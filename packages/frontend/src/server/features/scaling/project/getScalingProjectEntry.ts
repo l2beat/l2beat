@@ -19,8 +19,6 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
-import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
-import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -55,11 +53,14 @@ import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
-import { getInteropChains } from '../interop/utils/getInteropChains'
 import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
+import {
+  getProjectScalingInteropData,
+  type ProjectScalingInteropData,
+} from './getProjectScalingInteropData'
 import { getScalingDaSolutions } from './getScalingDaSolutions'
 import type { ScalingRosette } from './getScalingRosetteValues'
 import { getScalingRosette } from './getScalingRosetteValues'
@@ -132,113 +133,6 @@ export interface ProjectScalingEntry {
   hostChainName: string
   stageConfig: ProjectScalingStage
   discoUiHref: string | undefined
-}
-
-interface ProjectScalingInteropData {
-  chainId: string
-  interopChains: InteropChainWithIcon[]
-  protocols: {
-    id: string
-    slug: string
-    name: string
-    iconUrl: string
-  }[]
-  defaultSelectedChains: string[]
-  summary: {
-    protocols: {
-      items: {
-        id: string
-        name: string
-        iconUrl: string
-        volume: number
-      }[]
-      remainingCount: number
-    }
-    tokens: {
-      items: {
-        id: string
-        symbol: string
-        iconUrl: string
-        volume: number
-      }[]
-      remainingCount: number
-    }
-  }
-}
-
-async function getProjectScalingInteropData(
-  projectId: ProjectId,
-  interopProjects: Project<'interopConfig'>[],
-  helpers: SsrHelpers,
-): Promise<ProjectScalingInteropData | undefined> {
-  const interopChains = getInteropChains()
-    .filter((chain) => !chain.isUpcoming)
-    .map((chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-    }))
-
-  const currentInteropChain = interopChains.find(
-    (chain) => chain.id === projectId,
-  )
-  if (!currentInteropChain) return undefined
-
-  const orderedInteropChains = [
-    currentInteropChain,
-    ...interopChains.filter((chain) => chain.id !== currentInteropChain.id),
-  ]
-  const defaultSelectedChains = orderedInteropChains
-    .map((chain) => chain.id)
-    .slice(0, MAX_SELECTED_CHAINS)
-  const allInteropChainIds = orderedInteropChains.map((chain) => chain.id)
-  const protocols = interopProjects.map((protocol) => ({
-    id: protocol.id,
-    slug: protocol.slug,
-    name: protocol.interopConfig.name ?? protocol.name,
-    iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
-  }))
-  const interopFlows = await helpers.interop.flows.fetch({
-    chains: allInteropChainIds,
-    protocolIds: protocols.map((protocol) => protocol.id),
-  })
-  const currentChainData = interopFlows.chainData.find(
-    (chain) => chain.chainId === currentInteropChain.id,
-  )
-
-  return {
-    chainId: currentInteropChain.id,
-    interopChains: orderedInteropChains,
-    protocols,
-    defaultSelectedChains,
-    summary: {
-      protocols: {
-        items: (currentChainData?.topProtocols ?? []).map((protocol) => ({
-          id: protocol.id,
-          name: protocol.name,
-          iconUrl: protocol.iconUrl,
-          volume: protocol.volume,
-        })),
-        remainingCount: Math.max(
-          (currentChainData?.protocolCount ?? 0) -
-            (currentChainData?.topProtocols.length ?? 0),
-          0,
-        ),
-      },
-      tokens: {
-        items: (currentChainData?.topTokens ?? []).map((token) => ({
-          id: token.id,
-          symbol: token.symbol,
-          iconUrl: token.iconUrl,
-          volume: token.volume,
-        })),
-        remainingCount: Math.max(
-          (currentChainData?.tokenCount ?? 0) -
-            (currentChainData?.topTokens.length ?? 0),
-          0,
-        ),
-      },
-    },
-  }
 }
 
 export async function getScalingProjectEntry(
