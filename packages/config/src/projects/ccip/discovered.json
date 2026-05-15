@@ -72,19 +72,6 @@
       ]
     },
     {
-      "address": "eth:0x04189A291cC7E497015B45D4bb046DC0A8258068",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413",
-          "description": "schedule and execute transactions through this multisig once the root group quorum is reached.",
-          "role": ".config"
-        }
-      ]
-    },
-    {
       "name": "GHOEthereumTokenPool",
       "address": "eth:0x06179f7C1be40863405f374E7f5F8806c728660A",
       "type": "Contract",
@@ -261,6 +248,51 @@
           "from": "eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F",
           "description": "schedule and execute transactions through this multisig once the root group quorum is reached.",
           "role": ".config"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x0ee05ab47C2d68DbC821D205d876955b2289d9fb",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
         }
       ]
     },
@@ -613,19 +645,6 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "address": "eth:0x146CAe49Dbe1b1D1968fc4652814740706548952",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413",
-          "description": "schedule and execute transactions through this multisig once the root group quorum is reached.",
-          "role": ".config"
-        }
-      ]
-    },
-    {
       "address": "eth:0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC",
       "type": "EOA",
       "proxyType": "EOA"
@@ -693,19 +712,6 @@
         {
           "permission": "interact",
           "from": "eth:0xAD97C0270a243270136E40278155C12ce7C7F87B",
-          "description": "schedule and execute transactions through this multisig once the root group quorum is reached.",
-          "role": ".config"
-        }
-      ]
-    },
-    {
-      "address": "eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413",
           "description": "schedule and execute transactions through this multisig once the root group quorum is reached.",
           "role": ".config"
         }
@@ -864,6 +870,19 @@
       ]
     },
     {
+      "address": "eth:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
+        }
+      ]
+    },
+    {
       "name": "NonceManager",
       "address": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
       "type": "Contract",
@@ -886,6 +905,19 @@
       "implementationNames": {
         "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52": "NonceManager"
       }
+    },
+    {
+      "address": "eth:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
+        }
+      ]
     },
     {
       "address": "eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112",
@@ -946,6 +978,131 @@
           "tokenAdminRegistry": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
           "nonceManager": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52"
         },
+        "ocrCommit": {
+          "configInfo": {
+            "configDigest": "0x000a4fec8d71a8432f207afa4eb00bf32e3c7f33b90312432696e43d99898f7a",
+            "F": 5,
+            "n": 16,
+            "isSignatureVerificationEnabled": true
+          },
+          "signers": [
+            "eth:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+            "eth:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+            "eth:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+            "eth:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4",
+            "eth:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+            "eth:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+            "eth:0x2D2251fAC6871Df405450337E327683822baFc52",
+            "eth:0x7502128aF7a58E9906696EA6B60434f75d0026E0",
+            "eth:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+            "eth:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+            "eth:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+            "eth:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+            "eth:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+            "eth:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+            "eth:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+            "eth:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83"
+          ],
+          "transmitters": [
+            "eth:0x2ed0c5eEDC30985fEecBaA446FBC80e34742D217",
+            "eth:0xB0a0a0D9f00813C5E1CCD5F677263c0BC156093f",
+            "eth:0x66ED924143d3a20382cd70bF73813070ffFE7d8c",
+            "eth:0x97e6FE27dB773485944d26898FF863a86E963462",
+            "eth:0xceeB4C3b08a10B4EE3DbB83996c14454d425E37F",
+            "eth:0x564A5B77eDc6e66b32f108b9b8Df63A4E6B7aB44",
+            "eth:0x6B0F53DaDC2CE610B963788F8014ffed1b818fB4",
+            "eth:0x6D955D32713AbAA10C34f27d9f5608bB73711984",
+            "eth:0x0ee05ab47C2d68DbC821D205d876955b2289d9fb",
+            "eth:0x7ca4321170ede03dacf21cd2D57945226C93839a",
+            "eth:0xccAD6836E9E3c05F737573C4a4CA8b311a684df2",
+            "eth:0xC351f507c1DFB1D27956024aF6DdCcB2f1e8176C",
+            "eth:0xbE004180112433dEb2f9CcB3Ed17920bD13Ca2Ba",
+            "eth:0x69A0720c66a1f9c8893B9982ba1578DdF6137546",
+            "eth:0x796DBe6593e339D76ad5d59ad584595156071849",
+            "eth:0x802D353C5D8B1865f73f6669e48E7c4B752853eB"
+          ]
+        },
+        "ocrCommitSigners": [
+          "eth:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+          "eth:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+          "eth:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+          "eth:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4",
+          "eth:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+          "eth:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+          "eth:0x2D2251fAC6871Df405450337E327683822baFc52",
+          "eth:0x7502128aF7a58E9906696EA6B60434f75d0026E0",
+          "eth:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+          "eth:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+          "eth:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+          "eth:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+          "eth:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+          "eth:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+          "eth:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+          "eth:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83"
+        ],
+        "ocrCommitTransmitters": [
+          "eth:0x2ed0c5eEDC30985fEecBaA446FBC80e34742D217",
+          "eth:0xB0a0a0D9f00813C5E1CCD5F677263c0BC156093f",
+          "eth:0x66ED924143d3a20382cd70bF73813070ffFE7d8c",
+          "eth:0x97e6FE27dB773485944d26898FF863a86E963462",
+          "eth:0xceeB4C3b08a10B4EE3DbB83996c14454d425E37F",
+          "eth:0x564A5B77eDc6e66b32f108b9b8Df63A4E6B7aB44",
+          "eth:0x6B0F53DaDC2CE610B963788F8014ffed1b818fB4",
+          "eth:0x6D955D32713AbAA10C34f27d9f5608bB73711984",
+          "eth:0x0ee05ab47C2d68DbC821D205d876955b2289d9fb",
+          "eth:0x7ca4321170ede03dacf21cd2D57945226C93839a",
+          "eth:0xccAD6836E9E3c05F737573C4a4CA8b311a684df2",
+          "eth:0xC351f507c1DFB1D27956024aF6DdCcB2f1e8176C",
+          "eth:0xbE004180112433dEb2f9CcB3Ed17920bD13Ca2Ba",
+          "eth:0x69A0720c66a1f9c8893B9982ba1578DdF6137546",
+          "eth:0x796DBe6593e339D76ad5d59ad584595156071849",
+          "eth:0x802D353C5D8B1865f73f6669e48E7c4B752853eB"
+        ],
+        "ocrExecution": {
+          "configInfo": {
+            "configDigest": "0x000a77d661080fbb172de05d57a14782bf2fcce424836186987fdad5f96d38c6",
+            "F": 5,
+            "n": 0,
+            "isSignatureVerificationEnabled": false
+          },
+          "signers": [],
+          "transmitters": [
+            "eth:0x2ed0c5eEDC30985fEecBaA446FBC80e34742D217",
+            "eth:0x97e6FE27dB773485944d26898FF863a86E963462",
+            "eth:0x6D955D32713AbAA10C34f27d9f5608bB73711984",
+            "eth:0xbE004180112433dEb2f9CcB3Ed17920bD13Ca2Ba",
+            "eth:0x66ED924143d3a20382cd70bF73813070ffFE7d8c",
+            "eth:0x802D353C5D8B1865f73f6669e48E7c4B752853eB",
+            "eth:0xceeB4C3b08a10B4EE3DbB83996c14454d425E37F",
+            "eth:0x0ee05ab47C2d68DbC821D205d876955b2289d9fb",
+            "eth:0x7ca4321170ede03dacf21cd2D57945226C93839a",
+            "eth:0x6B0F53DaDC2CE610B963788F8014ffed1b818fB4",
+            "eth:0xC351f507c1DFB1D27956024aF6DdCcB2f1e8176C",
+            "eth:0x69A0720c66a1f9c8893B9982ba1578DdF6137546",
+            "eth:0x564A5B77eDc6e66b32f108b9b8Df63A4E6B7aB44",
+            "eth:0xB0a0a0D9f00813C5E1CCD5F677263c0BC156093f",
+            "eth:0x796DBe6593e339D76ad5d59ad584595156071849",
+            "eth:0xccAD6836E9E3c05F737573C4a4CA8b311a684df2"
+          ]
+        },
+        "ocrExecutionTransmitters": [
+          "eth:0x2ed0c5eEDC30985fEecBaA446FBC80e34742D217",
+          "eth:0x97e6FE27dB773485944d26898FF863a86E963462",
+          "eth:0x6D955D32713AbAA10C34f27d9f5608bB73711984",
+          "eth:0xbE004180112433dEb2f9CcB3Ed17920bD13Ca2Ba",
+          "eth:0x66ED924143d3a20382cd70bF73813070ffFE7d8c",
+          "eth:0x802D353C5D8B1865f73f6669e48E7c4B752853eB",
+          "eth:0xceeB4C3b08a10B4EE3DbB83996c14454d425E37F",
+          "eth:0x0ee05ab47C2d68DbC821D205d876955b2289d9fb",
+          "eth:0x7ca4321170ede03dacf21cd2D57945226C93839a",
+          "eth:0x6B0F53DaDC2CE610B963788F8014ffed1b818fB4",
+          "eth:0xC351f507c1DFB1D27956024aF6DdCcB2f1e8176C",
+          "eth:0x69A0720c66a1f9c8893B9982ba1578DdF6137546",
+          "eth:0x564A5B77eDc6e66b32f108b9b8Df63A4E6B7aB44",
+          "eth:0xB0a0a0D9f00813C5E1CCD5F677263c0BC156093f",
+          "eth:0x796DBe6593e339D76ad5d59ad584595156071849",
+          "eth:0xccAD6836E9E3c05F737573C4a4CA8b311a684df2"
+        ],
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "sourceChainConfigs": {
           "bsc": {
@@ -1144,6 +1301,21 @@
         "typeAndVersion": "OffRamp 1.6.0"
       },
       "fieldMeta": {
+        "ocrCommit": {
+          "description": "OCR config for the Commit plugin (pluginType=0). signers/transmitters are the DON oracles for committing merkle roots and price updates. isSignatureVerificationEnabled=true means F+1 of these signers must sign every commit report; the caller of commit() must additionally be one of the transmitters."
+        },
+        "ocrExecution": {
+          "description": "OCR config for the Execution plugin (pluginType=1). isSignatureVerificationEnabled=false means execute() takes no signatures, but msg.sender must still be in the transmitters list (UnauthorizedTransmitter otherwise). Signers may be configured but are unused."
+        },
+        "ocrCommitSigners": {
+          "description": "Commit-plugin OCR signers. F+1 of these must sign every commit report; their signatures are the load-bearing cryptographic attestation for moving merkle roots into the OffRamp."
+        },
+        "ocrCommitTransmitters": {
+          "description": "Commit-plugin OCR transmitters. msg.sender of commit() must be one of these; signature quorum from ocrCommitSigners is enforced separately."
+        },
+        "ocrExecutionTransmitters": {
+          "description": "Execution-plugin OCR transmitters. msg.sender of execute() must be one of these. Since isSignatureVerificationEnabled is false on the execution plugin, any one of these can singly authorize executing any already-committed message."
+        },
         "sourceChainConfigs": {
           "description": "Per-source-chain config for inbound CCIP messages: local Router used to deliver to receivers, whether the lane is enabled, whether RMN signature blessing is required on commits (false = blessing REQUIRED, true = blessing skipped — only OCR signatures gate the commit), and the bytes-encoded source-chain OnRamp address (left-padded EVM address for EVM sources; native encoding for non-EVM families). Keys are source-chain names. Replayed from SourceChainConfigSet events. minSeqNr is omitted because the event captures the value at config-change time, not the current commit counter (which advances on every _commitRoot)."
         }
@@ -1367,6 +1539,38 @@
           "from": "eth:0xAD97C0270a243270136E40278155C12ce7C7F87B",
           "description": "schedule and execute transactions through this multisig once the root group quorum is reached.",
           "role": ".config"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x2D2251fAC6871Df405450337E327683822baFc52",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x2ed0c5eEDC30985fEecBaA446FBC80e34742D217",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
         }
       ]
     },
@@ -5135,6 +5339,19 @@
       ]
     },
     {
+      "address": "eth:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
+        }
+      ]
+    },
+    {
       "address": "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3",
       "type": "EOA",
       "proxyType": "EOA",
@@ -6083,6 +6300,25 @@
       ]
     },
     {
+      "address": "eth:0x564A5B77eDc6e66b32f108b9b8Df63A4E6B7aB44",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
+        }
+      ]
+    },
+    {
       "address": "eth:0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd",
       "type": "EOA",
       "proxyType": "EOA"
@@ -6354,6 +6590,19 @@
       ]
     },
     {
+      "address": "eth:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
+        }
+      ]
+    },
+    {
       "name": "RMNTimelock",
       "address": "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A",
       "type": "Contract",
@@ -6475,6 +6724,25 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "address": "eth:0x66ED924143d3a20382cd70bF73813070ffFE7d8c",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
+        }
+      ]
+    },
+    {
       "address": "eth:0x68ad36Ad55bc29eE5a4C4781d9640DD47c8675Bc",
       "type": "EOA",
       "proxyType": "EOA",
@@ -6556,6 +6824,25 @@
       ]
     },
     {
+      "address": "eth:0x69A0720c66a1f9c8893B9982ba1578DdF6137546",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
+        }
+      ]
+    },
+    {
       "address": "eth:0x6A985273Db73f21D6a74Ee9f76725112819BD950",
       "type": "EOA",
       "proxyType": "EOA",
@@ -6606,6 +6893,25 @@
       ]
     },
     {
+      "address": "eth:0x6B0F53DaDC2CE610B963788F8014ffed1b818fB4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
+        }
+      ]
+    },
+    {
       "address": "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4",
       "type": "EOA",
       "proxyType": "EOA",
@@ -6651,6 +6957,38 @@
           "from": "eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F",
           "description": "schedule and execute transactions through this multisig once the root group quorum is reached.",
           "role": ".config"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x6D955D32713AbAA10C34f27d9f5608bB73711984",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
         }
       ]
     },
@@ -6734,9 +7072,54 @@
       ]
     },
     {
+      "address": "eth:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
+        }
+      ]
+    },
+    {
       "address": "eth:0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x7502128aF7a58E9906696EA6B60434f75d0026E0",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x796DBe6593e339D76ad5d59ad584595156071849",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
+        }
+      ]
     },
     {
       "name": "RMN_Multisig1",
@@ -6949,6 +7332,25 @@
           "from": "eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F",
           "description": "schedule and execute transactions through this multisig once the root group quorum is reached.",
           "role": ".config"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x7ca4321170ede03dacf21cd2D57945226C93839a",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
         }
       ]
     },
@@ -7209,6 +7611,25 @@
             "5214452172935136222": "treasure",
             "7222032299962346917": "neox"
           }
+        }
+      ]
+    },
+    {
+      "address": "eth:0x802D353C5D8B1865f73f6669e48E7c4B752853eB",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
         }
       ]
     },
@@ -7741,6 +8162,32 @@
         "eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F": "ManyChainMultiSig"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "eth:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
+        }
+      ]
     },
     {
       "name": "PriceRegistry",
@@ -8327,6 +8774,25 @@
       ]
     },
     {
+      "address": "eth:0x97e6FE27dB773485944d26898FF863a86E963462",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
+        }
+      ]
+    },
+    {
       "name": "ArbitrumToEthereumCommitStore",
       "address": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
       "type": "Contract",
@@ -8769,6 +9235,19 @@
       ]
     },
     {
+      "address": "eth:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
+        }
+      ]
+    },
+    {
       "address": "eth:0xa85936633588Fc7a120061CA973e65cE83839F87",
       "type": "EOA",
       "proxyType": "EOA",
@@ -9074,6 +9553,25 @@
       "address": "eth:0xAe735fd5e74887064DFf99C637f291caE5485A75",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xB0a0a0D9f00813C5E1CCD5F677263c0BC156093f",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
+        }
+      ]
     },
     {
       "address": "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9",
@@ -10203,6 +10701,25 @@
       ]
     },
     {
+      "address": "eth:0xbE004180112433dEb2f9CcB3Ed17920bD13Ca2Ba",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
+        }
+      ]
+    },
+    {
       "name": "Wrapped Ether Token",
       "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       "type": "Contract",
@@ -10246,6 +10763,38 @@
           "from": "eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3",
           "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
           "role": ".ocrConfig"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xC351f507c1DFB1D27956024aF6DdCcB2f1e8176C",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
         }
       ]
     },
@@ -10357,6 +10906,44 @@
           "from": "eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3",
           "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
           "role": ".ocrConfig"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xccAD6836E9E3c05F737573C4a4CA8b311a684df2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xceeB4C3b08a10B4EE3DbB83996c14454d425E37F",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "execute already-committed CCIP messages on this OffRamp (singly authorized; no signature quorum required because isSignatureVerificationEnabled is false for the execution plugin).",
+          "role": ".ocrExecutionTransmitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "submit OCR commit reports to this OffRamp (signature quorum from ocrCommitSigners is still required).",
+          "role": ".ocrCommitTransmitters"
         }
       ]
     },
@@ -10485,15 +11072,15 @@
       ]
     },
     {
-      "address": "eth:0xd3E2da792E806556517124f03F12e557045951E7",
+      "address": "eth:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413",
-          "description": "schedule and execute transactions through this multisig once the root group quorum is reached.",
-          "role": ".config"
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
         }
       ]
     },
@@ -11640,6 +12227,19 @@
       "implementationNames": {
         "eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3": "CommitStore"
       }
+    },
+    {
+      "address": "eth:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
+          "description": "co-sign OCR commit reports that move source-chain merkle roots and price updates into this OffRamp (F+1 of these required per report).",
+          "role": ".ocrCommitSigners"
+        }
+      ]
     },
     {
       "address": "eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028",
@@ -13220,7 +13820,7 @@
     "transporter/ManyChainMultiSig": "0xcb07649e24d3a2643d28343698d73862ff2ce7f437f123e6665cbd2f568ffd8c",
     "transporter/OffRampV1": "0xd299a9a3d7d35d0688dce1ec566f5beefd91f130913835b3625e750c848c6f43",
     "transporter/OfframpV2": "0x10d0b7d25ce268af9b6e9b5f73a3de7dc3f0899c08c0f464218b87114bd7054e",
-    "transporter/OfframpV3": "0x65da0d4abb0585476a2922e18973ce86144330fb6ee1815ba40989e65f107556",
+    "transporter/OfframpV3": "0xfab2ccbaeb86c33134033bfb84b900724e08db4c00d5c57fa44e2f9b1f7fd76d",
     "transporter/OnRampV1_6": "0x71c346e225c833b504b63726426cc6b20f313614c3249116f4e06034d20e6664",
     "transporter/PriceRegistry": "0x9c8c6d9e1c49d1e7c07826b526c5e393cfb077d7110797892d2ff8c32a14ddb4",
     "transporter/RBACTimelock": "0x7e2aacb693365ed1a6996fe36a483ba61e87663e13acf6dcac56f4ecd50cc9e2",
@@ -13231,5 +13831,5 @@
     "transporter/TokenPool": "0x23366a4f5f3dd76f32c1f9eb98e01ce5dc5f876782217c04086c2237dc55d7b7"
   },
   "usedBlockNumbers": { "ethereum": 25077639 },
-  "permissionsConfigHash": "0xc4c195e8db1f47c1ab0457afdbf5b9d35a3fbbf836e22187fc16029490b433ee"
+  "permissionsConfigHash": "0xdcf7e0d63d347ed996a770e3fdcb5a27d089c93b4d3374eae16258e21acee16a"
 }
