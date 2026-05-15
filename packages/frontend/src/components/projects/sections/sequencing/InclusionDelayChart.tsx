@@ -189,6 +189,7 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
       <EntityMarkersLegend
         entries={entityLegendEntries}
         color={chartMeta.entityStake?.color}
+        hasStakeDistribution={chart.entityStakeDistribution !== undefined}
       />
     </div>
   )
@@ -197,11 +198,13 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
 function EntityMarkersLegend({
   entries,
   color,
+  hasStakeDistribution,
 }: {
   entries: InclusionDelayEntityLegendEntry[]
   color: string | undefined
+  hasStakeDistribution: boolean
 }) {
-  if (entries.length === 0) return null
+  if (entries.length === 0 && hasStakeDistribution) return null
 
   return (
     <div className="mt-3 flex flex-col gap-2 font-medium text-label-value-13">
@@ -212,20 +215,26 @@ function EntityMarkersLegend({
         />
         <span>Largest staking entities</span>
       </div>
-      <div className="grid gap-x-6 gap-y-1.5 md:grid-cols-2">
-        {entries.map((entry) => (
-          <div
-            key={entry.id}
-            className="min-w-0 truncate"
-            title={entry.entityNames.join(', ')}
-          >
-            <span className="text-primary">{entry.label}:</span>{' '}
-            <span className="text-secondary">
-              {formatEntityMarkerName(entry)}
-            </span>
-          </div>
-        ))}
-      </div>
+      {entries.length > 0 ? (
+        <div className="grid gap-x-6 gap-y-1.5 md:grid-cols-2">
+          {entries.map((entry) => (
+            <div
+              key={entry.id}
+              className="min-w-0 truncate"
+              title={entry.entityNames.join(', ')}
+            >
+              <span className="text-primary">{entry.label}:</span>{' '}
+              <span className="text-secondary">
+                {formatEntityMarkerName(entry)}
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="w-fit rounded bg-warning/15 px-2 py-1 text-warning">
+          No data about stake distribution among entities available
+        </div>
+      )}
     </div>
   )
 }
