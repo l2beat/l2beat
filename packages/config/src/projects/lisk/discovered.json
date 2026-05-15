@@ -1,6 +1,6 @@
 {
   "name": "lisk",
-  "timestamp": 1778850530,
+  "timestamp": 1778851817,
   "configHash": "0x307fc0c6af675174a9d94e6ee381edcc7a2c6a5787bb9fb902b1727c343c2f0d",
   "entries": [
     {
@@ -896,7 +896,7 @@
       "address": "eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682",
       "type": "EOA",
       "sourceHashes": [
-        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
       ],
       "proxyType": "EIP7702 EOA",
       "values": {
@@ -2950,6 +2950,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25100748 },
+  "usedBlockNumbers": { "ethereum": 25100855 },
   "permissionsConfigHash": "0x216c71114e4fd0ceaee6c3ff06060778768975cec9c11f815d5125c7d49e2064"
 }

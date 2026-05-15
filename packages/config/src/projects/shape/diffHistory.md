@@ -11,7 +11,7 @@ Generated with discovered.json: 0x2ec974dc5615768f2f99b4f65ec7edfaf35bb8f6
 Two unrelated changes bundled into this discovery diff:
 
 Scheduled signer-key rotation on shared OP Stack governance contracts (no threshold or permission changes):
-- DeputyPauseModule (`0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754`): `deputy` rotated from `0x352f1defB49718e7Ea411687E850aA8d6299F7aC` to `0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c`. Executed via [superchain-ops eth/052](https://github.com/ethereum-optimism/superchain-ops/pull/1399); the [DeputyPauseModule spec](https://specs.optimism.io/protocol/deputy-pause-module.html) specifies an approximately quarterly rotation cadence.
+- DeputyPauseModule (`0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754`): `deputy` rotated from `0x352f1defB49718e7Ea411687E850aA8d6299F7aC` to `0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c`. Executed via [superchain-ops eth/052](https://github.com/ethereum-optimism/superchain-ops/pull/1399); the [DeputyPauseModule spec](https://specs.optimism.io/protocol/deputy-pause-module.html) specifies that this is a regular rotation.
 - OpFoundationUpgradeSafe: Member rotated.
 
 Shape-local sequencer configuration tweak:

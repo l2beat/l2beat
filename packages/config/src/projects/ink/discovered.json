@@ -1,6 +1,6 @@
 {
   "name": "ink",
-  "timestamp": 1778850529,
+  "timestamp": 1778851817,
   "configHash": "0xa01e7ef6c63452a53b2cdc9b5bbc9decc6789cab83e9b3d7d6daa5f432d1fe89",
   "entries": [
     {
@@ -158,7 +158,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 2100,
+        "gameCount": 2101,
         "gameImpls": [
           "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -1089,7 +1089,7 @@
       "address": "eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682",
       "type": "EOA",
       "sourceHashes": [
-        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
       ],
       "proxyType": "EIP7702 EOA",
       "values": {
@@ -2012,13 +2012,13 @@
         ],
         "$upgradeCount": 3,
         "absolutePrestateFromGame": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e",
-        "anchorGame": "eth:0x7617126d8281546705C2609Dd04B5566f708b148",
+        "anchorGame": "eth:0xB0f878891995a8f0702b4028259C539e5Da6a9dB",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xb0fa57df744e63d50cd66fdb4523ba0fa67e2d3a1d152ee823da845e7c62b142",
-          44724522
+          "0xdcb989e9d4e1490d989abf4f53d5b438365c138bc5fa8f6c389655fca534b3ae",
+          44746730
         ],
         "getStartingAnchorRoot": {
           "root": "0x10c839264195b6b897892b2d8949004bcb6005a9c712b41651aaf1a68c004d21",
@@ -2132,7 +2132,7 @@
         "$upgradeCount": 2,
         "baseFee": 0,
         "baseFeeScalar": 4424,
-        "blobBaseFee": 19134583,
+        "blobBaseFee": 14563776,
         "blobBaseFeeScalar": 810831,
         "decimals": 6,
         "DECIMALS": 6,
@@ -2141,7 +2141,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 322760407,
+        "l1BaseFee": 257496657,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -2339,10 +2339,10 @@
           ]
         ],
         "$upgradeCount": 2,
-        "basefee": 322760407,
+        "basefee": 257496657,
         "baseFeeScalar": 4424,
         "batcherHash": "0x000000000000000000000000500d7ea63cf2e501dadaa5feec1fc19fe2aa72ac",
-        "blobBaseFee": 19134583,
+        "blobBaseFee": 14563776,
         "blobBaseFeeScalar": 810831,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "ink:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -2352,15 +2352,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x5d6026fe32e9497e06b7a1635820bf93f4d0f9e266573c3781537d2eacb7ef4d",
+        "hash": "0x2139e7ca1a10df4cc61ad0f2eac8718325cd3673fbba0085fd9bfdf7ed4aa124",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 25100742,
+        "number": 25100850,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 11,
-        "timestamp": 1778850455,
+        "sequenceNumber": 3,
+        "timestamp": 1778851751,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -4479,6 +4479,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25100748, "ink": 45352118 },
+  "usedBlockNumbers": { "ethereum": 25100855, "ink": 45353406 },
   "permissionsConfigHash": "0xfd2b7c354e4af8e393be2573d12b7e2b76fcf89b01cabe486268e254058bdd74"
 }
