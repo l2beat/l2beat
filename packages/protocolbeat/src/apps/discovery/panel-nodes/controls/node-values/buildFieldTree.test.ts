@@ -64,6 +64,30 @@ describe(buildFieldTree.name, () => {
     ])
   })
 
+  it('address-keyed object map nests #key under the entry', () => {
+    const fields = [
+      field({ name: 'map.0xKeyA.inner' }),
+      field({ name: 'map.0xKeyA.#key' }),
+    ]
+    const tree = buildFieldTree(fields)
+    expect(tree).toEqual([
+      {
+        type: 'complex',
+        property: 'map',
+        value: [
+          {
+            type: 'complex',
+            property: '0xKeyA',
+            value: [
+              { type: 'simple', property: 'inner', fullKey: 'map.0xKeyA.inner' },
+              { type: 'simple', property: '#key', fullKey: 'map.0xKeyA.#key' },
+            ],
+          },
+        ],
+      },
+    ])
+  })
+
   it('nested arrays', () => {
     const fields = [
       field({ name: 'a[0][0]' }),
