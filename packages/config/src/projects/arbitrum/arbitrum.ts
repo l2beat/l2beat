@@ -231,15 +231,53 @@ export const arbitrum: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
     ],
   },
-  upgradesAndGovernance: getNitroGovernance(
-    l2CoreQuorumPercent,
-    l2TimelockDelay,
-    challengeWindowSeconds,
-    l1TimelockDelay,
-    treasuryTimelockDelay,
-    l2TreasuryQuorumPercent,
-    challengeGracePeriodSeconds,
-  ),
+  upgradesAndGovernance:
+    getNitroGovernance(
+      l2CoreQuorumPercent,
+      l2TimelockDelay,
+      challengeWindowSeconds,
+      l1TimelockDelay,
+      treasuryTimelockDelay,
+      l2TreasuryQuorumPercent,
+      challengeGracePeriodSeconds,
+    ) +
+    `
+
+<h3 style="text-align: center;">Governance Profile</h3>
+
+<h4 style="text-align: center;">:Security Council:</h4>
+
+| | |
+| --- | --- |
+| Security Council | **9-of-12** — 12 members across two 6-seat cohorts, 1-year staggered terms. DAO-elected via Tally with Foundation eligibility screening. |
+| SC members public | **Mapped** — 12 entities + addresses [published by the Arbitrum Foundation](https://docs.arbitrum.foundation/security-council-members). Mix of individuals (gzeon, zachxbt, Bartek, Yoav, Griff Green, "fred", Emiliano, Michael Lewellen) and orgs (Gauntlet, Immunefi, Certora, OpenZeppelin). |
+| SC charter | [Arbitrum DAO Constitution §3](https://docs.arbitrum.foundation/dao-constitution) — defines 9/12 threshold, transparency reports, conflict-of-interest, removal mechanics, ≤3-per-org cap. |
+
+<h4 style="text-align: center;">Upgrade paths</h4>
+
+| | |
+| --- | --- |
+| Normal upgrade path | Forum temp-check → On-chain vote (14d) → L2 Timelock (8d) → L2→L1 outbox (~6.4d) → L1 Timelock (3d) → execute. Total wall-clock ≈ 37 days for Constitutional AIPs, ≈ 27 days for Treasury AIPs. |
+| Emergency upgrade path | **9/12 SC, instant** — no timelock, no exit window. E.g. KelpDAO freeze (21 Apr 2026), Stylus stack-depth fix (13 Oct 2025). |
+| Exit window | **~12.4d** non-emergency · **0** emergency. L2→L1 outbox + L1 Timelock provides the non-emergency window; emergency actions skip both. |
+
+<h4 style="text-align: center;">Token governance</h4>
+
+| | |
+| --- | --- |
+| Governance token | \`ARB\` — 10,000,000,000 total · ~6.15B circulating · ~3.5B in DAO treasury. 1 token = 1 vote, delegated. Foundation tokens excluded from Votable Tokens. |
+| Voting venue | [Tally](https://www.tally.xyz/gov/arbitrum) — two on-chain governors on Arbitrum One: Core (Constitutional) \`0xf07DeD9d…\` · Treasury (Non-Constitutional) \`0x789fC990…\`. |
+| Proposal threshold | **1,000,000 ARB** delegated to submit on-chain. 500k ARB delegated to post a Snapshot temperature check. |
+| Quorum | **5%** Constitutional · **3%** Treasury. Counts "For" + "Abstain". Floor/ceiling: 150–450M ARB (Const) / 100–300M ARB (Treasury). |
+| Execution model | **On-chain payload · Permissionless execute.** The Governor stores the proposal's \`(targets[], values[], calldatas[])\` at submission. Once the vote passes and the L2/L1 Timelocks expire, anyone can call \`execute()\` — the same bytes that were voted on are what runs. No multisig signing, no team discretion, no off-chain step between vote and effect. |
+
+<h4 style="text-align: center;">SC ↔ DAO interplay</h4>
+
+| | |
+| --- | --- |
+| SC can bypass DAO? | **Yes** — emergency (9/12, instant) and non-emergency (9/12, still subject to 8d L2 + 3d L1 timelocks). Non-emergency bypass skips AIP Phases 1–3 only. |
+| DAO can override SC? | **Constitutional + practical** — DAO Constitution §3 grants the power to modify or eliminate the SC, but the 9/12 SC holds Canceller on both L1 and L2 Timelocks and can execute emergency upgrades during the ~17d execution window. |
+`,
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
       formatSeconds(totalDelay),
