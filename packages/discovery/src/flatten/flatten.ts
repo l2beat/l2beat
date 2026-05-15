@@ -29,18 +29,43 @@ export function flattenStartingFrom(
     rootFile,
   )
   assert(rootContract !== undefined, 'Failed to find the root contract')
-  const sorted = topologicalSort(parsedFileManager, rootContract)
-  const order = [...collectPragmas(sorted), ...sorted]
-  const shouldBeInterface = computeShouldBeInterface(
+  // Interface-ness, used members, and reachability are interdependent: pruning
+  // a contract can remove an implementation reference (e.g. a `new X` in a
+  // now-stripped body) that was keeping its target out of the purely-dynamic
+  // set, unblocking further pruning. Iterate until the surviving set is stable.
+  let current = topologicalSort(parsedFileManager, rootContract)
+  let shouldBeInterface = computeShouldBeInterface(
     parsedFileManager,
     rootContract,
-    order,
+    current,
   )
-  const usedMembers = computeUsedMembers(
+  let usedMembers = computeUsedMembers(
     parsedFileManager,
-    order,
+    current,
     shouldBeInterface,
   )
+  while (true) {
+    const next = pruneUnreachable(
+      parsedFileManager,
+      current,
+      rootContract,
+      shouldBeInterface,
+      usedMembers,
+    )
+    if (next.length === current.length) break
+    current = next
+    shouldBeInterface = computeShouldBeInterface(
+      parsedFileManager,
+      rootContract,
+      current,
+    )
+    usedMembers = computeUsedMembers(
+      parsedFileManager,
+      current,
+      shouldBeInterface,
+    )
+  }
+  const order = [...collectPragmas(current), ...current]
 
   const typeMap = buildTypeMap(order)
   const renameMap = buildRenameMap(order)
@@ -143,7 +168,6 @@ function computeUsedMembers(
   }
 
   for (const entry of order) {
-    if (shouldBeInterface[entry.declaration.id]) continue
     getASTIdentifiers(entry.declaration.ast, (node) => {
       if (node.type === 'MemberAccess') {
         const { expression, memberName } = node as AST.MemberAccess
@@ -185,8 +209,6 @@ function computeUsedMembers(
   return used
 }
 
-// Identifiers reachable from each member's *signature* — function bodies are
-// excluded because they're dropped when the interface is regenerated.
 function signatureRefMap(ast: AST.ContractDefinition): Map<string, string[]> {
   const map = new Map<string, string[]>()
   for (const sub of ast.subNodes) {
@@ -221,6 +243,47 @@ function signatureRefMap(ast: AST.ContractDefinition): Map<string, string[]> {
     }
   }
   return map
+}
+
+function pruneUnreachable(
+  parsedFileManager: ParsedFilesManager,
+  order: DeclarationFilePair[],
+  rootContract: DeclarationFilePair,
+  shouldBeInterface: Record<string, boolean>,
+  usedMembers: Map<string, Set<string>>,
+): DeclarationFilePair[] {
+  const effective = new Map<string, string[]>()
+  for (const entry of order) {
+    const id = entry.declaration.id
+    if (!shouldBeInterface[id]) {
+      effective.set(id, allReferences(entry))
+      continue
+    }
+    const keep = usedMembers.get(id) ?? new Set<string>()
+    const refs: string[] = [...entry.declaration.implementationReferences]
+    const sigs = signatureRefMap(
+      entry.declaration.ast as AST.ContractDefinition,
+    )
+    for (const [name, ids] of sigs) {
+      if (keep.has(name)) refs.push(...ids)
+    }
+    effective.set(id, refs)
+  }
+
+  const reachable = new Set<string>([rootContract.declaration.id])
+  const stack: DeclarationFilePair[] = [rootContract]
+  while (stack.length > 0) {
+    const cur = stack.pop() as DeclarationFilePair
+    for (const ref of effective.get(cur.declaration.id) ?? []) {
+      const head = ref.split('.')[0] as string
+      const dep = parsedFileManager.tryFindDeclaration(head, cur.file)
+      if (dep && !reachable.has(dep.declaration.id)) {
+        reachable.add(dep.declaration.id)
+        stack.push(dep)
+      }
+    }
+  }
+  return order.filter((e) => reachable.has(e.declaration.id))
 }
 
 function topologicalSort(

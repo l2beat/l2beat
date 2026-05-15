@@ -743,9 +743,6 @@ describe('flatten', () => {
     expect(flattened).toEqual(
       dedent(`
       // NOTE(l2beat): This is an interface, generated from the contract source code.
-      interface Namespace {}
-
-      // NOTE(l2beat): This is an interface, generated from the contract source code.
       interface ToBeInterface {
           function f() external view returns (uint256);
       }
@@ -803,13 +800,12 @@ describe('flatten', () => {
     )
   })
 
-  // TODO(radomski): This should be smart enough to understand that the body
-  // is gone and we no longer reference UsesNewing
   it('regression - drops used things when turned into an interface', () => {
     const file = sol(
       'Root.sol',
       `
       contract Newing {
+          struct Unsigned { uint256 value; }
           constructor() payable { }
       }
 
@@ -824,13 +820,14 @@ describe('flatten', () => {
               uint256 field;
           }
 
-          function usingLibrary() {
+          function usingLibrary() returns (Newing.Unsigned) {
               UsesNewing.use();
           }
       }
 
       contract R1 {
           function f(address x) public {
+              DynamicContract(x).usingLibrary();
               return DynamicContract.Structure({ field: 1337 });
           }
       }
@@ -842,13 +839,10 @@ describe('flatten', () => {
     })
     expect(flattened).toEqual(
       dedent(`
-      contract Newing {
-          constructor() payable { }
-      }
-
-      library UsesNewing {
-          function use() internal {
-              new Newing{ value: 123 }();
+      // NOTE(l2beat): This is an interface, generated from the contract source code.
+      interface Newing {
+          struct Unsigned {
+              uint256 value;
           }
       }
 
@@ -857,10 +851,13 @@ describe('flatten', () => {
           struct Structure {
               uint256 field;
           }
+
+          function usingLibrary() external returns (Newing.Unsigned);
       }
 
       contract R1 {
           function f(address x) public {
+              DynamicContract(x).usingLibrary();
               return DynamicContract.Structure({ field: 1337 });
           }
       }
@@ -1066,15 +1063,7 @@ describe('flatten', () => {
     expect(flattened).toEqual(
       dedent(`
     // NOTE(l2beat): This is an interface, generated from the contract source code.
-    interface Outer {}
-
-    contract Inner {
-        Outer public outer;
-    }
-
-    contract Derived is Inner {
-        function act() public {}
-    }
+    interface Inner {}
 
     contract Root {
         Inner i;
