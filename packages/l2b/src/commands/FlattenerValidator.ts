@@ -126,6 +126,9 @@ export const FlattenerValidator = command({
     })
 
     printFailures(failures)
+    if (failures.length > 0) {
+      throw new Error(`${failures.length} contract(s) failed validation`)
+    }
   },
 })
 
