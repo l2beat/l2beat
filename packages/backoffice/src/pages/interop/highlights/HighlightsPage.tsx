@@ -15,6 +15,7 @@ import {
   EmptyTitle,
 } from '~/components/core/Empty'
 import { ErrorState } from '~/components/ErrorState'
+import { ExternalLink } from '~/components/ExternalLink'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { formatDollars } from '~/pages/interop/transfers/utils'
@@ -227,6 +228,7 @@ export function HighlightsPage() {
                   label="Protocol"
                   entityLabel="Protocol"
                   entity={protocolIncrease?.id}
+                  entityHref={getProtocolHref(protocolIncrease?.id)}
                   primaryLabel="Increase"
                   primaryValue={
                     protocolIncrease
@@ -255,6 +257,8 @@ interface VolumeIncreaseMetric {
   increaseUsd: number
 }
 
+const L2BEAT_URL = 'https://l2beat.com'
+
 function DetailCell(props: { label: string; value: string }) {
   return (
     <div className="min-w-0 border-b p-3 sm:border-r sm:[&:nth-child(2n)]:border-r-0 [&:nth-last-child(-n+1)]:border-b-0 sm:[&:nth-last-child(-n+2)]:border-b-0">
@@ -272,6 +276,7 @@ function HighlightRow(props: {
   label: string
   entityLabel: string
   entity: string | undefined
+  entityHref?: string
   primaryLabel: string
   primaryValue: string | undefined
   secondary?: { label: string; value: string }[]
@@ -301,7 +306,7 @@ function HighlightRow(props: {
       </div>
 
       <div className="min-w-0 font-semibold text-sm">
-        <span className="block truncate">{props.entity}</span>
+        <EntityValue entity={props.entity} href={props.entityHref} />
       </div>
       <dl className="grid grid-cols-3 gap-3">
         <Metric label={props.primaryLabel} value={props.primaryValue} />
@@ -310,6 +315,18 @@ function HighlightRow(props: {
         ))}
       </dl>
     </div>
+  )
+}
+
+function EntityValue(props: { entity: string; href: string | undefined }) {
+  if (props.href === undefined) {
+    return <span className="block truncate">{props.entity}</span>
+  }
+
+  return (
+    <ExternalLink href={props.href} className="max-w-full truncate">
+      {props.entity}
+    </ExternalLink>
   )
 }
 
@@ -337,4 +354,12 @@ function Metric(props: { label: string; value: string }) {
       <dd className="mt-0.5 truncate font-semibold text-sm">{props.value}</dd>
     </div>
   )
+}
+
+function getProtocolHref(protocolId: string | undefined) {
+  if (protocolId === undefined) {
+    return undefined
+  }
+
+  return `${L2BEAT_URL}/interop/protocols/${protocolId}`
 }
