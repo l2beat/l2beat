@@ -8585,6 +8585,18 @@
       "deploymentTimestamp": 1745539200
     },
     {
+      "symbol": "WETH",
+      "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
+      "coingeckoId": "weth",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+      },
+      "deploymentTimestamp": 1612972800
+    },
+    {
       "symbol": "YGG",
       "address": "0x1c306872bC82525d72Bf3562E8F0aA3f8F26e857",
       "coingeckoId": "yield-guild-games",
