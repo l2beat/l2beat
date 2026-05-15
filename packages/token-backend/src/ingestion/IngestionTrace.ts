@@ -33,8 +33,10 @@ export type IngestionStep =
     }
   | {
       kind: 'resolved-from-coingecko-new-abstract'
-      record: AbstractTokenRecord
+      coingeckoId: string
+      symbol: string
     }
+  | { kind: 'fetched-coingecko-abstract'; record: AbstractTokenRecord }
   | { kind: 'fetched-facts'; facts: DeployedTokenFacts }
 
 export type IngestionOutcome =
@@ -48,6 +50,18 @@ export type IngestionOutcome =
       deployedToken: DeployedTokenWrite
       neighborsToEnqueue: TokenAddress[]
     }
+  | {
+      kind: 'pending'
+      operation: 'insert' | 'update'
+      existing: DeployedTokenRecord | undefined
+      abstract: PendingAbstract
+      symbolFallback: string | undefined
+      neighborsToEnqueue: TokenAddress[]
+    }
+
+export type PendingAbstract =
+  | { kind: 'existing'; id: string }
+  | { kind: 'new-coingecko'; coingeckoId: string; symbol: string }
 
 export type DeployedTokenWrite =
   | { type: 'insert'; record: DeployedTokenRecord }

@@ -3,12 +3,16 @@ import type {
   InteropTransferRecord,
   TokenDatabase,
 } from '@l2beat/database'
+import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
 import type { ChainRepository } from '@l2beat/database/dist/repositories/ChainRepository'
 import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import type { TokenIngestionQueueRecord } from '@l2beat/database/dist/repositories/TokenIngestionQueueRepository'
 import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import type { Chain } from '../chains/Chain'
 import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
+import type { DeployedTokenFacts } from '../chains/fetchDeployedTokenFacts'
+import type { IngestionTrace } from './IngestionTrace'
 import { buildInteropTransferIndex } from './InteropTransferIndex'
 import { TokenIngestionProcessor } from './TokenIngestionProcessor'
 
@@ -56,6 +60,327 @@ describe(TokenIngestionProcessor.name, () => {
       })
       expect(getByPrimaryKeys).toHaveBeenCalledWith([])
     })
+
+    it('returns pending-insert without fetching deployed-token facts for a new address', async () => {
+      const address = token('ethereum', '0xaaa')
+      const otherAddress = token('base', '0xbbb')
+      const fetchDeployedTokenFacts = mockFn().resolvesTo({
+        isContract: true,
+        symbol: 'USDC',
+        symbolSource: 'rpc',
+        decimals: 6,
+        deploymentTimestamp: UnixTime(1),
+        warnings: [],
+      })
+      const findByName = mockFn().resolvesTo(undefined)
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          deployedToken: mockObject<DeployedTokenRepository>({
+            findByChainAndAddress: mockFn().resolvesTo(undefined),
+            getByPrimaryKeys: mockFn().resolvesTo([
+              {
+                ...otherAddress,
+                abstractTokenId: 'USDC01',
+                symbol: 'USDC',
+                comment: null,
+                decimals: 6,
+                deploymentTimestamp: UnixTime(1),
+                metadata: null,
+              },
+            ]),
+          }),
+          chain: mockObject<ChainRepository>({ findByName }),
+        }),
+        fetchDeployedTokenFacts,
+      })
+
+      const trace = await processor.plan(
+        queueEntry(address),
+        buildInteropTransferIndex([
+          transfer({
+            srcChain: address.chain,
+            srcTokenAddress: address.address,
+            dstChain: otherAddress.chain,
+            dstTokenAddress: otherAddress.address,
+            bridgeType: 'lockAndMint',
+          }),
+        ]),
+      )
+
+      expect(trace.outcome).toEqual({
+        kind: 'pending',
+        operation: 'insert',
+        existing: undefined,
+        abstract: { kind: 'existing', id: 'USDC01' },
+        symbolFallback: undefined,
+        neighborsToEnqueue: [otherAddress],
+      })
+      expect(trace.steps.some((step) => step.kind === 'fetched-facts')).toEqual(
+        false,
+      )
+      expect(fetchDeployedTokenFacts).toHaveBeenCalledTimes(0)
+      expect(findByName).toHaveBeenCalledTimes(0)
+    })
+
+    it('returns pending with new-coingecko abstract without calling CoinGecko coin endpoints', async () => {
+      const address = token('ethereum', '0xaaa')
+      const getCoinDataById = mockFn().resolvesTo(undefined)
+      const getCoinMarketChartRange = mockFn().resolvesTo(undefined)
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          deployedToken: mockObject<DeployedTokenRepository>({
+            findByChainAndAddress: mockFn().resolvesTo(undefined),
+            getByPrimaryKeys: mockFn().resolvesTo([]),
+          }),
+          abstractToken: mockObject<AbstractTokenRepository>({
+            findByCoingeckoId: mockFn().resolvesTo(undefined),
+          }),
+          chain: mockObject<ChainRepository>({
+            getAll: mockFn().resolvesTo([
+              {
+                name: 'ethereum',
+                chainId: 1,
+                explorerUrl: null,
+                aliases: ['eth'],
+                apis: null,
+              },
+            ]),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          getCoinList: mockFn().resolvesTo([
+            {
+              id: 'usd-coin',
+              name: 'USD Coin',
+              symbol: 'usdc',
+              platforms: { eth: address.address },
+            },
+          ]),
+          getCoinDataById,
+          getCoinMarketChartRange,
+        }),
+      })
+
+      const trace = await processor.plan(
+        queueEntry(address),
+        buildInteropTransferIndex([]),
+      )
+
+      expect(trace.outcome).toEqual({
+        kind: 'pending',
+        operation: 'insert',
+        existing: undefined,
+        abstract: {
+          kind: 'new-coingecko',
+          coingeckoId: 'usd-coin',
+          symbol: 'usdc',
+        },
+        symbolFallback: 'USDC',
+        neighborsToEnqueue: [],
+      })
+      expect(getCoinDataById).toHaveBeenCalledTimes(0)
+      expect(getCoinMarketChartRange).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe(TokenIngestionProcessor.prototype.fetch.name, () => {
+    it('passes non-pending traces through unchanged', async () => {
+      const processor = createProcessor({})
+      const trace = {
+        address: token('ethereum', '0xaaa'),
+        steps: [],
+        outcome: { kind: 'skip', reason: 'whatever' } as const,
+      }
+      const result = await processor.fetch(trace)
+      expect(result).toEqual(trace)
+    })
+
+    it('upgrades pending insert with existing abstract to write/insert when facts are complete', async () => {
+      const address = token('ethereum', '0xaaa')
+      const fetchDeployedTokenFacts = mockFn().resolvesTo({
+        isContract: true,
+        symbol: 'USDC',
+        symbolSource: 'rpc' as const,
+        decimals: 6,
+        deploymentTimestamp: UnixTime(1),
+        warnings: [],
+      })
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<ChainRepository>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+        }),
+        fetchDeployedTokenFacts,
+      })
+
+      const result = await processor.fetch({
+        address,
+        steps: [],
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: { kind: 'existing', id: 'USDC01' },
+          symbolFallback: undefined,
+          neighborsToEnqueue: [],
+        },
+      })
+
+      expect(result.outcome).toEqual({
+        kind: 'write',
+        newAbstractToken: undefined,
+        deployedToken: {
+          type: 'insert',
+          record: {
+            ...address,
+            abstractTokenId: 'USDC01',
+            symbol: 'USDC',
+            decimals: 6,
+            deploymentTimestamp: UnixTime(1),
+            comment: null,
+            metadata: null,
+          },
+        },
+        neighborsToEnqueue: [],
+      })
+    })
+
+    it('builds the abstract from CoinGecko and inserts a deployed token for new-coingecko pending', async () => {
+      const address = token('ethereum', '0xaaa')
+      const getCoinDataById = mockFn().resolvesTo({
+        id: 'usd-coin',
+        symbol: 'usdc',
+        image: { large: 'https://example.com/usdc.png' },
+        platforms: {},
+      })
+      const getCoinMarketChartRange = mockFn().resolvesTo({
+        prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
+        marketCaps: [],
+      })
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<ChainRepository>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+          abstractToken: mockObject<AbstractTokenRepository>({
+            findById: mockFn().resolvesTo(undefined),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          getCoinDataById,
+          getCoinMarketChartRange,
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'USDC',
+          symbolSource: 'rpc' as const,
+          decimals: 6,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+      })
+
+      const result = await processor.fetch({
+        address,
+        steps: [],
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: {
+            kind: 'new-coingecko',
+            coingeckoId: 'usd-coin',
+            symbol: 'usdc',
+          },
+          symbolFallback: 'USDC',
+          neighborsToEnqueue: [],
+        },
+      })
+
+      expect(result.outcome.kind).toEqual('write')
+      expect(getCoinDataById).toHaveBeenCalledWith('usd-coin')
+      expect(
+        result.steps.some((step) => step.kind === 'fetched-coingecko-abstract'),
+      ).toEqual(true)
+    })
+
+    it('downgrades pending insert to error when facts are missing', async () => {
+      const address = token('ethereum', '0xaaa')
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<ChainRepository>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'USDC',
+          symbolSource: 'rpc' as const,
+          decimals: 6,
+          deploymentTimestamp: undefined,
+          warnings: [],
+        }),
+      })
+
+      const result = await processor.fetch({
+        address,
+        steps: [],
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: { kind: 'existing', id: 'USDC01' },
+          symbolFallback: undefined,
+          neighborsToEnqueue: [],
+        },
+      })
+
+      expect(result.outcome.kind).toEqual('error')
+    })
+  })
+
+  describe(TokenIngestionProcessor.prototype.apply.name, () => {
+    it('throws when called with a pending outcome', async () => {
+      const processor = createProcessor({})
+      const trace: IngestionTrace = {
+        address: token('ethereum', '0xaaa'),
+        steps: [],
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: { kind: 'existing', id: 'USDC01' },
+          symbolFallback: undefined,
+          neighborsToEnqueue: [],
+        },
+      }
+      await expect(
+        processor.apply(queueEntry(trace.address), trace),
+      ).toBeRejected()
+    })
   })
 })
 
@@ -63,12 +388,17 @@ function createProcessor(deps: {
   db?: Database
   tokenDb?: TokenDatabase
   coingeckoClient?: CoingeckoClient
+  fetchDeployedTokenFacts?: (
+    chain: Chain,
+    address: string,
+  ) => Promise<DeployedTokenFacts>
 }) {
   return new TokenIngestionProcessor({
     db: deps.db ?? mockObject<Database>({}),
     tokenDb: deps.tokenDb ?? mockObject<TokenDatabase>({}),
     coingeckoClient: deps.coingeckoClient ?? mockObject<CoingeckoClient>({}),
     etherscanApiKey: undefined,
+    fetchDeployedTokenFacts: deps.fetchDeployedTokenFacts,
   })
 }
 

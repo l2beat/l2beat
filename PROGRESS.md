@@ -31,14 +31,6 @@ Notes:
 - No cron loop, ingestion processor, TRPC API, or token-ui page changes are included yet.
 - I used `conflict` and `error` as explicit stored states because the requested UX includes both.
 
-Verification:
-
-- `pnpm -C packages/database typecheck` passed.
-- `pnpm -C packages/database lint` passed.
-- Targeted test passed with `7 passing`:
-  `pnpm exec mocha --no-config --require esbuild-register --timeout 10000 src/repositories/TokenIngestionQueueRepository.test.ts`
-- `pnpm -C packages/database test -- src/repositories/TokenIngestionQueueRepository.test.ts` ran the broader package suite because of the package Mocha config. The new queue tests passed, but the full run failed in an unrelated existing `IndexerStateRepository` test because the test database contained an `indexer` row when that test expected none.
-
 ## 2026-05-12 - Slice 2: queue feeder loop
 
 Implemented the scheduled pre-step that feeds the automatic ingestion queue from newly inserted interop transfers.
@@ -64,33 +56,11 @@ Notes:
 - This slice only feeds the queue. It does not implement the processor drain or token upsert logic yet.
 - The loop is disabled by default until the processor side exists.
 
-Verification:
-
-- `pnpm -C packages/database db:generate-types` passed.
-- `pnpm -C packages/database build` passed.
-- `pnpm -C packages/database typecheck` passed.
-- `pnpm -C packages/database format` passed.
-- `pnpm -C packages/database lint` passed.
-- `pnpm -C packages/token-backend typecheck` passed after rebuilding `@l2beat/database`.
-- `pnpm -C packages/token-backend lint` passed.
-- `pnpm -C packages/token-backend test -- src/ingestion/TokenIngestionQueueFeederLoop.test.ts` passed with `84 passing`; the package Mocha config ran the broader token-backend suite.
-- `pnpm -C packages/database test -- src/repositories/TokenDbSettingRepository.test.ts src/repositories/InteropTransferRepository.test.ts` did not run because the local test database has a pre-existing failed migration: `20260325094309_add_interop_derived_fulfilled`.
-
 Follow-up adjustment:
 
 - Renamed the transfer serial from `ingestionId` to `serialId` so the generic interop transfer row does not expose the token ingestion use case.
 - Replaced the dedicated `TokenIngestionCursor` table with generic `TokenDbSetting` storage. The feeder currently uses one setting: `interop-transfers:lastSerialId`.
 - Renamed `TokenDbSettingsRepository` / `tokenDbSettings` to singular `TokenDbSettingRepository` / `tokenDbSetting` to match the project's singular model repository naming.
-
-Verification after the repository rename:
-
-- `pnpm -C packages/database format` passed.
-- `pnpm -C packages/database build` passed.
-- `pnpm -C packages/database typecheck` passed.
-- `pnpm -C packages/database lint` passed.
-- `pnpm -C packages/token-backend typecheck` passed.
-- `pnpm -C packages/token-backend lint` passed.
-- `pnpm -C packages/token-backend test -- src/ingestion/TokenIngestionQueueFeederLoop.test.ts` passed with `84 passing`; the package Mocha config ran the broader token-backend suite.
 
 ## 2026-05-12 - Slice 3: queue drain
 
@@ -115,14 +85,6 @@ Behavior:
 - Queue entries are removed only when no abstract token can be resolved or after successful processing.
 - After a deployed token is inserted or updated, related interop transfers are marked unprocessed and neighboring transfer tokens are re-enqueued. No-op existing tokens do not propagate neighbors, avoiding ping-pong queue loops.
 
-Verification:
-
-- `pnpm -C packages/token-backend format` passed.
-- `pnpm -C packages/token-backend build` passed.
-- `pnpm -C packages/token-backend typecheck` passed.
-- `pnpm -C packages/token-backend lint` passed.
-- `pnpm -C packages/token-backend test -- src/ingestion/TokenIngestionLoop.test.ts` passed with `89 passing`; the package Mocha config ran the broader token-backend suite.
-
 Follow-up planning note:
 
 - Updated `docs/automatic-token-ingestion.md` with a proposed debug-only `staged` queue state. In debug approval mode, the pre-step can enqueue discovered addresses as `staged`; the drain ignores them until a researcher approves one entry, moving it to `pending`.
@@ -138,23 +100,6 @@ Implemented the Token UI page for inspecting and approving automatic ingestion q
 - Added `/tokens/ingestion-queue` in token-ui and a sidebar link under Tokens.
 - The page shows status, chain, address, message, created/updated timestamps, explorer links when chain metadata is available, and an approve button for staged entries.
 - Updated `docs/automatic-token-ingestion.md` to name `TOKEN_INGESTION_REQUIRE_APPROVAL=true` as the rollout/debug toggle.
-
-Verification:
-
-- `pnpm -C packages/database format:fix` passed.
-- `pnpm -C packages/database typecheck` passed.
-- `pnpm -C packages/database build` passed.
-- `pnpm -C packages/database lint` passed.
-- `pnpm -C packages/database exec mocha --no-config --require esbuild-register --timeout 10000 src/repositories/TokenIngestionQueueRepository.test.ts` passed with `10 passing`.
-- `pnpm -C packages/token-backend format:fix` passed.
-- `pnpm -C packages/token-backend build` passed.
-- `pnpm -C packages/token-backend typecheck` passed.
-- `pnpm -C packages/token-backend lint` passed.
-- `pnpm -C packages/token-backend test -- src/ingestion/TokenIngestionLoop.test.ts src/trpc/routers/tokenIngestionQueue/index.test.ts` passed with `93 passing`; the package Mocha config ran the broader token-backend suite.
-- `pnpm -C packages/token-ui format:fix` passed.
-- `pnpm -C packages/token-ui typecheck` passed.
-- `pnpm -C packages/token-ui lint` passed.
-- `pnpm -C packages/token-ui build` passed. Vite reported the existing large chunk warning.
 
 ## 2026-05-13 - Slice 5: dry-run preview and trace
 
@@ -206,16 +151,65 @@ Documentation:
 - Added it to `docs/mdbook/specs/SUMMARY.md`.
 - Linked it from `packages/token-backend/README.md`.
 
-Verification:
+## 2026-05-15 - Slice 6: queue-wide predicted outcomes (plan / fetch / apply)
 
-- `pnpm -C packages/token-backend format:fix` passed.
-- `pnpm -C packages/token-backend build` passed.
-- `pnpm -C packages/token-backend typecheck` passed.
-- `pnpm -C packages/token-backend lint` passed.
-- `pnpm -C packages/token-backend test` passed with `93 passing` (full
-  token-backend suite ran because of the package Mocha config).
-- `pnpm -C packages/token-ui format:fix` passed.
-- `pnpm -C packages/token-ui typecheck` passed.
-- `pnpm -C packages/token-ui lint` passed.
-- `pnpm -C packages/token-ui build` passed. Vite reported the existing
-  large chunk warning.
+Split the processor's single read phase into two: a fast, fully local
+`plan()` that makes **no external calls**, and a separate `fetch()` that
+is the only place RPC/explorer/per-coin CoinGecko calls happen. This lets
+the queue UI show what would happen for every row at no external cost.
+
+- `IngestionTrace.ts`: collapsed the previous `pending-insert` proposal
+  into a single `pending` outcome that carries `operation` (`insert` /
+  `update`), an optional `existing` deployed-token record (for update),
+  and an `abstract` of `{ kind: 'existing', id }` or
+  `{ kind: 'new-coingecko', coingeckoId, symbol }`. Slimmed the
+  `resolved-from-coingecko-new-abstract` step to just
+  `{ coingeckoId, symbol }` and added a new `fetched-coingecko-abstract`
+  step emitted by `fetch()` once the abstract record is materialized.
+- `TokenIngestionProcessor`:
+  - `plan()` no longer calls `fetchDeployedTokenFacts` and no longer
+    calls `buildAbstractToken` (the per-coin CoinGecko endpoints
+    `getCoinDataById` / `getCoinMarketChartRange`). For new addresses
+    and for first-time CoinGecko coins it returns a `pending` outcome.
+  - New `fetch(trace)` is the only place external calls happen. For
+    `pending` outcomes it materializes a new CoinGecko abstract when
+    needed, then — for inserts — calls `fetchDeployedTokenFacts`, and
+    upgrades the outcome to `write` (insert/update) or downgrades it to
+    `error` when required facts are missing.
+  - `apply()` switch was extended with a `pending` case that throws,
+    so any future path forgetting `fetch()` fails loudly.
+  - `process()` is now `plan → fetch → apply`.
+- `tokenIngestionQueue.getPage`: runs `plan()` per row inline and
+  returns `predictedOutcomes` alongside the existing `entries` /
+  `totalCount`. Reuses a single transfer index built from
+  `interopTransfer.getAll()` for the request.
+- `tokenIngestionQueue.preview`: now runs `plan` + `fetch` so the dialog
+  keeps showing fetched-facts and the full deployed-token record.
+- `TokenIngestionQueuePage`: removed `Updated` and `Created` columns;
+  added a `Will do` column that renders the predicted outcome with a
+  badge plus a short hint (e.g. abstract id, or pending CoinGecko coin).
+- `IngestionPreviewDialog`: added rendering for the new
+  `fetched-coingecko-abstract` step and the `pending` outcome (used only
+  if the dialog is ever opened on a plan-only trace).
+- Tests: added cases asserting that `plan()` does not call
+  `fetchDeployedTokenFacts`, `getCoinDataById`, or
+  `getCoinMarketChartRange`; that `fetch()` is the layer that calls
+  them; and that `apply()` throws on `pending`. Updated the
+  `getPage` router test to mock the transfer index and processor and
+  assert `predictedOutcomes` is returned.
+
+Rationale: a previous iteration ran a `plan()` that still made per-coin
+CoinGecko calls inside `resolveAbstractFromCoingecko`. Once `getPage`
+started calling `plan()` for every visible row, this caused a 429
+stampede on cold start because each unique CoinGecko coin needed two
+per-coin endpoint calls. After this slice, the queue UI populates the
+"Will do" column without paying any per-coin CoinGecko cost; per-coin
+calls happen only during drain or when a researcher clicks "Preview" on
+a single row.
+
+Documentation:
+
+- Updated `docs/mdbook/specs/l2b_specs/automatic_token_ingestion.md` to
+  describe `plan + fetch + apply`, the new `pending` outcome, the
+  zero-external-calls guarantee for `plan`, and the queue-wide
+  predicted-outcome consumption by `getPage`.

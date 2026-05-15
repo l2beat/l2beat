@@ -1,3 +1,4 @@
+import type { IngestionOutcome } from '@l2beat/token-backend'
 import {
   CheckIcon,
   ChevronLeftIcon,
@@ -55,6 +56,7 @@ export function TokenIngestionQueuePage() {
     )
   const { data: chains } = api.chains.getAll.useQuery()
   const queue = queuePage?.entries ?? []
+  const predictedOutcomes = queuePage?.predictedOutcomes ?? []
   const totalCount = queuePage?.totalCount ?? 0
   const pageCount = queuePage
     ? Math.max(1, Math.ceil(queuePage.totalCount / PAGE_SIZE))
@@ -160,15 +162,15 @@ export function TokenIngestionQueuePage() {
                   <TableHead>Chain</TableHead>
                   <TableHead>Address</TableHead>
                   <TableHead>Message</TableHead>
-                  <TableHead>Updated</TableHead>
-                  <TableHead>Created</TableHead>
+                  <TableHead>Will do</TableHead>
                   <TableHead className="text-right">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {queue.map((entry) => {
+                {queue.map((entry, index) => {
                   const key = getQueueEntryKey(entry)
                   const chain = chainsByName.get(entry.chain)
+                  const predicted = predictedOutcomes[index]
 
                   return (
                     <TableRow key={key}>
@@ -190,8 +192,13 @@ export function TokenIngestionQueuePage() {
                       <TableCell className="max-w-[520px] whitespace-normal break-words text-muted-foreground">
                         {entry.message ?? '-'}
                       </TableCell>
-                      <TableCell>{formatTimestamp(entry.updatedAt)}</TableCell>
-                      <TableCell>{formatTimestamp(entry.createdAt)}</TableCell>
+                      <TableCell className="max-w-[420px] whitespace-normal break-words">
+                        {predicted ? (
+                          <PredictedOutcome outcome={predicted} />
+                        ) : (
+                          '-'
+                        )}
+                      </TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-2">
                           <Button
@@ -277,6 +284,55 @@ function formatQueueRange(page: number, totalCount: number) {
   return `Showing ${start}-${end} of ${totalCount} entries`
 }
 
-function formatTimestamp(timestamp: number) {
-  return new Date(timestamp * 1000).toISOString().replace('T', ' ').slice(0, 16)
+function PredictedOutcome({ outcome }: { outcome: IngestionOutcome }) {
+  switch (outcome.kind) {
+    case 'skip':
+      return (
+        <span>
+          <Badge variant="outline">Skip</Badge>
+          <span className="ml-2 text-muted-foreground text-xs">
+            {outcome.reason}
+          </span>
+        </span>
+      )
+    case 'conflict':
+      return (
+        <span>
+          <Badge variant="outline">Conflict</Badge>
+          <span className="ml-2 text-muted-foreground text-xs">
+            {outcome.message}
+          </span>
+        </span>
+      )
+    case 'error':
+      return (
+        <span>
+          <Badge variant="destructive">Error</Badge>
+          <span className="ml-2 text-muted-foreground text-xs">
+            {outcome.message}
+          </span>
+        </span>
+      )
+    case 'noop':
+      return <Badge variant="secondary">No change</Badge>
+    case 'write':
+      return (
+        <Badge>
+          {outcome.deployedToken.type === 'insert' ? 'Add token' : 'Update'}
+        </Badge>
+      )
+    case 'pending':
+      return (
+        <span>
+          <Badge>
+            {outcome.operation === 'insert' ? 'Add token' : 'Update'}
+          </Badge>
+          <span className="ml-2 text-muted-foreground text-xs">
+            {outcome.abstract.kind === 'existing'
+              ? `abstract ${outcome.abstract.id}`
+              : `abstract from coingecko ${outcome.abstract.coingeckoId} (new)`}
+          </span>
+        </span>
+      )
+  }
 }

@@ -63,30 +63,50 @@ discovered addresses as `staged` instead of `pending`
 and approves it from the queue UI. Long-term, with this toggle off, the
 loop is fully autonomous and the UI focuses on `conflict` / `error`.
 
-## Processing one entry: plan + apply
+## Processing one entry: plan + fetch + apply
 
-The processor splits each tick into two phases:
+The processor splits each tick into three phases:
 
-1. **`plan(entry)`** — read-only. Looks at TokenDB, walks the interop
-   transfer index, optionally calls CoinGecko and the RPC/explorer fact
-   fetcher. Produces an **`IngestionTrace`**: an ordered list of decision
-   `steps` plus a single `outcome`.
-2. **`apply(entry, trace)`** — writes only. Switches on the outcome and
-   does the corresponding TokenDB and queue mutations.
+1. **`plan(entry)`** — fast and local. Looks at TokenDB, walks the
+   in-memory interop transfer index, and consults the in-memory CoinGecko
+   coin map. **No external calls**: no RPC, no explorer, and no per-coin
+   CoinGecko endpoints (`getCoinDataById` / `getCoinMarketChartRange`).
+   Produces an **`IngestionTrace`**: an ordered list of decision `steps`
+   plus a single `outcome`. When the outcome can't be made terminal
+   without an external call — either we'd insert a new token (needs RPC
+   facts) or we'd materialize a new abstract from a CoinGecko coin we
+   haven't seen before (needs CoinGecko per-coin endpoints) — the
+   outcome is `pending`, which carries the operation (`insert` or
+   `update`) and the abstract intent (`existing` id, or `new-coingecko`
+   with just the coin id and symbol).
+2. **`fetch(trace)`** — the only place external calls happen.
+   Pass-through for every outcome except `pending`. For `pending`,
+   `fetch` materializes the new abstract record (when needed) via
+   CoinGecko, then — for `operation: insert` — calls the RPC/explorer
+   fact fetcher. It either upgrades the outcome to `write` (with a full
+   deployed-token record) or downgrades it to `error` when required facts
+   are missing.
+3. **`apply(entry, trace)`** — writes only. Switches on the final
+   outcome and does the corresponding TokenDB and queue mutations. Throws
+   if it ever sees `pending` (a sign `fetch` was skipped).
 
-`process(entry)` is the 3-line composition: `plan` then `apply`.
+`process(entry)` is the 4-line composition: `plan` then `fetch` then
+`apply`.
 
 The split is the entire shape of the implementation. It exists because:
 
-- **Dry-run for free.** Calling `plan()` alone produces a full trace
-  without touching the database. The queue page exposes a "Preview" button
-  on every row that does exactly this.
+- **Fast queue-wide prediction.** Because `plan` is RPC-free, the queue
+  page can run it for every row on the visible page (inline inside
+  `getPage`) to populate a "Will do" column without paying RPC cost.
+- **Dry-run for free.** Calling `plan()` + `fetch()` alone produces a
+  full trace without touching the database. The queue page exposes a
+  "Preview" button on every row that does exactly this.
 - **The trace is its own audit log.** Steps describe *why* a particular
   abstract token was chosen, which transfer evidence was used, whether
   CoinGecko hit, which facts were fetched, and what warnings arose. The
   outcome describes *what* would change. No separate logger threading
   through RPC/CoinGecko/explorer calls is needed.
-- **No `dryRun: boolean` flag.** The phase boundary is the toggle.
+- **No `dryRun: boolean` flag.** The phase boundaries are the toggles.
 
 The trace and outcome shapes are defined in
 [`packages/token-backend/src/ingestion/IngestionTrace.ts`](../../../../packages/token-backend/src/ingestion/IngestionTrace.ts).
@@ -114,13 +134,18 @@ strategies, tried in order:
    coin's data.
 
 If none of the three resolves anything, the outcome is `skip` and the
-entry is removed. RPC/explorer fact fetching only runs *after* an abstract
-has been resolved — there's no point fetching `decimals` for an address
-we're going to drop.
+entry is removed. RPC/explorer fact fetching only runs in the `fetch`
+phase, and only for `pending-insert` outcomes — there's no point
+fetching `decimals` for an address we're going to drop or for one whose
+existing record only needs its abstract pointer updated.
 
 ## Outcomes
 
-The five outcome kinds are:
+`plan` produces one of: `skip`, `conflict`, `noop`, `write` (update
+with an already-existing abstract), or `pending`. `fetch` either passes
+the outcome through or converts `pending` into `write` (insert or
+update, possibly with a newly built CoinGecko abstract) or `error`.
+`apply` only ever sees the five terminal outcome kinds:
 
 - **`skip`** — no abstract resolvable, or address could not be normalized.
   `apply` removes the queue entry. No write.
@@ -160,12 +185,15 @@ The pre-step uses a separate insertion-order cursor
 (`interop-transfers:lastSerialId`, stored in `TokenDbSetting`) to find
 transfers added since the previous tick.
 
-## CoinGecko: queried at most once per address
+## CoinGecko: never called from `plan`
 
-CoinGecko calls cost money. The processor builds a chain-keyed map of all
-coin platforms once (per processor instance) and looks up addresses
-in-memory after that. For new abstract tokens, `getCoinDataById` and the
-listing-timestamp lookup are called once at creation.
+CoinGecko calls cost money and are rate-limited. The processor builds a
+chain-keyed map of all coin platforms once (per processor instance) and
+looks up addresses in-memory after that. For new abstract tokens,
+`getCoinDataById` and the listing-timestamp lookup are deferred to the
+`fetch` phase — they are never called from `plan`, so populating the
+queue page's "Will do" column for hundreds of rows costs zero per-coin
+CoinGecko calls.
 
 The processor instance is hoisted to server startup so it lives for the
 whole server lifetime — that is, the coin map cache spans the whole
@@ -195,8 +223,11 @@ EVM addresses. Normalization:
 - Drain: reads from both `db` (interop transfers) and `tokenDb` (TokenDB
   state, queue, settings). Writes go to `tokenDb` (and back to `db` for
   the unprocessed-marker).
-- Preview: same as plan(), called from the `tokenIngestionQueue.preview`
+- Preview: `plan` + `fetch`, called from the `tokenIngestionQueue.preview`
   tRPC route. Builds the transfer index on demand.
+- Queue page predicted outcomes: `plan` only, called once per row from
+  inside the `tokenIngestionQueue.getPage` tRPC route. Reuses a single
+  transfer index built for the request.
 
 ## What this replaces
 

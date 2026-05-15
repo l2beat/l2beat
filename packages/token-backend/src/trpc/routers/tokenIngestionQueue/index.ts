@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { TRPCError } from '@trpc/server'
+import type { IngestionOutcome } from '../../../ingestion/IngestionTrace'
 import { buildInteropTransferIndex } from '../../../ingestion/InteropTransferIndex'
 import { readOnlyProcedure, readWriteProcedure } from '../../procedures'
 import { router } from '../../trpc'
@@ -19,15 +20,30 @@ export const tokenIngestionQueueRouter = router({
   getAll: readOnlyProcedure.query(({ ctx }) => {
     return ctx.tokenDb.tokenIngestionQueue.getAll()
   }),
-  getPage: readOnlyProcedure.input(QueuePageInput).query(({ ctx, input }) => {
-    const page = Math.max(1, Math.floor(input.page))
-    const pageSize = Math.min(500, Math.max(1, Math.floor(input.pageSize)))
+  getPage: readOnlyProcedure
+    .input(QueuePageInput)
+    .query(async ({ ctx, input }) => {
+      const page = Math.max(1, Math.floor(input.page))
+      const pageSize = Math.min(500, Math.max(1, Math.floor(input.pageSize)))
 
-    return ctx.tokenDb.tokenIngestionQueue.getPage({
-      offset: (page - 1) * pageSize,
-      limit: pageSize,
-    })
-  }),
+      const result = await ctx.tokenDb.tokenIngestionQueue.getPage({
+        offset: (page - 1) * pageSize,
+        limit: pageSize,
+      })
+
+      const transfers = await ctx.db.interopTransfer.getAll()
+      const transferIndex = buildInteropTransferIndex(transfers)
+      const predictedOutcomes: IngestionOutcome[] = []
+      for (const entry of result.entries) {
+        const trace = await ctx.tokenIngestionProcessor.plan(
+          entry,
+          transferIndex,
+        )
+        predictedOutcomes.push(trace.outcome)
+      }
+
+      return { ...result, predictedOutcomes }
+    }),
   approve: readWriteProcedure
     .input(QueueEntryAddress)
     .mutation(async ({ ctx, input }) => {
@@ -54,6 +70,10 @@ export const tokenIngestionQueueRouter = router({
         createdAt: UnixTime.now(),
         updatedAt: UnixTime.now(),
       }
-      return ctx.tokenIngestionProcessor.plan(entry, transferIndex)
+      const planned = await ctx.tokenIngestionProcessor.plan(
+        entry,
+        transferIndex,
+      )
+      return ctx.tokenIngestionProcessor.fetch(planned)
     }),
 })

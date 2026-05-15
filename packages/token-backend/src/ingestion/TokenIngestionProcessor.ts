@@ -57,8 +57,12 @@ type AbstractTokenResolution =
   | {
       type: 'resolved'
       abstractTokenId: string
-      newAbstractToken: AbstractTokenRecord | undefined
       symbolFallback: string | undefined
+    }
+  | {
+      type: 'pending-new-coingecko'
+      coingeckoId: string
+      coinSymbol: string
     }
   | { type: 'missing' }
   | { type: 'conflict'; message: string }
@@ -81,7 +85,8 @@ export class TokenIngestionProcessor {
     entry: TokenIngestionQueueRecord,
     transferIndex: InteropTransferIndex,
   ): Promise<IngestionTrace> {
-    const trace = await this.plan(entry, transferIndex)
+    const planned = await this.plan(entry, transferIndex)
+    const trace = await this.fetch(planned)
     await this.apply(entry, trace)
     return trace
   }
@@ -138,13 +143,79 @@ export class TokenIngestionProcessor {
     return {
       address,
       steps,
-      outcome: await this.buildWriteOutcome(
-        address,
-        existing,
-        resolution,
-        transfers,
+      outcome: this.buildPlanOutcome(existing, resolution, transfers, address),
+    }
+  }
+
+  async fetch(trace: IngestionTrace): Promise<IngestionTrace> {
+    if (trace.outcome.kind !== 'pending') {
+      return trace
+    }
+
+    const steps = [...trace.steps]
+    const pending = trace.outcome
+
+    let abstractTokenId: string
+    let newAbstractToken: AbstractTokenRecord | undefined
+    if (pending.abstract.kind === 'existing') {
+      abstractTokenId = pending.abstract.id
+      newAbstractToken = undefined
+    } else {
+      newAbstractToken = await this.buildAbstractToken(
+        pending.abstract.coingeckoId,
+      )
+      abstractTokenId = newAbstractToken.id
+      steps.push({
+        kind: 'fetched-coingecko-abstract',
+        record: newAbstractToken,
+      })
+    }
+
+    if (pending.operation === 'update') {
+      if (!pending.existing) {
+        throw new Error('pending update outcome has no existing deployed token')
+      }
+      return {
+        ...trace,
         steps,
-      ),
+        outcome: {
+          kind: 'write',
+          newAbstractToken,
+          deployedToken: {
+            type: 'update',
+            pk: { chain: trace.address.chain, address: trace.address.address },
+            existing: pending.existing,
+            update: { abstractTokenId },
+          },
+          neighborsToEnqueue: pending.neighborsToEnqueue,
+        },
+      }
+    }
+
+    const built = await this.buildDeployedToken(
+      trace.address,
+      abstractTokenId,
+      pending.symbolFallback,
+      steps,
+    )
+
+    if (built.type === 'error') {
+      return {
+        ...trace,
+        steps,
+        outcome: { kind: 'error', message: built.message },
+      }
+    }
+
+    return {
+      ...trace,
+      steps,
+      outcome: {
+        kind: 'write',
+        newAbstractToken,
+        deployedToken: { type: 'insert', record: built.record },
+        neighborsToEnqueue: pending.neighborsToEnqueue,
+      },
     }
   }
 
@@ -171,6 +242,10 @@ export class TokenIngestionProcessor {
         ])
         await queue.remove(entry)
         return
+      case 'pending':
+        throw new Error(
+          'apply() called with a pending outcome; call fetch() first',
+        )
       case 'write':
         await this.deps.tokenDb.transaction(async () => {
           if (outcome.newAbstractToken) {
@@ -238,7 +313,6 @@ export class TokenIngestionProcessor {
       return {
         type: 'resolved',
         abstractTokenId: fromTransfers.abstractTokenId,
-        newAbstractToken: undefined,
         symbolFallback: undefined,
       }
     }
@@ -251,7 +325,6 @@ export class TokenIngestionProcessor {
       return {
         type: 'resolved',
         abstractTokenId: existing.abstractTokenId,
-        newAbstractToken: undefined,
         symbolFallback: undefined,
       }
     }
@@ -334,70 +407,78 @@ export class TokenIngestionProcessor {
       return {
         type: 'resolved',
         abstractTokenId: abstractToken.id,
-        newAbstractToken: undefined,
         symbolFallback: coin.symbol.toUpperCase(),
       }
     }
 
-    const newAbstractToken = await this.buildAbstractToken(coin.id)
     steps.push({
       kind: 'resolved-from-coingecko-new-abstract',
-      record: newAbstractToken,
+      coingeckoId: coin.id,
+      symbol: coin.symbol,
     })
     return {
-      type: 'resolved',
-      abstractTokenId: newAbstractToken.id,
-      newAbstractToken,
-      symbolFallback: newAbstractToken.symbol,
+      type: 'pending-new-coingecko',
+      coingeckoId: coin.id,
+      coinSymbol: coin.symbol,
     }
   }
 
-  private async buildWriteOutcome(
-    address: TokenAddress,
+  private buildPlanOutcome(
     existing: DeployedTokenRecord | undefined,
-    resolution: Extract<AbstractTokenResolution, { type: 'resolved' }>,
+    resolution: Extract<
+      AbstractTokenResolution,
+      { type: 'resolved' | 'pending-new-coingecko' }
+    >,
     transfers: InteropTransferMatch[],
-    steps: IngestionStep[],
-  ): Promise<IngestionOutcome> {
+    address: TokenAddress,
+  ): IngestionOutcome {
     const neighborsToEnqueue = collectTransferNeighbors(address, transfers)
 
-    if (existing) {
-      if (existing.abstractTokenId === resolution.abstractTokenId) {
-        return { kind: 'noop', deployedToken: existing }
+    if (resolution.type === 'resolved') {
+      if (existing) {
+        if (existing.abstractTokenId === resolution.abstractTokenId) {
+          return { kind: 'noop', deployedToken: existing }
+        }
+        return {
+          kind: 'write',
+          newAbstractToken: undefined,
+          deployedToken: {
+            type: 'update',
+            pk: { chain: address.chain, address: address.address },
+            existing,
+            update: { abstractTokenId: resolution.abstractTokenId },
+          },
+          neighborsToEnqueue,
+        }
       }
       return {
-        kind: 'write',
-        newAbstractToken: resolution.newAbstractToken,
-        deployedToken: {
-          type: 'update',
-          pk: { chain: address.chain, address: address.address },
-          existing,
-          update: { abstractTokenId: resolution.abstractTokenId },
-        },
+        kind: 'pending',
+        operation: 'insert',
+        existing: undefined,
+        abstract: { kind: 'existing', id: resolution.abstractTokenId },
+        symbolFallback: resolution.symbolFallback,
         neighborsToEnqueue,
       }
     }
 
-    const newDeployedToken = await this.buildDeployedToken(
-      address,
-      resolution,
-      steps,
-    )
-    if (newDeployedToken.type === 'error') {
-      return { kind: 'error', message: newDeployedToken.message }
-    }
-
     return {
-      kind: 'write',
-      newAbstractToken: resolution.newAbstractToken,
-      deployedToken: { type: 'insert', record: newDeployedToken.record },
+      kind: 'pending',
+      operation: existing ? 'update' : 'insert',
+      existing,
+      abstract: {
+        kind: 'new-coingecko',
+        coingeckoId: resolution.coingeckoId,
+        symbol: resolution.coinSymbol,
+      },
+      symbolFallback: resolution.coinSymbol.toUpperCase(),
       neighborsToEnqueue,
     }
   }
 
   private async buildDeployedToken(
     address: TokenAddress,
-    resolution: Extract<AbstractTokenResolution, { type: 'resolved' }>,
+    abstractTokenId: string,
+    symbolFallback: string | undefined,
     steps: IngestionStep[],
   ): Promise<NewDeployedTokenResult> {
     if (!address.address.startsWith('0x')) {
@@ -424,7 +505,7 @@ export class TokenIngestionProcessor {
       }
     }
 
-    const symbol = facts.symbol ?? resolution.symbolFallback
+    const symbol = facts.symbol ?? symbolFallback
     const missingFields = [
       symbol === undefined ? 'symbol' : undefined,
       facts.decimals === undefined ? 'decimals' : undefined,
@@ -457,7 +538,7 @@ export class TokenIngestionProcessor {
       record: {
         chain: address.chain,
         address: address.address,
-        abstractTokenId: resolution.abstractTokenId,
+        abstractTokenId,
         symbol,
         decimals: facts.decimals,
         deploymentTimestamp: facts.deploymentTimestamp,

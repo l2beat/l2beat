@@ -1,4 +1,5 @@
-import type { TokenDatabase } from '@l2beat/database'
+import type { Database, TokenDatabase } from '@l2beat/database'
+import type { InteropTransferRepository } from '@l2beat/database/dist/repositories/InteropTransferRepository'
 import type {
   TokenIngestionQueueRecord,
   TokenIngestionQueueRepository,
@@ -6,6 +7,7 @@ import type {
 import { UnixTime } from '@l2beat/shared-pure'
 import { TRPCError } from '@trpc/server'
 import { expect, mockFn, mockObject } from 'earl'
+import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
 import { createCallerFactory } from '../../trpc'
 import { tokenIngestionQueueRouter } from './index'
 
@@ -34,27 +36,43 @@ describe('tokenIngestionQueueRouter', () => {
   })
 
   describe('getPage', () => {
-    it('returns one page of queue entries', async () => {
-      const page = {
-        entries: [
-          queueEntry({ chain: 'ethereum', address: '0x111', state: 'staged' }),
-        ],
-        totalCount: 12,
-      }
+    it('returns one page of queue entries with predicted outcomes', async () => {
+      const entry = queueEntry({
+        chain: 'ethereum',
+        address: '0x111',
+        state: 'staged',
+      })
+      const page = { entries: [entry], totalCount: 12 }
       const getPage = mockFn().resolvesTo(page)
+      const plan = mockFn().resolvesTo({
+        address: { chain: entry.chain, address: entry.address },
+        steps: [],
+        outcome: { kind: 'noop', deployedToken: {} },
+      })
 
-      const caller = createRouter(
-        mockObject<TokenDatabase>({
+      const caller = createRouter({
+        tokenDb: mockObject<TokenDatabase>({
           tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
             getPage,
           }),
         }),
-      )
+        db: mockObject<Database>({
+          interopTransfer: mockObject<InteropTransferRepository>({
+            getAll: mockFn().resolvesTo([]),
+          }),
+        }),
+        processor: mockObject<TokenIngestionProcessor>({ plan }),
+      })
 
       const result = await caller.getPage({ page: 2, pageSize: 5 })
 
-      expect(result).toEqual(page)
+      expect(result.entries).toEqual([entry])
+      expect(result.totalCount).toEqual(12)
+      expect(result.predictedOutcomes).toEqual([
+        { kind: 'noop', deployedToken: {} as never },
+      ])
       expect(getPage).toHaveBeenCalledWith({ offset: 5, limit: 5 })
+      expect(plan).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -92,11 +110,24 @@ describe('tokenIngestionQueueRouter', () => {
   })
 })
 
-function createRouter(tokenDb: TokenDatabase) {
+function createRouter(
+  deps:
+    | TokenDatabase
+    | {
+        tokenDb: TokenDatabase
+        db?: Database
+        processor?: TokenIngestionProcessor
+      },
+) {
+  const config =
+    'tokenDb' in deps
+      ? deps
+      : { tokenDb: deps, db: undefined, processor: undefined }
   return createCallerFactory(tokenIngestionQueueRouter)({
-    db: {} as never,
-    tokenDb,
-    tokenIngestionProcessor: {} as never,
+    db: (config.db ?? ({} as never)) as Database,
+    tokenDb: config.tokenDb,
+    tokenIngestionProcessor: (config.processor ??
+      ({} as never)) as TokenIngestionProcessor,
     headers: new Headers(),
     session: {
       email: 'dev@l2beat.com',

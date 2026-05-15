@@ -156,7 +156,14 @@ function StepLine({ step }: { step: IngestionStep }) {
     case 'resolved-from-coingecko-new-abstract':
       return (
         <span>
-          Will create new abstract token{' '}
+          Will create new abstract token for CoinGecko coin{' '}
+          <code className="font-mono">{step.coingeckoId}</code> ({step.symbol}).
+        </span>
+      )
+    case 'fetched-coingecko-abstract':
+      return (
+        <span>
+          Built abstract token{' '}
           <code className="font-mono">{step.record.id}</code> (
           {step.record.symbol}) from CoinGecko coin{' '}
           <code className="font-mono">{step.record.coingeckoId}</code>.
@@ -217,6 +224,32 @@ function OutcomeView({ outcome }: { outcome: IngestionOutcome }) {
           <span>
             Existing deployed token already matches the resolved abstract token.
             The queue entry would be removed.
+          </span>
+        </div>
+      )
+    case 'pending':
+      return (
+        <div className="flex flex-col gap-2 text-sm">
+          <Badge>
+            {outcome.operation === 'insert' ? 'Add token' : 'Update'} (pending)
+          </Badge>
+          <span>
+            Would{' '}
+            {outcome.operation === 'insert'
+              ? 'insert a new deployed token'
+              : 'update the existing deployed token'}{' '}
+            with abstract{' '}
+            {outcome.abstract.kind === 'existing' ? (
+              <code className="font-mono">{outcome.abstract.id}</code>
+            ) : (
+              <>
+                from CoinGecko coin{' '}
+                <code className="font-mono">
+                  {outcome.abstract.coingeckoId}
+                </code>
+              </>
+            )}
+            .
           </span>
         </div>
       )
