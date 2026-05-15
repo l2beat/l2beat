@@ -11,6 +11,7 @@ import { CoveragePiesPage } from './pages/interop/coverage-pies/CoveragePiesPage
 import { EventDetailsPage } from './pages/interop/events/EventDetailsPage'
 import { EventsPage } from './pages/interop/events/EventsPage'
 import { FinancialActionsPage } from './pages/interop/financials/FinancialActionsPage'
+import { HighlightsPage } from './pages/interop/highlights/HighlightsPage'
 import { KnownAppsPage } from './pages/interop/known-apps/KnownAppsPage'
 import { MemoryPage } from './pages/interop/memory/MemoryPage'
 import { MessageDetailsPage } from './pages/interop/messages/MessageDetailsPage'
@@ -91,6 +92,10 @@ export function App() {
               <Route
                 path="/interop/insights/coverage-pies"
                 element={<CoveragePiesPage />}
+              />
+              <Route
+                path="/interop/insights/highlights"
+                element={<HighlightsPage />}
               />
               <Route path="/interop/insights/memory" element={<MemoryPage />} />
               <Route

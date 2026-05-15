@@ -13,6 +13,7 @@ export type { ActivityRecord } from './repositories/ActivityRepository'
 export type { AggregatedInteropTokenRecord } from './repositories/AggregatedInteropTokenRepository'
 export type { AggregatedInteropTokensPairRecord } from './repositories/AggregatedInteropTokensPairRepository'
 export type {
+  AggregatedInteropTopPathByVolumeRecord,
   AggregatedInteropTransferRecord,
   AggregatedInteropTransferSeriesRecord,
 } from './repositories/AggregatedInteropTransferRepository'

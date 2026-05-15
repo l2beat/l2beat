@@ -62,6 +62,15 @@ export interface AggregatedInteropTransferGroupRecord {
   dstChain: string
 }
 
+export interface AggregatedInteropTopPathByVolumeRecord {
+  timestamp: UnixTime
+  srcChain: string
+  dstChain: string
+  volumeUsd: number
+  transferCount: number
+  protocolCount: number
+}
+
 export function toRecord(
   row: Selectable<AggregatedInteropTransfer>,
 ): AggregatedInteropTransferRecord {
@@ -291,6 +300,64 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     return result?.max_timestamp
       ? UnixTime.fromDate(result.max_timestamp)
       : undefined
+  }
+
+  async getByTimestamp(
+    timestamp: UnixTime,
+  ): Promise<AggregatedInteropTransferRecord[]> {
+    const rows = await this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .selectAll()
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getTopPathByVolumeAtTimestamp(
+    timestamp: UnixTime,
+  ): Promise<AggregatedInteropTopPathByVolumeRecord | undefined> {
+    const volumeUsd = sql<number>`
+      sum(
+        case
+          when "srcValueUsd" is not null and "dstValueUsd" is not null
+            then greatest("srcValueUsd", "dstValueUsd")
+          else coalesce("srcValueUsd", "dstValueUsd", 0)
+        end
+      )
+    `
+
+    const row = await this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .select((eb) => [
+        'srcChain',
+        'dstChain',
+        eb.fn.sum('transferCount').as('transfer_count'),
+        sql<number>`count(distinct "id")`.as('protocol_count'),
+        volumeUsd.as('volume_usd'),
+      ])
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .whereRef('srcChain', '!=', 'dstChain')
+      .groupBy(['srcChain', 'dstChain'])
+      .orderBy(sql`volume_usd desc`)
+      .orderBy(sql`transfer_count desc`)
+      .orderBy('srcChain', 'asc')
+      .orderBy('dstChain', 'asc')
+      .limit(1)
+      .executeTakeFirst()
+
+    if (!row) {
+      return undefined
+    }
+
+    return {
+      timestamp,
+      srcChain: row.srcChain,
+      dstChain: row.dstChain,
+      volumeUsd: Number(row.volume_usd ?? 0),
+      transferCount: Number(row.transfer_count ?? 0),
+      protocolCount: Number(row.protocol_count ?? 0),
+    }
   }
 
   async getRecentStatsForGroup(

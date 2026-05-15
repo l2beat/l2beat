@@ -936,6 +936,69 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
   )
 
   describe(
+    AggregatedInteropTransferRepository.prototype.getByTimestamp.name,
+    () => {
+      it('returns records with matching timestamp', async () => {
+        const record1 = record({
+          id: 'id1',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 5,
+          identifiedCount: 1000,
+        })
+        const record2 = record({
+          id: 'id2',
+          timestamp: UnixTime(200),
+          srcChain: 'arbitrum',
+          dstChain: 'ethereum',
+          transferCount: 3,
+          identifiedCount: 2000,
+        })
+        const record3 = record({
+          id: 'id3',
+          timestamp: UnixTime(200),
+          srcChain: 'polygon',
+          dstChain: 'ethereum',
+          transferCount: 7,
+          identifiedCount: 3000,
+        })
+        const record4 = record({
+          id: 'id4',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'polygon',
+          transferCount: 2,
+          identifiedCount: 4000,
+        })
+
+        await repository.insertMany([record1, record2, record3, record4])
+
+        const result = await repository.getByTimestamp(UnixTime(200))
+
+        expect(result).toEqualUnsorted([record2, record3])
+      })
+
+      it('returns empty array when no records match timestamp', async () => {
+        await repository.insertMany([
+          record({
+            id: 'id1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            transferCount: 5,
+            identifiedCount: 1000,
+          }),
+        ])
+
+        const result = await repository.getByTimestamp(UnixTime(200))
+
+        expect(result).toEqual([])
+      })
+    },
+  )
+
+  describe(
     AggregatedInteropTransferRepository.prototype.getByChainsAndTimestamp.name,
     () => {
       it('returns records matching timestamp, srcChains and dstChains', async () => {
@@ -1214,6 +1277,118 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         )
 
         expect(result).toEqualUnsorted([crossChain, sameChain])
+      })
+    },
+  )
+
+  describe(
+    AggregatedInteropTransferRepository.prototype.getTopPathByVolumeAtTimestamp
+      .name,
+    () => {
+      it('returns the highest-volume cross-chain path with protocol distinct count', async () => {
+        const timestamp = UnixTime(500)
+        await repository.insertMany([
+          record({
+            id: 'across',
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            transferCount: 100,
+            srcValueUsd: 900_000,
+            dstValueUsd: 1_000_000,
+          }),
+          record({
+            id: 'stargate',
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            transferCount: 23,
+            srcValueUsd: 200_000,
+          }),
+          record({
+            id: 'relay',
+            timestamp,
+            srcChain: 'base',
+            dstChain: 'optimism',
+            transferCount: 400,
+            srcValueUsd: 500_000,
+            dstValueUsd: 500_000,
+          }),
+          record({
+            id: 'same-chain',
+            timestamp,
+            srcChain: 'base',
+            dstChain: 'base',
+            transferCount: 1,
+            srcValueUsd: 9_000_000,
+            dstValueUsd: 9_000_000,
+          }),
+        ])
+
+        const result = await repository.getTopPathByVolumeAtTimestamp(timestamp)
+
+        expect(result).toEqual({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          volumeUsd: 1_200_000,
+          transferCount: 123,
+          protocolCount: 2,
+        })
+      })
+
+      it('tie-breaks on transfer count then chain ids', async () => {
+        const timestamp = UnixTime(501)
+        await repository.insertMany([
+          record({
+            id: 'p1',
+            timestamp,
+            srcChain: 'b',
+            dstChain: 'c',
+            transferCount: 200,
+            srcValueUsd: 100,
+            dstValueUsd: 100,
+          }),
+          record({
+            id: 'p2',
+            timestamp,
+            srcChain: 'a',
+            dstChain: 'c',
+            transferCount: 10,
+            srcValueUsd: 100,
+            dstValueUsd: 100,
+          }),
+        ])
+
+        const result = await repository.getTopPathByVolumeAtTimestamp(timestamp)
+
+        expect(result).toEqual({
+          timestamp,
+          srcChain: 'b',
+          dstChain: 'c',
+          volumeUsd: 100,
+          transferCount: 200,
+          protocolCount: 1,
+        })
+      })
+
+      it('returns undefined when only same-chain aggregates exist', async () => {
+        const timestamp = UnixTime(502)
+        await repository.insertMany([
+          record({
+            id: 'x',
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'ethereum',
+            transferCount: 5,
+            srcValueUsd: 1_000_000,
+            dstValueUsd: 1_000_000,
+          }),
+        ])
+
+        const result = await repository.getTopPathByVolumeAtTimestamp(timestamp)
+
+        expect(result).toEqual(undefined)
       })
     },
   )

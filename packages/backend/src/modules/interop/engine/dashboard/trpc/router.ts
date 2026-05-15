@@ -10,6 +10,7 @@ import { createChainsRouter } from './routers/chains'
 import { createCoveragePiesRouter } from './routers/coveragePies'
 import { createEventsRouter } from './routers/events'
 import { createFinancialsRouter } from './routers/financials'
+import { createHighlightsRouter } from './routers/highlights'
 import { createKnownAppsRouter } from './routers/knownApps'
 import { createMessagesRouter } from './routers/messages'
 import { createMissingTokensRouter } from './routers/missingTokens'
@@ -34,6 +35,7 @@ export function createInteropTrpcRouter(deps: InteropTrpcRouterDeps) {
     coveragePies: createCoveragePiesRouter(),
     events: createEventsRouter(),
     financials: createFinancialsRouter(),
+    highlights: createHighlightsRouter(),
     messages: createMessagesRouter(),
     knownApps: createKnownAppsRouter(),
     missingTokens: createMissingTokensRouter(deps),
