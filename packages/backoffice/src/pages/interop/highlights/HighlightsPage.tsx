@@ -1,4 +1,5 @@
 import { RefreshCwIcon } from 'lucide-react'
+import type { ReactNode } from 'react'
 import { Button } from '~/components/core/Button'
 import {
   Card,
@@ -36,12 +37,12 @@ export function HighlightsPage() {
 
   return (
     <AppLayout>
-      <div className="flex flex-col gap-4">
-        <Card className="gap-4">
-          <CardHeader className="flex flex-row items-start justify-between gap-3">
+      <div className="flex flex-col gap-3">
+        <Card className="gap-3 py-4">
+          <CardHeader className="flex flex-col gap-3 px-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="space-y-1">
               <CardTitle>Highlights</CardTitle>
-              <CardDescription>
+              <CardDescription className="text-xs leading-4">
                 Focused interop metrics for the latest 24h aggregate window.
               </CardDescription>
             </div>
@@ -57,117 +58,210 @@ export function HighlightsPage() {
           </CardHeader>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Top path by volume</CardTitle>
-            <CardDescription>
-              Source to destination chain pair with the highest aggregate USD
-              volume over the latest 24h window.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {isLoading ? <LoadingState /> : null}
+        {isLoading ? (
+          <Card className="py-4">
+            <CardContent className="px-4">
+              <LoadingState />
+            </CardContent>
+          </Card>
+        ) : null}
 
-            {isError ? <ErrorState cause={error.message} /> : null}
-
-            {!isLoading && !isError && topPath === null ? (
-              <Empty className="border">
-                <EmptyHeader>
-                  <EmptyTitle>No aggregate snapshot</EmptyTitle>
-                  <EmptyDescription>
-                    Aggregated transfer history has not been generated yet.
-                  </EmptyDescription>
-                </EmptyHeader>
-              </Empty>
-            ) : null}
-
-            {!isLoading && !isError && topPath !== null ? (
-              <div className="grid gap-4 md:grid-cols-[1fr_auto]">
-                <div className="space-y-2">
-                  <div className="text-muted-foreground text-sm">
-                    {formatTransferTimestamp(topPath.windowStart)} UTC -{' '}
-                    {formatTransferTimestamp(topPath.windowEnd)} UTC
-                  </div>
-                  <div className="font-semibold text-2xl">
-                    {topPath.srcChain} {'->'} {topPath.dstChain}
-                  </div>
-                </div>
-                <dl className="grid gap-3 sm:grid-cols-3 md:min-w-[520px]">
-                  <Metric
-                    label="Volume"
-                    value={formatDollars(topPath.volumeUsd)}
-                  />
-                  <Metric
-                    label="Transfers"
-                    value={topPath.transferCount.toLocaleString()}
-                  />
-                  <Metric
-                    label="Protocols"
-                    value={topPath.protocolCount.toLocaleString()}
-                  />
-                </dl>
-              </div>
-            ) : null}
-          </CardContent>
-        </Card>
+        {isError ? (
+          <Card className="py-4">
+            <CardContent className="px-4">
+              <ErrorState cause={error.message} />
+            </CardContent>
+          </Card>
+        ) : null}
 
         {!isLoading && !isError ? (
-          <div className="grid gap-4 lg:grid-cols-3">
-            <VolumeIncreaseCard
-              title="Largest chain volume increase"
-              description="Source chain with the largest USD volume increase across all destination paths."
-              entityLabel="Chain"
-              entity={chainIncrease?.chain}
-              metric={chainIncrease}
-            />
-            <VolumeIncreaseCard
-              title="Largest token volume increase"
-              description="Token with the largest USD volume increase across all paths."
-              entityLabel="Token"
-              entity={tokenIncrease?.abstractTokenId}
-              metric={tokenIncrease}
-            />
-            <VolumeIncreaseCard
-              title="Largest protocol volume increase"
-              description="Protocol with the largest USD volume increase across all paths."
-              entityLabel="Protocol"
-              entity={protocolIncrease?.id}
-              metric={protocolIncrease}
-            />
+          <div className="grid gap-3 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+            <Card className="gap-3 py-4">
+              <CardHeader className="px-4">
+                <CardTitle>Top path by volume</CardTitle>
+                <CardDescription className="text-xs leading-4">
+                  Highest source to destination chain pair by aggregate USD
+                  volume.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="px-4">
+                {topPath === null ? (
+                  <Empty>
+                    <EmptyHeader>
+                      <EmptyTitle>No aggregate snapshot</EmptyTitle>
+                      <EmptyDescription>
+                        Aggregated transfer history has not been generated yet.
+                      </EmptyDescription>
+                    </EmptyHeader>
+                  </Empty>
+                ) : (
+                  <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.8fr)] md:items-center">
+                    <div className="min-w-0 space-y-2">
+                      <WindowRange
+                        start={topPath.windowStart}
+                        end={topPath.windowEnd}
+                      />
+                      <div className="truncate font-semibold text-2xl">
+                        {topPath.srcChain} {'->'} {topPath.dstChain}
+                      </div>
+                    </div>
+                    <dl className="grid grid-cols-3 gap-4">
+                      <Metric
+                        label="Volume"
+                        value={formatDollars(topPath.volumeUsd)}
+                      />
+                      <Metric
+                        label="Transfers"
+                        value={topPath.transferCount.toLocaleString()}
+                      />
+                      <Metric
+                        label="Protocols"
+                        value={topPath.protocolCount.toLocaleString()}
+                      />
+                    </dl>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            <Card className="gap-3 py-4">
+              <CardHeader className="px-4">
+                <CardTitle>Latest window</CardTitle>
+                <CardDescription className="text-xs leading-4">
+                  Largest inflow and activity deltas in the same 24h window.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="px-4">
+                <HighlightList>
+                  <HighlightRow
+                    label="Largest chain inflow"
+                    entityLabel="Chain"
+                    entity={topChainByInflow?.chain}
+                    primaryLabel="Inflow volume"
+                    primaryValue={
+                      topChainByInflow
+                        ? formatDollars(topChainByInflow.volumeUsd)
+                        : undefined
+                    }
+                    secondary={[
+                      {
+                        label: 'Transfers',
+                        value:
+                          topChainByInflow?.transferCount.toLocaleString() ??
+                          '',
+                      },
+                      {
+                        label: 'Protocols',
+                        value:
+                          topChainByInflow?.protocolCount.toLocaleString() ??
+                          '',
+                      },
+                    ]}
+                    emptyText="No inflows found"
+                  />
+                  <HighlightRow
+                    label="Largest UOPS increase"
+                    entityLabel="Chain"
+                    entity={uopsIncrease?.chain}
+                    primaryLabel="Increase"
+                    primaryValue={
+                      uopsIncrease
+                        ? `+${uopsIncrease.increase.toLocaleString()}`
+                        : undefined
+                    }
+                    secondary={
+                      uopsIncrease
+                        ? [
+                            {
+                              label: 'Current',
+                              value: uopsIncrease.currentCount.toLocaleString(),
+                            },
+                            {
+                              label: 'Previous',
+                              value:
+                                uopsIncrease.previousCount.toLocaleString(),
+                            },
+                          ]
+                        : []
+                    }
+                    emptyText="No positive UOPS delta"
+                  />
+                  <HighlightRow
+                    label="Largest TVS increase"
+                    entityLabel="Chain"
+                    entity={tvsIncrease?.chain}
+                    primaryLabel="Increase"
+                    primaryValue={
+                      tvsIncrease
+                        ? `+${formatDollars(tvsIncrease.increaseUsd)}`
+                        : undefined
+                    }
+                    secondary={volumeSecondary(tvsIncrease)}
+                    emptyText="No positive TVS delta"
+                  />
+                </HighlightList>
+              </CardContent>
+            </Card>
           </div>
         ) : null}
 
         {!isLoading && !isError ? (
-          <div className="grid gap-4 lg:grid-cols-3">
-            <ChainInflowCard metric={topChainByInflow} />
-            <CountIncreaseCard
-              title="Largest UOPS increase"
-              description="Chain with the largest UOPS increase compared with the previous day."
-              entityLabel="Chain"
-              entity={uopsIncrease?.chain}
-              metric={uopsIncrease}
-            />
-            <VolumeIncreaseCard
-              title="Largest TVS increase"
-              description="Chain with the largest TVS increase compared with the previous day."
-              entityLabel="Chain"
-              entity={tvsIncrease?.chain}
-              metric={tvsIncrease}
-            />
-          </div>
+          <Card className="gap-3 py-4">
+            <CardHeader className="px-4">
+              <CardTitle>Volume movers</CardTitle>
+              <CardDescription className="text-xs leading-4">
+                Largest positive USD volume deltas compared with the previous
+                day.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="px-4">
+              <HighlightList>
+                <HighlightRow
+                  label="Chain"
+                  entityLabel="Source chain"
+                  entity={chainIncrease?.chain}
+                  primaryLabel="Increase"
+                  primaryValue={
+                    chainIncrease
+                      ? `+${formatDollars(chainIncrease.increaseUsd)}`
+                      : undefined
+                  }
+                  secondary={volumeSecondary(chainIncrease)}
+                  emptyText="No positive chain volume delta"
+                />
+                <HighlightRow
+                  label="Token"
+                  entityLabel="Token"
+                  entity={tokenIncrease?.abstractTokenId}
+                  primaryLabel="Increase"
+                  primaryValue={
+                    tokenIncrease
+                      ? `+${formatDollars(tokenIncrease.increaseUsd)}`
+                      : undefined
+                  }
+                  secondary={volumeSecondary(tokenIncrease)}
+                  emptyText="No positive token volume delta"
+                />
+                <HighlightRow
+                  label="Protocol"
+                  entityLabel="Protocol"
+                  entity={protocolIncrease?.id}
+                  primaryLabel="Increase"
+                  primaryValue={
+                    protocolIncrease
+                      ? `+${formatDollars(protocolIncrease.increaseUsd)}`
+                      : undefined
+                  }
+                  secondary={volumeSecondary(protocolIncrease)}
+                  emptyText="No positive protocol volume delta"
+                />
+              </HighlightList>
+            </CardContent>
+          </Card>
         ) : null}
       </div>
     </AppLayout>
   )
-}
-
-interface ChainInflowMetric {
-  windowStart: number
-  windowEnd: number
-  chain: string
-  volumeUsd: number
-  transferCount: number
-  protocolCount: number
 }
 
 interface VolumeIncreaseMetric {
@@ -180,192 +274,86 @@ interface VolumeIncreaseMetric {
   increaseUsd: number
 }
 
-interface CountIncreaseMetric {
-  windowStart: number
-  windowEnd: number
-  previousWindowStart: number
-  previousWindowEnd: number
-  currentCount: number
-  previousCount: number
-  increase: number
-}
-
-function ChainInflowCard(props: { metric: ChainInflowMetric | null }) {
+function WindowRange(props: { start: number; end: number }) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Largest chain inflows</CardTitle>
-        <CardDescription>
-          Destination chain with the largest incoming USD volume.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        {props.metric === null ? (
-          <Empty className="border">
-            <EmptyHeader>
-              <EmptyTitle>No inflows found</EmptyTitle>
-              <EmptyDescription>
-                No cross-chain aggregate inflows were found for the latest
-                window.
-              </EmptyDescription>
-            </EmptyHeader>
-          </Empty>
-        ) : (
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <div className="text-muted-foreground text-sm">
-                {formatTransferTimestamp(props.metric.windowStart)} UTC -{' '}
-                {formatTransferTimestamp(props.metric.windowEnd)} UTC
-              </div>
-              <div>
-                <div className="text-muted-foreground text-sm">Chain</div>
-                <div className="font-semibold text-xl">
-                  {props.metric.chain}
-                </div>
-              </div>
-            </div>
-            <dl className="grid gap-3">
-              <Metric
-                label="Inflow volume"
-                value={formatDollars(props.metric.volumeUsd)}
-              />
-              <Metric
-                label="Transfers"
-                value={props.metric.transferCount.toLocaleString()}
-              />
-              <Metric
-                label="Protocols"
-                value={props.metric.protocolCount.toLocaleString()}
-              />
-            </dl>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+    <div className="text-muted-foreground text-xs">
+      {formatTransferTimestamp(props.start)} UTC to{' '}
+      {formatTransferTimestamp(props.end)} UTC
+    </div>
   )
 }
 
-function VolumeIncreaseCard(props: {
-  title: string
-  description: string
+function HighlightList(props: { children: ReactNode }) {
+  return <div className="divide-y">{props.children}</div>
+}
+
+function HighlightRow(props: {
+  label: string
   entityLabel: string
   entity: string | undefined
-  metric: VolumeIncreaseMetric | null
+  primaryLabel: string
+  primaryValue: string | undefined
+  secondary?: { label: string; value: string }[]
+  emptyText: string
 }) {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{props.title}</CardTitle>
-        <CardDescription>{props.description}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        {props.metric === null || props.entity === undefined ? (
-          <Empty className="border">
-            <EmptyHeader>
-              <EmptyTitle>No increase found</EmptyTitle>
-              <EmptyDescription>
-                No positive volume delta was found for the latest comparison.
-              </EmptyDescription>
-            </EmptyHeader>
-          </Empty>
-        ) : (
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <div className="text-muted-foreground text-sm">
-                {formatTransferTimestamp(props.metric.windowStart)} UTC -{' '}
-                {formatTransferTimestamp(props.metric.windowEnd)} UTC
-              </div>
-              <div>
-                <div className="text-muted-foreground text-sm">
-                  {props.entityLabel}
-                </div>
-                <div className="font-semibold text-xl">{props.entity}</div>
-              </div>
-            </div>
-            <dl className="grid gap-3">
-              <Metric
-                label="Increase"
-                value={`+${formatDollars(props.metric.increaseUsd)}`}
-              />
-              <Metric
-                label="Current volume"
-                value={formatDollars(props.metric.currentVolumeUsd)}
-              />
-              <Metric
-                label="Previous volume"
-                value={formatDollars(props.metric.previousVolumeUsd)}
-              />
-            </dl>
+  if (props.entity === undefined || props.primaryValue === undefined) {
+    return (
+      <div className="grid gap-3 py-3 md:grid-cols-[minmax(0,0.8fr)_minmax(0,0.8fr)_minmax(0,1fr)] md:items-center">
+        <div className="space-y-0.5">
+          <div className="font-medium text-sm">{props.label}</div>
+          <div className="text-muted-foreground text-xs">
+            {props.entityLabel}
           </div>
-        )}
-      </CardContent>
-    </Card>
+        </div>
+        <div className="text-muted-foreground text-sm md:col-span-2">
+          {props.emptyText}
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="grid gap-3 py-3 md:grid-cols-[minmax(0,0.8fr)_minmax(0,0.8fr)_minmax(0,1fr)] md:items-center">
+      <div className="space-y-0.5">
+        <div className="font-medium text-sm">{props.label}</div>
+        <div className="text-muted-foreground text-xs">{props.entityLabel}</div>
+      </div>
+
+      <div className="min-w-0 font-semibold text-sm">
+        <span className="block truncate">{props.entity}</span>
+      </div>
+      <dl className="grid grid-cols-3 gap-3">
+        <Metric label={props.primaryLabel} value={props.primaryValue} />
+        {(props.secondary ?? []).slice(0, 2).map((item) => (
+          <Metric key={item.label} label={item.label} value={item.value} />
+        ))}
+      </dl>
+    </div>
   )
 }
 
-function CountIncreaseCard(props: {
-  title: string
-  description: string
-  entityLabel: string
-  entity: string | undefined
-  metric: CountIncreaseMetric | null
-}) {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{props.title}</CardTitle>
-        <CardDescription>{props.description}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        {props.metric === null || props.entity === undefined ? (
-          <Empty className="border">
-            <EmptyHeader>
-              <EmptyTitle>No increase found</EmptyTitle>
-              <EmptyDescription>
-                No positive UOPS delta was found for the latest comparison.
-              </EmptyDescription>
-            </EmptyHeader>
-          </Empty>
-        ) : (
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <div className="text-muted-foreground text-sm">
-                {formatTransferTimestamp(props.metric.windowStart)} UTC -{' '}
-                {formatTransferTimestamp(props.metric.windowEnd)} UTC
-              </div>
-              <div>
-                <div className="text-muted-foreground text-sm">
-                  {props.entityLabel}
-                </div>
-                <div className="font-semibold text-xl">{props.entity}</div>
-              </div>
-            </div>
-            <dl className="grid gap-3">
-              <Metric
-                label="Increase"
-                value={`+${props.metric.increase.toLocaleString()}`}
-              />
-              <Metric
-                label="Current UOPS"
-                value={props.metric.currentCount.toLocaleString()}
-              />
-              <Metric
-                label="Previous UOPS"
-                value={props.metric.previousCount.toLocaleString()}
-              />
-            </dl>
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  )
+function volumeSecondary(metric: VolumeIncreaseMetric | null | undefined) {
+  if (!metric) {
+    return []
+  }
+
+  return [
+    {
+      label: 'Current',
+      value: formatDollars(metric.currentVolumeUsd),
+    },
+    {
+      label: 'Previous',
+      value: formatDollars(metric.previousVolumeUsd),
+    },
+  ]
 }
 
 function Metric(props: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border p-4">
-      <dt className="text-muted-foreground text-sm">{props.label}</dt>
-      <dd className="mt-1 font-semibold text-xl">{props.value}</dd>
+    <div className="min-w-0">
+      <dt className="truncate text-muted-foreground text-xs">{props.label}</dt>
+      <dd className="mt-0.5 truncate font-semibold text-sm">{props.value}</dd>
     </div>
   )
 }
