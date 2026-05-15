@@ -145,6 +145,7 @@ export class EtherscanClient implements IEtherscanClient {
     let files: Record<string, string> = {}
     let remappings: string[] = []
     let libraries: Record<string, EthereumAddress> = {}
+    let compilerSettings: ContractSource['compilerSettings'] | undefined
     const name = result.ContractName.trim()
     const solidityVersion = result.CompilerVersion
     const source = result.SourceCode
@@ -159,9 +160,12 @@ export class EtherscanClient implements IEtherscanClient {
         files = Object.fromEntries(decodedSource.sources)
         remappings = decodedSource.remappings
         libraries = decodedSource.libraries
+        compilerSettings = decodedSource.compilerSettings
       } catch (e) {
         this.logger.error(e)
       }
+
+      compilerSettings ??= parseEtherscanCompilerSettings(result)
     }
 
     return {
@@ -174,6 +178,7 @@ export class EtherscanClient implements IEtherscanClient {
       remappings,
       libraries,
       files,
+      compilerSettings,
     }
   }
 
@@ -305,6 +310,27 @@ const Sources = v.record(v.string(), v.object({ content: v.string() }))
 const Settings = v.object({
   remappings: v.array(v.string()).optional(),
   libraries: v.record(v.string(), v.record(v.string(), v.string())).optional(),
+  optimizer: v
+    .object({
+      enabled: v.boolean().optional(),
+      runs: v.number().optional(),
+    })
+    .optional(),
+  evmVersion: v.string().optional(),
+  viaIR: v.boolean().optional(),
+  metadata: v
+    .object({
+      bytecodeHash: v.string().optional(),
+      useLiteralContent: v.boolean().optional(),
+      appendCBOR: v.boolean().optional(),
+    })
+    .optional(),
+  debug: v
+    .object({
+      revertStrings: v.string(),
+      debugInfo: v.array(v.string()).optional(),
+    })
+    .optional(),
 })
 const EtherscanSource = v.object({ sources: Sources, settings: Settings })
 
@@ -312,6 +338,30 @@ interface DecodedSource {
   sources: [string, string][]
   remappings: string[]
   libraries: Record<string, EthereumAddress>
+  compilerSettings?: ContractSource['compilerSettings']
+}
+
+function parseEtherscanCompilerSettings(
+  result: import('./EtherscanModels').ContractSource,
+): ContractSource['compilerSettings'] | undefined {
+  const optimizerEnabled = result.OptimizationUsed === '1'
+  const optimizerRuns = Number(result.Runs)
+  const optimizer = {
+    enabled: result.OptimizationUsed === '' ? undefined : optimizerEnabled,
+    runs: Number.isInteger(optimizerRuns) ? optimizerRuns : undefined,
+  }
+  const hasOptimizer =
+    optimizer.enabled !== undefined || optimizer.runs !== undefined
+  const evmVersion = result.EVMVersion === '' ? undefined : result.EVMVersion
+
+  if (!hasOptimizer && evmVersion === undefined) {
+    return undefined
+  }
+
+  return {
+    optimizer: hasOptimizer ? optimizer : undefined,
+    evmVersion,
+  }
 }
 
 function parsePath(path: string | undefined): string | undefined {
@@ -354,6 +404,7 @@ function decodeEtherscanSource(
   const parsed: unknown = JSON.parse(source)
   let validated: Record<string, { content: string }>
   let remappings: string[] = []
+  let compilerSettings: ContractSource['compilerSettings'] | undefined
   const libraries: Record<string, EthereumAddress> = {}
   try {
     const verified = EtherscanSource.parse(parsed)
@@ -371,6 +422,13 @@ function decodeEtherscanSource(
 
     validated = verified.sources
     remappings = verified.settings.remappings ?? []
+    compilerSettings = {
+      optimizer: verified.settings.optimizer,
+      evmVersion: verified.settings.evmVersion,
+      viaIR: verified.settings.viaIR,
+      metadata: verified.settings.metadata,
+      debug: verified.settings.debug,
+    }
   } catch {
     validated = Sources.parse(parsed)
   }
@@ -382,5 +440,6 @@ function decodeEtherscanSource(
     ]),
     remappings,
     libraries,
+    compilerSettings,
   }
 }
