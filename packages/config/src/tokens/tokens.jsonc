@@ -8568,9 +8568,21 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+        "bridges": [{ "name": "Ronin Bridge (legacy multi-sig)" }]
       },
       "deploymentTimestamp": 1612972800
+    },
+    {
+      "symbol": "WBTC",
+      "address": "0xca3eb64f3dfd7861c76070e3d1492ee5ee20cdc3",
+      "coingeckoId": "wrapped-bitcoin",
+      "category": "btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+      },
+      "deploymentTimestamp": 1745539200
     },
     {
       "symbol": "YGG",
@@ -8589,8 +8601,11 @@
       "address": "0x7EAe20d11Ef8c779433Eb24503dEf900b9d28ad7",
       "coingeckoId": "pixels",
       "category": "other",
-      "source": "native",
-      "supply": "circulatingSupply",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+      },
       "deploymentTimestamp": 1708300800
     },
     {

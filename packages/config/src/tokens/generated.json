@@ -10422,8 +10422,16 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/35100/large/pixel-icon.png?1708339519",
       "chainId": 2020,
-      "source": "native",
-      "supply": "circulatingSupply"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "name": "Ronin Wrapped Ether",
@@ -10490,6 +10498,27 @@
       "symbol": "WBTC",
       "decimals": 8,
       "deploymentTimestamp": 1612972800,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/WBTCLOGO.png?1764496367",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Ronin Bridge (legacy multi-sig)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped Bitcoin",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0xCa3Eb64F3DFd7861C76070e3d1492eE5ee20cdC3",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1745539200,
       "coingeckoListingTimestamp": 1573689600,
       "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/WBTCLOGO.png?1764496367",

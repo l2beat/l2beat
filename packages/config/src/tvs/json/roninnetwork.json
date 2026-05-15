@@ -116,16 +116,23 @@
       "name": "PIXEL",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/35100/large/pixel-icon.png?1708339519",
       "amount": {
-        "type": "circulatingSupply",
-        "apiId": "pixels",
-        "decimals": 18,
-        "sinceTimestamp": 1778598960,
+        "type": "totalSupply",
         "address": "0x7EAe20d11Ef8c779433Eb24503dEf900b9d28ad7",
-        "chain": "roninnetwork"
+        "chain": "roninnetwork",
+        "decimals": 18,
+        "sinceTimestamp": 1778598960
       },
       "category": "other",
-      "source": "native",
-      "isAssociated": false
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -235,6 +242,31 @@
       "amount": {
         "type": "totalSupply",
         "address": "0x7E73630F81647bCFD7B1F2C04c1C662D17d4577e",
+        "chain": "roninnetwork",
+        "decimals": 8,
+        "sinceTimestamp": 1778598960
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Ronin Bridge (legacy multi-sig)"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-WBTC-2",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped Bitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/WBTCLOGO.png?1764496367",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xCa3Eb64F3DFd7861C76070e3d1492eE5ee20cdC3",
         "chain": "roninnetwork",
         "decimals": 8,
         "sinceTimestamp": 1778598960
