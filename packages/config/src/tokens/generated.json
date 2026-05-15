@@ -10426,6 +10426,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Ronin Wrapped Ether",
+      "coingeckoId": "weth",
+      "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1612972800,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "Smooth Love Potion",
       "coingeckoId": "smooth-love-potion",
       "address": "0xa8754b9Fa15fc18BB59458815510E40a12cD2014",
@@ -10482,6 +10504,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Wrapped Ronin",
+      "coingeckoId": "ronin",
+      "address": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
+      "symbol": "WRON",
+      "decimals": 18,
+      "deploymentTimestamp": 1640000000,
+      "coingeckoListingTimestamp": 1643241600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20009/large/photo_2024-04-06_22-52-24.jpg?1712415367",
+      "chainId": 2020,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Yield Guild Games Token",

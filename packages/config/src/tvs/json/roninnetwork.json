@@ -252,6 +252,87 @@
       }
     },
     {
+      "mode": "custom",
+      "id": "roninnetwork-WETH-1",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Ronin Wrapped Ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "totalSupply",
+            "chain": "roninnetwork",
+            "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
+            "decimals": 18,
+            "sinceTimestamp": 1612972800
+          },
+          {
+            "type": "calculation",
+            "operator": "sum",
+            "arguments": [
+              {
+                "type": "balanceOfEscrow",
+                "chain": "roninnetwork",
+                "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
+                "escrowAddress": "0x000000000000000000000000000000000000dEaD",
+                "decimals": 18,
+                "sinceTimestamp": 1612972800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "chain": "roninnetwork",
+                "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
+                "escrowAddress": "0x0000000000000000000000000000000000000001",
+                "decimals": 18,
+                "sinceTimestamp": 1612972800
+              },
+              {
+                "type": "balanceOfEscrow",
+                "chain": "ethereum",
+                "address": "native",
+                "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+                "decimals": 18,
+                "sinceTimestamp": 1612972800
+              }
+            ]
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-WRON",
+      "priceId": "ronin",
+      "symbol": "WRON",
+      "name": "Wrapped Ronin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20009/large/photo_2024-04-06_22-52-24.jpg?1712415367",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "ronin",
+        "decimals": 18,
+        "sinceTimestamp": 1778598960,
+        "address": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
+        "chain": "roninnetwork"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
       "mode": "auto",
       "id": "roninnetwork-xFISH",
       "priceId": "fishing-frenzy",

@@ -8528,6 +8528,15 @@
   ],
   "roninnetwork": [
     {
+      "symbol": "WRON",
+      "address": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
+      "coingeckoId": "ronin",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "deploymentTimestamp": 1640000000
+    },
+    {
       "symbol": "AXS",
       "address": "0x97a9107C1793BC407d6F527b77e7fff4D812bece",
       "coingeckoId": "axie-infinity",
