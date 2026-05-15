@@ -41,6 +41,20 @@ export const StoredNodeLayout = v.object({
 export type NodeLocations = v.infer<typeof NodeLocations>
 export type StoredNodeLayout = v.infer<typeof StoredNodeLayout>
 
+export function reconcileHiddenFields(
+  fieldNames: readonly string[],
+  hiddenFieldNames: readonly string[],
+): string[] {
+  const valid = new Set(fieldNames)
+  const result = new Set<string>()
+  for (const name of hiddenFieldNames) {
+    if (valid.has(name)) {
+      result.add(name)
+    }
+  }
+  return [...result]
+}
+
 function getLayoutStorageKey(projectId: string): string {
   return `layout/${projectId}`
 }

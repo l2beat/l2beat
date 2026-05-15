@@ -23,6 +23,7 @@ import { FixDiscoverySchemaPaths } from './FixDiscoverySchemaPaths'
 import { Flatten } from './Flatten'
 import { GenerateEntrypoints } from './GenerateEntrypoints'
 import { GetConfig } from './GetConfig'
+import { GetStakeDistrib } from './GetStakeDistrib'
 import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
 import { InitTemplate } from './InitTemplate'
@@ -70,6 +71,7 @@ export function getSubcommands() {
     Flatten,
     GenerateEntrypoints,
     GetConfig,
+    GetStakeDistrib,
     GetTokenMinters,
     Init,
     InitTemplate,

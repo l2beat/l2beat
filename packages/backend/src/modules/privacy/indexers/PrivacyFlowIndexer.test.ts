@@ -20,7 +20,7 @@ const TOPIC_B =
 describe(PrivacyFlowIndexer.name, () => {
   describe(PrivacyFlowIndexer.prototype.multiUpdate.name, () => {
     it('fetches logs, extracts records, and saves to DB', async () => {
-      const from = UnixTime.toStartOf(UnixTime.now(), 'hour')
+      const from = UnixTime.toStartOf(UnixTime(0), 'day')
       const to = from + 5 * UnixTime.HOUR
       const blockTimestamp = from + UnixTime.HOUR
 
