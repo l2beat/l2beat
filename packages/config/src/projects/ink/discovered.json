@@ -1,6 +1,6 @@
 {
   "name": "ink",
-  "timestamp": 1778830835,
+  "timestamp": 1778850529,
   "configHash": "0xa01e7ef6c63452a53b2cdc9b5bbc9decc6789cab83e9b3d7d6daa5f432d1fe89",
   "entries": [
     {
@@ -257,6 +257,7 @@
       }
     },
     {
+      "name": "Optimism EOA 1",
       "address": "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c",
       "type": "EOA",
       "proxyType": "EOA",
@@ -690,7 +691,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 25098991
+          "prevBlockNum": 25100721
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1056,7 +1057,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644070",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644083",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2131,7 +2132,7 @@
         "$upgradeCount": 2,
         "baseFee": 0,
         "baseFeeScalar": 4424,
-        "blobBaseFee": 10961604,
+        "blobBaseFee": 19134583,
         "blobBaseFeeScalar": 810831,
         "decimals": 6,
         "DECIMALS": 6,
@@ -2140,7 +2141,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 206330814,
+        "l1BaseFee": 322760407,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -2338,10 +2339,10 @@
           ]
         ],
         "$upgradeCount": 2,
-        "basefee": 206330814,
+        "basefee": 322760407,
         "baseFeeScalar": 4424,
         "batcherHash": "0x000000000000000000000000500d7ea63cf2e501dadaa5feec1fc19fe2aa72ac",
-        "blobBaseFee": 10961604,
+        "blobBaseFee": 19134583,
         "blobBaseFeeScalar": 810831,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "ink:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -2351,15 +2352,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xffb03d0e4d29256c7a1365645998bd8c6765de77744999ccbaba41b391fbbdd0",
+        "hash": "0x5d6026fe32e9497e06b7a1635820bf93f4d0f9e266573c3781537d2eacb7ef4d",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 25099105,
+        "number": 25100742,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 8,
-        "timestamp": 1778830763,
+        "sequenceNumber": 11,
+        "timestamp": 1778850455,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -4478,6 +4479,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25099111, "ink": 45332424 },
-  "permissionsConfigHash": "0x72423df412f7c195f019e7ad1407d80ea50450c7d1751e768c9b7561805e660a"
+  "usedBlockNumbers": { "ethereum": 25100748, "ink": 45352118 },
+  "permissionsConfigHash": "0xfd2b7c354e4af8e393be2573d12b7e2b76fcf89b01cabe486268e254058bdd74"
 }

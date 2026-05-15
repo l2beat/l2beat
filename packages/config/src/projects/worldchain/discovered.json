@@ -1,6 +1,6 @@
 {
   "name": "worldchain",
-  "timestamp": 1778831071,
+  "timestamp": 1778850530,
   "configHash": "0x42bff111a3a859dd0eefe0f8ea62d3974e0033474d7f26f46e73afb61ec22445",
   "entries": [
     {
@@ -98,7 +98,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 11775,
+        "gameCount": 11780,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xb42Dc014FD85994eCeD29430a5eFe887f4228398",
@@ -113,7 +113,7 @@
         "initVersion": 1,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 11773,
+        "permissionedGamesTotal": 11778,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D",
         "proxyAdminOwner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
@@ -379,6 +379,7 @@
       }
     },
     {
+      "name": "Optimism EOA 1",
       "address": "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c",
       "type": "EOA",
       "proxyType": "EOA",
@@ -973,17 +974,17 @@
           ]
         ],
         "$upgradeCount": 1,
-        "absolutePrestateFromGame": "eth:0x0000000000000000000000000000000000000000",
-        "anchorGame": "eth:0x0000000000000000000000000000000000000000",
-        "challengePeriodFromOracle": "eth:0x0000000000000000000000000000000000000000",
+        "absolutePrestateFromGame": "0x03caa1871bb9fe7f9b11217c245c16e4ded33367df5b3ccb2c6d0a847a217d1b",
+        "anchorGame": "eth:0xB1DdaE15be6Ef9F8A4F758597B22c8E4834b33A0",
+        "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x069c4c579671f8c120b1327a73217D01Ea2EC5ea",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x38aaaf5c7910fd15e77a8e4ba903896b55bf5562770ca1268b666a01ba5cfb6b",
-          22046345
+          "0xf83e7cf6efcbbe6392eb617773dea12c68be24e43c58b5218003592e54d1dc04",
+          29449894
         ],
         "initVersion": 1,
-        "oracleFromVm": "eth:0x0000000000000000000000000000000000000000",
+        "oracleFromVm": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
         "paused": false,
         "proxyAdmin": "eth:0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D",
         "proxyAdminOwner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
@@ -993,8 +994,8 @@
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "systemConfig": "eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A",
         "version": "3.5.0",
-        "vmFromGame": "eth:0x0000000000000000000000000000000000000000",
-        "wethFromGame": "eth:0x0000000000000000000000000000000000000000"
+        "vmFromGame": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
+        "wethFromGame": "eth:0xb705030703Bf8ff4300bd6FBD8dE63CE8492f575"
       },
       "fieldMeta": { "respectedGameType": { "severity": "HIGH" } },
       "implementationNames": {
@@ -1569,8 +1570,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 1326609,
-          "prevBlockNum": 25098983
+          "prevBoughtGas": 514422,
+          "prevBlockNum": 25100721
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1792,7 +1793,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292701291",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292701324",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2908,6 +2909,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25099130 },
-  "permissionsConfigHash": "0xc764366fcd045da5f51c2e6184d6867aa5812c68edfed671c8328a02b6b1ae24"
+  "usedBlockNumbers": { "ethereum": 25100748 },
+  "permissionsConfigHash": "0x72b60a6fec7bd23b4ea13824616f8bab7b7a1d3ba68509cd5ae2ecd306bae98d"
 }

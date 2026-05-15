@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd40c466e62734b4428d03c96fb0c19d104556f96
+Generated with discovered.json: 0x99abd24881718c382d877a1537cbd8998d4873de
 
-# Diff at Fri, 15 May 2026 07:46:39 GMT:
+# Diff at Fri, 15 May 2026 13:11:04 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@da451cba8e944a28754be7e17bcb7555d857f312 block: 1777994350
-- current timestamp: 1778831071
+- current timestamp: 1778850530
 
 ## Description
 
@@ -41,6 +41,20 @@ Scheduled signer-key rotation on shared OP Stack governance contracts (no thresh
       values.$members.6:
 -        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
 +        "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777994350 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      name:
+-        "Optimism EOA 1"
     }
 ```
 

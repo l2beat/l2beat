@@ -1,6 +1,6 @@
 {
   "name": "cyber",
-  "timestamp": 1778830835,
+  "timestamp": 1778850529,
   "configHash": "0xd7d5c03b7ff82607e30db59c4fd0631f7ebf1056d8d8f19e33d2740a891231e2",
   "entries": [
     {
@@ -366,6 +366,7 @@
       }
     },
     {
+      "name": "Optimism EOA 1",
       "address": "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1379,7 +1380,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 4047,
+        "gameCount": 4053,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x719206d1C83D16FBcAB21f9e9DBF5A8178567E2b",
@@ -1393,7 +1394,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398",
         "permissionedGameArgs": "EXPECT_REVERT",
-        "permissionedGamesTotal": 4047,
+        "permissionedGamesTotal": 4053,
         "proposerFromDGF": "UNRESOLVED",
         "version": "1.0.0",
         "wethFromDGF": "UNRESOLVED"
@@ -2613,6 +2614,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25099111 },
-  "permissionsConfigHash": "0x1cd41815614ce03633cc7378966d0baddbf20660bdd9470126c9a0f5230d74ca"
+  "usedBlockNumbers": { "ethereum": 25100748 },
+  "permissionsConfigHash": "0xee51809ffbd422737dff1c4787cc322e210cf503b4d4a68d5a29d4d5de817c05"
 }

@@ -1,6 +1,6 @@
 {
   "name": "arenaz",
-  "timestamp": 1778830763,
+  "timestamp": 1778850529,
   "configHash": "0x15b4315a37ea46b497f4db9b1833ff4f0a4970e714db02452c1ac33487553c7f",
   "entries": [
     {
@@ -428,6 +428,7 @@
       }
     },
     {
+      "name": "Optimism EOA 1",
       "address": "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c",
       "type": "EOA",
       "proxyType": "EOA",
@@ -2820,6 +2821,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25099105 },
-  "permissionsConfigHash": "0x2c8c68a49319aed24c87547830970d03f6cb54f2959d418558a9f80ebcbca73a"
+  "usedBlockNumbers": { "ethereum": 25100748 },
+  "permissionsConfigHash": "0xbd6200626667ceb1add8258f1770faf54c75647d8be8f6fc063b84f98f7f73f6"
 }

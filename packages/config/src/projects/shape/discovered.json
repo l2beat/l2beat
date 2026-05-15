@@ -1,6 +1,6 @@
 {
   "name": "shape",
-  "timestamp": 1778831025,
+  "timestamp": 1778850530,
   "configHash": "0x6556830c922b8a52b3de4440702e55b68cd8f0e0596833c7e32c100c33b2e006",
   "entries": [
     {
@@ -377,7 +377,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 8260,
+        "gameCount": 8266,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xE7A58c18D90E24fbf679E75678cA2b557dd9de49",
@@ -392,7 +392,7 @@
         "initVersion": 1,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 8260,
+        "permissionedGamesTotal": 8266,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e",
         "proxyAdminOwner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
@@ -417,6 +417,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "Optimism EOA 1",
       "address": "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c",
       "type": "EOA",
       "proxyType": "EOA",
@@ -2783,6 +2784,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25099126 },
-  "permissionsConfigHash": "0x75197441abad8285d6153ec6a76d3d09c355ee63c043e3be99a6635aac32ef21"
+  "usedBlockNumbers": { "ethereum": 25100748 },
+  "permissionsConfigHash": "0x8437888456a043377a4d4e7437fb2da641ac6525ee1e297caa9dbc2ce6718d61"
 }

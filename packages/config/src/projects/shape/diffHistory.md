@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xae3d323456517b054abaf945685d8cd357b69997
+Generated with discovered.json: 0x2ec974dc5615768f2f99b4f65ec7edfaf35bb8f6
 
-# Diff at Fri, 15 May 2026 07:45:23 GMT:
+# Diff at Fri, 15 May 2026 13:11:10 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@da451cba8e944a28754be7e17bcb7555d857f312 block: 1778001333
-- current timestamp: 1778831025
+- current timestamp: 1778850530
 
 ## Description
 
@@ -46,6 +46,20 @@ Shape-local sequencer configuration tweak:
       values.minBaseFee:
 -        0
 +        10000000
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778001333 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      name:
+-        "Optimism EOA 1"
     }
 ```
 

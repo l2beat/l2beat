@@ -1,6 +1,6 @@
 {
   "name": "funki",
-  "timestamp": 1778830835,
+  "timestamp": 1778850530,
   "configHash": "0x0a83ba87b132a85ecbd92e11ca7f33bbf0862e920fce65ad9c6d65cfae91e2ca",
   "entries": [
     {
@@ -136,6 +136,7 @@
       }
     },
     {
+      "name": "Optimism EOA 1",
       "address": "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1346,7 +1347,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 175,
+        "gameCount": 176,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x695F652b03470F396789cF007278F922e1726B94",
@@ -1360,7 +1361,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD",
         "permissionedGameArgs": "EXPECT_REVERT",
-        "permissionedGamesTotal": 175,
+        "permissionedGamesTotal": 176,
         "proposerFromDGF": "UNRESOLVED",
         "version": "1.0.0",
         "wethFromDGF": "UNRESOLVED"
@@ -2603,6 +2604,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25099111 },
-  "permissionsConfigHash": "0x2e28bd3ba8ad6c2bb49971167e7a3be795f1b7b914b0b0b3d74094b31b4a9887"
+  "usedBlockNumbers": { "ethereum": 25100748 },
+  "permissionsConfigHash": "0x9ff7f52fa9f0ac6e3f937ce1d3dc5dca2bbecf10853a0df36e5df4c95a68155e"
 }

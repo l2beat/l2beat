@@ -1,6 +1,6 @@
 {
   "name": "metal",
-  "timestamp": 1778830889,
+  "timestamp": 1778850530,
   "configHash": "0xf5c024ff2bb6bd2c8a0702587f7c780364bf9ea7d8e03caeaf959fe30c68dae1",
   "entries": [
     {
@@ -242,13 +242,13 @@
         ],
         "$upgradeCount": 2,
         "absolutePrestateFromGame": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e",
-        "anchorGame": "eth:0x7B4f825fE5a3a3EEb82322e7660Ff58534A5f472",
+        "anchorGame": "eth:0x6267529d8Bd0Fe63208C321879eC44aBE404Ae7F",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xabaedae34454219ecc1e6fa209217b87f31d663ee05fb12a269dcd0882061feb",
-          33319757
+          "0xb28ce271d62711ce3b15f1757ad8fe896ee74d7019f6b4b8a335063735f0b580",
+          33330576
         ],
         "getStartingAnchorRoot": {
           "root": "0x3841871029034867cc6585e1f0c75de0dc0e14ed593b5fb5a854197a6a7c7cb1",
@@ -413,6 +413,7 @@
       }
     },
     {
+      "name": "Optimism EOA 1",
       "address": "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1485,7 +1486,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 1342,
+        "gameCount": 1343,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -1500,7 +1501,7 @@
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "permissionedGameArgs": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb908120eb40f5fc6d2b47c67960bdb696a9e317c84b03daa8afa6e7f6cdd3be5f2ea610a0e795b76bb1f00000000000000000000000000000000000000000000000000000000000006d6c8187d40ad440328104a52bbed2d8efc5ab1f1f69ba6e03d8b90de867373db8cf1a58d2f7f006b3a",
-        "permissionedGamesTotal": 1342,
+        "permissionedGamesTotal": 1343,
         "proposerFromDGF": "eth:0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "proxyAdmin": "eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
@@ -2972,6 +2973,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25099115 },
-  "permissionsConfigHash": "0xbd885553164505f8ca4517ff3be2e81a38c57250b87f352092cc793245374bab"
+  "usedBlockNumbers": { "ethereum": 25100748 },
+  "permissionsConfigHash": "0x04f537713ed20b605d6302476ca181ea118118d0685478386eaf6d2d341cbf69"
 }
