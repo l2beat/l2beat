@@ -139,7 +139,11 @@ export const roninNetwork: ScalingProject = opStackL2({
       description:
         'Legacy multi-sig-secured Ronin bridge (pre-CCIP). Holds residual ETH and ERC-20 deposits. Withdrawals authorised by the Ronin BridgeOperator threshold-signature set.',
       tokens: '*',
-      excludedTokens: ['WETH'],
+      // Tokens excluded to avoid double-counting with tokens.jsonc:
+      //   AXS, USDC, WBTC, YGG → tracked via L2 totalSupply (Chainlink CCIP)
+      //   WETH → L2 supply historically over-issued vs L1 backing, no clean
+      //          attribution possible (see project description).
+      excludedTokens: ['AXS', 'USDC', 'WBTC', 'YGG', 'WETH'],
       source: 'external',
       bridgedUsing: {
         bridges: [{ name: 'Ronin Bridge (legacy multi-sig)' }],
