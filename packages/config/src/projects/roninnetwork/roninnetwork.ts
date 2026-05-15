@@ -25,7 +25,7 @@ export const roninNetwork: ScalingProject = opStackL2({
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Other.MigratedFromL1],
   associatedTokens: ['RON'],
   reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
