@@ -347,4 +347,15 @@ export const chains: ChainConfig[] = [
       url: 'https://explorer.ethscriptions.com/api',
     },
   },
+  {
+    name: 'roninnetwork',
+    chainId: 2020,
+    shortName: 'ronin',
+    multicall: getMulticall3Config(1),
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.roninchain.com/api',
+    },
+    coingeckoPlatform: 'ronin',
+  },
 ] as const satisfies ChainConfig[]
