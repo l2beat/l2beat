@@ -8525,5 +8525,82 @@
         ]
       }
     }
+  ],
+  "roninnetwork": [
+    {
+      "symbol": "AXS",
+      "address": "0x97a9107C1793BC407d6F527b77e7fff4D812bece",
+      "coingeckoId": "axie-infinity",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+      },
+      "deploymentTimestamp": 1612972800
+    },
+    {
+      "symbol": "USDC",
+      "address": "0x0B7007c13325C48911F73A2daD5FA5dCBf808aDc",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+      },
+      "deploymentTimestamp": 1654387200
+    },
+    {
+      "symbol": "WBTC",
+      "address": "0x7E73630F81647bCFD7B1F2C04c1C662D17d4577e",
+      "coingeckoId": "wrapped-bitcoin",
+      "category": "btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+      },
+      "deploymentTimestamp": 1612972800
+    },
+    {
+      "symbol": "YGG",
+      "address": "0x1c306872bC82525d72Bf3562E8F0aA3f8F26e857",
+      "coingeckoId": "yield-guild-games",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+      },
+      "deploymentTimestamp": 1640995200
+    },
+    {
+      "symbol": "PIXEL",
+      "address": "0x7EAe20d11Ef8c779433Eb24503dEf900b9d28ad7",
+      "coingeckoId": "pixels",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "deploymentTimestamp": 1708300800
+    },
+    {
+      "symbol": "SLP",
+      "address": "0xa8754b9Fa15fc18BB59458815510E40a12cD2014",
+      "coingeckoId": "smooth-love-potion",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "deploymentTimestamp": 1612972800
+    },
+    {
+      "symbol": "xFISH",
+      "address": "0x533701B17963AAf318E11ab274Ca8e2Ec813aA64",
+      "coingeckoId": "fishing-frenzy",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "deploymentTimestamp": 1700000000
+    }
   ]
 }

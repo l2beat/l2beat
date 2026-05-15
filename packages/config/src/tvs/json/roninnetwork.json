@@ -19,19 +19,45 @@
         "untilTimestamp": 1747440000
       },
       "category": "other",
-      "source": "custom-canonical",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Ronin Bridge (Chainlink CCIP + BridgeOperators)"
+            "name": "Ronin Bridge (legacy multi-sig)"
           }
         ]
       }
     },
     {
       "mode": "auto",
-      "id": "roninnetwork-AXS-2",
+      "id": "roninnetwork-AXS-1",
+      "priceId": "axie-infinity",
+      "symbol": "AXS",
+      "name": "Axie Infinity Shard",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13029/large/axie_infinity_logo.png?1696512817",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x97a9107C1793BC407d6F527b77e7fff4D812bece",
+        "chain": "roninnetwork",
+        "decimals": 18,
+        "sinceTimestamp": 1778598960
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-AXS-3",
       "priceId": "axie-infinity",
       "symbol": "AXS",
       "name": "Axie Infinity Shard",
@@ -45,12 +71,12 @@
         "sinceTimestamp": 1655883630
       },
       "category": "other",
-      "source": "custom-canonical",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Ronin Bridge (Chainlink CCIP + BridgeOperators)"
+            "name": "Ronin Bridge (legacy multi-sig)"
           }
         ]
       }
@@ -71,12 +97,12 @@
         "sinceTimestamp": 1655883630
       },
       "category": "ether",
-      "source": "custom-canonical",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Ronin Bridge (Chainlink CCIP + BridgeOperators)"
+            "name": "Ronin Bridge (legacy multi-sig)"
           }
         ]
       }
@@ -98,15 +124,53 @@
         "untilTimestamp": 1742428800
       },
       "category": "other",
-      "source": "custom-canonical",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Ronin Bridge (Chainlink CCIP + BridgeOperators)"
+            "name": "Ronin Bridge (legacy multi-sig)"
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-PIXEL",
+      "priceId": "pixels",
+      "symbol": "PIXEL",
+      "name": "PIXEL",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35100/large/pixel-icon.png?1708339519",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "pixels",
+        "decimals": 18,
+        "sinceTimestamp": 1778598960,
+        "address": "0x7EAe20d11Ef8c779433Eb24503dEf900b9d28ad7",
+        "chain": "roninnetwork"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-SLP-1",
+      "priceId": "smooth-love-potion",
+      "symbol": "SLP",
+      "name": "Smooth Love Potion",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/10366/large/SLP.png?1696510368",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "smooth-love-potion",
+        "decimals": 0,
+        "sinceTimestamp": 1778598960,
+        "address": "0xa8754b9Fa15fc18BB59458815510E40a12cD2014",
+        "chain": "roninnetwork"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -125,19 +189,45 @@
         "untilTimestamp": 1742169600
       },
       "category": "other",
-      "source": "custom-canonical",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Ronin Bridge (Chainlink CCIP + BridgeOperators)"
+            "name": "Ronin Bridge (legacy multi-sig)"
           }
         ]
       }
     },
     {
       "mode": "auto",
-      "id": "roninnetwork-USDC-2",
+      "id": "roninnetwork-USDC-1",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x0B7007c13325C48911F73A2daD5FA5dCBf808aDc",
+        "chain": "roninnetwork",
+        "decimals": 6,
+        "sinceTimestamp": 1778598960
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-USDC-3",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -151,12 +241,12 @@
         "sinceTimestamp": 1655883630
       },
       "category": "stablecoin",
-      "source": "custom-canonical",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Ronin Bridge (Chainlink CCIP + BridgeOperators)"
+            "name": "Ronin Bridge (legacy multi-sig)"
           }
         ]
       }
@@ -177,19 +267,45 @@
         "sinceTimestamp": 1655883630
       },
       "category": "stablecoin",
-      "source": "custom-canonical",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Ronin Bridge (Chainlink CCIP + BridgeOperators)"
+            "name": "Ronin Bridge (legacy multi-sig)"
           }
         ]
       }
     },
     {
       "mode": "auto",
-      "id": "roninnetwork-WBTC-2",
+      "id": "roninnetwork-WBTC-1",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped Bitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/WBTCLOGO.png?1764496367",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7E73630F81647bCFD7B1F2C04c1C662D17d4577e",
+        "chain": "roninnetwork",
+        "decimals": 8,
+        "sinceTimestamp": 1778598960
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-WBTC-3",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
@@ -203,45 +319,64 @@
         "sinceTimestamp": 1655883630
       },
       "category": "btc",
-      "source": "custom-canonical",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Ronin Bridge (Chainlink CCIP + BridgeOperators)"
+            "name": "Ronin Bridge (legacy multi-sig)"
           }
         ]
       }
     },
     {
       "mode": "auto",
-      "id": "roninnetwork-WETH-2",
-      "priceId": "weth",
-      "symbol": "WETH",
-      "name": "Wrapped Ether",
-      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "id": "roninnetwork-xFISH",
+      "priceId": "fishing-frenzy",
+      "symbol": "xFISH",
+      "name": "Fishing Frenzy",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70780/large/fish200x200.png?1763708762",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "chain": "ethereum",
-        "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+        "type": "circulatingSupply",
+        "apiId": "fishing-frenzy",
         "decimals": 18,
-        "sinceTimestamp": 1655883630
+        "sinceTimestamp": 1778598960,
+        "address": "0x533701B17963AAf318E11ab274Ca8e2Ec813aA64",
+        "chain": "roninnetwork"
       },
-      "category": "ether",
-      "source": "custom-canonical",
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-YGG-1",
+      "priceId": "yield-guild-games",
+      "symbol": "YGG",
+      "name": "Yield Guild Games Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/17358/large/Shield_Mark_-_Colored_-_Iridescent.png?1696516909",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1c306872bC82525d72Bf3562E8F0aA3f8F26e857",
+        "chain": "roninnetwork",
+        "decimals": 18,
+        "sinceTimestamp": 1778598960
+      },
+      "category": "other",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Ronin Bridge (Chainlink CCIP + BridgeOperators)"
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
           }
         ]
       }
     },
     {
       "mode": "auto",
-      "id": "roninnetwork-YGG-2",
+      "id": "roninnetwork-YGG-3",
       "priceId": "yield-guild-games",
       "symbol": "YGG",
       "name": "Yield Guild Games Token",
@@ -255,12 +390,12 @@
         "sinceTimestamp": 1655883630
       },
       "category": "other",
-      "source": "custom-canonical",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Ronin Bridge (Chainlink CCIP + BridgeOperators)"
+            "name": "Ronin Bridge (legacy multi-sig)"
           }
         ]
       }

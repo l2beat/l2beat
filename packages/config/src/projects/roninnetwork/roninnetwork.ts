@@ -3,7 +3,7 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { CONTRACTS, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
+import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getAltDaStage } from '../../common/stages/getAltDaStage'
@@ -90,6 +90,7 @@ export const roninNetwork: ScalingProject = opStackL2({
     name: 'roninnetwork',
     chainId: 2020,
     explorerUrl: 'https://app.roninchain.com/explorer',
+    coingeckoPlatform: 'ronin',
     sinceTimestamp: genesisTimestamp,
     gasTokens: ['RON'],
     multicallContracts: [
@@ -100,7 +101,17 @@ export const roninNetwork: ScalingProject = opStackL2({
         version: '3',
       },
     ],
-    apis: [],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://api.roninchain.com/rpc',
+        callsPerMinute: 300,
+      },
+      {
+        type: 'blockscout',
+        url: 'https://explorer.roninchain.com/api',
+      },
+    ],
   },
   milestones: [
     {
@@ -113,17 +124,25 @@ export const roninNetwork: ScalingProject = opStackL2({
     },
   ],
   nonTemplateEscrows: [
+    // Legacy multi-sig bridge — residual escrow, drained over time as users
+    // migrated to the CCIP-routed path. Still holds residual ETH plus dust of
+    // USDC/AXS/WETH. WETH is excluded here because L2 totalSupply on Ronin is
+    // historically over-issued vs L1 backing (legacy of the 2022 hack era).
+    // Chainlink CCIP pools are NOT tracked as Ronin escrows; the CCIP-bridged
+    // tokens are listed under `roninnetwork` in tokens.jsonc as source:external,
+    // matching the L2BEAT pattern used by Arbitrum/Base/BOB/Soneium etc.
     discovery.getEscrowDetails({
       address: ChainSpecificAddress(
         'eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08',
       ),
       name: 'MainchainGateway',
       description:
-        'Predates the L2 migration and remains the primary user-facing bridge for bridged ETH and ERC-20 assets. Withdrawals are authorised by Chainlink CCIP DONs in combination with the Ronin BridgeOperator multisig, not by the OP Stack fault proof system.',
+        'Legacy multi-sig-secured Ronin bridge (pre-CCIP). Holds residual ETH and ERC-20 deposits. Withdrawals authorised by the Ronin BridgeOperator threshold-signature set.',
       tokens: '*',
-      ...ESCROW.CANONICAL_ADD_TA,
+      excludedTokens: ['WETH'],
+      source: 'external',
       bridgedUsing: {
-        bridges: [{ name: 'Ronin Bridge (Chainlink CCIP + BridgeOperators)' }],
+        bridges: [{ name: 'Ronin Bridge (legacy multi-sig)' }],
       },
     }),
   ],
