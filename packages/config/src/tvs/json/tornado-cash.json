@@ -1,0 +1,211 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "tornado-cash",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "tornado-cash-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
+            "decimals": 18,
+            "sinceTimestamp": 1576534688
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144",
+            "decimals": 18,
+            "sinceTimestamp": 1577297383
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
+            "decimals": 18,
+            "sinceTimestamp": 1616114822
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0x23773E65ed146A459791799d01336DB287f25334",
+            "decimals": 18,
+            "sinceTimestamp": 1616115387
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "tornado-cash-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",
+            "decimals": 18,
+            "sinceTimestamp": 1576523323
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
+            "decimals": 18,
+            "sinceTimestamp": 1576534673
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
+            "decimals": 18,
+            "sinceTimestamp": 1576536415
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
+            "decimals": 18,
+            "sinceTimestamp": 1577296976
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "tornado-cash-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0xd96f2B1c14Db8458374d9Aca76E26c3D18364307",
+            "decimals": 6,
+            "sinceTimestamp": 1577298068
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D",
+            "decimals": 6,
+            "sinceTimestamp": 1577298155
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "tornado-cash-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "chain": "ethereum",
+            "escrowAddress": "0x169AD27A470D064DEDE56a2D3ff727986b15D52B",
+            "decimals": 6,
+            "sinceTimestamp": 1577298900
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "chain": "ethereum",
+            "escrowAddress": "0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f",
+            "decimals": 6,
+            "sinceTimestamp": 1577298985
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "tornado-cash-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "chain": "ethereum",
+            "escrowAddress": "0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
+            "decimals": 8,
+            "sinceTimestamp": 1616134868
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "chain": "ethereum",
+            "escrowAddress": "0x610B717796ad172B316836AC95a2ffad065CeaB4",
+            "decimals": 8,
+            "sinceTimestamp": 1616123193
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "chain": "ethereum",
+            "escrowAddress": "0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
+            "decimals": 8,
+            "sinceTimestamp": 1616135758
+          }
+        ]
+      },
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

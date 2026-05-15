@@ -1,10 +1,10 @@
 {
   "name": "railgun",
   "timestamp": 1777550988,
-  "configHash": "0xaa71d650e41b3ed94084a896637e03463cff8aa354eb5e371c4ee35ef4b54d5b",
+  "configHash": "0xb66e16c4dcff3f3e8ba7f31d2a79a11f21d464793e35da71e6c701634c6b986a",
   "entries": [
     {
-      "name": "Ae8AStreamPayout",
+      "name": "IntervalPayouts",
       "address": "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11",
       "type": "Contract",
       "template": "railgun/IntervalPayouts",
@@ -185,7 +185,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "PayoutBeneficiary_5a02",
       "address": "eth:0x5a02474A3083Bc969f20F92E7a8bd3824EC607f0",
       "type": "EOA",
       "proxyType": "EOA"
@@ -245,7 +244,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "Beneficiary5a02OneOffPayout",
+      "name": "IntervalPayouts",
       "address": "eth:0x7673e2E62435D25EDBcb58fD0d88c4C95806b10F",
       "type": "Contract",
       "template": "railgun/IntervalPayouts",
@@ -314,7 +313,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "SweeperProxyOwner",
       "address": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "type": "EOA",
       "proxyType": "EOA",
@@ -332,30 +330,14 @@
           "role": ".owner"
         },
         {
-          "permission": "interact",
-          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
-          "description": "update the Railgun smart wallet SNARK verifying keys through the Delegator.",
-          "role": ".verificationKeyDelegates",
-          "via": [
-            { "address": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46" }
-          ]
-        },
-        {
           "permission": "upgrade",
           "from": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
           "role": "admin"
         }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
-          "role": ".owner"
-        }
       ]
     },
     {
-      "name": "Ae8AOneOffPayout",
+      "name": "IntervalPayouts",
       "address": "eth:0x859E0C1790b8a721F4943742603cDB685A73BA5D",
       "type": "Contract",
       "template": "railgun/IntervalPayouts",
@@ -607,13 +589,12 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "PayoutBeneficiary_A4f2",
       "address": "eth:0xA4f2eA0a81179362558eBC1d2Bc817c9a0134ee3",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "A4f2OneOffPayout",
+      "name": "IntervalPayouts",
       "address": "eth:0xa863262Bf5E97e8CFeC47a71402aC360C0983060",
       "type": "Contract",
       "template": "railgun/IntervalPayouts",
@@ -682,7 +663,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "PayoutBeneficiary_Ae8A",
       "address": "eth:0xaE8A17EB859E024cF6B541802B08932B2268dcEe",
       "type": "EOA",
       "proxyType": "EOA"
@@ -877,7 +857,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "VKeySetterOwner_bbc2",
       "address": "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
       "type": "EOA",
       "proxyType": "EOA",
@@ -886,22 +865,6 @@
           "permission": "interact",
           "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
           "description": "stage replacement verification keys and manage the helper's local SETTING and WAITING states.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
-          "description": "update the Railgun smart wallet SNARK verifying keys through the Delegator.",
-          "role": ".verificationKeyDelegates",
-          "via": [
-            { "address": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
           "role": ".owner"
         }
       ]
@@ -1212,7 +1175,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "A4f2StreamPayout",
+      "name": "IntervalPayouts",
       "address": "eth:0xCA9A2894e814305fAfc2BA83a70B34295b1DdE9D",
       "type": "Contract",
       "template": "railgun/IntervalPayouts",
@@ -1487,7 +1450,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "Beneficiary5a02StreamPayout",
+      "name": "IntervalPayouts",
       "address": "eth:0xf5F9d74FbFd04801DFf83425ff6C2002f60B921A",
       "type": "Contract",
       "template": "railgun/IntervalPayouts",
@@ -2066,5 +2029,5 @@
     "railgun/Voting": "0xcf33f9d03116b81a59f25ba7bf17c38122eedecde0df775a365f78a34697bd68"
   },
   "usedBlockNumbers": { "ethereum": 24992832 },
-  "permissionsConfigHash": "0x4bb3862624385de7b78be9910a9378faeff1c49f16650e23a717757a96e764bb"
+  "permissionsConfigHash": "0xc817f0c081917a651bb5f6898d6620ac54c691a5f8bc742d66c531130c6dcdda"
 }

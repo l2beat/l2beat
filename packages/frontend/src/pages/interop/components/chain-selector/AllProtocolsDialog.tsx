@@ -72,23 +72,33 @@ export function AllProtocolsDialog({
               </p>
             ) : (
               <ul className="space-y-0.5">
-                {protocols.map((protocol) => (
-                  <li
-                    key={protocol.name}
-                    className="flex items-center gap-3 rounded-sm px-2 py-3"
-                  >
-                    <img
-                      src={protocol.iconUrl}
-                      alt={protocol.name}
-                      width={20}
-                      height={20}
-                      className="size-5"
-                    />
-                    <span className="font-bold text-label-value-15">
-                      {protocol.name}
-                    </span>
-                  </li>
-                ))}
+                {protocols.map((protocol) => {
+                  const content = (
+                    <>
+                      <img
+                        src={protocol.iconUrl}
+                        alt={protocol.name}
+                        width={20}
+                        height={20}
+                        className="size-5"
+                      />
+                      <span className="font-bold text-label-value-15">
+                        {protocol.name}
+                      </span>
+                    </>
+                  )
+
+                  return (
+                    <li key={protocol.name}>
+                      <a
+                        href={`/interop/protocols/${protocol.slug}`}
+                        className="flex items-center gap-3 rounded-sm px-2 py-3 hover:bg-surface-secondary"
+                      >
+                        {content}
+                      </a>
+                    </li>
+                  )
+                })}
               </ul>
             )}
           </div>

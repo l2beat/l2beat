@@ -24,5 +24,6 @@
       "description": "Recognized bridge contract. Token transfers to this address automatically trigger a call to `onTokenTransfer()`, which is by default the cross-chain bridging operation.",
       "severity": "HIGH"
     }
-  }
+  },
+  "ignoreInWatchMode": ["totalSupply"]
 }

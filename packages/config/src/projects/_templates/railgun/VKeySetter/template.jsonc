@@ -10,7 +10,6 @@
       "severity": "HIGH",
       "type": "PERMISSION",
       "permissions": [
-        { "type": "act" },
         {
           "type": "interact",
           "description": "stage replacement verification keys and manage the helper's local SETTING and WAITING states."

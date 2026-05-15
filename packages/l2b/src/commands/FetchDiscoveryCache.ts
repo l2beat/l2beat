@@ -2,7 +2,6 @@ import { SQLiteCache } from '@l2beat/discovery'
 import { formatSI } from '@l2beat/shared'
 import { formatSeconds } from '@l2beat/shared-pure'
 import { command, positional, string } from 'cmd-ts'
-import { createClient } from 'redis'
 
 export const FetchDiscoveryCache = command({
   name: 'fetch-discovery-cache',
@@ -15,6 +14,7 @@ export const FetchDiscoveryCache = command({
     }),
   },
   handler: async (args) => {
+    const { createClient } = await import('redis')
     const client = createClient({ url: args.redisPath })
     client.on('error', console.error)
     const cache = new SQLiteCache()

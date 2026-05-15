@@ -1,14 +1,32 @@
-Generated with discovered.json: 0x9644392d7c70ac175c45112a4b95ee7238687ad9
+Generated with discovered.json: 0xc8b78505484e9dab480c3c4101ff5382fee35097
 
-# Diff at Fri, 08 May 2026 07:51:23 GMT:
+# Diff at Tue, 12 May 2026 09:45:26 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777295886
-- current timestamp: 1777295886
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e08a4d47318721a3851fee0bc0991367ebd1fb4 block: 1777295886
+- current timestamp: 1778579058
 
 ## Description
 
-Use the new flattener implementation
+Two gov-approved transactions to grvt L2: https://tools.l2beat.com/decoder-new/?hash=0x9c4720dca52947f376a85b3e00f1a8f4fd6866a2c128d5b6857fc77b604c832f&data=AwA, https://tools.l2beat.com/decoder-new/?hash=0xbb0d5b5663bccfe8a0b73211149f0a469e32f6dfaf348f88df8117623b26b2f5&data=AwA.
+
+Config: use the new flattener implementation.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        42
++        44
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        42
++        44
+    }
+```
 
 ## Config/verification related changes
 

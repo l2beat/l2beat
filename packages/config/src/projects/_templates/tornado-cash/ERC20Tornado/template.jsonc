@@ -9,9 +9,7 @@
       "description": "Fixed deposit amount accepted by this pool.",
       "severity": "LOW"
     },
-    "token": {
-      "description": "ERC20 token accepted by this mixer instance."
-    },
+    "token": { "description": "ERC20 token accepted by this mixer instance." },
     "verifier": {
       "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
       "severity": "HIGH"
@@ -19,5 +17,6 @@
     "hasher": {
       "description": "Merkle-tree hasher used for commitments and root updates."
     }
-  }
+  },
+  "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"]
 }

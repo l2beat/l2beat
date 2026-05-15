@@ -6,9 +6,8 @@ import { IconControlEye } from './icons/IconControlEye'
 
 export function HideUnreachableButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
-  const knownNodes = nodes.filter((node) => node.addressType !== 'Unknown')
   const hiddenNodes = useStore((state) => state.hidden)
-  const anyUnreachableVisible = knownNodes.some(
+  const anyUnreachableVisible = nodes.some(
     (node) => !node.isReachable && !hiddenNodes.includes(node.id),
   )
 
@@ -32,9 +31,8 @@ export function HideUnreachableButton({ className }: { className?: string }) {
 
 export function ShowUnreachableButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
-  const knownNodes = nodes.filter((node) => node.addressType !== 'Unknown')
   const hiddenNodes = useStore((state) => state.hidden)
-  const anyUnreachableHidden = knownNodes.some(
+  const anyUnreachableHidden = nodes.some(
     (node) => !node.isReachable && hiddenNodes.includes(node.id),
   )
 

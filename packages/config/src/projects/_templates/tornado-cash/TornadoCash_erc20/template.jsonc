@@ -17,18 +17,14 @@
           "type": "interact",
           "description": "replace the withdrawal verifier."
         },
-        {
-          "type": "interact",
-          "description": "transfer the operator role."
-        }
+        { "type": "interact", "description": "transfer the operator role." }
       ]
     },
-    "token": {
-      "description": "ERC20 token accepted by this mixer instance."
-    },
+    "token": { "description": "ERC20 token accepted by this mixer instance." },
     "verifier": {
       "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
       "severity": "HIGH"
     }
-  }
+  },
+  "ignoreInWatchMode": ["getLastRoot", "currentRootIndex", "nextIndex"]
 }

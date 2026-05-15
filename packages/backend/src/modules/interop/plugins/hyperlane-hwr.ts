@@ -21,8 +21,11 @@ import {
   processLog,
 } from './hyperlane'
 import { findHyperlaneChain, HyperlaneConfig } from './hyperlane.config'
-import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
 import { findParsedAround, type ParsedTransferLog } from './logScan'
+import {
+  getBestEffortTokenFrameworkBridgeType,
+  getTokenFrameworkBridgeType,
+} from './tokenFrameworkBridgeTyping'
 import {
   createEventParser,
   createInteropEventType,
@@ -284,7 +287,10 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
             dstTokenAddress: event.args.tokenAddress,
             dstAmount: event.args.amount,
             dstWasMinted: event.args.minted,
-            bridgeType: 'burnAndMint',
+            bridgeType: getBestEffortTokenFrameworkBridgeType({
+              srcWasBurned: undefined,
+              dstWasMinted: event.args.minted,
+            }),
           }),
         ]
       }
@@ -318,7 +324,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
       const dstTokenAddress = event.args.tokenAddress
       const srcWasBurned = hwrSent.args.burned
       const dstWasMinted = event.args.minted
-      const bridgeType = getBridgeType({
+      const bridgeType = getTokenFrameworkBridgeType({
         srcTokenAddress,
         dstTokenAddress,
         srcWasBurned,
@@ -365,7 +371,10 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
         srcAmount: event.args.amount,
         srcWasBurned: event.args.burned,
         dstChain,
-        bridgeType: 'burnAndMint',
+        bridgeType: getBestEffortTokenFrameworkBridgeType({
+          srcWasBurned: event.args.burned,
+          dstWasMinted: undefined,
+        }),
       }),
     ]
   }

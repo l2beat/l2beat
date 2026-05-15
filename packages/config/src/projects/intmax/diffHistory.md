@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x969510c7d35ecccfa63bbf10cb15024432d035e0
+Generated with discovered.json: 0xb21b9f12ef95ba5c9ce119c1cdb3abb604f5a237
 
-# Diff at Fri, 08 May 2026 07:51:26 GMT:
+# Diff at Tue, 12 May 2026 10:52:19 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1771280072
-- current timestamp: 1771280072
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e08a4d47318721a3851fee0bc0991367ebd1fb4 block: 1771280072
+- current timestamp: 1778583067
 
 ## Description
 
-Use the new flattener implementation
+Config: use the new flattener implementation. Source hashes for gnosis safe L2 changed due to some config change, no onchain diff.
 
 ## Config/verification related changes
 
@@ -156,10 +156,13 @@ discovery. Values are for block 1771280072 (main branch discovery), not current.
     +++ description: None
       sourceHashes.0:
 -        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
-+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
++        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
       sourceHashes.1:
 -        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
 +        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      implementationNames.scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD:
+-        "GnosisSafeL2"
++        "GnosisSafeProxy"
     }
 ```
 

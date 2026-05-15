@@ -59,7 +59,8 @@
       "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
       "ignoreInWatchMode": [
         "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
+        "sequencerReportedSubMessageCount",
+        "delayedMessageCount"
       ]
     },
     "eth:0x1bAB804803159aD84b8854581AA53AC72455614E": {

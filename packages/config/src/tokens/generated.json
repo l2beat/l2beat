@@ -872,6 +872,20 @@
       "supply": "zero"
     },
     {
+      "name": "BOLD Stablecoin",
+      "coingeckoId": "liquity-bold-2",
+      "address": "0x6440f144b7e50D6a8439336510312d2F54beB01D",
+      "symbol": "BOLD",
+      "decimals": 18,
+      "deploymentTimestamp": 1747245587,
+      "coingeckoListingTimestamp": 1748217600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/56069/large/BOLD_logo.png?1748265087",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "BONE SHIBASWAP",
       "coingeckoId": "bone-shibaswap",
       "address": "0x9813037ee2218799597d83D4a5B6F3b6778218d9",
@@ -2131,6 +2145,20 @@
       "supply": "zero"
     },
     {
+      "name": "f(x) USD",
+      "coingeckoId": "f-x-protocol-fxusd",
+      "address": "0x085780639CC2cACd35E474e71f4d000e2405d8f6",
+      "symbol": "fxUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1708657775,
+      "coingeckoListingTimestamp": 1710979200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36202/large/fxUSD.jpg?1710833113",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Fantom Token",
       "coingeckoId": "wrapped-fantom",
       "address": "0x4E15361FD6b4BB609Fa63C81A2be19d873717870",
@@ -2252,6 +2280,20 @@
       "coingeckoListingTimestamp": 1711065600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36339/large/IMG_3928.png?1727165842",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Fluid",
+      "coingeckoId": "instadapp",
+      "address": "0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb",
+      "symbol": "FLUID",
+      "decimals": 18,
+      "deploymentTimestamp": 1617673481,
+      "coingeckoListingTimestamp": 1623801600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14688/large/Logo_1_%28brighter%29.png?1734430693",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2379,6 +2421,20 @@
       "coingeckoListingTimestamp": 1649462400,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Frax USD",
+      "coingeckoId": "frax-usd",
+      "address": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+      "symbol": "frxUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1735900127,
+      "coingeckoListingTimestamp": 1739664000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53963/large/frxUSD.png?1737792154",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3877,6 +3933,20 @@
       "coingeckoListingTimestamp": 1602633600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/10365/large/near.jpg?1696510367",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "NEAR",
+      "coingeckoId": "rainbow-bridged-near-ethereum",
+      "address": "0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4",
+      "symbol": "NEAR",
+      "decimals": 24,
+      "deploymentTimestamp": 1621575783,
+      "coingeckoListingTimestamp": 1768867200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71681/large/near.png?1768905174",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -6235,6 +6305,20 @@
       "supply": "zero"
     },
     {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1725290327,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "USUAL",
       "coingeckoId": "usual",
       "address": "0xC4441c2BE5d8fA8126822B9929CA0b81Ea0DE38E",
@@ -6431,6 +6515,20 @@
       "supply": "zero"
     },
     {
+      "name": "World Liberty Financial USD",
+      "coingeckoId": "usd1-wlfi",
+      "address": "0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
+      "symbol": "USD1",
+      "decimals": 18,
+      "deploymentTimestamp": 1738036895,
+      "coingeckoListingTimestamp": 1744329600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54977/large/USD1_1000x1000_transparent.png?1749297002",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Worldcoin",
       "coingeckoId": "worldcoin-wld",
       "address": "0x163f8C2467924be0ae7B5347228CABF260318753",
@@ -6580,6 +6678,20 @@
       "coingeckoListingTimestamp": 1703721600,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Wrapped OETH",
+      "coingeckoId": "wrapped-oeth",
+      "address": "0xDcEe70654261AF21C44c093C300eD3Bb97b78192",
+      "symbol": "wOETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1680301283,
+      "coingeckoListingTimestamp": 1699920000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29734/large/woeth-200x200.png?1714796686",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
