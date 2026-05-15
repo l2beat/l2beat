@@ -79,7 +79,11 @@ describe(buildFieldTree.name, () => {
             type: 'complex',
             property: '0xKeyA',
             value: [
-              { type: 'simple', property: 'inner', fullKey: 'map.0xKeyA.inner' },
+              {
+                type: 'simple',
+                property: 'inner',
+                fullKey: 'map.0xKeyA.inner',
+              },
               { type: 'simple', property: '#key', fullKey: 'map.0xKeyA.#key' },
             ],
           },
