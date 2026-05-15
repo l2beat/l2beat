@@ -165,9 +165,9 @@ export const roninNetwork: ScalingProject = opStackL2({
         ],
       },
       {
-        name: 'Dual-bridge architecture',
+        name: 'External bridge architecture',
         description:
-          'The May 2026 L2 migration changed how Ronin L2 state is settled on Ethereum but did not redeploy the bridge that custodies user assets. The risk analysis on this page covers the OP Stack canonical bridge (OptimismPortal2 and L1StandardBridge), which is deployed but currently empty. Bridged user assets continue to be held in MainchainGateway and bridged through Chainlink CCIP plus the Ronin BridgeOperator multisig. The two paths share no on-chain wiring and have different security models: the OP Stack path is secured by the permissioned fault proof system, while MainchainGateway is secured by CCIP DON attestations and a stake-weighted operator threshold. Sky Mavis has not announced a plan to migrate liquidity from MainchainGateway to the OP Stack bridge.',
+          'The May 2026 L2 migration deployed the OP Stack canonical bridge (OptimismPortal2 and L1StandardBridge) but did not migrate user funds into it; it is currently empty. User assets are custodied on two separate L1 paths, neither of which is the canonical bridge analyzed on this page: (1) Chainlink CCIP TokenPools, the active bridge since April 2025, securing 12 tokens including AXS, USDC, WETH, WBTC (new contract), YGG, PIXEL and SLP via Chainlink DON attestations and the Risk Management Network; (2) the legacy MainchainGateway, deprecated in April 2025 but still holding residual balances (legacy WBTC, ETH backing of legacy WETH, dust), withdrawable through the Ronin BridgeOperator stake-weighted multisig. Sky Mavis has not announced a plan to migrate liquidity into the OP Stack bridge.',
         risks: [],
         references: [
           {
