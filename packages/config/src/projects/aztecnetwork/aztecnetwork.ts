@@ -68,9 +68,11 @@ const slotDuration = discovery.getContractValue<number>(
   'Rollup',
   'getSlotDuration',
 )
-const epochDuration =
-  discovery.getContractValue<number>('Rollup', 'getEpochDuration') *
-  slotDuration
+const epochSlots = discovery.getContractValue<number>(
+  'Rollup',
+  'getEpochDuration',
+)
+const epochDuration = epochSlots * slotDuration
 const proofWindow =
   epochDuration *
   (discovery.getContractValue<number>('Rollup', 'getProofSubmissionEpochs') + 1)
@@ -452,6 +454,18 @@ export const aztecnetwork: ScalingProject = {
     sequencing: {
       name: 'Transactions are ordered by a staked committee',
       description: `Joining the sequencer set is permissionless and requires staking ${activationThresholdString}. For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer per slot. The committee and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
+      inclusionDelayChart: {
+        type: 'aztec',
+        validatorCount: activeSequencerCount,
+        committeeSize: targetCommitteeSize,
+        epochSlots,
+        slotSeconds: slotDuration,
+        blockingThreshold: Math.floor((targetCommitteeSize - 1) / 3),
+        target: 0.99,
+        maxCensorFraction: 0.5,
+        afterChart:
+          'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
+      },
       references: [
         {
           title: 'Rollup.sol - getProposerAt() on Etherscan',

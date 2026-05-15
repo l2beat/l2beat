@@ -44,6 +44,9 @@ const ambBridgeValidatorCount = discovery.getContractValue<number>(
   'validatorCount',
 )
 
+const gnosisValidatorSetSize = 100_000
+const gnosisSlotSeconds = 5
+
 export const gnosis: ScalingProject = {
   type: 'layer2',
   id: ProjectId('gnosis'),
@@ -216,6 +219,32 @@ export const gnosis: ScalingProject = {
         {
           category: 'Funds can be frozen if',
           text: 'transaction data is unavailable and bridge validators cannot reconstruct or sign the messages needed to exit.',
+        },
+      ],
+    },
+    sequencing: {
+      name: 'Transactions are ordered by Gnosis Chain validators',
+      description:
+        'Gnosis Chain uses a permissionless proof-of-stake validator set with stake-weighted proposer rotation and a 5 second slot time. This model uses a static equal-weight validator baseline for selective censorship on an otherwise live chain.',
+      inclusionDelayChart: {
+        type: 'ethereum',
+        validatorCount: gnosisValidatorSetSize,
+        slotSeconds: gnosisSlotSeconds,
+        target: 0.99,
+        maxCensorFraction: 0.5,
+        afterChart:
+          'The chart uses the Ethereum-style single-proposer formula with Gnosis-specific constants. It excludes finality, inactivity leaks, validator-set changes, hard forks, and blanket-censorship resistance gadgets.',
+      },
+      references: [
+        {
+          title: 'Gnosis Chain specifications',
+          url: 'https://docs.gnosischain.com/about/specs/',
+        },
+      ],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'at least half of the active stake censors them, or if current validators coordinate blanket censorship and the chain requires social recovery.',
         },
       ],
     },

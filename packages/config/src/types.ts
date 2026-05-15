@@ -50,8 +50,46 @@ export interface ProjectTechnologyChoice {
   description: string
   references: ReferenceLink[]
   risks: ProjectRisk[]
+  inclusionDelayChart?: ProjectInclusionDelayChart
   isIncomplete?: boolean
   isUnderReview?: boolean
+}
+
+export type ProjectInclusionDelayChart =
+  | ProjectEthereumInclusionDelayChart
+  | ProjectAztecInclusionDelayChart
+  | ProjectPolygonInclusionDelayChart
+
+interface ProjectInclusionDelayChartBase {
+  target: number
+  maxCensorFraction: number
+  afterChart?: string
+  configuredCensoringFraction?: number
+}
+
+export interface ProjectEthereumInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'ethereum'
+  validatorCount: number
+  slotSeconds: number
+}
+
+export interface ProjectAztecInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'aztec'
+  validatorCount: number
+  committeeSize: number
+  epochSlots: number
+  slotSeconds: number
+  blockingThreshold: number
+}
+
+export interface ProjectPolygonInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'polygon'
+  validatorCount: number
+  spanBlocks: number
+  blockSeconds: number
 }
 
 export interface ReferenceLink {
