@@ -1,3 +1,136 @@
+Generated with discovered.json: 0x5f9890e9b02642b06268f4639ed6396f7bb2cd39
+
+# Diff at Wed, 13 May 2026 13:31:40 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@da451cba8e944a28754be7e17bcb7555d857f312 block: 1773320760
+- current timestamp: 1778679029
+
+## Description
+
+Upgrade to Kailua [v1.2.0](https://github.com/boundless-xyz/kailua/releases/tag/v1.2.0).
+
+- Vanguard advantage activated: previously `0s` (disabled), now `1mo` with a designated vanguard (`0x7cB1022D…`). The vanguard can delay the first child proposal of each parent tournament by up to a month; sibling proposals stay permissionless (v1.2.0 retains the `childCount() == 1` gate).
+- `KailuaGame` impl rotated ([diff](https://disco.l2beat.com/diff/eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF/eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b)) — now holds a direct `KAILUA_VERIFIER` reference (read once from the treasury at construction) and calls the verifier for proof checking; vanguard and tournament logic unchanged.
+- `KailuaTreasury` rotated ([diff](https://disco.l2beat.com/diff/eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C/eth:0x9937033Cc967eED9d753e31c77D2F146d002ae53)) — drops the `RISC_ZERO_VERIFIER`, `FPVM_IMAGE_ID`, and `ROLLUP_CONFIG_HASH` immutables (moved to KailuaVerifier) and holds a `KAILUA_VERIFIER` reference instead.
+- `KailuaVerifier` (new in v1.2.0) — proxy-wrapped, holds the proof config that used to sit on KailuaTreasury, and replaces the previous `RiscZeroVerifierRouter` + emergency-stop path. Adds optional fault-proof permits: a prover can lock collateral to reserve an exclusive window for collecting the fault-proof reward (anti-front-run). Effectively negligible on bob (`PERMIT_DELAY=0`, `PERMIT_DURATION=1` → 1-second active window); fault-proof submission remains permissionless.
+- New FPVM image ID deployed alongside the v1.2.0 contracts.
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      values.accessControl.PROPOSER_ROLE.members.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.accessControl.CANCELLER_ROLE.members.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
++++ severity: HIGH
+      values.callsExecuted.12:
++        {"id":"0x5fb8d6ab7b9ad6614a645faf85120306acf72c02bc66de00b027c8ec57eff377","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc10000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
++++ severity: HIGH
+      values.callsExecuted.13:
++        {"id":"0x336fa76c82918a2642423bcae028021a204288e86965316b58737fb6e6a2d985","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e630000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
++++ severity: HIGH
+      values.callsExecuted.14:
++        {"id":"0x0c0f9e544f5acb8eafdf44bbd4a1f21cde030970ad1f76c01504ff1c291f0e9d","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f7830000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.15:
++        {"id":"0x5fb8d6ab7b9ad6614a645faf85120306acf72c02bc66de00b027c8ec57eff377","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc10000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.16:
++        {"id":"0x336fa76c82918a2642423bcae028021a204288e86965316b58737fb6e6a2d985","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e630000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.17:
++        {"id":"0x0c0f9e544f5acb8eafdf44bbd4a1f21cde030970ad1f76c01504ff1c291f0e9d","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f7830000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.Canceller.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.Executor.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.Proposer.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF) [risc0/KailuaGame]
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
+    EOA  (eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x9937033Cc967eED9d753e31c77D2F146d002ae53","description":"propose new state roots before anyone else, giving a first-mover advantage on the optimistic clock.","role":".vanguard"}]
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF"
++        "eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C) [risc0/KailuaTreasury]
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 0s.
+```
+
+```diff
+    contract Bob Multisig 1 (eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0x9937033Cc967eED9d753e31c77D2F146d002ae53) [risc0/KailuaTreasury]
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 1mo.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaVerifier (eth:0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b) [risc0/KailuaGame]
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+## Source code changes
+
+```diff
+.../bob/{.flat@1773320760 => .flat}/KailuaGame.sol | 6959 +++++---------------
+ .../{.flat@1773320760 => .flat}/KailuaTreasury.sol | 6925 +++++--------------
+ .../bob/.flat/KailuaVerifier/KailuaVerifier.sol    |  509 ++
+ .../projects/bob/.flat/KailuaVerifier/Proxy.p.sol  |  120 +
+ .../null => ./src/projects/bob/.flat/Safe/Safe.sol | 1216 ++++
+ .../src/projects/bob/.flat/Safe/SafeProxy.p.sol    |   42 +
+ 6 files changed, 5226 insertions(+), 10545 deletions(-)
+```
+
 Generated with discovered.json: 0x4061049f25662896532596c9725ba5fa0e5d136e
 
 # Diff at Fri, 08 May 2026 07:51:09 GMT:
