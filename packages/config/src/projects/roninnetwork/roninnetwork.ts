@@ -144,7 +144,7 @@ export const roninNetwork: ScalingProject = opStackL2({
       {
         name: 'Dual-bridge architecture',
         description:
-          'The May 2026 L2 migration changed how Ronin L2 state is settled on Ethereum but did not redeploy the bridge that custodies user assets. The risk analysis on this page covers the OP Stack canonical bridge (OptimismPortal2 and L1StandardBridge), which is deployed but currently empty. Bridged user assets continue to be held in MainchainGateway and bridged through Chainlink CCIP plus the Ronin BridgeOperator multisig. The two paths share no on-chain wiring and have different security models: the OP Stack path is secured by the Cannon MIPS64 fault proof system with a 7-day challenge window, while MainchainGateway is secured by CCIP DON attestations and a stake-weighted operator threshold. Sky Mavis has not announced a plan to migrate liquidity from MainchainGateway to the OP Stack bridge.',
+          'The May 2026 L2 migration changed how Ronin L2 state is settled on Ethereum but did not redeploy the bridge that custodies user assets. The risk analysis on this page covers the OP Stack canonical bridge (OptimismPortal2 and L1StandardBridge), which is deployed but currently empty. Bridged user assets continue to be held in MainchainGateway and bridged through Chainlink CCIP plus the Ronin BridgeOperator multisig. The two paths share no on-chain wiring and have different security models: the OP Stack path is secured by the permissioned fault proof system, while MainchainGateway is secured by CCIP DON attestations and a stake-weighted operator threshold. Sky Mavis has not announced a plan to migrate liquidity from MainchainGateway to the OP Stack bridge.',
         risks: [],
         references: [
           {
@@ -154,6 +154,27 @@ export const roninNetwork: ScalingProject = opStackL2({
           {
             title: 'Ronin Bridge to Chainlink CCIP migration - Ronin Blog',
             url: 'https://blog.roninchain.com/p/the-ronin-bridge-chainlink-ccip-migration',
+          },
+        ],
+      },
+      {
+        name: 'Proof system cannot execute for this chain',
+        description: `The dispute games on this chain commit to the op-program v1.3.1 prestate (0x038512e0…6764d54c). That binary embeds the superchain-registry snapshot at commit 42bd03ba8313 (2024-08-21), which lists 17 chain IDs and does not include Ronin (chainId 2020). If a dispute game were stepped through to the VM, op-program's RollupConfigByChainID(2020) would not find a rollup config and would panic, producing an invalid output state — any claim (honest or fraudulent) could then be "disproven" against the panic. Users are not exposed today because the respected game type is PermissionedDisputeGame: only the proposer can create state proposals and only proposer/challenger can move or step. The proof system therefore reduces to an operator-attested delay timer rather than an adversarial fraud-proof. Fix would require redeploying games with either an updated registry snapshot or a chain-specific prestate.`,
+        risks: [],
+        references: [
+          {
+            title:
+              'absolutePrestate hash registered in superchain-registry as op-program v1.3.1',
+            url: 'https://github.com/ethereum-optimism/superchain-registry/blob/main/validation/standard/standard-prestates.toml',
+          },
+          {
+            title: 'op-program v1.3.1 release (commit e3c2f04, 2024-08-23)',
+            url: 'https://github.com/ethereum-optimism/optimism/releases/tag/op-program%2Fv1.3.1',
+          },
+          {
+            title:
+              'superchain-registry snapshot pinned at op-program v1.3.1 build (42bd03ba8313)',
+            url: 'https://github.com/ethereum-optimism/superchain-registry/blob/42bd03ba8313/chainList.json',
           },
         ],
       },
