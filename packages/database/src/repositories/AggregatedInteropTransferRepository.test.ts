@@ -1423,7 +1423,8 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             srcChain: 'ethereum',
             dstChain: 'base',
             transferCount: 300,
-            srcValueUsd: 900_000,
+            srcValueUsd: 2_000_000,
+            dstValueUsd: 900_000,
           }),
           record({
             id: 'same-chain',

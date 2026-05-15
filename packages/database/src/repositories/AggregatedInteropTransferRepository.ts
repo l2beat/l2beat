@@ -393,7 +393,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         'dstChain',
         eb.fn.sum('transferCount').as('transfer_count'),
         sql<number>`count(distinct "id")`.as('protocol_count'),
-        transferVolumeUsd('AggregatedInteropTransfer').as('volume_usd'),
+        destinationVolumeUsd('AggregatedInteropTransfer').as('volume_usd'),
       ])
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .whereRef('srcChain', '!=', 'dstChain')
@@ -841,6 +841,18 @@ function transferVolumeUsd(tableAlias: string) {
           0
         )
       end
+    )
+  `
+}
+
+function destinationVolumeUsd(tableAlias: string) {
+  return sql<number>`
+    sum(
+      coalesce(
+        ${sql.raw(`"${tableAlias}"."dstValueUsd"`)},
+        ${sql.raw(`"${tableAlias}"."srcValueUsd"`)},
+        0
+      )
     )
   `
 }

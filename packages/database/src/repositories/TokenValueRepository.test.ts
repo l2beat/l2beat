@@ -132,7 +132,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         tokenValue('b', 'arbitrum', previousTimestamp, 1, 500, 500, 500, 10),
         tokenValue('c', 'base', previousTimestamp, 1, 800, 800, 800, 10),
         tokenValue(
-          'new',
+          'n',
           'new-project',
           previousTimestamp,
           1,
@@ -146,7 +146,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
         tokenValue('b', 'arbitrum', timestamp, 1, 2000, 2000, 2000, 10),
         tokenValue('c', 'base', timestamp, 1, 700, 700, 700, 10),
         tokenValue(
-          'new',
+          'n',
           'new-project',
           timestamp,
           1,
