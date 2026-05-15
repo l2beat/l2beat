@@ -16,6 +16,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import entityStakeDistribution from './entity-stake-distribution.json'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -263,12 +264,13 @@ export const polygonpos: ScalingProject = {
       name: 'Transactions are ordered by Polygon PoS validators',
       description: `Polygon PoS is operated by a proof-of-stake validator set with ${currentValidatorSetSize} active validators. Block production is assigned to one validator for a span, while Ethereum accepts checkpoints signed by more than two thirds of Polygon PoS stake.`,
       inclusionDelayChart: {
-        type: 'polygon',
+        type: 'spanlike',
         validatorCount: currentValidatorSetSize,
         spanBlocks: 6400,
         blockSeconds: 2,
         target: 0.99,
         maxCensorFraction: 0.33,
+        entityStakeDistribution,
         afterChart:
           'The chart models live-chain selective censorship only. Since proposing is stake-weighted, the x-axis represents the censoring POL stake, and does not cover validator-set changes, or blanket-censorship resistance gadgets.',
       },

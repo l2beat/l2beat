@@ -24,11 +24,13 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 
 import {
-  calculateProjectDelayDays,
   getInclusionDelayChartData,
+  getInclusionDelayEntityLegendEntries,
+  type InclusionDelayEntityLegendEntry,
 } from './calculateInclusionDelay'
 
 interface Props {
@@ -48,7 +50,11 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
       })),
     [chart],
   )
-  const marker = useMemo(() => getConfiguredMarker(chart), [chart])
+  const entityLegendEntries = useMemo(
+    () => getInclusionDelayEntityLegendEntries(chart),
+    [chart],
+  )
+  const entityMarkers = entityLegendEntries.filter(hasFiniteDelay)
   const yDomain = getYDomain(data, yAxisScale)
 
   const chartMeta = useMemo(
@@ -64,6 +70,11 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
           color: 'var(--chart-ethereum)',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
+        entityStake: {
+          label: 'Largest staking entities',
+          color: 'var(--chart-cyan)',
+          indicatorType: { shape: 'square' },
+        },
       }) satisfies ChartMeta,
     [projectName],
   )
@@ -72,10 +83,10 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
     <div className="my-6">
       <div className="mb-3 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
         <div>
-          <div className="font-bold text-base md:text-lg">
+          <div className="font-bold text-heading-16 md:text-heading-18">
             Inclusion delay by censorship fraction
           </div>
-          <div className="text-secondary text-xs md:text-sm">
+          <div className="font-medium text-label-value-13 text-secondary md:text-label-value-14">
             {formatTarget(chart.target)} inclusion delay in a static sequencer
             set by censoring fraction of sequencers/validators
           </div>
@@ -111,6 +122,7 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
             tickFormatter={formatCensoringFraction}
             tickLine={false}
             axisLine={false}
+            minTickGap={16}
           />
           <YAxis
             scale={yAxisScale === 'log' ? 'log' : 'linear'}
@@ -148,22 +160,72 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
             connectNulls
             isAnimationActive={false}
           />
-          {marker && (
+          {entityMarkers.map((marker) => (
             <ReferenceDot
-              x={marker.censoringFraction}
+              key={marker.id}
+              x={marker.stakeFraction}
               y={marker.delayDays}
-              r={4}
-              fill={chartMeta.projectDelayDays?.color}
+              r={4.5}
+              fill={chartMeta.entityStake?.color}
               stroke="var(--background)"
               strokeWidth={2}
+              label={{
+                value: marker.label,
+                position: 'top',
+                fill: 'var(--primary)',
+                fontSize: 11,
+                fontWeight: 500,
+                offset: 8,
+              }}
+              ifOverflow="discard"
             />
-          )}
+          ))}
           <ChartTooltip
             filterNull={false}
             content={<InclusionDelayTooltip />}
           />
         </ComposedChart>
       </ChartContainer>
+      <EntityMarkersLegend
+        entries={entityLegendEntries}
+        color={chartMeta.entityStake?.color}
+      />
+    </div>
+  )
+}
+
+function EntityMarkersLegend({
+  entries,
+  color,
+}: {
+  entries: InclusionDelayEntityLegendEntry[]
+  color: string | undefined
+}) {
+  if (entries.length === 0) return null
+
+  return (
+    <div className="mt-3 flex flex-col gap-2 font-medium text-label-value-13">
+      <div className="flex items-center gap-1.5 text-secondary">
+        <ChartDataIndicator
+          type={{ shape: 'square' }}
+          backgroundColor={color}
+        />
+        <span>Largest staking entities</span>
+      </div>
+      <div className="grid gap-x-6 gap-y-1.5 md:grid-cols-2">
+        {entries.map((entry) => (
+          <div
+            key={entry.id}
+            className="min-w-0 truncate"
+            title={entry.entityNames.join(', ')}
+          >
+            <span className="text-primary">{entry.label}:</span>{' '}
+            <span className="text-secondary">
+              {formatEntityMarkerName(entry)}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
@@ -178,9 +240,10 @@ function InclusionDelayTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-64 flex-col">
-        <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
+        <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           Censorship fraction: {formatCensoringFraction(censoringFraction)}
         </div>
+        <HorizontalSeparator className="mb-2" />
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
             if (entry.name === undefined || entry.type === 'none') return null
@@ -216,19 +279,10 @@ function InclusionDelayTooltip({
   )
 }
 
-function getConfiguredMarker(chart: ProjectInclusionDelayChart) {
-  if (chart.configuredCensoringFraction === undefined) return undefined
-
-  const censorCount = Math.round(
-    chart.validatorCount * chart.configuredCensoringFraction,
-  )
-  const delayDays = calculateProjectDelayDays(chart, censorCount)
-  if (delayDays === null) return undefined
-
-  return {
-    censoringFraction: censorCount / chart.validatorCount,
-    delayDays,
-  }
+function hasFiniteDelay(
+  entry: InclusionDelayEntityLegendEntry,
+): entry is InclusionDelayEntityLegendEntry & { delayDays: number } {
+  return entry.delayDays !== null
 }
 
 function getYDomain(
@@ -296,6 +350,14 @@ function formatDelayDays(days: number) {
   if (seconds <= 0) return '<1s'
 
   return formatSeconds(seconds)
+}
+
+function formatEntityMarkerName(entry: InclusionDelayEntityLegendEntry) {
+  const name = entry.entityNames.at(-1)
+  if (!name) return ''
+  if (entry.entityCount === 1) return name
+
+  return `+ ${name}`
 }
 
 function formatTarget(target: number) {

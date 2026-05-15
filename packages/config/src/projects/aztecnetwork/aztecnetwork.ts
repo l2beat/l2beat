@@ -25,6 +25,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { Sentiment } from '../../types'
+import entityStakeDistribution from './entity-stake-distribution.json'
 
 const discovery = new ProjectDiscovery('aztecnetwork')
 
@@ -455,7 +456,7 @@ export const aztecnetwork: ScalingProject = {
       name: 'Transactions are ordered by a staked committee',
       description: `Joining the sequencer set is permissionless and requires staking ${activationThresholdString}. For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer per slot. The committee and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
       inclusionDelayChart: {
-        type: 'aztec',
+        type: 'committeelike',
         validatorCount: activeSequencerCount,
         committeeSize: targetCommitteeSize,
         epochSlots,
@@ -463,6 +464,7 @@ export const aztecnetwork: ScalingProject = {
         blockingThreshold: Math.floor((targetCommitteeSize - 1) / 3),
         target: 0.99,
         maxCensorFraction: 0.5,
+        entityStakeDistribution,
         afterChart:
           'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
       },

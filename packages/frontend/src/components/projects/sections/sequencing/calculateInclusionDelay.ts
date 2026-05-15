@@ -1,8 +1,9 @@
 import type {
-  ProjectAztecInclusionDelayChart,
-  ProjectEthereumInclusionDelayChart,
+  ProjectCommitteeLikeInclusionDelayChart,
+  ProjectEthereumLikeInclusionDelayChart,
   ProjectInclusionDelayChart,
-  ProjectPolygonInclusionDelayChart,
+  ProjectInclusionDelayChartEntityStake,
+  ProjectSpanLikeInclusionDelayChart,
 } from '@l2beat/config'
 
 const ETHEREUM_COMPARISON_SLOT_SECONDS = 12
@@ -11,6 +12,15 @@ export interface InclusionDelayChartPoint {
   censoringFraction: number
   projectDelayDays: number | null
   ethereumDelayDays: number | null
+}
+
+export interface InclusionDelayEntityLegendEntry {
+  id: string
+  label: string
+  entityCount: number
+  entityNames: string[]
+  stakeFraction: number
+  delayDays: number | null
 }
 
 export function getInclusionDelayChartData(
@@ -30,7 +40,7 @@ export function getInclusionDelayChartData(
     return {
       censoringFraction,
       projectDelayDays: calculateProjectDelayDays(chart, censorCount),
-      ethereumDelayDays: calculateEthereumStyleDelayDaysForFraction({
+      ethereumDelayDays: calculateEthereumComparisonDelayDaysForFraction({
         censoringFraction,
         slotSeconds: ETHEREUM_COMPARISON_SLOT_SECONDS,
         target: chart.target,
@@ -39,70 +49,108 @@ export function getInclusionDelayChartData(
   })
 }
 
+export function getInclusionDelayEntityLegendEntries(
+  chart: ProjectInclusionDelayChart,
+): InclusionDelayEntityLegendEntry[] {
+  const distribution = chart.entityStakeDistribution
+  if (
+    !distribution ||
+    !Number.isFinite(distribution.totalStake) ||
+    distribution.totalStake <= 0
+  ) {
+    return []
+  }
+
+  const entities = getSortedPositiveEntities(distribution.entities)
+
+  let cumulativeStake = 0
+  const entries: InclusionDelayEntityLegendEntry[] = []
+
+  for (const [i, entity] of entities.entries()) {
+    cumulativeStake += entity.stake
+
+    const stakeFraction = cumulativeStake / distribution.totalStake
+    const delayDays =
+      stakeFraction <= chart.maxCensorFraction
+        ? calculateProjectDelayDays(
+            chart,
+            Math.round(chart.validatorCount * stakeFraction),
+          )
+        : null
+
+    const entityCount = i + 1
+    entries.push({
+      id: `${entityCount}-${entity.name}`,
+      label: `Top ${entityCount}`,
+      entityCount,
+      entityNames: entities.slice(0, entityCount).map((entity) => entity.name),
+      stakeFraction,
+      delayDays,
+    })
+
+    if (delayDays === null) break
+  }
+
+  return entries
+}
+
+function getSortedPositiveEntities(
+  entities: ProjectInclusionDelayChartEntityStake[],
+) {
+  return [...entities]
+    .filter((entity) => Number.isFinite(entity.stake) && entity.stake > 0)
+    .sort((a, b) => b.stake - a.stake)
+}
+
 export function calculateProjectDelayDays(
   chart: ProjectInclusionDelayChart,
   censorCount: number,
 ): number | null {
   switch (chart.type) {
-    case 'ethereum':
-      return calculateEthereumStyleDelayDays(chart, censorCount)
-    case 'polygon':
-      return calculatePolygonDelayDays(chart, censorCount)
-    case 'aztec':
-      return calculateAztecDelayDays(chart, censorCount)
+    case 'ethereumlike':
+      return calculateEthereumLikeDelayDays(chart, censorCount)
+    case 'spanlike':
+      return calculateSpanLikeDelayDays(chart, censorCount)
+    case 'committeelike':
+      return calculateCommitteeLikeDelayDays(chart, censorCount)
   }
 }
 
-export function calculateEthereumStyleDelayDays(
-  chart: ProjectEthereumInclusionDelayChart,
+export function calculateEthereumLikeDelayDays(
+  chart: ProjectEthereumLikeInclusionDelayChart,
   censorCount: number,
 ): number | null {
-  const honestCount = chart.validatorCount - censorCount
-  if (honestCount <= censorCount) return null
-
-  const honestSlotProbability = honestCount / chart.validatorCount
-  if (honestSlotProbability >= 1) {
-    return chart.slotSeconds / 86_400
-  }
-
-  if (honestSlotProbability <= 0) return null
-
-  const targetSlots = ceilWithTolerance(
-    Math.log(1 - chart.target) / Math.log(1 - honestSlotProbability),
-  )
-
-  return (targetSlots * chart.slotSeconds) / 86_400
+  return calculateSingleProposerDelayDays({
+    validatorCount: chart.validatorCount,
+    censorCount,
+    target: chart.target,
+    firstOpportunitySeconds: chart.slotSeconds,
+    missedOpportunitySeconds: chart.slotSeconds,
+    minHonestFraction: 0.5,
+  })
 }
 
-export function calculatePolygonDelayDays(
-  chart: ProjectPolygonInclusionDelayChart,
+export function calculateSpanLikeDelayDays(
+  chart: ProjectSpanLikeInclusionDelayChart,
   censorCount: number,
 ): number | null {
-  const honestCount = chart.validatorCount - censorCount
-  if (honestCount <= (2 / 3) * chart.validatorCount) return null
-
-  const honestSpanProbability = honestCount / chart.validatorCount
-  if (honestSpanProbability >= 1) {
-    return chart.blockSeconds / 86_400
-  }
-
-  if (honestSpanProbability <= 0) return null
-
-  const targetSpans = ceilWithTolerance(
-    Math.log(1 - chart.target) / Math.log(1 - honestSpanProbability),
-  )
-  const targetBlocks = (targetSpans - 1) * chart.spanBlocks + 1
-
-  return (targetBlocks * chart.blockSeconds) / 86_400
+  return calculateSingleProposerDelayDays({
+    validatorCount: chart.validatorCount,
+    censorCount,
+    target: chart.target,
+    firstOpportunitySeconds: chart.blockSeconds,
+    missedOpportunitySeconds: chart.spanBlocks * chart.blockSeconds,
+    minHonestFraction: 2 / 3,
+  })
 }
 
-export function calculateAztecDelayDays(
-  chart: ProjectAztecInclusionDelayChart,
+export function calculateCommitteeLikeDelayDays(
+  chart: ProjectCommitteeLikeInclusionDelayChart,
   censorCount: number,
 ): number | null {
   if (censorCount === 0) return chart.slotSeconds / 86_400
 
-  const probabilities = getAztecCommitteeCensorProbabilities(
+  const probabilities = getCommitteeCensorProbabilities(
     chart.validatorCount,
     chart.committeeSize,
     censorCount,
@@ -151,7 +199,42 @@ export function calculateAztecDelayDays(
   return (targetSlots * chart.slotSeconds) / 86_400
 }
 
-function calculateEthereumStyleDelayDaysForFraction({
+function calculateSingleProposerDelayDays({
+  validatorCount,
+  censorCount,
+  target,
+  firstOpportunitySeconds,
+  missedOpportunitySeconds,
+  minHonestFraction,
+}: {
+  validatorCount: number
+  censorCount: number
+  target: number
+  firstOpportunitySeconds: number
+  missedOpportunitySeconds: number
+  minHonestFraction: number
+}): number | null {
+  const honestCount = validatorCount - censorCount
+  if (honestCount <= minHonestFraction * validatorCount) return null
+
+  const honestOpportunityProbability = honestCount / validatorCount
+  if (honestOpportunityProbability >= 1) {
+    return firstOpportunitySeconds / 86_400
+  }
+
+  if (honestOpportunityProbability <= 0) return null
+
+  const targetOpportunities = ceilWithTolerance(
+    Math.log(1 - target) / Math.log(1 - honestOpportunityProbability),
+  )
+  const targetSeconds =
+    (targetOpportunities - 1) * missedOpportunitySeconds +
+    firstOpportunitySeconds
+
+  return targetSeconds / 86_400
+}
+
+function calculateEthereumComparisonDelayDaysForFraction({
   censoringFraction,
   slotSeconds,
   target,
@@ -192,7 +275,7 @@ function ceilWithTolerance(value: number) {
   return Math.ceil(value)
 }
 
-function getAztecCommitteeCensorProbabilities(
+function getCommitteeCensorProbabilities(
   validatorCount: number,
   committeeSize: number,
   censorCount: number,
@@ -278,17 +361,17 @@ function getSampledCensorCounts(
 
 function getCriticalCensorCounts(chart: ProjectInclusionDelayChart) {
   switch (chart.type) {
-    case 'ethereum':
+    case 'ethereumlike':
       return [
         Math.floor((chart.validatorCount - 1) / 2),
         Math.ceil(chart.validatorCount / 2),
       ]
-    case 'polygon':
+    case 'spanlike':
       return [
         Math.ceil(chart.validatorCount / 3) - 1,
         Math.ceil(chart.validatorCount / 3),
       ]
-    case 'aztec':
+    case 'committeelike':
       return []
   }
 }
@@ -306,11 +389,11 @@ function validateChart(chart: ProjectInclusionDelayChart) {
     throw new Error('maxCensorFraction must be between 0 and 1')
   }
 
-  if (chart.type === 'ethereum' && chart.slotSeconds <= 0) {
+  if (chart.type === 'ethereumlike' && chart.slotSeconds <= 0) {
     throw new Error('slotSeconds must be greater than 0')
   }
 
-  if (chart.type === 'polygon') {
+  if (chart.type === 'spanlike') {
     if (chart.spanBlocks <= 0) {
       throw new Error('spanBlocks must be greater than 0')
     }
@@ -319,7 +402,7 @@ function validateChart(chart: ProjectInclusionDelayChart) {
     }
   }
 
-  if (chart.type === 'aztec') {
+  if (chart.type === 'committeelike') {
     if (
       chart.committeeSize <= 0 ||
       chart.committeeSize > chart.validatorCount

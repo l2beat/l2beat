@@ -227,7 +227,7 @@ export const gnosis: ScalingProject = {
       description:
         'Gnosis Chain uses a permissionless proof-of-stake validator set with stake-weighted proposer rotation and a 5 second slot time. This model uses a static equal-weight validator baseline for selective censorship on an otherwise live chain.',
       inclusionDelayChart: {
-        type: 'ethereum',
+        type: 'ethereumlike',
         validatorCount: gnosisValidatorSetSize,
         slotSeconds: gnosisSlotSeconds,
         target: 0.99,

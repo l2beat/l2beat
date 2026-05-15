@@ -56,27 +56,38 @@ export interface ProjectTechnologyChoice {
 }
 
 export type ProjectInclusionDelayChart =
-  | ProjectEthereumInclusionDelayChart
-  | ProjectAztecInclusionDelayChart
-  | ProjectPolygonInclusionDelayChart
+  | ProjectEthereumLikeInclusionDelayChart
+  | ProjectCommitteeLikeInclusionDelayChart
+  | ProjectSpanLikeInclusionDelayChart
 
 interface ProjectInclusionDelayChartBase {
   target: number
   maxCensorFraction: number
   afterChart?: string
-  configuredCensoringFraction?: number
+  entityStakeDistribution?: ProjectInclusionDelayChartEntityStakeDistribution
 }
 
-export interface ProjectEthereumInclusionDelayChart
+export interface ProjectInclusionDelayChartEntityStakeDistribution {
+  stakeToken: string
+  totalStake: number
+  entities: ProjectInclusionDelayChartEntityStake[]
+}
+
+export interface ProjectInclusionDelayChartEntityStake {
+  name: string
+  stake: number
+}
+
+export interface ProjectEthereumLikeInclusionDelayChart
   extends ProjectInclusionDelayChartBase {
-  type: 'ethereum'
+  type: 'ethereumlike'
   validatorCount: number
   slotSeconds: number
 }
 
-export interface ProjectAztecInclusionDelayChart
+export interface ProjectCommitteeLikeInclusionDelayChart
   extends ProjectInclusionDelayChartBase {
-  type: 'aztec'
+  type: 'committeelike'
   validatorCount: number
   committeeSize: number
   epochSlots: number
@@ -84,9 +95,9 @@ export interface ProjectAztecInclusionDelayChart
   blockingThreshold: number
 }
 
-export interface ProjectPolygonInclusionDelayChart
+export interface ProjectSpanLikeInclusionDelayChart
   extends ProjectInclusionDelayChartBase {
-  type: 'polygon'
+  type: 'spanlike'
   validatorCount: number
   spanBlocks: number
   blockSeconds: number
