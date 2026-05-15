@@ -11,6 +11,12 @@
         {
           "permission": "interact",
           "from": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+          "description": "co-sign RMN reports that approve or block CCIP activity for the local chain (fSign+1 of these must sign for verify() to succeed).",
+          "role": ".rmnSigners"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
           "description": "sign RMNRemote reports; this is separate from CommitStoreV1's legacy isBlessed() passthrough.",
           "role": ".getVersionedConfig"
         }
@@ -941,11 +947,304 @@
           "nonceManager": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52"
         },
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+        "sourceChainConfigs": {
+          "bsc": {
+            "router": "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000f09afe78d3c7d359b334d7cb88995751f7ec5e13"
+          },
+          "base": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000ee85aefb15b9489563a6a29891ebe0750aa1a7ae"
+          },
+          "arbitrum": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000076a443768a5e3b8d1aed0105fc250877841deb40"
+          },
+          "solana": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0xac972977e1bab5fff6c686291f994ff52f34abed1bc7df88f76f43f926592c8f"
+          },
+          "etherlink": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000d4d2841ac332075833ae86eb49ce7af9f353cd21"
+          },
+          "morph": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000318ec96df83accc18b5ead5d23e0f022f7eb5503"
+          },
+          "aptos": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x20f808de3375db34d17cc946ec6b43fc26962f6afa125182dc903359756caf6b"
+          },
+          "xdc": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000040530f5305d6fd6912925c5ec2c36453b85d8f5f"
+          },
+          "tac": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000051e2a24742db77604b881d6781ee16b5b8fcbe29"
+          },
+          "memento": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000913814782144864e523c3fdb78e3ca25d2c2aeca"
+          },
+          "plasma": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000008fe3b17e6b0863aeea3d38df063aea39d4ab1602"
+          },
+          "0g": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000a132f089492cce5f1d79483a9e4552f37266ed01"
+          },
+          "bittensor": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000345cc465bcb9a902b420320b8793c9a5d6064404"
+          },
+          "xlayer": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000530ae314ec3fa038bd9a215095e37295ec76162a"
+          },
+          "everclear": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000dd8af6046349edfd40123e0b616286cec08010ed"
+          },
+          "ab": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000009b04018b5285ff16f3967af108bdc72423d547cc"
+          },
+          "monad": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000cdca5d374e46a6dddab50bd2d9acb8c796ec35c3"
+          },
+          "henesys": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000009b04018b5285ff16f3967af108bdc72423d547cc"
+          },
+          "jovay": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000009b04018b5285ff16f3967af108bdc72423d547cc"
+          },
+          "stable": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000d21d5a4e3fa0ebacc3dabb5258d9c1f4d24dc894"
+          },
+          "megaeth": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000059d32e5fa8eed1fd1510f7e583a2b6e6142dd49f"
+          },
+          "sui": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x03e843cbba25c863bae63783fe99213c5269916ed4a8bba32489094baa580fbf"
+          },
+          "mantle": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000004e2c866885b65f67e7a2b8382ecf0164bb19aa00"
+          },
+          "pharos": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000193beb1e11731b8b740b9fbbb62655553c3b4a25"
+          },
+          "edge": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000a132f089492cce5f1d79483a9e4552f37266ed01"
+          },
+          "adi": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000abd3f7722c178e42db20065f063b1e758b19fdb6"
+          },
+          "plume": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000c23071a8ae83671f37bda1dadbc745a9780f632a"
+          },
+          "hyperliquid": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000072f6000d70b291c67bed898214156d01383274b1"
+          },
+          "ton": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000ec893bc42d1abdf46f4b9d0712e17d826b8b6a40df15009dc541697866ade47a"
+          },
+          "tempo": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000021d66d23fe27bb4175c866d4d3ee9bc12c4824e3"
+          },
+          "creditcoin": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000770318d51052871def5eb5c452f4fd28b7960c4e"
+          },
+          "ink": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000530ae314ec3fa038bd9a215095e37295ec76162a"
+          }
+        },
         "typeAndVersion": "OffRamp 1.6.0"
+      },
+      "fieldMeta": {
+        "sourceChainConfigs": {
+          "description": "Per-source-chain config for inbound CCIP messages: local Router used to deliver to receivers, whether the lane is enabled, whether RMN signature blessing is required on commits (false = blessing REQUIRED, true = blessing skipped — only OCR signatures gate the commit), and the bytes-encoded source-chain OnRamp address (left-padded EVM address for EVM sources; native encoding for non-EVM families). Keys are source-chain names. Replayed from SourceChainConfigSet events. minSeqNr is omitted because the event captures the value at config-change time, not the current commit counter (which advances on every _commitRoot)."
+        }
       },
       "implementationNames": {
         "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5": "OffRamp"
-      }
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "4426351306075016396": "0g",
+            "4829375610284793157": "ab",
+            "3577778157919314504": "abstract",
+            "4059281736450291836": "adi",
+            "14894068710063348487": "apechain",
+            "4741433654826277614": "aptos",
+            "6433500567565415381": "avalanche",
+            "1294465214383781161": "berachain",
+            "465944652040885897": "opbnb",
+            "7937294810946806131": "bitlayer",
+            "3849287863852499584": "bob",
+            "4560701533377838164": "botanix",
+            "5406759801798337480": "bsquared",
+            "241851231317828981": "bitcoin-merlin",
+            "2135107236357186872": "bittensor",
+            "11344663589394136015": "bsc",
+            "1346049177634351622": "celo",
+            "1224752112135636129": "core",
+            "9043146809313071210": "corn",
+            "18240105181246962294": "creditcoin",
+            "1456215246176062136": "cronos",
+            "8788096068760390840": "cronos-zkevm",
+            "6325494908023253251": "edge",
+            "8805746078405598895": "andromeda",
+            "4949039107694359620": "arbitrum",
+            "15971525489660198786": "base",
+            "7613811247471741961": "hashkey",
+            "3461204551265785888": "ink",
+            "4627098889531055414": "linea",
+            "1556008542357238666": "mantle",
+            "7264351850409363825": "mode",
+            "3734403246176062136": "optimism",
+            "13204309965629103672": "scroll",
+            "16468599424800719238": "taiko",
+            "1923510103922296319": "unichain",
+            "2049429975587534727": "worldchain",
+            "3016212468291539606": "xlayer",
+            "17198166215261833993": "zircuit",
+            "1562403441176082196": "zksync",
+            "13624601974233774587": "etherlink",
+            "1462016016387883143": "fraxtal",
+            "3229138320728879060": "hedera",
+            "1804312132722180201": "hemi",
+            "2442541497099098535": "hyperliquid",
+            "1523760397290643893": "jovay",
+            "9813823125703490621": "kaia",
+            "5608378062013572713": "lens",
+            "15293031020466096408": "lisk",
+            "5009297550715157269": "ethereum",
+            "4051577828743386545": "matic",
+            "6093540873831549674": "megaeth",
+            "13447077090413146373": "metal",
+            "11690709103138290329": "mind",
+            "17164792800244661392": "mint",
+            "8481857512324358265": "monad",
+            "18164309074156128038": "morph",
+            "12657445206920369324": "henesys",
+            "7801139999541420232": "pharos",
+            "9335212494177455608": "plasma",
+            "17912061998839310979": "plume",
+            "6422105447186081193": "astar",
+            "2459028469735686113": "katana",
+            "6916147374840168594": "ronin",
+            "11964252391146578476": "rootstock",
+            "9027416829622342829": "sei",
+            "3993510008929295315": "shibarium",
+            "124615329519749607": "solana",
+            "12505351618335765396": "soneium",
+            "1673871237479749969": "sonic",
+            "16978377838628290997": "stable",
+            "470401360549526817": "superseed",
+            "5936861837188149645": "tac",
+            "7281642695469137430": "tempo",
+            "16448340667252469081": "ton",
+            "5142893604156789321": "wemix",
+            "465200170687744372": "xdai",
+            "17673274061779414707": "xdc",
+            "3555797439612589184": "zora",
+            "17529533435026248318": "sui",
+            "9762610643973837292": "sui-testnet",
+            "6473245816409426016": "memento",
+            "9723842205701363942": "everclear",
+            "1546563616611573946": "tron",
+            "4348158687435793198": "polygonzkevm",
+            "4411394078118774322": "blast",
+            "5214452172935136222": "treasure",
+            "7222032299962346917": "neox"
+          }
+        }
+      ]
     },
     {
       "address": "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845",
@@ -6086,7 +6385,13 @@
         {
           "permission": "interact",
           "from": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
-          "description": "update the RMN signer set and fault threshold used to approve or block CCIP activity.",
+          "description": "curse or uncurse subjects (chains or the global subject), which halts CCIP operations gated by ARMProxy.isCursed checks.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+          "description": "rotate the RMN signer set, fSign threshold, and RMNHome config digest used to approve or block CCIP activity.",
           "role": ".owner"
         }
       ],
@@ -10930,14 +11235,19 @@
         "isCursed": false,
         "legacyRMN": "eth:0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F",
         "owner": "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A",
+        "rmnSigners": ["eth:0x0100000000000000000000000000000000000000"],
         "typeAndVersion": "RMNRemote 1.6.0"
       },
       "fieldMeta": {
-        "getVersionedConfig": {
-          "description": "RMNRemote.verify() requires fSign+1 valid RMN signature. This is separate from the legacy isBlessed() passthrough used by CommitStoreV1."
+        "rmnSigners": {
+          "description": "RMN signers authorized to sign v1.6 commit reports for this chain. Each signer has a recoverable EVM-style public key; ECDSA recovery against report digests must yield one of these addresses. fSign+1 signatures are required for verify() to accept a report; total signers must be at least 2*fSign+1."
         },
+        "owner": { "severity": "HIGH", "type": "PERMISSION" },
         "legacyRMN": {
           "description": "Legacy RMN contract used by RMNRemote.isBlessed() for CommitStoreV1 root blessing. This immutable constructor arg is shown explicitly and kept as a leaf; its internal signer threshold is not decoded in this discovery."
+        },
+        "getVersionedConfig": {
+          "description": "RMNRemote.verify() requires fSign+1 valid RMN signature. This is separate from the legacy isBlessed() passthrough used by CommitStoreV1."
         },
         "getCursedSubjects": {
           "description": "Subjects currently cursed by RMNRemote. An empty list means there is no active global or route-specific curse in this contract."
@@ -12910,16 +13220,16 @@
     "transporter/ManyChainMultiSig": "0xcb07649e24d3a2643d28343698d73862ff2ce7f437f123e6665cbd2f568ffd8c",
     "transporter/OffRampV1": "0xd299a9a3d7d35d0688dce1ec566f5beefd91f130913835b3625e750c848c6f43",
     "transporter/OfframpV2": "0x10d0b7d25ce268af9b6e9b5f73a3de7dc3f0899c08c0f464218b87114bd7054e",
-    "transporter/OfframpV3": "0x0fa9c1194f6b67d48ad924ce0814bb0c50cbe558f63d4367622f3c99be3e9096",
+    "transporter/OfframpV3": "0x65da0d4abb0585476a2922e18973ce86144330fb6ee1815ba40989e65f107556",
     "transporter/OnRampV1_6": "0x71c346e225c833b504b63726426cc6b20f313614c3249116f4e06034d20e6664",
     "transporter/PriceRegistry": "0x9c8c6d9e1c49d1e7c07826b526c5e393cfb077d7110797892d2ff8c32a14ddb4",
     "transporter/RBACTimelock": "0x7e2aacb693365ed1a6996fe36a483ba61e87663e13acf6dcac56f4ecd50cc9e2",
     "transporter/RegistryModuleOwnerCustom": "0x5221d7b2ba6d2b68f2a8374b863a909102a31528ba002d55faa6c0bf1efc47a2",
-    "transporter/RMNRemote": "0x2db9d1fc261c37c44c9c13b2817ef5840e55f16edf0945c0642ca130b0095885",
+    "transporter/RMNRemote": "0x684b27d8439782341029cbc136be1af223a6c5cb404cd97784be91b8145a2891",
     "transporter/RouterV1_2_0": "0x21c399286da4da32ed8a752a1e05890c2c38a1b2d8ce7148f65c0b90db2e79ec",
     "transporter/TokenAdminRegistry": "0x0f8c544cc19afee7788ea268ac193afb4b9429e3d403a9db0f3303f20e066645",
     "transporter/TokenPool": "0x23366a4f5f3dd76f32c1f9eb98e01ce5dc5f876782217c04086c2237dc55d7b7"
   },
   "usedBlockNumbers": { "ethereum": 25077639 },
-  "permissionsConfigHash": "0xb54c3ac04cfaaedba091616ef84d789e93547007eaf8532301620a18567ea84f"
+  "permissionsConfigHash": "0xc4c195e8db1f47c1ab0457afdbf5b9d35a3fbbf836e22187fc16029490b433ee"
 }

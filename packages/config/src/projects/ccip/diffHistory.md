@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x685054d79d7696a894fcd8a1a09378ea9c7a5f28
+Generated with discovered.json: 0x724eca54613c2b9284fef42d0282fa52f76c196f
 
-# Diff at Wed, 13 May 2026 13:27:58 GMT:
+# Diff at Fri, 15 May 2026 09:08:48 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@170a9eff7fb05e32aa0bda5ee3356b12ec6a4691 block: 1777388210
+- comparing to: main@81908b566e918425ebf298c08aed66029316c1ad block: 1777388210
 - current timestamp: 1778572081
 
 ## Description
@@ -198,6 +198,14 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1777388210 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x0100000000000000000000000000000000000000) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20","description":"co-sign RMN reports that approve or block CCIP activity for the local chain (fSign+1 of these must sign for verify() to succeed).","role":".rmnSigners"}
+    }
+```
 
 ```diff
     EOA  (eth:0x08eAEE68e44caae09aa94367181470d92946310e) {
@@ -438,6 +446,11 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
 +        {"permission":"interact","from":"eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413","description":"rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.","role":".owner"}
       directlyReceivedPermissions.2:
 +        {"permission":"interact","from":"eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F","description":"rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.","role":".owner"}
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20","description":"curse or uncurse subjects (chains or the global subject), which halts CCIP operations gated by ARMProxy.isCursed checks.","role":".owner"}
+      directlyReceivedPermissions.0.description:
+-        "update the RMN signer set and fault threshold used to approve or block CCIP activity."
++        "rotate the RMN signer set, fSign threshold, and RMNHome config digest used to approve or block CCIP activity."
       values.AdminRoleGranted:
 -        ["eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"]
       values.adminRoleMemberCount:
@@ -980,6 +993,19 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
     +++ description: None
       receivedPermissions.2:
 +        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    contract RMNRemote (eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20) [transporter/RMNRemote] {
+    +++ description: RMNRemote contract behind the ARM proxy. It exposes RMN curse state and RMN 1.6 report verification. For pre-1.6 isBlessed() checks, it relays to the legacy RMN contract supplied in the constructor.
++++ description: RMN signers authorized to sign v1.6 commit reports for this chain. Each signer has a recoverable EVM-style public key; ECDSA recovery against report digests must yield one of these addresses. fSign+1 signatures are required for verify() to accept a report; total signers must be at least 2*fSign+1.
+      values.rmnSigners:
++        ["eth:0x0100000000000000000000000000000000000000"]
+      fieldMeta.rmnSigners:
++        {"description":"RMN signers authorized to sign v1.6 commit reports for this chain. Each signer has a recoverable EVM-style public key; ECDSA recovery against report digests must yield one of these addresses. fSign+1 signatures are required for verify() to accept a report; total signers must be at least 2*fSign+1."}
+      fieldMeta.owner:
++        {"severity":"HIGH","type":"PERMISSION"}
     }
 ```
 
