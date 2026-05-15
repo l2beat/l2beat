@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { Activity } from '../kysely/generated/types'
 
@@ -10,6 +10,14 @@ export interface ActivityRecord {
   uopsCount: number | null
   start: number
   end: number
+}
+
+export interface ActivityUopsCountIncreaseRecord {
+  timestamp: UnixTime
+  projectId: ProjectId
+  currentUopsCount: number
+  previousUopsCount: number
+  increase: number
 }
 
 export function toRecord(row: Selectable<Activity>): ActivityRecord {
@@ -80,6 +88,74 @@ export class ActivityRepository extends BaseRepository {
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('Activity').executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async getLatestTimestamp() {
+    const result = await this.db
+      .selectFrom('Activity')
+      .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
+      .executeTakeFirst()
+    return result?.max_timestamp
+      ? UnixTime.fromDate(result.max_timestamp)
+      : undefined
+  }
+
+  async getLargestUopsCountIncrease(
+    timestamp: UnixTime,
+    previousTimestamp: UnixTime,
+  ): Promise<ActivityUopsCountIncreaseRecord | undefined> {
+    const current = this.db
+      .selectFrom('Activity')
+      .select([
+        'projectId',
+        sql<number>`coalesce("uopsCount", "count")`.as('uops_count'),
+      ])
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .as('current')
+
+    const previous = this.db
+      .selectFrom('Activity')
+      .select([
+        'projectId',
+        sql<number>`coalesce("uopsCount", "count")`.as('uops_count'),
+      ])
+      .where('timestamp', '=', UnixTime.toDate(previousTimestamp))
+      .as('previous')
+
+    const increase = sql<number>`
+      "current"."uops_count" - coalesce("previous"."uops_count", 0)
+    `
+
+    const row = await this.db
+      .selectFrom(current)
+      .leftJoin(previous, (join) =>
+        join.onRef('current.projectId', '=', 'previous.projectId'),
+      )
+      .select([
+        sql<string>`"current"."projectId"`.as('project_id'),
+        sql<number>`"current"."uops_count"`.as('current_uops_count'),
+        sql<number>`coalesce("previous"."uops_count", 0)`.as(
+          'previous_uops_count',
+        ),
+        increase.as('increase'),
+      ])
+      .where(increase, '>', 0)
+      .orderBy(sql`increase desc`)
+      .orderBy('current.projectId', 'asc')
+      .limit(1)
+      .executeTakeFirst()
+
+    if (!row) {
+      return undefined
+    }
+
+    return {
+      timestamp,
+      projectId: ProjectId(row.project_id),
+      currentUopsCount: Number(row.current_uops_count ?? 0),
+      previousUopsCount: Number(row.previous_uops_count ?? 0),
+      increase: Number(row.increase ?? 0),
+    }
   }
 
   async getByProjectAndTimeRange(

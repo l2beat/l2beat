@@ -9,13 +9,17 @@ export type {
   AbstractTokenRecord,
   AbstractTokenUpdateable,
 } from './repositories/AbstractTokenRepository'
-export type { ActivityRecord } from './repositories/ActivityRepository'
+export type {
+  ActivityRecord,
+  ActivityUopsCountIncreaseRecord,
+} from './repositories/ActivityRepository'
 export type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTokenVolumeIncreaseRecord,
 } from './repositories/AggregatedInteropTokenRepository'
 export type { AggregatedInteropTokensPairRecord } from './repositories/AggregatedInteropTokensPairRepository'
 export type {
+  AggregatedInteropChainInflowRecord,
   AggregatedInteropChainVolumeIncreaseRecord,
   AggregatedInteropProtocolVolumeIncreaseRecord,
   AggregatedInteropTopPathByVolumeRecord,
@@ -102,6 +106,7 @@ export type {
   SummedByTimestampTokenValuePerProjectRecord,
   SummedByTimestampTokenValueRecord,
   TokenValueRecord,
+  TokenValueTvsIncreaseRecord,
 } from './repositories/TokenValueRepository'
 export type { TvsAmountRecord } from './repositories/TvsAmountRepository'
 export type { TvsBlockTimestampRecord } from './repositories/TvsBlockTimestampRepository'

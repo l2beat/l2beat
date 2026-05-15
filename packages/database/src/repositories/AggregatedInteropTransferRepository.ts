@@ -71,6 +71,14 @@ export interface AggregatedInteropTopPathByVolumeRecord {
   protocolCount: number
 }
 
+export interface AggregatedInteropChainInflowRecord {
+  timestamp: UnixTime
+  chain: string
+  volumeUsd: number
+  transferCount: number
+  protocolCount: number
+}
+
 export interface AggregatedInteropChainVolumeIncreaseRecord {
   timestamp: UnixTime
   chain: string
@@ -370,6 +378,39 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       timestamp,
       srcChain: row.srcChain,
       dstChain: row.dstChain,
+      volumeUsd: Number(row.volume_usd ?? 0),
+      transferCount: Number(row.transfer_count ?? 0),
+      protocolCount: Number(row.protocol_count ?? 0),
+    }
+  }
+
+  async getTopDestinationChainByInflowAtTimestamp(
+    timestamp: UnixTime,
+  ): Promise<AggregatedInteropChainInflowRecord | undefined> {
+    const row = await this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .select((eb) => [
+        'dstChain',
+        eb.fn.sum('transferCount').as('transfer_count'),
+        sql<number>`count(distinct "id")`.as('protocol_count'),
+        transferVolumeUsd('AggregatedInteropTransfer').as('volume_usd'),
+      ])
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .whereRef('srcChain', '!=', 'dstChain')
+      .groupBy('dstChain')
+      .orderBy(sql`volume_usd desc`)
+      .orderBy(sql`transfer_count desc`)
+      .orderBy('dstChain', 'asc')
+      .limit(1)
+      .executeTakeFirst()
+
+    if (!row) {
+      return undefined
+    }
+
+    return {
+      timestamp,
+      chain: row.dstChain,
       volumeUsd: Number(row.volume_usd ?? 0),
       transferCount: Number(row.transfer_count ?? 0),
       protocolCount: Number(row.protocol_count ?? 0),

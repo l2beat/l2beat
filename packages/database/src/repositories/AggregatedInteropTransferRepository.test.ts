@@ -1395,6 +1395,82 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
   describe(
     AggregatedInteropTransferRepository.prototype
+      .getTopDestinationChainByInflowAtTimestamp.name,
+    () => {
+      it('returns the destination chain with the largest inflow volume', async () => {
+        const timestamp = UnixTime(600)
+        await repository.insertMany([
+          record({
+            id: 'across',
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            transferCount: 100,
+            srcValueUsd: 900_000,
+            dstValueUsd: 1_000_000,
+          }),
+          record({
+            id: 'stargate',
+            timestamp,
+            srcChain: 'base',
+            dstChain: 'arbitrum',
+            transferCount: 20,
+            srcValueUsd: 300_000,
+          }),
+          record({
+            id: 'relay',
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'base',
+            transferCount: 300,
+            srcValueUsd: 900_000,
+          }),
+          record({
+            id: 'same-chain',
+            timestamp,
+            srcChain: 'base',
+            dstChain: 'base',
+            transferCount: 1,
+            srcValueUsd: 9_000_000,
+            dstValueUsd: 9_000_000,
+          }),
+        ])
+
+        const result =
+          await repository.getTopDestinationChainByInflowAtTimestamp(timestamp)
+
+        expect(result).toEqual({
+          timestamp,
+          chain: 'arbitrum',
+          volumeUsd: 1_300_000,
+          transferCount: 120,
+          protocolCount: 2,
+        })
+      })
+
+      it('returns undefined when only same-chain aggregates exist', async () => {
+        const timestamp = UnixTime(601)
+        await repository.insertMany([
+          record({
+            id: 'same-chain',
+            timestamp,
+            srcChain: 'base',
+            dstChain: 'base',
+            transferCount: 1,
+            srcValueUsd: 9_000_000,
+          }),
+        ])
+
+        const result =
+          await repository.getTopDestinationChainByInflowAtTimestamp(timestamp)
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
+    AggregatedInteropTransferRepository.prototype
       .getLargestSourceChainVolumeIncrease.name,
     () => {
       it('returns the source chain with the largest positive volume increase', async () => {

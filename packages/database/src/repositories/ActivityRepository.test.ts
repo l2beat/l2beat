@@ -50,6 +50,75 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
+  describe(ActivityRepository.prototype.getLatestTimestamp.name, () => {
+    it('returns latest timestamp', async () => {
+      await repository.upsertMany([
+        record('a', START),
+        record('a', START + 2 * UnixTime.DAY),
+        record('b', START + 1 * UnixTime.DAY),
+      ])
+
+      const result = await repository.getLatestTimestamp()
+
+      expect(result).toEqual(START + 2 * UnixTime.DAY)
+    })
+
+    it('returns undefined when no records exist', async () => {
+      const result = await repository.getLatestTimestamp()
+
+      expect(result).toEqual(undefined)
+    })
+  })
+
+  describe(
+    ActivityRepository.prototype.getLargestUopsCountIncrease.name,
+    () => {
+      it('returns project with largest positive UOPS increase', async () => {
+        const previousTimestamp = START
+        const timestamp = START + UnixTime.DAY
+
+        await repository.upsertMany([
+          record('ethereum', previousTimestamp, 1, 100),
+          record('arbitrum', previousTimestamp, 1, 50),
+          record('base', previousTimestamp, 20, null),
+          record('ethereum', timestamp, 1, 250),
+          record('arbitrum', timestamp, 1, 300),
+          record('base', timestamp, 100, null),
+        ])
+
+        const result = await repository.getLargestUopsCountIncrease(
+          timestamp,
+          previousTimestamp,
+        )
+
+        expect(result).toEqual({
+          timestamp,
+          projectId: ProjectId('arbitrum'),
+          currentUopsCount: 300,
+          previousUopsCount: 50,
+          increase: 250,
+        })
+      })
+
+      it('returns undefined when no project has positive UOPS increase', async () => {
+        const previousTimestamp = START
+        const timestamp = START + UnixTime.DAY
+
+        await repository.upsertMany([
+          record('ethereum', previousTimestamp, 1, 100),
+          record('ethereum', timestamp, 1, 90),
+        ])
+
+        const result = await repository.getLargestUopsCountIncrease(
+          timestamp,
+          previousTimestamp,
+        )
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
   describe(ActivityRepository.prototype.deleteByProjectIdFrom.name, () => {
     it('should delete all rows after a given timestamp and projectId', async () => {
       await repository.upsertMany([

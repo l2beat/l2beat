@@ -11,6 +11,14 @@ export interface InteropHighlightsData {
     transferCount: number
     protocolCount: number
   } | null
+  topChainByInflow: {
+    windowStart: number
+    windowEnd: number
+    chain: string
+    volumeUsd: number
+    transferCount: number
+    protocolCount: number
+  } | null
   largestVolumeIncreaseByChain:
     | (VolumeIncreaseHighlight & {
         chain: string
@@ -26,6 +34,16 @@ export interface InteropHighlightsData {
         id: string
       })
     | null
+  largestUopsIncreaseByChain:
+    | (CountIncreaseHighlight & {
+        chain: string
+      })
+    | null
+  largestTvsIncreaseByChain:
+    | (VolumeIncreaseHighlight & {
+        chain: string
+      })
+    | null
 }
 
 interface VolumeIncreaseHighlight {
@@ -38,90 +56,189 @@ interface VolumeIncreaseHighlight {
   increaseUsd: number
 }
 
+interface CountIncreaseHighlight {
+  windowStart: number
+  windowEnd: number
+  previousWindowStart: number
+  previousWindowEnd: number
+  currentCount: number
+  previousCount: number
+  increase: number
+}
+
 export async function getInteropHighlights(
   db: Database,
 ): Promise<InteropHighlightsData> {
-  const latestTimestamp =
-    await db.aggregatedInteropTransfer.getLatestTimestamp()
-
-  if (!latestTimestamp) {
-    return emptyHighlights()
-  }
-
-  const previousTimestamp = latestTimestamp - UnixTime.DAY
-  const [topPath, chainIncrease, tokenIncrease, protocolIncrease] =
+  const [latestInteropTimestamp, latestActivityTimestamp, latestTvsTimestamp] =
     await Promise.all([
-      db.aggregatedInteropTransfer.getTopPathByVolumeAtTimestamp(
-        latestTimestamp,
-      ),
-      db.aggregatedInteropTransfer.getLargestSourceChainVolumeIncrease(
-        latestTimestamp,
-        previousTimestamp,
-      ),
-      db.aggregatedInteropToken.getLargestTokenVolumeIncrease(
-        latestTimestamp,
-        previousTimestamp,
-      ),
-      db.aggregatedInteropTransfer.getLargestProtocolVolumeIncrease(
-        latestTimestamp,
-        previousTimestamp,
-      ),
+      db.aggregatedInteropTransfer.getLatestTimestamp(),
+      db.activity.getLatestTimestamp(),
+      db.tvsTokenValue.getLatestTimestamp(),
     ])
 
-  const window = {
-    windowStart: latestTimestamp - UnixTime.DAY,
-    windowEnd: latestTimestamp,
-    previousWindowStart: latestTimestamp - 2 * UnixTime.DAY,
-    previousWindowEnd: latestTimestamp - UnixTime.DAY,
-  }
+  const previousInteropTimestamp =
+    latestInteropTimestamp !== undefined
+      ? latestInteropTimestamp - UnixTime.DAY
+      : undefined
+  const previousActivityTimestamp =
+    latestActivityTimestamp !== undefined
+      ? latestActivityTimestamp - UnixTime.DAY
+      : undefined
+  const previousTvsTimestamp =
+    latestTvsTimestamp !== undefined
+      ? latestTvsTimestamp - UnixTime.DAY
+      : undefined
+
+  const [
+    topPath,
+    topChainByInflow,
+    chainIncrease,
+    tokenIncrease,
+    protocolIncrease,
+    uopsIncrease,
+    tvsIncrease,
+  ] = await Promise.all([
+    latestInteropTimestamp !== undefined
+      ? db.aggregatedInteropTransfer.getTopPathByVolumeAtTimestamp(
+          latestInteropTimestamp,
+        )
+      : undefined,
+    latestInteropTimestamp !== undefined
+      ? db.aggregatedInteropTransfer.getTopDestinationChainByInflowAtTimestamp(
+          latestInteropTimestamp,
+        )
+      : undefined,
+    latestInteropTimestamp !== undefined &&
+    previousInteropTimestamp !== undefined
+      ? db.aggregatedInteropTransfer.getLargestSourceChainVolumeIncrease(
+          latestInteropTimestamp,
+          previousInteropTimestamp,
+        )
+      : undefined,
+    latestInteropTimestamp !== undefined &&
+    previousInteropTimestamp !== undefined
+      ? db.aggregatedInteropToken.getLargestTokenVolumeIncrease(
+          latestInteropTimestamp,
+          previousInteropTimestamp,
+        )
+      : undefined,
+    latestInteropTimestamp !== undefined &&
+    previousInteropTimestamp !== undefined
+      ? db.aggregatedInteropTransfer.getLargestProtocolVolumeIncrease(
+          latestInteropTimestamp,
+          previousInteropTimestamp,
+        )
+      : undefined,
+    latestActivityTimestamp !== undefined &&
+    previousActivityTimestamp !== undefined
+      ? db.activity.getLargestUopsCountIncrease(
+          latestActivityTimestamp,
+          previousActivityTimestamp,
+        )
+      : undefined,
+    latestTvsTimestamp !== undefined && previousTvsTimestamp !== undefined
+      ? db.tvsTokenValue.getLargestTvsIncrease(
+          latestTvsTimestamp,
+          previousTvsTimestamp,
+        )
+      : undefined,
+  ])
+
+  const interopWindow =
+    latestInteropTimestamp !== undefined
+      ? getComparisonWindow(latestInteropTimestamp)
+      : undefined
+  const activityWindow =
+    latestActivityTimestamp !== undefined
+      ? getComparisonWindow(latestActivityTimestamp)
+      : undefined
+  const tvsWindow =
+    latestTvsTimestamp !== undefined
+      ? getComparisonWindow(latestTvsTimestamp)
+      : undefined
 
   return {
-    topPathByVolume: topPath
-      ? {
-          windowStart: window.windowStart,
-          windowEnd: window.windowEnd,
-          srcChain: topPath.srcChain,
-          dstChain: topPath.dstChain,
-          volumeUsd: topPath.volumeUsd,
-          transferCount: topPath.transferCount,
-          protocolCount: topPath.protocolCount,
-        }
-      : null,
-    largestVolumeIncreaseByChain: chainIncrease
-      ? {
-          ...window,
-          chain: chainIncrease.chain,
-          currentVolumeUsd: chainIncrease.currentVolumeUsd,
-          previousVolumeUsd: chainIncrease.previousVolumeUsd,
-          increaseUsd: chainIncrease.increaseUsd,
-        }
-      : null,
-    largestVolumeIncreaseByToken: tokenIncrease
-      ? {
-          ...window,
-          abstractTokenId: tokenIncrease.abstractTokenId,
-          currentVolumeUsd: tokenIncrease.currentVolumeUsd,
-          previousVolumeUsd: tokenIncrease.previousVolumeUsd,
-          increaseUsd: tokenIncrease.increaseUsd,
-        }
-      : null,
-    largestVolumeIncreaseByProtocol: protocolIncrease
-      ? {
-          ...window,
-          id: protocolIncrease.id,
-          currentVolumeUsd: protocolIncrease.currentVolumeUsd,
-          previousVolumeUsd: protocolIncrease.previousVolumeUsd,
-          increaseUsd: protocolIncrease.increaseUsd,
-        }
-      : null,
+    topPathByVolume:
+      topPath && interopWindow
+        ? {
+            windowStart: interopWindow.windowStart,
+            windowEnd: interopWindow.windowEnd,
+            srcChain: topPath.srcChain,
+            dstChain: topPath.dstChain,
+            volumeUsd: topPath.volumeUsd,
+            transferCount: topPath.transferCount,
+            protocolCount: topPath.protocolCount,
+          }
+        : null,
+    topChainByInflow:
+      topChainByInflow && interopWindow
+        ? {
+            windowStart: interopWindow.windowStart,
+            windowEnd: interopWindow.windowEnd,
+            chain: topChainByInflow.chain,
+            volumeUsd: topChainByInflow.volumeUsd,
+            transferCount: topChainByInflow.transferCount,
+            protocolCount: topChainByInflow.protocolCount,
+          }
+        : null,
+    largestVolumeIncreaseByChain:
+      chainIncrease && interopWindow
+        ? {
+            ...interopWindow,
+            chain: chainIncrease.chain,
+            currentVolumeUsd: chainIncrease.currentVolumeUsd,
+            previousVolumeUsd: chainIncrease.previousVolumeUsd,
+            increaseUsd: chainIncrease.increaseUsd,
+          }
+        : null,
+    largestVolumeIncreaseByToken:
+      tokenIncrease && interopWindow
+        ? {
+            ...interopWindow,
+            abstractTokenId: tokenIncrease.abstractTokenId,
+            currentVolumeUsd: tokenIncrease.currentVolumeUsd,
+            previousVolumeUsd: tokenIncrease.previousVolumeUsd,
+            increaseUsd: tokenIncrease.increaseUsd,
+          }
+        : null,
+    largestVolumeIncreaseByProtocol:
+      protocolIncrease && interopWindow
+        ? {
+            ...interopWindow,
+            id: protocolIncrease.id,
+            currentVolumeUsd: protocolIncrease.currentVolumeUsd,
+            previousVolumeUsd: protocolIncrease.previousVolumeUsd,
+            increaseUsd: protocolIncrease.increaseUsd,
+          }
+        : null,
+    largestUopsIncreaseByChain:
+      uopsIncrease && activityWindow
+        ? {
+            ...activityWindow,
+            chain: uopsIncrease.projectId.toString(),
+            currentCount: uopsIncrease.currentUopsCount,
+            previousCount: uopsIncrease.previousUopsCount,
+            increase: uopsIncrease.increase,
+          }
+        : null,
+    largestTvsIncreaseByChain:
+      tvsIncrease && tvsWindow
+        ? {
+            ...tvsWindow,
+            chain: tvsIncrease.projectId,
+            currentVolumeUsd: tvsIncrease.currentTvsUsd,
+            previousVolumeUsd: tvsIncrease.previousTvsUsd,
+            increaseUsd: tvsIncrease.increaseUsd,
+          }
+        : null,
   }
 }
 
-function emptyHighlights(): InteropHighlightsData {
+function getComparisonWindow(windowEnd: UnixTime) {
   return {
-    topPathByVolume: null,
-    largestVolumeIncreaseByChain: null,
-    largestVolumeIncreaseByToken: null,
-    largestVolumeIncreaseByProtocol: null,
+    windowStart: windowEnd - UnixTime.DAY,
+    windowEnd,
+    previousWindowStart: windowEnd - 2 * UnixTime.DAY,
+    previousWindowEnd: windowEnd - UnixTime.DAY,
   }
 }

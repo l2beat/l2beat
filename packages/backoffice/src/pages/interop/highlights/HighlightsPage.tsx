@@ -27,9 +27,12 @@ export function HighlightsPage() {
     api.interop.highlights.latest.useQuery()
 
   const topPath = data?.topPathByVolume ?? null
+  const topChainByInflow = data?.topChainByInflow ?? null
   const chainIncrease = data?.largestVolumeIncreaseByChain ?? null
   const tokenIncrease = data?.largestVolumeIncreaseByToken ?? null
   const protocolIncrease = data?.largestVolumeIncreaseByProtocol ?? null
+  const uopsIncrease = data?.largestUopsIncreaseByChain ?? null
+  const tvsIncrease = data?.largestTvsIncreaseByChain ?? null
 
   return (
     <AppLayout>
@@ -133,9 +136,38 @@ export function HighlightsPage() {
             />
           </div>
         ) : null}
+
+        {!isLoading && !isError ? (
+          <div className="grid gap-4 lg:grid-cols-3">
+            <ChainInflowCard metric={topChainByInflow} />
+            <CountIncreaseCard
+              title="Largest UOPS increase"
+              description="Chain with the largest UOPS increase compared with the previous day."
+              entityLabel="Chain"
+              entity={uopsIncrease?.chain}
+              metric={uopsIncrease}
+            />
+            <VolumeIncreaseCard
+              title="Largest TVS increase"
+              description="Chain with the largest TVS increase compared with the previous day."
+              entityLabel="Chain"
+              entity={tvsIncrease?.chain}
+              metric={tvsIncrease}
+            />
+          </div>
+        ) : null}
       </div>
     </AppLayout>
   )
+}
+
+interface ChainInflowMetric {
+  windowStart: number
+  windowEnd: number
+  chain: string
+  volumeUsd: number
+  transferCount: number
+  protocolCount: number
 }
 
 interface VolumeIncreaseMetric {
@@ -146,6 +178,71 @@ interface VolumeIncreaseMetric {
   currentVolumeUsd: number
   previousVolumeUsd: number
   increaseUsd: number
+}
+
+interface CountIncreaseMetric {
+  windowStart: number
+  windowEnd: number
+  previousWindowStart: number
+  previousWindowEnd: number
+  currentCount: number
+  previousCount: number
+  increase: number
+}
+
+function ChainInflowCard(props: { metric: ChainInflowMetric | null }) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Largest chain inflows</CardTitle>
+        <CardDescription>
+          Destination chain with the largest incoming USD volume.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        {props.metric === null ? (
+          <Empty className="border">
+            <EmptyHeader>
+              <EmptyTitle>No inflows found</EmptyTitle>
+              <EmptyDescription>
+                No cross-chain aggregate inflows were found for the latest
+                window.
+              </EmptyDescription>
+            </EmptyHeader>
+          </Empty>
+        ) : (
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <div className="text-muted-foreground text-sm">
+                {formatTransferTimestamp(props.metric.windowStart)} UTC -{' '}
+                {formatTransferTimestamp(props.metric.windowEnd)} UTC
+              </div>
+              <div>
+                <div className="text-muted-foreground text-sm">Chain</div>
+                <div className="font-semibold text-xl">
+                  {props.metric.chain}
+                </div>
+              </div>
+            </div>
+            <dl className="grid gap-3">
+              <Metric
+                label="Inflow volume"
+                value={formatDollars(props.metric.volumeUsd)}
+              />
+              <Metric
+                label="Transfers"
+                value={props.metric.transferCount.toLocaleString()}
+              />
+              <Metric
+                label="Protocols"
+                value={props.metric.protocolCount.toLocaleString()}
+              />
+            </dl>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  )
 }
 
 function VolumeIncreaseCard(props: {
@@ -197,6 +294,64 @@ function VolumeIncreaseCard(props: {
               <Metric
                 label="Previous volume"
                 value={formatDollars(props.metric.previousVolumeUsd)}
+              />
+            </dl>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  )
+}
+
+function CountIncreaseCard(props: {
+  title: string
+  description: string
+  entityLabel: string
+  entity: string | undefined
+  metric: CountIncreaseMetric | null
+}) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{props.title}</CardTitle>
+        <CardDescription>{props.description}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        {props.metric === null || props.entity === undefined ? (
+          <Empty className="border">
+            <EmptyHeader>
+              <EmptyTitle>No increase found</EmptyTitle>
+              <EmptyDescription>
+                No positive UOPS delta was found for the latest comparison.
+              </EmptyDescription>
+            </EmptyHeader>
+          </Empty>
+        ) : (
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <div className="text-muted-foreground text-sm">
+                {formatTransferTimestamp(props.metric.windowStart)} UTC -{' '}
+                {formatTransferTimestamp(props.metric.windowEnd)} UTC
+              </div>
+              <div>
+                <div className="text-muted-foreground text-sm">
+                  {props.entityLabel}
+                </div>
+                <div className="font-semibold text-xl">{props.entity}</div>
+              </div>
+            </div>
+            <dl className="grid gap-3">
+              <Metric
+                label="Increase"
+                value={`+${props.metric.increase.toLocaleString()}`}
+              />
+              <Metric
+                label="Current UOPS"
+                value={props.metric.currentCount.toLocaleString()}
+              />
+              <Metric
+                label="Previous UOPS"
+                value={props.metric.previousCount.toLocaleString()}
               />
             </dl>
           </div>
