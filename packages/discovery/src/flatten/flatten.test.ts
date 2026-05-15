@@ -520,6 +520,64 @@ describe('flatten', () => {
     )
   })
 
+  it('renames library aliases in global using declarations', () => {
+    const rootFile = sol(
+      'Root.sol',
+      `
+      import { LibPosition as PositionUtils } from "Lib.sol";
+
+      type Position is uint128;
+
+      using PositionUtils for Position global;
+
+      contract Root {
+          function f() public pure returns (Position) {
+              Position position = Position.wrap(0);
+              return position.update();
+          }
+      }
+    `,
+    )
+    const libFile = sol(
+      'Lib.sol',
+      `
+      library LibPosition {
+          function update(Position self) internal pure returns (Position) {
+              return self;
+          }
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom(
+      'Root',
+      'Root.sol',
+      [rootFile, libFile],
+      [],
+    )
+
+    expect(flattened).toEqual(
+      dedent(`
+      library LibPosition {
+          function update(Position self) internal pure returns (Position) {
+              return self;
+          }
+      }
+
+      using LibPosition for Position global;
+
+      type Position is uint128;
+
+      contract Root {
+          function f() public pure returns (Position) {
+              Position position = Position.wrap(0);
+              return position.update();
+          }
+      }
+    `),
+    )
+  })
+
   it('inheritance namespacing', () => {
     const rootFile = sol(
       'Root.sol',
