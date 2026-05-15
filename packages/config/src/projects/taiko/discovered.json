@@ -516,7 +516,7 @@
       "type": "Contract",
       "template": "taiko/RiscZeroGroth16Verifier",
       "sourceHashes": [
-        "0x6d31c3046dca02d527c9c812462cb52b4402d54884c3abe822cb6ac8371e4a5b"
+        "0xba12695f53ef79b4c552abf284ab9133ca47c0fc1908e05a8b941e5a176795cb"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).",

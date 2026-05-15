@@ -5,12 +5,18 @@ import type { DeclarationType, TopLevelDeclaration } from './ParsedFilesManager'
 export function generateInterfaceSourceFromContract(
   contract: TopLevelDeclaration,
   typeMap: Map<string, DeclarationType>,
+  keep?: Set<string>,
 ): string {
   assert(
     contract.type === 'contract' || contract.type === 'abstract',
     'Only contracts are supported',
   )
   const ast = contract.ast as AST.ContractDefinition
+
+  // When `keep` is provided, only members whose name is in the set are kept.
+  // receive() and fallback() are always kept (they have no callable name).
+  const isKept = (name: string | null): boolean =>
+    keep === undefined || (name !== null && keep.has(name))
 
   let result =
     '// NOTE(l2beat): This is an interface, generated from the contract source code.\n'
@@ -44,19 +50,26 @@ export function generateInterfaceSourceFromContract(
         if (child.visibility === 'private' || child.visibility === 'internal') {
           continue
         }
+        const isSpecial = child.isReceiveEther || child.isFallback
+        if (!isSpecial && !isKept(child.name)) {
+          continue
+        }
 
         elements.push([child.type, padding + formatFunctionDefinition(child)])
         break
       }
       case 'EventDefinition': {
+        if (!isKept(child.name)) continue
         elements.push([child.type, padding + formatEventDefinition(child)])
         break
       }
       case 'CustomErrorDefinition': {
+        if (!isKept(child.name)) continue
         elements.push([child.type, padding + formatErrorDefinition(child)])
         break
       }
       case 'StructDefinition': {
+        if (!isKept(child.name)) continue
         elements.push([
           child.type,
           padding + formatStructDefinition(child, padding),
@@ -64,6 +77,7 @@ export function generateInterfaceSourceFromContract(
         break
       }
       case 'EnumDefinition': {
+        if (!isKept(child.name)) continue
         elements.push([
           child.type,
           padding + formatEnumDefinition(child, padding),
@@ -71,6 +85,7 @@ export function generateInterfaceSourceFromContract(
         break
       }
       case 'TypeDefinition': {
+        if (!isKept(child.name)) continue
         elements.push([child.type, padding + formatTypeDefinition(child)])
         break
       }
@@ -80,12 +95,12 @@ export function generateInterfaceSourceFromContract(
       }
       case 'StateVariableDeclaration': {
         for (const variable of child.variables) {
-          if (variable.visibility === 'public') {
-            elements.push([
-              'FunctionDefinition',
-              padding + formatPublicVariableGetter(variable, typeMap),
-            ])
-          }
+          if (variable.visibility !== 'public') continue
+          if (!isKept(variable.name)) continue
+          elements.push([
+            'FunctionDefinition',
+            padding + formatPublicVariableGetter(variable, typeMap),
+          ])
         }
         break
       }
@@ -102,14 +117,20 @@ export function generateInterfaceSourceFromContract(
   if (elements.length > 0) {
     result += '\n'
     let prevType: string | undefined
+    let prevMultiLine = false
     for (const [type, element] of elements) {
-      if (prevType !== undefined && prevType !== type) {
+      const isMultiLine = element?.includes('\n') ?? false
+      if (
+        prevType !== undefined &&
+        (prevType !== type || prevMultiLine || isMultiLine)
+      ) {
         result += '\n'
       }
 
       result += element + '\n'
 
       prevType = type
+      prevMultiLine = isMultiLine
     }
   }
 
@@ -188,15 +209,8 @@ function formatFunctionDefinition(fn: AST.FunctionDefinition): string {
   prefix = fn.isReceiveEther ? 'receive' : prefix
   prefix = fn.isFallback ? 'fallback' : prefix
 
-  let declaration = `${prefix}(`
-  if (fn.parameters.length > 0) {
-    const params = []
-    for (const param of fn.parameters) {
-      params.push(formatParameter(param))
-    }
-    declaration += params.join(', ')
-  }
-  declaration += ')'
+  const inputs = fn.parameters.map(asExternalInput).map(formatParameter)
+  let declaration = `${prefix}(${inputs.join(', ')})`
 
   const addons: string[] = []
   addons.push('external')
@@ -258,15 +272,23 @@ function unwindGetterType(
 
 function formatParameter(param: AST.VariableDeclaration): string {
   assert(param.typeName !== null, 'Parameter must have a type')
-  let result = `${formatTypeName(param.typeName)}`
+  let result = formatTypeName(param.typeName)
   if (param.storageLocation !== null) {
     result += ` ${param.storageLocation}`
   }
   if (param.identifier !== null) {
     result += ` ${param.identifier.name}`
   }
-
   return result
+}
+
+// External function inputs cannot use `memory` for reference-type params —
+// they must be `calldata`. Return params are unaffected.
+function asExternalInput(
+  param: AST.VariableDeclaration,
+): AST.VariableDeclaration {
+  if (param.storageLocation !== 'memory') return param
+  return { ...param, storageLocation: 'calldata' }
 }
 
 function formatTypeName(typeName: AST.TypeName): string {
