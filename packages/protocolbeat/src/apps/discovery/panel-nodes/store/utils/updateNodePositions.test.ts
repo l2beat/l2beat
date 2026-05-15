@@ -2,6 +2,7 @@ import { expect } from 'earl'
 import type { Node, State } from '../State'
 import {
   BOTTOM_PADDING,
+  FIELD_HEIGHT,
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
 } from './constants'
@@ -171,6 +172,29 @@ describe('updateNodePositions', () => {
       false,
     )
     expect(result.nodes[0]?.fields[0]?.connection.to.x === 0).toEqual(false)
+  })
+
+  it('aligns visible field hit-boxes with their rendered row, ignoring hidden fields above', () => {
+    const state = buildState([
+      makeNode(
+        'a',
+        0,
+        0,
+        [
+          ['signers0', 'b'],
+          ['signers1', 'b'],
+          ['transmitter0', 'c'],
+          ['transmitter1', 'c'],
+        ],
+        ['signers0', 'signers1'],
+      ),
+      makeNode('b', 400, 0, []),
+      makeNode('c', 800, 0, []),
+    ])
+
+    const fields = (state.nodes[0] as Node).fields
+    expect(fields[2]?.box.y).toEqual(HEADER_HEIGHT)
+    expect(fields[3]?.box.y).toEqual(HEADER_HEIGHT + FIELD_HEIGHT)
   })
 
   it('clamps visible field count to zero when hidden fields exceed field count', () => {
