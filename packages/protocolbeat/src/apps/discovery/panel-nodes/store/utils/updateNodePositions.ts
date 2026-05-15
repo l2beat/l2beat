@@ -105,7 +105,7 @@ export function updateNodePositions(
 
       const nextFieldBox: Box = {
         x: nextBox.x,
-        y: nextBox.y + HEADER_HEIGHT + i * FIELD_HEIGHT,
+        y: nextBox.y + HEADER_HEIGHT + currentVisibleIndex * FIELD_HEIGHT,
         width: nextBox.width,
         height: FIELD_HEIGHT,
       }

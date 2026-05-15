@@ -27,6 +27,7 @@ export type DeclarationType =
   | 'event'
   | 'error'
   | 'using'
+  | 'pragma'
 
 type TopLevelDeclarationNode =
   | AST.StructDefinition
@@ -303,7 +304,7 @@ export class ParsedFilesManager {
     let subNodes: AST.BaseASTNode[] = []
     let backwardLinks: string[] = []
     if (c.type === 'ContractDefinition') {
-      subNodes = c.subNodes
+      subNodes = [...c.subNodes, ...c.baseContracts.flatMap((b) => b.arguments)]
     } else if (c.type === 'StructDefinition') {
       subNodes = c.members
     } else if (c.type === 'FunctionDefinition') {

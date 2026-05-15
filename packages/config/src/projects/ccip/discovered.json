@@ -78,7 +78,7 @@
       "template": "transporter/TokenPool",
       "sourceHashes": [
         "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f",
-        "0x39415a58cb2a072d97bd39f2f579e01c82ace7c06e80bf5619dc0be2bf2620e8"
+        "0x9c4424aa5c0675489f24e9cf8b9bf148ee3c51c282747bbf58f9bbba8bfd05d9"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "GHO lock-and-release token pool on Ethereum. It trusts configured Arbitrum remote pools and only accepts inbound token releases routed through CCIP OffRamps.",
