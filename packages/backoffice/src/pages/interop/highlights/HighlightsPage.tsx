@@ -17,10 +17,7 @@ import {
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import {
-  formatDollars,
-  formatTransferTimestamp,
-} from '~/pages/interop/transfers/utils'
+import { formatDollars } from '~/pages/interop/transfers/utils'
 import { api } from '~/react-query/trpc'
 
 export function HighlightsPage() {
@@ -75,14 +72,13 @@ export function HighlightsPage() {
         ) : null}
 
         {!isLoading && !isError ? (
-          <div className="grid gap-3 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+          <div className="grid gap-3 xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
             <Card className="gap-3 py-4">
               <CardHeader className="px-4">
-                <CardTitle>Top path by volume</CardTitle>
-                <CardDescription className="text-xs leading-4">
+                <CardTitle>
                   Highest source to destination chain pair by aggregate USD
-                  volume.
-                </CardDescription>
+                  volume
+                </CardTitle>
               </CardHeader>
               <CardContent className="px-4">
                 {topPath === null ? (
@@ -95,30 +91,17 @@ export function HighlightsPage() {
                     </EmptyHeader>
                   </Empty>
                 ) : (
-                  <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.8fr)] md:items-center">
-                    <div className="min-w-0 space-y-2">
-                      <WindowRange
-                        start={topPath.windowStart}
-                        end={topPath.windowEnd}
-                      />
-                      <div className="truncate font-semibold text-2xl">
-                        {topPath.srcChain} {'->'} {topPath.dstChain}
-                      </div>
-                    </div>
-                    <dl className="grid grid-cols-3 gap-4">
-                      <Metric
-                        label="Volume"
-                        value={formatDollars(topPath.volumeUsd)}
-                      />
-                      <Metric
-                        label="Transfers"
-                        value={topPath.transferCount.toLocaleString()}
-                      />
-                      <Metric
-                        label="Protocols"
-                        value={topPath.protocolCount.toLocaleString()}
-                      />
-                    </dl>
+                  <div className="grid overflow-hidden rounded-md border text-sm sm:grid-cols-2">
+                    <DetailCell label="Source" value={topPath.srcChain} />
+                    <DetailCell label="Destination" value={topPath.dstChain} />
+                    <DetailCell
+                      label="Volume"
+                      value={formatDollars(topPath.volumeUsd)}
+                    />
+                    <DetailCell
+                      label="Transfers"
+                      value={topPath.transferCount.toLocaleString()}
+                    />
                   </div>
                 )}
               </CardContent>
@@ -126,10 +109,9 @@ export function HighlightsPage() {
 
             <Card className="gap-3 py-4">
               <CardHeader className="px-4">
-                <CardTitle>Latest window</CardTitle>
-                <CardDescription className="text-xs leading-4">
+                <CardTitle>
                   Largest inflow and activity deltas in the same 24h window.
-                </CardDescription>
+                </CardTitle>
               </CardHeader>
               <CardContent className="px-4">
                 <HighlightList>
@@ -208,11 +190,10 @@ export function HighlightsPage() {
         {!isLoading && !isError ? (
           <Card className="gap-3 py-4">
             <CardHeader className="px-4">
-              <CardTitle>Volume movers</CardTitle>
-              <CardDescription className="text-xs leading-4">
+              <CardTitle>
                 Largest positive USD volume deltas compared with the previous
                 day.
-              </CardDescription>
+              </CardTitle>
             </CardHeader>
             <CardContent className="px-4">
               <HighlightList>
@@ -274,11 +255,11 @@ interface VolumeIncreaseMetric {
   increaseUsd: number
 }
 
-function WindowRange(props: { start: number; end: number }) {
+function DetailCell(props: { label: string; value: string }) {
   return (
-    <div className="text-muted-foreground text-xs">
-      {formatTransferTimestamp(props.start)} UTC to{' '}
-      {formatTransferTimestamp(props.end)} UTC
+    <div className="min-w-0 border-b p-3 sm:border-r sm:[&:nth-child(2n)]:border-r-0 [&:nth-last-child(-n+1)]:border-b-0 sm:[&:nth-last-child(-n+2)]:border-b-0">
+      <div className="text-muted-foreground text-xs">{props.label}</div>
+      <div className="mt-1 truncate font-semibold text-sm">{props.value}</div>
     </div>
   )
 }
