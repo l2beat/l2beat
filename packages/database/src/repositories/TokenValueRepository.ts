@@ -263,6 +263,8 @@ export class TokenValueRepository extends BaseRepository {
     timestamp: UnixTime,
     previousTimestamp: UnixTime,
   ): Promise<TokenValueTvsIncreaseRecord | undefined> {
+    const previousPreviousTimestamp = previousTimestamp - UnixTime.DAY
+
     const current = this.db
       .selectFrom('TokenValue')
       .select(['projectId', sql<number>`sum("valueForProject")`.as('tvs_usd')])
@@ -278,20 +280,33 @@ export class TokenValueRepository extends BaseRepository {
       .as('previous')
 
     const increaseUsd = sql<number>`
-      "current"."tvs_usd" - coalesce("previous"."tvs_usd", 0)
+      "current"."tvs_usd" - "previous"."tvs_usd"
     `
 
     const row = await this.db
       .selectFrom(current)
-      .leftJoin(previous, (join) =>
+      .innerJoin(previous, (join) =>
         join.onRef('current.projectId', '=', 'previous.projectId'),
       )
       .select([
         sql<string>`"current"."projectId"`.as('project_id'),
         sql<number>`"current"."tvs_usd"`.as('current_tvs_usd'),
-        sql<number>`coalesce("previous"."tvs_usd", 0)`.as('previous_tvs_usd'),
+        sql<number>`"previous"."tvs_usd"`.as('previous_tvs_usd'),
         increaseUsd.as('increase_usd'),
       ])
+      .where(({ eb, exists }) =>
+        exists(
+          eb
+            .selectFrom('TokenValue as older')
+            .select('older.projectId')
+            .whereRef('older.projectId', '=', 'current.projectId')
+            .where(
+              'older.timestamp',
+              '=',
+              UnixTime.toDate(previousPreviousTimestamp),
+            ),
+        ),
+      )
       .where(increaseUsd, '>', 0)
       .orderBy(sql`increase_usd desc`)
       .orderBy('current.projectId', 'asc')

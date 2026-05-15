@@ -104,6 +104,8 @@ export class ActivityRepository extends BaseRepository {
     timestamp: UnixTime,
     previousTimestamp: UnixTime,
   ): Promise<ActivityUopsCountIncreaseRecord | undefined> {
+    const previousPreviousTimestamp = previousTimestamp - UnixTime.DAY
+
     const current = this.db
       .selectFrom('Activity')
       .select([
@@ -123,22 +125,33 @@ export class ActivityRepository extends BaseRepository {
       .as('previous')
 
     const increase = sql<number>`
-      "current"."uops_count" - coalesce("previous"."uops_count", 0)
+      "current"."uops_count" - "previous"."uops_count"
     `
 
     const row = await this.db
       .selectFrom(current)
-      .leftJoin(previous, (join) =>
+      .innerJoin(previous, (join) =>
         join.onRef('current.projectId', '=', 'previous.projectId'),
       )
       .select([
         sql<string>`"current"."projectId"`.as('project_id'),
         sql<number>`"current"."uops_count"`.as('current_uops_count'),
-        sql<number>`coalesce("previous"."uops_count", 0)`.as(
-          'previous_uops_count',
-        ),
+        sql<number>`"previous"."uops_count"`.as('previous_uops_count'),
         increase.as('increase'),
       ])
+      .where(({ eb, exists }) =>
+        exists(
+          eb
+            .selectFrom('Activity as older')
+            .select('older.projectId')
+            .whereRef('older.projectId', '=', 'current.projectId')
+            .where(
+              'older.timestamp',
+              '=',
+              UnixTime.toDate(previousPreviousTimestamp),
+            ),
+        ),
+      )
       .where(increase, '>', 0)
       .orderBy(sql`increase desc`)
       .orderBy('current.projectId', 'asc')
