@@ -65,6 +65,20 @@ export interface ContractSource {
   files: Record<string, string>
   remappings: string[]
   libraries: Record<string, EthereumAddress>
+  compilerSettings?: {
+    optimizer?: { enabled?: boolean; runs?: number }
+    evmVersion?: string
+    viaIR?: boolean
+    metadata?: {
+      bytecodeHash?: string
+      useLiteralContent?: boolean
+      appendCBOR?: boolean
+    }
+    debug?: {
+      revertStrings: string
+      debugInfo?: string[]
+    }
+  }
 }
 
 export interface IEtherscanClient {

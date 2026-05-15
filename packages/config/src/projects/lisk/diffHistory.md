@@ -1,39 +1,14 @@
-Generated with discovered.json: 0xfda2f0101b188be4bc0b8b7217da18db411a35e7
+Generated with discovered.json: 0x00bd761d87363a1dfb4b6be1b4b10f141d20ef9f
 
-# Diff at Fri, 15 May 2026 13:11:07 GMT:
+# Diff at Fri, 15 May 2026 12:36:06 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@da451cba8e944a28754be7e17bcb7555d857f312 block: 1777994276
-- current timestamp: 1778850530
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1777994276
+- current timestamp: 1777994276
 
 ## Description
 
-Scheduled signer-key rotation on shared OP Stack governance contracts (no threshold or permission changes):
-- DeputyPauseModule (`0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754`): `deputy` rotated from `0x352f1defB49718e7Ea411687E850aA8d6299F7aC` to `0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c`. Executed via [superchain-ops eth/052](https://github.com/ethereum-optimism/superchain-ops/pull/1399); the [DeputyPauseModule spec](https://specs.optimism.io/protocol/deputy-pause-module.html) specifies an approximately quarterly rotation cadence.
-- OpFoundationUpgradeSafe: Member rotated.
-
-## Watched changes
-
-```diff
-    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) [opstack/DeputyPauseModule] {
-    +++ description: Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
-      description:
--        "Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module."
-+        "Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module."
-      values.deputy:
--        "eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC"
-+        "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c"
-    }
-```
-
-```diff
-    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
-    +++ description: None
-      values.$members.6:
--        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
-+        "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
-    }
-```
+Shape hashes update after flattener improvements
 
 ## Config/verification related changes
 
@@ -42,10 +17,11 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1777994276 (main branch discovery), not current.
 
 ```diff
-    EOA  (eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    EOA  (eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682) {
     +++ description: None
-      name:
--        "Optimism EOA 1"
+      sourceHashes.0:
+-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
++        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
     }
 ```
 

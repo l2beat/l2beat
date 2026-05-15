@@ -35,11 +35,15 @@ export function updateNodePositions(
     const start = nextState.positionsBeforeMove[node.id]
     const hiddenFieldsHeight =
       node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
+    const visibleFieldsCount = Math.max(
+      0,
+      node.fields.length - node.hiddenFields.length,
+    )
     const nextBox: Box = {
       width: node.box.width,
       height:
         HEADER_HEIGHT +
-        (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
+        visibleFieldsCount * FIELD_HEIGHT +
         BOTTOM_PADDING +
         hiddenFieldsHeight,
       x: start ? start.x + dx : node.box.x,
@@ -101,7 +105,7 @@ export function updateNodePositions(
 
       const nextFieldBox: Box = {
         x: nextBox.x,
-        y: nextBox.y + HEADER_HEIGHT + i * FIELD_HEIGHT,
+        y: nextBox.y + HEADER_HEIGHT + currentVisibleIndex * FIELD_HEIGHT,
         width: nextBox.width,
         height: FIELD_HEIGHT,
       }

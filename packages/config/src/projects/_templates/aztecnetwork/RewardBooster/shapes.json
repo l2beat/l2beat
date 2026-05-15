@@ -1,11 +1,11 @@
 {
   "RewardBooster.sol": {
-    "hash": "0x3e95cef0abe9b45d0a4870f63f29d32703b7ab0d5b2c1926b7dcd18cad0e989d",
+    "hash": "0x9b4d7f456fc246d3a8ed9dc133568610b8b5253720e7886fe3f0be3d8b69a080",
     "address": "eth:0x7101a6703491A4D808aeAbE9F62bC1Dc6a20bdf4",
     "blockNumber": 23834069
   },
   "RewardBooster_alpha.sol": {
-    "hash": "0xd88e52f8a67390118e6ca6308dcaa66116e76b793e891200be19354d545d0562",
+    "hash": "0xa55a151792fd54a06d45a214430777fdcc77649e3e3366b05a30ed49607b1d6e",
     "address": "eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80",
     "blockNumber": 24590324
   }
