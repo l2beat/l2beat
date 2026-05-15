@@ -40,7 +40,7 @@ export interface PrivacyProjectEntry {
   bucketCount: number
   assetsCount: number
   summary: {
-    totalValueSecuredUsd: number
+    totalValueLockedUsd: number
     deposits: {
       total: number
       last7d: number
@@ -115,7 +115,7 @@ export async function getPrivacyProjectData(
       projectIds: [details.id],
       range: defaultChartRange,
     }),
-    helpers.privacy.tvsChart.prefetch({
+    helpers.privacy.tvlChart.prefetch({
       projectIds: [details.id],
       range: defaultChartRange,
     }),
@@ -181,9 +181,9 @@ export async function getPrivacyProjectData(
   }
 
   sections.push({
-    type: 'PrivacyTvsSection',
+    type: 'PrivacyTvlSection',
     props: {
-      id: 'privacy-tvs',
+      id: 'privacy-tvl',
       title: 'Value Locked',
       defaultRange: defaultChartRange,
       project: chartProject,
@@ -291,7 +291,7 @@ export async function getPrivacyProjectData(
     bucketCount,
     assetsCount: details.assets.length,
     summary: {
-      totalValueSecuredUsd: details.summary.totalValueSecuredUsd,
+      totalValueLockedUsd: details.summary.totalValueLockedUsd,
       deposits: {
         total: details.summary.deposits.total,
         last7d: details.summary.deposits.last7d,

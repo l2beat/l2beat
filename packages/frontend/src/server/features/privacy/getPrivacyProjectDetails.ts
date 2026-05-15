@@ -8,7 +8,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import { getPrivacyProjects } from './getPrivacyProjects'
+import { getPrivacyProjectBySlug } from './getPrivacyProjects'
 import type { PrivacyAsset, PrivacyBucket } from './types'
 
 export interface PrivacyProjectDetails {
@@ -31,7 +31,7 @@ export interface PrivacyProjectDetails {
   upgradesAndGovernance?: string
   assets: PrivacyAsset[]
   summary: {
-    totalValueSecuredUsd: number
+    totalValueLockedUsd: number
     bucketCount: number
     deposits: {
       total: number
@@ -49,8 +49,7 @@ export interface PrivacyProjectDetails {
 export async function getPrivacyProjectDetails(
   slug: string,
 ): Promise<PrivacyProjectDetails | undefined> {
-  const projects = await getPrivacyProjects()
-  const project = projects.find((p) => p.slug === slug)
+  const project = await getPrivacyProjectBySlug(slug)
   if (!project) {
     return undefined
   }
@@ -73,17 +72,17 @@ export async function getPrivacyProjectDetails(
     db.tvsTokenValue.getLastNonZeroValue(now, projectId),
   ])
 
-  const tvsBySymbol = new Map<string, number>()
+  const tvlBySymbol = new Map<string, number>()
   for (const tv of tokenValues) {
-    const tvsToken = project.tvsConfig?.find(
+    const tvlToken = project.tvsConfig?.find(
       (t: { id: string; symbol: string }) => t.id === tv.tokenId,
     )
-    if (tvsToken) {
-      const existing = tvsBySymbol.get(tvsToken.symbol) ?? 0
-      tvsBySymbol.set(tvsToken.symbol, existing + tv.valueForProject)
+    if (tvlToken) {
+      const existing = tvlBySymbol.get(tvlToken.symbol) ?? 0
+      tvlBySymbol.set(tvlToken.symbol, existing + tv.valueForProject)
     }
   }
-  const projectTotalTvs = tokenValues.reduce(
+  const projectTotalTvl = tokenValues.reduce(
     (sum, tv) => sum + tv.valueForProject,
     0,
   )
@@ -93,10 +92,11 @@ export async function getPrivacyProjectDetails(
     totalIndex.set(`${total.projectId}::${total.bucketId}`, total)
   }
 
-  const dailyIndex = new Map<string, (typeof daily30d)[number]>()
+  const daily30dIndex = new Map<string, (typeof daily30d)[number]>()
+  const daily7dIndex = new Map<string, (typeof daily30d)[number]>()
   for (const row of daily30d) {
     const key = `${row.projectId}::${row.bucketId}`
-    const existing = dailyIndex.get(key) ?? {
+    const base = {
       projectId: row.projectId,
       bucketId: row.bucketId,
       timestamp: row.timestamp,
@@ -107,67 +107,58 @@ export async function getPrivacyProjectDetails(
       depositValueUsd: 0,
       withdrawalValueUsd: 0,
     }
-    existing.depositCount += row.depositCount
-    existing.withdrawalCount += row.withdrawalCount
-    existing.depositAmount += row.depositAmount
-    existing.withdrawalAmount += row.withdrawalAmount
-    existing.depositValueUsd += row.depositValueUsd
-    existing.withdrawalValueUsd += row.withdrawalValueUsd
-    dailyIndex.set(key, existing)
+
+    const existing30d = daily30dIndex.get(key) ?? { ...base }
+    existing30d.depositCount += row.depositCount
+    existing30d.withdrawalCount += row.withdrawalCount
+    existing30d.depositAmount += row.depositAmount
+    existing30d.withdrawalAmount += row.withdrawalAmount
+    existing30d.depositValueUsd += row.depositValueUsd
+    existing30d.withdrawalValueUsd += row.withdrawalValueUsd
+    daily30dIndex.set(key, existing30d)
+
+    if (row.timestamp >= last7dCutoff) {
+      const existing7d = daily7dIndex.get(key) ?? { ...base }
+      existing7d.depositCount += row.depositCount
+      existing7d.withdrawalCount += row.withdrawalCount
+      existing7d.depositAmount += row.depositAmount
+      existing7d.withdrawalAmount += row.withdrawalAmount
+      existing7d.depositValueUsd += row.depositValueUsd
+      existing7d.withdrawalValueUsd += row.withdrawalValueUsd
+      daily7dIndex.set(key, existing7d)
+    }
   }
 
   const assets = project.privacyInfo.tokens.map((token) => {
     const symbol = token.token.symbol
-    const assetTvs = tvsBySymbol.get(symbol) ?? null
+    const assetTvl = tvlBySymbol.get(symbol) ?? null
+
+    let assetDepositsTotal = 0
+    let assetDeposits7d = 0
+    let assetDeposits30d = 0
+    let assetValueTotal = 0
+    let assetValue7d = 0
+    let assetValue30d = 0
 
     const buckets = token.buckets.map((bucket) => {
       const key = `${projectId}::${bucket.id}`
       const total = totalIndex.get(key)
-      const daily = dailyIndex.get(key)
+      const daily7d = daily7dIndex.get(key)
+      const daily30d = daily30dIndex.get(key)
 
-      const depositCount7d =
-        daily?.depositCount ??
-        daily30d
-          .filter(
-            (r) =>
-              r.projectId === projectId &&
-              r.bucketId === bucket.id &&
-              r.timestamp >= last7dCutoff,
-          )
-          .reduce((sum, r) => sum + r.depositCount, 0)
+      const depositCountTotal = total?.depositCount ?? 0
+      const depositCount7d = daily7d?.depositCount ?? 0
+      const depositCount30d = daily30d?.depositCount ?? 0
+      const depositValueTotal = total?.depositValueUsd ?? 0
+      const depositValue7d = daily7d?.depositValueUsd ?? 0
+      const depositValue30d = daily30d?.depositValueUsd ?? 0
 
-      const depositCount30d =
-        daily?.depositCount ??
-        daily30d
-          .filter(
-            (r) =>
-              r.projectId === projectId &&
-              r.bucketId === bucket.id &&
-              r.timestamp >= last30dCutoff,
-          )
-          .reduce((sum, r) => sum + r.depositCount, 0)
-
-      const depositValueUsd7d =
-        daily?.depositValueUsd ??
-        daily30d
-          .filter(
-            (r) =>
-              r.projectId === projectId &&
-              r.bucketId === bucket.id &&
-              r.timestamp >= last7dCutoff,
-          )
-          .reduce((sum, r) => sum + r.depositValueUsd, 0)
-
-      const depositValueUsd30d =
-        daily?.depositValueUsd ??
-        daily30d
-          .filter(
-            (r) =>
-              r.projectId === projectId &&
-              r.bucketId === bucket.id &&
-              r.timestamp >= last30dCutoff,
-          )
-          .reduce((sum, r) => sum + r.depositValueUsd, 0)
+      assetDepositsTotal += depositCountTotal
+      assetDeposits7d += depositCount7d
+      assetDeposits30d += depositCount30d
+      assetValueTotal += depositValueTotal
+      assetValue7d += depositValue7d
+      assetValue30d += depositValue30d
 
       return {
         id: bucket.id,
@@ -177,14 +168,14 @@ export async function getPrivacyProjectDetails(
         totalAmount: null,
         totalValueUsd: null,
         deposits: {
-          total: total?.depositCount ?? 0,
+          total: depositCountTotal,
           last7d: depositCount7d,
           last30d: depositCount30d,
         },
         depositedValueUsd: {
-          total: total?.depositValueUsd ?? 0,
-          last7d: depositValueUsd7d,
-          last30d: depositValueUsd30d,
+          total: depositValueTotal,
+          last7d: depositValue7d,
+          last30d: depositValue30d,
         },
       } satisfies PrivacyBucket
     })
@@ -196,16 +187,16 @@ export async function getPrivacyProjectDetails(
       decimals: token.token.decimals,
       bucketCount: buckets.length,
       totalAmount: 0,
-      totalValueUsd: assetTvs,
+      totalValueUsd: assetTvl,
       deposits: {
-        total: sum(buckets.map((b) => b.deposits.total)),
-        last7d: sum(buckets.map((b) => b.deposits.last7d)),
-        last30d: sum(buckets.map((b) => b.deposits.last30d)),
+        total: assetDepositsTotal,
+        last7d: assetDeposits7d,
+        last30d: assetDeposits30d,
       },
       depositedValueUsd: {
-        total: sum(buckets.map((b) => b.depositedValueUsd.total)),
-        last7d: sum(buckets.map((b) => b.depositedValueUsd.last7d)),
-        last30d: sum(buckets.map((b) => b.depositedValueUsd.last30d)),
+        total: assetValueTotal,
+        last7d: assetValue7d,
+        last30d: assetValue30d,
       },
       buckets: buckets.sort((a, b) =>
         a.label.localeCompare(b.label, undefined, { numeric: true }),
@@ -218,6 +209,24 @@ export async function getPrivacyProjectDetails(
     if (valueDelta !== 0) return valueDelta
     return a.symbol.localeCompare(b.symbol, undefined, { numeric: true })
   })
+
+  let summaryBucketCount = 0
+  let summaryDepositsTotal = 0
+  let summaryDeposits7d = 0
+  let summaryDeposits30d = 0
+  let summaryValueTotal = 0
+  let summaryValue7d = 0
+  let summaryValue30d = 0
+
+  for (const asset of orderedAssets) {
+    summaryBucketCount += asset.bucketCount
+    summaryDepositsTotal += asset.deposits.total
+    summaryDeposits7d += asset.deposits.last7d
+    summaryDeposits30d += asset.deposits.last30d
+    summaryValueTotal += asset.depositedValueUsd.total
+    summaryValue7d += asset.depositedValueUsd.last7d
+    summaryValue30d += asset.depositedValueUsd.last30d
+  }
 
   return {
     id: project.id,
@@ -233,22 +242,18 @@ export async function getPrivacyProjectDetails(
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     assets: orderedAssets,
     summary: {
-      totalValueSecuredUsd: projectTotalTvs,
-      bucketCount: orderedAssets.reduce((sum, a) => sum + a.bucketCount, 0),
+      totalValueLockedUsd: projectTotalTvl,
+      bucketCount: summaryBucketCount,
       deposits: {
-        total: sum(orderedAssets.map((a) => a.deposits.total)),
-        last7d: sum(orderedAssets.map((a) => a.deposits.last7d)),
-        last30d: sum(orderedAssets.map((a) => a.deposits.last30d)),
+        total: summaryDepositsTotal,
+        last7d: summaryDeposits7d,
+        last30d: summaryDeposits30d,
       },
       depositedValueUsd: {
-        total: sum(orderedAssets.map((a) => a.depositedValueUsd.total)),
-        last7d: sum(orderedAssets.map((a) => a.depositedValueUsd.last7d)),
-        last30d: sum(orderedAssets.map((a) => a.depositedValueUsd.last30d)),
+        total: summaryValueTotal,
+        last7d: summaryValue7d,
+        last30d: summaryValue30d,
       },
     },
   }
-}
-
-function sum(values: number[]): number {
-  return values.reduce((acc, value) => acc + value, 0)
 }

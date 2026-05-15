@@ -19,7 +19,7 @@ import { formatRange } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
-export interface PrivacyTvsBreakdownProject {
+export interface PrivacyTvlBreakdownProject {
   id: string
   name: string
 }
@@ -28,12 +28,12 @@ interface Props {
   data:
     | [timestamp: number, valuesByProject: Record<string, number | null>][]
     | undefined
-  projects: PrivacyTvsBreakdownProject[]
+  projects: PrivacyTvlBreakdownProject[]
   syncedUntil: number | undefined
   isLoading: boolean
 }
 
-export function PrivacyTvsBreakdownChart({
+export function PrivacyTvlBreakdownChart({
   data,
   projects,
   syncedUntil,

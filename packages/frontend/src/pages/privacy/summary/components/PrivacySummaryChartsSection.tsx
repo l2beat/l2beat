@@ -8,11 +8,11 @@ import { api } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacyFlowChart } from '../../project/components/PrivacyFlowChart'
 import { PrivacyFlowsChartRangeControls } from '../../project/components/PrivacyFlowsChartRangeControls'
-import type { PrivacyTvsBreakdownProject } from './PrivacyTvsBreakdownChart'
-import { PrivacyTvsBreakdownChart } from './PrivacyTvsBreakdownChart'
+import type { PrivacyTvlBreakdownProject } from './PrivacyTvlBreakdownChart'
+import { PrivacyTvlBreakdownChart } from './PrivacyTvlBreakdownChart'
 
 interface Props {
-  projects: PrivacyTvsBreakdownProject[]
+  projects: PrivacyTvlBreakdownProject[]
   defaultRange: ChartRange
 }
 
@@ -21,8 +21,8 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
   const projectIds = useMemo(() => projects.map((p) => p.id), [projects])
   const { data: flowsData, isLoading: isFlowsLoading } =
     api.privacy.flowsChart.useQuery({ projectIds, range })
-  const { data: tvsData, isLoading: isTvsLoading } =
-    api.privacy.tvsChart.useQuery({ projectIds, range })
+  const { data: tvlData, isLoading: isTvlLoading } =
+    api.privacy.tvlChart.useQuery({ projectIds, range })
 
   const chartData = useMemo(
     () =>
@@ -52,12 +52,12 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     [chartData],
   )
 
-  const tvsChartTimeRange = useMemo(
+  const tvlChartTimeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
-        tvsData?.chart.map(([timestamp]) => ({ timestamp })),
+        tvlData?.chart.map(([timestamp]) => ({ timestamp })),
       ),
-    [tvsData],
+    [tvlData],
   )
 
   const countsChart = (
@@ -76,17 +76,17 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
       />
     </div>
   )
-  const tvsChart = (
+  const tvlChart = (
     <div>
       <div className="mb-3">
-        <h2 className="font-bold text-lg md:text-xl">Total value secured</h2>
-        <ChartTimeRange timeRange={tvsChartTimeRange} />
+        <h2 className="font-bold text-lg md:text-xl">Total value locked</h2>
+        <ChartTimeRange timeRange={tvlChartTimeRange} />
       </div>
-      <PrivacyTvsBreakdownChart
-        data={tvsData?.chart}
+      <PrivacyTvlBreakdownChart
+        data={tvlData?.chart}
         projects={projects}
-        syncedUntil={tvsData?.syncedUntil}
-        isLoading={isTvsLoading}
+        syncedUntil={tvlData?.syncedUntil}
+        isLoading={isTvlLoading}
       />
     </div>
   )
@@ -94,12 +94,12 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
   return (
     <>
       <div className="mb-3 grid grid-cols-2 gap-x-3 max-md:mt-2 max-lg:hidden">
-        <PrimaryCard>{tvsChart}</PrimaryCard>
+        <PrimaryCard>{tvlChart}</PrimaryCard>
         <PrimaryCard>{countsChart}</PrimaryCard>
       </div>
       <ChartTabs
         className="mt-2 mb-3 lg:hidden"
-        charts={[tvsChart, countsChart]}
+        charts={[tvlChart, countsChart]}
       />
       <ChartControlsWrapper className="justify-end max-md:pr-4">
         <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />

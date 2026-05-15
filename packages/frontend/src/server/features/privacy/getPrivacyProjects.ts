@@ -10,3 +10,14 @@ export async function getPrivacyProjects(): Promise<PrivacyProject[]> {
     })
   ).sort((a, b) => a.slug.localeCompare(b.slug))
 }
+
+export async function getPrivacyProjectBySlug(
+  slug: string,
+): Promise<PrivacyProject | undefined> {
+  return await ps.getProject({
+    slug,
+    where: ['privacyInfo'],
+    select: ['display', 'privacyInfo', 'statuses', 'tvsConfig'],
+    optional: ['contracts', 'permissions', 'discoveryInfo'],
+  })
+}

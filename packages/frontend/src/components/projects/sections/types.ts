@@ -17,7 +17,7 @@ import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
 import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
 import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
-import type { PrivacyTvsSectionProps } from './privacy/PrivacyTvsSection'
+import type { PrivacyTvlSectionProps } from './privacy/PrivacyTvlSection'
 import type { ProgramHashesSectionProps } from './program-hashes/ProgramHashesSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import type { RiskSummarySectionProps } from './RiskSummarySection'
@@ -63,7 +63,7 @@ type SectionId =
   | 'interop-volume'
   | 'interop-transfers'
   | 'interop-tokens'
-  | 'privacy-tvs'
+  | 'privacy-tvl'
   | 'privacy-flows'
   | 'privacy-assets-breakdown'
 type GroupId = 'da-layer' | 'da-bridge'
@@ -232,9 +232,9 @@ interface ProjectDetailsUpgradesAndGovernanceSection {
   props: ProjectDetailsProps<UpgradesAndGovernanceSectionProps>
 }
 
-interface ProjectDetailsPrivacyTvsSection {
-  type: 'PrivacyTvsSection'
-  props: ProjectDetailsProps<PrivacyTvsSectionProps>
+interface ProjectDetailsPrivacyTvlSection {
+  type: 'PrivacyTvlSection'
+  props: ProjectDetailsProps<PrivacyTvlSectionProps>
 }
 
 interface ProjectDetailsPrivacyFlowsSection {
@@ -282,7 +282,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsInteropTransfersSection
   | ProjectDetailsInteropTokensSection
   | ProjectDetailsUpgradesAndGovernanceSection
-  | ProjectDetailsPrivacyTvsSection
+  | ProjectDetailsPrivacyTvlSection
   | ProjectDetailsPrivacyFlowsSection
   | ProjectDetailsPrivacyAssetsBreakdownSection
 )

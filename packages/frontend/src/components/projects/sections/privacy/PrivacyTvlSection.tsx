@@ -4,24 +4,24 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrivacyFlowsChartRangeControls } from '~/pages/privacy/project/components/PrivacyFlowsChartRangeControls'
-import { PrivacyTvsChart } from '~/pages/privacy/summary/components/PrivacyTvsChart'
+import { PrivacyTvlChart } from '~/pages/privacy/summary/components/PrivacyTvlChart'
 import { api } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
-export interface PrivacyTvsSectionProps extends ProjectSectionProps {
+export interface PrivacyTvlSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
 }
 
-export function PrivacyTvsSection({
+export function PrivacyTvlSection({
   defaultRange,
   project,
   ...projectSectionProps
-}: PrivacyTvsSectionProps) {
+}: PrivacyTvlSectionProps) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = api.privacy.tvsChart.useQuery({
+  const { data, isLoading } = api.privacy.tvlChart.useQuery({
     projectIds: [project.id],
     range,
   })
@@ -46,7 +46,7 @@ export function PrivacyTvsSection({
         <ProjectChartTimeRange timeRange={timeRange} />
         <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
-      <PrivacyTvsChart
+      <PrivacyTvlChart
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}

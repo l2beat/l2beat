@@ -3,7 +3,7 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface Props {
-  totalValueSecuredUsd: number
+  totalValueLockedUsd: number
   assetsCount: number
   bucketsCount: number
   deposits: {
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export function PrivacyProjectStats({
-  totalValueSecuredUsd,
+  totalValueLockedUsd,
   assetsCount,
   bucketsCount,
   deposits,
@@ -23,10 +23,10 @@ export function PrivacyProjectStats({
     <div className="grid gap-4 md:grid-cols-4">
       <ProjectSummaryStat
         className="max-md:hidden"
-        title="Total Value Secured"
+        title="Total Value Locked"
         value={
           <div className="flex flex-col md:gap-1">
-            <span>{formatCurrency(totalValueSecuredUsd ?? 0, 'usd')}</span>
+            <span>{formatCurrency(totalValueLockedUsd ?? 0, 'usd')}</span>
             <span className="font-medium text-paragraph-12 text-secondary leading-normal">
               across {formatInteger(assetsCount ?? 0)} assets and{' '}
               {formatInteger(bucketsCount ?? 0)} buckets
@@ -36,8 +36,8 @@ export function PrivacyProjectStats({
       />
       <ProjectSummaryStat
         className="md:hidden"
-        title="TVS"
-        value={formatCurrency(totalValueSecuredUsd ?? 0, 'usd')}
+        title="TVL"
+        value={formatCurrency(totalValueLockedUsd ?? 0, 'usd')}
       />
       <ProjectSummaryStat
         className="md:hidden"
