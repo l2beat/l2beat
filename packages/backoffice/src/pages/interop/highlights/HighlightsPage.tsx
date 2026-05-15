@@ -27,6 +27,9 @@ export function HighlightsPage() {
     api.interop.highlights.latest.useQuery()
 
   const topPath = data?.topPathByVolume ?? null
+  const chainIncrease = data?.largestVolumeIncreaseByChain ?? null
+  const tokenIncrease = data?.largestVolumeIncreaseByToken ?? null
+  const protocolIncrease = data?.largestVolumeIncreaseByProtocol ?? null
 
   return (
     <AppLayout>
@@ -104,8 +107,102 @@ export function HighlightsPage() {
             ) : null}
           </CardContent>
         </Card>
+
+        {!isLoading && !isError ? (
+          <div className="grid gap-4 lg:grid-cols-3">
+            <VolumeIncreaseCard
+              title="Largest chain volume increase"
+              description="Source chain with the largest USD volume increase across all destination paths."
+              entityLabel="Chain"
+              entity={chainIncrease?.chain}
+              metric={chainIncrease}
+            />
+            <VolumeIncreaseCard
+              title="Largest token volume increase"
+              description="Token with the largest USD volume increase across all paths."
+              entityLabel="Token"
+              entity={tokenIncrease?.abstractTokenId}
+              metric={tokenIncrease}
+            />
+            <VolumeIncreaseCard
+              title="Largest protocol volume increase"
+              description="Protocol with the largest USD volume increase across all paths."
+              entityLabel="Protocol"
+              entity={protocolIncrease?.id}
+              metric={protocolIncrease}
+            />
+          </div>
+        ) : null}
       </div>
     </AppLayout>
+  )
+}
+
+interface VolumeIncreaseMetric {
+  windowStart: number
+  windowEnd: number
+  previousWindowStart: number
+  previousWindowEnd: number
+  currentVolumeUsd: number
+  previousVolumeUsd: number
+  increaseUsd: number
+}
+
+function VolumeIncreaseCard(props: {
+  title: string
+  description: string
+  entityLabel: string
+  entity: string | undefined
+  metric: VolumeIncreaseMetric | null
+}) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{props.title}</CardTitle>
+        <CardDescription>{props.description}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        {props.metric === null || props.entity === undefined ? (
+          <Empty className="border">
+            <EmptyHeader>
+              <EmptyTitle>No increase found</EmptyTitle>
+              <EmptyDescription>
+                No positive volume delta was found for the latest comparison.
+              </EmptyDescription>
+            </EmptyHeader>
+          </Empty>
+        ) : (
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <div className="text-muted-foreground text-sm">
+                {formatTransferTimestamp(props.metric.windowStart)} UTC -{' '}
+                {formatTransferTimestamp(props.metric.windowEnd)} UTC
+              </div>
+              <div>
+                <div className="text-muted-foreground text-sm">
+                  {props.entityLabel}
+                </div>
+                <div className="font-semibold text-xl">{props.entity}</div>
+              </div>
+            </div>
+            <dl className="grid gap-3">
+              <Metric
+                label="Increase"
+                value={`+${formatDollars(props.metric.increaseUsd)}`}
+              />
+              <Metric
+                label="Current volume"
+                value={formatDollars(props.metric.currentVolumeUsd)}
+              />
+              <Metric
+                label="Previous volume"
+                value={formatDollars(props.metric.previousVolumeUsd)}
+              />
+            </dl>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   )
 }
 

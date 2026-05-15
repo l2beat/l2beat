@@ -1395,6 +1395,161 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
   describe(
     AggregatedInteropTransferRepository.prototype
+      .getLargestSourceChainVolumeIncrease.name,
+    () => {
+      it('returns the source chain with the largest positive volume increase', async () => {
+        const previousTimestamp = UnixTime(100)
+        const timestamp = UnixTime(200)
+
+        await repository.insertMany([
+          record({
+            id: 'across',
+            timestamp: previousTimestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcValueUsd: 500,
+          }),
+          record({
+            id: 'relay',
+            timestamp: previousTimestamp,
+            srcChain: 'base',
+            dstChain: 'optimism',
+            srcValueUsd: 100,
+          }),
+          record({
+            id: 'across',
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcValueUsd: 1_000,
+            dstValueUsd: 1_200,
+          }),
+          record({
+            id: 'stargate',
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'base',
+            srcValueUsd: 300,
+          }),
+          record({
+            id: 'relay',
+            timestamp,
+            srcChain: 'base',
+            dstChain: 'optimism',
+            srcValueUsd: 900,
+          }),
+          record({
+            id: 'same-chain',
+            timestamp,
+            srcChain: 'base',
+            dstChain: 'base',
+            srcValueUsd: 9_000,
+            dstValueUsd: 9_000,
+          }),
+        ])
+
+        const result = await repository.getLargestSourceChainVolumeIncrease(
+          timestamp,
+          previousTimestamp,
+        )
+
+        expect(result).toEqual({
+          timestamp,
+          chain: 'ethereum',
+          currentVolumeUsd: 1_500,
+          previousVolumeUsd: 500,
+          increaseUsd: 1_000,
+        })
+      })
+
+      it('returns undefined when no source chain volume increased', async () => {
+        const previousTimestamp = UnixTime(100)
+        const timestamp = UnixTime(200)
+
+        await repository.insertMany([
+          record({
+            id: 'across',
+            timestamp: previousTimestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcValueUsd: 500,
+          }),
+          record({
+            id: 'across',
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcValueUsd: 100,
+          }),
+        ])
+
+        const result = await repository.getLargestSourceChainVolumeIncrease(
+          timestamp,
+          previousTimestamp,
+        )
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
+    AggregatedInteropTransferRepository.prototype
+      .getLargestProtocolVolumeIncrease.name,
+    () => {
+      it('returns the protocol with the largest positive volume increase', async () => {
+        const previousTimestamp = UnixTime(100)
+        const timestamp = UnixTime(200)
+
+        await repository.insertMany([
+          record({
+            id: 'across',
+            timestamp: previousTimestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcValueUsd: 300,
+          }),
+          record({
+            id: 'across',
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcValueUsd: 1_000,
+          }),
+          record({
+            id: 'across',
+            timestamp,
+            srcChain: 'base',
+            dstChain: 'optimism',
+            srcValueUsd: 400,
+          }),
+          record({
+            id: 'stargate',
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'base',
+            srcValueUsd: 1_000,
+          }),
+        ])
+
+        const result = await repository.getLargestProtocolVolumeIncrease(
+          timestamp,
+          previousTimestamp,
+        )
+
+        expect(result).toEqual({
+          timestamp,
+          id: 'across',
+          currentVolumeUsd: 1_400,
+          previousVolumeUsd: 300,
+          increaseUsd: 1_100,
+        })
+      })
+    },
+  )
+
+  describe(
+    AggregatedInteropTransferRepository.prototype
       .getSummedTransferCountsByChainsIdAndTimestamp.name,
     () => {
       it('returns summed transferCount and identifiedCount for matching records', async () => {

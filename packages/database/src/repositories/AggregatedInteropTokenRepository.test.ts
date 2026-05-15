@@ -450,6 +450,112 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
   )
 
   describe(
+    AggregatedInteropTokenRepository.prototype.getLargestTokenVolumeIncrease
+      .name,
+    () => {
+      it('returns the token with the largest positive volume increase', async () => {
+        const previousTimestamp = UnixTime(100)
+        const timestamp = UnixTime(200)
+
+        await repository.insertMany([
+          record({
+            id: 'across',
+            timestamp: previousTimestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            abstractTokenId: 'eth',
+            volume: 500,
+          }),
+          record({
+            id: 'relay',
+            timestamp: previousTimestamp,
+            srcChain: 'base',
+            dstChain: 'optimism',
+            abstractTokenId: 'usdc',
+            volume: 100,
+          }),
+          record({
+            id: 'across',
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            abstractTokenId: 'eth',
+            volume: 1_200,
+          }),
+          record({
+            id: 'stargate',
+            timestamp,
+            srcChain: 'base',
+            dstChain: 'optimism',
+            abstractTokenId: 'eth',
+            volume: 300,
+          }),
+          record({
+            id: 'relay',
+            timestamp,
+            srcChain: 'base',
+            dstChain: 'optimism',
+            abstractTokenId: 'usdc',
+            volume: 900,
+          }),
+          record({
+            id: 'same-chain',
+            timestamp,
+            srcChain: 'base',
+            dstChain: 'base',
+            abstractTokenId: 'usdc',
+            volume: 9_000,
+          }),
+        ])
+
+        const result = await repository.getLargestTokenVolumeIncrease(
+          timestamp,
+          previousTimestamp,
+        )
+
+        expect(result).toEqual({
+          timestamp,
+          abstractTokenId: 'eth',
+          currentVolumeUsd: 1_500,
+          previousVolumeUsd: 500,
+          increaseUsd: 1_000,
+        })
+      })
+
+      it('returns undefined when no token volume increased', async () => {
+        const previousTimestamp = UnixTime(100)
+        const timestamp = UnixTime(200)
+
+        await repository.insertMany([
+          record({
+            id: 'across',
+            timestamp: previousTimestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            abstractTokenId: 'eth',
+            volume: 500,
+          }),
+          record({
+            id: 'across',
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            abstractTokenId: 'eth',
+            volume: 100,
+          }),
+        ])
+
+        const result = await repository.getLargestTokenVolumeIncrease(
+          timestamp,
+          previousTimestamp,
+        )
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
     AggregatedInteropTokenRepository.prototype.getByChainsAndTimestamp.name,
     () => {
       it('returns records matching timestamp, srcChains, dstChains, and bridgeType', async () => {

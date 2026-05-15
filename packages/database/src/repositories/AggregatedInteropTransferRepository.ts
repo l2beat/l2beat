@@ -71,6 +71,22 @@ export interface AggregatedInteropTopPathByVolumeRecord {
   protocolCount: number
 }
 
+export interface AggregatedInteropChainVolumeIncreaseRecord {
+  timestamp: UnixTime
+  chain: string
+  currentVolumeUsd: number
+  previousVolumeUsd: number
+  increaseUsd: number
+}
+
+export interface AggregatedInteropProtocolVolumeIncreaseRecord {
+  timestamp: UnixTime
+  id: string
+  currentVolumeUsd: number
+  previousVolumeUsd: number
+  increaseUsd: number
+}
+
 export function toRecord(
   row: Selectable<AggregatedInteropTransfer>,
 ): AggregatedInteropTransferRecord {
@@ -360,6 +376,130 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     }
   }
 
+  async getLargestSourceChainVolumeIncrease(
+    timestamp: UnixTime,
+    previousTimestamp: UnixTime,
+  ): Promise<AggregatedInteropChainVolumeIncreaseRecord | undefined> {
+    const current = this.db
+      .selectFrom('AggregatedInteropTransfer as a')
+      .select([
+        sql<string>`"a"."srcChain"`.as('chain'),
+        transferVolumeUsd('a').as('volume_usd'),
+      ])
+      .where('a.timestamp', '=', UnixTime.toDate(timestamp))
+      .whereRef('a.srcChain', '!=', 'a.dstChain')
+      .groupBy('a.srcChain')
+      .as('current')
+
+    const previous = this.db
+      .selectFrom('AggregatedInteropTransfer as a')
+      .select([
+        sql<string>`"a"."srcChain"`.as('chain'),
+        transferVolumeUsd('a').as('volume_usd'),
+      ])
+      .where('a.timestamp', '=', UnixTime.toDate(previousTimestamp))
+      .whereRef('a.srcChain', '!=', 'a.dstChain')
+      .groupBy('a.srcChain')
+      .as('previous')
+
+    const increaseUsd = sql<number>`
+      "current"."volume_usd" - coalesce("previous"."volume_usd", 0)
+    `
+
+    const row = await this.db
+      .selectFrom(current)
+      .leftJoin(previous, (join) =>
+        join.onRef('current.chain', '=', 'previous.chain'),
+      )
+      .select([
+        sql<string>`"current"."chain"`.as('chain'),
+        sql<number>`"current"."volume_usd"`.as('current_volume_usd'),
+        sql<number>`coalesce("previous"."volume_usd", 0)`.as(
+          'previous_volume_usd',
+        ),
+        increaseUsd.as('increase_usd'),
+      ])
+      .where(increaseUsd, '>', 0)
+      .orderBy(sql`increase_usd desc`)
+      .orderBy('current.chain', 'asc')
+      .limit(1)
+      .executeTakeFirst()
+
+    if (!row) {
+      return undefined
+    }
+
+    return {
+      timestamp,
+      chain: row.chain,
+      currentVolumeUsd: Number(row.current_volume_usd ?? 0),
+      previousVolumeUsd: Number(row.previous_volume_usd ?? 0),
+      increaseUsd: Number(row.increase_usd ?? 0),
+    }
+  }
+
+  async getLargestProtocolVolumeIncrease(
+    timestamp: UnixTime,
+    previousTimestamp: UnixTime,
+  ): Promise<AggregatedInteropProtocolVolumeIncreaseRecord | undefined> {
+    const current = this.db
+      .selectFrom('AggregatedInteropTransfer as a')
+      .select([
+        sql<string>`"a"."id"`.as('id'),
+        transferVolumeUsd('a').as('volume_usd'),
+      ])
+      .where('a.timestamp', '=', UnixTime.toDate(timestamp))
+      .whereRef('a.srcChain', '!=', 'a.dstChain')
+      .groupBy('a.id')
+      .as('current')
+
+    const previous = this.db
+      .selectFrom('AggregatedInteropTransfer as a')
+      .select([
+        sql<string>`"a"."id"`.as('id'),
+        transferVolumeUsd('a').as('volume_usd'),
+      ])
+      .where('a.timestamp', '=', UnixTime.toDate(previousTimestamp))
+      .whereRef('a.srcChain', '!=', 'a.dstChain')
+      .groupBy('a.id')
+      .as('previous')
+
+    const increaseUsd = sql<number>`
+      "current"."volume_usd" - coalesce("previous"."volume_usd", 0)
+    `
+
+    const row = await this.db
+      .selectFrom(current)
+      .leftJoin(previous, (join) =>
+        join.onRef('current.id', '=', 'previous.id'),
+      )
+      .select([
+        sql<string>`"current"."id"`.as('id'),
+        sql<number>`"current"."volume_usd"`.as('current_volume_usd'),
+        sql<number>`coalesce("previous"."volume_usd", 0)`.as(
+          'previous_volume_usd',
+        ),
+        increaseUsd.as('increase_usd'),
+      ])
+      .where(increaseUsd, '>', 0)
+      .orderBy(sql`increase_usd desc`)
+      .orderBy('current.id', 'asc')
+      .limit(1)
+      .executeTakeFirst()
+
+    if (!row) {
+      return undefined
+    }
+
+    return {
+      timestamp,
+      id: row.id,
+      currentVolumeUsd: Number(row.current_volume_usd ?? 0),
+      previousVolumeUsd: Number(row.previous_volume_usd ?? 0),
+      increaseUsd: Number(row.increase_usd ?? 0),
+    }
+  }
+
   async getRecentStatsForGroup(
     limit: number,
     id: string,
@@ -642,4 +782,24 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
 
     return rows.map(toRecord)
   }
+}
+
+function transferVolumeUsd(tableAlias: string) {
+  return sql<number>`
+    sum(
+      case
+        when ${sql.raw(`"${tableAlias}"."srcValueUsd"`)} is not null
+          and ${sql.raw(`"${tableAlias}"."dstValueUsd"`)} is not null
+          then greatest(
+            ${sql.raw(`"${tableAlias}"."srcValueUsd"`)},
+            ${sql.raw(`"${tableAlias}"."dstValueUsd"`)}
+          )
+        else coalesce(
+          ${sql.raw(`"${tableAlias}"."srcValueUsd"`)},
+          ${sql.raw(`"${tableAlias}"."dstValueUsd"`)},
+          0
+        )
+      end
+    )
+  `
 }
