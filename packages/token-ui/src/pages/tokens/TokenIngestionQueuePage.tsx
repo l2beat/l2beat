@@ -35,6 +35,8 @@ import {
 } from '~/components/core/Table'
 import { ExplorerLink } from '~/components/ExplorerLink'
 import {
+  ConflictBadge,
+  formatAbstractRef,
   IngestionPreviewDialog,
   type IngestionPreviewState,
 } from '~/components/IngestionPreviewDialog'
@@ -264,7 +266,7 @@ function QueueStateBadge({
     case 'pending':
       return <Badge>Pending</Badge>
     case 'conflict':
-      return <Badge variant="outline">Conflict</Badge>
+      return <ConflictBadge />
     case 'error':
       return <Badge variant="destructive">Error</Badge>
   }
@@ -298,7 +300,7 @@ function PredictedOutcome({ outcome }: { outcome: IngestionOutcome }) {
     case 'conflict':
       return (
         <span>
-          <Badge variant="outline">Conflict</Badge>
+          <ConflictBadge />
           <span className="ml-2 text-muted-foreground text-xs">
             {outcome.message}
           </span>
@@ -314,7 +316,7 @@ function PredictedOutcome({ outcome }: { outcome: IngestionOutcome }) {
         </span>
       )
     case 'noop':
-      return <Badge variant="secondary">No change</Badge>
+      return <Badge variant="secondary">No update</Badge>
     case 'write':
       return (
         <Badge>
@@ -329,7 +331,7 @@ function PredictedOutcome({ outcome }: { outcome: IngestionOutcome }) {
           </Badge>
           <span className="ml-2 text-muted-foreground text-xs">
             {outcome.abstract.kind === 'existing'
-              ? `abstract ${outcome.abstract.id}`
+              ? `abstract ${formatAbstractRef(outcome.abstract.token)}`
               : `abstract from coingecko ${outcome.abstract.coingeckoId} (new)`}
           </span>
         </span>

@@ -1,5 +1,6 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type {
+  AbstractTokenRef,
   IngestionOutcome,
   IngestionStep,
   IngestionTrace,
@@ -115,9 +116,9 @@ function StepLine({ step }: { step: IngestionStep }) {
         <span>
           Found {step.total} transfers ({step.nonSwapping} non-swapping). Other
           sides resolve to:{' '}
-          {step.abstractTokenIds.length === 0
+          {step.abstractTokens.length === 0
             ? 'no abstract tokens'
-            : step.abstractTokenIds.map((id) => `"${id}"`).join(', ')}
+            : step.abstractTokens.map(formatAbstractRef).join(', ')}
           .
         </span>
       )
@@ -125,15 +126,15 @@ function StepLine({ step }: { step: IngestionStep }) {
       return (
         <span>
           Resolved abstract token{' '}
-          <code className="font-mono">{step.abstractTokenId}</code> from
-          non-swapping transfers.
+          <AbstractTokenLabel ref={step.abstractToken} /> from non-swapping
+          transfers.
         </span>
       )
     case 'resolved-from-existing':
       return (
         <span>
           Reused existing abstract token{' '}
-          <code className="font-mono">{step.abstractTokenId}</code>.
+          <AbstractTokenLabel ref={step.abstractToken} />.
         </span>
       )
     case 'coingecko-coin-found':
@@ -148,9 +149,9 @@ function StepLine({ step }: { step: IngestionStep }) {
     case 'resolved-from-coingecko-existing-abstract':
       return (
         <span>
-          Reused abstract token{' '}
-          <code className="font-mono">{step.abstractTokenId}</code> linked to
-          CoinGecko coin <code className="font-mono">{step.coinId}</code>.
+          Reused abstract token <AbstractTokenLabel ref={step.abstractToken} />{' '}
+          linked to CoinGecko coin{' '}
+          <code className="font-mono">{step.coinId}</code>.
         </span>
       )
     case 'resolved-from-coingecko-new-abstract':
@@ -194,6 +195,25 @@ function StepLine({ step }: { step: IngestionStep }) {
   }
 }
 
+export function ConflictBadge() {
+  return (
+    <Badge
+      variant="outline"
+      className="border-destructive text-destructive dark:border-destructive/60 dark:text-destructive-foreground"
+    >
+      Conflict
+    </Badge>
+  )
+}
+
+function AbstractTokenLabel({ ref }: { ref: AbstractTokenRef }) {
+  return <code className="font-mono">{formatAbstractRef(ref)}</code>
+}
+
+export function formatAbstractRef(ref: AbstractTokenRef) {
+  return `${ref.id}:${ref.symbol}`
+}
+
 function OutcomeView({ outcome }: { outcome: IngestionOutcome }) {
   switch (outcome.kind) {
     case 'skip':
@@ -206,7 +226,7 @@ function OutcomeView({ outcome }: { outcome: IngestionOutcome }) {
     case 'conflict':
       return (
         <div className="flex flex-col gap-2 text-sm">
-          <Badge variant="outline">Conflict</Badge>
+          <ConflictBadge />
           <span>{outcome.message}</span>
         </div>
       )
@@ -220,7 +240,7 @@ function OutcomeView({ outcome }: { outcome: IngestionOutcome }) {
     case 'noop':
       return (
         <div className="flex flex-col gap-2 text-sm">
-          <Badge variant="secondary">No change</Badge>
+          <Badge variant="secondary">No update</Badge>
           <span>
             Existing deployed token already matches the resolved abstract token.
             The queue entry would be removed.
@@ -240,7 +260,7 @@ function OutcomeView({ outcome }: { outcome: IngestionOutcome }) {
               : 'update the existing deployed token'}{' '}
             with abstract{' '}
             {outcome.abstract.kind === 'existing' ? (
-              <code className="font-mono">{outcome.abstract.id}</code>
+              <AbstractTokenLabel ref={outcome.abstract.token} />
             ) : (
               <>
                 from CoinGecko coin{' '}

@@ -1,6 +1,7 @@
 export { getTokenDbClient, type TokenDbClient } from './client'
 export type { Command } from './commands'
 export type {
+  AbstractTokenRef,
   IngestionOutcome,
   IngestionStep,
   IngestionTrace,

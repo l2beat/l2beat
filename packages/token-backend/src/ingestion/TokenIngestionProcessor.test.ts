@@ -56,7 +56,7 @@ describe(TokenIngestionProcessor.name, () => {
         kind: 'transfer-evidence',
         total: 1,
         nonSwapping: 0,
-        abstractTokenIds: [],
+        abstractTokens: [],
       })
       expect(getByPrimaryKeys).toHaveBeenCalledWith([])
     })
@@ -90,6 +90,11 @@ describe(TokenIngestionProcessor.name, () => {
               },
             ]),
           }),
+          abstractToken: mockObject<AbstractTokenRepository>({
+            getByIds: mockFn().resolvesTo([
+              abstractTokenRecord('USDC01', 'USDC'),
+            ]),
+          }),
           chain: mockObject<ChainRepository>({ findByName }),
         }),
         fetchDeployedTokenFacts,
@@ -112,7 +117,10 @@ describe(TokenIngestionProcessor.name, () => {
         kind: 'pending',
         operation: 'insert',
         existing: undefined,
-        abstract: { kind: 'existing', id: 'USDC01' },
+        abstract: {
+          kind: 'existing',
+          token: { id: 'USDC01', symbol: 'USDC' },
+        },
         symbolFallback: undefined,
         neighborsToEnqueue: [otherAddress],
       })
@@ -230,7 +238,10 @@ describe(TokenIngestionProcessor.name, () => {
           kind: 'pending',
           operation: 'insert',
           existing: undefined,
-          abstract: { kind: 'existing', id: 'USDC01' },
+          abstract: {
+            kind: 'existing',
+            token: { id: 'USDC01', symbol: 'USDC' },
+          },
           symbolFallback: undefined,
           neighborsToEnqueue: [],
         },
@@ -352,7 +363,10 @@ describe(TokenIngestionProcessor.name, () => {
           kind: 'pending',
           operation: 'insert',
           existing: undefined,
-          abstract: { kind: 'existing', id: 'USDC01' },
+          abstract: {
+            kind: 'existing',
+            token: { id: 'USDC01', symbol: 'USDC' },
+          },
           symbolFallback: undefined,
           neighborsToEnqueue: [],
         },
@@ -372,7 +386,10 @@ describe(TokenIngestionProcessor.name, () => {
           kind: 'pending',
           operation: 'insert',
           existing: undefined,
-          abstract: { kind: 'existing', id: 'USDC01' },
+          abstract: {
+            kind: 'existing',
+            token: { id: 'USDC01', symbol: 'USDC' },
+          },
           symbolFallback: undefined,
           neighborsToEnqueue: [],
         },
@@ -400,6 +417,20 @@ function createProcessor(deps: {
     etherscanApiKey: undefined,
     fetchDeployedTokenFacts: deps.fetchDeployedTokenFacts,
   })
+}
+
+function abstractTokenRecord(id: string, symbol: string) {
+  return {
+    id,
+    issuer: null,
+    symbol,
+    category: null,
+    iconUrl: null,
+    coingeckoId: null,
+    coingeckoListingTimestamp: null,
+    comment: null,
+    reviewed: false,
+  }
 }
 
 function token(chain: string, shortAddress: string) {

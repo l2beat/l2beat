@@ -220,6 +220,9 @@ describe(TokenIngestionLoop.name, () => {
             ]),
             updateByChainAndAddress,
           }),
+          abstractToken: mockObject<AbstractTokenRepository>({
+            getByIds: mockFn().resolvesTo([abstractToken('USDC01', 'USDC')]),
+          }),
         }),
         fetchDeployedTokenFacts,
       })
@@ -281,13 +284,19 @@ describe(TokenIngestionLoop.name, () => {
               deployedToken({ ...secondOther, abstractTokenId: 'SECOND' }),
             ]),
           }),
+          abstractToken: mockObject<AbstractTokenRepository>({
+            getByIds: mockFn().resolvesTo([
+              abstractToken('FIRST1', 'FOO'),
+              abstractToken('SECOND', 'BAR'),
+            ]),
+          }),
         }),
       })
 
       await loop.runOnce()
 
       expect(markConflict.calls[0]?.args[1]).toEqual(
-        'Non-swapping transfers point to multiple abstract tokens: FIRST1, SECOND.',
+        'Non-swapping transfers point to multiple abstract tokens: FIRST1:FOO, SECOND:BAR.',
       )
     })
 
@@ -376,6 +385,9 @@ describe(TokenIngestionLoop.name, () => {
             getByPrimaryKeys: mockFn().resolvesTo([
               deployedToken({ ...otherAddress, abstractTokenId: 'USDC01' }),
             ]),
+          }),
+          abstractToken: mockObject<AbstractTokenRepository>({
+            getByIds: mockFn().resolvesTo([abstractToken('USDC01', 'USDC')]),
           }),
           chain: mockObject<ChainRepository>({
             findByName: mockFn().resolvesTo({
@@ -590,6 +602,20 @@ function deployedToken(
     deploymentTimestamp: UnixTime(1),
     metadata: null,
     ...overrides,
+  }
+}
+
+function abstractToken(id: string, symbol: string) {
+  return {
+    id,
+    issuer: null,
+    symbol,
+    category: null,
+    iconUrl: null,
+    coingeckoId: null,
+    coingeckoListingTimestamp: null,
+    comment: null,
+    reviewed: false,
   }
 }
 

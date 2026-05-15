@@ -27,6 +27,7 @@ import {
   platformsToChainAddressPairs,
 } from '../trpc/routers/deployedTokens/chainAliases'
 import type {
+  AbstractTokenRef,
   IngestionOutcome,
   IngestionStep,
   IngestionTrace,
@@ -56,7 +57,7 @@ interface TokenIngestionProcessorDeps {
 type AbstractTokenResolution =
   | {
       type: 'resolved'
-      abstractTokenId: string
+      abstractToken: AbstractTokenRef
       symbolFallback: string | undefined
     }
   | {
@@ -158,7 +159,7 @@ export class TokenIngestionProcessor {
     let abstractTokenId: string
     let newAbstractToken: AbstractTokenRecord | undefined
     if (pending.abstract.kind === 'existing') {
-      abstractTokenId = pending.abstract.id
+      abstractTokenId = pending.abstract.token.id
       newAbstractToken = undefined
     } else {
       newAbstractToken = await this.buildAbstractToken(
@@ -287,6 +288,7 @@ export class TokenIngestionProcessor {
   ): Promise<AbstractTokenResolution> {
     const fromTransfers = await this.resolveAbstractFromNonSwappingTransfers(
       transfers,
+      existing,
       steps,
     )
 
@@ -294,37 +296,30 @@ export class TokenIngestionProcessor {
       return fromTransfers
     }
 
-    if (
-      existing?.abstractTokenId &&
-      fromTransfers.abstractTokenId &&
-      existing.abstractTokenId !== fromTransfers.abstractTokenId
-    ) {
-      return {
-        type: 'conflict',
-        message: `Non-swapping transfers point to abstract token ${fromTransfers.abstractTokenId}, but the deployed token already has ${existing.abstractTokenId}.`,
-      }
-    }
-
-    if (fromTransfers.abstractTokenId) {
+    if (fromTransfers.abstractToken) {
       steps.push({
         kind: 'resolved-from-transfers',
-        abstractTokenId: fromTransfers.abstractTokenId,
+        abstractToken: fromTransfers.abstractToken,
       })
       return {
         type: 'resolved',
-        abstractTokenId: fromTransfers.abstractTokenId,
+        abstractToken: fromTransfers.abstractToken,
         symbolFallback: undefined,
       }
     }
 
     if (existing?.abstractTokenId) {
-      steps.push({
-        kind: 'resolved-from-existing',
-        abstractTokenId: existing.abstractTokenId,
-      })
+      const existingAbstract = await this.deps.tokenDb.abstractToken.findById(
+        existing.abstractTokenId,
+      )
+      const ref: AbstractTokenRef = {
+        id: existing.abstractTokenId,
+        symbol: existingAbstract?.symbol ?? '?',
+      }
+      steps.push({ kind: 'resolved-from-existing', abstractToken: ref })
       return {
         type: 'resolved',
-        abstractTokenId: existing.abstractTokenId,
+        abstractToken: ref,
         symbolFallback: undefined,
       }
     }
@@ -334,9 +329,10 @@ export class TokenIngestionProcessor {
 
   private async resolveAbstractFromNonSwappingTransfers(
     transfers: InteropTransferMatch[],
+    existing: DeployedTokenRecord | undefined,
     steps: IngestionStep[],
   ): Promise<
-    | { type: 'resolved'; abstractTokenId: string | undefined }
+    | { type: 'resolved'; abstractToken: AbstractTokenRef | undefined }
     | { type: 'conflict'; message: string }
   > {
     const usableNonSwapping = transfers.filter(
@@ -361,24 +357,50 @@ export class TokenIngestionProcessor {
       }
     }
 
+    const lookupIds = new Set(abstractTokenIds)
+    if (existing?.abstractTokenId) lookupIds.add(existing.abstractTokenId)
+    const abstractRecords =
+      lookupIds.size > 0
+        ? await this.deps.tokenDb.abstractToken.getByIds(Array.from(lookupIds))
+        : []
+    const symbolById = new Map(
+      abstractRecords.map((record) => [record.id, record.symbol]),
+    )
+    const toRef = (id: string): AbstractTokenRef => ({
+      id,
+      symbol: symbolById.get(id) ?? '?',
+    })
+
+    const transferRefs = Array.from(abstractTokenIds).map(toRef)
+
     steps.push({
       kind: 'transfer-evidence',
       total: transfers.length,
       nonSwapping: usableNonSwapping.length,
-      abstractTokenIds: Array.from(abstractTokenIds),
+      abstractTokens: transferRefs,
     })
 
-    if (abstractTokenIds.size > 1) {
+    if (transferRefs.length > 1) {
       return {
         type: 'conflict',
-        message: `Non-swapping transfers point to multiple abstract tokens: ${Array.from(abstractTokenIds).join(', ')}.`,
+        message: `Non-swapping transfers point to multiple abstract tokens: ${transferRefs.map(formatRef).join(', ')}.`,
       }
     }
 
-    return {
-      type: 'resolved',
-      abstractTokenId: Array.from(abstractTokenIds)[0],
+    const transferAbstract = transferRefs[0]
+    if (
+      existing?.abstractTokenId &&
+      transferAbstract &&
+      existing.abstractTokenId !== transferAbstract.id
+    ) {
+      const existingRef = toRef(existing.abstractTokenId)
+      return {
+        type: 'conflict',
+        message: `Non-swapping transfers point to abstract token ${formatRef(transferAbstract)}, but the deployed token already has ${formatRef(existingRef)}.`,
+      }
     }
+
+    return { type: 'resolved', abstractToken: transferAbstract }
   }
 
   private async resolveAbstractFromCoingecko(
@@ -399,14 +421,18 @@ export class TokenIngestionProcessor {
     const abstractToken =
       await this.deps.tokenDb.abstractToken.findByCoingeckoId(coin.id)
     if (abstractToken) {
+      const ref: AbstractTokenRef = {
+        id: abstractToken.id,
+        symbol: abstractToken.symbol,
+      }
       steps.push({
         kind: 'resolved-from-coingecko-existing-abstract',
-        abstractTokenId: abstractToken.id,
+        abstractToken: ref,
         coinId: coin.id,
       })
       return {
         type: 'resolved',
-        abstractTokenId: abstractToken.id,
+        abstractToken: ref,
         symbolFallback: coin.symbol.toUpperCase(),
       }
     }
@@ -436,7 +462,7 @@ export class TokenIngestionProcessor {
 
     if (resolution.type === 'resolved') {
       if (existing) {
-        if (existing.abstractTokenId === resolution.abstractTokenId) {
+        if (existing.abstractTokenId === resolution.abstractToken.id) {
           return { kind: 'noop', deployedToken: existing }
         }
         return {
@@ -446,7 +472,7 @@ export class TokenIngestionProcessor {
             type: 'update',
             pk: { chain: address.chain, address: address.address },
             existing,
-            update: { abstractTokenId: resolution.abstractTokenId },
+            update: { abstractTokenId: resolution.abstractToken.id },
           },
           neighborsToEnqueue,
         }
@@ -455,7 +481,7 @@ export class TokenIngestionProcessor {
         kind: 'pending',
         operation: 'insert',
         existing: undefined,
-        abstract: { kind: 'existing', id: resolution.abstractTokenId },
+        abstract: { kind: 'existing', token: resolution.abstractToken },
         symbolFallback: resolution.symbolFallback,
         neighborsToEnqueue,
       }
@@ -698,6 +724,10 @@ function isNonSwappingTransfer(transfer: InteropTransferRecord) {
     transfer.bridgeType ?? InteropTransferClassifier.inferBridgeType(transfer)
 
   return bridgeType === 'lockAndMint' || bridgeType === 'burnAndMint'
+}
+
+function formatRef(ref: AbstractTokenRef) {
+  return `${ref.id}:${ref.symbol}`
 }
 
 function generateAbstractTokenId() {

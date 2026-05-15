@@ -12,6 +12,8 @@ export interface IngestionTrace {
   outcome: IngestionOutcome
 }
 
+export type AbstractTokenRef = { id: string; symbol: string }
+
 export type IngestionStep =
   | { kind: 'invalid-address'; rawAddress: string }
   | { kind: 'existing-token'; record: DeployedTokenRecord }
@@ -20,15 +22,15 @@ export type IngestionStep =
       kind: 'transfer-evidence'
       total: number
       nonSwapping: number
-      abstractTokenIds: string[]
+      abstractTokens: AbstractTokenRef[]
     }
-  | { kind: 'resolved-from-transfers'; abstractTokenId: string }
-  | { kind: 'resolved-from-existing'; abstractTokenId: string }
+  | { kind: 'resolved-from-transfers'; abstractToken: AbstractTokenRef }
+  | { kind: 'resolved-from-existing'; abstractToken: AbstractTokenRef }
   | { kind: 'coingecko-coin-found'; coinId: string; symbol: string }
   | { kind: 'coingecko-coin-not-found' }
   | {
       kind: 'resolved-from-coingecko-existing-abstract'
-      abstractTokenId: string
+      abstractToken: AbstractTokenRef
       coinId: string
     }
   | {
@@ -60,7 +62,7 @@ export type IngestionOutcome =
     }
 
 export type PendingAbstract =
-  | { kind: 'existing'; id: string }
+  | { kind: 'existing'; token: AbstractTokenRef }
   | { kind: 'new-coingecko'; coingeckoId: string; symbol: string }
 
 export type DeployedTokenWrite =
