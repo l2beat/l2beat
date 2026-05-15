@@ -195,6 +195,7 @@ function buildState(nodes: Node[]): State {
     userPreferences: {
       enableDimming: true,
       hideLargeArrays: false,
+      highlightOverlapping: true,
     },
     transform: {
       offsetX: 0,
