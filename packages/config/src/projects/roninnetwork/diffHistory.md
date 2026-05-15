@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x9835ad948b4707b3b61c7546a569e2613936126c
+Generated with discovered.json: 0xf81906de32fe634cbea40a05dcb8d1af34b2f189
 
-# Diff at Wed, 13 May 2026 21:59:23 GMT:
+# Diff at Fri, 15 May 2026 07:28:18 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1778709498
+- current timestamp: 1778830028
 
 ## Description
 
-Initial discovery.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Initial discovery
 
@@ -111,12 +111,6 @@ Initial discovery.
 +   Status: CREATED
     contract SystemConfig (eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1) [opstack/SystemConfig]
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-```
-
-```diff
-+   Status: CREATED
-    contract ETHLockbox (eth:0xDD42F308E85dE1Bd2590Fa8d0C97AB2dFc830242) [opstack/ETHLockbox]
-    +++ description: A simple escrow contract storing ETH for the canonical bridge.
 ```
 
 ```diff

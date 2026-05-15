@@ -4,13 +4,11 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77", // OptimismPortalProxy — root, all other OP Stack L1 contracts are reachable from here
-    "eth:0xDD42F308E85dE1Bd2590Fa8d0C97AB2dFc830242", // ETHLockboxProxy — orphan until OptimismPortal.ethLockbox is set post-migration
     "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08" // Legacy MainchainGateway — still holds all bridged user funds (ETH, USDC, AXS, WETH)
   ],
   "names": {
     "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77": "OptimismPortal2",
     "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1": "SystemConfig",
-    "eth:0xDD42F308E85dE1Bd2590Fa8d0C97AB2dFc830242": "ETHLockbox",
     "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a": "DisputeGameFactory",
     "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A": "AnchorStateRegistry",
     "eth:0xF9aD628d9F907ad5d46Ab80100dacDf09EAc9A8e": "L1CrossDomainMessenger",
@@ -37,6 +35,12 @@
     },
     "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": {
       "ignoreMethods": ["checkThreshold", "globalProposalRelayed", "round"]
+    },
+    "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a": {
+      "fields": {
+        "proposerFromDGF": { "permissions": [{ "type": "propose" }] },
+        "challengerFromDGF": { "permissions": [{ "type": "challenge" }] }
+      }
     }
   }
 }

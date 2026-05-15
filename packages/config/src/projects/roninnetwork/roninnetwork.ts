@@ -3,8 +3,9 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
+import { CONTRACTS, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -118,14 +119,56 @@ export const roninNetwork: ScalingProject = opStackL2({
       ),
       name: 'MainchainGateway',
       description:
-        'Legacy Ronin sidechain bridge — still the primary user-facing canonical bridge after the L2 migration. ETH, WETH, USDC, AXS and other ERC-20 deposits are held here and released on withdrawal via signatures from the Ronin BridgeOperators. Independent of the OP Stack canonical bridge, which is deployed but currently unused for asset bridging.',
+        'Predates the L2 migration and remains the primary user-facing bridge for bridged ETH and ERC-20 assets. Withdrawals are authorised by Chainlink CCIP DONs in combination with the Ronin BridgeOperator multisig, not by the OP Stack fault proof system.',
       tokens: '*',
+      ...ESCROW.CANONICAL_ADD_TA,
+      bridgedUsing: {
+        bridges: [{ name: 'Ronin Bridge (Chainlink CCIP + BridgeOperators)' }],
+      },
     }),
   ],
+  nonTemplateTechnology: {
+    otherConsiderations: [
+      {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
+        risks: [],
+        references: [
+          {
+            title: 'Introducing EVM Equivalence',
+            url: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+          },
+        ],
+      },
+      {
+        name: 'Dual-bridge architecture',
+        description:
+          'The May 2026 L2 migration changed how Ronin L2 state is settled on Ethereum but did not redeploy the bridge that custodies user assets. The risk analysis on this page covers the OP Stack canonical bridge (OptimismPortal2 and L1StandardBridge), which is deployed but currently empty. Bridged user assets continue to be held in MainchainGateway and bridged through Chainlink CCIP plus the Ronin BridgeOperator multisig. The two paths share no on-chain wiring and have different security models: the OP Stack path is secured by the Cannon MIPS64 fault proof system with a 7-day challenge window, while MainchainGateway is secured by CCIP DON attestations and a stake-weighted operator threshold. Sky Mavis has not announced a plan to migrate liquidity from MainchainGateway to the OP Stack bridge.',
+        risks: [],
+        references: [
+          {
+            title: 'MainchainGateway - Etherscan',
+            url: 'https://etherscan.io/address/0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08',
+          },
+          {
+            title: 'Ronin Bridge to Chainlink CCIP migration - Ronin Blog',
+            url: 'https://blog.roninchain.com/p/the-ronin-bridge-chainlink-ccip-migration',
+          },
+        ],
+      },
+    ],
+  },
   nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
-  // No game has resolved/anchored yet, so the dispute game's absolute
-  // prestate (Cannon MIPS64 image hash) cannot be read from a clone.
-  // Remove once `AnchorStateRegistry.anchorGame` is set.
-  nonTemplateProgramHashes: [],
+  // The OP Stack template's prestate lookup walks the live game clone /
+  // AnchorStateRegistry, both of which are still zero on Ronin (gameCount=0,
+  // anchorGame=0x0). Surface the prestate directly from the factory's
+  // `permissionedGameArgs` immutable args — first 32 bytes are the Cannon
+  // MIPS64 v1.3.1 absolute prestate.
+  nonTemplateProgramHashes: [
+    PROGRAM_HASHES(
+      '0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c',
+    ),
+  ],
   isNodeAvailable: 'UnderReview',
 })
