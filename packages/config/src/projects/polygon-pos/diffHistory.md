@@ -8,7 +8,7 @@ Generated with discovered.json: 0xa1c21a0d93e3291a86a0d6c1a76ddf838e0d3a3f
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+config: format mindeposit, ignore relatives.
 
 ## Config/verification related changes
 
