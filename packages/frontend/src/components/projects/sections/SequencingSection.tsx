@@ -1,4 +1,8 @@
-import type { ProjectInclusionDelayChart, ReferenceLink } from '@l2beat/config'
+import type {
+  ProjectInclusionDelayChart,
+  ProjectSequencerSetSpec,
+  ReferenceLink,
+} from '@l2beat/config'
 import { DiagramImage } from '~/components/DiagramImage'
 import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
@@ -8,6 +12,7 @@ import { ReferenceList } from './ReferenceList'
 import type { TechnologyRisk } from './RiskList'
 import { RiskList } from './RiskList'
 import { InclusionDelayChart } from './sequencing/InclusionDelayChart'
+import { SequencerSetSpecSheet } from './sequencing/SequencerSetSpecSheet'
 import type { ProjectSectionProps } from './types'
 
 export interface SequencingSectionProps extends ProjectSectionProps {
@@ -15,6 +20,7 @@ export interface SequencingSectionProps extends ProjectSectionProps {
   name: string
   diagram?: DiagramParams
   content: string
+  sequencerSetSpec?: ProjectSequencerSetSpec
   inclusionDelayChart?: ProjectInclusionDelayChart
   mdClassName?: string
   risks?: TechnologyRisk[]
@@ -26,6 +32,7 @@ export function SequencingSection({
   name,
   diagram,
   content,
+  sequencerSetSpec,
   inclusionDelayChart,
   mdClassName,
   risks,
@@ -50,6 +57,12 @@ export function SequencingSection({
       >
         {content}
       </Markdown>
+      {sequencerSetSpec && (
+        <SequencerSetSpecSheet
+          spec={sequencerSetSpec}
+          chart={inclusionDelayChart}
+        />
+      )}
       {inclusionDelayChart && (
         <>
           <InclusionDelayChart

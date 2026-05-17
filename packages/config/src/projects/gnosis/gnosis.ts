@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -226,6 +227,21 @@ export const gnosis: ScalingProject = {
       name: 'Transactions are ordered by Gnosis Chain validators',
       description:
         'Gnosis Chain uses a permissionless proof-of-stake validator set with stake-weighted proposer rotation and a 5 second slot time. This model uses a static equal-weight validator baseline for selective censorship on an otherwise live chain.',
+      sequencerSetSpec: {
+        slotTime: { value: formatSeconds(gnosisSlotSeconds) },
+        epochTime: { value: 'Block production is not committee-based' },
+        sequencerCount: {
+          value: `${gnosisValidatorSetSize.toLocaleString('en-US')} validators`,
+        },
+        blockProductionAccess: { value: 'Open', sentiment: 'good' },
+        stakePerValidator: {
+          value:
+            'minimum 1 GNO, variable (stake-weighted block production rights)',
+        },
+        rateLimit: { value: 'defined by consensus client' },
+        deterministicCrGadget: { value: 'No', sentiment: 'warning' },
+        additionalCrGadgets: { value: 'Shutter encrypted mempool beta' },
+      },
       inclusionDelayChart: {
         type: 'ethereumlike',
         validatorCount: gnosisValidatorSetSize,

@@ -13,6 +13,7 @@ export function getSequencingSection(
       project.scalingTechnology.sequencingImage ?? project.slug,
     ),
     content: project.scalingTechnology.sequencing.description,
+    sequencerSetSpec: project.scalingTechnology.sequencing.sequencerSetSpec,
     inclusionDelayChart:
       project.scalingTechnology.sequencing.inclusionDelayChart,
     isUnderReview: !!project.statuses.reviewStatus,

@@ -23,6 +23,11 @@ export interface InclusionDelayEntityLegendEntry {
   delayDays: number | null
 }
 
+export interface InclusionDelayEntityThreshold {
+  thresholdDays: number
+  entry: InclusionDelayEntityLegendEntry | null
+}
+
 export function getInclusionDelayChartData(
   chart: ProjectInclusionDelayChart,
 ): InclusionDelayChartPoint[] {
@@ -92,6 +97,21 @@ export function getInclusionDelayEntityLegendEntries(
   }
 
   return entries
+}
+
+export function getInclusionDelayEntityThresholds(
+  chart: ProjectInclusionDelayChart,
+  thresholdDays: number[],
+): InclusionDelayEntityThreshold[] {
+  const entries = getInclusionDelayEntityLegendEntries(chart)
+
+  return thresholdDays.map((thresholdDays) => ({
+    thresholdDays,
+    entry:
+      entries.find(
+        (entry) => entry.delayDays === null || entry.delayDays > thresholdDays,
+      ) ?? null,
+  }))
 }
 
 function getSortedPositiveEntities(

@@ -73,6 +73,10 @@ const epochSlots = discovery.getContractValue<number>(
   'Rollup',
   'getEpochDuration',
 )
+const entryQueueFlushSize = discovery.getContractValue<number>(
+  'Rollup',
+  'getEntryQueueFlushSize',
+)
 const epochDuration = epochSlots * slotDuration
 const proofWindow =
   epochDuration *
@@ -455,6 +459,18 @@ export const aztecnetwork: ScalingProject = {
     sequencing: {
       name: 'Transactions are ordered by a staked committee',
       description: `Joining the sequencer set is permissionless and requires staking ${activationThresholdString}. For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer per slot. The committee and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
+      sequencerSetSpec: {
+        slotTime: { value: formatSeconds(slotDuration) },
+        epochTime: { value: formatSeconds(epochDuration) },
+        sequencerCount: { value: `${activeSequencerCount} sequencers` },
+        blockProductionAccess: { value: 'Open', sentiment: 'good' },
+        stakePerValidator: { value: activationThresholdString + ', constant' },
+        rateLimit: {
+          value: `Up to ${entryQueueFlushSize} sequencers per epoch`,
+        },
+        deterministicCrGadget: { value: 'No', sentiment: 'warning' },
+        additionalCrGadgets: { value: 'Escape hatch, private transactions' },
+      },
       inclusionDelayChart: {
         type: 'committeelike',
         validatorCount: activeSequencerCount,

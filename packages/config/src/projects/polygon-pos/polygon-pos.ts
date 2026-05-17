@@ -43,6 +43,12 @@ const currentValidatorSetCap = discovery.getContractValue<number>(
   'validatorThreshold',
 )
 
+const polygonSpanBlocks = 6400
+const polygonBlockSeconds = 2
+const polygonSpanTimeString = formatSeconds(
+  polygonSpanBlocks * polygonBlockSeconds,
+)
+
 const chainId = 137
 
 export const polygonpos: ScalingProject = {
@@ -263,11 +269,29 @@ export const polygonpos: ScalingProject = {
     sequencing: {
       name: 'Transactions are ordered by Polygon PoS validators',
       description: `Polygon PoS is operated by a proof-of-stake validator set with ${currentValidatorSetSize} active validators. Block production is assigned to one validator for a span, while Ethereum accepts checkpoints signed by more than two thirds of Polygon PoS stake.`,
+      sequencerSetSpec: {
+        slotTime: { value: formatSeconds(polygonBlockSeconds) },
+        epochTime: {
+          value: `${polygonSpanBlocks.toLocaleString('en-US')} blocks (${polygonSpanTimeString})`,
+        },
+        sequencerCount: { value: `${currentValidatorSetSize} validators` },
+        blockProductionAccess: {
+          value: 'Closed and capped',
+          sentiment: 'bad',
+          description: `The current validator cap is ${currentValidatorSetCap}. Joining the set is permissioned (Multisig).`,
+        },
+        stakePerValidator: {
+          value:
+            'No minimum, variable (stake-weighted block production rights)',
+        },
+        deterministicCrGadget: { value: 'No', sentiment: 'warning' },
+        additionalCrGadgets: { value: 'No', sentiment: 'bad' },
+      },
       inclusionDelayChart: {
         type: 'spanlike',
         validatorCount: currentValidatorSetSize,
-        spanBlocks: 6400,
-        blockSeconds: 2,
+        spanBlocks: polygonSpanBlocks,
+        blockSeconds: polygonBlockSeconds,
         target: 0.99,
         maxCensorFraction: 0.33,
         entityStakeDistribution,

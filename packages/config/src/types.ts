@@ -50,9 +50,21 @@ export interface ProjectTechnologyChoice {
   description: string
   references: ReferenceLink[]
   risks: ProjectRisk[]
+  sequencerSetSpec?: ProjectSequencerSetSpec
   inclusionDelayChart?: ProjectInclusionDelayChart
   isIncomplete?: boolean
   isUnderReview?: boolean
+}
+
+export interface ProjectSequencerSetSpec {
+  slotTime?: TableReadyValue
+  epochTime?: TableReadyValue
+  sequencerCount?: TableReadyValue
+  blockProductionAccess?: TableReadyValue
+  stakePerValidator?: TableReadyValue
+  rateLimit?: TableReadyValue
+  deterministicCrGadget?: TableReadyValue
+  additionalCrGadgets?: TableReadyValue
 }
 
 export type ProjectInclusionDelayChart =
