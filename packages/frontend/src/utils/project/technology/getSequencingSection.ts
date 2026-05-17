@@ -16,6 +16,8 @@ export function getSequencingSection(
     sequencerSetSpec: project.scalingTechnology.sequencing.sequencerSetSpec,
     inclusionDelayChart:
       project.scalingTechnology.sequencing.inclusionDelayChart,
+    censorshipResistance:
+      project.scalingTechnology.sequencing.censorshipResistance,
     isUnderReview: !!project.statuses.reviewStatus,
     risks: project.scalingTechnology.sequencing.risks.map((r) => ({
       text: `${r.category} ${r.text}`,

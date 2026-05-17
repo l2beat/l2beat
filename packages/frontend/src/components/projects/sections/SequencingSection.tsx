@@ -22,6 +22,7 @@ export interface SequencingSectionProps extends ProjectSectionProps {
   content: string
   sequencerSetSpec?: ProjectSequencerSetSpec
   inclusionDelayChart?: ProjectInclusionDelayChart
+  censorshipResistance?: string
   mdClassName?: string
   risks?: TechnologyRisk[]
   references?: ReferenceLink[]
@@ -34,6 +35,7 @@ export function SequencingSection({
   content,
   sequencerSetSpec,
   inclusionDelayChart,
+  censorshipResistance,
   mdClassName,
   risks,
   references,
@@ -80,6 +82,21 @@ export function SequencingSection({
             </Markdown>
           )}
         </>
+      )}
+      {censorshipResistance && (
+        <div className="mt-6">
+          <h4 className="mb-3 font-bold text-heading-20">
+            Censorship resistance
+          </h4>
+          <Markdown
+            className={cn(
+              mdClassName,
+              'sequencing-censorship-resistance text-paragraph-15 md:text-paragraph-16',
+            )}
+          >
+            {censorshipResistance}
+          </Markdown>
+        </div>
       )}
       {risks && risks?.length > 0 && <RiskList risks={risks} />}
       {references && references?.length > 0 && (

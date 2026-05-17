@@ -52,6 +52,7 @@ export interface ProjectTechnologyChoice {
   risks: ProjectRisk[]
   sequencerSetSpec?: ProjectSequencerSetSpec
   inclusionDelayChart?: ProjectInclusionDelayChart
+  censorshipResistance?: string
   isIncomplete?: boolean
   isUnderReview?: boolean
 }

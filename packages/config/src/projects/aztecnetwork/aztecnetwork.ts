@@ -457,8 +457,8 @@ export const aztecnetwork: ScalingProject = {
       risks: [],
     },
     sequencing: {
-      name: 'Transactions are ordered by a staked committee',
-      description: `Joining the sequencer set is permissionless and requires staking ${activationThresholdString}. For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer per slot. The committee and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
+      name: 'Transactions are ordered by a staked validator committee',
+      description: `Joining the sequencer set is permissionless and requires staking ${activationThresholdString}. For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer from the current committee per slot. More than 2/3 of the sequencers in the committee need to attest to each proposed block in an epoch for it to be valid.`,
       sequencerSetSpec: {
         slotTime: { value: formatSeconds(slotDuration) },
         epochTime: { value: formatSeconds(epochDuration) },
@@ -466,10 +466,14 @@ export const aztecnetwork: ScalingProject = {
         blockProductionAccess: { value: 'Open', sentiment: 'good' },
         stakePerValidator: { value: activationThresholdString + ', constant' },
         rateLimit: {
-          value: `Up to ${entryQueueFlushSize} sequencers per epoch`,
+          value: `Up to ${entryQueueFlushSize} sequencers per epoch (current)`,
+          description: 'Can be changed (or set to 0) by onchain Governance',
         },
         deterministicCrGadget: { value: 'No', sentiment: 'warning' },
-        additionalCrGadgets: { value: 'Escape hatch, private transactions' },
+        additionalCrGadgets: {
+          value: 'Bonded escape hatch, private transactions',
+          sentiment: 'good',
+        },
       },
       inclusionDelayChart: {
         type: 'committeelike',
@@ -484,7 +488,16 @@ export const aztecnetwork: ScalingProject = {
         afterChart:
           'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
       },
+      censorshipResistance: `The committee and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations. The bond is ${escapeHatchBondString}, a high amount that is supposed to protect the single-proof system in case of bugs while still providing a last resort opportunity to circumvent the sequencer set. Aztec has developed a full private execution environment on the L2. This can benefit users because they cannot be censored based on their transaction content.
+### Selective censorship
+On a live Aztec L2 with a given fraction of censoring sequencers, users can either send private transactions or wait for a non-censoring committee and proposing sequencer to include their public transaction.
+### Blanket censorship
+If the Aztec L2 stops producing blocks or users are censored by the entire sequencer set, they can join it permissionlessly at the churn rate or circumvent it completely by bonding and using the escape hatch. In both cases, expensive hardware is required to provide the required validity proof (walkaway and active blanket censorship scenarios).`,
       references: [
+        {
+          title: 'Aztec docs - Privacy considerations',
+          url: 'https://github.com/AztecProtocol/aztec-packages/blob/next/docs/docs-developers/docs/resources/considerations/privacy_considerations.md#function-fingerprints-and-tx-fingerprints',
+        },
         {
           title: 'Rollup.sol - getProposerAt() on Etherscan',
           url: `https://etherscan.io/address/${rollupAddress.toString()}#code`,
