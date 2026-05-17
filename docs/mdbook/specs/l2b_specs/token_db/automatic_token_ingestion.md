@@ -1,3 +1,25 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Automatic Token Ingestion](#automatic-token-ingestion)
+  - [Overview](#overview)
+  - [The only input is an address](#the-only-input-is-an-address)
+  - [Queue states](#queue-states)
+  - [Approval mode](#approval-mode)
+  - [Processing one entry: plan + fetch + apply](#processing-one-entry-plan--fetch--apply)
+  - [Abstract token resolution](#abstract-token-resolution)
+  - [Outcomes](#outcomes)
+  - [Propagation](#propagation)
+  - [Reading the interop transfer table](#reading-the-interop-transfer-table)
+  - [CoinGecko: never called from `plan`](#coingecko-never-called-from-plan)
+  - [Address normalization](#address-normalization)
+  - [What runs where](#what-runs-where)
+  - [What this replaces](#what-this-replaces)
+  - [Future: persistent audit](#future-persistent-audit)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Automatic Token Ingestion
 
 This document describes how TokenDB is kept in sync automatically: how new
@@ -109,7 +131,7 @@ The split is the entire shape of the implementation. It exists because:
 - **No `dryRun: boolean` flag.** The phase boundaries are the toggles.
 
 The trace and outcome shapes are defined in
-[`packages/token-backend/src/ingestion/IngestionTrace.ts`](../../../../packages/token-backend/src/ingestion/IngestionTrace.ts).
+[`packages/token-backend/src/ingestion/IngestionTrace.ts`](../../../../../packages/token-backend/src/ingestion/IngestionTrace.ts).
 That file is the canonical reference for what a trace contains — keep it
 small and readable.
 
