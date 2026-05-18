@@ -5058,6 +5058,20 @@
       "supply": "zero"
     },
     {
+      "name": "Ronin",
+      "coingeckoId": "ronin",
+      "address": "0x5f2Db62536dd888AacEa933068384318A02094c0",
+      "symbol": "RON",
+      "decimals": 18,
+      "deploymentTimestamp": 1636027117,
+      "coingeckoListingTimestamp": 1643241600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20009/large/photo_2024-04-06_22-52-24.jpg?1712415367",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "rsETH",
       "coingeckoId": "kelp-dao-restaked-eth",
       "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
@@ -10374,6 +10388,201 @@
       "chainId": 1996,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Axie Infinity Shard",
+      "coingeckoId": "axie-infinity",
+      "address": "0x97a9107C1793BC407d6F527b77e7fff4D812bece",
+      "symbol": "AXS",
+      "decimals": 18,
+      "deploymentTimestamp": 1612972800,
+      "coingeckoListingTimestamp": 1604448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13029/large/axie_infinity_logo.png?1696512817",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Fishing Frenzy",
+      "coingeckoId": "fishing-frenzy",
+      "address": "0x533701B17963AAf318E11ab274Ca8e2Ec813aA64",
+      "symbol": "xFISH",
+      "decimals": 18,
+      "deploymentTimestamp": 1700000000,
+      "coingeckoListingTimestamp": 1764201600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70780/large/fish200x200.png?1763708762",
+      "chainId": 2020,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "PIXEL",
+      "coingeckoId": "pixels",
+      "address": "0x7EAe20d11Ef8c779433Eb24503dEf900b9d28ad7",
+      "symbol": "PIXEL",
+      "decimals": 18,
+      "deploymentTimestamp": 1708300800,
+      "coingeckoListingTimestamp": 1708300800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35100/large/pixel-icon.png?1708339519",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ronin Wrapped Ether",
+      "coingeckoId": "weth",
+      "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1612972800,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Smooth Love Potion",
+      "coingeckoId": "smooth-love-potion",
+      "address": "0xa8754b9Fa15fc18BB59458815510E40a12cD2014",
+      "symbol": "SLP",
+      "decimals": 0,
+      "deploymentTimestamp": 1612972800,
+      "coingeckoListingTimestamp": 1578700800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/10366/large/SLP.png?1696510368",
+      "chainId": 2020,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "USD Coin",
+      "coingeckoId": "usd-coin",
+      "address": "0x0B7007c13325C48911F73A2daD5FA5dCBf808aDc",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1654387200,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped Bitcoin",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x7E73630F81647bCFD7B1F2C04c1C662D17d4577e",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1612972800,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/WBTCLOGO.png?1764496367",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Ronin Bridge (legacy multi-sig)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped Bitcoin",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0xCa3Eb64F3DFd7861C76070e3d1492eE5ee20cdC3",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1745539200,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "btc",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/WBTCLOGO.png?1764496367",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped Ronin",
+      "coingeckoId": "ronin",
+      "address": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
+      "symbol": "WRON",
+      "decimals": 18,
+      "deploymentTimestamp": 1640000000,
+      "coingeckoListingTimestamp": 1643241600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20009/large/photo_2024-04-06_22-52-24.jpg?1712415367",
+      "chainId": 2020,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "Yield Guild Games Token",
+      "coingeckoId": "yield-guild-games",
+      "address": "0x1c306872bC82525d72Bf3562E8F0aA3f8F26e857",
+      "symbol": "YGG",
+      "decimals": 18,
+      "deploymentTimestamp": 1640995200,
+      "coingeckoListingTimestamp": 1627430400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/17358/large/Shield_Mark_-_Colored_-_Iridescent.png?1696516909",
+      "chainId": 2020,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "name": "ABSTER",
