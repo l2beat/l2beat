@@ -62,6 +62,7 @@ export const molten: ScalingProject = orbitStackL3({
       },
     ],
     gasTokens: ['MOLTEN'],
+    untilTimestamp: UnixTime(1779090374), // Mon, 18 May 2026 07:46:13 GMT
   },
   nonTemplateTechnology: {
     sequencing: ESPRESSO,

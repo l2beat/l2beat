@@ -132,6 +132,7 @@ export const brine: ScalingProject = {
     name: 'brine',
     chainId: undefined,
     apis: [{ type: 'starkex', product: ['brine'] }],
+    untilTimestamp: UnixTime(1779090374), // Mon, 18 May 2026 07:46:13 GMT
   },
   config: {
     escrows: [

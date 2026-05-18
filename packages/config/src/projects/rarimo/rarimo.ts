@@ -40,6 +40,7 @@ export const rarimo: ScalingProject = underReviewL2({
         callsPerMinute: 300,
       },
     ],
+    untilTimestamp: UnixTime(1779090374), // Mon, 18 May 2026 07:46:13 GMT
   },
   activityConfig: {
     type: 'block',
