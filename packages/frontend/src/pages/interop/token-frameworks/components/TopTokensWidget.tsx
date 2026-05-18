@@ -35,8 +35,14 @@ export function TopTokensWidget({
     to: selectedChains,
   })
 
-  const items = data?.topTokens[activeTab]
   const frameworksById = new Map(tokenFrameworks.map((f) => [f.id, f]))
+
+  const items =
+    activeTab === 'all'
+      ? data?.topTokens
+      : data?.frameworkTable.find((e) => e.id === activeTab)?.tokens
+  const activeFrameworkTokenCount =
+    activeTab === 'all' ? undefined : items?.length
 
   return (
     <PrimaryCard className="@container border-divider max-md:border-b md:col-span-2 lg:row-span-5">
@@ -51,7 +57,7 @@ export function TopTokensWidget({
         name="topTokensFramework"
         value={activeTab}
         onValueChange={setActiveTab}
-        className="mt-4"
+        className="mt-4 gap-1"
         variant="highlighted"
       >
         <TabsList className="h-6 w-fit gap-1 bg-transparent p-0">
@@ -76,14 +82,19 @@ export function TopTokensWidget({
             </TabsTrigger>
           ))}
         </TabsList>
-        <TabsContent value={activeTab} className="mt-4">
+        <div className="mt-1 h-3.5 font-medium text-secondary text-xs leading-none">
+          {activeFrameworkTokenCount
+            ? `${formatInteger(activeFrameworkTokenCount)}  total tokens`
+            : null}
+        </div>
+        <TabsContent value={activeTab} className="mt-2">
           {isLoading ? (
             <RowsSkeleton />
           ) : !items || items.length === 0 ? (
             <EmptyState />
           ) : (
             <div className="flex flex-col gap-3">
-              {items.map((token) => {
+              {items.slice(0, 5).map((token) => {
                 const framework =
                   activeTab === 'all' && token.frameworkId
                     ? frameworksById.get(token.frameworkId)

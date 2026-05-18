@@ -12,10 +12,12 @@ import type { Side } from './types'
 export function FrameworkCompareContent({
   tokenFrameworks,
   frameworkDominance,
+  frameworkTable,
   isLoading,
 }: {
   tokenFrameworks: InteropTokenFramework[]
   frameworkDominance: TokenFrameworksData['frameworkDominance'] | undefined
+  frameworkTable: TokenFrameworksData['frameworkTable'] | undefined
   isLoading: boolean
 }) {
   const [leftId, setLeftId] = useState<string>()
@@ -25,6 +27,11 @@ export function FrameworkCompareContent({
     const framework = tokenFrameworks.find((f) => f.id === id)
     const entry = frameworkDominance?.volume.entries.find((e) => e.id === id)
     return framework && entry ? { framework, entry } : undefined
+  }
+
+  const getTokenCount = (id: string | undefined): number | null => {
+    if (!id) return null
+    return frameworkTable?.find((e) => e.id === id)?.tokens.length ?? null
   }
 
   const left = getSide(leftId)
@@ -72,6 +79,15 @@ export function FrameworkCompareContent({
           right={right}
           leftValue={left?.entry.transferCount ?? null}
           rightValue={right?.entry.transferCount ?? null}
+          format={formatInteger}
+          isLoading={showSkeleton}
+        />
+        <HeadToHeadRow
+          label="Tokens"
+          left={left}
+          right={right}
+          leftValue={getTokenCount(leftId)}
+          rightValue={getTokenCount(rightId)}
           format={formatInteger}
           isLoading={showSkeleton}
         />

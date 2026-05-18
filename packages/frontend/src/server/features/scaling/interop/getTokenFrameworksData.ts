@@ -96,7 +96,7 @@ export type TokenFrameworksData = {
     transfers: FrameworkDominanceMetric
     volume: FrameworkDominanceMetric
   }
-  topTokens: Record<string, TopTokenItem[]>
+  topTokens: TopTokenItem[]
   frameworkTable: FrameworkTableEntry[]
   transferSizeChartData: TransferSizeDataPoint[] | undefined
 }
@@ -147,18 +147,11 @@ export async function getTokenFrameworksData(
   )
   const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
 
-  const topTokens: Record<string, TopTokenItem[]> = {
-    all: buildTopTokens(records, tokensDetailsMap, TOP_TOKENS_LIMIT),
-  }
+  const topTokens = buildTopTokens(records, tokensDetailsMap, TOP_TOKENS_LIMIT)
   const recordsByFramework = groupBy(records, (record) => record.id)
   const frameworkTable: FrameworkTableEntry[] = []
   for (const framework of TOKEN_FRAMEWORKS) {
     const frameworkRecords = recordsByFramework[framework.projectId] || []
-    topTokens[framework.id] = buildTopTokens(
-      frameworkRecords,
-      tokensDetailsMap,
-      TOP_TOKENS_LIMIT,
-    )
     frameworkTable.push({
       id: framework.id,
       tokens: buildTopTokens(frameworkRecords, tokensDetailsMap),
@@ -501,10 +494,7 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
     },
   ]
 
-  const topTokens: Record<string, TopTokenItem[]> = { all: mockTokens }
-  for (const framework of TOKEN_FRAMEWORKS) {
-    topTokens[framework.id] = mockTokens
-  }
+  const topTokens: TopTokenItem[] = mockTokens
 
   const extendedTokens: TopTokenItem[] = []
   for (let i = 0; i < 14; i++) {

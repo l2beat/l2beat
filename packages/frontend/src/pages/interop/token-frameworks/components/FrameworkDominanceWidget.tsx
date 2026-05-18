@@ -45,6 +45,7 @@ export function FrameworkDominanceWidget({
           <FrameworkCompareContent
             tokenFrameworks={tokenFrameworks}
             frameworkDominance={data?.frameworkDominance}
+            frameworkTable={data?.frameworkTable}
             isLoading={isLoading}
           />
         </TabsContent>

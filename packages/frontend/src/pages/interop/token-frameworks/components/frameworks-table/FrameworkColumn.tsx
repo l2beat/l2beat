@@ -1,5 +1,6 @@
 import type { FrameworkTableEntry } from '~/server/features/scaling/interop/getTokenFrameworksData'
 import { cn } from '~/utils/cn'
+import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import { BridgingTypeBreakdown } from './BridgingTypeBreakdown'
 import { ChainPathRow, TokenRow } from './Rows'
@@ -34,7 +35,14 @@ export function FrameworkColumn({
       </div>
 
       <div className="mt-5 space-y-8">
-        <Section title="Tokens by Volume">
+        <Section
+          title="Tokens by Volume"
+          subtitle={
+            entry && entry.tokens.length > 0
+              ? `${formatInteger(entry.tokens.length)} total tokens`
+              : undefined
+          }
+        >
           <ScrollList>
             {isLoading ? (
               <RowsSkeleton />
