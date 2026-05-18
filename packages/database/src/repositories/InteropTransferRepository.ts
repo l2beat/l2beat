@@ -201,6 +201,14 @@ export interface InteropTransfersDetailedStatsRecord {
   dstValueSum: number
 }
 
+export interface InteropTransferChainSummaryRecord {
+  chain: string
+  outgoingTransfersCount: number
+  outgoingValueUsd: number
+  incomingTransfersCount: number
+  incomingValueUsd: number
+}
+
 export interface InteropSuspiciousTransferRecord extends InteropTransferRecord {
   valueDifferencePercent: number
 }
@@ -576,6 +584,60 @@ export class InteropTransferRepository extends BaseRepository {
         dstValueSum: Number(chain.dstValueSum),
       }
     })
+  }
+
+  async getChainSummaryStats(): Promise<InteropTransferChainSummaryRecord[]> {
+    const [outgoing, incoming] = await Promise.all([
+      this.db
+        .selectFrom('InteropTransfer')
+        .select((eb) => [
+          'srcChain',
+          eb.fn.countAll().as('count'),
+          eb.fn.sum('srcValueUsd').as('valueUsdSum'),
+        ])
+        .where('srcChain', 'is not', null)
+        .groupBy('srcChain')
+        .execute(),
+      this.db
+        .selectFrom('InteropTransfer')
+        .select((eb) => [
+          'dstChain',
+          eb.fn.countAll().as('count'),
+          eb.fn.sum('dstValueUsd').as('valueUsdSum'),
+        ])
+        .where('dstChain', 'is not', null)
+        .groupBy('dstChain')
+        .execute(),
+    ])
+
+    const byChain = new Map<string, InteropTransferChainSummaryRecord>()
+
+    for (const row of outgoing) {
+      assert(row.srcChain !== null, 'srcChain should be present')
+
+      byChain.set(row.srcChain, {
+        chain: row.srcChain,
+        outgoingTransfersCount: Number(row.count),
+        outgoingValueUsd: Number(row.valueUsdSum ?? 0),
+        incomingTransfersCount: 0,
+        incomingValueUsd: 0,
+      })
+    }
+
+    for (const row of incoming) {
+      assert(row.dstChain !== null, 'dstChain should be present')
+
+      const current = byChain.get(row.dstChain)
+      byChain.set(row.dstChain, {
+        chain: row.dstChain,
+        outgoingTransfersCount: current?.outgoingTransfersCount ?? 0,
+        outgoingValueUsd: current?.outgoingValueUsd ?? 0,
+        incomingTransfersCount: Number(row.count),
+        incomingValueUsd: Number(row.valueUsdSum ?? 0),
+      })
+    }
+
+    return [...byChain.values()]
   }
 
   async getExistingItems(

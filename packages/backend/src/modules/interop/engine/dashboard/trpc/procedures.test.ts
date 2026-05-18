@@ -8,7 +8,10 @@ describe('interop trpc auth', () => {
   it('rejects unauthenticated callers', async () => {
     const callerFactory = createCallerFactory(
       createChainsRouter({
+        captureEnabled: true,
+        chains: [],
         getExplorerUrl: () => undefined,
+        oneSidedChains: [],
       }),
     )
     const caller = callerFactory({

@@ -1,5 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
-import { CellLink } from '~/components/table/CellLink'
+import { InternalLink } from '~/components/InternalLink'
 import type { MessageStatsRow } from '../types'
 import {
   buildMessageDetailsPath,
@@ -31,14 +31,14 @@ export const messageStatsColumns: TableOptions<MessageStatsRow>['columns'] = [
   columnHelper.accessor('count', {
     header: 'Count',
     cell: ({ row }) => (
-      <CellLink
+      <InternalLink
         to={buildMessageDetailsPath({
           plugin: row.original.plugin,
           type: row.original.type,
         })}
       >
         {row.original.count}
-      </CellLink>
+      </InternalLink>
     ),
     meta: {
       csvHeader: 'Count',

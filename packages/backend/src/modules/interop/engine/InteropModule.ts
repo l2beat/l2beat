@@ -144,15 +144,29 @@ export function createInteropModule({
   )
 
   const trpcRouter = createInteropTrpcRouter({
+    aggregationEnabled: config.interop.aggregation !== false,
     aggregationConfigs: config.interop.aggregation
       ? config.interop.aggregation.configs
       : [],
+    captureEnabled: config.interop.capture.enabled,
     getExplorerUrl: config.interop.dashboard.getExplorerUrl,
     getChainsForPlugin: (pluginName) =>
       syncersManager.getChainsForPlugin(pluginName),
     getPluginSyncStatuses: () => syncersManager.getPluginSyncStatuses(),
     getProcessorStatuses: () => getProcessorsStatus(processors),
     chains: config.interop.capture.chains,
+    oneSidedChains: config.interop.oneSidedChains,
+    matchingEnabled: config.interop.matching,
+    cleanerEnabled: config.interop.cleaner,
+    dashboardEnabled: config.interop.dashboard.enabled,
+    compareEnabled: config.interop.compare.enabled,
+    dangerousOperationsEnabled: config.interop.dangerousOperationsEnabled,
+    financialsEnabled: config.interop.financials.enabled,
+    tokenDbApiUrl: config.interop.financials.tokenDbApiUrl,
+    configSyncEnabled: config.interop.config.enabled,
+    configChains: config.interop.config.chains,
+    configIntervalMs: config.interop.config.configIntervalMs,
+    inMemoryEventCap: config.interop.inMemoryEventCap,
     tokenDbClient,
   })
 

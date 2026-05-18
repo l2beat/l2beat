@@ -1,5 +1,5 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
 import { EnvironmentProvider } from './components/environment/EnvironmentContext'
@@ -7,6 +7,9 @@ import { AggregatesPage } from './pages/interop/aggregates/AggregatesPage'
 import { AnomaliesPage } from './pages/interop/anomalies/AnomaliesPage'
 import { AnomalyDetailsPage } from './pages/interop/anomalies/AnomalyDetailsPage'
 import { SuspiciousTransfersPage } from './pages/interop/anomalies/SuspiciousTransfersPage'
+import { ChainDetailsPage } from './pages/interop/chains/ChainDetailsPage'
+import { ChainsPage } from './pages/interop/chains/ChainsPage'
+import { ConfigPage } from './pages/interop/config/ConfigPage'
 import { CoveragePiesPage } from './pages/interop/coverage-pies/CoveragePiesPage'
 import { EventDetailsPage } from './pages/interop/events/EventDetailsPage'
 import { EventsPage } from './pages/interop/events/EventsPage'
@@ -18,7 +21,6 @@ import { MessagesPage } from './pages/interop/messages/MessagesPage'
 import { MissingTokensPage } from './pages/interop/missing-tokens/MissingTokensPage'
 import { ProcessorStatusesPage } from './pages/interop/processor-statuses/ProcessorStatusesPage'
 import { StatusPage } from './pages/interop/status/StatusPage'
-import { SummaryPage } from './pages/interop/summary/SummaryPage'
 import { TransferDetailsPage } from './pages/interop/transfers/TransferDetailsPage'
 import { TransfersPage } from './pages/interop/transfers/TransfersPage'
 import { BackofficeLandingPage } from './pages/landing/BackofficeLandingPage'
@@ -39,7 +41,16 @@ export function App() {
             <Routes>
               <Route path="/" element={<BackofficeLandingPage />} />
 
-              <Route path="/interop" element={<SummaryPage />} />
+              <Route path="/interop" element={<ConfigPage />} />
+              <Route
+                path="/interop/configuration"
+                element={<Navigate to="/interop" replace />}
+              />
+              <Route path="/interop/chains" element={<ChainsPage />} />
+              <Route
+                path="/interop/chains/:id"
+                element={<ChainDetailsPage />}
+              />
               <Route path="/interop/aggregates" element={<AggregatesPage />} />
               <Route path="/interop/events" element={<EventsPage />} />
               <Route

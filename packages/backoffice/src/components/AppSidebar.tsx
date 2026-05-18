@@ -36,8 +36,12 @@ const interopItems = [
     icon: LayersIcon,
     items: [
       {
-        title: 'Overview',
+        title: 'Configuration',
         url: '/interop',
+      },
+      {
+        title: 'Chains',
+        url: '/interop/chains',
       },
       {
         title: 'Aggregates',
