@@ -182,6 +182,7 @@ function TokenRow({
             protocol={{
               id: framework.projectId,
               name: framework.name,
+              slug: framework.slug,
               iconUrl: framework.iconUrl,
             }}
             tokenId={token.id}

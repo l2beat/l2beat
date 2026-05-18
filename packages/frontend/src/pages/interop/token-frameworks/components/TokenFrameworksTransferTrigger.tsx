@@ -10,7 +10,7 @@ export function TokenFrameworksTransferTrigger({
   className,
   children,
 }: {
-  protocol: { id: string; name: string; iconUrl: string }
+  protocol: { id: string; name: string; slug: string; iconUrl: string }
   tokenId?: string
   className?: string
   children: ReactNode
