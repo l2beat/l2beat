@@ -55,9 +55,9 @@ export function InteropTokenFrameworksPage({
               <TotalVolumeWidget className="max-md:hidden" />
               <TotalTransfersWidget className="max-md:hidden" />
             </div>
-            <HorizontalSeparator className="my-4" />
+            <HorizontalSeparator className="md:my-4" />
             <FrameworkTransferSizeWidget />
-            <HorizontalSeparator className="my-4" />
+            <HorizontalSeparator className="md:my-4" />
             <FrameworksTable tokenFrameworks={tokenFrameworks} />
           </SideNavLayout>
         </TokenFrameworksSelectedChainsProvider>
