@@ -12,6 +12,7 @@ const discovery = new ProjectDiscovery('molten')
 
 export const molten: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1711843200), // 2024-03-31
+  archivedAt: UnixTime(1779090374), // Mon, 18 May 2026 07:46:13 GMT
   hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
