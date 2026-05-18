@@ -46,7 +46,7 @@ export const publicSystemsColumns = [
           cell: (ctx) => (
             <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
               <TableValueCell
-                emptyMode="upcoming"
+                emptyMode="no-data"
                 value={
                   ctx.row.original.data?.pastDayData?.avgThroughputPerSecond
                     ? {
@@ -91,7 +91,7 @@ export const publicSystemsColumns = [
 
           return (
             <TableValueCell
-              emptyMode="upcoming"
+              emptyMode="no-data"
               value={
                 maxThroughputPerSecond
                   ? {
@@ -114,7 +114,7 @@ export const publicSystemsColumns = [
           const maxRegisteredThroughput = ctx.row.original.data?.maxRegistered
           return (
             <TableValueCell
-              emptyMode="upcoming"
+              emptyMode="no-data"
               value={
                 maxRegisteredThroughput
                   ? {
@@ -144,7 +144,7 @@ export const publicSystemsColumns = [
       return (
         <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
           <TableValueCell
-            emptyMode={avgCapacityUtilization === null ? 'n/a' : 'upcoming'}
+            emptyMode={avgCapacityUtilization === null ? 'n/a' : 'no-data'}
             value={
               avgCapacityUtilization !== null &&
               avgCapacityUtilization !== undefined
@@ -169,7 +169,7 @@ export const publicSystemsColumns = [
     cell: (ctx) => (
       <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
         <TableValueCell
-          emptyMode="upcoming"
+          emptyMode="no-data"
           value={
             ctx.row.original.data?.pastDayData?.largestPoster
               ? {
@@ -197,7 +197,7 @@ export const publicSystemsColumns = [
       if (!data?.totalPosted) {
         return (
           <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
-            <TableValueCell emptyMode="upcoming" value={undefined} />
+            <TableValueCell emptyMode="no-data" value={undefined} />
           </SyncStatusWrapper>
         )
       }
