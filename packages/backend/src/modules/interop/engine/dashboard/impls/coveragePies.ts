@@ -63,6 +63,13 @@ const CHART_CONFIGS = [
     type: 'ccip.ExecutionStateChanged',
     chainArg: '$srcChain' as const,
   },
+  {
+    id: 'wormhole-mayan-order-created',
+    title: 'Wormhole (Mayan) destination chains',
+    centerLabel: 'mayan-swift.OrderCreated events',
+    type: 'mayan-swift.OrderCreated',
+    chainArg: '$dstChain' as const,
+  },
 ]
 
 export interface InteropCoveragePieSlice {
