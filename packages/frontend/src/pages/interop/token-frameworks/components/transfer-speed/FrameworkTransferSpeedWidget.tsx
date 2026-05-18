@@ -82,7 +82,9 @@ export function FrameworkTransferSpeedWidget({
       </h3>
       <ScrollWithGradient className="mt-2 flex max-h-42 flex-1 flex-col gap-2.5">
         {isLoading
-          ? tokenFrameworks.map((f) => <Skeleton key={f.id} className="h-7" />)
+          ? tokenFrameworks.map((f) => (
+              <Skeleton key={f.id} className="h-9.5" />
+            ))
           : sorted.map((entry) => {
               const framework = frameworksById.get(entry.id)
               if (!framework) return null
