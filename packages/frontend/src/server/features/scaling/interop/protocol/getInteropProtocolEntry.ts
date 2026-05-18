@@ -6,7 +6,10 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import type { InteropSelection } from '~/pages/interop/utils/types'
-import { hasRecentChanges } from '~/server/features/projects/recent-changes/getRecentChanges'
+import {
+  countRecentChangesEntriesInLastDays,
+  hasRecentChanges,
+} from '~/server/features/projects/recent-changes/getRecentChanges'
 import { getProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
@@ -40,6 +43,7 @@ export interface InteropProtocolEntry {
   }
   sections: ProjectDetailsSection[]
   hasRecentChanges: boolean
+  recentChanges7dCount: number
 }
 
 export async function getInteropProtocolEntry(
@@ -179,6 +183,19 @@ export async function getInteropProtocolEntry(
     }
   }
 
+  const hasRc =
+    !!project.discoveryInfo?.hasDiscoUi && hasRecentChanges(project.id)
+  if (hasRc) {
+    sections.push({
+      type: 'UpdatesMonitorSection',
+      props: {
+        id: 'updates-monitor',
+        title: 'Updates monitor',
+        projectId: project.id,
+      },
+    })
+  }
+
   return {
     id: project.id,
     name: project.interopConfig?.name ?? project.name,
@@ -191,8 +208,10 @@ export async function getInteropProtocolEntry(
     }),
     header,
     sections,
-    hasRecentChanges:
-      !!project.discoveryInfo?.hasDiscoUi && hasRecentChanges(project.id),
+    hasRecentChanges: hasRc,
+    recentChanges7dCount: hasRc
+      ? countRecentChangesEntriesInLastDays(project.id, 7)
+      : 0,
   }
 }
 

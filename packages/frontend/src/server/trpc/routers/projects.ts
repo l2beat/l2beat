@@ -17,6 +17,7 @@ export const projectsRouter = router({
         projectId: v.string(),
         page: v.number(),
         pageSize: v.number(),
+        maxAgeDays: v.number().optional(),
       }),
     )
     .query(({ input }) => getRecentChanges(input)),

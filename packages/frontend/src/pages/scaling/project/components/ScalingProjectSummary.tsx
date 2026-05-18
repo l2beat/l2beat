@@ -233,7 +233,11 @@ export function ProjectScalingSummary({ project }: Props) {
           projectLinks={project.header.links}
           recentChanges={
             project.hasRecentChanges
-              ? { projectId: project.id, projectName: project.name }
+              ? {
+                  projectId: project.id,
+                  projectName: project.name,
+                  last7DaysCount: project.recentChanges7dCount,
+                }
               : undefined
           }
         />

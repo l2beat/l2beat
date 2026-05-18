@@ -23,7 +23,7 @@ export function DiffBlock({ body, className }: Props) {
   const segments = splitFencedDiffs(body)
   if (segments.length === 0) return null
   return (
-    <div className={cn('flex flex-col gap-3 text-xs', className)}>
+    <div className={cn('flex min-w-0 flex-col gap-3 text-xs', className)}>
       {segments.map((segment, i) =>
         segment.kind === 'diff' ? (
           <DiffFence key={i} lines={segment.lines} />
@@ -42,7 +42,7 @@ export function DiffBlock({ body, className }: Props) {
 
 function DiffFence({ lines }: { lines: DiffLine[] }) {
   return (
-    <div className="overflow-x-auto rounded-md border border-divider bg-surface-primary font-mono">
+    <div className="min-w-0 overflow-x-auto rounded-md border border-divider bg-surface-primary font-mono">
       <table className="w-full border-collapse">
         <tbody>
           {lines.map((line, i) => (

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Badge } from '~/components/badge/Badge'
 import { Markdown } from '~/components/markdown/Markdown'
 import { ChevronIcon } from '~/icons/Chevron'
 import type {
@@ -16,51 +17,85 @@ interface Props {
 const SECTION_TITLE: Record<PublicDiffHistorySectionKind, string | null> = {
   'watched-changes': null,
   'initial-discovery': 'Initial discovery',
-  'source-code-changes': 'Source code changes',
 }
 
 export function RecentChangeEntry({ entry, defaultOpen = false }: Props) {
   const [open, setOpen] = useState(defaultOpen)
   return (
-    <article className="overflow-hidden rounded-lg border border-divider bg-surface-primary">
+    <article className="w-full min-w-0 overflow-hidden rounded-lg border border-divider bg-surface-primary">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        aria-expanded={open ? 'true' : 'false'}
+        aria-expanded={open}
         className={cn(
-          'flex w-full items-center justify-between gap-3 px-4 py-3 text-left font-medium text-sm',
+          'flex w-full flex-col gap-2 px-4 py-3 text-left text-sm',
           'hover:bg-surface-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand',
         )}
       >
-        <span>{entry.date}</span>
-        <ChevronIcon
-          className={cn(
-            'size-3 shrink-0 fill-secondary transition-transform duration-200',
-            open && '-rotate-180',
-          )}
-        />
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1">
+            <span className="shrink-0 font-medium text-primary leading-snug">
+              {entry.date}
+            </span>
+            {entry.highSeverity && (
+              <Badge
+                type="error"
+                size="extraSmall"
+                padding="small"
+                className="shrink-0 uppercase"
+              >
+                High severity
+              </Badge>
+            )}
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            <div className="flex items-baseline gap-1">
+              <span className="font-medium text-primary tabular-nums">
+                {entry.watchedChangeCount}
+              </span>
+              <span className="text-2xs text-secondary normal-case">
+                {entry.watchedChangeCount === 1 ? 'change' : 'changes'}
+              </span>
+            </div>
+            <ChevronIcon
+              className={cn(
+                'size-3 shrink-0 fill-secondary transition-transform duration-200',
+                open && '-rotate-180',
+              )}
+            />
+          </div>
+        </div>
+        {!open && entry.description.trim().length > 0 && (
+          <p className="line-clamp-1 min-w-0 font-normal text-secondary text-xs leading-snug">
+            {plainDescriptionOneLine(entry.description)}
+          </p>
+        )}
       </button>
       {open && (
-        <div className="flex flex-col gap-4 border-divider border-t px-4 py-4">
-          {entry.description.length > 0 && (
-            <SummaryBlock>
+        <div className="flex min-w-0 flex-col gap-4 border-divider border-t px-4 py-4">
+          {entry.description.trim().length > 0 && (
+            <div
+              className="min-w-0 max-w-full rounded-lg border border-divider bg-surface-secondary px-4 py-3.5 dark:bg-surface-primary"
+              role="region"
+              aria-label="Update description"
+            >
               <Markdown
                 ignoreGlossary
                 className={cn(
-                  'text-primary text-sm leading-relaxed',
+                  'min-w-0 max-w-full text-primary text-sm leading-relaxed [overflow-wrap:anywhere]',
                   '[&_p:last-child]:mb-0 [&_p]:mb-2',
                   '[&_li]:marker:text-secondary [&_ol]:mb-2 [&_ul]:mb-2',
-                  '[&_a]:text-link',
+                  '[&_a]:break-all [&_a]:text-link',
                 )}
               >
                 {entry.description}
               </Markdown>
-            </SummaryBlock>
+            </div>
           )}
           {entry.sections.map((section, i) => {
             const title = SECTION_TITLE[section.kind]
             return (
-              <div key={i} className="flex flex-col gap-2">
+              <div key={i} className="flex min-w-0 flex-col gap-2">
                 {title && (
                   <h4 className="font-bold text-secondary text-xs uppercase">
                     {title}
@@ -76,13 +111,16 @@ export function RecentChangeEntry({ entry, defaultOpen = false }: Props) {
   )
 }
 
-function SummaryBlock({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="rounded-lg border border-brand/20 bg-brand/10 px-4 py-3.5 dark:border-brand/25 dark:bg-brand/15">
-      <h4 className="mb-2 font-bold text-brand text-sm leading-tight tracking-tight">
-        Summary of the changes
-      </h4>
-      <div>{children}</div>
-    </div>
-  )
+/** Plain text for collapsed preview; visual truncation is `line-clamp-1` on the host. */
+function plainDescriptionOneLine(markdown: string): string {
+  return markdown
+    .replace(/\r\n/g, '\n')
+    .split('\n')
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .join(' ')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[*_`#>|]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
 }

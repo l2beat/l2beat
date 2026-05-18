@@ -1,5 +1,4 @@
-import { keepPreviousData } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useCallback } from 'react'
 import {
   Dialog,
   DialogClose,
@@ -15,19 +14,25 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '~/components/core/Drawer'
-import { Skeleton } from '~/components/core/Skeleton'
 import { useDevice } from '~/hooks/useDevice'
-import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
-import { RecentChangeEntry } from './RecentChangeEntry'
-import { RecentChangesPagination } from './RecentChangesPagination'
-
-const PAGE_SIZE = 5
+import { RecentChangesPanel } from './RecentChangesPanel'
 
 interface Props {
   projectId: string
   projectName: string
   onOpenChange: (open: boolean) => void
+}
+
+function scrollToUpdatesMonitorSection() {
+  const el = document.getElementById('updates-monitor')
+  if (!el) return
+  window.history.replaceState(
+    null,
+    '',
+    `${window.location.pathname}${window.location.search}#updates-monitor`,
+  )
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 export function RecentChangesDialog({
@@ -36,42 +41,63 @@ export function RecentChangesDialog({
   onOpenChange,
 }: Props) {
   const { isMobile } = useDevice()
-  const [page, setPage] = useState(1)
+  const description = `Recent updates for ${projectName} (past 7 days)`
 
-  const { data, isLoading } = api.projects.recentChanges.useQuery(
-    { projectId, page, pageSize: PAGE_SIZE },
-    { placeholderData: keepPreviousData },
+  const goToFullHistory = useCallback(() => {
+    onOpenChange(false)
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => scrollToUpdatesMonitorSection()),
+    )
+  }, [onOpenChange])
+
+  const titleRow = (
+    <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+      <span className="font-bold text-xl leading-none">Recent updates</span>
+      <span className="text-secondary text-sm leading-none">Past 7 days</span>
+    </div>
   )
 
-  const totalPages = data ? Math.max(1, Math.ceil(data.total / PAGE_SIZE)) : 1
-  const description = `Recent updates for ${projectName}`
+  const footerLinkClassName =
+    'text-2xs font-medium text-link underline underline-offset-2 transition-colors hover:text-blue-550 dark:hover:text-blue-550'
 
-  const body = (
-    <RecentChangesBody
-      data={data}
-      isLoading={isLoading && !data}
-      page={page}
-      totalPages={totalPages}
-      onPageChange={setPage}
-    />
+  const renderFooter = (paddingClass: string) => (
+    <div
+      className={cn(
+        'flex shrink-0 justify-center border-divider border-t py-3',
+        paddingClass,
+      )}
+    >
+      <button
+        type="button"
+        className={footerLinkClassName}
+        onClick={goToFullHistory}
+      >
+        See all historical changes
+      </button>
+    </div>
   )
+
+  const body = <RecentChangesPanel projectId={projectId} maxAgeDays={7} />
 
   if (isMobile) {
     return (
       <Drawer open onOpenChange={onOpenChange}>
         <DrawerContent
           className="max-h-[90dvh]"
-          contentClassName="flex min-h-0 flex-col px-0 pb-0"
+          contentClassName="flex min-h-0 flex-1 flex-col px-0 pb-0"
         >
-          <DrawerHeader className="px-4 pb-2">
-            <DrawerTitle className="mb-0 font-bold text-xl leading-none">
-              Recent updates
-            </DrawerTitle>
+          <DrawerHeader className="shrink-0 px-4 pb-2">
+            <DrawerTitle className="mb-0">{titleRow}</DrawerTitle>
             <DrawerDescription className="sr-only">
               {description}
             </DrawerDescription>
           </DrawerHeader>
-          <div className="overflow-y-auto px-4 pb-4">{body}</div>
+          <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+            <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-2">
+              {body}
+            </div>
+            {renderFooter('px-4 pb-4')}
+          </div>
         </DrawerContent>
       </Drawer>
     )
@@ -81,77 +107,17 @@ export function RecentChangesDialog({
     <Dialog open onOpenChange={onOpenChange}>
       <DialogContent className="primary-card flex max-h-[90dvh] w-[640px] flex-col overflow-hidden bg-surface-primary p-0 lg:w-[768px]">
         <DialogClose className="top-5 right-5" />
-        <DialogHeader className="border-divider border-b px-6 py-4">
-          <DialogTitle className="font-bold text-xl leading-none">
-            Recent updates
-          </DialogTitle>
+        <DialogHeader className="shrink-0 border-divider border-b px-6 py-4">
+          <DialogTitle className="mb-0">{titleRow}</DialogTitle>
           <DialogDescription className="sr-only">
             {description}
           </DialogDescription>
         </DialogHeader>
-        <div className="overflow-y-auto px-6 py-5">{body}</div>
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+          <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">{body}</div>
+          {renderFooter('px-6 pb-5')}
+        </div>
       </DialogContent>
     </Dialog>
-  )
-}
-
-function RecentChangesBody({
-  data,
-  isLoading,
-  page,
-  totalPages,
-  onPageChange,
-}: {
-  data:
-    | {
-        total: number
-        page: number
-        pageSize: number
-        entries: import('~/server/features/projects/recent-changes/getRecentChanges').PublicDiffHistoryEntry[]
-      }
-    | undefined
-  isLoading: boolean
-  page: number
-  totalPages: number
-  onPageChange: (page: number) => void
-}) {
-  if (isLoading) {
-    return <RecentChangesSkeleton />
-  }
-
-  if (!data || data.entries.length === 0) {
-    return (
-      <div className="py-10 text-center text-secondary text-sm">
-        No recent changes have been recorded for this project yet.
-      </div>
-    )
-  }
-
-  return (
-    <div className={cn('flex flex-col gap-3')}>
-      {data.entries.map((entry, i) => (
-        <RecentChangeEntry
-          key={`${entry.date}-${i}`}
-          entry={entry}
-          defaultOpen={page === 1 && i === 0}
-        />
-      ))}
-      <RecentChangesPagination
-        page={page}
-        totalPages={totalPages}
-        onPageChange={onPageChange}
-        className="pt-2"
-      />
-    </div>
-  )
-}
-
-function RecentChangesSkeleton() {
-  return (
-    <div className="flex flex-col gap-3">
-      {Array.from({ length: 3 }).map((_, i) => (
-        <Skeleton key={i} className="h-14 w-full rounded-lg" />
-      ))}
-    </div>
   )
 }

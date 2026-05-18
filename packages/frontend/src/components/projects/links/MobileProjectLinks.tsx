@@ -19,6 +19,7 @@ interface Props {
   recentChanges?: {
     projectId: string
     projectName: string
+    last7DaysCount: number
   }
 }
 
@@ -97,6 +98,7 @@ export function MobileProjectLinks({
           <RecentChangesPill
             projectId={recentChanges.projectId}
             projectName={recentChanges.projectName}
+            last7DaysCount={recentChanges.last7DaysCount}
           />
         </div>
       )}

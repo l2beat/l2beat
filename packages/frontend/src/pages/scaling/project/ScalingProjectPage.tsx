@@ -102,6 +102,7 @@ export function ScalingProjectPage({
                           ? {
                               projectId: projectEntry.id,
                               projectName: projectEntry.name,
+                              last7DaysCount: projectEntry.recentChanges7dCount,
                             }
                           : undefined
                       }

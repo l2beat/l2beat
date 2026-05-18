@@ -19,7 +19,10 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
-import { hasRecentChanges } from '~/server/features/projects/recent-changes/getRecentChanges'
+import {
+  countRecentChangesEntriesInLastDays,
+  hasRecentChanges,
+} from '~/server/features/projects/recent-changes/getRecentChanges'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -130,6 +133,7 @@ export interface ProjectScalingEntry {
   stageConfig: ProjectScalingStage
   discoUiHref: string | undefined
   hasRecentChanges: boolean
+  recentChanges7dCount: number
 }
 
 export async function getScalingProjectEntry(
@@ -318,6 +322,9 @@ export async function getScalingProjectEntry(
       : undefined,
     hasRecentChanges:
       !!project.discoveryInfo?.hasDiscoUi && hasRecentChanges(project.id),
+    recentChanges7dCount: project.discoveryInfo?.hasDiscoUi
+      ? countRecentChangesEntriesInLastDays(project.id, 7)
+      : 0,
   }
 
   const sections: ProjectDetailsSection[] = []
@@ -632,6 +639,17 @@ export async function getScalingProjectEntry(
     })
   }
 
+  if (common.hasRecentChanges) {
+    sections.push({
+      type: 'UpdatesMonitorSection',
+      props: {
+        id: 'updates-monitor',
+        title: 'Updates monitor',
+        projectId: project.id,
+      },
+    })
+  }
+
   if (operatorSection) {
     sections.push({
       type: 'TechnologyChoicesSection',
@@ -741,6 +759,22 @@ export async function getScalingProjectEntry(
         discoUi,
       },
     })
+  }
+
+  if (common.hasRecentChanges) {
+    await Promise.all([
+      helpers.projects.recentChanges.prefetch({
+        projectId: project.id,
+        page: 1,
+        pageSize: 5,
+      }),
+      helpers.projects.recentChanges.prefetch({
+        projectId: project.id,
+        page: 1,
+        pageSize: 5,
+        maxAgeDays: 7,
+      }),
+    ])
   }
 
   return { ...common, sections }

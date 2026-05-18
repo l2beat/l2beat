@@ -3,7 +3,12 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
 
-import { getRecentChanges, hasRecentChanges } from './getRecentChanges'
+import FakeTimers from '@sinonjs/fake-timers'
+import {
+  countRecentChangesEntriesInLastDays,
+  getRecentChanges,
+  hasRecentChanges,
+} from './getRecentChanges'
 
 /**
  * `getRecentChanges` reads from `process.cwd()/../config/src/projects/<id>/diffHistory.md`.
@@ -115,6 +120,8 @@ describe('getRecentChanges', () => {
         expect(entry.description).toEqual(
           'The Mantle Security Multisig updated its signer set.',
         )
+        expect(entry.watchedChangeCount).toEqual(1)
+        expect(entry.highSeverity).toEqual(false)
         expect(entry.sections.length).toEqual(1)
         expect(entry.sections[0]!.kind).toEqual('watched-changes')
         expect(entry.sections[0]!.body).toInclude('+   added line')
@@ -122,6 +129,167 @@ describe('getRecentChanges', () => {
         for (const section of entry.sections) {
           expect(section.body).not.toInclude('should be hidden')
         }
+      },
+    )
+  })
+
+  it('drops source code sections but keeps watched and initial discovery', () => {
+    const md = [
+      '# Diff at Mon, 01 Jan 2026 00:00:00 GMT:',
+      '',
+      '- current timestamp: 1',
+      '',
+      '## Description',
+      '',
+      'Mixed update',
+      '',
+      '## Watched changes',
+      '',
+      '```diff',
+      '+ watched',
+      '```',
+      '',
+      '## Source code changes',
+      '',
+      '```diff',
+      '+ source only',
+      '```',
+      '',
+    ].join('\n')
+
+    withTempCwd(
+      (projectsDir) => {
+        const dir = join(projectsDir, 'mixed')
+        mkdirSync(dir, { recursive: true })
+        writeFileSync(join(dir, 'diffHistory.md'), md, 'utf-8')
+      },
+      () => {
+        const result = getRecentChanges({
+          projectId: 'mixed',
+          page: 1,
+          pageSize: 5,
+        })
+        expect(result.total).toEqual(1)
+        const entry = result.entries[0]!
+        expect(entry.sections.map((s) => s.kind)).toEqual(['watched-changes'])
+        expect(entry.sections[0]!.body).toInclude('watched')
+        expect(entry.sections[0]!.body).not.toInclude('source only')
+        expect(entry.watchedChangeCount).toEqual(1)
+      },
+    )
+  })
+
+  it('marks high severity when watched diff changes $implementation', () => {
+    const md = [
+      '# Diff at Mon, 01 Jan 2026 00:00:00 GMT:',
+      '',
+      '- current timestamp: 1',
+      '',
+      '## Description',
+      '',
+      'Upgrade',
+      '',
+      '## Watched changes',
+      '',
+      '```diff',
+      '      values.$implementation:',
+      '-        "eth:0xaaa"',
+      '+        "eth:0xbbb"',
+      '```',
+      '',
+    ].join('\n')
+
+    withTempCwd(
+      (projectsDir) => {
+        const dir = join(projectsDir, 'impl')
+        mkdirSync(dir, { recursive: true })
+        writeFileSync(join(dir, 'diffHistory.md'), md, 'utf-8')
+      },
+      () => {
+        const entry = getRecentChanges({
+          projectId: 'impl',
+          page: 1,
+          pageSize: 5,
+        }).entries[0]!
+        expect(entry.highSeverity).toEqual(true)
+        expect(entry.watchedChangeCount).toEqual(1)
+      },
+    )
+  })
+
+  it('counts multiple watched diff fences', () => {
+    const md = [
+      '# Diff at Mon, 01 Jan 2026 00:00:00 GMT:',
+      '',
+      '- current timestamp: 1',
+      '',
+      '## Description',
+      '',
+      'Two diffs',
+      '',
+      '## Watched changes',
+      '',
+      '```diff',
+      '+ a',
+      '```',
+      '',
+      '```diff',
+      '+ b',
+      '```',
+      '',
+    ].join('\n')
+
+    withTempCwd(
+      (projectsDir) => {
+        const dir = join(projectsDir, 'two-fences')
+        mkdirSync(dir, { recursive: true })
+        writeFileSync(join(dir, 'diffHistory.md'), md, 'utf-8')
+      },
+      () => {
+        const entry = getRecentChanges({
+          projectId: 'two-fences',
+          page: 1,
+          pageSize: 5,
+        }).entries[0]!
+        expect(entry.watchedChangeCount).toEqual(2)
+      },
+    )
+  })
+
+  it('marks high severity when watched diff contains severity: HIGH', () => {
+    const md = [
+      '# Diff at Mon, 01 Jan 2026 00:00:00 GMT:',
+      '',
+      '- current timestamp: 1',
+      '',
+      '## Description',
+      '',
+      'Flagged',
+      '',
+      '## Watched changes',
+      '',
+      '```diff',
+      '      values.gameImpls.1:',
+      '-        "eth:0xold"',
+      '+        "eth:0xnew"',
+      '+++ severity: HIGH',
+      '```',
+      '',
+    ].join('\n')
+
+    withTempCwd(
+      (projectsDir) => {
+        const dir = join(projectsDir, 'sev')
+        mkdirSync(dir, { recursive: true })
+        writeFileSync(join(dir, 'diffHistory.md'), md, 'utf-8')
+      },
+      () => {
+        const entry = getRecentChanges({
+          projectId: 'sev',
+          page: 1,
+          pageSize: 5,
+        }).entries[0]!
+        expect(entry.highSeverity).toEqual(true)
       },
     )
   })
@@ -170,6 +338,67 @@ describe('getRecentChanges', () => {
           pageSize: 2,
         })
         expect(lastPage.entries.map((e) => e.description)).toEqual(['Entry 1'])
+      },
+    )
+  })
+
+  it('filters by maxAgeDays for getRecentChanges total and entries', () => {
+    const md = [
+      '# Diff at Wed, 18 Feb 2026 12:00:00 GMT:',
+      '',
+      '- current timestamp: 1',
+      '',
+      '## Description',
+      '',
+      'Recent',
+      '',
+      '## Watched changes',
+      '',
+      '```diff',
+      '+ a',
+      '```',
+      '',
+      '# Diff at Wed, 10 Feb 2026 12:00:00 GMT:',
+      '',
+      '- current timestamp: 1',
+      '',
+      '## Description',
+      '',
+      'Old',
+      '',
+      '## Watched changes',
+      '',
+      '```diff',
+      '+ b',
+      '```',
+      '',
+    ].join('\n')
+
+    withTempCwd(
+      (projectsDir) => {
+        const dir = join(projectsDir, 'age-window')
+        mkdirSync(dir, { recursive: true })
+        writeFileSync(join(dir, 'diffHistory.md'), md, 'utf-8')
+      },
+      () => {
+        const clock = FakeTimers.install({
+          now: new Date('2026-02-20T12:00:00.000Z'),
+        })
+        try {
+          expect(
+            countRecentChangesEntriesInLastDays('age-window', 7),
+          ).toEqual(1)
+          const filtered = getRecentChanges({
+            projectId: 'age-window',
+            page: 1,
+            pageSize: 10,
+            maxAgeDays: 7,
+          })
+          expect(filtered.total).toEqual(1)
+          expect(filtered.entries[0]!.description).toEqual('Recent')
+        } finally {
+          clock.uninstall()
+        }
       },
     )
   })

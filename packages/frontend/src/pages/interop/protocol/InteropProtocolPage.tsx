@@ -83,6 +83,7 @@ function Content({
                     ? {
                         projectId: projectEntry.id,
                         projectName: projectEntry.name,
+                        last7DaysCount: projectEntry.recentChanges7dCount,
                       }
                     : undefined
                 }
@@ -105,6 +106,7 @@ function Content({
                         ? {
                             projectId: projectEntry.id,
                             projectName: projectEntry.name,
+                            last7DaysCount: projectEntry.recentChanges7dCount,
                           }
                         : undefined
                     }
