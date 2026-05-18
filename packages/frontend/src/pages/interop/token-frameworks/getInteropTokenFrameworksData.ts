@@ -12,6 +12,7 @@ import type { InteropChainWithIcon } from '../components/chain-selector/types'
 
 export type InteropTokenFramework = {
   id: string
+  projectId: string
   label: string
   slug: string
   name: string
@@ -93,9 +94,7 @@ async function getTokenFrameworks(
   manifest: Manifest,
 ): Promise<InteropTokenFramework[]> {
   const projects = await ps.getProjects({ select: ['interopConfig'] })
-  const projectsById = new Map(
-    projects.map((project) => [project.id.toString(), project]),
-  )
+  const projectsById = new Map(projects.map((project) => [project.id, project]))
 
   return TOKEN_FRAMEWORKS.map((framework) => {
     const project = projectsById.get(framework.projectId)
@@ -108,6 +107,7 @@ async function getTokenFrameworks(
 
     return {
       id: framework.id,
+      projectId: framework.projectId,
       label: framework.label,
       slug: project.slug,
       name: project.interopConfig.name ?? project.name,

@@ -99,6 +99,7 @@ export type TokenFrameworksData = {
   topTokens: TopTokenItem[]
   frameworkTable: FrameworkTableEntry[]
   transferSizeChartData: TransferSizeDataPoint[] | undefined
+  snapshotTimestamp: number | undefined
 }
 
 export async function getTokenFrameworksData(
@@ -189,6 +190,7 @@ export async function getTokenFrameworksData(
     topTokens,
     frameworkTable,
     transferSizeChartData,
+    snapshotTimestamp,
   }
 }
 
@@ -585,5 +587,6 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
     topTokens,
     frameworkTable,
     transferSizeChartData,
+    snapshotTimestamp: UnixTime.now(),
   }
 }

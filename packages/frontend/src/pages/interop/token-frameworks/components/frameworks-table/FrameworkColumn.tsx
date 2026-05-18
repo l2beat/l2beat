@@ -50,7 +50,7 @@ export function FrameworkColumn({
               <EmptyState />
             ) : (
               entry.tokens.map((token) => (
-                <TokenRow key={token.id} token={token} />
+                <TokenRow key={token.id} token={token} framework={framework} />
               ))
             )}
           </ScrollList>

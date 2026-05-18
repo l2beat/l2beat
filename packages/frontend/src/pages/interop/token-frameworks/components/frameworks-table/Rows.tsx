@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type {
   FrameworkChainPathItem,
@@ -5,8 +6,16 @@ import type {
 } from '~/server/features/scaling/interop/getTokenFrameworksData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
+import { TokenFrameworksTransferTrigger } from '../TokenFrameworksTransferTrigger'
 
-export function TokenRow({ token }: { token: TopTokenItem }) {
+export function TokenRow({
+  token,
+  framework,
+}: {
+  token: TopTokenItem
+  framework: InteropTokenFramework
+}) {
   return (
     <div className="flex h-7 shrink-0 items-center justify-between gap-2">
       <div className="flex min-w-0 items-center gap-1.5">
@@ -19,7 +28,23 @@ export function TokenRow({ token }: { token: TopTokenItem }) {
           {token.symbol}
         </span>
       </div>
-      <RowStats volume={token.volume} transferCount={token.transferCount} />
+      <RowStats
+        volume={token.volume}
+        transferCount={token.transferCount}
+        txsTrigger={
+          <TokenFrameworksTransferTrigger
+            protocol={{
+              id: framework.projectId,
+              name: framework.name,
+              iconUrl: framework.iconUrl,
+            }}
+            tokenId={token.id}
+            className="cursor-pointer font-medium text-secondary hover:underline"
+          >
+            {formatInteger(token.transferCount)} txs
+          </TokenFrameworksTransferTrigger>
+        }
+      />
     </div>
   )
 }
@@ -55,15 +80,19 @@ function ChainIcon({
 export function RowStats({
   volume,
   transferCount,
+  txsTrigger,
 }: {
   volume: number
   transferCount: number
+  txsTrigger?: ReactNode
 }) {
   return (
     <div className="flex items-baseline gap-1.5 whitespace-nowrap text-paragraph-14">
-      <span className="font-medium text-secondary">
-        {formatInteger(transferCount)} txs
-      </span>
+      {txsTrigger ?? (
+        <span className="font-medium text-secondary">
+          {formatInteger(transferCount)} txs
+        </span>
+      )}
       <span className="font-bold">
         {formatCurrency(volume, 'usd', { decimals: 1 })}
       </span>

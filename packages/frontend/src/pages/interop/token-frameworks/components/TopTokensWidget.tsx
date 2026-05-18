@@ -21,6 +21,7 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
 import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
 import { Last24HoursBadge } from './Last24HoursBadge'
+import { TokenFrameworksTransferTrigger } from './TokenFrameworksTransferTrigger'
 
 export function TopTokensWidget({
   tokenFrameworks,
@@ -96,14 +97,17 @@ export function TopTokensWidget({
             <div className="flex flex-col gap-3">
               {items.slice(0, 5).map((token) => {
                 const framework =
-                  activeTab === 'all' && token.frameworkId
-                    ? frameworksById.get(token.frameworkId)
-                    : undefined
+                  activeTab === 'all'
+                    ? token.frameworkId
+                      ? frameworksById.get(token.frameworkId)
+                      : undefined
+                    : frameworksById.get(activeTab)
                 return (
                   <TokenRow
                     key={token.id}
                     token={token}
                     framework={framework}
+                    showFrameworkBadge={activeTab === 'all'}
                   />
                 )
               })}
@@ -118,10 +122,13 @@ export function TopTokensWidget({
 function TokenRow({
   token,
   framework,
+  showFrameworkBadge,
 }: {
   token: TopTokenItem
   framework: InteropTokenFramework | undefined
+  showFrameworkBadge: boolean
 }) {
+  const txsLabel = `${formatInteger(token.transferCount)} txs`
   return (
     <div className="flex items-center justify-between gap-2">
       <div className="flex min-w-0 items-center gap-2">
@@ -131,7 +138,7 @@ function TokenRow({
           className="size-6 shrink-0 rounded-full"
         />
         <span className="font-bold text-heading-16">{token.symbol}</span>
-        {framework && (
+        {showFrameworkBadge && framework && (
           <Tooltip>
             <TooltipTrigger asChild>
               <div
@@ -170,9 +177,23 @@ function TokenRow({
         <span className="font-bold text-label-value-15 md:text-label-value-16">
           {formatCurrency(token.volume, 'usd', { decimals: 2 })}
         </span>
-        <span className="font-medium text-paragraph-14 text-secondary md:text-paragraph-16">
-          {formatInteger(token.transferCount)} txs
-        </span>
+        {framework ? (
+          <TokenFrameworksTransferTrigger
+            protocol={{
+              id: framework.projectId,
+              name: framework.name,
+              iconUrl: framework.iconUrl,
+            }}
+            tokenId={token.id}
+            className="cursor-pointer font-medium text-paragraph-14 text-secondary hover:underline md:text-paragraph-16"
+          >
+            {txsLabel}
+          </TokenFrameworksTransferTrigger>
+        ) : (
+          <span className="font-medium text-paragraph-14 text-secondary md:text-paragraph-16">
+            {txsLabel}
+          </span>
+        )}
       </div>
     </div>
   )
