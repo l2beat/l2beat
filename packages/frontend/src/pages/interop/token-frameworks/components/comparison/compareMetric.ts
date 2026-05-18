@@ -1,4 +1,4 @@
-export function compare(
+export function compareMetric(
   left: number | null,
   right: number | null,
   lowerIsBetter: boolean | undefined,

@@ -1,10 +1,10 @@
 import { Skeleton } from '~/components/core/Skeleton'
 import { cn } from '~/utils/cn'
-import { compare } from './compare'
+import { compareMetric } from './compareMetric'
 import { LeadsIndicator } from './LeadsIndicator'
 import type { Side } from './types'
 
-export function CompareRow({
+export function HeadToHeadRow({
   label,
   left,
   right,
@@ -23,7 +23,7 @@ export function CompareRow({
   lowerIsBetter?: boolean
   isLoading: boolean
 }) {
-  const { leader, leftFill, rightFill } = compare(
+  const { leader, leftFill, rightFill } = compareMetric(
     leftValue,
     rightValue,
     lowerIsBetter,

@@ -5,8 +5,8 @@ import type { TokenFrameworksData } from '~/server/features/scaling/interop/getT
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
-import { CompareRow } from './CompareRow'
 import { FrameworkSelect } from './FrameworkSelect'
+import { HeadToHeadRow } from './HeadToHeadRow'
 import type { Side } from './types'
 
 export function FrameworkCompareContent({
@@ -57,7 +57,7 @@ export function FrameworkCompareContent({
       </div>
 
       <div className="mt-6 flex flex-col gap-5">
-        <CompareRow
+        <HeadToHeadRow
           label="Volume"
           left={left}
           right={right}
@@ -66,7 +66,7 @@ export function FrameworkCompareContent({
           format={(v) => formatCurrency(v, 'usd')}
           isLoading={showSkeleton}
         />
-        <CompareRow
+        <HeadToHeadRow
           label="Transfers"
           left={left}
           right={right}
@@ -75,7 +75,7 @@ export function FrameworkCompareContent({
           format={formatInteger}
           isLoading={showSkeleton}
         />
-        <CompareRow
+        <HeadToHeadRow
           label="Avg. transfer time"
           left={left}
           right={right}
@@ -85,7 +85,7 @@ export function FrameworkCompareContent({
           lowerIsBetter
           isLoading={showSkeleton}
         />
-        <CompareRow
+        <HeadToHeadRow
           label="Avg. transfer size"
           left={left}
           right={right}
