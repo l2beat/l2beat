@@ -3,7 +3,6 @@ import type { Insertable, Selectable, Updateable } from 'kysely'
 import isNil from 'lodash/isNil'
 import { BaseRepository } from '../BaseRepository'
 import type { DeployedToken } from '../kysely/generated/types'
-import { toJsonSafe } from '../utils/toJsonSafe'
 import {
   type AbstractTokenRecord,
   toAbstractTokenRecord,
@@ -54,34 +53,22 @@ function toRecord(row: Selectable<DeployedToken>): DeployedTokenRecord {
 }
 
 function toRow(record: DeployedTokenRecord): Insertable<DeployedToken> {
-  const row: Insertable<DeployedToken> = {
+  return {
     ...record,
     address: record.address.toLowerCase(),
     deploymentTimestamp: UnixTime.toDate(record.deploymentTimestamp),
   }
-  if ('abstractTokenAssignmentProof' in row) {
-    row.abstractTokenAssignmentProof = toJsonSafe(
-      row.abstractTokenAssignmentProof,
-    )
-  }
-  return row
 }
 
 function toUpdateRow(
   record: DeployedTokenUpdateable,
 ): Updateable<DeployedToken> {
-  const row: Updateable<DeployedToken> = {
+  return {
     ...record,
     deploymentTimestamp: isNil(record.deploymentTimestamp)
       ? record.deploymentTimestamp
       : UnixTime.toDate(record.deploymentTimestamp),
   }
-  if ('abstractTokenAssignmentProof' in row) {
-    row.abstractTokenAssignmentProof = toJsonSafe(
-      row.abstractTokenAssignmentProof,
-    )
-  }
-  return row
 }
 
 export class DeployedTokenRepository extends BaseRepository {

@@ -106,8 +106,10 @@ describe(TokenIngestionProcessor.name, () => {
           transfer({
             srcChain: address.chain,
             srcTokenAddress: address.address,
+            srcRawAmount: 0n,
             dstChain: otherAddress.chain,
             dstTokenAddress: otherAddress.address,
+            dstRawAmount: 123n,
             bridgeType: 'lockAndMint',
           }),
         ]),
@@ -122,7 +124,11 @@ describe(TokenIngestionProcessor.name, () => {
       expect(trace.outcome.neighborsToEnqueue).toEqual([otherAddress])
       expect(trace.outcome.proof.kind).toEqual('non-swapping-transfer')
       if (trace.outcome.proof.kind !== 'non-swapping-transfer') return
-      expect(trace.outcome.proof.transfer.transferId).toEqual('transfer-id')
+      const proof = trace.outcome.proof
+      expect(proof.transfer.transferId).toEqual('transfer-id')
+      expect(proof.transfer.srcRawAmount).toEqual('0')
+      expect(proof.transfer.dstRawAmount).toEqual('123')
+      expect(() => JSON.stringify(proof)).not.toThrow()
       expect(trace.steps.some((step) => step.kind === 'fetched-facts')).toEqual(
         false,
       )

@@ -26,6 +26,7 @@ import type { Command } from '../commands'
 import {
   type AbstractTokenAssignmentProof,
   commitTokenChanges,
+  nonSwappingTransferProof,
   type WriteSource,
 } from '../commitTokenChanges'
 import {
@@ -308,10 +309,7 @@ export class TokenIngestionProcessor {
         type: 'resolved',
         abstractToken: fromTransfers.abstractToken,
         symbolFallback: undefined,
-        proof: {
-          kind: 'non-swapping-transfer',
-          transfer: fromTransfers.supportingTransfer,
-        },
+        proof: nonSwappingTransferProof(fromTransfers.supportingTransfer),
       }
     }
 

@@ -28,7 +28,31 @@ export type WriteSource =
 export type AbstractTokenAssignmentProof =
   | { kind: 'manual' }
   | { kind: 'coingecko' }
-  | { kind: 'non-swapping-transfer'; transfer: InteropTransferRecord }
+  | {
+      kind: 'non-swapping-transfer'
+      transfer: AbstractTokenAssignmentProofTransfer
+    }
+
+export type AbstractTokenAssignmentProofTransfer = Omit<
+  InteropTransferRecord,
+  'srcRawAmount' | 'dstRawAmount'
+> & {
+  srcRawAmount: string | undefined
+  dstRawAmount: string | undefined
+}
+
+export function nonSwappingTransferProof(
+  transfer: InteropTransferRecord,
+): AbstractTokenAssignmentProof {
+  return {
+    kind: 'non-swapping-transfer',
+    transfer: {
+      ...transfer,
+      srcRawAmount: transfer.srcRawAmount?.toString(),
+      dstRawAmount: transfer.dstRawAmount?.toString(),
+    },
+  }
+}
 
 /**
  * The single write boundary for TokenDB. Both the user-driven
