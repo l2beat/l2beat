@@ -28,6 +28,7 @@ export const roninNetwork: ScalingProject = opStackL2({
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
+  stateValidationImage: 'opfp',
   display: {
     name: 'Ronin',
     aliases: ['Sky Mavis', 'Axie Infinity'],

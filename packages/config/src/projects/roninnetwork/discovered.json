@@ -1,7 +1,7 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1778830028,
-  "configHash": "0xb88dd02282bfbfbce7b92b645ccd6026ca295acac1434ac1c9f893bc0e1cc5df",
+  "timestamp": 1779095885,
+  "configHash": "0x3a6e1b31305d789fa6ceed44e24aa256dad20d3146d5078f13e04d6eb0695112",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -139,6 +139,7 @@
         "0x1bc887ce765ba7948f6ea3398e636cf3cfa1e6dfd755d3856ff26e6cde18e363"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Governance and proxy-admin contract for the legacy MainchainGateway bridge. Holds the operator/governor set, tallies stake-weighted votes for bridge proposals (operator rotations, threshold changes, withdrawals).",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -380,7 +381,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 5,
+        "gameCount": 11,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -395,7 +396,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c6463dee3828677f6270d83d45408044fc5edb9080b95ff1d1b113bac3e29ac0bbf2089126c9ae81a69fcd2e75af364295eaf48dc058338f80cffb43400000000000000000000000000000000000000000000000000000000000007e4d379de941e78ab394d4d4917fcce1cc45b6cd6204a4962275df8c60a80d3a25faec5aa7de116a746",
-        "permissionedGamesTotal": 5,
+        "permissionedGamesTotal": 11,
         "proposerFromDGF": "eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620",
         "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -682,7 +683,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "LegacyBridgeOwner",
       "address": "eth:0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -865,6 +866,7 @@
         "0xdfb24017264c4b6de3756ca39ecb395a1c548b1666de08df0642a77ee39b437e"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Legacy multi-sig-secured Ronin bridge contract holding the L1 side of deposits made before the April 2025 Chainlink CCIP migration. Still custodies residual user balances (ETH backing legacy WETH on Ronin, the deprecated WBTC contract, and dust). Withdrawals authorised by the Ronin BridgeOperator stake-weighted threshold via MainchainBridgeManager.",
       "deployerAddress": "eth:0xAA1d342354d755EC515F40e7d5E83CB4184bB9ee",
       "sinceTimestamp": 1655883630,
       "sinceBlock": 15006576,
@@ -1307,7 +1309,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2139747879718261304059592"
+        "totalSupply": "2218239512336451990258361"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1552,6 +1554,7 @@
         "0x09e1aa2b6ce6d8d270612a4a337d6eead730f40be12d2be2795897e36a5e26ec"
       ],
       "proxyType": "immutable",
+      "description": "Immutable emergency-pause contract for the legacy MainchainGateway. Holders of the SENTRY_ROLE can flip MainchainGateway into a paused state to halt deposits and withdrawals in an emergency.",
       "deployerAddress": "eth:0xeC42Db8Ad8a9a601bF329708C3372e676bd34042",
       "sinceTimestamp": 1743765359,
       "sinceBlock": 22195196,
@@ -2666,6 +2669,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25099043 },
-  "permissionsConfigHash": "0x872560db66e9fc5c9680740691a7f2bb82865ec5f726a801bd5d2277b436f75f"
+  "usedBlockNumbers": { "ethereum": 25121140 },
+  "permissionsConfigHash": "0xd1d93dff63e21ff00969b3ef99b2b89669fcd5ceee4253c9b20e9e1ebd31c3a4"
 }

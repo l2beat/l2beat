@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf81906de32fe634cbea40a05dcb8d1af34b2f189
+Generated with discovered.json: 0xa4e423ee25a511e32efa2e2c567d570562c99931
 
-# Diff at Fri, 15 May 2026 07:28:18 GMT:
+# Diff at Mon, 18 May 2026 09:19:34 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1778830028
+- current timestamp: 1779095885
 
 ## Description
 
@@ -20,7 +20,7 @@ Initial discovery.
 ```diff
 +   Status: CREATED
     contract MainchainBridgeManager (eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) [N/A]
-    +++ description: None
+    +++ description: Governance and proxy-admin contract for the legacy MainchainGateway bridge. Holds the operator/governor set, tallies stake-weighted votes for bridge proposals (operator rotations, threshold changes, withdrawals).
 ```
 
 ```diff
@@ -55,7 +55,7 @@ Initial discovery.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (eth:0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) [GnosisSafe]
+    contract LegacyBridgeOwner (eth:0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) [GnosisSafe]
     +++ description: None
 ```
 
@@ -68,7 +68,7 @@ Initial discovery.
 ```diff
 +   Status: CREATED
     contract MainchainGateway (eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) [N/A]
-    +++ description: None
+    +++ description: Legacy multi-sig-secured Ronin bridge contract holding the L1 side of deposits made before the April 2025 Chainlink CCIP migration. Still custodies residual user balances (ETH backing legacy WETH on Ronin, the deprecated WBTC contract, and dust). Withdrawals authorised by the Ronin BridgeOperator stake-weighted threshold via MainchainBridgeManager.
 ```
 
 ```diff
@@ -122,7 +122,7 @@ Initial discovery.
 ```diff
 +   Status: CREATED
     contract PauseEnforcer (eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062) [N/A]
-    +++ description: None
+    +++ description: Immutable emergency-pause contract for the legacy MainchainGateway. Holders of the SENTRY_ROLE can flip MainchainGateway into a paused state to halt deposits and withdrawals in an emergency.
 ```
 
 ```diff
