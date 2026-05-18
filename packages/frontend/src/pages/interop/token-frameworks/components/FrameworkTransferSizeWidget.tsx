@@ -12,7 +12,7 @@ export function FrameworkTransferSizeWidget() {
   })
 
   return (
-    <PrimaryCard className="flex h-[230px] flex-col">
+    <PrimaryCard className="flex h-[230px] flex-col" data-hide-overflow-x>
       <div className="flex items-center gap-2">
         <h2 className="font-bold text-heading-20">
           Transfer size distribution
