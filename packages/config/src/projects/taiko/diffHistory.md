@@ -1,3 +1,643 @@
+Generated with discovered.json: 0x850d9e5b70c3a1c71f02d6c68b3ea56678a98cff
+
+# Diff at Fri, 15 May 2026 12:37:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778675086
+- current timestamp: 1778675086
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778675086 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      sourceHashes.0:
+-        "0x6d31c3046dca02d527c9c812462cb52b4402d54884c3abe822cb6ac8371e4a5b"
++        "0xba12695f53ef79b4c552abf284ab9133ca47c0fc1908e05a8b941e5a176795cb"
+    }
+```
+
+Generated with discovered.json: 0x371f86238030e6a9855d01f4dad62cb1b3a38897
+
+# Diff at Wed, 13 May 2026 12:35:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd13366f13be78635363f6f5a496347735f4ea4e block: 1777963387
+- current timestamp: 1778675086
+
+## Description
+
+RiscZeroVerifierRouter: add new multisig as ac admin (was EOA-only before).
+
+L2BEAT removes one safe member from the SC safe.
+
+config related: ignore anchor details
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      values.accessControl.PROPOSER_ROLE.members.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.accessControl.CANCELLER_ROLE.members.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.Canceller.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.Executor.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.Proposer.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+    }
+```
+
+```diff
+    contract L2BEAT (eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x166868E5AE72592a06056775236d2E4D64CDcCa9"
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "2 of 2 (100%)"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1 and issue preconfirmations. It dynamically selects a single operator for a given epoch using the Ethereum beacon block root as a source of randomness.
+      values.operatorMapping.1:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.operatorMapping.2:
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       |    0
+ .../SafeProxy.p.sol                                |    0
+ .../Safe.sol                                       | 1216 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ 4 files changed, 1258 insertions(+)
+```
+
+Generated with discovered.json: 0x162b74128293b8977052b5258247837e74935ac9
+
+# Diff at Fri, 08 May 2026 07:52:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777963387
+- current timestamp: 1777963387
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777963387 (main branch discovery), not current.
+
+```diff
+    contract PEMCertChainLib (eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169) [taiko/PEMCertChainLib] {
+    +++ description: Library for managing PEM certificate chains.
+      sourceHashes.0:
+-        "0x59efc4927f69d03e199767bdde2f8a8ef3a544833cdbf8c2eecf9152b373dcbc"
++        "0x485d6aea22ce7ea49882285986e0169ee60cac9c60adf61616df151dee1ee7b9"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
++        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
+    }
+```
+
+```diff
+    contract TaikoRisc0Verifier (eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b) [taiko/Risc0Verifier] {
+    +++ description: Gating router contract to verify batches using RISC Zero.
+      sourceHashes.0:
+-        "0xa750071d4c85280eb006caef33e2d65c25ba3c05b6160ce789076d7d00b68cf5"
++        "0x0fbc7e2c06292d99f25238155902be56c4ab1f218e969ad201343ba6691617d7"
+    }
+```
+
+```diff
+    contract SgxVerifier (eth:0x08568Df252ecf37D6C3eFD24f6ca3688118697F1) [taiko/SgxVerifier] {
+    +++ description: Verifier contract for SGX proven blocks.
+      sourceHashes.0:
+-        "0xb3da82b2279d9cbede69cfe56ede3576d07b60acb34790a02463ea2f64e60ad7"
++        "0x64982ac2280542d1f822ed34b0d5a76af39b8c23309b9fa29e2e028aaaf409ed"
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      sourceHashes.0:
+-        "0x5b8836fe706f4142d9d19316f7ae849ba43b55173015f72bc3f9216f7a86cf0d"
++        "0xd75c3ac3fe43e81cc406b9316c4f35ab4c97b399585f8ed181cc438845d520be"
+    }
+```
+
+```diff
+    contract Halborn (eth:0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract SignerList (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for registering agents, similar to a Multisig.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x2e03e80de0ae2460891172f783bb22adb3198bbe1184bf5558ce46a0a1426ddb"
++        "0xa7ca079fc79b02b1bf21099f18108afd2619a15b9576f07826fd3d40323c362d"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX attestation certificates.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0xb88d9a2a00b03d84804743d62f07486e1276d8e7c989cc3a3cfd8f0ae26b5cd9"
++        "0xa475ba124c54ce3d05a591fa36ad4940d2596ffe8798d8fa7369c35835d9ce4a"
+    }
+```
+
+```diff
+    contract Taiko Token (eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) [taiko/TaikoToken] {
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x2b1eb63ab3adb1a0783bae6252816727a2fb5d150dd0e9912e0a01e4ee224be9"
++        "0x41ab29308b74d97dd20c9a343bb0ec5bf06ff5c16e1dce8e573ce3d11b24c37b"
+    }
+```
+
+```diff
+    contract Drew Van der Werff (eth:0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      sourceHashes.0:
+-        "0xb44ee6b08f1771b57cb0eaac00eb8ac68c0b86d1f4cbd25e8b80debe791ad2eb"
++        "0x6d31c3046dca02d527c9c812462cb52b4402d54884c3abe822cb6ac8371e4a5b"
+    }
+```
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) [taiko/EmergencyMultisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x5214d838c15a1ddc2fa952f428cd6eeb5b5146d215923c3d4667100066d7f73e"
++        "0x06b3c0dcde009443de8e2e9dbc01b7be47d4ab850aa790c61dd3e382d0223139"
+    }
+```
+
+```diff
+    contract EncryptionRegistry (eth:0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1) [taiko/EncryptionRegistry] {
+    +++ description: A registry for signers (of the Security Council) to appoint agents to operate on their behalf. These agents can also register their encryption keys for encrypted emergency proposal support.
+      sourceHashes.0:
+-        "0x95721d01741fd367320ddaabfaf4b41498755af0f0fda0f258599c6ddf848ed2"
++        "0x267e9b80c22b223bc6f3def714d9cc9965d9f1a4f38a3d5fcf94c253fc9bb0b3"
+    }
+```
+
+```diff
+    contract Taiko Foundation Treasury Multisig (eth:0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sourceHashes.0:
+-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
++        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
+    }
+```
+
+```diff
+    contract Chainbound (eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract SigVerifyLib (eth:0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9) [taiko/SigVerifyLib] {
+    +++ description: Library for verifying signatures.
+      sourceHashes.0:
+-        "0x5bf803a773ed2c117313ea970df3b38542eab3522714f18be2b65a75062e0ebf"
++        "0x98e16ff1318818952e17508c8ff77aab49a3dfe9ff98a6d43d8b4c8c3e50fa11"
+    }
+```
+
+```diff
+    contract Nethermind (eth:0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Gattaca (eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract MainnetInbox (eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f) [taiko/MainnetInbox] {
+    +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x8d260fddbc7a72c54273017cb2c35c4eab2166aed34e0ab7265950bbed7bef3f"
++        "0xa362200444c4acb7197c44886acc6eb7d90bb3933f19c339e94239e413f132d1"
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      sourceHashes.0:
+-        "0x8a1f2f8a442ecce12d0692b2117333692fe151bb272cd1e8b2f92ec437bf8d9c"
++        "0xe1cb8acc21214c3652ccc33caf9aca78a1e818c7cba5652c17c9d1a67bce341b"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX attestation certificates.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0xf03ee5163c982d906a23e9650c5ca9a0f66fa6bf33b9496c71476ce91c8d32ec"
++        "0x8b8e5b7672b834fd900d5235a8c921b42d5ee2025e3f2e171556191b1c402c20"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      sourceHashes.0:
+-        "0x09d9c9ba25591eb4e658e547eb5f5cc798449477bf745e6fa9f516a339f88364"
++        "0x3cae3ae6b0f352872c4065d61e6035712203a33041678708105f24c097febd2a"
+    }
+```
+
+```diff
+    contract QuotaManager (eth:0x91f67118DD47d502B1f0C354D0611997B022f29E) [taiko/QuotaManager] {
+    +++ description: Defines withdrawal limits per token.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x515420aaad70e32a5f53c329c15df869122650ffc387b0ef64bb3de9748b3797"
++        "0x6ae3c0946e5703cdce5cd4aab28ec8bba4df9b9be88a368c1078da02c48896de"
+    }
+```
+
+```diff
+    contract TaikoSP1Verifier (eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6) [taiko/SP1Verifier] {
+    +++ description: Gating router contract to verify batches using SP1.
+      sourceHashes.0:
+-        "0x1dcfcdf3dd450e8a527f8693f22f23affb00864ffba663c0a9b03a0083fb0b60"
++        "0xdee7636e5fc070c7646f6aa8bc2f927212edf07aa5e46d6d1f2abdf08febce20"
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x919b8268f27c8e7d5eb3409d5dfa664b37f80dc78898df309e0fe272050c410a"
++        "0x565adda256d285c36f58a97eaae35d0845077481920428065b2f2c98a97d05d3"
+    }
+```
+
+```diff
+    contract MainnetERC20Vault (eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) [taiko/SharedERC20Vault] {
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x0112b81e89b367f8ffeb6b571bd245b1be7a1279474ffa11591f8374a2c8b14f"
++        "0x4e0dd5fa918b3b1229feb85baaac3bf6d7fffd21febcdeb7a4f3bf62e22c9031"
+    }
+```
+
+```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) [taiko/DAO] {
+    +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x0567fe67ea1d2872edb3f9420706c18e62259987f7e28a61ab4bdf9c44348e57"
++        "0xfe89f584d934a1a68ad809c948a3f0eff7bc0afa661d021946e43c12e83853f6"
+    }
+```
+
+```diff
+    contract SignalService (eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) [taiko/SignalService] {
+    +++ description: Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x9da4ee2d38b5914e0408dd1d413eef87e7f2ae62c6ca8240e657f4cc8cfaa84c"
++        "0x20f8b06e752acd9eaddb6745d7eba47d69302f638a83d0db11476c03ece409d5"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      sourceHashes.0:
+-        "0x215b7779ba88b0e55cbc280c1640649f7ac41a2b2d76176efef0cfd88fe563f6"
++        "0x285eacaac2ca4f68ef5e866028ae0bc88ebc6f583afc9035f289ad34efc034e3"
+    }
+```
+
+```diff
+    contract SgxVerifier (eth:0xa1018Ba2e22139076f91dA2A856B2CAB22d968F6) [taiko/SgxVerifier] {
+    +++ description: Verifier contract for SGX proven blocks.
+      sourceHashes.0:
+-        "0xb3da82b2279d9cbede69cfe56ede3576d07b60acb34790a02463ea2f64e60ad7"
++        "0x64982ac2280542d1f822ed34b0d5a76af39b8c23309b9fa29e2e028aaaf409ed"
+    }
+```
+
+```diff
+    contract Toni Wahrstätter (eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Aragon (eth:0xb284810536C0dAB6A8e48153B58588A9B9e0F701) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Gustavo Gonzalez Taiko (eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
++        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract MainnetBridge (eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) [taiko/TaikoBridge] {
+    +++ description: Shared bridge for Taiko chains for bridged ETH.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x118c20a34164db28141d7fa6496d1fcf9e139354ed77c4e1c3f33e5eaac65977"
++        "0xa98023db33dc6ad6957a1c18e9e67712facad7f801f9437a6b05cf48aca80135"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x2b345501d9a4b9f9fc8537b9a257c07664f8aa5cc1db8755e53d6f7d8a589f91"
++        "0x044e282f62e9e82103d7af7f0ea2d090fc2b11d78f0d1925f201d770ac434581"
+    }
+```
+
+```diff
+    contract ProverWhitelist (eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae) [taiko/ProverWhitelist] {
+    +++ description: Defines the whitelist of addresses allowed to prove proposals. Non-whitelisted provers must wait for the permissionless proving delay before they can submit proofs.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x324653368e7bcaa7121b944af4794caa9a627937a3fa5afc9e643541abefb9a8"
++        "0x57dbd00bc282ee0976f1079d055fadca0cf93f2879731562abf574dd0d828dda"
+    }
+```
+
+```diff
+    contract L1SharedAddressManager (eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) [taiko/L1SharedAddressManager] {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x61eadd250e6fee2eea7d778ca5fdb6e04b0fa09044c65eba836b397f585e5535"
++        "0xc517995b98b38d37cfdc0d22945faf7a13c32c2eec5931b84ac669cdada0ef56"
+    }
+```
+
+```diff
+    contract L2BEAT (eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Safe (eth:0xF28C8D6b44361255FA7C116d09ccD5F914398C10) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1 and issue preconfirmations. It dynamically selects a single operator for a given epoch using the Ethereum beacon block root as a source of randomness.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x974afbdcc80d21c6158c6eb226d4a8b02a6041f7b8e9affd849a300ce70e21ef"
++        "0xbbc82a452c36768ecfa5ae0bddedf9ac6eab01d8818f3952da014b8dc7f365bd"
+    }
+```
+
+```diff
+    contract Bridge (taiko:0x1670000000000000000000000000000000000001) [taiko/L2Bridge] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x5f895f5e5eff391b355fd960e8891da71f24b40a469036685e6306937f582f93"
++        "0xfada2b71cfef6dfc63b33a9681baa712699f12de05eaf91f635ed3387a304791"
+    }
+```
+
+```diff
+    contract SignalService (taiko:0x1670000000000000000000000000000000000005) [taiko/SignalService] {
+    +++ description: Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x9da4ee2d38b5914e0408dd1d413eef87e7f2ae62c6ca8240e657f4cc8cfaa84c"
++        "0x20f8b06e752acd9eaddb6745d7eba47d69302f638a83d0db11476c03ece409d5"
+    }
+```
+
+```diff
+    contract L2AddressManager (taiko:0x1670000000000000000000000000000000000006) [taiko/L2AddressManager] {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x6fe05ffd6df39bf2744926b989c92177a890441393df2e76bc191747b86fe675"
++        "0x0cd2f8219748850e9271f472e5adab8d91073814feba07eb5b902fd06403ee6d"
+    }
+```
+
+```diff
+    contract Anchor (taiko:0x1670000000000000000000000000000000010001) [taiko/Anchor] {
+    +++ description: Immutable L2 contract that anchors L1 block details to L2 for cross-layer communication and manages EIP-1559 gas pricing for L2 operations.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0xd28d4f02b54957df5dd4894f6b101e59efaea4c568ce8ea8f87870f81cd977f1"
++        "0xb7363f9eb2b04eaac9917a7afc61fd33b89e7c7f5140743865a89e1d3e367c25"
+    }
+```
+
+```diff
+    contract DelegateController (taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x126c01552edc6ec0f433f57a1cb50dee6524ae96dc62ca10278748794a267e90"
++        "0x4616f709cc576ee52199d336b4f7b7be351448caad2db844eafd6cd1a231bca4"
+    }
+```
+
 Generated with discovered.json: 0x7724c53ecbd750b8f76f7ce54f4b68274fa0883c
 
 # Diff at Tue, 05 May 2026 10:23:18 GMT:

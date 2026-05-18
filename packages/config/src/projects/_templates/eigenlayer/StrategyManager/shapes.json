@@ -1,21 +1,21 @@
 {
   "StrategyManager": {
-    "hash": "0x02ef571f391efe8c4fe859f372cc691e345de88a1fc59df7f13eacbd8bba7bfa",
+    "hash": "0x35f9dc4715998a5f09875d3d0a38a49eaa68e5394ca5a162f95973628d40266c",
     "address": "eth:0x70f44C13944d49a236E3cD7a94f48f5daB6C619b",
     "blockNumber": 22188285
   },
   "StrategyManager.sol": {
-    "hash": "0xa50d63fab44e951546763a60992b2c223d1b089ebbd81504210b24beadcf5b50",
+    "hash": "0xf9fb797b0f44e78295001f3e13cad8fcb3da167b89aedba4597a585000c8f541",
     "address": "eth:0xba4b2b8A076851A3044882493C2e36503d50b925",
     "blockNumber": 22424645
   },
   "StrategyManager_redistribution": {
-    "hash": "0x60a5779b3a2f393b1ced806a8d45492e70d92e11a9943b66a8511672ae88c7d3",
+    "hash": "0xb33c2df3226264de24801a40c8ee25ed5f2dfc23d3ed7ab9b2c1370463ca7788",
     "address": "eth:0x46aefd30415be99e20169eE7046F65784B46d123",
     "blockNumber": 23083543
   },
   "StrategyManager_v1.9.0": {
-    "hash": "0x5433d9e78da537eadb2ed5b713412f6ed57cafef2bbe66fc756d599175cb2fab",
+    "hash": "0x571ba91f38006b5d830d08c555d127cde1188f64cc49883e9dd255d6ef74ebf8",
     "address": "eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c",
     "blockNumber": 24350294
   }

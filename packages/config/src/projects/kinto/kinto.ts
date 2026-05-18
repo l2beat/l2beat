@@ -1,5 +1,6 @@
 import {
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   UnixTime,
@@ -42,6 +43,16 @@ assert(
 const sanctionExpirySeconds = discovery.getContractValue<number>(
   'KintoID',
   'SANCTION_EXPIRY_PERIOD',
+)
+
+const sequencerInbox = discovery.getContract('SequencerInbox')
+const outbox = discovery.getContract('Outbox')
+assert(
+  sequencerInbox.sinceTimestamp !== undefined &&
+    outbox.sinceTimestamp !== undefined,
+)
+const genesisTimestamp = UnixTime(
+  Math.min(sequencerInbox.sinceTimestamp, outbox.sinceTimestamp),
 )
 
 // Validators: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators
@@ -100,13 +111,29 @@ export const kinto: ScalingProject = orbitStackL2({
   isNodeAvailable: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
-  sequencerInbox: discovery.getContract('SequencerInbox'),
+  sequencerInbox,
+  additionalTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(sequencerInbox.address),
+        selector: '0x3e5aa082',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+  ],
   usesEthereumBlobs: true,
   nonTemplateRiskView: {
     exitWindow: {
       value: 'None',
       description:
-        'There is no exit window for users to exit in case of unwanted regular upgrades of the L1 as they are initiated by the Security Council with instant upgrade power and without proper notice. Upgrades initiated by actors other than the Security Council (e.g. KYC providers) on Layer 2 guarantee at least a 7d exit window to the user.',
+        'There is no exit window for users to exit in case of unwanted upgrades of the L1 as they are initiated by the Security Council with instant upgrade power and without proper notice. Upgrades initiated by actors other than the Security Council (e.g. KYC providers) on Layer 2 guarantee at least a 7d exit window to the user.',
       sentiment: 'bad',
       orderHint: 0, // 0-7 days
     },

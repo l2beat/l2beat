@@ -1,4 +1,5 @@
 import type { RefreshReason } from '@l2beat/discovery'
+import { Fragment } from 'react'
 import { Loader } from '../../../../components/Loader'
 import {
   Tooltip,
@@ -156,14 +157,14 @@ function toStatusBundle(props: {
         <ol className="mt-1.5 ml-4 list-decimal space-y-1">
           {props.payload.reasons.map(({ project, reasons }) => {
             return (
-              <>
-                <li key={project}>{project}:</li>
+              <Fragment key={project}>
+                <li>{project}:</li>
                 <ol className="ml-4 list-disc space-y-1">
                   {reasons.map((reason, idx) => (
                     <li key={idx}>{formatReason(reason)}</li>
                   ))}
                 </ol>
-              </>
+              </Fragment>
             )
           })}
         </ol>

@@ -14,6 +14,8 @@ describe(EventHandler.name, () => {
     'event Add(address user)',
     'event Add2(address user)',
     'event Remove(address user)',
+    'event AddMany(address[] users)',
+    'event RemoveMany(address[] users)',
   ]
 
   const abi = new utils.Interface(stringABI)
@@ -23,11 +25,7 @@ describe(EventHandler.name, () => {
     (...args: T) =>
       abi.encodeEventLog(
         abi.getEvent(name),
-        args.map((k) =>
-          ChainSpecificAddress.check(k as string)
-            ? ChainSpecificAddress.address(k as ChainSpecificAddress)
-            : k,
-        ),
+        args.map(toAbiValue),
       ) as providers.Log
 
   const CurrentBatch = event<[number]>('CurrentBatch')
@@ -39,6 +37,8 @@ describe(EventHandler.name, () => {
   const Add = event<[ChainSpecificAddress]>('Add')
   const Add2 = event<[ChainSpecificAddress]>('Add2')
   const Remove = event<[ChainSpecificAddress]>('Remove')
+  const AddMany = event<[ChainSpecificAddress[]]>('AddMany')
+  const RemoveMany = event<[ChainSpecificAddress[]]>('RemoveMany')
 
   const ADDRESS = ChainSpecificAddress.random()
 
@@ -55,6 +55,21 @@ describe(EventHandler.name, () => {
 
       return new Promise((resolve, _) => resolve(result))
     }
+  }
+
+  function toAbiValue(value: unknown): unknown {
+    if (Array.isArray(value)) {
+      return value.map(toAbiValue)
+    }
+
+    if (
+      typeof value === 'string' &&
+      ChainSpecificAddress.check(value as ChainSpecificAddress)
+    ) {
+      return ChainSpecificAddress.address(value as ChainSpecificAddress)
+    }
+
+    return value
   }
 
   describe('adding and removing events', () => {
@@ -179,6 +194,36 @@ describe(EventHandler.name, () => {
       const result = await handler.execute(provider, ADDRESS)
 
       expect(result.value).toEqual([ChainSpecificAddress.address(U2)])
+    })
+
+    it('flattens selected event arrays before adding and removing', async () => {
+      const U1 = ChainSpecificAddress.random()
+      const U2 = ChainSpecificAddress.random()
+      const U3 = ChainSpecificAddress.random()
+      const provider = mockObject<IProvider>({
+        chain: 'ethereum',
+        getLogs: getLogsStub([
+          AddMany([U1, U2]),
+          AddMany([U3]),
+          RemoveMany([U2, U3]),
+        ]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: 'users',
+          flatten: true,
+          add: { event: 'AddMany' },
+          remove: { event: 'RemoveMany' },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual([ChainSpecificAddress.address(U1)])
     })
   })
 

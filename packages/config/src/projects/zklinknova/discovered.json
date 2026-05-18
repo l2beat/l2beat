@@ -62,8 +62,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x92d18063ee33accb564a80045a642ccab59919fc97ffb5f4a4849874239d7bc0"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x05f41bafb0b0ddec3d9cc38cde1566548e2be76855839c001335ac75954d775d"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -102,7 +102,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -192,8 +192,8 @@
       "address": "arb1:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
       "type": "Contract",
       "sourceHashes": [
-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
+        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413",
+        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -230,8 +230,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -303,8 +303,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x650e6121058aa74419a8d997f6cf169c5bb82b7e6302193672de5f10c1c1e561"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x203cb1c4a589ccec0b4a6b1db073cff1bf125cfe423111d8bbf66aa641fbd3c3"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -368,8 +368,8 @@
       "address": "base:0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
       "type": "Contract",
       "sourceHashes": [
-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
+        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413",
+        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -459,8 +459,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -528,7 +528,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -609,8 +609,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -677,8 +677,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x54984eed0ba905283811bcd69e63428602cc4c290c8eed30fc28011383549ff2"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xa6f74e73041f17918a28cbf8539229c36823ee1b0b4ac6d06d605c6ffab4b1b3"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050",
@@ -717,7 +717,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -794,8 +794,8 @@
       "address": "blastmainnet:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
       "type": "Contract",
       "sourceHashes": [
-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
+        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413",
+        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050",
@@ -884,8 +884,8 @@
       "address": "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
       "type": "Contract",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xff7b9bda4ccb0ae0e1775f82206c54ef89c794f6b4ffa42edbb65996bf7d0e8c"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xf6400e0c02bc34451a6c1894ec98ff6207a86224805bc4d5cd3694899ddd0c63"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -932,8 +932,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x9158bf76b126cdaa6a8fe310085a77d400ab2458c21f79e637846d8bc3cc2a13"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x6e4a4073d413a623b7bd3465ecbf3a23efd55e86f478e6bde3f1aa51e6b74294"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -1016,8 +1016,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xc39118a9cebca411d42cb5759e7387270a0a8472860288b0e01aa3235777afe5"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x5dc63c95ce93d7ac175b61834b7411e49e976a9d344a7884f64f92a0e9bda744"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -1060,8 +1060,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x9487f6c6e032e98bef376a27f09d5a3e8c83a059eaf6d8b092c80138cb37459f"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xbebda23695697e81503840056106c565dd9a0c9884980a96cff5ba3bdecc74ad"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -1094,8 +1094,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -1167,8 +1167,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xb3ae8d5bec68fa0994192ecdc4f2ad4126bb1ef22051378f5b605d59193955e4"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x9b65803e562ba8c4e2f362a0666690c8e5e777458db2809055a9a810f25750eb"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -1206,8 +1206,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x9487f6c6e032e98bef376a27f09d5a3e8c83a059eaf6d8b092c80138cb37459f"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xbebda23695697e81503840056106c565dd9a0c9884980a96cff5ba3bdecc74ad"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -1245,8 +1245,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x7f9e12d70f78945c6ea417774b5faf2e0a78ed4fbbdcaec591bf123428f28197"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x2e8636f7784e4f2d33d32f5f6b9c21169c305262c225c9706c093728bfc57228"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -1284,8 +1284,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x6f5cdba451da8c1759148644f4daf8344ed2853d765413e18cd2fcf662f4694a"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xe6ffb915b8c2c5406c8d72162a0edd46255f145821e228c0f7c49603f93f72eb"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -1328,8 +1328,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x91cc3c90f1b2c05558c8c2f9575ffcc8f7cb39a023073a028d6b6abb3986d601"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x8a9a34cec905da99318c2140f97842722d52a0093245b055f0617f65afe49393"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -1361,8 +1361,8 @@
       "address": "eth:0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
       "type": "Contract",
       "sourceHashes": [
-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
+        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413",
+        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -1420,7 +1420,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1526,8 +1526,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xb3ae8d5bec68fa0994192ecdc4f2ad4126bb1ef22051378f5b605d59193955e4"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x9b65803e562ba8c4e2f362a0666690c8e5e777458db2809055a9a810f25750eb"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -1565,8 +1565,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x070067bfd007d5f15c96e1e404a8b9b5eab4a2616d8ea8ebeab0a22f58262461"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xe6a894ed2f785fe6796138b8b72d44ab5b11b3558e593f6522181d8946069f83"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -1625,7 +1625,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1690,7 +1690,7 @@
       "address": "linea:0x509ff56c152315EdeE91A2e0f059195519507e01",
       "type": "Contract",
       "sourceHashes": [
-        "0x12cecfbcc6781dd4b8196aa7774f756e4f6b1ffa89386aee473d301f8b6e50a9"
+        "0x8c02abd7d6d6ab83a0fd7551279095d7b79038885ea6e4456cd598e98950cd92"
       ],
       "proxyType": "immutable",
       "deployerAddress": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
@@ -1963,7 +1963,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xa03991e1bce15902cbac3b622d56b1d1a7ffac18bd69a20e1b22a38a350b1246"
+        "0x074d0d1532ad3c5782c0e723f02fa54a70a418277e129b9c2674695a65788c78"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
@@ -2005,8 +2005,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x9cdec4676ceb81fecae56fb51bb2b303a5e0c13d98bb75c91e343bbe6b6d3d59"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xa0605e5a74aceabb3204d7e8828b9d3e068b1d18f97b7bab7fa9052a0e790cc4"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "linea:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -2082,7 +2082,7 @@
       "address": "linea:0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
       "type": "Contract",
       "sourceHashes": [
-        "0x200762223206dfe40a648627db22f3403b1bdb04c59d8753a1e7525591876fda"
+        "0x8c6f9e70207e3d28fb1b1b95d14964d982278de0ac87c8a90b62543fdec7f63e"
       ],
       "proxyType": "immutable",
       "receivedPermissions": [
@@ -2149,8 +2149,8 @@
       "address": "manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
       "type": "Contract",
       "sourceHashes": [
-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
+        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413",
+        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -2193,7 +2193,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -2289,8 +2289,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -2367,8 +2367,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x54984eed0ba905283811bcd69e63428602cc4c290c8eed30fc28011383549ff2"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xa6f74e73041f17918a28cbf8539229c36823ee1b0b4ac6d06d605c6ffab4b1b3"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -2422,7 +2422,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -2507,8 +2507,8 @@
       "address": "mantle:0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
       "type": "Contract",
       "sourceHashes": [
-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
+        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413",
+        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -2565,8 +2565,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xce3f5eaddd62b6c043d92c0ff2cc4eed6369114f68e9d57c1b76f3d26dd29fa2"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x883c1311587ca8c9a1bd7dfbdc6cc756c1e57e6138d68d9942020d1d3077b95b"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -2647,8 +2647,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xf74567f04dfc1337e1295ac8ee70891c3e1543ec852c2205630c0bcc4e0b6a19"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x176736cab5151b084da0fbe6c378f127442a0ffc06e823b0f4741eefa923a7df"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -2732,7 +2732,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -2805,8 +2805,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -2877,8 +2877,8 @@
       "address": "oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA",
       "type": "Contract",
       "sourceHashes": [
-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
+        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413",
+        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -2958,8 +2958,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x650e6121058aa74419a8d997f6cf169c5bb82b7e6302193672de5f10c1c1e561"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x203cb1c4a589ccec0b4a6b1db073cff1bf125cfe423111d8bbf66aa641fbd3c3"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -3022,8 +3022,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xcbd3207b9109e4f409b0253248655dee17cc83299a5e19d4d7c8bdc792b30008"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xc18029183330bee4c9182bcc1ffbfc3619e87f0bb8edcc72c37d7274430fe5cf"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -3088,8 +3088,8 @@
       "address": "scr:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
       "type": "Contract",
       "sourceHashes": [
-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
-        "0xd57c5157a667afc64df8bc542f1eb01744f7d6b961e031361d442aac61b7d5a0"
+        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413",
+        "0xcb4dd20abe47f9c0d374d660b6c4fef7f5649e1735ddcc38e0fb52b366f82f16"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -3179,8 +3179,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x3712da36508b3467318e72889e31c55c8421214be5ff058dba1d8a7cd33b4f9b"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x15392164422ad793ce776226be6341ec0bd2e740e6b2eb15e1d90e93403823a3"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -3220,8 +3220,8 @@
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -3276,7 +3276,7 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": "GnosisSafeL2",
+        "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": "GnosisSafeProxy",
         "scr:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
       }
     },
@@ -3302,7 +3302,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -3383,7 +3383,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
+        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -3420,8 +3420,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -3493,8 +3493,8 @@
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0xe0235f35c0fdaea3f676b1101581911d1a9b4bbc4bdbd2c76d9e93ab3da4762c"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x119e04b91c8e63c65c9cfb24741d8fd98080d11f9ccde409198f92cde1cc63c3"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -5790,54 +5790,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": [
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
-      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+      "constructor(address _singleton)"
     ],
     "zksync:0x1727c2c531cf966f902E5927b98490fDFb3b2b70": [
       "event AddedOwner(address owner)",

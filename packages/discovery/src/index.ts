@@ -132,7 +132,6 @@ export {
   flatteningHash,
   getHashToBeMatched,
 } from './flatten/utils'
-export { flattenStartingFrom as flattenBytecodeEquivalentStartingFrom } from './flatten-external/flatten'
 export {
   type ContractConfigSchema,
   type DiscoveryConfigSchema,

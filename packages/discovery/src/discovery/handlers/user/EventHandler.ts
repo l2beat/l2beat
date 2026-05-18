@@ -53,6 +53,7 @@ const setOnlySchema = v.object({
 const addAndRemoveSchema = v.object({
   ...common,
   set: v.undefined().optional(),
+  flatten: v.boolean().optional(),
   add: oneOrMany(EventHandlerAction),
   remove: oneOrMany(EventHandlerAction).optional(),
 })
@@ -175,6 +176,9 @@ export class EventHandler implements Handler {
     } else if (this.definition.add !== undefined) {
       const addActions = ensureArray(this.definition.add)
       const removeActions = ensureArray(this.definition.remove ?? [])
+      if (this.definition.flatten) {
+        logRows = flattenSelectedLogRows(logRows, select)
+      }
 
       logRows = this.executeAddRemove(
         longChain,
@@ -260,6 +264,37 @@ export class EventHandler implements Handler {
 
     return [...result.values()]
   }
+}
+
+function flattenSelectedLogRows(logRows: LogRow[], select: string[]): LogRow[] {
+  assert(
+    select.length === 1,
+    'Event handler flatten requires exactly one selected field',
+  )
+
+  // biome-ignore lint/style/noNonNullAssertion: checked above
+  const selectedKey = select[0]!
+  const result: LogRow[] = []
+  for (const row of logRows) {
+    const selectedValue = extractKey(row.value, selectedKey)
+    assert(
+      typeof row.value === 'object' && !Array.isArray(row.value),
+      'Event handler flatten requires object log values',
+    )
+    assert(
+      Array.isArray(selectedValue),
+      `Event handler flatten requires selected field [${selectedKey}] to be an array`,
+    )
+
+    for (const item of selectedValue) {
+      result.push({
+        log: row.log,
+        value: { ...row.value, [selectedKey]: item },
+      })
+    }
+  }
+
+  return result
 }
 
 async function fetchLogs(

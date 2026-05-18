@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x6e481b9a5bd03b8a2fd4845f88f53a993951e9f4
+
+# Diff at Fri, 08 May 2026 07:51:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777036752
+- current timestamp: 1777036752
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777036752 (main branch discovery), not current.
+
+```diff
+    contract HyperliquidBridge (arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7) [hyperliquid/HyperliquidBridge] {
+    +++ description: Single contract containing the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions. The current locker threshold is 2 and the minimum validator threshold is 2/3*4.
+      sourceHashes.0:
+-        "0x8c22d9d0e8dc4b87b77a97aca8a01a2050b5c416ff894e2b0c18daf22c76b122"
++        "0xffdc2cba00d9b1b339bee72dcf34ee34d38d62d6fecc073ff82c7d79bf1ff8af"
+    }
+```
+
 Generated with discovered.json: 0x9e9751a4fde24d4dace0960ef4c61fec74b6cfec
 
 # Diff at Tue, 05 May 2026 10:22:14 GMT:

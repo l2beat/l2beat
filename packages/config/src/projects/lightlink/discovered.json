@@ -20,7 +20,7 @@
       "template": "lightlink/Challenge",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
-        "0x90fc7abf9460afe3940188c51d98ab5da40ece530f7fc0e6e10c459a1b7f35f5"
+        "0xf376de5dc61e8c2cdbf725e0994e0b208ed444b3fae6ba2d34d9cc57020bcbec"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: false. Header challenges are enabled: true. L2 Header challenges are enabled: false.",
@@ -76,7 +76,7 @@
       "template": "lightlink/ChainOracle",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
-        "0x219c5860c98ee65c799aa9b6549168915088c6de2369583a157ee3a60cf65b47"
+        "0x7d73ad5b833f2974bd9713f13a56432a7676676aee93a8ab85c6fa5f3b1ad7ac"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used.",
@@ -112,7 +112,7 @@
       "type": "Contract",
       "template": "lightlink/Multisig",
       "sourceHashes": [
-        "0x4bbdb661859a4bbfa25496630a4c393bc0999fe0bdf4910997d7c098294d19e6"
+        "0x40a9adcbd49c977576606e55cc3bfe7e075b84609d602a79a8a72fdb18c50d28"
       ],
       "proxyType": "immutable",
       "description": "Custom multisig implementation with a hardcoded n/2+1 threshold.",
@@ -165,7 +165,7 @@
       "template": "lightlink/L1BridgeRegistry",
       "sourceHashes": [
         "0xb5af2f6166dd24adeb4b7faf21f2bbfc8512fe699c249b64b565127766ff6e3d",
-        "0xc12eca0e011860efa4f71723a172994a15e062d037a0d89ef36b5aed423fb37a"
+        "0x673431da3479cdba41913f19cf31e4bbf4826667c8b72a0c1cc38bb2e2185865"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.",
@@ -224,7 +224,7 @@
       "template": "lightlink/L1ERC20Predicate",
       "sourceHashes": [
         "0x271f364b7e28b516246603be8769c5002d3e585faea009e131bf170f073129e8",
-        "0xc53e364c720158d2d3f89d1c4ffb1a3550689489699dfdaca67ee8a51967c9cc"
+        "0xc19e12e2dd700da8a31861921327c2aece2a359060efa140c0b89647edd3dc4c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC20 token escrow contract. It is validated by external validators, according to the L1BridgeRegistry values.",
@@ -260,7 +260,7 @@
       "template": "lightlink/CanonicalStateChain",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
-        "0x7c0a4f7fb2f2948ffde2e5550debf14c02fa682bec9a57aac718daf43c80c2c7"
+        "0x283899cfbbbbe16829482acdaf2c59e489de654e5b833b4533d52b93d682985f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.",
@@ -333,7 +333,7 @@
       "template": "lightlink/SystemConfig",
       "sourceHashes": [
         "0x60ebf53dd49973efa525783a0716f706ac120b1ee0443943732fe5c97dd4959e",
-        "0x91fa96b49f07577afbb47b56e1b36b249127d43e691df431c23bf35d50f03626"
+        "0x18553e27277fbabf80d91294398034f8fe5fe45defd34ddf33671bfbd4a6e91a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Fork of the OP stack's SystemConfig. It link to the main portal contract and stores a 'start block' number. Both values are currently unused. Most importantly, it does NOT contain the resource configuration info.",
@@ -383,7 +383,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -474,7 +474,7 @@
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x60ebf53dd49973efa525783a0716f706ac120b1ee0443943732fe5c97dd4959e",
-        "0xa22fc4a393301224447cd798adfb870c71a158c78028b18ef2d501128ac6bbcb"
+        "0xe593730ed754d863764a11764d93471ffbd10851580889203bae9861607c809a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
@@ -527,7 +527,7 @@
       "template": "lightlink/LightLinkPortal",
       "sourceHashes": [
         "0x60ebf53dd49973efa525783a0716f706ac120b1ee0443943732fe5c97dd4959e",
-        "0xc0e63a4f63935a0e855262aed5e9a5b1ae7e6b33e52a78c8ca729cbe4672a8a5"
+        "0xc1a27d357563d202fb4a7fd1cdc31e7e2a750b487f2867d737057a3c88f6b83b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main contract to deposit ETH and handle L1 to L2 messages. It also allows to prove and finalize withdrawals. It also stores the resource configuration for the chain.",
@@ -583,7 +583,7 @@
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0x60ebf53dd49973efa525783a0716f706ac120b1ee0443943732fe5c97dd4959e",
-        "0x1862b438ea6e79c6dda9db9eadf4cfc0582195a923d0ea24cbf669e0c4d2e27e"
+        "0xfb3149f1ee629e1614977890ca7019ef4a2c46a79e1e9e6915afd1d21c400926"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",

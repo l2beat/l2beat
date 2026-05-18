@@ -1,3 +1,240 @@
+Generated with discovered.json: 0xbf06d64d74f8a96d44023635c14ffc4afa14299e
+
+# Diff at Fri, 15 May 2026 12:35:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1777388210
+- current timestamp: 1777388210
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777388210 (main branch discovery), not current.
+
+```diff
+    contract GHOEthereumTokenPool (eth:0x06179f7C1be40863405f374E7f5F8806c728660A) [transporter/TokenPool] {
+    +++ description: GHO lock-and-release token pool on Ethereum. It trusts configured Arbitrum remote pools and only accepts inbound token releases routed through CCIP OffRamps.
+      sourceHashes.1:
+-        "0x39415a58cb2a072d97bd39f2f579e01c82ace7c06e80bf5619dc0be2bf2620e8"
++        "0x9c4424aa5c0675489f24e9cf8b9bf148ee3c51c282747bbf58f9bbba8bfd05d9"
+    }
+```
+
+Generated with discovered.json: 0x30eee331d2405cf28886220483944dc18a02653e
+
+# Diff at Fri, 08 May 2026 07:51:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777388210
+- current timestamp: 1777388210
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777388210 (main branch discovery), not current.
+
+```diff
+    contract GHOEthereumTokenPool (eth:0x06179f7C1be40863405f374E7f5F8806c728660A) [transporter/TokenPool] {
+    +++ description: GHO lock-and-release token pool on Ethereum. It trusts configured Arbitrum remote pools and only accepts inbound token releases routed through CCIP OffRamps.
+      sourceHashes.0:
+-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762"
++        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f"
+      sourceHashes.1:
+-        "0x7612d95cd6518326945cfb5387b8a37c83d797ad268bd7d9d5695c45b59a579e"
++        "0x39415a58cb2a072d97bd39f2f579e01c82ace7c06e80bf5619dc0be2bf2620e8"
+    }
+```
+
+```diff
+    contract ARMProxyOwnerBypasser (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) [transporter/ManyChainMultiSig] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x15b33604a10bda5235da68c98629cc8246b96e86c931a23c296ae08f1eb691cb"
++        "0x0bfaa79275ffb76e161bfb96a564a2a4cd6e2ff1d915f2b667fb2698bce1cb80"
+    }
+```
+
+```diff
+    contract EthereumToArbitrumOnRampTokenLimitAdmin (eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B) [transporter/ManyChainMultiSig] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x15b33604a10bda5235da68c98629cc8246b96e86c931a23c296ae08f1eb691cb"
++        "0x0bfaa79275ffb76e161bfb96a564a2a4cd6e2ff1d915f2b667fb2698bce1cb80"
+    }
+```
+
+```diff
+    contract ARMProxy (eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81) [transporter/ARMProxy] {
+    +++ description: ARM proxy used by the Router, OnRamp, CommitStore, OffRamp, and GHO token pool to read RMN curse and blessing state.
+      sourceHashes.0:
+-        "0x3693b1f8ad16df4a5aaa5bfcfb070ead01c1ca6e49553832567f9710362a47ac"
++        "0xf745c9b3eca01e8c6767467ef71bb21afeb1caaf28b1def6d73cc2a98ef9e107"
+    }
+```
+
+```diff
+    contract ARMProxyOwner (eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449) [transporter/RBACTimelock] {
+    +++ description: Timelock administering the CCIP Router, PriceRegistry, CommitStore, OffRamp, OnRamp, and ARM proxy.
+      sourceHashes.0:
+-        "0xd5b2b6b0153f0ac33437f0059e864bae869943a68c01d8626d43eb2abebb728d"
++        "0x7626f6b1eaf5b322ddcc5a798e7402c8d43fb8ae6f435b47d1d82df5c80af4aa"
+    }
+```
+
+```diff
+    contract Executor (eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A) [N/A] {
+    +++ description: Aave governance executor that owns the GHO Ethereum token pool.
+      sourceHashes.0:
+-        "0x855bbd6c58ca4afabd099cd0fa12926ca20fd1820716d5f52dda1ae30a56ae45"
++        "0x65a423a76cbcee42a1c4cbb73e9fc30f6e4e4f1486f43a85805b0ec1efda8b3a"
+    }
+```
+
+```diff
+    contract RMNRemoteOwner (eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A) [transporter/RBACTimelock] {
+    +++ description: Timelock administering RMNRemote signer configuration and curse/blessing controls.
+      sourceHashes.0:
+-        "0xd5b2b6b0153f0ac33437f0059e864bae869943a68c01d8626d43eb2abebb728d"
++        "0x7626f6b1eaf5b322ddcc5a798e7402c8d43fb8ae6f435b47d1d82df5c80af4aa"
+    }
+```
+
+```diff
+    contract EthereumToArbitrumOnRamp (eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284) [transporter/OnRampV3] {
+    +++ description: Ethereum-to-Arbitrum OnRamp. It receives messages only from the Router, validates send limits and fees, locks or burns tokens through token pools, assigns sequence numbers and nonces, hashes the message, and emits CCIPSendRequested for the offchain DON (ccip consensus).
+      sourceHashes.0:
+-        "0x0ae770c7c5e476e676ed2fed06f93f96e0b4ed9b58b6a627483af05a17f92157"
++        "0xead790d7ae490d785045138f40f30e2660cc6efb72e1e84f23ba696c17c57674"
+    }
+```
+
+```diff
+    contract RMNRemoteOwnerProposer (eth:0x79bC82F3931A7d017719146A822e4AD8152b157e) [transporter/ManyChainMultiSig] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x4f59b9eb3c499a0ce481e88fbdca49583b553c9ae00db33bfcc9e38132a82b86"
++        "0x625c5a942ae3dc2e829b38f52d2d20899bcbb177a8be3624ae47485ba139cfc5"
+    }
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) [transporter/RouterV1_2_0] {
+    +++ description: Ethereum CCIP Router for this route. Users call it to send messages to Arbitrum; trusted Arbitrum OffRamps call it to deliver incoming messages to Ethereum receivers.
+      sourceHashes.0:
+-        "0x56b28474b4daa9a8cbbe1a1ed1135d6881be21c0f343671e361b90eebf0b210d"
++        "0x1e8e8f875d0575ef62e454568f565aea573ef5e086c95be2cc20920d2f8dd272"
+    }
+```
+
+```diff
+    contract RMNRemoteOwnerCanceller (eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413) [transporter/ManyChainMultiSig] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x4f59b9eb3c499a0ce481e88fbdca49583b553c9ae00db33bfcc9e38132a82b86"
++        "0x625c5a942ae3dc2e829b38f52d2d20899bcbb177a8be3624ae47485ba139cfc5"
+    }
+```
+
+```diff
+    contract RMNRemoteOwnerBypasser (eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F) [transporter/ManyChainMultiSig] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x4f59b9eb3c499a0ce481e88fbdca49583b553c9ae00db33bfcc9e38132a82b86"
++        "0x625c5a942ae3dc2e829b38f52d2d20899bcbb177a8be3624ae47485ba139cfc5"
+    }
+```
+
+```diff
+    contract PriceRegistry (eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) [transporter/PriceRegistry] {
+    +++ description: PriceRegistry used by the OnRamp and CommitStore to price fees, tokens, and gas for this route.
+      sourceHashes.0:
+-        "0xb3ac732170b6c82e6eb8e400fac9618c85fcdce082a404030cee9be7bd700bdf"
++        "0xe2d2d1138a8f51623ec04d3b84ea21a16032de22b8c6c1775dc988b2d8c9a165"
+    }
+```
+
+```diff
+    contract ArbitrumToEthereumCommitStore (eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749) [transporter/CommitStoreV1] {
+    +++ description: Arbitrum-to-Ethereum CommitStore. Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+      sourceHashes.0:
+-        "0xd025e395362545e27f2685927e4952ec45f7414e89a22f0db36aa587b3741d69"
++        "0xa9b2be15e7f9adcc07f7a7c2ce2e50f384ccfa8b93a684edf49b580bf40a3aec"
+    }
+```
+
+```diff
+    contract ARMProxyOwnerCanceller (eth:0xAD97C0270a243270136E40278155C12ce7C7F87B) [transporter/ManyChainMultiSig] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x15b33604a10bda5235da68c98629cc8246b96e86c931a23c296ae08f1eb691cb"
++        "0x0bfaa79275ffb76e161bfb96a564a2a4cd6e2ff1d915f2b667fb2698bce1cb80"
+    }
+```
+
+```diff
+    contract GhoCcipSteward (eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39) [N/A] {
+    +++ description: Aave GHO CCIP steward. It can update bridge and rate limits for the GHO Ethereum token pool only when called by the Aave Risk Council.
+      sourceHashes.0:
+-        "0xb2c79442b21e5fe7cc935a88ca894b959faf19445c69c6ab9f4751fd141a4c46"
++        "0xc6405b4381c2ea9fd594928e9d7f3967ff430a2669feb531936a405ce4571407"
+    }
+```
+
+```diff
+    contract ARMProxyOwnerGnosisSafe (eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd5e39124d6a5dcf27e7b56bfbb24569e89837dea5e334ef533c239e1497f1fee"
++        "0xac89801b8b4d85dcda1313c954a25adb42d9946d4f1e330fcd24a4ef85f4d61f"
+    }
+```
+
+```diff
+    contract ARMProxyOwnerProposer (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) [transporter/ManyChainMultiSig] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x4f59b9eb3c499a0ce481e88fbdca49583b553c9ae00db33bfcc9e38132a82b86"
++        "0x625c5a942ae3dc2e829b38f52d2d20899bcbb177a8be3624ae47485ba139cfc5"
+    }
+```
+
+```diff
+    contract ARMProxyOwnerProposer2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) [transporter/ManyChainMultiSig] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x15b33604a10bda5235da68c98629cc8246b96e86c931a23c296ae08f1eb691cb"
++        "0x0bfaa79275ffb76e161bfb96a564a2a4cd6e2ff1d915f2b667fb2698bce1cb80"
+    }
+```
+
+```diff
+    contract RMNRemote (eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20) [transporter/RMNRemote] {
+    +++ description: RMNRemote contract behind the ARM proxy. It exposes RMN curse state and RMN 1.6 report verification. For pre-1.6 isBlessed() checks, it relays to the legacy RMN contract supplied in the constructor.
+      sourceHashes.0:
+-        "0x3664618ea06cf10d0f454add5b6c58096ae0a6b3f86d41ffaf228442727fd581"
++        "0xb3594b8c0cad34a7d31b26071ec4ed8905f9d0a796ca41f06163784b6605b9cd"
+    }
+```
+
+```diff
+    contract ArbitrumToEthereumOffRamp (eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d) [transporter/OffRampV1] {
+    +++ description: Arbitrum-to-Ethereum OffRamp. It accepts OCR execution reports, checks every message against a blessed committed Merkle root, enforces sequence and nonce rules, releases or mints tokens, and calls the Router to deliver ccipReceive() to the receiver.
+      sourceHashes.0:
+-        "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
++        "0x6a89978af7e67cfca75bb193a00044fd19708ecfe3f6c1594af46be5a2a711c2"
+    }
+```
+
 Generated with discovered.json: 0xec0e018630fd338c89265be8940f7135496b3925
 
 # Diff at Tue, 05 May 2026 10:22:03 GMT:

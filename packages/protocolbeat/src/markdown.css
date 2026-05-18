@@ -2,6 +2,12 @@
 
 .mdc {
   @apply bg-coffee-800 p-2 text-xs;
+  /* Break long unbroken strings (addresses, hashes) instead of overflowing. */
+  overflow-wrap: anywhere;
+}
+
+.mdc a {
+  @apply text-aux-blue underline;
 }
 
 .mdc h1,
@@ -73,7 +79,10 @@
 }
 
 .mdc pre {
-  @apply overflow-auto rounded bg-coffee-600 px-4 py-2 font-mono;
+  @apply rounded bg-coffee-600 px-4 py-2 font-mono;
+  /* Wrap long lines instead of producing a huge horizontal scroll. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .mdc pre code {
@@ -108,4 +117,24 @@
 
 .mdc img {
   @apply dark:invert max-w-full align-[unset] my-4;
+}
+
+.mdc pre.mdc-diff {
+  @apply bg-coffee-700;
+}
+
+.mdc-diff-add {
+  @apply text-aux-green;
+}
+
+.mdc-diff-del {
+  @apply text-aux-red;
+}
+
+.mdc-diff-hunk {
+  @apply text-aux-blue;
+}
+
+.mdc-diff-meta {
+  @apply text-coffee-400;
 }

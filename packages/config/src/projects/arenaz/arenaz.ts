@@ -13,6 +13,7 @@ export const arenaz = opStackL2({
     isPartOfSuperchain: true,
   },
   addedAt: UnixTime(1737720994), // 2025-01-24T12:16:34+00:00
+  archivedAt: UnixTime.fromDate(new Date('2026-05-07')),
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Gaming'],
@@ -37,6 +38,7 @@ export const arenaz = opStackL2({
   chainConfig: {
     name: 'arenaz',
     chainId: 7897,
+    untilTimestamp: UnixTime.fromDate(new Date('2026-05-07')),
     apis: [
       {
         type: 'rpc',

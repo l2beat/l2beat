@@ -45,7 +45,7 @@
       "template": "shared-zk-stack/ValidatorTimelock_post29",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x1331a809e6d864cad7a57d9b2e1ae6cc5dcc4b3fd344e9cbe0551ce2b879c01d"
+        "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
@@ -132,7 +132,7 @@
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0x46ab6472330f39b5dde71de5fc30609f34ecfa68c11673e09438f6db607279ea",
-        "0xc7513302e4e09efc907df5e645d9f8037b1d02409f9a9089f61061c8951ef1ff"
+        "0xee0eeb13b78cdf1b9227960a31b35310c9e00441cd082d6a975f5225946b5693"
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
@@ -646,7 +646,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135",
-        "0x887b9d27b8b5ffb156d6a159bc56c0b8bb6e24d70f3568550066b1f247acf4fe"
+        "0xa25ffe3d89aaaf755c17d9be807b1dc4d67cd0138d5736cf72881d312c3439be"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.",
@@ -709,7 +709,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0x06c15368f64705eeb39a91543201cca750ade72c506049ef974548a8c85481f2"
+        "0x3cf72060d4de603ef3f4de0a79b4117e22049601fe6b9344c972f718d5400ee3"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.",
@@ -983,7 +983,7 @@
       "template": "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x315e1d3b3696636efa0d248c975aa4b01c6122915580099acaf0da0bffa4f224"
+        "0xd4d6269e74829bb11c2c10f4c282a21faebdb85c8ef7571790e37712c876c5bb"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.",

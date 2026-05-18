@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xe8aa4a75384e3132d2600107f768fda2d116594c
+
+# Diff at Fri, 08 May 2026 07:52:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777883283
+- current timestamp: 1777883283
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777883283 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sourceHashes.1:
+-        "0x1331a809e6d864cad7a57d9b2e1ae6cc5dcc4b3fd344e9cbe0551ce2b879c01d"
++        "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c"
+    }
+```
+
+```diff
+    contract Diamond (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      sourceHashes.1:
+-        "0xc7513302e4e09efc907df5e645d9f8037b1d02409f9a9089f61061c8951ef1ff"
++        "0xee0eeb13b78cdf1b9227960a31b35310c9e00441cd082d6a975f5225946b5693"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge_wstETH (eth:0x41527B2d03844dB6b0945f25702cB958b6d55989) [N/A] {
+    +++ description: Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.
+      sourceHashes.1:
+-        "0x887b9d27b8b5ffb156d6a159bc56c0b8bb6e24d70f3568550066b1f247acf4fe"
++        "0xa25ffe3d89aaaf755c17d9be807b1dc4d67cd0138d5736cf72881d312c3439be"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) [N/A] {
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+      sourceHashes.1:
+-        "0x06c15368f64705eeb39a91543201cca750ade72c506049ef974548a8c85481f2"
++        "0x3cf72060d4de603ef3f4de0a79b4117e22049601fe6b9344c972f718d5400ee3"
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      sourceHashes.1:
+-        "0x315e1d3b3696636efa0d248c975aa4b01c6122915580099acaf0da0bffa4f224"
++        "0xd4d6269e74829bb11c2c10f4c282a21faebdb85c8ef7571790e37712c876c5bb"
+    }
+```
+
 Generated with discovered.json: 0x7374dd51146106159326f92cbceb09e79051765b
 
 # Diff at Tue, 05 May 2026 10:24:03 GMT:

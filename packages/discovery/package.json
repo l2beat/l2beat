@@ -31,12 +31,10 @@
     "clingo-wasm": "0.3.2",
     "cmd-ts": "^0.13.0",
     "ethers": "^5.7.2",
-    "jsonc-parser": "^3.2.0",
     "lodash": "^4.17.21",
     "lru_map": "0.4.1",
     "mkdirp": "^3.0.0",
     "node-fetch": "^2.6.7",
-    "ohm-js": "^17.1.0",
     "rimraf": "^5.0.0",
     "sqlite3": "5.1.7"
   },

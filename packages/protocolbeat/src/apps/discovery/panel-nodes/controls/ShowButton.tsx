@@ -10,10 +10,7 @@ export function ShowButton({ className }: { className?: string }) {
   const showUnreachable = useStore((state) => state.showUnreachable)
 
   const hiddenUnreachableCount = nodes.filter(
-    (node) =>
-      node.addressType !== 'Unknown' &&
-      !node.isReachable &&
-      hiddenNodes.includes(node.id),
+    (node) => !node.isReachable && hiddenNodes.includes(node.id),
   ).length
 
   return (

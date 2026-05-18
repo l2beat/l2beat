@@ -1,3 +1,138 @@
+Generated with discovered.json: 0xcf0c3657f804e324a51e84d25e3e42a0882cf8ae
+
+# Diff at Fri, 15 May 2026 12:37:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1777026534
+- current timestamp: 1777026534
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777026534 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
++        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+    }
+```
+
+Generated with discovered.json: 0xb87f3a498a326d314c535288dfd054b481588f1d
+
+# Diff at Fri, 08 May 2026 07:53:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777026534
+- current timestamp: 1777026534
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777026534 (main branch discovery), not current.
+
+```diff
+    contract Manager (eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762"
++        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f"
+      sourceHashes.1:
+-        "0x84da8be39a916ec799c2d515f4c612a387cb3378d34916337722b367a019b8c6"
++        "0x22efa027adf30a6de805e24a32630537908b234296e3592e46c020d3ee39adc1"
+    }
+```
+
+```diff
+    contract Administrator (eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e) [yieldfi/Administrator] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762"
++        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f"
+      sourceHashes.1:
+-        "0xfeef795150202675eb781deeb753733de1bb9769ae0762cbb3f5a354690ae5e7"
++        "0x136a7ccc775b7afd3eeae698134121ce9a327c4eb5557c8a04eb30afbd789773"
+    }
+```
+
+```diff
+    contract yUSD (eth:0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb) [yieldfi/yToken] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762"
++        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f"
+      sourceHashes.1:
+-        "0xc584cf0791972d811cbb10b6ed2caf5e040fbcdd5219bf8386cdf9654fa19585"
++        "0x02e2d72c26c65b2a55f4610dbda4ffe375173552e486e4a592c2bad05d5a1067"
+    }
+```
+
+```diff
+    contract vyUSD (eth:0x2e3C5e514EEf46727DE1FE44618027A9b70D92FC) [yieldfi/yToken] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x986346836d4dfb3ec6cb62cd668e6d746f8be0a370a352172dd7f7e0a7fe1320"
++        "0x3335d1c5141feebb2c3729ab3dc2810d3d9196ee836d49c75be1c2b800a77d81"
+      sourceHashes.1:
+-        "0xe0d5f5bf90b1a9a74c7ac96f5bcbbf52030da73aa7927629913cc14c0d2a2264"
++        "0x36cb174eeefe4e520517d17b4eb874a87fa1ad98228902c93b7a37e24760c607"
+    }
+```
+
+```diff
+    contract Yield (eth:0x392017161a9507F19644E8886A237C58809212B5) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762"
++        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f"
+      sourceHashes.1:
+-        "0xd39f986b40a87be666a70c453f29c7d0f0d267c79bb9ffe83efaa218827874a6"
++        "0xc3f87c18a2da01f51bb6ebc75b476cc46ce896a68d0a4da706e085e7489c1796"
+    }
+```
+
+```diff
+    contract YieldFiTimelockController (eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4) [yieldfi/TimelockController] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x706812f226bec5d959f6b4977145ce734718d676eaee8707aa2bff14e59eba77"
++        "0xf65f8f13e98380ad7c41bf83adb8837cfec3492f905f8b84867aad9a59c7a6ac"
+    }
+```
+
+```diff
+    contract RequestReceipt (eth:0x933B4464beBE7136bC184637792c0EE514057660) [yieldfi/RequestReceipt] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762"
++        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f"
+      sourceHashes.1:
+-        "0x96fa98ebc2c01b61141dbd8871e1532a6ef100fce0a94d64e6a42ecf3ce69550"
++        "0x86b9680dedb75717cb529915288125a7d00471c49f34ec8a5e11b52cdd4cfe2f"
+    }
+```
+
+```diff
+    EOA  (eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
++        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
+    }
+```
+
 Generated with discovered.json: 0xa14dd8494a1d392d3689de6a1d0f336308542ac7
 
 # Diff at Tue, 05 May 2026 10:24:06 GMT:

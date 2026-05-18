@@ -292,7 +292,7 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82#code#F1#L54',
+            url: 'https://etherscan.io/address/0x21c7480b72c47fe93102BE5B865d18b770338098#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',
@@ -332,6 +332,18 @@ export const lighter: ScalingProject = {
       type: 'general',
     },
   ],
+  interopConfig: {
+    description:
+      'Canonical bridge between Ethereum and the Lighter perp DEX (zkSync-style priority queue), used by traders to deposit collateral and claim withdrawals.',
+    plugins: [
+      {
+        plugin: 'lighter-bridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+    transfersTimeMode: 'unknown',
+  },
 }
 
 function getVerifiers(): ChainSpecificAddress[] {

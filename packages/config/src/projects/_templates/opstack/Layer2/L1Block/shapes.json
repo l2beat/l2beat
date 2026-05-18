@@ -5,19 +5,18 @@
     "blockNumber": 134041720
   },
   "L1Block_v1_5_1beta_1": {
-    "hash": "0x7f01079ded401debff669ba38a7a0b6d29d76f14dd80a25a1079fde481115a8a",
+    "hash": "0x7e7d4d07caac72cf1052255326fa0d8419a3c0c198bc929828b0df5433787ab1",
     "address": "ink:0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
     "blockNumber": 10183769
   },
   "L1Block_v1_6_0": {
-    "hash": "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108",
+    "hash": "0x82b49af2119439a327bdb0793ac443fc386c181aa6e3e457593ffad185d89a63",
     "address": "oeth:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12",
     "blockNumber": 135717996
   },
   "L1Block.sol": {
-    "hash": "0x1d69ab3b3edee9b7eeccc72b0980f9041777fdc5f5224f97aa5e69f0a8b68c7c",
+    "hash": "0x399e57fff478211b47d61c5acb60592a4df8ffa5716959a1a6ee2ccabc44915e",
     "address": "base:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C",
-    "chain": "base",
     "blockNumber": 39201131
   }
 }

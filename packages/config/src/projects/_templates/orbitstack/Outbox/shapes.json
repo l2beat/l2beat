@@ -5,7 +5,7 @@
     "blockNumber": 22188285
   },
   "ERC20Outbox_apechain": {
-    "hash": "0xfc1c087eedce3e4be0593d2e01fcd357b4980c69e03399574b4606e4f3b9ee04",
+    "hash": "0xb9f7bc73978fab23b0df754fac230d706fee0d774d97b8533b62b3014d5561a8",
     "address": "eth:0x1f24EDD5161f82588007f33B72b0b28e46cCE878",
     "blockNumber": 22188285
   },
@@ -20,12 +20,12 @@
     "blockNumber": 22188285
   },
   "Outbox_arbitrum": {
-    "hash": "0xc90d60d6db95e55c93637eee14d0d8f4034a14d5f50fc0e8561e389073c9816a",
+    "hash": "0x5b7755d49c77e2a022f67573c5fffd97b534b67e85d588df5ae7484a8e59c41a",
     "address": "eth:0x0eA7372338a589e7f0b00E463a53AA464ef04e17",
     "blockNumber": 22188285
   },
   "Outbox_nova": {
-    "hash": "0x9f764f06f42aed913df011cc8dc09d70319d488074f11885eed5edbb66c6f5b4",
+    "hash": "0xe2768526287b5c0993c7f4237356587c3332ff067d6818197a4fc5d552eb149f",
     "address": "eth:0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f",
     "blockNumber": 22188285
   }

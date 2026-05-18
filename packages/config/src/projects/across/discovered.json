@@ -9,7 +9,7 @@
       "type": "Contract",
       "template": "uma/VotingV2",
       "sourceHashes": [
-        "0xef18268ad698461591028993ca19fa3b717ace3ee3371f86e68c1d0a3658d87e"
+        "0x890304fa0fd0460cab5fbf8e0c6abdfd572bc495ea2e94c9661913ab191c07d0"
       ],
       "proxyType": "immutable",
       "description": "Core smart contract for UMA's Data Verification Mechanism (DVM), serving as source of truth for disputed claims. UMA token holders collectively resolve price requests and earn rewards for correct participation. Commit- and reveal phases for the voting take 1d each.",
@@ -70,7 +70,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x6d9e4b79712a4e81c51941fb986f4c55774da36be108106577ca01ccb35a0f87"
+        "0x4f6390935976074a5e55dd19deba114be9e108c6f2dc9e185d1f379eaa9b702b"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -102,7 +102,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0xa11a006e88b4bc29596c25023695ef9026e9dc97dfd50ba059ee6b3e23a44008"
+        "0x6b7ccdb0b5af87e3b9ed000233ff71fa303f55dc611d3d720ee0c3f121fc8f3e"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -135,7 +135,7 @@
       "type": "Contract",
       "template": "acrossv3/universalAdapter",
       "sourceHashes": [
-        "0x7ff8668a17d865513414130cf8749a6b7e7452c5ce078ffa50e1a7b74d7c333b"
+        "0x6ac887d101497a6fd8bdfbdb2a3f053e66c698ecfe7134dd3750f67a7e6f852b"
       ],
       "proxyType": "immutable",
       "description": "This adapter can be used to send messages / root bundles to Hyperliquid. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.",
@@ -165,7 +165,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x0c32a0cfde3cb87843b5521bf184be1dd2b0031a8e91c2bc7885a2e10db010c1"
+        "0x00fd9d43c84d1b6249b59aa9283d8b5cd089cc0e27c0132b771c2d75510ea385"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -232,7 +232,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x56586e3315f76ed277970410b47da25a0980ca9400f2a97fd38139e2a1f2dc5e"
+        "0x93ccb0e337fe5516163e1356eccae360ca8812a86c40056e16ab8cd83580eb65"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -262,7 +262,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x9f8b082009430546d55daaa8e166eca77ef9ca17f7831f03de4635bdc4a32b31"
+        "0x55d31f2397d3b9176e0f464294848cb9c966ca1da16222ae071cf9367a3e5f5c"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -291,7 +291,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0xbc0e9c23007f3c3c61476c843d07e2734aef4507d5180c4e849a4f48580101b7"
+        "0xb49a294f23bb8fae981af2f32df9760968a529b61ce5814fdcd2955d4c2ddb5e"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -333,7 +333,7 @@
       "type": "Contract",
       "template": "acrossv3/AcrossConfigStore",
       "sourceHashes": [
-        "0x926aa3c074cb5463671ec24c946524d9e03d3aa56a9847ca738b17b747c0e076"
+        "0x8e71981e7f96299c3df4231d2575850b96b6886aba88bb849d7722e2b0ed9deb"
       ],
       "proxyType": "immutable",
       "description": "Simple, owner-controlled contract for storing protocol-wide, token-specific configuration data.",
@@ -354,7 +354,7 @@
       "type": "Contract",
       "template": "uma/Registry",
       "sourceHashes": [
-        "0xc24ab9710d3eb0d1c35d298ecefe98096f87a672be7bd8051f9e86902122612f"
+        "0x84b10a5992ff1755ec96f16d3c3c50231ac9b37e5613e708ecfac6b19e050557"
       ],
       "proxyType": "immutable",
       "description": "Registry for contracts that are allowed to call `requestPrice()` in the UMA voting contracts (ie. request dispute resolution by the UMA DVM).",
@@ -611,7 +611,7 @@
       "type": "Contract",
       "template": "acrossv3/AdapterStore",
       "sourceHashes": [
-        "0x2f3eaca74d04678cd00ac7aba0a7b0a044ee7af9b1b0ffddcf1724c046dc62eb"
+        "0x791604b31fe2492c6f4abea96c41e9877375530d40ce0e192bc142d2b80cf10a"
       ],
       "proxyType": "immutable",
       "description": "A helper contract for chain adapters on the hub chain that support OFT messaging. Handles token -> messenger mapping.",
@@ -632,7 +632,7 @@
       "type": "Contract",
       "template": "acrossv3/universalAdapter",
       "sourceHashes": [
-        "0x7ff8668a17d865513414130cf8749a6b7e7452c5ce078ffa50e1a7b74d7c333b"
+        "0x6ac887d101497a6fd8bdfbdb2a3f053e66c698ecfe7134dd3750f67a7e6f852b"
       ],
       "proxyType": "immutable",
       "description": "This adapter can be used to send messages / root bundles to Tempo. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.",
@@ -662,7 +662,7 @@
       "type": "Contract",
       "template": "uma/ProposerV2",
       "sourceHashes": [
-        "0x28c93f7b68e31548857633c6cb61284d9d2860cc0fbbcaaede8f631d364d66a4"
+        "0xbdacadbba17cad853dc7f3b53a6777024fe1862785c8ded594d8dd386fb5ca63"
       ],
       "proxyType": "immutable",
       "description": "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens.",
@@ -700,7 +700,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x14afbe84cefefdcb06132c680d267b8892f0834a39fc23ca0ea563758653a21a"
+        "0xaa57840bcec6253310d5736266a04eff14edb6cbdaca4c5f76392054eefa4edc"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -723,7 +723,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x6e7fdec1dea08a851a5c7c7d013648db8f07fcd751548a002281e712f89f6c49"
+        "0x19f838047a4ea9f6166087f42d798199893dae3be4bae6c5ec8ce33e0ab17674"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -762,7 +762,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0xbfd7166e5dce4fc403bfc9d03712390154e5aa737cb65ab10796605b28dc9e9e"
+        "0xd09d0d28995e5980f3ef0e5ae1c9d4b28d5d70043610e8cb52e5dd5e9b60e916"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -796,7 +796,7 @@
       "type": "Contract",
       "template": "uma/Store",
       "sourceHashes": [
-        "0x6f43084dec3aeec07252527bcb44d7bfafac569030fc87e32d6a5661a0f3e0f1"
+        "0x6bb7c4fac4cb75daa96658bc6b24d696cc72b2ac4b72286cc47a776ba5648a3b"
       ],
       "proxyType": "immutable",
       "description": "UMA protocol contract responsible for calculating and collecting regular and final fees for using the DVM.",
@@ -826,7 +826,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x0252bdb116e29cf6cc0b6de4ebf9589fcc53281458cb80f4db7a91a866d9eb46"
+        "0x320f883f620cbb7a377265c28d963349af796f667b09d772c6c22c00f98fb136"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -863,8 +863,8 @@
       "type": "Contract",
       "template": "acrossv3/SpokePool",
       "sourceHashes": [
-        "0x669da4e91a9ad0ca23205a174e7f8931e4d7d128453132164ba6458f11f15c72",
-        "0x51fe389d737f63ba780131cbcd7de767178890a9783c26f10a7914e04b8cccf8"
+        "0xd2812a145d2b7f3e3e1571f68022076a2cccd5fe82f8035d427714135197a6f1",
+        "0x7c82111265c69f8a894d8029e30766541164d55fb1e814bf29ddacecaeee12c1"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.",
@@ -967,7 +967,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x949e41ae655aafeb048cfa1c491186b6582bd4f6028227ed0ce17a012456e675"
+        "0x85648815e28158a5c0659f1200fa6f486406f3ef69fb2c045129c5ab14653f75"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -1005,7 +1005,7 @@
       "type": "Contract",
       "template": "acrossv3/universalAdapter",
       "sourceHashes": [
-        "0x7ff8668a17d865513414130cf8749a6b7e7452c5ce078ffa50e1a7b74d7c333b"
+        "0x6ac887d101497a6fd8bdfbdb2a3f053e66c698ecfe7134dd3750f67a7e6f852b"
       ],
       "proxyType": "immutable",
       "description": "This adapter can be used to send messages / root bundles to Binance Smart Chain. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.",
@@ -1035,7 +1035,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x1ccce681c671e5131c390787ccaa619eb4c4ee20d444e73484078b4770b12ea1"
+        "0xca3522b17a94cef6f519f34ec72ca7a7294b884761d47a60eedba59e7cf38b9d"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -1079,7 +1079,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x235e6017ab764deb7de4cf894fc0b8d15bebacad6ff219fc122864ee964bf523"
+        "0xacd8d420b2b79b9a74f15259c503b84e2dc0b2d54e116aeae0d204e23e79aea7"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -1112,7 +1112,7 @@
       "type": "Contract",
       "template": "uma/GovernorV2",
       "sourceHashes": [
-        "0xdf7f17e5c8ba1f0103fcfaf495da624089f8bfb3d5052217537bb064ca8c60b9"
+        "0x0c1bbf4432b7c167c329d7556367b2a74b4638207a1bd6802f271b409ddea670"
       ],
       "proxyType": "immutable",
       "description": "Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes.",
@@ -1208,7 +1208,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1261,7 +1261,7 @@
       "type": "Contract",
       "template": "uma/OptimisticGovernor",
       "sourceHashes": [
-        "0xcecd27c998c8fd83d7532693da2bdff346a1dbedbaab4744f21d2bcf1986e9de"
+        "0xff0641accc9447247f5ac1710b7b0d51e1441fabce1ca46f56f3654e6a13c4a2"
       ],
       "proxyType": "gnosis safe zodiac module",
       "description": "Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d. The rules for proposals can be read directly from the contract values.",
@@ -1355,7 +1355,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x4fed24508db075cc7ece3f2b393b38baa14d83cb16b7435622c6b3b7a2af178f"
+        "0xc313ad89f863c556da5ab53674479545a49178f3feb38c1d8babb8a8180673b4"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -1388,7 +1388,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x1cb72676cfb98558060e29bb95cd793731c85797f35025b1f2dfb383499f55a3"
+        "0x2b7b6e36efba9662d0c39439d22db847b7e6f11785852339ee909ac40034dede"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -1421,7 +1421,7 @@
       "type": "Contract",
       "template": "uma/EmergencyProposer",
       "sourceHashes": [
-        "0x435ceb597bcf7bd820f593bdbc0e3ce4d223cc2203b368911d2b29fa6bc5e048"
+        "0x877d9748e150bf89ecee6f6c42014a47405d4093a003904ec87bea291ebf19e0"
       ],
       "proxyType": "immutable",
       "description": "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.",
@@ -1486,7 +1486,7 @@
       "address": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "type": "EOA",
       "sourceHashes": [
-        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
       ],
       "proxyType": "EIP7702 EOA",
       "values": {
@@ -1517,7 +1517,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0xd9ba616630e494fc819ca66efe5c5ed40e5ed274cb568c605ecf8a609d88f738"
+        "0x64f26bb547fa35dd225c9d4dcdf35c6525bbc7bd5e99671f2135f4dde392f0b6"
       ],
       "proxyType": "immutable",
       "description": "Adapter for Solana. Uses CCTP v1 AMB to relay root bundles to the Solana spokepool.",
@@ -1551,7 +1551,7 @@
       "type": "Contract",
       "template": "acrossv3/universalAdapter",
       "sourceHashes": [
-        "0x7ff8668a17d865513414130cf8749a6b7e7452c5ce078ffa50e1a7b74d7c333b"
+        "0x6ac887d101497a6fd8bdfbdb2a3f053e66c698ecfe7134dd3750f67a7e6f852b"
       ],
       "proxyType": "immutable",
       "description": "This adapter can be used to send messages / root bundles to Tron. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.",
@@ -1581,7 +1581,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x6b9289adba88945bc716d68cbdde1a68c52429766cef73d7c17fe4ca6dd7cc59"
+        "0x682cb05b3efe79182019e10819d06cd3425fafd36baacb22c8956266be9b2ac2"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -1613,7 +1613,7 @@
       "type": "Contract",
       "template": "acrossv3/universalAdapter",
       "sourceHashes": [
-        "0x7ff8668a17d865513414130cf8749a6b7e7452c5ce078ffa50e1a7b74d7c333b"
+        "0x6ac887d101497a6fd8bdfbdb2a3f053e66c698ecfe7134dd3750f67a7e6f852b"
       ],
       "proxyType": "immutable",
       "description": "This adapter can be used to send messages / root bundles to Plasma Mainnet. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.",
@@ -1644,7 +1644,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1708,7 +1708,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x6ca9ce1725f28d3a737cdadeddcf98fdfee47b324e779a5cdbab51cea361d883"
+        "0x0f257a2a35947505fb4b62f1d968f46a1522d7a71417215d1d1d6834fcd09149"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -1750,7 +1750,7 @@
       "type": "Contract",
       "template": "acrossv3/HubPool",
       "sourceHashes": [
-        "0x3afa0a01f4cde6c678d6ec12443078407e69293b9a4519105445f694671b2dec"
+        "0xf9f15c444c97ea0bfb52d88f1424480e0c86e45cb6c889127ab1a3e6c30640f8"
       ],
       "proxyType": "immutable",
       "description": "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.",
@@ -1875,7 +1875,7 @@
       "type": "Contract",
       "template": "acrossv3/universalAdapter",
       "sourceHashes": [
-        "0x7ff8668a17d865513414130cf8749a6b7e7452c5ce078ffa50e1a7b74d7c333b"
+        "0x6ac887d101497a6fd8bdfbdb2a3f053e66c698ecfe7134dd3750f67a7e6f852b"
       ],
       "proxyType": "immutable",
       "description": "This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.",
@@ -1910,7 +1910,7 @@
       "type": "Contract",
       "template": "uma/IdentifierWhitelist",
       "sourceHashes": [
-        "0xde400b9e12dee4cf61dc66db5e9da7fb6d736020292a92092de7ae2a6bff4cac"
+        "0xa6bf0d1204bd182086e8208b83457b26507e2edb0d826bfce9e4f8c9141cafea"
       ],
       "proxyType": "immutable",
       "description": "Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol. Across uses the identifier `ACROSS-V2` for its disputes.",
@@ -2480,7 +2480,7 @@
       "type": "Contract",
       "template": "uma/AddressWhitelist",
       "sourceHashes": [
-        "0x34fe953eae62cfc4797c138b47bc03a1d268dc47ac86e5fce536da6e8bc1e195"
+        "0x44a9fb7aba5f366c5709b1ea452c40bd919a9bede21b2d9f0a1fe75ad8d2eb21"
       ],
       "proxyType": "immutable",
       "description": "A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the UMA ecosystem.",
@@ -2506,7 +2506,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0xbfd7166e5dce4fc403bfc9d03712390154e5aa737cb65ab10796605b28dc9e9e"
+        "0xd09d0d28995e5980f3ef0e5ae1c9d4b28d5d70043610e8cb52e5dd5e9b60e916"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -2540,7 +2540,7 @@
       "type": "Contract",
       "template": "acrossv3/BondToken",
       "sourceHashes": [
-        "0x1d9754ae4e99e4320201bbc6f0e19aa5ecac917dcacaadba3b70cfa018910754"
+        "0x91bb8c3eff4c7412c72ecc1ec5c3d2104881a87ba7c45600a7ce280f9ae0e9f6"
       ],
       "proxyType": "immutable",
       "description": "A bond token wrapping ETH for usage in the Across protocol. Implements modified ERC20 logic to only allow permissioned proposers to use it as a bond for root bundle proposals.",
@@ -2569,7 +2569,7 @@
       "type": "Contract",
       "template": "uma/SkinnyOptimisticOracle",
       "sourceHashes": [
-        "0xbe561564083bf80216ae0f5510f70415cf97a624ef4bad88fb98a43dc4231dd6"
+        "0xb8d4c4f4e2d169995b6c707cc7b5e8e55d7d58823957a7dc788fb724302451d3"
       ],
       "proxyType": "immutable",
       "description": "Validates bridge messages by allowing proposers to make bonded assertions about crosschain events. It enforces a challenge period during which any invalid claims can be disputed and escalated to UMA's Data Verification Mechanism (DVM) for resolution.",
@@ -2593,7 +2593,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x9c8e20215aa548a11ed98c8333dbfbaa36143263b4de43d8f73a57b19ec7cea6"
+        "0x65964e3465492ca227697477da67612af5dcb04548a7c1c36a5910c35be03bfc"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -2627,7 +2627,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x1b1b271fd3f736024fda7dd869d78943819efee5dcbf6f4075af9647cfb16cac"
+        "0xee47b40b9c392b198c1743ea54b8555ee0ef775ea685b4eb3d6d78ab6244b6a6"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -2659,7 +2659,7 @@
       "type": "Contract",
       "template": "acrossv3/Adapter",
       "sourceHashes": [
-        "0x596bdc0b39f0ff19cde625424cdc037dd3e79355ee2c845bd8a6e5e42b3bc332"
+        "0x0bf8ebe511d302a267fa925c315521d6c6b61b8219e8e97669ea100052df4309"
       ],
       "proxyType": "immutable",
       "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
@@ -2711,7 +2711,7 @@
       "type": "Contract",
       "template": "uma/OptimisticOracleV3",
       "sourceHashes": [
-        "0xfb2c9056673690384bb615fd326655f97b80fa2a5601a15a35065b0a68186ae7"
+        "0xde6962ac764b8b759d7524240877aca9d57df086f18829af492f39ffcc70622a"
       ],
       "proxyType": "immutable",
       "description": "Standard UMA optimistic oracle contract that allows anyone to make an arbitrary claim by posting a bond. The claim is considered true unless it is successfully disputed within a challenge window, with UMA's DVM acting as the final arbiter for disputes.",

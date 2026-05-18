@@ -1,10 +1,10 @@
 {
   "name": "railgun",
   "timestamp": 1777550988,
-  "configHash": "0xaa71d650e41b3ed94084a896637e03463cff8aa354eb5e371c4ee35ef4b54d5b",
+  "configHash": "0xb66e16c4dcff3f3e8ba7f31d2a79a11f21d464793e35da71e6c701634c6b986a",
   "entries": [
     {
-      "name": "Ae8AStreamPayout",
+      "name": "IntervalPayouts",
       "address": "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11",
       "type": "Contract",
       "template": "railgun/IntervalPayouts",
@@ -21,6 +21,7 @@
           "role": ".transferRoleMembers"
         }
       ],
+      "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776211,
       "sinceBlock": 15138816,
       "values": {
@@ -77,11 +78,12 @@
       "type": "Contract",
       "template": "railgun/Sweeper",
       "sourceHashes": [
-        "0xbfd517af5073b0a89f8f8dfce2d11e2bc003968785985ed504c9f9ab571f9d75",
+        "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
         "0x0b06be077f821ae1860dd79fc78b6a3c529270e369384afc64f0ac0a9473ab33"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Upgradeable helper that forwards all ETH or ERC20 balances it holds to a fixed receiver. If you trust this contract, you trust its proxy admin to upgrade, pause, or retarget the sweep behavior.",
+      "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1669148003,
       "sinceBlock": 16027851,
       "values": {
@@ -163,6 +165,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1625961245,
       "sinceBlock": 12802673,
       "values": {
@@ -182,7 +185,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "PayoutBeneficiary_5a02",
       "address": "eth:0x5a02474A3083Bc969f20F92E7a8bd3824EC607f0",
       "type": "EOA",
       "proxyType": "EOA"
@@ -193,7 +195,7 @@
       "type": "Contract",
       "template": "railgun/VKeySetter",
       "sourceHashes": [
-        "0x97c32fbfee382b7fe3932651160b482c01c51e25cee46e8e174218dadd7bcae8"
+        "0x9be46f47e8f61b9d373f7d991c68bc9d68a40d875ddb9da58563121fdeb69a85"
       ],
       "proxyType": "immutable",
       "description": "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, once Railgun governance switches the contract into COMMITTING state, can forward those keys to the Railgun smart wallet verifier through the Delegator. If you trust this contract, you trust its owner to stage and commit verifier-key changes and Railgun governance to authorize the commit phase.",
@@ -205,6 +207,7 @@
           "role": ".verificationKeyDelegates"
         }
       ],
+      "deployerAddress": "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
       "sinceTimestamp": 1752516023,
       "sinceBlock": 22919063,
       "values": {
@@ -241,7 +244,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "Beneficiary5a02OneOffPayout",
+      "name": "IntervalPayouts",
       "address": "eth:0x7673e2E62435D25EDBcb58fD0d88c4C95806b10F",
       "type": "Contract",
       "template": "railgun/IntervalPayouts",
@@ -258,6 +261,7 @@
           "role": ".transferRoleMembers"
         }
       ],
+      "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776188,
       "sinceBlock": 15138812,
       "values": {
@@ -309,7 +313,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "SweeperProxyOwner",
       "address": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "type": "EOA",
       "proxyType": "EOA",
@@ -327,30 +330,14 @@
           "role": ".owner"
         },
         {
-          "permission": "interact",
-          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
-          "description": "update the Railgun smart wallet SNARK verifying keys through the Delegator.",
-          "role": ".verificationKeyDelegates",
-          "via": [
-            { "address": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46" }
-          ]
-        },
-        {
           "permission": "upgrade",
           "from": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
           "role": "admin"
         }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
-          "role": ".owner"
-        }
       ]
     },
     {
-      "name": "Ae8AOneOffPayout",
+      "name": "IntervalPayouts",
       "address": "eth:0x859E0C1790b8a721F4943742603cDB685A73BA5D",
       "type": "Contract",
       "template": "railgun/IntervalPayouts",
@@ -367,6 +354,7 @@
           "role": ".transferRoleMembers"
         }
       ],
+      "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776163,
       "sinceBlock": 15138811,
       "values": {
@@ -423,7 +411,7 @@
       "type": "Contract",
       "template": "railgun/VKeySetter",
       "sourceHashes": [
-        "0x4c94632d11362a5297c31f6eba9f37322caadd6a88247c9032529d66ebd04cdf"
+        "0x302a2769069056aa8c4a9be3ba0d53d9d831149d84f14b7650cc2ff13729d27f"
       ],
       "proxyType": "immutable",
       "description": "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, once Railgun governance switches the contract into COMMITTING state, can forward those keys to the Railgun smart wallet verifier through the Delegator. If you trust this contract, you trust its owner to stage and commit verifier-key changes and Railgun governance to authorize the commit phase.",
@@ -435,6 +423,7 @@
           "role": ".verificationKeyDelegates"
         }
       ],
+      "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1677376967,
       "sinceBlock": 16709316,
       "values": {
@@ -476,8 +465,8 @@
       "type": "Contract",
       "template": "railgun/GovernorRewards",
       "sourceHashes": [
-        "0xef8b7ca35114debbd8f7c5998a55ca9dd61bbd558bf6987cbfcf5ea97e3af83a",
-        "0xd1b675b1a03700c03440f776180470c3a967a7ef2e7cbe7a6f2cb9d75c4ea8ad"
+        "0x6719d1d65fb919b52e894f249bcbbde8d2fddde75de20893e50e1b96ec608f06",
+        "0x9bf4e7d842e397338e0191cf08fc9478cf3988db823baa64976da77c103fab0d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Upgradeable reward distributor that pulls assets from the Railgun treasury and allocates them to stakers using snapshot voting power. If you trust this contract, you trust its owner to set reward parameters and tracked assets, and its proxy admin to pause or upgrade the logic.",
@@ -489,6 +478,7 @@
           "role": ".transferRoleMembers"
         }
       ],
+      "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1674193031,
       "sinceBlock": 16445969,
       "values": {
@@ -558,7 +548,7 @@
       "type": "Contract",
       "template": "railgun/SweeperLegacy",
       "sourceHashes": [
-        "0xbfd517af5073b0a89f8f8dfce2d11e2bc003968785985ed504c9f9ab571f9d75",
+        "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
         "0x388c06829abb17c9b902046b84e0c6e7da96cad5e13cccf4c4d676e8935d7474"
       ],
       "proxyType": "EIP1967 proxy",
@@ -571,6 +561,7 @@
           "role": ".transferRoleMembers"
         }
       ],
+      "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1662769859,
       "sinceBlock": 15505785,
       "values": {
@@ -598,13 +589,12 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "PayoutBeneficiary_A4f2",
       "address": "eth:0xA4f2eA0a81179362558eBC1d2Bc817c9a0134ee3",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "A4f2OneOffPayout",
+      "name": "IntervalPayouts",
       "address": "eth:0xa863262Bf5E97e8CFeC47a71402aC360C0983060",
       "type": "Contract",
       "template": "railgun/IntervalPayouts",
@@ -621,6 +611,7 @@
           "role": ".transferRoleMembers"
         }
       ],
+      "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776206,
       "sinceBlock": 15138815,
       "values": {
@@ -672,7 +663,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "PayoutBeneficiary_Ae8A",
       "address": "eth:0xaE8A17EB859E024cF6B541802B08932B2268dcEe",
       "type": "EOA",
       "proxyType": "EOA"
@@ -782,6 +772,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1625810239,
       "sinceBlock": 12791440,
       "values": {
@@ -866,7 +857,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "VKeySetterOwner_bbc2",
       "address": "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
       "type": "EOA",
       "proxyType": "EOA",
@@ -875,22 +865,6 @@
           "permission": "interact",
           "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
           "description": "stage replacement verification keys and manage the helper's local SETTING and WAITING states.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
-          "description": "update the Railgun smart wallet SNARK verifying keys through the Delegator.",
-          "role": ".verificationKeyDelegates",
-          "via": [
-            { "address": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
           "role": ".owner"
         }
       ]
@@ -1123,6 +1097,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1662770918,
       "sinceBlock": 15505853,
       "values": {
@@ -1200,7 +1175,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "A4f2StreamPayout",
+      "name": "IntervalPayouts",
       "address": "eth:0xCA9A2894e814305fAfc2BA83a70B34295b1DdE9D",
       "type": "Contract",
       "template": "railgun/IntervalPayouts",
@@ -1217,6 +1192,7 @@
           "role": ".transferRoleMembers"
         }
       ],
+      "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776264,
       "sinceBlock": 15138819,
       "values": {
@@ -1273,10 +1249,11 @@
       "type": "Contract",
       "template": "railgun/RailToken",
       "sourceHashes": [
-        "0xa82346e65e8737f6ecea9914efe8654029b2c87c2af1186d3515a49ce1b9db39"
+        "0xedf311c1a35646cbfb452e13446e64818194f368b2cd56c3bae91b0593f49852"
       ],
       "proxyType": "immutable",
       "description": "RAIL governance token contract with a capped mint schedule and an early anti-bot transfer override. If you trust this contract, you trust its owner to mint additional RAIL up to the hard cap.",
+      "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1625318205,
       "sinceBlock": 12754822,
       "values": {
@@ -1312,11 +1289,12 @@
       "type": "Contract",
       "template": "railgun/Treasury",
       "sourceHashes": [
-        "0xbfd517af5073b0a89f8f8dfce2d11e2bc003968785985ed504c9f9ab571f9d75",
-        "0x1e581c91de9e0c3cd50906d9d30663d1b8fe037db6a5a80caf0c20e961d7eb41"
+        "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
+        "0x38e90021f1f1c6b5378b5a32d25769119a4c3c07b14c2f813eb2b7a6264172cd"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Upgradeable treasury that collects Railgun fees, and can release ETH or ERC20s only to current TRANSFER_ROLE members. If you trust this contract, you trust its role admins to decide who can move treasury assets and its proxy admin to change the treasury logic.",
+      "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776059,
       "sinceBlock": 15138802,
       "values": {
@@ -1408,6 +1386,7 @@
       ],
       "proxyType": "immutable",
       "description": "Read-only helper contract that batches governance snapshot and reward-view calls. It does not custody funds or hold privileged roles.",
+      "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1670115011,
       "sinceBlock": 16107975,
       "values": {
@@ -1434,10 +1413,11 @@
       "type": "Contract",
       "template": "railgun/Staking",
       "sourceHashes": [
-        "0x2bff1afa5e292171f2c6c15a1e62198b014ff5a8b42eedc6ad43ba8a0627787d"
+        "0x12d1c6ff9fbd0f99b457b153c78e8f364a9aad6b9bfed98b2b682b53870cc5e4"
       ],
       "proxyType": "immutable",
       "description": "Immutable RAIL staking contract that tracks delegated voting power, enforces a 30-day unstake delay, and snapshots balances for governance. It has no admin, but its parameters define the governance system's voting power.",
+      "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1625670240,
       "sinceBlock": 12780995,
       "values": {
@@ -1470,7 +1450,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "Beneficiary5a02StreamPayout",
+      "name": "IntervalPayouts",
       "address": "eth:0xf5F9d74FbFd04801DFf83425ff6C2002f60B921A",
       "type": "Contract",
       "template": "railgun/IntervalPayouts",
@@ -1487,6 +1467,7 @@
           "role": ".transferRoleMembers"
         }
       ],
+      "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776236,
       "sinceBlock": 15138817,
       "values": {
@@ -1543,11 +1524,12 @@
       "type": "Contract",
       "template": "railgun/RailgunSmartWallet",
       "sourceHashes": [
-        "0xbfd517af5073b0a89f8f8dfce2d11e2bc003968785985ed504c9f9ab571f9d75",
-        "0xcf70d21ec20aa9f668a3d77681b3214b2b7aab73bc22211bf503612e1be5b813"
+        "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
+        "0x0ad85e59396caf20dd30307894a735a097dbd0d914bc1851af97c04cc874ad3b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Upgradeable privacy pool contract that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree. If you trust this contract, you trust its owner to change fees, treasury routing, token compatibility, and SNARK safety vectors, and its proxy admin to pause or upgrade the logic.",
+      "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1651422389,
       "sinceBlock": 14693013,
       "values": {
@@ -2047,5 +2029,5 @@
     "railgun/Voting": "0xcf33f9d03116b81a59f25ba7bf17c38122eedecde0df775a365f78a34697bd68"
   },
   "usedBlockNumbers": { "ethereum": 24992832 },
-  "permissionsConfigHash": "0x4bb3862624385de7b78be9910a9378faeff1c49f16650e23a717757a96e764bb"
+  "permissionsConfigHash": "0xc817f0c081917a651bb5f6898d6620ac54c691a5f8bc742d66c531130c6dcdda"
 }

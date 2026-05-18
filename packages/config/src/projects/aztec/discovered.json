@@ -14,7 +14,7 @@
       "type": "Contract",
       "template": "aztecv1/AztecFeeDistributor",
       "sourceHashes": [
-        "0x13139c06d2946718f6b4470f6346e54f4e2b26075fe5daa3b3a631092f7dd76e"
+        "0xe40f63f80dfb4ee0a5cdacbc4527030d3aa33252e5dd11fcae487ffba3ee38ef"
       ],
       "proxyType": "immutable",
       "description": "Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.",
@@ -49,7 +49,7 @@
       "type": "Contract",
       "template": "aztecv1/TurboVerifier",
       "sourceHashes": [
-        "0x72846aa5544e4499c54463014cbacb03ad291385be297b56c638ccfb15717b8b"
+        "0x0107cb80d1b32a9caa69a09106fbac1b902447a8bab90fa84c2641697ffb7fd6"
       ],
       "proxyType": "immutable",
       "description": "Turbo Plonk ZK verifier.",
@@ -67,7 +67,7 @@
       "type": "Contract",
       "template": "aztecv1/RollupProcessor",
       "sourceHashes": [
-        "0xc055a6555317d1508d60d0c1bf5b2332973126ca1ba545b095e733d95e490844"
+        "0x428db99da42e85b2493386db1e8328805b9ace32faa93a787f2451603e5c9043"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": [
@@ -181,7 +181,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],

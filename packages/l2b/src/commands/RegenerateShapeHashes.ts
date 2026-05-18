@@ -123,6 +123,9 @@ async function getSourceHash(
 
   const sources = await Promise.all(addresses.map((a) => client.getSource(a)))
   const hashes = sources.map((source) => contractFlatteningHash(source))
+  if (hashes.some((x) => x === undefined)) {
+    return undefined
+  }
   assert(hashes.every((x) => x !== undefined))
 
   if (hashes.length === 1) {

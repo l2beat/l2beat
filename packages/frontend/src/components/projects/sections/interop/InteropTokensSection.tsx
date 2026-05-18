@@ -26,6 +26,7 @@ import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
 const TOKENS_PER_PAGE = 6
+const ALL_TOKENS_LIMIT = 10_000
 
 export interface InteropTokensSectionProps extends ProjectSectionProps {
   projectId: ProjectId
@@ -44,6 +45,7 @@ export function InteropTokensSection({
       {
         ...apiSelection,
         id: projectId,
+        limit: ALL_TOKENS_LIMIT,
       },
       {
         enabled: !!data.entry,
@@ -51,11 +53,11 @@ export function InteropTokensSection({
     )
 
   const columns = useMemo(
-    () => getTopTokensColumns({ hideFlowsColumn: true }),
+    () => getTopTokensColumns({ showFlowsColumn: false }),
     [],
   )
 
-  const tableData = useMemo(() => tokensData ?? [], [tokensData])
+  const tableData = useMemo(() => tokensData?.items ?? [], [tokensData])
 
   const table = useTable<TokenRow>({
     data: tableData,

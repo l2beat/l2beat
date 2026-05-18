@@ -1,8 +1,7 @@
 {
   "ZKsyncOSDualVerifier_v30_0_ADI": {
-    "hash": "0x611d6c62506d4eb15d6b10346b737f49651ba4c3ee1231744069ece1b5ce7443",
+    "hash": "0x70ab85de02602a95e6073e1fde7e50e328c17e30e93fa91c00ea64cfc03d2a7d",
     "address": "eth:0x6Fd373b9470976Ec561F54664f931733C6149852",
-    "chain": "ethereum",
     "blockNumber": 24275768
   }
 }

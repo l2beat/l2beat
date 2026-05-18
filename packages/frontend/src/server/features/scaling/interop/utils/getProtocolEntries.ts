@@ -7,6 +7,7 @@ import type {
   AggregatedInteropTransferWithTokens,
   ByBridgeTypeData,
   InteropSelectionInput,
+  ProtocolDisplayable,
   ProtocolEntry,
 } from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
@@ -35,13 +36,13 @@ export function getProtocolEntries(
   selection: InteropSelectionInput,
 ): {
   entries: ProtocolEntry[]
-  zeroTransferProtocols: { name: string; iconUrl: string }[]
+  zeroTransferProtocols: ProtocolDisplayable[]
 } {
   const protocolsDataMap = getProtocolsDataMap(records)
   const protocolsDataByBridgeTypeMap = getProtocolsDataMapByBridgeType(records)
 
   const entries: ProtocolEntry[] = []
-  const zeroTransferProtocols: { name: string; iconUrl: string }[] = []
+  const zeroTransferProtocols: ProtocolDisplayable[] = []
 
   for (const project of interopProjects) {
     const data = protocolsDataMap.get(project.id)
@@ -66,6 +67,7 @@ export function getProtocolEntries(
     if (!data && (!type || bridgeTypes.includes(type))) {
       zeroTransferProtocols.push({
         name: project.interopConfig.name ?? project.name,
+        slug: project.slug,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       })
       continue

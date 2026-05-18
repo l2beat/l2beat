@@ -1,3 +1,84 @@
+Generated with discovered.json: 0x0b05ab1b5df79491e9bb8f99222b63e107fe8257
+
+# Diff at Fri, 15 May 2026 12:35:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1747043363
+- current timestamp: 1747043363
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1747043363 (main branch discovery), not current.
+
+```diff
+    contract AztecFeeDistributor (eth:0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734) [aztecv1/AztecFeeDistributor] {
+    +++ description: Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.
+      sourceHashes.0:
+-        "0x56ca2c5458055de0d08eedc65f6be38927e931bd328c77eb4db1ef43b752bbed"
++        "0xe40f63f80dfb4ee0a5cdacbc4527030d3aa33252e5dd11fcae487ffba3ee38ef"
+    }
+```
+
+Generated with discovered.json: 0xe88d0ba2499bafead0b4b48aee5d532c54956b1b
+
+# Diff at Fri, 08 May 2026 07:51:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1747043363
+- current timestamp: 1747043363
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1747043363 (main branch discovery), not current.
+
+```diff
+    contract AztecFeeDistributor (eth:0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734) [aztecv1/AztecFeeDistributor] {
+    +++ description: Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.
+      sourceHashes.0:
+-        "0x13139c06d2946718f6b4470f6346e54f4e2b26075fe5daa3b3a631092f7dd76e"
++        "0x56ca2c5458055de0d08eedc65f6be38927e931bd328c77eb4db1ef43b752bbed"
+    }
+```
+
+```diff
+    contract TurboVerifier (eth:0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8) [aztecv1/TurboVerifier] {
+    +++ description: Turbo Plonk ZK verifier.
+      sourceHashes.0:
+-        "0x72846aa5544e4499c54463014cbacb03ad291385be297b56c638ccfb15717b8b"
++        "0x0107cb80d1b32a9caa69a09106fbac1b902447a8bab90fa84c2641697ffb7fd6"
+    }
+```
+
+```diff
+    contract RollupProcessor (eth:0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba) [aztecv1/RollupProcessor] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc055a6555317d1508d60d0c1bf5b2332973126ca1ba545b095e733d95e490844"
++        "0x428db99da42e85b2493386db1e8328805b9ace32faa93a787f2451603e5c9043"
+    }
+```
+
+```diff
+    contract Aztec Multisig (eth:0xE298a76986336686CC3566469e3520d23D1a8aaD) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
 Generated with discovered.json: 0x8b3fc54ca5fe2f83d44721ec807d2ae39457bc44
 
 # Diff at Tue, 05 May 2026 10:21:57 GMT:

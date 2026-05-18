@@ -1,11 +1,11 @@
 {
   "L2ArbitrumToken": {
-    "hash": "0x637d7a1e879804c928473dab6d06d80f9fd85ea5d889c3d5fac43411f6e59346",
+    "hash": "0x302a3eb0e72192138714b043b921774b8ee503d0deeab95111950cfc6e3dee3a",
     "address": "arb1:0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882",
     "blockNumber": 322488866
   },
   "L2ArbitrumToken_DVP": {
-    "hash": "0x81f61863f4f68a0a85c555c0e2ceab81eecd68a77f2c9d290f4caaca4d53aad9",
+    "hash": "0xc65e6b00e388040ff1fa8195448aac18f0539c6f29f0e7c933c3803306761c56",
     "address": "arb1:0xd47D14a315394ddf063174f2286Ab4Eb7C507fa0",
     "blockNumber": 322488866
   }

@@ -6,22 +6,14 @@ import { createAggregatedAnomalyColumns } from './aggregated-columns'
 
 interface AggregatedTransferAnomaliesTableProps {
   data: AggregatedAnomalyRow[]
-  aggregateValueDiffAlertThresholdPercent: number
   enableCsvExport?: boolean
 }
 
 export function AggregatedTransferAnomaliesTable({
   data,
-  aggregateValueDiffAlertThresholdPercent,
   enableCsvExport = false,
 }: AggregatedTransferAnomaliesTableProps) {
-  const columns = useMemo(
-    () =>
-      createAggregatedAnomalyColumns({
-        aggregateValueDiffAlertThresholdPercent,
-      }),
-    [aggregateValueDiffAlertThresholdPercent],
-  )
+  const columns = useMemo(() => createAggregatedAnomalyColumns(), [])
 
   const {
     filteredRowsCount,
@@ -39,7 +31,7 @@ export function AggregatedTransferAnomaliesTable({
     columns,
     initialSorting: [{ id: 'timestamp', desc: true }],
     getRowId: (row) => row.id,
-    searchPlaceholder: 'Search transfer IDs, days, and interpretation labels',
+    searchPlaceholder: 'Search aggregate IDs, days, and alerts',
   })
 
   return (
@@ -48,6 +40,7 @@ export function AggregatedTransferAnomaliesTable({
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
       emptyMessage="No aggregated transfer anomalies found."
+      fillHeight
       enableVirtualization={false}
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>

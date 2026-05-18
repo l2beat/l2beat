@@ -1,6 +1,6 @@
 {
   "name": "lighter",
-  "timestamp": 1777891445,
+  "timestamp": 1778579977,
   "configHash": "0xb38099a89f4a1650c4592eb5b206aa3dfb12f4b33ad639c81fcfc9928be4e4d5",
   "entries": [
     {
@@ -32,13 +32,18 @@
       ]
     },
     {
+      "address": "eth:0x2994d343b6b17EC23E9E4a08082184Fd43F763a3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Lighter",
       "address": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
       "type": "Contract",
       "template": "lighter/ZkLighterWithSpot",
       "sourceHashes": [
-        "0xc3b09aa3d8c5332715cea375895325cd01f6a04b61f1a1c885d73502955c6460",
-        "0xc3634a3489804f8dab544a9e3a5e4dd76fd81bfe5bbe3f69c88caf99c672e30f"
+        "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
+        "0x9569dcd94342470829bda3bb0fd36074a965e17d37bedd39697db12f774365e1"
       ],
       "proxyType": "zkLighter proxy",
       "description": "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
@@ -86,8 +91,8 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 167484,
-        "committedPriorityRequestCount": 1838764,
+        "committedBatchesCount": 171135,
+        "committedPriorityRequestCount": 1841992,
         "createdMarketsPostSpot": [
           "ETH/USDC",
           "STABLE",
@@ -145,7 +150,16 @@
           "CHIP",
           "MU",
           "ORCL",
-          "EWY"
+          "EWY",
+          "CRWV",
+          "TSM",
+          "SOXX",
+          "WHEAT",
+          "SPACEX",
+          "BIO",
+          "1000NOT",
+          "MRVL",
+          "GME"
         ],
         "createdMarketsPreSpot": [
           "USELESS",
@@ -203,17 +217,17 @@
         ],
         "desertMode": false,
         "desertVerifier": "eth:0xd4460475F00307845082d3a146f36661354FBc67",
-        "executedBatchesCount": 167454,
-        "executedOnChainBatchesCount": 115635,
-        "executedPriorityRequestCount": 1838743,
+        "executedBatchesCount": 171117,
+        "executedOnChainBatchesCount": 117110,
+        "executedPriorityRequestCount": 1841977,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "getTarget": "eth:0x13d4Ed7Db9d2cF73C7A45bfA6e23aa9742e8598C",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310",
-        "lastAccountIndex": 724140,
-        "lastVerifiedEndBlockNumber": 227053393,
-        "lastVerifiedStateRoot": "0xaf1f3e46c32449b45222c0d5b8883e7b4906abf1cf047f964ca16f3e720ef6a1",
-        "lastVerifiedValidiumRoot": "0xb80b4f326cf8b719ded2cc4f7ea9aa5f39297c8b47819229c0980ed39d0cefb0",
+        "lastAccountIndex": 724944,
+        "lastVerifiedEndBlockNumber": 232914193,
+        "lastVerifiedStateRoot": "0xa0283a3a2bbd4bd8194c56943830bc29b2fe9cc6427350e08838c09bdfd00568",
+        "lastVerifiedValidiumRoot": "0x67f830c3c578010fdc078d707928bb4c4b8ad856ab7380a350d43ab21ff86c95",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -235,8 +249,8 @@
         "MIN_STAKING_SHARES_TO_MINT_OR_BURN": 1,
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
-        "openPriorityRequestCount": 26,
-        "pendingOnChainBatchesCount": 10,
+        "openPriorityRequestCount": 20,
+        "pendingOnChainBatchesCount": 6,
         "PRIORITY_EXPIRATION": 1209600,
         "registeredAssets": [
           {
@@ -276,13 +290,13 @@
             "tokenAddress": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2"
           }
         ],
-        "stateRoot": "0xaf1f3e46c32449b45222c0d5b8883e7b4906abf1cf047f964ca16f3e720ef6a1",
+        "stateRoot": "0xa0283a3a2bbd4bd8194c56943830bc29b2fe9cc6427350e08838c09bdfd00568",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
         "USDC_ASSET_INDEX": 3,
-        "validiumRoot": "0xb80b4f326cf8b719ded2cc4f7ea9aa5f39297c8b47819229c0980ed39d0cefb0",
-        "verifiedBatchesCount": 167454,
-        "verifiedPriorityRequestCount": 1838743,
+        "validiumRoot": "0x67f830c3c578010fdc078d707928bb4c4b8ad856ab7380a350d43ab21ff86c95",
+        "verifiedBatchesCount": 171117,
+        "verifiedPriorityRequestCount": 1841977,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
@@ -303,7 +317,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -347,11 +361,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x6d340Dd53b89b1f0bD94b473227612427125Bc8D",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x6FEe6cdD595D12Ec6cD1803474B3615f1D2fb9ed",
       "type": "EOA",
       "proxyType": "EOA"
@@ -370,11 +379,6 @@
       ]
     },
     {
-      "address": "eth:0x89f550Fce5c191b34AF95671c28bCF6CCDF1203a",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x8B0190046D7b366642D4ff091C100d84ec4AB6f6",
       "type": "EOA",
       "proxyType": "EOA"
@@ -391,7 +395,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -422,7 +426,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 64,
+        "nonce": 66,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -436,7 +440,7 @@
       "type": "Contract",
       "template": "lighter/UpgradeGatekeeper",
       "sourceHashes": [
-        "0xf2bfc82ef31f512666c7b406fef29855df438601bbba758fb91bef2837a76c26"
+        "0x897bcb49a87330dfd6cf64b3848b2ecf503f7720b70c8c08b942741f952d681d"
       ],
       "proxyType": "immutable",
       "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.",
@@ -475,7 +479,7 @@
         "securityCouncilAddress": "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045",
         "upgradeStartTimestamp": 0,
         "upgradeStatus": 0,
-        "versionId": 54,
+        "versionId": 56,
         "zkLighterProxy": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7"
       },
       "fieldMeta": {
@@ -495,7 +499,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -555,9 +559,9 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0x2994d343b6b17EC23E9E4a08082184Fd43F763a3",
           "eth:0x67d6c2569AB98A1F535E36b3BaB1FBD825fa536E",
-          "eth:0x89f550Fce5c191b34AF95671c28bCF6CCDF1203a",
-          "eth:0x6d340Dd53b89b1f0bD94b473227612427125Bc8D",
+          "eth:0xa0B3781B830DF57B1f018C434c58551c2Fc6b3Af",
           "eth:0x6FEe6cdD595D12Ec6cD1803474B3615f1D2fb9ed",
           "eth:0xF65F409d8f3fa3635287783256394D7eB7aD7835"
         ],
@@ -566,7 +570,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 106,
+        "nonce": 118,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -581,7 +585,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -612,13 +616,18 @@
       }
     },
     {
+      "address": "eth:0xa0B3781B830DF57B1f018C434c58551c2Fc6b3Af",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Governance",
       "address": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
       "type": "Contract",
       "template": "lighter/Governance",
       "sourceHashes": [
-        "0xc3b09aa3d8c5332715cea375895325cd01f6a04b61f1a1c885d73502955c6460",
-        "0xf6cff14a43f325bcc62514ffd204ebdd7d556d2b7d8111003a5d5809859f2223"
+        "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
+        "0x0033a032557a6a464645acc1901ac15e72d841e4d56cc8b94c64a55cae92b122"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the list of validators and the network governor.",
@@ -666,8 +675,8 @@
       "type": "Contract",
       "template": "lighter/ZkLighterVerifier",
       "sourceHashes": [
-        "0xc3b09aa3d8c5332715cea375895325cd01f6a04b61f1a1c885d73502955c6460",
-        "0x5bee4c4522233c699516029292bf16813f3dea03e484fe718e479ac2ace77653"
+        "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
+        "0x01d2d0bcda8de284060e58013910fa6454b5a8fd3d146e173364e231f0cf04e0"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
@@ -676,15 +685,15 @@
       "sinceBlock": 21642011,
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "$implementation": "eth:0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82",
+        "$implementation": "eth:0x21c7480b72c47fe93102BE5B865d18b770338098",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82"
+        "getTarget": "eth:0x21c7480b72c47fe93102BE5B865d18b770338098"
       },
       "implementationNames": {
         "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": "Proxy",
-        "eth:0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82": "ZkLighterVerifier"
+        "eth:0x21c7480b72c47fe93102BE5B865d18b770338098": "ZkLighterVerifier"
       }
     },
     {
@@ -750,11 +759,6 @@
     }
   ],
   "abis": {
-    "eth:0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function initialize(bytes)",
-      "function upgrade(bytes upgradeParameters)"
-    ],
     "eth:0x13d4Ed7Db9d2cF73C7A45bfA6e23aa9742e8598C": [
       "constructor()",
       "error ZkLighter_AccountAlreadyPerformedDesertForAsset()",
@@ -897,6 +901,11 @@
       "function withdraw(uint48 _accountIndex, uint16 _assetIndex, uint8 _routeType, uint64 _baseAmount)",
       "function withdrawPendingBalance(address _owner, uint16 _assetIndex, uint128 _baseAmount)",
       "function withdrawPendingBalanceLegacy(address _owner, uint128 _baseAmount)"
+    ],
+    "eth:0x21c7480b72c47fe93102BE5B865d18b770338098": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
     ],
     "eth:0x22F05515497ce8D78f3898088C474403Ac9C668f": [
       "error AdditionalZkLighter_AccountIsNotRegistered()",
@@ -1161,6 +1170,6 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/ZkLighterWithSpot": "0xf2193f542c5b2dc29610085ddafb70c168d82e65ee4e03f27faf3e9eaa11ece2"
   },
-  "usedBlockNumbers": { "ethereum": 25021112 },
-  "permissionsConfigHash": "0xd1e0b2f796c0d96b4b9801c4453b5edc394d28a91eb706a0ef4d51bb4c58fc9a"
+  "usedBlockNumbers": { "ethereum": 25078296 },
+  "permissionsConfigHash": "0x2974be932dd8e9c0be23ab51b1ac935f450f86609d9b7ef1391e76de51cd16ff"
 }

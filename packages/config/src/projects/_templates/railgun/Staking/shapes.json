@@ -1,8 +1,7 @@
 {
   "Staking": {
-    "hash": "0x2bff1afa5e292171f2c6c15a1e62198b014ff5a8b42eedc6ad43ba8a0627787d",
+    "hash": "0x12d1c6ff9fbd0f99b457b153c78e8f364a9aad6b9bfed98b2b682b53870cc5e4",
     "address": "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20",
-    "chain": "ethereum",
     "blockNumber": 12780995
   }
 }

@@ -1,8 +1,7 @@
 {
   "WETHOmnibridgeRouter.sol": {
-    "hash": "0x18759236610feb6952e897ade6b43506d161d78d8954c89f9e8a74a88bd0fcde",
+    "hash": "0x3ece097c6b632e3fd79f6e3bc21188ea4dd12f318a71911f5453c56163b807f5",
     "address": "eth:0xa6439Ca0FCbA1d0F80df0bE6A17220feD9c9038a",
-    "chain": "ethereum",
     "blockNumber": 24991869
   }
 }
