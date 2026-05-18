@@ -1,0 +1,20 @@
+{
+  "ECDSAStakeRegistry": {
+    "hash": "0xe5f47af7b0c82c4dec0eb0dd0786c315f9281aaf2981ffdabc70a9996475f603",
+    "address": "eth:0xa11b1a385287b5167eccA6A38F63AbEAB981d589",
+    "chain": "ethereum",
+    "blockNumber": 25000532
+  },
+  "ECDSAStakeRegistry_1B29dB": {
+    "hash": "0x7988f2a9e95cd868d6ceb293ef5e134176c7060ff24721a9d0e88445fc34773f",
+    "address": "eth:0xCf0F8a568693C23e1c8818e025BbA5A76494D0Ea",
+    "chain": "ethereum",
+    "blockNumber": 25000532
+  },
+  "ECDSAStakeRegistry_2C4e76": {
+    "hash": "0x77477cbd6b62a0e0ae6c664967383a394c2304f64e065ae487c33a6c92c42563",
+    "address": "eth:0xcb8396B9A707B4A9970c3fe1fcDCd88716Ae9824",
+    "chain": "ethereum",
+    "blockNumber": 25000532
+  }
+}

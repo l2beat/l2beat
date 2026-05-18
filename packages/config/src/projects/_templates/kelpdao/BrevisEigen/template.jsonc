@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BrevisEigen",
+  "ignoreRelatives": [
+    "EXTENSION_IMPLEMENTATION",
+    "adapter",
+    "adapterAddress",
+    "aggregator",
+    "alertConfirmer",
+    "attestationCenter",
+    "avsTreasury",
+    "blsApkRegistry",
+    "controller",
+    "ejector",
+    "freezeOracle",
+    "getAllActiveOperators",
+    "getRestakeableStrategies",
+    "indexRegistry",
+    "l2ChainMapping",
+    "nodeRegistry",
+    "nodeRegistryAddress",
+    "pauserRegistry",
+    "registryCoordinator",
+    "restakeableStrategies",
+    "rewardsInitiator",
+    "signatureChecker",
+    "socketRegistry",
+    "stakeRegistry",
+    "stakingContracts",
+    "unfreezeReceiver",
+    "voteWeigher"
+  ]
+}

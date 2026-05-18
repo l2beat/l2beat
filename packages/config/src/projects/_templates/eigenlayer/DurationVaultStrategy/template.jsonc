@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DurationVaultStrategy",
+  "description": "EigenLayer duration-vault strategy variant used for time-locked staking positions.",
+  "ignoreRelatives": ["underlyingToken"]
+}

@@ -1,6 +1,59 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "shared",
+  "canActIndependently": false,
+  "description": "EigenLayer EigenPod, one per staker. podOwner is set in initialize when the BeaconProxy is deployed by EigenPodManager and is not changeable afterwards. Validators staked through this pod have withdrawal credentials hardcoded to address(this), so beacon-chain withdrawals always exit into this pod. Function gates: onlyEigenPodManager: stake (msg.value must equal 32 ether, calls ETHPOS.deposit with this pod's withdrawal credentials), withdrawRestakedBeaconChainETH (sends ETH to a manager-supplied recipient, capped at withdrawableRestakedExecutionLayerGwei). onlyEigenPodOwner: recoverTokens (sweeps arbitrary ERC20 tokens to a caller-supplied recipient; does not touch native ETH or restaked balance accounting), setProofSubmitter. onlyOwnerOrProofSubmitter: startCheckpoint, verifyWithdrawalCredentials, requestConsolidation (forwards a fee + pubkey-pair payload to the EIP-7251 consolidation predeploy), requestWithdrawal (forwards a fee + pubkey/amount payload to the EIP-7002 withdrawal predeploy). Permissionless: receive() (accepts ETH from any caller, logs only), verifyCheckpointProofs (any caller advances the active checkpoint with valid Merkle proofs), verifyStaleBalance (any caller can mark a validator with stale balance to require a re-checkpoint). Each non-Manager entrypoint is independently gated by IPausable(eigenPodManager).paused(index) with a function-specific pause index, so EigenLayer's pause governance on EigenPodManager controls each operation separately.",
   "ignoreRelatives": ["ethPOS"],
-  "ignoreInWatchMode": ["getConsolidationRequestFee"]
+  "ignoreInWatchMode": [
+    "activeValidatorCount",
+    "currentCheckpoint",
+    "currentCheckpointTimestamp",
+    "lastCheckpointTimestamp",
+    "withdrawableRestakedExecutionLayerGwei",
+    "getConsolidationRequestFee",
+    "getWithdrawalRequestFee"
+  ],
+  "fields": {
+    "podOwner": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "The pod's owner. Set once by initialize when EigenPodManager deploys this BeaconProxy and not updateable by any function on this contract. Powers on this contract: recoverTokens (sweep arbitrary ERC20 tokens lying on this contract to a caller-supplied recipient), setProofSubmitter (set the proofSubmitter address), startCheckpoint, verifyWithdrawalCredentials, requestConsolidation (EIP-7251 consolidation predeploy), requestWithdrawal (EIP-7002 withdrawal predeploy, can request a partial or full beacon-chain validator exit but the resulting ETH lands in this pod). Cannot withdraw the pod's restaked ETH directly: withdrawRestakedBeaconChainETH is onlyEigenPodManager and chooses the recipient itself."
+    },
+    "proofSubmitter": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Optional second address allowed to call the onlyOwnerOrProofSubmitter subset: startCheckpoint, verifyWithdrawalCredentials, requestConsolidation, requestWithdrawal. Cannot recoverTokens, cannot setProofSubmitter. Settable only by podOwner via setProofSubmitter; defaults to address(0), which makes those four entrypoints podOwner-only."
+    },
+    "eigenPodManager": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Immutable, set in the constructor. The single EigenLayer EigenPodManager: sole caller permitted to invoke stake() and withdrawRestakedBeaconChainETH(), and the source of pause status read by every IPausable(eigenPodManager).paused(index) check."
+    },
+    "ethPOS": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Immutable, set in the constructor. Beacon-chain deposit contract that stake() forwards 32 ether to with this pod's withdrawal credentials."
+    },
+    "activeValidatorCount": {
+      "description": "Number of validators currently in VALIDATOR_STATUS.ACTIVE. Incremented in verifyWithdrawalCredentials when a new validator's credentials are proven against this pod; decremented (validator transitions to WITHDRAWN) inside verifyCheckpointProofs when a proof shows balance == 0."
+    },
+    "currentCheckpoint": {
+      "description": "In-progress checkpoint state. proofsRemaining counts ACTIVE validators not yet checkpointed; podBalanceGwei pins the pod's execution-layer ETH balance at checkpoint start; balanceDeltasGwei accumulates per-validator balance changes proven during the checkpoint; prevBeaconBalanceGwei accumulates each ACTIVE validator's last-known balance. Active iff currentCheckpointTimestamp != 0; cleared when proofsRemaining reaches 0 and the checkpoint finalizes."
+    },
+    "currentCheckpointTimestamp": {
+      "description": "Beacon timestamp the active checkpoint was pinned against, or 0 if no checkpoint is active. Set by startCheckpoint, cleared on finalization. While non-zero, verifyWithdrawalCredentials calls require beaconTimestamp > currentCheckpointTimestamp."
+    },
+    "lastCheckpointTimestamp": {
+      "description": "Beacon timestamp of the most recently finalized checkpoint. Used as the lower bound for verifyWithdrawalCredentials (beaconTimestamp must exceed it) and as the default lastCheckpointedAt for newly-proven validators when no checkpoint is currently active."
+    },
+    "withdrawableRestakedExecutionLayerGwei": {
+      "description": "View returning the internal restakedExecutionLayerGwei: ETH (in gwei) sitting in this pod that has been moved from the beacon chain to the execution layer via finalized checkpoints / exits. Available for withdrawRestakedBeaconChainETH (callable only by eigenPodManager) up to this amount."
+    },
+    "getConsolidationRequestFee": {
+      "description": "Live read of the EIP-7251 consolidation predeploy's current fee. Updated per-block by the consensus layer; quoted by requestConsolidation."
+    },
+    "getWithdrawalRequestFee": {
+      "description": "Live read of the EIP-7002 withdrawal predeploy's current fee. Updated per-block by the consensus layer; quoted by requestWithdrawal."
+    }
+  }
 }

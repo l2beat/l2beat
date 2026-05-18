@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LRTWithdrawalManager",
+  "category": "core",
+  "description": "Manages user withdrawal requests for rsETH redemption. Holds an Aave WETH position to back instant withdrawal liquidity.",
+  "ignoreRelatives": ["aaveAWETH", "WETH_ADDRESS"]
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LRTConverter",
+  "category": "core",
+  "description": "Converts Kelp's holdings of LSTs (e.g. stETH, swETH) and routes withdrawals through their respective protocols. Acts as the bridge between Kelp's accounting and the underlying LST/withdrawal contracts.",
+  "ignoreRelatives": ["stETH", "swETH", "swEXIT", "withdrawalQueue"]
+}

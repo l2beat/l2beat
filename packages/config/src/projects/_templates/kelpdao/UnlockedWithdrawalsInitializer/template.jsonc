@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UnlockedWithdrawalsInitializer",
+  "category": "gov",
+  "canActIndependently": false,
+  "description": "Holds the UNLOCKED_WITHDRAWAL_INITIALIZER role on LRTConfig. The role gates only LRTWithdrawalManager.initialize2, a one-shot reinitializer that seeds the per-asset unlockedWithdrawalsCount counter from the legacy withdrawal flow. After being called once, further calls are blocked by the OZ reinitializer guard, so this contract is effectively spent on the live deployment and retains no live authority over withdrawals."
+}

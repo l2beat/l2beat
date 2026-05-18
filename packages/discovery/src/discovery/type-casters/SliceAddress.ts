@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { ContractValue } from '../output/types'
 import type { ArgType, BaseTypeCaster } from './BaseTypeCaster'
@@ -25,6 +25,9 @@ export const SliceAddress: BaseTypeCaster = {
     const address = utils.getAddress('0x' + hex.slice(start, end))
     if (address === ZERO_ADDRESS) {
       return 'UNRESOLVED'
+    }
+    if (typeof arg.prefix === 'string') {
+      return ChainSpecificAddress.from(arg.prefix, address).toString()
     }
     return address
   },

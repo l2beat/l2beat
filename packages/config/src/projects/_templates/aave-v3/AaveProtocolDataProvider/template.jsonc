@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AaveProtocolDataProvider",
+  "description": "Aave V3 read-only data provider. Lists every reserve and aToken in the Aave V3 main pool.",
+  "ignoreRelatives": [
+    "ADDRESSES_PROVIDER",
+    "getAllATokens",
+    "getAllReservesTokens"
+  ]
+}

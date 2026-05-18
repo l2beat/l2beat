@@ -18,5 +18,11 @@
     "hash": "0x571ba91f38006b5d830d08c555d127cde1188f64cc49883e9dd255d6ef74ebf8",
     "address": "eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c",
     "blockNumber": 24350294
+  },
+  "StrategyManagerV2": {
+    "hash": "0x736195a6d0101e08cc21210f3e0cceae0ac4db2bfdb3e79e113fdae1fc8c418c",
+    "address": "eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394",
+    "chain": "ethereum",
+    "blockNumber": 24978836
   }
 }

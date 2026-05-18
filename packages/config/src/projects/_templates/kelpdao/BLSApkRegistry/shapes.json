@@ -1,0 +1,14 @@
+{
+  "BLSApkRegistry": {
+    "hash": "0x41f880f3241af62a993111a964f2cc582f03994969a0f2583547eff02b74c933",
+    "address": "eth:0x22FE3635f6094527F5A8f44bD4129DccA8cEd7dc",
+    "chain": "ethereum",
+    "blockNumber": 25000532
+  },
+  "BLSApkRegistry_acc464": {
+    "hash": "0x2828947ac39f37c8a7e541ac84519a86d24605a034323bdd5867a32fe4e78763",
+    "address": "eth:0x724B682CBe09C1D8BCFC0531f04eaBF55E5BD2C3",
+    "chain": "ethereum",
+    "blockNumber": 25000532
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TimelockController",
+  "category": "gov",
+  "canActIndependently": false,
+  "description": "OZ TimelockController. PROPOSER queues an arbitrary call (target, value, data, predecessor, salt) via schedule / scheduleBatch; once getMinDelay seconds have elapsed, anyone holding EXECUTOR_ROLE (or any address, see below) can run it via execute / executeBatch. CANCELLER aborts a still-pending operation via cancel(id). Two non-obvious patterns to look for in the values: (1) execute / executeBatch are gated by the onlyRoleOrOpenRole(EXECUTOR_ROLE) modifier, which checks address(0) first: if address(0) holds EXECUTOR_ROLE the per-msg.sender check is skipped and execution is permissionless. (2) The constructor grants TIMELOCK_ADMIN_ROLE (the role admin of every other role on this contract) to the contract itself, so role changes can be performed only by scheduling them and waiting the current delay; the constructor also grants the role to its admin argument when non-zero, and OZ recommends renouncing that admin immediately after deployment. updateDelay requires msg.sender == address(this), so changing getMinDelay must itself be scheduled and survive the current delay.",
+  "fields": {
+    "accessControl": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Role-by-role gates on this contract. PROPOSER_ROLE: schedule, scheduleBatch. EXECUTOR_ROLE: execute, executeBatch (gated by onlyRoleOrOpenRole, so granting the role to address(0) makes those functions callable by anyone). CANCELLER_ROLE: cancel(id) on any pending operation. TIMELOCK_ADMIN_ROLE: grantRole / revokeRole on every role here (the constructor sets it as the role admin of every role, including itself). Every role's admin is TIMELOCK_ADMIN_ROLE, so role changes can only be performed by holders of TIMELOCK_ADMIN_ROLE (which is granted to the contract itself, so changes normally flow through schedule + delay).",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5": "TIMELOCK_ADMIN_ROLE",
+          "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1": "PROPOSER_ROLE",
+          "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE",
+          "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783": "CANCELLER_ROLE"
+        }
+      }
+    },
+    "proposers": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Holders of PROPOSER_ROLE. Sole authority to queue a call via schedule(target, value, data, predecessor, salt, delay) or scheduleBatch; the operation's id is hashOperation(...) of the same parameters, and it becomes executable after at least the supplied delay (which must be >= getMinDelay). Targets, values and data are unconstrained: any contract call can be queued. Membership is changed by TIMELOCK_ADMIN_ROLE holders.",
+      "copy": "accessControl",
+      "edit": ["get", "PROPOSER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "queue any call against any target via schedule / scheduleBatch; queued operations become executable after the operation's delay (>= getMinDelay seconds)."
+        }
+      ]
+    },
+    "executors": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Holders of EXECUTOR_ROLE. execute and executeBatch are gated by onlyRoleOrOpenRole(EXECUTOR_ROLE), which checks address(0) first: if address(0) appears in this list, the per-msg.sender check is skipped and any address can execute a queued operation once its delay has elapsed. The address(0) entry is therefore the OZ open-role signal, not a real holder. While address(0) is present, additional grants here are inert (the open-role short-circuit fires first); revoking the role from address(0) is what closes the role to non-members. Executing does not let the caller pick what runs: the call payload was committed at schedule time. Membership is changed by TIMELOCK_ADMIN_ROLE holders.",
+      "copy": "accessControl",
+      "edit": ["get", "EXECUTOR_ROLE", "members"]
+    },
+    "cancellers": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Holders of CANCELLER_ROLE. Can call cancel(id) at any time between schedule and execution to abort a pending operation; cancel reverts on already-executed operations. Membership is changed by TIMELOCK_ADMIN_ROLE holders.",
+      "copy": "accessControl",
+      "edit": ["get", "CANCELLER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "guard",
+          "description": "cancel any scheduled but not-yet-executed operation via cancel(id)."
+        }
+      ]
+    },
+    "timelockAdmins": {
+      "description": "Holders of TIMELOCK_ADMIN_ROLE. The constructor sets this role as the role admin of TIMELOCK_ADMIN_ROLE, PROPOSER_ROLE, EXECUTOR_ROLE and CANCELLER_ROLE, so members can call grantRole / revokeRole for any of them. The constructor always grants this role to the contract itself, so role changes can be performed as a normal scheduled-then-executed operation, and additionally grants it to the constructor's admin argument when non-zero (the OZ-recommended flow is to renounce that admin immediately after deployment). Any holder here other than the timelock contract itself can grant or revoke roles directly without going through the delay.",
+      "copy": "accessControl",
+      "edit": ["get", "TIMELOCK_ADMIN_ROLE", "members"]
+    },
+    "getMinDelay": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Minimum delay in seconds between scheduling an operation and being able to execute it. Changeable only by updateDelay, which requires msg.sender == address(this); a delay change must therefore itself be scheduled by a PROPOSER, wait the current delay, and then be executed."
+    }
+  }
+}

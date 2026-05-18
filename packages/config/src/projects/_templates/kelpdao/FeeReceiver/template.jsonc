@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FeeReceiver",
+  "category": "core",
+  "description": "Treasury that receives protocol fees. Fees are minted as rsETH to this address by LRTOracle.updateRSETHPrice() — the rebase function takes protocolFeeInBPS of the per-period reward and mints the equivalent rsETH here (subject to a daily fee-mint cap)."
+}

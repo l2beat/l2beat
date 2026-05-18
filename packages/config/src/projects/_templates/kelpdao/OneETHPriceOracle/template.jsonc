@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OneETHPriceOracle",
+  "category": "core",
+  "canActIndependently": false,
+  "description": "IPriceFetcher implementation that returns 1e18 (asset/ETH = 1.0) from getAssetPrice regardless of which asset address is passed (the argument is ignored). Pure function, no state, no admin surface, deployed as a plain non-proxy contract."
+}

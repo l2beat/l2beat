@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "shared",
-  "description": "The token backing EIGEN and used for intersubjective staking."
+  "description": "The token backing EIGEN and used for intersubjective staking.",
+  "ignoreMethods": ["getPastTotalSupply", "getPastVotes"]
 }
