@@ -27,7 +27,6 @@ import {
   type AbstractTokenAssignmentProof,
   commitTokenChanges,
   nonSwappingTransferProof,
-  type WriteSource,
 } from '../commitTokenChanges'
 import {
   buildAliasToChainMap,
@@ -196,10 +195,12 @@ export class TokenIngestionProcessor {
             type: 'update',
             pk: { chain: trace.address.chain, address: trace.address.address },
             existing: pending.existing,
-            update: { abstractTokenId },
+            update: {
+              abstractTokenId,
+              abstractTokenAssignmentProof: pending.proof,
+            },
           },
           neighborsToEnqueue: pending.neighborsToEnqueue,
-          proof: pending.proof,
         },
       }
     }
@@ -225,9 +226,14 @@ export class TokenIngestionProcessor {
       outcome: {
         kind: 'write',
         newAbstractToken,
-        deployedToken: { type: 'insert', record: built.record },
+        deployedToken: {
+          type: 'insert',
+          record: {
+            ...built.record,
+            abstractTokenAssignmentProof: pending.proof,
+          },
+        },
         neighborsToEnqueue: pending.neighborsToEnqueue,
-        proof: pending.proof,
       },
     }
   }
@@ -261,12 +267,8 @@ export class TokenIngestionProcessor {
         )
       case 'write': {
         const commands = buildWriteCommands(outcome)
-        const source: WriteSource = {
-          kind: 'ingestion',
-          proof: outcome.proof,
-        }
         await this.deps.tokenDb.transaction(async () => {
-          await commitTokenChanges(this.deps.tokenDb, commands, source)
+          await commitTokenChanges(this.deps.tokenDb, commands)
         }, 'serializable')
 
         for (const neighbor of outcome.neighborsToEnqueue) {
@@ -503,10 +505,12 @@ export class TokenIngestionProcessor {
             type: 'update',
             pk: { chain: address.chain, address: address.address },
             existing,
-            update: { abstractTokenId: resolution.abstractToken.id },
+            update: {
+              abstractTokenId: resolution.abstractToken.id,
+              abstractTokenAssignmentProof: resolution.proof,
+            },
           },
           neighborsToEnqueue,
-          proof: resolution.proof,
         }
       }
       return {

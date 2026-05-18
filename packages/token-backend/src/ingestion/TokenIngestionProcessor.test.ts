@@ -338,10 +338,10 @@ describe(TokenIngestionProcessor.name, () => {
             deploymentTimestamp: UnixTime(1),
             comment: null,
             metadata: null,
+            abstractTokenAssignmentProof: { kind: 'coingecko' },
           },
         },
         neighborsToEnqueue: [],
-        proof: { kind: 'coingecko' },
       })
     })
 

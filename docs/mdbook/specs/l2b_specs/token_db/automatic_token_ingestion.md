@@ -199,27 +199,35 @@ ultimately write to the same two TokenDB tables (`AbstractToken` and
 that future cross-cutting concerns like a persistent history table land
 in exactly one place — they share a single primitive,
 [`commitTokenChanges`](../../../../../packages/token-backend/src/commitTokenChanges.ts),
-that takes a list of `Command`s and a `WriteSource`.
+that takes a list of `Command`s and dispatches each to the matching
+repository method.
 
-- The user pipeline calls it with `{ kind: 'user', email }` after the
-  re-plan-and-compare succeeds inside its SERIALIZABLE transaction.
-  `commitTokenChanges` stamps any abstract-token assignment from a user
-  write with `{ kind: 'manual' }`.
-- Ingestion's `apply` calls it with `{ kind: 'ingestion', proof }` for
-  the `write` outcome, also inside a SERIALIZABLE transaction. The
-  `proof` is captured by `plan` and carried through `fetch` so that
-  whenever an abstract-token assignment is written, the evidence that
-  justified the assignment is required by the type system.
+`commitTokenChanges` is a pure router: every command arrives with whatever
+fields it needs already populated, including any abstract-token
+assignment proof. Each pipeline decides the proof at plan time:
+
+- The user planner sets `abstractTokenAssignmentProof: { kind: 'manual',
+  user: <email> }` on any `AddDeployedTokenCommand` /
+  `UpdateDeployedTokenCommand` that introduces or changes
+  `abstractTokenId`, and `null` when the assignment is cleared.
+- The ingestion planner sets the proof returned by abstract-token
+  resolution (`{ kind: 'coingecko' }` or `{ kind: 'non-swapping-transfer',
+  transfer }`) onto the deployed-token write produced by the same plan
+  step. For `pending` outcomes the proof is held on the pending variant
+  and transferred onto the deployed-token write by `fetch`.
+
+The plan-time stamp means the proof shows up in the diff the user sees
+*before* clicking Confirm in the UI, and in the ingestion preview dialog
+that renders predicted outcomes from the queue.
 
 The proof is persisted on the `DeployedToken.abstractTokenAssignmentProof`
-JSON column. `commitTokenChanges` writes it on every command that *sets*
-`abstractTokenId` (insert with a non-null abstract, or update whose patch
-includes the field); commands that don't touch the assignment leave the
-column alone. Setting `abstractTokenId` to `null` clears the proof.
+JSON column. Commands that don't touch the assignment leave the column
+alone. Setting `abstractTokenId` to `null` clears the proof.
 
 `AbstractTokenAssignmentProof` today is one of:
 
-- `{ kind: 'manual' }` — written by user-driven plans.
+- `{ kind: 'manual'; user }` — written by user-driven plans. `user` is
+  the email of whoever was logged in when the plan was confirmed.
 - `{ kind: 'coingecko' }` — ingestion resolved the abstract from
   CoinGecko's platform lookup. The CoinGecko id is already on the
   abstract token itself, so the proof carries no extra data.
@@ -232,14 +240,14 @@ column alone. Setting `abstractTokenId` to `null` clears the proof.
 
 The column itself is typed as JSON (`unknown`) at the repository layer
 so old proofs continue to read even if the typed shape evolves; the
-strong `AbstractTokenAssignmentProof` type is only used at write time.
+strong `AbstractTokenAssignmentProof` type is only used at plan time.
 
 `commitTokenChanges` does not own its surrounding transaction — each
 pipeline opens its own, because the user pipeline also needs to re-plan
-inside that transaction while ingestion does not. The helper logs the
-command and the source for every write; persisting them to a permanent
-history table is a separate follow-up change that plugs in here once and
-covers both pipelines.
+inside that transaction while ingestion does not. The helper logs every
+command it executes; persisting an audit record to a permanent history
+table is a separate follow-up change that plugs in here once and covers
+both pipelines.
 
 ## Propagation
 

@@ -65,7 +65,7 @@ function toDeployedToken(
 }
 
 async function importTransformed(db: TokenDatabase) {
-  const source = { kind: 'user', email: 'script:import-generated' } as const
+  const opts = { user: 'script:import-generated' }
   const deployedToAbstract: Record<string, string> = {}
   for (const entry of transformed.abstractTokens) {
     const record = toAbstractToken(entry)
@@ -86,7 +86,7 @@ async function importTransformed(db: TokenDatabase) {
         type: 'AddAbstractTokenIntent',
         record,
       },
-      source,
+      opts,
     )
   }
 
@@ -99,7 +99,7 @@ async function importTransformed(db: TokenDatabase) {
         type: 'AddDeployedTokenIntent',
         record,
       },
-      source,
+      opts,
     )
   }
 }

@@ -67,14 +67,15 @@ through this helper. That means:
   wraps the writes in SERIALIZABLE), because they have different
   guarantees to provide.
 
-Every call to `commitTokenChanges` carries a `WriteSource` that records
-*who* is writing. When a command sets a deployed token's
-`abstractTokenId`, the write boundary stamps the
-`DeployedToken.abstractTokenAssignmentProof` JSON column with an
-`AbstractTokenAssignmentProof`: `{ kind: 'manual' }` for user writes,
-or the ingestion-provided `{ kind: 'coingecko' }` /
-`{ kind: 'non-swapping-transfer'; transfer }` for ingestion writes. The
-non-swapping-transfer proof carries the *full* transfer because the
-interop transfer table is a sliding 24h window; BigInt raw amounts are
-stored in JSON as decimal strings. The persistent history table that
-consumes the same `WriteSource` will land in a follow-up change.
+Each pipeline attaches an `AbstractTokenAssignmentProof` to deployed-token
+commands at *plan time*, so the proof is visible in the diff the user
+sees before clicking Confirm (and in the ingestion preview dialog):
+`{ kind: 'manual'; user }` (with the logged-in user's email) for user
+plans, and `{ kind: 'coingecko' }` or
+`{ kind: 'non-swapping-transfer'; transfer }` for ingestion plans. The
+proof lands on the `DeployedToken.abstractTokenAssignmentProof` JSON
+column; `commitTokenChanges` does not modify commands, it just routes
+them. The non-swapping-transfer proof carries the *full* transfer
+because the interop transfer table is a sliding 24h window; BigInt raw
+amounts are stored in JSON as decimal strings. A persistent history
+table will land in a follow-up change.

@@ -52,7 +52,6 @@ export type IngestionOutcome =
       newAbstractToken: AbstractTokenRecord | undefined
       deployedToken: DeployedTokenWrite
       neighborsToEnqueue: TokenAddress[]
-      proof: AbstractTokenAssignmentProof
     }
   | {
       kind: 'pending'
@@ -61,6 +60,8 @@ export type IngestionOutcome =
       abstract: PendingAbstract
       symbolFallback: string | undefined
       neighborsToEnqueue: TokenAddress[]
+      /** Decided at plan time; transferred onto the deployed-token write by
+       * `fetch()` once the abstract token id is known. */
       proof: AbstractTokenAssignmentProof
     }
 

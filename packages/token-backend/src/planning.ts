@@ -1,7 +1,8 @@
-import type { TokenDatabase } from '@l2beat/database'
+import type { DeployedTokenRecord, TokenDatabase } from '@l2beat/database'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { Command } from './commands'
+import { manualProof } from './commitTokenChanges'
 import {
   type AddAbstractTokenIntent,
   type AddDeployedTokenIntent,
@@ -12,6 +13,7 @@ import {
   type UpdateDeployedTokenIntent,
 } from './intents'
 import { getLogger } from './logger'
+import type { DeployedTokenUpdateable } from './schemas/DeployedToken'
 
 export type Plan = v.infer<typeof Plan>
 export const Plan = v.object({
@@ -38,19 +40,21 @@ interface PlanningResultError {
   error: string
 }
 
+export interface PlanOptions {
+  /** Email of the user the plan is being built for; used to stamp manual
+   * proofs on any deployed-token assignment changes. */
+  user: string
+  skipLogs?: boolean
+}
+
 export async function generatePlan(
   db: TokenDatabase,
   intent: Intent,
-  opts?: {
-    skipLogs?: boolean
-    meta?: {
-      email: string
-    }
-  },
+  opts: PlanOptions,
 ): Promise<PlanningResult> {
   const logger = getLogger().for('generatePlan')
-  if (!opts?.skipLogs) {
-    logger.info('Generating plan', { intent, meta: opts?.meta })
+  if (!opts.skipLogs) {
+    logger.info('Generating plan', { intent, user: opts.user })
   }
   let commands: Command[]
   try {
@@ -65,10 +69,10 @@ export async function generatePlan(
         commands = planDeleteAbstractToken(intent)
         break
       case 'AddDeployedTokenIntent':
-        commands = await planAddDeployedToken(db, intent)
+        commands = await planAddDeployedToken(db, intent, opts)
         break
       case 'UpdateDeployedTokenIntent':
-        commands = await planUpdateDeployedToken(db, intent)
+        commands = await planUpdateDeployedToken(db, intent, opts)
         break
 
       case 'DeleteDeployedTokenIntent':
@@ -87,8 +91,8 @@ export async function generatePlan(
     throw error
   }
 
-  if (!opts?.skipLogs) {
-    logger.info('Plan generated', { commands, meta: opts?.meta })
+  if (!opts.skipLogs) {
+    logger.info('Plan generated', { commands, user: opts.user })
   }
   return {
     outcome: 'success',
@@ -157,6 +161,7 @@ function planDeleteAbstractToken(intent: DeleteAbstractTokenIntent): Command[] {
 async function planAddDeployedToken(
   db: TokenDatabase,
   intent: AddDeployedTokenIntent,
+  opts: PlanOptions,
 ): Promise<Command[]> {
   const record = intent.record
   const existing = await db.deployedToken.findByChainAndAddress(record)
@@ -168,7 +173,7 @@ async function planAddDeployedToken(
   return [
     {
       type: 'AddDeployedTokenCommand',
-      record: intent.record,
+      record: stampInsertProof(record, opts.user),
     },
   ]
 }
@@ -176,6 +181,7 @@ async function planAddDeployedToken(
 async function planUpdateDeployedToken(
   db: TokenDatabase,
   intent: UpdateDeployedTokenIntent,
+  opts: PlanOptions,
 ): Promise<Command[]> {
   const existing = await db.deployedToken.findByChainAndAddress(intent.pk)
   if (existing === undefined) {
@@ -188,7 +194,7 @@ async function planUpdateDeployedToken(
       type: 'UpdateDeployedTokenCommand',
       existing,
       pk: intent.pk,
-      update: intent.update,
+      update: stampUpdateProof(intent.update, existing, opts.user),
     },
   ]
 }
@@ -200,4 +206,33 @@ function planDeleteDeployedToken(intent: DeleteDeployedTokenIntent): Command[] {
       pk: intent.pk,
     },
   ]
+}
+
+function stampInsertProof(
+  record: DeployedTokenRecord,
+  user: string,
+): DeployedTokenRecord {
+  return {
+    ...record,
+    abstractTokenAssignmentProof:
+      record.abstractTokenId === null ? null : manualProof(user),
+  }
+}
+
+function stampUpdateProof(
+  update: DeployedTokenUpdateable,
+  existing: DeployedTokenRecord,
+  user: string,
+): DeployedTokenUpdateable {
+  if (!('abstractTokenId' in update)) {
+    return update
+  }
+  if (update.abstractTokenId === existing.abstractTokenId) {
+    return update
+  }
+  return {
+    ...update,
+    abstractTokenAssignmentProof:
+      update.abstractTokenId === null ? null : manualProof(user),
+  }
 }

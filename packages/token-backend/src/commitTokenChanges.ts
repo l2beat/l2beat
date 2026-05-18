@@ -1,32 +1,20 @@
-import type {
-  DeployedTokenRecord,
-  InteropTransferRecord,
-  TokenDatabase,
-} from '@l2beat/database'
+import type { InteropTransferRecord, TokenDatabase } from '@l2beat/database'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Command } from './commands'
 import { getLogger } from './logger'
-import type { DeployedTokenUpdateable } from './schemas/DeployedToken'
-
-/**
- * Identifies who triggered a TokenDB write. The write boundary uses this to
- * stamp every abstract-token assignment with the appropriate proof (`manual`
- * for user writes, the carried proof for ingestion writes).
- */
-export type WriteSource =
-  | { kind: 'user'; email: string }
-  | { kind: 'ingestion'; proof: AbstractTokenAssignmentProof }
 
 /**
  * Evidence justifying a deployed token's abstract-token assignment. Persisted
- * as JSON on the `DeployedToken.abstractTokenAssignmentProof` column whenever
- * an Add/Update command sets `abstractTokenId`.
+ * as JSON on the `DeployedToken.abstractTokenAssignmentProof` column. Each
+ * pipeline attaches the appropriate proof at *plan time* (so the diff shown
+ * to a human or surfaced in an ingestion preview includes it); the write
+ * boundary below is then a pure router that does not touch proofs.
  *
  * The non-swapping-transfer variant carries a *full* transfer rather than an
  * id because interop transfers are only retained for ~24h.
  */
 export type AbstractTokenAssignmentProof =
-  | { kind: 'manual' }
+  | { kind: 'manual'; user: string }
   | { kind: 'coingecko' }
   | {
       kind: 'non-swapping-transfer'
@@ -54,28 +42,28 @@ export function nonSwappingTransferProof(
   }
 }
 
+export function manualProof(user: string): AbstractTokenAssignmentProof {
+  return { kind: 'manual', user }
+}
+
 /**
  * The single write boundary for TokenDB. Both the user-driven
  * intent/plan/execute pipeline and the automatic ingestion pipeline funnel
- * their writes through here.
+ * their writes through here. Commands arrive fully populated — including any
+ * `abstractTokenAssignmentProof` field — so this function is a pure router.
  */
 export async function commitTokenChanges(
   tokenDb: TokenDatabase,
   commands: Command[],
-  source: WriteSource,
 ): Promise<void> {
   const logger = getLogger().for('commitTokenChanges')
   for (const command of commands) {
-    await executeCommand(tokenDb, command, source)
-    logger.info('Command executed', { command, source })
+    await executeCommand(tokenDb, command)
+    logger.info('Command executed', { command })
   }
 }
 
-async function executeCommand(
-  tokenDb: TokenDatabase,
-  command: Command,
-  source: WriteSource,
-) {
+async function executeCommand(tokenDb: TokenDatabase, command: Command) {
   switch (command.type) {
     case 'AddAbstractTokenCommand':
       await tokenDb.abstractToken.insert(command.record)
@@ -90,14 +78,12 @@ async function executeCommand(
       await tokenDb.abstractToken.deleteAll()
       break
     case 'AddDeployedTokenCommand':
-      await tokenDb.deployedToken.insert(
-        stampInsertProof(command.record, source),
-      )
+      await tokenDb.deployedToken.insert(command.record)
       break
     case 'UpdateDeployedTokenCommand':
       await tokenDb.deployedToken.updateByChainAndAddress(
         command.pk,
-        stampUpdateProof(command.update, command.existing, source),
+        command.update,
       )
       break
     case 'DeleteDeployedTokenCommand':
@@ -109,37 +95,4 @@ async function executeCommand(
     default:
       assertUnreachable(command)
   }
-}
-
-function stampInsertProof(
-  record: DeployedTokenRecord,
-  source: WriteSource,
-): DeployedTokenRecord {
-  return {
-    ...record,
-    abstractTokenAssignmentProof:
-      record.abstractTokenId === null ? null : proofFor(source),
-  }
-}
-
-function stampUpdateProof(
-  update: DeployedTokenUpdateable,
-  existing: DeployedTokenRecord,
-  source: WriteSource,
-): DeployedTokenUpdateable {
-  if (!('abstractTokenId' in update)) {
-    return update
-  }
-  if (update.abstractTokenId === existing.abstractTokenId) {
-    return update
-  }
-  return {
-    ...update,
-    abstractTokenAssignmentProof:
-      update.abstractTokenId === null ? null : proofFor(source),
-  }
-}
-
-function proofFor(source: WriteSource): AbstractTokenAssignmentProof {
-  return source.kind === 'user' ? { kind: 'manual' } : source.proof
 }

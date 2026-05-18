@@ -8,11 +8,7 @@ import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Command } from './commands'
-import {
-  type AbstractTokenAssignmentProof,
-  commitTokenChanges,
-  type WriteSource,
-} from './commitTokenChanges'
+import { commitTokenChanges } from './commitTokenChanges'
 
 describe(commitTokenChanges.name, () => {
   it('routes each command kind to the matching repository call in order', async () => {
@@ -57,7 +53,7 @@ describe(commitTokenChanges.name, () => {
       { type: 'DeleteAllDeployedTokensCommand' },
     ]
 
-    await commitTokenChanges(tokenDb, commands, userSource())
+    await commitTokenChanges(tokenDb, commands)
 
     expect(abstractToken.insert).toHaveBeenOnlyCalledWith(abstract)
     expect(abstractToken.updateById).toHaveBeenOnlyCalledWith(abstract.id, {
@@ -65,10 +61,7 @@ describe(commitTokenChanges.name, () => {
     })
     expect(abstractToken.deleteById).toHaveBeenOnlyCalledWith(abstract.id)
     expect(abstractToken.deleteAll).toHaveBeenCalledTimes(1)
-    expect(deployedToken.insert).toHaveBeenOnlyCalledWith({
-      ...deployed,
-      abstractTokenAssignmentProof: { kind: 'manual' },
-    })
+    expect(deployedToken.insert).toHaveBeenOnlyCalledWith(deployed)
     expect(deployedToken.updateByChainAndAddress).toHaveBeenOnlyCalledWith(
       { chain: deployed.chain, address: deployed.address },
       { symbol: 'USDC2' },
@@ -80,111 +73,41 @@ describe(commitTokenChanges.name, () => {
     expect(deployedToken.deleteAll).toHaveBeenCalledTimes(1)
   })
 
-  it('stamps the ingestion proof on AddDeployedTokenCommand', async () => {
+  it('passes deployed-token commands through verbatim, including any proof field', async () => {
     const insert = mockFn().resolvesTo(undefined)
-    const tokenDb = mockObject<TokenDatabase>({
-      deployedToken: mockObject<DeployedTokenRepository>({ insert }),
-    })
-    const proof: AbstractTokenAssignmentProof = { kind: 'coingecko' }
-    const deployed = deployedRecord('ethereum', '0xaaa', 'USDC01')
-
-    await commitTokenChanges(
-      tokenDb,
-      [{ type: 'AddDeployedTokenCommand', record: deployed }],
-      { kind: 'ingestion', proof },
-    )
-
-    expect(insert).toHaveBeenOnlyCalledWith({
-      ...deployed,
-      abstractTokenAssignmentProof: proof,
-    })
-  })
-
-  it('writes null proof when AddDeployedTokenCommand has no abstract token', async () => {
-    const insert = mockFn().resolvesTo(undefined)
-    const tokenDb = mockObject<TokenDatabase>({
-      deployedToken: mockObject<DeployedTokenRepository>({ insert }),
-    })
-    const deployed: DeployedTokenRecord = {
-      ...deployedRecord('ethereum', '0xaaa', 'USDC01'),
-      abstractTokenId: null,
-    }
-
-    await commitTokenChanges(
-      tokenDb,
-      [{ type: 'AddDeployedTokenCommand', record: deployed }],
-      userSource(),
-    )
-
-    expect(insert).toHaveBeenOnlyCalledWith({
-      ...deployed,
-      abstractTokenAssignmentProof: null,
-    })
-  })
-
-  it('stamps proof on UpdateDeployedTokenCommand only when abstractTokenId changes', async () => {
     const updateByChainAndAddress = mockFn().resolvesTo(undefined)
     const tokenDb = mockObject<TokenDatabase>({
       deployedToken: mockObject<DeployedTokenRepository>({
+        insert,
         updateByChainAndAddress,
       }),
     })
-    const deployed = deployedRecord('ethereum', '0xaaa', 'USDC01')
+    const deployed: DeployedTokenRecord = {
+      ...deployedRecord('ethereum', '0xaaa', 'USDC01'),
+      abstractTokenAssignmentProof: { kind: 'manual', user: 'someone@x.io' },
+    }
     const pk = { chain: deployed.chain, address: deployed.address }
 
-    await commitTokenChanges(
-      tokenDb,
-      [
-        {
-          type: 'UpdateDeployedTokenCommand',
-          pk,
-          existing: deployed,
-          update: { abstractTokenId: 'USDT01' },
+    await commitTokenChanges(tokenDb, [
+      { type: 'AddDeployedTokenCommand', record: deployed },
+      {
+        type: 'UpdateDeployedTokenCommand',
+        pk,
+        existing: deployed,
+        update: {
+          abstractTokenId: 'USDT01',
+          abstractTokenAssignmentProof: { kind: 'coingecko' },
         },
-        {
-          type: 'UpdateDeployedTokenCommand',
-          pk,
-          existing: deployed,
-          update: { symbol: 'X' },
-        },
-        {
-          type: 'UpdateDeployedTokenCommand',
-          pk,
-          existing: deployed,
-          update: { abstractTokenId: deployed.abstractTokenId, symbol: 'Y' },
-        },
-        {
-          type: 'UpdateDeployedTokenCommand',
-          pk,
-          existing: deployed,
-          update: { abstractTokenId: null },
-        },
-      ],
-      userSource(),
-    )
+      },
+    ])
 
-    expect(updateByChainAndAddress).toHaveBeenCalledTimes(4)
-    expect(updateByChainAndAddress).toHaveBeenNthCalledWith(1, pk, {
+    expect(insert).toHaveBeenOnlyCalledWith(deployed)
+    expect(updateByChainAndAddress).toHaveBeenOnlyCalledWith(pk, {
       abstractTokenId: 'USDT01',
-      abstractTokenAssignmentProof: { kind: 'manual' },
-    })
-    expect(updateByChainAndAddress).toHaveBeenNthCalledWith(2, pk, {
-      symbol: 'X',
-    })
-    expect(updateByChainAndAddress).toHaveBeenNthCalledWith(3, pk, {
-      abstractTokenId: deployed.abstractTokenId,
-      symbol: 'Y',
-    })
-    expect(updateByChainAndAddress).toHaveBeenNthCalledWith(4, pk, {
-      abstractTokenId: null,
-      abstractTokenAssignmentProof: null,
+      abstractTokenAssignmentProof: { kind: 'coingecko' },
     })
   })
 })
-
-function userSource(): WriteSource {
-  return { kind: 'user', email: 'user@example.com' }
-}
 
 function abstractRecord(id: string, symbol: string): AbstractTokenRecord {
   return {

@@ -1,6 +1,6 @@
 import { isDeepStrictEqual } from 'node:util'
 import type { TokenDatabase } from '@l2beat/database'
-import { commitTokenChanges, type WriteSource } from './commitTokenChanges'
+import { commitTokenChanges } from './commitTokenChanges'
 import type { Intent } from './intents'
 import { getLogger } from './logger'
 import { generatePlan, type Plan } from './planning'
@@ -16,24 +16,29 @@ interface PlanExecutionSuccess {
   outcome: 'success'
 }
 
+export interface ExecuteOptions {
+  /** Email of the user executing the plan; used to re-stamp manual proofs
+   * during re-planning and recorded in the audit log. */
+  user: string
+}
+
 export function executePlan(
   db: TokenDatabase,
   plan: Plan,
-  meta?: {
-    email: string
-  },
+  opts: ExecuteOptions,
 ): Promise<PlanExecutionResult> {
   const logger = getLogger().for('executePlan')
-  logger.info('Executing plan', { plan, meta })
+  logger.info('Executing plan', { plan, user: opts.user })
   return db.transaction(
     async (): Promise<PlanExecutionResult> => {
       const planRegeneration = await generatePlan(db, plan.intent, {
+        user: opts.user,
         skipLogs: true,
       })
       if (planRegeneration.outcome === 'error') {
         logger.error('Plan is no longer valid', {
           error: planRegeneration.error,
-          meta,
+          user: opts.user,
         })
         return {
           outcome: 'error',
@@ -43,7 +48,7 @@ export function executePlan(
       if (!isDeepStrictEqual(planRegeneration.plan, plan)) {
         logger.error(
           'Plan is no longer valid due to recent changes to the database',
-          { meta },
+          { user: opts.user },
         )
         return {
           outcome: 'error',
@@ -52,12 +57,8 @@ export function executePlan(
         }
       }
 
-      const source: WriteSource = {
-        kind: 'user',
-        email: meta?.email ?? 'unknown',
-      }
-      await commitTokenChanges(db, plan.commands, source)
-      logger.info('Plan executed', { plan, meta })
+      await commitTokenChanges(db, plan.commands)
+      logger.info('Plan executed', { plan, user: opts.user })
       return {
         outcome: 'success',
       }
@@ -77,13 +78,13 @@ export function executePlan(
 export async function planAndExecute(
   db: TokenDatabase,
   intent: Intent,
-  source: WriteSource,
+  opts: ExecuteOptions,
 ): Promise<void> {
   await db.transaction(async () => {
-    const planningResult = await generatePlan(db, intent)
+    const planningResult = await generatePlan(db, intent, { user: opts.user })
     if (planningResult.outcome === 'error') {
       throw new Error(`Error during planning: ${planningResult.error}`)
     }
-    await commitTokenChanges(db, planningResult.plan.commands, source)
+    await commitTokenChanges(db, planningResult.plan.commands)
   }, 'serializable')
 }
