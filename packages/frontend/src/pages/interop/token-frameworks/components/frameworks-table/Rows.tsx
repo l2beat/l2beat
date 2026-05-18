@@ -32,17 +32,19 @@ export function TokenRow({
         volume={token.volume}
         transferCount={token.transferCount}
         txsTrigger={
-          <TokenFrameworksTransferTrigger
-            protocol={{
-              id: framework.projectId,
-              name: framework.name,
-              iconUrl: framework.iconUrl,
-            }}
-            tokenId={token.id}
-            className="cursor-pointer font-medium text-secondary hover:underline"
-          >
-            {formatInteger(token.transferCount)} txs
-          </TokenFrameworksTransferTrigger>
+          token.isUnknown ? undefined : (
+            <TokenFrameworksTransferTrigger
+              protocol={{
+                id: framework.projectId,
+                name: framework.name,
+                iconUrl: framework.iconUrl,
+              }}
+              tokenId={token.id}
+              className="cursor-pointer font-medium text-secondary hover:underline"
+            >
+              {formatInteger(token.transferCount)} txs
+            </TokenFrameworksTransferTrigger>
+          )
         }
       />
     </div>

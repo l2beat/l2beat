@@ -11,6 +11,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
   AggregatedInteropTransferWithTokens,
   InteropSelectionInput,
@@ -69,6 +70,7 @@ export type TopTokenItem = {
   transferCount: number
   topRoute: TopTokenChainRoute | undefined
   frameworkId: string | undefined
+  isUnknown?: boolean
 }
 
 export type FrameworkChainPathItem = {
@@ -122,6 +124,7 @@ export async function getTokenFrameworksData(
     ])
 
   const records = dropCanonicalSideInLockAndMint(rawRecords)
+  const unknownItemsByFrameworkId = getUnknownTokenItemsByFramework(rawRecords)
 
   const previousProtocolData = await getPreviousProtocolData(
     snapshotTimestamp,
@@ -149,13 +152,16 @@ export async function getTokenFrameworksData(
   const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
 
   const topTokens = buildTopTokens(records, tokensDetailsMap, TOP_TOKENS_LIMIT)
+
   const recordsByFramework = groupBy(records, (record) => record.id)
   const frameworkTable: FrameworkTableEntry[] = []
   for (const framework of TOKEN_FRAMEWORKS) {
     const frameworkRecords = recordsByFramework[framework.projectId] || []
+    const tokens = buildTopTokens(frameworkRecords, tokensDetailsMap)
+    const unknown = unknownItemsByFrameworkId.get(framework.id)
     frameworkTable.push({
       id: framework.id,
-      tokens: buildTopTokens(frameworkRecords, tokensDetailsMap),
+      tokens: unknown ? [...tokens, unknown] : tokens,
       chainPaths: buildChainPaths(frameworkRecords),
       bridgingTypeBreakdown: buildBridgingTypeBreakdown(frameworkRecords),
     })
@@ -218,6 +224,46 @@ export function dropCanonicalSideInLockAndMint(
     )
     return { ...record, tokens: frameworkTokens }
   })
+}
+
+// One-sided lockAndMint records are those where we observed only the lock
+// side: every token has mintedValueUsd === 0 and burnedValueUsd === 0. The
+// framework-issued (minted) counterpart is unknown to us, so the record
+// otherwise drops out of the per-token aggregation done in `buildTopTokens`.
+// We surface these as a synthetic "Unknown" entry per framework instead.
+export function getUnknownTokenItemsByFramework(
+  records: AggregatedInteropTransferWithTokens[],
+): Map<string, TopTokenItem> {
+  const result = new Map<string, TopTokenItem>()
+  for (const record of records) {
+    if (record.bridgeType !== 'lockAndMint') continue
+    const hasFrameworkSide = record.tokens.some(
+      (token) =>
+        (token.mintedValueUsd ?? 0) > 0 || (token.burnedValueUsd ?? 0) > 0,
+    )
+    if (hasFrameworkSide) continue
+    const frameworkId = frameworkIdByProjectId.get(record.id)
+    if (!frameworkId) continue
+    const volume = getInteropTransferValue(record) ?? 0
+    const transferCount = record.transferCount ?? 0
+    if (volume === 0 && transferCount === 0) continue
+    const current = result.get(frameworkId) ?? {
+      id: `unknown-${frameworkId}`,
+      symbol: 'Unknown',
+      iconUrl: TOKEN_PLACEHOLDER_ICON_URL,
+      volume: 0,
+      transferCount: 0,
+      topRoute: undefined,
+      frameworkId,
+      isUnknown: true,
+    }
+    result.set(frameworkId, {
+      ...current,
+      volume: current.volume + volume,
+      transferCount: current.transferCount + transferCount,
+    })
+  }
+  return result
 }
 
 export function buildFrameworkEntry(

@@ -7,6 +7,7 @@ import {
   buildFrameworkEntry,
   buildTopTokens,
   dropCanonicalSideInLockAndMint,
+  getUnknownTokenItemsByFramework,
 } from './getTokenFrameworksData'
 import type { AggregatedInteropTransferWithTokens } from './types'
 import type { TokensDetailsMap } from './utils/buildTokensDetailsMap'
@@ -62,6 +63,84 @@ describe('getTokenFrameworksData helpers', () => {
 
       assert(result[0])
       expect(result[0].tokens).toEqual(tokens)
+    })
+  })
+
+  describe(getUnknownTokenItemsByFramework.name, () => {
+    it('aggregates lockAndMint records that have no minted/burned side into an Unknown TopTokenItem per framework', () => {
+      const result = getUnknownTokenItemsByFramework([
+        record({
+          id: 'layerzero',
+          bridgeType: 'lockAndMint',
+          transferCount: 5,
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+          tokens: [token({ abstractTokenId: 'usdt' })],
+        }),
+        record({
+          id: 'layerzero',
+          bridgeType: 'lockAndMint',
+          transferCount: 3,
+          srcValueUsd: 40,
+          dstValueUsd: 40,
+          tokens: [token({ abstractTokenId: 'usdc' })],
+        }),
+      ])
+
+      const item = result.get('oft')
+      expect(item?.symbol).toEqual('Unknown')
+      expect(item?.frameworkId).toEqual('oft')
+      expect(item?.isUnknown).toEqual(true)
+      expect(item?.volume).toEqual(140)
+      expect(item?.transferCount).toEqual(8)
+    })
+
+    it('ignores records that have at least one minted/burned token', () => {
+      const result = getUnknownTokenItemsByFramework([
+        record({
+          id: 'layerzero',
+          bridgeType: 'lockAndMint',
+          transferCount: 5,
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+          tokens: [
+            token({ abstractTokenId: 'usdt' }),
+            token({ abstractTokenId: 'usdt0', mintedValueUsd: 100 }),
+          ],
+        }),
+      ])
+
+      expect(result.size).toEqual(0)
+    })
+
+    it('ignores non-lockAndMint records', () => {
+      const result = getUnknownTokenItemsByFramework([
+        record({
+          id: 'ccip',
+          bridgeType: 'burnAndMint',
+          transferCount: 5,
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+          tokens: [token({ abstractTokenId: 'usdc' })],
+        }),
+      ])
+
+      expect(result.size).toEqual(0)
+    })
+
+    it('skips records with no volume and no transfers', () => {
+      const result = getUnknownTokenItemsByFramework([
+        record({
+          id: 'layerzero',
+          bridgeType: 'lockAndMint',
+          transferCount: 0,
+          srcValueUsd: 0,
+          dstValueUsd: 0,
+          tokens: [token({ abstractTokenId: 'usdt' })],
+        }),
+      ])
+
+      expect(result.size).toEqual(0)
     })
   })
 
