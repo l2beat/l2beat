@@ -210,7 +210,7 @@ export async function getTokenFrameworksData(
 // burned (reverse direction), so it always has mintedValueUsd > 0 or
 // burnedValueUsd > 0. The canonical side is only locked/unlocked and has both
 // at 0.
-function dropCanonicalSideInLockAndMint(
+export function dropCanonicalSideInLockAndMint(
   records: AggregatedInteropTransferWithTokens[],
 ): AggregatedInteropTransferWithTokens[] {
   return records.map((record) => {
@@ -225,7 +225,7 @@ function dropCanonicalSideInLockAndMint(
   })
 }
 
-function buildFrameworkEntry(
+export function buildFrameworkEntry(
   framework: TokenFrameworkDefinition,
   data: ProtocolData | undefined,
   project: Project<'interopConfig'> | undefined,
@@ -298,7 +298,7 @@ const frameworkIdByProjectId = new Map(
   TOKEN_FRAMEWORKS.map((f) => [f.projectId.toString(), f.id]),
 )
 
-function buildTopTokens(
+export function buildTopTokens(
   records: AggregatedInteropTransferWithTokens[],
   tokensDetailsMap: TokensDetailsMap,
   limit?: number,
@@ -336,7 +336,7 @@ const chainIconMap = new Map(
   ]),
 )
 
-function buildChainPaths(
+export function buildChainPaths(
   records: AggregatedInteropTransferWithTokens[],
 ): FrameworkChainPathItem[] {
   const map = new Map<string, FrameworkChainPathItem>()
@@ -365,7 +365,7 @@ function buildChainPaths(
   return [...map.values()].sort((a, b) => b.volume - a.volume)
 }
 
-function buildBridgingTypeBreakdown(
+export function buildBridgingTypeBreakdown(
   records: AggregatedInteropTransferWithTokens[],
 ): FrameworkBridgingTypeItem[] {
   const map = new Map<InteropBridgeType, FrameworkBridgingTypeItem>()
