@@ -42,6 +42,7 @@ import { ShowPermissions } from './ShowPermissions'
 import { SolFmt } from './SolFmt'
 import { StarknetAccessControl } from './StarknetAccessControl'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
+import { Static } from './Static'
 import { TVL } from './TVL'
 import { UI } from './UI'
 import { Why } from './Why'
@@ -94,6 +95,7 @@ export function getSubcommands() {
     SolFmt,
     StarknetAccessControl,
     StarknetProgramHashes,
+    Static,
     TVL,
     UI,
     Why,
