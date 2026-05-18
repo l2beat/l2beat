@@ -306,8 +306,8 @@ export const optimism: ScalingProject = opStackL2({
 
 | | |
 | --- | --- |
-| Security Council | **10-of-13** — Gnosis Safe at \`0xc2819DC7…3Bd03\`. Cohorts of 7 + 6, 12-month staggered terms. Token-House-elected via Agora with Optimism Foundation eligibility screening (KYC/AML, geographic and organisational diversity). |
-| SC members public | **Entities only** — elected entity names are public; 1:1 entity-to-address mapping deliberately not published (Foundation privacy policy). Cohort A (elected Oct 2025, term Feb 2026 – Feb 2027): Agora, Velodrome, Cyfrin, pablito.eth, Mariano, Uniswap Foundation, Emiliano. Cohort B (elected Feb 2025, term Feb 2025 – Feb 2026): L2BEAT, OP Labs PBC, Coinbase Technologies, Test in Prod, Ink Foundation/Kraken, World Foundation; the Feb 2026 rotation outcome is not captured in this repo. |
+| Security Council | **10-of-13** — Gnosis Safe with cohorts of 7 + 6, 12-month staggered terms. Token-House-elected via Agora with Optimism Foundation eligibility screening (KYC/AML, geographic and organisational diversity). |
+| SC members public | **Entities only** — elected entity names are public; 1:1 entity-to-address mapping deliberately not published (Foundation privacy policy). Current Cohort A (Feb 2026 – Feb 2027): Agora, Velodrome, Cyfrin, pablito.eth, Mariano, Uniswap Foundation, Emiliano. Cohort B's initial slate (Feb 2025): L2BEAT, OP Labs PBC, Coinbase Technologies, Test in Prod, Ink Foundation/Kraken, World Foundation. |
 | SC charter | [Security Council Charter v0.1](https://github.com/ethereum-optimism/OPerating-manual/blob/main/Security%20Council%20Charter%20v0.1.md) — defines 75% threshold, emergency response, Token House removal, LivenessModule failsafe (control reverts to Foundation Upgrade Safe if signers drop below 8). |
 
 <h4 style="text-align: center;">Upgrade paths</h4>
@@ -322,7 +322,7 @@ export const optimism: ScalingProject = opStackL2({
 
 | | |
 | --- | --- |
-| Governance token | \`OP\` — 4,294,967,296 initial supply, up to 2%/yr inflation (cap fixed in the Operating Manual; changes require a 76% Inflation proposal). 1 OP = 1 vote, delegated. |
+| Governance token | \`OP\` — ~4.29B initial supply, up to 2%/yr inflation (cap fixed in the Operating Manual; changes require a 76% Inflation proposal). 1 OP = 1 vote, delegated. |
 | Voting venue | [Agora](https://vote.optimism.io/) for binding on-chain Token House votes. [Snapshot](https://snapshot.org/#/opcollective.eth) for Citizens' House signaling, Protocol Upgrade vetoes, and some Reflection Period votes. Forum stage: [gov.optimism.io](https://gov.optimism.io). |
 | Proposal threshold | **No OP minimum** — submission requires explicit approval from 4 of the top-100 delegates on the discussion thread (Operating Manual). Citizens' House analog: 4 Citizens. Foundation-initiated proposals require no approvals. Note: protocol upgrades since Aug 2025 originate from the DAB rather than the Token House. |
 | Quorum | **30%** for Token House proposals. Veto-window participation thresholds for protocol upgrades: 17% (two groups voting), 14% (three groups), 11% (four groups). |
@@ -332,8 +332,8 @@ export const optimism: ScalingProject = opStackL2({
 
 | | |
 | --- | --- |
-| SC can bypass DAO? | **Yes** — emergency response measures may be taken without specific Governance approval (Charter v0.1). The SC + Foundation Upgrade Safe (2/2 SuperchainProxyAdminOwner) hold the actual upgrade keys and can execute at any time. The on-chain narrative confirms: "for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process." |
-| DAO can override SC? | **Veto, plus member removal** — Token House and Citizens' House can veto DAB-approved upgrades during the 7-day Sepolia window (subject to participation thresholds). Token House can remove SC members by simple majority within one voting cycle (≤3 weeks) for Code of Conduct violations. LivenessModule auto-removes signers inactive ≥3 months 8 days; if signer count drops below 8, control reverts to the Foundation Upgrade Safe. |
+| SC can bypass DAO? | **Yes** — emergency response measures may be taken without specific Governance approval (Charter v0.1). The SC + Foundation Upgrade Safe (2/2 SuperchainProxyAdminOwner) hold the actual upgrade keys and can execute at any time. |
+| DAO can override SC? | **Veto, plus member removal** — Token House and Citizens' House can veto DAB-approved upgrades during the 7-day veto window (subject to participation thresholds). Token House can remove SC members by simple majority within one voting cycle (≤3 weeks) for Code of Conduct violations. LivenessModule auto-removes signers inactive ≥3 months 8 days; if signer count drops below 8, control reverts to the Foundation Upgrade Safe. |
 `,
   milestones: [
     {
