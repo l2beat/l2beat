@@ -1,5 +1,6 @@
 import type { AbstractTokenRecord, DeployedTokenRecord } from '@l2beat/database'
 import type { DeployedTokenFacts } from '../chains/fetchDeployedTokenFacts'
+import type { AbstractTokenAssignmentProof } from '../commitTokenChanges'
 import type {
   DeployedTokenPrimaryKey,
   DeployedTokenUpdateable,
@@ -51,6 +52,7 @@ export type IngestionOutcome =
       newAbstractToken: AbstractTokenRecord | undefined
       deployedToken: DeployedTokenWrite
       neighborsToEnqueue: TokenAddress[]
+      proof: AbstractTokenAssignmentProof
     }
   | {
       kind: 'pending'
@@ -59,6 +61,7 @@ export type IngestionOutcome =
       abstract: PendingAbstract
       symbolFallback: string | undefined
       neighborsToEnqueue: TokenAddress[]
+      proof: AbstractTokenAssignmentProof
     }
 
 export type PendingAbstract =

@@ -22,6 +22,12 @@ import {
   type DeployedTokenFacts,
   fetchDeployedTokenFacts,
 } from '../chains/fetchDeployedTokenFacts'
+import type { Command } from '../commands'
+import {
+  type AbstractTokenAssignmentProof,
+  commitTokenChanges,
+  type WriteSource,
+} from '../commitTokenChanges'
 import {
   buildAliasToChainMap,
   platformsToChainAddressPairs,
@@ -59,11 +65,14 @@ type AbstractTokenResolution =
       type: 'resolved'
       abstractToken: AbstractTokenRef
       symbolFallback: string | undefined
+      proof: AbstractTokenAssignmentProof
     }
+  | { type: 'existing-noop'; abstractToken: AbstractTokenRef }
   | {
       type: 'pending-new-coingecko'
       coingeckoId: string
       coinSymbol: string
+      proof: AbstractTokenAssignmentProof
     }
   | { type: 'missing' }
   | { type: 'conflict'; message: string }
@@ -189,6 +198,7 @@ export class TokenIngestionProcessor {
             update: { abstractTokenId },
           },
           neighborsToEnqueue: pending.neighborsToEnqueue,
+          proof: pending.proof,
         },
       }
     }
@@ -216,6 +226,7 @@ export class TokenIngestionProcessor {
         newAbstractToken,
         deployedToken: { type: 'insert', record: built.record },
         neighborsToEnqueue: pending.neighborsToEnqueue,
+        proof: pending.proof,
       },
     }
   }
@@ -247,23 +258,14 @@ export class TokenIngestionProcessor {
         throw new Error(
           'apply() called with a pending outcome; call fetch() first',
         )
-      case 'write':
+      case 'write': {
+        const commands = buildWriteCommands(outcome)
+        const source: WriteSource = {
+          kind: 'ingestion',
+          proof: outcome.proof,
+        }
         await this.deps.tokenDb.transaction(async () => {
-          if (outcome.newAbstractToken) {
-            await this.deps.tokenDb.abstractToken.insert(
-              outcome.newAbstractToken,
-            )
-          }
-          if (outcome.deployedToken.type === 'insert') {
-            await this.deps.tokenDb.deployedToken.insert(
-              outcome.deployedToken.record,
-            )
-          } else {
-            await this.deps.tokenDb.deployedToken.updateByChainAndAddress(
-              outcome.deployedToken.pk,
-              outcome.deployedToken.update,
-            )
-          }
+          await commitTokenChanges(this.deps.tokenDb, commands, source)
         }, 'serializable')
 
         for (const neighbor of outcome.neighborsToEnqueue) {
@@ -277,6 +279,7 @@ export class TokenIngestionProcessor {
         ])
         await queue.remove(entry)
         return
+      }
     }
   }
 
@@ -296,7 +299,7 @@ export class TokenIngestionProcessor {
       return fromTransfers
     }
 
-    if (fromTransfers.abstractToken) {
+    if (fromTransfers.abstractToken && fromTransfers.supportingTransfer) {
       steps.push({
         kind: 'resolved-from-transfers',
         abstractToken: fromTransfers.abstractToken,
@@ -305,10 +308,17 @@ export class TokenIngestionProcessor {
         type: 'resolved',
         abstractToken: fromTransfers.abstractToken,
         symbolFallback: undefined,
+        proof: {
+          kind: 'non-swapping-transfer',
+          transfer: fromTransfers.supportingTransfer,
+        },
       }
     }
 
     if (existing?.abstractTokenId) {
+      // Falling back to the deployed token's existing abstract always produces
+      // a noop (the assignment is unchanged), so no proof is needed — the new
+      // proof would never be persisted.
       const existingAbstract = await this.deps.tokenDb.abstractToken.findById(
         existing.abstractTokenId,
       )
@@ -317,11 +327,7 @@ export class TokenIngestionProcessor {
         symbol: existingAbstract?.symbol ?? '?',
       }
       steps.push({ kind: 'resolved-from-existing', abstractToken: ref })
-      return {
-        type: 'resolved',
-        abstractToken: ref,
-        symbolFallback: undefined,
-      }
+      return { type: 'existing-noop', abstractToken: ref }
     }
 
     return await this.resolveAbstractFromCoingecko(address, steps)
@@ -332,7 +338,11 @@ export class TokenIngestionProcessor {
     existing: DeployedTokenRecord | undefined,
     steps: IngestionStep[],
   ): Promise<
-    | { type: 'resolved'; abstractToken: AbstractTokenRef | undefined }
+    | {
+        type: 'resolved'
+        abstractToken: AbstractTokenRef | undefined
+        supportingTransfer: InteropTransferRecord | undefined
+      }
     | { type: 'conflict'; message: string }
   > {
     const usableNonSwapping = transfers.filter(
@@ -400,7 +410,19 @@ export class TokenIngestionProcessor {
       }
     }
 
-    return { type: 'resolved', abstractToken: transferAbstract }
+    const supportingTransfer = transferAbstract
+      ? supportingTransferFor(
+          transferAbstract.id,
+          usableNonSwapping,
+          otherDeployedTokenMap,
+        )
+      : undefined
+
+    return {
+      type: 'resolved',
+      abstractToken: transferAbstract,
+      supportingTransfer,
+    }
   }
 
   private async resolveAbstractFromCoingecko(
@@ -418,6 +440,8 @@ export class TokenIngestionProcessor {
       symbol: coin.symbol,
     })
 
+    const proof: AbstractTokenAssignmentProof = { kind: 'coingecko' }
+
     const abstractToken =
       await this.deps.tokenDb.abstractToken.findByCoingeckoId(coin.id)
     if (abstractToken) {
@@ -434,6 +458,7 @@ export class TokenIngestionProcessor {
         type: 'resolved',
         abstractToken: ref,
         symbolFallback: coin.symbol.toUpperCase(),
+        proof,
       }
     }
 
@@ -446,6 +471,7 @@ export class TokenIngestionProcessor {
       type: 'pending-new-coingecko',
       coingeckoId: coin.id,
       coinSymbol: coin.symbol,
+      proof,
     }
   }
 
@@ -453,12 +479,19 @@ export class TokenIngestionProcessor {
     existing: DeployedTokenRecord | undefined,
     resolution: Extract<
       AbstractTokenResolution,
-      { type: 'resolved' | 'pending-new-coingecko' }
+      { type: 'resolved' | 'existing-noop' | 'pending-new-coingecko' }
     >,
     transfers: InteropTransferMatch[],
     address: TokenAddress,
   ): IngestionOutcome {
     const neighborsToEnqueue = collectTransferNeighbors(address, transfers)
+
+    if (resolution.type === 'existing-noop') {
+      if (!existing) {
+        throw new Error('existing-noop resolution without an existing token')
+      }
+      return { kind: 'noop', deployedToken: existing }
+    }
 
     if (resolution.type === 'resolved') {
       if (existing) {
@@ -475,6 +508,7 @@ export class TokenIngestionProcessor {
             update: { abstractTokenId: resolution.abstractToken.id },
           },
           neighborsToEnqueue,
+          proof: resolution.proof,
         }
       }
       return {
@@ -484,6 +518,7 @@ export class TokenIngestionProcessor {
         abstract: { kind: 'existing', token: resolution.abstractToken },
         symbolFallback: resolution.symbolFallback,
         neighborsToEnqueue,
+        proof: resolution.proof,
       }
     }
 
@@ -498,6 +533,7 @@ export class TokenIngestionProcessor {
       },
       symbolFallback: resolution.coinSymbol.toUpperCase(),
       neighborsToEnqueue,
+      proof: resolution.proof,
     }
   }
 
@@ -701,6 +737,46 @@ function uniqueTokenAddresses(addresses: TokenAddress[]): TokenAddress[] {
       addresses.map((address) => [getTokenKey(address), address]),
     ).values(),
   )
+}
+
+function buildWriteCommands(
+  outcome: Extract<IngestionOutcome, { kind: 'write' }>,
+): Command[] {
+  const commands: Command[] = []
+  if (outcome.newAbstractToken) {
+    commands.push({
+      type: 'AddAbstractTokenCommand',
+      record: outcome.newAbstractToken,
+    })
+  }
+  if (outcome.deployedToken.type === 'insert') {
+    commands.push({
+      type: 'AddDeployedTokenCommand',
+      record: outcome.deployedToken.record,
+    })
+  } else {
+    commands.push({
+      type: 'UpdateDeployedTokenCommand',
+      pk: outcome.deployedToken.pk,
+      existing: outcome.deployedToken.existing,
+      update: outcome.deployedToken.update,
+    })
+  }
+  return commands
+}
+
+function supportingTransferFor(
+  abstractTokenId: string,
+  usableNonSwapping: (InteropTransferMatch & { otherToken: TokenAddress })[],
+  otherDeployedTokenMap: Map<string, DeployedTokenRecord>,
+): InteropTransferRecord | undefined {
+  for (const match of usableNonSwapping) {
+    const other = otherDeployedTokenMap.get(getTokenKey(match.otherToken))
+    if (other?.abstractTokenId === abstractTokenId) {
+      return match.transfer
+    }
+  }
+  return undefined
 }
 
 function collectTransferNeighbors(

@@ -113,22 +113,92 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
-      expect(trace.outcome).toEqual({
-        kind: 'pending',
-        operation: 'insert',
-        existing: undefined,
-        abstract: {
-          kind: 'existing',
-          token: { id: 'USDC01', symbol: 'USDC' },
-        },
-        symbolFallback: undefined,
-        neighborsToEnqueue: [otherAddress],
+      expect(trace.outcome.kind).toEqual('pending')
+      if (trace.outcome.kind !== 'pending') return
+      expect(trace.outcome.abstract).toEqual({
+        kind: 'existing',
+        token: { id: 'USDC01', symbol: 'USDC' },
       })
+      expect(trace.outcome.neighborsToEnqueue).toEqual([otherAddress])
+      expect(trace.outcome.proof.kind).toEqual('non-swapping-transfer')
+      if (trace.outcome.proof.kind !== 'non-swapping-transfer') return
+      expect(trace.outcome.proof.transfer.transferId).toEqual('transfer-id')
       expect(trace.steps.some((step) => step.kind === 'fetched-facts')).toEqual(
         false,
       )
       expect(fetchDeployedTokenFacts).toHaveBeenCalledTimes(0)
       expect(findByName).toHaveBeenCalledTimes(0)
+    })
+
+    it('records the first supporting transfer as proof and ignores transfers whose other side has no abstract', async () => {
+      const address = token('ethereum', '0xaaa')
+      const knownOther = token('base', '0xbbb')
+      const unknownOther = token('arbitrum', '0xccc')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          deployedToken: mockObject<DeployedTokenRepository>({
+            findByChainAndAddress: mockFn().resolvesTo(undefined),
+            getByPrimaryKeys: mockFn().resolvesTo([
+              {
+                ...knownOther,
+                abstractTokenId: 'USDC01',
+                symbol: 'USDC',
+                comment: null,
+                decimals: 6,
+                deploymentTimestamp: UnixTime(1),
+                metadata: null,
+              },
+            ]),
+          }),
+          abstractToken: mockObject<AbstractTokenRepository>({
+            getByIds: mockFn().resolvesTo([
+              abstractTokenRecord('USDC01', 'USDC'),
+            ]),
+          }),
+          chain: mockObject<ChainRepository>({
+            findByName: mockFn().resolvesTo(undefined),
+          }),
+        }),
+      })
+
+      const trace = await processor.plan(
+        queueEntry(address),
+        buildInteropTransferIndex([
+          transfer({
+            transferId: 'transfer-known-1',
+            srcChain: address.chain,
+            srcTokenAddress: address.address,
+            dstChain: knownOther.chain,
+            dstTokenAddress: knownOther.address,
+            bridgeType: 'lockAndMint',
+          }),
+          transfer({
+            transferId: 'transfer-known-2',
+            srcChain: address.chain,
+            srcTokenAddress: address.address,
+            dstChain: knownOther.chain,
+            dstTokenAddress: knownOther.address,
+            bridgeType: 'burnAndMint',
+          }),
+          transfer({
+            transferId: 'transfer-unknown',
+            srcChain: address.chain,
+            srcTokenAddress: address.address,
+            dstChain: unknownOther.chain,
+            dstTokenAddress: unknownOther.address,
+            bridgeType: 'lockAndMint',
+          }),
+        ]),
+      )
+
+      expect(trace.outcome.kind).toEqual('pending')
+      if (trace.outcome.kind !== 'pending') return
+      expect(trace.outcome.proof.kind).toEqual('non-swapping-transfer')
+      if (trace.outcome.proof.kind !== 'non-swapping-transfer') return
+      expect(trace.outcome.proof.transfer.transferId).toEqual(
+        'transfer-known-1',
+      )
     })
 
     it('returns pending with new-coingecko abstract without calling CoinGecko coin endpoints', async () => {
@@ -187,6 +257,7 @@ describe(TokenIngestionProcessor.name, () => {
         },
         symbolFallback: 'USDC',
         neighborsToEnqueue: [],
+        proof: { kind: 'coingecko' },
       })
       expect(getCoinDataById).toHaveBeenCalledTimes(0)
       expect(getCoinMarketChartRange).toHaveBeenCalledTimes(0)
@@ -244,6 +315,7 @@ describe(TokenIngestionProcessor.name, () => {
           },
           symbolFallback: undefined,
           neighborsToEnqueue: [],
+          proof: { kind: 'coingecko' },
         },
       })
 
@@ -263,6 +335,7 @@ describe(TokenIngestionProcessor.name, () => {
           },
         },
         neighborsToEnqueue: [],
+        proof: { kind: 'coingecko' },
       })
     })
 
@@ -322,6 +395,7 @@ describe(TokenIngestionProcessor.name, () => {
           },
           symbolFallback: 'USDC',
           neighborsToEnqueue: [],
+          proof: { kind: 'coingecko' },
         },
       })
 
@@ -369,6 +443,7 @@ describe(TokenIngestionProcessor.name, () => {
           },
           symbolFallback: undefined,
           neighborsToEnqueue: [],
+          proof: { kind: 'coingecko' },
         },
       })
 
@@ -392,6 +467,7 @@ describe(TokenIngestionProcessor.name, () => {
           },
           symbolFallback: undefined,
           neighborsToEnqueue: [],
+          proof: { kind: 'coingecko' },
         },
       }
       await expect(

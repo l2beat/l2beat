@@ -691,6 +691,8 @@ function deployedToken(
         excludeFromTotal: false,
       },
     },
+    abstractTokenAssignmentProof:
+      overrides.abstractTokenAssignmentProof ?? null,
   }
 }
 

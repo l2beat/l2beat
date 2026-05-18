@@ -3,6 +3,7 @@ import type { Insertable, Selectable, Updateable } from 'kysely'
 import isNil from 'lodash/isNil'
 import { BaseRepository } from '../BaseRepository'
 import type { DeployedToken } from '../kysely/generated/types'
+import { toJsonSafe } from '../utils/toJsonSafe'
 import {
   type AbstractTokenRecord,
   toAbstractTokenRecord,
@@ -18,6 +19,7 @@ export type DeployedTokenRecord = {
   decimals: number
   deploymentTimestamp: UnixTime
   metadata: DeployedTokenMetadata | null
+  abstractTokenAssignmentProof?: unknown
 }
 
 export type DeployedTokenMetadata = {
@@ -47,26 +49,39 @@ function toRecord(row: Selectable<DeployedToken>): DeployedTokenRecord {
     ...row,
     metadata: row.metadata as DeployedTokenMetadata,
     deploymentTimestamp: UnixTime.fromDate(row.deploymentTimestamp),
+    abstractTokenAssignmentProof: row.abstractTokenAssignmentProof,
   }
 }
 
 function toRow(record: DeployedTokenRecord): Insertable<DeployedToken> {
-  return {
+  const row: Insertable<DeployedToken> = {
     ...record,
     address: record.address.toLowerCase(),
     deploymentTimestamp: UnixTime.toDate(record.deploymentTimestamp),
   }
+  if ('abstractTokenAssignmentProof' in row) {
+    row.abstractTokenAssignmentProof = toJsonSafe(
+      row.abstractTokenAssignmentProof,
+    )
+  }
+  return row
 }
 
 function toUpdateRow(
   record: DeployedTokenUpdateable,
 ): Updateable<DeployedToken> {
-  return {
+  const row: Updateable<DeployedToken> = {
     ...record,
     deploymentTimestamp: isNil(record.deploymentTimestamp)
       ? record.deploymentTimestamp
       : UnixTime.toDate(record.deploymentTimestamp),
   }
+  if ('abstractTokenAssignmentProof' in row) {
+    row.abstractTokenAssignmentProof = toJsonSafe(
+      row.abstractTokenAssignmentProof,
+    )
+  }
+  return row
 }
 
 export class DeployedTokenRepository extends BaseRepository {
@@ -139,6 +154,7 @@ export class DeployedTokenRepository extends BaseRepository {
         decimals: row.decimals,
         deploymentTimestamp: row.deploymentTimestamp,
         metadata: row.metadata as DeployedTokenMetadata,
+        abstractTokenAssignmentProof: row.abstractTokenAssignmentProof,
       }),
       abstractToken:
         row.AbstractToken_id === null ||

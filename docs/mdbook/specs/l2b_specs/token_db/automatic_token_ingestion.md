@@ -110,7 +110,13 @@ The processor splits each tick into three phases:
    are missing.
 3. **`apply(entry, trace)`** — writes only. Switches on the final
    outcome and does the corresponding TokenDB and queue mutations. Throws
-   if it ever sees `pending` (a sign `fetch` was skipped).
+   if it ever sees `pending` (a sign `fetch` was skipped). For the
+   `write` outcome, `apply` translates the trace into `Command[]` and
+   funnels them through the shared
+   [`commitTokenChanges`](../../../../../packages/token-backend/src/commitTokenChanges.ts)
+   write boundary, which is the same primitive that the user-driven
+   `intent → plan → execute` pipeline uses. See *Shared write boundary*
+   below.
 
 `process(entry)` is the 4-line composition: `plan` then `fetch` then
 `apply`.
@@ -184,6 +190,56 @@ update, possibly with a newly built CoinGecko abstract) or `error`.
   re-enqueues every neighbor token from the address's transfers
   (propagation), marks related interop transfers as unprocessed, and
   removes the queue entry.
+
+## Shared write boundary
+
+Both this pipeline and the user-driven `intent → plan → execute` pipeline
+ultimately write to the same two TokenDB tables (`AbstractToken` and
+`DeployedToken`). To make sure both paths produce the same writes — and so
+that future cross-cutting concerns like a persistent history table land
+in exactly one place — they share a single primitive,
+[`commitTokenChanges`](../../../../../packages/token-backend/src/commitTokenChanges.ts),
+that takes a list of `Command`s and a `WriteSource`.
+
+- The user pipeline calls it with `{ kind: 'user', email }` after the
+  re-plan-and-compare succeeds inside its SERIALIZABLE transaction.
+  `commitTokenChanges` stamps any abstract-token assignment from a user
+  write with `{ kind: 'manual' }`.
+- Ingestion's `apply` calls it with `{ kind: 'ingestion', proof }` for
+  the `write` outcome, also inside a SERIALIZABLE transaction. The
+  `proof` is captured by `plan` and carried through `fetch` so that
+  whenever an abstract-token assignment is written, the evidence that
+  justified the assignment is required by the type system.
+
+The proof is persisted on the `DeployedToken.abstractTokenAssignmentProof`
+JSON column. `commitTokenChanges` writes it on every command that *sets*
+`abstractTokenId` (insert with a non-null abstract, or update whose patch
+includes the field); commands that don't touch the assignment leave the
+column alone. Setting `abstractTokenId` to `null` clears the proof.
+
+`AbstractTokenAssignmentProof` today is one of:
+
+- `{ kind: 'manual' }` — written by user-driven plans.
+- `{ kind: 'coingecko' }` — ingestion resolved the abstract from
+  CoinGecko's platform lookup. The CoinGecko id is already on the
+  abstract token itself, so the proof carries no extra data.
+- `{ kind: 'non-swapping-transfer'; transfer }` — ingestion resolved
+  from non-swapping transfer evidence. The proof carries the *full*
+  transfer row, not just an id, because the interop transfer table is a
+  sliding 24h window — by the time someone reviews the assignment, the
+  row may already be gone. Because the proof is stored as JSON, BigInt
+  raw amounts in that transfer are persisted as decimal strings.
+
+The column itself is typed as JSON (`unknown`) at the repository layer
+so old proofs continue to read even if the typed shape evolves; the
+strong `AbstractTokenAssignmentProof` type is only used at write time.
+
+`commitTokenChanges` does not own its surrounding transaction — each
+pipeline opens its own, because the user pipeline also needs to re-plan
+inside that transaction while ingestion does not. The helper logs the
+command and the source for every write; persisting them to a permanent
+history table is a separate follow-up change that plugs in here once and
+covers both pipelines.
 
 ## Propagation
 

@@ -1,7 +1,6 @@
 import { isDeepStrictEqual } from 'node:util'
 import type { TokenDatabase } from '@l2beat/database'
-import { assertUnreachable } from '@l2beat/shared-pure'
-import type { Command } from './commands'
+import { commitTokenChanges, type WriteSource } from './commitTokenChanges'
 import type { Intent } from './intents'
 import { getLogger } from './logger'
 import { generatePlan, type Plan } from './planning'
@@ -53,10 +52,11 @@ export function executePlan(
         }
       }
 
-      for (const command of plan.commands) {
-        await executeCommand(db, command)
-        logger.info('Command executed', { command, meta })
+      const source: WriteSource = {
+        kind: 'user',
+        email: meta?.email ?? 'unknown',
       }
+      await commitTokenChanges(db, plan.commands, source)
       logger.info('Plan executed', { plan, meta })
       return {
         outcome: 'success',
@@ -77,45 +77,13 @@ export function executePlan(
 export async function planAndExecute(
   db: TokenDatabase,
   intent: Intent,
+  source: WriteSource,
 ): Promise<void> {
   await db.transaction(async () => {
     const planningResult = await generatePlan(db, intent)
     if (planningResult.outcome === 'error') {
       throw new Error(`Error during planning: ${planningResult.error}`)
     }
-    for (const command of planningResult.plan.commands) {
-      await executeCommand(db, command)
-    }
+    await commitTokenChanges(db, planningResult.plan.commands, source)
   }, 'serializable')
-}
-
-async function executeCommand(db: TokenDatabase, command: Command) {
-  switch (command.type) {
-    case 'AddAbstractTokenCommand':
-      await db.abstractToken.insert(command.record)
-      break
-    case 'UpdateAbstractTokenCommand':
-      await db.abstractToken.updateById(command.id, command.update)
-      break
-    case 'DeleteAbstractTokenCommand':
-      await db.abstractToken.deleteById(command.id)
-      break
-    case 'DeleteAllAbstractTokensCommand':
-      await db.abstractToken.deleteAll()
-      break
-    case 'AddDeployedTokenCommand':
-      await db.deployedToken.insert(command.record)
-      break
-    case 'UpdateDeployedTokenCommand':
-      await db.deployedToken.updateByChainAndAddress(command.pk, command.update)
-      break
-    case 'DeleteDeployedTokenCommand':
-      await db.deployedToken.deleteByPrimaryKey(command.pk)
-      break
-    case 'DeleteAllDeployedTokensCommand':
-      await db.deployedToken.deleteAll()
-      break
-    default:
-      assertUnreachable(command)
-  }
 }

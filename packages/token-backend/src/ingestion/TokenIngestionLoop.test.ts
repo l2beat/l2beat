@@ -231,6 +231,10 @@ describe(TokenIngestionLoop.name, () => {
 
       expect(updateByChainAndAddress).toHaveBeenCalledWith(address, {
         abstractTokenId: 'USDC01',
+        abstractTokenAssignmentProof: {
+          kind: 'non-swapping-transfer',
+          transfer: expect.anything(),
+        },
       })
       expect(fetchDeployedTokenFacts).toHaveBeenCalledTimes(0)
     })

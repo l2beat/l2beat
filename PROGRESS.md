@@ -213,3 +213,90 @@ Documentation:
   describe `plan + fetch + apply`, the new `pending` outcome, the
   zero-external-calls guarantee for `plan`, and the queue-wide
   predicted-outcome consumption by `getPage`.
+
+## 2026-05-17 - Slice 7: shared write boundary
+
+Unified the two TokenDB write paths (user-driven `intent → plan →
+execute` and automatic ingestion's `plan → fetch → apply`) behind a
+single primitive, so that future cross-cutting concerns — most
+importantly the persistent token-history table — land in one place and
+cover both paths automatically.
+
+- Added `packages/token-backend/src/commitTokenChanges.ts` exposing
+  `commitTokenChanges(tokenDb, commands, source)` plus the `WriteSource`
+  and `AbstractTokenAssignmentProof` types. The helper switches on
+  `Command` kind and performs the matching repository call; it is
+  transaction-agnostic, so each caller keeps its own concurrency story.
+- `WriteSource` is either `{ kind: 'user'; email }` or
+  `{ kind: 'ingestion'; proof }`. `AbstractTokenAssignmentProof` is one
+  of `{ kind: 'manual' }`, `{ kind: 'coingecko' }`, or
+  `{ kind: 'non-swapping-transfer'; transfer }`. A proof is required
+  whenever a command sets `abstractTokenId` (insert with a non-null
+  abstract, or update whose patch touches the field); `commitTokenChanges`
+  derives `manual` for user writes and reads the carried proof for
+  ingestion writes. The non-swapping-transfer variant carries the *full*
+  transfer because the interop transfer table is a 24h sliding window.
+- Refactored `execution.ts` to delegate to `commitTokenChanges`.
+  `executePlan` still opens a SERIALIZABLE transaction, regenerates the
+  plan, and deep-compares it; only the per-command write switch moved
+  out. `planAndExecute` now takes an explicit `WriteSource`.
+- Refactored `TokenIngestionProcessor.apply()` so the `write` case
+  translates the outcome into `Command[]` and funnels them through
+  `commitTokenChanges`, with `source = { kind: 'ingestion', proof }`.
+  Queue-state writes (`skip`/`conflict`/`error`/`noop`) and the
+  `interopTransfer.markAsUnprocessedByTokens` call are not TokenDB rows
+  and stay where they were.
+- Threaded `proof` through abstract-token resolution:
+  - `resolveAbstractFromNonSwappingTransfers` now returns the first
+    supporting transfer (whose other side actually carries the chosen
+    abstract) and records it as the proof on `resolved` results.
+  - `resolveAbstractFromCoingecko` returns a `coingecko` proof both when
+    reusing an existing abstract and when materializing a new one.
+  - The "fallback to the deployed token's existing abstract" branch
+    became a dedicated `existing-noop` resolution variant — no proof is
+    constructed because the outcome is always a noop.
+  - `buildPlanOutcome` writes the proof into the `write` and `pending`
+    outcomes; `fetch` carries it through the `pending → write` upgrade.
+- Added the `abstractTokenAssignmentProof` JSONB column on the
+  `DeployedToken` table (migration
+  `20260518120000_add_abstract_token_assignment_proof`). The column is
+  typed `unknown` at the repository layer so old shapes still read; the
+  strong proof type is enforced only at write time. The repository makes
+  the proof JSON-safe before persistence, including serializing BigInt
+  raw amounts as decimal strings.
+- Updated `scripts/import-generated.ts` to pass `WriteSource` to
+  `planAndExecute`.
+
+Documentation:
+
+- Updated `docs/mdbook/specs/l2b_specs/token_db/README.md` with an
+  explicit section on the distinction between the two "planning"
+  subsystems (UX construct vs cost/separation construct) and on the
+  shared write boundary that sits below both.
+- Updated `docs/mdbook/specs/l2b_specs/token_db/automatic_token_ingestion.md`
+  to point `apply()` at `commitTokenChanges` and to describe the proof
+  shape required for every ingestion write.
+
+Tests:
+
+- Added `commitTokenChanges.test.ts` covering all eight command kinds,
+  the ingestion source variant, and the proof-stamping behavior on
+  insert/update (including the null-proof case when `abstractTokenId`
+  is cleared or absent).
+- Added a `TokenIngestionProcessor.plan` case asserting that the
+  recorded proof is a non-swapping-transfer carrying the first
+  supporting transfer and that transfers whose other side has no
+  resolvable abstract are ignored.
+- Updated existing trace/fetch tests for the new `proof` shape on
+  `pending` and `write` outcomes.
+
+Notes:
+
+- This slice deliberately does **not** introduce the history table.
+  The proof now lands on `DeployedToken.abstractTokenAssignmentProof`,
+  but the per-edit audit trail (who/when/which command, including for
+  writes that don't touch `abstractTokenId`) is the next follow-up.
+- Intent/Plan/Execute is preserved as the UX construct it always was;
+  forcing ingestion through it would re-create user-confirmation
+  machinery for a flow that has no user. The two pipelines now share
+  the write *primitive* without sharing the wrapper.

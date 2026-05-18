@@ -24,3 +24,57 @@ The docs in this folder describe how TokenDB is kept correct:
   intent → plan → commands pipeline behind every human-driven write
   from token-UI, and why it exists (visible blast radius + concurrency
   safety).
+
+## Two "planning" subsystems — what they share, what they don't
+
+TokenDB has *two* pipelines with `plan`-like steps in their names, and it
+is worth being explicit about why they exist and how they relate, because
+the distinction is load-bearing for any future work in this area.
+
+- **`intent → plan → execute`** ([intent_plan_execute.md](./intent_plan_execute.md))
+  is a **UX construct**. The plan exists so the user can see the full
+  blast radius of their edit before clicking Confirm; the re-plan-and-
+  compare inside the SERIALIZABLE transaction exists so what they
+  confirmed is exactly what gets written. It is not really about
+  "planning writes" — it is about *showing* writes and guaranteeing they
+  don't drift between dialog and click.
+- **`plan → fetch → apply`** ([automatic_token_ingestion.md](./automatic_token_ingestion.md))
+  in the ingestion processor is a **cost / separation construct**.
+  `plan` is RPC-free so the queue page can predict every row's outcome
+  cheaply; `fetch` is the only place external calls happen; `apply`
+  writes. The reasons are different, and the deep-equality check from
+  the other pipeline would actively hurt this one — CoinGecko coin map
+  updates would invalidate plans constantly.
+
+So merging the two into a single "plan-and-execute" pipeline would be the
+wrong target. Forcing ingestion through the intent pipeline would mean
+rebuilding a user-confirmation construct around something that has no
+user; conversely, dropping the intent pipeline would not actually
+simplify ingestion.
+
+What the two pipelines *do* share — and what should remain shared — is
+the **write boundary** below them: the `Command` primitives and a single
+`commitTokenChanges` helper in
+[`packages/token-backend/src/commitTokenChanges.ts`](../../../../../packages/token-backend/src/commitTokenChanges.ts).
+Both pipelines translate their work into `Command[]` and funnel it
+through this helper. That means:
+
+- There is exactly one place that writes to TokenDB's two tables.
+- Future cross-cutting concerns (history, audit log, write proofs) plug
+  in here once and cover both pipelines automatically.
+- Each pipeline still owns its own concurrency story (the intent
+  pipeline re-plans inside the SERIALIZABLE transaction; ingestion just
+  wraps the writes in SERIALIZABLE), because they have different
+  guarantees to provide.
+
+Every call to `commitTokenChanges` carries a `WriteSource` that records
+*who* is writing. When a command sets a deployed token's
+`abstractTokenId`, the write boundary stamps the
+`DeployedToken.abstractTokenAssignmentProof` JSON column with an
+`AbstractTokenAssignmentProof`: `{ kind: 'manual' }` for user writes,
+or the ingestion-provided `{ kind: 'coingecko' }` /
+`{ kind: 'non-swapping-transfer'; transfer }` for ingestion writes. The
+non-swapping-transfer proof carries the *full* transfer because the
+interop transfer table is a sliding 24h window; BigInt raw amounts are
+stored in JSON as decimal strings. The persistent history table that
+consumes the same `WriteSource` will land in a follow-up change.

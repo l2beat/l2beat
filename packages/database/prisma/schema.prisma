@@ -495,14 +495,15 @@ model AbstractToken {
 }
 
 model DeployedToken {
-  chain               String   @db.VarChar(32)
-  address             String   @db.VarChar(255)
-  abstractTokenId     String?  @db.Char(6)
-  symbol              String   @db.VarChar(255)
-  decimals            Int
-  deploymentTimestamp DateTime @db.Timestamp(6)
-  comment             String?  @db.Text
-  metadata            Json?
+  chain                        String   @db.VarChar(32)
+  address                      String   @db.VarChar(255)
+  abstractTokenId              String?  @db.Char(6)
+  symbol                       String   @db.VarChar(255)
+  decimals                     Int
+  deploymentTimestamp          DateTime @db.Timestamp(6)
+  comment                      String?  @db.Text
+  metadata                     Json?
+  abstractTokenAssignmentProof Json?
 
   chainRelation   Chain?            @relation(fields: [chain], references: [name], onDelete: Restrict)
   abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
