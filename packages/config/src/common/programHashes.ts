@@ -537,8 +537,24 @@ Verify:
     title: 'Avail VectorX DA bridge program',
     description:
       'ZK-friendly implementation of Avail Vector DA bridge that proves that a given data root was finalized on Avail.',
+    programUrl:
+      'https://github.com/availproject/sp1-vector/tree/1378db51be7634593f2bbb6301e5adf7590d03ab/program',
     proverSystemProject: ProjectId('sp1hypercube'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain v5.0.0: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up -v v5.0.0\` (the toolchain version must match the program's \`sp1-zkvm = "5.0.0"\` dependency and the docker tag used below).
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [availproject/sp1-vector](https://github.com/availproject/sp1-vector/tree/main) repo: \`git checkout 1378db51be7634593f2bbb6301e5adf7590d03ab\`.
+2. Make sure docker is running by running \`docker ps\`.
+3. From the \`sp1-vector/program\` dir run: \`cargo prove build --docker --tag v5.0.0 --elf-name vector-elf --output-directory ../elf\` to build the vector program elf within a docker container and place it in \`sp1-vector/elf\`.
+4. From \`sp1-vector\` run: \`cargo run --bin vkey --release\` to print the vkey of the \`vector-elf\` program.
+    `,
   },
   '0x00bca7947ba758bd6f539f480c6d983cca4bd4387a411a41a71fb953d5df3de7': {
     ...OP_SUCCINCT_AGG_EIGENDA,
