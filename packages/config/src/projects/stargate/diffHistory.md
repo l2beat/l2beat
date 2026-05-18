@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x1d5fb2354072bbe01688e8a01152d00a144b7725
+
+# Diff at Mon, 11 May 2026 12:40:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@37cdce03260dfa5682c2b693e3c1d4a9ccb125af block: 1777371085
+- current timestamp: 1778503168
+
+## Description
+
+config: lz template changes.
+
+## Watched changes
+
+```diff
+    contract EndpointV2 (eth:0x1a44076050125825900e736c501f859c50fE728c) [layerzero/EndpointV2] {
+    +++ description: A contract that is part of the LayerZero messaging protocol. The Stargate OApp owner can configure verification (MessageLib) and execution settings here.
+      values.getReceiveLibrary.isDefault:
+-        true
++        false
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777371085 (main branch discovery), not current.
+
+```diff
+    contract EndpointV2 (eth:0x1a44076050125825900e736c501f859c50fE728c) [layerzero/EndpointV2] {
+    +++ description: A contract that is part of the LayerZero messaging protocol. The Stargate OApp owner can configure verification (MessageLib) and execution settings here.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract BlockedMessageLib (eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) [layerzero/BlockedMessageLib] {
+    +++ description: Simple LayerZero library that blocks all messages if selected.
+      description:
+-        "Simple LayerZero library that blocks all messages if configured."
++        "Simple LayerZero library that blocks all messages if selected."
+    }
+```
+
+```diff
+    EOA  (eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059","role":"admin","via":[{"address":"eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"}]}]
+      controlsMajorityOfUpgradePermissions:
++        true
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3","role":".owner"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) [global/ProxyAdmin] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059","role":"admin"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059","role":"admin"}]
+    }
+```
+
+```diff
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2) [layerzero/ReceiveUln302] {
+    +++ description: LayerZero-deployed receive library, defining the validation of received messages.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
 Generated with discovered.json: 0x8a23c103bf3c4165c6dbda9a87e0fb90d4663276
 
 # Diff at Fri, 08 May 2026 07:52:25 GMT:

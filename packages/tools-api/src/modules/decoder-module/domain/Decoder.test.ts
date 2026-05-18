@@ -82,7 +82,13 @@ class TestSignatureService implements ISignatureService {
     this.signatures.clear()
   }
 
-  add(signature: string) {
+  add(signatures: string[]) {
+    for (const s of signatures) {
+      this.addOne(s)
+    }
+  }
+
+  addOne(signature: string) {
     const selector = toFunctionSelector(signature)
     const array = this.signatures.get(selector) ?? []
     array.push(signature)
@@ -136,7 +142,7 @@ describe(Decoder.name, () => {
   })
 
   it('call no arguments', async () => {
-    const selector = signatureService.add('function foo()')
+    const selector = signatureService.addOne('function foo()')
 
     const result = await decoder.decode({
       data: selector,
@@ -161,7 +167,7 @@ describe(Decoder.name, () => {
   })
 
   it('call with arguments', async () => {
-    const selector = signatureService.add('function foo(uint256 bar)')
+    const selector = signatureService.addOne('function foo(uint256 bar)')
     const data: `0x${string}` = `${selector}${'1234'.padStart(64, '0')}`
 
     const result = await decoder.decode({
@@ -194,8 +200,8 @@ describe(Decoder.name, () => {
   })
 
   it('nested call', async () => {
-    const selectorA = signatureService.add('function aaa(bytes call)')
-    const selectorB = signatureService.add('function bbb()')
+    const selectorA = signatureService.addOne('function aaa(bytes call)')
+    const selectorB = signatureService.addOne('function bbb()')
     const data = [
       selectorA,
       '20'.padStart(64, '0'), // offset
@@ -245,7 +251,7 @@ describe(Decoder.name, () => {
       'eth:0x2Ce6311ddAE708829bc0784C967b7d77D19FD779'
     addressService.setName(contractAddress, 'FiatTokenV2_2')
 
-    const selector = signatureService.add(
+    const selector = signatureService.addOne(
       'function multiTransfer(address[] recipients, address token, address from)',
     )
 
@@ -317,13 +323,13 @@ describe(Decoder.name, () => {
       .setAbi(targetA, ['function nested(uint256 value)'])
       .setAbi(targetB, ['function noop()'])
 
-    const executeSelector = signatureService.add(
+    const executeSelector = signatureService.addOne(
       'function execute(bytes _actions)',
     )
-    const nestedSelector = signatureService.add(
+    const nestedSelector = signatureService.addOne(
       'function nested(uint256 value)',
     )
-    const noopSelector = signatureService.add('function noop()')
+    const noopSelector = signatureService.addOne('function noop()')
 
     const nestedCallData = encodeFunctionData({
       abi: parseAbi(['function nested(uint256 value)']),
@@ -428,7 +434,7 @@ describe(Decoder.name, () => {
     const controller: Address = 'eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
 
     addressService.setAbi(controller, ['function execute(bytes _actions)'])
-    const executeSelector = signatureService.add(
+    const executeSelector = signatureService.addOne(
       'function execute(bytes _actions)',
     )
 

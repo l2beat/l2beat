@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x8658b3f397dbb661c8176b8a0c5abb4068f3b703
+
+# Diff at Fri, 15 May 2026 12:36:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1777299200
+- current timestamp: 1777299200
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777299200 (main branch discovery), not current.
+
+```diff
+    contract OneStepProofEntry (eth:0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xd5ebe4d74cb7850108973c618f80d9f0c18624f45c9e8cfc3ffa07197ca1423d"
++        "0x8342918a09a9fc42d1b623e96c5f3ba476a095f6fb99d619383113945b1aee41"
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (eth:0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688) [orbitstack/EdgeChallengeManager] {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      sourceHashes.1:
+-        "0x38a98fd3246d8aa8d3efab5b6fe60b4369399691b395325bcea9f939a52fddc5"
++        "0xe3bfba89667a59af2f558ead22d7fe0c142232b464bdae0f9e4b03555c7699f2"
+    }
+```
+
 Generated with discovered.json: 0x2705c4571b8e4bf77eebb447940c60e5c484ffe7
 
 # Diff at Fri, 08 May 2026 07:51:42 GMT:

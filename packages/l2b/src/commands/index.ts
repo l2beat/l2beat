@@ -21,8 +21,10 @@ import { FindL2 } from './FindL2'
 import { FindUnusedShapes } from './FindUnusedShapes'
 import { FixDiscoverySchemaPaths } from './FixDiscoverySchemaPaths'
 import { Flatten } from './Flatten'
+import { FlattenerValidator } from './FlattenerValidator'
 import { GenerateEntrypoints } from './GenerateEntrypoints'
 import { GetConfig } from './GetConfig'
+import { GetStakeDistrib } from './GetStakeDistrib'
 import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
 import { InitTemplate } from './InitTemplate'
@@ -68,8 +70,10 @@ export function getSubcommands() {
     FindUnusedShapes,
     FixDiscoverySchemaPaths,
     Flatten,
+    FlattenerValidator,
     GenerateEntrypoints,
     GetConfig,
+    GetStakeDistrib,
     GetTokenMinters,
     Init,
     InitTemplate,

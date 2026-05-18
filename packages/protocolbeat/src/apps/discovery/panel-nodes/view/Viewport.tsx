@@ -1,30 +1,13 @@
 import clsx from 'clsx'
-import {
-  Profiler,
-  type ProfilerOnRenderCallback,
-  useEffect,
-  useRef,
-} from 'react'
-import { SHOW_PERFORMANCE } from '../../../../config/perf'
+import { useEffect, useRef } from 'react'
 import { useMultiViewStore } from '../../multi-view/store'
 import { useSearchStore } from '../../search/store'
-import { perfStats } from '../perf/perfStats'
 import { useStore } from '../store/store'
 import { useDesktopControls } from './hooks/useDesktopControls'
 import { useTouchControls } from './hooks/useTouchControls'
 import { MouseSelection } from './MouseSelection'
 import { NodesAndConnections } from './NodesAndConnections'
 import { ScalableView } from './ScalableView'
-
-const onNodesRender: ProfilerOnRenderCallback = (
-  _id,
-  _phase,
-  actualDuration,
-) => {
-  if (actualDuration > 0) {
-    perfStats.recordRender(actualDuration)
-  }
-}
 
 export function Viewport() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -110,13 +93,7 @@ export function Viewport() {
       )}
     >
       <ScalableView ref={viewRef}>
-        {SHOW_PERFORMANCE ? (
-          <Profiler id="nodes-view" onRender={onNodesRender}>
-            <NodesAndConnections />
-          </Profiler>
-        ) : (
-          <NodesAndConnections />
-        )}
+        <NodesAndConnections />
       </ScalableView>
       <MouseSelection />
     </div>

@@ -2078,6 +2078,39 @@
     {
       "symbol": "ZRX",
       "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498"
+    },
+    {
+      "symbol": "fxUSD",
+      "address": "0x085780639CC2cACd35E474e71f4d000e2405d8f6"
+    },
+    {
+      "symbol": "BOLD",
+      "address": "0x6440f144b7e50D6a8439336510312d2F54beB01D"
+    },
+    {
+      "symbol": "USD1",
+      "address": "0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d"
+    },
+    {
+      "symbol": "frxUSD",
+      "address": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29"
+    },
+    {
+      "symbol": "wOETH",
+      "address": "0xDcEe70654261AF21C44c093C300eD3Bb97b78192"
+    },
+    {
+      "symbol": "NEAR",
+      "address": "0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4"
+    },
+    {
+      "symbol": "FLUID",
+      "address": "0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb"
+    },
+    {
+      "symbol": "USDS",
+      "category": "stablecoin",
+      "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F"
     }
   ],
   "galxegravity": [

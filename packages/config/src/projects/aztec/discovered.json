@@ -14,7 +14,7 @@
       "type": "Contract",
       "template": "aztecv1/AztecFeeDistributor",
       "sourceHashes": [
-        "0x56ca2c5458055de0d08eedc65f6be38927e931bd328c77eb4db1ef43b752bbed"
+        "0xe40f63f80dfb4ee0a5cdacbc4527030d3aa33252e5dd11fcae487ffba3ee38ef"
       ],
       "proxyType": "immutable",
       "description": "Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.",

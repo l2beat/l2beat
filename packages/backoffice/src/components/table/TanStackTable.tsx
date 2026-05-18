@@ -54,6 +54,7 @@ interface TanStackTableProps<TData extends RowData> {
   onSearchValueChange?: (value: string) => void
   searchPlaceholder?: string
   isSearchPending?: boolean
+  fillHeight?: boolean
 }
 
 export function TanStackTable<TData extends RowData>({
@@ -75,6 +76,7 @@ export function TanStackTable<TData extends RowData>({
   onSearchValueChange,
   searchPlaceholder = 'Search',
   isSearchPending = false,
+  fillHeight = false,
 }: TanStackTableProps<TData>) {
   const pageCount = Math.max(table.getPageCount(), 1)
   const pageIndex = table.getState().pagination.pageIndex
@@ -145,8 +147,10 @@ export function TanStackTable<TData extends RowData>({
   }, [syncScrollState])
 
   return (
-    <div className={cn('flex flex-col', className)}>
-      <div className="flex flex-col gap-3 border-b px-6 py-4 lg:flex-row lg:items-center lg:justify-between">
+    <div
+      className={cn('flex min-h-0 flex-col', fillHeight && 'flex-1', className)}
+    >
+      <div className="flex shrink-0 flex-col gap-3 border-b px-6 py-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
           {onSearchValueChange ? (
             <div className="relative w-full sm:max-w-sm">
@@ -207,7 +211,8 @@ export function TanStackTable<TData extends RowData>({
 
       <div
         className={cn(
-          'relative max-h-[80vh] w-full overflow-auto',
+          'relative w-full overflow-auto',
+          fillHeight ? 'min-h-0 flex-1' : 'max-h-[80vh]',
           scrollViewportClassName,
         )}
         ref={scrollViewportRef}
@@ -344,7 +349,7 @@ export function TanStackTable<TData extends RowData>({
         </CoreTable>
       </div>
 
-      <div className="flex flex-col gap-3 border-t px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex shrink-0 flex-col gap-3 border-t px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
         <span className="text-muted-foreground text-sm">
           Page {pageIndex + 1} of {pageCount}
         </span>

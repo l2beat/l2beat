@@ -6,6 +6,7 @@ import type { Sourcify4ByteClient } from '../../../third-party/Sourcify4ByteClie
 
 export interface ISignatureService {
   lookup(selector: `0x${string}`): Promise<string[]>
+  add(signatures: string[]): void
   lookupWellKnown(selector: `0x${string}`): string | undefined
   getInterface(selector: `0x${string}`): string | undefined
 }
@@ -43,6 +44,19 @@ export class SignatureService implements ISignatureService {
           interface: _interface,
         })
       }
+    }
+  }
+
+  add(signatures: string[]) {
+    for (const signature of signatures) {
+      try {
+        const selector = toFunctionSelector(signature)
+        const known = this.known.get(selector) ?? []
+        if (!known.includes(signature)) {
+          known.push(signature)
+          this.known.set(selector, known)
+        }
+      } catch {}
     }
   }
 

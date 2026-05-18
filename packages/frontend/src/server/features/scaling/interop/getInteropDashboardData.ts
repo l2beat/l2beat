@@ -2,7 +2,12 @@ import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import type { InteropDashboardParams, ProtocolEntry, TokenData } from './types'
+import type {
+  InteropDashboardParams,
+  ProtocolDisplayable,
+  ProtocolEntry,
+  TokenData,
+} from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getFlows, type InteropFlowData } from './utils/getFlows'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
@@ -27,7 +32,7 @@ export type InteropDashboardData = {
   topTokens: TopItems<TokenData>
   transferSizeChartData: TransferSizeDataPoint[] | undefined
   entries: ProtocolEntry[]
-  zeroTransferProtocols: { name: string; iconUrl: string }[]
+  zeroTransferProtocols: ProtocolDisplayable[]
 }
 
 export async function getInteropDashboardData(
@@ -111,6 +116,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     .slice(0, 5)
     .map((project, i) => ({
       name: project.interopConfig.name ?? project.name,
+      slug: project.slug,
       volume: { value: 20_000_000 - i * 3_000_000, share: 20 - i * 3 },
       transfers: { value: 5000 - i * 800, share: 20 - i * 3 },
     }))
@@ -214,6 +220,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
                 interopProjects[0].interopConfig.name ??
                 interopProjects[0].shortName ??
                 interopProjects[0].name,
+              slug: interopProjects[0].slug,
               iconUrl: manifest.getUrl(`/icons/${interopProjects[0].slug}.png`),
             }
           : undefined,
@@ -283,7 +290,11 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     transferSizeChartData,
     entries,
     zeroTransferProtocols: [
-      { name: 'Base Canonical', iconUrl: manifest.getUrl('/icons/base.png') },
+      {
+        name: 'Base Canonical',
+        slug: 'base',
+        iconUrl: manifest.getUrl('/icons/base.png'),
+      },
     ],
   }
 }

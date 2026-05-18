@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -83,6 +84,16 @@ const treasuryTimelockDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 
+const sequencerInbox = discovery.getContract('SequencerInbox')
+const outbox = discovery.getContract('Outbox')
+assert(
+  sequencerInbox.sinceTimestamp !== undefined &&
+    outbox.sinceTimestamp !== undefined,
+)
+const genesisTimestamp = UnixTime(
+  Math.min(sequencerInbox.sinceTimestamp, outbox.sinceTimestamp),
+)
+
 const maxTimeVariation = discovery.getContractValue<{
   delayBlocks: number
   futureBlocks: number
@@ -106,7 +117,37 @@ export const arbitrum: ScalingProject = orbitStackL2({
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
-  sequencerInbox: discovery.getContract('SequencerInbox'),
+  sequencerInbox,
+  additionalTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(sequencerInbox.address),
+        selector: '0x3e5aa082',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(sequencerInbox.address),
+        selector: '0x917cf8ac',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobsDelayProof(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+  ],
   usesEthereumBlobs: true,
   display: {
     name: 'Arbitrum One',

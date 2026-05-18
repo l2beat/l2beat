@@ -9,12 +9,6 @@ export function Settings({ className }: { className?: string }) {
   const preferences = useStore((state) => state.userPreferences)
   const setPreferences = useStore((state) => state.setPreferences)
 
-  const toggleHideUnknowns = useCallback(() => {
-    setPreferences({
-      hideUnknownOnLoad: !preferences.hideUnknownOnLoad,
-    })
-  }, [preferences.hideUnknownOnLoad, setPreferences])
-
   const toggleEnableDimming = useCallback(() => {
     setPreferences({
       enableDimming: !preferences.enableDimming,
@@ -26,6 +20,12 @@ export function Settings({ className }: { className?: string }) {
       hideLargeArrays: !preferences.hideLargeArrays,
     })
   }, [preferences.hideLargeArrays, setPreferences])
+
+  const toggleHighlightOverlapping = useCallback(() => {
+    setPreferences({
+      highlightOverlapping: preferences.highlightOverlapping === false,
+    })
+  }, [preferences.highlightOverlapping, setPreferences])
 
   return (
     <Dialog.Root>
@@ -43,20 +43,6 @@ export function Settings({ className }: { className?: string }) {
         </Dialog.Description>
 
         <div className="flex flex-col gap-3">
-          <div>
-            <div
-              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
-              onClick={toggleHideUnknowns}
-            >
-              <Checkbox checked={preferences.hideUnknownOnLoad} />
-              Hide unknowns on load
-            </div>
-            <div className="pl-5 font-light text-coffee-400 text-xs">
-              Nodes representing unverified or unidentified contracts start
-              hidden when the panel opens. Reveal them later via the show
-              controls.
-            </div>
-          </div>
           <div>
             <div
               className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
@@ -81,6 +67,20 @@ export function Settings({ className }: { className?: string }) {
             <div className="pl-5 font-light text-coffee-400 text-xs">
               Fields containing long arrays are collapsed by default to keep
               nodes compact and the graph readable.
+            </div>
+          </div>
+          <div>
+            <div
+              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
+              onClick={toggleHighlightOverlapping}
+            >
+              <Checkbox checked={preferences.highlightOverlapping !== false} />
+              Highlight overlapping nodes
+            </div>
+            <div className="pl-5 font-light text-coffee-400 text-xs">
+              Draw an accent outline around nodes whose bounding boxes
+              intersect, so a smaller node hidden behind a larger one is still
+              visible.
             </div>
           </div>
         </div>

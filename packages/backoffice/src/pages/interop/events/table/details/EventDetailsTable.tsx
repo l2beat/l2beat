@@ -48,6 +48,7 @@ export function EventDetailsTable({
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
       emptyMessage="No events found for the selected filters."
+      fillHeight
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
         `interop-event-details-${new Date().toISOString()}.csv`

@@ -27,6 +27,7 @@ Note that (TODO: )
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { getBestEffortTokenFrameworkBridgeType } from './tokenFrameworkBridgeTyping'
 import {
   createEventParser,
   createInteropEventType,
@@ -486,7 +487,10 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
         srcTokenAddress,
         srcAmount,
         srcWasBurned: sentTransceiverMessage.args.srcWasBurned,
-        bridgeType: 'burnAndMint',
+        bridgeType: getBestEffortTokenFrameworkBridgeType({
+          srcWasBurned: sentTransceiverMessage.args.srcWasBurned,
+          dstWasMinted: undefined,
+        }),
         extraEvents: [logMessagePublished],
       }),
     ]
@@ -513,7 +517,10 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
         dstTokenAddress: received.args.transferTokenAddress,
         dstAmount: received.args.transferAmount,
         dstWasMinted: received.args.dstWasMinted,
-        bridgeType: 'burnAndMint',
+        bridgeType: getBestEffortTokenFrameworkBridgeType({
+          srcWasBurned: undefined,
+          dstWasMinted: received.args.dstWasMinted,
+        }),
         extraEvents,
       }),
     ]

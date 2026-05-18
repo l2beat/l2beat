@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1777963387,
+  "timestamp": 1778675086,
   "configHash": "0xf35702c4c81529b7cb06b5ec621647cdb45fb0f8158a9a57e83bdbf848e54019",
   "entries": [
     {
@@ -162,26 +162,44 @@
           },
           "PROPOSER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+            "members": [
+              "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
+              "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+            ]
           },
           "CANCELLER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+            "members": [
+              "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
+              "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+            ]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+            "members": [
+              "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
+              "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+            ]
           }
         },
-        "Canceller": ["eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"],
+        "Canceller": [
+          "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
+          "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+        ],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711"],
-        "Executor": ["eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"],
+        "Executor": [
+          "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
+          "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+        ],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 259200,
         "getMinDelayFormatted": "3d",
-        "Proposer": ["eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"],
+        "Proposer": [
+          "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
+          "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+        ],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
       "implementationNames": {
@@ -337,6 +355,11 @@
       }
     },
     {
+      "address": "eth:0x10B0589c16a8851450BD7FEE274cD349fB9d6A0E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Taiko Token",
       "address": "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
       "type": "Contract",
@@ -392,7 +415,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1777963379,
+        "clock": 1778675075,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -428,11 +451,6 @@
         "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800": "ERC1967Proxy",
         "eth:0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106": "TaikoToken"
       }
-    },
-    {
-      "address": "eth:0x166868E5AE72592a06056775236d2E4D64CDcCa9",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Drew Van der Werff Agent",
@@ -498,7 +516,7 @@
       "type": "Contract",
       "template": "taiko/RiscZeroGroth16Verifier",
       "sourceHashes": [
-        "0x6d31c3046dca02d527c9c812462cb52b4402d54884c3abe822cb6ac8371e4a5b"
+        "0xba12695f53ef79b4c552abf284ab9133ca47c0fc1908e05a8b941e5a176795cb"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).",
@@ -564,6 +582,95 @@
       "implementationNames": {
         "eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd": "ERC1967Proxy",
         "eth:0x437E450452E8Bc142bd5317199296EcB187c514b": "EmergencyMultisig"
+      }
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+          "description": "add/remove verifiers and the selectors they are mapped to.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+              "delay": 259200
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+          "delay": 259200,
+          "role": ".Executor"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xbF58b6DE2B893e7ab707edc6cf99Bb6989C173a4",
+      "sinceTimestamp": 1778237171,
+      "sinceBlock": 25049832,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x10B0589c16a8851450BD7FEE274cD349fB9d6A0E",
+          "eth:0x751708D6341b36c0C258754fc2DbF96074f5BdC7",
+          "eth:0xbF58b6DE2B893e7ab707edc6cf99Bb6989C173a4",
+          "eth:0xd5D43445d0227a47cA2eACCb9392352746eD9926",
+          "eth:0xDA8e7102681f9652FB8a10b70949CF7F260e0A01"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x47737e89c747e1ee0cc9da891edc10788a1f86d914aaa945fc62aa1ef3165426",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -640,7 +747,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 173,
+        "nonce": 174,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -972,12 +1079,12 @@
           "permissionlessInclusionMultiplier": 160
         },
         "getCoreState": {
-          "nextProposalId": 7366,
-          "lastProposalBlockId": 25027064,
-          "lastFinalizedProposalId": 7361,
-          "lastFinalizedTimestamp": 1777962011,
-          "lastCheckpointTimestamp": 1777962011,
-          "lastFinalizedBlockHash": "0x2ab65761d1fa5e522388a72a90bbbcf31e9918174a802b7d4205e443814bc4ab"
+          "nextProposalId": 9221,
+          "lastProposalBlockId": 25086196,
+          "lastFinalizedProposalId": 9216,
+          "lastFinalizedTimestamp": 1778673887,
+          "lastCheckpointTimestamp": 1778673887,
+          "lastFinalizedBlockHash": "0x172fa05902361d2be571bf78522bf64c92cef17ccafe8bbf9d047f960f4603ec"
         },
         "getCurrentForcedInclusionFee": 1000000,
         "getForcedInclusionState": { "head_": 0, "tail_": 0 },
@@ -1010,6 +1117,11 @@
     },
     {
       "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x751708D6341b36c0C258754fc2DbF96074f5BdC7",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2224,6 +2336,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xbF58b6DE2B893e7ab707edc6cf99Bb6989C173a4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xBFD60Cb2313B848a2FC088d3bc1ab6BF498E1DD1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2327,6 +2444,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xd5D43445d0227a47cA2eACCb9392352746eD9926",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MainnetBridge",
       "address": "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
       "type": "Contract",
@@ -2413,7 +2535,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 39149,
+        "nextMessageId": 39194,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2469,6 +2591,11 @@
         "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321": "ERC1967Proxy",
         "eth:0x8510d389236d7213eE9B9C38CAaBc0aD24853C25": "Multisig"
       }
+    },
+    {
+      "address": "eth:0xDA8e7102681f9652FB8a10b70949CF7F260e0A01",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a",
@@ -2676,15 +2803,14 @@
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0x3D4997AAC0834BEb5ede861c424807Aa3F29b5bB",
-          "eth:0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf",
-          "eth:0x166868E5AE72592a06056775236d2E4D64CDcCa9"
+          "eth:0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf"
         ],
         "$threshold": 2,
         "domainSeparator": "0xae594c52c29d405feb0ada763f5db9b0bdfb194b07d0804bfd2490415e9675fc",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 3,
+        "multisigThreshold": "2 of 2 (100%)",
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2719,7 +2845,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 7,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2880,17 +3006,17 @@
           ]
         ],
         "$upgradeCount": 4,
-        "getOperatorForCurrentEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
-        "getOperatorForNextEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+        "getOperatorForCurrentEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+        "getOperatorForNextEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
         "impl": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
         "inNonReentrant": false,
-        "latestActivationEpoch": 1777307351,
+        "latestActivationEpoch": 1778138711,
         "OPERATOR_CHANGE_DELAY": 2,
         "operatorCount": 3,
         "operatorMapping": [
           "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
-          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
-          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
+          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
         ],
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
@@ -3136,6 +3262,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Immutable L2 contract that anchors L1 block details to L2 for cross-layer communication and manages EIP-1559 gas pricing for L2 operations.",
+      "ignoreInWatchMode": ["getBlockState"],
       "deployerAddress": "taiko:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1716620627,
       "sinceBlock": 0,
@@ -3183,8 +3310,8 @@
         "ANCHOR_GAS_LIMIT": 1000000,
         "checkpointStore": "taiko:0x1670000000000000000000000000000000000005",
         "getBlockState": {
-          "anchorBlockNumber": 25027058,
-          "ancestorsHash": "0x49a7e51364da6ffb3d3bfd3469fa64d0adce9ee57c8bdb658ca014229605b199"
+          "anchorBlockNumber": 25086191,
+          "ancestorsHash": "0xdc15f572371f572e13ccfeb6fe10019b92da8cc8b60e67e09562bd0c78b03e51"
         },
         "GOLDEN_TOUCH_ADDRESS": "taiko:0x0000777735367b36bC9B61C50022d9D0700dB4Ec",
         "impl": "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA",
@@ -3609,6 +3736,9 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609": [
+      "constructor(address _singleton)"
     ],
     "eth:0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1": [
       "constructor(address _addresslist)",
@@ -5128,7 +5258,7 @@
     "shared-sp1/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
-    "taiko/Anchor": "0xf1efff1d5a1df2fdb3f66f3f64ffef721d2f1a18591c741cb90eb697667e074a",
+    "taiko/Anchor": "0x846b092485323a96eb4e542c68883b005342e7a3a62dc78eb4357da58f2d2d21",
     "taiko/AutomataDcapV3Attestation": "0xc94a2c7d4ef9c322e01a6da5facff05a1b6389e69360c642587aa3c98d59677d",
     "taiko/DAO": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/EmergencyMultisig": "0x36b976b7e7ae2e39b6dbca16db2b65fa0a7cec1456f559a3a21cca1013c436ae",
@@ -5156,6 +5286,6 @@
     "taiko/TaikoDAOController": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804"
   },
-  "usedBlockNumbers": { "ethereum": 25027084, "taiko": 6361308 },
-  "permissionsConfigHash": "0x59f193a0a750e326d953842789bd483bb2b9bf867e916461d0add08687289380"
+  "usedBlockNumbers": { "ethereum": 25086197, "taiko": 6678092 },
+  "permissionsConfigHash": "0x5d732a3c5a32e8cb640d5527eda6a9ea648427e9e5eb0b2850954e4a8600f3c8"
 }

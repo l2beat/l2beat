@@ -3,5 +3,10 @@
     "hash": "0xda724e59049862aec67c8e164b7c54b1943194e1d17baa1576e7e73bb8c99da6",
     "address": "eth:0xE4e456c64B9b0de5FE8a90d809180cA71534D623",
     "blockNumber": 24047377
+  },
+  "KailuaTreasury2.sol": {
+    "hash": "0x0f0071892efe84f1b358ff9a1081c705d4ce1659db3f772d0875bcf56143ef23",
+    "address": "eth:0x01853F268B170D4A15D0c3AE905757b5Ec8375f3",
+    "blockNumber": 25040000
   }
 }
