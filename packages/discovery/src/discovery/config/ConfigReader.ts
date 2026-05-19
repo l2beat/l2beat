@@ -24,13 +24,6 @@ const JustImport = v.object({ import: v.array(v.string()).optional() })
 export class ConfigReader {
   private importedCache = new Map<string, JustImport>()
 
-  /**
-   * Cache for already resolved project directories. The key is the project name, the
-   * value is the absolute directory that contains the project files (its basename
-   * equals the project name).
-   */
-  private readonly projectPathCache = new Map<string, string>()
-
   constructor(private rootPath: string) {}
 
   readConfig(name: string): ConfigRegistry {
@@ -129,12 +122,8 @@ export class ConfigReader {
     return Hash160(`0x${hasher.digest('hex')}`)
   }
 
-  readAllConfiguredProjects(options: { skipGroup?: string } = {}): string[] {
+  readAllConfiguredProjects(): string[] {
     return this.enumerateProjectDirectories()
-      .filter(
-        (path) =>
-          !options.skipGroup || !path.includes(`(${options.skipGroup})`),
-      ) // quick fix to hide tokens in DiscoUI
       .filter((projectPath) => {
         const configPath = path.join(projectPath, 'config.jsonc')
 
@@ -154,32 +143,18 @@ export class ConfigReader {
 
         return false
       })
-      .map((projectPath) => {
-        return path.basename(projectPath)
-      })
+      .map((projectPath) => path.basename(projectPath))
   }
 
   // NOTE(radomski): Generates a list of projects that _have_ a
   // discovered.json. Most of the time this is what you want to use. We assume
   // that projects that have a discovered.json are also configured.
-  readAllDiscoveredProjects(options: { skipGroup?: string } = {}): string[] {
+  readAllDiscoveredProjects(): string[] {
     return this.enumerateProjectDirectories()
-      .filter(
-        (path) =>
-          !options.skipGroup || !path.includes(`(${options.skipGroup})`),
-      ) // quick fix to hide tokens in DiscoUI
-      .filter((projectPath) => {
-        const discoveredPath = path.join(projectPath, 'discovered.json')
-
-        if (!existsSync(discoveredPath)) {
-          return false
-        }
-
-        return true
-      })
-      .map((projectPath) => {
-        return path.basename(projectPath)
-      })
+      .filter((projectPath) =>
+        existsSync(path.join(projectPath, 'discovered.json')),
+      )
+      .map((projectPath) => path.basename(projectPath))
   }
 
   readDiffHistoryHash(name: string): Hash160 | undefined {
@@ -268,68 +243,6 @@ export class ConfigReader {
     return result
   }
 
-  // #region Grouping
-  getProjectsInGroup(group: string): string[] {
-    return this.enumerateProjectDirectories().flatMap((projectPath) => {
-      const basename = path.basename(projectPath)
-      const parentDir = path.basename(path.dirname(projectPath))
-      if (parentDir === `(${group})`) {
-        return [basename]
-      }
-      return []
-    })
-  }
-
-  /**
-   * Some directories are used only for grouping purposes (e.g. `(tokens)` in
-   * `projects/(tokens)/usdc`). These should be completely transparent for the
-   * discovery tooling.  We treat every directory whose name **starts with** `(`
-   * and **ends with** `)` as such a *grouping folder* – mirroring the behaviour
-   * of Next.js routing. All public methods that previously
-   * assumed `rootPath/<project>` now rely on {@link resolveProjectPath} to find
-   * the actual directory of a project regardless of the grouping folders.
-   */
-  isGroupingFolder(dirName: string): boolean {
-    return dirName.startsWith('(') && dirName.endsWith(')')
-  }
-
-  /**
-   * Recursively traverses the directory structure, handling grouping folders.
-   * This is the common logic used by both resolveProjectPath and enumerateProjectDirectories.
-   *
-   * @param visitor Function called for each directory entry. Return true to continue traversal, false to stop.
-   * @param searchStrategy 'breadth' for BFS (used by resolveProjectPath) or 'depth' for DFS (used by enumerateProjectDirectories)
-   */
-  private traverseDirectories<T>(
-    visitor: (entryName: string, fullPath: string) => T | null,
-    searchStrategy: 'breadth' | 'depth',
-  ): T[] {
-    const result: T[] = []
-    const queue: string[] = [this.rootPath]
-
-    while (queue.length > 0) {
-      const current = searchStrategy === 'breadth' ? queue.shift() : queue.pop()
-      if (current === undefined) continue
-
-      const entries = readdirSync(current, { withFileTypes: true })
-      for (const entry of entries) {
-        if (!entry.isDirectory()) continue
-        if (entry.name.startsWith('_')) continue // keep existing behaviour
-
-        const full = path.join(current, entry.name)
-        const visitResult = visitor(entry.name, full)
-
-        if (visitResult !== null) {
-          result.push(visitResult)
-        } else if (this.isGroupingFolder(entry.name)) {
-          queue.push(full)
-        }
-      }
-    }
-
-    return result
-  }
-
   projectConfigExists(project: string): boolean {
     try {
       this.resolveProjectPath(project)
@@ -343,76 +256,22 @@ export class ConfigReader {
     return path.join(this.resolveProjectPath(project), 'config.jsonc')
   }
 
-  /**
-   * Locate the on-disk directory for a given project. The search rules are:
-   * 1. Direct child of `rootPath` (legacy layout).
-   * 2. Recursively within any *grouping folder* (a directory wrapped in
-   *    parentheses). Only grouping folders are traversed – other regular
-   *    directories are treated as leaf project directories to keep the search
-   *    space small.
-   *
-   * Throws if the project cannot be found or if there are multiple matches.
-   */
   resolveProjectPath(project: string): string {
-    const cached = this.projectPathCache.get(project)
-    if (cached !== undefined) {
-      return cached
-    }
-
-    // 1. Fast path – direct child of root (must contain config.jsonc)
-    const direct = path.join(this.rootPath, project)
+    const full = path.join(this.rootPath, project)
     if (
-      fileExistsCaseSensitive(direct) &&
-      existsSync(path.join(direct, 'config.jsonc'))
+      !fileExistsCaseSensitive(full) ||
+      !existsSync(path.join(full, 'config.jsonc'))
     ) {
-      this.projectPathCache.set(project, direct)
-      return direct
-    }
-
-    // 2. Breadth-first search within grouping folders
-    const matches = this.traverseDirectories<string>((entryName, full) => {
-      if (
-        entryName === project &&
-        fileExistsCaseSensitive(full) &&
-        existsSync(path.join(full, 'config.jsonc'))
-      ) {
-        return full
-      }
-      return null
-    }, 'breadth')
-
-    if (matches.length === 0) {
       throw new Error('Project not found, check if case matches')
     }
-    if (matches.length > 1) {
-      const locations = matches.map((m) => path.relative(this.rootPath, m))
-      throw new Error(
-        `Multiple projects named "${project}" found in grouping folders: ${locations.join(', ')}`,
-      )
-    }
-
-    // matches[0] is defined because we checked matches.length above
-    const match = matches[0] as string
-    this.projectPathCache.set(project, match)
-    return match
+    return full
   }
 
-  /**
-   * Recursively gathers absolute paths of all *project* directories – these are
-   * directories that are **not** grouping folders (their name does **not** start
-   * with `(`) and are direct children of either `rootPath` or any grouping
-   * folder below it.
-   */
   enumerateProjectDirectories(): string[] {
-    return this.traverseDirectories<string>((entryName, full) => {
-      if (!this.isGroupingFolder(entryName)) {
-        return full
-      }
-      return null
-    }, 'depth')
+    return readdirSync(this.rootPath, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory() && !entry.name.startsWith('_'))
+      .map((entry) => path.join(this.rootPath, entry.name))
   }
-
-  // #endregion
 }
 
 function getReferencedProjects(discovery: DiscoveryOutput): string[] {
