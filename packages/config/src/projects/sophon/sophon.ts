@@ -40,7 +40,7 @@ export const sophon: ScalingProject = zkStackL2({
   daAttestedByIndependentParty: true,
   daVerifier7DayExitWindow: true,
   daCommitteeDecentralized: true,
-  daVerifier30DayExitWindow: true,
+  daVerifier30DayExitWindow: false,
   daMechanismEconomicSecurity: false,
   daVerifierLink:
     'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',

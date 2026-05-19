@@ -29,6 +29,7 @@ export const celo: ScalingProject = opStackL2({
   daVerifier7DayExitWindow: false,
   daCommitteeDecentralized: true,
   daVerifier30DayExitWindow: false,
+  daMechanismEconomicSecurity: false,
   zkVerifierContractsReproducible: true,
   nodeSourceLink: 'https://github.com/celo-org/op-geth',
   proverSourceLink: 'https://github.com/succinctlabs/sp1',
@@ -97,7 +98,7 @@ export const celo: ScalingProject = opStackL2({
     ],
   },
   nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
   interopConfig: {
     name: 'Celo Canonical',
     durationSplit: {

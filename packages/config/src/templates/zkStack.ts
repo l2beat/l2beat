@@ -140,6 +140,8 @@ export interface ZkStackConfigCommon {
   stage1PrincipleDescription?: string
   /** Manual altDA Stage 1 principle verdict (defaults to false, matching rollup). */
   stage1Principle?: boolean | 'UnderReview'
+  /** Stage 1: is the chain's own Security Council / ChainAdmin properly set up? */
+  hasProperSecurityCouncil?: boolean
 }
 
 export type Upgradeability = {
@@ -419,7 +421,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
                 principle: templateVars.stage1Principle ?? false,
                 usersCanExitWithoutCooperation: false,
                 usersHave7DaysToExit: false,
-                securityCouncilProperlySetUp: true,
+                securityCouncilProperlySetUp:
+                  templateVars.hasProperSecurityCouncil ?? false,
                 daVerifierSecureOnL1: templateVars.daVerifierSecureOnL1 ?? null,
                 daVerifier7DayExitWindow:
                   templateVars.daVerifier7DayExitWindow ?? null,

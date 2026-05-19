@@ -118,6 +118,8 @@ export const nova: ScalingProject = orbitStackL2({
   ],
   discovery,
   hasAtLeastFiveExternalChallengers: true,
+  usersHave7DaysToExit: true,
+  hasProperSecurityCouncil: true,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

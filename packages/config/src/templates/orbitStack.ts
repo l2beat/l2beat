@@ -191,6 +191,10 @@ interface OrbitStackConfigCommon {
   daVerifierLink?: string
   proverSourceLink?: string
   securityCouncilReference?: string
+  /** Stage 1: did the project's upgrade path provide ≥7d exit window? */
+  usersHave7DaysToExit?: boolean
+  /** Stage 1: is the project's Security Council properly set up? */
+  hasProperSecurityCouncil?: boolean
   stage1PrincipleDescription?: string
   /** Manual altDA Stage 1 principle verdict (no automation). */
   stage1Principle?: boolean | 'UnderReview'
@@ -1449,13 +1453,15 @@ function computedStage(
         daAttestedByIndependentParty:
           templateVars.daAttestedByIndependentParty ?? null,
         nodeSourceAvailable: templateVars.isNodeAvailable ?? 'UnderReview',
-        fraudProofSystemAtLeast5Outsiders: false,
+        fraudProofSystemAtLeast5Outsiders:
+          templateVars.hasAtLeastFiveExternalChallengers ?? false,
       },
       stage1: {
         principle: templateVars.stage1Principle ?? null,
         usersCanExitWithoutCooperation: true,
-        usersHave7DaysToExit: false,
-        securityCouncilProperlySetUp: false,
+        usersHave7DaysToExit: templateVars.usersHave7DaysToExit ?? false,
+        securityCouncilProperlySetUp:
+          templateVars.hasProperSecurityCouncil ?? false,
         daVerifierSecureOnL1: templateVars.daVerifierSecureOnL1 ?? null,
         daVerifier7DayExitWindow: templateVars.daVerifier7DayExitWindow ?? null,
         daCommitteeDecentralized: templateVars.daCommitteeDecentralized ?? null,
