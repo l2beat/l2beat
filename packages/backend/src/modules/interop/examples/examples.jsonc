@@ -622,6 +622,39 @@
       ]
     }
   },
+  "ccip-worldchain": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // Worldchain -> Ethereum (v1.5 token transfer)
+      {
+        "chain": "worldchain",
+        "tx": "0xd73ef487414b0d9b3d07e885a18875035480c629ed16b8714865c2d2d7fc0941"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xb39b5b385927947a5ad541f6a399dbeaf008b88b3567b411f198d962cae03370"
+      },
+      // Ethereum -> Worldchain (v1.5 WLD transfer)
+      {
+        "chain": "ethereum",
+        "tx": "0x1ab8a6a4e5e9e75eca7d57316356781966af256be222b11368f615f8347f7622"
+      },
+      {
+        "chain": "worldchain",
+        "tx": "0x45f3fa6a5b97372b0d9d20edfe395684992f9157a3301eff00dd13fd4a8e442c"
+      }
+    ],
+    "expects": {
+      "transfers": [
+        { "type": "ccip.Transfer" },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "WLD", "amount": 6276 } },
+          "dst": { "financials": { "symbol": "WLD", "amount": 6276 } }
+        }
+      ]
+    }
+  },
   "ccip-monad": {
     "loadConfigs": ["ccip"],
     "txs": [
