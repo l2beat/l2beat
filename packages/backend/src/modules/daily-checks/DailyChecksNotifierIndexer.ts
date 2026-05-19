@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { DiscordClient } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { INDEXER_NAMES } from '../../tools/uif/indexerIdentity'
 import {
@@ -42,6 +42,11 @@ export class DailyChecksNotifierIndexer extends ManagedChildIndexer {
       return to
     }
 
+    if (this.isWeekend(to)) {
+      this.logger.info('Skipping tick, weekend', { timezone: this.$.timezone })
+      return to
+    }
+
     const userId = this.pickResponsibleUser(to)
     const message = this.buildMessage(userId)
 
@@ -64,8 +69,10 @@ export class DailyChecksNotifierIndexer extends ManagedChildIndexer {
   }
 
   private pickResponsibleUser(timestamp: UnixTime): string {
-    const weekIndex = this.getIsoWeekIndex(UnixTime.toDate(timestamp))
-    return this.$.discordUserIds[weekIndex % this.$.discordUserIds.length]
+    // Rotate every 2 workdays.
+    const workdayIndex = this.getWorkdayIndex(UnixTime.toDate(timestamp))
+    const slot = Math.floor(workdayIndex / 2)
+    return this.$.discordUserIds[slot % this.$.discordUserIds.length]
   }
 
   private getHourInTimezone(timestamp: UnixTime): number {
@@ -78,7 +85,22 @@ export class DailyChecksNotifierIndexer extends ManagedChildIndexer {
     return hour === 24 ? 0 : hour
   }
 
-  private getIsoWeekIndex(date: Date): number {
+  private isWeekend(timestamp: UnixTime): boolean {
+    const weekday = this.getWeekday(UnixTime.toDate(timestamp))
+    return weekday === 'Sat' || weekday === 'Sun'
+  }
+
+  private getWeekday(date: Date): string {
+    const parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: this.$.timezone,
+      weekday: 'short',
+    }).formatToParts(date)
+    const weekday = parts.find((p) => p.type === 'weekday')
+    assert(weekday, 'Weekday not found')
+    return weekday.value
+  }
+
+  private getWorkdayIndex(date: Date): number {
     const parts = new Intl.DateTimeFormat('en-GB', {
       timeZone: this.$.timezone,
       year: 'numeric',
@@ -88,13 +110,14 @@ export class DailyChecksNotifierIndexer extends ManagedChildIndexer {
     const year = Number(parts.find((p) => p.type === 'year')?.value)
     const month = Number(parts.find((p) => p.type === 'month')?.value)
     const day = Number(parts.find((p) => p.type === 'day')?.value)
-    const utc = new Date(Date.UTC(year, month - 1, day))
-    const dayNum = utc.getUTCDay() === 0 ? 7 : utc.getUTCDay()
-    utc.setUTCDate(utc.getUTCDate() + 4 - dayNum)
-    const yearStart = new Date(Date.UTC(utc.getUTCFullYear(), 0, 1))
-    const weekNumber = Math.ceil(
-      ((utc.getTime() - yearStart.getTime()) / (24 * 60 * 60 * 1000) + 1) / 7,
+    const dayNumber = Math.floor(
+      Date.UTC(year, month - 1, day) / (24 * 60 * 60 * 1000),
     )
-    return utc.getUTCFullYear() * 53 + weekNumber
+    // 1970-01-05 (epoch day 4) was a Monday.
+    const daysSinceMonday = dayNumber - 4
+    const weeks = Math.floor(daysSinceMonday / 7)
+    const dow = daysSinceMonday - weeks * 7
+    const workdaysIntoWeek = Math.min(dow + 1, 5)
+    return weeks * 5 + workdaysIntoWeek - 1
   }
 }
