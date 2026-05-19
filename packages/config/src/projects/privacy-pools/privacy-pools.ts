@@ -57,8 +57,6 @@ export const privacyPools: BaseProject = {
       'A selective-disclosure privacy system for Ethereum that adds compliance-aware association sets.',
     detailedDescription: `Privacy Pools is a non-custodial privacy protocol on Ethereum built around asset-specific pools and private withdrawals, adding compliance by whitelisting all legitimate deposits. A deposit creates a commitment, which is represented by secret and nullifier, and a later withdrawal uses a zero-knowledge proof to spend that commitment, either partially or in full, without revealing the matching deposit. Losing the secret and the nullifier would effectively mean losing deposited tokens.
 
-Privacy pools are split by token, different pools are independent from each other. Deposits could be mixed only with other deposits of the same token. Arbitrary denominations of tokens could be deposited and withdrawn.
-
 Privacy Pools are controlled by a 2/4 multisig, which has authority to stop deposits and manage the deposit whitelist, but users always have an option to publicly withdraw deposited tokens.
 
 ### Privacy considerations
@@ -71,7 +69,11 @@ Practical privacy also depends on the timing and amounts of deposits and withdra
 
 The main feature of Privacy Pools is compliance, which is enforced through the ASP. Association set is a whitelist of deposits that are allowed to be withdrawn from the protocol. This set is managed in real time by the provider, which is currently a single entity. The full association set is published via IPFS, only its Merkle root is posted onchain. User's deposit could be excluded from the whitelist at any moment, in this case user can ragequit, i.e. publicly withdraw deposited funds.
 
-ASP is designed to guarantee that withdrawals from Privacy Pools are not related to any known illegal activity.`,
+ASP is designed to guarantee that withdrawals from Privacy Pools are not related to any known illegal activity.
+
+### Anonymity set
+
+User's anonymity set consists of all whitelisted deposits of the same token with the value greater than the withdrawal amount. Note that only deposits approved by the ASP contribute privacy. To maximize the anonymity set, users are advised to withdraw smaller amounts from the privacy pools and deposit popular tokens.`,
     links: {
       websites: ['https://www.privacypools.com'],
     },
