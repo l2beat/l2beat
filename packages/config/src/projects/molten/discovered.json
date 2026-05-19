@@ -1,6 +1,6 @@
 {
   "name": "molten",
-  "timestamp": 1778232916,
+  "timestamp": 1779198858,
   "configHash": "0xd34153da958bd57b3a9fb3757a8e1e5dab7d0d7a5019298aee8c36ddecc9286d",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
@@ -98,13 +98,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2358,
+        "firstUnresolvedNode": 2361,
         "inbox": "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19564823,
-        "latestConfirmed": 2357,
-        "latestNodeCreated": 2358,
+        "latestConfirmed": 2360,
+        "latestNodeCreated": 2360,
         "loserStakeEscrow": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B",
@@ -237,7 +237,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 104871,
+        "batchCount": 104873,
         "batchPosterManager": "arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738",
         "batchPosters": ["arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"],
         "BLOBSTREAM": "arb1:0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -270,7 +270,7 @@
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 71121,
+        "totalDelayedMessagesRead": 71127,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -887,7 +887,6 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "arb1:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232",
           "arb1:0xe5219fe14E2FD520Ff80be036790913053d1575d",
           "arb1:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
           "arb1:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
@@ -900,8 +899,8 @@
         "domainSeparator": "0xeb75286128f8b958bb9a8db0f4f446758af4c721059060ccbd44ff0cb027027e",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 118,
+        "multisigThreshold": "3 of 7 (43%)",
+        "nonce": 122,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1408,11 +1407,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "arb1:0xbf853295743511e8DC5F03809d209C33fC136d24",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1517,7 +1511,7 @@
         "allowedOutboxList": [
           "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
         ],
-        "delayedMessageCount": 71121,
+        "delayedMessageCount": 71127,
         "inboxHistory": [
           "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
           "arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
@@ -1527,8 +1521,8 @@
         "outboxHistory": ["arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerInbox": "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
-        "sequencerMessageCount": 104871,
-        "sequencerReportedSubMessageCount": 105289826
+        "sequencerMessageCount": 104873,
+        "sequencerReportedSubMessageCount": 105289832
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -2669,6 +2663,6 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 460628843 },
-  "permissionsConfigHash": "0xb4a898947d63711e78b55ac55265537332fc0d1c94670f37f3b94bde9cde0496"
+  "usedBlockNumbers": { "arbitrum": 464480023 },
+  "permissionsConfigHash": "0xd3341955ab62200f15bbf79c1a15e81bb3127ed8d8e5b3777ac6813e3dc4650d"
 }

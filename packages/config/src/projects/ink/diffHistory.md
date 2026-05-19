@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x0a9799be2e818d1035a573dd9c68bbf05ab57ed8
+
+# Diff at Tue, 19 May 2026 13:55:05 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@307f5c3dfdab6a4f88448861a0bb75f0043b762b block: 1778851817
+- current timestamp: 1779198841
+
+## Description
+
+Flattener artifact only: sourceHash for the EOA at `0x6a0A93Cd...` updated. No watched/governance change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778851817 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
++        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+    }
+```
+
 Generated with discovered.json: 0xa66ccdb54bcf5a1d0adb84769629d0bd42ea8405
 
 # Diff at Fri, 15 May 2026 13:31:28 GMT:
