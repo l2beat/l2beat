@@ -99,6 +99,19 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
       ])
     })
   })
+
+  describe(TokenDbHistoryRepository.prototype.getPage.name, () => {
+    it('returns one newest-first page with the total count', async () => {
+      await repository.insert(manualAddDeployed(UnixTime(1000), 'first@x.io'))
+      await repository.insert(manualAddDeployed(UnixTime(2000), 'second@x.io'))
+      await repository.insert(manualAddDeployed(UnixTime(3000), 'third@x.io'))
+
+      const page = await repository.getPage({ offset: 1, limit: 1 })
+
+      expect(page.totalCount).toEqual(3)
+      expect(page.entries.map((e) => e.userEmail)).toEqual(['second@x.io'])
+    })
+  })
 })
 
 function manualAddDeployed(

@@ -44,6 +44,7 @@ export function PlanConfirmationDialog({
     onSuccess: () => {
       if (!plan) return
       onSuccess?.()
+      utils.tokenDbHistory.getPage.invalidate()
       switch (plan.intent.type) {
         case 'AddAbstractTokenIntent':
           toast.success(

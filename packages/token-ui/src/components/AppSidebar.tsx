@@ -1,5 +1,6 @@
 import {
   CirclePlusIcon,
+  HistoryIcon,
   LightbulbIcon,
   ListChecksIcon,
   PanelsTopLeftIcon,
@@ -43,6 +44,11 @@ const items = [
         title: 'Queue',
         url: '/tokens/ingestion-queue',
         icon: ListChecksIcon,
+      },
+      {
+        title: 'History',
+        url: '/tokens/history',
+        icon: HistoryIcon,
       },
     ],
   },

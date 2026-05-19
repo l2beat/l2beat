@@ -16,6 +16,11 @@ export interface TokenDbHistoryEntryRecord {
 
 export type TokenDbHistoryEntryInsert = Omit<TokenDbHistoryEntryRecord, 'id'>
 
+export interface TokenDbHistoryPage {
+  entries: TokenDbHistoryEntryRecord[]
+  totalCount: number
+}
+
 function toRecord(
   row: Selectable<TokenDbHistoryEntry>,
 ): TokenDbHistoryEntryRecord {
@@ -67,6 +72,30 @@ export class TokenDbHistoryRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getPage(options: {
+    offset: number
+    limit: number
+  }): Promise<TokenDbHistoryPage> {
+    const rows = await this.db
+      .selectFrom('TokenDbHistoryEntry')
+      .selectAll()
+      .orderBy('timestamp', 'desc')
+      .orderBy('id', 'desc')
+      .offset(options.offset)
+      .limit(options.limit)
+      .execute()
+
+    const count = await this.db
+      .selectFrom('TokenDbHistoryEntry')
+      .select((eb) => eb.fn.countAll<number>().as('count'))
+      .executeTakeFirstOrThrow()
+
+    return {
+      entries: rows.map(toRecord),
+      totalCount: Number(count.count),
+    }
   }
 
   async getAll(): Promise<TokenDbHistoryEntryRecord[]> {

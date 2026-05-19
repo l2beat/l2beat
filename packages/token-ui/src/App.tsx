@@ -10,6 +10,7 @@ import { SearchPage } from './pages/search/SearchPage'
 import { AbstractTokenPage } from './pages/tokens/AbstractTokenPage'
 import { AddTokensPage } from './pages/tokens/add-tokens/AddTokensPage'
 import { DeployedTokenPage } from './pages/tokens/DeployedTokenPage'
+import { TokenHistoryPage } from './pages/tokens/TokenHistoryPage'
 import { TokenIngestionQueuePage } from './pages/tokens/TokenIngestionQueuePage'
 import { TokenSuggestionsPage } from './pages/tokens/TokenSuggestionsPage'
 import { TokensSummaryPage } from './pages/tokens/TokensSummaryPage'
@@ -34,6 +35,7 @@ export function App() {
               path="/tokens/ingestion-queue"
               element={<TokenIngestionQueuePage />}
             />
+            <Route path="/tokens/history" element={<TokenHistoryPage />} />
             <Route path="/search/:search" element={<SearchPage />} />
             <Route path="/tokens/new" element={<AddTokensPage />} />
             <Route path="/tokens/:id" element={<AbstractTokenPage />} />

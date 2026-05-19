@@ -31,6 +31,11 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 
+const LIVE_SUGGESTIONS_QUERY_OPTIONS = {
+  refetchOnMount: 'always',
+  staleTime: 0,
+} as const
+
 export function TokenSuggestionsPage() {
   return (
     <AppLayout>
@@ -45,7 +50,10 @@ export function TokenSuggestionsPage() {
 function ByMatchingAbstractTokensCard() {
   const navigate = useNavigate()
   const { data: suggestions, isLoading } =
-    api.deployedTokens.getSuggestionsByPartialTransfers.useQuery()
+    api.deployedTokens.getSuggestionsByPartialTransfers.useQuery(
+      undefined,
+      LIVE_SUGGESTIONS_QUERY_OPTIONS,
+    )
 
   return (
     <Card className="flex min-h-0 flex-1 flex-col">
@@ -168,7 +176,10 @@ function FromCoingeckoCard() {
   const navigate = useNavigate()
   const [interopOnly, setInteropOnly] = useState(false)
   const { data: suggestions, isLoading } =
-    api.deployedTokens.getCoingeckoSuggestions.useQuery()
+    api.deployedTokens.getCoingeckoSuggestions.useQuery(
+      undefined,
+      LIVE_SUGGESTIONS_QUERY_OPTIONS,
+    )
 
   const filteredSuggestions = (suggestions ?? [])
     .filter((suggestion) => !interopOnly || suggestion.isInterop)

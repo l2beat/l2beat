@@ -93,6 +93,7 @@ export type {
 export type {
   TokenDbHistoryEntryInsert,
   TokenDbHistoryEntryRecord,
+  TokenDbHistoryPage,
   TokenDbHistorySource,
 } from './repositories/TokenDbHistoryRepository'
 export type { TokenDbSettingRecord } from './repositories/TokenDbSettingRepository'
