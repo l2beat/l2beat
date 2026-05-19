@@ -7,6 +7,7 @@ import { createAboutUsRouter } from './about/AboutUsRouter'
 import { createBrandKitRouter } from './brand-kit/BrandKitRouter'
 import { createChangelogRouter } from './changelog/ChangelogRouter'
 import { createDaRiskFrameworkRouter } from './da-risk-framework/DaRiskFrameworkRouter'
+import { createDailyChecksRouter } from './daily-checks/DailyChecksRouter'
 import { createDataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
 import { createDevRouter } from './dev/DevRouter'
 import { createDonateRouter } from './donate/DonateRouter'
@@ -65,6 +66,7 @@ export function createServerPageRouter(
     createDonateRouter,
     createGlossaryRouter,
     createDaRiskFrameworkRouter,
+    createDailyChecksRouter,
     createMultisigReportRouter,
     createTermsOfServiceRouter,
     createStagesRouter,
