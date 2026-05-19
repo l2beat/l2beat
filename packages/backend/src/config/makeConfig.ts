@@ -203,6 +203,11 @@ function getNotificationsConfig(
         .split(',')
         .map((id) => id.trim())
         .filter((id) => id.length > 0),
+      timezone: env.string(
+        'NOTIFICATIONS_DAILY_CHECKS_TIMEZONE',
+        'Europe/Warsaw',
+      ),
+      hour: env.integer('NOTIFICATIONS_DAILY_CHECKS_HOUR', 9),
     },
   }
 }

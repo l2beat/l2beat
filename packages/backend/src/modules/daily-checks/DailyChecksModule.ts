@@ -16,7 +16,8 @@ export function createDailyChecksModule({
   }
   logger = logger.tag({ feature: 'dailyChecks', module: 'dailyChecks' })
 
-  const { discordWebhookUrl, discordUserIds } = config.notifications.dailyChecks
+  const { discordWebhookUrl, discordUserIds, timezone, hour } =
+    config.notifications.dailyChecks
 
   if (discordUserIds.length === 0) {
     logger.warn('No Discord user IDs configured, daily checks disabled')
@@ -33,6 +34,8 @@ export function createDailyChecksModule({
       minHeight: 0,
       discordClient: new DiscordClient(discordWebhookUrl),
       discordUserIds,
+      timezone,
+      hour,
     },
     logger,
   )

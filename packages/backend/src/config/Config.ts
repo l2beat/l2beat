@@ -225,6 +225,8 @@ export interface NotificationsConfig {
     | {
         discordWebhookUrl: string
         discordUserIds: string[]
+        timezone: string
+        hour: number
       }
     | false
 }
