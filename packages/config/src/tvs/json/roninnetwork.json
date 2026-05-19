@@ -299,7 +299,7 @@
             "chain": "roninnetwork",
             "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
             "decimals": 18,
-            "sinceTimestamp": 1612972800
+            "sinceTimestamp": 1778598960
           },
           {
             "type": "calculation",
@@ -311,7 +311,7 @@
                 "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
                 "escrowAddress": "0x000000000000000000000000000000000000dEaD",
                 "decimals": 18,
-                "sinceTimestamp": 1612972800
+                "sinceTimestamp": 1778598960
               },
               {
                 "type": "balanceOfEscrow",
@@ -319,7 +319,7 @@
                 "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
                 "escrowAddress": "0x0000000000000000000000000000000000000001",
                 "decimals": 18,
-                "sinceTimestamp": 1612972800
+                "sinceTimestamp": 1778598960
               },
               {
                 "type": "balanceOfEscrow",
@@ -327,7 +327,7 @@
                 "address": "native",
                 "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
                 "decimals": 18,
-                "sinceTimestamp": 1612972800
+                "sinceTimestamp": 1778598960
               }
             ]
           }
