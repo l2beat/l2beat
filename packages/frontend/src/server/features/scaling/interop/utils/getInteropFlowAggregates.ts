@@ -20,6 +20,8 @@ export interface InteropFlowAggregates {
   chainPairTopTokens: Map<string, TopEntry[]>
   chainTopProtocols: Map<string, TopEntry[]>
   chainPairTopProtocols: Map<string, TopEntry[]>
+  chainTokenCounts: Map<string, number>
+  chainProtocolCounts: Map<string, number>
   topToken: TopEntry | undefined
   topProtocol: TopEntry | undefined
   tokenIds: string[]
@@ -82,6 +84,8 @@ export function getInteropFlowAggregates(
     chainPairTopTokens,
     chainTopProtocols: chainProtocols.topByGroup(3),
     chainPairTopProtocols: pairProtocols.topByGroup(3),
+    chainTokenCounts: chainTokens.countByGroup(),
+    chainProtocolCounts: chainProtocols.countByGroup(),
     topToken,
     topProtocol,
     tokenIds: [...globalTokens.keys()],
@@ -105,6 +109,14 @@ class GroupedVolumes {
     const result = new Map<string, TopEntry[]>()
     for (const [group, volumes] of this.groups) {
       result.set(group, topEntries(volumes, n))
+    }
+    return result
+  }
+
+  countByGroup(): Map<string, number> {
+    const result = new Map<string, number>()
+    for (const [group, volumes] of this.groups) {
+      result.set(group, volumes.size)
     }
     return result
   }
