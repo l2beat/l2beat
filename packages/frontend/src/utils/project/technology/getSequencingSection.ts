@@ -6,12 +6,18 @@ export function getSequencingSection(
 ) {
   if (!project.scalingTechnology.sequencing) return undefined
   return {
+    projectName: project.name,
     name: project.scalingTechnology.sequencing.name,
     diagram: getDiagramParams(
       'sequencing',
       project.scalingTechnology.sequencingImage ?? project.slug,
     ),
     content: project.scalingTechnology.sequencing.description,
+    sequencerSetSpec: project.scalingTechnology.sequencing.sequencerSetSpec,
+    inclusionDelayChart:
+      project.scalingTechnology.sequencing.inclusionDelayChart,
+    censorshipResistance:
+      project.scalingTechnology.sequencing.censorshipResistance,
     isUnderReview: !!project.statuses.reviewStatus,
     risks: project.scalingTechnology.sequencing.risks.map((r) => ({
       text: `${r.category} ${r.text}`,

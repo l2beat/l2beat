@@ -16,6 +16,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import entityStakeDistribution from './entity-stake-distribution.json'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -40,6 +41,17 @@ const currentValidatorSetSize = discovery.getContractValue<number>(
 const currentValidatorSetCap = discovery.getContractValue<number>(
   'StakeManager',
   'validatorThreshold',
+)
+
+const minDeposit = discovery.getContractValue<string>(
+  'StakeManager',
+  'minDeposit',
+)
+
+const polygonSpanBlocks = 6400
+const polygonBlockSeconds = 2
+const polygonSpanTimeString = formatSeconds(
+  polygonSpanBlocks * polygonBlockSeconds,
 )
 
 const chainId = 137
@@ -259,6 +271,57 @@ export const polygonpos: ScalingProject = {
     //operator: {},
     //forceTransactions: {},
     //exitMechanisms: [],
+    sequencing: {
+      name: 'Transactions are ordered by Polygon PoS validators',
+      description: `Polygon PoS is operated by a closed proof-of-stake validator set with ${currentValidatorSetSize} active validators. Block production rights are given to validators randomly (stake-weighted) for the duration of a *span*. In practice, validators delegate the block production further to centralised validator-elected block producers (VeBloPs). Ethereum smart contracts accept checkpoints signed by more than two thirds of Polygon PoS validator stake.`,
+      sequencerSetSpec: {
+        slotTime: { value: formatSeconds(polygonBlockSeconds) },
+        epochTime: {
+          value: `*Span*: ${polygonSpanBlocks} blocks (${polygonSpanTimeString})`,
+        },
+        sequencerCount: { value: `${currentValidatorSetSize} validators` },
+        blockProductionAccess: {
+          value: 'Closed and capped',
+          sentiment: 'bad',
+          description: `The current validator cap is ${currentValidatorSetCap}. Joining the set is permissioned (Multisig).`,
+        },
+        stakePerValidator: {
+          value: minDeposit + ' POL minimum, variable',
+          description: 'stake-weighted block production rights, no maximum',
+        },
+        rateLimit: { value: 'No (permissioned)' },
+        deterministicCrGadget: { value: 'No', sentiment: 'warning' },
+        additionalCrGadgets: { value: 'No', sentiment: 'bad' },
+      },
+      inclusionDelayChart: {
+        type: 'spanlike',
+        validatorCount: currentValidatorSetSize,
+        spanBlocks: polygonSpanBlocks,
+        blockSeconds: polygonBlockSeconds,
+        target: 0.99,
+        maxCensorFraction: 0.33,
+        entityStakeDistribution,
+        afterChart:
+          'The chart models live-chain selective censorship only. Since proposing is stake-weighted, the x-axis represents the censoring POL stake, and does not cover validator-set changes, or blanket-censorship resistance gadgets.',
+      },
+      censorshipResistance: `The validator set is closed and capped, but includes a diverse set of known entities who share block production rights. There are no specific censorship resistance gadgets built into the Polygon PoS protocol.
+### Selective censorship
+As long as the Polygon PoS blockchain is producing blocks, users can expect to include their transactions due to the rotating, diverse block producers, even if they are censored by some of them. Unfortunately, the rotation is very slow (see *span* time) and even a few entities censoring can cause long inclusion delays.
+### Blanket censorship
+If validators holding more than 1/3 of the stake on Polygon PoS stop block production, the chain stops and there is no way for users to include any transactions (walkaway). The same 1/3 can censor users if they actively refuse to attest to blocks with their transactions.`,
+      references: [
+        {
+          title: 'Polygon PoS architecture documentation',
+          url: 'https://docs.polygon.technology/pos/architecture/',
+        },
+      ],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'the active span proposer censors them, or if at least one third of Polygon PoS stake refuses to attest blocks that include their transactions.',
+        },
+      ],
+    },
     otherConsiderations: [
       {
         name: 'Destination tokens are upgradeable',

@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -43,6 +44,9 @@ const ambBridgeValidatorCount = discovery.getContractValue<number>(
   'AMB Validators',
   'validatorCount',
 )
+
+const gnosisValidatorSetSize = 100_000
+const gnosisSlotSeconds = 5
 
 export const gnosis: ScalingProject = {
   type: 'layer2',
@@ -216,6 +220,61 @@ export const gnosis: ScalingProject = {
         {
           category: 'Funds can be frozen if',
           text: 'transaction data is unavailable and bridge validators cannot reconstruct or sign the messages needed to exit.',
+        },
+      ],
+    },
+    sequencing: {
+      name: 'Transactions are ordered by Gnosis Chain validators',
+      description:
+        'Gnosis Chain uses a permissionless proof-of-stake validator set with stake-weighted proposer rotation and a 5 second slot time. The Ethereum-like committee-free block production architecture combined with the short block time lead to fast theoretical inclusion times, even with high rates of censorship. In contrast to Ethereum, blcoks on Gnosis chain are usually built *locally*, meaning that validators do not delegate block production to specialised builders. There is no public information on the decentralisation of the Gnosis validator set.',
+      sequencerSetSpec: {
+        slotTime: { value: formatSeconds(gnosisSlotSeconds) },
+        epochTime: {
+          value: '80 seconds', // 5s/block * 16 blocks
+          description: 'Block production is not committee-based',
+        },
+        sequencerCount: {
+          value: `${gnosisValidatorSetSize.toLocaleString('en-US')} validators`,
+        },
+        blockProductionAccess: { value: 'Open', sentiment: 'good' },
+        stakePerValidator: {
+          value: '1 GNO minimum, variable',
+          description: 'stake-weighted block production rights, no maximum',
+        },
+        rateLimit: {
+          value: '~1-2 GNO per epoch',
+          description: 'defined by the consensus clients',
+        },
+        deterministicCrGadget: { value: 'No', sentiment: 'warning' },
+        additionalCrGadgets: {
+          value: 'Shutter encrypted mempool beta',
+          sentiment: 'warning',
+        },
+      },
+      inclusionDelayChart: {
+        type: 'ethereumlike',
+        validatorCount: gnosisValidatorSetSize,
+        slotSeconds: gnosisSlotSeconds,
+        target: 0.99,
+        maxCensorFraction: 0.5,
+        afterChart:
+          'The chart uses the Ethereum-style single-proposer formula with Gnosis-specific constants. It excludes finality, inactivity leaks, validator-set changes, hard forks, and blanket-censorship resistance gadgets.',
+      },
+      censorshipResistance: `Gnosis Chain does not have dedicated censorship resistance gadgets, but the sequencer set is open and there are no committees that can block inclusion.
+### Selective censorship
+Even with high percentages of stake censoring, users have very fast inclusion times. There are also initial tests of an out-of-protocol solution for encrypting transactions in the mempool (Shutterized Gnosis Chain).
+### Blanket censorship
+Since the validator set is open, new validators could theoretically join it in case all validators passively stop block production (walkaway). There is no way to circumvent the validator set from Ethereum in a case of active censorship by all (or a majority of) validators.`,
+      references: [
+        {
+          title: 'Gnosis Chain specifications',
+          url: 'https://docs.gnosischain.com/about/specs/',
+        },
+      ],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'at least half of the active stake censors them, or if current validators coordinate blanket censorship and the chain requires social recovery.',
         },
       ],
     },

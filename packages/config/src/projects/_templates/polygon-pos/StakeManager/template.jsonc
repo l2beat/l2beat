@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "minDeposit": {
+      "description": "min POL stake for new validators",
+      "edit": ["format", "Undecimal18"]
+    }
+  }
+}
