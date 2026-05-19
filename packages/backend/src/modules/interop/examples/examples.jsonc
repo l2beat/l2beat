@@ -655,6 +655,32 @@
       ]
     }
   },
+  "ccip-megaeth": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // MegaETH -> Ethereum (v1.6 token transfer)
+      {
+        "chain": "megaeth",
+        "tx": "0xf82081f29b3020478cbc930165ce9c3a740fece1aba229ff668db59a682b36ca"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x7ce56bfd214151c570ef19c687e7a0e0eacbda4f1ee30734cbd6bd7e272b16b7"
+      },
+      // Ethereum -> MegaETH (v1.6 token transfer)
+      {
+        "chain": "ethereum",
+        "tx": "0x216f3b0f02763bb7f20445ce8a0b6a5301af1b4722a8e04fb2096f7903005e35"
+      },
+      {
+        "chain": "megaeth",
+        "tx": "0x7a41f3c99843b27d141c49c77b14c1af3fc8632b35ec0d61be5de532569b5c16"
+      }
+    ],
+    "expects": {
+      "transfers": [{ "type": "ccip.Transfer" }, { "type": "ccip.Transfer" }]
+    }
+  },
   "ccip-monad": {
     "loadConfigs": ["ccip"],
     "txs": [
