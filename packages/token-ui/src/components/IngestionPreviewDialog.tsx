@@ -16,6 +16,7 @@ import {
   DialogTitle,
 } from './core/Dialog'
 import { Diff } from './Diff'
+import { IngestionLog } from './IngestionLog'
 import { LoadingState } from './LoadingState'
 
 export interface IngestionPreviewState {
@@ -70,15 +71,7 @@ export function IngestionPreviewDialog({
 function TraceView({ trace }: { trace: IngestionTraceView }) {
   return (
     <div className="min-w-0 space-y-4">
-      <section className="space-y-1">
-        <h3 className="font-medium text-sm">Steps</h3>
-        <ol className="list-decimal space-y-1 pl-5 text-sm">
-          {trace.steps.map((step, index) => (
-            <li key={index}>{step.description}</li>
-          ))}
-        </ol>
-      </section>
-
+      <IngestionLog log={trace.text} />
       <section className="space-y-2">
         <h3 className="font-medium text-sm">Outcome</h3>
         <OutcomeView outcome={trace.outcome} />
@@ -103,51 +96,25 @@ export function formatAbstractRef(ref: AbstractTokenRef) {
 }
 
 function OutcomeView({ outcome }: { outcome: IngestionOutcomeView }) {
-  const message = outcome.description
-
   switch (outcome.kind) {
     case 'skip':
-      return (
-        <div className="flex flex-col gap-2 text-sm">
-          <Badge variant="outline">Skip</Badge>
-          <span>{message}</span>
-        </div>
-      )
+      return <Badge variant="outline">Skip</Badge>
     case 'conflict':
-      return (
-        <div className="flex flex-col gap-2 text-sm">
-          <ConflictBadge />
-          <span>{message}</span>
-        </div>
-      )
+      return <ConflictBadge />
     case 'error':
-      return (
-        <div className="flex flex-col gap-2 text-sm">
-          <Badge variant="destructive">Error</Badge>
-          <span>{message}</span>
-        </div>
-      )
+      return <Badge variant="destructive">Error</Badge>
     case 'noop':
-      return (
-        <div className="flex flex-col gap-2 text-sm">
-          <Badge variant="secondary">No update</Badge>
-          <span>{message}</span>
-        </div>
-      )
+      return <Badge variant="secondary">No update</Badge>
     case 'pending':
       return (
-        <div className="flex flex-col gap-2 text-sm">
-          <Badge>
-            {outcome.operation === 'insert' ? 'Add token' : 'Update'} (pending)
-          </Badge>
-          <span>{message}</span>
-        </div>
+        <Badge>
+          {outcome.operation === 'insert' ? 'Add token' : 'Update'} (pending)
+        </Badge>
       )
     case 'write':
       return (
         <div className="min-w-0 space-y-3 text-sm">
           <Badge>Write</Badge>
-          <span>{message}</span>
           {outcome.newAbstractToken && (
             <div className="min-w-0 space-y-1">
               <h4 className="font-medium">New abstract token</h4>

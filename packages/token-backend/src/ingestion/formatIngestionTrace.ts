@@ -120,6 +120,7 @@ export function toIngestionTraceView(
     address: trace.address,
     steps: trace.steps.map(toIngestionStepView),
     outcome: toIngestionOutcomeView(trace.outcome),
+    text: formatIngestionTrace(trace),
   }
 }
 

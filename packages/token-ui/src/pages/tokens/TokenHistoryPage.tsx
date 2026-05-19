@@ -41,6 +41,7 @@ import {
   TableRow,
 } from '~/components/core/Table'
 import { Diff, ObjectDiff } from '~/components/Diff'
+import { IngestionLog } from '~/components/IngestionLog'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
@@ -251,8 +252,9 @@ function HistoryDetails({
                 {formatTimestamp(entry.timestamp)} | {formatSource(entry)}
               </SheetDescription>
             </SheetHeader>
-            <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4">
+            <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 pb-4">
               <CommandDiff entry={entry} />
+              {entry.ingestionLog && <IngestionLog log={entry.ingestionLog} />}
             </div>
           </>
         )}

@@ -483,3 +483,50 @@ Notes:
   dialog, and the persisted log now all share one wording — so the
   text a researcher sees in the preview is exactly what ends up in the
   DB.
+
+## 2026-05-19 - Slice 10: ingestion log on history UI
+
+Surfaced the `ingestionLog` persisted in Slice 9 on the Token UI history
+page, reusing the same component the queue preview dialog uses. The
+previous slice's follow-up note is now resolved.
+
+- New shared component `packages/token-ui/src/components/IngestionLog.tsx`.
+  It renders a labelled `<pre>` block from a single `log: string` prop,
+  matching how the preview previously rendered steps + outcome
+  descriptions.
+- Pre-rendered text on the backend so both consumers read from one
+  source: added `text: string` to `IngestionTraceView`, populated in
+  `toIngestionTraceView` via the existing `formatIngestionTrace(trace)`.
+  This is the same string format that gets persisted on
+  `TokenDbHistoryEntry.ingestionLog`, so the preview dialog and the
+  history detail render identical text for the same trace.
+- `IngestionPreviewDialog` now uses `<IngestionLog log={trace.text} />`
+  in place of its previous structured "Steps" list + per-outcome
+  description span. The outcome section keeps the badge and the
+  `write`-only rich extras (new abstract token JSON, deployed token
+  insert JSON or Diff, re-enqueued neighbors list) — those are not
+  text and don't belong in the log.
+- `OutcomeView` simplified: the redundant outcome description (now in
+  the log above) is removed from every branch. Skip / conflict / error
+  / noop / pending render just a badge; `write` keeps the badge plus
+  the rich extras.
+- `TokenHistoryPage` renders `<IngestionLog log={entry.ingestionLog} />`
+  at the bottom of the detail sheet, only when `entry.ingestionLog` is
+  non-null (i.e. ingestion writes; manual writes show nothing extra).
+
+Reuse path considered and rejected:
+
+- An earlier sketch tried to share the structured `TraceView` between
+  the preview and the history detail. That would have required
+  changing `ingestionLog` to JSONB and persisting `IngestionTraceView`,
+  which Slice 9 explicitly avoided (the column is plain text on
+  purpose). Sharing was instead done at the text-rendering layer —
+  one `<pre>`-style component, two callers — which keeps the column
+  shape from Slice 9 and still avoids duplication.
+
+Notes:
+
+- No backend schema change. The `ingestionLog TEXT` column from Slice 9
+  is read as-is.
+- Both `pnpm build` and `pnpm typecheck` are green in `token-ui`, and
+  `token-backend`'s test suite stays green.
