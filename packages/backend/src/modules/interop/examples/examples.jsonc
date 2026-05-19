@@ -2578,6 +2578,15 @@
       {
         "chain": "megaeth",
         "tx": "0x4d9b09120db5c4f129b6963ca5fb605baca8f07a2be96eef7203dd67f8370aa0"
+      },
+      // worldchain related txs: direct portal ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x7e2dfbadbf336b27ac92f7ee23a82d69022b87a052011390adbe3978661e9cd4"
+      },
+      {
+        "chain": "worldchain",
+        "tx": "0xa0dc666babce95538939e7a40638097c3f5685f949adb429b199e83e4f2bc02a"
       }
     ],
     "events": [
@@ -3120,6 +3129,70 @@
         }
       ]
     }
+  },
+  "opstack-standardbridge-worldchain-eth": {
+    "tags": ["opstack"],
+    "description": "worldchain <-> ethereum (eth)",
+    "txs": [
+      // L1 -> L2: 0.0001 ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xc7818a16dce084c10f97d325c049c12571bb140aaf0b87022ebd1f80a8da0060"
+      },
+      {
+        "chain": "worldchain",
+        "tx": "0xc5c3003c64b9b4ae61defd374aa370830aaeb79649ef3b46ca2813475fc697d0"
+      },
+      // L2 -> L1: 90 ETH withdrawal
+      {
+        "chain": "worldchain",
+        "tx": "0x96e33046aafa718e1509cd14deeecd1462b3164d7dd053fe83c4eaa29c1a6b44"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x063729cb304ae95558a1cf32d82c34c3f68f6db0cb203569f779504b84400a9c"
+      }
+    ],
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+    ],
+    "transfers": [
+      "opstack-standardbridge.L1ToL2Transfer",
+      "opstack-standardbridge.L2ToL1Transfer"
+    ]
+  },
+  "opstack-standardbridge-worldchain-erc20": {
+    "tags": ["opstack"],
+    "description": "worldchain <-> ethereum (erc20)",
+    "txs": [
+      // L1 -> L2: ERC20 deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x83daa2159735c43063ba1441976bde4b520ff792d42271d1aa44910646d87012"
+      },
+      {
+        "chain": "worldchain",
+        "tx": "0xf0557e830d6d62ef3df6ce7cb88b48a348b5b6fd965225ae248cc527213cf6d1"
+      },
+      // L2 -> L1: ERC20 withdrawal
+      {
+        "chain": "worldchain",
+        "tx": "0x6515fabcf300795485c87f9507091c775d3c26898e27d55af5a720d4aa656f29"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xf9b1fd5c4b1c6bc2d511a7edf1d95b233d3947437ceff2c21951dddc4efcfe61"
+      }
+    ],
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+    ],
+    "transfers": [
+      "opstack-standardbridge.L1ToL2Transfer",
+      "opstack-standardbridge.L2ToL1Transfer"
+    ]
   },
   "orbitstack": {
     "txs": [
