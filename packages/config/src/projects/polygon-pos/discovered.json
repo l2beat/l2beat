@@ -1192,6 +1192,12 @@
           "from": "eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
           "description": "move any tokens to or from the escrow.",
           "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
         }
       ],
       "ignoreInWatchMode": ["tokensMapped"],
@@ -4269,6 +4275,7 @@
       "name": "ERC721Predicate",
       "address": "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
       "type": "Contract",
+      "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0x1d84e4aa2ca9808f7866a5d3c6c804956136d56a985525328da76b85a63238f3",
         "0x3ba5e3b72dc8014129d816e9f97d23d3ff56b3b89c558939e6204ce70b662c26"
@@ -4318,10 +4325,22 @@
           ]
         ],
         "$upgradeCount": 7,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+          }
+        },
         "BATCH_LIMIT": 20,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"],
         "implementation": "eth:0x02Bc987f54B54bf18Ca6E20a13e57508ec561072",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
+        "managersAC": ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"],
         "proxyOwner": "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "proxyType": 2,
         "TOKEN_TYPE": "0x73ad2146b3d3a286642c794379d750360a2d53a3459a11b3e5d6cc900f55f44a",
@@ -4462,6 +4481,12 @@
           "from": "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
           "description": "can migrate the canonically bridged USDT token to a native or external version.",
           "role": ".migrator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
         },
         {
           "permission": "upgrade",
@@ -5716,5 +5741,5 @@
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25086587 },
-  "permissionsConfigHash": "0x3603c17442e5557127cece3c23beaed5b4b8e7abde617507c1de8a9f14ad01ba"
+  "permissionsConfigHash": "0xe5bd6484e6c3309c29d81cec4b336f4edd93d1701f98aaf3b05080f726f04350"
 }
