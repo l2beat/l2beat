@@ -255,10 +255,6 @@ export const lighter: ScalingProject = {
             title: 'Desert exit circuit + state snapshot',
             url: 'https://github.com/elliottech/lighter-prover/tree/main/desertexit',
           },
-          {
-            title: 'Deployed DesertVerifier 0x2adbd91…',
-            url: 'https://etherscan.io/address/0x2adbd91742b64105a097bc37d20ebbca9a496085',
-          },
         ],
       },
     ],
