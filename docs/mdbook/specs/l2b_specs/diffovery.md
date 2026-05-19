@@ -44,8 +44,8 @@ To determine if the computed difference is important to us we run two checks.
 The first check is very simple, we fetch all tokens that fall within the range on both sides and we only show the entry if the tokens between the left and right side are different.
 If the tokens are the same, this means that the change is purely in the white space.
 The second check is conditional, we only run it if the user selected to ignore comments.
-If they did, any differences that are inside lines that are purely comments get ignored.
-A line that mixes code with a trailing comment is not considered pure, so changes on such a line are still shown.
+If they did, all comment tokens are stripped from both sides before we compare, so any difference that lives entirely in comments gets ignored.
+This applies both to lines that are purely comments and to trailing comments on lines that also contain code.
 
 The actual behaviour is a little bit more complex than just accepting or rejecting a diff entry.
 For each entry, we are going to try to narrow the range down from the left and right side.
