@@ -9,12 +9,15 @@
     },
     "multisigSettings": {
       "severity": "HIGH",
+      "description": "the threshold in the SignerList needs to be changed manually if it changes here"
+    },
+    "dao": {
       "permissions": [
         {
-          "type": "act" // this object has the signerList, which should inherit perms
+          "type": "interact",
+          "description": "manage critical settings (e.g. threshold and multisig settings) for the emergency proposal governance path."
         }
-      ],
-      "description": "the threshold in the SignerList needs to be changed manually if it changes here"
+      ]
     }
   }
 }

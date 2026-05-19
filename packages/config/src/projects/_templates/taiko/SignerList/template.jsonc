@@ -1,18 +1,31 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list.",
+  "displayName": "SignerList (Security Council)",
+  "description": "A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.",
   "ignoreMethods": ["addresslistLengthAtBlock", "getEncryptionAgents"],
+  "ignoreRelatives": ["settings"],
   "fields": {
-    "$members": {
+    "multisigSigners": {
       "handler": {
         "type": "event",
         "select": "signers",
         "flatten": true,
-        "add": { "event": "SignersAdded" },
-        "remove": { "event": "SignersRemoved" }
-      }
+        "add": {
+          "event": "SignersAdded"
+        },
+        "remove": {
+          "event": "SignersRemoved"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure an agent address that represents this entity in the Security Council"
+        }
+      ]
     },
-    "agents": {
+    "$members": {
+      // agents getting the direct act permissions
       "handler": {
         "type": "call",
         "method": "function getEncryptionAgents() view returns (address[] result)",
@@ -21,9 +34,21 @@
     },
     "$threshold": {
       "description": "hardcoded emergency multisg threshold, must be manually changed here if it changes in the EmergencyMultisig contract.",
-      "handler": { "type": "hardcoded", "value": 7 }
+      "handler": {
+        "type": "hardcoded",
+        "value": 7
+      }
     },
-    "settings": { "severity": "HIGH" }
-  },
-  "ignoreRelatives": ["settings"]
+    "settings": {
+      "severity": "HIGH"
+    },
+    "dao": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add/remove members from the Security Council and change its minimum size."
+        }
+      ]
+    }
+  }
 }

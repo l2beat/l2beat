@@ -3,17 +3,18 @@
   "description": "Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).",
   "ignoreMethods": ["canExecute", "getProposal", "proxiableUUID"],
   "fields": {
-    "multisigSettings": {
-      "severity": "HIGH",
-      "permissions": [
-        {
-          "type": "act" // this object has the signerList, which should inherit perms
-        }
-      ]
-    },
+    "multisigSettings": { "severity": "HIGH" },
     "proposalCount": {
       "description": "total standard proposal count.",
       "severity": "HIGH"
+    },
+    "dao": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage critical settings (e.g. threshold and multisig settings) for the standard proposal governance path."
+        }
+      ]
     }
   }
 }
