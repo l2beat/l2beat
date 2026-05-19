@@ -1,3 +1,72 @@
+Generated with discovered.json: 0xc734b33fc7065bdfeacc9950b1c38e1cba610b50
+
+# Diff at Mon, 18 May 2026 10:37:33 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@81908b566e918425ebf298c08aed66029316c1ad block: 1777548282
+- current timestamp: 1779099959
+
+## Description
+
+Clean up spammy values.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777548282 (main branch discovery), not current.
+
+```diff
+    contract TornadoTreesV1 (eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417) [tornado-cash/TornadoTreesV1] {
+    +++ description: Legacy Tornado Trees contract that records deposit and withdrawal leaves from TornadoProxyV1 and maintains the roots later consumed by migration and mining logic.
+      values.blockNumber:
+-        24992607
+      values.lastProcessedDepositLeaf:
+-        6144
+      values.lastProcessedWithdrawalLeaf:
+-        5632
+    }
+```
+
+```diff
+    contract TornadoTreesV2 (eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce) [tornado-cash/TornadoTreesV2] {
+    +++ description: Upgradeable batch-based Tornado Trees contract that reuses legacy tree state, queues new leaves from the newer proxy, and accepts batched root updates proven by a verifier.
+      values.blockNumber:
+-        24992607
+      values.depositsLength:
+-        92895
+      values.depositsV1Length:
+-        22008
+      values.lastProcessedDepositLeaf:
+-        70656
+      values.lastProcessedWithdrawalLeaf:
+-        74752
+      values.withdrawalsLength:
+-        85961
+      values.withdrawalsV1Length:
+-        14884
+    }
+```
+
+```diff
+    contract RewardSwap (eth:0x5cab7692D4E94096462119ab7bF57319726Eed2A) [tornado-cash/RewardSwap] {
+    +++ description: Liquidity schedule that pays out TORN rewards for anonymity mining. Only the Miner contract can draw from it or adjust the reward weight.
+      values.getTimestamp:
+-        1777548275
+    }
+```
+
+```diff
+    contract TORN (eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C) [tornado-cash/TORN] {
+    +++ description: TORN governance token contract. Transfers start paused and can later be toggled by governance, which also controls the paused-transfer allowlist and token rescue functions.
+      values.blockTimestamp:
+-        1777548275
+      fieldMeta.canUnpauseAfter.severity:
+-        "LOW"
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0xa08143f070688c421cd9c5b5ca3cdc0716cd9c3b
 
 # Diff at Tue, 12 May 2026 10:06:35 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "myria",
-  "timestamp": 1777891434,
+  "timestamp": 1779099631,
   "configHash": "0x2faaf2da24c57f1cadf6ac511a56d8da395293aa33308eed7330d411ef33d985",
   "entries": [
     {
@@ -138,7 +138,7 @@
         "getValidiumTreeHeight": 31,
         "getValidiumVaultRoot": "2836643187968786902994714112811533015427861233654430505700269597006389819357",
         "implementation": "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-        "isFrozen": false,
+        "isFrozen": true,
         "isNotFinalized": true,
         "isStrictVaultBalancePolicy": false,
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
@@ -699,6 +699,6 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "usedBlockNumbers": { "ethereum": 25021111 },
+  "usedBlockNumbers": { "ethereum": 25121451 },
   "permissionsConfigHash": "0x13539b2d31e14624324e158e2f105b4c4add7621d9dc722ca6967d27eedb134c"
 }
