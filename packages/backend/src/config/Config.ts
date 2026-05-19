@@ -221,6 +221,12 @@ export interface NotificationsConfig {
         discordWebhookUrl: string
       }
     | false
+  readonly dailyChecks:
+    | {
+        discordWebhookUrl: string
+        discordUserIds: string[]
+      }
+    | false
 }
 
 export interface AnomaliesConfig {

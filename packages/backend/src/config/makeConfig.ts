@@ -194,6 +194,16 @@ function getNotificationsConfig(
         'NOTIFICATIONS_ETHEREUM_BLOBS_DISCORD_WEBHOOK_URL',
       ),
     },
+    dailyChecks: flags.isEnabled('notifications', 'dailyChecks') && {
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_DAILY_CHECKS_DISCORD_WEBHOOK_URL',
+      ),
+      discordUserIds: env
+        .string('NOTIFICATIONS_DAILY_CHECKS_DISCORD_USER_IDS')
+        .split(',')
+        .map((id) => id.trim())
+        .filter((id) => id.length > 0),
+    },
   }
 }
 
