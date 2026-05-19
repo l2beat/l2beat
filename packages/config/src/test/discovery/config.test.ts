@@ -4,12 +4,12 @@ import {
   DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
+  get$Implementations,
   getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   getHashToBeMatched,
   makeEntryStructureConfig,
   TemplateService,
-  get$Implementations,
 } from '@l2beat/discovery'
 import { assert, ChainSpecificAddress, unique } from '@l2beat/shared-pure'
 import { expect } from 'earl'
