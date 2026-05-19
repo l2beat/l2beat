@@ -6,6 +6,7 @@ import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -48,6 +49,7 @@ export const AbstractTokenSchema = v.object({
     .optional(),
   comment: v.string().optional(),
   reviewed: v.boolean(),
+  isPriceUnreliable: v.boolean(),
 })
 
 export function AbstractTokenForm({
@@ -281,6 +283,35 @@ export function AbstractTokenForm({
                   />
                 </FormControl>
                 <FormLabel className="font-normal text-sm">Reviewed</FormLabel>
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="isPriceUnreliable"
+            render={({ field }) => (
+              <FormItem className="grid gap-1">
+                <div className="flex flex-row items-center gap-2">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(checked) => {
+                        return checked
+                          ? field.onChange(true)
+                          : field.onChange(false)
+                      }}
+                    />
+                  </FormControl>
+                  <FormLabel className="font-normal text-sm">
+                    Unreliable price
+                  </FormLabel>
+                </div>
+                <FormDescription>
+                  Set this when the upstream provider price is wrong or
+                  inconsistent. Interop may ignore the price or zero out USD
+                  value for this token.
+                </FormDescription>
               </FormItem>
             )}
           />
