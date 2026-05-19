@@ -124,9 +124,7 @@ const columns = [
   }),
 ]
 
-const initialSorting: SortingState = [
-  { id: 'totalValueLockedUsd', desc: true },
-]
+const initialSorting: SortingState = [{ id: 'totalValueLockedUsd', desc: true }]
 
 export function PrivacySummaryTable({
   entries,
