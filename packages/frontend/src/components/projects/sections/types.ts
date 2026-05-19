@@ -27,6 +27,7 @@ import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
 import type { ScalingTvsSectionProps } from './tvs/ScalingTvsSection'
 import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
+import type { UpdatesSectionProps } from './UpdatesSection'
 import type { UpgradesAndGovernanceSectionProps } from './UpgradesAndGovernanceSection'
 import type { VerifiersSectionProps } from './verifiers/VerifiersSection'
 
@@ -48,6 +49,7 @@ type SectionId =
   | 'state-derivation'
   | 'state-validation'
   | 'upgrades-and-governance'
+  | 'updates'
   | 'permissions'
   | 'contracts'
   | 'sequencing'
@@ -226,6 +228,11 @@ interface ProjectDetailsUpgradesAndGovernanceSection {
   props: ProjectDetailsProps<UpgradesAndGovernanceSectionProps>
 }
 
+interface ProjectDetailsUpdatesSection {
+  type: 'UpdatesSection'
+  props: ProjectDetailsProps<UpdatesSectionProps>
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
   sideNavTitle?: string
@@ -261,4 +268,5 @@ export type ProjectDetailsSection = {
   | ProjectDetailsInteropTransfersSection
   | ProjectDetailsInteropTokensSection
   | ProjectDetailsUpgradesAndGovernanceSection
+  | ProjectDetailsUpdatesSection
 )
