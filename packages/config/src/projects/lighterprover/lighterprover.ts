@@ -51,17 +51,21 @@ Lighter prover is a zk proving system for Lighter L2 based on [Plonky2](https://
 
 However Lighter wraps these STARK in a [gnark](https://github.com/Consensys/gnark) implementation of Plonk over BN254 curve, which requires a trusted setup.
 
-### Circuits
+### Lighter Circuits
 
-The proof system operates on Lighter STF circuits and desert mode circuits. All published circuits are available [here](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit), note that the Lighter team has not published the desert circuits yet. 
+The proof system operates on Lighter STF circuits and desert mode circuits. All published circuits are available [here](https://github.com/elliottech/lighter-prover/tree/main). 
 
-Lighter proof system defines circuits for proving all transactions, including internal, L1 and L2 transactions. The full list of available transactions that define Lighter STF can be seen [here](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/transactions). 
+Lighter proof system defines circuits for proving all transactions, including internal, L1 and L2 transactions. The full list of available transactions that define Lighter STF can be seen [here](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/transactions). 
 
-Transaction circuits use custom implementations for arithmetic operations ([bigint](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/bigint), [uint](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/uint)), cryptographic primitives ([ecdsa](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/ecdsa) on the Secp256k1 curve, [eddsa](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/eddsa) on the ECgFp5 curve, [keccak](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/keccak), [poseidon_bn128](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/poseidon_bn128)) and other helper circuits.
+Transaction circuits use custom implementations for arithmetic operations ([bigint](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/bigint), [uint](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/uint)), cryptographic primitives ([ecdsa](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/ecdsa) on the Secp256k1 curve, [eddsa](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/eddsa) on the ECgFp5 curve, [keccak](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/keccak), [poseidon_bn128](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/poseidon_bn128)) and other helper circuits.
+
+### Desert circuits
+
+Lighter also provides [desert exit circuits](https://github.com/elliottech/lighter-prover/tree/main/desertexit) that allow users to permissionlessly exit L2 when it is in the desert mode. Users can use desert circuit to generate a proof of ownership of all their positions locally, which could be submitted on L1 for withdrawing funds.
 
 ### Recursion
 
-Lighter prover implements recursive aggregation of transaction proofs to make the whole pipeline more efficient and parallelizable. First, fixed-size blocks of consecutive transactions are processed and proven by [BlockTx circuit](https://github.com/elliottech/lighter-prover/blob/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/block_tx_constraints.rs), which can be done on separate machines. Next, arbitrary number of BlockTx proofs are aggregated into a single proof by [BlockTxChain circuit](https://github.com/elliottech/lighter-prover/blob/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/block_tx_chain_constraints.rs), which includes continuity checks across all BlockTx proofs.
+Lighter prover implements recursive aggregation of transaction proofs to make the whole pipeline more efficient and parallelizable. First, fixed-size blocks of consecutive transactions are processed and proven by [BlockTx circuit](https://github.com/elliottech/lighter-prover/blob/main/circuit/src/block_tx_constraints.rs), which can be done on separate machines. Next, arbitrary number of BlockTx proofs are aggregated into a single proof by [BlockTxChain circuit](https://github.com/elliottech/lighter-prover/blob/main/circuit/src/block_tx_chain_constraints.rs), which includes continuity checks across all BlockTx proofs.
 `,
     trustedSetups: [
       {

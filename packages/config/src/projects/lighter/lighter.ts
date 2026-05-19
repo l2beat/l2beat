@@ -41,8 +41,6 @@ export const lighter: ScalingProject = {
   addedAt: UnixTime(1711551933), // 2024-03-27T15:05:33Z
   badges: [BADGES.VM.AppChain, BADGES.DA.EthereumBlobs],
   display: {
-    warning:
-      'Apr 9 2026: the desert mode circuit source code is not publicly available, and L2BEAT research found that full state reconstruction from L1 data alone is not currently feasible. A prover migration (gnark → plonky2) occurred at block 23,711,820 without publishing a state snapshot, leaving pre-migration accounts unreconstructable. Users cannot exit without operator cooperation.',
     name: 'Lighter',
     slug: 'lighter',
     description:
@@ -246,7 +244,7 @@ export const lighter: ScalingProject = {
       {
         name: 'Escape hatch through ZK proofs',
         description:
-          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users are expected to exit by reconstructing the latest settled state and providing a ZK proof of balance. In practice, this is not currently possible: the desert mode circuit source code is not public, and pre-migration blob data cannot be decoded (see data availability note). Users must rely on operator cooperation to exit.',
+          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users are expected to exit by reconstructing the latest settled state and providing a ZK proof of balance. In practice, this is not currently possible: pre-migration blob data cannot be decoded (see data availability note). Users must rely on operator cooperation to exit.',
         risks: [],
         references: [],
       },
@@ -278,7 +276,7 @@ export const lighter: ScalingProject = {
       {
         title: 'Prover Architecture',
         description:
-          '[This repo](https://github.com/elliottech/lighter-prover/tree/main) contains the circuits and prover code for normal (i.e. non-desert) operation mode of Lighter. It includes the logic to generate and verify proofs of valid state transition according to the Lighter [matching engine](https://github.com/elliottech/lighter-prover/blob/d0ff2304aea516b22f3a5223881006b6a9af1cc9/circuit/src/matching_engine.rs).',
+          '[This repo](https://github.com/elliottech/lighter-prover/tree/main) contains the circuits and prover code for both normal and desert operation mode of Lighter. It includes the logic to generate and verify proofs of valid state transition according to the Lighter [matching engine](https://github.com/elliottech/lighter-prover/blob/d0ff2304aea516b22f3a5223881006b6a9af1cc9/circuit/src/matching_engine.rs).',
       },
       {
         title: 'ZK Circuits',
