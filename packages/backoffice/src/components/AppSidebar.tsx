@@ -122,6 +122,11 @@ type WebsiteItem =
 
 const websiteItems: WebsiteItem[] = [
   {
+    title: 'Daily checks',
+    icon: ClipboardCheckIcon,
+    url: '/website/daily-checks',
+  },
+  {
     title: 'Status',
     icon: LayersIcon,
     items: [
@@ -134,11 +139,6 @@ const websiteItems: WebsiteItem[] = [
         url: '/website/status/da-tracking',
       },
     ],
-  },
-  {
-    title: 'Daily checks',
-    icon: ClipboardCheckIcon,
-    url: '/website/daily-checks',
   },
 ]
 
