@@ -6,7 +6,9 @@ import {
   EyeIcon,
   HistoryIcon,
 } from 'lucide-react'
+import type { ReactNode } from 'react'
 import { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {
@@ -38,10 +40,11 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/core/Table'
-import { ObjectDiff } from '~/components/Diff'
+import { Diff, ObjectDiff } from '~/components/Diff'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
+import { diff } from '~/utils/getDiff'
 
 const PAGE_SIZE = 100
 const FIELD_LIMIT = 4
@@ -50,8 +53,14 @@ type HistoryEntry =
   RouterOutputs['tokenDbHistory']['getPage']['entries'][number]
 
 interface TokenInfo {
-  primary: string
-  secondary?: string
+  primary: ReactNode
+  secondary?: ReactNode
+  iconUrl?: string
+}
+
+interface AbstractTokenInfo {
+  symbol: string
+  iconUrl: string | null
 }
 
 export function TokenHistoryPage() {
@@ -66,8 +75,14 @@ export function TokenHistoryPage() {
     },
   )
   const { data: abstractTokens } = api.abstractTokens.getAll.useQuery()
-  const abstractSymbols = useMemo(
-    () => new Map(abstractTokens?.map((token) => [token.id, token.symbol])),
+  const abstractTokensById = useMemo(
+    () =>
+      new Map(
+        abstractTokens?.map((token) => [
+          token.id,
+          { symbol: token.symbol, iconUrl: token.iconUrl },
+        ]),
+      ),
     [abstractTokens],
   )
 
@@ -149,7 +164,7 @@ export function TokenHistoryPage() {
               </TableHeader>
               <TableBody>
                 {entries.map((entry) => {
-                  const token = getTokenInfo(entry, abstractSymbols)
+                  const token = getTokenInfo(entry, abstractTokensById)
 
                   return (
                     <TableRow key={entry.id}>
@@ -160,12 +175,25 @@ export function TokenHistoryPage() {
                         {formatTimestamp(entry.timestamp)}
                       </TableCell>
                       <TableCell className="max-w-[360px] whitespace-normal break-words">
-                        <div>{token.primary}</div>
-                        {token.secondary && (
-                          <div className="text-muted-foreground text-xs">
-                            {token.secondary}
+                        <div className="flex items-center gap-2">
+                          {token.iconUrl && (
+                            <img
+                              src={token.iconUrl}
+                              alt=""
+                              width={24}
+                              height={24}
+                              className="shrink-0 rounded-full"
+                            />
+                          )}
+                          <div>
+                            <div>{token.primary}</div>
+                            {token.secondary && (
+                              <div className="text-muted-foreground text-xs">
+                                {token.secondary}
+                              </div>
+                            )}
                           </div>
-                        )}
+                        </div>
                       </TableCell>
                       <TableCell className="max-w-[360px] whitespace-normal">
                         <ChangedFields entry={entry} />
@@ -224,7 +252,7 @@ function HistoryDetails({
               </SheetDescription>
             </SheetHeader>
             <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4">
-              <ObjectDiff left={{}} right={entry.command} maxDepth={4} />
+              <CommandDiff entry={entry} />
             </div>
           </>
         )}
@@ -268,14 +296,19 @@ function ChangedFields({ entry }: { entry: HistoryEntry }) {
 }
 
 function getChangedFields(entry: HistoryEntry) {
-  const command = asRecord(entry.command)
   switch (entry.commandType) {
     case 'AddAbstractTokenCommand':
     case 'AddDeployedTokenCommand':
-      return Object.keys(asRecord(command.record))
+      return []
     case 'UpdateAbstractTokenCommand':
     case 'UpdateDeployedTokenCommand':
-      return Object.keys(asRecord(command.update))
+      return Array.from(
+        new Set(
+          (getCommandDifferences(entry) ?? []).map((difference) =>
+            String(difference.path[0] ?? '?'),
+          ),
+        ),
+      )
     case 'DeleteAbstractTokenCommand':
     case 'DeleteDeployedTokenCommand':
       return ['deleted']
@@ -286,24 +319,28 @@ function getChangedFields(entry: HistoryEntry) {
 
 function getTokenInfo(
   entry: HistoryEntry,
-  abstractSymbols: Map<string, string>,
+  abstractTokensById: Map<string, AbstractTokenInfo>,
 ): TokenInfo {
   const command = asRecord(entry.command)
   switch (entry.commandType) {
     case 'AddDeployedTokenCommand':
-      return deployedInfo(asRecord(command.record), undefined, abstractSymbols)
+      return deployedInfo(
+        asRecord(command.record),
+        undefined,
+        abstractTokensById,
+      )
     case 'UpdateDeployedTokenCommand':
       return deployedInfo(
         asRecord(command.existing),
         asRecord(command.update),
-        abstractSymbols,
+        abstractTokensById,
         asRecord(command.pk),
       )
     case 'DeleteDeployedTokenCommand':
       return deployedInfo(
         asRecord(command.existing),
         undefined,
-        abstractSymbols,
+        abstractTokensById,
       )
     case 'AddAbstractTokenCommand':
       return abstractInfo(asRecord(command.record))
@@ -327,7 +364,7 @@ function getTokenInfo(
 function deployedInfo(
   record: Record<string, unknown>,
   update: Record<string, unknown> | undefined,
-  abstractSymbols: Map<string, string>,
+  abstractTokensById: Map<string, AbstractTokenInfo>,
   pk: Record<string, unknown> = {},
 ): TokenInfo {
   const symbol =
@@ -335,13 +372,30 @@ function deployedInfo(
   const chain = stringValue(pk.chain) ?? stringValue(record.chain) ?? '?'
   const address = stringValue(pk.address) ?? stringValue(record.address) ?? '?'
   const abstractTokenId = updatedValue(update, record, 'abstractTokenId')
-  const abstractToken = abstractTokenRef(abstractTokenId, abstractSymbols)
+  const abstractToken = abstractTokenRef(abstractTokenId, abstractTokensById)
+  const abstractTokenIdValue = stringValue(abstractTokenId)
+  const abstractTokenInfo = abstractTokenIdValue
+    ? abstractTokensById.get(abstractTokenIdValue)
+    : undefined
 
   return {
-    primary: `${symbol} ${shortAddress(address)}`,
-    secondary: [chain, abstractToken && `abstract ${abstractToken}`]
+    iconUrl: abstractTokenInfo?.iconUrl ?? undefined,
+    primary: (
+      <>
+        {symbol}{' '}
+        <TokenLink
+          to={`/tokens/${chain}/${address}`}
+          label={shortAddress(address)}
+        />
+      </>
+    ),
+    secondary: [chain, abstractToken]
       .filter(Boolean)
-      .join(' | '),
+      .reduce<ReactNode[]>((nodes, item, index) => {
+        if (index > 0) nodes.push(' | ')
+        nodes.push(item)
+        return nodes
+      }, []),
   }
 }
 
@@ -353,7 +407,46 @@ function abstractInfo(
   const id = stringValue(record.id) ?? stringValue(fallback.id) ?? '?'
   const symbol =
     stringValue(update?.symbol) ?? stringValue(record.symbol) ?? '?'
-  return { primary: `${id}:${symbol}` }
+  const iconUrl = stringValue(updatedValue(update, record, 'iconUrl'))
+  return {
+    iconUrl,
+    primary: <TokenLink to={`/tokens/${id}`} label={`${id}:${symbol}`} />,
+  }
+}
+
+function TokenLink({ to, label }: { to: string; label: string }) {
+  if (label.includes('?') || to.includes('?')) {
+    return <>{label}</>
+  }
+
+  return (
+    <Link to={to} className="underline underline-offset-2">
+      {label}
+    </Link>
+  )
+}
+
+function CommandDiff({ entry }: { entry: HistoryEntry }) {
+  const differences = getCommandDifferences(entry)
+  if (differences) {
+    return <Diff differences={differences} maxDepth={4} />
+  }
+
+  return <ObjectDiff left={{}} right={entry.command} maxDepth={4} />
+}
+
+function getCommandDifferences(entry: HistoryEntry) {
+  const command = asRecord(entry.command)
+  switch (entry.commandType) {
+    case 'UpdateAbstractTokenCommand':
+    case 'UpdateDeployedTokenCommand':
+      return diff(asRecord(command.existing), {
+        ...asRecord(command.existing),
+        ...asRecord(command.update),
+      })
+    default:
+      return undefined
+  }
 }
 
 function updatedValue(
@@ -367,11 +460,20 @@ function updatedValue(
   return record[key]
 }
 
-function abstractTokenRef(id: unknown, abstractSymbols: Map<string, string>) {
+function abstractTokenRef(
+  id: unknown,
+  abstractTokensById: Map<string, AbstractTokenInfo>,
+) {
   if (id === null) return undefined
   const value = stringValue(id)
   if (!value) return undefined
-  return `${value}:${abstractSymbols.get(value) ?? '?'}`
+  const abstractToken = abstractTokensById.get(value)
+  return (
+    <TokenLink
+      to={`/tokens/${value}`}
+      label={`${value}:${abstractToken?.symbol ?? '?'}`}
+    />
+  )
 }
 
 function shortAddress(address: string) {
