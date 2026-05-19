@@ -19,7 +19,7 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatRange } from '~/utils/dates'
+import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface PrivacyTvlChartDataPoint {
@@ -84,7 +84,10 @@ function PrivacyTvlChartTooltip({ payload, label }: CustomChartTooltipProps) {
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatRange(label, label + 1 * 24 * 60 * 60)}
+        {formatTimestamp(label, {
+          longMonthName: true,
+          mode: 'datetime',
+        })}
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">

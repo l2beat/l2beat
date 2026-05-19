@@ -15,7 +15,7 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatRange } from '~/utils/dates'
+import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
@@ -126,7 +126,10 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatRange(label, label + 24 * 60 * 60)}
+          {formatTimestamp(label, {
+            longMonthName: true,
+            mode: 'datetime',
+          })}
         </div>
         {visible.length > 1 && (
           <>
