@@ -1,6 +1,7 @@
 import {
   ArrowLeftRightIcon,
   ChevronRightIcon,
+  ClipboardCheckIcon,
   LayersIcon,
   PanelsTopLeftIcon,
   PieChartIcon,
@@ -119,6 +120,16 @@ const websiteItems = [
       {
         title: 'DA tracking',
         url: '/website/status/da-tracking',
+      },
+    ],
+  },
+  {
+    title: 'Ops',
+    icon: ClipboardCheckIcon,
+    items: [
+      {
+        title: 'Daily checks',
+        url: '/website/daily-checks',
       },
     ],
   },

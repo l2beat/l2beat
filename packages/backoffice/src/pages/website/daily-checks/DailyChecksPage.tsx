@@ -1,11 +1,12 @@
-import { CustomLink } from '~/components/link/CustomLink'
-import { MainPageHeader } from '~/components/MainPageHeader'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { CustomLinkIcon } from '~/icons/Outlink'
-import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
-import { SideNavLayout } from '~/layouts/SideNavLayout'
-
-interface Props extends AppLayoutProps {}
+import { ExternalLinkIcon } from 'lucide-react'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '~/components/core/Card'
+import { AppLayout } from '~/layouts/AppLayout'
 
 const DAILY_CHECKS = [
   {
@@ -26,31 +27,35 @@ const DAILY_CHECKS = [
   },
 ]
 
-export function DailyChecksPage(props: Props) {
+export function DailyChecksPage() {
   return (
-    <AppLayout {...props}>
-      <SideNavLayout>
-        <MainPageHeader>Daily checks</MainPageHeader>
-        <PrimaryCard className="md:p-8">
-          <p className="mb-4 text-primary">
+    <AppLayout>
+      <Card className="gap-4">
+        <CardHeader>
+          <CardTitle>Daily checks</CardTitle>
+          <CardDescription>
             Quick links to the Elastic Search dashboards we monitor on a daily
             basis.
-          </p>
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
           <ul className="flex flex-col gap-2">
             {DAILY_CHECKS.map((check) => (
               <li key={check.name}>
-                <CustomLink
+                <a
                   href={check.href}
-                  className="inline-flex items-center gap-1.5"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="inline-flex items-center gap-1.5 text-primary underline underline-offset-4 hover:text-primary/80"
                 >
                   {check.name}
-                  <CustomLinkIcon className="fill-current" />
-                </CustomLink>
+                  <ExternalLinkIcon className="size-3.5" />
+                </a>
               </li>
             ))}
           </ul>
-        </PrimaryCard>
-      </SideNavLayout>
+        </CardContent>
+      </Card>
     </AppLayout>
   )
 }

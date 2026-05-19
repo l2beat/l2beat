@@ -103,8 +103,6 @@ export const pageLoaders = {
   DaRiskFrameworkPage: async () =>
     (await import('./da-risk-framework/DaRiskFrameworkPage'))
       .DaRiskFrameworkPage,
-  DailyChecksPage: async () =>
-    (await import('./daily-checks/DailyChecksPage')).DailyChecksPage,
   MultisigReportPage: async () =>
     (await import('./multisig-report/MultisigReportPage')).MultisigReportPage,
   TermsOfServicePage: async () =>
