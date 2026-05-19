@@ -7,7 +7,6 @@ import { api } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../../../components/chain-selector/types'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import { ChainSelect } from './ChainSelect'
-import { FastestProtocol } from './FastestProtocol'
 import { FrameworkRow } from './FrameworkRow'
 
 export function FrameworkTransferSpeedWidget({
@@ -31,10 +30,6 @@ export function FrameworkTransferSpeedWidget({
       (a.averageDurationSeconds ?? Number.POSITIVE_INFINITY) -
       (b.averageDurationSeconds ?? Number.POSITIVE_INFINITY),
   )
-
-  const fastest =
-    sorted[0]?.averageDurationSeconds !== null ? sorted[0] : undefined
-  const fastestFramework = fastest && frameworksById.get(fastest.id)
 
   return (
     <PrimaryCard className="flex flex-col md:col-span-2 lg:col-start-3 lg:row-span-7 lg:row-start-6">
@@ -71,16 +66,10 @@ export function FrameworkTransferSpeedWidget({
         />
       </div>
 
-      <FastestProtocol
-        framework={fastestFramework}
-        entry={fastest}
-        isLoading={isLoading}
-      />
-
       <h3 className="mt-5 font-medium text-label-value-13 text-secondary">
         All Frameworks
       </h3>
-      <ScrollWithGradient className="mt-2 flex max-h-42 flex-1 flex-col gap-2.5">
+      <ScrollWithGradient className="mt-2 flex max-h-64.5 flex-1 flex-col gap-2.5">
         {isLoading
           ? tokenFrameworks.map((f) => (
               <Skeleton key={f.id} className="h-9.5" />
