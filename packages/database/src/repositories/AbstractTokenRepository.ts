@@ -21,18 +21,35 @@ export type AbstractTokenUpdateable = Omit<
   'id'
 >
 
-function toRecord(row: Selectable<AbstractToken>): AbstractTokenRecord {
+function toRecord(
+  row: Selectable<Omit<AbstractToken, 'isPriceUnreliable'>>,
+): AbstractTokenRecord {
   return {
-    ...row,
-    category: row.category as 'btc' | 'ether' | 'stablecoin' | 'other' | null,
+    id: row.id,
+    symbol: row.symbol,
+    issuer: row.issuer,
+    iconUrl: row.iconUrl,
+    comment: row.comment,
+    reviewed: row.reviewed,
+    coingeckoId: row.coingeckoId,
+
     coingeckoListingTimestamp: toTimestamp(row.coingeckoListingTimestamp),
+    category: row.category as 'btc' | 'ether' | 'stablecoin' | 'other' | null,
   }
 }
 export { toRecord as toAbstractTokenRecord }
 
 function toRow(record: AbstractTokenRecord): Insertable<AbstractToken> {
   return {
-    ...record,
+    id: record.id,
+    symbol: record.symbol,
+    issuer: record.issuer,
+    iconUrl: record.iconUrl,
+    comment: record.comment,
+    reviewed: record.reviewed,
+    category: record.category,
+    coingeckoId: record.coingeckoId,
+
     coingeckoListingTimestamp: fromTimestamp(record.coingeckoListingTimestamp),
   }
 }

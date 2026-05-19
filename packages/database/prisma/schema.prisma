@@ -484,6 +484,7 @@ model AbstractToken {
   coingeckoListingTimestamp DateTime? @db.Timestamp(6)
   comment                   String?   @db.Text
   reviewed                  Boolean   @default(false)
+  isPriceUnreliable         Boolean   @default(false)
 
   deployedTokens DeployedToken[]
 
