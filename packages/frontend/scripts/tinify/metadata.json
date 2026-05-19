@@ -1523,5 +1523,6 @@
   "static/icons/tornado-cash.png": "7501bcbc29c3993d67a3e9cafb96834b",
   "static/images/architecture/privacy-pools.png": "64590435eaa447a115ad12faeca7729b",
   "static/images/architecture/railgun.png": "a6b31a49f7d959e4020a7f716b52eb1b",
-  "static/images/architecture/tornado-cash.png": "9a2e963e2c9c43f2f0f9531f93b30932"
+  "static/images/architecture/tornado-cash.png": "9a2e963e2c9c43f2f0f9531f93b30932",
+  "static/meta-images/interop/projects/world/opengraph-image.png": "6f6bf28cd1b455547c20f46ec6cefd54"
 }
