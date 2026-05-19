@@ -108,7 +108,19 @@ const interopItems = [
   },
 ]
 
-const websiteItems = [
+type WebsiteItem =
+  | {
+      title: string
+      icon: typeof LayersIcon
+      items: { title: string; url: string }[]
+    }
+  | {
+      title: string
+      icon: typeof LayersIcon
+      url: string
+    }
+
+const websiteItems: WebsiteItem[] = [
   {
     title: 'Status',
     icon: LayersIcon,
@@ -124,14 +136,9 @@ const websiteItems = [
     ],
   },
   {
-    title: 'Ops',
+    title: 'Daily checks',
     icon: ClipboardCheckIcon,
-    items: [
-      {
-        title: 'Daily checks',
-        url: '/website/daily-checks',
-      },
-    ],
+    url: '/website/daily-checks',
   },
 ]
 
@@ -213,6 +220,18 @@ export function AppSidebar() {
           <SidebarGroupLabel>Website</SidebarGroupLabel>
           <SidebarMenu>
             {websiteItems.map((group) => {
+              if ('url' in group) {
+                return (
+                  <SidebarMenuItem key={group.title}>
+                    <SidebarMenuButton asChild tooltip={group.title}>
+                      <Link to={group.url}>
+                        <group.icon />
+                        <span>{group.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              }
               const isActive = isNavGroupActive(
                 pathname,
                 group.items,
