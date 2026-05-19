@@ -60,6 +60,17 @@ const forcedInclusionPermissionlessDelay =
   mainnetInboxConfig.forcedInclusionDelay *
   mainnetInboxConfig.permissionlessInclusionMultiplier
 
+const maxWithdrawalDelay =
+  forcedInclusionPermissionlessDelay +
+  mainnetInboxConfig.permissionlessProvingDelay
+const standardProposalDelay = discovery.getContractValue<{
+  timelockPeriod: number
+}>('OptimisticTokenVotingPlugin', 'governanceSettings').timelockPeriod
+const standardProposalExitWindow = RISK_VIEW.EXIT_WINDOW(
+  standardProposalDelay,
+  maxWithdrawalDelay,
+)
+
 const whitelistedOperatorsCount = discovery.getContractValue<number>(
   'PreconfWhitelist',
   'operatorCount',
@@ -353,10 +364,17 @@ export const taiko: ScalingProject = {
       ...DATA_ON_CHAIN,
     },
     exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(0, maxWithdrawalDelay),
       description:
-        'There is no window for users to exit in case of an unwanted upgrade since contracts are instantly upgradable.',
-      sentiment: 'bad',
-      value: 'None',
+        'Emergency proposals can be executed without delay, so there is no exit window for users in case of an unwanted emergency upgrade.',
+      regular: {
+        value: standardProposalExitWindow.value,
+        sentiment: standardProposalExitWindow.sentiment,
+      },
+      warning: {
+        value: `Standard proposals start on L1 and are delayed by ${formatSeconds(standardProposalDelay)}. A withdrawing user can be delayed by up to ${formatSeconds(maxWithdrawalDelay)}: ${formatSeconds(forcedInclusionPermissionlessDelay)} until proposing becomes permissionless after ignored forced inclusions, plus ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} until proving becomes permissionless. This leaves ${standardProposalExitWindow.value} to exit before a standard upgrade can execute.`,
+        sentiment: 'warning',
+      },
     },
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
       forcedInclusionPermissionlessDelay,
