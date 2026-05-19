@@ -406,3 +406,80 @@ Notes:
   was duplicating data already present in the command and was also
   losing the "patch shape" of updates by merging existing + update
   into a single resulting record.
+
+## 2026-05-19 - Slice 9: ingestion log on history + unified trace rendering
+
+Persisted the per-step reasoning of automatic ingestion alongside the
+per-command history rows added in the previous slice, and unified the
+text descriptions of trace steps and outcomes so the UI preview and the
+stored audit log render from a single source.
+
+- New nullable `ingestionLog TEXT` column on `TokenDbHistoryEntry`
+  (migration `20260519130000_add_token_db_history_ingestion_log`).
+  Populated only for ingestion writes; manual writes leave it `null`.
+- `WriteSource` ingestion variant now carries `log: string`.
+  `commitTokenChanges` stamps that string onto every history row it
+  inserts, so when a single ingestion produces both an
+  `AddAbstractTokenCommand` and an `AddDeployedTokenCommand` they share
+  the same `ingestionLog`. Manual writes stamp `null`.
+- Added `packages/token-backend/src/ingestion/formatIngestionTrace.ts`
+  with the canonical text describers: `describeIngestionStep(step)`,
+  `describeIngestionOutcome(outcome)`, and `formatIngestionTrace(trace)`
+  (which numbers the steps and appends a final "Outcome:" line).
+  `TokenIngestionProcessor.apply` builds the log via
+  `formatIngestionTrace(trace)` and passes it through `commitTokenChanges`.
+
+Unification with the UI preview dialog:
+
+- The text describer functions previously had a near-duplicate in
+  `IngestionPreviewDialog.tsx` (the old `StepLine` and `OutcomeView`
+  JSX). Both were rendering the same per-step / per-outcome wording in
+  different output shapes (React nodes vs string).
+- An initial attempt exported the describers as values from
+  `@l2beat/token-backend` and called them from the UI. That created a
+  new value coupling between `token-ui` and `token-backend` (which had
+  only ever imported types) and forced a `commonjsOptions` workaround
+  in the Vite config because the backend is built as CJS. Both were
+  rolled back.
+- Replaced with view types decorated at the tRPC boundary:
+  - `IngestionStepView = IngestionStep & { description: string }`
+  - `IngestionOutcomeView = IngestionOutcome & { description: string }`
+  - `IngestionTraceView` wrapping both.
+  - `toIngestionTraceView` / `toIngestionOutcomeView` decorators in
+    `formatIngestionTrace.ts`.
+- `tokenIngestionQueue.preview` now returns
+  `IngestionTraceView`; `tokenIngestionQueue.getPage` decorates each
+  `predictedOutcomes[i]` into `IngestionOutcomeView`.
+- `IngestionPreviewDialog` renders each step as `step.description` and
+  uses `outcome.description` for the outcome message body. The badge,
+  the `Diff` for updates, the JSON pretty-print for inserts, and the
+  re-enqueued neighbors list stay structured (those aren't text).
+- `@l2beat/token-backend`'s public index now only re-exports types
+  (including the new view types). UI imports remain `import type`
+  exclusively. No Vite config changes are needed.
+
+Tests:
+
+- `commitTokenChanges.test.ts` asserts `ingestionLog` is stamped on
+  every history row for ingestion (including multi-command ingestions)
+  and is `null` for manual writes.
+- `TokenDbHistoryRepository.test.ts` round-trips the new column.
+- Added `formatIngestionTrace.test.ts` covering the full-trace text
+  rendering and a conflict outcome.
+- Updated the `tokenIngestionQueue.getPage` router test to assert that
+  each predicted outcome carries a `description` field.
+
+Documentation:
+
+- (Spec doc not updated in this slice; the persistence shape change
+  is local to the existing "Token DB history" section and the next
+  doc pass will fold this in alongside any UI for viewing the log.)
+
+Notes:
+
+- UI surfacing of the stored `ingestionLog` (e.g. on the token-history
+  page) is a follow-up; this slice only ensures the log is captured.
+- The trace describers, the queue-page predicted outcomes, the preview
+  dialog, and the persisted log now all share one wording — so the
+  text a researcher sees in the preview is exactly what ends up in the
+  DB.
