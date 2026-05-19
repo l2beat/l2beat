@@ -175,8 +175,7 @@ function getType(p: ScalingProject): ProjectScalingCategory | undefined {
       // If there's a bridge in DA
       if (da.bridge.value === 'Plasma') return 'Plasma'
 
-      if (!p.proofSystem || !p.dataAvailability)
-        return undefined
+      if (!p.proofSystem || !p.dataAvailability) return undefined
 
       const isEthereumBridge =
         da.bridge.value === 'Enshrined' || da.bridge.value === 'Self-attested' // Intmax case

@@ -278,10 +278,7 @@ export async function getDaProjectEntry(
 
 export async function getEthereumDaProjectEntry(
   helpers: SsrHelpers,
-  layer: Project<
-    'daLayer' | 'display' | 'statuses',
-    'milestones'
-  >,
+  layer: Project<'daLayer' | 'display' | 'statuses', 'milestones'>,
   bridge: Project<'daBridge' | 'display', 'contracts' | 'permissions'>,
 ): Promise<EthereumDaProjectPageEntry> {
   const layerGrissiniValues = mapLayerRisksToRosetteValues(

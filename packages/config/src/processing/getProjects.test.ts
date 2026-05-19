@@ -737,9 +737,7 @@ describe('getProjects', () => {
 
   describe('all new projects are discovery driven', () => {
     const isNormalProject = (p: BaseProject) => {
-      return (
-        p.scalingInfo && p.archivedAt === undefined
-      )
+      return p.scalingInfo && p.archivedAt === undefined
     }
 
     const filteredProjects = projects.filter(

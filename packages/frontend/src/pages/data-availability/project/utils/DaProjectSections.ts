@@ -20,10 +20,7 @@ import { getDaProjectRiskSummarySection } from './getDaProjectRiskSummarySection
 import { getDaThroughputSection } from './getDaThroughputSection'
 
 type RegularDetailsParams = {
-  layer: Project<
-    'daLayer' | 'statuses' | 'display',
-    'milestones'
-  >
+  layer: Project<'daLayer' | 'statuses' | 'display', 'milestones'>
   bridge:
     | Project<
         'daBridge' | 'display',

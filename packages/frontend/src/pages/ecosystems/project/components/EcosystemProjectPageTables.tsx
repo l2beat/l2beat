@@ -22,10 +22,7 @@ export function EcosystemProjectPageTables({ ecosystem }: Props) {
     <>
       <TableFilters entries={ecosystem.liveProjects} className="max-md:mt-4" />
       <TableSortingProvider initialSort={initialSort}>
-        <EcosystemProjectsTable
-          entries={entries}
-          ecosystemId={ecosystem.id}
-        />
+        <EcosystemProjectsTable entries={entries} ecosystemId={ecosystem.id} />
       </TableSortingProvider>
     </>
   )
