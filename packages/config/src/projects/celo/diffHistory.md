@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x7330d1ac3a9ded2016b41db618634de73deadc04
+
+# Diff at Tue, 19 May 2026 11:27:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1d630d9c64f2d9431ff75a101bb6e0338cdffc9e block: 1777038237
+- current timestamp: 1777038237
+
+## Description
+
+All shapes have to be defined on an implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777038237 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      name:
+-        "Optimism EOA 1"
+    }
+```
+
 Generated with discovered.json: 0x3732dbc8e83d77670b40d3a445e235e402992d02
 
 # Diff at Fri, 08 May 2026 07:51:12 GMT:
