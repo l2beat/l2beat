@@ -15,6 +15,10 @@
           "description": "manage critical settings (e.g. threshold and multisig settings) for the standard proposal governance path."
         }
       ]
+    },
+    "minApprovals": {
+      "copy": "multisigSettings",
+      "edit": ["get", "minApprovals"]
     }
   }
 }

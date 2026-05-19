@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x1c6ddfa396118fb50904079b3f38b74941fb1d61
+Generated with discovered.json: 0x6820b0db5269aa283f26180f31e7bde480b4b98a
 
-# Diff at Tue, 19 May 2026 10:50:52 GMT:
+# Diff at Tue, 19 May 2026 12:03:01 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@0fe9c60201f783f1d4d90df97efb9c885a43a948 block: 1778675086
+- comparing to: main@1d630d9c64f2d9431ff75a101bb6e0338cdffc9e block: 1778675086
 - current timestamp: 1779173531
 
 ## Description
@@ -104,6 +104,8 @@ discovery. Values are for block 1778675086 (main branch discovery), not current.
 ```diff
     contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) [taiko/EmergencyMultisig] {
     +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+      values.minApprovals:
++        7
       fieldMeta.proposalCount.description:
 -        "The total count of encrypted emergency proposals created."
 +        "total count of encrypted emergency proposals created."
@@ -284,6 +286,8 @@ discovery. Values are for block 1778675086 (main branch discovery), not current.
 ```diff
     contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
     +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.minApprovals:
++        5
       fieldMeta:
 +        {"multisigSettings":{"severity":"HIGH"},"proposalCount":{"severity":"HIGH","description":"total standard proposal count."}}
     }
