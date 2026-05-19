@@ -69,7 +69,11 @@ describe('tokenIngestionQueueRouter', () => {
       expect(result.entries).toEqual([entry])
       expect(result.totalCount).toEqual(12)
       expect(result.predictedOutcomes).toEqual([
-        { kind: 'noop', deployedToken: {} as never },
+        {
+          kind: 'noop',
+          deployedToken: {} as never,
+          description: expect.a(String),
+        },
       ])
       expect(getPage).toHaveBeenCalledWith({ offset: 5, limit: 5 })
       expect(plan).toHaveBeenCalledTimes(1)

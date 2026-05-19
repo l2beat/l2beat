@@ -32,6 +32,7 @@ import {
   buildAliasToChainMap,
   platformsToChainAddressPairs,
 } from '../trpc/routers/deployedTokens/chainAliases'
+import { formatIngestionTrace } from './formatIngestionTrace'
 import type {
   AbstractTokenRef,
   IngestionOutcome,
@@ -267,9 +268,11 @@ export class TokenIngestionProcessor {
         )
       case 'write': {
         const commands = buildWriteCommands(outcome)
+        const log = formatIngestionTrace(trace)
         await this.deps.tokenDb.transaction(async () => {
           await commitTokenChanges(this.deps.tokenDb, commands, {
             kind: 'ingestion',
+            log,
           })
         }, 'serializable')
 

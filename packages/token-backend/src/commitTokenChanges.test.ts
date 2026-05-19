@@ -170,6 +170,7 @@ describe(commitTokenChanges.name, () => {
         userEmail: 'someone@x.io',
         commandType: 'AddAbstractTokenCommand',
         command: commands[0],
+        ingestionLog: null,
       })
       expect(entries[1]!).toEqual({
         timestamp: expect.a(Number),
@@ -177,6 +178,7 @@ describe(commitTokenChanges.name, () => {
         userEmail: 'someone@x.io',
         commandType: 'UpdateDeployedTokenCommand',
         command: commands[1],
+        ingestionLog: null,
       })
       expect(entries[2]!).toEqual({
         timestamp: expect.a(Number),
@@ -184,10 +186,46 @@ describe(commitTokenChanges.name, () => {
         userEmail: 'someone@x.io',
         commandType: 'DeleteAbstractTokenCommand',
         command: commands[2],
+        ingestionLog: null,
       })
     })
 
-    it('records ingestion source with no userEmail', async () => {
+    it('records ingestion source with the ingestion log and no userEmail', async () => {
+      const insert = mockFn<[TokenDbHistoryEntryInsert], Promise<void>>(() =>
+        Promise.resolve(),
+      )
+      const abstract = abstractRecord('USDC01', 'USDC')
+      const deployed = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const tokenDb = mockObject<TokenDatabase>({
+        abstractToken: mockObject<AbstractTokenRepository>({
+          insert: mockFn().resolvesTo(undefined),
+        }),
+        deployedToken: mockObject<DeployedTokenRepository>({
+          insert: mockFn().resolvesTo(undefined),
+        }),
+        tokenDbHistory: mockObject<TokenDbHistoryRepository>({ insert }),
+      })
+
+      await commitTokenChanges(
+        tokenDb,
+        [
+          { type: 'AddAbstractTokenCommand', record: abstract },
+          { type: 'AddDeployedTokenCommand', record: deployed },
+        ],
+        { kind: 'ingestion', log: 'step 1\nstep 2\nOutcome: write' },
+      )
+
+      expect(insert).toHaveBeenCalledTimes(2)
+      for (const call of insert.calls) {
+        expect(call.args[0].source).toEqual('ingestion')
+        expect(call.args[0].userEmail).toEqual(null)
+        expect(call.args[0].ingestionLog).toEqual(
+          'step 1\nstep 2\nOutcome: write',
+        )
+      }
+    })
+
+    it('records manual source with a null ingestion log', async () => {
       const insert = mockFn<[TokenDbHistoryEntryInsert], Promise<void>>(() =>
         Promise.resolve(),
       )
@@ -202,12 +240,10 @@ describe(commitTokenChanges.name, () => {
       await commitTokenChanges(
         tokenDb,
         [{ type: 'AddAbstractTokenCommand', record: abstract }],
-        { kind: 'ingestion' },
+        { kind: 'manual', user: 'someone@x.io' },
       )
 
-      const entry = insert.calls[0]!.args[0]
-      expect(entry.source).toEqual('ingestion')
-      expect(entry.userEmail).toEqual(null)
+      expect(insert.calls[0]!.args[0].ingestionLog).toEqual(null)
     })
   })
 })

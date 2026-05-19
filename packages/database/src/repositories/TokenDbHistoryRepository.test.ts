@@ -28,10 +28,11 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
         userEmail: 'someone@x.io',
         commandType: 'AddDeployedTokenCommand',
         command: entry.command,
+        ingestionLog: null,
       })
     })
 
-    it('stores ingestion entries with a null userEmail', async () => {
+    it('stores ingestion entries with the ingestion log and a null userEmail', async () => {
       await repository.insert({
         timestamp: UnixTime(1001),
         source: 'ingestion',
@@ -41,6 +42,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
           type: 'AddAbstractTokenCommand',
           record: { id: 'ABC123', symbol: 'USDC' },
         },
+        ingestionLog: '1. Resolved abstract\n2. Wrote token',
       })
 
       const [stored] = await repository.getAll()
@@ -48,6 +50,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
         source: 'ingestion',
         userEmail: null,
         commandType: 'AddAbstractTokenCommand',
+        ingestionLog: '1. Resolved abstract\n2. Wrote token',
       })
     })
 
@@ -68,6 +71,7 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
             },
           },
         },
+        ingestionLog: null,
       })
 
       const [stored] = await repository.getAll()
@@ -132,5 +136,6 @@ function manualAddDeployed(
         abstractTokenId: 'USDC01',
       },
     },
+    ingestionLog: null,
   }
 }

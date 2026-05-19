@@ -1,9 +1,8 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type {
   AbstractTokenRef,
-  IngestionOutcome,
-  IngestionStep,
-  IngestionTrace,
+  IngestionOutcomeView,
+  IngestionTraceView,
 } from '@l2beat/token-backend'
 import { diff } from '~/utils/getDiff'
 import { Badge } from './core/Badge'
@@ -22,7 +21,7 @@ import { LoadingState } from './LoadingState'
 export interface IngestionPreviewState {
   chain: string
   address: string
-  trace: IngestionTrace | undefined
+  trace: IngestionTraceView | undefined
   isLoading: boolean
   error: string | undefined
 }
@@ -68,16 +67,14 @@ export function IngestionPreviewDialog({
   )
 }
 
-function TraceView({ trace }: { trace: IngestionTrace }) {
+function TraceView({ trace }: { trace: IngestionTraceView }) {
   return (
     <div className="min-w-0 space-y-4">
       <section className="space-y-1">
         <h3 className="font-medium text-sm">Steps</h3>
         <ol className="list-decimal space-y-1 pl-5 text-sm">
           {trace.steps.map((step, index) => (
-            <li key={index}>
-              <StepLine step={step} />
-            </li>
+            <li key={index}>{step.description}</li>
           ))}
         </ol>
       </section>
@@ -88,111 +85,6 @@ function TraceView({ trace }: { trace: IngestionTrace }) {
       </section>
     </div>
   )
-}
-
-function StepLine({ step }: { step: IngestionStep }) {
-  switch (step.kind) {
-    case 'invalid-address':
-      return (
-        <span>
-          Address <code className="font-mono">{step.rawAddress}</code> could not
-          be normalized.
-        </span>
-      )
-    case 'existing-token':
-      return (
-        <span>
-          Found existing deployed token (abstract:{' '}
-          <code className="font-mono">
-            {step.record.abstractTokenId ?? 'none'}
-          </code>
-          ).
-        </span>
-      )
-    case 'no-existing-token':
-      return <span>No existing deployed token in TokenDB.</span>
-    case 'transfer-evidence':
-      return (
-        <span>
-          Found {step.total} transfers ({step.nonSwapping} non-swapping). Other
-          sides resolve to:{' '}
-          {step.abstractTokens.length === 0
-            ? 'no abstract tokens'
-            : step.abstractTokens.map(formatAbstractRef).join(', ')}
-          .
-        </span>
-      )
-    case 'resolved-from-transfers':
-      return (
-        <span>
-          Resolved abstract token{' '}
-          <AbstractTokenLabel ref={step.abstractToken} /> from non-swapping
-          transfers.
-        </span>
-      )
-    case 'resolved-from-existing':
-      return (
-        <span>
-          Reused existing abstract token{' '}
-          <AbstractTokenLabel ref={step.abstractToken} />.
-        </span>
-      )
-    case 'coingecko-coin-found':
-      return (
-        <span>
-          CoinGecko returned coin{' '}
-          <code className="font-mono">{step.coinId}</code> ({step.symbol}).
-        </span>
-      )
-    case 'coingecko-coin-not-found':
-      return <span>CoinGecko has no coin for this address.</span>
-    case 'resolved-from-coingecko-existing-abstract':
-      return (
-        <span>
-          Reused abstract token <AbstractTokenLabel ref={step.abstractToken} />{' '}
-          linked to CoinGecko coin{' '}
-          <code className="font-mono">{step.coinId}</code>.
-        </span>
-      )
-    case 'resolved-from-coingecko-new-abstract':
-      return (
-        <span>
-          Will create new abstract token for CoinGecko coin{' '}
-          <code className="font-mono">{step.coingeckoId}</code> ({step.symbol}).
-        </span>
-      )
-    case 'fetched-coingecko-abstract':
-      return (
-        <span>
-          Built abstract token{' '}
-          <code className="font-mono">{step.record.id}</code> (
-          {step.record.symbol}) from CoinGecko coin{' '}
-          <code className="font-mono">{step.record.coingeckoId}</code>.
-        </span>
-      )
-    case 'fetched-facts': {
-      const warnings = step.facts.warnings
-      return (
-        <span>
-          Fetched deployed-token facts: symbol={String(step.facts.symbol)},
-          decimals={String(step.facts.decimals)}, deploymentTimestamp=
-          {String(step.facts.deploymentTimestamp)}, isContract=
-          {String(step.facts.isContract)}.
-          {warnings.length > 0 && (
-            <ul className="mt-1 list-disc pl-5 text-muted-foreground text-xs">
-              {warnings.map((warning, index) => (
-                <li key={index}>
-                  [{warning.field}] {warning.message}
-                </li>
-              ))}
-            </ul>
-          )}
-        </span>
-      )
-    }
-    default:
-      assertUnreachable(step)
-  }
 }
 
 export function ConflictBadge() {
@@ -206,45 +98,40 @@ export function ConflictBadge() {
   )
 }
 
-function AbstractTokenLabel({ ref }: { ref: AbstractTokenRef }) {
-  return <code className="font-mono">{formatAbstractRef(ref)}</code>
-}
-
 export function formatAbstractRef(ref: AbstractTokenRef) {
   return `${ref.id}:${ref.symbol}`
 }
 
-function OutcomeView({ outcome }: { outcome: IngestionOutcome }) {
+function OutcomeView({ outcome }: { outcome: IngestionOutcomeView }) {
+  const message = outcome.description
+
   switch (outcome.kind) {
     case 'skip':
       return (
         <div className="flex flex-col gap-2 text-sm">
           <Badge variant="outline">Skip</Badge>
-          <span>{outcome.reason}. The queue entry would be removed.</span>
+          <span>{message}</span>
         </div>
       )
     case 'conflict':
       return (
         <div className="flex flex-col gap-2 text-sm">
           <ConflictBadge />
-          <span>{outcome.message}</span>
+          <span>{message}</span>
         </div>
       )
     case 'error':
       return (
         <div className="flex flex-col gap-2 text-sm">
           <Badge variant="destructive">Error</Badge>
-          <span>{outcome.message}</span>
+          <span>{message}</span>
         </div>
       )
     case 'noop':
       return (
         <div className="flex flex-col gap-2 text-sm">
           <Badge variant="secondary">No update</Badge>
-          <span>
-            Existing deployed token already matches the resolved abstract token.
-            The queue entry would be removed.
-          </span>
+          <span>{message}</span>
         </div>
       )
     case 'pending':
@@ -253,30 +140,14 @@ function OutcomeView({ outcome }: { outcome: IngestionOutcome }) {
           <Badge>
             {outcome.operation === 'insert' ? 'Add token' : 'Update'} (pending)
           </Badge>
-          <span>
-            Would{' '}
-            {outcome.operation === 'insert'
-              ? 'insert a new deployed token'
-              : 'update the existing deployed token'}{' '}
-            with abstract{' '}
-            {outcome.abstract.kind === 'existing' ? (
-              <AbstractTokenLabel ref={outcome.abstract.token} />
-            ) : (
-              <>
-                from CoinGecko coin{' '}
-                <code className="font-mono">
-                  {outcome.abstract.coingeckoId}
-                </code>
-              </>
-            )}
-            .
-          </span>
+          <span>{message}</span>
         </div>
       )
     case 'write':
       return (
         <div className="min-w-0 space-y-3 text-sm">
           <Badge>Write</Badge>
+          <span>{message}</span>
           {outcome.newAbstractToken && (
             <div className="min-w-0 space-y-1">
               <h4 className="font-medium">New abstract token</h4>

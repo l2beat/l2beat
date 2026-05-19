@@ -12,6 +12,7 @@ export interface TokenDbHistoryEntryRecord {
   userEmail: string | null
   commandType: string
   command: unknown
+  ingestionLog: string | null
 }
 
 export type TokenDbHistoryEntryInsert = Omit<TokenDbHistoryEntryRecord, 'id'>
@@ -31,6 +32,7 @@ function toRecord(
     userEmail: row.userEmail,
     commandType: row.commandType,
     command: row.command,
+    ingestionLog: row.ingestionLog,
   }
 }
 
@@ -43,6 +45,7 @@ function toRow(
     userEmail: record.userEmail,
     commandType: record.commandType,
     command: toJsonSafe(record.command),
+    ingestionLog: record.ingestionLog,
   }
 }
 

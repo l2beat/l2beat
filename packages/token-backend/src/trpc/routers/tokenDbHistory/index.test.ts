@@ -18,6 +18,7 @@ describe('tokenDbHistoryRouter', () => {
         userEmail: 'dev@l2beat.com',
         commandType: 'AddAbstractTokenCommand',
         command: { type: 'AddAbstractTokenCommand' },
+        ingestionLog: null,
       }
       const page = { entries: [entry], totalCount: 12 }
       const getPage = mockFn().resolvesTo(page)

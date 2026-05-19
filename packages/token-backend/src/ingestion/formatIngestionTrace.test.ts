@@ -1,0 +1,69 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import { expect } from 'earl'
+import { formatIngestionTrace } from './formatIngestionTrace'
+import type { IngestionTrace } from './IngestionTrace'
+
+describe(formatIngestionTrace.name, () => {
+  it('renders the address, every step and the outcome as text', () => {
+    const trace: IngestionTrace = {
+      address: { chain: 'ethereum', address: '0xaaa' },
+      steps: [
+        { kind: 'no-existing-token' },
+        {
+          kind: 'transfer-evidence',
+          total: 3,
+          nonSwapping: 2,
+          abstractTokens: [{ id: 'USDC01', symbol: 'USDC' }],
+        },
+        {
+          kind: 'resolved-from-transfers',
+          abstractToken: { id: 'USDC01', symbol: 'USDC' },
+        },
+      ],
+      outcome: {
+        kind: 'write',
+        newAbstractToken: undefined,
+        deployedToken: {
+          type: 'insert',
+          record: {
+            chain: 'ethereum',
+            address: '0xaaa',
+            abstractTokenId: 'USDC01',
+            symbol: 'USDC',
+            decimals: 6,
+            deploymentTimestamp: UnixTime(1),
+            comment: null,
+            metadata: null,
+          },
+        },
+        neighborsToEnqueue: [],
+      },
+    }
+
+    const log = formatIngestionTrace(trace)
+
+    expect(log).toEqual(
+      [
+        'Address: ethereum:0xaaa',
+        '1. No existing deployed token in TokenDB.',
+        '2. Found 3 transfers (2 non-swapping). Other sides resolve to: USDC01:USDC.',
+        '3. Resolved abstract token USDC01:USDC from non-swapping transfers.',
+        'Outcome: write — insert deployed token ethereum:0xaaa (abstract: USDC01).',
+      ].join('\n'),
+    )
+  })
+
+  it('handles conflict outcomes', () => {
+    const trace: IngestionTrace = {
+      address: { chain: 'ethereum', address: '0xbbb' },
+      steps: [{ kind: 'no-existing-token' }],
+      outcome: { kind: 'conflict', message: 'multiple abstracts' },
+    }
+
+    expect(
+      formatIngestionTrace(trace).includes(
+        'Outcome: conflict — multiple abstracts',
+      ),
+    ).toEqual(true)
+  })
+})

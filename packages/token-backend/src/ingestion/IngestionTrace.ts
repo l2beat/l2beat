@@ -77,3 +77,17 @@ export type DeployedTokenWrite =
       existing: DeployedTokenRecord
       update: DeployedTokenUpdateable
     }
+
+/**
+ * Trace + already-rendered descriptions, used at the tRPC boundary so the UI
+ * doesn't need to call any value functions from `@l2beat/token-backend`.
+ * Every step and outcome carries a pre-rendered `description` text that the
+ * UI renders as-is.
+ */
+export type IngestionStepView = IngestionStep & { description: string }
+export type IngestionOutcomeView = IngestionOutcome & { description: string }
+export interface IngestionTraceView {
+  address: TokenAddress
+  steps: IngestionStepView[]
+  outcome: IngestionOutcomeView
+}

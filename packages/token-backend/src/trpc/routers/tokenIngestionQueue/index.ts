@@ -1,7 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { TRPCError } from '@trpc/server'
-import type { IngestionOutcome } from '../../../ingestion/IngestionTrace'
+import {
+  toIngestionOutcomeView,
+  toIngestionTraceView,
+} from '../../../ingestion/formatIngestionTrace'
+import type { IngestionOutcomeView } from '../../../ingestion/IngestionTrace'
 import { buildInteropTransferIndex } from '../../../ingestion/InteropTransferIndex'
 import { readOnlyProcedure, readWriteProcedure } from '../../procedures'
 import { router } from '../../trpc'
@@ -33,13 +37,13 @@ export const tokenIngestionQueueRouter = router({
 
       const transfers = await ctx.db.interopTransfer.getAll()
       const transferIndex = buildInteropTransferIndex(transfers)
-      const predictedOutcomes: IngestionOutcome[] = []
+      const predictedOutcomes: IngestionOutcomeView[] = []
       for (const entry of result.entries) {
         const trace = await ctx.tokenIngestionProcessor.plan(
           entry,
           transferIndex,
         )
-        predictedOutcomes.push(trace.outcome)
+        predictedOutcomes.push(toIngestionOutcomeView(trace.outcome))
       }
 
       return { ...result, predictedOutcomes }
@@ -74,6 +78,7 @@ export const tokenIngestionQueueRouter = router({
         entry,
         transferIndex,
       )
-      return ctx.tokenIngestionProcessor.fetch(planned)
+      const trace = await ctx.tokenIngestionProcessor.fetch(planned)
+      return toIngestionTraceView(trace)
     }),
 })
