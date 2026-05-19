@@ -247,10 +247,6 @@ function CommandItem({ command }: { command: Command }) {
           </Tooltip>
         </li>
       )
-    case 'DeleteAllAbstractTokensCommand':
-      return <li>All abstract tokens will be deleted</li>
-    case 'DeleteAllDeployedTokensCommand':
-      return <li>All deployed tokens will be deleted</li>
     default:
       assertUnreachable(command)
   }

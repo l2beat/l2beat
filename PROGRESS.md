@@ -349,6 +349,11 @@ router with no extra reads or merges.
   time (and throw a `PlanningError` if it's missing). This makes
   delete commands self-describing — the history row alone says what
   was deleted, without the boundary doing a hidden read.
+- Removed the obsolete `DeleteAllAbstractTokensCommand` and
+  `DeleteAllDeployedTokensCommand` variants from token-backend and
+  token-ui. They were historical bulk-maintenance commands, are not
+  reachable from current intents or ingestion, and should not be
+  supported or special-cased in future TokenDB history/UI work.
 - Reintroduced `WriteSource` (`{ kind: 'manual'; user } | { kind:
   'ingestion' }`) — but only for audit, not for proof stamping. Proofs
   continue to ride on individual commands. `commitTokenChanges` now

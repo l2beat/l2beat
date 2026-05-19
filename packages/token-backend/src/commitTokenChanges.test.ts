@@ -20,13 +20,11 @@ describe(commitTokenChanges.name, () => {
       insert: mockFn().resolvesTo(undefined),
       updateById: mockFn().resolvesTo(undefined),
       deleteById: mockFn().resolvesTo(undefined),
-      deleteAll: mockFn().resolvesTo(undefined),
     })
     const deployedToken = mockObject<DeployedTokenRepository>({
       insert: mockFn().resolvesTo(undefined),
       updateByChainAndAddress: mockFn().resolvesTo(undefined),
       deleteByPrimaryKey: mockFn().resolvesTo(undefined),
-      deleteAll: mockFn().resolvesTo(undefined),
     })
     const tokenDb = mockObject<TokenDatabase>({
       abstractToken,
@@ -50,7 +48,6 @@ describe(commitTokenChanges.name, () => {
         id: abstract.id,
         existing: abstract,
       },
-      { type: 'DeleteAllAbstractTokensCommand' },
       { type: 'AddDeployedTokenCommand', record: deployed },
       {
         type: 'UpdateDeployedTokenCommand',
@@ -63,7 +60,6 @@ describe(commitTokenChanges.name, () => {
         pk: { chain: deployed.chain, address: deployed.address },
         existing: deployed,
       },
-      { type: 'DeleteAllDeployedTokensCommand' },
     ]
 
     await commitTokenChanges(tokenDb, commands, {
@@ -76,7 +72,6 @@ describe(commitTokenChanges.name, () => {
       symbol: 'USDC2',
     })
     expect(abstractToken.deleteById).toHaveBeenOnlyCalledWith(abstract.id)
-    expect(abstractToken.deleteAll).toHaveBeenCalledTimes(1)
     expect(deployedToken.insert).toHaveBeenOnlyCalledWith(deployed)
     expect(deployedToken.updateByChainAndAddress).toHaveBeenOnlyCalledWith(
       { chain: deployed.chain, address: deployed.address },
@@ -86,7 +81,6 @@ describe(commitTokenChanges.name, () => {
       chain: deployed.chain,
       address: deployed.address,
     })
-    expect(deployedToken.deleteAll).toHaveBeenCalledTimes(1)
   })
 
   it('passes deployed-token commands through verbatim, including any proof field', async () => {

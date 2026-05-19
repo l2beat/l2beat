@@ -91,9 +91,6 @@ async function executeCommand(tokenDb: TokenDatabase, command: Command) {
     case 'DeleteAbstractTokenCommand':
       await tokenDb.abstractToken.deleteById(command.id)
       break
-    case 'DeleteAllAbstractTokensCommand':
-      await tokenDb.abstractToken.deleteAll()
-      break
     case 'AddDeployedTokenCommand':
       await tokenDb.deployedToken.insert(command.record)
       break
@@ -105,9 +102,6 @@ async function executeCommand(tokenDb: TokenDatabase, command: Command) {
       break
     case 'DeleteDeployedTokenCommand':
       await tokenDb.deployedToken.deleteByPrimaryKey(command.pk)
-      break
-    case 'DeleteAllDeployedTokensCommand':
-      await tokenDb.deployedToken.deleteAll()
       break
     default:
       assertUnreachable(command)

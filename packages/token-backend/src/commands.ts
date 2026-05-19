@@ -34,13 +34,6 @@ export const DeleteAbstractTokenCommand = v.object({
   existing: AbstractTokenRecord,
 })
 
-export type DeleteAllAbstractTokensCommand = v.infer<
-  typeof DeleteAllAbstractTokensCommand
->
-export const DeleteAllAbstractTokensCommand = v.object({
-  type: v.literal('DeleteAllAbstractTokensCommand'),
-})
-
 export type AddDeployedTokenCommand = v.infer<typeof AddDeployedTokenCommand>
 export const AddDeployedTokenCommand = v.object({
   type: v.literal('AddDeployedTokenCommand'),
@@ -66,21 +59,12 @@ export const DeleteDeployedTokenCommand = v.object({
   existing: DeployedTokenRecord,
 })
 
-export type DeleteAllDeployedTokensCommand = v.infer<
-  typeof DeleteAllDeployedTokensCommand
->
-export const DeleteAllDeployedTokensCommand = v.object({
-  type: v.literal('DeleteAllDeployedTokensCommand'),
-})
-
 export type Command = v.infer<typeof Command>
 export const Command = v.union([
   AddAbstractTokenCommand,
   UpdateAbstractTokenCommand,
   DeleteAbstractTokenCommand,
-  DeleteAllAbstractTokensCommand,
   AddDeployedTokenCommand,
   UpdateDeployedTokenCommand,
   DeleteDeployedTokenCommand,
-  DeleteAllDeployedTokensCommand,
 ])
