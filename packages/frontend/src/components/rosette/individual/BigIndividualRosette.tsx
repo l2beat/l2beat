@@ -1,6 +1,5 @@
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
-import { UpcomingBadge } from '../../badge/UpcomingBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -26,7 +25,6 @@ interface Props {
     name: string
     risks: RosetteValueTuple
   }
-  isUpcoming?: boolean
   isUnderReview?: boolean
   className?: string
   background?: 'header' | 'surface'
@@ -41,7 +39,7 @@ export function BigIndividualRosette(props: Props) {
     )
   const parameters = rosetteParameters[props.size ?? 'regular']
 
-  if (isUnderReview || props.isUpcoming) {
+  if (isUnderReview) {
     return (
       <div
         className={cn(
@@ -53,16 +51,10 @@ export function BigIndividualRosette(props: Props) {
           l2={props.l2}
           l3={props.l3}
           isUnderReview={isUnderReview}
-          className={cn(
-            props.isUpcoming && 'opacity-30',
-            parameters.rosetteClassName,
-          )}
+          className={parameters.rosetteClassName}
           background={props.background}
           disableSectionLinking
         />
-        {props.isUpcoming && (
-          <UpcomingBadge className="absolute top-[130px] left-[90px]" />
-        )}
         <PizzaRosetteLabels
           values={props.l3.risks}
           containerSize={parameters.containerSize}

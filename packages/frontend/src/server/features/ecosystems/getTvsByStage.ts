@@ -13,7 +13,7 @@ export type TvsByStage = Record<
 export function getTvsByStage(
   ecosystemProjects: Project<
     'ecosystemInfo',
-    'scalingStage' | 'archivedAt' | 'isUpcoming'
+    'scalingStage' | 'archivedAt'
   >[],
   tvs: SevenDayTvsBreakdown,
 ): TvsByStage {

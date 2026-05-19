@@ -80,7 +80,7 @@ export async function getEcosystemMonthlyUpdateEntries(
     ps.getProjects({
       select: ['ecosystemInfo'],
       where: ['scalingInfo'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      whereNot: ['archivedAt'],
     }),
     ps.getProjects({
       select: ['ecosystemConfig', 'colors'],

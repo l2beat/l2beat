@@ -34,28 +34,22 @@ export function createActivityProjectsFilter(
 ): (project: Project<'scalingInfo' | 'statuses'>) => boolean {
   switch (filter.type) {
     case 'all':
-      return (project) => !(project.statuses.reviewStatus === 'initialReview')
+      return () => true
     case 'rollups':
       return (project) =>
-        !(project.statuses.reviewStatus === 'initialReview') &&
-        (project.scalingInfo.type === 'Optimistic Rollup' ||
-          project.scalingInfo.type === 'ZK Rollup')
+        project.scalingInfo.type === 'Optimistic Rollup' ||
+        project.scalingInfo.type === 'ZK Rollup'
     case 'validiumsAndOptimiums':
       return (project) =>
-        !(project.statuses.reviewStatus === 'initialReview') &&
-        (project.scalingInfo.type === 'Validium' ||
-          project.scalingInfo.type === 'Optimium' ||
-          project.scalingInfo.type === 'Plasma')
+        project.scalingInfo.type === 'Validium' ||
+        project.scalingInfo.type === 'Optimium' ||
+        project.scalingInfo.type === 'Plasma'
     case 'others':
-      return (project) =>
-        project.scalingInfo.type === 'Other' &&
-        !(project.statuses.reviewStatus === 'initialReview')
+      return (project) => project.scalingInfo.type === 'Other'
     case 'projects':
       return (project) => new Set(filter.projectIds).has(project.id)
     case 'withoutOthers':
-      return (project) =>
-        project.scalingInfo.type !== 'Other' &&
-        !(project.statuses.reviewStatus === 'initialReview')
+      return (project) => project.scalingInfo.type !== 'Other'
     default:
       assertUnreachable(filter)
   }

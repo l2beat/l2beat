@@ -375,20 +375,6 @@ export const CANONICAL_USDC: TableReadyValue = {
   sentiment: 'good',
 }
 
-export const UPCOMING_RISK: TableReadyValue = {
-  value: '',
-  description: 'No information available.',
-  sentiment: 'neutral',
-}
-
-export const UPCOMING_RISK_VIEW: ProjectScalingRiskView = {
-  stateValidation: UPCOMING_RISK,
-  dataAvailability: UPCOMING_RISK,
-  exitWindow: UPCOMING_RISK,
-  sequencerFailure: UPCOMING_RISK,
-  proposerFailure: UPCOMING_RISK,
-}
-
 export const UNDER_REVIEW_RISK: TableReadyValue = {
   value: 'Under Review',
   description: 'This risk is currently under review.',

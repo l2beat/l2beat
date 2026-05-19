@@ -22,7 +22,7 @@ import { getDaThroughputSection } from './getDaThroughputSection'
 type RegularDetailsParams = {
   layer: Project<
     'daLayer' | 'statuses' | 'display',
-    'milestones' | 'isUpcoming'
+    'milestones'
   >
   bridge:
     | Project<
@@ -236,7 +236,7 @@ export async function getRegularDaProjectSections({
     })
   }
 
-  if (!layer.isUpcoming && layer.milestones && layer.milestones.length > 0) {
+  if (layer.milestones && layer.milestones.length > 0) {
     const sortedMilestones = layer.milestones.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     )

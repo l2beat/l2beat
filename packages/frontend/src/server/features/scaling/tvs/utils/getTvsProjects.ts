@@ -18,9 +18,7 @@ export async function getTvsProjects(
   const projects = await ps.getProjects({
     select: ['statuses', 'tvsConfig'],
     optional: ['chainConfig', 'scalingInfo', 'tvsInfo'],
-    whereNot: options?.withoutArchivedAndUpcoming
-      ? ['isUpcoming', 'archivedAt']
-      : undefined,
+    whereNot: options?.withoutArchivedAndUpcoming ? ['archivedAt'] : undefined,
   })
 
   const filteredProjects = projects
