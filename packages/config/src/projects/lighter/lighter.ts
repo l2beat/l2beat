@@ -211,9 +211,9 @@ export const lighter: ScalingProject = {
   }),
   technology: {
     dataAvailability: {
-      name: 'Data published onchain, but state reconstruction is blocked',
+      name: 'Data published onchain',
       description:
-        'Account delta data is published onchain in the form of blobs. However, a prover migration (gnark/MIMC → plonky2/Poseidon2) occurred at block 23,711,820 without publishing a state snapshot. The old gnark circuit was never open-sourced, so ~60k pre-migration blobs cannot be decoded. Without this snapshot, users cannot reconstruct the latest accounts state required for forced exits.',
+        'Account delta data is published onchain as blobs. A prover migration (gnark/MIMC → plonky2/Poseidon2) at block 23,711,820 left pre-migration blobs undecodable, but Lighter published a full state snapshot at batch #166859 (blobs.zip) that closes the gap. L2BEAT reproduced the snapshot state root from blobs and verified the roll-forward to chain head, confirming the live state is reconstructable from L1.',
       risks: [],
       references: [
         {
@@ -223,6 +223,10 @@ export const lighter: ScalingProject = {
         {
           title: 'StateRootUpdate event — gnark to plonky2 migration',
           url: 'https://etherscan.io/tx/0x6a50b2b00444914e5c53df2fb48404078a098f93fc3911e6fcbde1c7b6418225',
+        },
+        {
+          title: 'Desert exit circuit + state snapshot (blobs.zip)',
+          url: 'https://github.com/elliottech/lighter-prover/tree/main/desertexit',
         },
       ],
     },
@@ -244,9 +248,18 @@ export const lighter: ScalingProject = {
       {
         name: 'Escape hatch through ZK proofs',
         description:
-          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users are expected to exit by reconstructing the latest settled state and providing a ZK proof of balance. In practice, this is not currently possible: pre-migration blob data cannot be decoded (see data availability note). Users must rely on operator cooperation to exit.',
+          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users are expected to exit by reconstructing the latest settled state and providing a ZK proof of balance. The desert exit circuit and a full state snapshot at batch #166859 are public, and the deployed DesertVerifier matches a rebuild from that circuit. L2BEAT reproduced the snapshot state root from L1 blobs and verified the roll-forward to chain head.',
         risks: [],
-        references: [],
+        references: [
+          {
+            title: 'Desert exit circuit + state snapshot',
+            url: 'https://github.com/elliottech/lighter-prover/tree/main/desertexit',
+          },
+          {
+            title: 'Deployed DesertVerifier 0x2adbd91…',
+            url: 'https://etherscan.io/address/0x2adbd91742b64105a097bc37d20ebbca9a496085',
+          },
+        ],
       },
     ],
     otherConsiderations: [
