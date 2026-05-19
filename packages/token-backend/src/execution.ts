@@ -57,7 +57,10 @@ export function executePlan(
         }
       }
 
-      await commitTokenChanges(db, plan.commands)
+      await commitTokenChanges(db, plan.commands, {
+        kind: 'manual',
+        user: opts.user,
+      })
       logger.info('Plan executed', { plan, user: opts.user })
       return {
         outcome: 'success',
@@ -85,6 +88,9 @@ export async function planAndExecute(
     if (planningResult.outcome === 'error') {
       throw new Error(`Error during planning: ${planningResult.error}`)
     }
-    await commitTokenChanges(db, planningResult.plan.commands)
+    await commitTokenChanges(db, planningResult.plan.commands, {
+      kind: 'manual',
+      user: opts.user,
+    })
   }, 'serializable')
 }

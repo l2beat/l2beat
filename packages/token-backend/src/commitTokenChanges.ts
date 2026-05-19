@@ -1,5 +1,9 @@
-import type { InteropTransferRecord, TokenDatabase } from '@l2beat/database'
-import { assertUnreachable } from '@l2beat/shared-pure'
+import type {
+  InteropTransferRecord,
+  TokenDatabase,
+  TokenDbHistoryEntryInsert,
+} from '@l2beat/database'
+import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import type { Command } from './commands'
 import { getLogger } from './logger'
 
@@ -47,18 +51,31 @@ export function manualProof(user: string): AbstractTokenAssignmentProof {
 }
 
 /**
+ * Who is making this write. Recorded in `TokenDbHistoryEntry.source` so every
+ * change to TokenDB has a traceable origin.
+ */
+export type WriteSource =
+  | { kind: 'manual'; user: string }
+  | { kind: 'ingestion' }
+
+/**
  * The single write boundary for TokenDB. Both the user-driven
  * intent/plan/execute pipeline and the automatic ingestion pipeline funnel
  * their writes through here. Commands arrive fully populated — including any
- * `abstractTokenAssignmentProof` field — so this function is a pure router.
+ * `abstractTokenAssignmentProof` field and, for updates/deletes, the
+ * `existing` record they were planned against — so this function is a pure
+ * router that also stores each executed command verbatim in
+ * `TokenDbHistoryEntry`.
  */
 export async function commitTokenChanges(
   tokenDb: TokenDatabase,
   commands: Command[],
+  source: WriteSource,
 ): Promise<void> {
   const logger = getLogger().for('commitTokenChanges')
   for (const command of commands) {
     await executeCommand(tokenDb, command)
+    await tokenDb.tokenDbHistory.insert(buildHistoryEntry(source, command))
     logger.info('Command executed', { command })
   }
 }
@@ -94,5 +111,18 @@ async function executeCommand(tokenDb: TokenDatabase, command: Command) {
       break
     default:
       assertUnreachable(command)
+  }
+}
+
+function buildHistoryEntry(
+  source: WriteSource,
+  command: Command,
+): TokenDbHistoryEntryInsert {
+  return {
+    timestamp: UnixTime.now(),
+    source: source.kind === 'manual' ? 'manual' : 'ingestion',
+    userEmail: source.kind === 'manual' ? source.user : null,
+    commandType: command.type,
+    command,
   }
 }

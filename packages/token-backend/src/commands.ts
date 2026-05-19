@@ -31,6 +31,7 @@ export type DeleteAbstractTokenCommand = v.infer<
 export const DeleteAbstractTokenCommand = v.object({
   type: v.literal('DeleteAbstractTokenCommand'),
   id: v.string(),
+  existing: AbstractTokenRecord,
 })
 
 export type DeleteAllAbstractTokensCommand = v.infer<
@@ -62,6 +63,7 @@ export type DeleteDeployedTokenCommand = v.infer<
 export const DeleteDeployedTokenCommand = v.object({
   type: v.literal('DeleteDeployedTokenCommand'),
   pk: DeployedTokenPrimaryKey,
+  existing: DeployedTokenRecord,
 })
 
 export type DeleteAllDeployedTokensCommand = v.infer<

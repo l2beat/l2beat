@@ -321,3 +321,83 @@ Notes:
   makes the change visible everywhere the diff is rendered, including
   cases where a manual edit overwrites a previous ingestion-stamped
   proof.
+
+## 2026-05-19 - Slice 8: token DB history
+
+Added a per-command audit trail recorded at the shared write boundary
+so the automatic ingestion feature can ship without losing visibility
+into what it has done. After an initial pass that denormalized
+before/after records into separate columns, the slice was simplified
+to store the executed `Command` verbatim — every command kind already
+carries everything the audit needs, so the boundary stays a pure
+router with no extra reads or merges.
+
+- New `TokenDbHistoryEntry` table (migration
+  `20260519120000_add_token_db_history`) with columns: `id`,
+  `timestamp`, `source` (`manual` | `ingestion`), `userEmail`,
+  `commandType`, `command` (JSONB). Indexed on `timestamp` and
+  `(commandType, timestamp)`.
+- New `TokenDbHistoryRepository` with `insert`, `getRecent(limit)`,
+  `getAll`, and `deleteAll`. The repository converts `BigInt` values
+  inside command JSON to decimal strings before persisting so transfer
+  proofs (which carry `srcRawAmount`/`dstRawAmount`) round-trip
+  cleanly.
+- Added `existing` to `DeleteAbstractTokenCommand` and
+  `DeleteDeployedTokenCommand`, mirroring the shape already used by
+  `Update*` commands. `planDeleteAbstractToken` and
+  `planDeleteDeployedToken` now fetch the existing record at plan
+  time (and throw a `PlanningError` if it's missing). This makes
+  delete commands self-describing — the history row alone says what
+  was deleted, without the boundary doing a hidden read.
+- Reintroduced `WriteSource` (`{ kind: 'manual'; user } | { kind:
+  'ingestion' }`) — but only for audit, not for proof stamping. Proofs
+  continue to ride on individual commands. `commitTokenChanges` now
+  takes `(tokenDb, commands, source)`; for each command it inserts
+  one history row carrying the command JSON, `commandType`, and
+  `source` / `userEmail`. No before/after merging.
+- `executePlan` and `planAndExecute` pass `{ kind: 'manual', user:
+  opts.user }` to `commitTokenChanges`; `TokenIngestionProcessor.apply`
+  passes `{ kind: 'ingestion' }`. The `user` arg already existed on
+  both write paths from the previous slice, so no caller changed
+  shape.
+- Tests:
+  - `commitTokenChanges.test.ts` asserts that each command kind
+    produces a history row whose `command` field is the executed
+    `Command` verbatim. Existing routing tests were updated to
+    construct `Delete*` commands with `existing` and to pass a
+    mocked `tokenDbHistory` and a write source.
+  - New `TokenDbHistoryRepository.test.ts` covers manual/ingestion
+    sources, BigInt JSON serialization (round-tripped as decimal
+    strings), and `getRecent` ordering.
+  - `TokenIngestionLoop.test.ts` setups were extended to include a
+    `tokenDbHistory` mock so the drain doesn't fault when calling
+    the write boundary.
+
+Documentation:
+
+- Added a "Token DB history" section to
+  `docs/mdbook/specs/l2b_specs/token_db/automatic_token_ingestion.md`
+  explaining why a single `command` column is sufficient. Renamed
+  the trailing "Future: persistent audit" section to "Future:
+  persistent trace audit" since the per-command audit is now done —
+  the only remaining follow-up is persisting the full
+  `IngestionTrace` for reasoning, not the diff.
+
+Notes:
+
+- No UI is included. The repository exposes the data; surfacing it
+  in Token UI is a separate slice.
+- Proof stamping and history recording are intentionally split: the
+  proof explains *why* an abstract was chosen and lives on the
+  deployed token row; history explains *what* command was executed
+  and lives on its own table. They overlap only inside `command`,
+  where any proof attached at plan time is naturally part of the
+  persisted command snapshot.
+- The first iteration of this slice added denormalized
+  `previousRecord` and `newRecord` columns; we collapsed those into
+  a single `command` JSON column once it was clear every command
+  type already carries the equivalent (`existing` + `update` on
+  updates and deletes, `record` on adds). The before/after split
+  was duplicating data already present in the command and was also
+  losing the "patch shape" of updates by merging existing + update
+  into a single resulting record.

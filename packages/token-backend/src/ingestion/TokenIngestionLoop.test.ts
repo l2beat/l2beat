@@ -9,6 +9,7 @@ import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories
 import type { ChainRepository } from '@l2beat/database/dist/repositories/ChainRepository'
 import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import type { InteropTransferRepository } from '@l2beat/database/dist/repositories/InteropTransferRepository'
+import type { TokenDbHistoryRepository } from '@l2beat/database/dist/repositories/TokenDbHistoryRepository'
 import type { TokenDbSettingRepository } from '@l2beat/database/dist/repositories/TokenDbSettingRepository'
 import type {
   TokenIngestionQueueRecord,
@@ -207,6 +208,9 @@ describe(TokenIngestionLoop.name, () => {
             findNextPending,
             enqueue: mockFn().resolvesTo(undefined),
             remove: mockFn().resolvesTo(1),
+          }),
+          tokenDbHistory: mockObject<TokenDbHistoryRepository>({
+            insert: mockFn().resolvesTo(undefined),
           }),
           deployedToken: mockObject<DeployedTokenRepository>({
             findByChainAndAddress: mockFn().resolvesTo(
@@ -452,6 +456,9 @@ describe(TokenIngestionLoop.name, () => {
               .resolvesToOnce(queueEntry(address))
               .resolvesToOnce(undefined),
             remove: mockFn().resolvesTo(1),
+          }),
+          tokenDbHistory: mockObject<TokenDbHistoryRepository>({
+            insert: mockFn().resolvesTo(undefined),
           }),
           deployedToken: mockObject<DeployedTokenRepository>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),

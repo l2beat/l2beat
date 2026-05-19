@@ -268,7 +268,9 @@ export class TokenIngestionProcessor {
       case 'write': {
         const commands = buildWriteCommands(outcome)
         await this.deps.tokenDb.transaction(async () => {
-          await commitTokenChanges(this.deps.tokenDb, commands)
+          await commitTokenChanges(this.deps.tokenDb, commands, {
+            kind: 'ingestion',
+          })
         }, 'serializable')
 
         for (const neighbor of outcome.neighborsToEnqueue) {

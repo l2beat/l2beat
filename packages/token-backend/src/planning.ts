@@ -66,7 +66,7 @@ export async function generatePlan(
         commands = await planUpdateAbstractToken(db, intent)
         break
       case 'DeleteAbstractTokenIntent':
-        commands = planDeleteAbstractToken(intent)
+        commands = await planDeleteAbstractToken(db, intent)
         break
       case 'AddDeployedTokenIntent':
         commands = await planAddDeployedToken(db, intent, opts)
@@ -76,7 +76,7 @@ export async function generatePlan(
         break
 
       case 'DeleteDeployedTokenIntent':
-        commands = planDeleteDeployedToken(intent)
+        commands = await planDeleteDeployedToken(db, intent)
         break
       default:
         assertUnreachable(intent)
@@ -149,11 +149,19 @@ async function planUpdateAbstractToken(
   ]
 }
 
-function planDeleteAbstractToken(intent: DeleteAbstractTokenIntent): Command[] {
+async function planDeleteAbstractToken(
+  db: TokenDatabase,
+  intent: DeleteAbstractTokenIntent,
+): Promise<Command[]> {
+  const existing = await db.abstractToken.findById(intent.id)
+  if (existing === undefined) {
+    throw new PlanningError(`AbstractToken ${intent.id} doesn't exist`)
+  }
   return [
     {
       type: 'DeleteAbstractTokenCommand',
       id: intent.id,
+      existing,
     },
   ]
 }
@@ -199,11 +207,21 @@ async function planUpdateDeployedToken(
   ]
 }
 
-function planDeleteDeployedToken(intent: DeleteDeployedTokenIntent): Command[] {
+async function planDeleteDeployedToken(
+  db: TokenDatabase,
+  intent: DeleteDeployedTokenIntent,
+): Promise<Command[]> {
+  const existing = await db.deployedToken.findByChainAndAddress(intent.pk)
+  if (existing === undefined) {
+    throw new PlanningError(
+      `DeployedToken ${intent.pk.chain}+${intent.pk.address} doesn't exist`,
+    )
+  }
   return [
     {
       type: 'DeleteDeployedTokenCommand',
       pk: intent.pk,
+      existing,
     },
   ]
 }

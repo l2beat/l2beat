@@ -534,6 +534,18 @@ model TokenDbSetting {
   @@id([key])
 }
 
+model TokenDbHistoryEntry {
+  id          BigInt   @id @default(autoincrement())
+  timestamp   DateTime @db.Timestamp(6)
+  source      String   @db.VarChar(32)
+  userEmail   String?  @db.VarChar(255)
+  commandType String   @db.VarChar(64)
+  command     Json
+
+  @@index([timestamp])
+  @@index([commandType, timestamp])
+}
+
 model TokenConnection {
   tokenFromChain   String  @db.VarChar(32)
   tokenFromAddress String  @db.VarChar(255)

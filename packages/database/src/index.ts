@@ -90,6 +90,11 @@ export type {
   TokenConnectionRecord,
   TokenConnectionUpdateable,
 } from './repositories/TokenConnectionRepository'
+export type {
+  TokenDbHistoryEntryInsert,
+  TokenDbHistoryEntryRecord,
+  TokenDbHistorySource,
+} from './repositories/TokenDbHistoryRepository'
 export type { TokenDbSettingRecord } from './repositories/TokenDbSettingRepository'
 export type { TokenFactInputRecord } from './repositories/TokenFactInputRepository'
 export type {

@@ -10,13 +10,15 @@
   - [Processing one entry: plan + fetch + apply](#processing-one-entry-plan--fetch--apply)
   - [Abstract token resolution](#abstract-token-resolution)
   - [Outcomes](#outcomes)
+  - [Shared write boundary](#shared-write-boundary)
+  - [Token DB history](#token-db-history)
   - [Propagation](#propagation)
   - [Reading the interop transfer table](#reading-the-interop-transfer-table)
   - [CoinGecko: never called from `plan`](#coingecko-never-called-from-plan)
   - [Address normalization](#address-normalization)
   - [What runs where](#what-runs-where)
   - [What this replaces](#what-this-replaces)
-  - [Future: persistent audit](#future-persistent-audit)
+  - [Future: persistent trace audit](#future-persistent-trace-audit)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -245,9 +247,40 @@ strong `AbstractTokenAssignmentProof` type is only used at plan time.
 `commitTokenChanges` does not own its surrounding transaction — each
 pipeline opens its own, because the user pipeline also needs to re-plan
 inside that transaction while ingestion does not. The helper logs every
-command it executes; persisting an audit record to a permanent history
-table is a separate follow-up change that plugs in here once and covers
-both pipelines.
+command it executes and records one row per executed command in the
+[`TokenDbHistoryEntry`](#token-db-history) table, so the audit trail
+covers both pipelines uniformly.
+
+## Token DB history
+
+Every executed command is recorded in `TokenDbHistoryEntry`. The shape is
+deliberately small:
+
+- `timestamp` — when the command was applied.
+- `source` — `'manual'` (user-driven plan) or `'ingestion'`.
+- `userEmail` — set when `source = 'manual'`, otherwise `null`.
+- `commandType` — the `Command.type` literal (e.g.
+  `AddDeployedTokenCommand`), denormalized off the JSON for indexed
+  filtering.
+- `command` — the executed `Command` stored verbatim as JSON.
+
+The `Command` already carries everything an audit reader needs: `Add*`
+commands hold the `record` being inserted, `Update*` commands hold both
+`existing` (the row as planned against) and `update` (the patch), and
+`Delete*` commands hold `existing` (the row about to be deleted). So
+history needs no separate "before" / "after" columns — `command` is the
+audit row. Re-rendering an `Update*` row as a diff is `{ existing, update
+}`; an `Add*` row is `record`; a `Delete*` row is `existing` with a
+deletion marker. `DeleteAll*` commands carry only `type` and are stored
+as-is.
+
+`source` is supplied as a third argument to `commitTokenChanges`. The
+user-driven `executePlan` / `planAndExecute` pass
+`{ kind: 'manual', user }` (the email is already required for proof
+stamping); ingestion passes `{ kind: 'ingestion' }`. The proofs introduced
+in the previous slice continue to ride on individual commands and are
+captured inside `command` — so anyone reading history sees both *what*
+changed and *why* the abstract assignment was chosen.
 
 ## Propagation
 
@@ -323,10 +356,12 @@ untouched, mostly to limit the amount of work necessary to implement
 automatic ingestion. In the future they will be slimmed down where
 they overlap with automatic ingestion process.
 
-## Future: persistent audit
+## Future: persistent trace audit
 
-The plan/apply split makes it trivial to persist traces. When `apply`
-performs a `write`, it already holds the full `IngestionTrace`. Storing
-it next to the deployed/abstract token (separate table or a JSON column)
-gives a permanent answer to "why does this token have this abstract
-assigned?". This is not currently implemented.
+`TokenDbHistoryEntry` already gives a per-command audit trail of *what*
+changed and *who* changed it. The next step, if needed, is persisting the
+full `IngestionTrace` next to write events so the *reasoning* (every
+decision step) is queryable too — useful when a researcher wants to
+understand why a particular abstract was chosen long after the interop
+transfer that justified it has rolled out of the 24h window. The trace
+already exists at `apply` time, so this is a low-cost follow-up.
