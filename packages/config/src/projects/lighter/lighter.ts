@@ -182,7 +182,7 @@ export const lighter: ScalingProject = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, priorityExpiration),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(priorityExpiration),
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
   },
   stage: getRollupStage({
     stage0: {
