@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1778675086,
+  "timestamp": 1779173531,
   "configHash": "0xf35702c4c81529b7cb06b5ec621647cdb45fb0f8158a9a57e83bdbf848e54019",
   "entries": [
     {
@@ -445,7 +445,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1778675075,
+        "clock": 1779173531,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -700,54 +700,12 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
-      "name": "EncryptionRegistry",
-      "address": "eth:0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1",
-      "type": "Contract",
-      "template": "taiko/EncryptionRegistry",
-      "sourceHashes": [
-        "0x267e9b80c22b223bc6f3def714d9cc9965d9f1a4f38a3d5fcf94c253fc9bb0b3"
-      ],
-      "proxyType": "immutable",
-      "description": "A registry for signers (of the Security Council) to appoint agents to operate on their behalf. These agents can also register their encryption keys for encrypted emergency proposal support.",
-      "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
-      "sinceTimestamp": 1746111707,
-      "sinceBlock": 22389760,
-      "values": {
-        "$immutable": true,
-        "accountList": [
-          "eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
-          "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894",
-          "eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06",
-          "eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7",
-          "eth:0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95",
-          "eth:0xb284810536C0dAB6A8e48153B58588A9B9e0F701",
-          "eth:0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1",
-          "eth:0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351",
-          "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E"
-        ],
-        "getRegisteredAccounts": [
-          "eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
-          "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894",
-          "eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06",
-          "eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7",
-          "eth:0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95",
-          "eth:0xb284810536C0dAB6A8e48153B58588A9B9e0F701",
-          "eth:0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1",
-          "eth:0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351",
-          "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E"
-        ]
-      },
-      "implementationNames": {
-        "eth:0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1": "EncryptionRegistry"
       }
     },
     {
@@ -782,7 +740,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 174,
+        "nonce": 175,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1114,12 +1072,12 @@
           "permissionlessInclusionMultiplier": 160
         },
         "getCoreState": {
-          "nextProposalId": 9221,
-          "lastProposalBlockId": 25086196,
-          "lastFinalizedProposalId": 9216,
-          "lastFinalizedTimestamp": 1778673887,
-          "lastCheckpointTimestamp": 1778673887,
-          "lastFinalizedBlockHash": "0x172fa05902361d2be571bf78522bf64c92cef17ccafe8bbf9d047f960f4603ec"
+          "nextProposalId": 10519,
+          "lastProposalBlockId": 25127586,
+          "lastFinalizedProposalId": 10509,
+          "lastFinalizedTimestamp": 1779170195,
+          "lastCheckpointTimestamp": 1779170195,
+          "lastFinalizedBlockHash": "0xcb6b647d8b2fea48216192eb362d515417b8d4a2cee0d804fb0ea84addb6fe22"
         },
         "getCurrentForcedInclusionFee": 1000000,
         "getForcedInclusionState": { "head_": 0, "tail_": 0 },
@@ -1633,7 +1591,7 @@
         "minVetoPercent": "10",
         "minVetoRatio": 100000,
         "pluginType": 0,
-        "proposalCount": 30,
+        "proposalCount": 31,
         "proposalIds": [
           "594318504305273196926027118847304676812617940992",
           "594333808845007833054360677244409987180489867265",
@@ -1664,7 +1622,8 @@
           "603470345479562597234986338918793351448504565786",
           "604072306347775205060623596830012262580693762075",
           "604252334775688929080375373293834029676709806108",
-          "604873005729564317786488715670244117998223753245"
+          "604873005729564317786488715670244117998223753245",
+          "605401718776602992082262606618382736114237571102"
         ],
         "PROPOSER_PERMISSION_ID": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
         "taikoBridge": "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
@@ -2769,7 +2728,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 39194,
+        "nextMessageId": 39238,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2817,7 +2776,7 @@
           "proposalExpirationPeriod": 1209600
         },
         "pluginType": 0,
-        "proposalCount": 19,
+        "proposalCount": 20,
         "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
       },
@@ -3086,7 +3045,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3247,7 +3206,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "getOperatorForCurrentEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+        "getOperatorForCurrentEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
         "getOperatorForNextEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
         "impl": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
         "inNonReentrant": false,
@@ -3551,8 +3510,8 @@
         "ANCHOR_GAS_LIMIT": 1000000,
         "checkpointStore": "taiko:0x1670000000000000000000000000000000000005",
         "getBlockState": {
-          "anchorBlockNumber": 25086191,
-          "ancestorsHash": "0xdc15f572371f572e13ccfeb6fe10019b92da8cc8b60e67e09562bd0c78b03e51"
+          "anchorBlockNumber": 25127580,
+          "ancestorsHash": "0xc75e8d78335c1c6d3f549f1cacfebd7f82cabd1f4fca05c4455770d435647cdb"
         },
         "GOLDEN_TOUCH_ADDRESS": "taiko:0x0000777735367b36bC9B61C50022d9D0700dB4Ec",
         "impl": "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA",
@@ -3980,28 +3939,6 @@
     ],
     "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609": [
       "constructor(address _singleton)"
-    ],
-    "eth:0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1": [
-      "constructor(address _addresslist)",
-      "error AlreadyAppointed()",
-      "error AlreadyListed()",
-      "error CannotAppointContracts()",
-      "error InvalidAddressList()",
-      "error MustBeAppointed()",
-      "error MustBeListed()",
-      "error MustResetAppointedAgent()",
-      "event AgentAppointed(address account, address agent)",
-      "event PublicKeySet(address account, bytes32 publicKey)",
-      "function accountList(uint256) view returns (address)",
-      "function accounts(address) view returns (address appointedAgent, bytes32 publicKey)",
-      "function appointAgent(address _newAgent)",
-      "function appointerOf(address) view returns (address)",
-      "function getAppointedAgent(address _account) view returns (address)",
-      "function getRegisteredAccounts() view returns (address[])",
-      "function removeUnused()",
-      "function setOwnPublicKey(bytes32 _publicKey)",
-      "function setPublicKey(address _accountOwner, bytes32 _publicKey)",
-      "function supportsInterface(bytes4 _interfaceId) view returns (bool)"
     ],
     "eth:0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da": [
       "constructor(address _singleton)"
@@ -5526,6 +5463,6 @@
     "taiko/TaikoDAOController": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804"
   },
-  "usedBlockNumbers": { "ethereum": 25086197, "taiko": 6678092 },
-  "permissionsConfigHash": "0x5d732a3c5a32e8cb640d5527eda6a9ea648427e9e5eb0b2850954e4a8600f3c8"
+  "usedBlockNumbers": { "ethereum": 25127588, "taiko": 6899722 },
+  "permissionsConfigHash": "0x9bed4b8ec55bf66036b6522fda7746be095ff448cfdbc0bc3fee14a50fb043a5"
 }

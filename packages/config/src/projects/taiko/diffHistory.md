@@ -1,3 +1,110 @@
+Generated with discovered.json: 0x63edb2649d6fc44b89c5b40e3162254241485331
+
+# Diff at Tue, 19 May 2026 06:54:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0fe9c60201f783f1d4d90df97efb9c885a43a948 block: 1778675086
+- current timestamp: 1779173531
+
+## Description
+
+config related: add taiko gov details.
+
+new proposal queued: [raiko2](https://dao.taiko.xyz/plugins/community-proposals/#/proposals/30), updates program hashes
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        30
++        31
+      values.proposalIds.30:
++        "605401718776602992082262606618382736114237571102"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
++++ description: total standard proposal count.
++++ severity: HIGH
+      values.proposalCount:
+-        19
++        20
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778675086 (main branch discovery), not current.
+
+```diff
+    contract SignerList (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list.
+      description:
+-        "A signer list for registering agents, similar to a Multisig."
++        "A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list."
+      values.getEncryptionAgents:
+-        ["eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163","eth:0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6","eth:0x884c3e8235788ae52C2106E847e30BD84F2FBCb8","eth:0x22aD66bcEaeff83e1461772Fa85CbeB01f0915f4","eth:0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A","eth:0x824Dce8d292a393DAb5FFdeb788DC1086257f678","eth:0x18B4f2afe456Dc89bddE9710476dCfC62D01d656","eth:0x1d955983044548E03DAA583B36A37cA4bdE6F556","eth:0xc4414B079bC4A013916B3dc241555F6f505c1619"]
+      values.$members:
++        ["eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7","eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06","eth:0xb284810536C0dAB6A8e48153B58588A9B9e0F701","eth:0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351","eth:0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95","eth:0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1","eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894","eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a","eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E"]
++++ description: hardcoded emergency multisg threshold, must be manually changed here if it changes in the EmergencyMultisig contract.
+      values.$threshold:
++        7
+      values.agents:
++        ["eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163","eth:0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6","eth:0x884c3e8235788ae52C2106E847e30BD84F2FBCb8","eth:0x22aD66bcEaeff83e1461772Fa85CbeB01f0915f4","eth:0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A","eth:0x824Dce8d292a393DAb5FFdeb788DC1086257f678","eth:0x18B4f2afe456Dc89bddE9710476dCfC62D01d656","eth:0x1d955983044548E03DAA583B36A37cA4bdE6F556","eth:0xc4414B079bC4A013916B3dc241555F6f505c1619"]
+      fieldMeta:
++        {"$threshold":{"description":"hardcoded emergency multisg threshold, must be manually changed here if it changes in the EmergencyMultisig contract."},"settings":{"severity":"HIGH"}}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd","role":".multisigSettings"},{"permission":"act","from":"eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321","role":".multisigSettings"}]
+    }
+```
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) [taiko/EmergencyMultisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+      fieldMeta.proposalCount.description:
+-        "The total count of encrypted emergency proposals created."
++        "total count of encrypted emergency proposals created."
+      fieldMeta.proposalCount.severity:
++        "HIGH"
+      fieldMeta.multisigSettings:
++        {"severity":"HIGH","description":"the threshold in the SignerList needs to be changed manually if it changes here"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EncryptionRegistry (eth:0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1) [taiko/EncryptionRegistry]
+    +++ description: A registry for signers (of the Security Council) to appoint agents to operate on their behalf. These agents can also register their encryption keys for encrypted emergency proposal support.
+```
+
+```diff
+    contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) [taiko/DAO] {
+    +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
++++ description: Granted permissions in the DAO. Need to be manually compared to the revoked ones and hardcoded permissions need to be adjusted on change.
+      values.permsGranted:
++        {"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF":[{"permissionId":"0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","who":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0x557340e1da86f1ece7405a684dc2616fd8730fa7e5a4e14f744c7f79be93d409","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2","who":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0xf796b89427c6552c1ac705d833bfb7909f8eb5ce502c1db97f85fabc6ad83548","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f","who":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","condition":"eth:0x0000000000000000000000000000000000000002"}],"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261":[{"permissionId":"0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0x1f53edd44352e5d15bad2b29233baa93bcd595e09457780bc7c5445bbbe751cc","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0xfaf505be9907aa6951c2ebe5b0312f4980e14f21912ed355372103cc8bd683bc","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0x557340e1da86f1ece7405a684dc2616fd8730fa7e5a4e14f744c7f79be93d409","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0xa0885006fe6672eeafd1deca6c67bcdc6dd79cfe2b157a98539ddf73cd8c04ea","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0x2CBe2F0907F99B5d0bECF8Be9fF623B7214389C2","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0xa0885006fe6672eeafd1deca6c67bcdc6dd79cfe2b157a98539ddf73cd8c04ea","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0x03Bfac9c11702ac9c239610a45ED58b80E82DA0b","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0xa0885006fe6672eeafd1deca6c67bcdc6dd79cfe2b157a98539ddf73cd8c04ea","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0x05960136abD6a3E87C67860C71859e91070735D1","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad","here":"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f","where":"eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5","here":"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f","where":"eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad","here":"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f","where":"eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5","here":"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f","where":"eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0x3dc194e23158bc1a3f2c26e18c8c910b557388bad663356cd4fc49c11477a4a4","here":"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f","where":"eth:0x989E348275b659d36f8751ea1c10D146211650BE","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5","here":"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f","where":"eth:0x989E348275b659d36f8751ea1c10D146211650BE","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"},{"permissionId":"0x09591533596d094e638b438de2d180bcb3143eb02f7e9dbf65d7115116212eeb","here":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","where":"eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2","who":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","condition":"eth:0x0000000000000000000000000000000000000002"}],"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f":[{"permissionId":"0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","who":"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f","condition":"eth:0x0000000000000000000000000000000000000002"}],"eth:0x989E348275b659d36f8751ea1c10D146211650BE":[{"permissionId":"0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d","here":"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f","where":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","who":"eth:0x989E348275b659d36f8751ea1c10D146211650BE","condition":"eth:0x0000000000000000000000000000000000000002"}],"eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321":[{"permissionId":"0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2","here":"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f","where":"eth:0x989E348275b659d36f8751ea1c10D146211650BE","who":"eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321","condition":"eth:0x0000000000000000000000000000000000000002"}],"eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd":[{"permissionId":"0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2","here":"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f","where":"eth:0x989E348275b659d36f8751ea1c10D146211650BE","who":"eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd","condition":"eth:0x0000000000000000000000000000000000000002"}]}
++++ description: Revoked permissions in the DAO. Need to be manually compared to the granted ones.
+      values.permsRevoked:
++        {"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF":[{"permissionId":"0x557340e1da86f1ece7405a684dc2616fd8730fa7e5a4e14f744c7f79be93d409","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2","who":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF"},{"permissionId":"0xf796b89427c6552c1ac705d833bfb7909f8eb5ce502c1db97f85fabc6ad83548","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f","who":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF"},{"permissionId":"0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","who":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF"}],"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f":[{"permissionId":"0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33","here":"eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF","where":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","who":"eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f"}]}
+      fieldMeta:
++        {"permsGranted":{"description":"Granted permissions in the DAO. Need to be manually compared to the revoked ones and hardcoded permissions need to be adjusted on change."},"permsRevoked":{"description":"Revoked permissions in the DAO. Need to be manually compared to the granted ones."}}
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      fieldMeta:
++        {"multisigSettings":{"severity":"HIGH"},"proposalCount":{"severity":"HIGH","description":"total standard proposal count."}}
+    }
+```
+
 Generated with discovered.json: 0x850d9e5b70c3a1c71f02d6c68b3ea56678a98cff
 
 # Diff at Fri, 15 May 2026 12:37:01 GMT:
