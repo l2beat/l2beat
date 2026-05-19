@@ -330,7 +330,7 @@
                 "sinceTimestamp": 1778598960
               },
               {
-                "_comment": "Axie DAO uncollateralized portion of the 2022 hack (56,000 ETH never reimbursed). Held at SafeProxy 0x245db945c485b68fdc429e4f7085a1761aa4d45d.",
+                "_comment": "Axie DAO uncollateralized portion of the 2022 hack (56,000 ETH never reimbursed). Held at Axie Treasury 0x245db945c485b68fdc429e4f7085a1761aa4d45d.",
                 "type": "const",
                 "value": "56000000000000000000000",
                 "decimals": 18,
