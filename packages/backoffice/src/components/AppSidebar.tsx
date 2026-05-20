@@ -1,5 +1,4 @@
 import {
-  ArrowLeftRightIcon,
   ChevronRightIcon,
   ClipboardCheckIcon,
   LayersIcon,
@@ -240,7 +239,6 @@ export function AppSidebar() {
                               <SidebarMenuSubItem key={subItem.title}>
                                 <SidebarMenuSubButton asChild>
                                   <Link to={subItem.url}>
-                                    <ArrowLeftRightIcon />
                                     <span>{subItem.title}</span>
                                   </Link>
                                 </SidebarMenuSubButton>
