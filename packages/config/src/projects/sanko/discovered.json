@@ -1,6 +1,6 @@
 {
   "name": "sanko",
-  "timestamp": 1778508954,
+  "timestamp": 1779128593,
   "configHash": "0xc855cb34be25d14d9b8cbdca2ddcc4600c16514e3ee7f3e4eb6e8bdeb4e59007",
   "entries": [
     {
@@ -854,7 +854,7 @@
         "challengeManager": "arb1:0x1f269F38196484ef81e58C0144AaD2c5F6394bB4",
         "challenges": [],
         "confirmPeriodBlocks": 45818,
-        "currentRequiredStake": "300000000000000000",
+        "currentRequiredStake": "600000000000000000",
         "extraChallengeTimeBlocks": 200,
         "firstUnresolvedNode": 3341,
         "inbox": "arb1:0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD",
@@ -1911,6 +1911,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 461730190 },
+  "usedBlockNumbers": { "arbitrum": 464200002 },
   "permissionsConfigHash": "0x5cdb9d992d2da325bbcc9c6f574d62b88ddaf8f783cbfffbb85639affe3bde40"
 }

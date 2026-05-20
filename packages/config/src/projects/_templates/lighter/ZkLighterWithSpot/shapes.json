@@ -46,5 +46,14 @@
       "eth:0x22F05515497ce8D78f3898088C474403Ac9C668f"
     ],
     "blockNumber": 24971787
+  },
+  "Lighter_May18_2026": {
+    "hash": "0xcd208d248bde92753c9b72b60864c4e7985f46c4b2c5a6fcead7552029b7e8b8",
+    "address": [
+      "eth:0xc4F38883af6d07D826A20A581cB21fFc2a58009C",
+      "eth:0x22F05515497ce8D78f3898088C474403Ac9C668f"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 25121536
   }
 }

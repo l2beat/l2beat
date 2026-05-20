@@ -209,6 +209,7 @@ function abstractToken(
     coingeckoId: overrides.coingeckoId ?? null,
     coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
     comment: overrides.comment ?? null,
-    reviewed: false,
+    reviewed: overrides.reviewed ?? false,
+    isPriceUnreliable: overrides.isPriceUnreliable ?? false,
   }
 }

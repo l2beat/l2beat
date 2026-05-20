@@ -14,6 +14,7 @@ export type AbstractTokenRecord = {
   coingeckoListingTimestamp: UnixTime | null
   comment: string | null
   reviewed: boolean
+  isPriceUnreliable: boolean
 }
 
 export type AbstractTokenUpdateable = Omit<
@@ -23,16 +24,33 @@ export type AbstractTokenUpdateable = Omit<
 
 function toRecord(row: Selectable<AbstractToken>): AbstractTokenRecord {
   return {
-    ...row,
-    category: row.category as 'btc' | 'ether' | 'stablecoin' | 'other' | null,
+    id: row.id,
+    symbol: row.symbol,
+    issuer: row.issuer,
+    iconUrl: row.iconUrl,
+    comment: row.comment,
+    reviewed: row.reviewed,
+    isPriceUnreliable: row.isPriceUnreliable,
+    coingeckoId: row.coingeckoId,
+
     coingeckoListingTimestamp: toTimestamp(row.coingeckoListingTimestamp),
+    category: row.category as 'btc' | 'ether' | 'stablecoin' | 'other' | null,
   }
 }
 export { toRecord as toAbstractTokenRecord }
 
 function toRow(record: AbstractTokenRecord): Insertable<AbstractToken> {
   return {
-    ...record,
+    id: record.id,
+    symbol: record.symbol,
+    issuer: record.issuer,
+    iconUrl: record.iconUrl,
+    comment: record.comment,
+    reviewed: record.reviewed,
+    isPriceUnreliable: record.isPriceUnreliable,
+    category: record.category,
+    coingeckoId: record.coingeckoId,
+
     coingeckoListingTimestamp: fromTimestamp(record.coingeckoListingTimestamp),
   }
 }

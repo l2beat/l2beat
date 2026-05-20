@@ -25,6 +25,7 @@ interface Props {
   onSelectAll?: () => void
   max?: number
   min?: number
+  pinnedChainId?: string
 }
 
 export function ChainsMultiSelect({
@@ -35,6 +36,7 @@ export function ChainsMultiSelect({
   onSelectAll,
   max,
   min,
+  pinnedChainId,
 }: Props) {
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
     id,
@@ -91,8 +93,14 @@ export function ChainsMultiSelect({
           chain={chain}
           isSelected={chain.isSelected}
           toggleSelected={onToggle}
-          disabled={isAtMax && !chain.isSelected}
-          disabledTooltip="Deselect a chain to select another"
+          disabled={
+            chain.id === pinnedChainId || (isAtMax && !chain.isSelected)
+          }
+          disabledTooltip={
+            chain.id === pinnedChainId
+              ? 'This chain cannot be deselected'
+              : 'Deselect a chain to select another'
+          }
         />
       ))}
     </div>
@@ -115,7 +123,9 @@ export function ChainsMultiSelect({
       <ModifierButton
         label="Deselect all"
         onClick={onDeselectAll}
-        disabled={selectedChains.length === 0}
+        disabled={
+          selectedChains.filter((id) => id !== pinnedChainId).length === 0
+        }
       />
     </div>
   )

@@ -8,13 +8,18 @@ export function FlowsChainsSelector({
 }: {
   allChains: InteropChainWithIcon[]
 }) {
-  const { selectedChains, toggleChainSelection, deselectAllChains } =
-    useInteropFlows()
+  const {
+    selectedChains,
+    pinnedChainId,
+    toggleChainSelection,
+    deselectAllChains,
+  } = useInteropFlows()
 
   return (
     <ChainsMultiSelect
       allChains={allChains}
       selectedChains={selectedChains}
+      pinnedChainId={pinnedChainId}
       onToggle={toggleChainSelection}
       onDeselectAll={deselectAllChains}
       max={MAX_SELECTED_CHAINS}
