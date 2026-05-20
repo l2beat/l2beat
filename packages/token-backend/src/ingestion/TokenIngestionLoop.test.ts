@@ -20,6 +20,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import type { Chain } from '../chains/Chain'
 import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
 import type { DeployedTokenFacts } from '../chains/fetchDeployedTokenFacts'
+import type { IngestionTrace } from './IngestionTrace'
 import { TokenIngestionLoop } from './TokenIngestionLoop'
 import { TokenIngestionProcessor } from './TokenIngestionProcessor'
 
@@ -168,6 +169,48 @@ describe(TokenIngestionLoop.name, () => {
 
       expect(enqueue).toHaveBeenCalledTimes(0)
       expect(set).toHaveBeenCalledTimes(0)
+    })
+
+    it('stops draining when the processing limit is reached', async () => {
+      const address = token('ethereum', '0xaaa')
+      const process = mockFn().resolvesTo({
+        address,
+        steps: [],
+        outcome: { kind: 'skip', reason: 'test' },
+      } satisfies IngestionTrace)
+      const findNextPending = mockFn().executes(async () => queueEntry(address))
+      const countPending = mockFn().resolvesTo(1)
+
+      const loop = new TokenIngestionLoop(
+        mockObject<Database>({
+          interopTransfer: mockObject<InteropTransferRepository>({
+            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+              latestSerialId: undefined,
+              transferCount: 0,
+              tokenAddresses: [],
+            }),
+            getAll: mockFn().resolvesTo([]),
+          }),
+        }),
+        mockObject<TokenDatabase>({
+          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+            get: mockFn().resolvesTo(undefined),
+          }),
+          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
+            findNextPending,
+            countPending,
+          }),
+        }),
+        mockObject({ process }) as unknown as TokenIngestionProcessor,
+        Logger.SILENT,
+        { intervalMs: 60_000, maxProcessedPerRun: 3 },
+      )
+
+      await loop.runOnce()
+
+      expect(process).toHaveBeenCalledTimes(3)
+      expect(findNextPending).toHaveBeenCalledTimes(4)
+      expect(countPending).toHaveBeenCalledTimes(1)
     })
 
     it('updates an existing token from a non-swapping transfer without fetching deployed facts', async () => {

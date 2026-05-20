@@ -34,4 +34,5 @@ export interface TokenIngestionConfig {
   enabled: boolean
   intervalMs: number
   requireApproval: boolean
+  maxProcessedPerRun: number
 }

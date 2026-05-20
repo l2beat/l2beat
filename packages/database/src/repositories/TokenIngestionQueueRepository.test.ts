@@ -74,6 +74,20 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
     })
   })
 
+  describe(TokenIngestionQueueRepository.prototype.countPending.name, () => {
+    it('counts only pending entries', async () => {
+      const pending = { chain: 'ethereum', address: '0x111' }
+      const staged = { chain: 'arbitrum', address: '0x222' }
+      const conflict = { chain: 'base', address: '0x333' }
+      await repository.enqueue(pending)
+      await repository.enqueue(staged, 'staged')
+      await repository.enqueue(conflict)
+      await repository.markConflict(conflict, 'needs review')
+
+      expect(await repository.countPending()).toEqual(1)
+    })
+  })
+
   describe(TokenIngestionQueueRepository.prototype.getByStates.name, () => {
     it('filters entries by state', async () => {
       const pending = { chain: 'ethereum', address: '0x111' }

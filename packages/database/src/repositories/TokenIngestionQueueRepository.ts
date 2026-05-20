@@ -90,6 +90,16 @@ export class TokenIngestionQueueRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
+  async countPending(): Promise<number> {
+    const count = await this.db
+      .selectFrom('TokenIngestionQueueEntry')
+      .select((eb) => eb.fn.countAll<number>().as('count'))
+      .where('state', '=', 'pending')
+      .executeTakeFirstOrThrow()
+
+    return Number(count.count)
+  }
+
   async getByStates(
     states: TokenIngestionQueueState[],
   ): Promise<TokenIngestionQueueRecord[]> {

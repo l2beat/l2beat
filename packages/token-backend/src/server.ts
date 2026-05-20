@@ -54,6 +54,7 @@ function main() {
     ? new TokenIngestionLoop(db, tokenDb, tokenIngestionProcessor, logger, {
         intervalMs: config.tokenIngestion.intervalMs,
         newQueueState,
+        maxProcessedPerRun: config.tokenIngestion.maxProcessedPerRun,
       })
     : undefined
   tokenIngestionLoop?.start()

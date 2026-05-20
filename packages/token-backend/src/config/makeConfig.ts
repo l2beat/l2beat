@@ -20,6 +20,10 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
       enabled: env.boolean('TOKEN_INGESTION_ENABLED', false),
       intervalMs: env.integer('TOKEN_INGESTION_INTERVAL_MS', 60_000),
       requireApproval: env.boolean('TOKEN_INGESTION_REQUIRE_APPROVAL', false),
+      maxProcessedPerRun: env.integer(
+        'TOKEN_INGESTION_MAX_PROCESSED_PER_RUN',
+        1_000,
+      ),
     },
   }
 }

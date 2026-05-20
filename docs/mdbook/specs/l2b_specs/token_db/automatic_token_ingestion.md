@@ -4,6 +4,7 @@
 
 - [Automatic Token Ingestion](#automatic-token-ingestion)
   - [Overview](#overview)
+  - [Drain guard and monitoring](#drain-guard-and-monitoring)
   - [The only input is an address](#the-only-input-is-an-address)
   - [Queue states](#queue-states)
   - [Approval mode](#approval-mode)
@@ -37,10 +38,26 @@ does two things in order:
    since the previous tick and enqueue both token addresses from each
    transfer.
 2. **Drain.** Repeatedly take the next pending queue entry and process it
-   until the queue is empty.
+   until the queue is empty or the per-run safety cap is reached.
 
 That's the entire shape. Everything else is a detail of how a single entry
 gets processed.
+
+## Drain guard and monitoring
+
+The drain has a hard per-run processing cap
+(`TOKEN_INGESTION_MAX_PROCESSED_PER_RUN`, default `1000`). This is a safety
+guard against accidental propagation cycles: if processing one entry keeps
+re-enqueueing the same connected set of tokens, one tick still terminates.
+
+When the cap is reached, the loop peeks once more. If the queue is empty
+exactly at the cap, the run is considered successful. If another pending
+entry remains, the loop stops, leaves all remaining entries as `pending`, and
+logs a warning with `limitReached: true`, `processed`,
+`remainingPending`, `maxProcessedPerRun`, outcome counts, repeated-address
+count, and duration. Every completed drain also logs the same summary at
+info level with `limitReached: false`, so Elasticsearch can graph processed
+entries and queue emptiness per run.
 
 ## The only input is an address
 
