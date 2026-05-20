@@ -1,13 +1,13 @@
+import {
+  type DiffHistoryEntry,
+  DiffHistoryParser,
+  type DiffHistorySectionKind,
+} from '@l2beat/shared'
 import { readFileSync } from 'fs'
 import {
   countDiffChanges,
   isHighSeverityDiffBody,
 } from '~/utils/diffHistory/diffHistoryMarkdown'
-import {
-  type DiffHistoryEntry,
-  DiffHistoryParser,
-  type DiffHistorySectionKind,
-} from './diffHistory/DiffHistoryParser'
 import { getDiffHistoryPath } from './diffHistory/getDiffHistoryPath'
 
 export type DiscoveryUpdateSectionKind = Extract<
@@ -59,7 +59,19 @@ export function parseDiscoveryUpdates(
   content: string,
   limit = DEFAULT_LIMIT,
 ): DiscoveryUpdate[] {
-  return diffHistoryParser.parseWithMap(content, toPublicDiscoveryUpdate, limit)
+  const updates: DiscoveryUpdate[] = []
+
+  for (const entry of diffHistoryParser.parse(content)) {
+    const update = toPublicDiscoveryUpdate(entry)
+    if (update !== null) {
+      updates.push(update)
+      if (updates.length >= limit) {
+        break
+      }
+    }
+  }
+
+  return updates
 }
 
 function readDiffHistoryContent(projectId: string): string | undefined {
