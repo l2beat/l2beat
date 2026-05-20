@@ -19,14 +19,10 @@ export function extractDiffBlockSpans(body: string): DiffBlockSpan[] {
   return spans
 }
 
-export function extractDiffBlocks(body: string): string[] {
-  return extractDiffBlockSpans(body).map((span) => span.content)
-}
-
 export function countDiffChanges(body: string): number {
   let count = 0
-  for (const block of extractDiffBlocks(body)) {
-    for (const line of block.split('\n')) {
+  for (const { content } of extractDiffBlockSpans(body)) {
+    for (const line of content.split('\n')) {
       if (line.startsWith('+++') || line.startsWith('---')) {
         continue
       }
