@@ -2,6 +2,7 @@ import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { DarkThemeToggle } from '~/components/DarkThemeToggle'
 import { Logo } from '~/components/Logo'
+import { MobileNavTriggerOpen } from '~/components/nav/mobile/MobileNavTrigger'
 import { TvsDisplayControlsContextProvider } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -80,12 +81,13 @@ export function OverviewPage({
         >
           <SideNavLayout homepageLayout>
             <header className="flex items-center gap-4 pt-[18px] pb-5 max-lg:hidden">
-              <a href="/home" aria-label="Go to home">
+              <a href="/overview" aria-label="Go to overview">
                 <Logo className="h-8 w-auto" />
               </a>
               <div className="h-8 border-divider border-l" />
               <h1 className="font-bold text-[26px]">Home</h1>
-              <div className="ml-auto shrink-0">
+              <div className="ml-auto flex shrink-0 items-center gap-4">
+                <MobileNavTriggerOpen />
                 <DarkThemeToggle />
               </div>
             </header>

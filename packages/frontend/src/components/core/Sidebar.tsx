@@ -82,30 +82,32 @@ function Sidebar({
   const breakpoint = useBreakpoint()
   const { openMobile, setOpenMobile } = useSidebar()
 
+  const mobileSheet = (
+    <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+      <SheetContent
+        className="z-999 w-(--sidebar-width) border-none bg-background p-0 text-primary [&>button]:hidden"
+        style={
+          {
+            '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
+          } as React.CSSProperties
+        }
+        side="right"
+      >
+        <SheetHeader className="sr-only">
+          <SheetTitle>Sidebar</SheetTitle>
+          <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+        </SheetHeader>
+        <div className="flex size-full flex-col gap-4">{children}</div>
+      </SheetContent>
+    </Sheet>
+  )
+
   if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
-    return (
-      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-        <SheetContent
-          className="z-999 w-(--sidebar-width) border-none bg-background p-0 text-primary [&>button]:hidden"
-          style={
-            {
-              '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
-            } as React.CSSProperties
-          }
-          side="right"
-        >
-          <SheetHeader className="sr-only">
-            <SheetTitle>Sidebar</SheetTitle>
-            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
-          </SheetHeader>
-          <div className="flex size-full flex-col gap-4">{children}</div>
-        </SheetContent>
-      </Sheet>
-    )
+    return mobileSheet
   }
 
   if (suppressDesktop) {
-    return null
+    return mobileSheet
   }
 
   return (
@@ -119,9 +121,7 @@ function Sidebar({
         )}
         {...props}
       >
-        <div className="flex size-full flex-col gap-6 bg-background">
-          {children}
-        </div>
+        <div className="flex size-full flex-col gap-6 bg-background">{children}</div>
       </div>
     </div>
   )
