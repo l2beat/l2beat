@@ -20,11 +20,22 @@ export function FrameworksTable({
     data?.frameworkTable.map((entry) => [entry.id, entry]) ?? [],
   )
 
+  const volumeById = new Map<string, number>(
+    data?.frameworkDominance.volume.entries.map((entry) => [
+      entry.id,
+      entry.volume,
+    ]) ?? [],
+  )
+
+  const sortedFrameworks = [...tokenFrameworks].sort(
+    (a, b) => (volumeById.get(b.id) ?? 0) - (volumeById.get(a.id) ?? 0),
+  )
+
   return (
     <PrimaryCard className="rounded-none! p-0 md:px-0 md:py-0">
       <div className="overflow-x-auto">
         <div className="flex min-w-fit">
-          {tokenFrameworks.map((framework, i) => (
+          {sortedFrameworks.map((framework, i) => (
             <FrameworkColumn
               key={framework.id}
               framework={framework}
