@@ -15,11 +15,14 @@ export function FrameworkRow({
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
-        <img src={framework.iconUrl} alt="" className="size-6 rounded-sm" />
-        <span className="flex-1 font-bold text-heading-16">
-          {framework.label}
-        </span>
-        <span className="font-bold text-label-value-18">
+        <a
+          href={`/interop/protocols/${framework.slug}`}
+          className="inline-flex w-fit items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
+        >
+          <img src={framework.iconUrl} alt="" className="size-6 rounded-sm" />
+          <span className="font-bold text-heading-16">{framework.label}</span>
+        </a>
+        <span className="ml-auto font-bold text-label-value-18">
           {duration !== null ? formatSeconds(duration) : '—'}
         </span>
         <span className="w-16 text-right font-medium text-label-value-15 text-secondary">

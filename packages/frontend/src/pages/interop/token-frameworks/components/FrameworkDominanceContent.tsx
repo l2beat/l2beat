@@ -32,6 +32,7 @@ type DisplayFramework = {
   label: string
   name: string
   color: string
+  slug?: string
 }
 
 type DisplayItem = {
@@ -138,23 +139,7 @@ function FrameworkRowItem({
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          {framework.iconUrl && (
-            <img
-              src={framework.iconUrl}
-              alt={framework.name}
-              className="size-6 rounded-full"
-            />
-          )}
-          <div className="flex items-center gap-1">
-            <span className="font-bold text-heading-16">{framework.label}</span>
-            {framework.label !== framework.name && (
-              <span className="font-medium text-label-value-16 text-secondary">
-                {framework.name}
-              </span>
-            )}
-          </div>
-        </div>
+        <FrameworkHeader framework={framework} />
         <div className="flex items-baseline gap-1">
           <span className="font-bold text-label-value-16">
             {metric === 'volume'
@@ -217,6 +202,40 @@ function FrameworkRowItem({
       </div>
     </div>
   )
+}
+
+function FrameworkHeader({ framework }: { framework: DisplayFramework }) {
+  const content = (
+    <>
+      {framework.iconUrl && (
+        <img
+          src={framework.iconUrl}
+          alt={framework.name}
+          className="size-6 rounded-full"
+        />
+      )}
+      <div className="flex items-center gap-1">
+        <span className="font-bold text-heading-16">{framework.label}</span>
+        {framework.label !== framework.name && (
+          <span className="font-medium text-label-value-16 text-secondary">
+            {framework.name}
+          </span>
+        )}
+      </div>
+    </>
+  )
+
+  if (framework.slug) {
+    return (
+      <a
+        href={`/interop/protocols/${framework.slug}`}
+        className="-mx-2 inline-flex items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
+      >
+        {content}
+      </a>
+    )
+  }
+  return <div className="flex items-center gap-2">{content}</div>
 }
 
 function Stat({

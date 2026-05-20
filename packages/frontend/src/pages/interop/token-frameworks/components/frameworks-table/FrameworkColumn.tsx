@@ -25,14 +25,17 @@ export function FrameworkColumn({
         !isFirst && 'border-divider border-l',
       )}
     >
-      <div className="flex items-center gap-2">
+      <a
+        href={`/interop/protocols/${framework.slug}`}
+        className="-mx-2 inline-flex w-fit items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
+      >
         <img
           src={framework.iconUrl}
           alt={framework.name}
           className="size-7 rounded-xs"
         />
         <span className="font-medium text-heading-24">{framework.label}</span>
-      </div>
+      </a>
 
       <div className="mt-5 space-y-8">
         <Section
