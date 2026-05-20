@@ -20,8 +20,8 @@ import type { ProtocolDisplayable } from '~/server/features/scaling/interop/type
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { ProjectSection } from '../ProjectSection'
-import { ExploreInteropButton } from './ExploreInteropButton'
 import type { ProjectSectionProps } from '../types'
+import { ExploreInteropButton } from './ExploreInteropButton'
 
 export interface InteropFlowsSectionProps extends ProjectSectionProps {
   interopChains: InteropChainWithIcon[]
