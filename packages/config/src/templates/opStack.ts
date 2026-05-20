@@ -48,6 +48,7 @@ import type {
   ProjectDaTrackingConfig,
   ProjectEcosystemInfo,
   ProjectEscrow,
+  ProjectGovernanceInfo,
   ProjectLivenessInfo,
   ProjectReviewStatus,
   ProjectRisk,
@@ -258,6 +259,7 @@ interface OpStackConfigCommon {
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   upgradesAndGovernance?: string
+  governanceInfo?: ProjectGovernanceInfo
   interopConfig?: InteropConfig
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
 }
@@ -579,6 +581,7 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
         }
       : undefined,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
+    governanceInfo: templateVars.governanceInfo,
   }
 }
 

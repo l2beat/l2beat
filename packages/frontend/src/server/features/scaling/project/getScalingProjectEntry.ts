@@ -14,6 +14,7 @@ import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { GovernanceInfo } from '~/components/projects/sections/UpgradesAndGovernanceSection'
 import {
   WALK_AWAY_NOT_PASSED_PROJECTS,
   WALK_AWAY_PASSED_PROJECTS,
@@ -629,9 +630,15 @@ export async function getScalingProjectEntry(
   }
 
   const allPastUpgrades = getProjectPastUpgrades(project.contracts)
+  const governanceInfo = (
+    project.scalingTechnology as typeof project.scalingTechnology & {
+      governanceInfo?: GovernanceInfo
+    }
+  ).governanceInfo
 
   if (
     project.scalingTechnology.upgradesAndGovernance ||
+    governanceInfo ||
     allPastUpgrades.length > 0
   ) {
     sections.push({
@@ -650,7 +657,7 @@ export async function getScalingProjectEntry(
           'upgrades-and-governance',
           project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
         ),
-
+        governanceInfo,
         pastUpgrades: getPastUpgradesData(allPastUpgrades),
         isUnderReview: !!project.statuses.reviewStatus,
       },

@@ -21,6 +21,7 @@ import type {
   ProjectDiscoveryInfo,
   ProjectEcosystemInfo,
   ProjectEscrow,
+  ProjectGovernanceInfo,
   ProjectLinks,
   ProjectLivenessConfig,
   ProjectLivenessInfo,
@@ -105,6 +106,8 @@ export interface ScalingProject {
   discoveryInfo: ProjectDiscoveryInfo
   /** Upgrades and governance explained */
   upgradesAndGovernance?: string
+  /** Additional structured governance information */
+  governanceInfo?: ProjectGovernanceInfo
   /** Interop configuration */
   interopConfig?: InteropConfig
 }
