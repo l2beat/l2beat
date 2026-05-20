@@ -309,8 +309,8 @@ export function AbstractTokenForm({
                 </div>
                 <FormDescription>
                   Set this when the upstream provider price is wrong or
-                  inconsistent. Interop may ignore the price or zero out USD
-                  value for this token.
+                  inconsistent. Interop will not calculate the USD value for
+                  this token.
                 </FormDescription>
               </FormItem>
             )}
