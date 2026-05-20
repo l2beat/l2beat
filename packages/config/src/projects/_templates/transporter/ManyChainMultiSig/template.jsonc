@@ -1,23 +1,50 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ManyChainMultiSig",
-  "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree.",
+  "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum {{minSigs}} signatures across {{memberCount}} total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat {{minSigs}}-of-{{memberCount}} multisig and is strictly more constrained. {{summaryRoot}}. [click for per-group breakdown: {{summaryGroups}}]. The owner can rotate the entire signer tree.",
   "category": "gov",
   "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
   "ignoreMethods": ["getConfig", "NUM_GROUPS", "MAX_NUM_SIGNERS"],
   "ignoreRelatives": ["owner", "pendingOwner", "getRootMetadata"],
   "fields": {
     "config": {
-      "description": "Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped.",
-      "handler": {
-        "type": "manyChainMultiSig"
-      },
-      "permissions": [
-        {
-          "type": "interact",
-          "description": "schedule and execute transactions through this multisig once the root group quorum is reached."
-        }
-      ]
+      "description": "Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped. Also exposes minSigs (recursive minimum signatures required to satisfy the root) and allMembers (flat union of every signer across all groups).",
+      "handler": { "type": "manyChainMultiSig" }
+    },
+    "summary": {
+      "description": "One-line readable form of the full tree-quorum, e.g. \"Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-14, ...\". Exposed as a top-level field so it can be interpolated into the entry's description.",
+      "copy": "config",
+      "edit": ["get", "summary"]
+    },
+    "summaryRoot": {
+      "description": "Just the root-group line of the tree summary (e.g. \"Root: 2-of-4, childGroups=(1,2,3,4)\"). Always-visible head of the description.",
+      "copy": "config",
+      "edit": ["get", "summaryRoot"]
+    },
+    "summaryGroups": {
+      "description": "The per-sub-group lines of the tree summary, joined with ' | '. Empty when the root has no sub-groups. Hidden behind the [click for per-group breakdown] collapsible in the entry description.",
+      "copy": "config",
+      "edit": ["get", "summaryGroups"]
+    },
+    "$threshold": {
+      "description": "Lower-bound signature count required to satisfy the root tree-quorum. Wired through so the frontend lists this contract as a Multisig and renders the per-signer participants list (same pipeline used for Gnosis Safes). The badge is a lower bound only: not any minSigs-of-memberCount combination is valid, the signatures must come from the specific groups required by the tree. The entry's description explicitly disclaims the flat-M-of-N reading.",
+      "copy": "config",
+      "edit": ["get", "minSigs"]
+    },
+    "$members": {
+      "description": "Flat union of every signer address across all groups. Wired through so the frontend lists this contract as a Multisig and renders participants the same way Gnosis Safes do. The tree-quorum semantics are encoded in the description, not in this flat list.",
+      "copy": "config",
+      "edit": ["get", "allMembers"]
+    },
+    "minSigs": {
+      "description": "Recursively-computed minimum signature count to satisfy the root quorum. NOT equivalent to a flat M-of-N — those signatures must come from the specific groups dictated by the tree; the same number of signatures from a different distribution will be rejected.",
+      "copy": "config",
+      "edit": ["get", "minSigs"]
+    },
+    "memberCount": {
+      "description": "Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule.",
+      "copy": "config",
+      "edit": ["pipe", ["get", "allMembers"], ["length"]]
     },
     "getRoot": {
       "description": "Currently active Merkle root of pending operations and its expiry timestamp."

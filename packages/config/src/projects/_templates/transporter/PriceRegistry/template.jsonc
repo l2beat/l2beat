@@ -37,6 +37,10 @@
         {
           "type": "interact",
           "description": "add or remove price updater accounts."
+        },
+        {
+          "type": "interact",
+          "description": "change the staleness threshold for token and gas prices."
         }
       ]
     }

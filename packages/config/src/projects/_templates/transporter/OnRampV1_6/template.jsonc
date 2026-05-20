@@ -4,13 +4,36 @@
   "ignoreRelatives": ["getSupportedTokens", "owner"],
   "ignoreInWatchMode": ["getExpectedNextSequenceNumber"],
   "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can update the FeeQuoter address used for fee estimations."
+        },
+        {
+          "type": "interact",
+          "description": "can set a 'message interceptor' contract to gate messages based on content."
+        },
+        {
+          "type": "interact",
+          "description": "can set the permissioned actor who can manage the sender whitelist."
+        }
+      ]
+    },
+    "allowlistAdmin": {
+      "description": "Permissioned account that can add or remove allowed senders for any destination chain whose allowlistEnabled flag is true on this OnRamp. Sourced from DynamicConfig.allowlistAdmin; zero address means no admin is currently set (only the owner can manage allowlists).",
+      "copy": "getDynamicConfig",
+      "edit": ["get", "allowlistAdmin"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove allowed senders for any destination chain whose allowlist is enabled on this OnRamp."
+        }
+      ]
+    },
     "staticConfig": {
       "description": "Immutable per-OnRamp config: source chain (this contract's chain), RMN remote, NonceManager, TokenAdminRegistry. Set once at construction.",
-      "handler": {
-        "type": "call",
-        "args": [],
-        "method": "getStaticConfig"
-      },
+      "handler": { "type": "call", "args": [], "method": "getStaticConfig" },
       "edit": ["set", "chainSelector", ["format", "CCIPChainName"]]
     },
     "destChainConfigs": {
@@ -41,5 +64,6 @@
       },
       "edit": ["map_keys", ["format", "CCIPChainName"]]
     }
-  }
+  },
+  "description": "Contract used to send outgoing messages to other chains. It saves destination chain configs, storing the router that is allowed to call the OnRamp and whether a whitelist is enabled to send messages."
 }

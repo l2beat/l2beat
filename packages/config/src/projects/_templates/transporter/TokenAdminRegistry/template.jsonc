@@ -1,6 +1,14 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can register arbitrary tokens with an arbitrary administrator."
+        }
+      ]
+    },
     "poolsMap": {
       "description": "Every CCIP-registered token on this chain mapped to its TokenPool address. Keys are token addresses, values are the pools through which the OnRamp lock-or-burns the token. Replayed from PoolSet events, latest pool per token wins.",
       "handler": {
@@ -38,5 +46,6 @@
         "ignoreRelative": true
       }
     }
-  }
+  },
+  "ignoreRelatives": ["administrators", "poolsMap"]
 }

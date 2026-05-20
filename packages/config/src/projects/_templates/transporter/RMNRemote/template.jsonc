@@ -2,8 +2,15 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "RMNRemote",
   "description": "Remote Risk Management Network contract used by CCIP to verify RMN reports and expose cursed subjects.",
-  "ignoreRelatives": ["getVersionedConfig"],
+  "ignoreRelatives": ["getVersionedConfig", "legacyRMN"],
   "fields": {
+    "legacyRMN": {
+      "description": "Legacy RMN contract used by RMNRemote.isBlessed() for CommitStoreV1 root blessing. This immutable constructor arg is shown explicitly and kept as a leaf; its internal signer threshold is not decoded in this discovery.",
+      "handler": {
+        "type": "hardcoded",
+        "value": "eth:0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F"
+      }
+    },
     "rmnSigners": {
       "description": "RMN signers authorized to sign v1.6 commit reports for this chain. Each signer has a recoverable EVM-style public key; ECDSA recovery against report digests must yield one of these addresses. fSign+1 signatures are required for verify() to accept a report; total signers must be at least 2*fSign+1.",
       "copy": "getVersionedConfig",
@@ -31,8 +38,24 @@
         {
           "type": "interact",
           "description": "curse or uncurse subjects (chains or the global subject), which halts CCIP operations gated by ARMProxy.isCursed checks."
+        },
+        { "type": "act" }
+      ]
+    },
+    "getVersionedConfig": {
+      "description": "RMNRemote.verify() requires fSign+1 valid RMN signature. This is separate from the legacy isBlessed() passthrough used by CommitStoreV1.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign RMNRemote reports; this is separate from CommitStoreV1's legacy isBlessed() passthrough."
         }
       ]
+    },
+    "getCursedSubjects": {
+      "description": "Subjects currently cursed by RMNRemote. An empty list means there is no active global or route-specific curse in this contract."
+    },
+    "isCursed": {
+      "description": "True when RMNRemote has an active global or legacy curse."
     }
   }
 }

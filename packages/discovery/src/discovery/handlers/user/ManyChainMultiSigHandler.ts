@@ -65,16 +65,64 @@ export class ManyChainMultiSigHandler implements Handler {
     const groups = buildTree(signers, quorums, parents)
     const longChain = provider.chain
 
+    const allMembers = [
+      ...new Set(groups.flatMap((g) => g.members.map((m) => m.toLowerCase()))),
+    ]
+      .sort()
+      .map((addr) => ChainSpecificAddress.fromLong(longChain, addr).toString())
+
+    const summaryLines = renderSummaryLines(groups)
+    const summaryRoot = summaryLines[0] ?? ''
+    const summaryGroups = summaryLines.slice(1).join(' | ')
+
     return {
       field: this.field,
       value: {
-        summary: renderSummary(groups),
+        summary: summaryLines.join(' | '),
+        summaryRoot,
+        summaryGroups,
         rootQuorum: groups[0]?.quorum ?? 0,
+        minSigs: minSigsForRoot(groups),
+        allMembers,
         signerGroups: renderGroups(groups, longChain),
       },
       ignoreRelative: this.definition.ignoreRelative,
     }
   }
+}
+
+// Recursively computes the minimum signature count required to satisfy the
+// root group's quorum. For each group, the optimal strategy is to satisfy the
+// `quorum` cheapest children (where a leaf signer costs 1 and a sub-group
+// costs its own recursively-computed minSigs).
+function minSigsForRoot(groups: GroupNode[]): number {
+  const byId = new Map(groups.map((g) => [g.id, g]))
+  const memo = new Map<number, number>()
+
+  function cost(groupId: number): number {
+    const cached = memo.get(groupId)
+    if (cached !== undefined) return cached
+
+    const g = byId.get(groupId)
+    if (g === undefined) return Number.POSITIVE_INFINITY
+
+    const childCosts: number[] = []
+    for (const m of g.members) {
+      void m
+      childCosts.push(1)
+    }
+    for (const cid of g.childGroups) {
+      childCosts.push(cost(cid))
+    }
+    childCosts.sort((a, b) => a - b)
+    const k = Math.min(g.quorum, childCosts.length)
+    const result = childCosts.slice(0, k).reduce((a, b) => a + b, 0)
+    memo.set(groupId, result)
+    return result
+  }
+
+  if (!byId.has(0)) return 0
+  return cost(0)
 }
 
 function buildTree(
@@ -120,20 +168,27 @@ function buildTree(
   return groups
 }
 
-function renderSummary(groups: GroupNode[]): string {
-  if (groups.length === 0) return 'No active groups.'
+// Returns one summary line per active group, root first. Joining with ' | '
+// produces the full single-line summary; the caller may also split off the
+// root line and hide the rest behind the frontend's [label: content]
+// collapsible widget.
+function renderSummaryLines(groups: GroupNode[]): string[] {
+  if (groups.length === 0) return ['No active groups.']
   const lines: string[] = []
   for (const g of groups) {
     const childCount = g.members.length + g.childGroups.length
     const prefix = g.id === 0 ? 'Root' : `Group ${g.id}`
+    // Use parens (not brackets) for the childGroups array — the frontend's
+    // markdown post-processor turns `[label: content]` into a collapsible
+    // button and stray brackets here would trigger spurious collapses.
     const parts = [`${prefix}: ${g.quorum}-of-${childCount}`]
     if (g.id !== 0) parts.push(`parent=${g.parent}`)
     if (g.childGroups.length > 0)
-      parts.push(`childGroups=[${g.childGroups.join(',')}]`)
+      parts.push(`childGroups=(${g.childGroups.join(',')})`)
     if (g.members.length > 0) parts.push(`signers=${g.members.length}`)
     lines.push(parts.join(', '))
   }
-  return lines.join(' | ')
+  return lines
 }
 
 function renderGroups(

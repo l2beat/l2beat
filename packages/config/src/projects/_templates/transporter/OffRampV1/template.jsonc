@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "canActIndependently": false,
+  "description": "Arbitrum-to-Ethereum OffRamp. It accepts OCR execution reports, checks every message against a blessed committed Merkle root, enforces sequence and nonce rules, releases or mints tokens, and calls the Router to deliver ccipReceive() to the receiver.",
   "ignoreMethods": [
     "getTransmitters",
     "getSupportedTokens",
@@ -11,7 +13,7 @@
   "ignoreRelatives": ["getTokenLimitAdmin", "owner"],
   "fields": {
     "ocrConfig": {
-      "description": "Latest OCR2 signer and transmitter config for executing messages on this OffRamp.",
+      "description": "Execution OCR config from ConfigSet. usually f+1 signers must sign message that is committed by a transmitter. This OffRamp inherits OCR2BaseNoChecks, so transmit() does not verify OCR signer signatures onchain. Acceptance is one configured transmitter plus the matching config digest; message safety comes from the blessed CommitStore proof and OffRamp execution checks.",
       "handler": {
         "type": "event",
         "select": [
@@ -28,11 +30,12 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp."
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof."
         }
       ]
     },
     "commitStore": {
+      "description": "CommitStore whose blessed Merkle roots must prove every message executed by this OffRamp.",
       "handler": {
         "type": "call",
         "method": "getStaticConfig",
@@ -47,7 +50,14 @@
       ]
     },
     "getStaticConfig": {
+      "description": "Immutable inbound lane config: Ethereum destination selector and Arbitrum source selector.",
       "edit": ["pick", "chainSelector", "sourceChainSelector"]
+    },
+    "getDynamicConfig": {
+      "description": "Mutable execution config: Router, PriceRegistry, permissionless execution delay, message size and token limits, and token pool gas limit."
+    },
+    "latestConfigDetails": {
+      "description": "Digest and config count for the currently accepted execution OCR config. Reports must use this digest, but this field is not itself a quorum."
     },
     "owner": {
       "permissions": [

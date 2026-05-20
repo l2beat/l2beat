@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "FeeQuoter",
-  "description": "v1.6 fee oracle + price registry. Replaces the per-lane PriceRegistry: holds the per-destination-chain config (gas overheads, DA multipliers, network fee, gas multiplier, size limits, chain-family selector, etc.), the per-fee-token premium config, the per-(destChain, token) transfer fee overrides, and the live USD price tables for tokens and destination gas. The per-chain v1.6 OnRamp delegates fee quoting to this contract via getValidatedFee().",
+  "description": "Fee oracle + price registry. It holds the per-destination-chain config (gas overheads, DA multipliers, network fee, gas multiplier, size limits, chain-family selector, etc.), the per-fee-token premium config, the per-(destChain, token) transfer fee overrides, and the live USD price tables for tokens and destination gas. The OnRamp delegates fee quoting to this contract.",
   "category": "core",
   "ignoreRelatives": ["owner"],
   "types": {
@@ -28,7 +28,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "publish or revise token and destination-chain gas prices stored in this FeeQuoter."
+          "description": "update token and destination-chain gas prices used for fee calculation."
         }
       ]
     },
@@ -116,6 +116,29 @@
         ["map_keys", ["format", "CCIPChainName"]]
       ]
     },
+    "allowedReports": {
+      "description": "Keystone-feeds allowlist: per-reportId permission entries that gate the FeeQuoter's IReceiver.onReport() direct-write path. Each reportId = keccak256(forwarder, workflowOwner, workflowName, reportName). The value carries the full Permission struct emitted by the owner via setReportPermissions(). Empty mapping means the Keystone direct-price-feed channel is fully disabled; only the OffRamp-via-OCR path can write prices. Replayed from ReportPermissionSet events.",
+      "handler": {
+        "type": "event",
+        "groupBy": "reportId",
+        "select": "permission",
+        "set": {
+          "event": "event ReportPermissionSet(bytes32 indexed reportId, (address forwarder, bytes10 workflowName, bytes2 reportName, address workflowOwner, bool isAllowed) permission)"
+        },
+        "ignoreRelative": true
+      },
+      "edit": [
+        "map_values",
+        [
+          "shape",
+          "forwarder",
+          "workflowName",
+          "reportName",
+          "workflowOwner",
+          "isAllowed"
+        ]
+      ]
+    },
     "tokenPriceFeeds": {
       "description": "Per-token Chainlink data-feed fallback config (dataFeedAddress, tokenDecimals, isEnabled). When set, the OnRamp can fall back to the feed for USD pricing if the OCR/Keystone path stale-checks fail. Replayed from PriceFeedPerTokenUpdated events. Empty mapping means no token has a data feed configured.",
       "handler": {
@@ -142,7 +165,11 @@
         },
         {
           "type": "interact",
-          "description": "add or remove authorized price-updater accounts."
+          "description": "add or remove fallback price feed oracles if the default path fails or is stale."
+        },
+        {
+          "type": "interact",
+          "description": "add or remove addresses in the authorized whitelist that can update prices."
         },
         {
           "type": "interact",

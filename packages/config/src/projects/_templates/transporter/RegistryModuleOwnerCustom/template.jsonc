@@ -1,14 +1,12 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "canActIndependently": false,
   "displayName": "RegistryModuleOwnerCustom",
-  "description": "Permissionless registry-module wrapper. Anyone can call it, but each entry-point (registerAdminViaGetCCIPAdmin, registerAdminViaOwner, and in v1.6 registerAccessControlDefaultAdmin) succeeds only when msg.sender is the token's own admin/owner per the named check. On success it calls TokenAdminRegistry.proposeAdministrator(token, msg.sender), which the TokenAdminRegistry only accepts because this address is whitelisted in its registryModules set. The contract has no privileged owner or state of its own.",
+  "description": "Permissionless registry-module wrapper. Anyone can call it, but each entry-point succeeds only when msg.sender is the token's own admin/owner, assuming they implement the proper interfaces (e.g. `IOwner`).",
   "category": "shared",
   "fields": {
     "constructorArgs": {
-      "handler": {
-        "type": "constructorArgs",
-        "nameArgs": true
-      }
+      "handler": { "type": "constructorArgs", "nameArgs": true }
     },
     "tokenAdminRegistry": {
       "description": "Immutable target TokenAdminRegistry. Every successful self-registration on this module forwards proposeAdministrator() to this address.",
