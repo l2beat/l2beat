@@ -587,12 +587,6 @@ export class ProjectDiscovery {
     return get$Implementations(contract.values)
   }
 
-  get$TokenData() {
-    return this.getContracts()
-      .flatMap((contract) => contract.values?.$tokenData)
-      .filter(notUndefined)
-  }
-
   getAccessControlField(
     contractIdentifier: string,
     roleName: string,

@@ -2116,6 +2116,34 @@
       "symbol": "USDS",
       "category": "stablecoin",
       "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+    },
+    {
+      "symbol": "ezETH",
+      "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+      "coingeckoId": "renzo-restaked-eth",
+      "category": "ether"
+    },
+    {
+      "symbol": "stAZUR",
+      "address": "0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB",
+      "coingeckoId": "azuro-protocol"
+    },
+    {
+      "symbol": "EURS",
+      "address": "0xdB25f211AB05b1c97D595516F45794528a807ad8",
+      "coingeckoId": "stasis-eurs",
+      "category": "stablecoin",
+      "deploymentTimestamp": 1529686012
+    },
+    {
+      "symbol": "Mog",
+      "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+      "coingeckoId": "mog-coin"
+    },
+    {
+      "symbol": "pzETH",
+      "address": "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
+      "coingeckoId": "renzo-restaked-lst"
     }
   ],
   "galxegravity": [
@@ -3370,6 +3398,45 @@
       "source": "native",
       "supply": "circulatingSupply",
       "coingeckoId": "t3rn"
+    },
+    {
+      "symbol": "BUIDL",
+      "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+      "coingeckoId": "blackrock-usd-institutional-digital-liquidity-fund",
+      "category": "rwaRestricted",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "USDY",
+      "address": "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
+      "coingeckoId": "ondo-us-dollar-yield",
+      "category": "rwaPublic",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "W",
+      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+      "coingeckoId": "wormhole",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     }
   ],
   "nova": [
@@ -4469,6 +4536,44 @@
           {
             "name": "Layer Zero",
             "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "Mog",
+      "address": "0x2Da56AcB9Ea78330f947bD57C54119Debda7AF71",
+      "coingeckoId": "mog-coin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "rsETH",
+      "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "W",
+      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+      "coingeckoId": "wormhole",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
           }
         ]
       }

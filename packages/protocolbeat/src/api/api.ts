@@ -206,7 +206,6 @@ export async function getConfigHealth(): Promise<ApiConfigHealthResponse> {
 
 export async function createConfigFile(
   project: string,
-  type: 'project' | 'token',
   initialAddresses: string[],
   overwrite: boolean,
   maxDepth?: number,
@@ -216,7 +215,6 @@ export async function createConfigFile(
     method: 'POST',
     body: JSON.stringify({
       project,
-      type,
       initialAddresses,
       overwrite,
       maxDepth,
