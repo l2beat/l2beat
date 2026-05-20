@@ -412,6 +412,202 @@ describe(TokenIngestionProcessor.name, () => {
       ).toEqual(true)
     })
 
+    it('downgrades pending insert with a new CoinGecko abstract to conflict when symbols differ', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<ChainRepository>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+          abstractToken: mockObject<AbstractTokenRepository>({
+            findById: mockFn().resolvesTo(undefined),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          getCoinDataById: mockFn().resolvesTo({
+            id: 'usd-coin',
+            symbol: 'usdc',
+            image: { large: 'https://example.com/usdc.png' },
+            platforms: {},
+          }),
+          getCoinMarketChartRange: mockFn().resolvesTo({
+            prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
+            marketCaps: [],
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'DAI',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+        generateAbstractTokenId: () => 'ABC123',
+      })
+
+      const result = await processor.fetch({
+        address,
+        steps: [],
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: {
+            kind: 'new-coingecko',
+            coingeckoId: 'usd-coin',
+            symbol: 'usdc',
+          },
+          symbolFallback: 'USDC',
+          neighborsToEnqueue: [],
+          proof: { kind: 'coingecko' },
+        },
+      })
+
+      expect(result.outcome).toEqual({
+        kind: 'conflict',
+        message:
+          'CoinGecko would create abstract token ABC123:USDC, but the deployed token symbol is DAI.',
+      })
+      expect(
+        result.steps.some((step) => step.kind === 'fetched-coingecko-abstract'),
+      ).toEqual(true)
+      expect(
+        result.steps.some((step) => step.kind === 'fetched-facts'),
+      ).toEqual(true)
+    })
+
+    it('does not use the new CoinGecko abstract symbol as deployed-token fallback', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<ChainRepository>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+          abstractToken: mockObject<AbstractTokenRepository>({
+            findById: mockFn().resolvesTo(undefined),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          getCoinDataById: mockFn().resolvesTo({
+            id: 'usd-coin',
+            symbol: 'usdc',
+            image: { large: 'https://example.com/usdc.png' },
+            platforms: {},
+          }),
+          getCoinMarketChartRange: mockFn().resolvesTo({
+            prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
+            marketCaps: [],
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: undefined,
+          symbolSource: undefined,
+          decimals: 6,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+        generateAbstractTokenId: () => 'ABC123',
+      })
+
+      const result = await processor.fetch({
+        address,
+        steps: [],
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: {
+            kind: 'new-coingecko',
+            coingeckoId: 'usd-coin',
+            symbol: 'usdc',
+          },
+          symbolFallback: 'USDC',
+          neighborsToEnqueue: [],
+          proof: { kind: 'coingecko' },
+        },
+      })
+
+      expect(result.outcome).toEqual({
+        kind: 'error',
+        message: 'Missing required deployed-token facts: symbol.',
+      })
+    })
+
+    it('downgrades pending update with a new CoinGecko abstract to conflict when symbols differ', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          abstractToken: mockObject<AbstractTokenRepository>({
+            findById: mockFn().resolvesTo(undefined),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          getCoinDataById: mockFn().resolvesTo({
+            id: 'usd-coin',
+            symbol: 'usdc',
+            image: { large: 'https://example.com/usdc.png' },
+            platforms: {},
+          }),
+          getCoinMarketChartRange: mockFn().resolvesTo({
+            prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
+            marketCaps: [],
+          }),
+        }),
+        generateAbstractTokenId: () => 'ABC123',
+      })
+
+      const existing = {
+        ...address,
+        abstractTokenId: null,
+        symbol: 'DAI',
+        decimals: 18,
+        deploymentTimestamp: UnixTime(1),
+        comment: null,
+        metadata: null,
+      }
+
+      const result = await processor.fetch({
+        address,
+        steps: [],
+        outcome: {
+          kind: 'pending',
+          operation: 'update',
+          existing,
+          abstract: {
+            kind: 'new-coingecko',
+            coingeckoId: 'usd-coin',
+            symbol: 'usdc',
+          },
+          symbolFallback: 'USDC',
+          neighborsToEnqueue: [],
+          proof: { kind: 'coingecko' },
+        },
+      })
+
+      expect(result.outcome).toEqual({
+        kind: 'conflict',
+        message:
+          'CoinGecko would create abstract token ABC123:USDC, but the deployed token symbol is DAI.',
+      })
+    })
+
     it('downgrades pending insert to error when facts are missing', async () => {
       const address = token('ethereum', '0xaaa')
       const processor = createProcessor({
@@ -491,6 +687,7 @@ function createProcessor(deps: {
     chain: Chain,
     address: string,
   ) => Promise<DeployedTokenFacts>
+  generateAbstractTokenId?: () => string
 }) {
   return new TokenIngestionProcessor({
     db: deps.db ?? mockObject<Database>({}),
@@ -498,6 +695,7 @@ function createProcessor(deps: {
     coingeckoClient: deps.coingeckoClient ?? mockObject<CoingeckoClient>({}),
     etherscanApiKey: undefined,
     fetchDeployedTokenFacts: deps.fetchDeployedTokenFacts,
+    generateAbstractTokenId: deps.generateAbstractTokenId,
   })
 }
 

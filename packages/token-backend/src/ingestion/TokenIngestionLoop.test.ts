@@ -528,6 +528,102 @@ describe(TokenIngestionLoop.name, () => {
         decimals: 6,
       })
     })
+
+    it('marks a conflict instead of creating a CoinGecko abstract when symbols differ', async () => {
+      const address = token('ethereum', '0xaaa')
+      const markConflict = mockFn().resolvesTo(1)
+      const abstractInsert = mockFn().resolvesTo('ABC123')
+      const deployedInsert = mockFn().resolvesTo(undefined)
+
+      const loop = createLoop({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<InteropTransferRepository>({
+            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+              latestSerialId: undefined,
+              transferCount: 0,
+              tokenAddresses: [],
+            }),
+            getAll: mockFn().resolvesTo([]),
+          }),
+        }),
+        tokenDb: mockObject<TokenDatabase>({
+          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+            get: mockFn().resolvesTo(undefined),
+          }),
+          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
+            findNextPending: mockFn()
+              .resolvesToOnce(queueEntry(address))
+              .resolvesToOnce(undefined),
+            markConflict,
+          }),
+          deployedToken: mockObject<DeployedTokenRepository>({
+            findByChainAndAddress: mockFn().resolvesTo(undefined),
+            getByPrimaryKeys: mockFn().resolvesTo([]),
+            insert: deployedInsert,
+          }),
+          abstractToken: mockObject<AbstractTokenRepository>({
+            findByCoingeckoId: mockFn().resolvesTo(undefined),
+            findById: mockFn().resolvesTo(undefined),
+            insert: abstractInsert,
+          }),
+          chain: mockObject<ChainRepository>({
+            getAll: mockFn().resolvesTo([
+              {
+                name: 'ethereum',
+                chainId: 1,
+                explorerUrl: null,
+                aliases: ['eth'],
+                apis: null,
+              },
+            ]),
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          getCoinList: mockFn().resolvesTo([
+            {
+              id: 'usd-coin',
+              name: 'USD Coin',
+              symbol: 'usdc',
+              platforms: { eth: address.address },
+            },
+          ]),
+          getCoinDataById: mockFn().resolvesTo({
+            id: 'usd-coin',
+            symbol: 'usdc',
+            image: { large: 'https://example.com/usdc.png' },
+            platforms: {},
+          }),
+          getCoinMarketChartRange: mockFn().resolvesTo({
+            prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
+            marketCaps: [],
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'DAI',
+          symbolSource: 'rpc',
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        } satisfies DeployedTokenFacts),
+        generateAbstractTokenId: () => 'ABC123',
+      })
+
+      await loop.runOnce()
+
+      expect(markConflict.calls[0]?.args[1]).toEqual(
+        'CoinGecko would create abstract token ABC123:USDC, but the deployed token symbol is DAI.',
+      )
+      expect(abstractInsert).toHaveBeenCalledTimes(0)
+      expect(deployedInsert).toHaveBeenCalledTimes(0)
+    })
   })
 })
 

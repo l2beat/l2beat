@@ -108,8 +108,9 @@ The processor splits each tick into three phases:
    `fetch` materializes the new abstract record (when needed) via
    CoinGecko, then — for `operation: insert` — calls the RPC/explorer
    fact fetcher. It either upgrades the outcome to `write` (with a full
-   deployed-token record) or downgrades it to `error` when required facts
-   are missing.
+   deployed-token record), downgrades it to `conflict` when a newly
+   materialized CoinGecko abstract has a different symbol than the deployed
+   token, or downgrades it to `error` when required facts are missing.
 3. **`apply(entry, trace)`** — writes only. Switches on the final
    outcome and does the corresponding TokenDB and queue mutations. Throws
    if it ever sees `pending` (a sign `fetch` was skipped). For the
@@ -161,7 +162,11 @@ strategies, tried in order:
    that lists this `(chain, address)` as a platform address. If found and
    we already have an `AbstractToken` with that `coingeckoId`, reuse it.
    Otherwise build a new `AbstractToken` (with `reviewed: false`) from the
-   coin's data.
+   coin's data, but only commit the new abstract/deployed-token assignment
+   if the deployed token symbol matches the new abstract token symbol. Since
+   inserts learn the deployed token symbol from RPC/explorer facts, this
+   mismatch check happens in `fetch`; a mismatch becomes `conflict`, while
+   a missing deployed token symbol remains an `error`.
 
 If none of the three resolves anything, the outcome is `skip` and the
 entry is removed. RPC/explorer fact fetching only runs in the `fetch`
@@ -174,7 +179,8 @@ existing record only needs its abstract pointer updated.
 `plan` produces one of: `skip`, `conflict`, `noop`, `write` (update
 with an already-existing abstract), or `pending`. `fetch` either passes
 the outcome through or converts `pending` into `write` (insert or
-update, possibly with a newly built CoinGecko abstract) or `error`.
+update, possibly with a newly built CoinGecko abstract), `conflict`
+(new CoinGecko abstract symbol differs from deployed token symbol), or `error`.
 `apply` only ever sees the five terminal outcome kinds:
 
 - **`skip`** — no abstract resolvable, or address could not be normalized.

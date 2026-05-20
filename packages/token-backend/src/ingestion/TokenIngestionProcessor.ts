@@ -186,6 +186,17 @@ export class TokenIngestionProcessor {
       if (!pending.existing) {
         throw new Error('pending update outcome has no existing deployed token')
       }
+      const conflict = getNewCoingeckoSymbolConflict(
+        newAbstractToken,
+        pending.existing.symbol,
+      )
+      if (conflict) {
+        return {
+          ...trace,
+          steps,
+          outcome: { kind: 'conflict', message: conflict },
+        }
+      }
       return {
         ...trace,
         steps,
@@ -209,7 +220,7 @@ export class TokenIngestionProcessor {
     const built = await this.buildDeployedToken(
       trace.address,
       abstractTokenId,
-      pending.symbolFallback,
+      newAbstractToken ? undefined : pending.symbolFallback,
       steps,
     )
 
@@ -218,6 +229,18 @@ export class TokenIngestionProcessor {
         ...trace,
         steps,
         outcome: { kind: 'error', message: built.message },
+      }
+    }
+
+    const conflict = getNewCoingeckoSymbolConflict(
+      newAbstractToken,
+      built.record.symbol,
+    )
+    if (conflict) {
+      return {
+        ...trace,
+        steps,
+        outcome: { kind: 'conflict', message: conflict },
       }
     }
 
@@ -811,6 +834,16 @@ function isNonSwappingTransfer(transfer: InteropTransferRecord) {
 
 function formatRef(ref: AbstractTokenRef) {
   return `${ref.id}:${ref.symbol}`
+}
+
+function getNewCoingeckoSymbolConflict(
+  newAbstractToken: AbstractTokenRecord | undefined,
+  deployedTokenSymbol: string,
+): string | undefined {
+  if (!newAbstractToken) return undefined
+  if (newAbstractToken.symbol === deployedTokenSymbol) return undefined
+
+  return `CoinGecko would create abstract token ${newAbstractToken.id}:${newAbstractToken.symbol}, but the deployed token symbol is ${deployedTokenSymbol}.`
 }
 
 function generateAbstractTokenId() {
