@@ -3,12 +3,12 @@ import {
   DiffHistoryParser,
   type DiffHistorySectionKind,
 } from '@l2beat/shared'
-import { readFileSync } from 'fs'
+import { existsSync, readFileSync } from 'fs'
+import path from 'path'
 import {
   countDiffChanges,
   isHighSeverityDiffBody,
 } from '~/utils/diffHistory/diffHistoryMarkdown'
-import { getDiffHistoryPath } from './diffHistory/getDiffHistoryPath'
 
 export type DiscoveryUpdateSectionKind = Extract<
   DiffHistorySectionKind,
@@ -75,8 +75,14 @@ export function parseDiscoveryUpdates(
 }
 
 function readDiffHistoryContent(projectId: string): string | undefined {
-  const diffHistoryPath = getDiffHistoryPath(projectId)
-  if (diffHistoryPath === undefined) {
+  const diffHistoryPath = path.join(
+    process.cwd(),
+    '../config/src/projects',
+    projectId,
+    'diffHistory.md',
+  )
+
+  if (!existsSync(diffHistoryPath)) {
     return undefined
   }
 
