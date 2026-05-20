@@ -1,3 +1,4 @@
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
@@ -21,9 +22,14 @@ export function EcosystemProjectPageTables({ ecosystem }: Props) {
   return (
     <>
       <TableFilters entries={ecosystem.liveProjects} className="max-md:mt-4" />
-      <TableSortingProvider initialSort={initialSort}>
-        <EcosystemProjectsTable entries={entries} ecosystemId={ecosystem.id} />
-      </TableSortingProvider>
+      <PrimaryCard className="max-md:-mx-4 mt-4 max-md:rounded-none">
+        <TableSortingProvider initialSort={initialSort}>
+          <EcosystemProjectsTable
+            entries={entries}
+            ecosystemId={ecosystem.id}
+          />
+        </TableSortingProvider>
+      </PrimaryCard>
     </>
   )
 }
