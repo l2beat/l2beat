@@ -281,26 +281,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
     l2TreasuryQuorumPercent,
     challengeGracePeriodSeconds,
   ),
-  governanceInfo: {
-    securityCouncil: {
-      'Members public':
-        'The Security Council members are publicly listed in the [Arbitrum docs](https://docs.arbitrum.foundation/launch-arbitrum-chain/configure-your-chain/common-configurations/security-council).',
-      'Emergency powers':
-        'The Security Council can execute emergency actions with reduced delay. This includes **critical protocol upgrades** and other actions defined by the governance system.',
-    },
-    upgrades: {
-      'Regular upgrade path':
-        'Regular upgrades follow the Arbitrum DAO governance process and are executed through timelocks after successful voting.',
-      'Upgrade delay':
-        'Upgrade execution is delayed by the configured timelock. The delay gives users time to react before changes are applied.',
-    },
-    tokenGovernance: {
-      'Voting token':
-        'ARB token holders participate in governance by voting directly or delegating their voting power to representatives.',
-      'Proposal execution':
-        'Accepted governance proposals can trigger onchain actions through the governance contracts and relevant timelocks.',
-    },
-  },
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
       formatSeconds(totalDelay),
