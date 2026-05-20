@@ -190,16 +190,18 @@ export class InteropFinancialsLoop extends TimeLoop {
     const tokenInfo = tokenInfos.get(id)
     if (!tokenInfo) return
 
-    if (tokenInfo.isPriceUnreliable) {
-      if (rawAmount === undefined) {
-        this.logger.warn('Missing raw amount', { id })
-        return
-      }
+    if (rawAmount === undefined) {
+      this.logger.warn('Missing raw amount', { id })
+      return
+    }
 
+    const amount = calculateAmount(rawAmount, tokenInfo.decimals)
+
+    if (tokenInfo.isPriceUnreliable) {
       return {
         abstractTokenId: tokenInfo.abstractId,
         symbol: tokenInfo.symbol,
-        amount: calculateAmount(rawAmount, tokenInfo.decimals),
+        amount,
       }
     }
 
@@ -212,13 +214,6 @@ export class InteropFinancialsLoop extends TimeLoop {
       })
       return
     }
-
-    if (rawAmount === undefined) {
-      this.logger.warn('Missing raw amount', { id })
-      return
-    }
-
-    const amount = calculateAmount(rawAmount, tokenInfo.decimals)
 
     return {
       abstractTokenId: tokenInfo.abstractId,
