@@ -7,7 +7,13 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/core/Tabs'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { PercentChange } from '~/components/PercentChange'
+import { InfoIcon } from '~/icons/Info'
 import type {
   FrameworkDominanceEntry,
   TokenFrameworksData,
@@ -149,17 +155,27 @@ function FrameworkRowItem({
             )}
           </div>
         </div>
-        <div className="flex items-baseline gap-2">
+        <div className="flex items-baseline gap-1">
           <span className="font-bold text-label-value-16">
             {metric === 'volume'
               ? formatCurrency(value, 'usd', { decimals: 2 })
               : formatInteger(value)}
           </span>
           {percentChange !== null && (
-            <PercentChange
-              className="font-medium text-label-value-16"
-              value={percentChange}
-            />
+            <div className="flex items-center gap-1">
+              <PercentChange
+                className="font-medium text-label-value-16"
+                value={percentChange}
+              />
+              <Tooltip>
+                <TooltipTrigger>
+                  <InfoIcon className="size-3" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  Percentage change compared to the previous 24 hours.
+                </TooltipContent>
+              </Tooltip>
+            </div>
           )}
         </div>
       </div>
