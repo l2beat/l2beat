@@ -28,6 +28,10 @@
     - [EigenDA](./code_walkthroughs/dalayers/eigenda/README.md)
         - [Blob Lifecycle](./code_walkthroughs/dalayers/eigenda/blob_lifecycle.md)
 
+# Process guides
+
+- [From research prototype to production](./process/prototype_to_production.md)
+
 # L2BEAT specs
 
 - [Interop](./l2b_specs/interop.md)
