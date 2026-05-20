@@ -29,6 +29,7 @@ const TRACKED_TOKENS = [
   { address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', symbol: 'WBTC' },
   { address: '0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4', symbol: 'NEAR' },
   { address: '0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb', symbol: 'FLUID' },
+  { address: '0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D', symbol: 'RAIL' },
 ]
 
 const railgunCore = discovery.getContract('RailgunSmartWallet')
