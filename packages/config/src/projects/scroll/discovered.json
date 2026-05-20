@@ -1,6 +1,6 @@
 {
   "name": "scroll",
-  "timestamp": 1774953745,
+  "timestamp": 1779198962,
   "configHash": "0x744ac5cf8fecc7d62eb30f5b7e47f6de644ef67d6aa725d9c9c77fa07bc2809e",
   "entries": [
     {
@@ -607,7 +607,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
+          "eth:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831",
           "eth:0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
           "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
           "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
@@ -617,7 +617,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 37,
+        "nonce": 38,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1029,11 +1029,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1774948919,
+        "getFirstUnfinalizedMessageEnqueueTime": 1779198455,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 995329,
-        "nextUnfinalizedQueueIndex": 995315,
+        "nextCrossDomainMessageIndex": 998217,
+        "nextUnfinalizedQueueIndex": 998216,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1396,7 +1396,45 @@
     {
       "address": "eth:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        }
+      ]
     },
     {
       "name": "EnforcedTxGateway",
@@ -2199,14 +2237,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 516015,
+        "lastFinalizedBatchIndex": 517606,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 516018,
-          "lastFinalizedBatchIndex": 516015,
-          "lastFinalizeTimestamp": 1774952675,
+          "lastCommittedBatchIndex": 517606,
+          "lastFinalizedBatchIndex": 517606,
+          "lastFinalizeTimestamp": 1779195167,
           "flags": 1,
           "reserved": 0
         },
@@ -2611,7 +2649,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2858,45 +2896,7 @@
     {
       "address": "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Scroll Multisig 3",
@@ -3037,7 +3037,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 30500267386633,
+        "totalBridgedUSDC": 9283812551814,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -3272,7 +3272,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 12 (17%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3716,7 +3716,7 @@
         "$immutable": false,
         "$implementation": "scr:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "scr:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
+          "scr:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831",
           "scr:0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
           "scr:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
           "scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
@@ -3726,7 +3726,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 30,
+        "nonce": 37,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -4064,9 +4064,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xfb09c5a1c798528be0044c9209d8a6ea3e44b4442f0b16c9223bea4a6b50844a",
+        "messageRoot": "0x262e295c9c3fda203c5cac1cb9b848d501c9798915259cdd5d677c6cd2f8e221",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 221938,
+        "nextMessageIndex": 322719,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -4365,7 +4365,36 @@
     {
       "address": "scr:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        }
+      ]
     },
     {
       "address": "scr:0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d",
@@ -4999,7 +5028,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 31,
+        "nonce": 33,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -5035,7 +5064,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -5237,36 +5266,7 @@
     {
       "address": "scr:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Scroll Multisig 3",
@@ -5337,7 +5337,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 30,
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -7767,6 +7767,6 @@
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24777061, "scroll": 32846778 },
-  "permissionsConfigHash": "0x9a64038c24bc1127f373994a1ec9de2a28f8af8f1a1aa40a426f14e8450f8ba0"
+  "usedBlockNumbers": { "ethereum": 25129706, "scroll": 33760170 },
+  "permissionsConfigHash": "0xbd2c6147b04ea46a996f93a0d6c8fa4ac119c0f4d93f3c79ef5a5423ef81d8c1"
 }
