@@ -32,6 +32,7 @@ import {
 
 type NavigationGroup = {
   title: string
+  matcher: string
   items: Item[]
 }
 
@@ -52,6 +53,7 @@ type Item =
 const navGroups: NavigationGroup[] = [
   {
     title: 'General',
+    matcher: '/',
     items: [
       {
         type: 'single',
@@ -63,6 +65,7 @@ const navGroups: NavigationGroup[] = [
   },
   {
     title: 'Interop',
+    matcher: '/interop',
     items: [
       {
         type: 'collapsible',
@@ -145,6 +148,7 @@ const navGroups: NavigationGroup[] = [
   },
   {
     title: 'Website',
+    matcher: '/website',
     items: [
       {
         type: 'single',
@@ -206,10 +210,11 @@ export function AppSidebar() {
                       </SidebarMenuItem>
                     )
                   }
+
                   const isActive = isNavGroupActive(
                     pathname,
                     item.items,
-                    '/website',
+                    group.matcher,
                   )
                   return (
                     <Collapsible
