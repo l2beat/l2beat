@@ -404,6 +404,20 @@
       ]
     }
   },
+  "ccip-sus": {
+    "loadConfigs": ["ccip", "cctp-v1"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x943f6e5db9b06d8430a15dc73138c0cb21a8e131e08f33be6d4219761d478402"
+      }
+    ],
+    "expects": {
+      "events": ["cctp-v1.MessageReceived", "ccip.ExecutionStateChanged"],
+      "messages": [],
+      "transfers": ["cctp-v1.Transfer"]
+    }
+  },
   "ccip": {
     "loadConfigs": ["ccip"],
     "txs": [

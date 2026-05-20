@@ -163,6 +163,101 @@ export function findTransferLogAround(
   )
 }
 
+// Picks the closest transfer by amount delta, then prefers mint/burn transfers
+// among same-value matches, then closest log index.
+export function findBestTransferLog(
+  logs: LogToCapture['txLogs'],
+  targetAmount: bigint,
+  startLogIndex: number,
+  parseTransfer: (
+    log: LogToCapture['txLogs'][number],
+  ) => TransferLike | undefined,
+): { transfer?: ParsedTransferLog; hasTransfer: boolean } {
+  const transfers: { parsed: ParsedTransferLog; logIndex: number | null }[] = []
+  for (const log of logs) {
+    const transfer = parseTransferLog(log, parseTransfer)
+    if (!transfer) continue
+    transfers.push({
+      parsed: transfer,
+      logIndex: log.logIndex,
+    })
+  }
+
+  // Exclude mint+burn pairs of the same token and amount (xERC20 lockbox pattern).
+  // When a token is minted from 0x0 then immediately burned to 0x0, the pair is
+  // intermediary and should not be picked over the real transfer.
+  const cancelled = new Set<number>()
+  for (let i = 0; i < transfers.length; i++) {
+    if (cancelled.has(i)) continue
+    const a = transfers[i].parsed
+    if (a.from !== Address32.ZERO) continue
+    for (let j = i + 1; j < transfers.length; j++) {
+      if (cancelled.has(j)) continue
+      const b = transfers[j].parsed
+      if (
+        b.to === Address32.ZERO &&
+        b.logAddress === a.logAddress &&
+        b.value === a.value
+      ) {
+        cancelled.add(i)
+        cancelled.add(j)
+        break
+      }
+    }
+  }
+
+  let closestMatch: ParsedTransferLog | undefined
+  let closestDelta: bigint | undefined
+  let closestDistance: number | undefined
+
+  for (let i = 0; i < transfers.length; i++) {
+    if (cancelled.has(i)) continue
+    const { parsed, logIndex } = transfers[i]
+
+    const delta = absDiff(parsed.value, targetAmount)
+    const distance =
+      logIndex === null
+        ? Number.POSITIVE_INFINITY
+        : Math.abs(logIndex - startLogIndex)
+
+    if (closestDelta === undefined || delta < closestDelta) {
+      closestDelta = delta
+      closestDistance = distance
+      closestMatch = parsed
+      continue
+    }
+
+    if (delta > closestDelta) continue
+
+    if (
+      closestMatch &&
+      parsed.value === closestMatch.value &&
+      isMintOrBurnTransfer(parsed) !== isMintOrBurnTransfer(closestMatch)
+    ) {
+      if (isMintOrBurnTransfer(parsed)) {
+        closestDistance = distance
+        closestMatch = parsed
+      }
+      continue
+    }
+
+    if (closestDistance === undefined || distance < closestDistance) {
+      closestDistance = distance
+      closestMatch = parsed
+    }
+  }
+
+  return { transfer: closestMatch, hasTransfer: transfers.length > 0 }
+}
+
+function absDiff(value: bigint, target: bigint): bigint {
+  return value >= target ? value - target : target - value
+}
+
+function isMintOrBurnTransfer(transfer: ParsedTransferLog): boolean {
+  return transfer.from === Address32.ZERO || transfer.to === Address32.ZERO
+}
+
 export function findTransferLogBefore(
   logs: LogToCapture['txLogs'],
   startLogIndex: number,
