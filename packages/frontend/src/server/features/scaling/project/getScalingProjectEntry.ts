@@ -19,10 +19,7 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
-import {
-  type DiscoveryUpdate,
-  getDiscoveryUpdates,
-} from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
+import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -497,7 +494,17 @@ export async function getScalingProjectEntry(
   }
 
   if (project.isUpcoming) {
-    appendUpdatesSection(sections, discoveryUpdates)
+    if (discoveryUpdates.length > 0) {
+      sections.push({
+        type: 'UpdatesSection',
+        props: {
+          id: 'updates',
+          title: 'Updates',
+          updates: discoveryUpdates,
+        },
+      })
+    }
+
     sections.push({
       type: 'UpcomingDisclaimer',
       excludeFromNavigation: true,
@@ -636,7 +643,16 @@ export async function getScalingProjectEntry(
     })
   }
 
-  appendUpdatesSection(sections, discoveryUpdates)
+  if (discoveryUpdates.length > 0) {
+    sections.push({
+      type: 'UpdatesSection',
+      props: {
+        id: 'updates',
+        title: 'Updates',
+        updates: discoveryUpdates,
+      },
+    })
+  }
 
   if (operatorSection) {
     sections.push({
@@ -750,22 +766,4 @@ export async function getScalingProjectEntry(
   }
 
   return { ...common, sections }
-}
-
-function appendUpdatesSection(
-  sections: ProjectDetailsSection[],
-  updates: DiscoveryUpdate[],
-) {
-  if (updates.length === 0) {
-    return
-  }
-
-  sections.push({
-    type: 'UpdatesSection',
-    props: {
-      id: 'updates',
-      title: 'Updates',
-      updates,
-    },
-  })
 }
