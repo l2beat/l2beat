@@ -20,6 +20,7 @@ import type { ProtocolDisplayable } from '~/server/features/scaling/interop/type
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { ProjectSection } from '../ProjectSection'
+import { ExploreInteropButton } from './ExploreInteropButton'
 import type { ProjectSectionProps } from '../types'
 
 export interface InteropFlowsSectionProps extends ProjectSectionProps {
@@ -39,7 +40,10 @@ export function InteropFlowsSection({
   ...sectionProps
 }: InteropFlowsSectionProps) {
   return (
-    <ProjectSection {...sectionProps}>
+    <ProjectSection
+      {...sectionProps}
+      headerAccessory={<ExploreInteropButton className="max-md:hidden" />}
+    >
       <InteropFlowsProvider
         chains={interopChains}
         protocols={protocols}
@@ -51,6 +55,9 @@ export function InteropFlowsSection({
           defaultStatsChainId={defaultStatsChainId}
         />
       </InteropFlowsProvider>
+      <div className="mt-4 md:hidden">
+        <ExploreInteropButton />
+      </div>
     </ProjectSection>
   )
 }
