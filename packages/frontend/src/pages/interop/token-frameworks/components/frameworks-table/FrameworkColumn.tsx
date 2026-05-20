@@ -67,6 +67,7 @@ export function FrameworkColumn({
                 <ChainPathRow
                   key={`${path.src.id}-${path.dst.id}-${i}`}
                   path={path}
+                  framework={framework}
                 />
               ))
             )}

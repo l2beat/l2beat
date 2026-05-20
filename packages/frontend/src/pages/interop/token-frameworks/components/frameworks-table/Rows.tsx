@@ -52,7 +52,13 @@ export function TokenRow({
   )
 }
 
-export function ChainPathRow({ path }: { path: FrameworkChainPathItem }) {
+export function ChainPathRow({
+  path,
+  framework,
+}: {
+  path: FrameworkChainPathItem
+  framework: InteropTokenFramework
+}) {
   return (
     <div className="flex h-7 shrink-0 items-center justify-between gap-2">
       <div className="flex min-w-0 items-center gap-1">
@@ -60,7 +66,24 @@ export function ChainPathRow({ path }: { path: FrameworkChainPathItem }) {
         <ArrowRightIcon className="size-3 fill-brand" />
         <ChainIcon iconUrl={path.dst.iconUrl} alt={path.dst.id} />
       </div>
-      <RowStats volume={path.volume} transferCount={path.transferCount} />
+      <RowStats
+        volume={path.volume}
+        transferCount={path.transferCount}
+        txsTrigger={
+          <TokenFrameworksTransferTrigger
+            protocol={{
+              id: framework.projectId,
+              name: framework.name,
+              slug: framework.slug,
+              iconUrl: framework.iconUrl,
+            }}
+            selectionForApi={{ from: [path.src.id], to: [path.dst.id] }}
+            className="cursor-pointer font-medium text-secondary hover:underline"
+          >
+            {formatInteger(path.transferCount)} txs
+          </TokenFrameworksTransferTrigger>
+        }
+      />
     </div>
   )
 }

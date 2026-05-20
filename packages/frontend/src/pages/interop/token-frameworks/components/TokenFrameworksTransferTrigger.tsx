@@ -7,21 +7,26 @@ import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelect
 export function TokenFrameworksTransferTrigger({
   protocol,
   tokenId,
+  selectionForApi,
   className,
   children,
 }: {
   protocol: { id: string; name: string; slug: string; iconUrl: string }
   tokenId?: string
+  selectionForApi?: { from: string[]; to: string[] }
   className?: string
   children: ReactNode
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const { selectedChains } = useTokenFrameworksSelectedChains()
-  const selectionForApi = useMemo(
-    () => ({ from: selectedChains, to: selectedChains }),
-    [selectedChains],
+  const dialogSelection = useMemo(
+    () => selectionForApi ?? { from: selectedChains, to: selectedChains },
+    [selectionForApi, selectedChains],
   )
-  const { data } = api.interop.tokenFrameworks.useQuery(selectionForApi)
+  const { data } = api.interop.tokenFrameworks.useQuery({
+    from: selectedChains,
+    to: selectedChains,
+  })
 
   return (
     <>
@@ -37,7 +42,7 @@ export function TokenFrameworksTransferTrigger({
         type={undefined}
         tokenId={tokenId}
         snapshotTimestamp={data?.snapshotTimestamp}
-        selectionForApi={selectionForApi}
+        selectionForApi={dialogSelection}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
