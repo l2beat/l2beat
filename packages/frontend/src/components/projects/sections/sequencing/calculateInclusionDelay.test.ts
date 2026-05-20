@@ -11,7 +11,7 @@ import {
   calculateSpanLikeDelayDays,
   getInclusionDelayChartData,
   getInclusionDelayEntityLegendEntries,
-  getInclusionDelayEntityThresholds,
+  getInclusionDelayThresholdMarkers,
 } from './calculateInclusionDelay'
 
 describe('calculateInclusionDelay', () => {
@@ -160,60 +160,27 @@ describe('calculateInclusionDelay', () => {
     })
   })
 
-  describe(getInclusionDelayEntityThresholds.name, () => {
-    it('returns the first cumulative entity above each delay threshold', () => {
+  describe(getInclusionDelayThresholdMarkers.name, () => {
+    it('returns markers on exact delay thresholds', () => {
       const chart = {
         type: 'ethereumlike',
         validatorCount: 10,
         slotSeconds: 10,
         target: 0.99,
         maxCensorFraction: 0.5,
-        entityStakeDistribution: {
-          stakeToken: 'TEST',
-          totalStake: 100,
-          entities: [
-            { name: 'Second', stake: 15 },
-            { name: 'First', stake: 25 },
-            { name: 'Third', stake: 10 },
-          ],
-        },
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
       expect(
-        getInclusionDelayEntityThresholds(chart, [30 / 86_400, 50 / 86_400, 7]),
+        getInclusionDelayThresholdMarkers(chart, [
+          { label: '50s', days: 50 / 86_400 },
+          { label: '2m', days: 120 / 86_400 },
+        ]),
       ).toEqual([
         {
-          thresholdDays: 30 / 86_400,
-          entry: {
-            id: '1-First',
-            label: 'Top 1',
-            entityCount: 1,
-            entityNames: ['First'],
-            stakeFraction: 0.25,
-            delayDays: 40 / 86_400,
-          },
-        },
-        {
-          thresholdDays: 50 / 86_400,
-          entry: {
-            id: '2-Second',
-            label: 'Top 2',
-            entityCount: 2,
-            entityNames: ['First', 'Second'],
-            stakeFraction: 0.4,
-            delayDays: 60 / 86_400,
-          },
-        },
-        {
-          thresholdDays: 7,
-          entry: {
-            id: '3-Third',
-            label: 'Top 3',
-            entityCount: 3,
-            entityNames: ['First', 'Second', 'Third'],
-            stakeFraction: 0.5,
-            delayDays: null,
-          },
+          id: 'delay-threshold-50s',
+          label: '50s delay',
+          censoringFraction: 0.35,
+          delayDays: 50 / 86_400,
         },
       ])
     })

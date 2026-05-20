@@ -7,6 +7,14 @@ import type {
 } from '@l2beat/config'
 
 const ETHEREUM_COMPARISON_SLOT_SECONDS = 12
+const SECONDS_PER_DAY = 86_400
+
+export const INCLUSION_DELAY_THRESHOLDS = [
+  { label: '1h', days: 1 / 24 },
+  { label: '1d', days: 1 },
+  { label: '7d', days: 7 },
+  { label: '30d', days: 30 },
+] as const
 
 export interface InclusionDelayChartPoint {
   censoringFraction: number
@@ -23,9 +31,11 @@ export interface InclusionDelayEntityLegendEntry {
   delayDays: number | null
 }
 
-export interface InclusionDelayEntityThreshold {
-  thresholdDays: number
-  entry: InclusionDelayEntityLegendEntry | null
+export interface InclusionDelayThresholdMarker {
+  id: string
+  label: string
+  censoringFraction: number
+  delayDays: number
 }
 
 export function getInclusionDelayChartData(
@@ -69,10 +79,12 @@ export function getInclusionDelayEntityLegendEntries(
   const entities = getSortedPositiveEntities(distribution.entities)
 
   let cumulativeStake = 0
+  const entityNames: string[] = []
   const entries: InclusionDelayEntityLegendEntry[] = []
 
   for (const [i, entity] of entities.entries()) {
     cumulativeStake += entity.stake
+    entityNames.push(entity.name)
 
     const stakeFraction = cumulativeStake / distribution.totalStake
     const delayDays =
@@ -88,7 +100,7 @@ export function getInclusionDelayEntityLegendEntries(
       id: `${entityCount}-${entity.name}`,
       label: `Top ${entityCount}`,
       entityCount,
-      entityNames: entities.slice(0, entityCount).map((entity) => entity.name),
+      entityNames: [...entityNames],
       stakeFraction,
       delayDays,
     })
@@ -99,19 +111,94 @@ export function getInclusionDelayEntityLegendEntries(
   return entries
 }
 
-export function getInclusionDelayEntityThresholds(
+export function getInclusionDelayThresholdMarkers(
   chart: ProjectInclusionDelayChart,
-  thresholdDays: number[],
-): InclusionDelayEntityThreshold[] {
-  const entries = getInclusionDelayEntityLegendEntries(chart)
+  thresholds: readonly {
+    label: string
+    days: number
+  }[] = INCLUSION_DELAY_THRESHOLDS,
+): InclusionDelayThresholdMarker[] {
+  const maxCensorCount = Math.floor(
+    chart.validatorCount * chart.maxCensorFraction,
+  )
 
-  return thresholdDays.map((thresholdDays) => ({
-    thresholdDays,
-    entry:
-      entries.find(
-        (entry) => entry.delayDays === null || entry.delayDays > thresholdDays,
-      ) ?? null,
-  }))
+  return thresholds.flatMap((threshold) => {
+    const censorCount = findFirstFiniteCensorCountAtOrAboveDelay(
+      chart,
+      threshold.days,
+      maxCensorCount,
+    )
+    if (censorCount === undefined) return []
+
+    const delayDays = calculateProjectDelayDays(chart, censorCount)
+    if (delayDays === null) return []
+
+    return [
+      {
+        id: `delay-threshold-${threshold.label}`,
+        label: `${threshold.label} delay`,
+        censoringFraction: interpolateCensoringFractionForDelay(
+          chart,
+          censorCount,
+          delayDays,
+          threshold.days,
+        ),
+        delayDays: threshold.days,
+      },
+    ]
+  })
+}
+
+function findFirstFiniteCensorCountAtOrAboveDelay(
+  chart: ProjectInclusionDelayChart,
+  thresholdDays: number,
+  maxCensorCount: number,
+) {
+  let low = 0
+  let high = maxCensorCount
+  let result: number | undefined
+
+  while (low <= high) {
+    const censorCount = Math.floor((low + high) / 2)
+    const delayDays = calculateProjectDelayDays(chart, censorCount)
+
+    if (delayDays === null || delayDays >= thresholdDays) {
+      result = censorCount
+      high = censorCount - 1
+    } else {
+      low = censorCount + 1
+    }
+  }
+
+  if (result === undefined) return undefined
+
+  const delayDays = calculateProjectDelayDays(chart, result)
+  if (delayDays === null || delayDays < thresholdDays) return undefined
+
+  return result
+}
+
+function interpolateCensoringFractionForDelay(
+  chart: ProjectInclusionDelayChart,
+  censorCount: number,
+  delayDays: number,
+  thresholdDays: number,
+) {
+  if (censorCount === 0) return 0
+
+  const previousDelayDays = calculateProjectDelayDays(chart, censorCount - 1)
+  if (previousDelayDays === null || previousDelayDays >= thresholdDays) {
+    return censorCount / chart.validatorCount
+  }
+
+  if (delayDays === previousDelayDays) {
+    return censorCount / chart.validatorCount
+  }
+
+  const progress =
+    (thresholdDays - previousDelayDays) / (delayDays - previousDelayDays)
+
+  return (censorCount - 1 + progress) / chart.validatorCount
 }
 
 function getSortedPositiveEntities(
@@ -168,7 +255,7 @@ export function calculateCommitteeLikeDelayDays(
   chart: ProjectCommitteeLikeInclusionDelayChart,
   censorCount: number,
 ): number | null {
-  if (censorCount === 0) return chart.slotSeconds / 86_400
+  if (censorCount === 0) return chart.slotSeconds / SECONDS_PER_DAY
 
   const probabilities = getCommitteeCensorProbabilities(
     chart.validatorCount,
@@ -216,7 +303,7 @@ export function calculateCommitteeLikeDelayDays(
   }
 
   if (targetSlots === undefined) return null
-  return (targetSlots * chart.slotSeconds) / 86_400
+  return (targetSlots * chart.slotSeconds) / SECONDS_PER_DAY
 }
 
 function calculateSingleProposerDelayDays({
@@ -239,7 +326,7 @@ function calculateSingleProposerDelayDays({
 
   const honestOpportunityProbability = honestCount / validatorCount
   if (honestOpportunityProbability >= 1) {
-    return firstOpportunitySeconds / 86_400
+    return firstOpportunitySeconds / SECONDS_PER_DAY
   }
 
   if (honestOpportunityProbability <= 0) return null
@@ -251,7 +338,7 @@ function calculateSingleProposerDelayDays({
     (targetOpportunities - 1) * missedOpportunitySeconds +
     firstOpportunitySeconds
 
-  return targetSeconds / 86_400
+  return targetSeconds / SECONDS_PER_DAY
 }
 
 function calculateEthereumComparisonDelayDaysForFraction({
@@ -264,14 +351,14 @@ function calculateEthereumComparisonDelayDaysForFraction({
   target: number
 }): number | null {
   if (censoringFraction >= 0.5) return null
-  if (censoringFraction <= 0) return slotSeconds / 86_400
+  if (censoringFraction <= 0) return slotSeconds / SECONDS_PER_DAY
 
   const censorSlotProbability = censoringFraction
   const targetSlots = ceilWithTolerance(
     Math.log(1 - target) / Math.log(censorSlotProbability),
   )
 
-  return (targetSlots * slotSeconds) / 86_400
+  return (targetSlots * slotSeconds) / SECONDS_PER_DAY
 }
 
 function getRequiredFullEpochs(

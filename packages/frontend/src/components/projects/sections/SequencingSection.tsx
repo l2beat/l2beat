@@ -59,12 +59,7 @@ export function SequencingSection({
       >
         {content}
       </Markdown>
-      {sequencerSetSpec && (
-        <SequencerSetSpecSheet
-          spec={sequencerSetSpec}
-          chart={inclusionDelayChart}
-        />
-      )}
+      {sequencerSetSpec && <SequencerSetSpecSheet spec={sequencerSetSpec} />}
       {inclusionDelayChart && (
         <>
           <InclusionDelayChart

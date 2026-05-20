@@ -20,17 +20,17 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
-  useChart,
 } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 
 import {
   getInclusionDelayChartData,
   getInclusionDelayEntityLegendEntries,
+  getInclusionDelayThresholdMarkers,
   type InclusionDelayEntityLegendEntry,
+  type InclusionDelayThresholdMarker,
 } from './calculateInclusionDelay'
 
 interface Props {
@@ -39,6 +39,10 @@ interface Props {
 }
 
 type YAxisScale = 'linear' | 'log'
+
+const ENTITY_MARKER_COLOR = 'var(--chart-cyan)'
+const DELAY_THRESHOLD_COLOR = 'var(--chart-yellow)'
+const SECONDS_PER_DAY = 86_400
 
 export function InclusionDelayChart({ chart, projectName }: Props) {
   const [yAxisScale, setYAxisScale] = useState<YAxisScale>('linear')
@@ -54,8 +58,12 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
     () => getInclusionDelayEntityLegendEntries(chart),
     [chart],
   )
+  const thresholdMarkers = useMemo(
+    () => getInclusionDelayThresholdMarkers(chart),
+    [chart],
+  )
   const entityMarkers = entityLegendEntries.filter(hasFiniteDelay)
-  const yDomain = getYDomain(data, yAxisScale)
+  const yDomain = getYDomain(data, yAxisScale, thresholdMarkers)
 
   const chartMeta = useMemo(
     () =>
@@ -69,11 +77,6 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
           label: 'Ethereum',
           color: 'var(--chart-ethereum)',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
-        },
-        entityStake: {
-          label: 'Largest staking entities',
-          color: 'var(--chart-cyan)',
-          indicatorType: { shape: 'square' },
         },
       }) satisfies ChartMeta,
     [projectName],
@@ -166,13 +169,33 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
               x={marker.stakeFraction}
               y={marker.delayDays}
               r={4.5}
-              fill={chartMeta.entityStake?.color}
+              fill={ENTITY_MARKER_COLOR}
               stroke="var(--background)"
               strokeWidth={2}
               label={{
                 value: marker.label,
                 position: 'top',
                 fill: 'var(--primary)',
+                fontSize: 11,
+                fontWeight: 500,
+                offset: 8,
+              }}
+              ifOverflow="discard"
+            />
+          ))}
+          {thresholdMarkers.map((marker) => (
+            <ReferenceDot
+              key={marker.id}
+              x={marker.censoringFraction}
+              y={marker.delayDays}
+              r={5.5}
+              fill="transparent"
+              stroke={DELAY_THRESHOLD_COLOR}
+              strokeWidth={2.5}
+              label={{
+                value: marker.label,
+                position: 'bottom',
+                fill: DELAY_THRESHOLD_COLOR,
                 fontSize: 11,
                 fontWeight: 500,
                 offset: 8,
@@ -188,7 +211,7 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
       </ChartContainer>
       <EntityMarkersLegend
         entries={entityLegendEntries}
-        color={chartMeta.entityStake?.color}
+        color={ENTITY_MARKER_COLOR}
         hasStakeDistribution={chart.entityStakeDistribution !== undefined}
       />
     </div>
@@ -243,46 +266,28 @@ function InclusionDelayTooltip({
   payload,
   label: censoringFraction,
 }: CustomChartTooltipProps) {
-  const { meta } = useChart()
   if (!payload || typeof censoringFraction !== 'number') return null
+  const projectDelay = payload.find(
+    (entry) => entry.name === 'projectDelayDays',
+  )?.value
+  const ethereumDelay = payload.find(
+    (entry) => entry.name === 'ethereumDelayDays',
+  )?.value
 
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-64 flex-col">
-        <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          Censorship fraction: {formatCensoringFraction(censoringFraction)}
-        </div>
-        <HorizontalSeparator className="mb-2" />
-        <div className="flex flex-col gap-2">
-          {payload.map((entry) => {
-            if (entry.name === undefined || entry.type === 'none') return null
-
-            const config = meta[String(entry.name)]
-            if (!config) return null
-
-            return (
-              <div
-                key={entry.name}
-                className="flex w-full items-center justify-between gap-2"
-              >
-                <div className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="font-medium text-label-value-14">
-                    {config.label}
-                  </span>
-                </div>
-                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {entry.value === null || entry.value === undefined
-                    ? 'No finite delay'
-                    : formatDelayDays(Number(entry.value))}
-                </span>
-              </div>
-            )
-          })}
-        </div>
+      <div className="w-64 font-medium text-label-value-14">
+        {formatCensoringFraction(censoringFraction)} censoring lead to{' '}
+        {formatTooltipDelay(projectDelay, {
+          suffix: 'inclusion delay',
+          fallback: 'no finite inclusion delay',
+        })}{' '}
+        (
+        {formatTooltipDelay(ethereumDelay, {
+          suffix: 'on Ethereum for comparison',
+          fallback: 'no finite delay on Ethereum for comparison',
+        })}
+        )
       </div>
     </ChartTooltipWrapper>
   )
@@ -297,12 +302,16 @@ function hasFiniteDelay(
 function getYDomain(
   data: { projectDelayDays: number | null; ethereumDelayDays: number | null }[],
   scale: YAxisScale,
+  thresholdMarkers: InclusionDelayThresholdMarker[],
 ): [number, number] {
-  const values = data.flatMap((point) =>
-    [point.projectDelayDays, point.ethereumDelayDays].filter(
-      (value): value is number => value !== null && value > 0,
+  const values = [
+    ...data.flatMap((point) =>
+      [point.projectDelayDays, point.ethereumDelayDays].filter(
+        (value): value is number => value !== null && value > 0,
+      ),
     ),
-  )
+    ...thresholdMarkers.map((marker) => marker.delayDays),
+  ].filter((value): value is number => value !== null && value > 0)
 
   if (values.length === 0) return [0, 1]
 
@@ -328,13 +337,13 @@ function getLogDelayTicks(minDays: number, maxDays: number) {
     15 * 60,
     60 * 60,
     6 * 60 * 60,
-    86_400,
-    7 * 86_400,
-    30 * 86_400,
-    365 * 86_400,
+    SECONDS_PER_DAY,
+    7 * SECONDS_PER_DAY,
+    30 * SECONDS_PER_DAY,
+    365 * SECONDS_PER_DAY,
   ]
   const ticks = ticksInSeconds
-    .map((seconds) => seconds / 86_400)
+    .map((seconds) => seconds / SECONDS_PER_DAY)
     .filter((days) => days >= minDays && days <= maxDays)
 
   return ticks.length >= 2 ? ticks : [minDays, maxDays]
@@ -355,10 +364,22 @@ function formatCensoringFraction(value: number) {
 }
 
 function formatDelayDays(days: number) {
-  const seconds = Math.round(days * 86_400)
+  const seconds = Math.round(days * SECONDS_PER_DAY)
   if (seconds <= 0) return '<1s'
 
   return formatSeconds(seconds)
+}
+
+function formatTooltipDelay(
+  value: unknown,
+  labels: { suffix: string; fallback: string },
+) {
+  if (value === null || value === undefined) return labels.fallback
+
+  const days = Number(value)
+  if (!Number.isFinite(days)) return labels.fallback
+
+  return `${formatDelayDays(days)} ${labels.suffix}`
 }
 
 function formatEntityMarkerName(entry: InclusionDelayEntityLegendEntry) {
