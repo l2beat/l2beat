@@ -56,6 +56,7 @@ function Display({
   blockNumber: number
 }) {
   const { configModel, templateModel, canModify } = useConfigModels()
+  const canModifyTemplate = canModify && templateModel.hasTemplate
   const templateIgnoredMethods = templateModel.ignoreMethods ?? []
   const configIgnoredMethods = configModel.ignoreMethods ?? []
   const ignoredMethods = [
@@ -86,16 +87,23 @@ function Display({
   const contractConfigDialog = canModify && <ContractConfigDialog />
 
   const fieldsFromSelected = 'fields' in selected ? selected.fields : []
-  const filteredIgnoredMethods = ignoredMethods
-    .filter(
+  const ignoredMethodsSet = new Set(ignoredMethods)
+  const fields = fieldsFromSelected.filter(
+    (field) => !ignoredMethodsSet.has(field.name),
+  )
+  const ignoredFieldNames = [
+    ...fieldsFromSelected
+      .filter((field) => ignoredMethodsSet.has(field.name))
+      .map((field) => field.name),
+    ...ignoredMethods.filter(
       (method) => !fieldsFromSelected.find((field) => field.name === method),
-    )
-    .map((method) => ({
-      name: method,
-      value: { type: 'empty' as const },
-    }))
-
-  const fields = [...fieldsFromSelected, ...filteredIgnoredMethods]
+    ),
+  ]
+  const ignoredFields = ignoredFieldNames.map((name) => ({
+    name,
+    inTemplate: templateIgnoredMethods.includes(name),
+    inConfig: configIgnoredMethods.includes(name),
+  }))
 
   return (
     <>
@@ -220,6 +228,40 @@ function Display({
               <FieldDisplay key={field.name} field={field} />
             ))}
           </ol>
+        </Folder>
+      )}
+      {ignoredFields.length > 0 && (
+        <Folder title={`Ignored methods (${ignoredFields.length})`} collapsed>
+          <div className="flex flex-wrap items-center gap-1 bg-coffee-900 px-4 py-2 text-2xs">
+            {ignoredFields.flatMap((field) => [
+              field.inTemplate && (
+                <FieldTag
+                  key={`${field.name}:template`}
+                  source="template"
+                  onRemoveClick={
+                    canModifyTemplate
+                      ? () => templateModel.toggleIgnoreMethods(field.name)
+                      : undefined
+                  }
+                >
+                  {field.name}
+                </FieldTag>
+              ),
+              field.inConfig && (
+                <FieldTag
+                  key={`${field.name}:config`}
+                  source="config"
+                  onRemoveClick={
+                    canModify
+                      ? () => configModel.toggleIgnoreMethods(field.name)
+                      : undefined
+                  }
+                >
+                  {field.name}
+                </FieldTag>
+              ),
+            ])}
+          </div>
         </Folder>
       )}
       {'abis' in selected && selected.abis.length > 0 && (
