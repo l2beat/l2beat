@@ -7,6 +7,7 @@ import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
 import { createBackofficeModule } from './modules/backoffice/BackofficeModule'
 import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
+import { createDailyChecksModule } from './modules/daily-checks/DailyChecksModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
 import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
@@ -80,6 +81,7 @@ export class Application {
       createEcosystemsModule(deps),
       createAnomaliesModule(deps),
       createBlockSyncModule(deps),
+      createDailyChecksModule(deps),
 
       interopModule,
       backofficeModule,
