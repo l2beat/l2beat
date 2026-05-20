@@ -1,3 +1,205 @@
+Generated with discovered.json: 0x2135ba76d5a9fe60a956b40856b4c062308cc39a
+
+# Diff at Wed, 20 May 2026 14:20:52 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@888693c37d3657c8dc12087ab8e4187c1c7ca035 block: 1778850530
+- current timestamp: 1779286786
+
+## Description
+
+Op-contracts upgrade executed 2026-05-18 by Alchemy Multisig 1, the chain operator. Same upgrade applied to `shape` and `worldchain`.
+
+Implementation rotations (versions verified via on-chain `version()`):
+- **OptimismPortal2** `5.1.1` → `5.2.0` — [disco diff](https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B)
+- **SystemConfig** `3.11.0` → `3.13.1` — [disco diff](https://disco.l2beat.com/diff/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2) — adds `DELAYED_WETH_SLOT` storage constant, `isCustomGasToken()` getter, `getAddresses()` struct including `delayedWETH` (zero — not activated for this chain).
+- **DisputeGameFactory** `1.3.0` → `1.4.0` — [disco diff](https://disco.l2beat.com/diff/eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c) — cloning logic now embeds gameType in clone bytecode when gameArgs are present; `permissionedGameArgs` getter exposed (L2BEAT now resolves `challengerFromDGF`/`proposerFromDGF`/`wethFromDGF` to the same addresses the prior `PermissionedDisputeGame` already used — new visibility, not a permissions change).
+- **AnchorStateRegistry** `3.5.0` → `3.7.0` — [disco diff](https://disco.l2beat.com/diff/eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5) — adds `getStartingAnchorRoot`.
+
+`gameImpls[1]` now points to the shared **PermissionedDisputeGameV2** at `eth:0x58bf355C…` (pre-existing since 2025-12-22), which moves per-chain params (VM, WETH, anchor registry, etc.) from constructor immutables into clone bytecode — so a single implementation now serves multiple chains via chain-specific CWIA clones. The shared **MIPS** FPVM at `eth:0x6463dEE3…` (pre-existing since 2025-11-04) appears in discovery because the new V2 references it.
+
+`L1CrossDomainMessenger`, `L1StandardBridge`, `L1ERC721Bridge`, `OptimismMintableERC20Factory`, `DelayedWETH` saw an `upgradeToAndCall` against their existing implementation (no impl rotation, just re-initialization). All contracts remain templatized.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x15C1dAED5443A77b4DcF6FE35cAFcCEBb0c6da0E) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xaa1b3bedab4e63198240e9dea4503f0e615e4d18a545961c9f11b72143279fbc"
++        "0x703fe68eeb3d5454a8ef012933846f1ff1433fc2df39c0c94f2a550d8325f085"
+      values.$implementation:
+-        "eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED"
++        "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"
+      values.$pastUpgrades.6:
++        ["2026-05-18T17:39:23.000Z","0x14780e5cb186caff569482bfa2e9778f093b33a41fcfe21ed8d09933733411ee",["eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.getAddresses.delayedWETH:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.version:
+-        "3.11.0"
++        "3.13.1"
+      values.DELAYED_WETH_SLOT:
++        "0x51547f31a231e1007dca33017faa3da20d959b95087c588a7768bfb922fd58ff"
+      values.delayedWETH:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.isCustomGasToken:
++        false
+      implementationNames.eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED:
+-        "SystemConfig"
+      implementationNames.eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x44e9388e88Bb8edE446d62590d8A4C6d34813e98) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades.3:
++        ["2026-05-18T17:39:23.000Z","0x14780e5cb186caff569482bfa2e9778f093b33a41fcfe21ed8d09933733411ee",["eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"]]
+      values.$upgradeCount:
+-        3
++        4
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x63e956115F7618A95Bb968ecEF2E72e99cdBA80F) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      sourceHashes.1:
+-        "0xf808a203af41f7932eb8e39985e56a7c75c940a260fb17d76d1003a3793281b5"
++        "0xfdabc8b9b4db9b7aa78227b26e936abaf24f058502b96e8d9a293d49b1e89b47"
+      values.$implementation:
+-        "eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E"
++        "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5"
+      values.$pastUpgrades.1:
++        ["2026-05-18T17:39:23.000Z","0x14780e5cb186caff569482bfa2e9778f093b33a41fcfe21ed8d09933733411ee",["eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "3.5.0"
++        "3.7.0"
+      values.getStartingAnchorRoot:
++        {"root":"0xc424cd12a1242e670af134a4a3ac7f1fb0f3e6ce6dbaba109618d9293040f07c","l2SequenceNumber":33858173}
+      implementationNames.eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E:
+-        "AnchorStateRegistry"
+      implementationNames.eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5:
++        "AnchorStateRegistry"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x9BdA922e6f1bD53c24F9bCFb88B9638199A82CEb) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.5:
++        ["2026-05-18T17:39:23.000Z","0x14780e5cb186caff569482bfa2e9778f093b33a41fcfe21ed8d09933733411ee",["eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"]]
+      values.$upgradeCount:
+-        5
++        6
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0xba926Da889B3f4224C6d37F39d8433bb454ce38b) [opstack/PermissionedDisputeGame]
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xCcfa1f8A93640488E3E1AE90A0edAf44680E9f82) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades.5:
++        ["2026-05-18T17:39:23.000Z","0x14780e5cb186caff569482bfa2e9778f093b33a41fcfe21ed8d09933733411ee",["eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"]]
+      values.$upgradeCount:
+-        5
++        6
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x7daf6049672fd2ab7dc8dd3b6287e1d0a40958346c5e2857c4616a73dcac4da6"
++        "0x8f21dbc160582c568a2a925ddad1b2bb889a9f72bac2067c6e72d43b662ef538"
+      values.$implementation:
+-        "eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50"
++        "eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"
+      values.$pastUpgrades.4:
++        ["2026-05-18T17:39:23.000Z","0x14780e5cb186caff569482bfa2e9778f093b33a41fcfe21ed8d09933733411ee",["eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.challengerFromDGF:
+-        "UNRESOLVED"
++        "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
++++ severity: HIGH
+      values.gameImpls.1:
+-        "eth:0xba926Da889B3f4224C6d37F39d8433bb454ce38b"
++        "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A"
+      values.permissionedGameArgs:
+-        "0x"
++        "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb90863e956115f7618a95bb968ecef2e72e99cdba80f3f1ce63c69d437fdd9f5d5ad294f677a1b7db08b00000000000000000000000000000000000000000000000000000000000014fb1bc6df949b8edc8ee61adb99d578a7a6e6ff7310a4fb12d15eb85dc9284a7df0adbc8b696edbbf1d"
+      values.proposerFromDGF:
+-        "UNRESOLVED"
++        "eth:0x1bC6Df949b8eDC8EE61adB99d578A7a6E6Ff7310"
+      values.version:
+-        "1.3.0"
++        "1.4.0"
+      values.wethFromDGF:
+-        "UNRESOLVED"
++        "eth:0x3f1cE63c69d437FDd9F5d5Ad294f677a1b7Db08B"
+      implementationNames.eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50:
+-        "DisputeGameFactory"
+      implementationNames.eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xFc1D560eB01443e31B0EB56620703E80e42A7E4e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      sourceHashes.1:
+-        "0x3e7e2cb08ba995795937c9c2e8ea9d0e4d2e2de852f389055073384d5f79c59d"
++        "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
+      values.$implementation:
+-        "eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202"
++        "eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"
+      values.$pastUpgrades.5:
++        ["2026-05-18T17:39:23.000Z","0x14780e5cb186caff569482bfa2e9778f093b33a41fcfe21ed8d09933733411ee",["eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "5.1.1"
++        "5.2.0"
+      implementationNames.eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202:
+-        "OptimismPortal2"
+      implementationNames.eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B:
++        "OptimismPortal2"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame]
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |   58 +-
+ .../DisputeGameFactory/DisputeGameFactory.sol      |   56 +-
+ .../OptimismPortal2/OptimismPortal2.sol            |   75 +-
+ .../PermissionedDisputeGame.sol                    | 4435 ++++++++++----------
+ .../SystemConfig/SystemConfig.sol                  |   71 +-
+ 5 files changed, 2425 insertions(+), 2270 deletions(-)
+```
+
 Generated with discovered.json: 0x2b8d78f30af2ac6b223dcdb14f06bb1e04feb186
 
 # Diff at Fri, 15 May 2026 13:11:03 GMT:
