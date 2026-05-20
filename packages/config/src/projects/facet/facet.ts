@@ -255,6 +255,8 @@ export const facet: ScalingProject = {
       challengeDelay: MAX_CHALLENGE_SECS,
       executionDelay: 0,
       initialBond: formatEther(proposerBond),
+      permissioned: false,
+      defenderAdvantage: 'not-assessed',
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
