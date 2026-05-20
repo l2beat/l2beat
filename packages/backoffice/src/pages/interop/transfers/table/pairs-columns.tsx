@@ -1,5 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
-import { CellLink } from '~/components/table/CellLink'
+import { InternalLink } from '~/components/InternalLink'
 import type { TransferPairRow } from '../types'
 import { formatDollars, formatTransferDuration } from '../utils'
 
@@ -34,9 +34,9 @@ export function createTransferPairsColumns({
     columnHelper.accessor('count', {
       header: 'Count',
       cell: ({ row }) => (
-        <CellLink to={getDetailsPath(row.original)}>
+        <InternalLink to={getDetailsPath(row.original)}>
           {row.original.count}
-        </CellLink>
+        </InternalLink>
       ),
       meta: {
         csvHeader: 'Count',

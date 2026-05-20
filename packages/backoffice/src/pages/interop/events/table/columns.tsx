@@ -1,5 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
-import { CellLink } from '~/components/table/CellLink'
+import { InternalLink } from '~/components/InternalLink'
 import type { EventStatsRow } from '../types'
 
 const columnHelper = createColumnHelper<EventStatsRow>()
@@ -28,11 +28,11 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
   columnHelper.accessor('count', {
     header: 'All',
     cell: ({ row }) => (
-      <CellLink
+      <InternalLink
         to={`/interop/events/all/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.count}
-      </CellLink>
+      </InternalLink>
     ),
     meta: {
       csvHeader: 'All',
@@ -41,11 +41,11 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
   columnHelper.accessor('matched', {
     header: 'Matched',
     cell: ({ row }) => (
-      <CellLink
+      <InternalLink
         to={`/interop/events/matched/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.matched}
-      </CellLink>
+      </InternalLink>
     ),
     meta: {
       csvHeader: 'Matched',
@@ -54,11 +54,11 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
   columnHelper.accessor('unmatched', {
     header: 'Unmatched',
     cell: ({ row }) => (
-      <CellLink
+      <InternalLink
         to={`/interop/events/unmatched/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.unmatched}
-      </CellLink>
+      </InternalLink>
     ),
     meta: {
       csvHeader: 'Unmatched',
@@ -67,11 +67,11 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
   columnHelper.accessor('oldUnmatched', {
     header: 'Unmatched (>2h ago)',
     cell: ({ row }) => (
-      <CellLink
+      <InternalLink
         to={`/interop/events/old-unmatched/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.oldUnmatched}
-      </CellLink>
+      </InternalLink>
     ),
     meta: {
       csvHeader: 'Unmatched (>2h ago)',
@@ -80,11 +80,11 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
   columnHelper.accessor('unsupported', {
     header: 'Unsupported',
     cell: ({ row }) => (
-      <CellLink
+      <InternalLink
         to={`/interop/events/unsupported/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.unsupported}
-      </CellLink>
+      </InternalLink>
     ),
     meta: {
       csvHeader: 'Unsupported',

@@ -1,5 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
-import { CellLink } from '~/components/table/CellLink'
+import { InternalLink } from '~/components/InternalLink'
 import type { TransferStatsRow } from '../types'
 import {
   buildTransferDetailsPath,
@@ -31,14 +31,14 @@ export const transferStatsColumns: TableOptions<TransferStatsRow>['columns'] = [
   columnHelper.accessor('count', {
     header: 'Count',
     cell: ({ row }) => (
-      <CellLink
+      <InternalLink
         to={buildTransferDetailsPath({
           type: row.original.type,
           plugin: row.original.plugin,
         })}
       >
         {row.original.count}
-      </CellLink>
+      </InternalLink>
     ),
     meta: {
       csvHeader: 'Count',

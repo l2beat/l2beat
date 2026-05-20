@@ -1,5 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
-import { CellLink } from '~/components/table/CellLink'
+import { InternalLink } from '~/components/InternalLink'
 import { formatDollars } from '~/pages/interop/transfers/utils'
 import type { AggregatedAnomalyRow } from '../types'
 import { buildAnomalyDetailsPath, formatGapPercent } from '../utils'
@@ -27,9 +27,9 @@ export function createAggregatedAnomalyColumns(): TableOptions<AggregatedAnomaly
       header: 'Aggregate ID',
       cell: ({ row }) => (
         <div className="flex min-w-[12rem] flex-col gap-1">
-          <CellLink to={buildAnomalyDetailsPath(row.original.id)}>
+          <InternalLink to={buildAnomalyDetailsPath(row.original.id)}>
             {row.original.id}
-          </CellLink>
+          </InternalLink>
           <span className="text-muted-foreground text-xs">Open charts</span>
         </div>
       ),
@@ -42,9 +42,9 @@ export function createAggregatedAnomalyColumns(): TableOptions<AggregatedAnomaly
       id: 'count',
       header: 'Count',
       cell: ({ row }) => (
-        <CellLink to={buildAnomalyDetailsPath(row.original.id)}>
+        <InternalLink to={buildAnomalyDetailsPath(row.original.id)}>
           {Math.round(row.original.counts.last).toLocaleString()}
-        </CellLink>
+        </InternalLink>
       ),
       meta: {
         csvHeader: 'Count',

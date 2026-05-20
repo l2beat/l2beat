@@ -2,7 +2,7 @@ import { ArrowRightIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { cn } from '~/utils/cn'
 
-export function CellLink({
+export function InternalLink({
   className,
   children,
   ...props
