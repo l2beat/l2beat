@@ -212,8 +212,10 @@ function getNotificationsConfig(
         'Europe/Warsaw',
       ),
       hour:
-        env.integer('NOTIFICATIONS_DAILY_CHECKS_HOUR', 9) -
-        clockOffsetSeconds / UnixTime.HOUR,
+        (env.integer('NOTIFICATIONS_DAILY_CHECKS_HOUR', 9) -
+          clockOffsetSeconds / UnixTime.HOUR +
+          24) %
+        24,
     },
   }
 }
