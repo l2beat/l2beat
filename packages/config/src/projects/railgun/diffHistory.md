@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xb378436b2e0d344c0ae4a38897be8431cecf73f9
+
+# Diff at Wed, 20 May 2026 12:20:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2d91f838715f5c45742803e4b6dc14301de74f5e block: 1777550988
+- current timestamp: 1777550988
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777550988 (main branch discovery), not current.
+
+```diff
+    contract Rail Token (eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D) [railgun/RailToken] {
+    +++ description: RAIL governance token contract with a capped mint schedule and an early anti-bot transfer override. If you trust this contract, you trust its owner to mint additional RAIL up to the hard cap.
+      name:
+-        "RailToken"
++        "Rail Token"
+    }
+```
+
 Generated with discovered.json: 0x9d896aa554475323e31765e93cfd52a7fac2fb11
 
 # Diff at Thu, 14 May 2026 07:39:56 GMT:
