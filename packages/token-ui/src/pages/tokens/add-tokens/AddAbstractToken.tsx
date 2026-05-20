@@ -35,6 +35,7 @@ export function AddAbstractToken({
     defaultValues: defaultValues ?? {
       id: generateRandomId(),
       reviewed: true,
+      isPriceUnreliable: false,
       category: null,
     },
   })
