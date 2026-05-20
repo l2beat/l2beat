@@ -84,6 +84,10 @@ export const fluent: ScalingProject = {
   },
   config: {
     associatedTokens: ['BLEND'],
+    activityConfig: {
+      type: 'block',
+      startBlock: 1,
+    },
     escrows: [
       // L1FluentBridge holds bridged ETH (gateways forward ETH here on deposit).
       discovery.getEscrowDetails({

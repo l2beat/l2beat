@@ -1,6 +1,6 @@
 {
   "name": "everclear",
-  "timestamp": 1778232956,
+  "timestamp": 1779128593,
   "configHash": "0xd3e30ff2b1e182de03b5692c2b14f9676fa11e5c19453de15168dab99f37af87",
   "entries": [
     {
@@ -226,7 +226,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 5,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -866,7 +866,7 @@
         "challengeManager": "eth:0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8",
         "challenges": [],
         "confirmPeriodBlocks": 45818,
-        "currentRequiredStake": "100000000000000000",
+        "currentRequiredStake": "300000000000000000",
         "extraChallengeTimeBlocks": 0,
         "firstUnresolvedNode": 1198,
         "inbox": "eth:0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
@@ -1946,6 +1946,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25049480 },
+  "usedBlockNumbers": { "ethereum": 25123860 },
   "permissionsConfigHash": "0x2dc24a2d9d6357cf9004a0f58d6f690257437efbbcacf47dee4a0af44805670d"
 }

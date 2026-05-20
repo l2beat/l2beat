@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x85d3d1227eab13fb3480722d8d7d66cef7be2a65
+
+# Diff at Mon, 18 May 2026 18:24:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b70f892b88d1263a724194cd3b4ec927d71a6fd9 block: 1778232956
+- current timestamp: 1779128593
+
+## Description
+
+RollupProxy `currentRequiredStake` (computed: rises above `baseStake` when the first unresolved node is past its deadline; enforced only on `_newStake`/`reduceDeposit`, not on every proposal) increased from `0.1 ETH` to `0.3 ETH`. This is an automatic on-chain reaction to an overdue unresolved node, not a governance config change — `baseStake` is unchanged.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "100000000000000000"
++        "300000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xc9127ce58f7aef833c6a0a3a546d1bef6c31fe61
 
 # Diff at Fri, 15 May 2026 12:35:53 GMT:

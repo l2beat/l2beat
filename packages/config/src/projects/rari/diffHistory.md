@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xf7441779f64308311592defb1313a3449947862b
+
+# Diff at Mon, 18 May 2026 18:24:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b70f892b88d1263a724194cd3b4ec927d71a6fd9 block: 1778233014
+- current timestamp: 1779128593
+
+## Description
+
+Caldera Multisig 1 signer removed.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "arb1:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.multisigThreshold:
+-        "3 of 8 (38%)"
++        "3 of 7 (43%)"
+    }
+```
+
 Generated with discovered.json: 0xb31fc680b52f53681d6176f08eca50e055e48469
 
 # Diff at Fri, 15 May 2026 12:36:20 GMT:

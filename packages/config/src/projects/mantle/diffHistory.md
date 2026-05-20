@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x872c1fce06feb222fca8ce98293035c06c90642e
+
+# Diff at Fri, 15 May 2026 07:43:09 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@da451cba8e944a28754be7e17bcb7555d857f312 block: 1778001356
+- current timestamp: 1778830889
+
+## Description
+
+MantleEngineeringMultisig: Two members rotated. No threshold or permission changes.
+
+## Watched changes
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x00da2F87c56C3a19BD863613995705095F55b524"
++        "eth:0xAAc91F5766905cE034FE9f650d067a236E845c45"
+      values.$members.4:
+-        "eth:0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e"
++        "eth:0xE8Da2d2381500E863dE1d8396c86C947c8E3Fd3a"
+    }
+```
+
 Generated with discovered.json: 0x28ce4e04e1243620d098692a5a487ca9ad5c2d29
 
 # Diff at Fri, 08 May 2026 07:51:36 GMT:
