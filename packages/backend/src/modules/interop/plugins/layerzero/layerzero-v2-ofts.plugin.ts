@@ -1,7 +1,7 @@
 import { Address32, assert } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import type { TokenMap } from '../../engine/match/TokenMap'
-import { findParsedAround } from '../logScan'
+import { findBestTransferLog } from '../logScan'
 import {
   getBestEffortTokenFrameworkBridgeType,
   getTokenFrameworkBridgeType,
@@ -85,7 +85,8 @@ type OFTSentTransferData = {
 function parseMatchingOFTSentTransfer(
   log: LogToCapture['txLogs'][number],
   normalized: NormalizedOFTSentAmounts,
-): OFTSentTransferData | undefined {
+  requireBurned = false,
+) {
   const transfer = parseTransfer(log, null)
   if (!transfer) return
 
@@ -96,10 +97,9 @@ function parseMatchingOFTSentTransfer(
     return
   }
 
-  return {
-    address: Address32.from(log.address),
-    burned: Address32.from(transfer.to) === Address32.ZERO,
-  }
+  if (requireBurned && Address32.from(transfer.to) !== Address32.ZERO) return
+
+  return transfer
 }
 
 // matching both amounts due to fees
@@ -109,16 +109,25 @@ export function findOFTSentTransferData(
   startLogIndex: number,
   normalized: NormalizedOFTSentAmounts,
 ): OFTSentTransferData | undefined {
-  return (
-    findParsedAround(logs, startLogIndex, (log) => {
-      const transfer = parseMatchingOFTSentTransfer(log, normalized)
-      if (!transfer?.burned) return
-      return transfer
-    }) ??
-    findParsedAround(logs, startLogIndex, (log) =>
-      parseMatchingOFTSentTransfer(log, normalized),
-    )
+  const burnedTransferMatch = findBestTransferLog(
+    logs,
+    normalized.amountSentLD,
+    startLogIndex,
+    (log) => parseMatchingOFTSentTransfer(log, normalized, true),
   )
+
+  const transfer =
+    burnedTransferMatch.transfer ??
+    findBestTransferLog(logs, normalized.amountSentLD, startLogIndex, (log) =>
+      parseMatchingOFTSentTransfer(log, normalized),
+    ).transfer
+
+  if (!transfer) return
+
+  return {
+    address: transfer.logAddress,
+    burned: transfer.to === Address32.ZERO,
+  }
 }
 
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
@@ -220,19 +229,17 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
             packetDelivered.origin.srcEid,
           )
 
-          const matchingTransferData = findParsedAround(
+          const transferMatch = findBestTransferLog(
             input.txLogs,
+            oftReceived.amountReceivedLD,
             // biome-ignore lint/style/noNonNullAssertion: It's there
             input.log.logIndex!,
-            (log, _index) => {
+            (log) => {
               const transfer = parseTransfer(log, null)
               if (!transfer) return
               // compare amount to not match a rogue Transfer event
               if (transfer.value !== oftReceived.amountReceivedLD) return
-              return {
-                address: Address32.from(log.address),
-                minted: Address32.from(transfer.from) === Address32.ZERO,
-              }
+              return transfer
             },
           )
 
@@ -242,9 +249,11 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               guid,
               amountReceivedLD: oftReceived.amountReceivedLD,
               oappAddress: Address32.from(input.log.address),
-              dstTokenAddress: matchingTransferData?.address,
+              dstTokenAddress: transferMatch.transfer?.logAddress,
               dstAmount: oftReceived.amountReceivedLD,
-              minted: matchingTransferData?.minted,
+              minted: transferMatch.transfer
+                ? transferMatch.transfer.from === Address32.ZERO
+                : undefined,
             }),
           ]
         }
