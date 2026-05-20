@@ -125,6 +125,150 @@ export const risc0: BaseProject = {
     ],
     verifierHashes: [
       {
+        hash: '0x1dcf73cbd51c9eba43c437c5a5ebc5328ca2d7a590c701a9a9bc1136eceeeea7',
+        name: 'RiscZero v2.0.0',
+        sourceLink: 'https://github.com/risc0/risc0/tree/v2.0.0',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: `
+Verification works on a linux machine, 36 GiB of memory is enough to regenerate the verifier. Approximately 14 GiB of trusted setup files need to be downloaded.
+
+1. Install npm, rust, git-lfs:
+\`\`\`
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. .cargo/env
+
+sudo apt install npm git-lfs
+\`\`\`
+
+2. Install snarkjs and circom v2.1.0 (from sources):
+\`\`\`
+npm install -g snarkjs
+
+git clone https://github.com/iden3/circom.git
+cd circom
+git checkout v2.1.0
+cargo build --release
+cargo install --path circom
+export PATH="$HOME/.cargo/bin:$PATH"
+\`\`\`
+
+3. Clone risc0 repo, lfs pull the circuit for verifying Risc Zero STARK proofs and compile it into R1CS:
+\`\`\`
+git clone https://github.com/risc0/risc0.git
+cd risc0
+git checkout v2.0.0  # hash 3f26f9d4c2fb8a7e5eb830ae2433c8eae67f5a38
+git lfs install
+git lfs pull --include=groth16_proof/groth16/stark_verify.circom
+cd groth16_proof/groth16
+circom stark_verify.circom --r1cs
+
+# check that the circuit is correct:
+shasum -a 256 stark_verify.r1cs   # output should be 84d3c34b7c0eb55ad1b16b24f75e0b9de307f7b74089ea4a20a998390ee24178
+\`\`\`
+
+4. Download phase 1 and phase 2 trusted setup files, verify their correctness:
+\`\`\`
+wget https://storage.googleapis.com/zkevm/ptau/powersOfTau28_hez_final_23.ptau
+wget https://risc0-artifacts.s3.us-west-2.amazonaws.com/tsc/2024-04-04/stark_verify_final.zkey
+
+export NODE_OPTIONS="--max-old-space-size=32768"    # without this snarkjs runs out of mem
+snarkjs zkey verify stark_verify.r1cs powersOfTau28_hez_final_23.ptau stark_verify_final.zkey
+\`\`\`
+
+5. Export the solidity verifier. Check it manually against the deployed smart contract: \`snarkjs zkey export solidityverifier stark_verify_final.zkey verifier.sol\`.
+        `,
+        description:
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_0, bytes16 value of CONTROL_ROOT_1.',
+      },
+      {
+        hash: '0xc6fcb1951eb5b45a669431346a01577df99f30d72baa9d5c7eea40ec6cccfab9',
+        name: 'RiscZero v2.0.0-rc.3',
+        sourceLink: 'https://github.com/risc0/risc0/tree/v2.0.0-rc.3',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
+            ),
+          },
+          // {
+          //   address: ChainSpecificAddress.fromLong(
+          //     'ethereum',
+          //     '0x7CCA385bdC790c25924333F5ADb7F4967F5d1599',
+          //   ),
+          // },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x411e56a890c5fe0712f6F345977815Ba8E7785C3',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: `
+Verification works on a linux machine, 36 GiB of memory is enough to regenerate the verifier. Approximately 14 GiB of trusted setup files need to be downloaded.
+
+1. Install npm, rust, git-lfs:
+\`\`\`
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. .cargo/env
+
+sudo apt install npm git-lfs
+\`\`\`
+
+2. Install snarkjs and circom v2.1.0 (from sources):
+\`\`\`
+npm install -g snarkjs
+
+git clone https://github.com/iden3/circom.git
+cd circom
+git checkout v2.1.0
+cargo build --release
+cargo install --path circom
+export PATH="$HOME/.cargo/bin:$PATH"
+\`\`\`
+
+3. Clone risc0 repo, lfs pull the circuit for verifying Risc Zero STARK proofs and compile it into R1CS:
+\`\`\`
+git clone https://github.com/risc0/risc0.git
+cd risc0
+git checkout v2.0.0-rc.3  # hash 99e8616b4e74203a5aa361a485e0196516b4b308
+git lfs install
+git lfs pull --include=groth16_proof/groth16/stark_verify.circom
+cd groth16_proof/groth16
+circom stark_verify.circom --r1cs
+
+# check that the circuit is correct:
+shasum -a 256 stark_verify.r1cs   # output should be 84d3c34b7c0eb55ad1b16b24f75e0b9de307f7b74089ea4a20a998390ee24178
+\`\`\`
+
+4. Download phase 1 and phase 2 trusted setup files, verify their correctness:
+\`\`\`
+wget https://storage.googleapis.com/zkevm/ptau/powersOfTau28_hez_final_23.ptau
+wget https://risc0-artifacts.s3.us-west-2.amazonaws.com/tsc/2024-04-04/stark_verify_final.zkey
+
+export NODE_OPTIONS="--max-old-space-size=32768"    # without this snarkjs runs out of mem
+snarkjs zkey verify stark_verify.r1cs powersOfTau28_hez_final_23.ptau stark_verify_final.zkey
+\`\`\`
+
+5. Export the solidity verifier. Check it manually against the deployed smart contract: \`snarkjs zkey export solidityverifier stark_verify_final.zkey verifier.sol\`.
+        `,
+        description:
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_0, bytes16 value of CONTROL_ROOT_1.',
+      },
+      {
         // Is a dummy to show soon as using risc0 proof system. Verifier
         // contract sources are unknown, so the actual hash cannot be computed.
         // Fix once the sources are on etherscan.
@@ -145,56 +289,6 @@ export const risc0: BaseProject = {
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
         description:
           'Verifier smart contract sources are not available on Etherscan, hash value is set to 0x0 to indicate that it is not known.',
-      },
-      {
-        hash: '0x1dcf73cbd51c9eba43c437c5a5ebc5328ca2d7a590c701a9a9bc1136eceeeea7',
-        name: 'RiscZero v2.2.0',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
-            ),
-          },
-          // {
-          //   address: EthereumAddress(
-          //     '0x34Eda8BfFb539AeC33078819847B36D221c6641c',
-          //   ),
-          //   chain: 'ethereum',
-          // },
-        ],
-        verificationStatus: 'notVerified',
-        description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_0, bytes16 value of CONTROL_ROOT_1.',
-      },
-      {
-        hash: '0xc6fcb1951eb5b45a669431346a01577df99f30d72baa9d5c7eea40ec6cccfab9',
-        name: 'RiscZero v3.0.0',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
-            ),
-          },
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x7CCA385bdC790c25924333F5ADb7F4967F5d1599',
-            ),
-          },
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x411e56a890c5fe0712f6F345977815Ba8E7785C3',
-            ),
-          },
-        ],
-        verificationStatus: 'notVerified',
-        description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_0, bytes16 value of CONTROL_ROOT_1.',
       },
     ],
   },
