@@ -23,6 +23,7 @@ import { TransferDetailsPage } from './pages/interop/transfers/TransferDetailsPa
 import { TransfersPage } from './pages/interop/transfers/TransfersPage'
 import { BackofficeLandingPage } from './pages/landing/BackofficeLandingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { DailyChecksPage } from './pages/website/daily-checks/DailyChecksPage'
 import { DaTrackingStatusPage } from './pages/website/status/da-tracking/DaTrackingStatusPage'
 import { TrackedTxsStatusPage } from './pages/website/status/tracked-txs/TrackedTxsStatusPage'
 import { TRPCReactProvider } from './react-query/trpc'
@@ -100,6 +101,10 @@ export function App() {
               <Route
                 path="/website/status/da-tracking"
                 element={<DaTrackingStatusPage />}
+              />
+              <Route
+                path="/website/daily-checks"
+                element={<DailyChecksPage />}
               />
               <Route path="/not-found" element={<NotFoundPage />} />
               <Route path="*" element={<NotFoundPage />} />

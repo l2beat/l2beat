@@ -6,6 +6,7 @@ import type {
 } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
+import type { AbstractTokenRecord } from '../../../schemas/AbstractToken'
 import { createCallerFactory } from '../../trpc'
 import { abstractTokensRouter } from './index'
 
@@ -13,7 +14,7 @@ describe('abstractTokensRouter', () => {
   describe('getAll', () => {
     it('returns all abstract tokens', async () => {
       const abstractTokens = [
-        {
+        abstractToken({
           id: 'TK0001',
           symbol: 'BTC',
           category: 'btc' as const,
@@ -23,8 +24,8 @@ describe('abstractTokensRouter', () => {
           comment: null,
           coingeckoListingTimestamp: null,
           reviewed: false,
-        },
-        {
+        }),
+        abstractToken({
           id: 'TK0002',
           symbol: 'ETH',
           category: 'ether' as const,
@@ -34,7 +35,7 @@ describe('abstractTokensRouter', () => {
           comment: null,
           coingeckoListingTimestamp: null,
           reviewed: false,
-        },
+        }),
       ]
       const mockGetAll = mockFn().resolvesTo(abstractTokens)
       const mockTokenDb = mockObject<TokenDatabase>({
@@ -69,7 +70,7 @@ describe('abstractTokensRouter', () => {
   describe('getAllWithDeployedTokens', () => {
     it('returns abstract tokens with their deployed tokens', async () => {
       const abstractTokens = [
-        {
+        abstractToken({
           id: 'TK0001',
           symbol: 'USDC',
           category: 'stablecoin' as const,
@@ -79,7 +80,7 @@ describe('abstractTokensRouter', () => {
           comment: null,
           coingeckoListingTimestamp: null,
           reviewed: false,
-        },
+        }),
       ]
       const deployedTokens = [
         {
@@ -166,7 +167,7 @@ describe('abstractTokensRouter', () => {
 
     it('handles abstract tokens without deployed tokens', async () => {
       const abstractTokens = [
-        {
+        abstractToken({
           id: 'TK0001',
           symbol: 'BTC',
           category: 'btc' as const,
@@ -176,7 +177,7 @@ describe('abstractTokensRouter', () => {
           comment: null,
           coingeckoListingTimestamp: null,
           reviewed: false,
-        },
+        }),
       ]
       const mockTokenDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<AbstractTokenRepository>({
@@ -203,7 +204,7 @@ describe('abstractTokensRouter', () => {
 
   describe('getById', () => {
     it('returns abstract token with deployed tokens', async () => {
-      const abstractToken = {
+      const token = abstractToken({
         id: 'TK0001',
         symbol: 'USDC',
         category: 'stablecoin' as const,
@@ -213,7 +214,7 @@ describe('abstractTokensRouter', () => {
         comment: null,
         coingeckoListingTimestamp: null,
         reviewed: false,
-      }
+      })
       const deployedTokens = [
         {
           chain: 'ethereum',
@@ -241,7 +242,7 @@ describe('abstractTokensRouter', () => {
       ] satisfies DeployedTokenRecord[]
       const mockTokenDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<AbstractTokenRepository>({
-          findById: mockFn().resolvesTo(abstractToken),
+          findById: mockFn().resolvesTo(token),
         }),
         deployedToken: mockObject<DeployedTokenRepository>({
           getByAbstractTokenId: mockFn().resolvesTo(deployedTokens),
@@ -253,7 +254,7 @@ describe('abstractTokensRouter', () => {
       const result = await caller.getById('TK0001')
 
       expect(result).toEqual({
-        ...abstractToken,
+        ...token,
         deployedTokens,
       })
     })
@@ -404,4 +405,21 @@ function createRouter(
     tokenDb: mockTokenDb,
     db: mockObject<Database>({}),
   })
+}
+
+function abstractToken(
+  overrides: Partial<AbstractTokenRecord> & Pick<AbstractTokenRecord, 'id'>,
+): AbstractTokenRecord {
+  return {
+    id: overrides.id,
+    symbol: overrides.symbol ?? 'TOKEN',
+    category: overrides.category ?? null,
+    issuer: overrides.issuer ?? null,
+    coingeckoId: overrides.coingeckoId ?? null,
+    iconUrl: overrides.iconUrl ?? null,
+    comment: overrides.comment ?? null,
+    coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
+    reviewed: overrides.reviewed ?? false,
+    isPriceUnreliable: overrides.isPriceUnreliable ?? false,
+  }
 }
