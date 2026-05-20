@@ -12,13 +12,13 @@ interface TvsProject {
 export async function getTvsProjects(
   filter: (p: Project<'statuses', 'scalingInfo'>) => boolean,
   options?: {
-    withoutArchivedAndUpcoming?: boolean
+    withoutArchived?: boolean
   },
 ): Promise<TvsProject[]> {
   const projects = await ps.getProjects({
     select: ['statuses', 'tvsConfig'],
     optional: ['chainConfig', 'scalingInfo', 'tvsInfo'],
-    whereNot: options?.withoutArchivedAndUpcoming ? ['archivedAt'] : undefined,
+    whereNot: options?.withoutArchived ? ['archivedAt'] : undefined,
   })
 
   const filteredProjects = projects
