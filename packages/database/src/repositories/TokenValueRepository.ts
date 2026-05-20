@@ -54,6 +54,14 @@ export interface SummedByTimestampTokenValuePerProjectRecord {
   other: number
 }
 
+export interface TokenValueTvsIncreaseRecord {
+  timestamp: UnixTime
+  projectId: string
+  currentTvsUsd: number
+  previousTvsUsd: number
+  increaseUsd: number
+}
+
 export function toRecord(row: Selectable<TokenValue>): TokenValueRecord {
   return {
     ...row,
@@ -239,6 +247,83 @@ export class TokenValueRepository extends BaseRepository {
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('TokenValue').executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async getLatestTimestamp() {
+    const result = await this.db
+      .selectFrom('TokenValue')
+      .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
+      .executeTakeFirst()
+    return result?.max_timestamp
+      ? UnixTime.fromDate(result.max_timestamp)
+      : undefined
+  }
+
+  async getLargestTvsIncrease(
+    timestamp: UnixTime,
+    previousTimestamp: UnixTime,
+  ): Promise<TokenValueTvsIncreaseRecord | undefined> {
+    const previousPreviousTimestamp = previousTimestamp - UnixTime.DAY
+
+    const current = this.db
+      .selectFrom('TokenValue')
+      .select(['projectId', sql<number>`sum("valueForProject")`.as('tvs_usd')])
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .groupBy('projectId')
+      .as('current')
+
+    const previous = this.db
+      .selectFrom('TokenValue')
+      .select(['projectId', sql<number>`sum("valueForProject")`.as('tvs_usd')])
+      .where('timestamp', '=', UnixTime.toDate(previousTimestamp))
+      .groupBy('projectId')
+      .as('previous')
+
+    const increaseUsd = sql<number>`
+      "current"."tvs_usd" - "previous"."tvs_usd"
+    `
+
+    const row = await this.db
+      .selectFrom(current)
+      .innerJoin(previous, (join) =>
+        join.onRef('current.projectId', '=', 'previous.projectId'),
+      )
+      .select([
+        sql<string>`"current"."projectId"`.as('project_id'),
+        sql<number>`"current"."tvs_usd"`.as('current_tvs_usd'),
+        sql<number>`"previous"."tvs_usd"`.as('previous_tvs_usd'),
+        increaseUsd.as('increase_usd'),
+      ])
+      .where(({ eb, exists }) =>
+        exists(
+          eb
+            .selectFrom('TokenValue as older')
+            .select('older.projectId')
+            .whereRef('older.projectId', '=', 'current.projectId')
+            .where(
+              'older.timestamp',
+              '=',
+              UnixTime.toDate(previousPreviousTimestamp),
+            ),
+        ),
+      )
+      .where(increaseUsd, '>', 0)
+      .orderBy(sql`increase_usd desc`)
+      .orderBy('current.projectId', 'asc')
+      .limit(1)
+      .executeTakeFirst()
+
+    if (!row) {
+      return undefined
+    }
+
+    return {
+      timestamp,
+      projectId: row.project_id,
+      currentTvsUsd: Number(row.current_tvs_usd ?? 0),
+      previousTvsUsd: Number(row.previous_tvs_usd ?? 0),
+      increaseUsd: Number(row.increase_usd ?? 0),
+    }
   }
 
   async getSummedByTimestampByProjects(

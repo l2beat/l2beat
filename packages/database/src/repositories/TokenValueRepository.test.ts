@@ -71,6 +71,126 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
   })
 
+  describe(TokenValueRepository.prototype.getLatestTimestamp.name, () => {
+    it('returns latest timestamp', async () => {
+      await repository.upsertMany([
+        tokenValue('a', 'ethereum', UnixTime(100), 10, 10000, 8000, 5000, 10),
+        tokenValue('b', 'arbitrum', UnixTime(300), 10, 10000, 8000, 5000, 10),
+        tokenValue('c', 'base', UnixTime(200), 10, 10000, 8000, 5000, 10),
+      ])
+
+      const result = await repository.getLatestTimestamp()
+
+      expect(result).toEqual(UnixTime(300))
+    })
+
+    it('returns undefined when no records exist', async () => {
+      const result = await repository.getLatestTimestamp()
+
+      expect(result).toEqual(undefined)
+    })
+  })
+
+  describe(TokenValueRepository.prototype.getLargestTvsIncrease.name, () => {
+    it('returns project with largest positive TVS increase', async () => {
+      const previousPreviousTimestamp = UnixTime(100)
+      const previousTimestamp = UnixTime(100 + UnixTime.DAY)
+      const timestamp = UnixTime(100 + 2 * UnixTime.DAY)
+
+      await repository.upsertMany([
+        tokenValue(
+          'a',
+          'ethereum',
+          previousPreviousTimestamp,
+          1,
+          900,
+          900,
+          900,
+          10,
+        ),
+        tokenValue(
+          'b',
+          'arbitrum',
+          previousPreviousTimestamp,
+          1,
+          400,
+          400,
+          400,
+          10,
+        ),
+        tokenValue(
+          'c',
+          'base',
+          previousPreviousTimestamp,
+          1,
+          900,
+          900,
+          900,
+          10,
+        ),
+        tokenValue('a', 'ethereum', previousTimestamp, 1, 1000, 1000, 1000, 10),
+        tokenValue('b', 'arbitrum', previousTimestamp, 1, 500, 500, 500, 10),
+        tokenValue('c', 'base', previousTimestamp, 1, 800, 800, 800, 10),
+        tokenValue('n', 'new-project', previousTimestamp, 1, 100, 100, 100, 10),
+        tokenValue('a', 'ethereum', timestamp, 1, 2000, 2000, 2000, 10),
+        tokenValue('d', 'ethereum', timestamp, 1, 700, 700, 700, 10),
+        tokenValue('b', 'arbitrum', timestamp, 1, 2000, 2000, 2000, 10),
+        tokenValue('c', 'base', timestamp, 1, 700, 700, 700, 10),
+        tokenValue(
+          'n',
+          'new-project',
+          timestamp,
+          1,
+          10_000,
+          10_000,
+          10_000,
+          10,
+        ),
+      ])
+
+      const result = await repository.getLargestTvsIncrease(
+        timestamp,
+        previousTimestamp,
+      )
+
+      expect(result).toEqual({
+        timestamp,
+        projectId: 'ethereum',
+        currentTvsUsd: 2700,
+        previousTvsUsd: 1000,
+        increaseUsd: 1700,
+      })
+    })
+
+    it('returns undefined when no project has positive TVS increase', async () => {
+      const previousPreviousTimestamp = UnixTime(100)
+      const previousTimestamp = UnixTime(100 + UnixTime.DAY)
+      const timestamp = UnixTime(100 + 2 * UnixTime.DAY)
+
+      await repository.upsertMany([
+        tokenValue(
+          'a',
+          'ethereum',
+          previousPreviousTimestamp,
+          1,
+          1100,
+          1100,
+          1100,
+          10,
+        ),
+        tokenValue('a', 'ethereum', previousTimestamp, 1, 1000, 1000, 1000, 10),
+        tokenValue('a', 'ethereum', timestamp, 1, 900, 900, 900, 10),
+      ])
+
+      const result = await repository.getLargestTvsIncrease(
+        timestamp,
+        previousTimestamp,
+      )
+
+      expect(result).toEqual(undefined)
+    })
+  })
+
   describe(TokenValueRepository.prototype.getByProject.name, () => {
     beforeEach(async () => {
       await repository.upsertMany([

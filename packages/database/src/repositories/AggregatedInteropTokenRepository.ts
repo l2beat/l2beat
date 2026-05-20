@@ -22,6 +22,14 @@ export interface AggregatedInteropTokenRecord {
   burnedValueUsd: number | undefined
 }
 
+export interface AggregatedInteropTokenVolumeIncreaseRecord {
+  timestamp: UnixTime
+  abstractTokenId: string
+  currentVolumeUsd: number
+  previousVolumeUsd: number
+  increaseUsd: number
+}
+
 export function toRecord(
   row: Selectable<AggregatedInteropToken>,
 ): AggregatedInteropTokenRecord {
@@ -195,5 +203,71 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
       .deleteFrom('AggregatedInteropToken')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async getLargestTokenVolumeIncrease(
+    timestamp: UnixTime,
+    previousTimestamp: UnixTime,
+  ): Promise<AggregatedInteropTokenVolumeIncreaseRecord | undefined> {
+    const current = this.db
+      .selectFrom('AggregatedInteropToken as a')
+      .select([
+        sql<string>`"a"."abstractTokenId"`.as('abstract_token_id'),
+        sql<number>`sum("a"."volume")`.as('volume_usd'),
+      ])
+      .where('a.timestamp', '=', UnixTime.toDate(timestamp))
+      .whereRef('a.srcChain', '!=', 'a.dstChain')
+      .groupBy('a.abstractTokenId')
+      .as('current')
+
+    const previous = this.db
+      .selectFrom('AggregatedInteropToken as a')
+      .select([
+        sql<string>`"a"."abstractTokenId"`.as('abstract_token_id'),
+        sql<number>`sum("a"."volume")`.as('volume_usd'),
+      ])
+      .where('a.timestamp', '=', UnixTime.toDate(previousTimestamp))
+      .whereRef('a.srcChain', '!=', 'a.dstChain')
+      .groupBy('a.abstractTokenId')
+      .as('previous')
+
+    const increaseUsd = sql<number>`
+      "current"."volume_usd" - coalesce("previous"."volume_usd", 0)
+    `
+
+    const row = await this.db
+      .selectFrom(current)
+      .leftJoin(previous, (join) =>
+        join.onRef(
+          'current.abstract_token_id',
+          '=',
+          'previous.abstract_token_id',
+        ),
+      )
+      .select([
+        sql<string>`"current"."abstract_token_id"`.as('abstract_token_id'),
+        sql<number>`"current"."volume_usd"`.as('current_volume_usd'),
+        sql<number>`coalesce("previous"."volume_usd", 0)`.as(
+          'previous_volume_usd',
+        ),
+        increaseUsd.as('increase_usd'),
+      ])
+      .where(increaseUsd, '>', 0)
+      .orderBy(sql`increase_usd desc`)
+      .orderBy('current.abstract_token_id', 'asc')
+      .limit(1)
+      .executeTakeFirst()
+
+    if (!row) {
+      return undefined
+    }
+
+    return {
+      timestamp,
+      abstractTokenId: row.abstract_token_id,
+      currentVolumeUsd: Number(row.current_volume_usd ?? 0),
+      previousVolumeUsd: Number(row.previous_volume_usd ?? 0),
+      increaseUsd: Number(row.increase_usd ?? 0),
+    }
   }
 }

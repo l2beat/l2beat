@@ -100,6 +100,10 @@ const interopItems = [
         url: '/interop/insights/coverage-pies',
       },
       {
+        title: 'Highlights',
+        url: '/interop/insights/highlights',
+      },
+      {
         title: 'Memory',
         url: '/interop/insights/memory',
       },
