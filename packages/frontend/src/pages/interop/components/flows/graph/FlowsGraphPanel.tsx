@@ -16,6 +16,7 @@ interface FlowsGraphPanelProps {
   hasEnoughProtocols: boolean
   isLoading: boolean
   baseDollarsPerParticle?: number
+  topChainId?: string
 }
 
 export function FlowsGraphPanel({
@@ -25,6 +26,7 @@ export function FlowsGraphPanel({
   hasEnoughProtocols,
   isLoading,
   baseDollarsPerParticle,
+  topChainId,
 }: FlowsGraphPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
@@ -60,6 +62,7 @@ export function FlowsGraphPanel({
               size={size}
               isSmallScreen={isSmallScreen}
               baseDollarsPerParticle={baseDollarsPerParticle}
+              topChainId={topChainId}
             />
           )}
         </div>
