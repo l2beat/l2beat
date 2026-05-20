@@ -2,7 +2,7 @@ import { Address32 } from '@l2beat/shared-pure'
 import type { LogToCapture } from './types'
 
 /**
- * bastis log scanning tools for the capture phase of plugins
+ * Shared log scanning tools for the capture phase of plugins.
  */
 
 export type LogScanDirection = 'around' | 'before' | 'after'
@@ -172,11 +172,13 @@ export function findBestTransferLog(
   parseTransfer: (
     log: LogToCapture['txLogs'][number],
   ) => TransferLike | undefined,
+  predicate?: (transfer: ParsedTransferLog) => boolean,
 ): { transfer?: ParsedTransferLog; hasTransfer: boolean } {
   const transfers: { parsed: ParsedTransferLog; logIndex: number | null }[] = []
   for (const log of logs) {
     const transfer = parseTransferLog(log, parseTransfer)
     if (!transfer) continue
+    if (predicate && !predicate(transfer)) continue
     transfers.push({
       parsed: transfer,
       logIndex: log.logIndex,
@@ -248,6 +250,27 @@ export function findBestTransferLog(
   }
 
   return { transfer: closestMatch, hasTransfer: transfers.length > 0 }
+}
+
+// Same ranking as findBestTransferLog, but ignores transfers whose amount
+// does not exactly match the event amount.
+export function findBestTransferLogByExactAmount(
+  logs: LogToCapture['txLogs'],
+  targetAmount: bigint,
+  startLogIndex: number,
+  parseTransfer: (
+    log: LogToCapture['txLogs'][number],
+  ) => TransferLike | undefined,
+  predicate?: (transfer: ParsedTransferLog) => boolean,
+): { transfer?: ParsedTransferLog; hasTransfer: boolean } {
+  return findBestTransferLog(
+    logs,
+    targetAmount,
+    startLogIndex,
+    parseTransfer,
+    (transfer) =>
+      transfer.value === targetAmount && (predicate?.(transfer) ?? true),
+  )
 }
 
 function absDiff(value: bigint, target: bigint): bigint {

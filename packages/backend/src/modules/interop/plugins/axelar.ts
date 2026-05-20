@@ -8,7 +8,7 @@
  */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { TokenMap } from '../engine/match/TokenMap'
-import { findBestTransferLog, findParsedAround } from './logScan'
+import { findBestTransferLogByExactAmount, findParsedAround } from './logScan'
 import {
   getBestEffortTokenFrameworkBridgeType,
   getTokenFrameworkBridgeType,
@@ -145,18 +145,12 @@ export class AxelarPlugin implements InteropPlugin {
       null,
     )
     if (expressExecutedWithToken) {
-      const transferMatch = findBestTransferLog(
+      const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
         expressExecutedWithToken.amount,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== expressExecutedWithToken.amount) return
-          return transfer
-        },
+        (log) => parseTransfer(log, null),
       )
 
       const srcChain = findChain(
@@ -196,18 +190,12 @@ export class AxelarPlugin implements InteropPlugin {
 
     const contractCallWithToken = parseContractCallWithToken(input.log, null)
     if (contractCallWithToken) {
-      const transferMatch = findBestTransferLog(
+      const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
         contractCallWithToken.amount,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== contractCallWithToken.amount) return
-          return transfer
-        },
+        (log) => parseTransfer(log, null),
       )
 
       const dstChain = findChain(

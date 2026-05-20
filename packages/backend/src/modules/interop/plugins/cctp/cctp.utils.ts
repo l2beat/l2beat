@@ -1,4 +1,4 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import { type Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import { findBestTransferLog } from '../logScan'
@@ -142,13 +142,13 @@ export function parseCctpV1ReceivedTransfer(
   if (!received) return
 
   const burnMessage = decodeV1MessageBody(received.messageBody)
-  const transferMatch = burnMessage
+  const transfer = burnMessage
     ? findBestTransferLog(
         input.txLogs,
         burnMessage.amount,
         input.log.logIndex ?? -1,
         (log) => parseCctpTransfer(log, null),
-      )
+      ).transfer
     : undefined
 
   return {
@@ -162,10 +162,8 @@ export function parseCctpV1ReceivedTransfer(
     nonce: Number(received.nonce),
     messageBody: received.messageBody,
     burnMessage,
-    dstTokenAddress: transferMatch?.transfer
-      ? Address32.from(transferMatch.transfer.logAddress)
-      : undefined,
-    dstAmount: transferMatch?.transfer?.value,
+    dstTokenAddress: transfer?.logAddress,
+    dstAmount: transfer?.value,
   }
 }
 
@@ -185,12 +183,12 @@ export function parseCctpV2ReceivedTransfer(
   const messageHash = hashV2MessageBody(received.messageBody)
   if (!messageHash) return
 
-  const transferMatch = findBestTransferLog(
+  const transfer = findBestTransferLog(
     input.txLogs,
     burnMessage ? burnMessage.amount - burnMessage.feeExecuted : 0n,
     input.log.logIndex ?? -1,
     (log) => parseCctpTransfer(log, null),
-  )
+  ).transfer
 
   return {
     version: 'v2',
@@ -207,10 +205,8 @@ export function parseCctpV2ReceivedTransfer(
     finalityThresholdExecuted: Number(received.finalityThresholdExecuted),
     messageHash,
     burnMessage,
-    dstTokenAddress: transferMatch.transfer
-      ? Address32.from(transferMatch.transfer.logAddress)
-      : undefined,
-    dstAmount: transferMatch.transfer?.value,
+    dstTokenAddress: transfer?.logAddress,
+    dstAmount: transfer?.value,
   }
 }
 
@@ -224,13 +220,18 @@ export function findCctpReceivedTransfer(
     dstAmount?: bigint
   },
 ): CctpReceivedTransfer | undefined {
+  const v1Networks = options.v1Networks ?? []
+  const v2Networks = options.v2Networks ?? []
+  if (v1Networks.length === 0 && v2Networks.length === 0) return
+
   for (const log of input.txLogs) {
     const candidate =
-      parseCctpV1ReceivedTransfer(
-        { ...input, log },
-        options.v1Networks ?? [],
-      ) ??
-      parseCctpV2ReceivedTransfer({ ...input, log }, options.v2Networks ?? [])
+      (v1Networks.length > 0
+        ? parseCctpV1ReceivedTransfer({ ...input, log }, v1Networks)
+        : undefined) ??
+      (v2Networks.length > 0
+        ? parseCctpV2ReceivedTransfer({ ...input, log }, v2Networks)
+        : undefined)
 
     if (candidate && matchesReceivedTransfer(candidate, options)) {
       return candidate

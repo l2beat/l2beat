@@ -11,7 +11,7 @@ import {
   ContractCallApproved,
   ContractCallExecuted,
 } from './axelar'
-import { findBestTransferLog } from './logScan'
+import { findBestTransferLogByExactAmount } from './logScan'
 import {
   getBestEffortTokenFrameworkBridgeType,
   getTokenFrameworkBridgeType,
@@ -65,18 +65,12 @@ export class AxelarITSPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const interchainTransfer = parseInterchainTransfer(input.log, null)
     if (interchainTransfer) {
-      const transferMatch = findBestTransferLog(
+      const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
         interchainTransfer.amount,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== interchainTransfer.amount) return
-          return transfer
-        },
+        (log) => parseTransfer(log, null),
       )
 
       const $dstChain = findChain(
@@ -111,18 +105,12 @@ export class AxelarITSPlugin implements InteropPlugin {
       null,
     )
     if (interchainTransferReceived) {
-      const transferMatch = findBestTransferLog(
+      const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
         interchainTransferReceived.amount,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== interchainTransferReceived.amount) return
-          return transfer
-        },
+        (log) => parseTransfer(log, null),
       )
 
       const $srcChain = findChain(
