@@ -7,12 +7,17 @@ import { IconFileUp } from '../../../../icons/IconFileUp'
 import { cn } from '../../../../utils/cn'
 import type { ApplyLayoutMode } from '../store/actions/applyStoredLayout'
 import { useStore } from '../store/store'
-import { buildStoredNodeLayout, StoredNodeLayout } from '../store/utils/storage'
+import { migrateLayout } from '../store/utils/layout'
+import {
+  buildStoredNodeLayout,
+  type StoredNodeLayout,
+} from '../store/utils/storage'
 import { ControlButton } from './ControlButton'
 
 interface PendingLayout {
   filename: string
   data: StoredNodeLayout
+  migratedFrom: number
 }
 
 interface LoadError {
@@ -61,24 +66,27 @@ export function LayoutFileButtons(props?: {
     const file = event.target.files?.[0]
     event.target.value = ''
     if (!file) return
+    let raw: unknown
     try {
-      const raw = JSON.parse(await file.text())
-      const result = StoredNodeLayout.safeParse(raw)
-      if (!result.success) {
-        setError({
-          filename: file.name,
-          message: 'File is not a valid layout file.',
-        })
-        return
-      }
-      setPending({ filename: file.name, data: result.data })
-      setError(null)
+      raw = JSON.parse(await file.text())
     } catch (err) {
       setError({
         filename: file.name,
         message: err instanceof Error ? err.message : 'Failed to read file.',
       })
+      return
     }
+    const result = migrateLayout(raw)
+    if (!result.ok) {
+      setError({ filename: file.name, message: result.message })
+      return
+    }
+    setPending({
+      filename: file.name,
+      data: result.layout,
+      migratedFrom: result.migratedFrom,
+    })
+    setError(null)
   }
 
   return (
@@ -169,6 +177,11 @@ function ConfirmLoadDialog({
       <Dialog.Title>Load layout</Dialog.Title>
       <div className="mb-3 text-coffee-200 text-xs">
         <div>File: {pending.filename}</div>
+        <div>
+          Layout version: v{pending.migratedFrom}
+          {pending.migratedFrom !== pending.data.version &&
+            ` (migrated to v${pending.data.version})`}
+        </div>
         <div className="mt-1 grid grid-cols-2 gap-x-4">
           <span>Positions: {positions}</span>
           <span>Hidden nodes: {hiddenNodes}</span>
