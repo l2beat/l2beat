@@ -73,7 +73,6 @@ export interface ProjectScalingEntry {
   slug: string
   icon: string
   archivedAt: UnixTime | undefined
-  isUpcoming: boolean
   isAppchain: boolean
   colors:
     | {
@@ -151,7 +150,6 @@ export async function getScalingProjectEntry(
     | 'scalingDa'
     | 'customDa'
     | 'chainConfig'
-    | 'isUpcoming'
     | 'archivedAt'
     | 'milestones'
     | 'trackedTxsConfig'
@@ -306,7 +304,6 @@ export async function getScalingProjectEntry(
       ...changes,
     }),
     archivedAt: project.archivedAt,
-    isUpcoming: !!project.isUpcoming,
     isAppchain: project.scalingInfo.capability === 'appchain',
     colors: {
       project: project.colors,
@@ -380,7 +377,7 @@ export async function getScalingProjectEntry(
 
   const projectWithIcon = withProjectIcon(project)
 
-  if (!project.isUpcoming && scalingTvsSection && tvsProjectStats) {
+  if (scalingTvsSection && tvsProjectStats) {
     sections.push({
       type: 'ScalingTvsSection',
       props: {
@@ -424,7 +421,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (!project.isUpcoming && costsSection) {
+  if (costsSection) {
     sections.push({
       type: 'CostsSection',
       props: {
@@ -469,11 +466,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (
-    !project.isUpcoming &&
-    project.milestones &&
-    project.milestones.length > 0
-  ) {
+  if (project.milestones && project.milestones.length > 0) {
     sections.push({
       type: 'MilestonesAndIncidentsSection',
       props: {
@@ -516,14 +509,6 @@ export async function getScalingProjectEntry(
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
-  }
-
-  if (project.isUpcoming) {
-    sections.push({
-      type: 'UpcomingDisclaimer',
-      excludeFromNavigation: true,
-    })
-    return { ...common, sections }
   }
 
   if (hostChain && common.rosette.host) {

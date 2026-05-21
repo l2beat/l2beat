@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xdebe3f1eeae26f719735b4e402d4eecdca41445e
+
+# Diff at Tue, 19 May 2026 13:55:18 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@307f5c3dfdab6a4f88448861a0bb75f0043b762b block: 1773325467
+- current timestamp: 1779198854
+
+## Description
+
+UpgradeExecutor: one of two `EXECUTOR_ROLE` members removed. `arb1:0x871e290d5447b958131F6d44f915F10032436ee6` remains as the sole executor.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28"
+      values.executors.0:
+-        "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28"
+    }
+```
+
 Generated with discovered.json: 0x44ba260c9085210d27ab4d1157ae9ed9db316391
 
 # Diff at Fri, 15 May 2026 12:35:50 GMT:

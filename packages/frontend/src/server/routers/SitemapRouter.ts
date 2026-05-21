@@ -16,7 +16,6 @@ const STATIC_PATHS = [
   '/scaling/liveness',
   '/scaling/costs',
   '/scaling/archived',
-  '/scaling/upcoming',
   '/interop/summary',
   '/interop/non-minting',
   '/interop/lock-and-mint',
