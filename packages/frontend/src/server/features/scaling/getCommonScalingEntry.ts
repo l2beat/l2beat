@@ -16,7 +16,7 @@ const proofSystemLabel: Record<ProjectScalingProofSystem['type'], string> = {
 export interface CommonScalingEntry
   extends CommonProjectEntry,
     FilterableEntry {
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed'
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
   isLayer3: boolean
 }
 
@@ -56,8 +56,7 @@ export function getCommonScalingEntry({
         ? undefined
         : `L3 on ${project.scalingInfo.hostChain.shortName ?? project.scalingInfo.hostChain.name}`,
     shortName: project.shortName,
-    backgroundColor:
-      tab === 'notReviewed' ? undefined : getRowBackgroundColor(statuses),
+    backgroundColor: getRowBackgroundColor(statuses),
     statuses,
     tab,
     filterable: [
@@ -120,16 +119,14 @@ export function getCommonScalingEntry({
 
 export function getScalingTab(
   project: Project<'scalingInfo' | 'statuses'>,
-): 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed' {
+): 'rollups' | 'validiumsAndOptimiums' | 'others' {
   const isRollup =
     project.scalingInfo.type === 'Optimistic Rollup' ||
     project.scalingInfo.type === 'ZK Rollup'
 
-  return project.statuses.reviewStatus === 'initialReview'
-    ? 'notReviewed'
-    : project.scalingInfo.type === 'Other'
-      ? 'others'
-      : isRollup
-        ? 'rollups'
-        : 'validiumsAndOptimiums'
+  return project.scalingInfo.type === 'Other'
+    ? 'others'
+    : isRollup
+      ? 'rollups'
+      : 'validiumsAndOptimiums'
 }

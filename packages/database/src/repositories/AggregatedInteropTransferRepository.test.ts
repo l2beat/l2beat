@@ -1080,7 +1080,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           UnixTime(300),
           ['ethereum', 'arbitrum'],
           ['ethereum', 'arbitrum'],
-          'lockAndMint',
+          ['lockAndMint'],
         )
 
         expect(result).toEqualUnsorted([record1, record3])

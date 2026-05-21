@@ -87,5 +87,11 @@ function _useConfigModels() {
     templateModel,
     isError,
     isPending,
+    isConfigPending,
+    isConfigError,
+    isTemplatePending,
+    isTemplateError,
+    isProjectPending,
+    isProjectError,
   }
 }

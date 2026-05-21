@@ -24,6 +24,7 @@ const TOKEN_A = {
   coingeckoListingTimestamp: null,
   comment: null,
   reviewed: false,
+  isPriceUnreliable: false,
 } satisfies AbstractTokenRecord
 
 describe(InteropMatchingLoop.name, () => {

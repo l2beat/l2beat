@@ -73,10 +73,19 @@ export function DiffView(props: DiffViewProps) {
     setIgnoreComments(ignoreComments)
   }, [ignoreComments])
 
-  editor?.onComputedDiff(setDiff)
-  editor?.onComputedDiff(() => {
-    editor?.getPlugin(LineSelector)?.scrollToSelection()
-  })
+  useEffect(() => {
+    if (!editor) {
+      return
+    }
+    const diffDisposable = editor.onComputedDiff(setDiff)
+    const scrollDisposable = editor.onComputedDiff(() => {
+      editor.getPlugin(LineSelector)?.scrollToSelection()
+    })
+    return () => {
+      diffDisposable.dispose()
+      scrollDisposable.dispose()
+    }
+  }, [editor, setDiff])
 
   return (
     <div className="flex h-full w-full flex-col">

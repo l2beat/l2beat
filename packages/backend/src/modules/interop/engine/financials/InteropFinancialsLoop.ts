@@ -17,10 +17,6 @@ import type {
   InteropTransferAnalyzerRecord,
 } from '../InteropTransferAnalyzer'
 import { DeployedTokenId } from './DeployedTokenId'
-import {
-  getRemappedPrice,
-  INTEROP_PRICE_REMAPPING_RULES,
-} from './priceRemappingRules'
 
 export type TokenInfos = Map<
   string,
@@ -29,18 +25,17 @@ export type TokenInfos = Map<
     symbol: string
     coingeckoId: string
     decimals: number
+    isPriceUnreliable: boolean
   }
 >
 
 interface InteropFinancialsLoopOptions {
   analyzer?: InteropTransferAnalyzer
   intervalMs?: number
-  priceRemappingRules?: typeof INTEROP_PRICE_REMAPPING_RULES
 }
 
 export class InteropFinancialsLoop extends TimeLoop {
   private readonly analyzer: InteropTransferAnalyzer | undefined
-  private readonly priceRemappingRules: typeof INTEROP_PRICE_REMAPPING_RULES
 
   constructor(
     private chains: { id: string; type: 'evm' }[],
@@ -52,8 +47,6 @@ export class InteropFinancialsLoop extends TimeLoop {
     super({ intervalMs: options.intervalMs ?? 10_000 })
     this.logger = logger.for(this)
     this.analyzer = options.analyzer
-    this.priceRemappingRules =
-      options.priceRemappingRules ?? INTEROP_PRICE_REMAPPING_RULES
   }
 
   async run() {
@@ -197,9 +190,22 @@ export class InteropFinancialsLoop extends TimeLoop {
     const tokenInfo = tokenInfos.get(id)
     if (!tokenInfo) return
 
-    const price =
-      getRemappedPrice(this.priceRemappingRules, tokenInfo, priceTimestamp) ??
-      prices.get(tokenInfo.coingeckoId)
+    if (rawAmount === undefined) {
+      this.logger.warn('Missing raw amount', { id })
+      return
+    }
+
+    const amount = calculateAmount(rawAmount, tokenInfo.decimals)
+
+    if (tokenInfo.isPriceUnreliable) {
+      return {
+        abstractTokenId: tokenInfo.abstractId,
+        symbol: tokenInfo.symbol,
+        amount,
+      }
+    }
+
+    const price = prices.get(tokenInfo.coingeckoId)
     if (price === undefined) {
       this.logger.warn('Missing price data', {
         id,
@@ -209,17 +215,6 @@ export class InteropFinancialsLoop extends TimeLoop {
       return
     }
 
-    if (rawAmount === undefined) {
-      this.logger.warn('Missing raw amount', { id })
-      return
-    }
-
-    // This calculation gives us 6 decimal places of precision while not
-    // calculating absurd values using basic numbers
-    const amount =
-      Number((rawAmount * 1_000_000n) / 10n ** BigInt(tokenInfo.decimals)) /
-      1_000_000
-
     return {
       abstractTokenId: tokenInfo.abstractId,
       symbol: tokenInfo.symbol,
@@ -228,6 +223,12 @@ export class InteropFinancialsLoop extends TimeLoop {
       valueUsd: price * amount,
     }
   }
+}
+
+function calculateAmount(rawAmount: bigint, decimals: number): number {
+  // This calculation gives us 6 decimal places of precision while not
+  // calculating absurd values using basic numbers
+  return Number((rawAmount * 1_000_000n) / 10n ** BigInt(decimals)) / 1_000_000
 }
 
 function getEmptyFinancialUpdate(): InteropTransferUpdate {
@@ -316,6 +317,7 @@ export async function getTokenInfos(
       symbol: deployedToken.symbol,
       coingeckoId: abstractToken.coingeckoId,
       decimals: deployedToken.decimals,
+      isPriceUnreliable: abstractToken.isPriceUnreliable,
     })
   }
 

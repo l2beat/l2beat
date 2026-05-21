@@ -6,7 +6,6 @@ import type { SEARCH_BAR_PROJECT_KEYS } from './utils/toSearchBarProject'
 export type SearchBarProjectEntry = SearchBarEntry & {
   type: 'project'
   id: string
-  isUpcoming: boolean
   iconUrl: string
   kind: 'layer2' | 'layer3' | 'da' | 'interop' | 'zkCatalog' | 'ecosystem'
   scalingCategory?: ProjectScalingCategory

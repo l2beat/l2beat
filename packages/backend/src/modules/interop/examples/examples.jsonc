@@ -404,6 +404,20 @@
       ]
     }
   },
+  "ccip-sus": {
+    "loadConfigs": ["ccip", "cctp-v1"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x943f6e5db9b06d8430a15dc73138c0cb21a8e131e08f33be6d4219761d478402"
+      }
+    ],
+    "expects": {
+      "events": ["cctp-v1.MessageReceived", "ccip.ExecutionStateChanged"],
+      "messages": [],
+      "transfers": ["cctp-v1.Transfer"]
+    }
+  },
   "ccip": {
     "loadConfigs": ["ccip"],
     "txs": [
@@ -1788,19 +1802,27 @@
       "transfers": [
         {
           "type": "axelar-squid.Transfer",
-          "bridgeType": "nonMinting"
+          "bridgeType": "nonMinting",
+          "src": { "financials": { "symbol": "axlUSDC" } },
+          "dst": { "financials": { "symbol": "USDC" } }
         },
         {
           "type": "axelar.Transfer",
-          "bridgeType": "lockAndMint"
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "axlUSDC" } },
+          "dst": { "financials": { "symbol": "USDC" } }
         },
         {
           "type": "axelar.Transfer",
-          "bridgeType": "lockAndMint"
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "axlUSDC" } },
+          "dst": { "financials": { "symbol": "USDC" } }
         },
         {
           "type": "axelar.Transfer",
-          "bridgeType": "lockAndMint"
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "USDC" } },
+          "dst": { "financials": { "symbol": "axlUSDC" } }
         }
       ]
     }
@@ -1848,15 +1870,21 @@
       "transfers": [
         {
           "type": "axelar-its.Transfer",
-          "bridgeType": "burnAndMint"
+          "bridgeType": "burnAndMint",
+          "src": { "financials": { "symbol": "Speed" } },
+          "dst": { "financials": { "symbol": "Speed" } }
         },
         {
           "type": "axelar-its.Transfer",
-          "bridgeType": "lockAndMint"
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "KLIMA" } },
+          "dst": { "financials": { "symbol": "KLIMA" } }
         },
         {
           "type": "axelar-its.Transfer",
-          "bridgeType": "lockAndMint"
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "G3" } },
+          "dst": { "financials": { "symbol": "G3" } }
         }
       ]
     }
@@ -2162,7 +2190,10 @@
           "plugin": "wormhole-ntt",
           "bridgeType": "lockAndMint",
           "src": { "chain": "solana" },
-          "dst": { "event": { "ctx": { "chain": "polygonpos" } } }
+          "dst": {
+            "event": { "ctx": { "chain": "polygonpos" } },
+            "financials": { "symbol": "GEOD" }
+          }
         }
       ]
     }
@@ -4166,7 +4197,7 @@
     "transfers": ["hyperlaneHwr.Transfer"]
   },
   "hwr": {
-    // 4 hwr transfers, one is USDC via cctp
+    // HWR transfers covering burn-and-mint, lock-and-mint, non-minting, and CCTP
     "loadConfigs": ["hyperlane"],
     "txs": [
       {
@@ -4236,6 +4267,15 @@
       {
         "chain": "optimism",
         "tx": "0x511e35b924f9c1da4845d0b6668870372dfcc925e1c8d931d4a27effe16e3184"
+      },
+      // Native ETH Ink → BSC (non-minting)
+      {
+        "chain": "ink",
+        "tx": "0x1ddd80773aac3e45c0e8b9a7b4e0dffad6071592345e7b42817e8fcd8dd950ab"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x767d19b3d64f2d7a9799c6339c41778f257f0099e6c94e5e045df1fa39b778eb"
       }
     ],
     "expects": {
@@ -4262,13 +4302,24 @@
         },
         {
           "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "lockAndMint",
           "src": { "financials": { "symbol": "oUSDT", "amount": 195.463566 } },
           "dst": { "financials": { "symbol": "USD₮", "amount": 195.463566 } }
         },
         {
           "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "lockAndMint",
           "src": { "financials": { "symbol": "USD₮", "amount": 1000 } },
           "dst": { "financials": { "symbol": "oUSDT", "amount": 1000 } }
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "nonMinting",
+          "src": { "tokenAddress": "native", "wasBurned": false },
+          "dst": {
+            "tokenAddress": "0x0000000000000000000000002170ed0880ac9a755fd29b2688956bd959f933f8",
+            "wasMinted": false
+          }
         }
       ],
       "messages": [
@@ -4328,6 +4379,43 @@
       }
     ]
   },
+  "hwr-batch": {
+    "loadConfigs": ["hyperlane"],
+    "txs": [
+      {
+        "chain": "avalanche",
+        "tx": "0xccce62bdeb690789733bdc469fe312c1d37354059532a10d41da10cb5288b110"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0xb058cf16205c0f56a77e3481fe853957b10c17fd720ee68bd09631945e411b6e"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6c3578ad22703440d7029df1003648ce6e2b76f54997bba8886054501a772bde"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "hyperlane.Message", "app": "hwr" },
+        { "type": "hyperlane.Message", "app": "hwr" }
+      ],
+      "transfers": [
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "tokenAmount": "80412292340654771535872" },
+          "dst": { "tokenAmount": "80412292340654771535872" }
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "tokenAmount": "184025619229273926194947" },
+          "dst": { "tokenAmount": "184025619229273926194947" }
+        }
+      ]
+    }
+  },
   "oft": {
     "loadConfigs": ["layerzero-v2"],
     // 4 oft transfers
@@ -4382,33 +4470,60 @@
       {
         "chain": "base",
         "tx": "0xac2254035ff788d5f9ee4bb15c0805eac0ec29e96a40083b48ecf2850fb6ed3a"
+      },
+      // arb -> celo 'lockmint' (USDT0 -> USDT nonMinting)
+      {
+        "chain": "arbitrum",
+        "tx": "0xe910b7f74846bd44996f9462c692fa1642458aadad24f3e182b9993ee5812687"
+      },
+      {
+        "chain": "celo",
+        "tx": "0x0ad4f466176064aff24c475fd716be481a2c805e7a28b3f8ca7c90c2ea624dde"
       }
     ],
     "expects": {
       "transfers": [
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "lockAndMint"
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "USDe" } },
+          "dst": { "financials": { "symbol": "USDe" } }
         },
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "lockAndMint"
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "USDT" } },
+          "dst": { "financials": { "symbol": "USD₮0" } }
         },
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "lockAndMint"
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "USD₮0" } },
+          "dst": { "financials": { "symbol": "USDT" } }
         },
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "burnAndMint"
+          "bridgeType": "burnAndMint",
+          "src": { "financials": { "symbol": "CHECK" } },
+          "dst": { "financials": { "symbol": "CHECK" } }
         },
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "nonMinting"
+          "bridgeType": "nonMinting",
+          "src": { "financials": { "symbol": "USDT" } },
+          "dst": { "financials": { "symbol": "USD₮" } }
         },
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "burnAndMint"
+          "bridgeType": "burnAndMint",
+          "src": { "financials": { "symbol": "OL" } },
+          "dst": { "financials": { "symbol": "OL" } }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "USD₮0" } },
+          "dst": { "financials": { "symbol": "USD₮" } }
         }
       ]
     }
@@ -4442,20 +4557,29 @@
         {
           "type": "oftv2.Transfer",
           "bridgeType": "burnAndMint",
-          "src": { "event": { "ctx": { "chain": "bsc" } } },
+          "src": {
+            "event": { "ctx": { "chain": "bsc" } },
+            "financials": { "symbol": "PRL" }
+          },
           "dst": { "chain": "solana" }
         },
         {
           "type": "oftv2.Transfer",
           "bridgeType": "lockAndMint",
-          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "financials": { "symbol": "USDT" }
+          },
           "dst": { "chain": "solana" }
         },
         {
           "type": "oftv2.Transfer",
           "bridgeType": "lockAndMint",
           "src": { "chain": "solana" },
-          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+          "dst": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "financials": { "symbol": "USDT" }
+          }
         }
       ]
     }

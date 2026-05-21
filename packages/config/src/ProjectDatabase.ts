@@ -69,7 +69,6 @@ const schema = {
   contracts: 'TEXT',
   discoveryInfo: 'TEXT',
 
-  isUpcoming: 'BOOLEAN',
   archivedAt: 'INTEGER',
   hasTestnet: 'BOOLEAN',
 } satisfies Schema<BaseProject>

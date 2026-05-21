@@ -44,7 +44,7 @@ export async function getScalingDaEntries() {
       select: ['statuses', 'scalingInfo', 'scalingDa', 'display'],
       optional: ['customDa', 'contracts'],
       where: ['scalingInfo'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      whereNot: ['archivedAt'],
     }),
     ps.getProjects({
       select: ['daLayer'],

@@ -12,10 +12,9 @@ import { getScalingActivityColumns } from './columns'
 
 interface Props {
   entries: ScalingActivityEntry[]
-  notReviewed?: boolean
 }
 
-export function ScalingActivityTable({ entries, notReviewed }: Props) {
+export function ScalingActivityTable({ entries }: Props) {
   const { metric } = useActivityMetricContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -26,13 +25,7 @@ export function ScalingActivityTable({ entries, notReviewed }: Props) {
     return tableEntries ?? []
   }, [entries, metric])
 
-  const columns = useMemo(
-    () =>
-      getScalingActivityColumns(metric, {
-        ignoreUnderReviewIcon: notReviewed,
-      }),
-    [metric, notReviewed],
-  )
+  const columns = useMemo(() => getScalingActivityColumns(metric), [metric])
 
   const table = useTable({
     columns,
