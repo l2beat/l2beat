@@ -44,7 +44,7 @@ export const Leaks = command({
       long: 'address',
       short: 'a',
       description:
-        'dump the full breakdown for a single entry (chain-prefixed address or unique name)',
+        'dump the full breakdown for a single entry (chain-prefixed address, e.g. eth:0x...)',
     }),
     all: flag({
       long: 'all',
