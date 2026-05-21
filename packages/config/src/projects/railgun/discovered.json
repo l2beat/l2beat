@@ -70,10 +70,7 @@
       "implementationNames": {
         "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": "IntervalPayouts"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "GovernorRewardsSweeper",
@@ -116,10 +113,7 @@
         "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B": "PausableUpgradableProxy",
         "eth:0x2ea76A3c4795DD1a5d206B285fD21b2Fb83EAf1a": "Sweeper"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "ProxyAdmin",
@@ -188,10 +182,7 @@
       "implementationNames": {
         "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8": "ProxyAdmin"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "eth:0x5a02474A3083Bc969f20F92E7a8bd3824EC607f0",
@@ -250,10 +241,7 @@
       "implementationNames": {
         "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": "VKeySetter"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "IntervalPayouts",
@@ -322,10 +310,7 @@
       "implementationNames": {
         "eth:0x7673e2E62435D25EDBcb58fD0d88c4C95806b10F": "IntervalPayouts"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
@@ -343,17 +328,6 @@
           "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
           "description": "stage replacement verification keys and manage the helper's local SETTING and WAITING states.",
           "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
-          "description": "update the Railgun smart wallet SNARK verifying keys through the Delegator.",
-          "role": ".verificationKeyDelegates",
-          "via": [
-            {
-              "address": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46"
-            }
-          ]
         },
         {
           "permission": "upgrade",
@@ -429,10 +403,7 @@
       "implementationNames": {
         "eth:0x859E0C1790b8a721F4943742603cDB685A73BA5D": "IntervalPayouts"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "VerificationKeySetter_9086",
@@ -486,10 +457,7 @@
       "implementationNames": {
         "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": "VKeySetter"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "GovernorRewards",
@@ -572,10 +540,7 @@
         "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f": "PausableUpgradableProxy",
         "eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b": "GovernorRewards"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "LegacySweeper",
@@ -621,10 +586,7 @@
         "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686": "PausableUpgradableProxy",
         "eth:0x9b1310BdCC19D172D0092240e33209a9156c8EE2": "Sweeper"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "eth:0xA4f2eA0a81179362558eBC1d2Bc817c9a0134ee3",
@@ -698,10 +660,7 @@
       "implementationNames": {
         "eth:0xa863262Bf5E97e8CFeC47a71402aC360C0983060": "IntervalPayouts"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "eth:0xaE8A17EB859E024cF6B541802B08932B2268dcEe",
@@ -895,10 +854,7 @@
       "implementationNames": {
         "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B": "Delegator"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
@@ -909,24 +865,6 @@
           "permission": "interact",
           "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
           "description": "stage replacement verification keys and manage the helper's local SETTING and WAITING states.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
-          "description": "update the Railgun smart wallet SNARK verifying keys through the Delegator.",
-          "role": ".verificationKeyDelegates",
-          "via": [
-            {
-              "address": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598"
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
           "role": ".owner"
         }
       ]
@@ -948,9 +886,7 @@
           "description": "switch the VKeySetter into COMMITTING so its owner can push stored verification keys to the verifier.",
           "role": ".delegator",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -959,9 +895,7 @@
           "description": "switch the VKeySetter into COMMITTING so its owner can push stored verification keys to the verifier.",
           "role": ".delegator",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -970,9 +904,7 @@
           "description": "add or remove allowed reward safety vectors.",
           "role": ".owner",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -981,9 +913,7 @@
           "description": "add or remove reward tokens from the distribution set.",
           "role": ".owner",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -992,9 +922,7 @@
           "description": "change the per-interval reward rate.",
           "role": ".owner",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1003,12 +931,8 @@
           "description": "pause, unpause, transfer proxy ownership, or upgrade the GovernorRewards implementation.",
           "role": ".$admin",
           "via": [
-            {
-              "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8"
-            },
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1017,9 +941,7 @@
           "description": "pause, unpause, transfer proxy ownership, or upgrade the legacy Sweeper implementation.",
           "role": ".$admin",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1034,9 +956,7 @@
           "description": "mint additional RAIL up to the hard cap and transfer token ownership.",
           "role": ".owner",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1045,9 +965,7 @@
           "description": "grant or revoke treasury roles, including who can move ETH and ERC20s out of the treasury.",
           "role": ".defaultAdminRoleMembers",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1056,12 +974,8 @@
           "description": "pause, unpause, transfer proxy ownership, or upgrade the treasury implementation.",
           "role": ".$admin",
           "via": [
-            {
-              "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8"
-            },
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1070,15 +984,9 @@
           "description": "transfer ETH or ERC20s out of the treasury.",
           "role": ".transferRoleMembers",
           "via": [
-            {
-              "address": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f"
-            },
-            {
-              "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8"
-            },
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f" },
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1087,12 +995,8 @@
           "description": "transfer ETH or ERC20s out of the treasury.",
           "role": ".transferRoleMembers",
           "via": [
-            {
-              "address": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686"
-            },
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1101,9 +1005,7 @@
           "description": "transfer ETH or ERC20s out of the treasury.",
           "role": ".transferRoleMembers",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1112,9 +1014,7 @@
           "description": "add or remove allowed SNARK safety vectors.",
           "role": ".owner",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1123,9 +1023,7 @@
           "description": "add or remove tokens from the shielding blocklist.",
           "role": ".owner",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1134,9 +1032,7 @@
           "description": "change the shield, unshield, and NFT fee schedule.",
           "role": ".owner",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1145,9 +1041,7 @@
           "description": "change the treasury that receives protocol fees.",
           "role": ".owner",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1156,12 +1050,8 @@
           "description": "pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet implementation.",
           "role": ".$admin",
           "via": [
-            {
-              "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8"
-            },
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1169,12 +1059,8 @@
           "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
           "role": "admin",
           "via": [
-            {
-              "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8"
-            },
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1182,9 +1068,7 @@
           "from": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686",
           "role": "admin",
           "via": [
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1192,12 +1076,8 @@
           "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
           "role": "admin",
           "via": [
-            {
-              "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8"
-            },
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         },
         {
@@ -1205,12 +1085,8 @@
           "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
           "role": "admin",
           "via": [
-            {
-              "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8"
-            },
-            {
-              "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            }
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
           ]
         }
       ],
@@ -1296,10 +1172,7 @@
       "implementationNames": {
         "eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC": "Voting"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "IntervalPayouts",
@@ -1368,10 +1241,7 @@
       "implementationNames": {
         "eth:0xCA9A2894e814305fAfc2BA83a70B34295b1DdE9D": "IntervalPayouts"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "Rail Token",
@@ -1406,17 +1276,12 @@
           "description": "Hard cap on total RAIL supply.",
           "type": "RISK_PARAMETER"
         },
-        "totalSupply": {
-          "description": "Current minted RAIL supply."
-        }
+        "totalSupply": { "description": "Current minted RAIL supply." }
       },
       "implementationNames": {
         "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D": "RailToken"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "Treasury",
@@ -1440,9 +1305,7 @@
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
-            ]
+            "members": ["eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"]
           },
           "TRANSFER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1511,10 +1374,7 @@
         "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40": "PausableUpgradableProxy",
         "eth:0xA092c7577354EA82a6c7e55B423c3DD80f0dF255": "Treasury"
       },
-      "category": {
-        "name": "Local Infrastructure",
-        "priority": 5
-      }
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Getters",
@@ -1545,10 +1405,7 @@
       "implementationNames": {
         "eth:0xe90275239D734899e8D94646139213F6F97bEB0E": "Getters"
       },
-      "category": {
-        "name": "Shared Infrastructure",
-        "priority": 4
-      }
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "Staking",
@@ -1590,10 +1447,7 @@
       "implementationNames": {
         "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20": "Staking"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "IntervalPayouts",
@@ -1662,10 +1516,7 @@
       "implementationNames": {
         "eth:0xf5F9d74FbFd04801DFf83425ff6C2002f60B921A": "IntervalPayouts"
       },
-      "category": {
-        "name": "Governance",
-        "priority": 3
-      }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "RailgunSmartWallet",
@@ -1745,10 +1596,7 @@
         "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9": "PausableUpgradableProxy",
         "eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b": "RailgunSmartWallet"
       },
-      "category": {
-        "name": "Local Infrastructure",
-        "priority": 5
-      }
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],
   "abis": {
@@ -2180,8 +2028,6 @@
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
     "railgun/Voting": "0xcf33f9d03116b81a59f25ba7bf17c38122eedecde0df775a365f78a34697bd68"
   },
-  "usedBlockNumbers": {
-    "ethereum": 24992832
-  },
-  "permissionsConfigHash": "0x4bb3862624385de7b78be9910a9378faeff1c49f16650e23a717757a96e764bb"
+  "usedBlockNumbers": { "ethereum": 25135980 },
+  "permissionsConfigHash": "0xedd462c0e7d5c3b0e3a6430193cae24752e4898aa3ec197cb654cfeedced168f"
 }

@@ -1,9 +1,9 @@
 Generated with discovered.json: 0x114aec919c4ef30655212e1a37b230364075a3cf
 
-# Diff at Wed, 20 May 2026 11:02:45 GMT:
+# Diff at Thu, 21 May 2026 14:01:31 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@f59f0d404af9ed9bb5c23cd4f8a0378debc582c7 block: 1777567242
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@9ea5541ca31cba65aa152c5d320ea978e69421e0 block: 1777567242
 - current timestamp: 1779274839
 
 ## Description

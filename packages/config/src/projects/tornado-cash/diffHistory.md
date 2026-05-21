@@ -1,93 +1,14 @@
-Generated with discovered.json: 0x8cec95aa6950e159c2dbdd393555165fb985ece5
+Generated with discovered.json: 0xd05f5aa608ee77727923af45c6302605c3f64a33
 
-# Diff at Wed, 20 May 2026 09:52:30 GMT:
+# Diff at Thu, 21 May 2026 14:00:53 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@f59f0d404af9ed9bb5c23cd4f8a0378debc582c7 block: 1779099959
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@9ea5541ca31cba65aa152c5d320ea978e69421e0 block: 1779099959
 - current timestamp: 1779270677
 
 ## Description
 
 Cleaned up tornado cash configs. Also, because this disco is on a different branch, spammy values reappeared.
-
-## Watched changes
-
-```diff
-    contract TornadoTreesV1 (eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417) [tornado-cash/TornadoTreesV1] {
-    +++ description: Legacy Tornado Trees contract that records deposit and withdrawal leaves from TornadoProxyV1 and maintains the roots later consumed by migration and mining logic.
-      values.blockNumber:
--        25121479
-+        25135664
-    }
-```
-
-```diff
-    contract TornadoTreesV2 (eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce) [tornado-cash/TornadoTreesV2] {
-    +++ description: Upgradeable batch-based Tornado Trees contract that reuses legacy tree state, queues new leaves from the newer proxy, and accepts batched root updates proven by a verifier.
-      values.blockNumber:
--        25121479
-+        25135664
-    }
-```
-
-```diff
-    contract TornadoStakingRewards (eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29) [tornado-cash/TornadoStakingRewards] {
-    +++ description: Upgradeable staking rewards contract that holds relayer stake, distributes burn-derived rewards to locked TORN holders, and lets governance recover TORN from the contract.
-+++ description: Global reward-per-TORN accumulator used to distribute burned relayer stake.
-+++ severity: LOW
-      values.accumulatedRewardPerTorn:
--        "11599697864931810575136983"
-+        "11615666940494547971650310"
-    }
-```
-
-```diff
-    contract RewardSwap (eth:0x5cab7692D4E94096462119ab7bF57319726Eed2A) [tornado-cash/RewardSwap] {
-    +++ description: Liquidity schedule that pays out TORN rewards for anonymity mining. Only the Miner contract can draw from it or adjust the reward weight.
-      values.getTimestamp:
--        1779099959
-+        1779270671
-    }
-```
-
-```diff
-    contract FeeManager (eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7) [tornado-cash/FeeManager] {
-    +++ description: Upgradeable fee manager that derives relayer burn fees for each Tornado instance from registry settings and Uniswap TWAP data.
-      values.feeDeviations.1.deviation:
--        12
-+        0
-      values.feeDeviations.2.deviation:
--        15
-+        0
-      values.feeDeviations.3.deviation:
--        13
-+        0
-      values.feeDeviations.6.deviation:
--        -239
-+        -224
-      values.feeDeviations.7.deviation:
--        5
-+        25
-      values.feeDeviations.16.deviation:
--        -374
-+        -364
-      values.feeDeviations.17.deviation:
--        -374
-+        -364
-      values.feeDeviations.18.deviation:
--        336
-+        358
-    }
-```
-
-```diff
-    contract TORN (eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C) [tornado-cash/TORN] {
-    +++ description: TORN governance token contract. Transfers start paused and can later be toggled by governance, which also controls the paused-transfer allowlist and token rescue functions.
-      values.blockTimestamp:
--        1779099959
-+        1779270671
-    }
-```
 
 ## Config/verification related changes
 
@@ -204,18 +125,6 @@ discovery. Values are for block 1779099959 (main branch discovery), not current.
 ```
 
 ```diff
-    contract TornadoTreesV1 (eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417) [tornado-cash/TornadoTreesV1] {
-    +++ description: Legacy Tornado Trees contract that records deposit and withdrawal leaves from TornadoProxyV1 and maintains the roots later consumed by migration and mining logic.
-      values.blockNumber:
-+        25121479
-      values.lastProcessedDepositLeaf:
-+        6144
-      values.lastProcessedWithdrawalLeaf:
-+        5632
-    }
-```
-
-```diff
     contract Pool_1000_USDC (eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D) [tornado-cash/TornadoCash_erc20] {
     +++ description: Fixed-denomination Tornado Cash pool for 1000 USDC deposits.
       name:
@@ -240,44 +149,6 @@ discovery. Values are for block 1779099959 (main branch discovery), not current.
 ```
 
 ```diff
-    contract TornadoTreesV2 (eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce) [tornado-cash/TornadoTreesV2] {
-    +++ description: Upgradeable batch-based Tornado Trees contract that reuses legacy tree state, queues new leaves from the newer proxy, and accepts batched root updates proven by a verifier.
-      values.blockNumber:
-+        25121479
-      values.depositsLength:
-+        92895
-      values.depositsV1Length:
-+        22008
-      values.lastProcessedDepositLeaf:
-+        70656
-      values.lastProcessedWithdrawalLeaf:
-+        74752
-      values.withdrawalsLength:
-+        85961
-      values.withdrawalsV1Length:
-+        14884
-    }
-```
-
-```diff
-    contract TornadoStakingRewards (eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29) [tornado-cash/TornadoStakingRewards] {
-    +++ description: Upgradeable staking rewards contract that holds relayer stake, distributes burn-derived rewards to locked TORN holders, and lets governance recover TORN from the contract.
-+++ description: Global reward-per-TORN accumulator used to distribute burned relayer stake.
-+++ severity: LOW
-      values.accumulatedRewardPerTorn:
-+        "11599697864931810575136983"
-    }
-```
-
-```diff
-    contract RewardSwap (eth:0x5cab7692D4E94096462119ab7bF57319726Eed2A) [tornado-cash/RewardSwap] {
-    +++ description: Liquidity schedule that pays out TORN rewards for anonymity mining. Only the Miner contract can draw from it or adjust the reward weight.
-      values.getTimestamp:
-+        1779099959
-    }
-```
-
-```diff
     contract Pool_1_WBTC (eth:0x610B717796ad172B316836AC95a2ffad065CeaB4) [tornado-cash/ERC20Tornado] {
     +++ description: Fixed-denomination Tornado Cash pool for 1 WBTC deposits.
       name:
@@ -286,17 +157,6 @@ discovery. Values are for block 1779099959 (main branch discovery), not current.
       description:
 -        "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment."
 +        "Fixed-denomination Tornado Cash pool for 1 WBTC deposits."
-    }
-```
-
-```diff
-    contract TORN (eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C) [tornado-cash/TORN] {
-    +++ description: TORN governance token contract. Transfers start paused and can later be toggled by governance, which also controls the paused-transfer allowlist and token rescue functions.
-      values.blockTimestamp:
-+        1779099959
-      fieldMeta.canUnpauseAfter.severity:
--        "HIGH"
-+        "LOW"
     }
 ```
 

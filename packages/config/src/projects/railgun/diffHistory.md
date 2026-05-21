@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xf4cf0474e43de803742779a2e4f647f18a803f53
+Generated with discovered.json: 0xa7814e9968bf1dc85f2b4c576381269c2f014807
 
 # Diff at Thu, 21 May 2026 07:19:18 GMT:
 
@@ -22,44 +22,6 @@ discovery. Values are for block 1777550988 (main branch discovery), not current.
       name:
 -        "RailToken"
 +        "Rail Token"
-    }
-```
-
-Generated with discovered.json: 0x8d5edd481f130572df0fb4202ad91ac58ad1fba3
-
-# Diff at Wed, 20 May 2026 10:58:53 GMT:
-
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@f59f0d404af9ed9bb5c23cd4f8a0378debc582c7 block: 1777550988
-- current timestamp: 1779274488
-
-## Description
-
-Clean up disco configs.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1777550988 (main branch discovery), not current.
-
-```diff
-    EOA  (eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624) {
-    +++ description: None
-      receivedPermissions.2:
-+        {"permission":"interact","from":"eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B","description":"update the Railgun smart wallet SNARK verifying keys through the Delegator.","role":".verificationKeyDelegates","via":[{"address":"eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46"}]}
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46","role":".owner"}]
-    }
-```
-
-```diff
-    EOA  (eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2) {
-    +++ description: None
-      receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B","description":"update the Railgun smart wallet SNARK verifying keys through the Delegator.","role":".verificationKeyDelegates","via":[{"address":"eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598"}]}
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598","role":".owner"}]
     }
 ```
 
