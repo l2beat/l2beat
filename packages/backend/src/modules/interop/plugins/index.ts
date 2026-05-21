@@ -221,8 +221,8 @@ export function createInteropPlugins(
       {
         name: 'axelar',
         plugins: [
-          new AxelarITSPlugin(), // should be run before Axelar
-          new AxelarPlugin(),
+          new AxelarITSPlugin(deps.oneSidedChains), // should be run before Axelar
+          new AxelarPlugin(deps.oneSidedChains),
         ],
       },
       new AcrossPlugin(deps.configs, deps.oneSidedChains),

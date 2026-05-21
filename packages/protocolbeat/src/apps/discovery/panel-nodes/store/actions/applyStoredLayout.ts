@@ -1,8 +1,12 @@
-import type { State } from '../State'
-import type { StoredNodeLayout } from '../utils/storage'
+import type { Node, State } from '../State'
+import { reconcileHiddenFields, type StoredNodeLayout } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export type ApplyLayoutMode = 'merge' | 'replace'
+
+function fieldNamesOf(node: Node): string[] {
+  return node.fields.map((f) => f.name)
+}
 
 export function applyStoredLayout(
   state: State,
@@ -18,7 +22,10 @@ export function applyStoredLayout(
       return {
         ...node,
         color: typeof savedColor === 'number' ? savedColor : 0,
-        hiddenFields: savedHiddenFields ?? [],
+        hiddenFields: reconcileHiddenFields(
+          fieldNamesOf(node),
+          savedHiddenFields ?? [],
+        ),
         box: {
           ...node.box,
           x: savedBox?.x ?? node.box.x,
@@ -44,7 +51,13 @@ export function applyStoredLayout(
       next = { ...next, color: savedColor }
     }
     if (savedHiddenFields !== undefined) {
-      next = { ...next, hiddenFields: savedHiddenFields }
+      next = {
+        ...next,
+        hiddenFields: reconcileHiddenFields(
+          fieldNamesOf(next),
+          savedHiddenFields,
+        ),
+      }
     }
     return next
   })
@@ -56,8 +69,7 @@ export function applyStoredLayout(
       ? fileHidden
       : [...new Set([...state.hidden, ...fileHidden])]
 
-  return updateNodePositions({
-    ...state,
+  return updateNodePositions(state, {
     nodes: updatedNodes,
     hidden: newHidden,
   })

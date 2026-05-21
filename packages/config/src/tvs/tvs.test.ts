@@ -13,11 +13,12 @@ type FormulaTest = (formula: Formula) => void
 
 describe('tvs', () => {
   const projects = getProjects().filter((p) => p.tvsConfig)
-  const supportedChains = new Set(
+  const chainSinceTimestamps = new Map(
     getProjects()
       .filter((p) => p.chainConfig)
-      .map((c) => c.chainConfig!.name),
+      .map((c) => [c.chainConfig!.name, c.chainConfig!.sinceTimestamp]),
   )
+  const supportedChains = new Set(chainSinceTimestamps.keys())
 
   it('throws when token config has wrong schema', () => {
     const mockTvsConfig = {
@@ -125,6 +126,21 @@ describe('tvs', () => {
           }
         }
 
+        // each onchain leg's sinceTimestamp must be >= its chain's sinceTimestamp,
+        // otherwise the TokenValueIndexer asks for amounts the OnchainAmountIndexer
+        // never stored
+        const sinceAfterChainGenesis: FormulaTest = (formula) => {
+          if (isOnchainAmountFormula(formula)) {
+            const chainSince = chainSinceTimestamps.get(formula.chain)
+            if (chainSince !== undefined) {
+              assert(
+                formula.sinceTimestamp >= chainSince,
+                `sinceTimestamp ${formula.sinceTimestamp} on chain ${formula.chain} predates chain.sinceTimestamp ${chainSince} for token ${token.id}`,
+              )
+            }
+          }
+        }
+
         // first argument of diff should have the earliest sinceTimestamp
         const diffWithHasCorrectSince: FormulaTest = (formula) => {
           if (formula.type === 'calculation' && formula.operator === 'diff') {
@@ -144,6 +160,7 @@ describe('tvs', () => {
           hasCorrectNumberOfArguments,
           noMixedArguments,
           chainIsSupported,
+          sinceAfterChainGenesis,
           diffWithHasCorrectSince,
         ]
 

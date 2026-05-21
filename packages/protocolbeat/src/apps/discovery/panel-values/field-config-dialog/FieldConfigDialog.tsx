@@ -57,6 +57,9 @@ export function FieldConfigDialog(props: Props) {
   const templateHandlerString =
     models.templateModel.getFieldHandlerString(fieldName)
 
+  const configEditString = models.configModel.getFieldEditString(fieldName)
+  const templateEditString = models.templateModel.getFieldEditString(fieldName)
+
   const activeModel =
     activeTab === 'template' ? models.templateModel : models.configModel
 
@@ -230,6 +233,10 @@ export function FieldConfigDialog(props: Props) {
                 </div>
               </ConfigRow>
 
+              <ConfigRow headline="Edit">
+                <Code content={configEditString ?? 'No edit formula defined'} />
+              </ConfigRow>
+
               <ConfigRow headline="Description">
                 <DescriptionEditor
                   content={configDescription}
@@ -334,6 +341,12 @@ export function FieldConfigDialog(props: Props) {
                         fieldName={fieldName}
                       />
                     </div>
+                  </ConfigRow>
+
+                  <ConfigRow headline="Edit">
+                    <Code
+                      content={templateEditString ?? 'No edit formula defined'}
+                    />
                   </ConfigRow>
 
                   <ConfigRow headline="Description">

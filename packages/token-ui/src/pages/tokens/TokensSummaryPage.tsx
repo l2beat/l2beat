@@ -193,6 +193,14 @@ export function TokensSummaryPage() {
                     label="Reviewed"
                     value={selectedAbstractToken.reviewed ? 'Yes' : 'No'}
                   />
+                  <ItemWithLabel
+                    label="Price Reliability"
+                    value={
+                      selectedAbstractToken.isPriceUnreliable
+                        ? 'Unreliable'
+                        : 'Reliable'
+                    }
+                  />
                 </div>
               )}
             </CardContent>

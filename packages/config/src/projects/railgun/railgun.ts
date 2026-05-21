@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatLargeNumber,
@@ -13,7 +12,10 @@ import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { getTokenByAddress } from '../../tokens/getTokenByAddress'
+import {
+  getTokenByAddress,
+  getTokenBySymbol,
+} from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 
 const discovery = new ProjectDiscovery('railgun')
@@ -31,7 +33,10 @@ const TRACKED_TOKENS = [
   { address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', symbol: 'WBTC' },
   { address: '0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4', symbol: 'NEAR' },
   { address: '0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb', symbol: 'FLUID' },
+  { address: '0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D', symbol: 'RAIL' },
 ]
+
+const RAIL_TOKEN = getTokenBySymbol('RAIL')
 
 const railgunCore = discovery.getContract('RailgunSmartWallet')
 const stakeLocktime = discovery.getContractValue<number>(
@@ -70,7 +75,6 @@ const quorum = discovery.getContractValueBigInt('Voting', 'QUORUM')
 
 const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
   const resolved = getTokenByAddress(token.address)
-  assert(resolved, `Unknown token ${token.address}`)
 
   return {
     token: {
@@ -166,7 +170,7 @@ Because Railgun allows private transfers and interactions with DeFi, anonymity s
     tokens: [token.symbol],
   })),
   tvsInfo: {
-    associatedTokens: [],
+    associatedTokens: [{ symbol: RAIL_TOKEN.symbol, icon: RAIL_TOKEN.iconUrl }],
     warnings: [],
   },
   privacyInfo: {

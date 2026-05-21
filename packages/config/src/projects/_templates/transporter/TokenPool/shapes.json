@@ -50,7 +50,7 @@
     "blockNumber": 22188285
   },
   "UpgradeableLockReleaseTokenPool": {
-    "hash": "0x5b187ea9039835912993acbbf87e6b24558e090e020ab927d3b0c218e6b3b807",
+    "hash": "0x014775cd2c8664d048385d99c6f2576c23043f716e65cac2bb9892307f4c25c1",
     "address": "eth:0x72427dA7EFBa1585E94F30C72221d8d394aE3Bb7",
     "blockNumber": 22188285
   },
@@ -135,7 +135,7 @@
     "blockNumber": 23345741
   },
   "UpgradeableLockReleaseTokenPoolV2": {
-    "hash": "0x39415a58cb2a072d97bd39f2f579e01c82ace7c06e80bf5619dc0be2bf2620e8",
+    "hash": "0x9c4424aa5c0675489f24e9cf8b9bf148ee3c51c282747bbf58f9bbba8bfd05d9",
     "address": "eth:0x2Ce400703dAcc37b7edFA99D228b8E70a4d3831B",
     "blockNumber": 23345741
   },
@@ -230,7 +230,7 @@
     "blockNumber": 24183337
   },
   "TokenTransferorPool.sol": {
-    "hash": "0x516d6dbfbb8874829fafd0861527b63a2ea203bdbeb9ed02d392b49d0fa7786d",
+    "hash": "0x00eb93a307cf1a2965f223e4c6b7b89ad32030c22088ce8557613f26bc559844",
     "address": "eth:0xEB322952C9Ba0E204a1ab341Fc18832A9700D54a",
     "blockNumber": 24183337
   },
