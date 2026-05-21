@@ -14,12 +14,14 @@ interface ConfigSkeleton {
   chains?: Record<string, object>
   import?: string[]
   archived?: boolean
+  maxAddresses?: number
 }
 
 export function initDiscovery(
   project: string,
   chain: string,
   initialAddresses: EthereumAddress[],
+  maxAddresses?: number,
 ) {
   const paths = getDiscoveryPaths()
   const projectPath = path.join(paths.discovery, project)
@@ -35,6 +37,7 @@ export function initDiscovery(
     existingConfig,
     project,
     initialAddresses.map((a) => ChainSpecificAddress.fromLong(chain, a)),
+    maxAddresses,
   )
 
   const content = formatJson(config)
@@ -45,6 +48,7 @@ function createEmptyConfig(
   existingConfig: ConfigSkeleton,
   project: string,
   initialAddresses: ChainSpecificAddress[],
+  maxAddresses?: number,
 ) {
   const newConfig = {
     $schema: '../../../../discovery/schemas/config.v2.schema.json',
@@ -54,6 +58,7 @@ function createEmptyConfig(
         ? ['../globalConfig.jsonc']
         : undefined,
     archived: existingConfig.archived ?? undefined,
+    maxAddresses: existingConfig.maxAddresses ?? maxAddresses,
     initialAddresses,
   }
 
