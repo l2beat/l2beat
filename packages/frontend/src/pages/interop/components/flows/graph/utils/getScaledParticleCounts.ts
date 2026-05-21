@@ -24,18 +24,30 @@ export function getScaledParticleCounts(
   if (baseExactCounts.length === 0)
     return { counts: [], dollarsPerParticle: baseDollarsPerParticle }
 
-  let dollarsPerParticle = baseDollarsPerParticle
+  const maxBaseCount = Math.max(...baseExactCounts)
+  const totalBaseCount = baseExactCounts.reduce((sum, c) => sum + c, 0)
 
-  while (true) {
-    const scale = baseDollarsPerParticle / dollarsPerParticle
-    const counts = baseExactCounts.map((c) => c * scale)
+  const minDppForPerFlowCap =
+    (maxBaseCount * baseDollarsPerParticle) / MAX_PARTICLES_PER_FLOW
+  const minDppForTotalCap =
+    (totalBaseCount * baseDollarsPerParticle) / MAX_TOTAL_PARTICLES
+  const minRequiredDpp = Math.max(
+    baseDollarsPerParticle,
+    minDppForPerFlowCap,
+    minDppForTotalCap,
+  )
 
-    const maxCount = Math.max(...counts)
-    const totalCount = counts.reduce((sum, c) => sum + c, 0)
+  const stepsNeeded = Math.max(
+    0,
+    Math.ceil(
+      (minRequiredDpp - baseDollarsPerParticle) / DOLLARS_PER_PARTICLE_STEP,
+    ),
+  )
+  const dollarsPerParticle =
+    baseDollarsPerParticle + stepsNeeded * DOLLARS_PER_PARTICLE_STEP
 
-    if (maxCount <= MAX_PARTICLES_PER_FLOW && totalCount <= MAX_TOTAL_PARTICLES)
-      return { counts, dollarsPerParticle }
+  const scale = baseDollarsPerParticle / dollarsPerParticle
+  const counts = baseExactCounts.map((c) => c * scale)
 
-    dollarsPerParticle += DOLLARS_PER_PARTICLE_STEP
-  }
+  return { counts, dollarsPerParticle }
 }
