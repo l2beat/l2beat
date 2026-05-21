@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x6f5b7e44f17877392981421bd2baa0902857975c
+Generated with discovered.json: 0x3bef697f11f62aba7d2cb647d508e03888c4af8b
 
-# Diff at Wed, 20 May 2026 14:05:46 GMT:
+# Diff at Thu, 21 May 2026 13:56:18 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@c4d95930574ebdab2a986e673553b1824111990a block: 1777388210
+- comparing to: main@3f32b799a8ae1f1caacd37bf2e2cc7b1dec2ddeb block: 1777388210
 - current timestamp: 1778572081
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Re-discovery on top of merged `main`. The ManyChainMultiSig template now sets `$members` (flat union of all signers across the tree) and `$threshold` (recursively-computed minimum signatures to satisfy the root quorum), so every ARM_Multisig now renders on the L2BEAT frontend the same way Gnosis Safes do (Multisig type badge, M/N name prefix, full participants list). The contract description disclaims the flat-M-of-N reading, surfaces the root quorum inline, and hides the per-group breakdown behind a click-to-expand collapsible. No upstream protocol changes; permissions and structural data are unchanged.
 
 ## Watched changes
 
@@ -16,38 +16,40 @@ Provide description of changes. This section will be preserved.
     contract ARM_Multisig4 (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) [transporter/ManyChainMultiSig] {
     +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 8 signatures across 67 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 8-of-67 multisig and is strictly more constrained. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-3, parent=0, childGroups=(20,21,22) | Group 20: 2-of-14, parent=19, signers=14 | Group 21: 2-of-12, parent=19, signers=12 | Group 22: 2-of-5, parent=19, signers=5]. The owner can rotate the entire signer tree.
       receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"add a 'message interceptor' contract that can gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
++        {"permission":"interact","from":"eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52","description":"update the list of authorized callers that can update the nonces.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can arbitrarily update signers and transmitters set.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"add a 'message interceptor' contract that can gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.3:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can disable source chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can arbitrarily update signers and transmitters set.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.4:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can enable 'RMN' verification for messages coming from a certain route, which require additional signatures to be accepted.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can disable source chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.5:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the fee quoter contract, where signers save new prices used for fee estimation.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can enable 'RMN' verification for messages coming from a certain route, which require additional signatures to be accepted.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.6:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the fee quoter contract, where signers save new prices used for fee estimation.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.7:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the time before permissionless execution of messages, currently set to 1h.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.8:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the time before permissionless execution of messages, currently set to 1h.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.9:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.10:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.11:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.12:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.13:
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.14:
 +        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update token and destination-chain gas prices used for fee calculation.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.21:
-+        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set a 'message interceptor' contract to gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.22:
-+        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set the permissioned actor who can manage the sender whitelist.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
++        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set a 'message interceptor' contract to gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
       receivedPermissions.23:
++        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set the permissioned actor who can manage the sender whitelist.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.24:
 +        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can update the FeeQuoter address used for fee estimations.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.25:
+      receivedPermissions.26:
 +        {"permission":"interact","from":"eth:0xb22764f98dD05c789929716D677382Df22C05Cb6","description":"can register arbitrary tokens with an arbitrary administrator.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
     }
 ```
@@ -62,38 +64,40 @@ Provide description of changes. This section will be preserved.
     contract ARMTimelock (eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449) [transporter/RBACTimelock] {
     +++ description: Role based timelock used to administer CCIP contracts.
       directlyReceivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"add a 'message interceptor' contract that can gate messages based on content.","role":".owner"}
++        {"permission":"interact","from":"eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52","description":"update the list of authorized callers that can update the nonces.","role":".owner"}
       directlyReceivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can arbitrarily update signers and transmitters set.","role":".owner"}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"add a 'message interceptor' contract that can gate messages based on content.","role":".owner"}
       directlyReceivedPermissions.3:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can disable source chains.","role":".owner"}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can arbitrarily update signers and transmitters set.","role":".owner"}
       directlyReceivedPermissions.4:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can enable 'RMN' verification for messages coming from a certain route, which require additional signatures to be accepted.","role":".owner"}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can disable source chains.","role":".owner"}
       directlyReceivedPermissions.5:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the fee quoter contract, where signers save new prices used for fee estimation.","role":".owner"}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can enable 'RMN' verification for messages coming from a certain route, which require additional signatures to be accepted.","role":".owner"}
       directlyReceivedPermissions.6:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.","role":".owner"}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the fee quoter contract, where signers save new prices used for fee estimation.","role":".owner"}
       directlyReceivedPermissions.7:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the time before permissionless execution of messages, currently set to 1h.","role":".owner"}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.","role":".owner"}
       directlyReceivedPermissions.8:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner"}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the time before permissionless execution of messages, currently set to 1h.","role":".owner"}
       directlyReceivedPermissions.9:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner"}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner"}
       directlyReceivedPermissions.10:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner"}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner"}
       directlyReceivedPermissions.11:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner"}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner"}
       directlyReceivedPermissions.12:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead).","role":".owner"}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner"}
       directlyReceivedPermissions.13:
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead).","role":".owner"}
+      directlyReceivedPermissions.14:
 +        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update token and destination-chain gas prices used for fee calculation.","role":".getAllAuthorizedCallers"}
-      directlyReceivedPermissions.19:
-+        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set a 'message interceptor' contract to gate messages based on content.","role":".owner"}
       directlyReceivedPermissions.20:
-+        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set the permissioned actor who can manage the sender whitelist.","role":".owner"}
++        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set a 'message interceptor' contract to gate messages based on content.","role":".owner"}
       directlyReceivedPermissions.21:
++        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set the permissioned actor who can manage the sender whitelist.","role":".owner"}
+      directlyReceivedPermissions.22:
 +        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can update the FeeQuoter address used for fee estimations.","role":".owner"}
-      directlyReceivedPermissions.23:
+      directlyReceivedPermissions.24:
 +        {"permission":"interact","from":"eth:0xb22764f98dD05c789929716D677382Df22C05Cb6","description":"can register arbitrary tokens with an arbitrary administrator.","role":".owner"}
     }
 ```
@@ -142,38 +146,40 @@ Provide description of changes. This section will be preserved.
     contract ARM_GnosisSafe (eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) [GnosisSafe] {
     +++ description: None
       receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"add a 'message interceptor' contract that can gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52","description":"update the list of authorized callers that can update the nonces.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can arbitrarily update signers and transmitters set.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"add a 'message interceptor' contract that can gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.3:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can disable source chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can arbitrarily update signers and transmitters set.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.4:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can enable 'RMN' verification for messages coming from a certain route, which require additional signatures to be accepted.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can disable source chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.5:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the fee quoter contract, where signers save new prices used for fee estimation.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can enable 'RMN' verification for messages coming from a certain route, which require additional signatures to be accepted.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.6:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the fee quoter contract, where signers save new prices used for fee estimation.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.7:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the time before permissionless execution of messages, currently set to 1h.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.8:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the time before permissionless execution of messages, currently set to 1h.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.9:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.10:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.11:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.12:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.13:
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.14:
 +        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update token and destination-chain gas prices used for fee calculation.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.21:
-+        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set a 'message interceptor' contract to gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.22:
-+        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set the permissioned actor who can manage the sender whitelist.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set a 'message interceptor' contract to gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.23:
++        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set the permissioned actor who can manage the sender whitelist.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.24:
 +        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can update the FeeQuoter address used for fee estimations.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.25:
+      receivedPermissions.26:
 +        {"permission":"interact","from":"eth:0xb22764f98dD05c789929716D677382Df22C05Cb6","description":"can register arbitrary tokens with an arbitrary administrator.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
     }
 ```
@@ -182,38 +188,40 @@ Provide description of changes. This section will be preserved.
     contract ARM_Multisig1 (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) [transporter/ManyChainMultiSig] {
     +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 38 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-38 multisig and is strictly more constrained. Root: 2-of-4, childGroups=(1,2,3,4). [click for per-group breakdown: Group 1: 2-of-14, parent=0, signers=14 | Group 2: 2-of-12, parent=0, signers=12 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
       receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"add a 'message interceptor' contract that can gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52","description":"update the list of authorized callers that can update the nonces.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can arbitrarily update signers and transmitters set.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"add a 'message interceptor' contract that can gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.3:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can disable source chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can arbitrarily update signers and transmitters set.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.4:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can enable 'RMN' verification for messages coming from a certain route, which require additional signatures to be accepted.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can disable source chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.5:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the fee quoter contract, where signers save new prices used for fee estimation.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can enable 'RMN' verification for messages coming from a certain route, which require additional signatures to be accepted.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.6:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the fee quoter contract, where signers save new prices used for fee estimation.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.7:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the time before permissionless execution of messages, currently set to 1h.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.8:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the time before permissionless execution of messages, currently set to 1h.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.9:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.10:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.11:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.12:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.13:
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.14:
 +        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update token and destination-chain gas prices used for fee calculation.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.21:
-+        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set a 'message interceptor' contract to gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.22:
-+        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set the permissioned actor who can manage the sender whitelist.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set a 'message interceptor' contract to gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.23:
++        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set the permissioned actor who can manage the sender whitelist.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.24:
 +        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can update the FeeQuoter address used for fee estimations.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.25:
+      receivedPermissions.26:
 +        {"permission":"interact","from":"eth:0xb22764f98dD05c789929716D677382Df22C05Cb6","description":"can register arbitrary tokens with an arbitrary administrator.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
     }
 ```
@@ -222,38 +230,40 @@ Provide description of changes. This section will be preserved.
     contract ARM_Multisig2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) [transporter/ManyChainMultiSig] {
     +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 41 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-41 multisig and is strictly more constrained. Root: 2-of-4, childGroups=(1,2,3,4). [click for per-group breakdown: Group 1: 2-of-15, parent=0, signers=15 | Group 2: 2-of-14, parent=0, signers=14 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
       receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"add a 'message interceptor' contract that can gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52","description":"update the list of authorized callers that can update the nonces.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can arbitrarily update signers and transmitters set.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"add a 'message interceptor' contract that can gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.3:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can disable source chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can arbitrarily update signers and transmitters set.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.4:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can enable 'RMN' verification for messages coming from a certain route, which require additional signatures to be accepted.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can disable source chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.5:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the fee quoter contract, where signers save new prices used for fee estimation.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can enable 'RMN' verification for messages coming from a certain route, which require additional signatures to be accepted.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.6:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the fee quoter contract, where signers save new prices used for fee estimation.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.7:
-+        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the time before permissionless execution of messages, currently set to 1h.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.8:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5","description":"can update the time before permissionless execution of messages, currently set to 1h.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.9:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.10:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.11:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.12:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.13:
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.14:
 +        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update token and destination-chain gas prices used for fee calculation.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.21:
-+        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set a 'message interceptor' contract to gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.22:
-+        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set the permissioned actor who can manage the sender whitelist.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
++        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set a 'message interceptor' contract to gate messages based on content.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
       receivedPermissions.23:
++        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can set the permissioned actor who can manage the sender whitelist.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.24:
 +        {"permission":"interact","from":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","description":"can update the FeeQuoter address used for fee estimations.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.25:
+      receivedPermissions.26:
 +        {"permission":"interact","from":"eth:0xb22764f98dD05c789929716D677382Df22C05Cb6","description":"can register arbitrary tokens with an arbitrary administrator.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
     }
 ```
@@ -266,8 +276,8 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract NonceManager (eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52) [N/A]
-    +++ description: None
+    contract NonceManager (eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52) [ccip/NonceManager]
+    +++ description: Contract maintaining message nonces,  which are updated by the OnRamp and OffRamps.
 ```
 
 ```diff
@@ -303,7 +313,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) [transporter/TokenAdminRegistry]
-    +++ description: None
+    +++ description: Central token registry that defines token pools and administrative rights to change such token pools. Tokens can either be centrally administered by Chainlink, or by the actual token admin / issuer.
 ```
 
 ## Source code changes
@@ -1295,13 +1305,21 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
       description:
 -        "RMNRemote contract behind the ARM proxy. It exposes RMN curse state and RMN 1.6 report verification. For pre-1.6 isBlessed() checks, it relays to the legacy RMN contract supplied in the constructor."
 +        "Remote Risk Management Network contract used by CCIP to verify RMN reports and expose cursed subjects."
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the source-chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects:
++        []
 +++ description: RMN signers authorized to sign v1.6 commit reports for this chain. Each signer has a recoverable EVM-style public key; ECDSA recovery against report digests must yield one of these addresses. fSign+1 signatures are required for verify() to accept a report; total signers must be at least 2*fSign+1.
       values.rmnSigners:
 +        ["eth:0x0100000000000000000000000000000000000000"]
+      fieldMeta.getCursedSubjects.description:
+-        "Subjects currently cursed by RMNRemote. An empty list means there is no active global or route-specific curse in this contract."
++        "Raw bytes16 subjects currently cursed by RMNRemote (s_cursedSubjects.values()). Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001 (kills every CCIP path through this RMN) or bytes16(uint128(chainSelector)) (kills inbound traffic from that source chain). An empty list means no curse is active. See cursedSubjects for the decoded view."
       fieldMeta.rmnSigners:
 +        {"description":"RMN signers authorized to sign v1.6 commit reports for this chain. Each signer has a recoverable EVM-style public key; ECDSA recovery against report digests must yield one of these addresses. fSign+1 signatures are required for verify() to accept a report; total signers must be at least 2*fSign+1."}
       fieldMeta.owner:
 +        {"severity":"HIGH","type":"PERMISSION"}
+      fieldMeta.cursedSubjects:
++        {"description":"Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the source-chain name from the CCIPChainName mapping (decimal selector when not in the mapping)."}
     }
 ```
 

@@ -223,6 +223,15 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "update the list of authorized callers that can update the nonces.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "add a 'message interceptor' contract that can gate messages based on content.",
           "role": ".owner",
@@ -1016,10 +1025,12 @@
       "name": "NonceManager",
       "address": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
       "type": "Contract",
+      "template": "ccip/NonceManager",
       "sourceHashes": [
         "0x3e5b26bc92f667e2e323060ed8fe069149070f6ed966ff21385fa4ac22544303"
       ],
       "proxyType": "immutable",
+      "description": "Contract maintaining message nonces,  which are updated by the OnRamp and OffRamps.",
       "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1744752959,
       "sinceBlock": 22277107,
@@ -5447,6 +5458,12 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "update the list of authorized callers that can update the nonces.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "add a 'message interceptor' contract that can gate messages based on content.",
           "role": ".owner"
@@ -8574,6 +8591,7 @@
         "0xfb7fdb28fab4aff784a3fb152883a6c5fc7ac82b614385e560f713752a039e40"
       ],
       "proxyType": "immutable",
+      "description": "Central token registry that defines token pools and administrative rights to change such token pools. Tokens can either be centrally administered by Chainlink, or by the actual token admin / issuer.",
       "deployerAddress": "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414",
       "sinceTimestamp": 1726156727,
       "sinceBlock": 20735575,
@@ -9748,6 +9766,18 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "update the list of authorized callers that can update the nonces.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "add a 'message interceptor' contract that can gate messages based on content.",
           "role": ".owner",
@@ -10121,6 +10151,18 @@
           "permission": "interact",
           "from": "eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc",
           "description": "rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "update the list of authorized callers that can update the nonces.",
           "role": ".owner",
           "via": [
             {
@@ -10704,6 +10746,18 @@
           "permission": "interact",
           "from": "eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc",
           "description": "rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "update the list of authorized callers that can update the nonces.",
           "role": ".owner",
           "via": [
             {
@@ -11299,6 +11353,7 @@
       "sinceBlock": 22277104,
       "values": {
         "$immutable": true,
+        "cursedSubjects": [],
         "getCursedSubjects": [],
         "getLocalChainSelector": "5009297550715157269",
         "getReportDigestHeader": "0x9651943783dbf81935a60e98f218a9d9b5b28823fb2228bbd91320d632facf53",
@@ -11333,7 +11388,10 @@
           "description": "RMNRemote.verify() requires fSign+1 valid RMN signature. This is separate from the legacy isBlessed() passthrough used by CommitStoreV1."
         },
         "getCursedSubjects": {
-          "description": "Subjects currently cursed by RMNRemote. An empty list means there is no active global or route-specific curse in this contract."
+          "description": "Raw bytes16 subjects currently cursed by RMNRemote (s_cursedSubjects.values()). Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001 (kills every CCIP path through this RMN) or bytes16(uint128(chainSelector)) (kills inbound traffic from that source chain). An empty list means no curse is active. See cursedSubjects for the decoded view."
+        },
+        "cursedSubjects": {
+          "description": "Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the source-chain name from the CCIPChainName mapping (decimal selector when not in the mapping)."
         },
         "isCursed": {
           "description": "True when RMNRemote has an active global or legacy curse."
@@ -12430,6 +12488,7 @@
     ]
   },
   "usedTemplates": {
+    "ccip/NonceManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "transporter/ARMProxy": "0x0d78981b088695fa8edd067139f44a81159efbe8e385b468e8b111de70c9eacc",
     "transporter/CallProxy": "0x4770aa5c570af6c39a6fa38038b1833dab91e11e67547ccda6021e195e48fe3e",
@@ -12440,11 +12499,11 @@
     "transporter/OnRampV1_6": "0x3cc316f14754573a007da5904cb802e9eb28fd79b6095b660550bec009b9e392",
     "transporter/RBACTimelock": "0x7e2aacb693365ed1a6996fe36a483ba61e87663e13acf6dcac56f4ecd50cc9e2",
     "transporter/RegistryModuleOwnerCustom": "0x31426f3737f5820435725410fc412b5e921a0c3da71f4a75869eaa59fa2af379",
-    "transporter/RMNRemote": "0x8ac5e26121a1c4c4e17e82ac7a23506a0c827c089a24d6004e0bca715861d3e1",
+    "transporter/RMNRemote": "0xcdc147715d75ca79489ca5912b26252c69c9c65da8f64943ed212b469096d585",
     "transporter/RouterV1_2_0": "0x98bd2d7f9da868cf6fb53bd2fa80bd63f67e712945dd1b93ca5c85d4e65effe7",
     "transporter/TokenAdminRegistry": "0x30a93231c3c7ddad9e5b1e6cae1a24dc4868b220564302bf4022c349b3990e0d",
     "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d"
   },
   "usedBlockNumbers": { "ethereum": 25077639 },
-  "permissionsConfigHash": "0x3837c6fadf27c976022ef9e6b832b10576929796aacb1fe93d2696dd28fb673d"
+  "permissionsConfigHash": "0x96bee4156df6d89ea021788d6c40248c0846a985229fc09afc8186d662541643"
 }
