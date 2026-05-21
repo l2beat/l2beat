@@ -124,7 +124,7 @@ export class MonacoCodeEditor<T extends EditorType> {
     for (const callback of this.callbacks) {
       callback.dispose()
     }
-    this.callbacks.length = 0
+    this.callbacks = []
   }
 }
 
