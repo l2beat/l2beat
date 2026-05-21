@@ -1,3 +1,4 @@
+import type { ProjectGovernanceInfo } from '@l2beat/config'
 import { DiagramImage } from '~/components/DiagramImage'
 import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
@@ -10,22 +11,13 @@ import {
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
-type GovernanceInfoSectionKey =
-  | 'securityCouncil'
-  | 'upgrades'
-  | 'tokenGovernance'
-
-type GovernanceInfoSection = Record<string, string>
-
-export type GovernanceInfo = Partial<
-  Record<GovernanceInfoSectionKey, GovernanceInfoSection>
->
+type GovernanceInfoSectionKey = keyof ProjectGovernanceInfo
 
 export interface UpgradesAndGovernanceSectionProps extends ProjectSectionProps {
   diagram?: DiagramParams
   content?: string
   mdClassName?: string
-  governanceInfo?: GovernanceInfo
+  governanceInfo?: ProjectGovernanceInfo
   pastUpgrades?: PastUpgradesData
 }
 
@@ -87,7 +79,7 @@ const GOVERNANCE_INFO_SECTIONS: {
 function GovernanceInfoTable({
   governanceInfo,
 }: {
-  governanceInfo: GovernanceInfo
+  governanceInfo: ProjectGovernanceInfo
 }) {
   const sections = GOVERNANCE_INFO_SECTIONS.map((section) => ({
     ...section,
