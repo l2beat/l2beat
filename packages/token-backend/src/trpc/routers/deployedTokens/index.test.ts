@@ -786,6 +786,7 @@ describe('deployedTokensRouter', () => {
               coingeckoListingTimestamp: null,
               comment: null,
               reviewed: true,
+              isPriceUnreliable: false,
             },
           ]),
         }),
@@ -832,6 +833,7 @@ describe('deployedTokensRouter', () => {
           coingeckoListingTimestamp: null,
           comment: null,
           reviewed: true,
+          isPriceUnreliable: false,
         },
       ])
       const mockCreateChain = mockFn().returns({
@@ -979,6 +981,7 @@ describe('deployedTokensRouter', () => {
               coingeckoListingTimestamp: null,
               comment: null,
               reviewed: true,
+              isPriceUnreliable: false,
             },
           ]),
         }),
@@ -1678,6 +1681,7 @@ describe('deployedTokensRouter', () => {
       coingeckoListingTimestamp: null,
       comment: null,
       reviewed: true,
+      isPriceUnreliable: false,
     }
 
     function makeTransfer(
@@ -2072,6 +2076,7 @@ describe('deployedTokensRouter', () => {
         coingeckoListingTimestamp: null,
         comment: null,
         reviewed: true,
+        isPriceUnreliable: false,
       }
 
       const mockDb = mockObject<Database>({})
@@ -2089,6 +2094,7 @@ describe('deployedTokensRouter', () => {
               coingeckoListingTimestamp: null,
               comment: null,
               reviewed: true,
+              isPriceUnreliable: false,
             },
             {
               id: 'abstract-no-coingecko',
@@ -2100,6 +2106,7 @@ describe('deployedTokensRouter', () => {
               coingeckoListingTimestamp: null,
               comment: null,
               reviewed: true,
+              isPriceUnreliable: false,
             },
           ]),
         }),

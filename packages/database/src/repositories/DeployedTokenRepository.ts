@@ -118,6 +118,7 @@ export class DeployedTokenRepository extends BaseRepository {
         'AbstractToken.symbol as AbstractToken_symbol',
         'AbstractToken.comment as AbstractToken_comment',
         'AbstractToken.reviewed as AbstractToken_reviewed',
+        'AbstractToken.isPriceUnreliable as AbstractToken_isPriceUnreliable',
       ])
       .where((eb) =>
         eb.or(
@@ -146,7 +147,8 @@ export class DeployedTokenRepository extends BaseRepository {
       abstractToken:
         row.AbstractToken_id === null ||
         row.AbstractToken_symbol === null ||
-        row.AbstractToken_reviewed === null
+        row.AbstractToken_reviewed === null ||
+        row.AbstractToken_isPriceUnreliable === null
           ? undefined
           : toAbstractTokenRecord({
               id: row.AbstractToken_id,
@@ -159,6 +161,7 @@ export class DeployedTokenRepository extends BaseRepository {
                 row.AbstractToken_coingeckoListingTimestamp,
               comment: row.AbstractToken_comment,
               reviewed: row.AbstractToken_reviewed,
+              isPriceUnreliable: row.AbstractToken_isPriceUnreliable,
             }),
     }))
   }

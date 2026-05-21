@@ -61,6 +61,7 @@ const INITIAL_STATE: State = {
   userPreferences: {
     enableDimming: true,
     hideLargeArrays: true,
+    highlightOverlapping: true,
   },
   loaded: false,
 }

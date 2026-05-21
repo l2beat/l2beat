@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xce121534839f7b4d5c4a1686419068c8a0895152
+
+# Diff at Fri, 15 May 2026 12:37:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
++        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
+      implementationNames.scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77:
+-        "GnosisSafeL2"
++        "GnosisSafeProxy"
+    }
+```
+
 Generated with discovered.json: 0x0e6d5884e45832eebdb25818b6fce190628ff986
 
 # Diff at Fri, 08 May 2026 07:52:54 GMT:

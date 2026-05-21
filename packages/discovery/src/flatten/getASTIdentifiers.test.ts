@@ -40,8 +40,7 @@ describe(getASTIdentifiers.name, () => {
   it('gets unique identifiers', () => {
     const ast = parse(soliditySource)
     const idents = ast.children.flatMap((c) => getASTIdentifiers(c))
-    const result = new Set(idents)
-    expect([...result].sort()).toEqual(
+    expect(idents.sort()).toEqual(
       [
         'DefinedLibrary1',
         'Buffer',

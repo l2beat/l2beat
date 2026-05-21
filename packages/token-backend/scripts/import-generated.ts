@@ -38,6 +38,7 @@ function toAbstractToken(
     coingeckoListingTimestamp: fileEntry.coingeckoListingTimestamp,
     iconUrl: fileEntry.iconUrl,
     reviewed: fileEntry.reviewed ?? false,
+    isPriceUnreliable: false,
     comment: null,
   }
 }

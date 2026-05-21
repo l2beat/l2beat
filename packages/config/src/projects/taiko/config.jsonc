@@ -13,7 +13,8 @@
     // "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9", // TaikoLabs Prover, ignored post shasta
     "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f", // post-Shasta Inbox
     "taiko:0x1670000000000000000000000000000000000001",
-    "taiko:0x1670000000000000000000000000000000010001"
+    "taiko:0x1670000000000000000000000000000000010001",
+    "taiko:0x1670000000000000000000000000000000000002"
   ],
   "names": {},
   "overrides": {
@@ -69,6 +70,12 @@
           "description": "Currently used Risc0 verifier contract, selector determined manually from calldata"
         }
       }
+    },
+    "taiko:0x1670000000000000000000000000000000000001": {
+      "description": "Bridge escrow holding preminted ETH on Taiko."
+    },
+    "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E": {
+      "category": "spam"
     }
   }
 }

@@ -21,6 +21,7 @@ export function computeGraphLayout(
   chainVolumes: { chainId: string; totalVolume: number }[],
   size: number,
   isSmallScreen: boolean,
+  topChainId?: string,
 ): FlowsGraphLayout {
   const layout: FlowsGraphLayout = new Map()
   if (chainIds.length === 0 || size === 0) return layout
@@ -33,7 +34,7 @@ export function computeGraphLayout(
     ? SMALL_SCREEN_MAX_BUBBLE_RADIUS
     : MAX_BUBBLE_RADIUS
 
-  const spreadIds = spreadByVolume(chainIds, volumeMap)
+  const spreadIds = spreadByVolume(chainIds, volumeMap, topChainId)
 
   const centerX = size / 2
   const centerY = size / 2
@@ -68,10 +69,13 @@ export function computeGraphLayout(
  * Algorithm: sort by volume descending, split into a top half and bottom half,
  * then interleave them. This guarantees every high-volume chain is flanked
  * by two lower-volume chains.
+ * If a top chain is provided, the final circular order is rotated to place it
+ * at the top without changing adjacent chains.
  */
 function spreadByVolume(
   chainIds: string[],
   volumeMap: Map<string, number>,
+  topChainId?: string,
 ): string[] {
   if (chainIds.length <= 2) return chainIds
 
@@ -93,5 +97,10 @@ function spreadByVolume(
     }
   }
 
-  return result
+  if (!topChainId) return result
+
+  const topChainIndex = result.indexOf(topChainId)
+  if (topChainIndex === -1) return result
+
+  return [...result.slice(topChainIndex), ...result.slice(0, topChainIndex)]
 }

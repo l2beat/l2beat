@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xf63d01b1e1cfbc9ec529d79ec47b67edf55e847a
+
+# Diff at Fri, 15 May 2026 12:36:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778535511
+- current timestamp: 1778535511
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778535511 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+      sourceHashes.0:
+-        "0x19c3fbedf93ee852d83096519dd22f26409f70fc13f7843307acaecb508981d6"
++        "0x20f30107695bee36a63acac61a5ba93d47cbb8ad79df70f6dd9b16d15db66ad3"
+    }
+```
+
 Generated with discovered.json: 0xd6fb873eb77a64098e57a7eecd575d5b753f84fc
 
 # Diff at Mon, 11 May 2026 21:39:47 GMT:
