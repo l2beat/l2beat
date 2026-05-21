@@ -47,7 +47,10 @@ export async function getDiscolupeProjects() {
       stateValidationConfigured:
         project.scalingTechnology.stateValidation !== undefined,
       upgradesAndGovernanceConfigured:
-        project.scalingTechnology.upgradesAndGovernance !== undefined,
+        project.scalingTechnology.upgradesAndGovernance?.content !==
+          undefined ||
+        project.scalingTechnology.upgradesAndGovernance?.governanceInfo !==
+          undefined,
     })),
   }
 }

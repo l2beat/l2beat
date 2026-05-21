@@ -14,7 +14,6 @@ import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import type { GovernanceInfo } from '~/components/projects/sections/UpgradesAndGovernanceSection'
 import {
   WALK_AWAY_NOT_PASSED_PROJECTS,
   WALK_AWAY_PASSED_PROJECTS,
@@ -630,15 +629,11 @@ export async function getScalingProjectEntry(
   }
 
   const allPastUpgrades = getProjectPastUpgrades(project.contracts)
-  const governanceInfo = (
-    project.scalingTechnology as typeof project.scalingTechnology & {
-      governanceInfo?: GovernanceInfo
-    }
-  ).governanceInfo
+  const upgradesAndGovernance = project.scalingTechnology.upgradesAndGovernance
 
   if (
-    project.scalingTechnology.upgradesAndGovernance ||
-    governanceInfo ||
+    upgradesAndGovernance?.content ||
+    upgradesAndGovernance?.governanceInfo ||
     allPastUpgrades.length > 0
   ) {
     sections.push({
@@ -646,18 +641,18 @@ export async function getScalingProjectEntry(
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: project.scalingTechnology.upgradesAndGovernance
+        content: upgradesAndGovernance?.content
           ? linkAddresses(
-              project.scalingTechnology.upgradesAndGovernance,
+              upgradesAndGovernance.content,
               project.contracts,
               project.permissions,
             )
           : undefined,
         diagram: getDiagramParams(
           'upgrades-and-governance',
-          project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
+          upgradesAndGovernance?.image ?? project.slug,
         ),
-        governanceInfo,
+        governanceInfo: upgradesAndGovernance?.governanceInfo,
         pastUpgrades: getPastUpgradesData(allPastUpgrades),
         isUnderReview: !!project.statuses.reviewStatus,
       },
