@@ -19,7 +19,6 @@ export type EditorCallbacks = {
 export class Editor extends EditorPluginStore<'code'> {
   private models: Record<string, editor.IModel | null> = {}
   private viewStates: Record<string, editor.ICodeEditorViewState | null> = {}
-  private callbacks: monaco.IDisposable[] = []
 
   private onSaveCallback: ((content: string) => string) | null = null
 
@@ -64,16 +63,16 @@ export class Editor extends EditorPluginStore<'code'> {
     this.onSaveCallback = onSaveCallback
   }
 
-  onChange(onChangeCallback: (content: string) => void) {
+  onChange(onChangeCallback: (content: string) => void): monaco.IDisposable {
     const disposable = this.editor.onDidChangeModelContent(() => {
       const value = this.editor.getModel()?.getValue() ?? ''
       onChangeCallback(value)
     })
 
-    this.callbacks.push(disposable)
+    return this.trackDisposable(disposable)
   }
 
-  onLoad(onLoadCallback: (content: string) => void) {
+  onLoad(onLoadCallback: (content: string) => void): monaco.IDisposable {
     const disposable = this.editor.onDidChangeModel((e) => {
       if (e.oldModelUrl == null) {
         const value = this.editor.getModel()?.getValue() ?? ''
@@ -81,15 +80,7 @@ export class Editor extends EditorPluginStore<'code'> {
       }
     })
 
-    this.callbacks.push(disposable)
-  }
-
-  private disposeCallbacks() {
-    this.onSaveCallback = null
-    for (const callback of this.callbacks) {
-      callback.dispose()
-    }
-    this.callbacks = []
+    return this.trackDisposable(disposable)
   }
 
   private getOrCreateFileModel(file: EditorFile) {
@@ -141,6 +132,7 @@ export class Editor extends EditorPluginStore<'code'> {
   }
 
   dispose() {
+    this.onSaveCallback = null
     Object.values(this.models).forEach((model) => {
       if (model) {
         model.dispose()

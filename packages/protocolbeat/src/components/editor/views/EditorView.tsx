@@ -31,13 +31,19 @@ export function EditorView(props: EditorViewProps) {
   const { setDirtyFile, getIsDirtyFile } = useCodeStore()
   const { resetRange, initialSelection, setSelection } = useCodeSettings()
 
-  editor?.onLoad(() => {
-    const plugin = editor.getPlugin(LineSelector)
-    if (plugin) {
-      plugin.setSelection(initialSelection)
-      plugin.scrollToSelection()
+  useEffect(() => {
+    if (!editor) {
+      return
     }
-  })
+    const loadDisposable = editor.onLoad(() => {
+      const plugin = editor.getPlugin(LineSelector)
+      if (plugin) {
+        plugin.setSelection(initialSelection)
+        plugin.scrollToSelection()
+      }
+    })
+    return () => loadDisposable.dispose()
+  }, [editor, initialSelection])
 
   useEffect(() => {
     return editor?.getPlugin(LineSelector)?.onSelectionChange((selection) => {
@@ -49,6 +55,7 @@ export function EditorView(props: EditorViewProps) {
     if (editor && props.files.length > 0) {
       const activeFile = props.files[activeFileIndex]
       if (activeFile) {
+        let changeDisposable: { dispose: () => void } | undefined
         if (!activeFile.readOnly) {
           editor.onSave((content) => {
             const isNewContentOk = props.callbacks?.onSave?.(content)
@@ -58,7 +65,7 @@ export function EditorView(props: EditorViewProps) {
             return activeFile.content
           })
 
-          editor.onChange((content) => {
+          changeDisposable = editor.onChange((content) => {
             props.callbacks?.onChange?.(content)
             setDirtyFile(
               props.editorId,
@@ -69,6 +76,10 @@ export function EditorView(props: EditorViewProps) {
         }
 
         editor.setFile(activeFile)
+
+        return () => {
+          changeDisposable?.dispose()
+        }
       }
     }
   }, [editor, props.files, activeFileIndex])
