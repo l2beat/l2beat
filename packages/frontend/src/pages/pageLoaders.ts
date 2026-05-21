@@ -83,6 +83,9 @@ export const pageLoaders = {
       .EcosystemProjectPage,
   GovernancePage: async () =>
     (await import('./governance/GovernancePage')).GovernancePage,
+  GovernanceProjectsPage: async () =>
+    (await import('./governance/projects/GovernanceProjectsPage'))
+      .GovernanceProjectsPage,
   EthereumConnectPage: async () =>
     (await import('./governance/ethereum-connect/EthereumConnectPage'))
       .EthereumConnectPage,

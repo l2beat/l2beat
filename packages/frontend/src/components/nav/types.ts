@@ -21,4 +21,6 @@ export interface NavLink {
   href: string
   disabled?: boolean
   accessory?: React.ReactNode
+  /** When true, the link is only highlighted on an exact pathname match. */
+  exact?: boolean
 }

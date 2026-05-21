@@ -16,6 +16,7 @@ import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
+import { GovernanceIcon } from '~/icons/pages/Governance'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { InteropSelectedChainsContext } from '~/pages/interop/utils/InteropSelectedChainsContext'
@@ -170,6 +171,25 @@ export function SideNavLayout({
         },
         {
           type: 'multiple',
+          title: 'Governance',
+          match: 'governance',
+          icon: (
+            <GovernanceIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
+          links: [
+            {
+              title: 'Projects',
+              href: '/governance/projects',
+            },
+            {
+              title: 'Delegate',
+              href: '/governance',
+              exact: true,
+            },
+          ],
+        },
+        {
+          type: 'multiple',
           title: 'Ecosystems',
           match: 'ecosystems',
           disableMobileTabs: true,
@@ -228,10 +248,6 @@ export function SideNavLayout({
         {
           title: 'Donate',
           href: '/donate',
-        },
-        {
-          title: 'Governance',
-          href: '/governance',
         },
         {
           title: 'Tools',
