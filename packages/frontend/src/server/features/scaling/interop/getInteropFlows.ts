@@ -3,7 +3,11 @@ import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { INTEROP_PAIR_SEPARATOR } from './consts'
-import type { InteropFlowsParams, TokenData } from './types'
+import type {
+  AggregatedInteropTransferWithTokens,
+  InteropFlowsParams,
+  TokenData,
+} from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getInteropChains } from './utils/getInteropChains'
 import type { TopEntry } from './utils/getInteropFlowAggregates'
@@ -15,6 +19,7 @@ import { getTopItems, type TopItems } from './utils/getTopItems'
 export interface FlowToken {
   id: string
   symbol: string
+  issuer: string | null
   iconUrl: string
   volume: number
 }
@@ -94,7 +99,11 @@ export async function getInteropFlows(
     undefined,
     params.protocolIds,
   )
-  if (records.length === 0) {
+  const scopedRecords = params.tokenId
+    ? scopeRecordsToToken(records, params.tokenId)
+    : records
+
+  if (scopedRecords.length === 0) {
     return {
       flows: [],
       chainData: [],
@@ -120,10 +129,6 @@ export async function getInteropFlows(
   const subgroupProjects = new Set(
     interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
   )
-  const nonSubgroupRecords = records.filter(
-    (record) => !subgroupProjects.has(record.id as ProjectId),
-  )
-
   const {
     flows,
     chainTopTokens,
@@ -135,11 +140,13 @@ export async function getInteropFlows(
     topToken: topTokenEntry,
     topProtocol: topProtocolEntry,
     tokenIds,
-  } = getInteropFlowAggregates(records, subgroupProjects)
+  } = getInteropFlowAggregates(scopedRecords, subgroupProjects)
 
   const detailsMap = await buildTokensDetailsMap(tokenIds)
   const summaryTokens = getSummaryTokensData(
-    nonSubgroupRecords,
+    scopedRecords.filter(
+      (record) => !subgroupProjects.has(record.id as ProjectId),
+    ),
     detailsMap,
     interopProjects,
   )
@@ -166,6 +173,7 @@ export async function getInteropFlows(
     return {
       id: entry.id,
       symbol: details.symbol,
+      issuer: details.issuer,
       iconUrl: details.iconUrl,
       volume: entry.volume,
     }
@@ -255,6 +263,45 @@ export async function getInteropFlows(
       topProtocol,
     },
   }
+}
+
+function scopeRecordsToToken(
+  records: AggregatedInteropTransferWithTokens[],
+  tokenId: string,
+) {
+  return records
+    .map((record) => {
+      const tokens = record.tokens.filter(
+        (token) => token.abstractTokenId === tokenId,
+      )
+      const volume = tokens.reduce((sum, token) => sum + (token.volume ?? 0), 0)
+      const transferCount = tokens.reduce(
+        (sum, token) => sum + (token.transferCount ?? 0),
+        0,
+      )
+      const transfersWithDurationCount = tokens.reduce(
+        (sum, token) => sum + (token.transfersWithDurationCount ?? 0),
+        0,
+      )
+      const totalDurationSum = tokens.reduce(
+        (sum, token) => sum + (token.totalDurationSum ?? 0),
+        0,
+      )
+
+      if (tokens.length === 0 || transferCount === 0) return undefined
+
+      return {
+        ...record,
+        tokens,
+        srcValueUsd: volume,
+        dstValueUsd: volume,
+        transferCount,
+        identifiedCount: transferCount,
+        transfersWithDurationCount,
+        totalDurationSum,
+      }
+    })
+    .filter((record) => record !== undefined)
 }
 
 function resolveEntries<T>(
@@ -411,6 +458,7 @@ function getMockInteropFlows(): InteropFlowsData {
       topToken: {
         id: 'eth',
         symbol: 'ETH',
+        issuer: 'ethereum',
         iconUrl: '/icons/tokens/ether.png',
         volume: 1_000_000,
       },

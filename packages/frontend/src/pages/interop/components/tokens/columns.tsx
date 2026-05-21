@@ -19,6 +19,8 @@ import type {
   TokensPairData,
 } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
+import type { InteropSelection } from '../../utils/types'
 import { InteropNoDataBadge } from '../InteropNoDataBadge'
 import { AvgDurationCell } from '../table/AvgDurationCell'
 import { TokenFlowsCell } from './TokenFlowsCell'
@@ -222,10 +224,12 @@ export const getTopTokensColumns = ({
   showNetMintedValueColumn,
   showTopProtocolColumn,
   showFlowsColumn,
+  selectedChains,
 }: {
   showNetMintedValueColumn?: boolean
   showTopProtocolColumn?: boolean
   showFlowsColumn?: boolean
+  selectedChains?: InteropSelection
 } = {}) =>
   compact([
     tokenColumnHelper.display({
@@ -247,19 +251,36 @@ export const getTopTokensColumns = ({
     }),
     tokenColumnHelper.accessor('symbol', {
       header: 'Symbol',
-      cell: (ctx) => (
-        <TwoRowCell>
-          <TwoRowCell.First className="font-bold leading-none!">
-            {ctx.row.original.symbol}
-          </TwoRowCell.First>
-          {ctx.row.original.issuer && (
-            <TwoRowCell.Second>
-              Issued by{' '}
-              <span className="capitalize">{ctx.row.original.issuer}</span>
-            </TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      ),
+      cell: (ctx) => {
+        const content = (
+          <>
+            <TwoRowCell.First className="font-bold leading-none!">
+              {ctx.row.original.symbol}
+            </TwoRowCell.First>
+            {ctx.row.original.issuer && (
+              <TwoRowCell.Second>
+                Issued by{' '}
+                <span className="capitalize">{ctx.row.original.issuer}</span>
+              </TwoRowCell.Second>
+            )}
+          </>
+        )
+
+        return (
+          <TwoRowCell>
+            {selectedChains && ctx.row.original.id !== 'unknown' ? (
+              <a
+                href={getInteropTokenUrl(ctx.row.original, selectedChains)}
+                className="hover:underline"
+              >
+                {content}
+              </a>
+            ) : (
+              content
+            )}
+          </TwoRowCell>
+        )
+      },
       meta: {
         headClassName: 'pl-0!',
         cellClassName: 'pl-0!',
@@ -295,9 +316,11 @@ const tokensPairColumnHelper = createColumnHelper<TokensPairRow>()
 export const getTopTokensPairsColumns = ({
   showTopProtocolColumn,
   showFlowsColumn,
+  selectedChains,
 }: {
   showTopProtocolColumn?: boolean
   showFlowsColumn?: boolean
+  selectedChains?: InteropSelection
 } = {}) => [
   tokensPairColumnHelper.accessor(
     (row) =>
@@ -321,7 +344,7 @@ export const getTopTokensPairsColumns = ({
               height={20}
               alt={`${tokenA.symbol} icon`}
             />
-            <span>{tokenA.symbol}</span>
+            <TokenPairSymbol token={tokenA} selectedChains={selectedChains} />
             <BidirectionalArrowIcon className="size-4 shrink-0 fill-brand" />
             <img
               className="size-[20px] rounded-full bg-white shadow"
@@ -330,7 +353,7 @@ export const getTopTokensPairsColumns = ({
               height={20}
               alt={`${tokenB.symbol} icon`}
             />
-            <span>{tokenB.symbol}</span>
+            <TokenPairSymbol token={tokenB} selectedChains={selectedChains} />
           </div>
         )
       },
@@ -346,3 +369,24 @@ export const getTopTokensPairsColumns = ({
     showFlowsColumn,
   ),
 ]
+
+function TokenPairSymbol({
+  token,
+  selectedChains,
+}: {
+  token: TokensPairRow['tokenA']
+  selectedChains: InteropSelection | undefined
+}) {
+  if (!selectedChains || token.id === 'unknown') {
+    return <span>{token.symbol}</span>
+  }
+
+  return (
+    <a
+      href={getInteropTokenUrl(token, selectedChains)}
+      className="hover:underline"
+    >
+      {token.symbol}
+    </a>
+  )
+}

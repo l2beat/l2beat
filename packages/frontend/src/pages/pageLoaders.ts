@@ -55,6 +55,8 @@ export const pageLoaders = {
   InteropProtocolPage: async () =>
     (await import('./interop/protocol/InteropProtocolPage'))
       .InteropProtocolPage,
+  InteropTokenPage: async () =>
+    (await import('./interop/token/InteropTokenPage')).InteropTokenPage,
   DataAvailabilitySummaryPage: async () =>
     (await import('./data-availability/summary/DataAvailabilitySummaryPage'))
       .DataAvailabilitySummaryPage,

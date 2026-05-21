@@ -265,20 +265,24 @@ function toggleSelection(
 }
 
 function toInteropPathMode(path: string, mode: InteropMode) {
+  const internalPathSuffix = '/internal'
   const normalizedPath = path.endsWith('/') ? path.slice(0, -1) : path
+  const pathWithoutInternalSuffix = normalizedPath.endsWith(internalPathSuffix)
+    ? normalizedPath.slice(0, -internalPathSuffix.length)
+    : normalizedPath
+
+  if (/^\/interop\/tokens\/[^/]+$/.test(pathWithoutInternalSuffix)) {
+    return pathWithoutInternalSuffix
+  }
 
   if (mode === 'internal') {
-    if (normalizedPath.endsWith('/internal')) {
+    if (normalizedPath.endsWith(internalPathSuffix)) {
       return normalizedPath
     }
-    return `${normalizedPath}/internal`
+    return `${normalizedPath}${internalPathSuffix}`
   }
 
-  if (normalizedPath.endsWith('/internal')) {
-    return normalizedPath.slice(0, -'/internal'.length)
-  }
-
-  return normalizedPath
+  return pathWithoutInternalSuffix
 }
 
 function isSameSelection(left: string[], right: string[]) {

@@ -6,27 +6,18 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { toInteropProtocolTransferDetailsItem } from './getInteropProtocolTransfers'
 import type {
   InteropProtocolTransferDetailsItem,
   InteropProtocolTransfersCursor,
-  InteropProtocolTransfersParams,
   InteropProtocolTransfersResponse,
+  InteropTokenTransfersParams,
 } from './types'
-import {
-  buildTokensDetailsMap,
-  type TokensDetailsMap,
-} from './utils/buildTokensDetailsMap'
-
-interface TransfersPage {
-  items: InteropTransferRecord[]
-  nextCursor: InteropProtocolTransfersCursor | undefined
-}
+import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 
 const DEFAULT_PAGE_SIZE = 100
 const MAX_PAGE_SIZE = 100
 const RAW_BATCH_SIZE = 500
-const UNKNOWN_TOKEN_SYMBOL = 'Unknown'
 
 const INTEROP_CHAIN_EXPLORER_URLS = new Map(
   INTEROP_CHAINS.map((chain) => [chain.id, chain.explorerUrl]),
@@ -38,53 +29,38 @@ const INTEROP_CHAIN_ICON_URLS = new Map(
   ]),
 )
 
-export async function getInteropProtocolTransfers({
-  id,
+export async function getInteropTokenTransfers({
+  tokenId,
   from,
   to,
-  type,
   snapshotTimestamp,
   limit,
   cursor,
-}: InteropProtocolTransfersParams): Promise<InteropProtocolTransfersResponse> {
+}: InteropTokenTransfersParams): Promise<InteropProtocolTransfersResponse> {
   if (from.length === 0 || to.length === 0) {
-    return {
-      items: [],
-      nextCursor: undefined,
-    }
+    return { items: [], nextCursor: undefined }
   }
 
   if (env.MOCK) {
-    return getMockInteropProtocolTransfers({ from, to })
+    return getMockInteropTokenTransfers({ tokenId, from, to })
   }
 
-  const interopProject = await ps.getProject({
-    id,
+  const interopProjects = await ps.getProjects({
     select: ['interopConfig'],
   })
-  if (!interopProject?.interopConfig) {
-    return {
-      items: [],
-      nextCursor: undefined,
-    }
-  }
-
-  const plugins = type
-    ? interopProject.interopConfig.plugins.filter(
-        (plugin) => plugin.bridgeType === type,
-      )
-    : interopProject.interopConfig.plugins
+  const plugins = interopProjects.flatMap(
+    (project) => project.interopConfig.plugins,
+  )
   if (plugins.length === 0) {
-    return {
-      items: [],
-      nextCursor: undefined,
-    }
+    return { items: [], nextCursor: undefined }
   }
 
   const classifier = new InteropTransferClassifier()
   const matcher = classifier.createMatcher<InteropTransferRecord>(plugins)
   const pluginIds = [...new Set(plugins.map((plugin) => plugin.plugin))]
-  const result = await getFilteredTransfersPage({
+
+  const result = await getFilteredTokenTransfersPage({
+    tokenId,
     snapshotTimestamp,
     sourceChains: from,
     destinationChains: to,
@@ -93,9 +69,8 @@ export async function getInteropProtocolTransfers({
     limit: getPageSize(limit),
     cursor,
   })
-  const tokensDetailsMap = await buildTokensDetailsMap(
-    getAbstractTokenIds(result.items),
-  )
+  const tokensDetailsMap = await buildTokensDetailsMap([tokenId])
+
   return {
     items: result.items.map((transfer) =>
       toInteropProtocolTransferDetailsItem(
@@ -108,7 +83,8 @@ export async function getInteropProtocolTransfers({
   }
 }
 
-async function getFilteredTransfersPage({
+async function getFilteredTokenTransfersPage({
+  tokenId,
   snapshotTimestamp,
   sourceChains,
   destinationChains,
@@ -117,6 +93,7 @@ async function getFilteredTransfersPage({
   limit,
   cursor,
 }: {
+  tokenId: string
   snapshotTimestamp: number
   sourceChains: string[]
   destinationChains: string[]
@@ -124,7 +101,10 @@ async function getFilteredTransfersPage({
   matcher: (transfer: InteropTransferRecord) => boolean
   limit: number
   cursor: InteropProtocolTransfersCursor | undefined
-}): Promise<TransfersPage> {
+}): Promise<{
+  items: InteropTransferRecord[]
+  nextCursor: InteropProtocolTransfersCursor | undefined
+}> {
   const db = getDb()
   const items: InteropTransferRecord[] = []
   let dbCursor = cursor
@@ -151,7 +131,11 @@ async function getFilteredTransfersPage({
     for (const [i, transfer] of transfers.entries()) {
       dbCursor = toTransferCursor(transfer)
 
-      if (!matcher(transfer)) {
+      if (
+        !matcher(transfer) ||
+        (transfer.srcAbstractTokenId !== tokenId &&
+          transfer.dstAbstractTokenId !== tokenId)
+      ) {
         continue
       }
 
@@ -197,124 +181,33 @@ function toTransferCursor(
   }
 }
 
-export function toInteropProtocolTransferDetailsItem(
-  transfer: InteropTransferRecord,
-  chainExplorerUrlsById: Map<string, string>,
-  tokensDetailsMap: TokensDetailsMap,
-): InteropProtocolTransferDetailsItem {
-  const srcTxHashHref = getTxHashHref(
-    chainExplorerUrlsById,
-    transfer.srcChain,
-    transfer.srcTxHash,
-  )
-  const dstTxHashHref = getTxHashHref(
-    chainExplorerUrlsById,
-    transfer.dstChain,
-    transfer.dstTxHash,
-  )
-
-  return {
-    transferId: transfer.transferId,
-    timestamp: transfer.timestamp,
-    srcAmount: transfer.srcAmount,
-    srcSymbol: transfer.srcSymbol ?? UNKNOWN_TOKEN_SYMBOL,
-    srcTokenIssuer:
-      transfer.srcAbstractTokenId !== undefined
-        ? (tokensDetailsMap.get(transfer.srcAbstractTokenId)?.issuer ?? null)
-        : null,
-    srcTokenIconUrl: getTokenIconUrl(
-      transfer.srcAbstractTokenId,
-      tokensDetailsMap,
-    ),
-    dstAmount: transfer.dstAmount,
-    dstSymbol: transfer.dstSymbol ?? UNKNOWN_TOKEN_SYMBOL,
-    dstTokenIssuer:
-      transfer.dstAbstractTokenId !== undefined
-        ? (tokensDetailsMap.get(transfer.dstAbstractTokenId)?.issuer ?? null)
-        : null,
-    dstTokenIconUrl: getTokenIconUrl(
-      transfer.dstAbstractTokenId,
-      tokensDetailsMap,
-    ),
-    valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
-    duration: transfer.duration,
-    srcChain: transfer.srcChain,
-    srcChainIconUrl: INTEROP_CHAIN_ICON_URLS.get(transfer.srcChain),
-    srcTxHash: transfer.srcTxHash,
-    srcTxHashHref,
-    dstChain: transfer.dstChain,
-    dstChainIconUrl: INTEROP_CHAIN_ICON_URLS.get(transfer.dstChain),
-    dstTxHash: transfer.dstTxHash,
-    dstTxHashHref,
-  }
-}
-
-function getAbstractTokenIds(transfers: InteropTransferRecord[]): string[] {
-  return [
-    ...new Set(
-      transfers
-        .flatMap((transfer) => [
-          transfer.srcAbstractTokenId,
-          transfer.dstAbstractTokenId,
-        ])
-        .filter((id): id is string => id !== undefined),
-    ),
-  ]
-}
-
-function getTokenIconUrl(
-  abstractTokenId: string | undefined,
-  tokensDetailsMap: TokensDetailsMap,
-): string {
-  if (!abstractTokenId) return TOKEN_PLACEHOLDER_ICON_URL
-  return (
-    tokensDetailsMap.get(abstractTokenId)?.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL
-  )
-}
-
-function getTxHashHref(
-  chainExplorerUrlsById: Map<string, string>,
-  chainId: string,
-  txHash: string | undefined,
-): string | undefined {
-  if (!txHash) {
-    return undefined
-  }
-
-  const explorerUrl = chainExplorerUrlsById.get(chainId)
-  if (!explorerUrl) {
-    return undefined
-  }
-
-  return `${explorerUrl}/tx/${txHash}`
-}
-
-function getMockInteropProtocolTransfers({
+function getMockInteropTokenTransfers({
+  tokenId,
   from,
   to,
 }: {
+  tokenId: string
   from: string[]
   to: string[]
 }): InteropProtocolTransfersResponse {
-  const ethIcon =
-    'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880'
   const srcChain = from[0] ?? 'ethereum'
   const dstChain = to[0] ?? 'optimism'
   const timestamp = UnixTime.now() - UnixTime.HOUR
+  const symbol = tokenId.includes('usdc') ? 'USDC' : 'ETH'
 
   const items: InteropProtocolTransferDetailsItem[] = Array.from(
     { length: 5 },
     (_, i) => ({
-      transferId: `mock-transfer-${i}`,
+      transferId: `mock-token-transfer-${i}`,
       timestamp: timestamp - i * 60,
       srcAmount: 1_000,
-      srcSymbol: 'ETH',
-      srcTokenIssuer: 'ethereum',
-      srcTokenIconUrl: ethIcon,
+      srcSymbol: symbol,
+      srcTokenIssuer: tokenId.includes('usdc') ? 'circle' : 'ethereum',
+      srcTokenIconUrl: INTEROP_CHAIN_ICON_URLS.get(srcChain) ?? '',
       dstAmount: 1_000,
-      dstSymbol: 'ETH',
-      dstTokenIssuer: 'ethereum',
-      dstTokenIconUrl: ethIcon,
+      dstSymbol: symbol,
+      dstTokenIssuer: tokenId.includes('usdc') ? 'circle' : 'ethereum',
+      dstTokenIconUrl: INTEROP_CHAIN_ICON_URLS.get(dstChain) ?? '',
       valueUsd: 1_000,
       duration: 60_000,
       srcChain,
