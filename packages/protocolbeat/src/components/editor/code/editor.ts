@@ -23,6 +23,7 @@ const viewStateCache: Map<string, editor.ICodeEditorViewState> = new Map()
 export class Editor extends EditorPluginStore<'code'> {
   private models: Record<string, editor.IModel | null> = {}
   private callbacks: monaco.IDisposable[] = []
+  private disposed = false
 
   private onSaveCallback: ((content: string) => string) | null = null
 
@@ -149,6 +150,10 @@ export class Editor extends EditorPluginStore<'code'> {
   }
 
   dispose() {
+    if (this.disposed) {
+      return
+    }
+    this.disposed = true
     this.saveViewState()
     Object.values(this.models).forEach((model) => {
       if (model) {
