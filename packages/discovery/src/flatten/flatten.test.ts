@@ -923,8 +923,6 @@ describe('flatten', () => {
     )
   })
 
-  // TODO(radomski): This should be smart enough to understand that the body
-  // is gone and we no longer reference UsesNewing
   it('regression - new a base type', () => {
     const file = sol(
       'Root.sol',

@@ -51,15 +51,12 @@ import {
   Address32,
   assert,
   ChainSpecificAddress,
-  EthereumAddress,
+  type EthereumAddress,
 } from '@l2beat/shared-pure'
-import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
-import { findBestTransferLog } from '../hyperlane-hwr'
 import { isMayanCircleForwarded, MayanForwarded } from '../mayan-forwarder'
 import { findWrappedMayanWormholeLog } from '../mayan-wormhole'
 import {
-  createEventParser,
   createInteropEventType,
   type DataRequest,
   findChain,
@@ -72,16 +69,16 @@ import {
 } from '../types'
 import { LogMessagePublished } from '../wormhole/wormhole.plugin'
 import { CCTPV1Config } from './cctp.config'
-
-const messageSentLog = 'event MessageSent(bytes message)'
-const parseMessageSent = createEventParser(messageSentLog)
-
-const v1MessageReceivedLog =
-  'event MessageReceived(address indexed caller, uint32 sourceDomain, uint64 indexed nonce, bytes32 sender, bytes messageBody)'
-const parseV1MessageReceived = createEventParser(v1MessageReceivedLog)
-
-const transferLog =
-  'event Transfer(address indexed from, address indexed to, uint256 value)'
+import {
+  cctpMessageSentLog,
+  cctpTransferLog,
+  cctpV1MessageReceivedLog,
+  decodeMessageVersion,
+  decodeV1Message,
+  decodeV1MessageBody,
+  parseCctpMessageSent,
+  parseCctpV1ReceivedTransfer,
+} from './cctp.utils'
 
 type CCTPV1MessagePayloadInfo = {
   app?: string
@@ -150,13 +147,13 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
     return [
       {
         type: 'event',
-        signature: messageSentLog,
+        signature: cctpMessageSentLog,
         addresses,
       },
       {
         type: 'event',
-        signature: v1MessageReceivedLog,
-        includeTxEvents: [transferLog],
+        signature: cctpV1MessageReceivedLog,
+        includeTxEvents: [cctpTransferLog],
         addresses,
       },
     ]
@@ -173,7 +170,7 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
       'We capture only chain with message transmitters',
     )
 
-    const messageSent = parseMessageSent(input.log, [
+    const messageSent = parseCctpMessageSent(input.log, [
       network.messageTransmitter,
     ])
     if (messageSent) {
@@ -204,36 +201,20 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
       }
     }
 
-    const v1MessageReceived = parseV1MessageReceived(input.log, [
-      network.messageTransmitter,
-    ])
+    const v1MessageReceived = parseCctpV1ReceivedTransfer(input, networks)
     if (v1MessageReceived) {
-      const messageBody = decodeV1MessageBody(v1MessageReceived.messageBody) // only encodes the source token, so no value to us
       const payloadInfo = classifyV1MessagePayload(
         v1MessageReceived.messageBody,
-        messageBody,
+        v1MessageReceived.burnMessage,
       )
-      const transferMatch = messageBody
-        ? findBestTransferLog(
-            input.txLogs,
-            messageBody.amount,
-            input.log.logIndex ?? -1,
-          )
-        : undefined
       return [
         CCTPv1MessageReceived.create(input, {
-          caller: EthereumAddress(v1MessageReceived.caller),
-          $srcChain: findChain(
-            networks,
-            (x) => x.domain,
-            Number(v1MessageReceived.sourceDomain),
-          ),
-          nonce: Number(v1MessageReceived.nonce),
+          caller: v1MessageReceived.caller,
+          $srcChain: v1MessageReceived.srcChain,
+          nonce: v1MessageReceived.nonce,
           messageBody: v1MessageReceived.messageBody,
-          dstTokenAddress: transferMatch?.transfer
-            ? Address32.from(transferMatch.transfer.logAddress)
-            : undefined,
-          dstAmount: transferMatch?.transfer?.value ?? undefined,
+          dstTokenAddress: v1MessageReceived.dstTokenAddress,
+          dstAmount: v1MessageReceived.dstAmount,
           ...payloadInfo,
         }),
       ]
@@ -346,67 +327,6 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
         }),
       ]
     }
-  }
-}
-
-export function decodeMessageVersion(encodedHex: string) {
-  try {
-    return new BinaryReader(encodedHex).readUint32()
-  } catch {
-    return undefined
-  }
-}
-
-// https://basescan.org/address/0xad09780d193884d503182ad4588450c416d6f9d4#code#L1285
-export function decodeV1Message(encodedHex: string) {
-  try {
-    const reader = new BinaryReader(encodedHex)
-    const version = reader.readUint32()
-    const sourceDomain = reader.readUint32()
-    const destinationDomain = reader.readUint32()
-    const nonce = reader.readUint64()
-    const sender = reader.readBytes(32)
-    const recipient = reader.readBytes(32)
-    const destinationCaller = reader.readBytes(32)
-    const rawBody = reader.readRemainingBytes()
-    return {
-      version,
-      sourceDomain,
-      destinationDomain,
-      nonce,
-      sender,
-      recipient,
-      destinationCaller,
-      rawBody,
-    }
-  } catch {
-    return undefined
-  }
-}
-
-// https://developers.circle.com/cctp/v1/message-format
-export function decodeV1MessageBody(encodedHex: string) {
-  try {
-    if ((encodedHex.length - 2) / 2 !== 4 + 32 + 32 + 32 + 32) {
-      return undefined
-    }
-
-    const reader = new BinaryReader(encodedHex)
-    const version = reader.readUint32()
-    if (version !== 0) return undefined
-    const burnToken = reader.readBytes(32)
-    const mintRecipient = reader.readBytes(32)
-    const amount = reader.readUint256()
-    const messageSender = reader.readBytes(32)
-    return {
-      version,
-      burnToken,
-      mintRecipient,
-      amount,
-      messageSender,
-    }
-  } catch {
-    return undefined
   }
 }
 

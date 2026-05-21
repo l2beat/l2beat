@@ -45,7 +45,6 @@ export const onChainProjects: string[] = [
   'privacy-pools',
   'railgun',
   'tornado-cash',
-  ...configReader.getProjectsInGroup('tokens'),
 ]
 
 describe('discovery config.jsonc', () => {

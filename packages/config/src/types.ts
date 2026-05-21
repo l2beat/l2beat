@@ -77,7 +77,7 @@ export type ProjectRiskCategory =
   | 'Withdrawals can be delayed if'
 // #endregion
 
-export type ProjectReviewStatus = 'initialReview' | 'inReview'
+export type ProjectReviewStatus = 'inReview'
 
 export interface BaseProject {
   id: ProjectId
@@ -139,7 +139,6 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
 
   // tags
-  isUpcoming?: true
   archivedAt?: UnixTime
   hasTestnet?: true
 }
@@ -1227,8 +1226,6 @@ export interface ProjectEscrow {
   premintedTokens?: string[]
   /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
   isHistorical?: boolean
-  /** Upcoming projects needs upcoming escrows (needed for TVL) */
-  isUpcoming?: boolean
   /** Inclusive */
   untilTimestamp?: UnixTime
   includeInTotal?: boolean

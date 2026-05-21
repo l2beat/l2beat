@@ -61,6 +61,25 @@
     },
     {
       "mode": "auto",
+      "id": "railgun-RAIL",
+      "priceId": "railgun",
+      "symbol": "RAIL",
+      "name": "Rail",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16840/large/railgun.jpeg?1696516407",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
+        "chain": "ethereum",
+        "escrowAddress": "0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+        "decimals": 18,
+        "sinceTimestamp": 1651422389
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
       "id": "railgun-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",

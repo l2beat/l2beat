@@ -8,7 +8,7 @@
  */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { TokenMap } from '../engine/match/TokenMap'
-import { findParsedAround } from './logScan'
+import { findBestTransferLogByExactAmount, findParsedAround } from './logScan'
 import {
   getBestEffortTokenFrameworkBridgeType,
   getTokenFrameworkBridgeType,
@@ -145,17 +145,12 @@ export class AxelarPlugin implements InteropPlugin {
       null,
     )
     if (expressExecutedWithToken) {
-      const tokenAddress = findParsedAround(
+      const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
+        expressExecutedWithToken.amount,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== expressExecutedWithToken.amount) return
-          return Address32.from(log.address)
-        },
+        (log) => parseTransfer(log, null),
       )
 
       const srcChain = findChain(
@@ -167,7 +162,7 @@ export class AxelarPlugin implements InteropPlugin {
       return [
         SquidExpressExecutedWithToken.create(input, {
           commandId: expressExecutedWithToken.commandId,
-          tokenAddress,
+          tokenAddress: transferMatch.transfer?.logAddress,
           amount: expressExecutedWithToken.amount,
           symbol: expressExecutedWithToken.symbol,
           $srcChain: srcChain === 'Unknown_axelar' ? undefined : srcChain,
@@ -195,20 +190,12 @@ export class AxelarPlugin implements InteropPlugin {
 
     const contractCallWithToken = parseContractCallWithToken(input.log, null)
     if (contractCallWithToken) {
-      const transferData = findParsedAround(
+      const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
+        contractCallWithToken.amount,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== contractCallWithToken.amount) return
-          return {
-            address: Address32.from(log.address),
-            burned: Address32.from(transfer.to) === Address32.ZERO,
-          }
-        },
+        (log) => parseTransfer(log, null),
       )
 
       const dstChain = findChain(
@@ -223,11 +210,13 @@ export class AxelarPlugin implements InteropPlugin {
           destinationContractAddress:
             contractCallWithToken.destinationContractAddress,
           payloadHash: contractCallWithToken.payloadHash,
-          tokenAddress: transferData?.address,
+          tokenAddress: transferMatch.transfer?.logAddress,
           symbol: contractCallWithToken.symbol,
           amount: contractCallWithToken.amount,
           $dstChain: dstChain === 'Unknown_axelar' ? undefined : dstChain,
-          srcWasBurned: transferData?.burned,
+          srcWasBurned: transferMatch.transfer
+            ? transferMatch.transfer.to === Address32.ZERO
+            : undefined,
         }),
       ]
     }

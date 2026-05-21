@@ -22,7 +22,7 @@ export async function getScalingCostsEntries(helpers: SsrHelpers) {
       select: ['statuses', 'scalingInfo', 'costsInfo', 'display'],
       optional: ['contracts'],
       where: ['scalingInfo'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      whereNot: ['archivedAt'],
     }),
     helpers.costs.table.fetch({ range: optionToRange('30d') }),
   ])

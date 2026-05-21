@@ -1,5 +1,5 @@
 import compact from 'lodash/compact'
-import { useContext, useMemo } from 'react'
+import { useMemo } from 'react'
 import { HiringBadge } from '~/components/badge/HiringBadge'
 import { ChangelogUnreadBadge } from '~/components/changelog/ChangelogUnreadBadge'
 import { SidebarProvider } from '~/components/core/Sidebar'
@@ -18,7 +18,6 @@ import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
-import { InteropSelectedChainsContext } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { cn } from '~/utils/cn'
 import { createOrderedSort } from '~/utils/sort'
 
@@ -39,8 +38,6 @@ export function SideNavLayout({
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )
-
-  const selectedChainsContext = useContext(InteropSelectedChainsContext)
 
   const groups = useMemo(
     () =>
@@ -87,10 +84,6 @@ export function SideNavLayout({
           ],
           secondaryLinks: [
             {
-              title: 'Upcoming',
-              href: '/scaling/upcoming',
-            },
-            {
               title: 'Archived',
               href: '/scaling/archived',
             },
@@ -109,22 +102,8 @@ export function SideNavLayout({
               href: '/interop/summary',
             },
             {
-              title: 'Non-minting protocols',
-              href:
-                selectedChainsContext?.buildUrl('/interop/non-minting') ??
-                '/interop/non-minting',
-            },
-            {
-              title: 'Lock & Mint protocols',
-              href:
-                selectedChainsContext?.buildUrl('/interop/lock-and-mint') ??
-                '/interop/lock-and-mint',
-            },
-            {
-              title: 'Burn & Mint protocols',
-              href:
-                selectedChainsContext?.buildUrl('/interop/burn-and-mint') ??
-                '/interop/burn-and-mint',
+              title: 'Token frameworks',
+              href: '/interop/token-frameworks',
             },
           ],
         },
@@ -206,7 +185,7 @@ export function SideNavLayout({
             })),
         },
       ]),
-    [selectedChainsContext],
+    [],
   )
 
   const sideLinks = useMemo(

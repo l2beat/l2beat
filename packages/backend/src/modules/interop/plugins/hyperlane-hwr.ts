@@ -9,6 +9,11 @@ import { Address32 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import type { TokenMap } from '../engine/match/TokenMap'
 import {
+  cctpV1DepositForBurnLog,
+  cctpV2DepositForBurnLog,
+  parseCctpDepositForBurn,
+} from './cctp/cctp.utils'
+import {
   Dispatch,
   dispatchIdLog,
   dispatchLog,
@@ -21,7 +26,11 @@ import {
   processLog,
 } from './hyperlane'
 import { findHyperlaneChain, HyperlaneConfig } from './hyperlane.config'
-import { findParsedAround, type ParsedTransferLog } from './logScan'
+import {
+  findBestTransferLog as findBestTransferLogWithParser,
+  findParsedAround,
+  type ParsedTransferLog,
+} from './logScan'
 import {
   getBestEffortTokenFrameworkBridgeType,
   getTokenFrameworkBridgeType,
@@ -50,21 +59,14 @@ const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
 export const parseTransfer = createEventParser(transferLog)
 
-const depositForBurnCCTPv1Log =
-  'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)'
-const parseDepositForBurnCCTPv1 = createEventParser(depositForBurnCCTPv1Log)
-const depositForBurnCCTPv2Log =
-  'event DepositForBurn(address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller, uint256 maxFee, uint32 indexed minFinalityThreshold, bytes hookData)'
-const parseDepositForBurnCCTPv2 = createEventParser(depositForBurnCCTPv2Log)
-
 const hwrTxEventSignatures = [
   dispatchLog,
   dispatchIdLog,
   processLog,
   processIdLog,
   transferLog,
-  depositForBurnCCTPv1Log,
-  depositForBurnCCTPv2Log,
+  cctpV1DepositForBurnLog,
+  cctpV2DepositForBurnLog,
 ]
 
 const HwrTransferSent = createInteropEventType<{
@@ -155,12 +157,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => {
-          return (
-            parseDepositForBurnCCTPv1(log, null) ||
-            parseDepositForBurnCCTPv2(log, null)
-          )
-        },
+        (log, _index) => parseCctpDepositForBurn(log),
       )
       const transferMatch = findBestTransferLog(
         input.txLogs,
@@ -388,94 +385,12 @@ export function findBestTransferLog(
   targetAmount: bigint,
   startLogIndex: number,
 ): { transfer?: ParsedTransferLog; hasTransfer: boolean } {
-  const transfers: { parsed: ParsedTransferLog; logIndex: number | null }[] = []
-  for (const log of logs) {
-    const transfer = parseTransfer(log, null)
-    if (!transfer) continue
-    transfers.push({
-      parsed: {
-        logAddress: Address32.from(log.address),
-        from: Address32.from(transfer.from),
-        to: Address32.from(transfer.to),
-        value: transfer.value,
-      },
-      logIndex: log.logIndex,
-    })
-  }
-
-  // Exclude mint+burn pairs of the same token and amount (xERC20 lockbox pattern).
-  // When a token is minted from 0x0 then immediately burned to 0x0, the pair is
-  // intermediary and should not be picked over the real transfer.
-  const cancelled = new Set<number>()
-  for (let i = 0; i < transfers.length; i++) {
-    if (cancelled.has(i)) continue
-    const a = transfers[i].parsed
-    if (a.from !== Address32.ZERO) continue
-    for (let j = i + 1; j < transfers.length; j++) {
-      if (cancelled.has(j)) continue
-      const b = transfers[j].parsed
-      if (
-        b.to === Address32.ZERO &&
-        b.logAddress === a.logAddress &&
-        b.value === a.value
-      ) {
-        cancelled.add(i)
-        cancelled.add(j)
-        break
-      }
-    }
-  }
-
-  let closestMatch: ParsedTransferLog | undefined
-  let closestDelta: bigint | undefined
-  let closestDistance: number | undefined
-
-  for (let i = 0; i < transfers.length; i++) {
-    if (cancelled.has(i)) continue
-    const { parsed, logIndex } = transfers[i]
-
-    const delta = absDiff(parsed.value, targetAmount)
-    const distance =
-      logIndex === null
-        ? Number.POSITIVE_INFINITY
-        : Math.abs(logIndex - startLogIndex)
-
-    if (closestDelta === undefined || delta < closestDelta) {
-      closestDelta = delta
-      closestDistance = distance
-      closestMatch = parsed
-      continue
-    }
-
-    if (delta > closestDelta) continue
-
-    if (
-      closestMatch &&
-      parsed.value === closestMatch.value &&
-      isMintOrBurnTransfer(parsed) !== isMintOrBurnTransfer(closestMatch)
-    ) {
-      if (isMintOrBurnTransfer(parsed)) {
-        closestDistance = distance
-        closestMatch = parsed
-      }
-      continue
-    }
-
-    if (closestDistance === undefined || distance < closestDistance) {
-      closestDistance = distance
-      closestMatch = parsed
-    }
-  }
-
-  return { transfer: closestMatch, hasTransfer: transfers.length > 0 }
-}
-
-function absDiff(value: bigint, target: bigint): bigint {
-  return value >= target ? value - target : target - value
-}
-
-function isMintOrBurnTransfer(transfer: ParsedTransferLog): boolean {
-  return transfer.from === Address32.ZERO || transfer.to === Address32.ZERO
+  return findBestTransferLogWithParser(
+    logs,
+    targetAmount,
+    startLogIndex,
+    (log) => parseTransfer(log, null),
+  )
 }
 
 function pickTransferAmount(

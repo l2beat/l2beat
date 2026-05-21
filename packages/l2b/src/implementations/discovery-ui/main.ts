@@ -114,7 +114,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   })
 
   app.get('/api/projects', (_req, res) => {
-    const response = getProjects(configReader, readonly)
+    const response = getProjects(configReader)
     res.json(response)
   })
 
