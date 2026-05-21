@@ -24,6 +24,7 @@ import type {
  */
 export function formatIngestionTrace(trace: IngestionTrace): string {
   const lines: string[] = []
+  lines.push(`Ingestion ID: ${trace.id}`)
   lines.push(`Address: ${trace.address.chain}:${trace.address.address}`)
   trace.steps.forEach((step, index) => {
     lines.push(`${index + 1}. ${describeIngestionStep(step)}`)
@@ -117,6 +118,7 @@ export function toIngestionTraceView(
   trace: IngestionTrace,
 ): IngestionTraceView {
   return {
+    id: trace.id,
     address: trace.address,
     steps: trace.steps.map(toIngestionStepView),
     outcome: toIngestionOutcomeView(trace.outcome),

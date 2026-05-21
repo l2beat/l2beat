@@ -174,6 +174,7 @@ describe(TokenIngestionLoop.name, () => {
     it('stops draining when the processing limit is reached', async () => {
       const address = token('ethereum', '0xaaa')
       const process = mockFn().resolvesTo({
+        id: 'ing_test',
         address,
         steps: [],
         outcome: { kind: 'skip', reason: 'test' },

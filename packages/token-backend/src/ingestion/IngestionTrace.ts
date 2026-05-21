@@ -8,6 +8,7 @@ import type {
 import type { TokenAddress } from './InteropTransferIndex'
 
 export interface IngestionTrace {
+  id: string
   address: TokenAddress
   steps: IngestionStep[]
   outcome: IngestionOutcome
@@ -87,6 +88,7 @@ export type DeployedTokenWrite =
 export type IngestionStepView = IngestionStep & { description: string }
 export type IngestionOutcomeView = IngestionOutcome & { description: string }
 export interface IngestionTraceView {
+  id: string
   address: TokenAddress
   steps: IngestionStepView[]
   outcome: IngestionOutcomeView

@@ -11,6 +11,7 @@ import type {
   TokenIngestionQueueState,
 } from '@l2beat/database/dist/repositories/TokenIngestionQueueRepository'
 import { UnixTime } from '@l2beat/shared-pure'
+import { randomUUID } from 'crypto'
 import { InteropTransferClassifier } from '../../../shared/build'
 import { Chain } from '../chains/Chain'
 import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
@@ -106,11 +107,13 @@ export class TokenIngestionProcessor {
     entry: TokenIngestionQueueRecord,
     transferIndex: InteropTransferIndex,
   ): Promise<IngestionTrace> {
+    const id = generateIngestionTraceId()
     const steps: IngestionStep[] = []
     const address = normalizeQueuedAddress(entry)
     if (!address) {
       steps.push({ kind: 'invalid-address', rawAddress: entry.address })
       return {
+        id,
         address: { chain: entry.chain, address: entry.address },
         steps,
         outcome: { kind: 'skip', reason: 'Address could not be normalized' },
@@ -135,6 +138,7 @@ export class TokenIngestionProcessor {
 
     if (resolution.type === 'conflict') {
       return {
+        id,
         address,
         steps,
         outcome: { kind: 'conflict', message: resolution.message },
@@ -142,6 +146,7 @@ export class TokenIngestionProcessor {
     }
     if (resolution.type === 'missing') {
       return {
+        id,
         address,
         steps,
         outcome: {
@@ -152,6 +157,7 @@ export class TokenIngestionProcessor {
     }
 
     return {
+      id,
       address,
       steps,
       outcome: this.buildPlanOutcome(existing, resolution, transfers, address),
@@ -855,4 +861,8 @@ function generateAbstractTokenId() {
     )
   }
   return result
+}
+
+function generateIngestionTraceId() {
+  return `ing_${randomUUID()}`
 }

@@ -50,6 +50,7 @@ describe(TokenIngestionProcessor.name, () => {
         ]),
       )
 
+      expect(trace.id).toMatchRegex(/^ing_[0-9a-f-]{36}$/)
       expect(
         trace.steps.find((step) => step.kind === 'transfer-evidence'),
       ).toEqual({
@@ -274,6 +275,7 @@ describe(TokenIngestionProcessor.name, () => {
     it('passes non-pending traces through unchanged', async () => {
       const processor = createProcessor({})
       const trace = {
+        id: 'ing_test',
         address: token('ethereum', '0xaaa'),
         steps: [],
         outcome: { kind: 'skip', reason: 'whatever' } as const,
@@ -309,6 +311,7 @@ describe(TokenIngestionProcessor.name, () => {
       })
 
       const result = await processor.fetch({
+        id: 'ing_test',
         address,
         steps: [],
         outcome: {
@@ -388,6 +391,7 @@ describe(TokenIngestionProcessor.name, () => {
       })
 
       const result = await processor.fetch({
+        id: 'ing_test',
         address,
         steps: [],
         outcome: {
@@ -454,6 +458,7 @@ describe(TokenIngestionProcessor.name, () => {
       })
 
       const result = await processor.fetch({
+        id: 'ing_test',
         address,
         steps: [],
         outcome: {
@@ -526,6 +531,7 @@ describe(TokenIngestionProcessor.name, () => {
       })
 
       const result = await processor.fetch({
+        id: 'ing_test',
         address,
         steps: [],
         outcome: {
@@ -584,6 +590,7 @@ describe(TokenIngestionProcessor.name, () => {
       }
 
       const result = await processor.fetch({
+        id: 'ing_test',
         address,
         steps: [],
         outcome: {
@@ -633,6 +640,7 @@ describe(TokenIngestionProcessor.name, () => {
       })
 
       const result = await processor.fetch({
+        id: 'ing_test',
         address,
         steps: [],
         outcome: {
@@ -657,6 +665,7 @@ describe(TokenIngestionProcessor.name, () => {
     it('throws when called with a pending outcome', async () => {
       const processor = createProcessor({})
       const trace: IngestionTrace = {
+        id: 'ing_test',
         address: token('ethereum', '0xaaa'),
         steps: [],
         outcome: {

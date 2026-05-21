@@ -265,6 +265,7 @@ function abstractRecord(id: string, symbol: string): AbstractTokenRecord {
     coingeckoListingTimestamp: null,
     comment: null,
     reviewed: false,
+    isPriceUnreliable: false
   }
 }
 

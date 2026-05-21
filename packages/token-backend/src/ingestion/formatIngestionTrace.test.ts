@@ -6,6 +6,7 @@ import type { IngestionTrace } from './IngestionTrace'
 describe(formatIngestionTrace.name, () => {
   it('renders the address, every step and the outcome as text', () => {
     const trace: IngestionTrace = {
+      id: 'ing_test',
       address: { chain: 'ethereum', address: '0xaaa' },
       steps: [
         { kind: 'no-existing-token' },
@@ -44,6 +45,7 @@ describe(formatIngestionTrace.name, () => {
 
     expect(log).toEqual(
       [
+        'Ingestion ID: ing_test',
         'Address: ethereum:0xaaa',
         '1. No existing deployed token in TokenDB.',
         '2. Found 3 transfers (2 non-swapping). Other sides resolve to: USDC01:USDC.',
@@ -55,6 +57,7 @@ describe(formatIngestionTrace.name, () => {
 
   it('handles conflict outcomes', () => {
     const trace: IngestionTrace = {
+      id: 'ing_test',
       address: { chain: 'ethereum', address: '0xbbb' },
       steps: [{ kind: 'no-existing-token' }],
       outcome: { kind: 'conflict', message: 'multiple abstracts' },
