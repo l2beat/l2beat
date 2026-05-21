@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xce54eb014b95aab36918916f8f619ff6048d75f8
+
+# Diff at Mon, 18 May 2026 10:00:55 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@81908b566e918425ebf298c08aed66029316c1ad block: 1778579058
+- current timestamp: 1779097887
+
+## Description
+
+Upgraded GRVT bridge to align with ZK stack state of the art: https://disco.l2beat.com/diff/eth:0xf7B67bDDb74B5eD3De49e1a6Da4D1d7460F00780/eth:0x7F9FCdaf7f65Fd5737De61d8bF5617A9AA8cFaF1. Changes are:
+
+- Interfaces upgraded to the same versions as zksync era has
+- Added bridging ETH
+- Switched to using standard L1AssetRouter
+- Also increased `L2_GAS_LIMIT_DEPOSIT` by the factor of two (the amount of gas that could be used to consume deposit trx on L2).
+
+## Watched changes
+
+```diff
+    contract GRVTBridgeProxy (eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65) [N/A] {
+    +++ description: Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.
+      sourceHashes.1:
+-        "0xf5ebf18a9d794626fa9f7aaa9d607e40298981f57ecc7ad15d41e03d8d756e4f"
++        "0x5061251553a3aefbac60a53a4ca37e0da1a7979b38e33e09934e41db023506be"
+      values.$implementation:
+-        "eth:0xf7B67bDDb74B5eD3De49e1a6Da4D1d7460F00780"
++        "eth:0x7F9FCdaf7f65Fd5737De61d8bF5617A9AA8cFaF1"
+      values.$pastUpgrades.1:
++        ["2026-05-14T06:34:35.000Z","0xa6b1d1369e7a967309819edfff49e2b878bd97f58bcec51a1f9739c28f4163e3",["eth:0xE9C6E19CaA23801B904335E20a7F2BDFE112CAF8"]]
+      values.$pastUpgrades.2:
++        ["2026-05-14T09:56:47.000Z","0xbc38229556154bce739a2fc9f896f5360edb78dd453f44ed9b0284e9ac8d9a6d",["eth:0x7F9FCdaf7f65Fd5737De61d8bF5617A9AA8cFaF1"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.L2_GAS_LIMIT_DEPOSIT:
+-        1200000
++        2400000
+      values.ETH_TOKEN_ADDRESS:
++        "eth:0x0000000000000000000000000000000000000001"
+      implementationNames.eth:0xf7B67bDDb74B5eD3De49e1a6Da4D1d7460F00780:
+-        "GRVTBridgeProxy"
+      implementationNames.eth:0x7F9FCdaf7f65Fd5737De61d8bF5617A9AA8cFaF1:
++        "GRVTBridgeProxy"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GRVTBridgeProxy/GRVTBridgeProxy.sol            | 1459 ++++++++++++++------
+ 1 file changed, 1019 insertions(+), 440 deletions(-)
+```
+
 Generated with discovered.json: 0xc8b78505484e9dab480c3c4101ff5382fee35097
 
 # Diff at Tue, 12 May 2026 09:45:26 GMT:

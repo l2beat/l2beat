@@ -6,7 +6,6 @@ import { expect, mockFn, mockObject } from 'earl'
 import type { InteropTransferAnalyzer } from '../InteropTransferAnalyzer'
 import { DeployedTokenId } from './DeployedTokenId'
 import { InteropFinancialsLoop } from './InteropFinancialsLoop'
-import type { PriceRemappingRule } from './priceRemappingRules'
 
 describe(InteropFinancialsLoop.name, () => {
   describe(InteropFinancialsLoop.prototype.run.name, () => {
@@ -24,7 +23,7 @@ describe(InteropFinancialsLoop.name, () => {
         db,
         tokenDb,
         Logger.SILENT,
-        { priceRemappingRules: [], intervalMs: 1000 },
+        { intervalMs: 1000 },
       )
 
       await service.run()
@@ -52,7 +51,7 @@ describe(InteropFinancialsLoop.name, () => {
         db,
         tokenDb,
         Logger.SILENT,
-        { priceRemappingRules: [], intervalMs: 1000 },
+        { intervalMs: 1000 },
       )
 
       await service.run()
@@ -134,7 +133,11 @@ describe(InteropFinancialsLoop.name, () => {
             symbol: 'ETH',
             decimals: 18,
           },
-          abstractToken: { id: '123456:ethereum:ETH', coingeckoId: 'ethereum' },
+          abstractToken: {
+            id: '123456:ethereum:ETH',
+            coingeckoId: 'ethereum',
+            isPriceUnreliable: false,
+          },
         },
         {
           deployedToken: {
@@ -143,7 +146,11 @@ describe(InteropFinancialsLoop.name, () => {
             symbol: 'ARB',
             decimals: 18,
           },
-          abstractToken: { id: 'abcdef:arbitrum:ARB', coingeckoId: 'arbitrum' },
+          abstractToken: {
+            id: 'abcdef:arbitrum:ARB',
+            coingeckoId: 'arbitrum',
+            isPriceUnreliable: false,
+          },
         },
         {
           deployedToken: {
@@ -152,7 +159,11 @@ describe(InteropFinancialsLoop.name, () => {
             symbol: 'ETH',
             decimals: 18,
           },
-          abstractToken: { id: 'ethereum+native', coingeckoId: 'ethereum' },
+          abstractToken: {
+            id: 'ethereum+native',
+            coingeckoId: 'ethereum',
+            isPriceUnreliable: false,
+          },
         },
         {
           deployedToken: {
@@ -161,7 +172,11 @@ describe(InteropFinancialsLoop.name, () => {
             symbol: 'BASE',
             decimals: 18,
           },
-          abstractToken: { id: 'fedcba:base:BASE', coingeckoId: 'base' },
+          abstractToken: {
+            id: 'fedcba:base:BASE',
+            coingeckoId: 'base',
+            isPriceUnreliable: false,
+          },
         },
         {
           deployedToken: {
@@ -170,7 +185,11 @@ describe(InteropFinancialsLoop.name, () => {
             symbol: 'TOKEN',
             decimals: 6,
           },
-          abstractToken: { id: '222222:ethereum:TOKEN', coingeckoId: 'token' },
+          abstractToken: {
+            id: '222222:ethereum:TOKEN',
+            coingeckoId: 'token',
+            isPriceUnreliable: false,
+          },
         },
       ]
 
@@ -188,7 +207,7 @@ describe(InteropFinancialsLoop.name, () => {
         db,
         tokenDb,
         Logger.SILENT,
-        { priceRemappingRules: [], intervalMs: 1000 },
+        { intervalMs: 1000 },
       )
 
       await service.run()
@@ -327,7 +346,7 @@ describe(InteropFinancialsLoop.name, () => {
         db,
         tokenDb,
         logger,
-        { priceRemappingRules: [], intervalMs: 1000 },
+        { intervalMs: 1000 },
       )
 
       await service.run()
@@ -347,7 +366,7 @@ describe(InteropFinancialsLoop.name, () => {
       })
     })
 
-    it('applies price remapping rules using side timestamps', async () => {
+    it('keeps token identity and amount while skipping valuation for unreliable prices', async () => {
       const srcToken = DeployedTokenId.from(
         'ethereum',
         EthereumAddress.random(),
@@ -357,43 +376,28 @@ describe(InteropFinancialsLoop.name, () => {
         EthereumAddress.random(),
       )
 
-      const mockTransfers = [
-        {
-          transferId: 'msg1',
-          timestamp: UnixTime(250),
-
-          srcTime: UnixTime(200),
-          srcChain: 'ethereum',
-          srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
-          srcRawAmount: BigInt('1000000000000000000'),
-
-          dstTime: UnixTime(250),
-          dstChain: 'arbitrum',
-          dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken)),
-          dstRawAmount: BigInt('2000000000000000000'),
-        },
-        {
-          transferId: 'msg2',
-          timestamp: UnixTime(250),
-
-          srcTime: UnixTime(250),
-          srcChain: 'ethereum',
-          srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
-          srcRawAmount: BigInt('3000000000000000000'),
-        },
-      ]
-
-      const pricesMap = new Map([
-        ['src-cg-id', 10],
-        ['dst-cg-id', 20],
-      ])
-
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
         hasAnyPrices: mockFn().resolvesTo(true),
-        getClosestPrices: mockFn().resolvesTo(pricesMap),
+        getClosestPrices: mockFn().resolvesTo(
+          new Map([
+            ['unreliable-token', 3000],
+            ['reliable-token', 2],
+          ]),
+        ),
       })
       const interopTransfer = mockObject<Database['interopTransfer']>({
-        getUnprocessed: mockFn().resolvesTo(mockTransfers),
+        getUnprocessed: mockFn().resolvesTo([
+          {
+            transferId: 'msg1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
+            srcRawAmount: BigInt('1000000000000000000'),
+            dstChain: 'arbitrum',
+            dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken)),
+            dstRawAmount: BigInt('2000000000000000000'),
+          },
+        ]),
         updateFinancials: mockFn().resolvesTo(undefined),
       })
       const transaction = mockFn(async (fn) => await fn())
@@ -411,43 +415,32 @@ describe(InteropFinancialsLoop.name, () => {
                 deployedToken: {
                   chain: 'ethereum',
                   address: DeployedTokenId.address(srcToken),
-                  symbol: 'TKNA',
+                  symbol: 'BAD',
                   decimals: 18,
                 },
                 abstractToken: {
                   id: 'src-abstract-id',
-                  coingeckoId: 'src-cg-id',
+                  coingeckoId: 'unreliable-token',
+                  isPriceUnreliable: true,
                 },
               },
               {
                 deployedToken: {
                   chain: 'arbitrum',
                   address: DeployedTokenId.address(dstToken),
-                  symbol: 'TKNB',
+                  symbol: 'GOOD',
                   decimals: 18,
                 },
                 abstractToken: {
                   id: 'dst-abstract-id',
-                  coingeckoId: 'dst-cg-id',
+                  coingeckoId: 'reliable-token',
+                  isPriceUnreliable: false,
                 },
               },
             ]),
           },
         },
       } as any)
-
-      const priceRemappingRules: PriceRemappingRule[] = [
-        {
-          abstractId: 'src-abstract-id',
-          fromTimestamp: UnixTime(200),
-          priceUsd: 1,
-        },
-        {
-          abstractId: 'dst-abstract-id',
-          fromTimestamp: UnixTime(200),
-          priceUsd: 2,
-        },
-      ]
 
       const service = new InteropFinancialsLoop(
         [
@@ -457,37 +450,22 @@ describe(InteropFinancialsLoop.name, () => {
         db,
         tokenDb,
         Logger.SILENT,
-        { priceRemappingRules, intervalMs: 1000 },
+        { intervalMs: 1000 },
       )
 
       await service.run()
 
       expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {
         srcAbstractTokenId: 'src-abstract-id',
-        srcSymbol: 'TKNA',
-        srcPrice: 1,
+        srcSymbol: 'BAD',
+        srcPrice: null,
         srcAmount: 1,
-        srcValueUsd: 1,
-
+        srcValueUsd: null,
         dstAbstractTokenId: 'dst-abstract-id',
-        dstSymbol: 'TKNB',
+        dstSymbol: 'GOOD',
         dstPrice: 2,
         dstAmount: 2,
         dstValueUsd: 4,
-      })
-
-      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg2', {
-        srcAbstractTokenId: 'src-abstract-id',
-        srcSymbol: 'TKNA',
-        srcPrice: 1,
-        srcAmount: 3,
-        srcValueUsd: 3,
-
-        dstAbstractTokenId: null,
-        dstSymbol: null,
-        dstPrice: null,
-        dstAmount: null,
-        dstValueUsd: null,
       })
     })
 
@@ -565,6 +543,7 @@ describe(InteropFinancialsLoop.name, () => {
                 abstractToken: {
                   id: 'src-abstract-id',
                   coingeckoId: 'token',
+                  isPriceUnreliable: false,
                 },
               },
               {
@@ -577,6 +556,7 @@ describe(InteropFinancialsLoop.name, () => {
                 abstractToken: {
                   id: 'dst-abstract-id',
                   coingeckoId: 'token',
+                  isPriceUnreliable: false,
                 },
               },
             ]),
@@ -598,7 +578,6 @@ describe(InteropFinancialsLoop.name, () => {
         {
           analyzer,
           intervalMs: 1000,
-          priceRemappingRules: [],
         },
       )
 
@@ -667,6 +646,7 @@ describe(InteropFinancialsLoop.name, () => {
                 abstractToken: {
                   id: 'src-abstract-id',
                   coingeckoId: 'token',
+                  isPriceUnreliable: false,
                 },
               },
               {
@@ -679,6 +659,7 @@ describe(InteropFinancialsLoop.name, () => {
                 abstractToken: {
                   id: 'dst-abstract-id',
                   coingeckoId: 'token',
+                  isPriceUnreliable: false,
                 },
               },
             ]),
@@ -702,7 +683,6 @@ describe(InteropFinancialsLoop.name, () => {
         {
           analyzer,
           intervalMs: 1000,
-          priceRemappingRules: [],
         },
       )
 

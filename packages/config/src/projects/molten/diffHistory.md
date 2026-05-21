@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x1b0a8a0049b0c0962951bc82a8301a7ec60bffc1
+
+# Diff at Tue, 19 May 2026 13:56:37 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@307f5c3dfdab6a4f88448861a0bb75f0043b762b block: 1778232916
+- current timestamp: 1779198858
+
+## Description
+
+Caldera Multisig 1 signer removed. Included even though the project is archived (#11869) because it still appears on the discovery status dashboard.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "arb1:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.multisigThreshold:
+-        "3 of 8 (38%)"
++        "3 of 7 (43%)"
+    }
+```
+
 Generated with discovered.json: 0xdebc655d6f44a749101c6ac5a976c4d6408ca02d
 
 # Diff at Fri, 15 May 2026 12:36:11 GMT:

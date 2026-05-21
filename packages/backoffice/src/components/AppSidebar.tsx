@@ -1,6 +1,6 @@
 import {
-  ArrowLeftRightIcon,
   ChevronRightIcon,
+  ClipboardCheckIcon,
   LayersIcon,
   PanelsTopLeftIcon,
   PieChartIcon,
@@ -11,7 +11,6 @@ import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
-  SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
@@ -30,95 +29,146 @@ import {
   CollapsibleTrigger,
 } from './core/Collapsible'
 
-const interopItems = [
-  {
-    title: 'Data',
-    icon: LayersIcon,
-    items: [
-      {
-        title: 'Overview',
-        url: '/interop',
-      },
-      {
-        title: 'Aggregates',
-        url: '/interop/aggregates',
-      },
-      {
-        title: 'Events',
-        url: '/interop/events',
-      },
-      {
-        title: 'Messages',
-        url: '/interop/messages',
-      },
-      {
-        title: 'Transfers',
-        url: '/interop/transfers',
-      },
-      {
-        title: 'Missing tokens',
-        url: '/interop/missing-tokens',
-      },
-      {
-        title: 'Known apps',
-        url: '/interop/known-apps',
-      },
-    ],
-  },
-  {
-    title: 'Indexing',
-    icon: RefreshCwIcon,
-    items: [
-      {
-        title: 'Plugin statuses',
-        url: '/interop/indexing/plugin-statuses',
-      },
-      {
-        title: 'Processor statuses',
-        url: '/interop/indexing/processor-statuses',
-      },
-      {
-        title: 'Financial actions',
-        url: '/interop/financials/actions',
-      },
-    ],
-  },
-  {
-    title: 'Insights',
-    icon: PieChartIcon,
-    items: [
-      {
-        title: 'Anomalies',
-        url: '/interop/insights/anomalies',
-      },
-      {
-        title: 'Suspicious transfers',
-        url: '/interop/insights/anomalies/suspicious-transfers',
-      },
-      {
-        title: 'Coverage pies',
-        url: '/interop/insights/coverage-pies',
-      },
-      {
-        title: 'Memory',
-        url: '/interop/insights/memory',
-      },
-    ],
-  },
-]
+type NavigationGroup = {
+  title: string
+  matcher: string
+  items: Item[]
+}
 
-const websiteItems = [
+type Item =
+  | {
+      type: 'collapsible'
+      title: string
+      icon: typeof LayersIcon
+      items: { title: string; url: string }[]
+    }
+  | {
+      type: 'single'
+      title: string
+      icon: typeof LayersIcon
+      url: string
+    }
+
+const navGroups: NavigationGroup[] = [
   {
-    title: 'Status',
-    icon: LayersIcon,
+    title: 'General',
+    matcher: '/',
     items: [
       {
-        title: 'Tracked txs',
-        url: '/website/status/tracked-txs',
+        type: 'single',
+        title: 'Home',
+        icon: PanelsTopLeftIcon,
+        url: '/',
+      },
+    ],
+  },
+  {
+    title: 'Interop',
+    matcher: '/interop',
+    items: [
+      {
+        type: 'collapsible',
+        title: 'Data',
+        icon: LayersIcon,
+        items: [
+          {
+            title: 'Overview',
+            url: '/interop',
+          },
+          {
+            title: 'Aggregates',
+            url: '/interop/aggregates',
+          },
+          {
+            title: 'Events',
+            url: '/interop/events',
+          },
+          {
+            title: 'Messages',
+            url: '/interop/messages',
+          },
+          {
+            title: 'Transfers',
+            url: '/interop/transfers',
+          },
+          {
+            title: 'Missing tokens',
+            url: '/interop/missing-tokens',
+          },
+          {
+            title: 'Known apps',
+            url: '/interop/known-apps',
+          },
+        ],
       },
       {
-        title: 'DA tracking',
-        url: '/website/status/da-tracking',
+        type: 'collapsible',
+        title: 'Indexing',
+        icon: RefreshCwIcon,
+        items: [
+          {
+            title: 'Plugin statuses',
+            url: '/interop/indexing/plugin-statuses',
+          },
+          {
+            title: 'Processor statuses',
+            url: '/interop/indexing/processor-statuses',
+          },
+          {
+            title: 'Financial actions',
+            url: '/interop/financials/actions',
+          },
+        ],
+      },
+      {
+        type: 'collapsible',
+        title: 'Insights',
+        icon: PieChartIcon,
+        items: [
+          {
+            title: 'Anomalies',
+            url: '/interop/insights/anomalies',
+          },
+          {
+            title: 'Suspicious transfers',
+            url: '/interop/insights/anomalies/suspicious-transfers',
+          },
+          {
+            title: 'Coverage pies',
+            url: '/interop/insights/coverage-pies',
+          },
+          {
+            title: 'Memory',
+            url: '/interop/insights/memory',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: 'Website',
+    matcher: '/website',
+    items: [
+      {
+        type: 'single',
+        title: 'Daily checks',
+        icon: ClipboardCheckIcon,
+        url: '/website/daily-checks',
+      },
+      {
+        type: 'collapsible',
+        title: 'Status',
+        icon: LayersIcon,
+        items: [
+          {
+            title: 'Tracked txs',
+            url: '/website/status/tracked-txs',
+          },
+          {
+            title: 'DA tracking',
+            url: '/website/status/da-tracking',
+          },
+        ],
       },
     ],
   },
@@ -141,106 +191,69 @@ export function AppSidebar() {
         <SidebarSeparator className="mx-0" />
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>General</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Home">
-                  <Link to="/">
-                    <PanelsTopLeftIcon />
-                    <span>Home</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Interop</SidebarGroupLabel>
-          <SidebarMenu>
-            {interopItems.map((group) => {
-              const isActive = isNavGroupActive(
-                pathname,
-                group.items,
-                '/interop',
-              )
-              return (
-                <Collapsible key={group.title} asChild defaultOpen={isActive}>
-                  <SidebarMenuItem>
-                    <CollapsibleTrigger asChild className="group">
-                      <div>
-                        <SidebarMenuButton tooltip={group.title}>
-                          <group.icon />
-                          {group.title}
+        {navGroups.map((group) => {
+          return (
+            <SidebarGroup key={group.title}>
+              <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
+              <SidebarMenu>
+                {group.items.map((item) => {
+                  if (item.type === 'single') {
+                    return (
+                      <SidebarMenuItem key={item.title}>
+                        <SidebarMenuButton asChild tooltip={item.title}>
+                          <Link to={item.url}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </Link>
                         </SidebarMenuButton>
-                        <SidebarMenuAction className="group-data-[state=open]:rotate-90">
-                          <ChevronRightIcon />
-                        </SidebarMenuAction>
-                      </div>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <SidebarMenuSub>
-                        {group.items.map((subItem) => (
-                          <SidebarMenuSubItem key={subItem.title}>
-                            <SidebarMenuSubButton asChild>
-                              <Link to={subItem.url}>
-                                <span>{subItem.title}</span>
-                              </Link>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        ))}
-                      </SidebarMenuSub>
-                    </CollapsibleContent>
-                  </SidebarMenuItem>
-                </Collapsible>
-              )
-            })}
-          </SidebarMenu>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Website</SidebarGroupLabel>
-          <SidebarMenu>
-            {websiteItems.map((group) => {
-              const isActive = isNavGroupActive(
-                pathname,
-                group.items,
-                '/website',
-              )
-              return (
-                <Collapsible key={group.title} asChild defaultOpen={isActive}>
-                  <SidebarMenuItem>
-                    <CollapsibleTrigger asChild className="group">
-                      <div>
-                        <SidebarMenuButton tooltip={group.title}>
-                          <group.icon />
-                          {group.title}
-                        </SidebarMenuButton>
-                        <SidebarMenuAction className="group-data-[state=open]:rotate-90">
-                          <ChevronRightIcon />
-                        </SidebarMenuAction>
-                      </div>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <SidebarMenuSub>
-                        {group.items.map((subItem) => (
-                          <SidebarMenuSubItem key={subItem.title}>
-                            <SidebarMenuSubButton asChild>
-                              <Link to={subItem.url}>
-                                <ArrowLeftRightIcon />
-                                <span>{subItem.title}</span>
-                              </Link>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        ))}
-                      </SidebarMenuSub>
-                    </CollapsibleContent>
-                  </SidebarMenuItem>
-                </Collapsible>
-              )
-            })}
-          </SidebarMenu>
-        </SidebarGroup>
+                      </SidebarMenuItem>
+                    )
+                  }
+
+                  const isActive = isNavGroupActive(
+                    pathname,
+                    item.items,
+                    group.matcher,
+                  )
+                  return (
+                    <Collapsible
+                      key={item.title}
+                      asChild
+                      defaultOpen={isActive}
+                    >
+                      <SidebarMenuItem>
+                        <CollapsibleTrigger asChild className="group">
+                          <div>
+                            <SidebarMenuButton tooltip={item.title}>
+                              <item.icon />
+                              {item.title}
+                            </SidebarMenuButton>
+                            <SidebarMenuAction className="group-data-[state=open]:rotate-90">
+                              <ChevronRightIcon />
+                            </SidebarMenuAction>
+                          </div>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            {item.items.map((subItem) => (
+                              <SidebarMenuSubItem key={subItem.title}>
+                                <SidebarMenuSubButton asChild>
+                                  <Link to={subItem.url}>
+                                    <span>{subItem.title}</span>
+                                  </Link>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            ))}
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
+                      </SidebarMenuItem>
+                    </Collapsible>
+                  )
+                })}
+              </SidebarMenu>
+            </SidebarGroup>
+          )
+        })}
       </SidebarContent>
     </Sidebar>
   )
