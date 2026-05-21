@@ -4,21 +4,66 @@
   "ignoreRelatives": ["getSupportedTokens", "owner"],
   "ignoreInWatchMode": ["getExpectedNextSequenceNumber"],
   "fields": {
-    "staticConfigAddresses": {
-      "handler": {
-        "type": "call",
-        "args": [],
-        "method": "getStaticConfig"
-      },
-      "edit": ["pick", "rmnRemote", "nonceManager", "tokenAdminRegistry"]
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can update the FeeQuoter address used for fee estimations."
+        },
+        {
+          "type": "interact",
+          "description": "can set a 'message interceptor' contract to gate messages based on content."
+        },
+        {
+          "type": "interact",
+          "description": "can set the permissioned actor who can manage the sender whitelist."
+        }
+      ]
     },
-    "staticConfigChains": {
+    "allowlistAdmin": {
+      "description": "Permissioned account that can add or remove allowed senders for any destination chain whose allowlistEnabled flag is true on this OnRamp. Sourced from DynamicConfig.allowlistAdmin; zero address means no admin is currently set (only the owner can manage allowlists).",
+      "copy": "getDynamicConfig",
+      "edit": ["get", "allowlistAdmin"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove allowed senders for any destination chain whose allowlist is enabled on this OnRamp."
+        }
+      ]
+    },
+    "staticConfig": {
+      "description": "Immutable per-OnRamp config: source chain (this contract's chain), RMN remote, NonceManager, TokenAdminRegistry. Set once at construction.",
+      "handler": { "type": "call", "args": [], "method": "getStaticConfig" },
+      "edit": ["set", "chainSelector", ["format", "CCIPChainName"]]
+    },
+    "destChainConfigs": {
+      "description": "Per-destination-chain lane config (which local Router can send ccipSend() for this destination, and whether the per-chain allowlist gate is enabled). Replayed from DestChainConfigSet events; keys are CCIP chain selectors, value is the latest (router, allowlistEnabled) pair. The sequenceNumber field on the event reflects the seq at the moment of the config change, not the current send counter, so it is dropped.",
       "handler": {
-        "type": "call",
-        "args": [],
-        "method": "getStaticConfig"
+        "type": "event",
+        "groupBy": "destChainSelector",
+        "select": ["router", "allowlistEnabled"],
+        "set": {
+          "event": "event DestChainConfigSet(uint64 indexed destChainSelector, uint64 sequenceNumber, address router, bool allowlistEnabled)"
+        }
       },
-      "edit": ["pick", "chainSelector"]
+      "edit": ["map_keys", ["format", "CCIPChainName"]]
+    },
+    "destChainAllowlist": {
+      "description": "Per-destination-chain sender allowlist (addresses that ccipSend() through this OnRamp for that destination when allowlistEnabled is true). Replayed from AllowListSendersAdded / AllowListSendersRemoved events.",
+      "handler": {
+        "type": "event",
+        "groupBy": "destChainSelector",
+        "select": "senders",
+        "flatten": true,
+        "add": {
+          "event": "event AllowListSendersAdded(uint64 indexed destChainSelector, address[] senders)"
+        },
+        "remove": {
+          "event": "event AllowListSendersRemoved(uint64 indexed destChainSelector, address[] senders)"
+        }
+      },
+      "edit": ["map_keys", ["format", "CCIPChainName"]]
     }
-  }
+  },
+  "description": "Contract used to send outgoing messages to other chains. It saves destination chain configs, storing the router that is allowed to call the OnRamp and whether a whitelist is enabled to send messages."
 }

@@ -1,4 +1,156 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreMethods": ["getAllSourceChainConfigs", "getLatestPriceSequenceNumber"]
+  "description": "OffRamp used to receive messages on Ethereum from other chains. It stores the list and threshold of \"OCR\" signers that authorize the commitment of crosschain messages and the list of \"transmitters\", i.e. addresses can relay messages signed by the signers. Currently {{ocrCommitN}} signers are configured with F={{ocrCommitF}}, so {{ocrCommitF}}+1 signatures are required on every commit report. Committed message are usually executed by whitelisted \"execution transmitters\". If they are not executed within {{permissionLessExecutionThresholdFmt}}, anyone can execute them.",
+  "ignoreMethods": ["getAllSourceChainConfigs", "getLatestPriceSequenceNumber"],
+  "ignoreRelatives": ["ocrExecution"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can arbitrarily update signers and transmitters set."
+        },
+        {
+          "type": "interact",
+          "description": "can update the time before permissionless execution of messages, currently set to {{permissionLessExecutionThresholdFmt}}."
+        },
+        {
+          "type": "interact",
+          "description": "can update the fee quoter contract, where signers save new prices used for fee estimation."
+        },
+        {
+          "type": "interact",
+          "description": "add a 'message interceptor' contract that can gate messages based on content."
+        },
+        { "type": "interact", "description": "can disable source chains." },
+        {
+          "type": "interact",
+          "description": "can enable 'RMN' verification for messages coming from a certain route, which require additional signatures to be accepted."
+        },
+        {
+          "type": "interact",
+          "description": "can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured."
+        }
+      ]
+    },
+    "ocrCommit": {
+      "description": "OCR config for the Commit plugin (pluginType=0). signers/transmitters are the DON oracles for committing merkle roots and price updates. isSignatureVerificationEnabled=true means F+1 of these signers must sign every commit report; the caller of commit() must additionally be one of the transmitters.",
+      "handler": {
+        "type": "call",
+        "method": "latestConfigDetails",
+        "args": ["0"]
+      },
+      "edit": [
+        "pipe",
+        ["shape", "configInfo", "signers", "transmitters"],
+        [
+          "set",
+          "configInfo",
+          ["shape", "configDigest", "F", "n", "isSignatureVerificationEnabled"]
+        ]
+      ]
+    },
+    "ocrExecution": {
+      "description": "OCR config for the Execution plugin (pluginType=1). isSignatureVerificationEnabled=false means execute() takes no signatures, but msg.sender must still be in the transmitters list (UnauthorizedTransmitter otherwise). Signers may be configured but are unused.",
+      "handler": {
+        "type": "call",
+        "method": "latestConfigDetails",
+        "args": ["1"]
+      },
+      "edit": [
+        "pipe",
+        ["shape", "configInfo", "signers", "transmitters"],
+        [
+          "set",
+          "configInfo",
+          ["shape", "configDigest", "F", "n", "isSignatureVerificationEnabled"]
+        ]
+      ]
+    },
+    "ocrCommitSigners": {
+      "description": "Message OCR signers. F+1 of these must sign every crosschain and price report.",
+      "copy": "ocrCommit",
+      "edit": ["get", "signers"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign OCR commit reports that move crosschain merkle roots of messages and price updates into this OffRamp. F+1 of these required per report."
+        },
+        { "type": "act" }
+      ]
+    },
+    "ocrCommitTransmitters": {
+      "description": "Commit-plugin OCR transmitters. They relay a signature quorum from OCR commit signers.",
+      "copy": "ocrCommit",
+      "edit": ["get", "transmitters"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can submit signed OCR commit reports to this OffRamp before the permissioned submission deadline."
+        }
+      ]
+    },
+    "ocrCommitN": {
+      "description": "Number of configured Commit-plugin OCR signers. Convenience flat field so {{ocrCommitN}} can be interpolated into descriptions.",
+      "copy": "ocrCommit",
+      "edit": ["pipe", ["get", "configInfo"], ["get", "n"]]
+    },
+    "permissionLessExecutionThresholdFmt": {
+      "description": "How long after a commit any external caller may manually execute its messages (in addition to the whitelisted execution transmitters). Formatted version of getDynamicConfig.permissionLessExecutionThresholdSeconds.",
+      "copy": "getDynamicConfig",
+      "edit": [
+        "pipe",
+        ["get", "permissionLessExecutionThresholdSeconds"],
+        ["format", "FormatSeconds"]
+      ]
+    },
+    "ocrCommitF": {
+      "description": "F threshold for the Commit-plugin OCR config. F+1 signatures are required on every commit report; the system tolerates up to F faulty signers.",
+      "copy": "ocrCommit",
+      "edit": ["pipe", ["get", "configInfo"], ["get", "F"]]
+    },
+    "ocrExecutionTransmitters": {
+      "description": "Execution-plugin OCR transmitters. msg.sender of execute() must be one of these. Since isSignatureVerificationEnabled is false on the execution plugin, any one of these can singly authorize executing any already-committed message.",
+      "copy": "ocrExecution",
+      "edit": ["get", "transmitters"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "execute already-committed CCIP messages on this OffRamp."
+        }
+      ]
+    },
+    "sourceChainConfigs": {
+      "description": "Per-source-chain config for inbound CCIP messages: local Router used to deliver to receivers, whether the lane is enabled, whether RMN signature blessing is required on commits (false = blessing REQUIRED, true = blessing skipped — only OCR signatures gate the commit), and the bytes-encoded source-chain OnRamp address (left-padded EVM address for EVM sources; native encoding for non-EVM families). Keys are source-chain names. Replayed from SourceChainConfigSet events. minSeqNr is omitted because the event captures the value at config-change time, not the current commit counter (which advances on every _commitRoot).",
+      "handler": {
+        "type": "event",
+        "groupBy": "sourceChainSelector",
+        "select": "sourceConfig",
+        "set": {
+          "event": "event SourceChainConfigSet(uint64 indexed sourceChainSelector, (address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp) sourceConfig)"
+        },
+        "ignoreRelative": true
+      },
+      "edit": [
+        "pipe",
+        [
+          "map_values",
+          [
+            "pipe",
+            [
+              "shape",
+              "router",
+              "isEnabled",
+              "minSeqNr",
+              "isRMNVerificationDisabled",
+              "onRamp"
+            ],
+            ["delete", "minSeqNr"]
+          ]
+        ],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ]
+    }
+  },
+  "category": "core"
 }

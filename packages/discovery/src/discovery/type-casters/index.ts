@@ -1,6 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import type { BaseTypeCaster } from './BaseTypeCaster'
 import { Bytes32ToString } from './Bytes32ToString'
+import { CCIPCurseSubject } from './CCIPCurseSubject'
 import { ChainPrefix } from './ChainPrefix'
 import { FormatSeconds } from './FormatSeconds'
 import { GreaterThan } from './GreaterThan'
@@ -11,6 +12,7 @@ import { Undecimal } from './Undecimal'
 
 export const TypeConverters = {
   Bytes32ToString,
+  CCIPCurseSubject,
   FormatSeconds,
   Undecimal,
   Mapping,
