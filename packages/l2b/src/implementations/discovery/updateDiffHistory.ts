@@ -276,18 +276,6 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   return { prevDiscovery, codeDiff: flatDiff === '' ? undefined : flatDiff }
 }
 
-function getMainBranchName(): 'main' | 'master' {
-  try {
-    execSync('git show-ref --verify refs/heads/master', {
-      stdio: 'ignore',
-    })
-    return 'master'
-  } catch {
-    // If error, it means 'master' doesn't exist, so we'll stick with 'main'
-    return 'main'
-  }
-}
-
 function shellQuote(p: string): string {
   return `'${p.replaceAll("'", "'\\''")}'`
 }
@@ -326,7 +314,6 @@ function getFileVersionOnMainBranch(
   content: string
   mainBranchHash: string
 } {
-  const mainBranch = getMainBranchName()
   try {
     // NOTE(radomski): Node when starting a process reserves a buffer of around
     // 200KB for STDIO output. This is not enough in cases where the
@@ -343,12 +330,10 @@ function getFileVersionOnMainBranch(
     // inside the path (extremely unlikely in our repo layout).
     const quotedPath = shellQuote(filePath)
     const content = execSync(
-      `git show ${mainBranch}:${quotedPath} 2>/dev/null`,
+      `git show main:${quotedPath} 2>/dev/null`,
       { maxBuffer: BUFFER_SIZE },
     ).toString()
-    const mainBranchHash = execSync(`git rev-parse ${mainBranch}`)
-      .toString()
-      .trim()
+    const mainBranchHash = execSync(`git rev-parse main`).toString().trim()
     return { content, mainBranchHash }
   } catch {
     logger.info(`No previous version of ${filePath} found`)
@@ -378,7 +363,6 @@ function generateDiffHistoryMarkdown(
   description?: string,
 ): string {
   const result = []
-  const mainBranch = getMainBranchName()
 
   const now = new Date().toUTCString()
   result.push(`${FIRST_SECTION_PREFIX} ${now}:`)
@@ -387,7 +371,7 @@ function generateDiffHistoryMarkdown(
   result.push(`- author: ${name} (<${email}>)`)
   if (timestampFromMainBranchDiscovery !== undefined) {
     result.push(
-      `- comparing to: ${mainBranch}@${mainBranchHash} block: ${timestampFromMainBranchDiscovery}`,
+      `- comparing to: main@${mainBranchHash} block: ${timestampFromMainBranchDiscovery}`,
     )
   }
   result.push(`- current timestamp: ${timestamp}`)
