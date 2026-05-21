@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x114aec919c4ef30655212e1a37b230364075a3cf
+
+# Diff at Thu, 21 May 2026 14:01:31 GMT:
+
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@9ea5541ca31cba65aa152c5d320ea978e69421e0 block: 1777567242
+- current timestamp: 1779274839
+
+## Description
+
+Clean up disco configs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777567242 (main branch discovery), not current.
+
+```diff
+    contract WithdrawalVerifier (eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d) [privacy-pools/WithdrawalVerifier] {
+    +++ description: Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs.
+      description:
+-        "Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs. The verification key is hardcoded in the contract and there are no privileged roles or mutable configuration."
++        "Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs."
+    }
+```
+
+```diff
+    EOA  (eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187) {
+    +++ description: None
+      name:
+-        "PrivacyPoolsASPPostman"
+    }
+```
+
+```diff
+    contract RagequitVerifier (eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6) [privacy-pools/CommitmentVerifier] {
+    +++ description: Stateless Groth16 verifier used by Privacy Pool contracts to verify ragequit proofs.
+      description:
+-        "Stateless Groth16 verifier used by Privacy Pool contracts to verify ragequit proofs. The verification key is hardcoded in the contract and there are no privileged roles or mutable configuration."
++        "Stateless Groth16 verifier used by Privacy Pool contracts to verify ragequit proofs."
+    }
+```
+
+```diff
+    EOA  (eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
++        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
+    }
+```
+
 Generated with discovered.json: 0x839297ea25bf32308e0a894c36ab14046d4332d2
 
 # Diff at Fri, 15 May 2026 12:36:19 GMT:

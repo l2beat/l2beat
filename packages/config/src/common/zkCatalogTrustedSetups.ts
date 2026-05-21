@@ -165,6 +165,7 @@ Ceremony was run among 12 participants affiliated with Across Protocol, OP Labs,
     id: 'TornadoCash',
     name: 'Tornado Cash',
     risk: 'green',
+    participantCount: 1114,
     shortDescription:
       'Circuit-specific trusted setup for Groth16 Tornado Cash circuits, contains 1114 contributions.',
     longDescription: `
@@ -183,6 +184,7 @@ Ceremony was run among 12 participants affiliated with Across Protocol, OP Labs,
     id: 'PrivacyPools',
     name: 'Privacy Pools',
     risk: 'green',
+    participantCount: 513,
     shortDescription:
       'Trusted setup for two Groth16 Privacy Pools circuits, with 514 and 513 participants.',
     longDescription: `
@@ -200,6 +202,7 @@ Ceremony was run among 12 participants affiliated with Across Protocol, OP Labs,
     id: 'Railgun',
     name: 'Railgun',
     risk: 'green',
+    participantCount: 304,
     shortDescription:
       'Circuit-specific trusted setup for 54 Groth16 Railgun circuits over BN254, publicly announced and completed in December 2022 with 328 named contributors (304 contributions on the 1x1 circuit).',
     longDescription: `

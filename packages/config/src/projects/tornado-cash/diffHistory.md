@@ -1,3 +1,249 @@
+Generated with discovered.json: 0xd05f5aa608ee77727923af45c6302605c3f64a33
+
+# Diff at Thu, 21 May 2026 14:00:53 GMT:
+
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@9ea5541ca31cba65aa152c5d320ea978e69421e0 block: 1779099959
+- current timestamp: 1779270677
+
+## Description
+
+Cleaned up tornado cash configs. Also, because this disco is on a different branch, spammy values reappeared.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779099959 (main branch discovery), not current.
+
+```diff
+    contract Pool_50K_cDAI (eth:0x03893a7c7463AE47D46bc7f091665f1893656003) [tornado-cash/cTornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 50K cDAI deposits.
+      name:
+-        "cTornado"
++        "Pool_50K_cDAI"
+      description:
+-        "Fixed-denomination cToken-based mixer pool. Anyone can sweep accrued COMP rewards, but the claimed COMP is always sent to the governance address."
++        "Fixed-denomination Tornado Cash pool for 50K cDAI deposits."
+    }
+```
+
+```diff
+    contract Pool_10K_DAI (eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 10K DAI deposits.
+      name:
+-        "ERC20Tornado"
++        "Pool_10K_DAI"
+      description:
+-        "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment."
++        "Fixed-denomination Tornado Cash pool for 10K DAI deposits."
+    }
+```
+
+```diff
+    contract Pool_1000_USDT (eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f) [tornado-cash/TornadoCash_erc20] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 USDT deposits.
+      name:
+-        "TornadoCash_erc20"
++        "Pool_1000_USDT"
+      description:
+-        "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced."
++        "Fixed-denomination Tornado Cash pool for 1000 USDT deposits."
+    }
+```
+
+```diff
+    contract Pool_0.1_ETH (eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc) [tornado-cash/TornadoCash_Eth_01] {
+    +++ description: Fixed-denomination Tornado Cash pool for 0.1 ETH deposits.
+      name:
+-        "TornadoCash_Eth_01"
++        "Pool_0.1_ETH"
+      description:
+-        "Legacy fixed-denomination ETH mixer for 0.1 ETH deposits. This older pool generation keeps an operator role that can replace the withdrawal verifier and, for this instance, perform a one-time state migration."
++        "Fixed-denomination Tornado Cash pool for 0.1 ETH deposits."
+    }
+```
+
+```diff
+    contract Pool_100_USDT (eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B) [tornado-cash/TornadoCash_erc20] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 USDT deposits.
+      name:
+-        "TornadoCash_erc20"
++        "Pool_100_USDT"
+      description:
+-        "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced."
++        "Fixed-denomination Tornado Cash pool for 100 USDT deposits."
+    }
+```
+
+```diff
+    contract Pool_0.1_WBTC (eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 0.1 WBTC deposits.
+      name:
+-        "ERC20Tornado"
++        "Pool_0.1_WBTC"
+      description:
+-        "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment."
++        "Fixed-denomination Tornado Cash pool for 0.1 WBTC deposits."
+    }
+```
+
+```diff
+    contract Pool_5K_cDAI (eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b) [tornado-cash/TornadoCash_erc20] {
+    +++ description: Fixed-denomination Tornado Cash pool for 5K cDAI deposits.
+      name:
+-        "TornadoCash_erc20"
++        "Pool_5K_cDAI"
+      description:
+-        "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced."
++        "Fixed-denomination Tornado Cash pool for 5K cDAI deposits."
+    }
+```
+
+```diff
+    contract Pool_100K_DAI (eth:0x23773E65ed146A459791799d01336DB287f25334) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100K DAI deposits.
+      name:
+-        "ERC20Tornado"
++        "Pool_100K_DAI"
+      description:
+-        "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment."
++        "Fixed-denomination Tornado Cash pool for 100K DAI deposits."
+    }
+```
+
+```diff
+    contract Pool_500K_cDAI (eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701) [tornado-cash/cTornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 500K cDAI deposits.
+      name:
+-        "cTornado"
++        "Pool_500K_cDAI"
+      description:
+-        "Fixed-denomination cToken-based mixer pool. Anyone can sweep accrued COMP rewards, but the claimed COMP is always sent to the governance address."
++        "Fixed-denomination Tornado Cash pool for 500K cDAI deposits."
+    }
+```
+
+```diff
+    contract Pool_1000_USDC (eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D) [tornado-cash/TornadoCash_erc20] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 USDC deposits.
+      name:
+-        "TornadoCash_erc20"
++        "Pool_1000_USDC"
+      description:
+-        "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced."
++        "Fixed-denomination Tornado Cash pool for 1000 USDC deposits."
+    }
+```
+
+```diff
+    contract Pool_1_ETH (eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1 ETH deposits.
+      name:
+-        "TornadoCash_eth"
++        "Pool_1_ETH"
+      description:
+-        "Legacy fixed-denomination ETH mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced."
++        "Fixed-denomination Tornado Cash pool for 1 ETH deposits."
+    }
+```
+
+```diff
+    contract Pool_1_WBTC (eth:0x610B717796ad172B316836AC95a2ffad065CeaB4) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1 WBTC deposits.
+      name:
+-        "ERC20Tornado"
++        "Pool_1_WBTC"
+      description:
+-        "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment."
++        "Fixed-denomination Tornado Cash pool for 1 WBTC deposits."
+    }
+```
+
+```diff
+    contract Pool_10_ETH (eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 10 ETH deposits.
+      name:
+-        "TornadoCash_eth"
++        "Pool_10_ETH"
+      description:
+-        "Legacy fixed-denomination ETH mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced."
++        "Fixed-denomination Tornado Cash pool for 10 ETH deposits."
+    }
+```
+
+```diff
+    contract Pool_100_ETH (eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 ETH deposits.
+      name:
+-        "TornadoCash_eth"
++        "Pool_100_ETH"
+      description:
+-        "Legacy fixed-denomination ETH mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced."
++        "Fixed-denomination Tornado Cash pool for 100 ETH deposits."
+    }
+```
+
+```diff
+    contract Pool_10_WBTC (eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 10 WBTC deposits.
+      name:
+-        "ERC20Tornado"
++        "Pool_10_WBTC"
+      description:
+-        "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment."
++        "Fixed-denomination Tornado Cash pool for 10 WBTC deposits."
+    }
+```
+
+```diff
+    contract Pool_5M_cDAI (eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af) [tornado-cash/cTornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 5M cDAI deposits.
+      name:
+-        "cTornado"
++        "Pool_5M_cDAI"
+      description:
+-        "Fixed-denomination cToken-based mixer pool. Anyone can sweep accrued COMP rewards, but the claimed COMP is always sent to the governance address."
++        "Fixed-denomination Tornado Cash pool for 5M cDAI deposits."
+    }
+```
+
+```diff
+    contract Pool_100_DAI (eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3) [tornado-cash/TornadoCash_erc20] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 DAI deposits.
+      name:
+-        "TornadoCash_erc20"
++        "Pool_100_DAI"
+      description:
+-        "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced."
++        "Fixed-denomination Tornado Cash pool for 100 DAI deposits."
+    }
+```
+
+```diff
+    contract Pool_100_USDC (eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307) [tornado-cash/TornadoCash_erc20] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 USDC deposits.
+      name:
+-        "TornadoCash_erc20"
++        "Pool_100_USDC"
+      description:
+-        "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced."
++        "Fixed-denomination Tornado Cash pool for 100 USDC deposits."
+    }
+```
+
+```diff
+    contract Pool_1000_DAI (eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144) [tornado-cash/TornadoCash_erc20] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 DAI deposits.
+      name:
+-        "TornadoCash_erc20"
++        "Pool_1000_DAI"
+      description:
+-        "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced."
++        "Fixed-denomination Tornado Cash pool for 1000 DAI deposits."
+    }
+```
+
 Generated with discovered.json: 0xc734b33fc7065bdfeacc9950b1c38e1cba610b50
 
 # Diff at Mon, 18 May 2026 10:37:33 GMT:

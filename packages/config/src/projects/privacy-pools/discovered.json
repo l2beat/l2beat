@@ -1,6 +1,6 @@
 {
   "name": "privacy-pools",
-  "timestamp": 1777567242,
+  "timestamp": 1779274839,
   "configHash": "0xf9192766dd26296bfd503dde39bf8c324db0c13e83768307818333d189865a4b",
   "entries": [
     {
@@ -12,7 +12,7 @@
         "0x07cd5a627237e701cfe28108fb25dba3f03b259350b88d0e07401568e8ac8dcd"
       ],
       "proxyType": "immutable",
-      "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs. The verification key is hardcoded in the contract and there are no privileged roles or mutable configuration.",
+      "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs.",
       "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265199,
       "sinceBlock": 22153709,
@@ -51,14 +51,14 @@
           "vettingFeeBPS": 0,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "15245540048584026650305232901945805699249551100965313934107320460107121576710",
-        "currentRootIndex": 22,
+        "currentRoot": "17596031629302693141783666430379374533394381682172560407193818971072949610444",
+        "currentRootIndex": 27,
         "currentTreeDepth": 5,
-        "currentTreeSize": 22,
+        "currentTreeSize": 27,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 14,
+        "nonce": 17,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "10083421949316970946867916491567109470259179563818386567305777802830033294482",
@@ -112,14 +112,14 @@
           "vettingFeeBPS": 0,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "20313281170578484609491745691274966010719374879987535209602757660344034743032",
-        "currentRootIndex": 63,
-        "currentTreeDepth": 6,
-        "currentTreeSize": 63,
+        "currentRoot": "10419630154203220642538815439119457027154160634330506586247443682571866189297",
+        "currentRootIndex": 2,
+        "currentTreeDepth": 7,
+        "currentTreeSize": 66,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 33,
+        "nonce": 35,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "472674026048933344947929992064610492276304547390666782210980269768303717449",
@@ -206,7 +206,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "PrivacyPoolsASPPostman",
       "address": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "type": "EOA",
       "proxyType": "EOA",
@@ -279,7 +278,7 @@
           "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187"
         ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "latestRoot": "12251761450139241298987886334382639136527285160047904414009832340685225700382",
+        "latestRoot": "4832310693254717582558585405076837597542367969378533930938372350850332310218",
         "ownerRoleMembers": ["eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"],
         "registeredPools": [
           "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB",
@@ -398,7 +397,7 @@
         "0x68c7357a788298156bf6491b7f63e41b5ce2cb6863646cb5f6f031011abede4e"
       ],
       "proxyType": "immutable",
-      "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify ragequit proofs. The verification key is hardcoded in the contract and there are no privileged roles or mutable configuration.",
+      "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify ragequit proofs.",
       "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265211,
       "sinceBlock": 22153710,
@@ -510,14 +509,14 @@
           "vettingFeeBPS": 50,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "9570414265497737917933695872321540686802279577865531126368539012745245956122",
-        "currentRootIndex": 8,
+        "currentRoot": "5539235508673468088650628556972564103261345264615486184688189766396366503159",
+        "currentRootIndex": 4,
         "currentTreeDepth": 11,
-        "currentTreeSize": 1288,
+        "currentTreeSize": 1476,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 454,
+        "nonce": 520,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "16452108168275993030962142353354044100680963945240756716593099151407051066232",
@@ -571,10 +570,10 @@
           "vettingFeeBPS": 50,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "10368640358757238446710581155604743137931037519125301998558197959456707859641",
-        "currentRootIndex": 44,
+        "currentRoot": "7314745401965903957675155442232834798803457627135785773661185660514577638757",
+        "currentRootIndex": 47,
         "currentTreeDepth": 6,
-        "currentTreeSize": 44,
+        "currentTreeSize": 47,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
@@ -815,10 +814,10 @@
           "vettingFeeBPS": 0,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "12096975949212207450070401589339638667810631285985938409654204376943985158213",
-        "currentRootIndex": 53,
+        "currentRoot": "19137107897555475589954932362587331387810276415731774029089256427237588529018",
+        "currentRootIndex": 61,
         "currentTreeDepth": 8,
-        "currentTreeSize": 181,
+        "currentTreeSize": 189,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
@@ -851,7 +850,7 @@
       "address": "eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E",
       "type": "EOA",
       "sourceHashes": [
-        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
       ],
       "proxyType": "EIP7702 EOA",
       "values": {
@@ -966,14 +965,14 @@
           "vettingFeeBPS": 0,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "13447251225897205379274201930902604803667805163752197013539680606266189643914",
-        "currentRootIndex": 37,
-        "currentTreeDepth": 8,
-        "currentTreeSize": 229,
+        "currentRoot": "11879091841983054163435408819805852185972385234264290181077568484749650637069",
+        "currentRootIndex": 57,
+        "currentTreeDepth": 9,
+        "currentTreeSize": 377,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 94,
+        "nonce": 142,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "15021418340692283880916004685565940332387258944710606800522765380598358159605",
@@ -1027,14 +1026,14 @@
           "vettingFeeBPS": 50,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "12071268616164404005308248364603715888922396838030974883258120506746873007472",
-        "currentRootIndex": 7,
+        "currentRoot": "8003304339516898850990410743909063989412955137960912940131743757895075504215",
+        "currentRootIndex": 22,
         "currentTreeDepth": 13,
-        "currentTreeSize": 7751,
+        "currentTreeSize": 8150,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 3945,
+        "nonce": 4063,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "4916574638117198869413701114161172350986437430914933850166949084132905299523",
@@ -2021,6 +2020,6 @@
     "privacy-pools/PrivacyPoolSimple": "0xd0e9393e828033bd062a089147a4eb32a24f23f58884256bd8c90a7896d25ba3",
     "privacy-pools/WithdrawalVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24994181 },
-  "permissionsConfigHash": "0x32e24e73ac93e35e0d94d98aca02b8ed60c8a91a9d288f517f5436f0b7a25deb"
+  "usedBlockNumbers": { "ethereum": 25136008 },
+  "permissionsConfigHash": "0x1233f3d26168c7ef560f9a07597a94bc5c490db08b92adf5fa611f3aaec98724"
 }
