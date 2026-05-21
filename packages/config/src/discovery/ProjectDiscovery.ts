@@ -444,14 +444,7 @@ export class ProjectDiscovery {
       )
       const url = `${explorerUrl}/address/${raw}`
 
-      result.push({
-        address,
-        type,
-        isVerified,
-        name,
-        url,
-        displayName: entry.name,
-      })
+      result.push({ address, type, isVerified, name, url })
     }
 
     return result
