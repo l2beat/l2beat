@@ -207,7 +207,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
     const receivedTransferRemote = parseReceivedTransferRemote(input.log, null)
     if (receivedTransferRemote) {
       const recipientAddress = input.log.address.toLowerCase()
-      // Batched deliveries can place the next Process right after this receive.
+      // Batched deliveries can place the next Process right after this receive, we do not want to accidently consume those
       const messageId = findParsedBefore(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
