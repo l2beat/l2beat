@@ -4,8 +4,11 @@ import { CURRENT_LAYOUT_VERSION, migrateLayout } from './migrate'
 describe(migrateLayout.name, () => {
   it('accepts current-version payload as-is', () => {
     const input = {
-      version: 2 as const,
+      version: 3 as const,
       projectId: 'p',
+      metadata: {
+        description: 'Useful for audits.',
+      },
       locations: { a: { x: 1, y: 2 } },
       colors: { a: 3 },
       hiddenFields: { a: ['f'] },
@@ -14,7 +17,7 @@ describe(migrateLayout.name, () => {
     const result = migrateLayout(input)
     if (!result.ok) throw new Error('expected success')
     expect(result.layout).toEqual(input)
-    expect(result.migratedFrom).toEqual(2)
+    expect(result.migratedFrom).toEqual(3)
   })
 
   it('treats unversioned payload as v1 and migrates to current', () => {
@@ -36,6 +39,20 @@ describe(migrateLayout.name, () => {
     })
     if (!result.ok) throw new Error('expected success')
     expect(result.layout.colors).toEqual({ a: 0, b: 4 })
+  })
+
+  it('migrates v2 payloads to current without inventing metadata', () => {
+    const result = migrateLayout({
+      version: 2,
+      projectId: 'p',
+      locations: { a: { x: 0, y: 0 } },
+      colors: { a: 1 },
+    })
+    if (!result.ok) throw new Error('expected success')
+    expect(result.migratedFrom).toEqual(2)
+    expect(result.layout.version).toEqual(CURRENT_LAYOUT_VERSION)
+    expect(result.layout.metadata).toEqual(undefined)
+    expect(result.layout.colors).toEqual({ a: 1 })
   })
 
   it('refuses payloads from a newer version with too-new reason', () => {
