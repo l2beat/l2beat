@@ -47,7 +47,7 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
       this.editor.getModifiedEditor(),
       this.modifiedAlignmentZoneIds,
     )
-    this.callbacks.push(
+    this.trackDisposable(
       this.editor.onDidUpdateDiff(() => this.syncAlignmentZones()),
     )
   }
