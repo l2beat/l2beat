@@ -101,6 +101,10 @@ export function SideNavLayout({
               title: 'Summary',
               href: '/interop/summary',
             },
+            {
+              title: 'Token frameworks',
+              href: '/interop/token-frameworks',
+            },
           ],
         },
         {

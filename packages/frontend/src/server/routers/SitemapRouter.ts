@@ -20,6 +20,7 @@ const STATIC_PATHS = [
   '/interop/non-minting',
   '/interop/lock-and-mint',
   '/interop/burn-and-mint',
+  '/interop/token-frameworks',
   '/data-availability/summary',
   '/data-availability/risk',
   '/data-availability/throughput',
