@@ -34,7 +34,7 @@ export const Init = command({
       long: 'max-addresses',
       short: 'm',
       description:
-        'set maxAddresses on the scaffolded config (default: omit, which uses the engine default of 500). During the milestone-1 cleanup loop a low cap (30-100) is the recommended fail-fast guardrail.',
+        'set maxAddresses on the scaffolded config. During the milestone-1 cleanup loop a low cap (30-100) is the recommended fail-fast guardrail.',
     }),
   },
   handler: (args) => {

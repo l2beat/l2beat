@@ -58,7 +58,7 @@ function createEmptyConfig(
         ? ['../globalConfig.jsonc']
         : undefined,
     archived: existingConfig.archived ?? undefined,
-    maxAddresses: existingConfig.maxAddresses ?? maxAddresses,
+    maxAddresses: maxAddresses ?? existingConfig.maxAddresses,
     initialAddresses,
   }
 
