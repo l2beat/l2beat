@@ -1,75 +1,10 @@
-import type { BackendRouter } from '@l2beat/backend/trpc'
-import { v } from '@l2beat/validate'
-import { createTRPCClient, httpBatchLink } from '@trpc/client'
-import type { EnvironmentConfig } from '~/components/environment/EnvironmentContext'
 import type {
   ChainsSummaryBackendChain,
   ChainsSummaryFrontendChain,
   ChainsSummaryRow,
 } from './types'
 
-export type DeployedEnvironment = 'staging' | 'production'
-
-export const TARGETS: { id: DeployedEnvironment; label: string }[] = [
-  { id: 'production', label: 'Production' },
-  { id: 'staging', label: 'Staging' },
-]
-
-const FRONTEND_URLS: Record<DeployedEnvironment, string> = {
-  production: 'https://l2beat.com',
-  staging: 'https://fe-stag.l2beat.com',
-}
-
-export const LOCAL_FRONTEND_URL =
-  (import.meta.env.VITE_LOCAL_FRONTEND_URL as string | undefined) ??
-  'http://localhost:3000'
-
-const FrontendChains = v.array(
-  v.object({
-    id: v.string(),
-    isUpcoming: v.boolean(),
-  }),
-)
-
-interface ConfigEntry {
-  id: string
-  config: EnvironmentConfig
-}
-
-export function getBackendUrl(params: {
-  target: DeployedEnvironment
-  allConfigs: ConfigEntry[]
-  isLocalTesting: boolean
-  localBackendUrl: string | undefined
-}) {
-  if (params.isLocalTesting && params.localBackendUrl) {
-    return params.localBackendUrl
-  }
-  return params.allConfigs.find((c) => c.id === params.target)?.config.url ?? ''
-}
-
-export function getFrontendUrl(
-  target: DeployedEnvironment,
-  isLocalTesting: boolean,
-) {
-  return isLocalTesting ? LOCAL_FRONTEND_URL : FRONTEND_URLS[target]
-}
-
-export function getQueryErrors(
-  queries: { error: unknown }[],
-): { label: string; error: Error }[] {
-  const kinds = ['backend', 'frontend']
-  return queries
-    .map((query, index) => {
-      const target = TARGETS[Math.floor(index / 2)]
-      if (!target || !(query.error instanceof Error)) return undefined
-      return {
-        label: `${target.label} ${kinds[index % 2]}`,
-        error: query.error,
-      }
-    })
-    .filter((x) => x !== undefined)
-}
+const PRODUCTION_FRONTEND_URL = 'https://l2beat.com'
 
 export function getChainsSummaryRows(input: {
   productionBackend: ChainsSummaryBackendChain[] | undefined
@@ -125,7 +60,7 @@ export function getChainsSummaryRows(input: {
         display: meta?.display ?? id.slice(0, 3).toUpperCase(),
         color: meta?.color ?? '#888888',
         iconUrl: meta
-          ? `${FRONTEND_URLS.production}/icons/${meta.iconSlug}.png`
+          ? `${PRODUCTION_FRONTEND_URL}/icons/${meta.iconSlug}.png`
           : undefined,
         enabledOnProductionFrontend: productionFrontend.has(id),
         enabledOnProductionFrontendUpcoming:
@@ -167,44 +102,6 @@ export function getSummaryStats(rows: ChainsSummaryRow[]) {
         row.enabledOnStagingFrontend !== row.enabledOnStagingBackendCapture,
     ).length,
   }
-}
-
-export function fetchBackendChains(
-  url: string,
-): Promise<ChainsSummaryBackendChain[]> {
-  const client = createTRPCClient<BackendRouter>({
-    links: [
-      httpBatchLink({
-        transformer: {
-          serialize: JSON.stringify,
-          deserialize: JSON.parse,
-        },
-        url,
-        headers: () => {
-          const headers = new Headers()
-          const backendAuthToken = import.meta.env.VITE_BACKEND_AUTH_TOKEN
-          if (backendAuthToken) {
-            headers.set('Authorization', backendAuthToken)
-          }
-          return headers
-        },
-      }),
-    ],
-  })
-
-  return client.interop.chains.summary.query()
-}
-
-export async function fetchFrontendChains(
-  frontendUrl: string,
-): Promise<ChainsSummaryFrontendChain[]> {
-  const response = await fetch(`${frontendUrl}/api/interop/chains`)
-  if (!response.ok) {
-    throw new Error(
-      `Failed to fetch frontend chains from ${frontendUrl}: ${response.status}`,
-    )
-  }
-  return FrontendChains.parse(await response.json())
 }
 
 function isEnabledSomewhere(row: ChainsSummaryRow) {
