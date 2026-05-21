@@ -186,9 +186,6 @@ function leakTag(
   if (addrs.length === 0) return ''
   if (ignored.template.has(field)) return '  [IGNORED via template]'
   if (ignored.override.has(field)) return '  [IGNORED via override]'
-  // If every target is in the engine's per-entry ignoredAddresses set
-  // (proxy implementation, beacon, past upgrade), the BFS won't walk them
-  // even though no ignoreRelatives entry covers the field.
   const liveTargets = addrs.filter((a) => !proxyFiltered.has(a))
   if (liveTargets.length === 0) return '  [IGNORED via proxy]'
   if (liveTargets.length < addrs.length) return '  [LEAKING (partial)]'

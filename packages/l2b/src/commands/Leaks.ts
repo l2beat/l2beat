@@ -134,8 +134,11 @@ function printEntry(
   const ignored = opts.showIgnored
     ? entry.fields.filter((f) => f.ignore.status === 'ignored')
     : []
+  const internal = opts.showIgnored
+    ? entry.fields.filter((f) => f.ignore.status === 'internal')
+    : []
 
-  if (leaking.length === 0 && ignored.length === 0) {
+  if (leaking.length === 0 && ignored.length === 0 && internal.length === 0) {
     console.log('  (no address-typed fields)')
     return
   }
@@ -149,6 +152,11 @@ function printEntry(
     assert(f.ignore.status === 'ignored')
     const targetLine = formatTargets(f)
     console.log(`  I  .${f.field}  ${targetLine}  [${f.ignore.source}]`)
+  }
+
+  for (const f of internal) {
+    const targetLine = formatTargets(f)
+    console.log(`  .  .${f.field}  ${targetLine}  [internal]`)
   }
 }
 
@@ -183,19 +191,18 @@ export function analyzeOutgoing(
     for (const [field, value] of Object.entries(entry.values)) {
       const allAddrs = toAddressArray(value)
       if (allAddrs.length === 0) continue
-      // Drop addresses that the engine auto-filters via the per-entry
-      // ignoredAddresses list (proxy implementations, beacons, past upgrades).
-      // A field whose only targets are all proxy-filtered isn't actually
-      // walked, so we omit it from the output entirely.
       const addrs = allAddrs.filter((a) => !proxyFiltered.has(a))
       if (addrs.length === 0) continue
       const inTemplate = ignored.template.has(field)
       const inOverride = ignored.override.has(field)
+      const newAddrs = addrs.filter((a) => !index.nameByAddress.has(a))
       const ignore: RelativeIgnore = inTemplate
         ? { status: 'ignored', source: 'template' }
         : inOverride
           ? { status: 'ignored', source: 'override' }
-          : { status: 'leaking' }
+          : newAddrs.length > 0
+            ? { status: 'leaking' }
+            : { status: 'internal' }
       const targets: RelativeTarget[] = addrs.map((address) => {
         return {
           address,
@@ -203,9 +210,10 @@ export function analyzeOutgoing(
           template: index.templateByAddress.get(address),
         }
       })
-      for (const t of targets) {
-        if (ignore.status === 'leaking') leakingAddrs.add(t.address)
-        else ignoredAddrs.add(t.address)
+      if (ignore.status === 'leaking') {
+        for (const a of newAddrs) leakingAddrs.add(a)
+      } else if (ignore.status === 'ignored') {
+        for (const t of targets) ignoredAddrs.add(t.address)
       }
       fields.push({ field, ignore, targets })
     }
@@ -241,6 +249,7 @@ export function buildDiscoveryIndex(discovery: {
 
 export type RelativeIgnore =
   | { status: 'leaking' }
+  | { status: 'internal' }
   | { status: 'ignored'; source: 'template' | 'override' }
 
 export type RelativeTarget = {

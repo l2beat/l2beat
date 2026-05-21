@@ -57,7 +57,7 @@ export const Why = command({
       address: ChainSpecificAddress
       field: string
       ignored: boolean
-      ignoreSource: 'template' | 'override' | undefined
+      ignoreSource: 'template' | 'override' | 'proxy' | undefined
     }
     const hits: Hit[] = []
 
@@ -70,21 +70,23 @@ export const Why = command({
         projectConfig,
         templateService,
       )
+      const isProxyIgnored = proxyFilteredAddresses(entry).has(address)
 
       for (const [field, value] of Object.entries(entry.values)) {
         if (!toAddressArray(value).includes(address)) continue
+        const ignoreSource = isProxyIgnored
+          ? 'proxy'
+          : ignoredFields.template.has(field)
+            ? 'template'
+            : ignoredFields.override.has(field)
+              ? 'override'
+              : undefined
         hits.push({
           from: entry.name ?? '???',
           address: entry.address,
           field,
-          ignored:
-            ignoredFields.template.has(field) ||
-            ignoredFields.override.has(field),
-          ignoreSource: ignoredFields.template.has(field)
-            ? 'template'
-            : ignoredFields.override.has(field)
-              ? 'override'
-              : undefined,
+          ignored: ignoreSource !== undefined,
+          ignoreSource,
         })
       }
     }
@@ -107,11 +109,10 @@ export const Why = command({
     }
 
     if (ignored.length > 0) {
-      console.log(`IGNORED via ignoreRelatives (${ignored.length}):`)
+      console.log(`IGNORED (${ignored.length}):`)
       for (const h of ignored) {
-        const tag = h.ignoreSource === 'template' ? 'template' : 'override'
         console.log(
-          `  ${h.from.padEnd(35)} ${h.address}  .${h.field}  [${tag}]`,
+          `  ${h.from.padEnd(35)} ${h.address}  .${h.field}  [${h.ignoreSource}]`,
         )
       }
       console.log('')
@@ -166,11 +167,6 @@ function findShortestRootPath(
   config: ConfigRegistry,
   templateService: TemplateService,
 ): PathNode[] | undefined {
-  // Build forward edges: address -> [(toAddress, viaField)] using only
-  // non-ignored fields. We compute effective ignoreRelatives for each entry
-  // (template + per-address override) and skip those fields. We also drop
-  // addresses the engine auto-filters per-entry (proxy implementation, beacon,
-  // past upgrades) so the path mirrors what the BFS actually walks.
   type Edge = { to: ChainSpecificAddress; field: string }
   const edges = new Map<string, Edge[]>()
   for (const entry of discovery.entries) {
