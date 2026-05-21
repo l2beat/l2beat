@@ -39,7 +39,7 @@ export type EventHandlerAction = v.infer<typeof EventHandlerAction>
 const common = {
   type: v.literal('event'),
   select: oneOrMany(v.string()).optional(),
-  groupBy: v.string().optional(),
+  groupBy: oneOrMany(v.string()).optional(),
   ignoreRelative: v.boolean().optional(),
 }
 
@@ -130,13 +130,8 @@ export class EventHandler implements Handler {
 
     let value: ContractValue | undefined
     if (this.definition.groupBy !== undefined) {
-      const groupByKey = this.definition.groupBy
-      const grouped = groupBy(logRows, (e) => extractKey(e.value, groupByKey))
-      value = {}
-      for (const key in grouped) {
-        // biome-ignore lint/style/noNonNullAssertion: we know it's there
-        value[key] = this.processLogs(provider.chain, grouped[key]!)
-      }
+      const groupByKeys = ensureArray(this.definition.groupBy)
+      value = this.groupAndProcess(provider.chain, logRows, groupByKeys)
     } else {
       value = this.processLogs(provider.chain, logRows)
     }
@@ -146,6 +141,26 @@ export class EventHandler implements Handler {
       value,
       ignoreRelative: this.definition.ignoreRelative,
     }
+  }
+
+  groupAndProcess(
+    longChain: string,
+    logRows: LogRow[],
+    keys: string[],
+  ): ContractValue {
+    if (keys.length === 0) {
+      return this.processLogs(longChain, logRows) as ContractValue
+    }
+    // biome-ignore lint/style/noNonNullAssertion: keys.length > 0 by the guard above
+    const firstKey = keys[0]!
+    const restKeys = keys.slice(1)
+    const grouped = groupBy(logRows, (e) => extractKey(e.value, firstKey))
+    const result: { [key: string]: ContractValue | undefined } = {}
+    for (const key in grouped) {
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
+      result[key] = this.groupAndProcess(longChain, grouped[key]!, restKeys)
+    }
+    return result
   }
 
   processLogs(

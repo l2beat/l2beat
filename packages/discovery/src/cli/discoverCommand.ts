@@ -86,6 +86,12 @@ export const DiscoverCommandArgs = {
     long: 'overwrite-cache',
     description: 'overwrite the cache entries',
   }),
+  analyzeTimeoutMs: option({
+    type: optional(number),
+    long: 'analyze-timeout',
+    description:
+      'hard timeout per contract analysis in milliseconds. Aborts the analyze() call and marks the address as timed-out instead of letting a stuck RPC retry hang the whole BFS.',
+  }),
 }
 
 export const DiscoverCommand = command({

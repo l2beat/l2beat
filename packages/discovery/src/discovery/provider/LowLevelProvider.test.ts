@@ -110,6 +110,10 @@ describe(LowLevelProvider.name, () => {
     'execution reverted',
     'gas uint64 overflow',
     'invalid opcode: INVALID',
+    'invalid opcode: 0xfe',
+    'stack underflow (2 <=> 4)',
+    'stack overflow (1024 <=> 1025)',
+    'invalid jump destination',
   ]
   for (const message of outOfGasMessage) {
     it(`does not retry on non-server error [${message}]`, async () => {

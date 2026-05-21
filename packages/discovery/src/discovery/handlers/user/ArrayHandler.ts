@@ -135,10 +135,23 @@ export class ArrayHandler implements Handler {
       value.length === resolved.maxLength &&
       value.length !== resolved.length
     ) {
+      // Heuristic: if the last value we got back is structurally zero, the
+      // method is almost certainly a mapping read (e.g. `return _items[id]`)
+      // that returns the zero value of the return type for missing keys
+      // instead of reverting. In that case raising maxLength won't help; the
+      // user must set `length` explicitly (often via a cross-contract `call`
+      // handler that fetches the count from the contract holding the source
+      // of truth).
+      const lastValue = value[value.length - 1]
+      const looksLikeMappingRead =
+        lastValue !== undefined && isZeroLikeValue(lastValue)
+      const error = looksLikeMappingRead
+        ? 'Too many values. The last result is the zero value of the return type, which usually means this is a mapping read (e.g. `return _items[id]`) that doesn\'t revert on missing keys. Raising maxLength won\'t help. Set `length` explicitly via a {{ field }} reference - if the count lives on another contract, add a hidden helper field that uses a `call` handler with `address: "{{ otherContract }}"`.'
+        : 'Too many values. Provide a higher maxLength value'
       return {
         field: this.field,
         value,
-        error: 'Too many values. Provide a higher maxLength value',
+        error,
         fragment: arrayFragment,
       }
     }
@@ -149,6 +162,40 @@ export class ArrayHandler implements Handler {
       fragment: arrayFragment,
     }
   }
+}
+
+/**
+ * Returns true if a `ContractValue` is "structurally zero": the zero address,
+ * an empty string, the empty bytes value, the number 0, false, an empty array,
+ * or an object/array whose every leaf is itself zero-like. Used to detect
+ * "this looks like a mapping read returning the default value".
+ */
+function isZeroLikeValue(v: unknown): boolean {
+  if (v === null || v === undefined) return true
+  if (typeof v === 'string') {
+    if (v === '' || v === '0x') return true
+    // numeric string: "0", "00", ...
+    if (/^0+$/.test(v)) return true
+    // hex string: "0x0", "0x00...", ...
+    if (/^0x0+$/.test(v)) return true
+    // chain-prefixed address: "eth:0x000...000"
+    const addrMatch = v.match(/^[a-z0-9]+:0x([0-9a-fA-F]+)$/)
+    if (addrMatch?.[1] && /^0+$/.test(addrMatch[1])) return true
+    // bare address: "0x0000...0000"
+    const bareAddr = v.match(/^0x([0-9a-fA-F]+)$/)
+    if (bareAddr?.[1] && /^0+$/.test(bareAddr[1])) return true
+    return false
+  }
+  if (typeof v === 'number') return v === 0
+  if (typeof v === 'bigint') return v === 0n
+  if (typeof v === 'boolean') return v === false
+  if (Array.isArray(v)) return v.every((x) => isZeroLikeValue(x))
+  if (typeof v === 'object') {
+    return Object.values(v as Record<string, unknown>).every((x) =>
+      isZeroLikeValue(x),
+    )
+  }
+  return false
 }
 function createCallIndex(
   provider: IProvider,
