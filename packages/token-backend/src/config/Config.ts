@@ -8,6 +8,7 @@ export interface Config {
   readonly etherscanApiKey: string | undefined
   readonly readOnlyAuthToken?: string
   readonly jsonBodyLimitMb: number
+  readonly tokenIngestion: TokenIngestionConfig
 }
 
 export interface DatabaseConfig {
@@ -27,4 +28,11 @@ export interface AuthConfig {
   JWKS: ReturnType<typeof createRemoteJWKSet>
   aud: string
   teamDomain: string
+}
+
+export interface TokenIngestionConfig {
+  enabled: boolean
+  intervalMs: number
+  requireApproval: boolean
+  maxProcessedPerRun: number
 }

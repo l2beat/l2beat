@@ -404,6 +404,7 @@ function createRouter(
     },
     tokenDb: mockTokenDb,
     db: mockObject<Database>({}),
+    tokenIngestionProcessor: {} as never,
   })
 }
 

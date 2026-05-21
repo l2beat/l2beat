@@ -2217,5 +2217,6 @@ function createRouter(
     },
     db,
     tokenDb: mockTokenDb,
+    tokenIngestionProcessor: {} as never,
   })
 }

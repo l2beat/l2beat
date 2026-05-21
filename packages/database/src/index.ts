@@ -90,7 +90,19 @@ export type {
   TokenConnectionRecord,
   TokenConnectionUpdateable,
 } from './repositories/TokenConnectionRepository'
+export type {
+  TokenDbHistoryEntryInsert,
+  TokenDbHistoryEntryRecord,
+  TokenDbHistoryPage,
+  TokenDbHistorySource,
+} from './repositories/TokenDbHistoryRepository'
+export type { TokenDbSettingRecord } from './repositories/TokenDbSettingRepository'
 export type { TokenFactInputRecord } from './repositories/TokenFactInputRepository'
+export type {
+  TokenIngestionQueueAddress,
+  TokenIngestionQueueRecord,
+  TokenIngestionQueueState,
+} from './repositories/TokenIngestionQueueRepository'
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,

@@ -221,6 +221,7 @@ function createRouter(mockTokenDb: TokenDatabase) {
     },
     db: mockObject<Database>({}),
     tokenDb: mockTokenDb,
+    tokenIngestionProcessor: {} as never,
   })
 }
 

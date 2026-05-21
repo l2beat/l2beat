@@ -451,6 +451,7 @@ function createRouter(
     },
     tokenDb: mockTokenDb,
     db: mockObject<Database>({}),
+    tokenIngestionProcessor: {} as never,
   })
 }
 
@@ -480,5 +481,6 @@ function createRouterWithEtherscanKey(
     },
     tokenDb: mockTokenDb,
     db: mockObject<Database>({}),
+    tokenIngestionProcessor: {} as never,
   })
 }
