@@ -20,9 +20,9 @@ export function RiskValue(props: RosetteValue) {
             vibrant={true}
             className="font-medium text-label-value-15"
           >
-            {props.value}
+            {props.regular ? `Emergency: ${props.value}` : props.value}
           </SentimentText>
-          {props.warning && (
+          {props.warning && !props.regular && (
             <RoundedWarningIcon
               className={cn(
                 'size-4',
@@ -31,6 +31,15 @@ export function RiskValue(props: RosetteValue) {
             />
           )}
         </div>
+      )}
+      {props.regular && (
+        <SentimentText
+          sentiment={props.regular.sentiment ?? 'neutral'}
+          vibrant={true}
+          className="block font-medium text-label-value-15"
+        >
+          {`Regular: ${props.regular.value}`}
+        </SentimentText>
       )}
     </div>
   )

@@ -1,17 +1,15 @@
-import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/Tooltip'
-import { SentimentText } from '../../SentimentText'
-import { sentimentToWarningBarColor, WarningBar } from '../../WarningBar'
 import { rosetteParameters } from '../parameters'
 import {
   RosetteTooltipContextProvider,
   useRosetteTooltipContext,
 } from '../RosetteTooltipContext'
+import { RosetteTooltipRisk } from '../RosetteTooltipRisk'
 import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './PizzaRosetteIcon'
 import { PizzaRosetteLabels } from './PizzaRosetteLabels'
@@ -99,23 +97,13 @@ function RosetteTooltipContent() {
       <p className="mb-2 font-medium text-label-value-14">
         {selectedRisk.name}
       </p>
-      <SentimentText
-        sentiment={selectedRisk.sentiment ?? 'neutral'}
-        vibrant={true}
-        className="mb-2 flex items-center gap-1 font-medium text-heading-18"
-      >
-        {selectedRisk.value}
-      </SentimentText>
-      {selectedRisk.warning && (
-        <WarningBar
-          className="mb-2 px-3 py-2"
-          icon={RoundedWarningIcon}
-          text={selectedRisk.warning.value}
-          color={sentimentToWarningBarColor(selectedRisk.warning.sentiment)}
-          ignoreMarkdown
-        />
-      )}
-      <span>{selectedRisk.description}</span>
+      <RosetteTooltipRisk
+        risk={selectedRisk}
+        valueClassName="mb-2 flex items-center gap-1 font-medium text-heading-18"
+        regularClassName="mb-2 block font-medium text-heading-18"
+        warningClassName="mb-2 px-3 py-2"
+        ignoreWarningMarkdown
+      />
     </TooltipContent>
   )
 }
