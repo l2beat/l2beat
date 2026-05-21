@@ -1133,6 +1133,7 @@ export interface ProjectPermission {
 
 export interface ProjectPermissionedAccount {
   name: string
+  displayName?: string
   url: string
   address: ChainSpecificAddress
   isVerified: boolean
