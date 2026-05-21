@@ -63,8 +63,7 @@ const AVAILABLE_COLUMNS_RAW = [
     header: 'Is Live',
     id: 'zz',
     align: 'right',
-    fn: (project: DiscoLupeProject) =>
-      !project.isUpcoming && !project.isArchived ? 'Yes' : 'No',
+    fn: (project: DiscoLupeProject) => (!project.isArchived ? 'Yes' : 'No'),
     displayFn: IndicatorContainer,
   },
   {
@@ -72,13 +71,6 @@ const AVAILABLE_COLUMNS_RAW = [
     id: 'zk',
     align: 'right',
     fn: (project: DiscoLupeProject) => (project.isUnderReview ? 'Yes' : 'No'),
-    displayFn: IndicatorContainer,
-  },
-  {
-    header: 'Is Upcoming',
-    id: 'mk',
-    align: 'right',
-    fn: (project: DiscoLupeProject) => (project.isUpcoming ? 'Yes' : 'No'),
     displayFn: IndicatorContainer,
   },
   {

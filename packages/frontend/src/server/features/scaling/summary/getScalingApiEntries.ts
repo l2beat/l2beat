@@ -17,7 +17,6 @@ interface ScalingApiEntry {
   providers: string[] | undefined
   purposes: string[]
   isArchived: boolean
-  isUpcoming: boolean
   isUnderReview: boolean
   badges: Badge[]
   stage: string
@@ -40,7 +39,7 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
     get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
       select: ['display', 'statuses', 'scalingInfo', 'scalingRisks', 'tvsInfo'],
-      whereNot: ['archivedAt', 'isUpcoming'],
+      whereNot: ['archivedAt'],
     }),
   ])
 
@@ -60,7 +59,6 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
         providers: project.scalingInfo.stacks,
         purposes: project.scalingInfo.purposes,
         isArchived: false,
-        isUpcoming: false,
         isUnderReview: !!getUnderReviewStatus({
           isUnderReview: !!project.statuses.reviewStatus,
           impactfulChange: !!changes?.impactfulChange,
