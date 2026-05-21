@@ -87,10 +87,6 @@ export function SideNavLayout({
           ],
           secondaryLinks: [
             {
-              title: 'Upcoming',
-              href: '/scaling/upcoming',
-            },
-            {
               title: 'Archived',
               href: '/scaling/archived',
             },

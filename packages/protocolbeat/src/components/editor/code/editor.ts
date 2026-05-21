@@ -16,9 +16,12 @@ export type EditorCallbacks = {
   onLoad?: EditorContentCallback
 }
 
+// Session-scoped view state cache: persists folds/cursor/scroll per file URI
+// across Editor instance lifecycles - stable and mainly to help with React's StrictMode double-renders
+const viewStateCache: Map<string, editor.ICodeEditorViewState> = new Map()
+
 export class Editor extends EditorPluginStore<'code'> {
   private models: Record<string, editor.IModel | null> = {}
-  private viewStates: Record<string, editor.ICodeEditorViewState | null> = {}
 
   private onSaveCallback: ((content: string) => string) | null = null
 
@@ -115,7 +118,10 @@ export class Editor extends EditorPluginStore<'code'> {
       return
     }
 
-    this.viewStates[model.uri.toString()] = this.editor.saveViewState()
+    const state = this.editor.saveViewState()
+    if (state !== null) {
+      viewStateCache.set(model.uri.toString(), state)
+    }
   }
 
   private restoreViewState() {
@@ -124,7 +130,9 @@ export class Editor extends EditorPluginStore<'code'> {
       return
     }
 
-    this.editor.restoreViewState(this.viewStates[model.uri.toString()] ?? null)
+    this.editor.restoreViewState(
+      viewStateCache.get(model.uri.toString()) ?? null,
+    )
   }
 
   resize() {
@@ -133,13 +141,13 @@ export class Editor extends EditorPluginStore<'code'> {
 
   dispose() {
     this.onSaveCallback = null
+    this.saveViewState()
     Object.values(this.models).forEach((model) => {
       if (model) {
         model.dispose()
       }
     })
     this.models = {}
-    this.viewStates = {}
     this.disposeCallbacks()
     this.disposePlugins()
     this.editor.dispose()

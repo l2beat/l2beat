@@ -32,7 +32,6 @@ interface CommonDaProjectPageEntry {
   type: string
   description: string
   isUnderReview: boolean
-  isUpcoming: boolean
   archivedAt: number | undefined
   colors: ProjectCustomColors | undefined
   projectVariants?: {
@@ -98,7 +97,7 @@ export async function getDaProjectEntry(
   helpers: SsrHelpers,
   layer: Project<
     'daLayer' | 'display' | 'statuses',
-    'isUpcoming' | 'milestones' | 'archivedAt' | 'colors'
+    'milestones' | 'archivedAt' | 'colors'
   >,
   bridgeSlug: string,
 ): Promise<DaProjectPageEntry | undefined> {
@@ -183,7 +182,6 @@ export async function getDaProjectEntry(
     type: layer.daLayer.type,
     description: `${layer.display.description} ${selected?.display.description ?? ''}`,
     isUnderReview: !!layer.statuses.reviewStatus,
-    isUpcoming: layer.isUpcoming ?? false,
     archivedAt: layer.archivedAt,
     colors: layer.colors,
     selectedBridge: {
@@ -280,10 +278,7 @@ export async function getDaProjectEntry(
 
 export async function getEthereumDaProjectEntry(
   helpers: SsrHelpers,
-  layer: Project<
-    'daLayer' | 'display' | 'statuses',
-    'isUpcoming' | 'milestones'
-  >,
+  layer: Project<'daLayer' | 'display' | 'statuses', 'milestones'>,
   bridge: Project<'daBridge' | 'display', 'contracts' | 'permissions'>,
 ): Promise<EthereumDaProjectPageEntry> {
   const layerGrissiniValues = mapLayerRisksToRosetteValues(
@@ -333,7 +328,6 @@ export async function getEthereumDaProjectEntry(
     type: layer.daLayer.type,
     description: `${layer.display.description} ${bridge.display.description}`,
     isUnderReview: !!layer.statuses.reviewStatus,
-    isUpcoming: false,
     archivedAt: undefined,
     colors: undefined,
     header: {
