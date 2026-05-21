@@ -43,6 +43,7 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
+  ProjectGovernanceInfo,
   ProjectPermissions,
   ProjectReviewStatus,
   ProjectRisk,
@@ -100,6 +101,7 @@ interface AgglayerBaseConfig {
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
   upgradesAndGovernance?: string
+  governanceInfo?: ProjectGovernanceInfo
   stage?: ProjectScalingStage
   stateValidation?: ProjectScalingStateValidation
   associatedTokens?: string[]
@@ -323,6 +325,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
       zkVerifiers: getAgglayerVerifiers(config.discovery),
     },
     upgradesAndGovernance,
+    governanceInfo: config.governanceInfo,
     milestones: config.milestones,
     badges: mergeBadges([BADGES.Infra.Agglayer], variantSections.badges),
     customDa: variantSections.customDa,

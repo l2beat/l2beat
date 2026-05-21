@@ -614,9 +614,11 @@ export async function getScalingProjectEntry(
   }
 
   const allPastUpgrades = getProjectPastUpgrades(project.contracts)
+  const upgradesAndGovernance = project.scalingTechnology.upgradesAndGovernance
 
   if (
-    project.scalingTechnology.upgradesAndGovernance ||
+    upgradesAndGovernance?.content ||
+    upgradesAndGovernance?.governanceInfo ||
     allPastUpgrades.length > 0
   ) {
     sections.push({
@@ -624,18 +626,18 @@ export async function getScalingProjectEntry(
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: project.scalingTechnology.upgradesAndGovernance
+        content: upgradesAndGovernance?.content
           ? linkAddresses(
-              project.scalingTechnology.upgradesAndGovernance,
+              upgradesAndGovernance.content,
               project.contracts,
               project.permissions,
             )
           : undefined,
         diagram: getDiagramParams(
           'upgrades-and-governance',
-          project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
+          upgradesAndGovernance?.image ?? project.slug,
         ),
-
+        governanceInfo: upgradesAndGovernance?.governanceInfo,
         pastUpgrades: getPastUpgradesData(allPastUpgrades),
         isUnderReview: !!project.statuses.reviewStatus,
       },
