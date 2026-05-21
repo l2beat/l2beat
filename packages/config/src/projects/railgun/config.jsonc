@@ -16,7 +16,6 @@
     "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B": "GovernorRewardsSweeper",
     "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": "VerificationKeySetter_9086",
     "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686": "LegacySweeper"
-    "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686": "LegacySweeper"
   },
   "overrides": {
     "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": {
