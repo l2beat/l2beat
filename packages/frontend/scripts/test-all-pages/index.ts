@@ -37,7 +37,6 @@ async function main() {
     '/scaling/liveness',
     '/scaling/costs',
     '/scaling/archived',
-    '/scaling/upcoming',
     ...scalingProjects.flatMap((x) => [
       `/scaling/projects/${x.slug}`,
       x.tvsConfig && `/scaling/projects/${x.slug}/tvs-breakdown`,

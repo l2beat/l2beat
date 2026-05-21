@@ -214,11 +214,6 @@ interface ProjectDetailsInteropTokensSection {
   props: ProjectDetailsProps<InteropTokensSectionProps>
 }
 
-interface ProjectDetailsUpcomingDisclaimer {
-  type: 'UpcomingDisclaimer'
-  excludeFromNavigation: true
-}
-
 interface ProjectDetailsGroup {
   type: 'Group'
   props: ProjectDetailsProps<GroupSectionProps>
@@ -275,7 +270,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsPermissionsSection
   | ProjectDetailsContractsSection
   | ProjectDetailsDataPostedSection
-  | ProjectDetailsUpcomingDisclaimer
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection
   | ProjectDetailsThroughputSection

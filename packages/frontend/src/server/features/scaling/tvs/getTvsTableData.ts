@@ -23,7 +23,6 @@ export const TvsBreakdownProjectParams = v.union([
       'rollups',
       'validiumsAndOptimiums',
       'others',
-      'notReviewed',
     ]),
     ...baseParams,
   }),

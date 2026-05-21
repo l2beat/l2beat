@@ -59,6 +59,10 @@ const mainPages: MainPage[] = [
     title: 'Burn & Mint',
   },
   {
+    type: 'interop',
+    title: 'Token Frameworks',
+  },
+  {
     type: 'data-availability',
     title: 'Summary',
   },

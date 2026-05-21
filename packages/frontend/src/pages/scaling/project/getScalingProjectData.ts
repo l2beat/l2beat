@@ -32,7 +32,6 @@ export async function getScalingProjectData(
       'livenessInfo',
       'livenessConfig',
       'customDa',
-      'isUpcoming',
       'archivedAt',
       'milestones',
       'trackedTxsConfig',
