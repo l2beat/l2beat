@@ -1,9 +1,10 @@
 import { LayoutV1 } from './v1'
 import { LayoutV2 } from './v2'
+import { LayoutV3 } from './v3'
 
-export const CURRENT_LAYOUT_VERSION = 2
+export const CURRENT_LAYOUT_VERSION = 3
 
-export type Layout = LayoutV2
+export type Layout = LayoutV3
 
 export type MigrateFailureReason = 'invalid' | 'unsupported-version' | 'too-new'
 
@@ -56,7 +57,7 @@ export function migrateLayout(raw: unknown): MigrateResult {
       }
       return {
         ok: true,
-        layout: migrateV1toV2(parsed.data),
+        layout: migrateV2toV3(migrateV1toV2(parsed.data)),
         migratedFrom: 1,
       }
     }
@@ -69,7 +70,22 @@ export function migrateLayout(raw: unknown): MigrateResult {
           message: 'File is not a valid layout file.',
         }
       }
-      return { ok: true, layout: parsed.data, migratedFrom: 2 }
+      return {
+        ok: true,
+        layout: migrateV2toV3(parsed.data),
+        migratedFrom: 2,
+      }
+    }
+    case 3: {
+      const parsed = LayoutV3.safeParse(raw)
+      if (!parsed.success) {
+        return {
+          ok: false,
+          reason: 'invalid',
+          message: 'File is not a valid layout file.',
+        }
+      }
+      return { ok: true, layout: parsed.data, migratedFrom: 3 }
     }
     default:
       return {
@@ -102,6 +118,18 @@ function migrateV1toV2(input: LayoutV1): LayoutV2 {
     projectId: input.projectId,
     locations: input.locations,
     colors,
+    hiddenFields: input.hiddenFields,
+    hiddenNodes: input.hiddenNodes,
+  }
+}
+
+function migrateV2toV3(input: LayoutV2): LayoutV3 {
+  return {
+    version: 3,
+    projectId: input.projectId,
+    metadata: undefined,
+    locations: input.locations,
+    colors: input.colors,
     hiddenFields: input.hiddenFields,
     hiddenNodes: input.hiddenNodes,
   }
