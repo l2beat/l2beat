@@ -329,11 +329,10 @@ function getFileVersionOnMainBranch(
     // characters like parentheses or spaces. We also escape any single quotes
     // inside the path (extremely unlikely in our repo layout).
     const quotedPath = shellQuote(filePath)
-    const content = execSync(
-      `git show main:${quotedPath} 2>/dev/null`,
-      { maxBuffer: BUFFER_SIZE },
-    ).toString()
-    const mainBranchHash = execSync(`git rev-parse main`).toString().trim()
+    const content = execSync(`git show main:${quotedPath} 2>/dev/null`, {
+      maxBuffer: BUFFER_SIZE,
+    }).toString()
+    const mainBranchHash = execSync('git rev-parse main').toString().trim()
     return { content, mainBranchHash }
   } catch {
     logger.info(`No previous version of ${filePath} found`)
