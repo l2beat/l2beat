@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xdd014adff0ba4c31cb110c5e2e051d6e697cbf2b
+
+# Diff at Thu, 21 May 2026 09:21:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aa147da36dc2b8d307d8e09b17d18109b2286235 block: 1779173531
+- current timestamp: 1779355207
+
+## Description
+
+Risc0 emergency stop moved from EOA to multisig.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696","description":"pause the verifier.","role":".owner"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      values.owner:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+    }
+```
+
+```diff
+    EOA  (eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412) {
+    +++ description: None
+      receivedPermissions.5:
+-        {"permission":"interact","from":"eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696","description":"pause the verifier.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0x6820b0db5269aa283f26180f31e7bde480b4b98a
 
 # Diff at Tue, 19 May 2026 12:03:01 GMT:
