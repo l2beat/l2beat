@@ -54,6 +54,79 @@ export interface ProjectTechnologyChoice {
   isUnderReview?: boolean
 }
 
+export interface ProjectSequencingTechnologyChoice
+  extends ProjectTechnologyChoice {
+  sequencerSetSpec?: ProjectSequencerSetSpec
+  inclusionDelay?: ProjectInclusionDelayConfig
+  censorshipResistance?: string
+}
+
+export interface ProjectSequencerSetSpec {
+  slotTime?: TableReadyValue
+  epochTime?: TableReadyValue
+  sequencerCount?: TableReadyValue
+  blockProductionAccess?: TableReadyValue
+  stakePerValidator?: TableReadyValue
+  rateLimit?: TableReadyValue
+  deterministicCrGadget?: TableReadyValue
+  additionalCrGadgets?: TableReadyValue
+}
+
+export type ProjectInclusionDelayConfig =
+  | ProjectSingleSlotInclusionDelayConfig
+  | ProjectSpanInclusionDelayConfig
+  | ProjectCommitteeInclusionDelayConfig
+
+interface ProjectInclusionDelayConfigBase {
+  /** Target inclusion percentile, e.g. 0.99 for T99. */
+  targetPercentile: number
+  maxCensoringFraction: number
+  afterChart?: string
+  entityStakeDistribution?: ProjectInclusionDelayEntityStakeDistribution
+}
+
+export interface ProjectInclusionDelayEntityStakeDistribution {
+  stakeToken: string
+  totalStake: number
+  entities: ProjectInclusionDelayEntityStake[]
+  /** ISO 8601 timestamp of when the snapshot was fetched. */
+  updatedAt?: string
+  /** URL or identifier of the data source used for the snapshot. */
+  source?: string
+  /** Number of top entities included in the snapshot. */
+  limit?: number
+}
+
+export interface ProjectInclusionDelayEntityStake {
+  name: string
+  stake: number
+}
+
+export interface ProjectSingleSlotInclusionDelayConfig
+  extends ProjectInclusionDelayConfigBase {
+  type: 'singleSlot'
+  validatorCount: number
+  slotSeconds: number
+}
+
+export interface ProjectSpanInclusionDelayConfig
+  extends ProjectInclusionDelayConfigBase {
+  type: 'span'
+  validatorCount: number
+  spanBlocks: number
+  blockSeconds: number
+}
+
+export interface ProjectCommitteeInclusionDelayConfig
+  extends ProjectInclusionDelayConfigBase {
+  type: 'committee'
+  validatorCount: number
+  committeeSize: number
+  epochSlots: number
+  slotSeconds: number
+  blockingThreshold: number
+}
+
 export interface ReferenceLink {
   title: string
   url: string
@@ -566,7 +639,7 @@ export interface ProjectScalingTechnology {
   architectureImage?: string
   dataAvailability?: ProjectTechnologyChoice[]
   operator?: ProjectTechnologyChoice
-  sequencing?: ProjectTechnologyChoice
+  sequencing?: ProjectSequencingTechnologyChoice
   sequencingImage?: string
   forceTransactions?: ProjectTechnologyChoice
   exitMechanisms?: ProjectTechnologyChoice[]
