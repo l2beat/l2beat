@@ -33,8 +33,6 @@ describe(getScaledParticleCounts.name, () => {
   })
 
   it('returns quickly for very large values without iterating', () => {
-    // The previous implementation looped in $25 increments; with values this
-    // large it would take millions of iterations. Should return in O(n).
     const start = Date.now()
     const result = getScaledParticleCounts([1e12, 5e11, 1e10])
     const elapsed = Date.now() - start
