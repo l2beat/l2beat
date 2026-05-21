@@ -1,6 +1,6 @@
 /**
  * Renders the text form of an ingestion trace. The same text is persisted on
- * `TokenDbHistoryEntry.ingestionLog` (for the history detail sheet) and
+ * `TokenDbHistory.ingestionLog` (for the history detail sheet) and
  * pre-rendered into the `text` field of `IngestionTraceView` (for the queue
  * preview dialog), so both panels show it identically.
  */

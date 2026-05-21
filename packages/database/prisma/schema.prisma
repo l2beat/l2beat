@@ -514,7 +514,7 @@ model DeployedToken {
   @@index([abstractTokenId])
 }
 
-model TokenIngestionQueueEntry {
+model TokenIngestionQueue {
   chain     String   @db.VarChar(32)
   address   String   @db.VarChar(255)
   state     String   @default("pending") @db.VarChar(32)
@@ -526,7 +526,7 @@ model TokenIngestionQueueEntry {
   @@index([state, updatedAt])
 }
 
-model TokenDbSetting {
+model TokenDbSettings {
   key       String   @db.VarChar(255)
   value     String   @db.Text
   updatedAt DateTime @updatedAt @db.Timestamp(6)
@@ -534,7 +534,7 @@ model TokenDbSetting {
   @@id([key])
 }
 
-model TokenDbHistoryEntry {
+model TokenDbHistory {
   id           BigInt   @id @default(autoincrement())
   timestamp    DateTime @db.Timestamp(6)
   source       String   @db.VarChar(32)

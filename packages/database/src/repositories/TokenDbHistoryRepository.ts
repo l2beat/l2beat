@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { TokenDbHistoryEntry } from '../kysely/generated/types'
+import type { TokenDbHistory } from '../kysely/generated/types'
 
 export type TokenDbHistorySource = 'manual' | 'ingestion'
 
@@ -22,9 +22,7 @@ export interface TokenDbHistoryPage {
   totalCount: number
 }
 
-function toRecord(
-  row: Selectable<TokenDbHistoryEntry>,
-): TokenDbHistoryEntryRecord {
+function toRecord(row: Selectable<TokenDbHistory>): TokenDbHistoryEntryRecord {
   return {
     id: row.id,
     timestamp: UnixTime.fromDate(row.timestamp),
@@ -36,9 +34,7 @@ function toRecord(
   }
 }
 
-function toRow(
-  record: TokenDbHistoryEntryInsert,
-): Insertable<TokenDbHistoryEntry> {
+function toRow(record: TokenDbHistoryEntryInsert): Insertable<TokenDbHistory> {
   return {
     timestamp: UnixTime.toDate(record.timestamp),
     source: record.source,
@@ -59,15 +55,12 @@ function toJsonSafe(value: unknown): unknown {
 
 export class TokenDbHistoryRepository extends BaseRepository {
   async insert(record: TokenDbHistoryEntryInsert): Promise<void> {
-    await this.db
-      .insertInto('TokenDbHistoryEntry')
-      .values(toRow(record))
-      .execute()
+    await this.db.insertInto('TokenDbHistory').values(toRow(record)).execute()
   }
 
   async getRecent(limit: number): Promise<TokenDbHistoryEntryRecord[]> {
     const rows = await this.db
-      .selectFrom('TokenDbHistoryEntry')
+      .selectFrom('TokenDbHistory')
       .selectAll()
       .orderBy('timestamp', 'desc')
       .orderBy('id', 'desc')
@@ -82,7 +75,7 @@ export class TokenDbHistoryRepository extends BaseRepository {
     limit: number
   }): Promise<TokenDbHistoryPage> {
     const rows = await this.db
-      .selectFrom('TokenDbHistoryEntry')
+      .selectFrom('TokenDbHistory')
       .selectAll()
       .orderBy('timestamp', 'desc')
       .orderBy('id', 'desc')
@@ -91,7 +84,7 @@ export class TokenDbHistoryRepository extends BaseRepository {
       .execute()
 
     const count = await this.db
-      .selectFrom('TokenDbHistoryEntry')
+      .selectFrom('TokenDbHistory')
       .select((eb) => eb.fn.countAll<number>().as('count'))
       .executeTakeFirstOrThrow()
 
@@ -103,7 +96,7 @@ export class TokenDbHistoryRepository extends BaseRepository {
 
   async getAll(): Promise<TokenDbHistoryEntryRecord[]> {
     const rows = await this.db
-      .selectFrom('TokenDbHistoryEntry')
+      .selectFrom('TokenDbHistory')
       .selectAll()
       .orderBy('timestamp', 'asc')
       .orderBy('id', 'asc')
@@ -113,9 +106,7 @@ export class TokenDbHistoryRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('TokenDbHistoryEntry')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('TokenDbHistory').executeTakeFirst()
 
     return Number(result.numDeletedRows)
   }

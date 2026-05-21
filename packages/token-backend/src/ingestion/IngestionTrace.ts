@@ -90,7 +90,7 @@ export interface IngestionTraceView {
   address: TokenAddress
   steps: IngestionStepView[]
   outcome: IngestionOutcomeView
-  /** Same text format that gets persisted to `TokenDbHistoryEntry.ingestionLog`
+  /** Same text format that gets persisted to `TokenDbHistory.ingestionLog`
    * after a successful write, so the queue preview and history detail can
    * render the log identically. */
   text: string

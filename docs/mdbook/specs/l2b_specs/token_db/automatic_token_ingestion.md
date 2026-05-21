@@ -271,12 +271,12 @@ strong `AbstractTokenAssignmentProof` type is only used at plan time.
 pipeline opens its own, because the user pipeline also needs to re-plan
 inside that transaction while ingestion does not. The helper logs every
 command it executes and records one row per executed command in the
-[`TokenDbHistoryEntry`](#token-db-history) table, so the audit trail
+[`TokenDbHistory`](#token-db-history) table, so the audit trail
 covers both pipelines uniformly.
 
 ## Token DB history
 
-Every executed command is recorded in `TokenDbHistoryEntry`. The shape is
+Every executed command is recorded in `TokenDbHistory`. The shape is
 deliberately small:
 
 - `timestamp` — when the command was applied.
@@ -324,7 +324,7 @@ DB queries for transfers. This is cheap because the interop table only
 retains the last ~24 hours.
 
 The pre-step uses a separate insertion-order cursor
-(`interop-transfers:lastSerialId`, stored in `TokenDbSetting`) to find
+(`interop-transfers:lastSerialId`, stored in `TokenDbSettings`) to find
 transfers added since the previous tick.
 
 ## CoinGecko: never called from `plan`
@@ -381,7 +381,7 @@ they overlap with automatic ingestion process.
 
 ## Future: persistent trace audit
 
-`TokenDbHistoryEntry` already gives a per-command audit trail of *what*
+`TokenDbHistory` already gives a per-command audit trail of *what*
 changed and *who* changed it. The next step, if needed, is persisting the
 full `IngestionTrace` next to write events so the *reasoning* (every
 decision step) is queryable too — useful when a researcher wants to

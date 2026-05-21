@@ -1,13 +1,13 @@
 import type { Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { TokenDbSetting } from '../kysely/generated/types'
+import type { TokenDbSettings } from '../kysely/generated/types'
 
 export interface TokenDbSettingRecord {
   key: string
   value: string
 }
 
-function toRecord(row: Selectable<TokenDbSetting>): TokenDbSettingRecord {
+function toRecord(row: Selectable<TokenDbSettings>): TokenDbSettingRecord {
   return {
     key: row.key,
     value: row.value,
@@ -17,7 +17,7 @@ function toRecord(row: Selectable<TokenDbSetting>): TokenDbSettingRecord {
 export class TokenDbSettingRepository extends BaseRepository {
   async get(key: string): Promise<TokenDbSettingRecord | undefined> {
     const row = await this.db
-      .selectFrom('TokenDbSetting')
+      .selectFrom('TokenDbSettings')
       .selectAll()
       .where('key', '=', key)
       .executeTakeFirst()
@@ -28,7 +28,7 @@ export class TokenDbSettingRepository extends BaseRepository {
   async set(record: TokenDbSettingRecord): Promise<void> {
     const now = new Date()
     await this.db
-      .insertInto('TokenDbSetting')
+      .insertInto('TokenDbSettings')
       .values({ ...record, updatedAt: now })
       .onConflict((cb) =>
         cb.column('key').doUpdateSet({
@@ -40,7 +40,9 @@ export class TokenDbSettingRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('TokenDbSetting').executeTakeFirst()
+    const result = await this.db
+      .deleteFrom('TokenDbSettings')
+      .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

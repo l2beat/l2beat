@@ -23,7 +23,7 @@ export function createTokenDatabase(config?: PoolConfig & { log?: LogConfig }) {
     deployedToken: new DeployedTokenRepository(db),
     tokenConnection: new TokenConnectionRepository(db),
     tokenDbHistory: new TokenDbHistoryRepository(db),
-    tokenDbSetting: new TokenDbSettingRepository(db),
+    tokenDbSettings: new TokenDbSettingRepository(db),
     tokenIngestionQueue: new TokenIngestionQueueRepository(db),
 
     stats: () => getDatabaseStats(db),

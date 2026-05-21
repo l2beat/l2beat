@@ -18,7 +18,7 @@ import type {
 
 /**
  * Renders an `IngestionTrace` as a plain-text log: one line per decision step,
- * followed by a single outcome line. Persisted on `TokenDbHistoryEntry` for
+ * followed by a single outcome line. Persisted on `TokenDbHistory` for
  * every command produced by automatic ingestion so the reasoning behind each
  * write is part of the audit trail.
  */

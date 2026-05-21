@@ -51,7 +51,7 @@ export function manualProof(user: string): AbstractTokenAssignmentProof {
 }
 
 /**
- * Who is making this write. Recorded in `TokenDbHistoryEntry.source` so every
+ * Who is making this write. Recorded in `TokenDbHistory.source` so every
  * change to TokenDB has a traceable origin. The ingestion variant carries the
  * formatted ingestion trace (`log`) so that the reasoning that produced the
  * commands is persisted on every resulting history row.
@@ -67,7 +67,7 @@ export type WriteSource =
  * `abstractTokenAssignmentProof` field and, for updates/deletes, the
  * `existing` record they were planned against — so this function is a pure
  * router that also stores each executed command verbatim in
- * `TokenDbHistoryEntry`.
+ * `TokenDbHistory`.
  */
 export async function commitTokenChanges(
   tokenDb: TokenDatabase,

@@ -45,7 +45,7 @@ describe(TokenIngestionLoop.name, () => {
 
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDbSettingRepository>({
             get,
             set,
           }),
@@ -82,7 +82,7 @@ describe(TokenIngestionLoop.name, () => {
       const loop = createLoop({
         newQueueState: 'staged',
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDbSettingRepository>({
             get: mockFn().resolvesTo(undefined),
             set: mockFn().resolvesTo(undefined),
           }),
@@ -116,7 +116,7 @@ describe(TokenIngestionLoop.name, () => {
       })
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDbSettingRepository>({
             get: mockFn().resolvesTo(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
@@ -141,7 +141,7 @@ describe(TokenIngestionLoop.name, () => {
       const enqueue = mockFn().resolvesTo(undefined)
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDbSettingRepository>({
             get: mockFn().resolvesTo({
               key: 'interop-transfers:lastSerialId',
               value: '10',
@@ -193,7 +193,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         mockObject<TokenDatabase>({
-          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDbSettingRepository>({
             get: mockFn().resolvesTo(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
@@ -244,7 +244,7 @@ describe(TokenIngestionLoop.name, () => {
         }),
         tokenDb: mockObject<TokenDatabase>({
           transaction: async (callback) => await callback(),
-          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDbSettingRepository>({
             get: mockFn().resolvesTo(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
@@ -319,7 +319,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDbSettingRepository>({
             get: mockFn().resolvesTo(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
@@ -358,7 +358,7 @@ describe(TokenIngestionLoop.name, () => {
 
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDbSettingRepository>({
             get: mockFn().resolvesTo(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
@@ -422,7 +422,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDbSettingRepository>({
             get: mockFn().resolvesTo(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
@@ -491,7 +491,7 @@ describe(TokenIngestionLoop.name, () => {
         }),
         tokenDb: mockObject<TokenDatabase>({
           transaction: async (callback) => await callback(),
-          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDbSettingRepository>({
             get: mockFn().resolvesTo(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
@@ -590,7 +590,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDbSettingRepository>({
             get: mockFn().resolvesTo(undefined),
           }),
           tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
@@ -696,7 +696,7 @@ function createLoop(deps: {
   const tokenDb =
     deps.tokenDb ??
     mockObject<TokenDatabase>({
-      tokenDbSetting: mockObject<TokenDbSettingRepository>({
+      tokenDbSettings: mockObject<TokenDbSettingRepository>({
         get: mockFn().resolvesTo(undefined),
       }),
       tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({

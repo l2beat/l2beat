@@ -3,7 +3,7 @@ import { describeTokenDatabase } from '../test/tokenDatabase'
 import { TokenDbSettingRepository } from './TokenDbSettingRepository'
 
 describeTokenDatabase(TokenDbSettingRepository.name, (db) => {
-  const repository = db.tokenDbSetting
+  const repository = db.tokenDbSettings
 
   afterEach(async () => {
     await repository.deleteAll()

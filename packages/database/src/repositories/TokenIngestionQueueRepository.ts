@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { TokenIngestionQueueEntry } from '../kysely/generated/types'
+import type { TokenIngestionQueue } from '../kysely/generated/types'
 
 export const TOKEN_INGESTION_QUEUE_STATES = [
   'staged',
@@ -40,7 +40,7 @@ function normalizeAddress(
 }
 
 function toRecord(
-  row: Selectable<TokenIngestionQueueEntry>,
+  row: Selectable<TokenIngestionQueue>,
 ): TokenIngestionQueueRecord {
   return {
     chain: row.chain,
@@ -55,7 +55,7 @@ function toRecord(
 function toRow(
   record: TokenIngestionQueueAddress,
   state: Extract<TokenIngestionQueueState, 'staged' | 'pending'>,
-): Insertable<TokenIngestionQueueEntry> {
+): Insertable<TokenIngestionQueue> {
   const now = new Date()
   return {
     ...normalizeAddress(record),
@@ -72,7 +72,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
     state: Extract<TokenIngestionQueueState, 'staged' | 'pending'> = 'pending',
   ): Promise<void> {
     await this.db
-      .insertInto('TokenIngestionQueueEntry')
+      .insertInto('TokenIngestionQueue')
       .values(toRow(address, state))
       .onConflict((cb) => cb.columns(['chain', 'address']).doNothing())
       .execute()
@@ -80,7 +80,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
 
   async findNextPending(): Promise<TokenIngestionQueueRecord | undefined> {
     const row = await this.db
-      .selectFrom('TokenIngestionQueueEntry')
+      .selectFrom('TokenIngestionQueue')
       .selectAll()
       .where('state', '=', 'pending')
       .orderBy('updatedAt', 'asc')
@@ -92,7 +92,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
 
   async countPending(): Promise<number> {
     const count = await this.db
-      .selectFrom('TokenIngestionQueueEntry')
+      .selectFrom('TokenIngestionQueue')
       .select((eb) => eb.fn.countAll<number>().as('count'))
       .where('state', '=', 'pending')
       .executeTakeFirstOrThrow()
@@ -106,7 +106,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
     if (states.length === 0) return []
 
     const rows = await this.db
-      .selectFrom('TokenIngestionQueueEntry')
+      .selectFrom('TokenIngestionQueue')
       .selectAll()
       .where('state', 'in', states)
       .orderBy('updatedAt', 'asc')
@@ -132,7 +132,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
   async retry(address: TokenIngestionQueueAddress): Promise<number> {
     const normalized = normalizeAddress(address)
     const result = await this.db
-      .updateTable('TokenIngestionQueueEntry')
+      .updateTable('TokenIngestionQueue')
       .set({
         state: 'pending',
         message: null,
@@ -149,7 +149,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
   async approve(address: TokenIngestionQueueAddress): Promise<number> {
     const normalized = normalizeAddress(address)
     const result = await this.db
-      .updateTable('TokenIngestionQueueEntry')
+      .updateTable('TokenIngestionQueue')
       .set({
         state: 'pending',
         message: null,
@@ -166,7 +166,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
   async remove(address: TokenIngestionQueueAddress): Promise<number> {
     const normalized = normalizeAddress(address)
     const result = await this.db
-      .deleteFrom('TokenIngestionQueueEntry')
+      .deleteFrom('TokenIngestionQueue')
       .where('chain', '=', normalized.chain)
       .where('address', '=', normalized.address)
       .executeTakeFirst()
@@ -176,7 +176,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
 
   async getAll(): Promise<TokenIngestionQueueRecord[]> {
     const rows = await this.db
-      .selectFrom('TokenIngestionQueueEntry')
+      .selectFrom('TokenIngestionQueue')
       .selectAll()
       .orderBy(['chain', 'address'])
       .execute()
@@ -189,7 +189,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
     limit: number
   }): Promise<TokenIngestionQueuePage> {
     const rows = await this.db
-      .selectFrom('TokenIngestionQueueEntry')
+      .selectFrom('TokenIngestionQueue')
       .selectAll()
       .orderBy(['chain', 'address'])
       .offset(options.offset)
@@ -197,7 +197,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
       .execute()
 
     const count = await this.db
-      .selectFrom('TokenIngestionQueueEntry')
+      .selectFrom('TokenIngestionQueue')
       .select((eb) => eb.fn.countAll<number>().as('count'))
       .executeTakeFirstOrThrow()
 
@@ -209,7 +209,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('TokenIngestionQueueEntry')
+      .deleteFrom('TokenIngestionQueue')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
@@ -221,7 +221,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
   ): Promise<number> {
     const normalized = normalizeAddress(address)
     const result = await this.db
-      .updateTable('TokenIngestionQueueEntry')
+      .updateTable('TokenIngestionQueue')
       .set({
         state,
         message,

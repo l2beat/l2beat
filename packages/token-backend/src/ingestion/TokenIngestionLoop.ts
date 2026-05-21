@@ -70,7 +70,7 @@ export class TokenIngestionLoop {
   }
 
   private async enqueueNewInteropTransferTokens() {
-    const setting = await this.tokenDb.tokenDbSetting.get(
+    const setting = await this.tokenDb.tokenDbSettings.get(
       INTEROP_TRANSFERS_LAST_SERIAL_ID_KEY,
     )
     const lastSerialId = setting?.value ?? '0'
@@ -95,7 +95,7 @@ export class TokenIngestionLoop {
       }
     }
 
-    await this.tokenDb.tokenDbSetting.set({
+    await this.tokenDb.tokenDbSettings.set({
       key: INTEROP_TRANSFERS_LAST_SERIAL_ID_KEY,
       value: batch.latestSerialId,
     })
