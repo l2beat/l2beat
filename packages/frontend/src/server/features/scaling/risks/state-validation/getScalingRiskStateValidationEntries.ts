@@ -118,6 +118,7 @@ export interface ScalingRiskStateValidationValidityEntry
   trustedSetupsByProofSystem: TrustedSetupsByProofSystem
   executionDelay: number | undefined
   executionDelayMode: 'always' | 'if-challenged' | undefined
+  permissioned: boolean | undefined
   tvs: TvsData
 }
 
@@ -168,6 +169,7 @@ function getScalingRiskStateValidationValidityEntry(
     executionDelay: project.scalingRisks.self.stateValidation?.executionDelay,
     executionDelayMode:
       project.scalingRisks.self.stateValidation?.executionDelayMode,
+    permissioned: project.scalingRisks.self.stateValidation?.permissioned,
     tvs: getTvsData(project, projectTvs),
   }
 }

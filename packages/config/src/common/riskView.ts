@@ -85,6 +85,7 @@ export const STATE_ZKP_SN: ProjectScalingRiskView['stateValidation'] = {
     'SNARKs are succinct zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
+  permissioned: true,
 }
 
 export const STATE_ZKP_ST: ProjectScalingRiskView['stateValidation'] = {
@@ -93,6 +94,7 @@ export const STATE_ZKP_ST: ProjectScalingRiskView['stateValidation'] = {
     'STARKs are zero knowledge proofs that ensure state correctness.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
+  permissioned: true,
 }
 
 export const STATE_ZKP_ST_SN_WRAP: ProjectScalingRiskView['stateValidation'] = {
@@ -101,6 +103,7 @@ export const STATE_ZKP_ST_SN_WRAP: ProjectScalingRiskView['stateValidation'] = {
     'STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
+  permissioned: true,
 }
 
 export function STATE_ZKP_L3(
@@ -111,6 +114,7 @@ export function STATE_ZKP_L3(
     description: `Zero knowledge cryptography is used to ensure state correctness. Proofs are first verified on ${L2} and finally on Ethereum.`,
     sentiment: 'good',
     orderHint: Number.POSITIVE_INFINITY,
+    permissioned: true,
   }
 }
 
