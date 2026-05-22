@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useLayoutEffect, useRef } from 'react'
 
 const DEFAULT_DELAY_MS = 2_000
 
@@ -26,7 +26,10 @@ export function useDebouncedCallback<T extends (...args: unknown[]) => unknown>(
 ) {
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null)
   const callbackRef = useRef(callback)
-  callbackRef.current = callback
+
+  useLayoutEffect(() => {
+    callbackRef.current = callback
+  }, [callback])
 
   return useCallback(
     (...args: Parameters<T>) => {
