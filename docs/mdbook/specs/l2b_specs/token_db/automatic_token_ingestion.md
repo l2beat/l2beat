@@ -208,13 +208,11 @@ update, possibly with a newly built CoinGecko abstract), `conflict`
   incomplete (missing `symbol`, `decimals`, or `deploymentTimestamp`).
   `apply` moves the entry to `error` with a message.
 - **`noop`** — token already exists with the resolved abstract; nothing to
-  write. `apply` marks related interop transfers as unprocessed (so
-  downstream re-derivation can re-run) and removes the queue entry.
+  write. `apply` removes the queue entry.
 - **`write`** — `apply` inserts/updates the deployed token and, if
   needed, inserts a new abstract token in the same transaction. It then
   re-enqueues every neighbor token from the address's transfers
-  (propagation), marks related interop transfers as unprocessed, and
-  removes the queue entry.
+  (propagation) and removes the queue entry.
 
 ## Shared write boundary
 
@@ -363,8 +361,7 @@ EVM addresses. Normalization:
 
 - Pre-step: reads from the interop database (`db`).
 - Drain: reads from both `db` (interop transfers) and `tokenDb` (TokenDB
-  state, queue, settings). Writes go to `tokenDb` (and back to `db` for
-  the unprocessed-marker).
+  state, queue, settings). Writes go to `tokenDb`.
 - Preview: `plan` + `fetch`, called from the `tokenIngestionQueue.preview`
   tRPC route. Builds the transfer index on demand.
 - Queue page predicted outcomes: `plan` only, called once per row from

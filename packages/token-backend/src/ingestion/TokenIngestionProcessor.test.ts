@@ -659,6 +659,62 @@ describe(TokenIngestionProcessor.name, () => {
   })
 
   describe(TokenIngestionProcessor.prototype.apply.name, () => {
+    it('applies writes, propagates neighbors, and removes the queue entry', async () => {
+      const address = token('ethereum', '0xaaa')
+      const neighbor = token('base', '0xbbb')
+      const insert = mockFn().resolvesTo(undefined)
+      const enqueue = mockFn().resolvesTo(undefined)
+      const remove = mockFn().resolvesTo(1)
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          transaction: async (callback) => await callback(),
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            insert,
+          }),
+          tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
+            insert: mockFn().resolvesTo(undefined),
+          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              enqueue,
+              remove,
+            },
+          ),
+        }),
+      })
+
+      const trace: IngestionTrace = {
+        id: 'ing_test',
+        address,
+        steps: [],
+        outcome: {
+          kind: 'write',
+          newAbstractToken: undefined,
+          deployedToken: {
+            type: 'insert',
+            record: {
+              ...address,
+              abstractTokenId: 'USDC01',
+              symbol: 'USDC',
+              decimals: 6,
+              deploymentTimestamp: UnixTime(1),
+              comment: null,
+              metadata: null,
+              abstractTokenAssignmentProof: { kind: 'coingecko' },
+            },
+          },
+          neighborsToEnqueue: [neighbor],
+        },
+      }
+
+      await processor.apply(queueEntry(address), trace)
+
+      expect(insert).toHaveBeenCalledTimes(1)
+      expect(enqueue).toHaveBeenCalledWith(neighbor, 'pending')
+      expect(remove).toHaveBeenCalledWith(queueEntry(address))
+    })
+
     it('throws when called with a pending outcome', async () => {
       const processor = createProcessor({})
       const trace: IngestionTrace = {

@@ -284,9 +284,6 @@ export class TokenIngestionProcessor {
         await queue.markError(entry, outcome.message)
         return
       case 'noop':
-        await this.deps.db.interopTransfer.markAsUnprocessedByTokens([
-          { chain: trace.address.chain, tokenAddress: trace.address.address },
-        ])
         await queue.remove(entry)
         return
       case 'pending':
@@ -309,9 +306,6 @@ export class TokenIngestionProcessor {
             this.deps.newQueueState ?? 'pending',
           )
         }
-        await this.deps.db.interopTransfer.markAsUnprocessedByTokens([
-          { chain: trace.address.chain, tokenAddress: trace.address.address },
-        ])
         await queue.remove(entry)
         return
       }

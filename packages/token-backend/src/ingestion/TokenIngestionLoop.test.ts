@@ -241,7 +241,6 @@ describe(TokenIngestionLoop.name, () => {
                 bridgeType: 'lockAndMint',
               }),
             ]),
-            markAsUnprocessedByTokens: mockFn().resolvesTo(1),
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
@@ -496,7 +495,6 @@ describe(TokenIngestionLoop.name, () => {
               tokenAddresses: [],
             }),
             getAll: mockFn().resolvesTo([]),
-            markAsUnprocessedByTokens: mockFn().resolvesTo(1),
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
