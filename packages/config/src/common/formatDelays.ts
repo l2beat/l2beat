@@ -22,9 +22,9 @@ export function formatChallengeAndExecutionDelay(
 ) {
   if (challengeDelay === undefined && executionDelay === undefined)
     return undefined
-  if ((challengeDelay ?? 0) === 0 && (executionDelay ?? 0) === 0)
+  if (!challengeDelay && !executionDelay)
     return 'No challenge + execution delay'
-  if ((executionDelay ?? 0) === 0) return formatChallengePeriod(challengeDelay)
-  if ((challengeDelay ?? 0) === 0) return formatExecutionDelay(executionDelay)
-  return `${formatSeconds(challengeDelay!)} challenge period\n+ ${formatSeconds(executionDelay!)} execution delay`
+  if (!executionDelay) return formatChallengePeriod(challengeDelay)
+  if (!challengeDelay) return formatExecutionDelay(executionDelay)
+  return `${formatSeconds(challengeDelay)} challenge period\n+ ${formatSeconds(executionDelay)} execution delay`
 }
