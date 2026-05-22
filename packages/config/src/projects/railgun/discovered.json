@@ -1,6 +1,6 @@
 {
   "name": "railgun",
-  "timestamp": 1779274488,
+  "timestamp": 1779448334,
   "configHash": "0xb66e16c4dcff3f3e8ba7f31d2a79a11f21d464793e35da71e6c701634c6b986a",
   "entries": [
     {
@@ -12,7 +12,7 @@
         "0x525c6d47f3570e10cbae71328a39c0c1fe26df09b6e18c994918607ceed9da08"
       ],
       "proxyType": "immutable",
-      "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.",
+      "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -26,7 +26,7 @@
       "sinceBlock": 15138816,
       "values": {
         "$immutable": true,
-        "amount": "1850000000000000000000000",
+        "amount": "1,850,000",
         "beneficiary": "eth:0xaE8A17EB859E024cF6B541802B08932B2268dcEe",
         "intervalLength": 23650000,
         "startTime": 1669625000,
@@ -70,7 +70,8 @@
       "implementationNames": {
         "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": "IntervalPayouts"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "GovernorRewardsSweeper",
@@ -82,7 +83,7 @@
         "0x0b06be077f821ae1860dd79fc78b6a3c529270e369384afc64f0ac0a9473ab33"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable helper that forwards all ETH or ERC20 balances it holds to a fixed receiver. If you trust this contract, you trust its proxy admin to upgrade, pause, or retarget the sweep behavior.",
+      "description": "Helper that forwards all ETH or ERC20 balances it holds to a fixed receiver.",
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1669148003,
       "sinceBlock": 16027851,
@@ -113,7 +114,7 @@
         "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B": "PausableUpgradableProxy",
         "eth:0x2ea76A3c4795DD1a5d206B285fD21b2Fb83EAf1a": "Sweeper"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "ProxyAdmin",
@@ -198,7 +199,7 @@
         "0x9be46f47e8f61b9d373f7d991c68bc9d68a40d875ddb9da58563121fdeb69a85"
       ],
       "proxyType": "immutable",
-      "description": "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, once Railgun governance switches the contract into COMMITTING state, can forward those keys to the Railgun smart wallet verifier through the Delegator. If you trust this contract, you trust its owner to stage and commit verifier-key changes and Railgun governance to authorize the commit phase.",
+      "description": "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -252,7 +253,7 @@
         "0x525c6d47f3570e10cbae71328a39c0c1fe26df09b6e18c994918607ceed9da08"
       ],
       "proxyType": "immutable",
-      "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.",
+      "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -266,7 +267,7 @@
       "sinceBlock": 15138812,
       "values": {
         "$immutable": true,
-        "amount": "75000000000000000000000",
+        "amount": "75,000",
         "beneficiary": "eth:0x5a02474A3083Bc969f20F92E7a8bd3824EC607f0",
         "intervalLength": 1,
         "startTime": 1657800000,
@@ -310,7 +311,8 @@
       "implementationNames": {
         "eth:0x7673e2E62435D25EDBcb58fD0d88c4C95806b10F": "IntervalPayouts"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
@@ -345,7 +347,7 @@
         "0x525c6d47f3570e10cbae71328a39c0c1fe26df09b6e18c994918607ceed9da08"
       ],
       "proxyType": "immutable",
-      "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.",
+      "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -359,7 +361,7 @@
       "sinceBlock": 15138811,
       "values": {
         "$immutable": true,
-        "amount": "925000000000000000000000",
+        "amount": "925,000",
         "beneficiary": "eth:0xaE8A17EB859E024cF6B541802B08932B2268dcEe",
         "intervalLength": 1,
         "startTime": 1657800000,
@@ -403,7 +405,8 @@
       "implementationNames": {
         "eth:0x859E0C1790b8a721F4943742603cDB685A73BA5D": "IntervalPayouts"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "VerificationKeySetter_9086",
@@ -414,7 +417,7 @@
         "0x302a2769069056aa8c4a9be3ba0d53d9d831149d84f14b7650cc2ff13729d27f"
       ],
       "proxyType": "immutable",
-      "description": "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, once Railgun governance switches the contract into COMMITTING state, can forward those keys to the Railgun smart wallet verifier through the Delegator. If you trust this contract, you trust its owner to stage and commit verifier-key changes and Railgun governance to authorize the commit phase.",
+      "description": "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -469,7 +472,7 @@
         "0x9bf4e7d842e397338e0191cf08fc9478cf3988db823baa64976da77c103fab0d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable reward distributor that pulls assets from the Railgun treasury and allocates them to stakers using snapshot voting power. If you trust this contract, you trust its owner to set reward parameters and tracked assets, and its proxy admin to pause or upgrade the logic.",
+      "description": "Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -552,7 +555,7 @@
         "0x388c06829abb17c9b902046b84e0c6e7da96cad5e13cccf4c4d676e8935d7474"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Older Railgun sweeper generation that still holds Treasury transfer rights. It is upgradeable and forwards balances to an immutable receiver, but this specific deployment does not expose the receiver getter cleanly through discovery.",
+      "description": "Older Railgun sweeper generation that still holds Treasury transfer rights. It is upgradeable and forwards balances to an immutable receiver.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -602,7 +605,7 @@
         "0x525c6d47f3570e10cbae71328a39c0c1fe26df09b6e18c994918607ceed9da08"
       ],
       "proxyType": "immutable",
-      "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.",
+      "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -616,7 +619,7 @@
       "sinceBlock": 15138815,
       "values": {
         "$immutable": true,
-        "amount": "100000000000000000000000",
+        "amount": "100,000",
         "beneficiary": "eth:0xA4f2eA0a81179362558eBC1d2Bc817c9a0134ee3",
         "intervalLength": 1,
         "startTime": 1657800000,
@@ -660,7 +663,8 @@
       "implementationNames": {
         "eth:0xa863262Bf5E97e8CFeC47a71402aC360C0983060": "IntervalPayouts"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "eth:0xaE8A17EB859E024cF6B541802B08932B2268dcEe",
@@ -676,7 +680,7 @@
         "0xb2e5d4b92141657f0ac259d83e128a7a6504cd491e1326fa625354186d937b28"
       ],
       "proxyType": "immutable",
-      "description": "Permission router owned by Railgun governance. If you trust this contract, you trust its owner and any currently delegated callers to execute privileged calls through it on connected Railgun components.",
+      "description": "Permission router proxy owned by Railgun governance.",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -878,7 +882,7 @@
         "0xb43f60b5a1864a059b570289a0d863684c488d36606efea6af35821ad64b0e69"
       ],
       "proxyType": "immutable",
-      "description": "Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator; if you trust this contract, you trust RAIL voting power governed by these rules to change connected Railgun components.",
+      "description": "Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1183,7 +1187,7 @@
         "0x525c6d47f3570e10cbae71328a39c0c1fe26df09b6e18c994918607ceed9da08"
       ],
       "proxyType": "immutable",
-      "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.",
+      "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1197,7 +1201,7 @@
       "sinceBlock": 15138819,
       "values": {
         "$immutable": true,
-        "amount": "200000000000000000000000",
+        "amount": "200,000",
         "beneficiary": "eth:0xA4f2eA0a81179362558eBC1d2Bc817c9a0134ee3",
         "intervalLength": 23650000,
         "startTime": 1669625000,
@@ -1241,7 +1245,8 @@
       "implementationNames": {
         "eth:0xCA9A2894e814305fAfc2BA83a70B34295b1DdE9D": "IntervalPayouts"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Rail Token",
@@ -1252,13 +1257,13 @@
         "0xedf311c1a35646cbfb452e13446e64818194f368b2cd56c3bae91b0593f49852"
       ],
       "proxyType": "immutable",
-      "description": "RAIL governance token contract with a capped mint schedule and an early anti-bot transfer override. If you trust this contract, you trust its owner to mint additional RAIL up to the hard cap.",
+      "description": "RAIL governance token contract with a capped (100,000,000 RAIL total supply) mint schedule and an early anti-bot transfer override.",
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1625318205,
       "sinceBlock": 12754822,
       "values": {
         "$immutable": true,
-        "cap": "100000000000000000000000000",
+        "cap": "100,000,000",
         "decimals": 18,
         "DEPLOY_TIME": 1625318205,
         "name": "Rail",
@@ -1281,6 +1286,7 @@
       "implementationNames": {
         "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D": "RailToken"
       },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -1293,7 +1299,7 @@
         "0x38e90021f1f1c6b5378b5a32d25769119a4c3c07b14c2f813eb2b7a6264172cd"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable treasury that collects Railgun fees, and can release ETH or ERC20s only to current TRANSFER_ROLE members. If you trust this contract, you trust its role admins to decide who can move treasury assets and its proxy admin to change the treasury logic.",
+      "description": "Collects Railgun fees. Managed through access control roles.",
       "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776059,
       "sinceBlock": 15138802,
@@ -1385,7 +1391,7 @@
         "0x2b27b919f2f0ceebf6a30b8b3af7426812898663d4c26085ab9a97200354f7a6"
       ],
       "proxyType": "immutable",
-      "description": "Read-only helper contract that batches governance snapshot and reward-view calls. It does not custody funds or hold privileged roles.",
+      "description": "Read-only helper contract that batches governance snapshot and reward-view calls.",
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1670115011,
       "sinceBlock": 16107975,
@@ -1405,7 +1411,7 @@
       "implementationNames": {
         "eth:0xe90275239D734899e8D94646139213F6F97bEB0E": "Getters"
       },
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Staking",
@@ -1416,7 +1422,7 @@
         "0x12d1c6ff9fbd0f99b457b153c78e8f364a9aad6b9bfed98b2b682b53870cc5e4"
       ],
       "proxyType": "immutable",
-      "description": "Immutable RAIL staking contract that tracks delegated voting power, enforces a 30-day unstake delay, and snapshots balances for governance. It has no admin, but its parameters define the governance system's voting power.",
+      "description": "RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.",
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1625670240,
       "sinceBlock": 12780995,
@@ -1425,7 +1431,9 @@
         "DEPLOY_TIME": 1625670240,
         "intervalAtTime": [],
         "SNAPSHOT_INTERVAL": 86400,
+        "SNAPSHOT_INTERVAL_fmt": "1d",
         "STAKE_LOCKTIME": 2592000,
+        "STAKE_LOCKTIME_fmt": "1mo",
         "stakingToken": "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D"
       },
       "fieldMeta": {
@@ -1458,7 +1466,7 @@
         "0x525c6d47f3570e10cbae71328a39c0c1fe26df09b6e18c994918607ceed9da08"
       ],
       "proxyType": "immutable",
-      "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.",
+      "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1472,7 +1480,7 @@
       "sinceBlock": 15138817,
       "values": {
         "$immutable": true,
-        "amount": "150000000000000000000000",
+        "amount": "150,000",
         "beneficiary": "eth:0x5a02474A3083Bc969f20F92E7a8bd3824EC607f0",
         "intervalLength": 23650000,
         "startTime": 1669625000,
@@ -1516,7 +1524,8 @@
       "implementationNames": {
         "eth:0xf5F9d74FbFd04801DFf83425ff6C2002f60B921A": "IntervalPayouts"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "RailgunSmartWallet",
@@ -1528,7 +1537,7 @@
         "0x0ad85e59396caf20dd30307894a735a097dbd0d914bc1851af97c04cc874ad3b"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable privacy pool contract that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree. If you trust this contract, you trust its owner to change fees, treasury routing, token compatibility, and SNARK safety vectors, and its proxy admin to pause or upgrade the logic.",
+      "description": "Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.",
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1651422389,
       "sinceBlock": 14693013,
@@ -2017,17 +2026,17 @@
     "railgun/Delegator": "0xfb68e5ca10bac6979413d0bfc12ef74a760fbe13fbbc4be4bb7ac2d4b4fd25d2",
     "railgun/Getters": "0xc2d9dc8a843eec349cf7491b6123f0494b71cd8308a138102d022781e8717b70",
     "railgun/GovernorRewards": "0x57affc64455412dccc40619b5fe609e68f9e5cc7e9e974ee0eb337aceb11a2a5",
-    "railgun/IntervalPayouts": "0x4bc1c299f6166d7e240f6bdc3f9c96a51cfb3d663ba5a115c0819ab9df020c05",
+    "railgun/IntervalPayouts": "0x09fe161481fbf0d6537d95f2fea87b62f20bcf765449ab946ee2af02f60ec1c1",
     "railgun/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "railgun/RailgunSmartWallet": "0x73f14bd8461facf56cca712201c02818c69035359f3c6d9f62ead7358c1abd92",
-    "railgun/RailToken": "0x1accecbf363e089fe076d95372f29d46ba515d0a47882681e318a1dba85d0fd4",
-    "railgun/Staking": "0x7ae078e86e08252ca74cbf4a5615976c862e3b6be0ffaa85da6452a1c93a2a31",
+    "railgun/RailToken": "0x804530e37ec6008f7e038487ae7914ce758ee7b27c21a98172234dc96f3fe682",
+    "railgun/Staking": "0x78593ec22b89ba550eccd09e11681e717d558121e95ec8eb62c6fe12826ba8a3",
     "railgun/Sweeper": "0x770b366e3e05222adc3601c01c4d6707431927b39692b296f886ae34d7c9f3a2",
     "railgun/SweeperLegacy": "0x2eb417aa4538dd13c156beb75374c4ab97c3a0e34a2e1616eaf4d440bed50af7",
     "railgun/Treasury": "0xe53be1977d2dba54b3716f7715569df8ec79c2de52d77b1c11b84d5902f65b12",
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
     "railgun/Voting": "0xcf33f9d03116b81a59f25ba7bf17c38122eedecde0df775a365f78a34697bd68"
   },
-  "usedBlockNumbers": { "ethereum": 25135980 },
+  "usedBlockNumbers": { "ethereum": 25150417 },
   "permissionsConfigHash": "0xedd462c0e7d5c3b0e3a6430193cae24752e4898aa3ec197cb654cfeedced168f"
 }
