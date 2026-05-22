@@ -626,16 +626,16 @@ export async function getScalingProjectEntry(
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: upgradesAndGovernance?.content
+        content: upgradesAndGovernance
           ? linkAddresses(
-              upgradesAndGovernance.content,
+              upgradesAndGovernance,
               project.contracts,
               project.permissions,
             )
           : undefined,
         diagram: getDiagramParams(
           'upgrades-and-governance',
-          upgradesAndGovernance?.image ?? project.slug,
+          project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
         ),
 
         pastUpgrades: getPastUpgradesData(allPastUpgrades),
