@@ -1,18 +1,10 @@
 import type {
+  AbstractTokenRecord,
   Database,
+  DeployedTokenRecord,
   InteropTransferRecord,
   TokenDatabase,
 } from '@l2beat/database'
-import type {
-  AbstractTokenRecord,
-  AbstractTokenRepository,
-} from '@l2beat/database/dist/repositories/AbstractTokenRepository'
-import type { ChainRepository } from '@l2beat/database/dist/repositories/ChainRepository'
-import type {
-  DeployedTokenRecord,
-  DeployedTokenRepository,
-} from '@l2beat/database/dist/repositories/DeployedTokenRepository'
-import type { InteropTransferRepository } from '@l2beat/database/dist/repositories/InteropTransferRepository'
 import { Address32 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
@@ -25,7 +17,7 @@ describe('deployedTokensRouter', () => {
       const mockFindByChainAndAddress = mockFn().resolvesTo(undefined)
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFindByChainAndAddress,
         }),
       })
@@ -68,7 +60,7 @@ describe('deployedTokensRouter', () => {
         },
       } satisfies DeployedTokenRecord
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(token),
         }),
       })
@@ -88,7 +80,7 @@ describe('deployedTokensRouter', () => {
   describe('checkIfExists', () => {
     it('returns false when token does not exist', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
       })
@@ -111,7 +103,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       }
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(token),
         }),
       })
@@ -179,7 +171,7 @@ describe('deployedTokensRouter', () => {
       }[]
       const mockGetByChainAndAddress = mockFn().resolvesTo(tokens)
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByChainAndAddress: mockGetByChainAndAddress,
         }),
       })
@@ -208,7 +200,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       }
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(existingToken),
         }),
       })
@@ -234,7 +226,7 @@ describe('deployedTokensRouter', () => {
 
     it('returns undefined error and data when address does not start with 0x', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
       })
@@ -256,10 +248,10 @@ describe('deployedTokensRouter', () => {
 
     it('returns chain-not-found error when chain does not exist', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(undefined),
         }),
       })
@@ -299,10 +291,10 @@ describe('deployedTokensRouter', () => {
       const mockDb = mockObject<Database>({})
       const mockGetCoinList = mockFn().resolvesTo([])
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
         }),
       })
@@ -352,15 +344,15 @@ describe('deployedTokensRouter', () => {
       })
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([chainRecord]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           findByCoingeckoId: mockFn().resolvesTo(undefined),
         }),
       })
@@ -423,15 +415,15 @@ describe('deployedTokensRouter', () => {
       })
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([chainRecord]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           findByCoingeckoId: mockFn().resolvesTo(undefined),
         }),
       })
@@ -492,15 +484,15 @@ describe('deployedTokensRouter', () => {
       })
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([chainRecord]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           findByCoingeckoId: mockFn().resolvesTo(undefined),
         }),
       })
@@ -557,15 +549,15 @@ describe('deployedTokensRouter', () => {
       })
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([chainRecord]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           findByCoingeckoId: mockFn().resolvesTo(undefined),
         }),
       })
@@ -609,14 +601,14 @@ describe('deployedTokensRouter', () => {
       })
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([chainRecord]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
@@ -661,10 +653,10 @@ describe('deployedTokensRouter', () => {
       }
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([
             {
@@ -752,16 +744,16 @@ describe('deployedTokensRouter', () => {
         } satisfies InteropTransferRecord,
       ])
       const mockDb = mockObject<Database>({
-        interopTransfer: mockObject<InteropTransferRepository>({
+        interopTransfer: mockObject<Database['interopTransfer']>({
           getWithPartialAbstractTokenIdsForToken:
             mockGetWithPartialAbstractTokenIds,
         }),
       })
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([
             chainRecord,
@@ -774,7 +766,7 @@ describe('deployedTokensRouter', () => {
             },
           ]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo([
             {
               id: 'abstract-usdc',
@@ -844,14 +836,14 @@ describe('deployedTokensRouter', () => {
       })
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([chainRecord]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockGetAll,
         }),
       })
@@ -882,14 +874,14 @@ describe('deployedTokensRouter', () => {
       const mockGetAll = mockFn().resolvesTo([])
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([chainRecord]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockGetAll,
         }),
       })
@@ -917,7 +909,7 @@ describe('deployedTokensRouter', () => {
       }
       const targetAddress = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
       const mockDb = mockObject<Database>({
-        interopTransfer: mockObject<InteropTransferRepository>({
+        interopTransfer: mockObject<Database['interopTransfer']>({
           getWithPartialAbstractTokenIdsForToken: mockFn().resolvesTo([
             {
               plugin: 'test-plugin',
@@ -960,15 +952,15 @@ describe('deployedTokensRouter', () => {
         }),
       })
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([chainRecord]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           findByCoingeckoId: mockFn().resolvesTo(undefined),
           getAll: mockFn().resolvesTo([
             {
@@ -1025,11 +1017,11 @@ describe('deployedTokensRouter', () => {
       }
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([
             {
@@ -1041,7 +1033,7 @@ describe('deployedTokensRouter', () => {
             },
           ]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           findByCoingeckoId: mockFn().resolvesTo({
             id: '1',
             coingeckoId: 'usd-coin',
@@ -1095,15 +1087,15 @@ describe('deployedTokensRouter', () => {
       }
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([chainRecord]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           findByCoingeckoId: mockFn().resolvesTo(undefined),
         }),
       })
@@ -1156,11 +1148,11 @@ describe('deployedTokensRouter', () => {
       }
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([
             {
@@ -1172,7 +1164,7 @@ describe('deployedTokensRouter', () => {
             },
           ]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           findByCoingeckoId: mockFn().resolvesTo(undefined),
         }),
       })
@@ -1209,7 +1201,7 @@ describe('deployedTokensRouter', () => {
       }
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn()
             .resolvesTo(undefined)
             .given({
@@ -1228,7 +1220,7 @@ describe('deployedTokensRouter', () => {
             }),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([
             {
@@ -1247,7 +1239,7 @@ describe('deployedTokensRouter', () => {
             },
           ]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           findByCoingeckoId: mockFn().resolvesTo(undefined),
         }),
       })
@@ -1290,11 +1282,11 @@ describe('deployedTokensRouter', () => {
       }
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([
             {
@@ -1306,7 +1298,7 @@ describe('deployedTokensRouter', () => {
             },
           ]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           findByCoingeckoId: mockFn().resolvesTo(undefined),
         }),
       })
@@ -1385,10 +1377,10 @@ describe('deployedTokensRouter', () => {
       ]
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo(chains),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByChainsAndAddresses: mockFn().resolvesTo(deployedTokens),
         }),
       })
@@ -1460,10 +1452,10 @@ describe('deployedTokensRouter', () => {
       ]
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo(chains),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByChainsAndAddresses: mockFn().resolvesTo(deployedTokens),
         }),
       })
@@ -1496,10 +1488,10 @@ describe('deployedTokensRouter', () => {
       ]
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo(chains),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
       })
@@ -1538,10 +1530,10 @@ describe('deployedTokensRouter', () => {
       ]
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo(chains),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
       })
@@ -1580,10 +1572,10 @@ describe('deployedTokensRouter', () => {
       ]
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo(chains),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByChainsAndAddresses: mockFn().resolvesTo([]),
         }),
       })
@@ -1639,10 +1631,10 @@ describe('deployedTokensRouter', () => {
       ]
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo(chains),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByChainsAndAddresses: mockFn().resolvesTo(deployedTokens),
         }),
       })
@@ -1729,20 +1721,20 @@ describe('deployedTokensRouter', () => {
 
     const mockTokenDbForSuggestions = (abstractTokens: AbstractTokenRecord[]) =>
       mockObject<TokenDatabase>({
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo(abstractTokens),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
 
     it('returns empty array when no partial transfers exist', async () => {
       const mockDb = mockObject<Database>({
-        interopTransfer: mockObject<InteropTransferRepository>({
+        interopTransfer: mockObject<Database['interopTransfer']>({
           getWithPartialAbstractTokenIds: mockFn().resolvesTo([]),
         }),
       })
@@ -1764,7 +1756,7 @@ describe('deployedTokensRouter', () => {
       })
 
       const mockDb = mockObject<Database>({
-        interopTransfer: mockObject<InteropTransferRepository>({
+        interopTransfer: mockObject<Database['interopTransfer']>({
           getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
         }),
       })
@@ -1805,7 +1797,7 @@ describe('deployedTokensRouter', () => {
       })
 
       const mockDb = mockObject<Database>({
-        interopTransfer: mockObject<InteropTransferRepository>({
+        interopTransfer: mockObject<Database['interopTransfer']>({
           getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
         }),
       })
@@ -1858,7 +1850,7 @@ describe('deployedTokensRouter', () => {
       })
 
       const mockDb = mockObject<Database>({
-        interopTransfer: mockObject<InteropTransferRepository>({
+        interopTransfer: mockObject<Database['interopTransfer']>({
           getWithPartialAbstractTokenIds: mockFn().resolvesTo([
             transfer1,
             transfer2,
@@ -1912,7 +1904,7 @@ describe('deployedTokensRouter', () => {
       })
 
       const mockDb = mockObject<Database>({
-        interopTransfer: mockObject<InteropTransferRepository>({
+        interopTransfer: mockObject<Database['interopTransfer']>({
           getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
         }),
       })
@@ -1934,15 +1926,15 @@ describe('deployedTokensRouter', () => {
       })
 
       const mockDb = mockObject<Database>({
-        interopTransfer: mockObject<InteropTransferRepository>({
+        interopTransfer: mockObject<Database['interopTransfer']>({
           getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
         }),
       })
       const mockTokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo([ABSTRACT_USDC]),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockFn().resolvesTo([
             {
               chain: 'ethereum',
@@ -1950,7 +1942,7 @@ describe('deployedTokensRouter', () => {
             } as DeployedTokenRecord,
           ]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
@@ -1971,7 +1963,7 @@ describe('deployedTokensRouter', () => {
       })
 
       const mockDb = mockObject<Database>({
-        interopTransfer: mockObject<InteropTransferRepository>({
+        interopTransfer: mockObject<Database['interopTransfer']>({
           getWithPartialAbstractTokenIds: mockFn().resolvesTo([
             nonMintingTransfer,
           ]),
@@ -2010,7 +2002,7 @@ describe('deployedTokensRouter', () => {
       })
 
       const mockDb = mockObject<Database>({
-        interopTransfer: mockObject<InteropTransferRepository>({
+        interopTransfer: mockObject<Database['interopTransfer']>({
           getWithPartialAbstractTokenIds: mockFn().resolvesTo([
             lockAndMintTransfer,
             burnAndMintTransfer,
@@ -2081,7 +2073,7 @@ describe('deployedTokensRouter', () => {
 
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo([
             usdc,
             {
@@ -2110,7 +2102,7 @@ describe('deployedTokensRouter', () => {
             },
           ]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo([
             {
               name: 'ethereum',
@@ -2135,7 +2127,7 @@ describe('deployedTokensRouter', () => {
             },
           ]),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockFn().resolvesTo([
             { chain: 'arbitrum', address: '0x222' },
           ]),
@@ -2192,7 +2184,7 @@ function createRouter(
   })
 
   const callerFactory = createCallerFactory(router)
-  let mockInteropTransfer: InteropTransferRepository | undefined
+  let mockInteropTransfer: Database['interopTransfer'] | undefined
   try {
     mockInteropTransfer = mockDb.interopTransfer
   } catch {
@@ -2203,7 +2195,7 @@ function createRouter(
     ...mockDb,
     interopTransfer:
       mockInteropTransfer ??
-      mockObject<InteropTransferRepository>({
+      mockObject<Database['interopTransfer']>({
         getWithPartialAbstractTokenIds: mockFn().resolvesTo([]),
         getWithPartialAbstractTokenIdsForToken: mockFn().resolvesTo([]),
       }),

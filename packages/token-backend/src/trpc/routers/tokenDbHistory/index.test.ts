@@ -1,8 +1,4 @@
-import type { TokenDatabase } from '@l2beat/database'
-import type {
-  TokenDbHistoryEntryRecord,
-  TokenDbHistoryRepository,
-} from '@l2beat/database/dist/repositories/TokenDbHistoryRepository'
+import type { TokenDatabase, TokenDbHistoryEntryRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { createCallerFactory } from '../../trpc'
@@ -26,7 +22,9 @@ describe('tokenDbHistoryRouter', () => {
       const caller = createCallerFactory(tokenDbHistoryRouter)({
         db: {} as never,
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbHistory: mockObject<TokenDbHistoryRepository>({ getPage }),
+          tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
+            getPage,
+          }),
         }),
         tokenIngestionProcessor: {} as never,
         headers: new Headers(),

@@ -21,6 +21,11 @@ export type { AggregatedLivenessRecord } from './repositories/AggregatedLiveness
 export type { AnomalyRecord } from './repositories/AnomaliesRepository'
 export type { AnomalyStatsRecord } from './repositories/AnomalyStatsRepository'
 export type { BlobPairCount, BlobRecord } from './repositories/BlobsRepository'
+export type {
+  ChainApi,
+  ChainRecord,
+  ChainUpdateable,
+} from './repositories/ChainRepository'
 export type { CurrentPriceRecord } from './repositories/CurrentPriceRepository'
 export type {
   DataAvailabilityRecord,

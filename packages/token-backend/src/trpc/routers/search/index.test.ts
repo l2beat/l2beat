@@ -1,7 +1,4 @@
 import type { Database, TokenDatabase } from '@l2beat/database'
-import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
-import type { ChainRepository } from '@l2beat/database/dist/repositories/ChainRepository'
-import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
 import type { AbstractTokenRecord } from '../../../schemas/AbstractToken'
 import { createCallerFactory } from '../../trpc'
@@ -22,13 +19,13 @@ describe('searchRouter', () => {
         },
       ]
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockFn().resolvesTo(deployedTokens),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
@@ -85,13 +82,13 @@ describe('searchRouter', () => {
       const mockGetAllAbstract = mockFn().resolvesTo(abstractTokens)
       const mockGetAllChains = mockFn().resolvesTo([])
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockGetAllDeployed,
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockGetAllAbstract,
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockGetAllChains,
         }),
       })
@@ -108,13 +105,13 @@ describe('searchRouter', () => {
 
     it('returns empty arrays when no tokens exist', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
@@ -147,13 +144,13 @@ describe('searchRouter', () => {
         deploymentTimestamp: 0,
       }))
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockFn().resolvesTo(deployedTokens),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo(abstractTokens),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
@@ -191,13 +188,13 @@ describe('searchRouter', () => {
         },
       ]
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo(chains),
         }),
       })

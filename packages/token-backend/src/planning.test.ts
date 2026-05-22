@@ -1,6 +1,4 @@
 import type { DeployedTokenRecord, TokenDatabase } from '@l2beat/database'
-import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
-import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { generatePlan } from './planning'
@@ -177,10 +175,10 @@ function mockDb(opts: {
   existingDeployed?: DeployedTokenRecord
 }): TokenDatabase {
   return mockObject<TokenDatabase>({
-    deployedToken: mockObject<DeployedTokenRepository>({
+    deployedToken: mockObject<TokenDatabase['deployedToken']>({
       findByChainAndAddress: mockFn().resolvesTo(opts.existingDeployed),
     }),
-    abstractToken: mockObject<AbstractTokenRepository>({}),
+    abstractToken: mockObject<TokenDatabase['abstractToken']>({}),
   })
 }
 

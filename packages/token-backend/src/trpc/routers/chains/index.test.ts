@@ -1,8 +1,4 @@
-import type { Database, TokenDatabase } from '@l2beat/database'
-import type {
-  ChainRecord,
-  ChainRepository,
-} from '@l2beat/database/dist/repositories/ChainRepository'
+import type { ChainRecord, Database, TokenDatabase } from '@l2beat/database'
 import { expect, mockFn, mockObject } from 'earl'
 import type { BlockscoutClient } from '../../../chains/clients/blockscout/BlockscoutClient'
 import type { EtherscanClient } from '../../../chains/clients/etherscan/EtherscanClient'
@@ -15,7 +11,7 @@ describe('chainRouter', () => {
   describe('getAll', () => {
     it('returns empty array when no chains exist', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
@@ -45,7 +41,7 @@ describe('chainRouter', () => {
       ]
       const mockGetAll = mockFn().resolvesTo(chains)
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockGetAll,
         }),
       })
@@ -69,7 +65,7 @@ describe('chainRouter', () => {
       }
       const mockFindByName = mockFn().resolvesTo(chain)
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFindByName,
         }),
       })
@@ -84,7 +80,7 @@ describe('chainRouter', () => {
     it('returns null when chain does not exist', async () => {
       const mockFindByName = mockFn().resolvesTo(undefined)
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           findByName: mockFindByName,
         }),
       })
@@ -108,7 +104,7 @@ describe('chainRouter', () => {
       }
       const mockInsert = mockFn().resolvesTo(undefined)
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           insert: mockInsert,
         }),
       })
@@ -130,7 +126,7 @@ describe('chainRouter', () => {
       }
       const mockInsert = mockFn().resolvesTo(undefined)
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           insert: mockInsert,
         }),
       })
@@ -157,7 +153,7 @@ describe('chainRouter', () => {
       }
       const mockInsert = mockFn().resolvesTo(undefined)
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           insert: mockInsert,
         }),
       })
@@ -181,7 +177,7 @@ describe('chainRouter', () => {
       }
       const mockUpdateByName = mockFn().resolvesTo(1)
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           updateByName: mockUpdateByName,
         }),
       })
@@ -203,7 +199,7 @@ describe('chainRouter', () => {
       }
       const mockUpdateByName = mockFn().resolvesTo(1)
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           updateByName: mockUpdateByName,
         }),
       })
@@ -227,7 +223,7 @@ describe('chainRouter', () => {
       }
       const mockUpdateByName = mockFn().resolvesTo(1)
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           updateByName: mockUpdateByName,
         }),
       })
@@ -247,7 +243,7 @@ describe('chainRouter', () => {
     it('deletes an existing chain', async () => {
       const mockDeleteByName = mockFn().resolvesTo(1)
       const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           deleteByName: mockDeleteByName,
         }),
       })
@@ -268,7 +264,7 @@ describe('chainRouter', () => {
         })
 
         const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<ChainRepository>({}),
+          chain: mockObject<TokenDatabase['chain']>({}),
         })
 
         const caller = createRouter(mockTokenDb, {
@@ -292,7 +288,7 @@ describe('chainRouter', () => {
         })
 
         const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<ChainRepository>({}),
+          chain: mockObject<TokenDatabase['chain']>({}),
         })
 
         const caller = createRouter(mockTokenDb, {
@@ -314,7 +310,7 @@ describe('chainRouter', () => {
         })
 
         const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<ChainRepository>({}),
+          chain: mockObject<TokenDatabase['chain']>({}),
         })
 
         const caller = createRouter(mockTokenDb, {
@@ -338,7 +334,7 @@ describe('chainRouter', () => {
         })
 
         const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<ChainRepository>({}),
+          chain: mockObject<TokenDatabase['chain']>({}),
         })
 
         const caller = createRouter(mockTokenDb, {
@@ -360,7 +356,7 @@ describe('chainRouter', () => {
         })
 
         const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<ChainRepository>({}),
+          chain: mockObject<TokenDatabase['chain']>({}),
         })
 
         const caller = createRouterWithEtherscanKey(
@@ -381,7 +377,7 @@ describe('chainRouter', () => {
 
       it('returns failure when API key is not configured', async () => {
         const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<ChainRepository>({}),
+          chain: mockObject<TokenDatabase['chain']>({}),
         })
 
         const caller = createRouter(mockTokenDb)
@@ -405,7 +401,7 @@ describe('chainRouter', () => {
         })
 
         const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<ChainRepository>({}),
+          chain: mockObject<TokenDatabase['chain']>({}),
         })
 
         const caller = createRouterWithEtherscanKey(

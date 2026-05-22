@@ -1,4 +1,4 @@
-import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
+import type { ChainRecord } from '@l2beat/database'
 import type { Chain } from '../../../chains/Chain'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
 

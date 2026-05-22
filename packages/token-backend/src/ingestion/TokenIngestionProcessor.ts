@@ -1,15 +1,13 @@
 import type {
   AbstractTokenRecord,
+  ChainRecord,
   Database,
   DeployedTokenRecord,
   InteropTransferRecord,
   TokenDatabase,
-} from '@l2beat/database'
-import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
-import type {
   TokenIngestionQueueRecord,
   TokenIngestionQueueState,
-} from '@l2beat/database/dist/repositories/TokenIngestionQueueRepository'
+} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
 import { InteropTransferClassifier } from '../../../shared/build'

@@ -1,9 +1,9 @@
 import type {
   AbstractTokenRecord,
+  ChainRecord,
   Database,
   TokenDatabase,
 } from '@l2beat/database'
-import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
 import { Address32 } from '@l2beat/shared-pure'
 import { Chain } from '../../../chains/Chain'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'

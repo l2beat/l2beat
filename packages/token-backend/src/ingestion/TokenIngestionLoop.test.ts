@@ -4,17 +4,8 @@ import type {
   DeployedTokenRecord,
   InteropTransferRecord,
   TokenDatabase,
-} from '@l2beat/database'
-import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
-import type { ChainRepository } from '@l2beat/database/dist/repositories/ChainRepository'
-import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
-import type { InteropTransferRepository } from '@l2beat/database/dist/repositories/InteropTransferRepository'
-import type { TokenDbHistoryRepository } from '@l2beat/database/dist/repositories/TokenDbHistoryRepository'
-import type { TokenDbSettingRepository } from '@l2beat/database/dist/repositories/TokenDbSettingRepository'
-import type {
   TokenIngestionQueueRecord,
-  TokenIngestionQueueRepository,
-} from '@l2beat/database/dist/repositories/TokenIngestionQueueRepository'
+} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Chain } from '../chains/Chain'
@@ -45,17 +36,19 @@ describe(TokenIngestionLoop.name, () => {
 
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSettings: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get,
             set,
           }),
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            enqueue,
-            findNextPending,
-          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              enqueue,
+              findNextPending,
+            },
+          ),
         }),
         db: mockObject<Database>({
-          interopTransfer: mockObject<InteropTransferRepository>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId,
             getAll: mockFn().resolvesTo([]),
           }),
@@ -82,17 +75,19 @@ describe(TokenIngestionLoop.name, () => {
       const loop = createLoop({
         newQueueState: 'staged',
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSettings: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
             set: mockFn().resolvesTo(undefined),
           }),
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            enqueue,
-            findNextPending: mockFn().resolvesTo(undefined),
-          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              enqueue,
+              findNextPending: mockFn().resolvesTo(undefined),
+            },
+          ),
         }),
         db: mockObject<Database>({
-          interopTransfer: mockObject<InteropTransferRepository>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId: mockFn().resolvesTo({
               latestSerialId: '1',
               transferCount: 1,
@@ -116,15 +111,17 @@ describe(TokenIngestionLoop.name, () => {
       })
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSettings: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            findNextPending: mockFn().resolvesTo(undefined),
-          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findNextPending: mockFn().resolvesTo(undefined),
+            },
+          ),
         }),
         db: mockObject<Database>({
-          interopTransfer: mockObject<InteropTransferRepository>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId,
             getAll: mockFn().resolvesTo([]),
           }),
@@ -141,20 +138,22 @@ describe(TokenIngestionLoop.name, () => {
       const enqueue = mockFn().resolvesTo(undefined)
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSettings: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo({
               key: 'interop-transfers:lastSerialId',
               value: '10',
             }),
             set,
           }),
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            enqueue,
-            findNextPending: mockFn().resolvesTo(undefined),
-          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              enqueue,
+              findNextPending: mockFn().resolvesTo(undefined),
+            },
+          ),
         }),
         db: mockObject<Database>({
-          interopTransfer: mockObject<InteropTransferRepository>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId: mockFn().resolvesTo({
               latestSerialId: undefined,
               transferCount: 0,
@@ -184,7 +183,7 @@ describe(TokenIngestionLoop.name, () => {
 
       const loop = new TokenIngestionLoop(
         mockObject<Database>({
-          interopTransfer: mockObject<InteropTransferRepository>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId: mockFn().resolvesTo({
               latestSerialId: undefined,
               transferCount: 0,
@@ -194,13 +193,15 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         mockObject<TokenDatabase>({
-          tokenDbSettings: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            findNextPending,
-            countPending,
-          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findNextPending,
+              countPending,
+            },
+          ),
         }),
         mockObject({ process }) as unknown as TokenIngestionProcessor,
         Logger.SILENT,
@@ -225,7 +226,7 @@ describe(TokenIngestionLoop.name, () => {
 
       const loop = createLoop({
         db: mockObject<Database>({
-          interopTransfer: mockObject<InteropTransferRepository>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId: mockFn().resolvesTo({
               latestSerialId: undefined,
               transferCount: 0,
@@ -245,18 +246,20 @@ describe(TokenIngestionLoop.name, () => {
         }),
         tokenDb: mockObject<TokenDatabase>({
           transaction: async (callback) => await callback(),
-          tokenDbSettings: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            findNextPending,
-            enqueue: mockFn().resolvesTo(undefined),
-            remove: mockFn().resolvesTo(1),
-          }),
-          tokenDbHistory: mockObject<TokenDbHistoryRepository>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findNextPending,
+              enqueue: mockFn().resolvesTo(undefined),
+              remove: mockFn().resolvesTo(1),
+            },
+          ),
+          tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
             insert: mockFn().resolvesTo(undefined),
           }),
-          deployedToken: mockObject<DeployedTokenRepository>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(
               deployedToken({ ...address, abstractTokenId: null }),
             ),
@@ -268,7 +271,7 @@ describe(TokenIngestionLoop.name, () => {
             ]),
             updateByChainAndAddress,
           }),
-          abstractToken: mockObject<AbstractTokenRepository>({
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
             getByIds: mockFn().resolvesTo([abstractToken('USDC01', 'USDC')]),
           }),
         }),
@@ -295,7 +298,7 @@ describe(TokenIngestionLoop.name, () => {
 
       const loop = createLoop({
         db: mockObject<Database>({
-          interopTransfer: mockObject<InteropTransferRepository>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId: mockFn().resolvesTo({
               latestSerialId: undefined,
               transferCount: 0,
@@ -320,23 +323,25 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSettings: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            findNextPending: mockFn()
-              .resolvesToOnce(queueEntry(address))
-              .resolvesToOnce(undefined),
-            markConflict,
-          }),
-          deployedToken: mockObject<DeployedTokenRepository>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findNextPending: mockFn()
+                .resolvesToOnce(queueEntry(address))
+                .resolvesToOnce(undefined),
+              markConflict,
+            },
+          ),
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
             getByPrimaryKeys: mockFn().resolvesTo([
               deployedToken({ ...firstOther, abstractTokenId: 'FIRST1' }),
               deployedToken({ ...secondOther, abstractTokenId: 'SECOND' }),
             ]),
           }),
-          abstractToken: mockObject<AbstractTokenRepository>({
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
             getByIds: mockFn().resolvesTo([
               abstractToken('FIRST1', 'FOO'),
               abstractToken('SECOND', 'BAR'),
@@ -359,26 +364,28 @@ describe(TokenIngestionLoop.name, () => {
 
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSettings: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            findNextPending: mockFn()
-              .resolvesToOnce(queueEntry(address))
-              .resolvesToOnce(undefined),
-            remove,
-          }),
-          deployedToken: mockObject<DeployedTokenRepository>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findNextPending: mockFn()
+                .resolvesToOnce(queueEntry(address))
+                .resolvesToOnce(undefined),
+              remove,
+            },
+          ),
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
             getByPrimaryKeys: mockFn().resolvesTo([]),
           }),
-          chain: mockObject<ChainRepository>({
+          chain: mockObject<TokenDatabase['chain']>({
             getAll: mockFn().resolvesTo([]),
             findByName,
           }),
         }),
         db: mockObject<Database>({
-          interopTransfer: mockObject<InteropTransferRepository>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId: mockFn().resolvesTo({
               latestSerialId: undefined,
               transferCount: 0,
@@ -405,7 +412,7 @@ describe(TokenIngestionLoop.name, () => {
 
       const loop = createLoop({
         db: mockObject<Database>({
-          interopTransfer: mockObject<InteropTransferRepository>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId: mockFn().resolvesTo({
               latestSerialId: undefined,
               transferCount: 0,
@@ -423,25 +430,27 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSettings: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            findNextPending: mockFn()
-              .resolvesToOnce(queueEntry(address))
-              .resolvesToOnce(undefined),
-            markError,
-          }),
-          deployedToken: mockObject<DeployedTokenRepository>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findNextPending: mockFn()
+                .resolvesToOnce(queueEntry(address))
+                .resolvesToOnce(undefined),
+              markError,
+            },
+          ),
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
             getByPrimaryKeys: mockFn().resolvesTo([
               deployedToken({ ...otherAddress, abstractTokenId: 'USDC01' }),
             ]),
           }),
-          abstractToken: mockObject<AbstractTokenRepository>({
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
             getByIds: mockFn().resolvesTo([abstractToken('USDC01', 'USDC')]),
           }),
-          chain: mockObject<ChainRepository>({
+          chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
               chainId: 1,
@@ -480,7 +489,7 @@ describe(TokenIngestionLoop.name, () => {
 
       const loop = createLoop({
         db: mockObject<Database>({
-          interopTransfer: mockObject<InteropTransferRepository>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId: mockFn().resolvesTo({
               latestSerialId: undefined,
               transferCount: 0,
@@ -492,29 +501,31 @@ describe(TokenIngestionLoop.name, () => {
         }),
         tokenDb: mockObject<TokenDatabase>({
           transaction: async (callback) => await callback(),
-          tokenDbSettings: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            findNextPending: mockFn()
-              .resolvesToOnce(queueEntry(address))
-              .resolvesToOnce(undefined),
-            remove: mockFn().resolvesTo(1),
-          }),
-          tokenDbHistory: mockObject<TokenDbHistoryRepository>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findNextPending: mockFn()
+                .resolvesToOnce(queueEntry(address))
+                .resolvesToOnce(undefined),
+              remove: mockFn().resolvesTo(1),
+            },
+          ),
+          tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
             insert: mockFn().resolvesTo(undefined),
           }),
-          deployedToken: mockObject<DeployedTokenRepository>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
             getByPrimaryKeys: mockFn().resolvesTo([]),
             insert: deployedInsert,
           }),
-          abstractToken: mockObject<AbstractTokenRepository>({
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
             findByCoingeckoId: mockFn().resolvesTo(undefined),
             findById: mockFn().resolvesTo(undefined),
             insert: abstractInsert,
           }),
-          chain: mockObject<ChainRepository>({
+          chain: mockObject<TokenDatabase['chain']>({
             getAll: mockFn().resolvesTo([
               {
                 name: 'ethereum',
@@ -581,7 +592,7 @@ describe(TokenIngestionLoop.name, () => {
 
       const loop = createLoop({
         db: mockObject<Database>({
-          interopTransfer: mockObject<InteropTransferRepository>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
             getTokenAddressesAfterSerialId: mockFn().resolvesTo({
               latestSerialId: undefined,
               transferCount: 0,
@@ -591,26 +602,28 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
-          tokenDbSettings: mockObject<TokenDbSettingRepository>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            findNextPending: mockFn()
-              .resolvesToOnce(queueEntry(address))
-              .resolvesToOnce(undefined),
-            markConflict,
-          }),
-          deployedToken: mockObject<DeployedTokenRepository>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findNextPending: mockFn()
+                .resolvesToOnce(queueEntry(address))
+                .resolvesToOnce(undefined),
+              markConflict,
+            },
+          ),
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
             getByPrimaryKeys: mockFn().resolvesTo([]),
             insert: deployedInsert,
           }),
-          abstractToken: mockObject<AbstractTokenRepository>({
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
             findByCoingeckoId: mockFn().resolvesTo(undefined),
             findById: mockFn().resolvesTo(undefined),
             insert: abstractInsert,
           }),
-          chain: mockObject<ChainRepository>({
+          chain: mockObject<TokenDatabase['chain']>({
             getAll: mockFn().resolvesTo([
               {
                 name: 'ethereum',
@@ -685,7 +698,7 @@ function createLoop(deps: {
   const db =
     deps.db ??
     mockObject<Database>({
-      interopTransfer: mockObject<InteropTransferRepository>({
+      interopTransfer: mockObject<Database['interopTransfer']>({
         getTokenAddressesAfterSerialId: mockFn().resolvesTo({
           latestSerialId: undefined,
           transferCount: 0,
@@ -697,10 +710,10 @@ function createLoop(deps: {
   const tokenDb =
     deps.tokenDb ??
     mockObject<TokenDatabase>({
-      tokenDbSettings: mockObject<TokenDbSettingRepository>({
+      tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
         get: mockFn().resolvesTo(undefined),
       }),
-      tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
+      tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>({
         findNextPending: mockFn().resolvesTo(undefined),
       }),
     })

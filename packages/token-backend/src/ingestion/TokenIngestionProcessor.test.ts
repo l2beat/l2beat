@@ -2,11 +2,8 @@ import type {
   Database,
   InteropTransferRecord,
   TokenDatabase,
+  TokenIngestionQueueRecord,
 } from '@l2beat/database'
-import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
-import type { ChainRepository } from '@l2beat/database/dist/repositories/ChainRepository'
-import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
-import type { TokenIngestionQueueRecord } from '@l2beat/database/dist/repositories/TokenIngestionQueueRepository'
 import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Chain } from '../chains/Chain'
@@ -24,11 +21,11 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
-          deployedToken: mockObject<DeployedTokenRepository>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
             getByPrimaryKeys,
           }),
-          chain: mockObject<ChainRepository>({
+          chain: mockObject<TokenDatabase['chain']>({
             getAll: mockFn().resolvesTo([]),
           }),
         }),
@@ -77,7 +74,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
-          deployedToken: mockObject<DeployedTokenRepository>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
             getByPrimaryKeys: mockFn().resolvesTo([
               {
@@ -91,12 +88,12 @@ describe(TokenIngestionProcessor.name, () => {
               },
             ]),
           }),
-          abstractToken: mockObject<AbstractTokenRepository>({
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
             getByIds: mockFn().resolvesTo([
               abstractTokenRecord('USDC01', 'USDC'),
             ]),
           }),
-          chain: mockObject<ChainRepository>({ findByName }),
+          chain: mockObject<TokenDatabase['chain']>({ findByName }),
         }),
         fetchDeployedTokenFacts,
       })
@@ -144,7 +141,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
-          deployedToken: mockObject<DeployedTokenRepository>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
             getByPrimaryKeys: mockFn().resolvesTo([
               {
@@ -158,12 +155,12 @@ describe(TokenIngestionProcessor.name, () => {
               },
             ]),
           }),
-          abstractToken: mockObject<AbstractTokenRepository>({
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
             getByIds: mockFn().resolvesTo([
               abstractTokenRecord('USDC01', 'USDC'),
             ]),
           }),
-          chain: mockObject<ChainRepository>({
+          chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo(undefined),
           }),
         }),
@@ -215,14 +212,14 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
-          deployedToken: mockObject<DeployedTokenRepository>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
             getByPrimaryKeys: mockFn().resolvesTo([]),
           }),
-          abstractToken: mockObject<AbstractTokenRepository>({
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
             findByCoingeckoId: mockFn().resolvesTo(undefined),
           }),
-          chain: mockObject<ChainRepository>({
+          chain: mockObject<TokenDatabase['chain']>({
             getAll: mockFn().resolvesTo([
               {
                 name: 'ethereum',
@@ -297,7 +294,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<ChainRepository>({
+          chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
               chainId: 1,
@@ -363,7 +360,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<ChainRepository>({
+          chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
               chainId: 1,
@@ -372,7 +369,7 @@ describe(TokenIngestionProcessor.name, () => {
               apis: null,
             }),
           }),
-          abstractToken: mockObject<AbstractTokenRepository>({
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
             findById: mockFn().resolvesTo(undefined),
           }),
         }),
@@ -421,7 +418,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<ChainRepository>({
+          chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
               chainId: 1,
@@ -430,7 +427,7 @@ describe(TokenIngestionProcessor.name, () => {
               apis: null,
             }),
           }),
-          abstractToken: mockObject<AbstractTokenRepository>({
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
             findById: mockFn().resolvesTo(undefined),
           }),
         }),
@@ -494,7 +491,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<ChainRepository>({
+          chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
               chainId: 1,
@@ -503,7 +500,7 @@ describe(TokenIngestionProcessor.name, () => {
               apis: null,
             }),
           }),
-          abstractToken: mockObject<AbstractTokenRepository>({
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
             findById: mockFn().resolvesTo(undefined),
           }),
         }),
@@ -560,7 +557,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
-          abstractToken: mockObject<AbstractTokenRepository>({
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
             findById: mockFn().resolvesTo(undefined),
           }),
         }),
@@ -619,7 +616,7 @@ describe(TokenIngestionProcessor.name, () => {
       const address = token('ethereum', '0xaaa')
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<ChainRepository>({
+          chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
               chainId: 1,

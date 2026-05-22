@@ -1,6 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database, TokenDatabase } from '@l2beat/database'
-import type { TokenIngestionQueueState } from '@l2beat/database/dist/repositories/TokenIngestionQueueRepository'
+import type {
+  Database,
+  TokenDatabase,
+  TokenIngestionQueueState,
+} from '@l2beat/database'
 import type { IngestionOutcome } from './IngestionTrace'
 import type { TokenIngestionProcessor } from './TokenIngestionProcessor'
 import {

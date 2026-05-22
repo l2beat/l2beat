@@ -2,13 +2,8 @@ import type {
   AbstractTokenRecord,
   DeployedTokenRecord,
   TokenDatabase,
-} from '@l2beat/database'
-import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
-import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
-import type {
   TokenDbHistoryEntryInsert,
-  TokenDbHistoryRepository,
-} from '@l2beat/database/dist/repositories/TokenDbHistoryRepository'
+} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Command } from './commands'
@@ -16,12 +11,12 @@ import { commitTokenChanges } from './commitTokenChanges'
 
 describe(commitTokenChanges.name, () => {
   it('routes each command kind to the matching repository call in order', async () => {
-    const abstractToken = mockObject<AbstractTokenRepository>({
+    const abstractToken = mockObject<TokenDatabase['abstractToken']>({
       insert: mockFn().resolvesTo(undefined),
       updateById: mockFn().resolvesTo(undefined),
       deleteById: mockFn().resolvesTo(undefined),
     })
-    const deployedToken = mockObject<DeployedTokenRepository>({
+    const deployedToken = mockObject<TokenDatabase['deployedToken']>({
       insert: mockFn().resolvesTo(undefined),
       updateByChainAndAddress: mockFn().resolvesTo(undefined),
       deleteByPrimaryKey: mockFn().resolvesTo(undefined),
@@ -87,7 +82,7 @@ describe(commitTokenChanges.name, () => {
     const insert = mockFn().resolvesTo(undefined)
     const updateByChainAndAddress = mockFn().resolvesTo(undefined)
     const tokenDb = mockObject<TokenDatabase>({
-      deployedToken: mockObject<DeployedTokenRepository>({
+      deployedToken: mockObject<TokenDatabase['deployedToken']>({
         insert,
         updateByChainAndAddress,
       }),
@@ -131,14 +126,14 @@ describe(commitTokenChanges.name, () => {
       const abstract = abstractRecord('USDC01', 'USDC')
       const deployed = deployedRecord('ethereum', '0xaaa', 'USDC01')
       const tokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           insert: mockFn().resolvesTo(undefined),
           deleteById: mockFn().resolvesTo(undefined),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           updateByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
-        tokenDbHistory: mockObject<TokenDbHistoryRepository>({ insert }),
+        tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({ insert }),
       })
 
       const commands: Command[] = [
@@ -197,13 +192,13 @@ describe(commitTokenChanges.name, () => {
       const abstract = abstractRecord('USDC01', 'USDC')
       const deployed = deployedRecord('ethereum', '0xaaa', 'USDC01')
       const tokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           insert: mockFn().resolvesTo(undefined),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           insert: mockFn().resolvesTo(undefined),
         }),
-        tokenDbHistory: mockObject<TokenDbHistoryRepository>({ insert }),
+        tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({ insert }),
       })
 
       await commitTokenChanges(
@@ -231,10 +226,10 @@ describe(commitTokenChanges.name, () => {
       )
       const abstract = abstractRecord('USDC01', 'USDC')
       const tokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           insert: mockFn().resolvesTo(undefined),
         }),
-        tokenDbHistory: mockObject<TokenDbHistoryRepository>({ insert }),
+        tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({ insert }),
       })
 
       await commitTokenChanges(
@@ -249,7 +244,7 @@ describe(commitTokenChanges.name, () => {
 })
 
 function mockHistory() {
-  return mockObject<TokenDbHistoryRepository>({
+  return mockObject<TokenDatabase['tokenDbHistory']>({
     insert: mockFn().resolvesTo(undefined),
   })
 }

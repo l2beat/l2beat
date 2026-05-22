@@ -1,9 +1,8 @@
-import type { Database, TokenDatabase } from '@l2beat/database'
-import type { InteropTransferRepository } from '@l2beat/database/dist/repositories/InteropTransferRepository'
 import type {
+  Database,
+  TokenDatabase,
   TokenIngestionQueueRecord,
-  TokenIngestionQueueRepository,
-} from '@l2beat/database/dist/repositories/TokenIngestionQueueRepository'
+} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { TRPCError } from '@trpc/server'
 import { expect, mockFn, mockObject } from 'earl'
@@ -22,9 +21,11 @@ describe('tokenIngestionQueueRouter', () => {
 
       const caller = createRouter(
         mockObject<TokenDatabase>({
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            getAll,
-          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              getAll,
+            },
+          ),
         }),
       )
 
@@ -52,12 +53,14 @@ describe('tokenIngestionQueueRouter', () => {
 
       const caller = createRouter({
         tokenDb: mockObject<TokenDatabase>({
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            getPage,
-          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              getPage,
+            },
+          ),
         }),
         db: mockObject<Database>({
-          interopTransfer: mockObject<InteropTransferRepository>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
             getAll: mockFn().resolvesTo([]),
           }),
         }),
@@ -85,9 +88,11 @@ describe('tokenIngestionQueueRouter', () => {
       const approve = mockFn().resolvesTo(1)
       const caller = createRouter(
         mockObject<TokenDatabase>({
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            approve,
-          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              approve,
+            },
+          ),
         }),
       )
 
@@ -101,9 +106,11 @@ describe('tokenIngestionQueueRouter', () => {
     it('fails when the entry is not staged', async () => {
       const caller = createRouter(
         mockObject<TokenDatabase>({
-          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-            approve: mockFn().resolvesTo(0),
-          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              approve: mockFn().resolvesTo(0),
+            },
+          ),
         }),
       )
 
