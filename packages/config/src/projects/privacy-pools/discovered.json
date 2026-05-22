@@ -1,6 +1,6 @@
 {
   "name": "privacy-pools",
-  "timestamp": 1779274839,
+  "timestamp": 1779457786,
   "configHash": "0xf9192766dd26296bfd503dde39bf8c324db0c13e83768307818333d189865a4b",
   "entries": [
     {
@@ -31,7 +31,7 @@
         "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -92,7 +92,7 @@
         "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -153,7 +153,7 @@
         "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -238,7 +238,7 @@
         "0xc0803a56928ed2a65accbfc22d51bd281c0eb4a0e377078e13b26d12153628ec"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "UUPS-upgradeable hub for Privacy Pools. It accepts deposits, relays withdrawals, tracks association-set roots published by the ASP, and maps each supported asset and scope to a pool. Trusting this contract means trusting OWNER_ROLE holders to upgrade it, manage pools and fees, and withdraw fees, and trusting ASP_POSTMAN holders to publish the latest association-set root used by withdrawals.",
+      "description": "Main hub for Privacy Pools. Entrypoint for deposits, relayed withdrawals, pool registry/configuration, ASP root updates, fee withdrawal, and wind-down management.",
       "ignoreInWatchMode": ["latestRoot"],
       "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265247,
@@ -278,7 +278,7 @@
           "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187"
         ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "latestRoot": "4832310693254717582558585405076837597542367969378533930938372350850332310218",
+        "latestRoot": "1584512156896721714967404498187650673653718182935138525755255164453931291189",
         "ownerRoleMembers": ["eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"],
         "registeredPools": [
           "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB",
@@ -336,7 +336,7 @@
         "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -408,7 +408,7 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "PrivacyPoolsAdminSafe",
+      "name": "Privacy Pools Multisig",
       "address": "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -489,7 +489,7 @@
         "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -509,14 +509,14 @@
           "vettingFeeBPS": 50,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "5539235508673468088650628556972564103261345264615486184688189766396366503159",
-        "currentRootIndex": 4,
+        "currentRoot": "6987542381103021098512346445631441160970277391237911857987355393230495111607",
+        "currentRootIndex": 40,
         "currentTreeDepth": 11,
-        "currentTreeSize": 1476,
+        "currentTreeSize": 1512,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 520,
+        "nonce": 528,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "16452108168275993030962142353354044100680963945240756716593099151407051066232",
@@ -550,7 +550,7 @@
         "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -611,7 +611,7 @@
         "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -672,7 +672,7 @@
         "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -733,7 +733,7 @@
         "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -794,7 +794,7 @@
         "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -850,7 +850,7 @@
       "address": "eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E",
       "type": "EOA",
       "sourceHashes": [
-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
       ],
       "proxyType": "EIP7702 EOA",
       "values": {
@@ -884,7 +884,7 @@
         "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -945,7 +945,7 @@
         "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -965,14 +965,14 @@
           "vettingFeeBPS": 0,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "11879091841983054163435408819805852185972385234264290181077568484749650637069",
-        "currentRootIndex": 57,
+        "currentRoot": "14181017306389609323385573222048356175227966719051540056967364280079644821299",
+        "currentRootIndex": 13,
         "currentTreeDepth": 9,
-        "currentTreeSize": 377,
+        "currentTreeSize": 397,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 142,
+        "nonce": 146,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "15021418340692283880916004685565940332387258944710606800522765380598358159605",
@@ -1006,7 +1006,7 @@
         "0x3252809f9d07f7ff3537481cd733b81f8455c6ecfde29a27f9ed7e3094998f44"
       ],
       "proxyType": "immutable",
-      "description": "Native-asset Privacy Pool that escrows ETH commitments for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "Native-asset Privacy Pool that escrows ETH commitments for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -1026,14 +1026,14 @@
           "vettingFeeBPS": 50,
           "maxRelayFeeBPS": 1000
         },
-        "currentRoot": "8003304339516898850990410743909063989412955137960912940131743757895075504215",
-        "currentRootIndex": 22,
-        "currentTreeDepth": 13,
-        "currentTreeSize": 8150,
+        "currentRoot": "312190533071921530849780474919212400411901207255566186192891059794583939462",
+        "currentRootIndex": 2,
+        "currentTreeDepth": 14,
+        "currentTreeSize": 8194,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 4063,
+        "nonce": 4073,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "4916574638117198869413701114161172350986437430914933850166949084132905299523",
@@ -1067,7 +1067,7 @@
         "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
       "ignoreInWatchMode": [
         "currentRoot",
         "currentRootIndex",
@@ -2020,6 +2020,6 @@
     "privacy-pools/PrivacyPoolSimple": "0xd0e9393e828033bd062a089147a4eb32a24f23f58884256bd8c90a7896d25ba3",
     "privacy-pools/WithdrawalVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25136008 },
-  "permissionsConfigHash": "0x1233f3d26168c7ef560f9a07597a94bc5c490db08b92adf5fa611f3aaec98724"
+  "usedBlockNumbers": { "ethereum": 25151204 },
+  "permissionsConfigHash": "0xa2fe80a6353c246244e21ef081837feb859c2bddbbf7cf71c645f81ca1528b70"
 }
