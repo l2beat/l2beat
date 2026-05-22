@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TornadoRouter",
-  "description": "Router contract that validates supported instances, forwards deposits and withdrawals, and burns relayer stake through the relayer registry during withdrawals.",
+  "description": "Router contract that validates supported instances, forwards deposits and withdrawals, and subtracts from relayer stake through the relayer registry during withdrawals.",
   "category": "core",
   "fields": {
     "governance": {

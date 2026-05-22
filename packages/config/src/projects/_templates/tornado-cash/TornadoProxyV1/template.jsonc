@@ -1,8 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TornadoProxyV1",
-  "description": "Legacy immutable Tornado proxy that routes deposits and withdrawals to pool instances and records them in the legacy Tornado Trees contract.",
-  "category": "core",
+  "description": "Anonymity Mining - Legacy immutable Tornado proxy that routes deposits and withdrawals to pool instances and records them in the legacy Tornado Trees contract.",
+  "category": "bridge-external",
   "fields": {
     "governance": {
       "description": "Governance address controlling the legacy proxy.",

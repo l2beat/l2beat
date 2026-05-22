@@ -27,8 +27,8 @@
       "severity": "HIGH"
     },
     "isMigrated": {
-      "description": "Whether the one-time legacy state migration path has already been used.",
-      "severity": "LOW"
+      "description": "Whether the one-time legacy state migration path has already been used. If true, this pool behaves like the ones without this function.",
+      "severity": "HIGH"
     }
   },
   "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"]

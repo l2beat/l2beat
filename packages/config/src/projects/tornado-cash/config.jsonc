@@ -44,10 +44,12 @@
       "description": "Unverified merkle tree instance that stores legacy Tornado deposit leaves for TornadoTreesV1."
     },
     "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": {
-      "description": "Unverified MiMC hasher used by newer Tornado pool generations for commitment-tree operations."
+      "description": "Unverified MiMC hasher used by newer Tornado pool generations for commitment-tree operations. If this contract were malicious or had a backdoor, all pools using it would be compromised.",
+      "category": "core"
     },
     "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2": {
-      "description": "Unverified Poseidon hasher used by the legacy Tornado Trees merkle trees."
+      "description": "Anonymity Mining - Unverified Poseidon hasher used by the legacy Tornado Trees merkle trees.",
+      "category": "bridge-external"
     },
     "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": {
       "ignoreDiscovery": true
