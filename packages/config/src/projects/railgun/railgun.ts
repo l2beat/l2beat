@@ -6,7 +6,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BADGES } from '../../common/badges'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -156,12 +155,7 @@ Because Railgun allows private transfers and interactions with DeFi, anonymity s
     links: {
       websites: ['https://railgun.org'],
     },
-    badges: [
-      BADGES.Privacy.Compliance,
-      BADGES.Privacy.PrivateTransfers,
-      BADGES.Privacy.SmartContractInteractions,
-      BADGES.Other.Governance,
-    ],
+    badges: [],
   },
   escrows: TRACKED_TOKENS.map((token) => ({
     address: ChainSpecificAddress.address(railgunCore.address),

@@ -5,7 +5,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BADGES } from '../../common/badges'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -77,7 +76,7 @@ User's anonymity set consists of all whitelisted deposits of the same token with
     links: {
       websites: ['https://www.privacypools.com'],
     },
-    badges: [BADGES.Privacy.Compliance],
+    badges: [],
   },
   escrows: BUCKETS.map((bucket) => ({
     address: ChainSpecificAddress.address(bucket.address),
