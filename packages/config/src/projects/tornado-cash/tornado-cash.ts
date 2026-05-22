@@ -114,10 +114,20 @@ Protocol pools were [sanctioned by OFAC in August 2022](https://home.treasury.go
 
 ### Anonymity set
 
-User's anonymity set consists of all previous deposits into the same bucket (i.e. deposits of the same token and amount). Deposits could be mixed only with other deposits of the same token and denomination. To maximize the anonymity set, users are advised to deposit into the buckets with most usage.`,
+User's anonymity set consists of all previous deposits into the same bucket (i.e. deposits of the same token and amount). Deposits could be mixed only with other deposits of the same token and denomination. To maximize the anonymity set, users are advised to deposit into the buckets with most usage.
+
+### Secure frontend
+
+Tornado Cash frontend presents an attack surface that could expose user private data to third parties. To prevent these risks, users are advised to either: 
+
+1. use the frontend deployed on IPFS network. The IPFS content hash is registered on [Tornado Cash ENS](https://app.ens.domains/tornadocash.eth?tab=records) and is managed by the Tornado Cash DAO.
+2. use a locally built frontend, the sources could be found [here](https://codeberg.org/torndao/tornado-ipfs-ui).
+
+Also see [this guide](https://notes.ethereum.org/@GW1ZUbNKR5iRjjKYx6_dJQ/Bk8zsJ9xj) for more info.
+`,
     links: {
       websites: [
-        'https://ipfs.io/ipfs/bafybeie5hxovqc4ifcnrnhvmjbefxgeix6oqvzaspyytdxiyscji22v5pu',
+        'ipfs://bafybeibr7xeb2sg6uiaeueh5lrw6vsoopkyti67wamiyimpo5gvrpua5by',
       ],
     },
     badges: [],
@@ -152,13 +162,13 @@ User's anonymity set consists of all previous deposits into the same bucket (i.e
 Tornado cash has a TORN DAO, which does not have the authority to upgrade or modify existing pools in any way. However it controls a significant portion of the Tornado cash protocol and periphery, including:
 
 1. **Default router for deposits and withdrawals and the official registry of supported pools**. Malicious upgrades of these components could lead to users losing deposited tokens.  
-2. **Standard UI IPFS hash registered on ENS, and associated UI content hash**. Malicious upgrades of these components could lead to users losing deposited tokens, which [was exploited in 2024](https://www.coindesk.com/business/2024/02/26/tornado-cash-reportedly-suffers-backend-exploit-user-deposits-at-risk?utm_source=chatgpt.com).  
+2. **Standard UI IPFS hash registered on ENS** ([link](https://app.ens.domains/tornadocash.eth)). Malicious upgrades of these components could lead to users losing deposited tokens, which [was exploited in 2024](https://www.coindesk.com/business/2024/02/26/tornado-cash-reportedly-suffers-backend-exploit-user-deposits-at-risk?utm_source=chatgpt.com).  
 3. **TORN token itself**. Malicious upgrades of the token could lead to token transfers being frozen.  
 4. **Registered relayers**. Malicious upgrades of these components could remove all registered relayers, disrupting user-relayer coordination and complicating private withdrawals.
 
 ### **Governance flow**
 
-1. Users lock TORN token in the Governance contract ([0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce)). After voting or proposing, staked tokens are locked for several days, preventing governance hopping. The stake can be delegated to another address.  
+1. Users lock TORN token in the Governance contract ([0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce)). After voting or proposing, staked tokens are locked for ${formatSeconds(voteExtendTime + executionExpiration + executionDelay)} after proposal ends, preventing governance hopping. The stake can be delegated to another address.  
 2. Anyone with at least ${formatLargeNumber(Number(proposalThreshold / 10n ** 18n))} TORN can create a proposal. The proposal spends ${formatSeconds(votingDelay)} in the Pending state, where voting is still disabled, followed by ${formatSeconds(votingPeriod)} of Active state, when votes are cast. If the vote outcome changes in the last ${formatSeconds(closingPeriod)}, the voting period is extended by another ${formatSeconds(voteExtendTime)}.  
 3. Proposal is accepted by the simple majority with a required quorum of ${formatLargeNumber(Number(quorumVotes / 10n ** 18n))} TORN. Once accepted, ${formatSeconds(executionDelay)} of Timelocked state allow exiting the protocol to everyone who disagrees with the proposal. Afterwards, the proposal can be permissionlessly executed within ${formatSeconds(executionExpiration)}.     
     `,
