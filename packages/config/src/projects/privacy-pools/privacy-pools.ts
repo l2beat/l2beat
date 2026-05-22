@@ -56,7 +56,7 @@ export const privacyPools: BaseProject = {
       'A selective-disclosure privacy system for Ethereum that adds compliance-aware association sets.',
     detailedDescription: `Privacy Pools is a non-custodial privacy protocol on Ethereum built around asset-specific pools and private withdrawals, adding compliance by whitelisting all legitimate deposits. A deposit creates a commitment, which is represented by secret and nullifier, and a later withdrawal uses a zero-knowledge proof to spend that commitment, either partially or in full, without revealing the matching deposit. Losing the secret and the nullifier would effectively mean losing deposited tokens.
 
-Privacy Pools are controlled by a 2/4 multisig, which has authority to stop deposits and manage the deposit whitelist, but users always have an option to publicly withdraw deposited tokens.
+Privacy Pools are controlled by a 2/4 multisig, which has authority to stop deposits and manage the deposit whitelist, but users always have an option to publicly withdraw deposited tokens, linking their withdrawal to their deposit.
 
 ### Privacy considerations
 
@@ -66,13 +66,13 @@ Practical privacy also depends on the timing and amounts of deposits and withdra
 
 ### Compliance
 
-The main feature of Privacy Pools is compliance, which is enforced through the ASP. Association set is a whitelist of deposits that are allowed to be withdrawn from the protocol. This set is managed in real time by the provider, which is currently a single entity. The full association set is published via IPFS, only its Merkle root is posted onchain. User's deposit could be excluded from the whitelist at any moment, in this case user can ragequit, i.e. publicly withdraw deposited funds.
+The main feature of Privacy Pools is compliance, which is enforced through the ASP. Association set is a whitelist of deposits that are allowed to be withdrawn from the protocol. This set is managed in real time by the provider, which is currently a single entity. The full association set is published via IPFS, only its Merkle root is posted onchain. User's deposit could be excluded from the whitelist at any moment, in this case the user can still ragequit, i.e. publicly withdraw deposited funds and link them to their deposit.
 
-ASP is designed to guarantee that withdrawals from Privacy Pools are not related to any known illegal activity.
+ASP is designed to vouch that withdrawals from Privacy Pools are not related to any known illegal activity.
 
 ### Anonymity set
 
-User's anonymity set consists of all whitelisted deposits of the same token with the value greater than the withdrawal amount. Note that only deposits approved by the ASP contribute privacy. To maximize the anonymity set, users are advised to withdraw smaller amounts from the privacy pools and deposit popular tokens.`,
+The anonymity set consists of all whitelisted deposits of the same token with the value greater than the withdrawal amount. Note that only deposits approved by the ASP add to the anonymity set. To maximize the anonymity set, users are recommended to withdraw smaller amounts and deposit popular tokens.`,
     links: {
       websites: ['https://www.privacypools.com'],
     },
@@ -106,11 +106,7 @@ User's anonymity set consists of all whitelisted deposits of the same token with
 ## Privacy can be lost if
 1. no relayer is available and the withdrawal must be submitted from an address that can be linked to the user.
 2. the ASP manager refuses to whitelist a deposit, forcing the user to either wait or exit publicly through ragequit.`,
-    upgradesAndGovernance: `Privacy pools Entrypoint contract is owned by a 2/4 Multisig ([0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159](https://etherscan.io/address/0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159)). 
-    
-    It is a powerful role that has the authority to upgrade the Entrypoint contract, through which all deposits go. It can also manage minimum deposit amount, deposit fee, disable deposits on pools and manage ASP postman address that manages whitelisted privacy pools deposits.
-    
-    Entrypoint owner cannot prevent private or public withdrawals from the pools.`,
+    upgradesAndGovernance: `The ${discovery.getMultisigStats('Privacy Pools Multisig')} Privacy Pools Multisig can instantly change the system’s critical configs, including the Entrypoint implementation and ASP root used for private withdrawals. The ASP postman (EOA) can also remove any deposit from the whitelist at any time, forcing a public rage-quit if the affected party wishes to withdraw. The guaranteed immutable escape hatch is pool-level ragequit (public withdrawal) to the original depositor address, because that logic lives in the immutable pool contracts and does not depend on the Entrypoint registry and config. This means the system is permissioned in its deposit logic and deposit privacy, but non-custodial for deposited assets. Past, successful (non-ragequit) withdrawals can not be deanonymized by the protocol.`,
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
