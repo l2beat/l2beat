@@ -25,10 +25,7 @@ describe('CCIPCurseSubject', () => {
 
   it('handles uppercase hex input', () => {
     expect(
-      CCIPCurseSubject.cast(
-        {},
-        '0x000000000000000000000000DEADBEEF',
-      ),
+      CCIPCurseSubject.cast({}, '0x000000000000000000000000DEADBEEF'),
     ).toEqual('3735928559')
   })
 })
