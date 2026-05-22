@@ -1029,19 +1029,21 @@ function getRiskView(
               : 0,
             challengeGracePeriodBlocks ? 'if-challenged' : undefined,
           ),
-          initialBond: isPostBoLD
-            ? formatEther(
-                templateVars.discovery.getContractValue<number>(
-                  'RollupProxy',
-                  'baseStake',
+          initialBond: {
+            value: isPostBoLD
+              ? formatEther(
+                  templateVars.discovery.getContractValue<number>(
+                    'RollupProxy',
+                    'baseStake',
+                  ),
+                )
+              : formatEther(
+                  templateVars.discovery.getContractValue<number>(
+                    'RollupProxy',
+                    'currentRequiredStake',
+                  ),
                 ),
-              )
-            : formatEther(
-                templateVars.discovery.getContractValue<number>(
-                  'RollupProxy',
-                  'currentRequiredStake',
-                ),
-              ),
+          },
         }
       })(),
     dataAvailability:

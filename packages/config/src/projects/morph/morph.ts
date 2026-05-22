@@ -183,9 +183,11 @@ export const morph: ScalingProject = {
       sentiment: 'warning',
       challengeDelay: challengeWindow,
       executionDelay: 0,
-      initialBond: formatEther(
-        discovery.getContractValue<number>('L1Staking', 'stakingValue'),
-      ),
+      initialBond: {
+        value: formatEther(
+          discovery.getContractValue<number>('L1Staking', 'stakingValue'),
+        ),
+      },
       permissioned: true,
       defenderAdvantage: 'not-applicable',
     },

@@ -541,10 +541,13 @@ export interface ProjectRiskView {
     executionDelayMode?: 'always' | 'if-challenged'
     /** @unit seconds */
     challengeDelay?: number
-    /** Defaults to ETH (rendered with Ξ prefix). Set when the bond is paid in
-     *  a non-ETH token; the value is then rendered as "<initialBond> <token>". */
-    initialBond?: string
-    initialBondToken?: string
+    /** Defaults to ETH (rendered with Ξ prefix). Set `token` when the bond is
+     *  paid in a non-ETH token; the value is then rendered as
+     *  "<value> <token>". */
+    initialBond?: {
+      value: string
+      token?: string
+    }
     /** Whether challenging is restricted to a whitelist. When true, the bond
      *  amount is set by the project rather than reflecting an open economic
      *  barrier, so values across permissioned systems aren't comparable to

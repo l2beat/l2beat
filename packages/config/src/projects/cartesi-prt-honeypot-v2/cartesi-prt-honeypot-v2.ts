@@ -168,7 +168,7 @@ export const cartesiprthoneypotv2: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT(minChallengePeriodSeconds),
-      initialBond: utils.formatEther(topLevelTournamentBond),
+      initialBond: { value: utils.formatEther(topLevelTournamentBond) },
       permissioned: false,
       defenderAdvantage: { shape: 'log' },
     },

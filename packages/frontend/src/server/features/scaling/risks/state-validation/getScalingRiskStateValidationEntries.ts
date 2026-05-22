@@ -183,8 +183,7 @@ export interface ScalingRiskStateValidationOptimisticEntry
   executionDelay: number | undefined
   executionDelayMode: 'always' | 'if-challenged' | undefined
   challengePeriod: number | undefined
-  initialBond: string | undefined
-  initialBondToken: string | undefined
+  initialBond: { value: string; token?: string } | undefined
   permissioned: boolean | undefined
   defenderAdvantage:
     | { multiplier: number; shape: 'linear' }
@@ -267,7 +266,6 @@ function getScalingRiskStateValidationOptimisticEntry(
     executionDelayMode: stateValidation?.executionDelayMode,
     challengePeriod: stateValidation?.challengeDelay,
     initialBond: stateValidation?.initialBond,
-    initialBondToken: stateValidation?.initialBondToken,
     permissioned: stateValidation?.permissioned,
     defenderAdvantage: stateValidation?.defenderAdvantage,
     tvs: getTvsData(project, projectTvs),

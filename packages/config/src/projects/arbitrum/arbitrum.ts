@@ -329,9 +329,11 @@ export const arbitrum: ScalingProject = orbitStackL2({
         challengeGracePeriodSeconds,
         'if-challenged',
       ),
-      initialBond: formatEther(
-        discovery.getContractValue<number>('RollupProxy', 'baseStake'),
-      ),
+      initialBond: {
+        value: formatEther(
+          discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+        ),
+      },
       permissioned: false,
       defenderAdvantage: computeBoldDefenderAdvantage(
         discovery.getContractValue<number>('RollupProxy', 'baseStake'),

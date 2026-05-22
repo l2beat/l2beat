@@ -227,16 +227,15 @@ export const scalingRiskStateValidationOptimisticColumns = [
   optimisticColumnHelper.accessor('initialBond', {
     header: 'Initial Bond',
     cell: (ctx) => {
-      const { initialBond, initialBondToken, defenderAdvantage } =
-        ctx.row.original
+      const { initialBond, defenderAdvantage } = ctx.row.original
       return (
         <TableValueCell
           value={
             initialBond !== undefined
               ? {
-                  value: initialBondToken
-                    ? `${initialBond} ${initialBondToken}`
-                    : 'Ξ' + initialBond,
+                  value: initialBond.token
+                    ? `${initialBond.value} ${initialBond.token}`
+                    : 'Ξ' + initialBond.value,
                   secondLine: defenderAdvantageLine(defenderAdvantage),
                 }
               : undefined

@@ -166,7 +166,7 @@ export const cartesiprthoneypot: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT(minChallengePeriodSeconds),
-      initialBond: formatEther(0),
+      initialBond: { value: formatEther(0) },
       permissioned: false,
       defenderAdvantage: { shape: 'log' },
     },
