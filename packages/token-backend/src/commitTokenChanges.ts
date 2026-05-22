@@ -5,7 +5,6 @@ import type {
 } from '@l2beat/database'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import type { Command } from './commands'
-import { getLogger } from './logger'
 
 /**
  * Evidence justifying a deployed token's abstract-token assignment. Persisted
@@ -74,11 +73,9 @@ export async function commitTokenChanges(
   commands: Command[],
   source: WriteSource,
 ): Promise<void> {
-  const logger = getLogger().for('commitTokenChanges')
   for (const command of commands) {
     await executeCommand(tokenDb, command)
     await tokenDb.tokenDbHistory.insert(buildHistoryEntry(source, command))
-    logger.info('Command executed', { command })
   }
 }
 
