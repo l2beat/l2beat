@@ -142,7 +142,7 @@ Railgun has a DAO governed by holders of the RAIL token. The DAO has the authori
 
 Railgun protocol supports [relayed withdrawals](https://docs.railgun.org/developer-guide/wallet/transactions/unshielding), in which a relayer processes withdrawals on the user's behalf for a fee, which enables sending funds to fresh addresses. Transactions from private addresses can be sent through broadcasters over the [Waku network](https://blog.waku.org/2024-04-26-railgun-case-study/), which increases network-level privacy. Railgun allows interactions between shielded tokens and DeFi, which allows depositing and withdrawing different tokens.
 
-Practical privacy also depends on the timing and amounts of deposits and withdrawals, as well as RPC providers used to send transactions and query the public blockchain state. Users are advised to research the best OPSEC practices.
+Practical privacy also depends on the timing and amounts of deposits and withdrawals, as well as RPC providers used to send transactions and query the public blockchain state. Syncing a railgun wallet requires a user to make heavy rpc queries because they need to scan all deposits to the protocol to track their own balance. Running a full node or trusted rpc is recommended. Users are advised to research the best OPSEC practices. Users are advised to research the best OPSEC practices.
 
 ### Compliance
 
