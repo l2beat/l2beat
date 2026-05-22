@@ -8,6 +8,7 @@ import type {
 import { Address32 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
+import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
 import { createCallerFactory } from '../../trpc'
 import { type DeployedTokensRouterDeps, deployedTokensRouter } from './index'
 
@@ -2209,6 +2210,6 @@ function createRouter(
     },
     db,
     tokenDb: mockTokenDb,
-    tokenIngestionProcessor: {} as never,
+    tokenIngestionProcessor: mockObject<TokenIngestionProcessor>({}),
   })
 }

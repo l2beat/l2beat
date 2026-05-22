@@ -1,6 +1,11 @@
-import type { TokenDatabase, TokenDbHistoryEntryRecord } from '@l2beat/database'
+import type {
+  Database,
+  TokenDatabase,
+  TokenDbHistoryEntryRecord,
+} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
 import { createCallerFactory } from '../../trpc'
 import { tokenDbHistoryRouter } from './index'
 
@@ -20,13 +25,13 @@ describe('tokenDbHistoryRouter', () => {
       const getPage = mockFn().resolvesTo(page)
 
       const caller = createCallerFactory(tokenDbHistoryRouter)({
-        db: {} as never,
+        db: mockObject<Database>({}),
         tokenDb: mockObject<TokenDatabase>({
           tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
             getPage,
           }),
         }),
-        tokenIngestionProcessor: {} as never,
+        tokenIngestionProcessor: mockObject<TokenIngestionProcessor>({}),
         headers: new Headers(),
         session: {
           email: 'dev@l2beat.com',

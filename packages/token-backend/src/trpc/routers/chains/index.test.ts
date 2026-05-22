@@ -3,6 +3,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import type { BlockscoutClient } from '../../../chains/clients/blockscout/BlockscoutClient'
 import type { EtherscanClient } from '../../../chains/clients/etherscan/EtherscanClient'
 import type { RpcClient } from '../../../chains/clients/rpc/RpcClient'
+import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
 import type { ChainUpdate } from '../../../schemas/Chain'
 import { createCallerFactory } from '../../trpc'
 import { chainsRouter } from './index'
@@ -447,7 +448,7 @@ function createRouter(
     },
     tokenDb: mockTokenDb,
     db: mockObject<Database>({}),
-    tokenIngestionProcessor: {} as never,
+    tokenIngestionProcessor: mockObject<TokenIngestionProcessor>({}),
   })
 }
 
@@ -477,6 +478,6 @@ function createRouterWithEtherscanKey(
     },
     tokenDb: mockTokenDb,
     db: mockObject<Database>({}),
-    tokenIngestionProcessor: {} as never,
+    tokenIngestionProcessor: mockObject<TokenIngestionProcessor>({}),
   })
 }

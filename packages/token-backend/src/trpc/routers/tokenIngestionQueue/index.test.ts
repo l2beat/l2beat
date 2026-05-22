@@ -7,6 +7,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { TRPCError } from '@trpc/server'
 import { expect, mockFn, mockObject } from 'earl'
 import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
+import type { DeployedTokenRecord } from '../../../schemas/DeployedToken'
 import { createCallerFactory } from '../../trpc'
 import { tokenIngestionQueueRouter } from './index'
 
@@ -45,10 +46,11 @@ describe('tokenIngestionQueueRouter', () => {
       })
       const page = { entries: [entry], totalCount: 12 }
       const getPage = mockFn().resolvesTo(page)
+      const deployedToken = mockObject<DeployedTokenRecord>({})
       const plan = mockFn().resolvesTo({
         address: { chain: entry.chain, address: entry.address },
         steps: [],
-        outcome: { kind: 'noop', deployedToken: {} },
+        outcome: { kind: 'noop', deployedToken },
       })
 
       const caller = createRouter({
@@ -74,7 +76,7 @@ describe('tokenIngestionQueueRouter', () => {
       expect(result.predictedOutcomes).toEqual([
         {
           kind: 'noop',
-          deployedToken: {} as never,
+          deployedToken,
           description: expect.a(String),
         },
       ])
@@ -135,10 +137,10 @@ function createRouter(
       ? deps
       : { tokenDb: deps, db: undefined, processor: undefined }
   return createCallerFactory(tokenIngestionQueueRouter)({
-    db: (config.db ?? ({} as never)) as Database,
+    db: config.db ?? mockObject<Database>({}),
     tokenDb: config.tokenDb,
-    tokenIngestionProcessor: (config.processor ??
-      ({} as never)) as TokenIngestionProcessor,
+    tokenIngestionProcessor:
+      config.processor ?? mockObject<TokenIngestionProcessor>({}),
     headers: new Headers(),
     session: {
       email: 'dev@l2beat.com',

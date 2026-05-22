@@ -1,5 +1,6 @@
 import type { Database, TokenDatabase } from '@l2beat/database'
 import { expect, mockFn, mockObject } from 'earl'
+import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
 import type { AbstractTokenRecord } from '../../../schemas/AbstractToken'
 import { createCallerFactory } from '../../trpc'
 import { searchRouter } from './index'
@@ -218,7 +219,7 @@ function createRouter(mockTokenDb: TokenDatabase) {
     },
     db: mockObject<Database>({}),
     tokenDb: mockTokenDb,
-    tokenIngestionProcessor: {} as never,
+    tokenIngestionProcessor: mockObject<TokenIngestionProcessor>({}),
   })
 }
 

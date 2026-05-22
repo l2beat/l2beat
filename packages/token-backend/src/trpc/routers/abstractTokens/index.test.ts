@@ -5,6 +5,7 @@ import type {
 } from '@l2beat/database'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
+import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
 import type { AbstractTokenRecord } from '../../../schemas/AbstractToken'
 import { createCallerFactory } from '../../trpc'
 import { abstractTokensRouter } from './index'
@@ -403,7 +404,7 @@ function createRouter(
     },
     tokenDb: mockTokenDb,
     db: mockObject<Database>({}),
-    tokenIngestionProcessor: {} as never,
+    tokenIngestionProcessor: mockObject<TokenIngestionProcessor>({}),
   })
 }
 
