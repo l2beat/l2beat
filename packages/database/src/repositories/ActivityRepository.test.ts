@@ -70,6 +70,28 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
+  describe(ActivityRepository.prototype.getMaxTimestampAtOrBefore.name, () => {
+    it('returns latest timestamp at or before the given timestamp', async () => {
+      await repository.upsertMany([
+        record('a', START),
+        record('a', START + 2 * UnixTime.DAY),
+        record('b', START + 1 * UnixTime.DAY),
+      ])
+
+      const result = await repository.getMaxTimestampAtOrBefore(
+        START + 1 * UnixTime.DAY,
+      )
+
+      expect(result).toEqual(START + 1 * UnixTime.DAY)
+    })
+
+    it('returns undefined when no records exist', async () => {
+      const result = await repository.getMaxTimestampAtOrBefore(START)
+
+      expect(result).toEqual(undefined)
+    })
+  })
+
   describe(ActivityRepository.prototype.deleteByProjectIdFrom.name, () => {
     it('should delete all rows after a given timestamp and projectId', async () => {
       await repository.upsertMany([

@@ -1,3 +1,4 @@
+import { INTEROP_CHAINS } from '@l2beat/config'
 import type {
   ActivityRecord,
   AggregatedInteropTokenRecord,
@@ -141,11 +142,18 @@ describe(createHighlightsRouter.name, () => {
       .resolvesToOnce(currentTokens)
       .resolvesToOnce(previousTokens)
       .resolvesTo([])
+    const getActivityMaxTimestampAtOrBefore = mockFn().resolvesTo(
+      latestTimestamp,
+    )
     const getActivityByTimestamp = mockFn()
       .resolvesToOnce(currentActivity)
       .resolvesToOnce(previousActivity)
       .resolvesToOnce(olderActivity)
       .resolvesTo([])
+    const getTvsMaxTimestampAtOrBefore = mockFn()
+      .resolvesToOnce(latestTimestamp)
+      .resolvesToOnce(previousTimestamp)
+      .resolvesToOnce(olderTimestamp)
     const getTvsByTimestamp = mockFn()
       .resolvesToOnce(currentTvs)
       .resolvesToOnce(previousTvs)
@@ -156,7 +164,9 @@ describe(createHighlightsRouter.name, () => {
       latestTimestamp,
       getTransferByTimestamp,
       getTokenByTimestamp,
+      getActivityMaxTimestampAtOrBefore,
       getActivityByTimestamp,
+      getTvsMaxTimestampAtOrBefore,
       getTvsByTimestamp,
       getAbstractTokenById,
     })
@@ -168,8 +178,7 @@ describe(createHighlightsRouter.name, () => {
       previousWindowStart: latestTimestamp - 2 * UnixTime.DAY,
       previousWindowEnd: latestTimestamp - UnixTime.DAY,
     }
-    const activityWindow = interopWindow
-    const tvsWindow = interopWindow
+    const comparisonWindow = interopWindow
     const topPath = getTopPathByVolumeAtTimestamp(
       currentTransfers,
       latestTimestamp,
@@ -193,29 +202,36 @@ describe(createHighlightsRouter.name, () => {
       previousTransfers,
       latestTimestamp,
     )
+    const interopProjectIds = new Set(INTEROP_CHAINS.map((chain) => chain.id))
     const uopsIncrease = getLargestUopsCountIncrease(
       currentActivity,
       previousActivity,
       olderActivity,
       latestTimestamp,
+      interopProjectIds,
     )
     const tvsIncrease = getLargestTvsIncrease(
       currentTvs,
       previousTvs,
       olderTvs,
       latestTimestamp,
+      interopProjectIds,
     )
 
     expect(getTransferByTimestamp).toHaveBeenCalledTimes(2)
     expect(getTokenByTimestamp).toHaveBeenCalledTimes(2)
     expect(getActivityByTimestamp).toHaveBeenCalledTimes(3)
     expect(getTvsByTimestamp).toHaveBeenCalledTimes(3)
+    expect(getActivityByTimestamp).toHaveBeenCalledWith(latestTimestamp)
+    expect(getActivityByTimestamp).toHaveBeenCalledWith(previousTimestamp)
+    expect(getActivityByTimestamp).toHaveBeenCalledWith(olderTimestamp)
+    expect(getTvsByTimestamp).toHaveBeenCalledWith(latestTimestamp)
     expect(getAbstractTokenById).toHaveBeenCalledWith('9HN5PN')
     expect(result).toEqual({
       topPathByVolume: topPath
         ? {
-            windowStart: interopWindow.windowStart,
-            windowEnd: interopWindow.windowEnd,
+            windowStart: comparisonWindow.windowStart,
+            windowEnd: comparisonWindow.windowEnd,
             srcChain: topPath.srcChain,
             dstChain: topPath.dstChain,
             volumeUsd: topPath.volumeUsd,
@@ -225,8 +241,8 @@ describe(createHighlightsRouter.name, () => {
         : null,
       topChainByInflow: topChainByInflow
         ? {
-            windowStart: interopWindow.windowStart,
-            windowEnd: interopWindow.windowEnd,
+            windowStart: comparisonWindow.windowStart,
+            windowEnd: comparisonWindow.windowEnd,
             chain: topChainByInflow.chain,
             volumeUsd: topChainByInflow.volumeUsd,
             transferCount: topChainByInflow.transferCount,
@@ -235,7 +251,7 @@ describe(createHighlightsRouter.name, () => {
         : null,
       largestVolumeIncreaseByChain: chainIncrease
         ? {
-            ...interopWindow,
+            ...comparisonWindow,
             chain: chainIncrease.chain,
             currentVolumeUsd: chainIncrease.currentVolumeUsd,
             previousVolumeUsd: chainIncrease.previousVolumeUsd,
@@ -244,7 +260,7 @@ describe(createHighlightsRouter.name, () => {
         : null,
       largestVolumeIncreaseByToken: tokenIncrease
         ? {
-            ...interopWindow,
+            ...comparisonWindow,
             token: {
               id: tokenIncrease.abstractTokenId,
               symbol: 'USDC',
@@ -258,7 +274,7 @@ describe(createHighlightsRouter.name, () => {
         : null,
       largestVolumeIncreaseByProtocol: protocolIncrease
         ? {
-            ...interopWindow,
+            ...comparisonWindow,
             id: protocolIncrease.id,
             currentVolumeUsd: protocolIncrease.currentVolumeUsd,
             previousVolumeUsd: protocolIncrease.previousVolumeUsd,
@@ -267,7 +283,7 @@ describe(createHighlightsRouter.name, () => {
         : null,
       largestUopsIncreaseByChain: uopsIncrease
         ? {
-            ...activityWindow,
+            ...comparisonWindow,
             chain: uopsIncrease.projectId.toString(),
             currentCount: uopsIncrease.currentUopsCount,
             previousCount: uopsIncrease.previousUopsCount,
@@ -277,7 +293,7 @@ describe(createHighlightsRouter.name, () => {
         : null,
       largestTvsIncreaseByChain: tvsIncrease
         ? {
-            ...tvsWindow,
+            ...comparisonWindow,
             chain: tvsIncrease.projectId,
             currentVolumeUsd: tvsIncrease.currentTvsUsd,
             previousVolumeUsd: tvsIncrease.previousTvsUsd,
@@ -285,6 +301,60 @@ describe(createHighlightsRouter.name, () => {
           }
         : null,
     })
+  })
+
+  it('ignores non-interop projects for UOPS and TVS highlights', async () => {
+    const latestTimestamp = UnixTime(1_700_000_000)
+    const previousTimestamp = latestTimestamp - UnixTime.DAY
+    const olderTimestamp = previousTimestamp - UnixTime.DAY
+
+    const getActivityByTimestamp = mockFn()
+      .resolvesToOnce([
+        activityRecord('hashkey', latestTimestamp, 2000),
+        activityRecord('ethereum', latestTimestamp, 50),
+      ])
+      .resolvesToOnce([
+        activityRecord('hashkey', previousTimestamp, 1000),
+        activityRecord('ethereum', previousTimestamp, 20),
+      ])
+      .resolvesToOnce([
+        activityRecord('hashkey', olderTimestamp, 900),
+        activityRecord('ethereum', olderTimestamp, 18),
+      ])
+      .resolvesTo([])
+    const getTvsByTimestamp = mockFn()
+      .resolvesToOnce([tvsRecord('uniswap', latestTimestamp, 9_000_000_000)])
+      .resolvesToOnce([tvsRecord('uniswap', previousTimestamp, 1_000_000_000)])
+      .resolvesToOnce([tvsRecord('uniswap', olderTimestamp, 900_000_000)])
+      .resolvesTo([])
+
+    const caller = createCaller({
+      latestTimestamp,
+      getTransferByTimestamp: mockFn().resolvesTo([]),
+      getTokenByTimestamp: mockFn().resolvesTo([]),
+      getActivityMaxTimestampAtOrBefore: mockFn().resolvesTo(latestTimestamp),
+      getActivityByTimestamp,
+      getTvsMaxTimestampAtOrBefore: mockFn()
+        .resolvesToOnce(latestTimestamp)
+        .resolvesToOnce(previousTimestamp)
+        .resolvesToOnce(olderTimestamp),
+      getTvsByTimestamp,
+    })
+
+    const result = await caller.latest()
+
+    expect(result.largestUopsIncreaseByChain).toEqual({
+      windowStart: latestTimestamp - UnixTime.DAY,
+      windowEnd: latestTimestamp,
+      previousWindowStart: latestTimestamp - 2 * UnixTime.DAY,
+      previousWindowEnd: latestTimestamp - UnixTime.DAY,
+      chain: 'ethereum',
+      currentCount: 50,
+      previousCount: 20,
+      increase: 30,
+      increasePercent: 150,
+    })
+    expect(result.largestTvsIncreaseByChain).toEqual(null)
   })
 
   it('returns empty metrics when no snapshots exist', async () => {
@@ -322,7 +392,9 @@ function createCaller(options: {
   latestTimestamp: UnixTime | undefined
   getTransferByTimestamp?: ReturnType<typeof mockFn>
   getTokenByTimestamp?: ReturnType<typeof mockFn>
+  getActivityMaxTimestampAtOrBefore?: ReturnType<typeof mockFn>
   getActivityByTimestamp?: ReturnType<typeof mockFn>
+  getTvsMaxTimestampAtOrBefore?: ReturnType<typeof mockFn>
   getTvsByTimestamp?: ReturnType<typeof mockFn>
   getAbstractTokenById?: ReturnType<typeof mockFn>
 }) {
@@ -349,12 +421,16 @@ function createCaller(options: {
         getByTimestamp: options.getTokenByTimestamp ?? mockFn().resolvesTo([]),
       }),
       activity: mockObject<Database['activity']>({
-        getLatestTimestamp: mockFn().resolvesTo(options.latestTimestamp),
+        getMaxTimestampAtOrBefore:
+          options.getActivityMaxTimestampAtOrBefore ??
+          mockFn().resolvesTo(undefined),
         getByTimestamp:
           options.getActivityByTimestamp ?? mockFn().resolvesTo([]),
       }),
       tvsTokenValue: mockObject<Database['tvsTokenValue']>({
-        getLatestTimestamp: mockFn().resolvesTo(options.latestTimestamp),
+        getMaxTimestampAtOrBefore:
+          options.getTvsMaxTimestampAtOrBefore ??
+          mockFn().resolvesTo(undefined),
         getByTimestamp: options.getTvsByTimestamp ?? mockFn().resolvesTo([]),
       }),
     }),

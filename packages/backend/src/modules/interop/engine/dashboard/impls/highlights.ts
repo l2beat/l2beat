@@ -84,33 +84,53 @@ interface CountIncreaseHighlight {
 export async function getInteropHighlights(
   db: Database,
   tokenDb: TokenDatabase,
+  interopProjectIds: readonly string[],
 ): Promise<InteropHighlightsData> {
-  const [latestInteropTimestamp, latestActivityTimestamp, latestTvsTimestamp] =
-    await Promise.all([
-      db.aggregatedInteropTransfer.getLatestTimestamp(),
-      db.activity.getLatestTimestamp(),
-      db.tvsTokenValue.getLatestTimestamp(),
-    ])
+  const latestTimestamp =
+    await db.aggregatedInteropTransfer.getLatestTimestamp()
+  const interopProjects = new Set(interopProjectIds)
 
-  const previousInteropTimestamp =
-    latestInteropTimestamp !== undefined
-      ? latestInteropTimestamp - UnixTime.DAY
+  const previousTimestamp =
+    latestTimestamp !== undefined ? latestTimestamp - UnixTime.DAY : undefined
+
+  let activityTimestamp =
+    latestTimestamp !== undefined
+      ? await db.activity.getMaxTimestampAtOrBefore(latestTimestamp)
       : undefined
-  const previousActivityTimestamp =
-    latestActivityTimestamp !== undefined
-      ? latestActivityTimestamp - UnixTime.DAY
+
+  if (
+    activityTimestamp !== undefined &&
+    latestTimestamp !== undefined &&
+    activityTimestamp === UnixTime.toStartOf(latestTimestamp, 'day') &&
+    latestTimestamp > activityTimestamp
+  ) {
+    activityTimestamp = activityTimestamp - UnixTime.DAY
+  }
+
+  const activityPreviousTimestamp =
+    activityTimestamp !== undefined
+      ? activityTimestamp - UnixTime.DAY
       : undefined
-  const previousTvsTimestamp =
-    latestTvsTimestamp !== undefined
-      ? latestTvsTimestamp - UnixTime.DAY
+  const activityOlderTimestamp =
+    activityTimestamp !== undefined
+      ? activityTimestamp - 2 * UnixTime.DAY
       : undefined
-  const olderActivityTimestamp =
-    previousActivityTimestamp !== undefined
-      ? previousActivityTimestamp - UnixTime.DAY
+
+  const tvsTimestamp =
+    latestTimestamp !== undefined
+      ? await db.tvsTokenValue.getMaxTimestampAtOrBefore(latestTimestamp)
       : undefined
-  const olderTvsTimestamp =
-    previousTvsTimestamp !== undefined
-      ? previousTvsTimestamp - UnixTime.DAY
+  const tvsPreviousTimestamp =
+    tvsTimestamp !== undefined
+      ? await db.tvsTokenValue.getMaxTimestampAtOrBefore(
+          tvsTimestamp - UnixTime.DAY,
+        )
+      : undefined
+  const tvsOlderTimestamp =
+    tvsPreviousTimestamp !== undefined
+      ? await db.tvsTokenValue.getMaxTimestampAtOrBefore(
+          tvsPreviousTimestamp - UnixTime.DAY,
+        )
       : undefined
 
   const [
@@ -125,99 +145,95 @@ export async function getInteropHighlights(
     previousTvsRecords,
     olderTvsRecords,
   ] = await Promise.all([
-    latestInteropTimestamp !== undefined
-      ? db.aggregatedInteropTransfer.getByTimestamp(latestInteropTimestamp)
+    latestTimestamp !== undefined
+      ? db.aggregatedInteropTransfer.getByTimestamp(latestTimestamp)
       : [],
-    previousInteropTimestamp !== undefined
-      ? db.aggregatedInteropTransfer.getByTimestamp(previousInteropTimestamp)
+    previousTimestamp !== undefined
+      ? db.aggregatedInteropTransfer.getByTimestamp(previousTimestamp)
       : [],
-    latestInteropTimestamp !== undefined
-      ? db.aggregatedInteropToken.getByTimestamp(latestInteropTimestamp)
+    latestTimestamp !== undefined
+      ? db.aggregatedInteropToken.getByTimestamp(latestTimestamp)
       : [],
-    previousInteropTimestamp !== undefined
-      ? db.aggregatedInteropToken.getByTimestamp(previousInteropTimestamp)
+    previousTimestamp !== undefined
+      ? db.aggregatedInteropToken.getByTimestamp(previousTimestamp)
       : [],
-    latestActivityTimestamp !== undefined
-      ? db.activity.getByTimestamp(latestActivityTimestamp)
+    activityTimestamp !== undefined
+      ? db.activity.getByTimestamp(activityTimestamp)
       : [],
-    previousActivityTimestamp !== undefined
-      ? db.activity.getByTimestamp(previousActivityTimestamp)
+    activityPreviousTimestamp !== undefined
+      ? db.activity.getByTimestamp(activityPreviousTimestamp)
       : [],
-    olderActivityTimestamp !== undefined
-      ? db.activity.getByTimestamp(olderActivityTimestamp)
+    activityOlderTimestamp !== undefined
+      ? db.activity.getByTimestamp(activityOlderTimestamp)
       : [],
-    latestTvsTimestamp !== undefined
-      ? db.tvsTokenValue.getByTimestamp(latestTvsTimestamp)
+    tvsTimestamp !== undefined
+      ? db.tvsTokenValue.getByTimestamp(tvsTimestamp)
       : [],
-    previousTvsTimestamp !== undefined
-      ? db.tvsTokenValue.getByTimestamp(previousTvsTimestamp)
+    tvsPreviousTimestamp !== undefined
+      ? db.tvsTokenValue.getByTimestamp(tvsPreviousTimestamp)
       : [],
-    olderTvsTimestamp !== undefined
-      ? db.tvsTokenValue.getByTimestamp(olderTvsTimestamp)
+    tvsOlderTimestamp !== undefined
+      ? db.tvsTokenValue.getByTimestamp(tvsOlderTimestamp)
       : [],
   ])
 
   const topPath =
-    latestInteropTimestamp !== undefined
-      ? getTopPathByVolumeAtTimestamp(
-          currentInteropRecords,
-          latestInteropTimestamp,
-        )
+    latestTimestamp !== undefined
+      ? getTopPathByVolumeAtTimestamp(currentInteropRecords, latestTimestamp)
       : undefined
   const topChainByInflow =
-    latestInteropTimestamp !== undefined
+    latestTimestamp !== undefined
       ? getTopDestinationChainByInflowAtTimestamp(
           currentInteropRecords,
-          latestInteropTimestamp,
+          latestTimestamp,
         )
       : undefined
   const chainIncrease =
-    latestInteropTimestamp !== undefined &&
-    previousInteropTimestamp !== undefined
+    latestTimestamp !== undefined && previousTimestamp !== undefined
       ? getLargestSourceChainVolumeIncrease(
           currentInteropRecords,
           previousInteropRecords,
-          latestInteropTimestamp,
+          latestTimestamp,
         )
       : undefined
   const tokenIncrease =
-    latestInteropTimestamp !== undefined &&
-    previousInteropTimestamp !== undefined
+    latestTimestamp !== undefined && previousTimestamp !== undefined
       ? getLargestTokenVolumeIncrease(
           currentTokenRecords,
           previousTokenRecords,
-          latestInteropTimestamp,
+          latestTimestamp,
         )
       : undefined
   const protocolIncrease =
-    latestInteropTimestamp !== undefined &&
-    previousInteropTimestamp !== undefined
+    latestTimestamp !== undefined && previousTimestamp !== undefined
       ? getLargestProtocolVolumeIncrease(
           currentInteropRecords,
           previousInteropRecords,
-          latestInteropTimestamp,
+          latestTimestamp,
         )
       : undefined
   const uopsIncrease =
-    latestActivityTimestamp !== undefined &&
-    previousActivityTimestamp !== undefined &&
-    olderActivityTimestamp !== undefined
+    activityTimestamp !== undefined &&
+    activityPreviousTimestamp !== undefined &&
+    activityOlderTimestamp !== undefined
       ? getLargestUopsCountIncrease(
           currentActivityRecords,
           previousActivityRecords,
           olderActivityRecords,
-          latestActivityTimestamp,
+          activityTimestamp,
+          interopProjects,
         )
       : undefined
   const tvsIncrease =
-    latestTvsTimestamp !== undefined &&
-    previousTvsTimestamp !== undefined &&
-    olderTvsTimestamp !== undefined
+    tvsTimestamp !== undefined &&
+    tvsPreviousTimestamp !== undefined &&
+    tvsOlderTimestamp !== undefined
       ? getLargestTvsIncrease(
           currentTvsRecords,
           previousTvsRecords,
           olderTvsRecords,
-          latestTvsTimestamp,
+          tvsTimestamp,
+          interopProjects,
         )
       : undefined
 
@@ -225,25 +241,23 @@ export async function getInteropHighlights(
     ? await tokenDb.abstractToken.findById(tokenIncrease.abstractTokenId)
     : undefined
 
-  const interopWindow =
-    latestInteropTimestamp !== undefined
-      ? getComparisonWindow(latestInteropTimestamp)
+  const comparisonWindow =
+    latestTimestamp !== undefined
+      ? getComparisonWindow(latestTimestamp)
       : undefined
   const activityWindow =
-    latestActivityTimestamp !== undefined
-      ? getComparisonWindow(latestActivityTimestamp)
+    activityTimestamp !== undefined
+      ? getComparisonWindow(activityTimestamp)
       : undefined
   const tvsWindow =
-    latestTvsTimestamp !== undefined
-      ? getComparisonWindow(latestTvsTimestamp)
-      : undefined
+    tvsTimestamp !== undefined ? getComparisonWindow(tvsTimestamp) : undefined
 
   return {
     topPathByVolume:
-      topPath && interopWindow
+      topPath && comparisonWindow
         ? {
-            windowStart: interopWindow.windowStart,
-            windowEnd: interopWindow.windowEnd,
+            windowStart: comparisonWindow.windowStart,
+            windowEnd: comparisonWindow.windowEnd,
             srcChain: topPath.srcChain,
             dstChain: topPath.dstChain,
             volumeUsd: topPath.volumeUsd,
@@ -252,10 +266,10 @@ export async function getInteropHighlights(
           }
         : null,
     topChainByInflow:
-      topChainByInflow && interopWindow
+      topChainByInflow && comparisonWindow
         ? {
-            windowStart: interopWindow.windowStart,
-            windowEnd: interopWindow.windowEnd,
+            windowStart: comparisonWindow.windowStart,
+            windowEnd: comparisonWindow.windowEnd,
             chain: topChainByInflow.chain,
             volumeUsd: topChainByInflow.volumeUsd,
             transferCount: topChainByInflow.transferCount,
@@ -263,9 +277,9 @@ export async function getInteropHighlights(
           }
         : null,
     largestVolumeIncreaseByChain:
-      chainIncrease && interopWindow
+      chainIncrease && comparisonWindow
         ? {
-            ...interopWindow,
+            ...comparisonWindow,
             chain: chainIncrease.chain,
             currentVolumeUsd: chainIncrease.currentVolumeUsd,
             previousVolumeUsd: chainIncrease.previousVolumeUsd,
@@ -273,9 +287,9 @@ export async function getInteropHighlights(
           }
         : null,
     largestVolumeIncreaseByToken:
-      tokenIncrease && interopWindow
+      tokenIncrease && comparisonWindow
         ? {
-            ...interopWindow,
+            ...comparisonWindow,
             token: {
               id: tokenIncrease.abstractTokenId,
               symbol: tokenInfo?.symbol ?? tokenIncrease.abstractTokenId,
@@ -288,9 +302,9 @@ export async function getInteropHighlights(
           }
         : null,
     largestVolumeIncreaseByProtocol:
-      protocolIncrease && interopWindow
+      protocolIncrease && comparisonWindow
         ? {
-            ...interopWindow,
+            ...comparisonWindow,
             id: protocolIncrease.id,
             currentVolumeUsd: protocolIncrease.currentVolumeUsd,
             previousVolumeUsd: protocolIncrease.previousVolumeUsd,

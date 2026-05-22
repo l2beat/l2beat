@@ -205,7 +205,8 @@ export function getLargestSourceChainVolumeIncrease(
     }
     previousVolumes.set(
       record.srcChain,
-      (previousVolumes.get(record.srcChain) ?? 0) + getTransferVolumeUsd(record),
+      (previousVolumes.get(record.srcChain) ?? 0) +
+        getTransferVolumeUsd(record),
     )
   }
 
@@ -351,20 +352,30 @@ export function getLargestUopsCountIncrease(
   previousRecords: ActivityRecord[],
   olderRecords: ActivityRecord[],
   timestamp: UnixTime,
+  projectIds?: ReadonlySet<string>,
 ): ActivityUopsCountIncrease | undefined {
+  const isIncluded = (projectId: string) =>
+    projectIds === undefined || projectIds.has(projectId)
+
   const projectsWithOlderSnapshot = new Set(
-    olderRecords.map((record) => record.projectId.toString()),
+    olderRecords
+      .filter((record) => isIncluded(record.projectId.toString()))
+      .map((record) => record.projectId.toString()),
   )
   const previousCounts = new Map(
-    previousRecords.map((record) => [
-      record.projectId.toString(),
-      record.uopsCount ?? record.count,
-    ]),
+    previousRecords
+      .filter((record) => isIncluded(record.projectId.toString()))
+      .map((record) => [
+        record.projectId.toString(),
+        record.uopsCount ?? record.count,
+      ]),
   )
 
   const increases = currentRecords
-    .filter((record) =>
-      projectsWithOlderSnapshot.has(record.projectId.toString()),
+    .filter(
+      (record) =>
+        isIncluded(record.projectId.toString()) &&
+        projectsWithOlderSnapshot.has(record.projectId.toString()),
     )
     .map((record) => {
       const projectId = record.projectId.toString()
@@ -425,13 +436,23 @@ export function getLargestTvsIncrease(
   previousRecords: TokenValueRecord[],
   olderRecords: TokenValueRecord[],
   timestamp: UnixTime,
+  projectIds?: ReadonlySet<string>,
 ): TokenValueTvsIncrease | undefined {
+  const isIncluded = (projectId: string) =>
+    projectIds === undefined || projectIds.has(projectId)
+
   const projectsWithOlderSnapshot = new Set(
-    olderRecords.map((record) => record.projectId),
+    olderRecords
+      .filter((record) => isIncluded(record.projectId))
+      .map((record) => record.projectId),
   )
   const previousTvs = new Map<string, number>()
 
   for (const record of previousRecords) {
+    if (!isIncluded(record.projectId)) {
+      continue
+    }
+
     previousTvs.set(
       record.projectId,
       (previousTvs.get(record.projectId) ?? 0) + record.valueForProject,
@@ -440,6 +461,10 @@ export function getLargestTvsIncrease(
 
   const currentTvs = new Map<string, number>()
   for (const record of currentRecords) {
+    if (!isIncluded(record.projectId)) {
+      continue
+    }
+
     currentTvs.set(
       record.projectId,
       (currentTvs.get(record.projectId) ?? 0) + record.valueForProject,

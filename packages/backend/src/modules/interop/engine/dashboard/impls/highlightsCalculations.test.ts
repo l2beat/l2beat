@@ -159,6 +159,7 @@ describe('highlightsCalculations', () => {
           activityRecord('lighter', previousPreviousTimestamp, 1100),
         ],
         timestamp,
+        new Set(['ethereum']),
       )
 
       expect(result).toEqual({
