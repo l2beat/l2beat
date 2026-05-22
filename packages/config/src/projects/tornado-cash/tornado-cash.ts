@@ -147,10 +147,12 @@ Also see [this guide](https://notes.ethereum.org/@GW1ZUbNKR5iRjjKYx6_dJQ/Bk8zsJ9
       PRIVACY_ATTRIBUTES.fixedAmounts,
       PRIVACY_ATTRIBUTES.openSource,
     ],
-    riskSummary: `## Funds can be lost if
+    riskSummary: `## Funds can be stolen if
 1. the zk proof system is broken, allowing invalid withdrawals.
 2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid withdrawals.
-3. a user loses the note secrets required to withdraw.  
+<br>
+## Funds can be lost if
+1. a user loses the note secrets required to withdraw.  
 <br>
 ## Privacy can be lost if
 1. no relayer is available and the withdrawal must be submitted from an address that can be linked to the user (see [best practices page](/privacy/best-practices) for more info).`,
