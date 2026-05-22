@@ -15,6 +15,7 @@ export class LineSelector implements EditorPlugin<ForType> {
   private selectedLines: LineSelection | null = null
   private decorationIds: string[] = []
   private selectionChangeListeners: LineSelectionListener[] = []
+  private disposables: monaco.IDisposable[] = []
 
   static encode(selection: LineSelection): string {
     if (selection.startLine === selection.endLine) {
@@ -44,6 +45,10 @@ export class LineSelector implements EditorPlugin<ForType> {
   }
 
   dispose() {
+    for (const d of this.disposables) {
+      d.dispose()
+    }
+    this.disposables = []
     this.decorationIds = []
     this.selectionChangeListeners = []
   }
@@ -87,16 +92,20 @@ export class LineSelector implements EditorPlugin<ForType> {
   }
 
   private setupLineSelectionHandlers() {
-    this.editor.onMouseDown((e) => {
-      if (e.target.type === monaco.editor.MouseTargetType.GUTTER_LINE_NUMBERS) {
-        this.handleLineClick(
-          e.target.position?.lineNumber ?? 0,
-          e.event.shiftKey,
-        )
-      } else {
-        this.clearSelection()
-      }
-    })
+    this.disposables.push(
+      this.editor.onMouseDown((e) => {
+        if (
+          e.target.type === monaco.editor.MouseTargetType.GUTTER_LINE_NUMBERS
+        ) {
+          this.handleLineClick(
+            e.target.position?.lineNumber ?? 0,
+            e.event.shiftKey,
+          )
+        } else {
+          this.clearSelection()
+        }
+      }),
+    )
   }
 
   private handleLineClick(lineNumber: number, shiftKey: boolean) {

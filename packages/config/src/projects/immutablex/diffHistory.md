@@ -1,3 +1,111 @@
+Generated with discovered.json: 0x7f30a2a72c76b2d37f4fdeda6808ebb0793f769a
+
+# Diff at Thu, 21 May 2026 16:02:29 GMT:
+
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1772785651
+- current timestamp: 1779377712
+
+## Description
+
+Upgrade to ImmutableX contract: https://disco.l2beat.com/diff/eth:0x58b5484F489f7858DC83a5a677338074b57de806/eth:0x273b65a7231321D4ee47a4c47408Ef43517455Ec. 
+
+It introduces 7 hardcoded L1 addresses that are granted VCO tokens from the ImmutableX bridge, each different amounts. They have already withdrawn these tokens. Amounts are small and token is worthless according to coingecko. 
+
+Also, added `registerSender` and `registerEthAddress` functions from Users.sol in StarkEx repo to register an eth address for a given starknet address after checking a valid signature.
+
+## Watched changes
+
+```diff
+    contract StarkExchange (eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xb71805b4d4f8f1e27f622cf275932a3b69fce577df37460525fce8b64adb1d00"
++        "0xc122235bc278c4eacd03c0bc862ed748a4d0c810460ff5348df2b85c2979c6a5"
+      values.$implementation:
+-        "eth:0x58b5484F489f7858DC83a5a677338074b57de806"
++        "eth:0x273b65a7231321D4ee47a4c47408Ef43517455Ec"
+      values.$pastUpgrades.9:
++        ["2026-05-20T23:38:47.000Z","0x9af235b6b0759b9fa2b301c7bc7bf04e05e5bd15000abe74b405466e09fca332",["eth:0x273b65a7231321D4ee47a4c47408Ef43517455Ec"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.implementation:
+-        "eth:0x58b5484F489f7858DC83a5a677338074b57de806"
++        "eth:0x273b65a7231321D4ee47a4c47408Ef43517455Ec"
+      values.HOLDER_1_AMOUNT:
++        4900000000000
++++ description: HOLDER_i_ETH addresses are hardcoded into ImmutableX v2 rollup contract initializer, which assigns them custom amounts of VCO tokens (small amounts of worthless tokens). Tokens were already withdrawn.
+      values.HOLDER_1_ETH:
++        "eth:0x5eBb994EBC1c44815FbF2fA61a6E1f8368dcB0C7"
+      values.HOLDER_1_KEY:
++        "3538623774493345151179551783812164840645197873942623890310120442690648622931"
+      values.HOLDER_2_AMOUNT:
++        125000000000
+      values.HOLDER_2_ETH:
++        "eth:0x216e8577B504aC3dB213eDd261e47fffBb354248"
+      values.HOLDER_2_KEY:
++        "896591154720277861849412210959098837543990746331085354094151559066127293616"
+      values.HOLDER_3_AMOUNT:
++        7540000000
+      values.HOLDER_3_ETH:
++        "eth:0x10cbBBb225BBEA137aC01F0F6D91CDB126BccaA6"
+      values.HOLDER_3_KEY:
++        "2337782983793367352107417745440247520204745783973227763313597957897585144884"
+      values.HOLDER_4_AMOUNT:
++        4900000000000
+      values.HOLDER_4_ETH:
++        "eth:0x409F85D2207796b543b8abdB6a0E2490BB1483D1"
+      values.HOLDER_4_KEY:
++        "3515120365152864005724897321625748708134718892093672796597024618874380434380"
+      values.HOLDER_5_AMOUNT:
++        382500000000
+      values.HOLDER_5_ETH:
++        "eth:0xCE5A537D4dA620DE59efA6F74a0A065732600c71"
+      values.HOLDER_5_KEY:
++        "320866735717256483006023350708017670742221720926224055507147702459465353560"
+      values.HOLDER_6_AMOUNT:
++        "266488641810000000"
+      values.HOLDER_6_ETH:
++        "eth:0x941f54cb53Dc1478Cb126a2Ba8a83b2130419dB5"
+      values.HOLDER_6_KEY:
++        "1072283648975915474201171160655623968861623556483236771217709513165697501697"
+      values.HOLDER_7_AMOUNT:
++        235000000000
+      values.HOLDER_7_ETH:
++        "eth:0xBC6EeB5111fEa2B5e9B2Bc534bBcbCa9568999a4"
+      values.HOLDER_7_KEY:
++        "750813242579361465277803604892953637745780756132536315292318654687088446962"
+      values.VCO_ASSET_TYPE:
++        "1485183671027309009439509871835489442660821279230223034298428454062208985878"
+      implementationNames.eth:0x58b5484F489f7858DC83a5a677338074b57de806:
+-        "StarkExchangeMigration"
+      implementationNames.eth:0x273b65a7231321D4ee47a4c47408Ef43517455Ec:
++        "StarkExchangeMigrationV2"
+    }
+```
+
+## Source code changes
+
+```diff
+.../StarkExchange/StarkExchangeMigrationV2.sol}    | 356 ++++++++++++++++++++-
+ 1 file changed, 355 insertions(+), 1 deletion(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772785651 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) [N/A] {
+    +++ description: None
+      fieldMeta:
++        {"HOLDER_1_ETH":{"description":"HOLDER_i_ETH addresses are hardcoded into ImmutableX v2 rollup contract initializer, which assigns them custom amounts of VCO tokens (small amounts of worthless tokens). Tokens were already withdrawn."}}
+    }
+```
+
 Generated with discovered.json: 0x311c64dfb872334df2e059da3c5d11ddea5c3332
 
 # Diff at Fri, 08 May 2026 07:51:24 GMT:

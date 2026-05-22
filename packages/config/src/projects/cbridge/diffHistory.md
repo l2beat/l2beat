@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xf818c9ca713b2f75bf0cbdf5df3e22c9527438dd
+
+# Diff at Thu, 21 May 2026 09:31:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aa147da36dc2b8d307d8e09b17d18109b2286235 block: 1778678924
+- current timestamp: 1779355836
+
+## Description
+
+fees moved to static conf, one voter changed.
+
+## Watched changes
+
+```diff
+    contract MessageBus (eth:0x4066D196A423b2b3B8B054f4F40efB47a74E200C) [N/A] {
+    +++ description: None
+      values.feeBase:
+-        15000000000000
++        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      values.feePerByte:
+-        150000000000
++        0
+    }
+```
+
+```diff
+    contract MessageBusOwner (eth:0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175) [N/A] {
+    +++ description: None
+      values.getVoters.0.3:
+-        "eth:0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823"
++        "eth:0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
+    }
+```
+
 Generated with discovered.json: 0x1c661790779b06afcc7f831cc3c17fedfc2531e1
 
 # Diff at Wed, 13 May 2026 13:41:11 GMT:

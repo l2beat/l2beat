@@ -7,7 +7,6 @@ import { Banner } from '../Banner'
 
 interface Project {
   archivedAt?: number
-  isUpcoming?: boolean
   underReviewStatus?: UnderReviewStatus
   header?: {
     warning?: string
@@ -19,7 +18,6 @@ interface Project {
 export function ProjectSummaryBars({ project }: { project: Project }) {
   if (
     !project.archivedAt &&
-    !project.isUpcoming &&
     !project.underReviewStatus &&
     !project.header?.warning &&
     !project.header?.redWarning &&
@@ -33,11 +31,6 @@ export function ProjectSummaryBars({ project }: { project: Project }) {
       {project.archivedAt && (
         <Banner type="info" centered>
           This project is archived and no longer maintained.
-        </Banner>
-      )}
-      {project.isUpcoming && (
-        <Banner type="info" centered>
-          This is an upcoming project. Stay tuned!
         </Banner>
       )}
       {project.underReviewStatus && (

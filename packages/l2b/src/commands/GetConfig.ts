@@ -44,7 +44,6 @@ const ALL_PROJECT_OPTIONAL_KEYS = [
   'permissions',
   'contracts',
   'discoveryInfo',
-  'isUpcoming',
   'archivedAt',
   'hasTestnet',
 ] satisfies NonBasicProjectKey[]

@@ -6,7 +6,6 @@ export const pages = [
   '/scaling/data-availability',
   '/scaling/liveness',
   '/scaling/costs',
-  '/scaling/upcoming',
   '/scaling/archived',
   '/data-availability/summary',
   '/data-availability/risk',
