@@ -245,7 +245,7 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
         ),
       )
       .select([
-        sql<string>`"current"."abstract_token_id"`.as('abstract_token_id'),
+        'current.abstract_token_id as abstract_token_id',
         sql<number>`"current"."volume_usd"`.as('current_volume_usd'),
         sql<number>`coalesce("previous"."volume_usd", 0)`.as(
           'previous_volume_usd',
