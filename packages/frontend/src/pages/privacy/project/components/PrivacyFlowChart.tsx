@@ -15,6 +15,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -84,19 +85,35 @@ export function PrivacyFlowChart({
       }}
     >
       <AreaChart responsive data={chartData} margin={{ top: 20 }}>
+        <defs>
+          <CustomFillGradientDef
+            id={`privacy-${metric}-deposits-fill`}
+            colors={{
+              primary: 'var(--chart-emerald)',
+              secondary: 'var(--chart-emerald)',
+            }}
+          />
+          <CustomFillGradientDef
+            id={`privacy-${metric}-withdrawals-fill`}
+            colors={{
+              primary: 'var(--chart-pink)',
+              secondary: 'var(--chart-pink)',
+            }}
+          />
+        </defs>
         <ChartLegend content={<ChartLegendContent />} />
         <ChartStrokeOverFillAreaComponents
           data={[
             {
               dataKey: 'deposits',
               stroke: 'var(--chart-emerald)',
-              fill: 'var(--chart-emerald)',
+              fill: `url(#privacy-${metric}-deposits-fill)`,
               hide: !dataKeys.includes('deposits'),
             },
             {
               dataKey: 'withdrawals',
               stroke: 'var(--chart-pink)',
-              fill: 'var(--chart-pink)',
+              fill: `url(#privacy-${metric}-withdrawals-fill)`,
               hide: !dataKeys.includes('withdrawals'),
             },
           ]}
