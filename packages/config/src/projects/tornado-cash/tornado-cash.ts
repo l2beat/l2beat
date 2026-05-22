@@ -118,12 +118,13 @@ User's anonymity set consists of all previous deposits into the same bucket (i.e
 
 ### Secure frontend
 
-Tornado Cash frontend presents an attack surface that could expose user private data to third parties. To prevent these risks, users are advised to either: 
+For average users, the Tornado Cash frontend must be recognized as a critical part of the privacy protocol. If compromised, it can steal user assets and violate user privacy, which [was exploited in 2024](https://www.coindesk.com/business/2024/02/26/tornado-cash-reportedly-suffers-backend-exploit-user-deposits-at-risk).
 
-1. use the frontend deployed on IPFS network. The IPFS content hash is registered on [Tornado Cash ENS](https://app.ens.domains/tornadocash.eth?tab=records) and is managed by the Tornado Cash DAO.
-2. use a locally built frontend, the sources could be found [here](https://codeberg.org/torndao/tornado-ipfs-ui).
-
-Also see [this guide](https://notes.ethereum.org/@GW1ZUbNKR5iRjjKYx6_dJQ/Bk8zsJ9xj) for more info.
+The frontend's root of trust is the IPFS content hash registered for [tornadocash.eth](https://app.ens.domains/tornadocash.eth?tab=records) in the ENS smart contract on Ethereum. 
+The latest hash can be fetched from a trusted ethereum node (e.g. your own node or a light node). 
+There were incidents of malicious frontend hash updates passing onchain governance proposals before, so using a publicly audited or self-audited IPFS hash is advised. 
+An example of audit process with useful links could be found [here](https://gist.github.com/pcaversaccio/ea7f62fd21b6e22f301980007f7c767e) or [here](https://notes.ethereum.org/@GW1ZUbNKR5iRjjKYx6_dJQ/Bk8zsJ9xj).
+The frontend can then be accessed by running a local IPFS node that automatically fetches the verified frontend hash (e.g. in style of [dapp3.eth](https://github.com/apoorvlathey/dapp3)) and serves it in the browser locally.
 `,
     links: {},
     badges: [],
@@ -160,7 +161,7 @@ Also see [this guide](https://notes.ethereum.org/@GW1ZUbNKR5iRjjKYx6_dJQ/Bk8zsJ9
 Tornado cash has a TORN DAO, which does not have the authority to upgrade or modify existing pools in any way. However it controls a significant portion of the Tornado cash protocol and periphery, including:
 
 1. **Default router for deposits and withdrawals and the official registry of supported pools**. Malicious upgrades of these components could lead to users losing deposited tokens.  
-2. **Standard UI IPFS hash registered on ENS** ([link](https://app.ens.domains/tornadocash.eth)). Malicious upgrades of these components could lead to users losing deposited tokens, which [was exploited in 2024](https://www.coindesk.com/business/2024/02/26/tornado-cash-reportedly-suffers-backend-exploit-user-deposits-at-risk?utm_source=chatgpt.com).  
+2. **Standard UI IPFS hash registered on ENS** ([link](https://app.ens.domains/tornadocash.eth)). Malicious upgrades of these components could lead to users losing deposited tokens.  
 3. **TORN token itself**. Malicious upgrades of the token could lead to token transfers being frozen.  
 4. **Registered relayers**. Malicious upgrades of these components could remove all registered relayers, disrupting user-relayer coordination and complicating private withdrawals.
 
