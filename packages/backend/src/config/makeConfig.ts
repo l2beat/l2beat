@@ -1,6 +1,6 @@
 import type { Env } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Config } from './Config'
 import { getChainConfig } from './chain/getChainConfig'
 import { FeatureFlags } from './FeatureFlags'
@@ -44,13 +44,15 @@ export async function makeConfig(
     isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
   )
 
+  const clockOffsetSeconds = UnixTime.HOUR
+
   return {
     name,
     isReadonly,
     clock: {
       minBlockTimestamp:
         minTimestampOverride ?? getEthereumMinTimestamp(chains),
-      safeTimeOffsetSeconds: 60 * 60,
+      safeTimeOffsetSeconds: clockOffsetSeconds,
     },
     database: isLocal
       ? {
@@ -84,7 +86,8 @@ export async function makeConfig(
           isReadonly,
         },
     notifications:
-      flags.isEnabled('notifications') && getNotificationsConfig(env, flags),
+      flags.isEnabled('notifications') &&
+      getNotificationsConfig(env, flags, clockOffsetSeconds),
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
     api: {
       port: env.integer('PORT', isLocal ? 3001 : undefined),
@@ -172,6 +175,7 @@ export async function makeConfig(
 function getNotificationsConfig(
   env: Env,
   flags: FeatureFlags,
+  clockOffsetSeconds: number,
 ): Config['notifications'] {
   return {
     updateMonitor: flags.isEnabled('notifications', 'updateMonitor') && {
@@ -207,7 +211,11 @@ function getNotificationsConfig(
         'NOTIFICATIONS_DAILY_CHECKS_TIMEZONE',
         'Europe/Warsaw',
       ),
-      hour: env.integer('NOTIFICATIONS_DAILY_CHECKS_HOUR', 9),
+      hour:
+        (env.integer('NOTIFICATIONS_DAILY_CHECKS_HOUR', 9) -
+          clockOffsetSeconds / UnixTime.HOUR +
+          24) %
+        24,
     },
   }
 }

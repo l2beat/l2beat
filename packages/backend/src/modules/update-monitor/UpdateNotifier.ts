@@ -242,7 +242,7 @@ export async function generateTemplatizedStatus(): Promise<string> {
   const scaling = await ps.getProjects({
     select: ['scalingInfo', 'discoveryInfo'],
     where: ['scalingInfo'],
-    whereNot: ['isUpcoming', 'archivedAt'],
+    whereNot: ['archivedAt'],
   })
 
   const stacks: ProjectScalingStack[] = [

@@ -58,8 +58,6 @@ export interface ScalingProject {
   addedAt: UnixTime
   /** Date of archiving of the project */
   archivedAt?: UnixTime
-  /** Is this project an upcoming rollup? */
-  isUpcoming?: boolean
   /** What is the review status of this project? */
   reviewStatus?: ProjectReviewStatus
   /** Colors used in the project's branding. E.g. ecosystem gradient, project page accents */
@@ -256,7 +254,6 @@ export interface Bridge {
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
   archivedAt?: UnixTime
-  isUpcoming?: boolean
   reviewStatus?: ProjectReviewStatus
   interopConfig?: InteropConfig
   display: BridgeDisplay

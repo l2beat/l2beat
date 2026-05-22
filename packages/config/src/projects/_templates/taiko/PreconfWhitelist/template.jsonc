@@ -39,10 +39,23 @@
       ]
     },
     "ejecters": {
+      "handler": {
+        "type": "event",
+        "select": "ejecter",
+        "add": {
+          "event": "event EjecterUpdated(address indexed ejecter, bool isEjecter)",
+          "where": ["=", "#isEjecter", true]
+        },
+        "remove": {
+          "event": "event EjecterUpdated(address indexed ejecter, bool isEjecter)",
+          "select": "ejecter",
+          "where": ["!=", "#isEjecter", true]
+        }
+      },
       "permissions": [
         {
           "type": "interact",
-          "description": "manage operators"
+          "description": "add/remove operators" // yes also add
         }
       ]
     }

@@ -2086,22 +2086,27 @@
     },
     {
       "symbol": "fxUSD",
+      "category": "stablecoin",
       "address": "0x085780639CC2cACd35E474e71f4d000e2405d8f6"
     },
     {
       "symbol": "BOLD",
+      "category": "stablecoin",
       "address": "0x6440f144b7e50D6a8439336510312d2F54beB01D"
     },
     {
       "symbol": "USD1",
+      "category": "stablecoin",
       "address": "0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d"
     },
     {
       "symbol": "frxUSD",
+      "category": "stablecoin",
       "address": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29"
     },
     {
       "symbol": "wOETH",
+      "category": "ether",
       "address": "0xDcEe70654261AF21C44c093C300eD3Bb97b78192"
     },
     {
@@ -2116,6 +2121,10 @@
       "symbol": "USDS",
       "category": "stablecoin",
       "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+    },
+    {
+      "symbol": "RAIL",
+      "address": "0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D"
     },
     {
       "symbol": "ezETH",

@@ -24,11 +24,11 @@ export function ConfigPanel() {
     [project, configModels],
   )
 
-  if (configModels.isError) {
+  if (configModels.isProjectError || configModels.isConfigError) {
     return <ErrorState />
   }
 
-  if (configModels.isPending) {
+  if (configModels.isProjectPending || configModels.isConfigPending) {
     return <LoadingState />
   }
 

@@ -16,7 +16,6 @@ export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
       'permissions',
       'aliases',
     ],
-    whereNot: ['isUpcoming'],
   })
 
   return projects
