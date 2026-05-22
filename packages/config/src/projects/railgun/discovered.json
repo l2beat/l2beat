@@ -1,6 +1,6 @@
 {
   "name": "railgun",
-  "timestamp": 1779378858,
+  "timestamp": 1779461009,
   "configHash": "0x8d3c34a44997c37874729e98c3fe3b1a19b6bf4b5c3b2c933fbec1ec0f0fe439",
   "entries": [
     {
@@ -2065,15 +2065,15 @@
     "railgun/IntervalPayouts": "0x09fe161481fbf0d6537d95f2fea87b62f20bcf765449ab946ee2af02f60ec1c1",
     "railgun/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "railgun/RailgunSmartWallet": "0x73f14bd8461facf56cca712201c02818c69035359f3c6d9f62ead7358c1abd92",
-    "railgun/RailToken": "0x1accecbf363e089fe076d95372f29d46ba515d0a47882681e318a1dba85d0fd4",
+    "railgun/RailToken": "0x804530e37ec6008f7e038487ae7914ce758ee7b27c21a98172234dc96f3fe682",
     "railgun/RelayAdapt": "0xe64239195c9b233532c77144e0b1161bdf296080b3fbe1d7857a20920c72f5df",
-    "railgun/Staking": "0x7ae078e86e08252ca74cbf4a5615976c862e3b6be0ffaa85da6452a1c93a2a31",
+    "railgun/Staking": "0x78593ec22b89ba550eccd09e11681e717d558121e95ec8eb62c6fe12826ba8a3",
     "railgun/Sweeper": "0x770b366e3e05222adc3601c01c4d6707431927b39692b296f886ae34d7c9f3a2",
     "railgun/SweeperLegacy": "0x2eb417aa4538dd13c156beb75374c4ab97c3a0e34a2e1616eaf4d440bed50af7",
     "railgun/Treasury": "0xe53be1977d2dba54b3716f7715569df8ec79c2de52d77b1c11b84d5902f65b12",
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
     "railgun/Voting": "0xcf33f9d03116b81a59f25ba7bf17c38122eedecde0df775a365f78a34697bd68"
   },
-  "usedBlockNumbers": { "ethereum": 25144649 },
+  "usedBlockNumbers": { "ethereum": 25151472 },
   "permissionsConfigHash": "0x56bb3ba002f719a35f1d9124f1e67edd6294599dc20dd69d0fcfcf0a7efc6a21"
 }
