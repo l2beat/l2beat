@@ -130,7 +130,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "Universal_Adapter",
+      "name": "HyperEVM_Adapter",
       "address": "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B",
       "type": "Contract",
       "template": "acrossv3/universalAdapter",
@@ -138,7 +138,7 @@
         "0x6ac887d101497a6fd8bdfbdb2a3f053e66c698ecfe7134dd3750f67a7e6f852b"
       ],
       "proxyType": "immutable",
-      "description": "This adapter can be used to send messages / root bundles to Hyperliquid. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.",
+      "description": "This adapter can be used to send messages / root bundles to HyperEVM. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.",
       "deployerAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1757975987,
       "sinceBlock": 23371516,
@@ -627,7 +627,7 @@
       }
     },
     {
-      "name": "Universal_Adapter",
+      "name": "Tempo_Adapter",
       "address": "eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c",
       "type": "Contract",
       "template": "acrossv3/universalAdapter",
@@ -962,7 +962,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ZkStack_CustomGasToken_Adapter",
+      "name": "Lens_Adapter",
       "address": "eth:0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf",
       "type": "Contract",
       "template": "acrossv3/Adapter",
@@ -1000,7 +1000,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "Universal_Adapter",
+      "name": "BNBSmartChain_Adapter",
       "address": "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b",
       "type": "Contract",
       "template": "acrossv3/universalAdapter",
@@ -1350,7 +1350,7 @@
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
-      "name": "DoctorWho_Adapter",
+      "name": "Unichain_Adapter",
       "address": "eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1",
       "type": "Contract",
       "template": "acrossv3/Adapter",
@@ -1546,7 +1546,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "Universal_Adapter",
+      "name": "Tron_Adapter",
       "address": "eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db",
       "type": "Contract",
       "template": "acrossv3/universalAdapter",
@@ -1576,7 +1576,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ZkStack_Adapter",
+      "name": "ZkSyncEra_Adapter",
       "address": "eth:0xA374585E6062517Ee367ee5044946A6fBe17724f",
       "type": "Contract",
       "template": "acrossv3/Adapter",
@@ -1608,7 +1608,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "Universal_Adapter",
+      "name": "Plasma_Adapter",
       "address": "eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363",
       "type": "Contract",
       "template": "acrossv3/universalAdapter",
@@ -1774,67 +1774,67 @@
       "values": {
         "$immutable": true,
         "Adapters": {
-          "1": "eth:0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
-          "10": "eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5",
-          "56": "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b",
-          "130": "eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1",
-          "137": "eth:0x537abE038C223066B50312474409924487D2E655",
-          "143": "eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452",
-          "232": "eth:0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf",
-          "288": "eth:0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
-          "324": "eth:0xA374585E6062517Ee367ee5044946A6fBe17724f",
-          "480": "eth:0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1",
-          "690": "eth:0x188F8C95B7cfB7993B53a4F643efa687916f73fA",
-          "999": "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B",
-          "1135": "eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b",
-          "1868": "eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2",
-          "4217": "eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c",
-          "4326": "eth:0xE1f04404b74F996A311F13aE291849fC153578Ac",
-          "8453": "eth:0x799BDC55d91864b14B2eD63A34DeF5d502AA897f",
-          "9745": "eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363",
-          "34443": "eth:0xf1B59868697f3925b72889ede818B9E7ba0316d0",
-          "41455": "eth:0x6F4083304C2cA99B077ACE06a5DcF670615915Af",
-          "42161": "eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3",
-          "57073": "eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5",
-          "59144": "eth:0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787",
-          "81457": "eth:0xF2bEf5E905AAE0295003ab14872F811E914EdD81",
-          "534352": "eth:0x2DA799c2223c6ffB595e578903AE6b95839160d8",
-          "7777777": "eth:0x024F2fC31CBDD8de17194b1892c834f98Ef5169b",
-          "728126428": "eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db",
-          "34268394551451": "eth:0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3"
+          "Ethereum": "eth:0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
+          "OP Mainnet": "eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5",
+          "BNB Smart Chain": "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b",
+          "Unichain": "eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1",
+          "Polygon PoS": "eth:0x537abE038C223066B50312474409924487D2E655",
+          "Monad": "eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452",
+          "Lens": "eth:0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf",
+          "Boba": "eth:0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
+          "ZKsync Era": "eth:0xA374585E6062517Ee367ee5044946A6fBe17724f",
+          "World Chain": "eth:0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1",
+          "Redstone": "eth:0x188F8C95B7cfB7993B53a4F643efa687916f73fA",
+          "HyperEVM": "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B",
+          "Lisk": "eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b",
+          "Soneium": "eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2",
+          "Tempo": "eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c",
+          "MegaETH": "eth:0xE1f04404b74F996A311F13aE291849fC153578Ac",
+          "Base": "eth:0x799BDC55d91864b14B2eD63A34DeF5d502AA897f",
+          "Plasma": "eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363",
+          "Mode": "eth:0xf1B59868697f3925b72889ede818B9E7ba0316d0",
+          "Aleph Zero": "eth:0x6F4083304C2cA99B077ACE06a5DcF670615915Af",
+          "Arbitrum One": "eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3",
+          "Ink": "eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5",
+          "Linea": "eth:0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787",
+          "Blast": "eth:0xF2bEf5E905AAE0295003ab14872F811E914EdD81",
+          "Scroll": "eth:0x2DA799c2223c6ffB595e578903AE6b95839160d8",
+          "Zora": "eth:0x024F2fC31CBDD8de17194b1892c834f98Ef5169b",
+          "Tron": "eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db",
+          "Solana": "eth:0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3"
         },
         "bondAmount": "450000000000000000",
         "bondAmountFmt": "0.45",
         "bondToken": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
         "CrossChainContracts": {
-          "1": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-          "10": "eth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
-          "56": "eth:0x4e8E101924eDE233C13e2D8622DC8aED2872d505",
-          "130": "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
-          "137": "eth:0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
-          "143": "eth:0xd2ecb3afe598b746F8123CaE365a598DA831A449",
-          "232": "eth:0xb234cA484866c811d0e6D3318866F583781ED045",
-          "288": "eth:0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
-          "324": "eth:0xE0B015E54d54fc84a6cB9B666099c46adE9335FF",
-          "480": "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
-          "690": "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
-          "999": "eth:0x35E63eA3eb0fb7A3bc543C71FB66412e1F6B0E04",
-          "1135": "eth:0x9552a0a6624A23B848060AE5901659CDDa1f83f8",
-          "1868": "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
-          "4217": "eth:0x2d4710F04Da90184255782d3715224A6C776955D",
-          "4326": "eth:0x3Db06DA8F0a24A525f314eeC954fC5c6a973d40E",
-          "8453": "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
-          "9745": "eth:0x50039fAEfebef707cFD94D6d462fE6D10B39207a",
-          "34443": "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
-          "41455": "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
-          "42161": "eth:0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
-          "57073": "eth:0xeF684C38F94F48775959ECf2012D7E864ffb9dd4",
-          "59144": "eth:0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
-          "81457": "eth:0x2D509190Ed0172ba588407D4c2df918F955Cc6E1",
-          "534352": "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
-          "7777777": "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
-          "728126428": "eth:0xc148aF9B50Bc03Cc0c616Cd85C66Aae9bD90cD80",
-          "34268394551451": "eth:0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
+          "Ethereum": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "OP Mainnet": "eth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "BNB Smart Chain": "eth:0x4e8E101924eDE233C13e2D8622DC8aED2872d505",
+          "Unichain": "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
+          "Polygon PoS": "eth:0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
+          "Monad": "eth:0xd2ecb3afe598b746F8123CaE365a598DA831A449",
+          "Lens": "eth:0xb234cA484866c811d0e6D3318866F583781ED045",
+          "Boba": "eth:0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
+          "ZKsync Era": "eth:0xE0B015E54d54fc84a6cB9B666099c46adE9335FF",
+          "World Chain": "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
+          "Redstone": "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
+          "HyperEVM": "eth:0x35E63eA3eb0fb7A3bc543C71FB66412e1F6B0E04",
+          "Lisk": "eth:0x9552a0a6624A23B848060AE5901659CDDa1f83f8",
+          "Soneium": "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
+          "Tempo": "eth:0x2d4710F04Da90184255782d3715224A6C776955D",
+          "MegaETH": "eth:0x3Db06DA8F0a24A525f314eeC954fC5c6a973d40E",
+          "Base": "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
+          "Plasma": "eth:0x50039fAEfebef707cFD94D6d462fE6D10B39207a",
+          "Mode": "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
+          "Aleph Zero": "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
+          "Arbitrum One": "eth:0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
+          "Ink": "eth:0xeF684C38F94F48775959ECf2012D7E864ffb9dd4",
+          "Linea": "eth:0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
+          "Blast": "eth:0x2D509190Ed0172ba588407D4c2df918F955Cc6E1",
+          "Scroll": "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
+          "Zora": "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
+          "Tron": "eth:0xc148aF9B50Bc03Cc0c616Cd85C66Aae9bD90cD80",
+          "Solana": "eth:0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
         },
         "finalizationDelayFmt": "30m",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
@@ -1866,7 +1866,42 @@
       "implementationNames": {
         "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda": "HubPool"
       },
-      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "usedTypes": [
+        { "typeCaster": "Undecimal", "arg": { "decimals": 18 } },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "1": "Ethereum",
+            "10": "OP Mainnet",
+            "56": "BNB Smart Chain",
+            "130": "Unichain",
+            "137": "Polygon PoS",
+            "143": "Monad",
+            "232": "Lens",
+            "288": "Boba",
+            "324": "ZKsync Era",
+            "480": "World Chain",
+            "690": "Redstone",
+            "999": "HyperEVM",
+            "1135": "Lisk",
+            "1868": "Soneium",
+            "4217": "Tempo",
+            "4326": "MegaETH",
+            "8453": "Base",
+            "9745": "Plasma",
+            "34443": "Mode",
+            "41455": "Aleph Zero",
+            "42161": "Arbitrum One",
+            "57073": "Ink",
+            "59144": "Linea",
+            "81457": "Blast",
+            "534352": "Scroll",
+            "7777777": "Zora",
+            "728126428": "Tron",
+            "34268394551451": "Solana"
+          }
+        }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -2501,7 +2536,7 @@
       }
     },
     {
-      "name": "OP_Adapter",
+      "name": "MegaETH_Adapter",
       "address": "eth:0xE1f04404b74F996A311F13aE291849fC153578Ac",
       "type": "Contract",
       "template": "acrossv3/Adapter",
@@ -4007,7 +4042,7 @@
     "acrossv3/Adapter": "0x103d2d74360dacd5d1483aaaa09905c04c03d469c0d74c2040009d6ebe56f9e5",
     "acrossv3/AdapterStore": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "acrossv3/BondToken": "0x9bbb4f401a9c199b2f0dd48f9f1279e769c7040bdbc6ff1619b1eca5cf91a19a",
-    "acrossv3/HubPool": "0x7faf23c33c8701a2210dc2c5ca33da02e4eebfbe13ae24bf3b5ac1507061bd16",
+    "acrossv3/HubPool": "0xd03281628aeebe9a31fe85783968c37d996d7647f86a45ec57c1e3b64bc8b213",
     "acrossv3/HubPoolStore": "0x3642c36edf2d3a762a4ba62c17f663d8b14f65861115a98004718b3c91ba7ac8",
     "acrossv3/SpokePool": "0x129b82fd3037f5f22d4fc04c875c2da6b18d7fcf7cce7e51cce9126a2ed485d9",
     "acrossv3/universalAdapter": "0x0fe89d590abc56ee5cbf6e99497eeaeeecb6fff890d94a83dfd30ead4463b7e8",
@@ -4027,5 +4062,5 @@
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
   "usedBlockNumbers": { "ethereum": 25142707 },
-  "permissionsConfigHash": "0x0d9786c64b48b82169e67f5e59962553314fa5fa7800d3fae6beb2337b83d3bb"
+  "permissionsConfigHash": "0x15dd5a284f2c2b1a231b52990e7b624ba6148351def2e3edb4a3b0a6eadd8fd6"
 }

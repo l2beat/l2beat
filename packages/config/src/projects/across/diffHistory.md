@@ -1,3 +1,337 @@
+Generated with discovered.json: 0xc094804329cd69a5472105e2af58c68d7a52151f
+
+# Diff at Fri, 22 May 2026 13:50:37 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@5632621dca713c3c25f738ebb5a0b887f7bed9c4 block: 1779355521
+- current timestamp: 1779355521
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779355521 (main branch discovery), not current.
+
+```diff
+    contract HyperEVM_Adapter (eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B) [acrossv3/universalAdapter] {
+    +++ description: This adapter can be used to send messages / root bundles to HyperEVM. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+      name:
+-        "Universal_Adapter"
++        "HyperEVM_Adapter"
+      description:
+-        "This adapter can be used to send messages / root bundles to Hyperliquid. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
++        "This adapter can be used to send messages / root bundles to HyperEVM. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
+    }
+```
+
+```diff
+    contract Tempo_Adapter (eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c) [acrossv3/universalAdapter] {
+    +++ description: This adapter can be used to send messages / root bundles to Tempo. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+      name:
+-        "Universal_Adapter"
++        "Tempo_Adapter"
+    }
+```
+
+```diff
+    contract Lens_Adapter (eth:0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf) [acrossv3/Adapter] {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      name:
+-        "ZkStack_CustomGasToken_Adapter"
++        "Lens_Adapter"
+    }
+```
+
+```diff
+    contract BNBSmartChain_Adapter (eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b) [acrossv3/universalAdapter] {
+    +++ description: This adapter can be used to send messages / root bundles to Binance Smart Chain. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.
+      name:
+-        "Universal_Adapter"
++        "BNBSmartChain_Adapter"
+    }
+```
+
+```diff
+    contract Unichain_Adapter (eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1) [acrossv3/Adapter] {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      name:
+-        "DoctorWho_Adapter"
++        "Unichain_Adapter"
+    }
+```
+
+```diff
+    contract Tron_Adapter (eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db) [acrossv3/universalAdapter] {
+    +++ description: This adapter can be used to send messages / root bundles to Tron. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+      name:
+-        "Universal_Adapter"
++        "Tron_Adapter"
+    }
+```
+
+```diff
+    contract ZkSyncEra_Adapter (eth:0xA374585E6062517Ee367ee5044946A6fBe17724f) [acrossv3/Adapter] {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      name:
+-        "ZkStack_Adapter"
++        "ZkSyncEra_Adapter"
+    }
+```
+
+```diff
+    contract Plasma_Adapter (eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363) [acrossv3/universalAdapter] {
+    +++ description: This adapter can be used to send messages / root bundles to Plasma Mainnet. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.
+      name:
+-        "Universal_Adapter"
++        "Plasma_Adapter"
+    }
+```
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.Adapters.1:
+-        "eth:0x527E872a5c3f0C7c24Fe33F2593cFB890a285084"
+      values.Adapters.10:
+-        "eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5"
+      values.Adapters.56:
+-        "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b"
+      values.Adapters.130:
+-        "eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1"
+      values.Adapters.137:
+-        "eth:0x537abE038C223066B50312474409924487D2E655"
+      values.Adapters.143:
+-        "eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452"
+      values.Adapters.232:
+-        "eth:0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf"
+      values.Adapters.288:
+-        "eth:0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3"
+      values.Adapters.324:
+-        "eth:0xA374585E6062517Ee367ee5044946A6fBe17724f"
+      values.Adapters.480:
+-        "eth:0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1"
+      values.Adapters.690:
+-        "eth:0x188F8C95B7cfB7993B53a4F643efa687916f73fA"
+      values.Adapters.999:
+-        "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B"
+      values.Adapters.1135:
+-        "eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b"
+      values.Adapters.1868:
+-        "eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2"
+      values.Adapters.4217:
+-        "eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c"
+      values.Adapters.4326:
+-        "eth:0xE1f04404b74F996A311F13aE291849fC153578Ac"
+      values.Adapters.8453:
+-        "eth:0x799BDC55d91864b14B2eD63A34DeF5d502AA897f"
+      values.Adapters.9745:
+-        "eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363"
+      values.Adapters.34443:
+-        "eth:0xf1B59868697f3925b72889ede818B9E7ba0316d0"
+      values.Adapters.41455:
+-        "eth:0x6F4083304C2cA99B077ACE06a5DcF670615915Af"
+      values.Adapters.42161:
+-        "eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3"
+      values.Adapters.57073:
+-        "eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5"
+      values.Adapters.59144:
+-        "eth:0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787"
+      values.Adapters.81457:
+-        "eth:0xF2bEf5E905AAE0295003ab14872F811E914EdD81"
+      values.Adapters.534352:
+-        "eth:0x2DA799c2223c6ffB595e578903AE6b95839160d8"
+      values.Adapters.7777777:
+-        "eth:0x024F2fC31CBDD8de17194b1892c834f98Ef5169b"
+      values.Adapters.728126428:
+-        "eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db"
+      values.Adapters.34268394551451:
+-        "eth:0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3"
+      values.Adapters.Ethereum:
++        "eth:0x527E872a5c3f0C7c24Fe33F2593cFB890a285084"
+      values.Adapters.OP Mainnet:
++        "eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5"
+      values.Adapters.BNB Smart Chain:
++        "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b"
+      values.Adapters.Unichain:
++        "eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1"
+      values.Adapters.Polygon PoS:
++        "eth:0x537abE038C223066B50312474409924487D2E655"
+      values.Adapters.Monad:
++        "eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452"
+      values.Adapters.Lens:
++        "eth:0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf"
+      values.Adapters.Boba:
++        "eth:0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3"
+      values.Adapters.ZKsync Era:
++        "eth:0xA374585E6062517Ee367ee5044946A6fBe17724f"
+      values.Adapters.World Chain:
++        "eth:0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1"
+      values.Adapters.Redstone:
++        "eth:0x188F8C95B7cfB7993B53a4F643efa687916f73fA"
+      values.Adapters.HyperEVM:
++        "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B"
+      values.Adapters.Lisk:
++        "eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b"
+      values.Adapters.Soneium:
++        "eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2"
+      values.Adapters.Tempo:
++        "eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c"
+      values.Adapters.MegaETH:
++        "eth:0xE1f04404b74F996A311F13aE291849fC153578Ac"
+      values.Adapters.Base:
++        "eth:0x799BDC55d91864b14B2eD63A34DeF5d502AA897f"
+      values.Adapters.Plasma:
++        "eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363"
+      values.Adapters.Mode:
++        "eth:0xf1B59868697f3925b72889ede818B9E7ba0316d0"
+      values.Adapters.Aleph Zero:
++        "eth:0x6F4083304C2cA99B077ACE06a5DcF670615915Af"
+      values.Adapters.Arbitrum One:
++        "eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3"
+      values.Adapters.Ink:
++        "eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5"
+      values.Adapters.Linea:
++        "eth:0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787"
+      values.Adapters.Blast:
++        "eth:0xF2bEf5E905AAE0295003ab14872F811E914EdD81"
+      values.Adapters.Scroll:
++        "eth:0x2DA799c2223c6ffB595e578903AE6b95839160d8"
+      values.Adapters.Zora:
++        "eth:0x024F2fC31CBDD8de17194b1892c834f98Ef5169b"
+      values.Adapters.Tron:
++        "eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db"
+      values.Adapters.Solana:
++        "eth:0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3"
+      values.CrossChainContracts.1:
+-        "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+      values.CrossChainContracts.10:
+-        "eth:0x6f26Bf09B1C792e3228e5467807a900A503c0281"
+      values.CrossChainContracts.56:
+-        "eth:0x4e8E101924eDE233C13e2D8622DC8aED2872d505"
+      values.CrossChainContracts.130:
+-        "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+      values.CrossChainContracts.137:
+-        "eth:0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096"
+      values.CrossChainContracts.143:
+-        "eth:0xd2ecb3afe598b746F8123CaE365a598DA831A449"
+      values.CrossChainContracts.232:
+-        "eth:0xb234cA484866c811d0e6D3318866F583781ED045"
+      values.CrossChainContracts.288:
+-        "eth:0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58"
+      values.CrossChainContracts.324:
+-        "eth:0xE0B015E54d54fc84a6cB9B666099c46adE9335FF"
+      values.CrossChainContracts.480:
+-        "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+      values.CrossChainContracts.690:
+-        "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+      values.CrossChainContracts.999:
+-        "eth:0x35E63eA3eb0fb7A3bc543C71FB66412e1F6B0E04"
+      values.CrossChainContracts.1135:
+-        "eth:0x9552a0a6624A23B848060AE5901659CDDa1f83f8"
+      values.CrossChainContracts.1868:
+-        "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+      values.CrossChainContracts.4217:
+-        "eth:0x2d4710F04Da90184255782d3715224A6C776955D"
+      values.CrossChainContracts.4326:
+-        "eth:0x3Db06DA8F0a24A525f314eeC954fC5c6a973d40E"
+      values.CrossChainContracts.8453:
+-        "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+      values.CrossChainContracts.9745:
+-        "eth:0x50039fAEfebef707cFD94D6d462fE6D10B39207a"
+      values.CrossChainContracts.34443:
+-        "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+      values.CrossChainContracts.41455:
+-        "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+      values.CrossChainContracts.42161:
+-        "eth:0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A"
+      values.CrossChainContracts.57073:
+-        "eth:0xeF684C38F94F48775959ECf2012D7E864ffb9dd4"
+      values.CrossChainContracts.59144:
+-        "eth:0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75"
+      values.CrossChainContracts.81457:
+-        "eth:0x2D509190Ed0172ba588407D4c2df918F955Cc6E1"
+      values.CrossChainContracts.534352:
+-        "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+      values.CrossChainContracts.7777777:
+-        "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+      values.CrossChainContracts.728126428:
+-        "eth:0xc148aF9B50Bc03Cc0c616Cd85C66Aae9bD90cD80"
+      values.CrossChainContracts.34268394551451:
+-        "eth:0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
+      values.CrossChainContracts.Ethereum:
++        "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+      values.CrossChainContracts.OP Mainnet:
++        "eth:0x6f26Bf09B1C792e3228e5467807a900A503c0281"
+      values.CrossChainContracts.BNB Smart Chain:
++        "eth:0x4e8E101924eDE233C13e2D8622DC8aED2872d505"
+      values.CrossChainContracts.Unichain:
++        "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+      values.CrossChainContracts.Polygon PoS:
++        "eth:0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096"
+      values.CrossChainContracts.Monad:
++        "eth:0xd2ecb3afe598b746F8123CaE365a598DA831A449"
+      values.CrossChainContracts.Lens:
++        "eth:0xb234cA484866c811d0e6D3318866F583781ED045"
+      values.CrossChainContracts.Boba:
++        "eth:0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58"
+      values.CrossChainContracts.ZKsync Era:
++        "eth:0xE0B015E54d54fc84a6cB9B666099c46adE9335FF"
+      values.CrossChainContracts.World Chain:
++        "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+      values.CrossChainContracts.Redstone:
++        "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+      values.CrossChainContracts.HyperEVM:
++        "eth:0x35E63eA3eb0fb7A3bc543C71FB66412e1F6B0E04"
+      values.CrossChainContracts.Lisk:
++        "eth:0x9552a0a6624A23B848060AE5901659CDDa1f83f8"
+      values.CrossChainContracts.Soneium:
++        "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+      values.CrossChainContracts.Tempo:
++        "eth:0x2d4710F04Da90184255782d3715224A6C776955D"
+      values.CrossChainContracts.MegaETH:
++        "eth:0x3Db06DA8F0a24A525f314eeC954fC5c6a973d40E"
+      values.CrossChainContracts.Base:
++        "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+      values.CrossChainContracts.Plasma:
++        "eth:0x50039fAEfebef707cFD94D6d462fE6D10B39207a"
+      values.CrossChainContracts.Mode:
++        "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+      values.CrossChainContracts.Aleph Zero:
++        "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+      values.CrossChainContracts.Arbitrum One:
++        "eth:0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A"
+      values.CrossChainContracts.Ink:
++        "eth:0xeF684C38F94F48775959ECf2012D7E864ffb9dd4"
+      values.CrossChainContracts.Linea:
++        "eth:0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75"
+      values.CrossChainContracts.Blast:
++        "eth:0x2D509190Ed0172ba588407D4c2df918F955Cc6E1"
+      values.CrossChainContracts.Scroll:
++        "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+      values.CrossChainContracts.Zora:
++        "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+      values.CrossChainContracts.Tron:
++        "eth:0xc148aF9B50Bc03Cc0c616Cd85C66Aae9bD90cD80"
+      values.CrossChainContracts.Solana:
++        "eth:0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"1":"Ethereum","10":"OP Mainnet","56":"BNB Smart Chain","130":"Unichain","137":"Polygon PoS","143":"Monad","232":"Lens","288":"Boba","324":"ZKsync Era","480":"World Chain","690":"Redstone","999":"HyperEVM","1135":"Lisk","1868":"Soneium","4217":"Tempo","4326":"MegaETH","8453":"Base","9745":"Plasma","34443":"Mode","41455":"Aleph Zero","42161":"Arbitrum One","57073":"Ink","59144":"Linea","81457":"Blast","534352":"Scroll","7777777":"Zora","728126428":"Tron","34268394551451":"Solana"}}
+    }
+```
+
+```diff
+    contract MegaETH_Adapter (eth:0xE1f04404b74F996A311F13aE291849fC153578Ac) [acrossv3/Adapter] {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      name:
+-        "OP_Adapter"
++        "MegaETH_Adapter"
+    }
+```
+
 Generated with discovered.json: 0x78fae1e0ea84a47b6f1d79d5c27fdc721bd43b6a
 
 # Diff at Thu, 21 May 2026 09:26:54 GMT:
