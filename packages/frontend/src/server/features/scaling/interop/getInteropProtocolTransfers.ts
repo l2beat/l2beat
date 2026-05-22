@@ -28,13 +28,20 @@ const MAX_PAGE_SIZE = 100
 const RAW_BATCH_SIZE = 500
 const UNKNOWN_TOKEN_SYMBOL = 'Unknown'
 
-const INTEROP_CHAIN_EXPLORER_URLS = new Map(
-  INTEROP_CHAINS.map((chain) => [chain.id, chain.explorerUrl]),
-)
-const INTEROP_CHAIN_ICON_URLS = new Map(
+interface InteropChainDetails {
+  name: string
+  iconUrl: string
+  explorerUrl: string
+}
+
+const INTEROP_CHAIN_DETAILS = new Map<string, InteropChainDetails>(
   INTEROP_CHAINS.map((chain) => [
     chain.id,
-    manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+    {
+      name: chain.name,
+      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+      explorerUrl: chain.explorerUrl,
+    },
   ]),
 )
 
@@ -107,7 +114,7 @@ export async function getInteropProtocolTransfers({
     items: result.items.map((transfer) =>
       toInteropProtocolTransferDetailsItem(
         transfer,
-        INTEROP_CHAIN_EXPLORER_URLS,
+        INTEROP_CHAIN_DETAILS,
         tokensDetailsMap,
       ),
     ),
@@ -206,19 +213,13 @@ function toTransferCursor(
 
 export function toInteropProtocolTransferDetailsItem(
   transfer: InteropTransferRecord,
-  chainExplorerUrlsById: Map<string, string>,
+  chainDetailsById: Map<string, InteropChainDetails>,
   tokensDetailsMap: TokensDetailsMap,
 ): InteropProtocolTransferDetailsItem {
-  const srcTxHashHref = getTxHashHref(
-    chainExplorerUrlsById,
-    transfer.srcChain,
-    transfer.srcTxHash,
-  )
-  const dstTxHashHref = getTxHashHref(
-    chainExplorerUrlsById,
-    transfer.dstChain,
-    transfer.dstTxHash,
-  )
+  const srcDetails = chainDetailsById.get(transfer.srcChain)
+  const dstDetails = chainDetailsById.get(transfer.dstChain)
+  const srcTxHashHref = getTxHashHref(srcDetails?.explorerUrl, transfer.srcTxHash)
+  const dstTxHashHref = getTxHashHref(dstDetails?.explorerUrl, transfer.dstTxHash)
 
   return {
     transferId: transfer.transferId,
@@ -237,12 +238,12 @@ export function toInteropProtocolTransferDetailsItem(
     ),
     valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
     duration: transfer.duration,
-    srcChain: transfer.srcChain,
-    srcChainIconUrl: INTEROP_CHAIN_ICON_URLS.get(transfer.srcChain),
+    srcChain: srcDetails?.name ?? transfer.srcChain,
+    srcChainIconUrl: srcDetails?.iconUrl,
     srcTxHash: transfer.srcTxHash,
     srcTxHashHref,
-    dstChain: transfer.dstChain,
-    dstChainIconUrl: INTEROP_CHAIN_ICON_URLS.get(transfer.dstChain),
+    dstChain: dstDetails?.name ?? transfer.dstChain,
+    dstChainIconUrl: dstDetails?.iconUrl,
     dstTxHash: transfer.dstTxHash,
     dstTxHashHref,
   }
@@ -272,16 +273,10 @@ function getTokenIconUrl(
 }
 
 function getTxHashHref(
-  chainExplorerUrlsById: Map<string, string>,
-  chainId: string,
+  explorerUrl: string | undefined,
   txHash: string | undefined,
 ): string | undefined {
-  if (!txHash) {
-    return undefined
-  }
-
-  const explorerUrl = chainExplorerUrlsById.get(chainId)
-  if (!explorerUrl) {
+  if (!txHash || !explorerUrl) {
     return undefined
   }
 
@@ -314,12 +309,12 @@ function getMockInteropProtocolTransfers({
       dstTokenIconUrl: ethIcon,
       valueUsd: 1_000,
       duration: 60_000,
-      srcChain,
-      srcChainIconUrl: INTEROP_CHAIN_ICON_URLS.get(srcChain),
+      srcChain: INTEROP_CHAIN_DETAILS.get(srcChain)?.name ?? srcChain,
+      srcChainIconUrl: INTEROP_CHAIN_DETAILS.get(srcChain)?.iconUrl,
       srcTxHash: undefined,
       srcTxHashHref: undefined,
-      dstChain,
-      dstChainIconUrl: INTEROP_CHAIN_ICON_URLS.get(dstChain),
+      dstChain: INTEROP_CHAIN_DETAILS.get(dstChain)?.name ?? dstChain,
+      dstChainIconUrl: INTEROP_CHAIN_DETAILS.get(dstChain)?.iconUrl,
       dstTxHash: undefined,
       dstTxHashHref: undefined,
     }),
