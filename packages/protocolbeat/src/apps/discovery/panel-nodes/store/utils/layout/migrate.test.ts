@@ -28,14 +28,24 @@ describe(migrateLayout.name, () => {
     expect(result.layout.projectId).toEqual('p')
   })
 
-  it('drops legacy oklch color objects to palette index 0', () => {
+  it('drops legacy oklch color objects instead of forcing squash color 0', () => {
     const result = migrateLayout({
       projectId: 'p',
       locations: { a: { x: 0, y: 0 }, b: { x: 1, y: 1 } },
       colors: { a: { l: 0.5, c: 0.1, h: 200 }, b: 4 },
     })
     if (!result.ok) throw new Error('expected success')
-    expect(result.layout.colors).toEqual({ a: 0, b: 4 })
+    expect(result.layout.colors).toEqual({ b: 4 })
+  })
+
+  it('omits colors when a v1 layout only contains legacy color objects', () => {
+    const result = migrateLayout({
+      projectId: 'p',
+      locations: { a: { x: 0, y: 0 } },
+      colors: { a: { l: 0.5, c: 0.1, h: 200 } },
+    })
+    if (!result.ok) throw new Error('expected success')
+    expect(result.layout.colors).toEqual(undefined)
   })
 
   it('refuses payloads from a newer version with too-new reason', () => {

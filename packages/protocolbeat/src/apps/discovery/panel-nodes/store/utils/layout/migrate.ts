@@ -107,16 +107,14 @@ function migrateV1toV2(input: LayoutV1): LayoutV2 {
   }
 }
 
-// Legacy oklch color objects collapse to palette index 0. This matches the
-// coercion readers already apply for non-numeric color entries, so it's a
-// no-op against current runtime behavior; the difference is that the
-// on-disk shape is now uniform.
 function normalizeColors(
   colors: NonNullable<LayoutV1['colors']>,
-): Record<string, number> {
+): Record<string, number> | undefined {
   const result: Record<string, number> = {}
   for (const [id, color] of Object.entries(colors)) {
-    result[id] = typeof color === 'number' ? color : 0
+    if (typeof color === 'number') {
+      result[id] = color
+    }
   }
-  return result
+  return Object.keys(result).length > 0 ? result : undefined
 }
