@@ -130,28 +130,28 @@ export const railgun: BaseProject = {
   display: {
     description:
       'An onchain privacy system for Ethereum based on encrypted UTXO-style private balances and zk-proven DeFi interactions.',
-    detailedDescription: `Railgun is a non-custodial privacy protocol on Ethereum built around encrypted UTXO-style private balances rather than fixed-denomination pools. This design enables interactions, like transfers of shielded tokens and interactions with DeFi smart contracts.
+    detailedDescription: `Railgun is a non-custodial privacy protocol on Ethereum built around encrypted UTXO-style private balances rather than fixed-denomination pools. This design enables in-protocol transfers of shielded tokens and interactions with DeFi smart contracts on L1.
 
-A shield transaction moves assets from a public address into the Railgun contract and creates encrypted commitments in a Merkle-tree state. Later private transfers or unshields use zk-SNARK proofs to spend those commitments without revealing the sender, recipient, token type, or amount. Notes created by deposits and private transactions represents ownership of tokens in Railgun, users must keep them secret and make sure the notes are not lost.
+A shield transaction moves assets from a public address on Ethereum into the Railgun contract and creates encrypted commitments in a Merkle-tree state. Later private transfers or unshields use zk-SNARK proofs to spend those commitments without revealing the sender, recipient, token type, or amount. Notes created by deposits and private transactions represents ownership of tokens in Railgun, users must keep them secret and make sure the notes are not lost.
 
 Railgun supports private transfers and cross-contract interactions without fragmenting liquidity across denominations. External DeFi calls are executed through the Relay Adapt flow, which temporarily unshields tokens into an adapter contract, performs a sequence of contract calls, and shields the resulting assets back into a private balance in a single transaction.
 
-Railgun has a DAO governed by holders of RAIL token. DAO has authority to arbitrarily change the logic for shielded tokens.
+Railgun has a DAO governed by holders of the RAIL token. The DAO has the authority to arbitrarily change the logic of the protocol and its shielded tokens.
 
 ### Privacy considerations
 
-Railgun protocol supports [relayed withdrawals](https://docs.railgun.org/developer-guide/wallet/transactions/unshielding), in which relayer processes withdrawals on user's behalf for a fee, which enables sending funds to fresh addresses. Transactions from private addresses can be sent through broadcasters over [Waku network](https://blog.waku.org/2024-04-26-railgun-case-study/), which increases network-level privacy. Railgun allows interactions between shielded tokens and DeFi, which allows depositing and withdrawing different tokens.
+Railgun protocol supports [relayed withdrawals](https://docs.railgun.org/developer-guide/wallet/transactions/unshielding), in which a relayer processes withdrawals on the user's behalf for a fee, which enables sending funds to fresh addresses. Transactions from private addresses can be sent through broadcasters over the [Waku network](https://blog.waku.org/2024-04-26-railgun-case-study/), which increases network-level privacy. Railgun allows interactions between shielded tokens and DeFi, which allows depositing and withdrawing different tokens.
 
-Practical privacy also depends on the timing and amounts of deposits and withdrawals, as well as RPC providers used to send transactions and query public blockchain state. Users are advised to research the best OPSEC practices.
+Practical privacy also depends on the timing and amounts of deposits and withdrawals, as well as RPC providers used to send transactions and query the public blockchain state. Users are advised to research the best OPSEC practices.
 
 ### Compliance
 
-Railgun protocol does not enforce any compliance measures. However it allows using [Private Proof of Innocence](https://docs.railgun.org/wiki/assurance/private-proofs-of-innocence), which can attest to the origin and history of shielded tokens. Practically, broadcasters and some wallets only process transactions with valid PPoI.
+Railgun protocol does not enforce any compliance measures. However it allows using [Private Proof of Innocence](https://docs.railgun.org/wiki/assurance/private-proofs-of-innocence), which can attest to the origin and history of shielded tokens. Practically, broadcasters and some wallets only process transactions with a valid PPoI.
 
 Additionally, Railgun users can share a read-only viewing key to expose all sent and received private transactions, if required by a regulator or enforcer. 
 ### Anonymity set
 
-Because Railgun allows private transfers and interactions with DeFi, anonymity set is not well defined. A withdrawal from Railgun could be connected with a deposit of another token, or could even not correspond to any deposit if a user received a private transfer from another user. The anonymity set roughly corresponds to the set of all Railgun users.`,
+Because Railgun allows private transfers and interactions with DeFi, its anonymity set is not well defined. A withdrawal from Railgun could be connected with a deposit of another token, or could even not correspond to any deposit if a user received a private transfer from another user. The anonymity set roughly corresponds to the set of all Railgun users.`,
     links: {
       websites: ['https://railgun.org'],
     },
