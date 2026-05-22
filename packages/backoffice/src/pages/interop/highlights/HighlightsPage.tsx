@@ -18,6 +18,7 @@ import { ErrorState } from '~/components/ErrorState'
 import { ExternalLink } from '~/components/ExternalLink'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
+import { formatPercent } from '~/pages/interop/anomalies/utils'
 import { formatDollars } from '~/pages/interop/transfers/utils'
 import { api } from '~/react-query/trpc'
 
@@ -149,7 +150,7 @@ export function HighlightsPage() {
                     primaryLabel="Increase"
                     primaryValue={
                       uopsIncrease
-                        ? `+${uopsIncrease.increase.toLocaleString()}`
+                        ? formatPercent(uopsIncrease.increasePercent)
                         : undefined
                     }
                     secondary={

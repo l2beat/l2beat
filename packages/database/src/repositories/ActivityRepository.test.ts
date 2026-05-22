@@ -73,23 +73,18 @@ describeDatabase(ActivityRepository.name, (db) => {
   describe(
     ActivityRepository.prototype.getLargestUopsCountIncrease.name,
     () => {
-      it('returns project with largest positive UOPS increase', async () => {
+      it('returns project with largest positive UOPS percentage increase', async () => {
         const previousPreviousTimestamp = START
         const previousTimestamp = START + UnixTime.DAY
         const timestamp = START + 2 * UnixTime.DAY
 
         await repository.upsertMany([
-          record('ethereum', previousPreviousTimestamp, 1, 90),
-          record('arbitrum', previousPreviousTimestamp, 1, 40),
-          record('base', previousPreviousTimestamp, 20, null),
-          record('ethereum', previousTimestamp, 1, 100),
-          record('arbitrum', previousTimestamp, 1, 50),
-          record('base', previousTimestamp, 20, null),
-          record('new-project', previousTimestamp, 1, 1),
-          record('ethereum', timestamp, 1, 250),
-          record('arbitrum', timestamp, 1, 300),
-          record('base', timestamp, 100, null),
-          record('new-project', timestamp, 1, 1000),
+          record('ethereum', previousPreviousTimestamp, 1, 18),
+          record('lighter', previousPreviousTimestamp, 1, 1100),
+          record('ethereum', previousTimestamp, 1, 20),
+          record('lighter', previousTimestamp, 1, 1200),
+          record('ethereum', timestamp, 1, 50),
+          record('lighter', timestamp, 1, 1250),
         ])
 
         const result = await repository.getLargestUopsCountIncrease(
@@ -103,6 +98,7 @@ describeDatabase(ActivityRepository.name, (db) => {
           currentUopsCount: 300,
           previousUopsCount: 50,
           increase: 250,
+          increasePercent: 500,
         })
       })
 

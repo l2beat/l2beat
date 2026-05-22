@@ -18,6 +18,7 @@ export interface ActivityUopsCountIncreaseRecord {
   currentUopsCount: number
   previousUopsCount: number
   increase: number
+  increasePercent: number
 }
 
 export function toRecord(row: Selectable<Activity>): ActivityRecord {
@@ -127,6 +128,10 @@ export class ActivityRepository extends BaseRepository {
     const increase = sql<number>`
       "current"."uops_count" - "previous"."uops_count"
     `
+    const increasePercent = sql<number>`
+      ("current"."uops_count" - "previous"."uops_count")::double precision
+      / "previous"."uops_count" * 100
+    `
 
     const row = await this.db
       .selectFrom(current)
@@ -138,6 +143,7 @@ export class ActivityRepository extends BaseRepository {
         sql<number>`"current"."uops_count"`.as('current_uops_count'),
         sql<number>`"previous"."uops_count"`.as('previous_uops_count'),
         increase.as('increase'),
+        increasePercent.as('increase_percent'),
       ])
       .where(({ eb, exists }) =>
         exists(
@@ -152,8 +158,9 @@ export class ActivityRepository extends BaseRepository {
             ),
         ),
       )
+      .where(sql`"previous"."uops_count"`, '>', 0)
       .where(increase, '>', 0)
-      .orderBy(sql`increase desc`)
+      .orderBy(sql`increase_percent desc`)
       .orderBy('current.projectId', 'asc')
       .limit(1)
       .executeTakeFirst()
@@ -168,6 +175,7 @@ export class ActivityRepository extends BaseRepository {
       currentUopsCount: Number(row.current_uops_count ?? 0),
       previousUopsCount: Number(row.previous_uops_count ?? 0),
       increase: Number(row.increase ?? 0),
+      increasePercent: Number(row.increase_percent ?? 0),
     }
   }
 

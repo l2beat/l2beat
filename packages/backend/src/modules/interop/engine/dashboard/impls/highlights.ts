@@ -69,6 +69,7 @@ interface CountIncreaseHighlight {
   currentCount: number
   previousCount: number
   increase: number
+  increasePercent: number
 }
 
 export async function getInteropHighlights(
@@ -234,6 +235,7 @@ export async function getInteropHighlights(
             currentCount: uopsIncrease.currentUopsCount,
             previousCount: uopsIncrease.previousUopsCount,
             increase: uopsIncrease.increase,
+            increasePercent: uopsIncrease.increasePercent,
           }
         : null,
     largestTvsIncreaseByChain:

@@ -52,10 +52,11 @@ describe(createHighlightsRouter.name, () => {
     })
     const getLargestUopsCountIncrease = mockFn().resolvesTo({
       timestamp: latestTimestamp,
-      projectId: 'base',
-      currentUopsCount: 4_000_000,
-      previousUopsCount: 2_500_000,
-      increase: 1_500_000,
+      projectId: 'ethereum',
+      currentUopsCount: 50,
+      previousUopsCount: 20,
+      increase: 30,
+      increasePercent: 150,
     })
     const getLargestTvsIncrease = mockFn().resolvesTo({
       timestamp: latestTimestamp,
@@ -180,10 +181,11 @@ describe(createHighlightsRouter.name, () => {
         windowEnd: latestTimestamp,
         previousWindowStart: latestTimestamp - 2 * UnixTime.DAY,
         previousWindowEnd: latestTimestamp - UnixTime.DAY,
-        chain: 'base',
-        currentCount: 4_000_000,
-        previousCount: 2_500_000,
-        increase: 1_500_000,
+        chain: 'ethereum',
+        currentCount: 50,
+        previousCount: 20,
+        increase: 30,
+        increasePercent: 150,
       },
       largestTvsIncreaseByChain: {
         windowStart: latestTimestamp - UnixTime.DAY,
