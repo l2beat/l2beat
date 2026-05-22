@@ -28,7 +28,8 @@
     },
     "canUnpauseAfter": {
       "description": "Earliest timestamp after which governance may change the paused state.",
-      "severity": "LOW"
+      "severity": "HIGH"
     }
-  }
+  },
+  "ignoreMethods": ["blockTimestamp"]
 }

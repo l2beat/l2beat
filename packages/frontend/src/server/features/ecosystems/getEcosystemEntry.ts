@@ -27,10 +27,6 @@ import {
 import type { ProjectSevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
 import { getTvsTableData } from '../scaling/tvs/getTvsTableData'
 import { getTvsSyncWarning } from '../scaling/tvs/utils/syncStatus'
-import {
-  getScalingUpcomingEntry,
-  type ScalingUpcomingEntry,
-} from '../scaling/upcoming/getScalingUpcomingEntries'
 import { type BlobsData, getBlobsData } from './getBlobsData'
 import { getEcosystemLogo } from './getEcosystemLogo'
 import type { EcosystemProjectsCountData } from './getEcosystemProjectsChartData'
@@ -63,7 +59,6 @@ export interface EcosystemEntry {
   badges: BadgeWithParams[]
   colors: ProjectCustomColors
   liveProjects: EcosystemProjectEntry[]
-  upcomingProjects: ScalingUpcomingEntry[]
   projectsChartData: EcosystemProjectsCountData
   allScalingProjects: {
     tvs: {
@@ -139,7 +134,7 @@ export async function getEcosystemEntry(
   const [allScalingProjects, projects, zkCatalogProjects] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      whereNot: ['archivedAt'],
     }),
     ps.getProjects({
       select: [
@@ -157,7 +152,6 @@ export async function getEcosystemEntry(
         'chainConfig',
         'milestones',
         'archivedAt',
-        'isUpcoming',
         'hasTestnet',
         'contracts',
       ],
@@ -172,10 +166,9 @@ export async function getEcosystemEntry(
     (p) => p.ecosystemInfo.id === ecosystem.id,
   )
 
-  const upcomingProjects = ecosystemProjects.filter((p) => p.isUpcoming)
   const archivedProjects = ecosystemProjects.filter((p) => !!p.archivedAt)
   const liveProjects = ecosystemProjects
-    .filter((p) => !p.isUpcoming && !p.archivedAt)
+    .filter((p) => !p.archivedAt)
     .toSorted((a, b) => a.id.localeCompare(b.id))
 
   const [
@@ -299,9 +292,6 @@ export async function getEcosystemEntry(
       }
       return result
     }),
-    upcomingProjects: upcomingProjects.map((p) =>
-      getScalingUpcomingEntry(p, zkCatalogProjects),
-    ),
     allMilestones: getMilestones([ecosystem, ...ecosystemProjects]),
     ecosystemMilestones: getMilestones([ecosystem]),
     images: {

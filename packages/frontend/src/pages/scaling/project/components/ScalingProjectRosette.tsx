@@ -21,7 +21,6 @@ export function ProjectScalingRosette({ project, size }: Props) {
         className="my-auto max-lg:hidden"
         values={project.rosette.self}
         isUnderReview={project.underReviewStatus === 'config'}
-        isUpcoming={project.isUpcoming}
         size={size}
       />
     )
@@ -40,9 +39,7 @@ export function ProjectScalingRosette({ project, size }: Props) {
           rosetteType={rosetteType}
           setRosetteType={setRosetteType}
           isDisabled={
-            project.underReviewStatus === 'config' ||
-            project.isUpcoming ||
-            !project.rosette.host
+            project.underReviewStatus === 'config' || !project.rosette.host
           }
         />
       )}
@@ -50,22 +47,18 @@ export function ProjectScalingRosette({ project, size }: Props) {
     </div>
   )
 
-  // L3 - general under review/upcoming
-  if (project.underReviewStatus === 'config' || project.isUpcoming) {
+  if (project.underReviewStatus === 'config') {
     return (
       <Wrapper>
-        {/* Under review/upcoming thus no risks so we let the basic rosette fallback to question mark */}
         <BigPizzaRosette
           values={project.rosette.self}
           isUnderReview={project.underReviewStatus === 'config'}
-          isUpcoming={project.isUpcoming}
           size={size}
         />
       </Wrapper>
     )
   }
 
-  // L3 - no host chain (Multiple), should not happen
   if (!project.rosette.host || !project.hostChainName) {
     return (
       <Wrapper hideSelector>
@@ -74,7 +67,6 @@ export function ProjectScalingRosette({ project, size }: Props) {
     )
   }
 
-  // L3 - has stacked risks
   if (project.rosette.stacked) {
     return (
       <Wrapper>
@@ -97,7 +89,6 @@ export function ProjectScalingRosette({ project, size }: Props) {
     )
   }
 
-  // L3 - no stacked risks - so only switch and individual rosette is there
   return (
     <Wrapper>
       {rosetteType === 'individual' ? (
@@ -113,7 +104,6 @@ export function ProjectScalingRosette({ project, size }: Props) {
           size={size}
         />
       ) : (
-        // Force under review for combined - values doesn't matter
         <BigPizzaRosette
           values={project.rosette.host}
           isUnderReview

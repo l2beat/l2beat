@@ -39,14 +39,12 @@
       ]
     },
     "namedAddresses": {
-      "description": "Don't necessarily trust because inconsistencies have been found, e.g. signal service",
+      "description": "Don't necessarily trust because inconsistencies have been found, e.g. signal service. Review bridging if quota-manager, or watchdog gets added here.",
       "handler": {
         "type": "event",
         "select": "newAddress",
         "groupBy": "name",
-        "set": {
-          "event": "AddressSet"
-        },
+        "set": { "event": "AddressSet" },
         "ignoreRelative": true
       },
       "edit": [

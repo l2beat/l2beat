@@ -3,6 +3,7 @@ import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories
 import type { ChainRepository } from '@l2beat/database/dist/repositories/ChainRepository'
 import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
+import type { AbstractTokenRecord } from '../../../schemas/AbstractToken'
 import { createCallerFactory } from '../../trpc'
 import { searchRouter } from './index'
 
@@ -46,7 +47,7 @@ describe('searchRouter', () => {
 
     it('returns fuzzy search results', async () => {
       const abstractTokens = [
-        {
+        abstractToken({
           id: 'TK0001',
           symbol: 'Bitcoin',
           category: 'btc' as const,
@@ -56,8 +57,8 @@ describe('searchRouter', () => {
           comment: null,
           coingeckoListingTimestamp: null,
           reviewed: false,
-        },
-        {
+        }),
+        abstractToken({
           id: 'TK0002',
           symbol: 'Ethereum',
           category: 'ether' as const,
@@ -67,7 +68,7 @@ describe('searchRouter', () => {
           comment: null,
           coingeckoListingTimestamp: null,
           reviewed: false,
-        },
+        }),
       ]
       const deployedTokens = [
         {
@@ -129,17 +130,13 @@ describe('searchRouter', () => {
     })
 
     it('limits results to 15 items per type', async () => {
-      const abstractTokens = Array.from({ length: 20 }, (_, i) => ({
-        id: `TK${String(i).padStart(4, '0')}`,
-        symbol: `Token${i}`,
-        category: 'other' as const,
-        issuer: null,
-        coingeckoId: null,
-        iconUrl: null,
-        comment: null,
-        coingeckoListingTimestamp: null,
-        reviewed: false,
-      }))
+      const abstractTokens = Array.from({ length: 20 }, (_, i) =>
+        abstractToken({
+          id: `TK${String(i).padStart(4, '0')}`,
+          symbol: `Token${i}`,
+          category: 'other' as const,
+        }),
+      )
       const deployedTokens = Array.from({ length: 20 }, (_, i) => ({
         chain: 'ethereum',
         address: `0x${String(i).padStart(40, '0')}`,
@@ -225,4 +222,21 @@ function createRouter(mockTokenDb: TokenDatabase) {
     db: mockObject<Database>({}),
     tokenDb: mockTokenDb,
   })
+}
+
+function abstractToken(
+  overrides: Partial<AbstractTokenRecord> & Pick<AbstractTokenRecord, 'id'>,
+): AbstractTokenRecord {
+  return {
+    id: overrides.id,
+    symbol: overrides.symbol ?? 'TOKEN',
+    category: overrides.category ?? null,
+    issuer: overrides.issuer ?? null,
+    coingeckoId: overrides.coingeckoId ?? null,
+    iconUrl: overrides.iconUrl ?? null,
+    comment: overrides.comment ?? null,
+    coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
+    reviewed: overrides.reviewed ?? false,
+    isPriceUnreliable: overrides.isPriceUnreliable ?? false,
+  }
 }

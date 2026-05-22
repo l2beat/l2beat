@@ -46,6 +46,8 @@ const settings: monaco.editor.IStandaloneEditorConstructionOptions = {
 
 export class MonacoCodeEditor<T extends EditorType> {
   protected editor: ToMonaco<T>
+  protected callbacks: monaco.IDisposable[] = []
+
   constructor(element: HTMLElement, editorType: T) {
     if (!initialized) {
       init()
@@ -99,6 +101,30 @@ export class MonacoCodeEditor<T extends EditorType> {
       ...currentDiagnostics,
       schemas: filteredSchemas,
     })
+  }
+
+  // Wraps a Monaco disposable so the caller can dispose it directly *and*
+  // we still clean it up on full editor disposal if the caller never did.
+  protected trackDisposable(
+    disposable: monaco.IDisposable,
+  ): monaco.IDisposable {
+    this.callbacks.push(disposable)
+    return {
+      dispose: () => {
+        const index = this.callbacks.indexOf(disposable)
+        if (index !== -1) {
+          this.callbacks.splice(index, 1)
+        }
+        disposable.dispose()
+      },
+    }
+  }
+
+  protected disposeCallbacks() {
+    for (const callback of this.callbacks) {
+      callback.dispose()
+    }
+    this.callbacks = []
   }
 }
 

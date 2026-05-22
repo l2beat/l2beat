@@ -505,7 +505,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           UnixTime(100),
           ['ethereum', 'arbitrum'],
           ['ethereum', 'arbitrum'],
-          'lockAndMint',
+          ['lockAndMint'],
         )
 
         expect(result).toEqualUnsorted([record1])
@@ -617,7 +617,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           UnixTime(100),
           ['ethereum', 'arbitrum'],
           ['ethereum', 'arbitrum'],
-          'lockAndMint',
+          ['lockAndMint'],
         )
 
         expect(result).toEqualUnsorted([record1, record3])

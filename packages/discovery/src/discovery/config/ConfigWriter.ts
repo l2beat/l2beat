@@ -23,21 +23,10 @@ export class ConfigWriter {
     writeFileSync(configPath, contents)
   }
 
-  // #region config templates
   createProjectConfigFile(project: string, contents: ConfigTemplateValues) {
     const projectPath = join(this.rootPath, project)
 
     const config = this.prepareProjectConfig(contents)
-
-    StructureConfig.parse(config)
-
-    this.createConfigFile(projectPath, formatJson(config))
-  }
-
-  createTokenConfigFile(project: string, contents: ConfigTemplateValues) {
-    const projectPath = join(this.rootPath, '(tokens)', project)
-
-    const config = this.prepareTokenConfig(contents)
 
     StructureConfig.parse(config)
 
@@ -58,38 +47,6 @@ export class ConfigWriter {
 
     return config
   }
-
-  private prepareTokenConfig(incomingValues: ConfigTemplateValues) {
-    const { name, initialAddresses, maxDepth, maxAddresses } = incomingValues
-
-    const overrides: Record<string, unknown> = {}
-
-    for (const address of initialAddresses ?? []) {
-      overrides[address.toString()] = {
-        fields: {
-          $tokenData: {
-            handler: {
-              type: 'ERC20Data',
-            },
-          },
-        },
-      }
-    }
-
-    const projectConfig = this.prepareProjectConfig({
-      name,
-      initialAddresses,
-      maxDepth,
-      maxAddresses,
-    })
-
-    return {
-      ...projectConfig,
-      import: ['../../globalConfig.jsonc'],
-      overrides,
-    }
-  }
-  // #endregion config templates
 
   private createConfigFile(projectPath: string, contents: string) {
     mkdirSync(projectPath, { recursive: true })

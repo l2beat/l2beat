@@ -1244,7 +1244,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "RailToken",
+      "name": "Rail Token",
       "address": "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
       "type": "Contract",
       "template": "railgun/RailToken",
@@ -2029,5 +2029,5 @@
     "railgun/Voting": "0xcf33f9d03116b81a59f25ba7bf17c38122eedecde0df775a365f78a34697bd68"
   },
   "usedBlockNumbers": { "ethereum": 24992832 },
-  "permissionsConfigHash": "0xc817f0c081917a651bb5f6898d6620ac54c691a5f8bc742d66c531130c6dcdda"
+  "permissionsConfigHash": "0xedd462c0e7d5c3b0e3a6430193cae24752e4898aa3ec197cb654cfeedced168f"
 }

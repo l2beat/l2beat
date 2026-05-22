@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x839297ea25bf32308e0a894c36ab14046d4332d2
+
+# Diff at Fri, 15 May 2026 12:36:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1777567242
+- current timestamp: 1777567242
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777567242 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
++        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+    }
+```
+
 Generated with discovered.json: 0x7ec6f3085e1de8c3f9dcb62235fcb04067d66a6c
 
 # Diff at Fri, 08 May 2026 08:29:06 GMT:
