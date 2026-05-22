@@ -6,7 +6,7 @@ import {
   toIngestionTraceView,
 } from '../../../ingestion/formatIngestionTrace'
 import type { IngestionOutcomeView } from '../../../ingestion/IngestionTrace'
-import { buildInteropTransferIndex } from '../../../ingestion/InteropTransferIndex'
+import { buildInteropTransferIndex } from '../../../ingestion/tokenIngestionUtils'
 import { readOnlyProcedure, readWriteProcedure } from '../../procedures'
 import { router } from '../../trpc'
 

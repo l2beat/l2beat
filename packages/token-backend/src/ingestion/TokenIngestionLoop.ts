@@ -2,11 +2,11 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database, TokenDatabase } from '@l2beat/database'
 import type { TokenIngestionQueueState } from '@l2beat/database/dist/repositories/TokenIngestionQueueRepository'
 import type { IngestionOutcome } from './IngestionTrace'
+import type { TokenIngestionProcessor } from './TokenIngestionProcessor'
 import {
   buildInteropTransferIndex,
   normalizeInteropTokenAddress,
-} from './InteropTransferIndex'
-import type { TokenIngestionProcessor } from './TokenIngestionProcessor'
+} from './tokenIngestionUtils'
 
 const INTEROP_TRANSFERS_LAST_SERIAL_ID_KEY = 'interop-transfers:lastSerialId'
 const DEFAULT_MAX_PROCESSED_PER_RUN = 1_000

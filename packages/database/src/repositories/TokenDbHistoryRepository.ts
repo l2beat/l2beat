@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TokenDbHistory } from '../kysely/generated/types'
+import { toJsonSafe } from '../utils/toJsonSafe'
 
 export type TokenDbHistorySource = 'manual' | 'ingestion'
 
@@ -43,14 +44,6 @@ function toRow(record: TokenDbHistoryEntryInsert): Insertable<TokenDbHistory> {
     command: toJsonSafe(record.command),
     ingestionLog: record.ingestionLog,
   }
-}
-
-function toJsonSafe(value: unknown): unknown {
-  return JSON.parse(
-    JSON.stringify(value, (_key, v) =>
-      typeof v === 'bigint' ? v.toString() : v,
-    ),
-  )
 }
 
 export class TokenDbHistoryRepository extends BaseRepository {

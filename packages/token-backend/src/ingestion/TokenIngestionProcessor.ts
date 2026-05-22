@@ -46,7 +46,7 @@ import {
   type InteropTransferMatch,
   normalizeInteropTokenAddress,
   type TokenAddress,
-} from './InteropTransferIndex'
+} from './tokenIngestionUtils'
 
 interface TokenIngestionProcessorDeps {
   db: Database

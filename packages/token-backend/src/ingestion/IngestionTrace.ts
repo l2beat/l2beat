@@ -5,7 +5,7 @@ import type {
   DeployedTokenPrimaryKey,
   DeployedTokenUpdateable,
 } from '../schemas/DeployedToken'
-import type { TokenAddress } from './InteropTransferIndex'
+import type { TokenAddress } from './tokenIngestionUtils'
 
 export interface IngestionTrace {
   id: string

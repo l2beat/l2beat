@@ -13,8 +13,8 @@ import type { Chain } from '../chains/Chain'
 import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
 import type { DeployedTokenFacts } from '../chains/fetchDeployedTokenFacts'
 import type { IngestionTrace } from './IngestionTrace'
-import { buildInteropTransferIndex } from './InteropTransferIndex'
 import { TokenIngestionProcessor } from './TokenIngestionProcessor'
+import { buildInteropTransferIndex } from './tokenIngestionUtils'
 
 describe(TokenIngestionProcessor.name, () => {
   describe(TokenIngestionProcessor.prototype.plan.name, () => {
