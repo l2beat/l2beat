@@ -47,14 +47,16 @@ export function FrameworkCompareContent({
         Select two frameworks & view head-to-head comparison
       </p>
       <HorizontalSeparator className="my-6" />
-      <div className="flex items-center gap-5">
+      <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:gap-5">
         <FrameworkSelect
           frameworks={tokenFrameworks}
           value={leftId}
           onChange={setLeftId}
           excludeId={rightId}
         />
-        <span className="font-semibold text-base text-secondary">vs.</span>
+        <span className="text-center font-semibold text-base text-secondary sm:text-left">
+          vs.
+        </span>
         <FrameworkSelect
           frameworks={tokenFrameworks}
           value={rightId}
