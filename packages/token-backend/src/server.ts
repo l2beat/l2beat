@@ -23,9 +23,7 @@ function main() {
     apiKey: config.coingeckoApiKey,
   })
 
-  const newQueueState = config.tokenIngestion.requireApproval
-    ? 'staged'
-    : 'pending'
+  const newQueueState = config.tokenIngestion.autoApprove ? 'pending' : 'staged'
   const tokenIngestionProcessor = new TokenIngestionProcessor({
     db,
     tokenDb,

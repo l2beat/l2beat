@@ -9,7 +9,7 @@ and their connections, e.g. finding all related tokens (even if connections are 
 |----------|----------|---------|-------------|
 | `TOKEN_INGESTION_ENABLED` | No | `false` | Enable the background token ingestion loop. |
 | `TOKEN_INGESTION_INTERVAL_MS` | No | `60000` | Interval between ingestion runs, in milliseconds. |
-| `TOKEN_INGESTION_REQUIRE_APPROVAL` | No | `false` | If `true`, newly ingested tokens are placed in a `staged` state awaiting manual approval. If `false`, they go straight to `pending` and will be processed automatically. |
+| `TOKEN_INGESTION_AUTOAPPROVE` | No | `false` | If `true`, newly ingested tokens go straight to `pending` and will be processed automatically. If `false`, they are placed in a `staged` state awaiting manual approval. |
 | `TOKEN_INGESTION_MAX_PROCESSED_PER_RUN` | No | `1000` | Prevents infinite-loop. Maximum number of pending queue entries processed in one ingestion run before the drain stops and leaves the rest pending. |
 | `CF_TEAM_DOMAIN` | Yes* | — | Cloudflare Access team domain (e.g. `https://myteam.cloudflareaccess.com`). Required when `DEPLOYMENT_ENV` is `staging` or `production`. |
 | `CF_ACCESS_AUD` | Yes* | — | Cloudflare Access application AUD. Required when `DEPLOYMENT_ENV` is `staging` or `production`. |

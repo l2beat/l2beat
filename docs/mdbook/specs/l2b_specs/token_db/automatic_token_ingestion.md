@@ -98,11 +98,11 @@ it and we try again from scratch.
 
 ## Approval mode
 
-For production rollout the pre-step can be configured to enqueue
-discovered addresses as `staged` instead of `pending`
-(`TOKEN_INGESTION_REQUIRE_APPROVAL=true`). A researcher inspects each one
-and approves it from the queue UI. Long-term, with this toggle off, the
-loop is fully autonomous and the UI focuses on `conflict` / `error`.
+For production rollout the pre-step enqueues discovered addresses as
+`staged` by default. A researcher inspects each one and approves it from
+the queue UI. Long-term, `TOKEN_INGESTION_AUTOAPPROVE=true` makes the loop
+fully autonomous by enqueueing new addresses as `pending`, and the UI
+focuses on `conflict` / `error`.
 
 ## Processing one entry: plan + fetch + apply
 

@@ -69,7 +69,7 @@ describe(TokenIngestionLoop.name, () => {
       })
     })
 
-    it('stages newly discovered addresses when approval is required', async () => {
+    it('stages newly discovered addresses when auto-approve is disabled', async () => {
       const enqueue = mockFn().resolvesTo(undefined)
 
       const loop = createLoop({
