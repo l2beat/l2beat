@@ -9,7 +9,6 @@ export const SEARCH_BAR_PROJECT_KEYS = [
   'id',
   'iconUrl',
   'kind',
-  'isUpcoming',
   'scalingCategory',
 ] as const satisfies (keyof SearchBarProjectEntry)[]
 

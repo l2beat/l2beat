@@ -4,6 +4,7 @@ import {
   DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
+  get$Implementations,
   getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   getHashToBeMatched,
@@ -44,7 +45,6 @@ export const onChainProjects: string[] = [
   'privacy-pools',
   'railgun',
   'tornado-cash',
-  ...configReader.getProjectsInGroup('tokens'),
 ]
 
 describe('discovery config.jsonc', () => {
@@ -122,7 +122,7 @@ describe('discovery config.jsonc', () => {
   })
 
   it('committed discovery config hash, template hashes and shapeFilesHash are up to date', () => {
-    for (const c of configs) {
+    for (const c of configs.filter((c) => !c.archived)) {
       const discovery = configReader.readDiscovery(c.name)
       const reasons = templateService.discoveryNeedsRefresh(discovery, c)
 
@@ -150,6 +150,31 @@ describe('discovery config.jsonc', () => {
 
         const uniqueAddresses = unique(addresses, asKey)
         expect(addresses).toHaveLength(uniqueAddresses.length)
+      })
+    }
+  })
+
+  describe('shape addresses are not proxies', () => {
+    const proxies: Set<ChainSpecificAddress> = new Set()
+
+    for (const c of configs.filter((c) => !c.archived)) {
+      const discovery = configReader.readDiscovery(c.name)
+      const addresses = discovery.entries
+        .filter((e) => get$Implementations(e.values).length > 0)
+        .map((e) => e.address)
+
+      for (const a of addresses) proxies.add(a)
+    }
+
+    const shapes = templateService.listAllTemplates()
+    for (const [templateId, { shapePath }] of Object.entries(shapes)) {
+      it(`shape ${templateId}:${shapePath} addresses are not proxies`, () => {
+        const shape = templateService.readShapeSchema(shapePath)
+        const addresses = Object.values(shape).flatMap((x) =>
+          Array.isArray(x.address) ? x.address : [x.address],
+        )
+
+        expect(addresses.every((a) => !proxies.has(a))).toBeTruthy()
       })
     }
   })
@@ -201,7 +226,7 @@ describe('discovery config.jsonc', () => {
       const mismatches: TemplateMatchMismatch[] = []
       const allShapes = templateService.getAllShapes()
 
-      for (const c of configs) {
+      for (const c of configs.filter((c) => !c.archived)) {
         const discovery = configReader.readDiscovery(c.name)
 
         for (const contract of discovery.entries) {

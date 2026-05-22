@@ -214,6 +214,28 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getLatestTimestampsByConfigId(): Promise<
+    { configurationId: string; latestTimestamp: UnixTime }[]
+  > {
+    const rows = await this.db
+      .selectFrom('DataAvailability')
+      .select(['configurationId'])
+      .select(this.db.fn.max('timestamp').as('latestTimestamp'))
+      .groupBy('configurationId')
+      .execute()
+
+    return rows.flatMap((row) => {
+      if (row.latestTimestamp === null) {
+        return []
+      }
+
+      return {
+        configurationId: row.configurationId,
+        latestTimestamp: UnixTime.fromDate(row.latestTimestamp),
+      }
+    })
+  }
+
   // Test only
   async getAll(): Promise<DataAvailabilityRecord[]> {
     const rows = await this.db

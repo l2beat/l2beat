@@ -1,8 +1,7 @@
 {
   "Proposal": {
-    "hash": "0x5efc2fdc403e69629e56eddb4e3c7fe537d5a4db7adc21e95ec603f5b09005b7",
+    "hash": "0xdc8f034743e60e596fcdb7e3e2c904582718c8a12e0470e689e7b0a2344890c9",
     "address": "eth:0x4B6C07B8940a7602fE4332AFa915b366e56eAce5",
-    "chain": "ethereum",
     "blockNumber": 24992607
   }
 }

@@ -9,9 +9,7 @@
       "description": "Fixed cToken amount accepted by this pool.",
       "severity": "LOW"
     },
-    "token": {
-      "description": "cToken accepted by this mixer instance."
-    },
+    "token": { "description": "cToken accepted by this mixer instance." },
     "verifier": {
       "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
       "severity": "HIGH"
@@ -25,5 +23,6 @@
     "governance": {
       "description": "Recipient of claimed COMP rewards from this pool."
     }
-  }
+  },
+  "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"]
 }

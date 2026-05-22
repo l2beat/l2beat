@@ -45,7 +45,7 @@ export async function getScalingRiskStateValidationEntries() {
       select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
       optional: ['contracts', 'tvsInfo'],
       where: ['scalingInfo'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      whereNot: ['archivedAt'],
     }),
     ps.getProjects({
       select: ['zkCatalogInfo'],
@@ -57,12 +57,8 @@ export async function getScalingRiskStateValidationEntries() {
     get7dTvsBreakdown({ type: 'all' }),
   ])
 
-  const reviewedProjects = projects.filter(
-    (p) => p.statuses.reviewStatus !== 'initialReview',
-  )
-
   const [withProofSystem, noProofsProjects] = partition(
-    reviewedProjects,
+    projects,
     (p) => !!p.scalingInfo.proofSystem,
   )
 

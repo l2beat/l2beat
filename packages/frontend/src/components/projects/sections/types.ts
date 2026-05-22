@@ -6,6 +6,7 @@ import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSecti
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
+import type { InteropFlowsSectionProps } from './interop/InteropFlowsSection'
 import type { InteropTokensSectionProps } from './interop/InteropTokensSection'
 import type { InteropTransfersSectionProps } from './interop/InteropTransfersSection'
 import type { InteropVolumeSectionProps } from './interop/InteropVolumeSection'
@@ -58,6 +59,7 @@ type SectionId =
   | 'verifiers'
   | 'program-hashes'
   | 'interop-volume'
+  | 'interop-flows'
   | 'interop-transfers'
   | 'interop-tokens'
 type GroupId = 'da-layer' | 'da-bridge'
@@ -191,6 +193,11 @@ interface ProjectDetailsInteropVolumeSection {
   props: ProjectDetailsProps<InteropVolumeSectionProps>
 }
 
+interface ProjectDetailsInteropFlowsSection {
+  type: 'InteropFlowsSection'
+  props: ProjectDetailsProps<InteropFlowsSectionProps>
+}
+
 interface ProjectDetailsInteropTransfersSection {
   type: 'InteropTransfersSection'
   props: ProjectDetailsProps<InteropTransfersSectionProps>
@@ -199,11 +206,6 @@ interface ProjectDetailsInteropTransfersSection {
 interface ProjectDetailsInteropTokensSection {
   type: 'InteropTokensSection'
   props: ProjectDetailsProps<InteropTokensSectionProps>
-}
-
-interface ProjectDetailsUpcomingDisclaimer {
-  type: 'UpcomingDisclaimer'
-  excludeFromNavigation: true
 }
 
 interface ProjectDetailsGroup {
@@ -247,7 +249,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsPermissionsSection
   | ProjectDetailsContractsSection
   | ProjectDetailsDataPostedSection
-  | ProjectDetailsUpcomingDisclaimer
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection
   | ProjectDetailsThroughputSection
@@ -258,6 +259,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsProgramHashesSection
   | ProjectDetailsZkCatalogTvsSection
   | ProjectDetailsInteropVolumeSection
+  | ProjectDetailsInteropFlowsSection
   | ProjectDetailsInteropTransfersSection
   | ProjectDetailsInteropTokensSection
   | ProjectDetailsUpgradesAndGovernanceSection

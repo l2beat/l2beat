@@ -50,6 +50,7 @@ export function getProjects(): BaseProject[] {
   runConfigAdjustments()
 
   return refactored
+    .map((p): BaseProject => ({ ...p, tvsConfig: getTvsConfig(p) }))
     .concat(layer2s.map(layer2Or3ToProject))
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(ecosystems)
@@ -160,7 +161,6 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     interopConfig: p.interopConfig,
     // tags
     archivedAt: p.archivedAt,
-    isUpcoming: p.isUpcoming ? true : undefined,
     hasTestnet: p.hasTestnet,
     escrows: p.config.escrows,
   }
@@ -175,8 +175,7 @@ function getType(p: ScalingProject): ProjectScalingCategory | undefined {
       // If there's a bridge in DA
       if (da.bridge.value === 'Plasma') return 'Plasma'
 
-      if (p.isUpcoming || !p.proofSystem || !p.dataAvailability)
-        return undefined
+      if (!p.proofSystem || !p.dataAvailability) return undefined
 
       const isEthereumBridge =
         da.bridge.value === 'Enshrined' || da.bridge.value === 'Self-attested' // Intmax case
@@ -329,9 +328,7 @@ export function adjustDiscoveryInfo(
   }
 }
 
-function getTvsConfig(
-  project: ScalingProject | Bridge,
-): TvsToken[] | undefined {
+function getTvsConfig(project: { id: ProjectId }): TvsToken[] | undefined {
   const fileName = `${project.id.replace('=', '').replace(';', '')}.json`
   const filePath = join(__dirname, `../../src/tvs/json/${fileName}`)
 

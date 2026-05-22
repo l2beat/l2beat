@@ -19,6 +19,7 @@ import {
   pickWorseRisk,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
+  stackExitWindowRisk,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
@@ -201,6 +202,7 @@ interface OpStackConfigCommon {
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   additionalStateValidationReferences?: { title: string; url: string }[]
+  kailuaVanguardAppliesToAllProposals?: boolean
   milestones?: Milestone[]
   ecosystemInfo?: ProjectEcosystemInfo
   nonTemplateProofSystem?: ProjectScalingProofSystem
@@ -603,7 +605,7 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
       common.riskView.dataAvailability,
       baseChain.riskView.dataAvailability,
     ),
-    exitWindow: pickWorseRisk(
+    exitWindow: stackExitWindowRisk(
       common.riskView.exitWindow,
       baseChain.riskView.exitWindow,
     ),
@@ -881,7 +883,9 @@ function getStateValidation(
       const vanguardDescription =
         vanguardAdvantage === 0
           ? 'The **Vanguard** is configured with `vanguardAdvantage = 0`, so this advantage is currently disabled (not active) and child proposals are permissionless immediately.'
-          : `The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`
+          : templateVars.kailuaVanguardAppliesToAllProposals
+            ? `The **Vanguard** is the only address that can submit any proposal (first child or conflicting sibling) on a parent state root during the \`vanguardAdvantage\` window of ${formatSeconds(vanguardAdvantage)}. Faulty Vanguard proposals can be flagged via ZK fault proofs (\`proveOutputFault\`) but cannot be replaced by an honest sibling, so the chain stalls at that tournament until the Vanguard submits a correct state root.`
+            : `The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`
       return {
         categories: [
           {
@@ -918,9 +922,13 @@ ${vanguardDescription}`,
           {
             title: 'Challenges',
             description: `
-Any conflicting sibling proposals within a tournament that are made within the ${formatSeconds(maxClockDuration)} challenge period of a proposal they are challenging, delay resolving the tournament until sufficient ZK proofs are published to leave one single tournament survivor.
+${
+  templateVars.kailuaVanguardAppliesToAllProposals
+    ? `Any actor can submit a ZK fault proof against an existing child proposal via \`proveOutputFault\` to mark it faulty during the ${formatSeconds(maxClockDuration)} challenge period; this blocks the wrong proposal from resolving but does not, by itself, advance the chain. Conflicting sibling proposals (which would survive the tournament and resolve in place of a faulty proposal) can only be submitted by the Vanguard during the \`vanguardAdvantage\` window.`
+    : `Any conflicting sibling proposals within a tournament that are made within the ${formatSeconds(maxClockDuration)} challenge period of a proposal they are challenging, delay resolving the tournament until sufficient ZK proofs are published to leave one single tournament survivor.`
+}
 
-In the tree of proposed state roots, each parent node can have multiple children. These children are indirectly challenging each other in a tournament, which can only be resolved if but a single child survives. A state root can be resolved if it is **the only remaining proposal** due to any combination of the following elimination methods: 
+In the tree of proposed state roots, each parent node can have multiple children. These children are indirectly challenging each other in a tournament, which can only be resolved if but a single child survives. A state root can be resolved if it is **the only remaining proposal** due to any combination of the following elimination methods:
 1. the proposal's challenge period of ${formatSeconds(maxClockDuration)} has ended before a conflicting proposal was made
 2. the proposal is proven correct with a full validity proof (invalidates all conflicting proposals)
 3. a conflicting sibling proposal is proven faulty
@@ -1403,7 +1411,7 @@ function getRiskViewExitWindow(
     return {
       value: 'None',
       description:
-        'There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
+        'There is no exit window for users to exit in case of unwanted upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
       sentiment: 'bad',
       orderHint: -finalizationPeriod,
     }

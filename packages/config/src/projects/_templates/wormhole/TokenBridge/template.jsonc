@@ -30,6 +30,13 @@
       "type": "CODE_CHANGE"
     },
     "wormhole": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "validate incoming transfers and register remote bridge peers."
+        },
+        { "type": "upgrade" }
+      ],
       "description": "The Wormhole Core Bridge used to verify Guardian-signed VAAs consumed by this Token Bridge.",
       "severity": "HIGH",
       "type": "PERMISSION"

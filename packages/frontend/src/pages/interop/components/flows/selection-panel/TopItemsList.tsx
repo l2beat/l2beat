@@ -33,8 +33,28 @@ export function TopItemsList({
 }
 
 function TopItemRow({ item }: { item: TopItem }) {
-  const content = (
-    <>
+  const className = 'flex items-center justify-between gap-2 text-[13px]'
+
+  if (item.href) {
+    return (
+      <a href={item.href} className={`${className} group`}>
+        <span className="flex min-w-0 items-center gap-1 font-medium text-secondary leading-none">
+          <img
+            src={item.iconUrl}
+            alt={item.title}
+            className="size-4 shrink-0"
+          />
+          <span className="truncate group-hover:underline">{item.title}</span>
+        </span>
+        <span className="shrink-0 font-semibold leading-[1.15]">
+          {formatCurrency(item.volume, 'usd')}
+        </span>
+      </a>
+    )
+  }
+
+  return (
+    <div className={className}>
       <span className="flex min-w-0 items-center gap-1 font-medium text-secondary leading-none">
         <img src={item.iconUrl} alt={item.title} className="size-4 shrink-0" />
         <span className="truncate">{item.title}</span>
@@ -42,18 +62,6 @@ function TopItemRow({ item }: { item: TopItem }) {
       <span className="shrink-0 font-semibold leading-[1.15]">
         {formatCurrency(item.volume, 'usd')}
       </span>
-    </>
+    </div>
   )
-
-  const className = 'flex items-center justify-between gap-2 text-[13px]'
-
-  if (item.href) {
-    return (
-      <a href={item.href} className={className}>
-        {content}
-      </a>
-    )
-  }
-
-  return <div className={className}>{content}</div>
 }

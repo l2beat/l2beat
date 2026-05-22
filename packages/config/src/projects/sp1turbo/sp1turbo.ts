@@ -101,6 +101,10 @@ export const sp1turbo: BaseProject = {
     ],
     projectsForTvs: [
       {
+        projectId: ProjectId('fluent'),
+        sinceTimestamp: UnixTime(1776599267), // first onchain commitBatch 2026-04-19
+      },
+      {
         projectId: ProjectId('forknet'),
         sinceTimestamp: UnixTime(1753882500),
       },

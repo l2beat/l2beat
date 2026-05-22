@@ -41,8 +41,6 @@ export const lighter: ScalingProject = {
   addedAt: UnixTime(1711551933), // 2024-03-27T15:05:33Z
   badges: [BADGES.VM.AppChain, BADGES.DA.EthereumBlobs],
   display: {
-    warning:
-      'Apr 9 2026: the desert mode circuit source code is not publicly available, and L2BEAT research found that full state reconstruction from L1 data alone is not currently feasible. A prover migration (gnark → plonky2) occurred at block 23,711,820 without publishing a state snapshot, leaving pre-migration accounts unreconstructable. Users cannot exit without operator cooperation.',
     name: 'Lighter',
     slug: 'lighter',
     description:
@@ -184,7 +182,7 @@ export const lighter: ScalingProject = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, priorityExpiration),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(priorityExpiration),
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
   },
   stage: getRollupStage({
     stage0: {
@@ -203,7 +201,7 @@ export const lighter: ScalingProject = {
       noRedTrustedSetups: true,
       programHashesReproducible: null,
       proverSourcePublished: true,
-      verifierContractsReproducible: false,
+      verifierContractsReproducible: true,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -213,9 +211,9 @@ export const lighter: ScalingProject = {
   }),
   technology: {
     dataAvailability: {
-      name: 'Data published onchain, but state reconstruction is blocked',
+      name: 'Data published onchain',
       description:
-        'Account delta data is published onchain in the form of blobs. However, a prover migration (gnark/MIMC → plonky2/Poseidon2) occurred at block 23,711,820 without publishing a state snapshot. The old gnark circuit was never open-sourced, so ~60k pre-migration blobs cannot be decoded. Without this snapshot, users cannot reconstruct the latest accounts state required for forced exits.',
+        'Account delta data is published onchain as blobs. A prover migration (gnark/MIMC → plonky2/Poseidon2) at block 23,711,820 left pre-migration blobs undecodable, but Lighter published a full state snapshot at batch #166859 (blobs.zip) that closes the gap. L2BEAT reproduced the snapshot state root from blobs and verified the roll-forward to chain head, confirming the live state is reconstructable from L1.',
       risks: [],
       references: [
         {
@@ -225,6 +223,10 @@ export const lighter: ScalingProject = {
         {
           title: 'StateRootUpdate event — gnark to plonky2 migration',
           url: 'https://etherscan.io/tx/0x6a50b2b00444914e5c53df2fb48404078a098f93fc3911e6fcbde1c7b6418225',
+        },
+        {
+          title: 'Desert exit circuit + state snapshot (blobs.zip)',
+          url: 'https://github.com/elliottech/lighter-prover/tree/main/desertexit',
         },
       ],
     },
@@ -246,9 +248,14 @@ export const lighter: ScalingProject = {
       {
         name: 'Escape hatch through ZK proofs',
         description:
-          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users are expected to exit by reconstructing the latest settled state and providing a ZK proof of balance. In practice, this is not currently possible: the desert mode circuit source code is not public, and pre-migration blob data cannot be decoded (see data availability note). Users must rely on operator cooperation to exit.',
+          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users are expected to exit by reconstructing the latest settled state and providing a ZK proof of balance. The desert exit circuit and a full state snapshot at batch #166859 are public, and the deployed DesertVerifier matches a rebuild from that circuit. L2BEAT reproduced the snapshot state root from L1 blobs and verified the roll-forward to chain head.',
         risks: [],
-        references: [],
+        references: [
+          {
+            title: 'Desert exit circuit + state snapshot',
+            url: 'https://github.com/elliottech/lighter-prover/tree/main/desertexit',
+          },
+        ],
       },
     ],
     otherConsiderations: [
@@ -278,7 +285,7 @@ export const lighter: ScalingProject = {
       {
         title: 'Prover Architecture',
         description:
-          '[This repo](https://github.com/elliottech/lighter-prover/tree/main) contains the circuits and prover code for normal (i.e. non-desert) operation mode of Lighter. It includes the logic to generate and verify proofs of valid state transition according to the Lighter [matching engine](https://github.com/elliottech/lighter-prover/blob/d0ff2304aea516b22f3a5223881006b6a9af1cc9/circuit/src/matching_engine.rs).',
+          '[This repo](https://github.com/elliottech/lighter-prover/tree/main) contains the circuits and prover code for both normal and desert operation mode of Lighter. It includes the logic to generate and verify proofs of valid state transition according to the Lighter [matching engine](https://github.com/elliottech/lighter-prover/blob/d0ff2304aea516b22f3a5223881006b6a9af1cc9/circuit/src/matching_engine.rs).',
       },
       {
         title: 'ZK Circuits',
@@ -292,11 +299,11 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82#code#F1#L54',
+            url: 'https://etherscan.io/address/0xaa76aC5cC406037be638d483d8c1daF2AFDC1A68#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',
-            url: 'https://etherscan.io/address/0xd4460475F00307845082d3a146f36661354FBc67#code#F1#L39',
+            url: 'https://etherscan.io/address/0x2aDBd91742B64105a097bC37D20Ebbca9a496085#code#F1#L55',
           },
         ],
       },
@@ -332,6 +339,18 @@ export const lighter: ScalingProject = {
       type: 'general',
     },
   ],
+  interopConfig: {
+    description:
+      'Canonical bridge between Ethereum and the Lighter perp DEX (zkSync-style priority queue), used by traders to deposit collateral and claim withdrawals.',
+    plugins: [
+      {
+        plugin: 'lighter-bridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+    transfersTimeMode: 'unknown',
+  },
 }
 
 function getVerifiers(): ChainSpecificAddress[] {

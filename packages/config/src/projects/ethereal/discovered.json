@@ -1,6 +1,6 @@
 {
   "name": "ethereal",
-  "timestamp": 1777994290,
+  "timestamp": 1778232940,
   "configHash": "0x50a2cd9246c5bdd111a9aedd4dd511ed1ae59cf76c2a57aff7bdd2a0e62ce1f1",
   "entries": [
     {
@@ -10,7 +10,7 @@
       "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xb57f3e67e08492b235337cda4f3ea0117e3e043cceaf8e9a7a51b57611ba99de"
+        "0xd9d7945b3c909d8777cc1798e1b56051640a57595cc65064235a913104f4e9e9"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
@@ -20,6 +20,7 @@
         "buffer",
         "postsBlobs"
       ],
+      "deployerAddress": "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD",
       "sinceTimestamp": 1758570590,
       "sinceBlock": 381930711,
       "values": {
@@ -38,7 +39,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 5253,
+        "batchCount": 5319,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3"],
         "bridge": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
@@ -112,10 +113,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
-        "0x95e26ae3077f12aa3b383e87c553884e67eaf30c17ca083768d76822d0916cb8"
+        "0x130f30b3e9318970d22dad0a549e532b9a19290ebaaad3a0ce20352ff33cc104"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117760,
       "sinceBlock": 332189402,
       "values": { "$immutable": true },
@@ -140,10 +142,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x620d7E459cfFcdC56a874536dC19147De801a4A1",
       "sinceTimestamp": 1760352479,
       "sinceBlock": 389071022,
       "values": {
@@ -185,6 +188,7 @@
       ],
       "proxyType": "immutable",
       "description": "Simple contract that, if set as allowedOutbox in the arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8, allows to sweep all native tokens from the escrow to arb1:0x33Fbf4E75d54bBec0e432B6dc27bDEa0ca5DEdf9.",
+      "deployerAddress": "arb1:0xe74b5a7369847e0263a8de9F144f66622aD8E99F",
       "sinceTimestamp": 1760659299,
       "sinceBlock": 390300240,
       "values": {
@@ -219,10 +223,11 @@
       "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x82dad78abdf27e168de1ae177b8055db4167106d71273d9a3264e9898a6055e4"
+        "0x03939c3cbd6c108ea9a077f61bb7ec6c3254fe21911bf5dfdb3c0efcb636e796"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "deployerAddress": "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD",
       "sinceTimestamp": 1758570590,
       "sinceBlock": 381930711,
       "values": {
@@ -260,10 +265,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
-        "0x9da1c11f886667abb57a92659891b066372dde4fe1a3eebce72c722ecf872874"
+        "0xa7a92329b6a7a74a22b00e80ded5f76b2d46cddfc3fef149bd93c941f577388b"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117617,
       "sinceBlock": 332188829,
       "values": { "$immutable": true },
@@ -278,10 +284,11 @@
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x089ac3cec821c0f014f284ec4ec1039ef6bc50b6ad3ee47c82e20af65cc30c33"
+        "0x30d86d66b2eba9a29c67fd3a446f636d4d7835b6d679dab61a2cfc6e10b97b23"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "deployerAddress": "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD",
       "sinceTimestamp": 1758570590,
       "sinceBlock": 381930711,
       "values": {
@@ -314,10 +321,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
-        "0xfdda77bfcb4ee6e1d88939c755d6eda90f3250c8053b15b511ad9148cce8a787"
+        "0x8342918a09a9fc42d1b623e96c5f3ba476a095f6fb99d619383113945b1aee41"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117833,
       "sinceBlock": 332189694,
       "values": {
@@ -357,8 +365,8 @@
       "type": "Contract",
       "template": "orbitstack/RollupProxyBoLD",
       "sourceHashes": [
-        "0x951637f3a8787d8273dbd619921f256bd87a38b9d955e65c2e520772c2e0a642",
-        "0x7b0429a0a98808dee6774a44d8d1ed15305ecc4b6fee4670db2d49f9caf65e51"
+        "0xc66527a2dd7fcfbb954018194b0db35218725aa1072451f6ec2470d103b4a0a2",
+        "0x865eda6aeccd46252ab6f23f58421b95f106676e38c62d4aaa768a6d5f2c26e9"
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).",
@@ -367,6 +375,7 @@
         "latestConfirmed",
         "latestNodeCreated"
       ],
+      "deployerAddress": "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
       "sinceTimestamp": 1770631406,
       "sinceBlock": 430237486,
       "values": {
@@ -399,7 +408,7 @@
         "getValidators": ["arb1:0x80e046764185e776100A4f59079C2B00327f279A"],
         "inbox": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
         "isPostBoLD": true,
-        "latestConfirmed": "0xf06b16794adf2bb7e51e6e57bf9a293749225e76538648c2d7ec5b89b94d288e",
+        "latestConfirmed": "0x275b655b30827b0af85a09992126ea0000910f65a58c3d8f4fce301493c5652c",
         "loserStakeEscrow": "arb1:0x80e046764185e776100A4f59079C2B00327f279A",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
@@ -479,10 +488,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
-        "0x549b7c350bf6e1da7e8aa5fda9440889a76d5611ed7c6e37411d364ee36f8d5b"
+        "0x165bc2eea08646ff24d665db74c1cd2deedc703052ceccac716f25eea2c23d80"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117542,
       "sinceBlock": 332188531,
       "values": { "$immutable": true },
@@ -497,7 +507,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -590,6 +600,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c",
       "sinceTimestamp": 1701465533,
       "sinceBlock": 155965667,
       "values": {
@@ -613,7 +624,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 132,
+        "nonce": 133,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -666,10 +677,11 @@
       "template": "orbitstack/Outbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xfc1c087eedce3e4be0593d2e01fcd357b4980c69e03399574b4606e4f3b9ee04"
+        "0xb9f7bc73978fab23b0df754fac230d706fee0d774d97b8533b62b3014d5561a8"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "deployerAddress": "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD",
       "sinceTimestamp": 1758570590,
       "sinceBlock": 381930711,
       "values": {
@@ -712,10 +724,11 @@
       "template": "orbitstack/EdgeChallengeManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x6c09a44175196122c17b285af0789d13088361d0f4244fbe65f00f40d3036cb8"
+        "0xe3bfba89667a59af2f558ead22d7fe0c142232b464bdae0f9e4b03555c7699f2"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that implements the main challenge protocol logic of the fraud proof system.",
+      "deployerAddress": "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
       "sinceTimestamp": 1770631406,
       "sinceBlock": 430237486,
       "values": {
@@ -757,10 +770,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
-        "0xeb0b77a8bbbb65eabcb1e26f29f9eac4db26d0b5974e37d9cc57ffc03b7be0e1"
+        "0x5bd5c472d09dfca8febfe8da2a09b7c0a1a11653ed9a4908ce4719abc68caf2b"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117689,
       "sinceBlock": 332189122,
       "values": { "$immutable": true },
@@ -819,6 +833,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD",
       "sinceTimestamp": 1758570590,
       "sinceBlock": 381930711,
       "values": {
@@ -836,7 +851,7 @@
       "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x7f62b9bd4a0aac711ca355a523b1d934ab93ae14c5fae5a860c0ded42ee5a3c3"
+        "0xcf23a1556783b1256851289ed1e962cbab0633dca95bc20654f016b52c1d4fae"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
@@ -845,6 +860,7 @@
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
       ],
+      "deployerAddress": "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD",
       "sinceTimestamp": 1758570590,
       "sinceBlock": 381930711,
       "values": {
@@ -885,8 +901,8 @@
         ],
         "rollup": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
         "sequencerInbox": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-        "sequencerMessageCount": 5253,
-        "sequencerReportedSubMessageCount": 4489824
+        "sequencerMessageCount": 5319,
+        "sequencerReportedSubMessageCount": 4521628
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -919,7 +935,7 @@
       "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
+        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
@@ -941,6 +957,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD",
       "sinceTimestamp": 1758570590,
       "sinceBlock": 381930711,
       "values": {
@@ -1021,7 +1038,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1038,22 +1055,25 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "ethereal:0x4320A9290720462F0cd5dfB0F0B9bD4D4A74A8D3",
       "sinceTimestamp": 1777577481,
       "sinceBlock": 4439701,
       "values": {
         "$immutable": false,
         "$implementation": "ethereal:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
         "$members": [
+          "ethereal:0xcE7a6c96B0a351081a6053e6C95FA616555f3fb9",
+          "ethereal:0x9D2178879e0387B1820168463670c43889536042",
           "ethereal:0x4320A9290720462F0cd5dfB0F0B9bD4D4A74A8D3",
           "ethereal:0xF3D11F9829Fdb9F61a7d987CCAa858054E80Eb33",
           "ethereal:0xb6349012024331A6989cdc4cfDf480C40cfAE058"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0xc5df4fce396ae873e7589f3a4ee4615f56051cdd8fd8145d56ffbb508facc808",
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 2,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1073,7 +1093,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1085,6 +1105,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "ethereal:0xb93C042c688F1Cf038bab03C4F832F2630Bb7d8F",
       "sinceTimestamp": 1760472215,
       "sinceBlock": 17902,
       "values": {
@@ -1132,7 +1153,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1144,6 +1165,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "ethereal:0x0B9E74f490d731690Da1D0C70F7DB9433C9B4658",
       "sinceTimestamp": 1760499457,
       "sinceBlock": 18163,
       "values": {
@@ -1159,7 +1181,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 91,
+        "nonce": 97,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1173,10 +1195,11 @@
       "type": "Contract",
       "template": "ethereal/ExchangeGatewayRegistryContracts",
       "sourceHashes": [
-        "0x6aac002e19307973aae2c7f4e38a5804b35dff1da8b348242101dc26b8f6b5b3"
+        "0x9cee872c7e0a49b46aa8f9658d16530e50e5989aa34cecea6e4fd75968589123"
       ],
       "proxyType": "immutable",
       "description": "Auxiliary contract of the ExchangeGateway.",
+      "deployerAddress": "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11",
       "sinceTimestamp": 1776326201,
       "sinceBlock": 4258775,
       "values": { "$immutable": true },
@@ -1190,10 +1213,11 @@
       "type": "Contract",
       "template": "ethereal/ExchangeGatewayRegistryContracts",
       "sourceHashes": [
-        "0x09b192ba7fe0c948d056b981a202a7c6bf2f7535255539908256c1914b716764"
+        "0x7e9156bdbe2b0f1e2fca8925f034693bdf5abaae1b868270c2a4f44956e1ea6a"
       ],
       "proxyType": "immutable",
       "description": "Auxiliary contract of the ExchangeGateway.",
+      "deployerAddress": "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11",
       "sinceTimestamp": 1760534426,
       "sinceBlock": 18535,
       "values": { "$immutable": true },
@@ -1212,10 +1236,11 @@
       "type": "Contract",
       "template": "ethereal/ExchangeGatewayRegistryContracts",
       "sourceHashes": [
-        "0xad7e7fd7b43fd83e9a1b0fb841090fe2c1a4244dbc6b2a9a64780714e1cdf93a"
+        "0x92593ae99a9bb91cca005c4db1025ad553c96de856d66c0ee21e2ad15daf1634"
       ],
       "proxyType": "immutable",
       "description": "Auxiliary contract of the ExchangeGateway.",
+      "deployerAddress": "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11",
       "sinceTimestamp": 1776326201,
       "sinceBlock": 4258774,
       "values": {
@@ -1240,10 +1265,11 @@
       "type": "Contract",
       "template": "layerzero/OrbitNativeOFTAdapter",
       "sourceHashes": [
-        "0x06bfc09649a2d808ed13a12f95572720fa8ccd81e6d2c2206f879d4495257925"
+        "0xdc7fa9200a150735467f7b832663c27d5df9487fe7a30b8b8abc3d3e833081ff"
       ],
       "proxyType": "immutable",
       "description": "An OApp in the LayerZero protocol. It allows to mint the native token using the arbNativeTokenManager precompile on ArbOs. This means that the native token inherits all trust assumptions of the LayerZero security stack configured for this OApp and its crosschein peers, including minting and burning.",
+      "deployerAddress": "ethereal:0x31a9FFd7bCea9fC810D96D85DB701dC3f04710Dd",
       "sinceTimestamp": 1759179850,
       "sinceBlock": 3896,
       "values": {
@@ -1298,6 +1324,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "ethereal:0x9D2178879e0387B1820168463670c43889536042",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "ethereal:0x9D4F46b2595F596fC826Db2e5A6c32bCfE8BdDA5",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1316,11 +1347,12 @@
       "type": "Contract",
       "template": "ethereal/PythLazer",
       "sourceHashes": [
-        "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
-        "0xb75ff3068e1db24addb7f90f7c75fccf57377621aa5e5c513fb73d164c28455c"
+        "0xf66f390c3291bc5b8725bf8fa36d64494b91e8cfb2b717b52e85adcc68dcdd50",
+        "0x8116841183f2287b1cd74715261b90dd53e082d3f96ca03d900945950329fccc"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to verify offchain signed oracle data.",
+      "deployerAddress": "ethereal:0x78357316239040e19fC823372cC179ca75e64b81",
       "sinceTimestamp": 1758743720,
       "sinceBlock": 64,
       "values": {
@@ -1351,10 +1383,11 @@
       "template": "ethereal/ExchangeGateway",
       "sourceHashes": [
         "0x824c9fa3c6d16c698f949d86f6b383cee854f6ab6073b6356acadc9f7e88d705",
-        "0x86b45155220c874371724e1491434de1633d3c9ec81f0e45455e5621da661872"
+        "0xb5045a4ff694fdc0973c7f5b6a61bc6178a601b89c90fc21faff429e9867bbfd"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.",
+      "deployerAddress": "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11",
       "sinceTimestamp": 1760534426,
       "sinceBlock": 18533,
       "values": {
@@ -1439,10 +1472,11 @@
       "type": "Contract",
       "template": "ethereal/ExchangeGatewayRegistryContracts",
       "sourceHashes": [
-        "0x9ffa8cb4f60c8030f1786fd22cc1e6f9903e82114fb4ae3f713c47f60178c0de"
+        "0x2eb254b441530c0a6a36c063566a20b1b99f95ee5d7100456468373d3d97e905"
       ],
       "proxyType": "immutable",
       "description": "Auxiliary contract of the ExchangeGateway.",
+      "deployerAddress": "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11",
       "sinceTimestamp": 1760534426,
       "sinceBlock": 18535,
       "values": { "$immutable": true },
@@ -1456,16 +1490,22 @@
       "type": "Contract",
       "template": "ethereal/ExchangeGatewayRegistryContracts",
       "sourceHashes": [
-        "0x1f2d6ea306a2ce3c1e94fee76d9184cd06fa8a76178bc2a973d42d495f56d3cf"
+        "0x56d246b21257a122c9a36355cbe338200a35274157d5e06d354df138145365f5"
       ],
       "proxyType": "immutable",
       "description": "Auxiliary contract of the ExchangeGateway.",
+      "deployerAddress": "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11",
       "sinceTimestamp": 1760534426,
       "sinceBlock": 18535,
       "values": { "$immutable": true },
       "implementationNames": {
         "ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37": "PerpEngine"
       }
+    },
+    {
+      "address": "ethereal:0xcE7a6c96B0a351081a6053e6C95FA616555f3fb9",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "ethereal:0xE3F95F2e1aDEC092337FB5D93C1fE87558658b11",
@@ -1488,10 +1528,11 @@
       "type": "Contract",
       "template": "ethereal/ExchangeGatewayRegistryContracts",
       "sourceHashes": [
-        "0xcf06ecba5335035199e65edcc6e047920089cd2ef278275008a53a8c4af61045"
+        "0x8c1e8d72f479be706a4a4e2347f8720df282d156fe80278400864c17c67e2490"
       ],
       "proxyType": "immutable",
       "description": "Auxiliary contract of the ExchangeGateway.",
+      "deployerAddress": "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11",
       "sinceTimestamp": 1776326201,
       "sinceBlock": 4258776,
       "values": { "$immutable": true },
@@ -2804,6 +2845,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 459677506, "ethereal": 4490193 },
-  "permissionsConfigHash": "0x297f81d31afbcd629304fdaf8a2b8e16989f98f0b96ad4640b847e973600c210"
+  "usedBlockNumbers": { "arbitrum": 460628939, "ethereal": 4521955 },
+  "permissionsConfigHash": "0xb87ef75c0e5b313a9b7987f1d6a3ad0909b9c27d7722b21470c032563cdd7b77"
 }

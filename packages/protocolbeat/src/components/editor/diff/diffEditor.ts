@@ -5,6 +5,11 @@ import 'monaco-editor/esm/vs/language/json/monaco.contribution'
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import { cyrb64 } from '../hashes/cyrb-hash'
 import { EditorPluginStore } from '../pluginStore'
+import {
+  getSharedDiffProvider,
+  type LineRange,
+  type LineRangeMapping,
+} from './customDiffProvider'
 
 export interface Change {
   readonly left: [number, number]
@@ -20,11 +25,46 @@ export interface Diff {
 export class DiffEditor extends EditorPluginStore<'diff'> {
   private models: Record<string, editor.IDiffEditorModel | null> = {}
   private viewStates: Record<string, editor.IDiffEditorViewState | null> = {}
-  private callbacks: monaco.IDisposable[] = []
   private currentCodeHash = ''
+  private originalAlignmentZoneIds = new Set<string>()
+  private modifiedAlignmentZoneIds = new Set<string>()
 
   constructor(element: HTMLElement) {
     super(element, 'diff')
+    // Hide our alignment zones from Monaco's diff-alignment computation.
+    // `getAdditionalLineHeights` (diffEditorViewZones.js:500) walks the
+    // inner editor's getWhitespaces() and treats anything not in its
+    // private ignore-set as content needing compensation on the other
+    // side. Since the public ignore-set isn't reachable, we filter our
+    // IDs out at the API boundary instead. The inner editor's own
+    // rendering/layout uses viewLayout.getWhitespaces() directly
+    // (codeEditorWidget.js:388) and is unaffected.
+    this.shadowGetWhitespaces(
+      this.editor.getOriginalEditor(),
+      this.originalAlignmentZoneIds,
+    )
+    this.shadowGetWhitespaces(
+      this.editor.getModifiedEditor(),
+      this.modifiedAlignmentZoneIds,
+    )
+    this.trackDisposable(
+      this.editor.onDidUpdateDiff(() => this.syncAlignmentZones()),
+    )
+  }
+
+  private shadowGetWhitespaces(
+    innerEditor: monaco.editor.ICodeEditor,
+    ourIds: Set<string>,
+  ) {
+    const target = innerEditor as unknown as {
+      getWhitespaces: () => {
+        id: string
+        afterLineNumber: number
+        height: number
+      }[]
+    }
+    const original = target.getWhitespaces.bind(target)
+    target.getWhitespaces = () => original().filter((w) => !ourIds.has(w.id))
   }
 
   setDiff(codeLeft: string, codeRight: string) {
@@ -49,7 +89,7 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
     this.editor.restoreViewState(this.viewStates[newCodeHash] ?? null)
   }
 
-  onComputedDiff(listener: (diff: Diff) => void) {
+  onComputedDiff(listener: (diff: Diff) => void): monaco.IDisposable {
     const disposable = this.editor.onDidUpdateDiff(() => {
       const lineChanges = this.editor.getLineChanges() ?? []
       let deletions = 0
@@ -73,7 +113,7 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
       listener({ deletions, additions, changes })
     })
 
-    this.callbacks.push(disposable)
+    return this.trackDisposable(disposable)
   }
 
   resize() {
@@ -96,11 +136,71 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
     this.editor.goToDiff('previous')
   }
 
-  private disposeCallbacks() {
-    for (const callback of this.callbacks) {
-      callback.dispose()
+  // For each filtered range, add a view zone on the side with fewer lines
+  // so Monaco's alignment for the kept changes still lines up. This covers
+  // fully dropped changes and the lead/trail slices around a narrowed change.
+  // Monaco listens to onDidChangeViewZones and re-runs its alignment pass
+  // when our zones land (diffEditorViewZones.js:64-69).
+  private syncAlignmentZones() {
+    const model = this.editor.getModel()
+    if (!model) {
+      return
     }
-    this.callbacks = []
+
+    const alignmentGaps = getSharedDiffProvider().getAlignmentGaps(
+      model.modified,
+    )
+
+    this.padShorterSide(
+      this.editor.getOriginalEditor(),
+      this.originalAlignmentZoneIds,
+      alignmentGaps,
+      (d) => d.original,
+      (d) => d.modified,
+    )
+    this.padShorterSide(
+      this.editor.getModifiedEditor(),
+      this.modifiedAlignmentZoneIds,
+      alignmentGaps,
+      (d) => d.modified,
+      (d) => d.original,
+    )
+  }
+
+  private padShorterSide(
+    innerEditor: monaco.editor.ICodeEditor,
+    ourIds: Set<string>,
+    gaps: readonly LineRangeMapping[],
+    hereSide: (d: LineRangeMapping) => LineRange,
+    otherSide: (d: LineRangeMapping) => LineRange,
+  ) {
+    innerEditor.changeViewZones((accessor) => {
+      for (const id of ourIds) {
+        accessor.removeZone(id)
+      }
+      ourIds.clear()
+      for (const gap of gaps) {
+        const here = hereSide(gap)
+        const other = otherSide(gap)
+        const delta =
+          other.endLineNumberExclusive -
+          other.startLineNumber -
+          (here.endLineNumberExclusive - here.startLineNumber)
+        if (delta <= 0) {
+          continue
+        }
+        const domNode = document.createElement('div')
+        domNode.className = 'diagonal-fill'
+        const id = accessor.addZone({
+          afterLineNumber: here.endLineNumberExclusive - 1,
+          heightInLines: delta,
+          domNode,
+          showInHiddenAreas: true,
+          suppressMouseDown: true,
+        })
+        ourIds.add(id)
+      }
+    })
   }
 
   dispose() {

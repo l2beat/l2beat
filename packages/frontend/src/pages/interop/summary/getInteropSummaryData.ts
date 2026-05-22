@@ -147,6 +147,7 @@ async function getCachedData(
     protocols: protocols.map((protocol) => ({
       id: protocol.id,
       name: protocol.interopConfig.name ?? protocol.name,
+      slug: protocol.slug,
       iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
     })),
     defaultFlowChainOrder,

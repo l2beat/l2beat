@@ -1,8 +1,7 @@
 {
   "TornadoProxyV2": {
-    "hash": "0x3210d1bc909600212d664918623bdd92f02d2924640909ac9fc1c617ce49c413",
+    "hash": "0x94c0d6f1b0684e653aa34db54a42ff01a22e669c6f0cdf51b8ad4adf2890eac1",
     "address": "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
-    "chain": "ethereum",
     "blockNumber": 24992607
   }
 }

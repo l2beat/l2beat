@@ -1,9 +1,11 @@
 import { assert } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
-import type { TopLevelDeclaration } from './ParsedFilesManager'
+import type { DeclarationType, TopLevelDeclaration } from './ParsedFilesManager'
 
 export function generateInterfaceSourceFromContract(
   contract: TopLevelDeclaration,
+  typeMap: Map<string, DeclarationType>,
+  keep?: Set<string>,
 ): string {
   assert(
     contract.type === 'contract' || contract.type === 'abstract',
@@ -11,8 +13,13 @@ export function generateInterfaceSourceFromContract(
   )
   const ast = contract.ast as AST.ContractDefinition
 
+  // When `keep` is provided, only members whose name is in the set are kept.
+  // receive() and fallback() are always kept (they have no callable name).
+  const isKept = (name: string | null): boolean =>
+    keep === undefined || (name !== null && keep.has(name))
+
   let result =
-    '// NOTE(l2beat): This is a virtual interface, generated from the contract source code.\n'
+    '// NOTE(l2beat): This is an interface, generated from the contract source code.\n'
 
   result += `interface ${contract.name}`
   if (ast.baseContracts.length > 0) {
@@ -40,19 +47,29 @@ export function generateInterfaceSourceFromContract(
         if (child.isConstructor) {
           continue
         }
+        if (child.visibility === 'private' || child.visibility === 'internal') {
+          continue
+        }
+        const isSpecial = child.isReceiveEther || child.isFallback
+        if (!isSpecial && !isKept(child.name)) {
+          continue
+        }
 
         elements.push([child.type, padding + formatFunctionDefinition(child)])
         break
       }
       case 'EventDefinition': {
+        if (!isKept(child.name)) continue
         elements.push([child.type, padding + formatEventDefinition(child)])
         break
       }
       case 'CustomErrorDefinition': {
+        if (!isKept(child.name)) continue
         elements.push([child.type, padding + formatErrorDefinition(child)])
         break
       }
       case 'StructDefinition': {
+        if (!isKept(child.name)) continue
         elements.push([
           child.type,
           padding + formatStructDefinition(child, padding),
@@ -60,10 +77,16 @@ export function generateInterfaceSourceFromContract(
         break
       }
       case 'EnumDefinition': {
+        if (!isKept(child.name)) continue
         elements.push([
           child.type,
           padding + formatEnumDefinition(child, padding),
         ])
+        break
+      }
+      case 'TypeDefinition': {
+        if (!isKept(child.name)) continue
+        elements.push([child.type, padding + formatTypeDefinition(child)])
         break
       }
       case 'UsingForDeclaration': {
@@ -71,7 +94,14 @@ export function generateInterfaceSourceFromContract(
         break
       }
       case 'StateVariableDeclaration': {
-        // NOTE(radomski): State variables are not supported in interfaces
+        for (const variable of child.variables) {
+          if (variable.visibility !== 'public') continue
+          if (!isKept(variable.name)) continue
+          elements.push([
+            'FunctionDefinition',
+            padding + formatPublicVariableGetter(variable, typeMap),
+          ])
+        }
         break
       }
       case 'ModifierDefinition': {
@@ -87,14 +117,20 @@ export function generateInterfaceSourceFromContract(
   if (elements.length > 0) {
     result += '\n'
     let prevType: string | undefined
+    let prevMultiLine = false
     for (const [type, element] of elements) {
-      if (prevType !== undefined && prevType !== type) {
+      const isMultiLine = element?.includes('\n') ?? false
+      if (
+        prevType !== undefined &&
+        (prevType !== type || prevMultiLine || isMultiLine)
+      ) {
         result += '\n'
       }
 
       result += element + '\n'
 
       prevType = type
+      prevMultiLine = isMultiLine
     }
   }
 
@@ -136,6 +172,10 @@ function formatStructDefinition(
   return result
 }
 
+function formatTypeDefinition(typeDef: AST.TypeDefinition): string {
+  return `type ${typeDef.name} is ${formatTypeName(typeDef.definition)};`
+}
+
 function formatErrorDefinition(error: AST.CustomErrorDefinition): string {
   let result = `error ${error.name}(`
 
@@ -169,17 +209,11 @@ function formatFunctionDefinition(fn: AST.FunctionDefinition): string {
   prefix = fn.isReceiveEther ? 'receive' : prefix
   prefix = fn.isFallback ? 'fallback' : prefix
 
-  let declaration = `${prefix}(`
-  if (fn.parameters.length > 0) {
-    const params = []
-    for (const param of fn.parameters) {
-      params.push(formatParameter(param))
-    }
-    declaration += params.join(', ')
-  }
-  declaration += ')'
+  const inputs = fn.parameters.map(asExternalInput).map(formatParameter)
+  let declaration = `${prefix}(${inputs.join(', ')})`
 
-  const addons = ['external']
+  const addons: string[] = []
+  addons.push('external')
   if (fn.stateMutability !== null) {
     addons.push(fn.stateMutability)
   }
@@ -207,23 +241,64 @@ function formatFunctionDefinition(fn: AST.FunctionDefinition): string {
   return declaration
 }
 
+function formatPublicVariableGetter(
+  variable: AST.StateVariableDeclarationVariable,
+  typeMap: Map<string, DeclarationType>,
+): string {
+  assert(variable.typeName !== null, 'Variable must have a type')
+
+  const params: string[] = []
+  const leafType = unwindGetterType(variable.typeName, params)
+  const returnStr = formatTypeNameForReturn(leafType, typeMap)
+
+  const paramStr = params.join(', ')
+  return `function ${variable.name}(${paramStr}) external view returns (${returnStr});`
+}
+
+function unwindGetterType(
+  typeName: AST.TypeName,
+  params: string[],
+): AST.TypeName {
+  if (typeName.type === 'Mapping') {
+    params.push(formatTypeName(typeName.keyType))
+    return unwindGetterType(typeName.valueType, params)
+  }
+  if (typeName.type === 'ArrayTypeName') {
+    params.push('uint256')
+    return unwindGetterType(typeName.baseTypeName, params)
+  }
+  return typeName
+}
+
 function formatParameter(param: AST.VariableDeclaration): string {
   assert(param.typeName !== null, 'Parameter must have a type')
-  let result = `${formatTypeName(param.typeName)}`
+  let result = formatTypeName(param.typeName)
   if (param.storageLocation !== null) {
     result += ` ${param.storageLocation}`
   }
   if (param.identifier !== null) {
     result += ` ${param.identifier.name}`
   }
-
   return result
+}
+
+// External function inputs cannot use `memory` for reference-type params —
+// they must be `calldata`. Return params are unaffected.
+function asExternalInput(
+  param: AST.VariableDeclaration,
+): AST.VariableDeclaration {
+  if (param.storageLocation !== 'memory') return param
+  return { ...param, storageLocation: 'calldata' }
 }
 
 function formatTypeName(typeName: AST.TypeName): string {
   switch (typeName.type) {
     case 'ElementaryTypeName': {
-      return typeName.name
+      let result = typeName.name
+      if (typeName.stateMutability !== null) {
+        result += ` ${typeName.stateMutability}`
+      }
+      return result
     }
     case 'UserDefinedTypeName': {
       return typeName.namePath
@@ -265,6 +340,29 @@ function formatTypeName(typeName: AST.TypeName): string {
 
       return declaration
     }
+  }
+}
+
+function formatTypeNameForReturn(
+  typeName: AST.TypeName,
+  typeMap: Map<string, DeclarationType>,
+): string {
+  const name = formatTypeName(typeName)
+  switch (typeName.type) {
+    case 'ElementaryTypeName':
+      return typeName.name === 'bytes' || typeName.name === 'string'
+        ? `${name} memory`
+        : name
+    case 'ArrayTypeName':
+      return `${name} memory`
+    case 'Mapping':
+      return `${name} memory`
+    case 'UserDefinedTypeName': {
+      const kind = typeMap.get(typeName.namePath)
+      return kind === 'struct' ? `${name} memory` : name
+    }
+    case 'FunctionTypeName':
+      return name
   }
 }
 

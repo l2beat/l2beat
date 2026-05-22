@@ -50,12 +50,6 @@ export const RefreshDiscovery = command({
       description:
         'Message that will be written in the description section of diffHistory.md.',
     }),
-    group: option({
-      type: optional(string),
-      long: 'group',
-      short: 'g',
-      description: 'group of projects to refresh.',
-    }),
     overwriteCache: flag({
       type: boolean,
       long: 'overwrite-cache',
@@ -74,13 +68,8 @@ export const RefreshDiscovery = command({
     const templateService = new TemplateService(paths.discovery)
     const logger = getPlainLogger(args.concise ? 'WARN' : 'INFO')
 
-    const projects = args.group
-      ? configReader.getProjectsInGroup(args.group)
-      : null
-
     const projectChain = configReader
       .readAllDiscoveredProjects()
-      .filter((project) => (projects ? projects.includes(project) : true))
       .filter((project) =>
         args.excludeProjects ? !args.excludeProjects.includes(project) : true,
       )

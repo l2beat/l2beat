@@ -2,7 +2,6 @@
   "TornadoVault": {
     "hash": "0x2c4d82f1db9eb433527603a82e8324dd2aa08001c5eb7974967ef1e11c0e09f1",
     "address": "eth:0x2F50508a8a3D323B91336FA3eA6ae50E55f32185",
-    "chain": "ethereum",
     "blockNumber": 24992607
   }
 }

@@ -510,12 +510,51 @@ fn main() {
     proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'notVerified',
   },
+  '0x00b451fcd696cd0a4025e30bfed96343b1767ac6523a360fee1183f9e2e20745': {
+    title: 'Celestia Blobstream DA bridge program',
+    description:
+      'ZK-friendly implementation of Celestia Blobstream DA bridge that proves that enough Celestia validators have confirmed a given data root.',
+    programUrl:
+      'https://github.com/succinctlabs/sp1-blobstream/tree/78a9d3419339a8c60bf51e1e3241f242bc44d434/program',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct commit hash in [sp1-blobstream](https://github.com/succinctlabs/sp1-blobstream/tree/main) repo:  \`git checkout 78a9d3419339a8c60bf51e1e3241f242bc44d434\`.
+2. Make sure docker is running by running  \`docker ps\`.
+3. From the  \`sp1-blobstream/program\` dir run:  \`cargo prove build --docker --tag v6.1.0 --elf-name blobstream-elf --output-directory ../elf\` to build the blobstream program elf within a docker container and place it in \`sp1-blobstream/elf\`.
+4. From \`sp1-blobstream\` run: \`cargo run --bin vkey --release\` to print the vkey of the \`blobstream-elf\` program.
+    `,
+  },
   '0x0057b7de6dcd8ff25e7b41089f4b5fa586067fbb107756d1f66d92fe71dd6ad1': {
     title: 'Avail VectorX DA bridge program',
     description:
       'ZK-friendly implementation of Avail Vector DA bridge that proves that a given data root was finalized on Avail.',
+    programUrl:
+      'https://github.com/availproject/sp1-vector/tree/1378db51be7634593f2bbb6301e5adf7590d03ab/program',
     proverSystemProject: ProjectId('sp1hypercube'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain v5.0.0: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up -v v5.0.0\` (the toolchain version must match the program's \`sp1-zkvm = "5.0.0"\` dependency and the docker tag used below).
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [availproject/sp1-vector](https://github.com/availproject/sp1-vector/tree/main) repo: \`git checkout 1378db51be7634593f2bbb6301e5adf7590d03ab\`.
+2. Make sure docker is running by running \`docker ps\`.
+3. From the \`sp1-vector/program\` dir run: \`cargo prove build --docker --tag v5.0.0 --elf-name vector-elf --output-directory ../elf\` to build the vector program elf within a docker container and place it in \`sp1-vector/elf\`.
+4. From \`sp1-vector\` run: \`cargo run --bin vkey --release\` to print the vkey of the \`vector-elf\` program.
+    `,
   },
   '0x00bca7947ba758bd6f539f480c6d983cca4bd4387a411a41a71fb953d5df3de7': {
     ...OP_SUCCINCT_AGG_EIGENDA,
@@ -634,13 +673,43 @@ Verify:
   },
   '0x0006e0a9f37edc912bb269856518599d61689c78300c23615b2f90868d0181cf': {
     ...OP_SUCCINCT_AGG_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.2.1/programs/aggregation',
     proverSystemProject: ProjectId('sp1hypercube'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct tag in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/v2.2.1) repo:  \`git checkout v2.2.1\` . Commit hash should be  \`664a1bd4172a976ec58a1a1fb7b9a1f589574c57\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes. The Arsia build removes the EigenDA code path entirely, so no feature flag is required.
+  `,
   },
   '0x1d1e0ac74bb66ded0388062e779adae47925fd572a49a3424e2684f83d776004': {
     ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.2.1/programs/range/ethereum',
     proverSystemProject: ProjectId('sp1hypercube'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct tag in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/v2.2.1) repo:  \`git checkout v2.2.1\` . Commit hash should be  \`664a1bd4172a976ec58a1a1fb7b9a1f589574c57\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes. The Arsia build removes the EigenDA code path entirely, so no feature flag is required.
+  `,
   },
   '0x08666bcf03c2240b14b399040abdc4aa2fe934535315fd3c158f010926d1e4a5': {
     ...OP_SUCCINCT_RANGE_BLOBS,
@@ -2621,5 +2690,39 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
     verificationStatus: 'unsuccessful',
     verificationSteps:
       'According to Automata Network, the linked program was compiled in a non-reporducible way (without docker). The compiled binary could not be reproduced.',
+  },
+  '0x0085924e73e2b0d0e2626c592825fe092d3cfb63b108757965b2a6c06c8c311b': {
+    title: 'Fluent Nitro TEE verifier',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.0/bin/aws-nitro-validator',
+    description:
+      'Verifies correctness of a single TEE attestation for executing Fluent STF within a trusted enclave on AWS cloud.',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/fluent-stf/blob/v1.0.0/README.md). The process is reproducible on a Linux machnie.
+
+1. Install prerequesits: docker, python3, git, jq.
+2. Checkout correct branch in https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.0: \`git checkout v1.0.0\`. Commit hash should be \`c8023c370a3fb859b591223bf81a9fe81df43778\`.
+3. Build Nitro program for the mainnet within docker: \`make build-nitro-validator-docker NETWORK=mainnet\`. This command will create \`nitro-validaotr-mainnet.vkey\` file with the program hash string.
+    `,
+  },
+  '0x00e34107e4c5284bd4ecc4269c650671038c1e85d9dacb931b534e984f607334': {
+    title: 'Fluent STF guest program',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    // programUrl:
+    //   'https://github.com/fluentlabs-xyz/fluent-stf/tree/djadjka/release-1.0.1/bin/client',
+    description:
+      'Guest program implementing state transition function of the Fluent rollup',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'According to the Fluent team, the sources for this program were not yet published. Thus it cannot be verified.',
+    //       verificationSteps: `
+    // Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/fluent-stf/blob/v1.0.0/README.md). The process is reproducible on a Linux machnie.
+
+    // 1. Install prerequesits: docker, python3, git, jq.
+    // 2. Checkout correct branch in https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.0: \`git checkout v1.0.0\`. Commit hash should be \`c8023c370a3fb859b591223bf81a9fe81df43778\`.
+    // 3. Build client program for the mainnet within docker: \`make build-client-docker NETWORK=mainnet\`. This command will create \`rsp-client-mainnet.vkey\` file with the program hash string.
+    //     `
   },
 }

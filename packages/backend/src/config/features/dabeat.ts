@@ -9,7 +9,6 @@ export async function getDaBeatConfig(
 ): Promise<DaBeatConfig> {
   const projects = await ps.getProjects({
     select: ['daLayer'],
-    whereNot: ['isUpcoming'],
   })
 
   const coingeckoIds = projects

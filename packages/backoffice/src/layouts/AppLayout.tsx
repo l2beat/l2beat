@@ -5,9 +5,11 @@ import { cn } from '~/utils/cn'
 export function AppLayout({
   children,
   className,
+  contentClassName,
 }: {
   children: React.ReactNode
   className?: string
+  contentClassName?: string
 }) {
   return (
     <>
@@ -18,7 +20,9 @@ export function AppLayout({
           className,
         )}
       >
-        <div className="flex min-h-full flex-col gap-2">
+        <div
+          className={cn('flex h-full min-h-0 flex-col gap-2', contentClassName)}
+        >
           <div className="flex items-center px-2 md:hidden">
             <SidebarTrigger className="size-8" />
           </div>

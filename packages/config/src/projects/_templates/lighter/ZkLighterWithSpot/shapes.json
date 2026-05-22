@@ -1,56 +1,59 @@
 {
   "Lighter.sol": {
-    "hash": "0x016ec5f80bfe1e98a099c8e237105be90b1da112de262adc17dcec715a4ee173",
+    "hash": "0x6970ad1995c9fcc8fc82fe873de8cbd99f340951411f4574ed6a8443652d4f58",
     "address": [
       "eth:0xe5FB592Ef1b620909000Af0D5fb55a3593026142",
       "eth:0x9307350AF47B0C0e7f8cA5ED2D57993aF3a6df1d"
     ],
-    "chain": "ethereum",
     "blockNumber": 23981955
   },
   "Lighter_Jan_2026": {
-    "hash": "0x6811045a7db4a2039e15ce02aad40f93a195abf3b68a900d217df71c7ab37294",
+    "hash": "0x2397b224f63d7748f620dc58ccc03d86c5d02a08a4112dc1ca9e0a10e0ba7aef",
     "address": [
       "eth:0x8bdccd961Ae8b8B99dBA5FbAd0e5AA92bE8c59Fb",
       "eth:0xF7627A2ab5cD6a5Cdbb84ffa96afE21A136B05d9"
     ],
-    "chain": "ethereum",
     "blockNumber": 24340970
   },
   "Lighter_Feb_2026": {
-    "hash": "0x4a50bcb82038f6198f88207da255045d7547680f7a48c66d23055539b0481a94",
+    "hash": "0xea54d1da4bf02cee7f565556eb22cf1c7f14140d08c41db75fd2ca299fd2c6c8",
     "address": [
       "eth:0x803bd6a0577c083c1EDe82Da455C8e69e697c878",
       "eth:0xF7627A2ab5cD6a5Cdbb84ffa96afE21A136B05d9"
     ],
-    "chain": "ethereum",
     "blockNumber": 24447047
   },
   "Lighter_Feb17_2026": {
-    "hash": "0xb28249d5dff85a357d4365eb463ef3eb2778445cefe5c663c7966dce55b8c2a0",
+    "hash": "0xf5b884e95a29006ff95ac84e38f5158df862678c742dfb9ce8daf0f656b16166",
     "address": [
       "eth:0xdC2877f6C162991B47fC5f7Cc50F85c084B9B408",
       "eth:0xF7627A2ab5cD6a5Cdbb84ffa96afE21A136B05d9"
     ],
-    "chain": "ethereum",
     "blockNumber": 24480000
   },
   "Lighter_Mar9_2026": {
-    "hash": "0x9196f787ee56fceda2cb5edc19619ee00a4261076f58a5096729585a79c5c474",
+    "hash": "0x82f7ccea7809be0e29e55c00dbd2d7f47642b44a217fbc3fd3203c2a3817a264",
     "address": [
       "eth:0xE315CbEDc21c5beC186bF478D899e91A604a6bC8",
       "eth:0x84E480C589e715D0CE7de004b1EEA69f8D714936"
     ],
-    "chain": "ethereum",
     "blockNumber": 24619817
   },
   "Lighter_Apr27_2026": {
-    "hash": "0xc3634a3489804f8dab544a9e3a5e4dd76fd81bfe5bbe3f69c88caf99c672e30f",
+    "hash": "0x9569dcd94342470829bda3bb0fd36074a965e17d37bedd39697db12f774365e1",
     "address": [
       "eth:0x13d4Ed7Db9d2cF73C7A45bfA6e23aa9742e8598C",
       "eth:0x22F05515497ce8D78f3898088C474403Ac9C668f"
     ],
-    "chain": "ethereum",
     "blockNumber": 24971787
+  },
+  "Lighter_May18_2026": {
+    "hash": "0xcd208d248bde92753c9b72b60864c4e7985f46c4b2c5a6fcead7552029b7e8b8",
+    "address": [
+      "eth:0xc4F38883af6d07D826A20A581cB21fFc2a58009C",
+      "eth:0x22F05515497ce8D78f3898088C474403Ac9C668f"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 25121536
   }
 }

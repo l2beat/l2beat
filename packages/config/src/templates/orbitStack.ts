@@ -24,6 +24,7 @@ import {
   pickWorseRisk,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
+  stackExitWindowRisk,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
@@ -146,7 +147,7 @@ interface OrbitStackConfigCommon {
   nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   activityConfig?: ProjectActivityConfig
   milestones?: Milestone[]
-  trackedTxs?: Layer2TxConfig[]
+  additionalTrackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
   additionalBadges?: Badge[]
   stage?: ProjectScalingStage
@@ -755,7 +756,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
         ),
       exitWindow:
         templateVars.stackedRiskView?.exitWindow ??
-        pickWorseRisk(
+        stackExitWindowRisk(
           common.riskView.exitWindow,
           baseChain.riskView.exitWindow,
         ),
@@ -1310,62 +1311,6 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
       query: {
         formula: 'functionCall',
         address: ChainSpecificAddress.address(sequencerInbox.address),
-        selector: '0x37501551',
-        functionSignature:
-          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, bytes quote)',
-        sinceTimestamp: UnixTime(genesisTimestamp),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: ChainSpecificAddress.address(sequencerInbox.address),
-        selector: '0x3e5aa082',
-        functionSignature:
-          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: UnixTime(genesisTimestamp),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: ChainSpecificAddress.address(sequencerInbox.address),
-        selector: '0x6e620055',
-        functionSignature:
-          'function addSequencerL2BatchDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
-        sinceTimestamp: UnixTime(genesisTimestamp),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: ChainSpecificAddress.address(sequencerInbox.address),
-        selector: '0x917cf8ac',
-        functionSignature:
-          'function addSequencerL2BatchFromBlobsDelayProof(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
-        sinceTimestamp: UnixTime(genesisTimestamp),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: ChainSpecificAddress.address(sequencerInbox.address),
         selector: '0x69cacded',
         functionSignature:
           'function addSequencerL2BatchFromOriginDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
@@ -1386,6 +1331,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         sinceTimestamp: UnixTime(genesisTimestamp),
       },
     },
+    ...(templateVars.additionalTrackedTxs ?? []),
   ]
 }
 

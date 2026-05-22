@@ -4,7 +4,6 @@ export const LogoGeneratorProject = v.object({
   name: v.string(),
   type: v.enum(['layer2', 'layer3']),
   slug: v.string(),
-  isUpcoming: v.boolean().optional(),
   isArchived: v.boolean().optional(),
 })
 

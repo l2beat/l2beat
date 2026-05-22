@@ -241,17 +241,3 @@ export function getScalingSummaryOthersColumns(
     ...getScalingSummaryValidiumAndOptimiumsColumns(opts).slice(6),
   ]
 }
-
-export function getScalingSummaryNotReviewedColumns(
-  opts?: ScalingSummaryColumnsOpts,
-) {
-  return [
-    ...getScalingCommonProjectColumns(
-      columnHelper,
-      (row) => `/scaling/projects/${row.slug}`,
-      { ignoreUnderReviewIcon: true },
-    ),
-    ...getScalingSummaryColumns().slice(4, 5),
-    ...getScalingSummaryColumns(opts).slice(6, 8),
-  ]
-}

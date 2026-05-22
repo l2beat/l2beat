@@ -1,3 +1,165 @@
+Generated with discovered.json: 0xc11d8b3018a24fac5c1d58217e6abe85cfa60bad
+
+# Diff at Fri, 08 May 2026 07:51:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1765550969
+- current timestamp: 1765550969
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765550969 (main branch discovery), not current.
+
+```diff
+    contract PreimageOracle (eth:0x192668f6b57DeB9D46e6DE87caD7065a052fe1b4) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      sourceHashes.0:
+-        "0x665ede6663477caf46bd510bb4ba7de3f2a6d8f51f840d058bad706018c67453"
++        "0xe9be56d8069214223cd51790b35de680e8ccb6c0be1181994e1271860cba8813"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes.1:
+-        "0x8c9491e689f31c280886abc8ea05ec6ac8d5394be56da8048ab9efeca67c4a3c"
++        "0xb8308c5a25dabece9395ce1b347859fe230530cb210e57358cc39bcef21ae017"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x465833609d9ff2Cb9A070b0d71b700F318C97293) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sourceHashes.1:
+-        "0xb1fe1fe741a2a22eb0e195e6bbd15f2f8de06e5586318a57ca82cbb6386f82e3"
++        "0x70b3f957e366b7ad3a2925eb80f8d2eccf25596d8d1d6e068c86cc0e0cd753da"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x5b0e75a52862881b4077C865B244CC17cD2b531b) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x6bee26e08bb3e482693649b598e8c0423de9025ebebdc773e9a2f9aa6f362478"
++        "0x96785d7bfc102ca5008d9c4af7edfdce509f5f73c3b0779a902afc7725a0b633"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x683ca289a8418Cb090E42929A73a263d7b81DfC2) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x0c1c0a5eff46fa1b105a2cabe6ce2b7a7fbac2f58af57392b196f8fe5768bd2a"
++        "0xa49036e4a5541250bcfbe69936ca385f921272eb68f775edc58fe130309709b7"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xd11ebc38ae875b9412d457a72f0a1fcd3e10098f5c74ff8d7139c4afd4edcf27"
++        "0x218b85a795c700ed4b19eab9e684d629273bacbc230c95f2624c012f2052a159"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x73bD898CD5b1dE0Ad1ED5Bf51aaEb52129F697d8) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"
++        "0x2d6eed673d2bab5d76faa0267fc22e2e2bc709d60036b7a47290ed08a484a8d8"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x82e66E285aeAd8C06D8b5d6f2a46fd6fAb9097e6) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xaac82ba0947c8928e2d00f2d5343a95f7e494fe1cb792814cc4875a689952f15"
++        "0xd0d5584a5b8a1d8179a9cefdf6fbd81f06f3beb7e93946f19a861c968926bba4"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
++        "0x834fe6e18d4d5cf60a1c6924a1d6a88208e8381fe449791d043bd5911e404b5b"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0xb7850CFa577332EB839840e1411962AC3Dd2f183) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes.1:
+-        "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
++        "0x6de38b49bc1a04f15ed8bf666e32170c813f9e69b7c213c6e3fdb961091ec37e"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x58864ca785ad0e38e611f758e06007a088cbf2a5879db0007cd97d598af27a2c"
++        "0x7559ecd7ec08209a080fbbc512953030307f88d95aede065f0c367fb487a6ef5"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F) [opstack/AnchorStateRegistry] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      sourceHashes.1:
+-        "0x9276015f2765194b8fc3bda15ecb50e1dacb7d171c9fd9dc4902b05944d949b0"
++        "0x07a34078379a1532a40fa8beaa0d3f37e22090e8ec809f1c409352d3c132699e"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xF014d8028A7028352baD6226A4894Ae596e2846c) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x7f307d6191215a72b6c24c01b3c2fc87c84f7fb346790132e58736caa2d1dd14"
++        "0x1980306d226136cbad2449a2c202c25d6c85457e35b935b96acd59ad61c467ce"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xF24e68552ED9F4024E1cEBa8ECB8715F62Bb9259) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
++        "0xe038348a5096e5fabd6264cc71bf88fecdd70c4a0e6c891d657ad0ce2e952342"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0xFED2F84E3e18e24EE6aa5f375edBA79782FDA6D2) [opstack/FaultDisputeGame] {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sourceHashes.0:
+-        "0xdb01a01fb5143b496ce6858f53dfad238652f6662be66a7b56c75807b5cbfb6a"
++        "0x4fc52282b95591b430f181af44968eb5f237fa11c460e48899d931c123b8e00c"
+    }
+```
+
 Generated with discovered.json: 0x61daa4aed2a53bc28afb2a73bf524625a6087a7d
 
 # Diff at Tue, 05 May 2026 10:22:37 GMT:

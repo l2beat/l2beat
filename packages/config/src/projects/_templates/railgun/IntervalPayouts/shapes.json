@@ -2,7 +2,6 @@
   "IntervalPayouts": {
     "hash": "0x525c6d47f3570e10cbae71328a39c0c1fe26df09b6e18c994918607ceed9da08",
     "address": "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11",
-    "chain": "ethereum",
     "blockNumber": 15138816
   }
 }

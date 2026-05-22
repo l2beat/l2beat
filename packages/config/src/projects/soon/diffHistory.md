@@ -1,3 +1,111 @@
+Generated with discovered.json: 0xafee36a9fb8c4d25e222e7aef432cde6fe41c61e
+
+# Diff at Fri, 08 May 2026 07:52:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1769535666
+- current timestamp: 1769535666
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769535666 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x839b34401a76cc25acc40c619feca981ae72bcbfea47fcc684c44caed2ece257"
++        "0x30ec974e5d46c5401659af784839bae305ed2419a3a39b112dc4b58237afbd94"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) [opstack/OptimismPortal2_soon] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
+      sourceHashes.1:
+-        "0x110afdef90725a52a9718b18c76ee94eedc98dbaa26f8818c43489caa0c4096d"
++        "0x020cd1f3781cbab14e8093d3fa6bc9d2b4079839f36be9eb7adaf2a099f4f41e"
+    }
+```
+
+```diff
+    contract KailuaGame (eth:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32) [risc0/KailuaGame] {
+    +++ description: Implementation of the KailuaGame with type 2000. Based on this implementation, new KailuaGames are created with every new state root proposal.
+      sourceHashes.0:
+-        "0xbf453d00f5e94a4688e269a30c6e5666cb18400a5ae67b17d1cd94fb227c391a"
++        "0x6b063ede72e6ec21a4b348934166e1ae8c9ab9e2ce3365ec3338a76e50fd2aec"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x24cb1546f4d13c900c36748855b85910c515856750676e6d425b2cd42204ff9f"
++        "0xec73147ff0c60e8bedce72aa2413e771a573eaa8c0aef9c1f6300d2c7a58cfe6"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xb085c0ecb42d97e9bd5fab260dd0fb686b8e112ba9b1ec07ece067a8ce17e2a3"
++        "0xe74145e75ea8e68c3fd39e721c2247e0b55bfce42ae36292b76e5676a5120457"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x7f307d6191215a72b6c24c01b3c2fc87c84f7fb346790132e58736caa2d1dd14"
++        "0x1980306d226136cbad2449a2c202c25d6c85457e35b935b96acd59ad61c467ce"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x280407852e66d748a811537f910566851115897f01a3de6b9cc11aebe341b900"
++        "0xc04c40a5965a9a7fb752080e0daff6acdb5264072991da48abeb089f4ef49e96"
+    }
+```
+
+```diff
+    contract SoonMultisig (eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract KailuaTreasury (eth:0xd6E6c8bd7A86C2ba6e846D8ae2f9cC013c533beb) [risc0/KailuaTreasury_soon] {
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.01 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
+      sourceHashes.0:
+-        "0x81207087384c13355df32b8597b7fff27ebc2f9943c46f62de7bd8546af54f77"
++        "0x27bd26097d017bf5c000629f14cc723a31a47350d46c2a97ee84a01a1e6ab1d7"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9) [opstack/L1StandardBridge_soon] {
+    +++ description: The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.
+      sourceHashes.1:
+-        "0x31171ab8eadf4234ec9b516f45a99b4ba57e9270edb7dd669d39db328abe95eb"
++        "0x4e5886534493cca2b7663bf55924a64094f905426f547997ca167c4de5d78362"
+    }
+```
+
 Generated with discovered.json: 0xce4192f88d7dd2d42f6599960c42d3a510af4359
 
 # Diff at Tue, 05 May 2026 10:23:09 GMT:

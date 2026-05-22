@@ -1,3 +1,138 @@
+Generated with discovered.json: 0x2a937095361ddbc160a70ac873eadc609cbc0a18
+
+# Diff at Fri, 15 May 2026 12:35:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1771250356
+- current timestamp: 1771250356
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771250356 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x277D26a45Add5775F21256159F089769892CEa5B) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
++        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+    }
+```
+
+Generated with discovered.json: 0xd7815df287daf73e5534a451917c18d33524132a
+
+# Diff at Fri, 08 May 2026 07:50:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1771250356
+- current timestamp: 1771250356
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771250356 (main branch discovery), not current.
+
+```diff
+    contract Safe (eth:0x0807C9f0247084cf1C5aB86A8fb00e7c70Cd27eB) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    EOA  (eth:0x277D26a45Add5775F21256159F089769892CEa5B) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
++        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sourceHashes.1:
+-        "0x1331a809e6d864cad7a57d9b2e1ae6cc5dcc4b3fd344e9cbe0551ce2b879c01d"
++        "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c"
+    }
+```
+
+```diff
+    contract Diamond (eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sourceHashes.1:
+-        "0xc7513302e4e09efc907df5e645d9f8037b1d02409f9a9089f61061c8951ef1ff"
++        "0xee0eeb13b78cdf1b9227960a31b35310c9e00441cd082d6a975f5225946b5693"
+    }
+```
+
+```diff
+    contract Safe (eth:0x325407EEC948b97429068AF0cd8A8D95F06315a4) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Safe (eth:0x57533344e91d29f927AAEBee364A33633Bd205Ab) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Safe (eth:0x58536761C97F5037931b56efeE922471add0eEe8) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Safe (eth:0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Abstract Multisig (eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract ChainAdmin (eth:0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063 act through it.
+      sourceHashes.0:
+-        "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
++        "0x5a6156ab737196ad26f28ac0f8be667f64154ce292ba41d4b7bc0c693ff19dea"
+    }
+```
+
 Generated with discovered.json: 0x9d100da1550a1739d6c0fa4e8768fcf1eb124855
 
 # Diff at Tue, 05 May 2026 10:21:51 GMT:

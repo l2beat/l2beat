@@ -47,7 +47,7 @@ export async function getScalingLivenessEntries() {
       ],
       optional: ['scalingDa', 'contracts'],
       where: ['scalingInfo'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      whereNot: ['archivedAt'],
     }),
     ps.getProjects({
       select: ['zkCatalogInfo'],

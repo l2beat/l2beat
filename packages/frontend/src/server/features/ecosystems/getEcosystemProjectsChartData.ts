@@ -18,7 +18,7 @@ export type EcosystemProjectsCountData = {
 }
 
 export function getEcosystemProjectsChartData(
-  entries: Project<'ecosystemInfo', 'archivedAt' | 'isUpcoming'>[],
+  entries: Project<'ecosystemInfo', 'archivedAt'>[],
   allScalingProjectsCount: number,
   projectsTvs: Record<string, ProjectSevenDayTvsBreakdown>,
   projectsActivity: ActivityLatestUopsData,

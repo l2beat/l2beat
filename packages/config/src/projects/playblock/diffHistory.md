@@ -1,3 +1,330 @@
+Generated with discovered.json: 0x927ad1f8ceb91402c14ae06afb1427826bd80dbd
+
+# Diff at Mon, 18 May 2026 18:24:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b70f892b88d1263a724194cd3b4ec927d71a6fd9 block: 1778508927
+- current timestamp: 1779128593
+
+## Description
+
+RollupProxy `stakerCount` incremented from 2 → 3 (a third staker joined the validator set).
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.stakerCount:
+-        2
++        3
+    }
+```
+
+Generated with discovered.json: 0x2b9916bd48c6b85d0598cce6151ec55bc608122a
+
+# Diff at Fri, 15 May 2026 12:36:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778508927
+- current timestamp: 1778508927
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778508927 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.1:
+-        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
++        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb-nova:0x19bD7120cD19D6BE6D21f987544e404e47608c16) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
++        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
+    }
+```
+
+```diff
+    contract ChallengeManager (arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
++        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb-nova:0x77E1b4F2e1bf192975c59bdF44EcB5a2D42AF017) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xd64745a0edbb2ada69b81d849f2737d7c082d18ca14a715c23c4165e4eecc637"
++        "0x081875b93df655e91ec23245390ad21db0990c12125dad497f1cbf118501ccc2"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb-nova:0x944dB3fA4828B5F41ca0E77b97867529F1A899cB) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
++        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb-nova:0xfaD0d420ffF503a40E9CDcb90ff0328E46f06c08) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
++        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
+    }
+```
+
+Generated with discovered.json: 0xe740c87d2a389a8ef46b645f64d123407e40092b
+
+# Diff at Mon, 11 May 2026 14:16:51 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@37cdce03260dfa5682c2b693e3c1d4a9ccb125af block: 1778233010
+- current timestamp: 1778508927
+
+## Description
+
+- **RollupProxy** (`arb-nova:0x04ea347c...`): two sequential `setValidator()` calls — `setValidator([0x8273A6b1...], [true])` at block 84931832, then `setValidator([0xB2464216...], [false])` at block 84931833. Net effect: validator swap. `setValidatorCount` counts events.
+- **UpgradeExecutor** (`arb-nova:0x0611b78A...`): EXECUTOR_ROLE member rotated `0x10Fe3cb8...` → `0x04b47Ba4...` (a new Safe, created in this diff).
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        3
++        5
+      values.validators.0:
+-        "arb-nova:0xB246421622FB931BdAc20B4a26816F881771Db1e"
++        "arb-nova:0x8273A6b13Ee8F7eF85bc769E27e4e508f53009Cc"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
++        "arb-nova:0x04b47Ba4A06bc88279BaCd4af2185090e2FF3F57"
+      values.executors.0:
+-        "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
++        "arb-nova:0x04b47Ba4A06bc88279BaCd4af2185090e2FF3F57"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosters.0:
+-        "arb-nova:0x3A8F935c5722535A8F34BD176d57D130Cb37d3A0"
++        "arb-nova:0x28a60eFd283Dc7FC6aa959bA733B5612C9982458"
+      values.dacKeyset.membersCount:
+-        2
++        1
+      values.dacKeyset.blsSignatures.0:
+-        "YBlgGETG0JAkF0lRA3szPn3L5opNuQWdu2c9OsvmyiFTuut4zl6E8tcgnXSzlX1cwxFb/dKGoetJtdHbrfN4a70U5wD5NXsMjvZGJC9grFkyEQ4gQfOfMcW/NX5CEp3FvBfLYp9lTR/sAjU/uZ7JNGMj1ol0xyYkOkyAQvbN7ri9z05Jo3H8hhHYpvAkaIpgVQw2nSQg1nlMMhmUdn0g2XEBzijYfDvQC3MZDurPXmiC9eARVq+gLXF57By/3m1u8hZoshxjU2aG24ukLjEXEqGvqDR158jZpQE7ZMtv8c7ma1XSUSXLqm1LQMWlK2FRJwErkKGyUQM4luTI4fGoycDnpdQq2eI6+TZXm2PYY1nJrPo7lMghYL+CLkCSCvMmPQ=="
+      values.dacKeyset.blsSignatures.1:
+-        "YAImQLIbSOCL4/9H1Cz7q4xAOZPVli5CulIEqvuMF4JjZwEhRDa8n3tie56cEykcxhgd8kixHEdOm2YcGOetbcUN7HUgfDpVMEqspHjIYzp06QM/IEC0SC2oUxsXorqewxPqukssVdSDsZQ26R/A9uZ2+wpHhGd8V9itDIRK+1HXzECMMd02yic2cyGjmOxPXAGfMay9PnLViYszEOKRNsiRWBO6Z6n8VP3GJF4S4/XFPHQ58wFxIi8zWR12BvzCbw6UUKohmrC2SIHtu9hJ6rbj3EcXlNGa/YsGatysgfcVR20/rMysbmqy7E1zhsYwvhRQaOBUpoVUzH4DajylpiJdWpbk46dlq0127k2vtGgWXNErbBRES1IK2cDfbP+Ztw=="
++        "YBhPN6Tq6nXoJS041bPwKYcDeU1Y84s1URBM4MJHKup49TzNB/23scWwhETSvpAl1RnMwh0S/Z+LZ8UGFWlLYmquyJi5weYTsMF6rChTnuZnqY4I1zQZPemy5hK0sIJDlQaqb/llv/8ujT5q3p4DhBLXZ3eIUMcXs4j7F+QMNZyO87mbTnrulLiPfZbAno1SKg8k2Q76fbNPQs76GK4aseCPeA5hPguvjijDIqDVK5Ffz/PhQ6nap8K6UlApBm+CMBIOmAP9IdMyAVs+wirhgMvR88+JVhoMW9kU3F90bWks78tHYqASrw/lXBFI8TgiGhlvvsmUJAC3dyzjccjMyO0M05JjmM1i8bkAdYuCWRF0KV63rABVXUAFGtKAzrLPpw=="
+      values.keySetUpdates:
+-        4
++        5
+      values.setIsBatchPosterCount:
+-        3
++        5
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (arb-nova:0x04b47Ba4A06bc88279BaCd4af2185090e2FF3F57) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/playblock/.flat/SafeL2/SafeL2.sol | 1286 ++++++++++++++++++++
+ .../playblock/.flat/SafeL2/SafeProxy.p.sol         |   42 +
+ 2 files changed, 1328 insertions(+)
+```
+
+Generated with discovered.json: 0x8b83cdad2b61e4f006a0b276653f9a2e2e94ee3a
+
+# Diff at Fri, 08 May 2026 09:37:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1765379686
+- current timestamp: 1778233010
+
+## Description
+
+SequencerInbox (`arb-nova:0xe347C122...`) — `maxTimeVariation` widened 10x: `delayBlocks` 5,760 → 57,600 and `delaySeconds` 86,400 → 864,000 (24h → 240h / 10 days). Materially more leeway for the sequencer to delay/reorder forced inbox messages.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.maxTimeVariation.delayBlocks:
+-        5760
++        57600
+      values.maxTimeVariation.delaySeconds:
+-        86400
++        864000
+    }
+```
+
+Generated with discovered.json: 0x6ad108584ca685aa6585973e4f232699d5d64408
+
+# Diff at Fri, 08 May 2026 07:51:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1765379686
+- current timestamp: 1765379686
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765379686 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.0:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
++        "0xb739f8156f36efd1dca81c7048413241da1e5bf4a5f98001523a474136b8defd"
+      sourceHashes.1:
+-        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
++        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sourceHashes.1:
+-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
++        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb-nova:0x19bD7120cD19D6BE6D21f987544e404e47608c16) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
++        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb-nova:0x2964CBfC551A76527D42F57131E7f77f9Dce8921) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
++        "0xd38b92884347e76d4ce463bc343cbf508eefb150146ed51cb80c2aee8c565122"
+    }
+```
+
+```diff
+    contract ChallengeManager (arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
++        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
+    }
+```
+
+```diff
+    contract ValidatorUtils (arb-nova:0x6c21303F5986180B1394d2C89f3e883890E2867b) [orbitstack/ValidatorUtils] {
+    +++ description: This contract implements view only utilities for validators.
+      sourceHashes.0:
+-        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
++        "0xebcd95194086ae9c3b9095578172a3192d9d209e5b159956f1d266910d248334"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb-nova:0x77E1b4F2e1bf192975c59bdF44EcB5a2D42AF017) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
++        "0xd64745a0edbb2ada69b81d849f2737d7c082d18ca14a715c23c4165e4eecc637"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb-nova:0x944dB3fA4828B5F41ca0E77b97867529F1A899cB) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
++        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
+    }
+```
+
+```diff
+    contract Bridge (arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
++        "0x44eab8a1244ce0ae33674b88b4211d02a3f4d060cf9a7791854f3263c039813a"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
++        "0x38fab1c44903c11839e1113e339b7268b07f99808721133182f57fdd891be63a"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb-nova:0xfaD0d420ffF503a40E9CDcb90ff0328E46f06c08) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
++        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
+    }
+```
+
+```diff
+    contract Inbox (arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
++        "0xb33f29d585cf178f81b64440ee9a3c598cd398ad18d2b3c6dc6c711eaf63d5e4"
+    }
+```
+
 Generated with discovered.json: 0x572e14611c461a1bc743e0b20b71a25485e25983
 
 # Diff at Tue, 05 May 2026 10:22:34 GMT:

@@ -35,3 +35,4 @@
 - [Contracts section](./l2b_specs/contracts.md)
 - [Finality page](./l2b_specs/finality.md)
 - [Stages edge cases](./l2b_specs/stages_edgecases.md)
+- [Diffovery](./l2b_specs/diffovery.md)

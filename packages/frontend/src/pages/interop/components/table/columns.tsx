@@ -57,7 +57,7 @@ const commonColumns = [
           <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
             <TwoRowCell>
               <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-                <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
+                <div className="w-fit max-w-[78px] break-words font-bold text-label-value-15 md:leading-none">
                   {ctx.row.original.name}
                 </div>
                 {ctx.row.original.subgroup && (
@@ -171,6 +171,7 @@ export function getAllProtocolsColumns(
           protocol={{
             id: ctx.row.original.id,
             name: ctx.row.original.name,
+            slug: ctx.row.original.slug,
             iconUrl: ctx.row.original.iconUrl,
           }}
         />
@@ -311,6 +312,7 @@ export function getAllProtocolsColumns(
             protocol={{
               id: ctx.row.original.id,
               name: ctx.row.original.name,
+              slug: ctx.row.original.slug,
               iconUrl: ctx.row.original.iconUrl,
               bridgeTypes: ctx.row.original.bridgeTypes,
             }}

@@ -3,10 +3,12 @@ import { getInteropFlows } from '~/server/features/scaling/interop/getInteropFlo
 import { getInteropProtocolTransfers } from '~/server/features/scaling/interop/getInteropProtocolTransfers'
 import { getInteropTokensInfinite } from '~/server/features/scaling/interop/getInteropTokens'
 import { getInteropTokensPairsInfinite } from '~/server/features/scaling/interop/getInteropTokensPairs'
+import { getTokenFrameworksData } from '~/server/features/scaling/interop/getTokenFrameworksData'
 import {
   InteropDashboardParams,
   InteropFlowsParams,
   InteropProtocolTransfersParams,
+  InteropSelectionInput,
   InteropTopItemsInfiniteParams,
 } from '~/server/features/scaling/interop/types'
 import { procedure, router } from '../trpc'
@@ -15,6 +17,9 @@ export const interopRouter = router({
   dashboard: procedure
     .input(InteropDashboardParams)
     .query(({ input }) => getInteropDashboardData(input)),
+  tokenFrameworks: procedure
+    .input(InteropSelectionInput)
+    .query(({ input }) => getTokenFrameworksData(input)),
   tokens: procedure
     .input(InteropTopItemsInfiniteParams)
     .query(({ input }) => getInteropTokensInfinite(input)),

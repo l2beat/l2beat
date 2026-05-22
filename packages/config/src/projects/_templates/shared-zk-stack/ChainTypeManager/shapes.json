@@ -1,16 +1,16 @@
 {
   "ChainTypeManager": {
-    "hash": "0xf6789714ce74a28098dbbf1bb19c228c5c72b5a0756925b2f1c4b8ea9c072e37",
+    "hash": "0xbc08e8329a33d1521ca9eda6b91f259598fe2f68f5460310add96af5165daefb",
     "address": "eth:0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb",
     "blockNumber": 22188285
   },
   "ChainTypeManager_v27": {
-    "hash": "0x5462a6c55c6e9f2d98c21f2588b2b9a4de1dc41ba0c10906f8965e21849a3a52",
+    "hash": "0xf62de6d5bab810f94e1483fb35977f0551d103eb255a25740db441b4edaaf997",
     "address": "eth:0x6D598c77AF57Bfa17201483400615c61819dD45A",
     "blockNumber": 22374168
   },
   "ChainTypeManager_v29": {
-    "hash": "0xee0ad6dd34008989477a03f84eca5083a1cb79b46c01c850617d62c7b406c4ba",
+    "hash": "0xb0eebc8da1c8b487e37ce835acafbb43e7540c68772e535769e5a1a1620c2b89",
     "address": "eth:0x4aB7204e4205c96C32E23ADa9191720976dC084f",
     "blockNumber": 23588465
   }

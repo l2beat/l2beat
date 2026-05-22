@@ -41,6 +41,10 @@ export interface TableReadyValue<T extends string = string> {
   orderHint?: number
 }
 
+export interface ExitWindowRisk extends TableReadyValue {
+  regular?: Pick<TableReadyValue, 'value' | 'sentiment'>
+}
+
 export interface ProjectTechnologyChoice {
   name: string
   description: string
@@ -73,7 +77,7 @@ export type ProjectRiskCategory =
   | 'Withdrawals can be delayed if'
 // #endregion
 
-export type ProjectReviewStatus = 'initialReview' | 'inReview'
+export type ProjectReviewStatus = 'inReview'
 
 export interface BaseProject {
   id: ProjectId
@@ -113,6 +117,9 @@ export interface BaseProject {
   // interop data
   interopConfig?: InteropConfig
 
+  // privacy data
+  privacyInfo?: ProjectPrivacyInfo
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -132,7 +139,6 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
 
   // tags
-  isUpcoming?: true
   archivedAt?: UnixTime
   hasTestnet?: true
 }
@@ -563,7 +569,7 @@ export interface ProjectRiskView {
       | 'not-assessed'
   }
   dataAvailability: TableReadyValue
-  exitWindow: TableReadyValue
+  exitWindow: ExitWindowRisk
   sequencerFailure: TableReadyValue
   proposerFailure: TableReadyValue
 }
@@ -858,6 +864,70 @@ export interface TrustedSetup {
   shortDescription: string
   longDescription: string
 }
+
+// #endregion
+
+// #region privacy data
+
+export interface ProjectPrivacyInfo {
+  trustedSetup: TrustedSetup
+  tokens: ProjectPrivacyToken[]
+  riskSummary?: string
+  upgradesAndGovernance?: string
+}
+
+export interface ProjectPrivacyToken {
+  token: {
+    address: EthereumAddress
+    symbol: string
+    decimals: number
+    priceId: string
+    sinceTimestamp: UnixTime
+  }
+  buckets: ProjectPrivacyBucket[]
+}
+
+export interface ProjectPrivacyBucket {
+  id: string
+  type: 'pool' | 'denomination'
+  label: string
+  address: ChainSpecificAddress
+  sinceTimestamp: UnixTime
+  denomination?: string
+  deposit: PrivacyFlowSource
+  withdrawal: PrivacyFlowSource
+}
+
+export type PrivacyFlowSource = {
+  event: string
+} & PrivacyFlowExtractorConfig
+
+export type PrivacyFlowExtractorConfig =
+  | {
+      extractor: 'fixedAmount'
+      params: {
+        amount: string
+      }
+    }
+  | {
+      extractor: 'privacyPoolsValue'
+      params: Record<string, never>
+    }
+  | {
+      extractor: 'railgunShield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'railgunUnshield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+
+export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
+export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
 
 // #endregion
 
@@ -1177,8 +1247,6 @@ export interface ProjectEscrow {
   premintedTokens?: string[]
   /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
   isHistorical?: boolean
-  /** Upcoming projects needs upcoming escrows (needed for TVL) */
-  isUpcoming?: boolean
   /** Inclusive */
   untilTimestamp?: UnixTime
   includeInTotal?: boolean
@@ -1230,6 +1298,7 @@ export type InteropPluginName =
   | 'hyperlane-simple-apps'
   | 'hyperliquid-bridge'
   | 'layerzero-v2'
+  | 'lighter-bridge'
   | 'layerzero-v2-ofts'
   | 'lido-wsteth'
   | 'maker-bridge'

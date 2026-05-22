@@ -1,6 +1,6 @@
 {
   "name": "tokens",
-  "timestamp": 1776866286,
+  "timestamp": 1778679898,
   "configHash": "0xc85bebc78e82be6af50bb2565e541cf6d471c63cace747b2c2561539ee515ec5",
   "entries": [
     {
@@ -25,7 +25,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -48,7 +48,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 37,
+        "nonce": 38,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -67,8 +67,8 @@
       "type": "Contract",
       "template": "tokens/PermissionManager",
       "sourceHashes": [
-        "0x1b700e4f2cb900deab1fc07dc6cc38305b72bc7c6703d5313def15c56e809288",
-        "0x775ec46d31d03f2687835380ad135abaab92a7ad5cd897280e4b1551244a01a9"
+        "0x3fdf32f1c47da113fac0a216260af28d8f4d514a4ead929122cc1ce71734cdde",
+        "0x9e9af02f6a242a5f8fb27ed1a6031a2e9f082348fc4310d7ccaa13a1b69ab87a"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "arb1:0xEd608cf38968C0ba09676843D90B33Dd59dd7375",
@@ -108,8 +108,8 @@
       "type": "Contract",
       "template": "tokens/EUTBL",
       "sourceHashes": [
-        "0x1b700e4f2cb900deab1fc07dc6cc38305b72bc7c6703d5313def15c56e809288",
-        "0x95ca38921467c82db81aa7581b20ab8104b4a24de3baf525a0bbf527a33511f3"
+        "0x3fdf32f1c47da113fac0a216260af28d8f4d514a4ead929122cc1ce71734cdde",
+        "0xeaaa2bc5f75c54a9b1f8fdaf14118614824245dfca16bdeee0b8b66431dae0bf"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["totalSupply"],
@@ -143,7 +143,7 @@
         "owner": "arb1:0x0000000000000000000000000000000000000000",
         "paused": false,
         "symbol": "EUTBL",
-        "totalSupply": 30690486857459,
+        "totalSupply": 30306570049415,
         "trustedForwarder": "arb1:0xd3f5f1524e1A472B51374A3ff41B8936EB5B658E",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -213,7 +213,7 @@
       "type": "Contract",
       "template": "tokens/circle/TokenMessenger",
       "sourceHashes": [
-        "0xd05b852e1f8c4b58ffee547d6db9feb1ae5b614ac3281d8cb02c8b2e3af2164f"
+        "0x0e7e48035fe31487cc6f796d7f7e598c93bc4237c35407323cd2b05747144916"
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP",
@@ -285,8 +285,8 @@
       "type": "Contract",
       "template": "tokens/circle/GatewayMinter",
       "sourceHashes": [
-        "0xf65031b6016e2f8ceefeebfc98dfb3c259cfa4326be072dd1de90d143026753b",
-        "0x525585e7459a78092c75ba3666a1a0b6ceee863111052fc114675a13b4d06322"
+        "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
+        "0x6838d677f53c3c637659817b8a77b44a7975202d988e744fd0ae6f2254cdd03d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entrypoint or minter of USDC on this chain for the Gateway protocol.",
@@ -372,7 +372,7 @@
       "template": "tokens/circle/TokenMessenger",
       "sourceHashes": [
         "0x0f6567e3f3b76997d73df085a97533bc460aeb5a6a5dcd00a17aeb1dd95c5816",
-        "0x65d3e84e1231bb11a792f4a9946c0672509f68725186e8c623086e51d4ace1a3"
+        "0xc7716814991dd09cd5c16dec694aea6f3c06a42531df261c804cf65fc2342841"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of CCTP",
@@ -523,7 +523,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -576,11 +576,12 @@
         "domainSeparator": "0xba6f3e6722a231d4f26db258965feab61ed3d4f343da431bcad2104ae9ea4096",
         "getChainId": 8453,
         "GnosisSafe_modules": [
+          "base:0xf633980A61E9F90a41d030676059Dc201D9d4A37",
           "base:0xf6B23291bF4993832b92A05c67d5f43eF3287C6a",
           "base:0xe3B3b4Fc77505EcfAACf6dD21619a8Cc12fcc501"
         ],
         "multisigThreshold": "2 of 8 (25%)",
-        "nonce": 454,
+        "nonce": 468,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -649,8 +650,8 @@
       "type": "Contract",
       "template": "tokens/circle/GatewayWallet",
       "sourceHashes": [
-        "0xf65031b6016e2f8ceefeebfc98dfb3c259cfa4326be072dd1de90d143026753b",
-        "0x506e625ba860a14389c9a084a8c4fd214f27c61d2748b95699be952eb3ff6af0"
+        "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
+        "0x58abac7a9c89cc1bb5e3008040a2a14acbee3ba234aab0da096e9163c2ba3962"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Exit point or burner of USDC on this chain for the Gateway protocol.",
@@ -720,7 +721,7 @@
       "template": "tokens/circle/MessageTransmitter",
       "sourceHashes": [
         "0x0f6567e3f3b76997d73df085a97533bc460aeb5a6a5dcd00a17aeb1dd95c5816",
-        "0x84e99328c6ecdcc29a4322f0758efcb0a5886faaa900a1764ba815e6c8a2036a"
+        "0xb1b996883e893bf22c3220218684d23097e100c26c9467bf95428b8bb1e2b576"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of CCTP",
@@ -771,7 +772,7 @@
       "template": "tokens/circle/USDC",
       "sourceHashes": [
         "0x3e6aa5a9e907eadff9fe4df338a8f629966b60307fbbe5956fb9886d74822fd1",
-        "0xacd76117eb21f736961ade180c25f63d796bc2e83f43b82ee3ff585bb34ce6ed"
+        "0xa3d835fb690ea2f5e876dfe8976087c2953119048813d2517a18c0d0467bcfee"
       ],
       "proxyType": "ZeppelinOS proxy",
       "ignoreInWatchMode": ["totalSupply"],
@@ -830,7 +831,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "base:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 4522261460893566,
+        "totalSupply": 4353054139723740,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -879,7 +880,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -945,7 +946,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 60,
+        "nonce": 62,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -994,7 +995,7 @@
       "type": "Contract",
       "template": "tokens/circle/MessageTransmitter",
       "sourceHashes": [
-        "0x0a6be4fecca4861686e0a31878557d698e444ce7024f01190aabc908e17087e3"
+        "0x70813cb58534e0502dc344758b141e16cbde2a0857ff4f999c0aee6b3c816da1"
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP",
@@ -1012,7 +1013,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 6,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 786345,
+        "nextAvailableNonce": 790277,
         "owner": "base:0x4273C43e14888ae07FB3a850c1C7c596C607d50d",
         "paused": false,
         "pauser": "base:0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -1085,7 +1086,7 @@
       "template": "tokens/Origin/wOETH",
       "sourceHashes": [
         "0x673392adedd1101b7ce28c092f44c9856be04d0430709116f6cfd1cc3d606fa3",
-        "0x524b79f95e1fba1f052501755efaea01bd2ddd95a7e6453ef2261c263d99dc23"
+        "0xf35eaaf4ed55d10da08f22a170649fff29c24dda3dce76693441b95aee9ea8f8"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["totalSupply"],
@@ -1127,7 +1128,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Wrapped OETH",
         "symbol": "wOETH",
-        "totalSupply": "8926061626214221901776"
+        "totalSupply": "8684279662862468756018"
       },
       "implementationNames": {
         "base:0xD8724322f44E5c58D7A815F542036fb17DbbF839": "BridgedBaseWOETHProxy",
@@ -1150,7 +1151,7 @@
       "type": "Contract",
       "template": "tokens/circle/TokenMinter",
       "sourceHashes": [
-        "0xe3726a2ed0f748a5239bddbe87c3c53ab18fe03308c167092fb98d970396ec63"
+        "0x8ce1834b9145a30f7685f60bcbb820752f2a42cd7586782754eb4c2b8ca04117"
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP: Used for automated access control for minting.",
@@ -1268,7 +1269,7 @@
       "type": "Contract",
       "template": "tokens/circle/TokenMinter",
       "sourceHashes": [
-        "0x4f65c99b21662a49a87fe117a196b5c67b5e8414afb355272fa80cd5830591fb"
+        "0xd344d9de17d9bc1f71a1617c4dcbb528e821a05bc72d58e263a87e66e6640696"
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP: Used for automated access control for minting.",
@@ -1305,7 +1306,7 @@
       "type": "Contract",
       "template": "global/DepositContract",
       "sourceHashes": [
-        "0x50e829416130215b875975340a7567d915ecf66f25070a50813ca972a4322191"
+        "0x64e29339363d55b4dc7d88beeb0bf9d0c5f577c7bf1218f08d527708f60e5ded"
       ],
       "proxyType": "immutable",
       "description": "Ethereum Beacon Chain deposit contract.",
@@ -1315,8 +1316,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x4788250000000000",
-        "get_deposit_root": "0x3a0c20ad06176847ed3a7c40865c2268803496ccc54428f567aaab0fc3c5767f"
+        "get_deposit_count": "0x22bd250000000000",
+        "get_deposit_root": "0x9f34d17719715f57d55b0f82061f980fad82267be4fe39f700a7346c0e8dd175"
       },
       "implementationNames": {
         "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -1365,7 +1366,7 @@
       "address": "eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A",
       "type": "Contract",
       "sourceHashes": [
-        "0xe40cdacf85295b79ce35608aea6526762e642df543bb498f3457de2d03e02455"
+        "0xf02b676e5911c76b150e966dae8cd3e4a3337de8862b89c1cea2ae0ba7310e1d"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
@@ -1452,7 +1453,7 @@
       "type": "Contract",
       "template": "tokens/Lido/StakingVault",
       "sourceHashes": [
-        "0x01eb43e0204902ef83ed3b7284f39b6ac2747cfec8fa2d667063c77597693253"
+        "0x203e0b11552fff69c2b0e3617840f67ef689929efef062b5628afc6a2880ff45"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["availableBalance"],
@@ -1483,7 +1484,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
-        "0x50b1f029cbc9832f0464c9fb50f05553e7d8689e5bf07c118c523edd42acff5d"
+        "0x8a38737f10d5c2a00f6cc519d3dbc125e8864a4f422532a8005f910ec3893984"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44",
@@ -1537,7 +1538,7 @@
       "template": "tokens/Lido/ValidatorsExitBusOracle",
       "sourceHashes": [
         "0x04c21a54dfbc4ca3baf7ce93d62b487e1071a6439bde71a1896d76f073a66848",
-        "0xe4c526720601a291e152819a6b6a28a60b7aa74dfc163dcdda0848713449d95d"
+        "0x4879e0bd2e338990ef1272eed42b478311c14048e7d4acfd4bcf5be1219ab013"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -1577,9 +1578,9 @@
         "GENESIS_TIME": 1606824023,
         "getConsensusContract": "eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
         "getConsensusReport": {
-          "hash": "0xf9aac7b23e9df2c54ec54d9518418a8c35e185bf44f9717f9389c80f6d3a9f18",
-          "refSlot": 14169599,
-          "processingDeadlineTime": 1776888011,
+          "hash": "0xa00b2c93556e9fb094dbfb6b92e477ae708ae028e83dbbd08d22c2a26fb42229",
+          "refSlot": 14320799,
+          "processingDeadlineTime": 1778702411,
           "processingStarted": true
         },
         "getConsensusVersion": 4,
@@ -1593,16 +1594,16 @@
         },
         "getMaxValidatorsPerReport": 600,
         "getProcessingState": {
-          "currentFrameRefSlot": 14169599,
-          "processingDeadlineTime": 1776888011,
-          "dataHash": "0xf9aac7b23e9df2c54ec54d9518418a8c35e185bf44f9717f9389c80f6d3a9f18",
+          "currentFrameRefSlot": 14320799,
+          "processingDeadlineTime": 1778702411,
+          "dataHash": "0xa00b2c93556e9fb094dbfb6b92e477ae708ae028e83dbbd08d22c2a26fb42229",
           "dataSubmitted": true,
           "dataFormat": 1,
-          "requestsCount": 600,
-          "requestsSubmitted": 600
+          "requestsCount": 0,
+          "requestsSubmitted": 0
         },
         "getResumeSinceTimestamp": 1684163759,
-        "getTotalRequestsProcessed": 135095,
+        "getTotalRequestsProcessed": 147167,
         "isPaused": false,
         "MANAGE_CONSENSUS_CONTRACT_ROLE": "0x04a0afbbd09d5ad397fc858789da4f8edd59f5ca5098d70faa490babee945c3b",
         "MANAGE_CONSENSUS_VERSION_ROLE": "0xc31b1e4b732c5173dc51d519dfa432bad95550ecc4b0f9a61c2a558a2a8e4341",
@@ -1653,7 +1654,7 @@
       "template": "tokens/Lido/VaultHub",
       "sourceHashes": [
         "0x04c21a54dfbc4ca3baf7ce93d62b487e1071a6439bde71a1896d76f073a66848",
-        "0x5a96636cae49d9865336a069167358aa1056cd74f8308fd55834376c6cbf67e5"
+        "0x6bcf34d4a5b8a1bbe9daa335f1f67871309c33f2bf9fb1f50c339cacb0d21561"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["vaultsCount"],
@@ -1703,7 +1704,7 @@
           "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
           "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4"
         ],
-        "vaultsCount": 16
+        "vaultsCount": 19
       },
       "implementationNames": {
         "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709": "OssifiableProxy",
@@ -1754,7 +1755,7 @@
       "address": "eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9",
       "type": "Contract",
       "sourceHashes": [
-        "0xd88820a97d649ac3bcce0fb26e37ce6f1db8e4c2afc721076b4f7267f7b96c19"
+        "0xae1475dea458c2985b5c3ebd503e52cbcdbc0e654a3aa89bd46cfdc4e613a3ad"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
@@ -1785,7 +1786,7 @@
       "type": "Contract",
       "template": "tokens/Lido/Dashboard",
       "sourceHashes": [
-        "0x26cc32bd36fc0ef84955e8396853432eecfd75a2d5018a994325ed26f9334edb"
+        "0x0f7ce949499fae2d9966f5b69098e43c8b34ecc49cb47a97ae2cbc7cde5d01b7"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
@@ -1885,7 +1886,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -1906,7 +1907,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 355,
+        "nonce": 358,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1999,8 +2000,8 @@
       "type": "Contract",
       "template": "tokens/Lido/LidoDaoAgent",
       "sourceHashes": [
-        "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a",
-        "0xa2a0001d171ac04fee445851ab0e1c994c3b76a49ae877c1b3d2b563ae8b8178"
+        "0x5d180561dda86f9c602d514f0327c10a48c8b42836553121aa85c9d14a285d36",
+        "0x4eb31af8f0026c187cef5d9a69b934ec306b9206f749781bc0ee029bd7302489"
       ],
       "proxyType": "EIP897 proxy",
       "description": "Custom role-based operations entrypoint for Lido.",
@@ -2170,8 +2171,8 @@
       "type": "Contract",
       "template": "tokens/Lido/StakingVault",
       "sourceHashes": [
-        "0xb7340cba7f15880cbd57f96214be29f7ffde82f06b923a0a7b01ed660a852279",
-        "0x01eb43e0204902ef83ed3b7284f39b6ac2747cfec8fa2d667063c77597693253"
+        "0x98752ee6352221931e7a0dc594ec6c7f22b18c7b84c2f69891efc90010a84a65",
+        "0x203e0b11552fff69c2b0e3617840f67ef689929efef062b5628afc6a2880ff45"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableBalance"],
@@ -2264,7 +2265,7 @@
         "proposedOwner": "eth:0x0000000000000000000000000000000000000000",
         "supplyController": "eth:0x2fb074FA59c9294c71246825C1c9A0c7782d41a4",
         "symbol": "PAXG",
-        "totalSupply": "486380797000000000000000"
+        "totalSupply": "471942854000000000000000"
       },
       "implementationNames": {
         "eth:0x45804880De22913dAFE09f4980848ECE6EcbAf78": "AdminUpgradeabilityProxy",
@@ -2298,7 +2299,7 @@
       "template": "tokens/Lido/CSFeeOracle",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
-        "0xe9044668de5a790902b6bfed112ac2d764965db11a13b730c985ceff09edff4d"
+        "0xef315fcae19b9f01e7ea5921b2afa1fad88cd4144538899030080474517e6ccb"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11",
@@ -2353,7 +2354,7 @@
       "template": "tokens/Lido/CSAccounting",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
-        "0xa3793b129329502d6009f7a85359b308a4c6469ce911caf16b24083bdc712519"
+        "0x280da68a03f1701c7c504e3f35f47635d95186ccd20f8359ed48eaa84733134b"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["getBondLockRetentionPeriod", "totalBondShares"],
@@ -2402,7 +2403,7 @@
         "RECOVERER_ROLE": "0xb3e25b5404b87e5a838579cb5d7481d61ad96ee284d38ec1e97c07ba64e7f6fc",
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "SET_BOND_CURVE_ROLE": "0x645c9e6d2a86805cb5a28b1e4751c0dab493df7cf935070ce405489ba1a7bf72",
-        "totalBondShares": "23681798460266973639662",
+        "totalBondShares": "23738641159609776444032",
         "WITHDRAWAL_QUEUE": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
         "WSTETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
@@ -2422,8 +2423,8 @@
       "type": "Contract",
       "template": "tokens/Lido/NodeOperatorsRegistry",
       "sourceHashes": [
-        "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a",
-        "0x7e3615bebdb8e2033c00916316355965e076187f136311105c57e4ab8eed8911"
+        "0x5d180561dda86f9c602d514f0327c10a48c8b42836553121aa85c9d14a285d36",
+        "0x56f04cbd6d74c74c565e84eb51b261382833911c9b0e29b6e8470a96c8c6a4b0"
       ],
       "proxyType": "EIP897 proxy",
       "ignoreInWatchMode": [
@@ -2448,7 +2449,7 @@
         "getRecoveryVault": "eth:0x0000000000000000000000000000000000000000",
         "getRewardDistributionState": 2,
         "getStakingModuleSummary": {
-          "totalExitedValidators": 164771,
+          "totalExitedValidators": 180519,
           "totalDepositedValidators": 421296,
           "depositableValidatorsCount": 34693
         },
@@ -2506,7 +2507,7 @@
       "template": "tokens/Lido/LazyOracle",
       "sourceHashes": [
         "0x04c21a54dfbc4ca3baf7ce93d62b487e1071a6439bde71a1896d76f073a66848",
-        "0x458c2f866141c2cf9eae20f1615ea8870280742c4c0e674575619c0088821291"
+        "0x4e35d87bdeaefb350dcfcc6021b16ffae2c9268f30b5c712569f9755dd281f36"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -2535,12 +2536,12 @@
         "$upgradeCount": 2,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "latestReportData": {
-          "timestamp": 1776859211,
-          "refSlot": 14169599,
-          "treeRoot": "0xaa762742af7037af9c17e26a6fd1b80fa85c5cc651527895986b4ac5f4dc93b6",
-          "reportCid": "QmdnecUiRfLrMEsaXKNyereWhuVvH5WnVPhH21mQ4ky4kr"
+          "timestamp": 1778673611,
+          "refSlot": 14320799,
+          "treeRoot": "0x7ed7a880cf73d88d209c29377b14858a54e8f174316fade2e93539eea907eada",
+          "reportCid": "QmQPsoxmzPbGn5oAnjG4MRYUNGZSUVvFKA918aaC1rxwUs"
         },
-        "latestReportTimestamp": 1776859211,
+        "latestReportTimestamp": 1778673611,
         "LIDO_LOCATOR": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
         "MAX_LIDO_FEE_RATE_PER_SECOND": "10000000000000000000",
         "MAX_QUARANTINE_PERIOD": 2592000,
@@ -2552,7 +2553,7 @@
         "proxy__getIsOssified": false,
         "quarantinePeriod": 259200,
         "UPDATE_SANITY_PARAMS_ROLE": "0x7baf7f4a9784fa74c97162de631a3eb567edeb85878cb6965945310f2c512c63",
-        "vaultsCount": 16
+        "vaultsCount": 19
       },
       "implementationNames": {
         "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c": "OssifiableProxy",
@@ -2564,7 +2565,7 @@
       "address": "eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789",
       "type": "Contract",
       "sourceHashes": [
-        "0x5217226f6d0d771ac4dec680c53cb340e7e91c54b6b442d0b2509d249701210a"
+        "0x5cf3d26d4fcd1958dd8077785a9ff2adda45e0c7ca89b651ba85610102eadb3b"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
@@ -2610,8 +2611,8 @@
       "type": "Contract",
       "template": "tokens/Lido/StakingVault",
       "sourceHashes": [
-        "0xb7340cba7f15880cbd57f96214be29f7ffde82f06b923a0a7b01ed660a852279",
-        "0x01eb43e0204902ef83ed3b7284f39b6ac2747cfec8fa2d667063c77597693253"
+        "0x98752ee6352221931e7a0dc594ec6c7f22b18c7b84c2f69891efc90010a84a65",
+        "0x203e0b11552fff69c2b0e3617840f67ef689929efef062b5628afc6a2880ff45"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableBalance"],
@@ -2630,7 +2631,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "availableBalance": "77503720913906926202",
+        "availableBalance": "77630721107735814774",
         "beaconChainDepositsPaused": false,
         "DEPOSIT_CONTRACT": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositor": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3",
@@ -2675,7 +2676,7 @@
       "type": "Contract",
       "template": "tokens/Lido/HashConsensus",
       "sourceHashes": [
-        "0xd7c073e5462dc74227ab219c6db299253e6a83e1a470f27a9d5dcff04fd6b46f"
+        "0x7f94d3380501ff2d32dbedc9ec31a5dead8beb57dd5d1dd1c49d2dabc4097011"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": [
@@ -2714,23 +2715,25 @@
           "genesisTime": 1606824023
         },
         "getConsensusState": {
-          "refSlot": 14105279,
-          "consensusReport": "0x70013d6c49db4cc8929aee97d187d706771b5c09d7d9e42ddf05ea1f34520384",
+          "refSlot": 14306879,
+          "consensusReport": "0x849bb92a5028100eb02771caa20787e53ca0b3c362190db81679cc16e40501da",
           "isReportProcessing": true
         },
         "getCurrentFrame": {
-          "refSlot": 14105279,
-          "reportProcessingDeadlineSlot": 14306879
+          "refSlot": 14306879,
+          "reportProcessingDeadlineSlot": 14508479
         },
         "getFastLaneMembers": {
           "addresses": [
-            "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3",
             "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
             "eth:0x8dB977C13CAA938BC58464bFD622DF0570564b78",
             "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
-            "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf"
+            "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
+            "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8"
           ],
-          "lastReportedRefSlots": [13680479, 14105279, 0, 14105279, 14105279]
+          "lastReportedRefSlots": [
+            14306879, 14306879, 14306879, 14306879, 14306879
+          ]
         },
         "getFrameConfig": {
           "initialEpoch": 434490,
@@ -2751,15 +2754,15 @@
             "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922"
           ],
           "lastReportedRefSlots": [
-            13680479, 13680479, 14105279, 0, 14105279, 14105279, 13478879,
-            13903679, 0
+            13680479, 13680479, 14306879, 14306879, 14306879, 14306879,
+            14306879, 13903679, 0
           ]
         },
         "getQuorum": 5,
         "getReportProcessor": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
         "getReportVariants": {
           "variants": [
-            "0x70013d6c49db4cc8929aee97d187d706771b5c09d7d9e42ddf05ea1f34520384"
+            "0x849bb92a5028100eb02771caa20787e53ca0b3c362190db81679cc16e40501da"
           ],
           "support": [5]
         },
@@ -2813,7 +2816,7 @@
       "type": "Contract",
       "template": "tokens/Lido/wstETH",
       "sourceHashes": [
-        "0x6b938c3d38678ebb00f3860def4bdf9d5d8ab7008a6d598cc109fdf7a6c34e0e"
+        "0xab552f390c30719bef4caa481ac16f685edca33726aeacd269e1a992987610b8"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["tokensPerStEth", "stEthPerToken", "totalSupply"],
@@ -2826,10 +2829,10 @@
         "DOMAIN_SEPARATOR": "0xd4a8ff90a402dc7d4fcbf60f5488291263c743ccff180e139f47d139cedfd5fe",
         "name": "Wrapped liquid staked Ether 2.0",
         "stETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-        "stEthPerToken": "1232555665889320507",
+        "stEthPerToken": "1234372613551727878",
         "symbol": "wstETH",
-        "tokensPerStEth": "811322382976086006",
-        "totalSupply": "3401669300581914397816432"
+        "tokensPerStEth": "810128148519631579",
+        "totalSupply": "3346970341593164383753467"
       },
       "implementationNames": {
         "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
@@ -2846,7 +2849,7 @@
       "type": "Contract",
       "template": "tokens/Lido/HashConsensus",
       "sourceHashes": [
-        "0xdcb2da84a44fbac1b8d7ea814fd34325ac06bb8169fad7507a00835a3ffb25de"
+        "0x5ece20510894b8d8a162c09a6f55308cf4a105f985efb1b7b6e2edc97923ede6"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": [
@@ -2881,13 +2884,13 @@
           "genesisTime": 1606824023
         },
         "getConsensusState": {
-          "refSlot": 14169599,
-          "consensusReport": "0xf9aac7b23e9df2c54ec54d9518418a8c35e185bf44f9717f9389c80f6d3a9f18",
+          "refSlot": 14320799,
+          "consensusReport": "0xa00b2c93556e9fb094dbfb6b92e477ae708ae028e83dbbd08d22c2a26fb42229",
           "isReportProcessing": true
         },
         "getCurrentFrame": {
-          "refSlot": 14169599,
-          "reportProcessingDeadlineSlot": 14171999
+          "refSlot": 14320799,
+          "reportProcessingDeadlineSlot": 14323199
         },
         "getFastLaneMembers": {
           "addresses": [
@@ -2898,7 +2901,7 @@
             "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9"
           ],
           "lastReportedRefSlots": [
-            14169599, 14169599, 14169599, 14167199, 14169599
+            14320799, 14320799, 14318399, 14320799, 14320799
           ]
         },
         "getFrameConfig": {
@@ -2920,15 +2923,15 @@
             "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922"
           ],
           "lastReportedRefSlots": [
-            14169599, 14167199, 14169599, 14169599, 14169599, 14169599,
-            14167199, 14169599, 14159999
+            14320799, 14315999, 14318399, 14320799, 14320799, 14318399,
+            14320799, 14320799, 14320799
           ]
         },
         "getQuorum": 5,
         "getReportProcessor": "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
         "getReportVariants": {
           "variants": [
-            "0xf9aac7b23e9df2c54ec54d9518418a8c35e185bf44f9717f9389c80f6d3a9f18"
+            "0xa00b2c93556e9fb094dbfb6b92e477ae708ae028e83dbbd08d22c2a26fb42229"
           ],
           "support": [6]
         },
@@ -2953,7 +2956,7 @@
       "template": "tokens/Lido/AccountingOracle",
       "sourceHashes": [
         "0x04c21a54dfbc4ca3baf7ce93d62b487e1071a6439bde71a1896d76f073a66848",
-        "0xf330a3f485b5e535d79bf6d47f0acb1a8c8d4df1b8f410979ddd1d7c88751869"
+        "0x942cad30e14ba51db1a2a12e6bb48e0ba708f8bf7390773e0d4bdeb22f8da772"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["getConsensusReport", "getProcessingState"],
@@ -2999,19 +3002,19 @@
         "GENESIS_TIME": 1606824023,
         "getConsensusContract": "eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288",
         "getConsensusReport": {
-          "hash": "0xc6c9d6363ac90ac3ca7d8873967ee5aabcab75ef5b4cc76406184fb06d0c23c2",
-          "refSlot": 14169599,
-          "processingDeadlineTime": 1776945611,
+          "hash": "0x5b8be9a1999f3f947301c82bd7f90c172e0828141cd2e17db274ca00a4d40f4e",
+          "refSlot": 14320799,
+          "processingDeadlineTime": 1778760011,
           "processingStarted": true
         },
         "getConsensusVersion": 5,
         "getContractVersion": 4,
         "getProcessingState": {
-          "currentFrameRefSlot": 14169599,
-          "processingDeadlineTime": 1776945611,
-          "mainDataHash": "0xc6c9d6363ac90ac3ca7d8873967ee5aabcab75ef5b4cc76406184fb06d0c23c2",
+          "currentFrameRefSlot": 14320799,
+          "processingDeadlineTime": 1778760011,
+          "mainDataHash": "0x5b8be9a1999f3f947301c82bd7f90c172e0828141cd2e17db274ca00a4d40f4e",
           "mainDataSubmitted": true,
-          "extraDataHash": "0x2233fc6e8b93dfdb04391fac5e15c7e44aca75c4f9264e0d0b184445f092441c",
+          "extraDataHash": "0x63c9588ce4119cef96460093b81eb7f89bb73e39797dceef88a12bb804a31676",
           "extraDataFormat": 1,
           "extraDataSubmitted": true,
           "extraDataItemsCount": 1,
@@ -3037,8 +3040,8 @@
       "type": "Contract",
       "template": "tokens/Lido/EVMScriptRegistry",
       "sourceHashes": [
-        "0x3cab9c9a12a52c625f55b2d3d9693f8eb062cb0d41841589b557888ad01afced",
-        "0x00350407c4a32b62d60dbac5ac3093bf4bffd482f40b2df2a9cd3268365b84e5"
+        "0xd8c08b0f59d6133c399a109ada5168c6e1c1e0c8754b62eb3a4adb440113f20c",
+        "0x5efa3e07ce85dbc47ae51ae53f32fbd64447598eda9d352ce0d65e48a65417a0"
       ],
       "proxyType": "EIP897 proxy",
       "deployerAddress": "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA",
@@ -3072,7 +3075,7 @@
       "template": "tokens/Lido/WithdrawalQueueERC721",
       "sourceHashes": [
         "0x04c21a54dfbc4ca3baf7ce93d62b487e1071a6439bde71a1896d76f073a66848",
-        "0x700596a656c09529255fe261db91a5a98b3795dc7aac6bd680e1b9d5ad5f2f5f"
+        "0xbae57f272b3ad6106fc07236b94267465124470d2fed4a0979371fcaada9584b"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -3107,9 +3110,9 @@
         "FINALIZE_ROLE": "0x485191a2ef18512555bd4426d18a716ce8e98c80ec2de16394dcf86d7d91bc80",
         "getBaseURI": "https://wq-api.lido.fi/v1/nft",
         "getContractVersion": 1,
-        "getLastFinalizedRequestId": 120984,
-        "getLastRequestId": 122338,
-        "getLockedEtherAmount": "31809176763541425654141",
+        "getLastFinalizedRequestId": 124022,
+        "getLastRequestId": 124183,
+        "getLockedEtherAmount": "46070395479414187448766",
         "getNFTDescriptorAddress": "eth:0x0000000000000000000000000000000000000000",
         "getResumeSinceTimestamp": 1684163759,
         "isBunkerModeActive": false,
@@ -3128,8 +3131,8 @@
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "STETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "symbol": "unstETH",
-        "unfinalizedRequestNumber": 1354,
-        "unfinalizedStETH": "408417508762495970926765",
+        "unfinalizedRequestNumber": 161,
+        "unfinalizedStETH": "18193045669065494380565",
         "WSTETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "implementationNames": {
@@ -3167,7 +3170,7 @@
       "address": "eth:0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7",
       "type": "Contract",
       "sourceHashes": [
-        "0x15185b2d9f11dcf2ea4d005741fa941922e233e89fc5742793ebfb0ca05897c4"
+        "0xb01f6025cd4784eb0b53fd5f60e8713f25f7911a5cf1a76222d33450156be8ff"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5",
@@ -3185,7 +3188,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -3240,8 +3243,8 @@
       "address": "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb",
       "type": "Contract",
       "sourceHashes": [
-        "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a",
-        "0x766bf5f8bd85cd18a36ec23449bcbb22c66fbc01f44a2e38ff2a06dd5919eb4b"
+        "0x5d180561dda86f9c602d514f0327c10a48c8b42836553121aa85c9d14a285d36",
+        "0xc8c18571f2497cd14c9faa606ad94b64788733b81afae0244175db3c419d228b"
       ],
       "proxyType": "EIP897 proxy",
       "deployerAddress": "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA",
@@ -3288,7 +3291,7 @@
       "template": "tokens/Lido/CSParametersRegistry",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
-        "0xc1deebfbd111e2f8e2157336320630099bc5658e2dac19d1ff99e0c76d95e5fd"
+        "0xfc21dd6685a953c7c43b586390cef00c9a04fd78abab13996449f7ca3876ea26"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44",
@@ -3356,7 +3359,7 @@
       "template": "tokens/Lido/CSStrikes",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
-        "0x85df3ccf87b902aa07f9bfedaabda68d3ac37ad2524de995d9caa2cd8aa41086"
+        "0x6d90c93ddc693f6962cb745252a149286e2b9de0b6ad20e0dd8ac07c33b0c2af"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["treeCid", "treeRoot"],
@@ -3385,8 +3388,8 @@
         "proxy__getAdmin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "proxy__getImplementation": "eth:0x3E5021424c9e13FC853e523Cd68ebBec848956a0",
         "proxy__getIsOssified": false,
-        "treeCid": "QmZ4Ri5oGNrhtDMVM6AW4r6WhVDb8YCcq9nHt7tbaU4YqT",
-        "treeRoot": "0xeb688d85224c83b905b15c022e29375419ea79a3af090d7c7812365019f9d6ce"
+        "treeCid": "QmaUFLV2Q2qQe1n7ZkJeaZF3A7RDkYgFDXqtzQuG7GWapM",
+        "treeRoot": "0x73e977d402307deb5bc519bdcec72a8a6e0b618bee0972d3eae4659575d7b71b"
       },
       "implementationNames": {
         "eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f": "OssifiableProxy",
@@ -3410,7 +3413,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -3432,7 +3435,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 21,
+        "nonce": 23,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3446,8 +3449,8 @@
       "type": "Contract",
       "template": "tokens/Lido/stETH",
       "sourceHashes": [
-        "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a",
-        "0x9edb5ea402771070d36f4e553ed8055f5114e26d2b0511b5f3688f8dfd8e1ef5"
+        "0x5d180561dda86f9c602d514f0327c10a48c8b42836553121aa85c9d14a285d36",
+        "0xb4bbd6fc5f141519929083b25c8ce94688fca5c65d89d3bad1cf528f121a4451"
       ],
       "proxyType": "EIP897 proxy",
       "ignoreInWatchMode": [
@@ -3482,27 +3485,27 @@
         },
         "getBeaconStat": {
           "depositedValidators": 455863,
-          "beaconValidators": 446218,
-          "beaconBalance": "9054644817316830000000000"
+          "beaconValidators": 447368,
+          "beaconBalance": "8483008421252335000000000"
         },
-        "getBufferedEther": "2173505957161800066167",
+        "getBufferedEther": "175842837860941795842",
         "getContractVersion": 3,
         "getCurrentStakeLimit": "150000000000000000000000",
         "getDepositableEther": 0,
         "getEIP712StETH": "eth:0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7",
         "getEVMScriptRegistry": "eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
-        "getExternalEther": "4545809512029127489651",
-        "getExternalShares": "3688117005854830419411",
+        "getExternalEther": "4581325127225756136073",
+        "getExternalShares": "3711460443085867410703",
         "getFee": 999,
         "getFeeDistribution": {
-          "treasuryFeeBasisPoints": 3853,
+          "treasuryFeeBasisPoints": 3873,
           "insuranceFeeBasisPoints": 0,
-          "operatorsFeeBasisPoints": 6146
+          "operatorsFeeBasisPoints": 6126
         },
         "getInitializationBlock": 11473216,
         "getLidoLocator": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
         "getMaxExternalRatioBP": 3000,
-        "getMaxMintableExternalShares": "3252771582066376830730342",
+        "getMaxMintableExternalShares": "3036013509833417175921321",
         "getRecoveryVault": "eth:0x0000000000000000000000000000000000000000",
         "getStakeLimitFullInfo": {
           "isStakingPaused_": false,
@@ -3510,11 +3513,11 @@
           "currentStakeLimit": "150000000000000000000000",
           "maxStakeLimit": "150000000000000000000000",
           "maxStakeLimitGrowthBlocks": 6400,
-          "prevStakeLimit": "149660949675236903745322",
-          "prevStakeBlockNumber": 24935902
+          "prevStakeLimit": "149998703209617335471276",
+          "prevStakeBlockNumber": 25086582
         },
-        "getTotalPooledEther": "9370004132786020927555818",
-        "getTotalShares": "7602094081507728706435503",
+        "getTotalPooledEther": "8759605589217421697931915",
+        "getTotalShares": "7096403057754926301852093",
         "getTreasury": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "getWithdrawalCredentials": "0x010000000000000000000000b9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
         "hasInitialized": true,
@@ -3531,7 +3534,7 @@
         "STAKING_CONTROL_ROLE": "0xa42eee1333c0758ba72be38e728b6dadb32ea767de5b4ddbaea1dae85b1b051f",
         "STAKING_PAUSE_ROLE": "0x84ea57490227bc2be925c684e2a367071d69890b629590198f4125a018eb1de8",
         "symbol": "stETH",
-        "totalSupply": "9370004132786020927555818",
+        "totalSupply": "8759605589217421697931915",
         "UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE": "0xe6dc5d79630c61871e99d341ad72c5a052bed2fc8c79e5a4480a7cd31117576c"
       },
       "implementationNames": {
@@ -3545,8 +3548,8 @@
       "type": "Contract",
       "template": "tokens/Lido/NodeOperatorsRegistry",
       "sourceHashes": [
-        "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a",
-        "0x7e3615bebdb8e2033c00916316355965e076187f136311105c57e4ab8eed8911"
+        "0x5d180561dda86f9c602d514f0327c10a48c8b42836553121aa85c9d14a285d36",
+        "0x56f04cbd6d74c74c565e84eb51b261382833911c9b0e29b6e8470a96c8c6a4b0"
       ],
       "proxyType": "EIP897 proxy",
       "ignoreInWatchMode": [
@@ -3613,7 +3616,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -3659,8 +3662,8 @@
       "address": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
       "type": "Contract",
       "sourceHashes": [
-        "0x3ef00bf119dbb1f46a05a35111f35da84bb45cac1abfa574989211677d16787a",
-        "0x452458b35204910fe71376b423bd8d2887a1e82d22843fd79880d4ac0dce2a33"
+        "0xa5a4d8f9ad65f9d9b5e6809f6ff0e2be3f24c2714272e8e47a80772a24c1b3b4",
+        "0x4760f9383c4bf8a64ac82aaf6006e2f971fbe2300b77b9b32b986295a28cee33"
       ],
       "proxyType": "EIP897 proxy",
       "deployerAddress": "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA",
@@ -3695,8 +3698,8 @@
       "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
       "type": "Contract",
       "sourceHashes": [
-        "0x5cbdf8b8bb204120168ae7790c42ca01a3c365626be04e051f3be6c99a63d794",
-        "0x02a7455341d351b5cf754695894d7496179272403e2b811db5202057c6373cad"
+        "0x7a9326e8dc291104b25b9956298c4e7a3b5ef0ef3b4a420da00b454decc3a5e8",
+        "0xd295f7b16bbfc3dcff446f382882d7f210156d24b07f3d44cf7b0380299e6213"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0xe19fc582dd93FA876CF4061Eb5456F310144F57b",
@@ -3745,7 +3748,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -3778,7 +3781,7 @@
       "address": "eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f",
       "type": "Contract",
       "sourceHashes": [
-        "0x04d8a8a48b4238c64fe27aef387c89bd9d925104d58ae9f3a471fe4684f9dd2e"
+        "0x2d45d09afa27ef4bdab79c0c9c40dffdc2e828937a1b2c962dc9d4e9ef39a954"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x88133C759fdF2D713dEa478D3fD9046853eD198d",
@@ -3812,7 +3815,7 @@
       "address": "eth:0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09",
       "type": "Contract",
       "sourceHashes": [
-        "0x6f38bad385eb6769def612742a8a4ab65d19921bffe96d1ee9241121e2ae1aba"
+        "0x40dfe4001c2bcd0233d4aac1aa3b6e44c712df8c650cdd8c5bcb55c600e6613d"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5",
@@ -3960,7 +3963,7 @@
       "template": "tokens/Lido/OperatorGrid",
       "sourceHashes": [
         "0x04c21a54dfbc4ca3baf7ce93d62b487e1071a6439bde71a1896d76f073a66848",
-        "0xf8459583fb5a2f8592ade03af60f53d81b1018a669fc56a119e4f821599c4a84"
+        "0xf3868a5258cc49adc67a37a4f1a254b036d51b92e0721ab460a9fb35c0865c33"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["nodeOperatorCount", "tiersCount"],
@@ -3985,12 +3988,12 @@
         "LIDO_LOCATOR": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
         "MAX_CONFIRM_EXPIRY": 2592000,
         "MIN_CONFIRM_EXPIRY": 3600,
-        "nodeOperatorCount": 36,
+        "nodeOperatorCount": 38,
         "proxy__getAdmin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "proxy__getImplementation": "eth:0xA612E30D71d7D54aEaf4e5A21023F3F270932C2C",
         "proxy__getIsOssified": false,
         "REGISTRY_ROLE": "0xa495a3428837724c7f7648cda02eb83c9c4c778c8688d6f254c7f3f80c154d55",
-        "tiersCount": 170
+        "tiersCount": 180
       },
       "implementationNames": {
         "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d": "OssifiableProxy",
@@ -4002,7 +4005,7 @@
       "address": "eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C",
       "type": "Contract",
       "sourceHashes": [
-        "0xa2a2abe99fefa83e09c282ce11527c7eccc31adfa7d899e7f8e3a633550a260d"
+        "0xa70548df0048ed622a658c039b3c21018ad159c165a6e5c5e91b1d9404a4a63f"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44",
@@ -4056,7 +4059,7 @@
       "type": "Contract",
       "template": "tokens/STRK",
       "sourceHashes": [
-        "0x23af76dab677f190c20ba297bc76c209cffb68653221079dd83fd167ae158753"
+        "0x5f0dbdd26f57b962619c26cd9451be4794c0f375bbe91f91d580d44a5357b141"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply"],
@@ -4081,7 +4084,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "StarkNet Token",
         "symbol": "STRK",
-        "totalSupply": "10105300000000000000000000000"
+        "totalSupply": "10113100000000000000000000000"
       },
       "implementationNames": {
         "eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766": "StarkNetToken"
@@ -4092,8 +4095,8 @@
       "address": "eth:0xCa14076A3cec95448BaD179cc19B351A4204B88B",
       "type": "Contract",
       "sourceHashes": [
-        "0x11978b0aaa6fe38a6bf2106e5ea89f014d40cda3e6f61234c46466e99cf187ee",
-        "0x3691fdeb4948182156b23943d1951957e54192b7f9f7ab4c88828089d29d58d7"
+        "0x4f614e396f88e35e1278c687469f0b3b1d3694d0f166aa86d9b4f19a22fef667",
+        "0xe5d1e0659f04569f4906592b79388401de1d531008c5003eedb3f62ff417d357"
       ],
       "proxyType": "StarkWare proxy",
       "deployerAddress": "eth:0xdC863FDb545F4DB986DD76F78085AcaFf0271C00",
@@ -4149,8 +4152,8 @@
       "type": "Contract",
       "template": "tokens/Lido/StakingVault",
       "sourceHashes": [
-        "0xb7340cba7f15880cbd57f96214be29f7ffde82f06b923a0a7b01ed660a852279",
-        "0x01eb43e0204902ef83ed3b7284f39b6ac2747cfec8fa2d667063c77597693253"
+        "0x98752ee6352221931e7a0dc594ec6c7f22b18c7b84c2f69891efc90010a84a65",
+        "0x203e0b11552fff69c2b0e3617840f67ef689929efef062b5628afc6a2880ff45"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableBalance"],
@@ -4169,8 +4172,8 @@
           ]
         ],
         "$upgradeCount": 1,
-        "availableBalance": "32024670640846120237",
-        "beaconChainDepositsPaused": false,
+        "availableBalance": "32211965835097305601",
+        "beaconChainDepositsPaused": true,
         "DEPOSIT_CONTRACT": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositor": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3",
         "getInitializedVersion": 1,
@@ -4199,7 +4202,7 @@
       "type": "Contract",
       "template": "tokens/Lido/OpStackTokenRatePusher",
       "sourceHashes": [
-        "0x914444eb1e15eba41dafc9099a1e9e51a554ff786ce9f7b5159cb306f4779477"
+        "0x255983b1a7c926cdb6f5a9611737ef6575185bd282d6add443e6d73de5560727"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0xBb01c09DE4Bf967AbaB418450c3e18Df46358322",
@@ -4226,7 +4229,7 @@
       "type": "Contract",
       "template": "tokens/Lido/HashConsensus",
       "sourceHashes": [
-        "0xdcb2da84a44fbac1b8d7ea814fd34325ac06bb8169fad7507a00835a3ffb25de"
+        "0x5ece20510894b8d8a162c09a6f55308cf4a105f985efb1b7b6e2edc97923ede6"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": [
@@ -4261,24 +4264,24 @@
           "genesisTime": 1606824023
         },
         "getConsensusState": {
-          "refSlot": 14169599,
-          "consensusReport": "0xc6c9d6363ac90ac3ca7d8873967ee5aabcab75ef5b4cc76406184fb06d0c23c2",
+          "refSlot": 14320799,
+          "consensusReport": "0x5b8be9a1999f3f947301c82bd7f90c172e0828141cd2e17db274ca00a4d40f4e",
           "isReportProcessing": true
         },
         "getCurrentFrame": {
-          "refSlot": 14169599,
-          "reportProcessingDeadlineSlot": 14176799
+          "refSlot": 14320799,
+          "reportProcessingDeadlineSlot": 14327999
         },
         "getFastLaneMembers": {
           "addresses": [
-            "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3",
-            "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
-            "eth:0x8dB977C13CAA938BC58464bFD622DF0570564b78",
             "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
-            "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf"
+            "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
+            "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
+            "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
+            "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922"
           ],
           "lastReportedRefSlots": [
-            14169599, 14155199, 14169599, 14169599, 14169599
+            14320799, 14313599, 14320799, 14320799, 14320799
           ]
         },
         "getFrameConfig": {
@@ -4300,17 +4303,17 @@
             "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922"
           ],
           "lastReportedRefSlots": [
-            14162399, 14169599, 14155199, 14169599, 14169599, 14169599,
-            14140799, 14169599, 14169599
+            14291999, 14320799, 14320799, 14320799, 14320799, 14313599,
+            14320799, 14320799, 14320799
           ]
         },
         "getQuorum": 5,
         "getReportProcessor": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
         "getReportVariants": {
           "variants": [
-            "0xc6c9d6363ac90ac3ca7d8873967ee5aabcab75ef5b4cc76406184fb06d0c23c2"
+            "0x5b8be9a1999f3f947301c82bd7f90c172e0828141cd2e17db274ca00a4d40f4e"
           ],
-          "support": [6]
+          "support": [7]
         },
         "MANAGE_FAST_LANE_CONFIG_ROLE": "0x4af6faa30fabb2c4d8d567d06168f9be8adb583156c1ecb424b4832a7e4d6717",
         "MANAGE_FRAME_CONFIG_ROLE": "0x921f40f434e049d23969cbe68d9cf3ac1013fbe8945da07963af6f3142de6afe",
@@ -4328,7 +4331,7 @@
       "template": "tokens/Lido/CSFeeDistributor",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
-        "0x881e365358bb714cd1d4c59279039f33010f934835d0bd8406443a9bb43c5b9f"
+        "0xd9dc270d40f391b4b91c286bc179319e2886781eeeb5d1744dea73ed801c4f1b"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -4358,18 +4361,18 @@
         "$upgradeCount": 2,
         "ACCOUNTING": "eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "distributionDataHistoryCount": 7,
+        "distributionDataHistoryCount": 8,
         "getInitializedVersion": 2,
         "ORACLE": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
-        "pendingSharesToDistribute": "23164073622666065400",
+        "pendingSharesToDistribute": "4976634696402229347",
         "proxy__getAdmin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "proxy__getImplementation": "eth:0x5DCF7cF7c6645E9E822a379dF046a8b0390251A1",
         "proxy__getIsOssified": false,
         "rebateRecipient": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "RECOVERER_ROLE": "0xb3e25b5404b87e5a838579cb5d7481d61ad96ee284d38ec1e97c07ba64e7f6fc",
         "STETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-        "totalClaimableShares": "100528410425991602200",
-        "treeRoot": "0xb3de2f624121f0ccee9945c7db9f649966c7132e8de501fadb3b849d2a177d8c"
+        "totalClaimableShares": "127986970274780105924",
+        "treeRoot": "0xec16cd915bbfc6a78dad02571448ef2c5bd6fc1cfbddff0658ce755858efd85f"
       },
       "implementationNames": {
         "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0": "OssifiableProxy",
@@ -4383,7 +4386,7 @@
       "template": "tokens/Lido/CSModule",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
-        "0xde753d771c3a4dc27e58e529b2dfd70871547d49e71ecd3478353ec02e995aa8"
+        "0x415b0abee07f0a91a3208b51454b2914b46d714595716a4f7ff7e9e742a791bf"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -4418,14 +4421,14 @@
         "DEPOSIT_SIZE": "32000000000000000000",
         "EXIT_PENALTIES": "eth:0x06cd61045f958A209a0f8D746e103eCc625f4193",
         "FEE_DISTRIBUTOR": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
-        "getActiveNodeOperatorsCount": 571,
+        "getActiveNodeOperatorsCount": 578,
         "getInitializedVersion": 2,
-        "getNodeOperatorsCount": 571,
+        "getNodeOperatorsCount": 578,
         "getResumeSinceTimestamp": 1729872203,
         "getStakingModuleSummary": {
-          "totalExitedValidators": 1087,
+          "totalExitedValidators": 1305,
           "totalDepositedValidators": 22488,
-          "depositableValidatorsCount": 692
+          "depositableValidatorsCount": 980
         },
         "getType": "0x636f6d6d756e6974792d6f6e636861696e2d7631000000000000000000000000",
         "isPaused": false,
@@ -4457,7 +4460,7 @@
       "type": "Contract",
       "template": "tokens/Lido/TriggerableWithdrawalsGateway",
       "sourceHashes": [
-        "0x6e0f1e9ab2993ef59e29bff788073adafb044d30f822762a9085b18062c36002"
+        "0x55a4d669e1d7d7d718aa53167de51e6498b02aef6dbbdd4e3e2e95edb5df0539"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["getExitRequestLimitFullInfo"],
@@ -4472,7 +4475,7 @@
           "maxExitRequestsLimit": 11200,
           "exitsPerFrame": 1,
           "frameDurationInSec": 48,
-          "prevExitRequestsLimit": 11197,
+          "prevExitRequestsLimit": 11198,
           "currentExitRequestsLimit": 11200
         },
         "getResumeSinceTimestamp": 0,
@@ -4499,8 +4502,8 @@
       "type": "Contract",
       "template": "tokens/Lido/StakingVault",
       "sourceHashes": [
-        "0xb7340cba7f15880cbd57f96214be29f7ffde82f06b923a0a7b01ed660a852279",
-        "0x01eb43e0204902ef83ed3b7284f39b6ac2747cfec8fa2d667063c77597693253"
+        "0x98752ee6352221931e7a0dc594ec6c7f22b18c7b84c2f69891efc90010a84a65",
+        "0x203e0b11552fff69c2b0e3617840f67ef689929efef062b5628afc6a2880ff45"
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableBalance"],
@@ -4560,7 +4563,7 @@
       "template": "tokens/Lido/Burner",
       "sourceHashes": [
         "0x04c21a54dfbc4ca3baf7ce93d62b487e1071a6439bde71a1896d76f073a66848",
-        "0xe60f3737139719a5b7ee625ecc64bbd2f3a558bf210117aa0b0a232fe24a4b80"
+        "0x1bcc782f2db1ba9f9d33585bbcfa0a4d3112f7b4c56b1454d43e73c49852e412"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -4587,7 +4590,7 @@
         "getContractVersion": 1,
         "getCoverSharesBurnt": "14684898881648297203",
         "getExcessStETH": 0,
-        "getNonCoverSharesBurnt": "12735591931960489291414212",
+        "getNonCoverSharesBurnt": "13351634199234003448648673",
         "getSharesRequestedToBurn": { "coverShares": 0, "nonCoverShares": 0 },
         "isMigrationAllowed": false,
         "LIDO": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
@@ -4614,7 +4617,7 @@
       "type": "Contract",
       "template": "tokens/Lido/OracleReportSanityChecker",
       "sourceHashes": [
-        "0xb1ae7110938670e0ac737a01859c9c6cec20361c269e686d82d1f9007f79dbd6"
+        "0xac98014b6eb58f63a45fb64697a2b2d15d725923c438ac9a1c031988af5d5d7f"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
@@ -4663,7 +4666,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x04c21a54dfbc4ca3baf7ce93d62b487e1071a6439bde71a1896d76f073a66848",
-        "0x95ddbbdfb56975dd1a0b91463d3e9a4362231c44b46f40b47781724ceef477c5"
+        "0xb97b8a0c7648d3d10372c1719e32bb311cb254066843bdef5d9cef60fe290494"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
@@ -4739,7 +4742,7 @@
       "template": "tokens/Lido/StakingRouter",
       "sourceHashes": [
         "0x04c21a54dfbc4ca3baf7ce93d62b487e1071a6439bde71a1896d76f073a66848",
-        "0xfff62cfc156b3379b99f876fed184d721dcaa8f2c185eb5267d7f0609085e688"
+        "0xa74939534f557c737e81a3317dd9c739b9c0dad834a3342ce70b74afb286f4ad"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -4797,13 +4800,13 @@
               "name": "curated-onchain-v1",
               "lastDepositAt": 1775934599,
               "lastDepositBlock": 24858497,
-              "exitedValidatorsCount": 164771,
+              "exitedValidatorsCount": 180519,
               "priorityExitShareThreshold": 10000,
               "maxDepositsPerBlock": 150,
               "minDepositBlockDistance": 25
             },
             "summary": {
-              "totalExitedValidators": 164771,
+              "totalExitedValidators": 180519,
               "totalDepositedValidators": 421296,
               "depositableValidatorsCount": 34693
             }
@@ -4833,8 +4836,8 @@
             }
           },
           {
-            "nodeOperatorsCount": 571,
-            "activeNodeOperatorsCount": 571,
+            "nodeOperatorsCount": 578,
+            "activeNodeOperatorsCount": 578,
             "state": {
               "id": 3,
               "stakingModuleAddress": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
@@ -4845,26 +4848,26 @@
               "name": "Community Staking",
               "lastDepositAt": 1776001427,
               "lastDepositBlock": 24864048,
-              "exitedValidatorsCount": 1087,
+              "exitedValidatorsCount": 1305,
               "priorityExitShareThreshold": 1020,
               "maxDepositsPerBlock": 30,
               "minDepositBlockDistance": 25
             },
             "summary": {
-              "totalExitedValidators": 1087,
+              "totalExitedValidators": 1305,
               "totalDepositedValidators": 22488,
-              "depositableValidatorsCount": 692
+              "depositableValidatorsCount": 980
             }
           }
         ],
         "getContractVersion": 3,
         "getLido": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "getStakingFeeAggregateDistribution": {
-          "modulesFee": "3853056608217925357",
-          "treasuryFee": "6146943391782074640",
+          "modulesFee": "3871727412731006159",
+          "treasuryFee": "6128272587268993838",
           "basePrecision": "100000000000000000000"
         },
-        "getStakingModuleActiveValidatorsCount": [256525, 10760, 21401],
+        "getStakingModuleActiveValidatorsCount": [240777, 10760, 21183],
         "getStakingModuleIds": [1, 2, 3],
         "getStakingModuleIsActive": [true, true, true],
         "getStakingModuleIsDepositsPaused": [false, false, false],
@@ -4872,7 +4875,7 @@
         "getStakingModuleLastDepositBlock": [24858497, 24687607, 24864048],
         "getStakingModuleMaxDepositsPerBlock": [150, 150, 30],
         "getStakingModuleMinDepositBlockDistance": [25, 25, 25],
-        "getStakingModuleNonce": [17892, 1081, 4172],
+        "getStakingModuleNonce": [17923, 1081, 4473],
         "getStakingModules": [
           {
             "id": 1,
@@ -4884,7 +4887,7 @@
             "name": "curated-onchain-v1",
             "lastDepositAt": 1775934599,
             "lastDepositBlock": 24858497,
-            "exitedValidatorsCount": 164771,
+            "exitedValidatorsCount": 180519,
             "priorityExitShareThreshold": 10000,
             "maxDepositsPerBlock": 150,
             "minDepositBlockDistance": 25
@@ -4914,7 +4917,7 @@
             "name": "Community Staking",
             "lastDepositAt": 1776001427,
             "lastDepositBlock": 24864048,
-            "exitedValidatorsCount": 1087,
+            "exitedValidatorsCount": 1305,
             "priorityExitShareThreshold": 1020,
             "maxDepositsPerBlock": 30,
             "minDepositBlockDistance": 25
@@ -4930,9 +4933,9 @@
           ],
           "stakingModuleIds": [1, 2, 3],
           "stakingModuleFees": [
-            "3110083273868493796",
-            "298178643924540850",
-            "444794690424890711"
+            "3090053901437371663",
+            "315635083602229392",
+            "466038427691405104"
           ],
           "totalFee": "9999999999999999997",
           "precisionPoints": "100000000000000000000"
@@ -9762,9 +9765,9 @@
     "tokens/STRK": "0x9979d16113874eb421347478aae102736cd4055e0853e97e1c132d1f41506d1d"
   },
   "usedBlockNumbers": {
-    "arbitrum": 455180707,
-    "base": 45038469,
-    "ethereum": 24935917
+    "arbitrum": 462412464,
+    "base": 45945275,
+    "ethereum": 25086595
   },
   "permissionsConfigHash": "0xf36c5b00fec7c9b8802222b64a99afe0e9b39b2087a03bb184032eb66470a6cc"
 }

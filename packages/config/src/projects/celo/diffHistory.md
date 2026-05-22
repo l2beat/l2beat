@@ -1,3 +1,353 @@
+Generated with discovered.json: 0xe6e913edff38533e795848ca9fa842d06e58a9a9
+
+# Diff at Tue, 19 May 2026 11:27:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1d630d9c64f2d9431ff75a101bb6e0338cdffc9e block: 1777038237
+- current timestamp: 1777038237
+
+## Description
+
+All shapes have to be defined on an implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777038237 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      name:
+-        "Optimism EOA 1"
+    }
+```
+
+Generated with discovered.json: 0x3732dbc8e83d77670b40d3a445e235e402992d02
+
+# Diff at Fri, 08 May 2026 07:51:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777038237
+- current timestamp: 1777038237
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777038237 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
++        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
+    }
+```
+
+```diff
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x9db9942f58670bab2d2f04cd659483dd804b63208c5c83a704972a47b551b85e"
++        "0x95cab01520951dfeea5b263c4a895ff1f547de882c618621b670a6b69ef1c08d"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      sourceHashes.0:
+-        "0xd9838f1f137bd5397f583f33c414ec9c0fc3dc69401213fae0f09c36d4ac8e47"
++        "0x16701fcaa0e04e5481701a81736e7c8ee2c8aa32da272bf74e0589e6a90c3615"
+    }
+```
+
+```diff
+    contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25) [gnosisSafeModules/LivenessGuard] {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      sourceHashes.0:
+-        "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
++        "0xe2e33569583c3b0a8186c653cba56130fb30cb26c95500065a6394824546cc2e"
+    }
+```
+
+```diff
+    contract CeloSuperchainConfig (eth:0x25035d2233d099f0BA710ca1e5a3834842870C66) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x6adf60d6597198813da3e966b64fc439713c0882361ff9683309e7ae89db4aaf"
++        "0x463ca41187306b8ab127bfcef93a737fc34ce6ce6ec920516521e3f6af902c68"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F) [opstack/FaultDisputeGame] {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sourceHashes.0:
+-        "0xefd91bf99438f1ea2fe19cfde2bbab3aefd64672f541c2fa58e9463384b2338d"
++        "0x1dbd21b456d1b37140889b5d2cb2b29169a45399e0e738ea644ee1aa4c610231"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sourceHashes.0:
+-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
++        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x3C519816C5BdC0a0199147594F83feD4F5847f13) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x75cd470a9d1c1afc343b599b1c14731f55bb36fe8a4e844ddb88a0b791918795"
++        "0x1f65fda230b6d0df44e466b06418b2e12a401ef82c07521ad18d2f4ae6c70fb2"
+    }
+```
+
+```diff
+    contract CeloProxyAdminOwner (eth:0x4092A77bAF58fef0309452cEaCb09221e556E112) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS] {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0xff203abbbb6edba7fff3caefb2752c4e7b786992b19c4f0f8ab568bc0a5fbf04"
++        "0x4a578c18a0b50fb7778c6a6b805dcb18427478d4002c8f7f28c2146dcfbf3a33"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x6f0E4f1EB98A52EfaCF7BE11d48B9d9d6510A906) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x25bad2bdb7df4347412a48e271dea1489299460192b43b8ca52ed191b4940992"
++        "0xa89e0f90e0c290b71f9211dae49c0d75e48970756e68e4a17c4d8228c05b02c1"
+    }
+```
+
+```diff
+    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) [opstack/DeputyPauseModule] {
+    +++ description: Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+      sourceHashes.0:
+-        "0x6d8659eec5f14dbbacd2c5fb2ebcfab040b98237fc8ea869b3317a9e425da7bf"
++        "0xd3119ff100b38f6dbd66a573658509c10d6ddd7ab9dd522bd3401928062b128f"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xec811d054ae19d6bf9a5a9be07ae9ec060a10d411e1cd81528489e4450a5e313"
++        "0x6e1e3b6b40da8eed7633cfa50191a5d541fa6bd224747838df2b27e7a3b04538"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      sourceHashes.0:
+-        "0x8a1f2f8a442ecce12d0692b2117333692fe151bb272cd1e8b2f92ec437bf8d9c"
++        "0xe1cb8acc21214c3652ccc33caf9aca78a1e818c7cba5652c17c9d1a67bce341b"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      sourceHashes.1:
+-        "0x1601463fd2e47d8994c28a90b556c6933f38e8685214f702dc41a5ae08d9787c"
++        "0xf808a203af41f7932eb8e39985e56a7c75c940a260fb17d76d1003a3793281b5"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x91FA5B653aFe81A79890A93ad83768A04cc011b4) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sourceHashes.1:
+-        "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1"
++        "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      sourceHashes.1:
+-        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
++        "0x5fb525d1572fb90d060d122143b915059cbff39e0298b345857fd4267d7f6b28"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0xf687ceb2d3a3ac5806864ef0c440ed6639eb8570b227e7bdb1748d7d24be0d18"
++        "0x2f71a86ad989b3b5efd695a7666a2879c8445e5cbc806096a1a047495f657e90"
+    }
+```
+
+```diff
+    contract Celo cLabs Multisig (eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x284eddae8c2726c3558d3ce1656fcd222947612b13d4d440519d6a82fc68acec"
++        "0x23375b62bc80656613e6e37217856dbef4aa805d14edc5827ca5e26e87cf4af4"
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      sourceHashes.0:
+-        "0x037b17d0072b90906969c37097eb5ed525df21e4a27ba101d5b0b5de87e66dd7"
++        "0xf3c2f517bc8bfc612fa686bea9f5a85b983b23a9d407b3a4fd3c0f18fc824469"
+    }
+```
+
+```diff
+    contract Celo Security Council (eth:0xC03172263409584f7860C25B6eB4985f0f6F4636) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
++        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 42.
+      sourceHashes.1:
+-        "0x2747309564448749b20795c515708ee56536208ae4dadd4096a4819135b2b71f"
++        "0x73aba8dc2f3cfb0ca416668b33fb2b09f25714614c60c8591b1dbd1abe3454c9"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sourceHashes.1:
+-        "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1"
++        "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract Safe (eth:0xD1C635987B6Aa287361d08C6461491Fa9df087f2) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract OPSuccinctFaultDisputeGame (eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1) [succinct/OPSuccinct/OPSuccinctFaultDisputeGame] {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sourceHashes.0:
+-        "0xf7e6253e33073d03e58dd85db83b34b568e76fe6b4e84c838357ac993d91bf1e"
++        "0x6ee63fad782cceddadfaea5bec5034e5650b11c28070d4ece5dd60daede8f636"
+    }
+```
+
+```diff
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816) [succinct/OPSuccinct/AccessManager] {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+      sourceHashes.0:
+-        "0x5328680aaf3216187a64073bdff9a69e374be581a9be8dc3ec9851276d36ae7e"
++        "0x25e2fd33e56e0f2487c10c9735c4420e3cb4ea27e35fc796bafcc4c8a84569e6"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x19f3f7c7ee3977705261bfb86f826d5f97b885796f2246be7cc3e815c3e95dca"
++        "0x7daf6049672fd2ab7dc8dd3b6287e1d0a40958346c5e2857c4616a73dcac4da6"
+    }
+```
+
 Generated with discovered.json: 0x5420cd7ffecd267107f9e76e75917b2341ebc217
 
 # Diff at Tue, 05 May 2026 10:22:03 GMT:

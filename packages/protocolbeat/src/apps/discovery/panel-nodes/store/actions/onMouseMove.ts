@@ -19,15 +19,19 @@ export function onMouseMove(
 ): Partial<State> {
   if (!state.input.lmbPressed && !state.input.mmbPressed) {
     const { x, y } = toViewCoordinates(event, container, state.transform)
-
     const node = state.nodes.find((node) => boxContains(node.box, x, y))
-    if (node && isResizable(node.box, state.transform.scale, x)) {
-      return {
-        resizingNode: node.id,
-      }
-    }
+    const next =
+      node && isResizable(node.box, state.transform.scale, x)
+        ? node.id
+        : undefined
 
-    return { resizingNode: undefined }
+    // Returning the same state ref makes Zustand's setState bail on
+    // Object.is and skip notifying every subscriber. Without this, every
+    // native mousemove (60-120 Hz) re-evaluates every selector in the tree.
+    if (next === state.resizingNode) {
+      return state
+    }
+    return { resizingNode: next }
   }
 
   const isLeftMouse =
@@ -56,8 +60,7 @@ export function onMouseMove(
             : other,
         )
 
-        return updateNodePositions({
-          ...state,
+        return updateNodePositions(state, {
           input: { ...state.input, mouseX: x, mouseY: y },
           nodes,
         })
@@ -77,8 +80,7 @@ export function onMouseMove(
       case 'drag': {
         const { x, y } = toViewCoordinates(event, container, state.transform)
 
-        return updateNodePositions({
-          ...state,
+        return updateNodePositions(state, {
           mouseUpAction: undefined,
           input: { ...state.input, mouseX: x, mouseY: y },
         })
@@ -87,8 +89,7 @@ export function onMouseMove(
       case 'select-add': {
         if (opts?.disableSelection) {
           const [x, y] = [event.clientX, event.clientY]
-          return updateNodePositions({
-            ...state,
+          return {
             mouseMoveAction: 'pan',
             input: {
               ...state.input,
@@ -99,7 +100,7 @@ export function onMouseMove(
               mouseY: y,
             },
             selection: undefined,
-          })
+          }
         }
 
         const { x, y } = toViewCoordinates(event, container, state.transform)
@@ -112,21 +113,31 @@ export function onMouseMove(
           height: Math.abs(input.mouseStartY - input.mouseY),
         }
 
-        return updateNodePositions({
-          ...state,
-          selected: state.nodes
-            .filter(
-              (node) =>
-                !state.hidden.includes(node.id) &&
-                (intersects(node.box, selection) ||
-                  (state.mouseMoveAction === 'select-add' &&
-                    state.selected.includes(node.id))),
-            )
-            .map((x) => x.id),
+        // Select-box doesn't move any nodes, so skip updateNodePositions —
+        // it would rebuild every node and connection per mousemove for no
+        // reason. Only the selection rectangle and selected ids change.
+        const hiddenSet = new Set(state.hidden)
+        const previousSelected =
+          state.mouseMoveAction === 'select-add'
+            ? new Set(state.selected)
+            : undefined
+        const selected: string[] = []
+        for (const node of state.nodes) {
+          if (hiddenSet.has(node.id)) continue
+          if (
+            intersects(node.box, selection) ||
+            previousSelected?.has(node.id)
+          ) {
+            selected.push(node.id)
+          }
+        }
+
+        return {
+          selected,
           mouseUpAction: undefined,
           input,
           selection: toContainerCoordinates(selection, state.transform),
-        })
+        }
       }
     }
   }

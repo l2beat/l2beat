@@ -1,3 +1,664 @@
+Generated with discovered.json: 0xb59f4ed19d327d6cad0428a524b96c8f8781b9e4
+
+# Diff at Fri, 15 May 2026 13:11:11 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@da451cba8e944a28754be7e17bcb7555d857f312 block: 1777994306
+- current timestamp: 1778850530
+
+## Description
+
+Scheduled signer-key rotation on shared OP Stack governance contracts (no threshold or permission changes):
+- DeputyPauseModule (`0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754`): `deputy` rotated from `0x352f1defB49718e7Ea411687E850aA8d6299F7aC` to `0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c`. Executed via [superchain-ops eth/052](https://github.com/ethereum-optimism/superchain-ops/pull/1399); the [DeputyPauseModule spec](https://specs.optimism.io/protocol/deputy-pause-module.html) specifies that this is a regular rotation.
+- OpFoundationUpgradeSafe and OpFoundationOperationsSafe: Member rotated.
+
+## Watched changes
+
+```diff
+    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) [opstack/DeputyPauseModule] {
+    +++ description: Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+      description:
+-        "Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module."
++        "Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module."
+      values.deputy:
+-        "eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC"
++        "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.6:
+-        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
++        "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) [GnosisSafe] {
+    +++ description: None
+      values.$members.6:
+-        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
++        "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777994306 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      name:
+-        "Optimism EOA 1"
+    }
+```
+
+Generated with discovered.json: 0xf6c098ce11d7adf65da5d497bc3af9e9a5e0205a
+
+# Diff at Fri, 08 May 2026 07:52:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777994306
+- current timestamp: 1777994306
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777994306 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748) [gnosisSafeModules/LivenessModule] {
+    +++ description: used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      deployerAddress:
++        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
+```
+
+```diff
+    contract ETHLockbox (eth:0x08bA0023eD60C7Bd040716dD13C45fA0062df5C5) [opstack/ETHLockbox] {
+    +++ description: A simple escrow contract storing ETH for the canonical bridge.
+      sourceHashes.1:
+-        "0x472fa7a61a37a57da6eac2000038cc269e240a832d4a1ffe5ac0800946e5d196"
++        "0x330c0ee4ca969ca3a1deda35d8ce83d1861361088ef0b4b8efe0ec23b4f24c19"
+      deployerAddress:
++        "eth:0x34154426ab842AAAeFda28F3f5d103Dd0b0FE37A"
+    }
+```
+
+```diff
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      sourceHashes.1:
+-        "0x3410684a7a8c16c4f87db990b834ce7c3be33136857c103791b132b824bfd951"
++        "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
+      deployerAddress:
++        "eth:0xFFf2F7417Be1a4E2Ad1F26f538AD6F67D0fE11F2"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x0bdbEc6bd35571F97f96f3ed21822a4f2e071A3c) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sourceHashes.1:
+-        "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1"
++        "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9"
+      deployerAddress:
++        "eth:0x34154426ab842AAAeFda28F3f5d103Dd0b0FE37A"
+    }
+```
+
+```diff
+    contract Escrow (eth:0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A) [maker/L1Escrow] {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      deployerAddress:
++        "eth:0x54eAde20f7DD1A67624626A3DB9408185eD0039e"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      sourceHashes.0:
+-        "0xd9838f1f137bd5397f583f33c414ec9c0fc3dc69401213fae0f09c36d4ac8e47"
++        "0x16701fcaa0e04e5481701a81736e7c8ee2c8aa32da272bf74e0589e6a90c3615"
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25) [gnosisSafeModules/LivenessGuard] {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      sourceHashes.0:
+-        "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
++        "0xe2e33569583c3b0a8186c653cba56130fb30cb26c95500065a6394824546cc2e"
+      deployerAddress:
++        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x27Cf508E4E3Aa8d30b3226aC3b5Ea0e8bcaCAFF9) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      sourceHashes.1:
+-        "0xa1c629e3a86e4cba49482956c04d921b52551c4ee9833ddda7e44ca155bc6cab"
++        "0xfdabc8b9b4db9b7aa78227b26e936abaf24f058502b96e8d9a293d49b1e89b47"
+      deployerAddress:
++        "eth:0x34154426ab842AAAeFda28F3f5d103Dd0b0FE37A"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x2F12d621a16e2d3285929C9996f478508951dFe4) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x0fdb3ea7873ad716dd0f5f9d2fdbab989f3b308066977be182ddc31d150e12f5"
++        "0x8f21dbc160582c568a2a925ddad1b2bb889a9f72bac2067c6e72d43b662ef538"
+      deployerAddress:
++        "eth:0xFFf2F7417Be1a4E2Ad1F26f538AD6F67D0fE11F2"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "eth:0xFFf2F7417Be1a4E2Ad1F26f538AD6F67D0fE11F2"
+    }
+```
+
+```diff
+    contract LivenessModule (eth:0x4B4F1aF8d43C8c140D2355Fea663fC9f762067C2) [gnosisSafeModules/LivenessModule] {
+    +++ description: used to remove members inactive for 2mo 10d while making sure that the threshold remains above 60%. If the number of members falls below 1, the eth:0x0000000000000000000000000000000000000000 takes ownership of the multisig
+      deployerAddress:
++        "eth:0x5451D0ff17735067e9ccaa77470Caa13c6027B11"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x282b981348a4ab1395edfcf6b2e0eeb3e9cfa9df3decce6b4d2cdd480825613d"
++        "0xc36a2d08c78e94899e169e68b8ae59394b021eb370f8b104550c3892e4ca8cad"
+      deployerAddress:
++        "eth:0x926E9595fb147A376800022a554C8c05444EB658"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS] {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0xff203abbbb6edba7fff3caefb2752c4e7b786992b19c4f0f8ab568bc0a5fbf04"
++        "0x4a578c18a0b50fb7778c6a6b805dcb18427478d4002c8f7f28c2146dcfbf3a33"
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract UnichainProxyAdminOwner (eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      deployerAddress:
++        "eth:0x5451D0ff17735067e9ccaa77470Caa13c6027B11"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame] {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sourceHashes.0:
+-        "0x127a5a9b6364f01a1835b317e119b9e894fc7eedf3e9a939569f741f74378a8f"
++        "0x2987fcaf908b3baa0ae4ff6ad30ef75935c87c0b317ba03f034967803c7778ca"
+      deployerAddress:
++        "eth:0x926E9595fb147A376800022a554C8c05444EB658"
+    }
+```
+
+```diff
+    contract L1ERC20TokenBridge (eth:0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877) [lido/L1LidoTokensBridge] {
+    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
+      sourceHashes.1:
+-        "0xee07202651af1cf311f14f1f29908dd5524a050efc650832b6ee88c9a9cf86fd"
++        "0x2bd131300b48e6652e12d55e42a0bcaf468b74775bf0c31c2162950c78faa2c4"
+      deployerAddress:
++        "eth:0xfB276CBd830B69103588B651cA78dD6AC4EE665E"
+    }
+```
+
+```diff
+    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) [opstack/DeputyPauseModule] {
+    +++ description: Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+      sourceHashes.0:
+-        "0x6d8659eec5f14dbbacd2c5fb2ebcfab040b98237fc8ea869b3317a9e425da7bf"
++        "0xd3119ff100b38f6dbd66a573658509c10d6ddd7ab9dd522bd3401928062b128f"
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x8098F676033A377b9Defe302e9fE6877cD63D575) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0xFFf2F7417Be1a4E2Ad1F26f538AD6F67D0fE11F2"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x0114d3af66179d6404d14360203dc6bcf404f23e2db4ee1b5848e923e131bc00"
++        "0xcacd38e7b52353ad3463da40b7e7a29b028f95500a82590d2b8f8ffd26b83f6d"
+      deployerAddress:
++        "eth:0xFFf2F7417Be1a4E2Ad1F26f538AD6F67D0fE11F2"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      deployerAddress:
++        "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c"
+    }
+```
+
+```diff
+    contract Unichain Multisig 2 (eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      deployerAddress:
++        "eth:0x5451D0ff17735067e9ccaa77470Caa13c6027B11"
+    }
+```
+
+```diff
+    contract LivenessGuard (eth:0x9343c452dec3251fe99D9Fd29b74c5b9CD1751a6) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x557d6b82a61dbfcb3f20617e8f61c463781047822c6e50c8bfcf39f70f1b8d7a"
++        "0x27b0a289daa062724e446091c8e756925f5fa5fcd7a6acebc7bf374c4e93408a"
+      deployerAddress:
++        "eth:0x5451D0ff17735067e9ccaa77470Caa13c6027B11"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      sourceHashes.1:
+-        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
++        "0x5fb525d1572fb90d060d122143b915059cbff39e0298b345857fd4267d7f6b28"
+      deployerAddress:
++        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xfa9c986019a03bd66efb7584a7064e708f6fb71956643a9d4daa2c0972a29c03"
++        "0x1f2c13ad1144ce6548e578b834c33b0d65b1564aeb0d5c708ed4e7fb50535cc6"
+      deployerAddress:
++        "eth:0xFFf2F7417Be1a4E2Ad1F26f538AD6F67D0fE11F2"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      deployerAddress:
++        "eth:0x6B7C001F4af36A576babA2aF3b5251Fc326Ab09A"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0xA2B597EaeAcb6F627e088cbEaD319e934ED5edad) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x25bad2bdb7df4347412a48e271dea1489299460192b43b8ca52ed191b4940992"
++        "0x307d4cb83e682629880fe9bb874a188805e3b93cb11a2cbf80095975f1e5b04e"
+      deployerAddress:
++        "eth:0xFFf2F7417Be1a4E2Ad1F26f538AD6F67D0fE11F2"
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      sourceHashes.0:
+-        "0x037b17d0072b90906969c37097eb5ed525df21e4a27ba101d5b0b5de87e66dd7"
++        "0xf3c2f517bc8bfc612fa686bea9f5a85b983b23a9d407b3a4fd3c0f18fc824469"
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract Unichain Multisig 1 (eth:0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      deployerAddress:
++        "eth:0x5451D0ff17735067e9ccaa77470Caa13c6027B11"
+    }
+```
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x86dc9ef5cbf4cc436d50678ad7b2abbf9cc1905641ebbeccddbf1adf9b724403"
++        "0x703fe68eeb3d5454a8ef012933846f1ff1433fc2df39c0c94f2a550d8325f085"
+      deployerAddress:
++        "eth:0xFFf2F7417Be1a4E2Ad1F26f538AD6F67D0fE11F2"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x75cd470a9d1c1afc343b599b1c14731f55bb36fe8a4e844ddb88a0b791918795"
++        "0x1f65fda230b6d0df44e466b06418b2e12a401ef82c07521ad18d2f4ae6c70fb2"
+      deployerAddress:
++        "eth:0xFFf2F7417Be1a4E2Ad1F26f538AD6F67D0fE11F2"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0xe62B0279f6A466C5E1676f3ea955086300Bcd0Ac) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sourceHashes.1:
+-        "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1"
++        "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9"
+      deployerAddress:
++        "eth:0x34154426ab842AAAeFda28F3f5d103Dd0b0FE37A"
+    }
+```
+
+```diff
+    contract DeployerWhitelist (unichain:0x4200000000000000000000000000000000000002) [N/A] {
+    +++ description: Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (unichain:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      sourceHashes.1:
+-        "0x232dce20746263348611758da13c5157e6731aa8b6a6fde61475eb230f8a87f0"
++        "0x1ef37a50dbdd57f7019208b81019e52087cb92379f963e1ec092bd3eb81ec978"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract GasPriceOracle (unichain:0x420000000000000000000000000000000000000F) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2StandardBridge (unichain:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      sourceHashes.1:
+-        "0xa4f24c20d581e0bac8e94e683fdd07c596b2e534f9e822aaddf952658542972d"
++        "0xe528a1a655ef22d36419f53488f5b31752c4ecc2efea627fc6be5b0d63fa5069"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (unichain:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault] {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      sourceHashes.1:
+-        "0xbf16b8057a2beae4130302910e769f47307e0e0e5afd365093b06effa159019c"
++        "0x509425b10b7bc736a2d76eb9fe3bc5951124e88ef3e4752a0a314d33690041d2"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (unichain:0x4200000000000000000000000000000000000012) [opstack/Layer2/OptimismMintableERC20Factory] {
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+      sourceHashes.1:
+-        "0x7235f633505819bfbed4f3905acfb40f5998a831cc47abc2f22f730a0bc3686a"
++        "0x106f86d507a55d0f26e3683c910a71a9804d75ced3a4bb374e6a78978462274b"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1BlockNumber (unichain:0x4200000000000000000000000000000000000013) [opstack/Layer2/L1BlockNumber] {
+    +++ description: Simple contract that returns the latest L1 block number.
+      sourceHashes.1:
+-        "0x56c885b4644f191a780cd112098dd6bff77fae09fd61699d3d34a1fee191e919"
++        "0x9cd3f331d86734c79347ae5fdf12b65671c460ca6858e3fd8ab93b2810fbf977"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (unichain:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge] {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      sourceHashes.1:
+-        "0xf8e3171eeccb9b5e31480276120e77545d7f33ae218b16ee367370dc484149f2"
++        "0x271f936ec1986057d9043b9961aa266e87908766814bdde8071f19a9de7484be"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1Block (unichain:0x4200000000000000000000000000000000000015) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (unichain:0x4200000000000000000000000000000000000016) [opstack/Layer2/L2ToL1MessagePasser] {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      sourceHashes.1:
+-        "0x1904a0b899857bcfd0f09e8b106c904d2d1a1fc1bcc0d3f7f0a77e6ab9daacb4"
++        "0x1e27889ae9ce2358b6248afde8e8b6f7c4ccf0b308a9d9ecb629369ce110ea23"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (unichain:0x4200000000000000000000000000000000000017) [opstack/Layer2/OptimismMintableERC721Factory] {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      sourceHashes.1:
+-        "0xd05d0050b36bb2fb43c345eabc2d7f6e796571360aa2198707da64794c5f4b64"
++        "0xec1bfae18ba5717949a6969cb01d743511c076e7bc6c78ed2c2b63232b97cc57"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (unichain:0x4200000000000000000000000000000000000018) [opstack/Layer2/L2ProxyAdmin] {
+    +++ description: Administration contract for other contract proxies.
+      sourceHashes.1:
+-        "0xe6aa6a8aed0808dc2e9355191d252aeab0c0891c1f81e4c9e51bc206fee6740c"
++        "0x5685f6e3015a6b9a257228bb8ef3c33efb233627bc5c81b7005670a10a37bd47"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract BaseFeeVault (unichain:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault] {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      sourceHashes.1:
+-        "0x0706f7ff4b2f4c1e03bff710e9b98afa6f716ae6ac7b5e61797f9cb40a58221a"
++        "0x3d0a3be0a8f45817aa732f9e2f00e95db42726fa0335aa511b97c1a4cdecd4b7"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1FeeVault (unichain:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault] {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      sourceHashes.1:
+-        "0x6cd48142610d7634a3e49c7a9f181be68c6ca47b0ed2777c884a26a219ebb034"
++        "0x7c20cecc6bd09d07904ca96f0b10f1b1106bb1b0910dadd959556c970f5b527e"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract SchemaRegistry (unichain:0x4200000000000000000000000000000000000020) [opstack/Layer2/SchemaRegistry] {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      sourceHashes.1:
+-        "0x8953b1a1d45818a07988bc049a217a4400be83db95b5aeced6a374e52cd17c5e"
++        "0x184ad3273d7e257c9f1b138ecff33286528599eae858abc182fdc3068060af90"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract EAS (unichain:0x4200000000000000000000000000000000000021) [opstack/Layer2/EAS] {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      sourceHashes.1:
+-        "0x0ca562554163a2c4d87d76cd922699bca2c35809d5595ca3737d56db3d87b9f9"
++        "0xa445fc3be07624967bd4cb9792e42018303744e20dc788527e19f17d83b6373d"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract FeeSplitter (unichain:0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x1f2b6fc2c60f9146209fc5eb2dacd47f042450f4348d6656802b5b561c6325ea"
++        "0xd4c3544cf1fab8c24cae79ed641891aa726075011cb21ed124bb8ad3a1f92210"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1Splitter (unichain:0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002) [unichain/L1Splitter] {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa).
+      sourceHashes.0:
+-        "0x4463f100e9cf9f75c48ce2bdf395baea65cffbcfc47d7b49c54ac49deb99fb09"
++        "0xec3d2631b587840a92d5bdbf31e3c065d86709caa6845a58abbfe5e425470ff0"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1Splitter (unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003) [unichain/L1Splitter] {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15).
+      sourceHashes.0:
+-        "0x4463f100e9cf9f75c48ce2bdf395baea65cffbcfc47d7b49c54ac49deb99fb09"
++        "0xec3d2631b587840a92d5bdbf31e3c065d86709caa6845a58abbfe5e425470ff0"
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract NetFeeSplitter (unichain:0x4300c0D3c0D3c0D3c0D3c0D3C0D3c0d3c0D30004) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xe0a7c1c8013db0ad61542af98e7fd2e5a71f4ca3
 
 # Diff at Tue, 05 May 2026 15:19:38 GMT:

@@ -58,6 +58,7 @@ export const brine: ScalingProject = {
   id: ProjectId('brine'),
   capability: 'appchain',
   addedAt: UnixTime(1690545663), // 2023-07-28T12:01:03Z
+  archivedAt: UnixTime(1779090374), // Mon, 18 May 2026 07:46:13 GMT
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -131,6 +132,7 @@ export const brine: ScalingProject = {
     name: 'brine',
     chainId: undefined,
     apis: [{ type: 'starkex', product: ['brine'] }],
+    untilTimestamp: UnixTime(1779090374), // Mon, 18 May 2026 07:46:13 GMT
   },
   config: {
     escrows: [

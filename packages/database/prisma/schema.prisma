@@ -270,6 +270,48 @@ model TokenMetadata {
   @@index([projectId])
 }
 
+model PrivacyPrice {
+  timestamp       DateTime @db.Timestamp(6)
+  configurationId String   @db.Char(12)
+  priceId         String   @db.VarChar(255)
+  priceUsd        Float    @db.Real
+
+  @@id([timestamp, configurationId])
+  @@index([priceId])
+}
+
+model PrivacyBlockTimestamp {
+  timestamp       DateTime @db.Timestamp(6)
+  configurationId String   @db.Char(12)
+  chain           String   @db.VarChar(255)
+  blockNumber     Int
+
+  @@id([timestamp, configurationId])
+  @@index([chain])
+}
+
+model PrivacyFlowEvent {
+  configurationId String   @db.Char(12)
+  projectId       String   @db.VarChar(255)
+  bucketId        String   @db.VarChar(255)
+  chain           String   @db.VarChar(32)
+  direction       String   @db.VarChar(16)
+  timestamp       DateTime @db.Timestamp(6)
+  blockNumber     Int
+  txHash          String   @db.VarChar(66)
+  logIndex        Int
+  count           Int
+  amount          Decimal  @db.Decimal(80, 0)
+  priceId         String   @db.VarChar(255)
+  valueUsd        Float    @db.Real
+
+  @@id([configurationId, txHash, logIndex])
+  @@index([projectId, timestamp])
+  @@index([projectId, bucketId, timestamp])
+  @@index([configurationId, blockNumber])
+  @@index([configurationId, timestamp])
+}
+
 model UpdateDiff {
   projectId         String   @db.VarChar(255)
   address           String   @db.VarChar(255)
@@ -442,6 +484,7 @@ model AbstractToken {
   coingeckoListingTimestamp DateTime? @db.Timestamp(6)
   comment                   String?   @db.Text
   reviewed                  Boolean   @default(false)
+  isPriceUnreliable         Boolean   @default(false)
 
   deployedTokens DeployedToken[]
 

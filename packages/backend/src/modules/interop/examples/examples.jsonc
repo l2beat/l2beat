@@ -45,6 +45,255 @@
       ]
     }
   },
+  "lighter-bridge": {
+    "description": "Ethereum <> Lighter perp DEX bridge (one-sided)",
+    "txs": [
+      // USDC deposit (assetIndex=3, route=0/Perps) via aggregator
+      {
+        "chain": "ethereum",
+        "tx": "0x456433eb2b783b3e36b5261f282e74d5a8cafb3fe2af595eeb28fc9d6c71cf6c"
+      },
+      // Batched USDC deposits (two Deposit events, single ERC20 Transfer)
+      {
+        "chain": "ethereum",
+        "tx": "0xf3ee6ec05e48d40c0a1f77bc5d53e6f71fc83d046334822e00323ad22d025aba"
+      },
+      // Large `_deposit` batch: 14 USDC recipients, single ERC20 Transfer.
+      // Stresses proportional split across many siblings.
+      {
+        "chain": "ethereum",
+        "tx": "0x939588633a08f0f457358c5dae4b40c0cdadfe82b0b491d63ea3832048448b7b"
+      },
+      // ETH deposit (assetIndex=1/NATIVE) via 4337 + WETH-unwrap router
+      {
+        "chain": "ethereum",
+        "tx": "0xf08ca05ec6030f14df61661656e5e0037f44db0a2a7b14941b629fea160c7fe3"
+      },
+      // LIT deposit (assetIndex=2) directly to bridge
+      {
+        "chain": "ethereum",
+        "tx": "0xaed77e1e9d75abfb01da29900c2b73fa460a4a75ccb6edc3865a815ae541c284"
+      },
+      // AZTEC deposit (assetIndex=10) directly to bridge
+      {
+        "chain": "ethereum",
+        "tx": "0x81d070278cb1cacbafd01516e38ae8cfd49c1af88b579295300e027cc9f8e6d4"
+      },
+      // UNI deposit (assetIndex=6) — exercises dynamic token discovery
+      {
+        "chain": "ethereum",
+        "tx": "0x63211374188a4838fd2213abb912734ada334719d1c49fcee5c8ed2118bf8b65"
+      },
+      // SKY deposit (assetIndex=8)
+      {
+        "chain": "ethereum",
+        "tx": "0x2d2090eb8bfb3d5d63ab358c84c739b0ad9c814eef0fc1228354ac81d4dd7a69"
+      },
+      // LDO deposit (assetIndex=9)
+      {
+        "chain": "ethereum",
+        "tx": "0x95b6f7d05b41a0d826c6a08021cfae294938c411b6a28b9475077fd9b4644de8"
+      },
+      // USDC single claim via relayer
+      {
+        "chain": "ethereum",
+        "tx": "0x165c147da580aa73c4e51d15ba4f264a0ca4e7a24a89cdbcb1a1ff69a756f6b4"
+      },
+      // USDC multi-claim batch via relayer (multiple WithdrawPending in one tx)
+      {
+        "chain": "ethereum",
+        "tx": "0xac86141d45479b4d2a6047fe3620be4a765620b38ce741bb1c28072ce71db343"
+      },
+      // ETH withdrawal claim via relayer
+      {
+        "chain": "ethereum",
+        "tx": "0x106752950deaae7d705d1612c5ff574522b70066f8d8ce51486db4e3832ffbaf"
+      },
+      // LIT withdrawal claim direct by user
+      {
+        "chain": "ethereum",
+        "tx": "0x7878a9a0bc560bc254a2c9dd3425a7beb8f087b3df470c5b9d6ac56bd5375531"
+      },
+      // AZTEC withdrawal claim via relayer
+      {
+        "chain": "ethereum",
+        "tx": "0x72cb0e46661bc9c217f25db7a7ec0b7ee196ffd9c33b935338751f03fae96c06"
+      },
+      // LDO + ETH (NATIVE) multi-claim — NATIVE WP at WP-1 of an ERC20 WP.
+      // Stresses the NATIVE branch isolation: if the position-based check
+      // were applied without the NATIVE_ASSET_INDEX short-circuit, it could
+      // misattribute the LDO Transfer at idx=501 to the ETH WP at idx=503.
+      {
+        "chain": "ethereum",
+        "tx": "0x48759217270d61f8f16e5b67226d1ef1f2455296d2bd8e400841cab4c9546419"
+      },
+      // 4-claim batch via relayer: LIT + LDO + LDO + USDC. Tests that
+      // each WP correctly pairs with its own preceding Transfer even when
+      // the same owner has multiple claims for the same asset.
+      {
+        "chain": "ethereum",
+        "tx": "0xe920c1d178a0f83be0b5bc612ae837d7dfc699d7e273d41e1471e18ebc8b1e11"
+      },
+      // AAVE (assetIndex=7) + UNI multi-claim. Adds AAVE as a tested asset
+      // and exercises the relayer-batch case for two distinct ERC20s.
+      {
+        "chain": "ethereum",
+        "tx": "0x2265b0afe073fe2d09a3ac285c3f44e3081f08d9c8d223760cb578f045a7fc13"
+      },
+      // Very large LIT deposit (~147,915 LIT, baseAmount=14.79e12).
+      // Tests big-number arithmetic in the proportional split.
+      {
+        "chain": "ethereum",
+        "tx": "0x968b8b9fbc828728349427b64764e687c22f69f0d5798e368b0a9b8f310ce568"
+      },
+      // 10M USDC single deposit (largest USDC seen). Big-number sanity.
+      {
+        "chain": "ethereum",
+        "tx": "0x9fc393a771246e78594732011143a3948ba351c20460e284f4be3297ff3740a6"
+      }
+    ],
+    "expects": {
+      "transfers": [
+        // ETH deposit — exercises NATIVE branch (baseAmount × NATIVE_TICK_SIZE)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "4260000000000000" },
+          "dst": { "chain": "lighter" }
+        },
+        // USDC 2-recipient `_deposit` batch split (single Transfer, two Deposits)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "10178217" },
+          "dst": { "chain": "lighter" }
+        },
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "11670116" },
+          "dst": { "chain": "lighter" }
+        },
+        // 14-recipient `_deposit` batch — the unique large slice (~1.2k USDC)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "1199930118" },
+          "dst": { "chain": "lighter" }
+        },
+        // Diverse ERC20 deposits — verify dynamic token+amount discovery
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "129664227690000000000" }, // LIT
+          "dst": { "chain": "lighter" }
+        },
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "1898600000000000000000" }, // AZTEC
+          "dst": { "chain": "lighter" }
+        },
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "61544335080000000000" }, // UNI
+          "dst": { "chain": "lighter" }
+        },
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "13937811412820000000000" }, // SKY
+          "dst": { "chain": "lighter" }
+        },
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "1000000000000000000000" }, // LDO
+          "dst": { "chain": "lighter" }
+        },
+        // ETH withdrawal — NATIVE branch
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "2707100000000000000" }
+        },
+        // LIT withdrawal — direct user claim
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "32870000000000000000000" }
+        },
+        // AZTEC withdrawal — via relayer
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "879584000000000000000000" }
+        },
+        // USDC withdrawal — single claim via relayer
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "12000000000" }
+        },
+        // ETH withdrawal claim immediately after an LDO claim in the same
+        // tx (validates NATIVE_ASSET_INDEX short-circuit; otherwise WP-1
+        // would point to the LDO WP, not a real Transfer)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "100000000000000000" }
+        },
+        // 4-claim batch: LIT slice
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "54630000000000000000" }
+        },
+        // 4-claim batch: first LDO slice
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "1403000000000000000000" }
+        },
+        // 4-claim batch: second LDO slice (same owner, same asset, distinct
+        // claim — verifies each WP pairs with its own Transfer)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "6615000000000000000000" }
+        },
+        // AAVE withdrawal (asset 7, first time we exercise this token)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "92700000000000000000" }
+        },
+        // UNI withdrawal slice (in the AAVE+UNI relayer batch)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "245200000000000000000" }
+        },
+        // Massive LIT deposit (~147,915 LIT) — big-number proportional split
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "147915844136000000000000" },
+          "dst": { "chain": "lighter" }
+        },
+        // 10M USDC deposit (10e12 in 6-decimal units)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "10000000000000" },
+          "dst": { "chain": "lighter" }
+        },
+        // Generic catch-alls (consume any remaining ethereum<->lighter transfer)
+        {
+          "type": "lighter-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          "dst": { "chain": "lighter" }
+        },
+        {
+          "type": "lighter-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "lighter" },
+          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        }
+      ]
+    }
+  },
   "hyperliquid-bridge": {
     "description": "Arbitrum <> Hyperliquid USDC bridge (one-sided)",
     "txs": [
@@ -153,6 +402,20 @@
           "dst": { "wasMinted": false }
         }
       ]
+    }
+  },
+  "ccip-sus": {
+    "loadConfigs": ["ccip", "cctp-v1"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x943f6e5db9b06d8430a15dc73138c0cb21a8e131e08f33be6d4219761d478402"
+      }
+    ],
+    "expects": {
+      "events": ["cctp-v1.MessageReceived", "ccip.ExecutionStateChanged"],
+      "messages": [],
+      "transfers": ["cctp-v1.Transfer"]
     }
   },
   "ccip": {
@@ -371,6 +634,65 @@
         // Arbitrum → Unichain BETS (no financials enrichment available)
         { "type": "ccip.Transfer" }
       ]
+    }
+  },
+  "ccip-worldchain": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // Worldchain -> Ethereum (v1.5 token transfer)
+      {
+        "chain": "worldchain",
+        "tx": "0xd73ef487414b0d9b3d07e885a18875035480c629ed16b8714865c2d2d7fc0941"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xb39b5b385927947a5ad541f6a399dbeaf008b88b3567b411f198d962cae03370"
+      },
+      // Ethereum -> Worldchain (v1.5 WLD transfer)
+      {
+        "chain": "ethereum",
+        "tx": "0x1ab8a6a4e5e9e75eca7d57316356781966af256be222b11368f615f8347f7622"
+      },
+      {
+        "chain": "worldchain",
+        "tx": "0x45f3fa6a5b97372b0d9d20edfe395684992f9157a3301eff00dd13fd4a8e442c"
+      }
+    ],
+    "expects": {
+      "transfers": [
+        { "type": "ccip.Transfer" },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "WLD", "amount": 6276 } },
+          "dst": { "financials": { "symbol": "WLD", "amount": 6276 } }
+        }
+      ]
+    }
+  },
+  "ccip-megaeth": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // MegaETH -> Ethereum (v1.6 token transfer)
+      {
+        "chain": "megaeth",
+        "tx": "0xf82081f29b3020478cbc930165ce9c3a740fece1aba229ff668db59a682b36ca"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x7ce56bfd214151c570ef19c687e7a0e0eacbda4f1ee30734cbd6bd7e272b16b7"
+      },
+      // Ethereum -> MegaETH (v1.6 token transfer)
+      {
+        "chain": "ethereum",
+        "tx": "0x216f3b0f02763bb7f20445ce8a0b6a5301af1b4722a8e04fb2096f7903005e35"
+      },
+      {
+        "chain": "megaeth",
+        "tx": "0x7a41f3c99843b27d141c49c77b14c1af3fc8632b35ec0d61be5de532569b5c16"
+      }
+    ],
+    "expects": {
+      "transfers": [{ "type": "ccip.Transfer" }, { "type": "ccip.Transfer" }]
     }
   },
   "ccip-monad": {
@@ -677,7 +999,7 @@
         {
           "type": "ccip.Transfer",
           "plugin": "ccip",
-          "bridgeType": "burnAndMint",
+          "bridgeType": "lockAndMint",
           "src": {
             "tokenAddress": "0x000000000000000000000000243c9be13faba09f945ccc565547293337da0ad7",
             "wasBurned": false,
@@ -689,7 +1011,7 @@
         {
           "type": "ccip.Transfer",
           "plugin": "ccip",
-          "bridgeType": "burnAndMint",
+          "bridgeType": "lockAndMint",
           "src": { "chain": "solana" },
           "dst": {
             "tokenAddress": "0x00000000000000000000000080ac24aa929eaf5013f6436cda2a7ba190f5cc0b",
@@ -1475,7 +1797,35 @@
         "chain": "polygonpos",
         "tx": "0x86fd6f0fa2719ab88d35cfae7d124ee4f8214f09a5b993550d49ae097481859a"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "axelar-squid.Transfer",
+          "bridgeType": "nonMinting",
+          "src": { "financials": { "symbol": "axlUSDC" } },
+          "dst": { "financials": { "symbol": "USDC" } }
+        },
+        {
+          "type": "axelar.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "axlUSDC" } },
+          "dst": { "financials": { "symbol": "USDC" } }
+        },
+        {
+          "type": "axelar.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "axlUSDC" } },
+          "dst": { "financials": { "symbol": "USDC" } }
+        },
+        {
+          "type": "axelar.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "USDC" } },
+          "dst": { "financials": { "symbol": "axlUSDC" } }
+        }
+      ]
+    }
   },
   "axelar-its": {
     "txs": [
@@ -1515,7 +1865,29 @@
         "chain": "arbitrum",
         "tx": "0x3ea610acd6fc3422099437b3c6c5d47ccc1c97b7e9c75e0adc9577cda3bebe5c"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "axelar-its.Transfer",
+          "bridgeType": "burnAndMint",
+          "src": { "financials": { "symbol": "Speed" } },
+          "dst": { "financials": { "symbol": "Speed" } }
+        },
+        {
+          "type": "axelar-its.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "KLIMA" } },
+          "dst": { "financials": { "symbol": "KLIMA" } }
+        },
+        {
+          "type": "axelar-its.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "G3" } },
+          "dst": { "financials": { "symbol": "G3" } }
+        }
+      ]
+    }
   },
   "centrifuge": {
     "txs": [
@@ -1809,16 +2181,19 @@
         {
           "type": "wormhole-ntt.Transfer",
           "plugin": "wormhole-ntt",
-          "bridgeType": "burnAndMint",
+          "bridgeType": "lockAndMint",
           "src": { "event": { "ctx": { "chain": "ethereum" } } },
           "dst": { "chain": "solana" }
         },
         {
           "type": "wormhole-ntt.Transfer",
           "plugin": "wormhole-ntt",
-          "bridgeType": "burnAndMint",
+          "bridgeType": "lockAndMint",
           "src": { "chain": "solana" },
-          "dst": { "event": { "ctx": { "chain": "polygonpos" } } }
+          "dst": {
+            "event": { "ctx": { "chain": "polygonpos" } },
+            "financials": { "symbol": "GEOD" }
+          }
         }
       ]
     }
@@ -2284,6 +2659,24 @@
       {
         "chain": "unichain",
         "tx": "0xc6ae8abbfdb4b01f4cae51e52748c86186ac0dfe6568585b5479d7df5f1ad6b9"
+      },
+      // megaeth related txs: direct portal ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x6fa097e8c75bda7f784014655957cff35817e05534a6c6c19464508b1363eb3f"
+      },
+      {
+        "chain": "megaeth",
+        "tx": "0x4d9b09120db5c4f129b6963ca5fb605baca8f07a2be96eef7203dd67f8370aa0"
+      },
+      // worldchain related txs: direct portal ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x7e2dfbadbf336b27ac92f7ee23a82d69022b87a052011390adbe3978661e9cd4"
+      },
+      {
+        "chain": "worldchain",
+        "tx": "0xa0dc666babce95538939e7a40638097c3f5685f949adb429b199e83e4f2bc02a"
       }
     ],
     "events": [
@@ -2717,6 +3110,65 @@
       "opstack-standardbridge.L2ToL1Transfer"
     ]
   },
+  "opstack-standardbridge-megaeth-eth": {
+    "tags": ["opstack"],
+    "description": "megaeth <-> ethereum (eth)",
+    "txs": [
+      // L1 -> L2: ~0.186 ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xf37b0a88752ee08a388f06979aaa5f2784621b54bcb95e584a7fa193b843ba75"
+      },
+      {
+        "chain": "megaeth",
+        "tx": "0x22a00319a061b24cad8efcc4f86ed56ecbb5c5e3c869a8671ada250a94ac5298"
+      },
+      // L2 -> L1: ~53.4 ETH withdrawal
+      {
+        "chain": "megaeth",
+        "tx": "0xd19d0e90e5e4d490106f58c9920caa16014c1c4b2860bd7a4e7ca26d40641dbe"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x14b48eb64ca4f2c0e0aae70f9e6bed464ad1827458c823cdcfa6664b7f9fbf51"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+        { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+      ],
+      "transfers": [
+        {
+          "type": "opstack-standardbridge.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "ETH", "amount": 0.186125 } }
+        },
+        {
+          "type": "opstack-standardbridge.L2ToL1Transfer",
+          "dst": { "financials": { "symbol": "ETH", "amount": 53.407822 } }
+        }
+      ]
+    }
+  },
+  "opstack-standardbridge-megaeth-erc20": {
+    "tags": ["opstack"],
+    "description": "megaeth <- ethereum (erc20)",
+    "txs": [
+      // L1 -> L2: 2,000,000 snMUSDC deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x9cc30700cbffd4a14a82d0ca9d36f4782090f5137c17378dbcef4e82b7495ac1"
+      },
+      {
+        "chain": "megaeth",
+        "tx": "0x5aab3cf99e59fb8cb84a3b2d6eb0def991c7f6114a79f044f638fd1b5e516d85"
+      }
+    ],
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+    ],
+    "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
+  },
   "opstack-standardbridge-ink-eth": {
     "tags": ["opstack"],
     "description": "ink <-> ethereum (eth)",
@@ -2767,6 +3219,70 @@
         }
       ]
     }
+  },
+  "opstack-standardbridge-worldchain-eth": {
+    "tags": ["opstack"],
+    "description": "worldchain <-> ethereum (eth)",
+    "txs": [
+      // L1 -> L2: 0.0001 ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xc7818a16dce084c10f97d325c049c12571bb140aaf0b87022ebd1f80a8da0060"
+      },
+      {
+        "chain": "worldchain",
+        "tx": "0xc5c3003c64b9b4ae61defd374aa370830aaeb79649ef3b46ca2813475fc697d0"
+      },
+      // L2 -> L1: 90 ETH withdrawal
+      {
+        "chain": "worldchain",
+        "tx": "0x96e33046aafa718e1509cd14deeecd1462b3164d7dd053fe83c4eaa29c1a6b44"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x063729cb304ae95558a1cf32d82c34c3f68f6db0cb203569f779504b84400a9c"
+      }
+    ],
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+    ],
+    "transfers": [
+      "opstack-standardbridge.L1ToL2Transfer",
+      "opstack-standardbridge.L2ToL1Transfer"
+    ]
+  },
+  "opstack-standardbridge-worldchain-erc20": {
+    "tags": ["opstack"],
+    "description": "worldchain <-> ethereum (erc20)",
+    "txs": [
+      // L1 -> L2: ERC20 deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x83daa2159735c43063ba1441976bde4b520ff792d42271d1aa44910646d87012"
+      },
+      {
+        "chain": "worldchain",
+        "tx": "0xf0557e830d6d62ef3df6ce7cb88b48a348b5b6fd965225ae248cc527213cf6d1"
+      },
+      // L2 -> L1: ERC20 withdrawal
+      {
+        "chain": "worldchain",
+        "tx": "0x6515fabcf300795485c87f9507091c775d3c26898e27d55af5a720d4aa656f29"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xf9b1fd5c4b1c6bc2d511a7edf1d95b233d3947437ceff2c21951dddc4efcfe61"
+      }
+    ],
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+    ],
+    "transfers": [
+      "opstack-standardbridge.L1ToL2Transfer",
+      "opstack-standardbridge.L2ToL1Transfer"
+    ]
   },
   "orbitstack": {
     "txs": [
@@ -3681,7 +4197,7 @@
     "transfers": ["hyperlaneHwr.Transfer"]
   },
   "hwr": {
-    // 4 hwr transfers, one is USDC via cctp
+    // HWR transfers covering burn-and-mint, lock-and-mint, non-minting, and CCTP
     "loadConfigs": ["hyperlane"],
     "txs": [
       {
@@ -3751,6 +4267,15 @@
       {
         "chain": "optimism",
         "tx": "0x511e35b924f9c1da4845d0b6668870372dfcc925e1c8d931d4a27effe16e3184"
+      },
+      // Native ETH Ink → BSC (non-minting)
+      {
+        "chain": "ink",
+        "tx": "0x1ddd80773aac3e45c0e8b9a7b4e0dffad6071592345e7b42817e8fcd8dd950ab"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x767d19b3d64f2d7a9799c6339c41778f257f0099e6c94e5e045df1fa39b778eb"
       }
     ],
     "expects": {
@@ -3777,13 +4302,24 @@
         },
         {
           "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "lockAndMint",
           "src": { "financials": { "symbol": "oUSDT", "amount": 195.463566 } },
           "dst": { "financials": { "symbol": "USD₮", "amount": 195.463566 } }
         },
         {
           "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "lockAndMint",
           "src": { "financials": { "symbol": "USD₮", "amount": 1000 } },
           "dst": { "financials": { "symbol": "oUSDT", "amount": 1000 } }
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "nonMinting",
+          "src": { "tokenAddress": "native", "wasBurned": false },
+          "dst": {
+            "tokenAddress": "0x0000000000000000000000002170ed0880ac9a755fd29b2688956bd959f933f8",
+            "wasMinted": false
+          }
         }
       ],
       "messages": [
@@ -3817,7 +4353,7 @@
       "transfers": [
         {
           "type": "hyperlaneHwr.Transfer",
-          "bridgeType": "burnAndMint",
+          "bridgeType": "lockAndMint",
           "src": { "event": { "ctx": { "chain": "ethereum" } } },
           "dst": { "chain": "solana" }
         },
@@ -3842,6 +4378,43 @@
         "tx": "0x2f6c995f2d834d8792108d93f7f55749dc04d58eab0915c35ec1d1066728e6ee"
       }
     ]
+  },
+  "hwr-batch": {
+    "loadConfigs": ["hyperlane"],
+    "txs": [
+      {
+        "chain": "avalanche",
+        "tx": "0xccce62bdeb690789733bdc469fe312c1d37354059532a10d41da10cb5288b110"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0xb058cf16205c0f56a77e3481fe853957b10c17fd720ee68bd09631945e411b6e"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6c3578ad22703440d7029df1003648ce6e2b76f54997bba8886054501a772bde"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "hyperlane.Message", "app": "hwr" },
+        { "type": "hyperlane.Message", "app": "hwr" }
+      ],
+      "transfers": [
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "tokenAmount": "80412292340654771535872" },
+          "dst": { "tokenAmount": "80412292340654771535872" }
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "tokenAmount": "184025619229273926194947" },
+          "dst": { "tokenAmount": "184025619229273926194947" }
+        }
+      ]
+    }
   },
   "oft": {
     "loadConfigs": ["layerzero-v2"],
@@ -3897,33 +4470,60 @@
       {
         "chain": "base",
         "tx": "0xac2254035ff788d5f9ee4bb15c0805eac0ec29e96a40083b48ecf2850fb6ed3a"
+      },
+      // arb -> celo 'lockmint' (USDT0 -> USDT nonMinting)
+      {
+        "chain": "arbitrum",
+        "tx": "0xe910b7f74846bd44996f9462c692fa1642458aadad24f3e182b9993ee5812687"
+      },
+      {
+        "chain": "celo",
+        "tx": "0x0ad4f466176064aff24c475fd716be481a2c805e7a28b3f8ca7c90c2ea624dde"
       }
     ],
     "expects": {
       "transfers": [
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "lockAndMint"
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "USDe" } },
+          "dst": { "financials": { "symbol": "USDe" } }
         },
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "lockAndMint"
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "USDT" } },
+          "dst": { "financials": { "symbol": "USD₮0" } }
         },
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "lockAndMint"
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "USD₮0" } },
+          "dst": { "financials": { "symbol": "USDT" } }
         },
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "burnAndMint"
+          "bridgeType": "burnAndMint",
+          "src": { "financials": { "symbol": "CHECK" } },
+          "dst": { "financials": { "symbol": "CHECK" } }
         },
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "nonMinting"
+          "bridgeType": "nonMinting",
+          "src": { "financials": { "symbol": "USDT" } },
+          "dst": { "financials": { "symbol": "USD₮" } }
         },
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "burnAndMint"
+          "bridgeType": "burnAndMint",
+          "src": { "financials": { "symbol": "OL" } },
+          "dst": { "financials": { "symbol": "OL" } }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "financials": { "symbol": "USD₮0" } },
+          "dst": { "financials": { "symbol": "USD₮" } }
         }
       ]
     }
@@ -3945,6 +4545,10 @@
       },
       {
         "chain": "ethereum",
+        "tx": "0x4d76c29a53347e095f751f8af8aa27602e729d7bb1123a08c5b7b7cc8e34dc5b" // ethereum -> solana lockAndMint
+      },
+      {
+        "chain": "ethereum",
         "tx": "0x6938c3677d8855d94f289f5ece9aed150bee9744a221a2124112338a251752b5" // solana -> eth
       }
     ],
@@ -3953,14 +4557,29 @@
         {
           "type": "oftv2.Transfer",
           "bridgeType": "burnAndMint",
-          "src": { "event": { "ctx": { "chain": "bsc" } } },
+          "src": {
+            "event": { "ctx": { "chain": "bsc" } },
+            "financials": { "symbol": "PRL" }
+          },
           "dst": { "chain": "solana" }
         },
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "burnAndMint",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "financials": { "symbol": "USDT" }
+          },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "lockAndMint",
           "src": { "chain": "solana" },
-          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+          "dst": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "financials": { "symbol": "USDT" }
+          }
         }
       ]
     }

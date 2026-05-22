@@ -1,7 +1,6 @@
 import type { TableReadyValue } from '@l2beat/config'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
-import { UpcomingBadge } from '~/components/badge/UpcomingBadge'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
@@ -21,7 +20,7 @@ import { TwoRowCell } from './TwoRowCell'
 interface Props {
   value: TableReadyValue | undefined
   href?: string
-  emptyMode?: 'em-dash' | 'no-info' | 'n/a' | 'no-data' | 'upcoming'
+  emptyMode?: 'em-dash' | 'no-info' | 'n/a' | 'no-data'
   secondLineClassName?: string
 }
 
@@ -44,9 +43,6 @@ export function TableValueCell({
     }
     if (emptyMode === 'no-data') {
       return <NoDataBadge />
-    }
-    if (emptyMode === 'upcoming') {
-      return <UpcomingBadge />
     }
     return <NoInfoCell />
   }

@@ -39,6 +39,7 @@ export type ProtocolEntry = {
 
 export type ProtocolDisplayable = {
   name: string
+  slug: string
   iconUrl: string
 }
 
@@ -140,6 +141,7 @@ export const InteropProtocolTransfersParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
+  tokenId: v.string().optional(),
   snapshotTimestamp: v.number(),
   limit: v.number().optional(),
   cursor: InteropProtocolTransfersCursor.optional(),

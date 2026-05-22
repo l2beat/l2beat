@@ -1,6 +1,6 @@
 import type { Env } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Config } from './Config'
 import { getChainConfig } from './chain/getChainConfig'
 import { FeatureFlags } from './FeatureFlags'
@@ -10,6 +10,7 @@ import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getEcosystemsConfig } from './features/ecosystemToken'
 import { getInteropFeatureConfig } from './features/interop'
+import { getPrivacyConfig } from './features/privacy'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
@@ -43,13 +44,15 @@ export async function makeConfig(
     isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
   )
 
+  const clockOffsetSeconds = UnixTime.HOUR
+
   return {
     name,
     isReadonly,
     clock: {
       minBlockTimestamp:
         minTimestampOverride ?? getEthereumMinTimestamp(chains),
-      safeTimeOffsetSeconds: 60 * 60,
+      safeTimeOffsetSeconds: clockOffsetSeconds,
     },
     database: isLocal
       ? {
@@ -83,7 +86,8 @@ export async function makeConfig(
           isReadonly,
         },
     notifications:
-      flags.isEnabled('notifications') && getNotificationsConfig(env, flags),
+      flags.isEnabled('notifications') &&
+      getNotificationsConfig(env, flags, clockOffsetSeconds),
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
     api: {
       port: env.integer('PORT', isLocal ? 3001 : undefined),
@@ -159,6 +163,8 @@ export async function makeConfig(
       chains,
       activeChains,
     ),
+    privacy:
+      flags.isEnabled('privacy') && (await getPrivacyConfig(ps, env, flags)),
     backoffice: getBackofficeConfig(env, flags, isLocal),
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last
@@ -169,6 +175,7 @@ export async function makeConfig(
 function getNotificationsConfig(
   env: Env,
   flags: FeatureFlags,
+  clockOffsetSeconds: number,
 ): Config['notifications'] {
   return {
     updateMonitor: flags.isEnabled('notifications', 'updateMonitor') && {
@@ -190,6 +197,25 @@ function getNotificationsConfig(
       discordWebhookUrl: env.string(
         'NOTIFICATIONS_ETHEREUM_BLOBS_DISCORD_WEBHOOK_URL',
       ),
+    },
+    dailyChecks: flags.isEnabled('notifications', 'dailyChecks') && {
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_DAILY_CHECKS_DISCORD_WEBHOOK_URL',
+      ),
+      discordUserIds: env
+        .string('NOTIFICATIONS_DAILY_CHECKS_DISCORD_USER_IDS')
+        .split(',')
+        .map((id) => id.trim())
+        .filter((id) => id.length > 0),
+      timezone: env.string(
+        'NOTIFICATIONS_DAILY_CHECKS_TIMEZONE',
+        'Europe/Warsaw',
+      ),
+      hour:
+        (env.integer('NOTIFICATIONS_DAILY_CHECKS_HOUR', 9) -
+          clockOffsetSeconds / UnixTime.HOUR +
+          24) %
+        24,
     },
   }
 }
