@@ -299,7 +299,7 @@
             "chain": "roninnetwork",
             "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
             "decimals": 18,
-            "sinceTimestamp": 1612972800
+            "sinceTimestamp": 1778598960
           },
           {
             "type": "calculation",
@@ -311,7 +311,7 @@
                 "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
                 "escrowAddress": "0x000000000000000000000000000000000000dEaD",
                 "decimals": 18,
-                "sinceTimestamp": 1612972800
+                "sinceTimestamp": 1778598960
               },
               {
                 "type": "balanceOfEscrow",
@@ -319,7 +319,7 @@
                 "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
                 "escrowAddress": "0x0000000000000000000000000000000000000001",
                 "decimals": 18,
-                "sinceTimestamp": 1612972800
+                "sinceTimestamp": 1778598960
               },
               {
                 "type": "balanceOfEscrow",
@@ -327,7 +327,14 @@
                 "address": "native",
                 "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
                 "decimals": 18,
-                "sinceTimestamp": 1612972800
+                "sinceTimestamp": 1778598960
+              },
+              {
+                "_comment": "Axie DAO uncollateralized portion of the 2022 hack (56,076 ETH never reimbursed). Held at Axie Treasury 0x245db945c485b68fdc429e4f7085a1761aa4d45d.",
+                "type": "const",
+                "value": "56076000000000000000000",
+                "decimals": 18,
+                "sinceTimestamp": 1778598960
               }
             ]
           }

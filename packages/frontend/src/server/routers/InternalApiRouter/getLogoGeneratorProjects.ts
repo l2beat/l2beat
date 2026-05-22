@@ -2,7 +2,7 @@ import { ps } from '~/server/projects'
 
 export async function getLogoGeneratorProjects() {
   const projects = await ps.getProjects({
-    optional: ['isUpcoming', 'archivedAt', 'bridgeInfo', 'scalingInfo'],
+    optional: ['archivedAt', 'bridgeInfo', 'scalingInfo'],
   })
 
   return projects
@@ -11,7 +11,6 @@ export async function getLogoGeneratorProjects() {
       name: project.name,
       type: project.scalingInfo?.layer,
       slug: project.slug,
-      isUpcoming: project.isUpcoming,
       isArchived: !!project.archivedAt,
     }))
 }

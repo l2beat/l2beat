@@ -29,29 +29,23 @@ export function createTvsProjectsFilter(
 ): (project: Project<'statuses', 'scalingInfo'>) => boolean {
   switch (filter.type) {
     case 'layer2':
-      return (project) =>
-        !!project.scalingInfo &&
-        !(project.statuses.reviewStatus === 'initialReview')
+      return (project) => !!project.scalingInfo
     case 'projects':
       return (project) => new Set(filter.projectIds).has(project.id)
     case 'rollups':
       return (project) =>
         !!project.scalingInfo &&
-        !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Optimistic Rollup' ||
           project.scalingInfo.type === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
         !!project.scalingInfo &&
-        !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Validium' ||
           project.scalingInfo.type === 'Optimium' ||
           project.scalingInfo.type === 'Plasma')
     case 'others':
       return (project) =>
-        !!project.scalingInfo &&
-        project.scalingInfo.type === 'Other' &&
-        !(project.statuses.reviewStatus === 'initialReview')
+        !!project.scalingInfo && project.scalingInfo.type === 'Other'
     default:
       assertUnreachable(filter)
   }

@@ -43,6 +43,7 @@ export async function getInteropProtocolTransfers({
   from,
   to,
   type,
+  tokenId,
   snapshotTimestamp,
   limit,
   cursor,
@@ -82,7 +83,13 @@ export async function getInteropProtocolTransfers({
   }
 
   const classifier = new InteropTransferClassifier()
-  const matcher = classifier.createMatcher<InteropTransferRecord>(plugins)
+  const pluginMatcher = classifier.createMatcher<InteropTransferRecord>(plugins)
+  const matcher = tokenId
+    ? (transfer: InteropTransferRecord) =>
+        pluginMatcher(transfer) &&
+        (transfer.srcAbstractTokenId === tokenId ||
+          transfer.dstAbstractTokenId === tokenId)
+    : pluginMatcher
   const pluginIds = [...new Set(plugins.map((plugin) => plugin.plugin))]
   const result = await getFilteredTransfersPage({
     snapshotTimestamp,

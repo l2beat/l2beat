@@ -47,5 +47,7 @@
       "description": "Scaling factor based on total TORN supply used in reward calculations.",
       "severity": "LOW"
     }
-  }
+  },
+  "ignoreMethods": ["accumulatedRewardPerTorn"],
+  "ignoreInWatchMode": ["accumulatedRewardPerTorn"]
 }

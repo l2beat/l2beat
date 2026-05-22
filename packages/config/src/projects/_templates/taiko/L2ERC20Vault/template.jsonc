@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Escrow for L2-native tokens sent to L1 via the canonical bridge.",
+  "ignoreMethods": ["proxiableUUID"]
+}
