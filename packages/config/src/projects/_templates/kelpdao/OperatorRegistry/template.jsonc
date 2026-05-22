@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OperatorRegistry",
+  "description": "Othentic-style AVS-wide operator registry. Maintains the full list of operators registered with this AVS network across every staker, accessible via getAllActiveOperators.",
+  "ignoreRelatives": ["getAllActiveOperators", "slasherAddress"]
+}

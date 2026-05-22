@@ -1,0 +1,20 @@
+{
+  "MachServiceManager": {
+    "hash": "0xdb7a7bf6968ae6e558bdd99ed189559516d5adceca0b219a405f184dab8b9ca9",
+    "address": "eth:0x44FAb641A5d5FDB61198251dA8098520998326F0",
+    "chain": "ethereum",
+    "blockNumber": 25000532
+  },
+  "MachServiceManager_19Dcdb": {
+    "hash": "0x26320fd58988c9e28ccf54f639689cac8d0af905ab2b111d0d079770c2e8f580",
+    "address": "eth:0x527AaEc14781c21224078382aa42faF16E31f123",
+    "chain": "ethereum",
+    "blockNumber": 25000532
+  },
+  "MachServiceManager_0Ec044": {
+    "hash": "0x2d04926e9cf2add35e9e7ff629b0c9a5a408d21a87d81d6a44ecb201a87ebfe6",
+    "address": "eth:0xD6a75Bd82E57AA6894E98a72fDb780af9DdF9632",
+    "chain": "ethereum",
+    "blockNumber": 25000532
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "IndexRegistry": {
+    "hash": "0x3653b5dd3990de14765c02feefa3d7402fe0258367ca11d261837bacaa686586",
+    "address": "eth:0x9ff78aDA93ebd95d5C35cD23C6418964e8a06Ae3",
+    "chain": "ethereum",
+    "blockNumber": 25000532
+  },
+  "IndexRegistry_11779B": {
+    "hash": "0x0085b0b892574d02ff30e99a6f948ec9f4fa4be65921d169ea83f80e228b20ff",
+    "address": "eth:0xAf4D199001cFD402500202f4d60749aCaCF78d41",
+    "chain": "ethereum",
+    "blockNumber": 25000532
+  }
+}

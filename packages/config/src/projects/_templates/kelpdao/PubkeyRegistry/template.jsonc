@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PubkeyRegistry",
+  "category": "core",
+  "description": "Stores the BLS pubkeys used by NodeDelegators when registering validators with EigenLayer's EigenPodManager."
+}

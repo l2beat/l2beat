@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EthXPriceOracle",
+  "category": "core",
+  "canActIndependently": false,
+  "description": "IPriceFetcher implementation for one specific LST. getAssetPrice reverts unless the supplied asset equals ethxAddress; otherwise it returns IETHXStakePoolsManager(ethXStakePoolsManagerProxyAddress).getExchangeRate() as the asset/ETH rate. Both ethXStakePoolsManagerProxyAddress and ethxAddress are set by one-shot initializers (initialize and initialize2) and have no setters; the implementation behind the proxy is upgradeable through the proxy admin.",
+  "ignoreRelatives": ["ethXStakePoolsManagerProxyAddress"],
+  "fields": {
+    "ethxAddress": {
+      "description": "The only asset that getAssetPrice will price (it reverts on any other input). Set once in initialize2 by reading getETHxToken() on the StaderConfig pointed to by IETHXStakePoolsManager(ethXStakePoolsManagerProxyAddress).staderConfig(); has no setter."
+    },
+    "ethXStakePoolsManagerProxyAddress": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Address whose getExchangeRate() return value getAssetPrice forwards as the asset/ETH rate. Set once in initialize and not updateable by any function on this contract. Walks into the foreign Stader stack and is therefore listed in ignoreRelatives so the BFS does not follow it."
+    }
+  }
+}

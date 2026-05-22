@@ -1,0 +1,8 @@
+{
+  "EthXPriceOracle": {
+    "hash": "0x4b10ed614e628c02a2223a991a5ee06e650377ed7c4dc6fa0a0f89af62c11af5",
+    "address": "eth:0x3f258821a5ad28391e9Bb0B69A705fdf545BCab0",
+    "chain": "ethereum",
+    "blockNumber": 24978836
+  }
+}

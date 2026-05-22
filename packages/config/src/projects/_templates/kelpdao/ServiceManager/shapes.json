@@ -1,0 +1,20 @@
+{
+  "ServiceManager": {
+    "hash": "0x106c6d8f147e8cfad1e2cab3996ebeb048cc74edf7ff3ac2c617a1b4be278b68",
+    "address": "eth:0x828e57222b254D484b329441c6271255E960854d",
+    "chain": "ethereum",
+    "blockNumber": 25000532
+  },
+  "ServiceManager_A4540E": {
+    "hash": "0x2d9acba810dd29fdb885ec16b93e1972bb77bff9f4660a20fed9da8edb1d8d38",
+    "address": "eth:0x8E5b926EceaD5068d71eFCD43779F28E94DCf995",
+    "chain": "ethereum",
+    "blockNumber": 25000532
+  },
+  "ServiceManager_c5BaC6": {
+    "hash": "0x6cb86a029936f38e717f081cc98d6e25566e993cd88f082fa79cf88e8e3952a1",
+    "address": "eth:0x37330103411033e2A4543BD412f5F37eB5059607",
+    "chain": "ethereum",
+    "blockNumber": 25000532
+  }
+}

@@ -1,0 +1,470 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "kelpdao",
+  "import": [
+    "../globalConfig.jsonc"
+  ],
+  "maxAddresses": 1500,
+  "initialAddresses": [
+    "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+    // AVSDirectory: pulled into the discovery explicitly so the kelpOperatorAvsRegistrations
+    // override below fires. Otherwise it would only be reachable via ProtocolRegistry.getAllDeployments,
+    // which we cut to keep EigenLayer's full deployment registry out of this project's surface.
+    "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+    // AutomationServiceManager: one of the AVSes Kelp's operators are registered with on
+    // AVSDirectory. Pulled in explicitly to surface its proxy-admin chain so a reviewer
+    // can see the upgrade authority (currently a single EOA). The AVS-internal registries
+    // are cut by the AutomationServiceManager template's ignoreRelatives — only the admin
+    // chain is walked. Sample case for the broader question "who could enable slashing on
+    // a Kelp-relevant AVS"; the same pattern applies to the other 11 single-EOA-controlled
+    // AVSes Kelp operators are registered with.
+    "eth:0x18343Aa10e3D2F3A861e5649627324aEAD987Adf",
+    // rsETH on Base: a LayerZero V2 OFT (mint/burn) representing rsETH bridged from
+    // Ethereum. Pulled in to surface the bridge's LayerZero stack — Endpoint, Send/Receive
+    // ULN302 libraries, and the DVNs that secure cross-chain messages. The DVN set is the
+    // primary trust assumption for anyone holding rsETH on Base.
+    "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+    // rsETH OFTAdapter on Ethereum: the eth-side counterpart that locks rsETH when bridging
+    // to Base and unlocks it when receiving from Base. Owned by KelpManagerMultisig; this
+    // is the contract a malicious DVN-validated message would target to release rsETH on
+    // Ethereum.
+    "eth:0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3"
+  ],
+  "names": {
+    "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d": "KelpAdminMultisig",
+    "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1": "KelpManagerMultisig",
+    "eth:0xEe68dF9f661da6ED968Ea4cbF7EC68fcFE375bc6": "KelpRewardReceiverMultisig",
+    "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF": "ELOperator_A",
+    "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5": "ELOperator_B",
+    "eth:0xFc561966ceaAa09f4d6CBa4AdD54778c2bF1cB85": "NodeDelegator_A1",
+    "eth:0x395884D1974a839702bcFCBa176AC7871c788946": "NodeDelegator_A2",
+    "eth:0x4C798C4653b1257D5149910523D7a6eeD5712F83": "NodeDelegator_A3",
+    "eth:0x545D69B99759E7b670Df243b882700121d6d3AB9": "NodeDelegator_A4",
+    "eth:0xee5470E1519972C3eA95249d60EBD064af2D53D3": "NodeDelegator_A5",
+    "eth:0x049EA11D337f185b1Aa910d98e8Fbd991f0FBA7B": "NodeDelegator_B1",
+    "eth:0x79f17234746344E0365D40be50d8d43DB9082c32": "NodeDelegator_B2",
+    "eth:0x322F2d4bFe8280EeB713B7C51EEbA42590C36f78": "KelpProtocolTreasury",
+    "eth:0x4E24A7E8B276b8ed42124C9e09C811f3eDC98c62": "KelpAssetTransferMultisig",
+    "eth:0x23Bd955B62027AA2b1060c6f79B4a8281c049667": "KelpInstantWithdrawalFeeRecipient",
+    "eth:0xb6AbB489aCA4583833230F10B3A7670114D09559": "KelpPauserMultisig",
+    "eth:0xb9577E83a6d9A6DE35047aa066E3758221FE0DA2": "KelpLegacyProtocolTreasury",
+    "eth:0xF2099c4783921f44Ac988B67e743DAeFd4A00efd": "KelpOperatorEOA",
+    "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993": "rsETH_OFT_Base",
+    "eth:0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3": "rsETH_OFTAdapter_Eth",
+    "base:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": "BlockedMessageLib_Base",
+    "base:0xCcD558d6839e128320bBC932CBBa2c890a5518E8": "LayerZero_Treasury_Base"
+  },
+  "overrides": {
+    "eth:0x42A72499eDDB0374ebFba44Fc880F82CCe736614": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x75351d49229aa42Df7fEBfbEa0c7cECC881ad7E7": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x10aD871Ad645A63113E1dAE7a71Cbd0E2F7443eE": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x11afc5adeD8346e147504f84BE7CBb80a9B93aDe": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x51288463A0a430c94603221242A5084070D9Aed6": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x56979Fd34a06518B918BFda0B50d62Cc856f6064": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x67c929b7e86B3210517A45C3767e2828037de968": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x95199F7890887408e50E3bA704f04FbcE10A66C9": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xa918A7b8217639723055b302abf0336694993ac7": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xa937396c34d8B5F7A89A97c4796bf0f6A1d732fb": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xF7fcff55d5FDAf2C3Bbeb140Be5e62a2c7D26Db3": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129": {
+      "ignoreRelatives": [
+        "getAllDeployments"
+      ]
+    },
+    "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": {
+      "ignoreRelatives": [
+        "blsApkRegistry",
+        "registryCoordinator",
+        "stakeRegistry",
+        "pauserRegistry",
+        "paymentVault",
+        "eigenDADisperserRegistry",
+        "eigenDARelayRegistry",
+        "eigenDAThresholdRegistry",
+        "rewardsInitiator",
+        "batchConfirmers"
+      ]
+    },
+    "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF": {
+      "description": "AVSDirectory: legacy EigenLayer (operator, AVS) registration registry. The override below adds a kelp-scoped derived field that walks every AVS Kelp's two operators (ELOperator_A, ELOperator_B) are currently registered with on this directory, so the BFS pulls their internals (ServiceManager, registries, slasher chain) into this discovery automatically. List refreshes on every discovery run; the only deployment-stable inputs hardcoded in the where clauses are the two operator addresses (which are also named in this project and would surface as a separate diff if MANAGER ever undelegates and re-delegates).",
+      "fields": {
+        "kelpOperatorAvsRegistrations": {
+          "severity": "HIGH",
+          "type": "EXTERNAL",
+          "description": "Per-operator set of AVS addresses each Kelp NodeDelegator-delegated EigenLayer operator is currently REGISTERED with on this AVSDirectory. Reconstructed live from OperatorAVSRegistrationStatusUpdated events restricted to Kelp's two operators; entries appear when the operator's status flips to REGISTERED (1) and disappear when it flips to DEREGISTERED (0).",
+          "edit": [
+            "pick",
+            "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF",
+            "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
+          ],
+          "handler": {
+            "type": "event",
+            "select": "avs",
+            "groupBy": "operator",
+            "ignoreRelative": true,
+            "add": [
+              {
+                "event": "OperatorAVSRegistrationStatusUpdated",
+                "where": [
+                  "and",
+                  [
+                    "=",
+                    "#operator",
+                    "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF"
+                  ],
+                  [
+                    "=",
+                    "#status",
+                    1
+                  ]
+                ]
+              },
+              {
+                "event": "OperatorAVSRegistrationStatusUpdated",
+                "where": [
+                  "and",
+                  [
+                    "=",
+                    "#operator",
+                    "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
+                  ],
+                  [
+                    "=",
+                    "#status",
+                    1
+                  ]
+                ]
+              }
+            ],
+            "remove": [
+              {
+                "event": "OperatorAVSRegistrationStatusUpdated",
+                "where": [
+                  "and",
+                  [
+                    "=",
+                    "#operator",
+                    "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF"
+                  ],
+                  [
+                    "=",
+                    "#status",
+                    0
+                  ]
+                ]
+              },
+              {
+                "event": "OperatorAVSRegistrationStatusUpdated",
+                "where": [
+                  "and",
+                  [
+                    "=",
+                    "#operator",
+                    "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
+                  ],
+                  [
+                    "=",
+                    "#status",
+                    0
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39": {
+      "fields": {
+        "slashingCapableOperatorSets": {
+          "severity": "HIGH",
+          "type": "EXTERNAL",
+          "description": "Every operator set created on AllocationManager. Each entry is an {avs, id} pair identifying an AVS that has opted into the post-2025 EigenLayer slashing model and the index of one of its operator sets.",
+          "handler": {
+            "type": "event",
+            "select": "operatorSet",
+            "ignoreRelative": true,
+            "add": {
+              "event": "OperatorSetCreated"
+            }
+          }
+        },
+        "kelpOperatorAllocationManagerRegistrations": {
+          "severity": "HIGH",
+          "type": "PERMISSION",
+          "description": "Per-operator set of operator sets each Kelp operator (ELOperator_A, ELOperator_B) is currently registered with on AllocationManager. A non-empty entry means the operator has opted into a slashable allocation under the new slashing model.",
+          "edit": [
+            "pick",
+            "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF",
+            "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
+          ],
+          "handler": {
+            "type": "event",
+            "select": "operatorSet",
+            "groupBy": "operator",
+            "ignoreRelative": true,
+            "add": [
+              {
+                "event": "OperatorAddedToOperatorSet",
+                "where": [
+                  "=",
+                  "#operator",
+                  "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF"
+                ]
+              },
+              {
+                "event": "OperatorAddedToOperatorSet",
+                "where": [
+                  "=",
+                  "#operator",
+                  "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
+                ]
+              }
+            ],
+            "remove": [
+              {
+                "event": "OperatorRemovedFromOperatorSet",
+                "where": [
+                  "=",
+                  "#operator",
+                  "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF"
+                ]
+              },
+              {
+                "event": "OperatorRemovedFromOperatorSet",
+                "where": [
+                  "=",
+                  "#operator",
+                  "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "base:0xB5320B0B3a13cC860893E2Bd79FCd7e13484Dda2": {
+      "fields": {
+        "rsETHSendUlnConfig": {
+          "description": "ULN security config governing rsETH OFT messages sent FROM Base TO Ethereum (eid 30101). Returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs].",
+          "handler": {
+            "type": "call",
+            "method": "getUlnConfig",
+            "args": [
+              "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+              30101
+            ]
+          }
+        },
+        "rsETHSendExecutorConfig": {
+          "description": "Executor config governing rsETH OFT messages sent FROM Base TO Ethereum (eid 30101). Returns: [maxMessageSize, executor].",
+          "handler": {
+            "type": "call",
+            "method": "getExecutorConfig",
+            "args": [
+              "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+              30101
+            ]
+          }
+        }
+      }
+    },
+    "base:0xc70AB6f32772f59fBfc23889Caf4Ba3376C84bAf": {
+      "fields": {
+        "rsETHReceiveUlnConfig": {
+          "description": "ULN security config governing rsETH OFT messages received ON Base FROM Ethereum (eid 30101). Returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs].",
+          "handler": {
+            "type": "call",
+            "method": "getUlnConfig",
+            "args": [
+              "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+              30101
+            ]
+          }
+        }
+      }
+    },
+    "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993": {
+      "description": "rsETH on Base: a LayerZero V2 OFT (mint/burn) for rsETH. Cross-chain messages between this contract and its Ethereum-side peer are secured by the DVN set surfaced on the Send/Receive ULN302 entries below. The owner controls the OFT mint/burn surface and is the LZ delegate (can change DVN config on the Endpoint).",
+      "types": {
+        "EthBytes32Peer": {
+          "typeCaster": "SliceAddress",
+          "arg": { "offset": 12, "prefix": "eth" }
+        }
+      },
+      "fields": {
+        "peerOnEthereum": {
+          "description": "Authorized rsETH OFT peer on Ethereum (eid 30101). Cross-chain messages signed by this peer are accepted by this OFT. Returned by peers(uint32).",
+          "handler": {
+            "type": "call",
+            "method": "peers",
+            "args": [30101]
+          },
+          "edit": ["format", "EthBytes32Peer"]
+        },
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "set the LayerZero peer for any chain (rebinding the bridge), pause sends/receives, and reconfigure DVNs/libraries on the Endpoint via the LZ delegate slot."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3": {
+      "description": "rsETH OFTAdapter on Ethereum: locks rsETH for outgoing bridge messages and unlocks it on incoming. Owner doubles as the LZ delegate (can change Endpoint DVN config).",
+      "types": {
+        "BaseBytes32Peer": {
+          "typeCaster": "SliceAddress",
+          "arg": { "offset": 12, "prefix": "base" }
+        }
+      },
+      "fields": {
+        "peerOnBase": {
+          "description": "Authorized rsETH OFT peer on Base (eid 30184). Cross-chain messages signed by this peer are accepted by this adapter and trigger token unlocks here. Returned by peers(uint32).",
+          "handler": {
+            "type": "call",
+            "method": "peers",
+            "args": [30184]
+          },
+          "edit": ["format", "BaseBytes32Peer"]
+        },
+        "allPeers": {
+          "description": "Per-eid map of authorized cross-chain peers (LayerZero OFT/OApp address) currently set on this adapter. Reconstructed from PeerSet(eid, peer) events. Values are bytes32 (LayerZero's wire format: 20-byte address left-padded with 12 zero bytes). Addresses here are NOT BFS-walked (ignoreRelative): each peer lives on a different chain and would be the entry point of a separate per-chain discovery.",
+          "handler": {
+            "type": "event",
+            "select": "peer",
+            "groupBy": "eid",
+            "ignoreRelative": true,
+            "set": {
+              "event": "PeerSet"
+            }
+          }
+        },
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "rebind the LayerZero peer for any chain (which would let an attacker-chosen OFT mint phantom rsETH to drain this adapter), and reconfigure DVNs/libraries on the Endpoint via the LZ delegate slot."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": {
+      "fields": {
+        "rsETHSendUlnConfig": {
+          "description": "ULN security config governing rsETH OFTAdapter messages sent FROM Ethereum TO Base (eid 30184). Returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs].",
+          "handler": {
+            "type": "call",
+            "method": "getUlnConfig",
+            "args": [
+              "0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3",
+              30184
+            ]
+          }
+        },
+        "rsETHSendExecutorConfig": {
+          "description": "Executor config governing rsETH OFTAdapter messages sent FROM Ethereum TO Base (eid 30184). Returns: [maxMessageSize, executor].",
+          "handler": {
+            "type": "call",
+            "method": "getExecutorConfig",
+            "args": [
+              "0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3",
+              30184
+            ]
+          }
+        }
+      }
+    },
+    "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": {
+      "fields": {
+        "rsETHReceiveUlnConfig": {
+          "description": "ULN security config governing rsETH OFTAdapter messages received ON Ethereum FROM Base (eid 30184). Returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs].",
+          "handler": {
+            "type": "call",
+            "method": "getUlnConfig",
+            "args": [
+              "0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3",
+              30184
+            ]
+          }
+        }
+      }
+    },
+    "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": {
+      "category": "shared",
+      "description": "Lido stETH — accepted as a deposit asset by KelpDAO. Shown as a leaf: ERC20 metadata is captured but Lido's internal admin/locator chain is not walked (Lido has its own discovery).",
+      "ignoreRelatives": [
+        "eip712Domain",
+        "getEIP712StETH",
+        "getEVMScriptRegistry",
+        "getLidoLocator",
+        "getTreasury",
+        "kernel"
+      ]
+    },
+    "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b": {
+      "category": "shared",
+      "description": "Stader ETHx — accepted as a deposit asset by KelpDAO. Shown as a leaf: ERC20 metadata is captured but Stader's StaderConfig chain is not walked.",
+      "ignoreRelatives": [
+        "$admin",
+        "staderConfig"
+      ]
+    },
+    "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE": {
+      "category": "shared",
+      "description": "Native ETH sentinel address used by LRTConfig.supportedAssetList to mark native ETH as an accepted deposit (not a real contract)."
+    },
+    "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d": {
+      "description": "KelpAdminMultisig — root admin of the rsETH protocol. Holds DEFAULT_ADMIN_ROLE on LRTConfig: can grant/revoke any role on every Kelp contract (including MINTER_ROLE and BURNER_ROLE on rsETH), re-point any entry in LRTConfig's bytes32 contract registry (so it can effectively replace LRTDepositPool, LRTOracle, LRTWithdrawalManager or rsETH itself), and add/remove supported deposit assets and their EigenLayer strategies. Also set as rsETH.custodyAddress, the ASSET_TRANSFER_ROLE-style endpoint stored on the rsETH token. There is no timelock on these operations except for adding new supported assets (which is gated by TIME_LOCK_ROLE / 10-day timelock). In short: this multisig can stop, replace, or reroute every component that mints, burns, or backs rsETH."
+    },
+    "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1": {
+      "description": "KelpManagerMultisig, operational admin of the rsETH protocol. Holds three roles on LRTConfig. MANAGER lets it set protocolFeeInBPS (the rsETH protocol fee LRTOracle mints to the treasury on every rebase, capped at 1500 bps by the setter) and per-asset deposit limits, tune LRTOracle parameters (maxFeeMintAmountPerDay, the manager-only updateRSETHPriceAsManager that bypasses the price-percentage limit) and LRTWithdrawalManager parameters (withdrawal delay, instant-withdrawal enable/fee/fee-recipient), set rsETH's daily mint cap, blocklist any rsETH holder for 24h via blockUserTransfers, mark addresses as permanently exempt from such freezes, call delegateTo / undelegate / createEigenPod on the NodeDelegators (changes which EigenLayer operator each NodeDelegator delegates to), and call stakeEthForStETH on LRTDepositPool. PAUSER_ROLE lets it pause every Kelp contract via LRTConfig.pauseAll or each individual pause function. OPERATOR_ROLE lets it drive NodeDelegator workflows (depositAssetIntoStrategy, stake32Eth, verifyWithdrawalCredentials, startCheckpoint, initiateUnstaking, processClaim) and the operator-gated paths on LRTDepositPool (internal swaps), LRTWithdrawalManager (completeWithdrawalForUser, depositIdleETHToAave, collectInterestToTreasury, unlockQueue) and LRTUnstakingVault. Cannot grant roles, replace contracts in the LRTConfig registry, set the EigenLayer reward receiver, change the dust threshold, or unpause anything (those are DEFAULT_ADMIN), and cannot move pooled LST/ETH balances between LRTDepositPool, NodeDelegators and LRTUnstakingVault (that is ASSET_TRANSFER_ROLE)."
+    },
+    "eth:0xb6AbB489aCA4583833230F10B3A7670114D09559": {
+      "description": "KelpPauserMultisig — secondary pause-only authority. Holds PAUSER_ROLE on LRTConfig. Can pause LRTDepositPool (block new deposits / rsETH minting), LRTOracle (freeze the rsETH/ETH rate and stop fee-mints), LRTWithdrawalManager (block redemptions / rsETH burning), and rsETH transfers. Cannot unpause — that requires MANAGER or DEFAULT_ADMIN. Pure circuit breaker for rsETH user flows."
+    },
+    "eth:0x4E24A7E8B276b8ed42124C9e09C811f3eDC98c62": {
+      "description": "KelpAssetTransferMultisig — holds ASSET_TRANSFER_ROLE on LRTConfig. Can move pooled LSTs/ETH between LRTDepositPool, NodeDelegators and LRTUnstakingVault. Does not change rsETH supply, but controls the assets that back rsETH at any given moment, so it can rebalance Kelp's restaked vs idle balance."
+    },
+    "eth:0xEe68dF9f661da6ED968Ea4cbF7EC68fcFE375bc6": {
+      "description": "KelpRewardReceiverMultisig — set as LRTConfig.eigenLayerRewardReceiver. Receives EigenLayer rewards earned by Kelp's NodeDelegators. Does not directly mint or burn rsETH, but holds the reward value that ultimately backs rsETH; how this multisig redistributes those rewards (e.g. forwarding into LRTDepositPool) is what makes the rewards actually flow into the rsETH backing."
+    },
+    "eth:0x322F2d4bFe8280EeB713B7C51EEbA42590C36f78": {
+      "description": "KelpProtocolTreasury — registered under PROTOCOL_TREASURY in LRTConfig. Receives the rsETH that LRTOracle.updateRSETHPrice() mints as the protocol fee on every rebase (sized by protocolFeeInBPS, capped by the daily fee-mint limit). This multisig holds the realized rsETH protocol revenue."
+    },
+    "eth:0xb9577E83a6d9A6DE35047aa066E3758221FE0DA2": {
+      "description": "KelpLegacyProtocolTreasury — referenced from FeeReceiver._legacyProtocolTreasury. Historical destination for protocol fees before the current FeeReceiver / PROTOCOL_TREASURY split was introduced. No active write authority over rsETH; kept on-chain for backward reference."
+    },
+    "eth:0x23Bd955B62027AA2b1060c6f79B4a8281c049667": {
+      "description": "KelpInstantWithdrawalFeeRecipient — set as LRTWithdrawalManager.instantWithdrawalFeeRecipient. Collects the fee users pay (in WETH) for taking the instant-withdrawal path instead of the standard EigenLayer-cooldown queue. Does not mint or burn rsETH directly, but the instant path always burns rsETH against Aave-backed WETH liquidity, so this multisig is the economic counterparty for every instant rsETH redemption."
+    },
+    "eth:0xF2099c4783921f44Ac988B67e743DAeFd4A00efd": {
+      "description": "KelpOperatorEOA — single externally-owned account holding OPERATOR_ROLE on LRTConfig (one of three holders, alongside KelpManagerMultisig and a second EOA). Does not directly mint or burn rsETH, but as an OPERATOR can drive every NodeDelegator workflow that moves Kelp's pooled LSTs into and out of EigenLayer: deposit assets into EigenLayer strategies, queue and complete EigenLayer withdrawals, claim rewards, and register beacon-chain validators through EigenPods. The full LST/ETH backing of rsETH is exposed to whoever controls this single private key — slashing or operational disruption from this key propagates into the rsETH/ETH exchange rate computed by LRTOracle.\n\nIf this EOA was hacked, the adversary could:\n- Call NodeDelegator.stake32Eth with attacker-chosen validator pubkey/signature, registering 32-ETH validators whose consensus keys the attacker controls. Withdrawal credentials are hardcoded to the EigenPod, so the principal cannot be stolen directly — but the attacker can force slashing (signing conflicting attestations / proposals → up to ~1 ETH lost per validator), siphon block proposal tips and MEV, or refuse to attest (inactivity-leak drain). Each event reduces the ETH backing rsETH and lowers the LRTOracle-reported rate.\n- Call NodeDelegator.initiateUnstaking on any subset of strategies/shares to queue large EigenLayer withdrawals (7–14 day cooldown). The withdrawer is hardcoded to the NodeDelegator so funds cannot be redirected, but an adversary can deliberately starve LRTWithdrawalManager of redemption liquidity, force users onto the costly Aave-backed instant path, and create a sustained discount on rsETH's secondary-market price.\n- Call NodeDelegator.depositAssetIntoStrategy to lock pooled LSTs into the configured EigenLayer strategy at adversarial moments (e.g. just before a known slashing event on that strategy).\n- Call NodeDelegator.processClaim with malformed or stale Merkle proofs to grief reward distribution. Rewards still flow to lrtConfig.eigenLayerRewardReceiver (set by MANAGER), so the destination cannot be redirected.\n- Call NodeDelegator.startCheckpoint / verifyWithdrawalCredentials at adversarial timings to crystallise slashing losses into rsETH's accounting earlier than otherwise.\n\nWhat the adversary cannot do with only this key: change the EigenLayer operator delegation (gated by MANAGER), redirect unstaked LSTs or rewards (recipients hardcoded to NodeDelegator / LRTConfig-stored), mint or burn rsETH, pause Kelp contracts, grant or revoke roles, or replace any contract in LRTConfig's registry. Net effect: cannot directly steal rsETH backing, but can systematically destroy value through slashing and liquidity disruption until KelpAdminMultisig revokes the role."
+    }
+  }
+}

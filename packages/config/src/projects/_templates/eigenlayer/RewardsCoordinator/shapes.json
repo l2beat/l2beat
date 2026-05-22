@@ -13,5 +13,11 @@
     "hash": "0xc12ea0d92007e77c83dbfcc9d809f0082e6d9363d0b8328afebd7cbd1c5f04b3",
     "address": "eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF",
     "blockNumber": 24350294
+  },
+  "RewardsCoordinatorV2": {
+    "hash": "0x7b1f03011cfcb15bf1f9fef4f3d459a2b254ee80329a6e767143b333475ae702",
+    "address": "eth:0xa0673C53980665a706352412D2538bA005403C26",
+    "chain": "ethereum",
+    "blockNumber": 24978836
   }
 }
