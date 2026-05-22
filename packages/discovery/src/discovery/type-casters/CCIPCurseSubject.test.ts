@@ -27,8 +27,8 @@ describe('CCIPCurseSubject', () => {
     expect(
       CCIPCurseSubject.cast(
         {},
-        '0x01000000000000000000000000000001'.toUpperCase(),
+        '0x000000000000000000000000DEADBEEF',
       ),
-    ).toEqual('GLOBAL_CURSE')
+    ).toEqual('3735928559')
   })
 })
