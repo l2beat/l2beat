@@ -112,25 +112,31 @@ export class PrivacyFlowEventRepository extends BaseRepository {
         'bucketId',
         day.as('timestamp'),
         eb.fn
-          .sum<number>('count')
+          .sum('count')
           .filterWhere('direction', '=', 'deposit')
           .as('depositCount'),
         eb.fn
-          .sum<number>('count')
+          .sum('count')
           .filterWhere('direction', '=', 'withdrawal')
           .as('withdrawalCount'),
-        sql<string>`COALESCE(SUM("amount") FILTER (WHERE "direction" = 'deposit'), 0)`.as(
-          'depositAmount',
-        ),
-        sql<string>`COALESCE(SUM("amount") FILTER (WHERE "direction" = 'withdrawal'), 0)`.as(
-          'withdrawalAmount',
-        ),
         eb.fn
-          .sum<number>('valueUsd')
+          .coalesce(
+            eb.fn.sum('amount').filterWhere('direction', '=', 'deposit'),
+            sql<string>`'0'`,
+          )
+          .as('depositAmount'),
+        eb.fn
+          .coalesce(
+            eb.fn.sum('amount').filterWhere('direction', '=', 'withdrawal'),
+            sql<string>`'0'`,
+          )
+          .as('withdrawalAmount'),
+        eb.fn
+          .sum('valueUsd')
           .filterWhere('direction', '=', 'deposit')
           .as('depositValueUsd'),
         eb.fn
-          .sum<number>('valueUsd')
+          .sum('valueUsd')
           .filterWhere('direction', '=', 'withdrawal')
           .as('withdrawalValueUsd'),
       ])
@@ -199,25 +205,31 @@ export class PrivacyFlowEventRepository extends BaseRepository {
         'projectId',
         'bucketId',
         eb.fn
-          .sum<number>('count')
+          .sum('count')
           .filterWhere('direction', '=', 'deposit')
           .as('depositCount'),
         eb.fn
-          .sum<number>('count')
+          .sum('count')
           .filterWhere('direction', '=', 'withdrawal')
           .as('withdrawalCount'),
-        sql<string>`COALESCE(SUM("amount") FILTER (WHERE "direction" = 'deposit'), 0)`.as(
-          'depositAmount',
-        ),
-        sql<string>`COALESCE(SUM("amount") FILTER (WHERE "direction" = 'withdrawal'), 0)`.as(
-          'withdrawalAmount',
-        ),
         eb.fn
-          .sum<number>('valueUsd')
+          .coalesce(
+            eb.fn.sum('amount').filterWhere('direction', '=', 'deposit'),
+            sql<string>`'0'`,
+          )
+          .as('depositAmount'),
+        eb.fn
+          .coalesce(
+            eb.fn.sum('amount').filterWhere('direction', '=', 'withdrawal'),
+            sql<string>`0`,
+          )
+          .as('withdrawalAmount'),
+        eb.fn
+          .sum('valueUsd')
           .filterWhere('direction', '=', 'deposit')
           .as('depositValueUsd'),
         eb.fn
-          .sum<number>('valueUsd')
+          .sum('valueUsd')
           .filterWhere('direction', '=', 'withdrawal')
           .as('withdrawalValueUsd'),
       ])

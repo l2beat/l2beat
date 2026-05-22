@@ -1,5 +1,6 @@
 import type { PrivacyAttribute, TrustedSetup } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
+import groupBy from 'lodash/groupBy'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import type { PrivacyProject } from './types'
@@ -25,7 +26,7 @@ export async function getPrivacySummaryEntries(
   projects: PrivacyProject[],
 ): Promise<PrivacySummaryEntry[]> {
   const db = getDb()
-  const projectIds = projects.map((p) => p.id.toString())
+  const projectIds = projects.map((p) => p.id)
 
   const now = UnixTime.now()
   const currentDay = UnixTime.toStartOf(now, 'day')
@@ -41,15 +42,15 @@ export async function getPrivacySummaryEntries(
     db.tvsTokenValue.getLastNonZeroValueByProjects(now, projectIds),
   ])
 
-  const totalsByProject = groupByProjectId(totals)
-  const dailyByProject = groupByProjectId(daily30d)
-  const tokenValuesByProject = groupByProjectId(tokenValues)
+  const totalsByProject = groupBy(totals, (t) => t.projectId)
+  const dailyByProject = groupBy(daily30d, (d) => d.projectId)
+  const tokenValuesByProject = groupBy(tokenValues, (v) => v.projectId)
 
   const entries = projects.map((project): PrivacySummaryEntry => {
-    const projectId = project.id.toString()
-    const projectTotals = totalsByProject.get(projectId) ?? []
-    const projectDaily = dailyByProject.get(projectId) ?? []
-    const tokenValues = tokenValuesByProject.get(projectId) ?? []
+    const projectId = project.id
+    const projectTotals = totalsByProject[projectId] ?? []
+    const projectDaily = dailyByProject[projectId] ?? []
+    const tokenValues = tokenValuesByProject[projectId] ?? []
 
     const totalValueLockedUsd = tokenValues.reduce(
       (sum, tv) => sum + tv.valueForProject,
@@ -87,16 +88,4 @@ export async function getPrivacySummaryEntries(
   })
 
   return entries.sort((a, b) => b.totalValueLockedUsd - a.totalValueLockedUsd)
-}
-
-function groupByProjectId<T extends { projectId: string }>(
-  items: T[],
-): Map<string, T[]> {
-  const map = new Map<string, T[]>()
-  for (const item of items) {
-    const existing = map.get(item.projectId) ?? []
-    existing.push(item)
-    map.set(item.projectId, existing)
-  }
-  return map
 }

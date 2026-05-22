@@ -31,32 +31,12 @@ export function PrivacyFlowsSection({
     range,
   })
 
-  const chartData = useMemo(
-    () =>
-      data?.chart.map(
-        ([
-          timestamp,
-          depositsCount,
-          withdrawalsCount,
-          depositsValueUsd,
-          withdrawalsValueUsd,
-        ]) => ({
-          timestamp,
-          depositsCount,
-          withdrawalsCount,
-          depositsValueUsd,
-          withdrawalsValueUsd,
-        }),
-      ),
-    [data],
-  )
-
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
-        chartData?.map((point) => ({ timestamp: point.timestamp })),
+        data?.chart.map(([timestamp]) => ({ timestamp })),
       ),
-    [chartData],
+    [data],
   )
 
   return (
@@ -66,7 +46,7 @@ export function PrivacyFlowsSection({
         <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <PrivacyFlowChart
-        data={chartData}
+        data={data?.chart}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
         metric={metric}

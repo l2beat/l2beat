@@ -18,7 +18,7 @@ export function PrivacyBestPracticesPage({ content, ...props }: Props) {
         <MainPageHeader>Onchain privacy best practices</MainPageHeader>
         <PrimaryCard className="md:p-8">
           <main className="mx-auto">
-            <Article className="extended-char-set [&>h2:first-child]:mt-0 [&_img]:my-8 [&_img]:w-full [&_img]:rounded-lg [&_img]:border [&_img]:border-divider [&_img]:bg-pure-black [&_img]:shadow-sm [&_li]:ml-0 [&_li]:rounded-lg [&_li]:border [&_li]:border-divider [&_li]:bg-surface-secondary [&_li]:p-4 [&_ul]:grid [&_ul]:list-none [&_ul]:gap-3 [&_ul]:pl-0">
+            <Article className="extended-char-set privacy-best-practices">
               {content.content}
             </Article>
           </main>

@@ -286,7 +286,7 @@ export async function getPrivacyProjectData(
       return badgeWithParams ? [badgeWithParams] : []
     }),
     projectLinks: getProjectLinks(details.display.links),
-    discoveryHref: `https://disco.l2beat.com/ui/p/${details.id}`,
+    discoveryHref: discoUi.href,
     discoUi,
     bucketCount,
     assetsCount: details.assets.length,
@@ -320,7 +320,7 @@ export async function getPrivacyProjectData(
         }),
         url,
         openGraph: {
-          image: '/meta-images/data-availability/summary/opengraph-image.png',
+          image: `/meta-images/privacy/projects/${details.slug}/opengraph-image.png`,
         },
       }),
     },

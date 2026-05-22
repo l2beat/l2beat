@@ -12,10 +12,6 @@ export function PrivacyTrustedSetupCell({
 }: {
   trustedSetup: TrustedSetup
 }) {
-  const participantCount = (
-    trustedSetup as TrustedSetup & { participantCount?: number }
-  ).participantCount
-
   return (
     <Tooltip>
       <TooltipTrigger
@@ -27,9 +23,9 @@ export function PrivacyTrustedSetupCell({
           size="sm"
           className="shrink-0"
         />
-        {participantCount !== undefined && (
+        {trustedSetup.participantCount !== undefined && (
           <span className="text-[11px] text-secondary leading-none">
-            {formatInteger(participantCount)} participants
+            {formatInteger(trustedSetup.participantCount)} participants
           </span>
         )}
       </TooltipTrigger>

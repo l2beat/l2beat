@@ -4,11 +4,15 @@ import type {
   ProjectPermissions,
   ProjectStatuses,
 } from '@l2beat/config'
+import type {
+  PrivacyFlowBucketTotalRecord,
+  PrivacyFlowDailyRecord,
+} from '@l2beat/database'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import { getPrivacyProjectBySlug } from './getPrivacyProjects'
 import type { PrivacyAsset, PrivacyBucket } from './types'
 
 export interface PrivacyProjectDetails {
@@ -49,13 +53,18 @@ export interface PrivacyProjectDetails {
 export async function getPrivacyProjectDetails(
   slug: string,
 ): Promise<PrivacyProjectDetails | undefined> {
-  const project = await getPrivacyProjectBySlug(slug)
+  const project = await ps.getProject({
+    slug,
+    where: ['privacyInfo'],
+    select: ['display', 'privacyInfo', 'statuses', 'tvsConfig'],
+    optional: ['contracts', 'permissions', 'discoveryInfo'],
+  })
   if (!project) {
     return undefined
   }
 
   const db = getDb()
-  const projectId = project.id.toString()
+  const projectId = project.id
 
   const now = UnixTime.now()
   const currentDay = UnixTime.toStartOf(now, 'day')
@@ -87,13 +96,13 @@ export async function getPrivacyProjectDetails(
     0,
   )
 
-  const totalIndex = new Map<string, (typeof totals)[number]>()
+  const totalIndex = new Map<string, PrivacyFlowBucketTotalRecord>()
   for (const total of totals) {
     totalIndex.set(`${total.projectId}::${total.bucketId}`, total)
   }
 
-  const daily30dIndex = new Map<string, (typeof daily30d)[number]>()
-  const daily7dIndex = new Map<string, (typeof daily30d)[number]>()
+  const daily30dIndex = new Map<string, PrivacyFlowDailyRecord>()
+  const daily7dIndex = new Map<string, PrivacyFlowDailyRecord>()
   for (const row of daily30d) {
     const key = `${row.projectId}::${row.bucketId}`
     const base = {

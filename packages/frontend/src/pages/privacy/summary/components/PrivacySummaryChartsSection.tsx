@@ -24,32 +24,12 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
   const { data: tvlData, isLoading: isTvlLoading } =
     api.privacy.tvlChart.useQuery({ projectIds, range })
 
-  const chartData = useMemo(
-    () =>
-      flowsData?.chart.map(
-        ([
-          timestamp,
-          depositsCount,
-          withdrawalsCount,
-          depositsValueUsd,
-          withdrawalsValueUsd,
-        ]) => ({
-          timestamp,
-          depositsCount,
-          withdrawalsCount,
-          depositsValueUsd,
-          withdrawalsValueUsd,
-        }),
-      ),
-    [flowsData],
-  )
-
   const flowChartTimeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
-        chartData?.map((point) => ({ timestamp: point.timestamp })),
+        flowsData?.chart.map(([timestamp]) => ({ timestamp })),
       ),
-    [chartData],
+    [flowsData],
   )
 
   const tvlChartTimeRange = useMemo(
@@ -69,7 +49,7 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
         <ChartTimeRange timeRange={flowChartTimeRange} />
       </div>
       <PrivacyFlowChart
-        data={chartData}
+        data={flowsData?.chart}
         syncedUntil={flowsData?.syncedUntil}
         isLoading={isFlowsLoading}
         metric={'count'}

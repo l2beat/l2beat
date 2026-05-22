@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type {
   ChartMeta,
@@ -33,19 +32,15 @@ interface Props {
   isLoading: boolean
 }
 
-export function PrivacyTvlChart({ data, syncedUntil, isLoading }: Props) {
-  const chartMeta = useMemo(
-    () =>
-      ({
-        value: {
-          label: 'TVL',
-          color: 'var(--chart-pink)',
-          indicatorType: { shape: 'line' },
-        },
-      }) satisfies ChartMeta,
-    [],
-  )
+const chartMeta = {
+  value: {
+    label: 'TVL',
+    color: 'var(--chart-pink)',
+    indicatorType: { shape: 'line' },
+  },
+} satisfies ChartMeta
 
+export function PrivacyTvlChart({ data, syncedUntil, isLoading }: Props) {
   return (
     <ChartContainer data={data} meta={chartMeta} isLoading={isLoading}>
       <AreaChart responsive data={data} margin={{ top: 20 }}>

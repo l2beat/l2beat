@@ -15,29 +15,34 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import type { PrivacyFlowsChartPoint } from '~/server/features/privacy/getPrivacyFlowsChart'
 import { formatRange } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
-interface PrivacyFlowChartDataPoint {
-  timestamp: number
-  depositsCount: number
-  withdrawalsCount: number
-  depositsValueUsd: number
-  withdrawalsValueUsd: number
-}
-
 interface Props {
-  data: PrivacyFlowChartDataPoint[] | undefined
+  data: PrivacyFlowsChartPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
   metric: 'count' | 'value'
   project?: ChartProject
 }
+
+const chartMeta = {
+  deposits: {
+    label: 'Deposits',
+    color: 'var(--chart-emerald)',
+    indicatorType: { shape: 'line' },
+  },
+  withdrawals: {
+    label: 'Withdrawals',
+    color: 'var(--chart-pink)',
+    indicatorType: { shape: 'line' },
+  },
+} satisfies ChartMeta
 
 export function PrivacyFlowChart({
   data,
@@ -46,34 +51,22 @@ export function PrivacyFlowChart({
   metric,
   project,
 }: Props) {
-  const chartMeta = useMemo(
-    () =>
-      ({
-        deposits: {
-          label: 'Deposits',
-          color: 'var(--chart-emerald)',
-          indicatorType: { shape: 'line' },
-        },
-        withdrawals: {
-          label: 'Withdrawals',
-          color: 'var(--chart-pink)',
-          indicatorType: { shape: 'line' },
-        },
-      }) satisfies ChartMeta,
-    [],
-  )
-
   const chartData = useMemo(
     () =>
-      data?.map((point) => ({
-        timestamp: point.timestamp,
-        deposits:
-          metric === 'count' ? point.depositsCount : point.depositsValueUsd,
-        withdrawals:
-          metric === 'count'
-            ? point.withdrawalsCount
-            : point.withdrawalsValueUsd,
-      })),
+      data?.map(
+        ([
+          timestamp,
+          depositsCount,
+          withdrawalsCount,
+          depositsValueUsd,
+          withdrawalsValueUsd,
+        ]) => ({
+          timestamp,
+          deposits: metric === 'count' ? depositsCount : depositsValueUsd,
+          withdrawals:
+            metric === 'count' ? withdrawalsCount : withdrawalsValueUsd,
+        }),
+      ),
     [data, metric],
   )
 
@@ -91,35 +84,19 @@ export function PrivacyFlowChart({
       }}
     >
       <AreaChart responsive data={chartData} margin={{ top: 20 }}>
-        <defs>
-          <CustomFillGradientDef
-            id={`privacy-${metric}-deposits-fill`}
-            colors={{
-              primary: 'var(--chart-emerald)',
-              secondary: 'var(--chart-emerald)',
-            }}
-          />
-          <CustomFillGradientDef
-            id={`privacy-${metric}-withdrawals-fill`}
-            colors={{
-              primary: 'var(--chart-pink)',
-              secondary: 'var(--chart-pink)',
-            }}
-          />
-        </defs>
         <ChartLegend content={<ChartLegendContent />} />
         <ChartStrokeOverFillAreaComponents
           data={[
             {
               dataKey: 'deposits',
               stroke: 'var(--chart-emerald)',
-              fill: `url(#privacy-${metric}-deposits-fill)`,
+              fill: 'var(--chart-emerald)',
               hide: !dataKeys.includes('deposits'),
             },
             {
               dataKey: 'withdrawals',
               stroke: 'var(--chart-pink)',
-              fill: `url(#privacy-${metric}-withdrawals-fill)`,
+              fill: 'var(--chart-pink)',
               hide: !dataKeys.includes('withdrawals'),
             },
           ]}
