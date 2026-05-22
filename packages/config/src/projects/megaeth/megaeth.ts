@@ -138,10 +138,11 @@ export const megaeth: ScalingProject = opStackL2({
       initialBond: {
         value: formatEther(
           discovery.getContractValue<number>(
-          activeKailuaTreasury,
-          'participationBond',
+            activeKailuaTreasury,
+            'participationBond',
+          ),
         ),
-
+      },
       orderHint: Number.NEGATIVE_INFINITY,
     },
   },
