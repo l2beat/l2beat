@@ -28,7 +28,7 @@ CREATE TABLE "TokenDbSettings" (
     "value" TEXT NOT NULL,
     "updatedAt" TIMESTAMP(6) NOT NULL,
 
-    CONSTRAINT "TokenDbSetting_pkey" PRIMARY KEY ("key")
+    CONSTRAINT "TokenDbSettings_pkey" PRIMARY KEY ("key")
 );
 
 -- CreateTable
