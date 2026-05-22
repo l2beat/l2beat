@@ -117,6 +117,8 @@ export interface ScalingRiskStateValidationValidityEntry
   isa: string | undefined
   trustedSetupsByProofSystem: TrustedSetupsByProofSystem
   executionDelay: number | undefined
+  executionDelayMode: 'always' | 'if-challenged' | undefined
+  permissioned: boolean | undefined
   tvs: TvsData
 }
 
@@ -165,6 +167,9 @@ function getScalingRiskStateValidationValidityEntry(
     isa: isa?.name,
     trustedSetupsByProofSystem,
     executionDelay: project.scalingRisks.self.stateValidation?.executionDelay,
+    executionDelayMode:
+      project.scalingRisks.self.stateValidation?.executionDelayMode,
+    permissioned: project.scalingRisks.self.stateValidation?.permissioned,
     tvs: getTvsData(project, projectTvs),
   }
 }
@@ -174,8 +179,16 @@ export interface ScalingRiskStateValidationOptimisticEntry
   tvsOrder: number
   proofSystem: ProjectScalingProofSystem
   executionDelay: number | undefined
+  executionDelayMode: 'always' | 'if-challenged' | undefined
   challengePeriod: number | undefined
-  initialBond: string | undefined
+  initialBond: { value: string; token?: string } | undefined
+  permissioned: boolean | undefined
+  defenderAdvantage:
+    | { multiplier: number; shape: 'linear' }
+    | { shape: 'log' }
+    | 'not-applicable'
+    | 'not-assessed'
+    | undefined
   tvs: TvsData
   zkCatalog:
     | {
@@ -248,8 +261,11 @@ function getScalingRiskStateValidationOptimisticEntry(
       name: proofSystem.name ?? zkCatalogProject?.name,
     },
     executionDelay: stateValidation?.executionDelay,
+    executionDelayMode: stateValidation?.executionDelayMode,
     challengePeriod: stateValidation?.challengeDelay,
     initialBond: stateValidation?.initialBond,
+    permissioned: stateValidation?.permissioned,
+    defenderAdvantage: stateValidation?.defenderAdvantage,
     tvs: getTvsData(project, projectTvs),
     zkCatalog,
   }

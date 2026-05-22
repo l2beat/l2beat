@@ -210,7 +210,8 @@ function getProcessedRiskView(
   let secondLine: string | undefined
   if (challengeDelay !== undefined && executionDelay !== undefined) {
     secondLine = formatChallengeAndExecutionDelay(
-      challengeDelay + executionDelay,
+      challengeDelay,
+      executionDelay,
     )
   } else if (challengeDelay !== undefined) {
     secondLine = formatChallengePeriod(challengeDelay)

@@ -371,6 +371,7 @@ export const aztecnetwork: ScalingProject = {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN, // UltraHonk and CHONK (Client-side Highly Optimized ploNK)
       executionDelay: 0, // a proposed checkpoint can be immediately proven
+      permissioned: false,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: exitWindowObject,

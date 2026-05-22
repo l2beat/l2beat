@@ -135,12 +135,14 @@ export const megaeth: ScalingProject = opStackL2({
         activeKailuaGame,
         'MAX_CLOCK_DURATION',
       ),
-      initialBond: formatEther(
-        discovery.getContractValue<number>(
-          activeKailuaTreasury,
-          'participationBond',
+      initialBond: {
+        value: formatEther(
+          discovery.getContractValue<number>(
+            activeKailuaTreasury,
+            'participationBond',
+          ),
         ),
-      ),
+      },
       orderHint: Number.NEGATIVE_INFINITY,
     },
   },
