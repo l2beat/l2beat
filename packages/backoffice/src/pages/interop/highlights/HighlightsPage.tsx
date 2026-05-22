@@ -262,8 +262,6 @@ interface VolumeIncreaseMetric {
   increaseUsd: number
 }
 
-const L2BEAT_URL = 'https://l2beat.com'
-
 function DetailCell(props: { label: string; value: string }) {
   return (
     <div className="min-w-0 border-b p-3 sm:border-r sm:[&:nth-child(2n)]:border-r-0 [&:nth-last-child(-n+1)]:border-b-0 sm:[&:nth-last-child(-n+2)]:border-b-0">
@@ -399,5 +397,5 @@ function getProtocolHref(protocolId: string | undefined) {
     return undefined
   }
 
-  return `${L2BEAT_URL}/interop/protocols/${protocolId}`
+  return `https://l2beat.com/interop/protocols/${protocolId}`
 }
