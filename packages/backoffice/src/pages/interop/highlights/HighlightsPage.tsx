@@ -214,7 +214,12 @@ export function HighlightsPage() {
                 <HighlightRow
                   label="Token"
                   entityLabel="Token"
-                  entity={tokenIncrease?.abstractTokenId}
+                  entity={tokenIncrease?.token.id}
+                  entityContent={
+                    tokenIncrease ? (
+                      <TokenEntity token={tokenIncrease.token} />
+                    ) : undefined
+                  }
                   primaryLabel="Increase"
                   primaryValue={
                     tokenIncrease
@@ -277,6 +282,7 @@ function HighlightRow(props: {
   entityLabel: string
   entity: string | undefined
   entityHref?: string
+  entityContent?: ReactNode
   primaryLabel: string
   primaryValue: string | undefined
   secondary?: { label: string; value: string }[]
@@ -306,7 +312,9 @@ function HighlightRow(props: {
       </div>
 
       <div className="min-w-0 font-semibold text-sm">
-        <EntityValue entity={props.entity} href={props.entityHref} />
+        {props.entityContent ?? (
+          <EntityValue entity={props.entity} href={props.entityHref} />
+        )}
       </div>
       <dl className="grid grid-cols-3 gap-3">
         <Metric label={props.primaryLabel} value={props.primaryValue} />
@@ -327,6 +335,36 @@ function EntityValue(props: { entity: string; href: string | undefined }) {
     <ExternalLink href={props.href} className="max-w-full truncate">
       {props.entity}
     </ExternalLink>
+  )
+}
+
+function TokenEntity(props: {
+  token: {
+    id: string
+    symbol: string
+    issuer: string | null
+    iconUrl: string | null
+  }
+}) {
+  return (
+    <div className="flex min-w-0 items-center gap-2">
+      {props.token.iconUrl ? (
+        <img
+          src={props.token.iconUrl}
+          alt={props.token.symbol}
+          className="size-6 shrink-0 rounded-full"
+        />
+      ) : null}
+      <div className="min-w-0">
+        <div className="truncate font-semibold text-sm">
+          {props.token.symbol}
+        </div>
+        <div className="truncate text-muted-foreground text-xs">
+          ID: {props.token.id}
+          {props.token.issuer ? ` · Issuer: ${props.token.issuer}` : ''}
+        </div>
+      </div>
+    </div>
   )
 }
 

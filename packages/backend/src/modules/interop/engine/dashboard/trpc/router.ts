@@ -1,3 +1,4 @@
+import type { TokenDatabase } from '@l2beat/database'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import type { InteropAggregationConfig } from '../../../../../config/features/interop'
@@ -24,6 +25,7 @@ export interface InteropTrpcRouterDeps {
   getPluginSyncStatuses: () => Promise<PluginSyncStatus[]>
   getProcessorStatuses: () => ProcessorStatus[]
   chains: readonly { id: string; type: 'evm' }[]
+  tokenDb: TokenDatabase
   tokenDbClient: TokenDbClient
 }
 
@@ -35,7 +37,7 @@ export function createInteropTrpcRouter(deps: InteropTrpcRouterDeps) {
     coveragePies: createCoveragePiesRouter(),
     events: createEventsRouter(),
     financials: createFinancialsRouter(),
-    highlights: createHighlightsRouter(),
+    highlights: createHighlightsRouter(deps),
     messages: createMessagesRouter(),
     knownApps: createKnownAppsRouter(),
     missingTokens: createMissingTokensRouter(deps),

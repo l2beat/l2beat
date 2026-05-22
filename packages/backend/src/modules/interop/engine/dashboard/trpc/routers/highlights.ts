@@ -1,11 +1,16 @@
+import type { TokenDatabase } from '@l2beat/database'
 import { router } from '../../../../../../trpc/init'
 import { protectedProcedure } from '../../../../../../trpc/procedures'
 import { getInteropHighlights } from '../../impls/highlights'
 
-export function createHighlightsRouter() {
+interface HighlightsRouterDeps {
+  tokenDb: TokenDatabase
+}
+
+export function createHighlightsRouter(deps: HighlightsRouterDeps) {
   return router({
     latest: protectedProcedure.query(({ ctx }) => {
-      return getInteropHighlights(ctx.db)
+      return getInteropHighlights(ctx.db, deps.tokenDb)
     }),
   })
 }

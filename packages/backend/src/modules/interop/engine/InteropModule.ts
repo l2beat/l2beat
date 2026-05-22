@@ -1,3 +1,4 @@
+import { createTokenDatabase } from '@l2beat/database'
 import {
   DiscordClient,
   HttpClient,
@@ -82,6 +83,13 @@ export function createInteropModule({
     authToken: config.interop.financials.tokenDbAuthToken,
     callSource: 'interop',
   })
+  const tokenDb = createTokenDatabase({
+    connectionString: config.interop.tokensDatabaseUrl,
+    application_name: 'backend-interop',
+    ssl: !config.interop.tokensDatabaseUrl.includes('localhost')
+      ? { rejectUnauthorized: false }
+      : undefined,
+  })
   const plugins = createInteropPlugins({
     configs: configStore,
     chains: config.interop.config.chains,
@@ -153,6 +161,7 @@ export function createInteropModule({
     getPluginSyncStatuses: () => syncersManager.getPluginSyncStatuses(),
     getProcessorStatuses: () => getProcessorsStatus(processors),
     chains: config.interop.capture.chains,
+    tokenDb,
     tokenDbClient,
   })
 

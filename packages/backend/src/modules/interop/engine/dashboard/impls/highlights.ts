@@ -1,4 +1,4 @@
-import type { Database } from '@l2beat/database'
+import type { Database, TokenDatabase } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 
 export interface InteropHighlightsData {
@@ -26,7 +26,12 @@ export interface InteropHighlightsData {
     | null
   largestVolumeIncreaseByToken:
     | (VolumeIncreaseHighlight & {
-        abstractTokenId: string
+        token: {
+          id: string
+          symbol: string
+          issuer: string | null
+          iconUrl: string | null
+        }
       })
     | null
   largestVolumeIncreaseByProtocol:
@@ -68,6 +73,7 @@ interface CountIncreaseHighlight {
 
 export async function getInteropHighlights(
   db: Database,
+  tokenDb: TokenDatabase,
 ): Promise<InteropHighlightsData> {
   const [latestInteropTimestamp, latestActivityTimestamp, latestTvsTimestamp] =
     await Promise.all([
@@ -144,6 +150,10 @@ export async function getInteropHighlights(
       : undefined,
   ])
 
+  const tokenInfo = tokenIncrease
+    ? await tokenDb.abstractToken.findById(tokenIncrease.abstractTokenId)
+    : undefined
+
   const interopWindow =
     latestInteropTimestamp !== undefined
       ? getComparisonWindow(latestInteropTimestamp)
@@ -195,7 +205,12 @@ export async function getInteropHighlights(
       tokenIncrease && interopWindow
         ? {
             ...interopWindow,
-            abstractTokenId: tokenIncrease.abstractTokenId,
+            token: {
+              id: tokenIncrease.abstractTokenId,
+              symbol: tokenInfo?.symbol ?? tokenIncrease.abstractTokenId,
+              issuer: tokenInfo?.issuer ?? null,
+              iconUrl: tokenInfo?.iconUrl ?? null,
+            },
             currentVolumeUsd: tokenIncrease.currentVolumeUsd,
             previousVolumeUsd: tokenIncrease.previousVolumeUsd,
             increaseUsd: tokenIncrease.increaseUsd,

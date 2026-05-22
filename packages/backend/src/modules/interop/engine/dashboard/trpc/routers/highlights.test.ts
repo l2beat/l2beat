@@ -1,4 +1,4 @@
-import type { Database } from '@l2beat/database'
+import type { Database, TokenDatabase } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { createCallerFactory } from '../../../../../../trpc/init'
@@ -39,10 +39,16 @@ describe(createHighlightsRouter.name, () => {
     })
     const getLargestTokenVolumeIncrease = mockFn().resolvesTo({
       timestamp: latestTimestamp,
-      abstractTokenId: 'usdc',
+      abstractTokenId: '9HN5PN',
       currentVolumeUsd: 3_000_000,
       previousVolumeUsd: 1_000_000,
       increaseUsd: 2_000_000,
+    })
+    const getAbstractTokenById = mockFn().resolvesTo({
+      id: '9HN5PN',
+      symbol: 'USDC',
+      issuer: 'circle',
+      iconUrl: 'https://example.com/usdc.png',
     })
     const getLargestUopsCountIncrease = mockFn().resolvesTo({
       timestamp: latestTimestamp,
@@ -85,6 +91,7 @@ describe(createHighlightsRouter.name, () => {
       aggregatedInteropToken,
       activity,
       tvsTokenValue,
+      getAbstractTokenById,
     })
 
     const result = await caller.latest()
@@ -102,6 +109,7 @@ describe(createHighlightsRouter.name, () => {
       latestTimestamp,
       latestTimestamp - UnixTime.DAY,
     )
+    expect(getAbstractTokenById).toHaveBeenCalledWith('9HN5PN')
     expect(getLargestProtocolVolumeIncrease).toHaveBeenCalledWith(
       latestTimestamp,
       latestTimestamp - UnixTime.DAY,
@@ -147,7 +155,12 @@ describe(createHighlightsRouter.name, () => {
         windowEnd: latestTimestamp,
         previousWindowStart: latestTimestamp - 2 * UnixTime.DAY,
         previousWindowEnd: latestTimestamp - UnixTime.DAY,
-        abstractTokenId: 'usdc',
+        token: {
+          id: '9HN5PN',
+          symbol: 'USDC',
+          issuer: 'circle',
+          iconUrl: 'https://example.com/usdc.png',
+        },
         currentVolumeUsd: 3_000_000,
         previousVolumeUsd: 1_000_000,
         increaseUsd: 2_000_000,
@@ -249,8 +262,17 @@ function createCaller(repositories: {
   aggregatedInteropToken: Database['aggregatedInteropToken']
   activity: Database['activity']
   tvsTokenValue: Database['tvsTokenValue']
+  getAbstractTokenById?: ReturnType<typeof mockFn>
 }) {
-  const callerFactory = createCallerFactory(createHighlightsRouter())
+  const callerFactory = createCallerFactory(
+    createHighlightsRouter({
+      tokenDb: mockObject<TokenDatabase>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          findById: repositories.getAbstractTokenById ?? mockFn(),
+        }),
+      }),
+    }),
+  )
   return callerFactory({
     headers: new Headers(),
     db: mockObject<Database>({
