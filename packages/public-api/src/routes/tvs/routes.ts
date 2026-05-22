@@ -129,7 +129,7 @@ export function addTvsRoutes(
 async function getTvsProjects(ps: ProjectService): Promise<ProjectId[]> {
   const projects = await ps.getProjects({
     select: ['tvsConfig'],
-    whereNot: ['isUpcoming', 'archivedAt'],
+    whereNot: ['archivedAt'],
   })
 
   return projects.map((p) => p.id)

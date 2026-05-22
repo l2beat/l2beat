@@ -8,6 +8,7 @@ import {
 import { formatEther } from 'ethers/lib/utils'
 import {
   CONTRACTS,
+  computeBoldDefenderAdvantage,
   OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
   SOA,
@@ -367,9 +368,20 @@ export const arbitrum: ScalingProject = orbitStackL2({
       ...RISK_VIEW.STATE_FP_INT(
         challengeWindowSeconds,
         challengeGracePeriodSeconds,
+        'if-challenged',
       ),
-      initialBond: formatEther(
+      initialBond: {
+        value: formatEther(
+          discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+        ),
+      },
+      permissioned: false,
+      defenderAdvantage: computeBoldDefenderAdvantage(
         discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+        discovery.getContractValue<number[]>(
+          'EdgeChallengeManager',
+          'stakeAmounts',
+        ),
       ),
     },
   },

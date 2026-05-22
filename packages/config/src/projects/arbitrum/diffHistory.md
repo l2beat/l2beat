@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xc642c76d98c34554f67143802ec02becca4bb830
+Generated with discovered.json: 0xfd5a407c4ea991bfd0a90f6be7cfae46e8e1c956
 
-# Diff at Thu, 21 May 2026 21:42:24 GMT:
+# Diff at Fri, 22 May 2026 15:38:12 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@af480cdcac217110f9e99ef400ba0185c35a6c55 block: 1779129406
+- comparing to: main@1b7024bc804124af9b25421eca5fac952454cb09 block: 1779129406
 - current timestamp: 1779399672
 
 ## Description
@@ -51,6 +51,20 @@ Arbitrum DAO Security Council member sync executed (the scheduled L1Timelock txs
 -        "eth:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
       values.$members.9:
 -        "eth:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779129406 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
     }
 ```
 

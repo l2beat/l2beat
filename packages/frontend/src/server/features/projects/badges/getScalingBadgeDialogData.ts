@@ -24,7 +24,7 @@ export async function getScalingBadgeDialogData(input: {
   const projects = await ps.getProjects({
     select: ['display', 'scalingInfo'],
     where: ['scalingInfo'],
-    whereNot: ['isUpcoming', 'archivedAt'],
+    whereNot: ['archivedAt'],
   })
 
   const badgesById = new Map<string, ScalingBadge>()

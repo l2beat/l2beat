@@ -1,7 +1,7 @@
 {
   "name": "across",
-  "timestamp": 1777369203,
-  "configHash": "0x7280d281feb04e5121935f95f9cad77e4599ed8c3737550e28177b1a8558022b",
+  "timestamp": 1779355521,
+  "configHash": "0x83eec6b559336dd706ea6155b64267a1cee995faedff8808347a10ce63e6e2d5",
   "entries": [
     {
       "name": "VotingV2",
@@ -31,28 +31,28 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "19609831360268303516274900",
+        "cumulativeStake": "19673894216140886130149593",
         "currentActiveRequests": true,
         "delayFmt": "1d",
         "emissionRate": "130000000000000000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 10285,
+        "getCurrentRoundId": 10297,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 35,
-          "numberResolvedPriceRequests": 3100
+          "numberPendingPriceRequests": 13,
+          "numberResolvedPriceRequests": 3321
         },
-        "getVotePhase": 1,
-        "lastRoundIdProcessed": 10285,
-        "lastUpdateTime": 1777368947,
+        "getVotePhase": 0,
+        "lastRoundIdProcessed": 10297,
+        "lastUpdateTime": 1779355403,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "eth:0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 35,
+        "nextPendingIndexToProcess": 13,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "eth:0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "784558564102901984",
-        "rewardPerTokenStored": "784556893512298825",
+        "rewardPerToken": "797787397827615761",
+        "rewardPerTokenStored": "797786684191573717",
         "slashingLibrary": "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -683,7 +683,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1777369199,
+        "getCurrentTime": 1779355511,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -940,11 +940,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1777369199,
+        "getCurrentTime": 1779355511,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 3866307,
+        "numberOfDeposits": 3925511,
         "OFT_DST_EID": 0,
         "OFT_FEE_CAP": 0,
         "owner": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
@@ -1186,7 +1186,7 @@
         "$immutable": true,
         "emergencyProposer": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1777369199,
+        "getCurrentTime": 1779355511,
         "getMember": [
           "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1237,7 +1237,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 971,
+        "nonce": 983,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1443,7 +1443,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1777369199,
+        "getCurrentTime": 1779355511,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1694,7 +1694,7 @@
           "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 417,
+        "nonce": 430,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1833,7 +1833,7 @@
           "81457": "eth:0x2D509190Ed0172ba588407D4c2df918F955Cc6E1",
           "534352": "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
           "7777777": "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
-          "728126428": "eth:0x284352bb448C65b75EbE004862e4f4531042d628",
+          "728126428": "eth:0xc148aF9B50Bc03Cc0c616Cd85C66Aae9bD90cD80",
           "34268394551451": "eth:0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
         },
         "finalizationDelayFmt": "30m",
@@ -1847,13 +1847,13 @@
         "protocolFeeCaptureAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0xb87a170231d82e53baf38b178b154aac79bb84452219e1219c4e5ab72a724fc7",
-          "relayerRefundRoot": "0xcd43f9a78436c97413b2aecbfd73eff071e5428d0edfd9329193e77c016f83a3",
+          "poolRebalanceRoot": "0xe1c1654593925b29f971739a4d4002a1ed75415b6c1e648e6e669c38bae20419",
+          "relayerRefundRoot": "0x98068e2c958b541229bfe8d747689f1c1962dd5cefcb954676ce26fed77e9d34",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 21,
-          "challengePeriodEndTimestamp": 1777368035
+          "unclaimedPoolRebalanceLeafCount": 20,
+          "challengePeriodEndTimestamp": 1779357095
         },
         "spokePool": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -2556,7 +2556,7 @@
         "owner": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
         "proposers": ["eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"],
         "symbol": "ABT",
-        "totalSupply": "39964500000000000000"
+        "totalSupply": "40864500000000000000"
       },
       "fieldMeta": { "proposers": { "severity": "HIGH" } },
       "implementationNames": {
@@ -4026,6 +4026,6 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
-  "usedBlockNumbers": { "ethereum": 24977724 },
+  "usedBlockNumbers": { "ethereum": 25142707 },
   "permissionsConfigHash": "0x0d9786c64b48b82169e67f5e59962553314fa5fa7800d3fae6beb2337b83d3bb"
 }

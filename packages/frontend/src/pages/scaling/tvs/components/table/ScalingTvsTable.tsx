@@ -11,18 +11,12 @@ import { toTableRows } from '../../utils/toTableRows'
 import { getScalingTvsColumns } from './columns'
 
 interface Props {
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed'
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
   entries: ScalingTvsEntry[]
   breakdownType: 'bridgeType' | 'assetCategory'
-  ignoreUnderReviewIcon?: boolean
 }
 
-export function ScalingTvsTable({
-  tab,
-  entries,
-  breakdownType,
-  ignoreUnderReviewIcon,
-}: Props) {
+export function ScalingTvsTable({ tab, entries, breakdownType }: Props) {
   const { display } = useTvsDisplayControlsContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -44,12 +38,11 @@ export function ScalingTvsTable({
   const columns = useMemo(
     () =>
       getScalingTvsColumns({
-        ignoreUnderReviewIcon,
         breakdownType,
         excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
         isTvsLoading,
       }),
-    [breakdownType, ignoreUnderReviewIcon, display, isTvsLoading],
+    [breakdownType, display, isTvsLoading],
   )
 
   const table = useTable({

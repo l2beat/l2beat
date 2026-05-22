@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x245d7c9cb2c2d6fcc1539090f775674b2d33d943
+
+# Diff at Wed, 20 May 2026 12:14:10 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f59f0d404af9ed9bb5c23cd4f8a0378debc582c7 block: 1778579292
+- current timestamp: 1779278363
+
+## Description
+
+Security council migrated to 8 members as per https://www.tally.xyz/gov/zksync/proposal/38457812855457311077054202023053780960745243426690711582482794483162556902949?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f.
+
+Emergency upgrade board redeployed with a link to the new security council: https://disco.l2beat.com/diff/eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6/eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x13f07d9BF17615f6a17F272fe1A913168C275A66) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract Guardians (eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) [shared-zk-stack/Guardians] {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      receivedPermissions.1.from:
+-        "eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
++        "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncil (eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410) [shared-zk-stack/SecurityCouncil]
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract ZK Foundation Multisig (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
++        "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111"
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      values.emergencyUpgradeBoard:
+-        "eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
++        "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111"
+      values.securityCouncil:
+-        "eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410"
++        "eth:0x59195219d1176E42f8e607e9AC114926D47f9035"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EmergencyUpgradeBoard (eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) [shared-zk-stack/EmergencyUpgradeBoard]
+    +++ description: A custom contract allowing a 3/3 of eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncil (eth:0x59195219d1176E42f8e607e9AC114926D47f9035) [shared-zk-stack/SecurityCouncil]
+    +++ description: Custom Multisig implementation that has a general threshold of 6 but also specific thresholds for upgrade approvals (4) or soft freezes (3).
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyUpgradeBoard (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111) [shared-zk-stack/EmergencyUpgradeBoard]
+    +++ description: A custom contract allowing a 3/3 of eth:0x59195219d1176E42f8e607e9AC114926D47f9035, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    | 1026 --------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 --------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 --------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 --------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../SecurityCouncil.sol                            |   18 +-
+ 9 files changed, 9 insertions(+), 4265 deletions(-)
+```
+
 Generated with discovered.json: 0xcbd964823bd31ed662e716011240cec1889aef62
 
 # Diff at Fri, 15 May 2026 12:36:50 GMT:

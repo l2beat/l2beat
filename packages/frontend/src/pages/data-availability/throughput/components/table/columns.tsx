@@ -222,7 +222,7 @@ export const publicSystemsColumns = [
     header: 'Finality',
     cell: (ctx) => (
       <TableValueCell
-        emptyMode="upcoming"
+        emptyMode="no-info"
         value={
           ctx.row.original.finality
             ? { value: ctx.row.original.finality }

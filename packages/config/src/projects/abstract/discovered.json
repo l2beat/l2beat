@@ -1,7 +1,7 @@
 {
   "name": "abstract",
   "timestamp": 1771250356,
-  "configHash": "0x716ccec87a46949325e140be028cdb47122f837d6964f15794f41e19995637e8",
+  "configHash": "0xc62590ca731911e0ab93201ff531cc70b2c6677503d1e42095b3df8d40596b2d",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -609,9 +609,8 @@
     },
     {
       "address": "eth:0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De",
@@ -1529,5 +1528,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 24469834 },
-  "permissionsConfigHash": "0x733ec81285b6a70d8b6a13e2c1b09a5cd96541b7bcd259f9085e81f9c5758d8e"
+  "permissionsConfigHash": "0x25bd988ed98d72ffeab5865506772259d2d5646deeb501f6b6ddad25fbd3ecb8"
 }

@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x276ebce80f94e11bdc41acba26f3d32c25c84ba5
+
+# Diff at Fri, 22 May 2026 15:38:04 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1b7024bc804124af9b25421eca5fac952454cb09 block: 1771250356
+- current timestamp: 1771250356
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771250356 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
 Generated with discovered.json: 0x2a937095361ddbc160a70ac873eadc609cbc0a18
 
 # Diff at Fri, 15 May 2026 12:35:35 GMT:

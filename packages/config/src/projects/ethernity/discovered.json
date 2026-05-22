@@ -1,7 +1,7 @@
 {
   "name": "ethernity",
   "timestamp": 1777390951,
-  "configHash": "0xa7153e82ae3b20a173c049bee3e9b63f6cd9191da6a05477e608aed5f2f74dc5",
+  "configHash": "0x6a58f1f839dd59e3eb0ec62af7e4d0c9b45763e7c996d083eebc5d9a3d453e77",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
