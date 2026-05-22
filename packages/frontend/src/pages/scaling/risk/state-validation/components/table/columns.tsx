@@ -242,6 +242,7 @@ export const scalingRiskStateValidationOptimisticColumns = [
               : undefined
           }
           emptyMode="n/a"
+          secondLineClassName="whitespace-nowrap"
         />
       )
     },
