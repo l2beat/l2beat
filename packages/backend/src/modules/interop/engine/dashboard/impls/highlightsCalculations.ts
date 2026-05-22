@@ -1,0 +1,518 @@
+import type {
+  ActivityRecord,
+  AggregatedInteropTokenRecord,
+  AggregatedInteropTransferRecord,
+  TokenValueRecord,
+} from '@l2beat/database'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+
+export interface AggregatedInteropTopPathByVolume {
+  timestamp: UnixTime
+  srcChain: string
+  dstChain: string
+  volumeUsd: number
+  transferCount: number
+  protocolCount: number
+}
+
+export interface AggregatedInteropChainInflow {
+  timestamp: UnixTime
+  chain: string
+  volumeUsd: number
+  transferCount: number
+  protocolCount: number
+}
+
+export interface AggregatedInteropChainVolumeIncrease {
+  timestamp: UnixTime
+  chain: string
+  currentVolumeUsd: number
+  previousVolumeUsd: number
+  increaseUsd: number
+}
+
+export interface AggregatedInteropProtocolVolumeIncrease {
+  timestamp: UnixTime
+  id: string
+  currentVolumeUsd: number
+  previousVolumeUsd: number
+  increaseUsd: number
+}
+
+export interface AggregatedInteropTokenVolumeIncrease {
+  timestamp: UnixTime
+  abstractTokenId: string
+  currentVolumeUsd: number
+  previousVolumeUsd: number
+  increaseUsd: number
+}
+
+export interface ActivityUopsCountIncrease {
+  timestamp: UnixTime
+  projectId: ProjectId
+  currentUopsCount: number
+  previousUopsCount: number
+  increase: number
+  increasePercent: number
+}
+
+export interface TokenValueTvsIncrease {
+  timestamp: UnixTime
+  projectId: string
+  currentTvsUsd: number
+  previousTvsUsd: number
+  increaseUsd: number
+}
+
+export function getTopPathByVolumeAtTimestamp(
+  records: AggregatedInteropTransferRecord[],
+  timestamp: UnixTime,
+): AggregatedInteropTopPathByVolume | undefined {
+  const paths = new Map<
+    string,
+    {
+      srcChain: string
+      dstChain: string
+      volumeUsd: number
+      transferCount: number
+      protocolIds: Set<string>
+    }
+  >()
+
+  for (const record of records) {
+    if (record.srcChain === record.dstChain) {
+      continue
+    }
+
+    const key = `${record.srcChain}:${record.dstChain}`
+    const path = paths.get(key) ?? {
+      srcChain: record.srcChain,
+      dstChain: record.dstChain,
+      volumeUsd: 0,
+      transferCount: 0,
+      protocolIds: new Set<string>(),
+    }
+
+    path.volumeUsd += getTransferVolumeUsd(record)
+    path.transferCount += record.transferCount
+    path.protocolIds.add(record.id)
+    paths.set(key, path)
+  }
+
+  const top = maxBy([...paths.values()], (a, b) => {
+    if (a.volumeUsd !== b.volumeUsd) {
+      return b.volumeUsd - a.volumeUsd
+    }
+    if (a.transferCount !== b.transferCount) {
+      return b.transferCount - a.transferCount
+    }
+    if (a.srcChain !== b.srcChain) {
+      return a.srcChain.localeCompare(b.srcChain)
+    }
+    return a.dstChain.localeCompare(b.dstChain)
+  })
+
+  if (!top) {
+    return undefined
+  }
+
+  return {
+    timestamp,
+    srcChain: top.srcChain,
+    dstChain: top.dstChain,
+    volumeUsd: top.volumeUsd,
+    transferCount: top.transferCount,
+    protocolCount: top.protocolIds.size,
+  }
+}
+
+export function getTopDestinationChainByInflowAtTimestamp(
+  records: AggregatedInteropTransferRecord[],
+  timestamp: UnixTime,
+): AggregatedInteropChainInflow | undefined {
+  const chains = new Map<
+    string,
+    {
+      chain: string
+      volumeUsd: number
+      transferCount: number
+      protocolIds: Set<string>
+    }
+  >()
+
+  for (const record of records) {
+    if (record.srcChain === record.dstChain) {
+      continue
+    }
+
+    const chain = chains.get(record.dstChain) ?? {
+      chain: record.dstChain,
+      volumeUsd: 0,
+      transferCount: 0,
+      protocolIds: new Set<string>(),
+    }
+
+    chain.volumeUsd += record.dstValueUsd ?? record.srcValueUsd ?? 0
+    chain.transferCount += record.transferCount
+    chain.protocolIds.add(record.id)
+    chains.set(record.dstChain, chain)
+  }
+
+  const top = maxBy([...chains.values()], (a, b) => {
+    if (a.volumeUsd !== b.volumeUsd) {
+      return b.volumeUsd - a.volumeUsd
+    }
+    if (a.transferCount !== b.transferCount) {
+      return b.transferCount - a.transferCount
+    }
+    return a.chain.localeCompare(b.chain)
+  })
+
+  if (!top) {
+    return undefined
+  }
+
+  return {
+    timestamp,
+    chain: top.chain,
+    volumeUsd: top.volumeUsd,
+    transferCount: top.transferCount,
+    protocolCount: top.protocolIds.size,
+  }
+}
+
+export function getLargestSourceChainVolumeIncrease(
+  currentRecords: AggregatedInteropTransferRecord[],
+  previousRecords: AggregatedInteropTransferRecord[],
+  timestamp: UnixTime,
+): AggregatedInteropChainVolumeIncrease | undefined {
+  const currentVolumes = new Map<string, number>()
+  const previousVolumes = new Map<string, number>()
+
+  for (const record of currentRecords) {
+    if (record.srcChain === record.dstChain) {
+      continue
+    }
+    currentVolumes.set(
+      record.srcChain,
+      (currentVolumes.get(record.srcChain) ?? 0) + getTransferVolumeUsd(record),
+    )
+  }
+
+  for (const record of previousRecords) {
+    if (record.srcChain === record.dstChain) {
+      continue
+    }
+    previousVolumes.set(
+      record.srcChain,
+      (previousVolumes.get(record.srcChain) ?? 0) + getTransferVolumeUsd(record),
+    )
+  }
+
+  const increases = [...currentVolumes.entries()]
+    .map(([chain, currentVolumeUsd]) => {
+      const previousVolumeUsd = previousVolumes.get(chain) ?? 0
+      const increaseUsd = currentVolumeUsd - previousVolumeUsd
+      return {
+        timestamp,
+        chain,
+        currentVolumeUsd,
+        previousVolumeUsd,
+        increaseUsd,
+      }
+    })
+    .filter((entry) => entry.increaseUsd > 0)
+
+  const top = maxBy(increases, (a, b) => {
+    if (a.increaseUsd !== b.increaseUsd) {
+      return b.increaseUsd - a.increaseUsd
+    }
+    return a.chain.localeCompare(b.chain)
+  })
+
+  return top ?? undefined
+}
+
+export function getLargestProtocolVolumeIncrease(
+  currentRecords: AggregatedInteropTransferRecord[],
+  previousRecords: AggregatedInteropTransferRecord[],
+  timestamp: UnixTime,
+): AggregatedInteropProtocolVolumeIncrease | undefined {
+  const currentVolumes = new Map<string, number>()
+  const previousVolumes = new Map<string, number>()
+
+  for (const record of currentRecords) {
+    if (record.srcChain === record.dstChain) {
+      continue
+    }
+    currentVolumes.set(
+      record.id,
+      (currentVolumes.get(record.id) ?? 0) + getTransferVolumeUsd(record),
+    )
+  }
+
+  for (const record of previousRecords) {
+    if (record.srcChain === record.dstChain) {
+      continue
+    }
+    previousVolumes.set(
+      record.id,
+      (previousVolumes.get(record.id) ?? 0) + getTransferVolumeUsd(record),
+    )
+  }
+
+  const increases = [...currentVolumes.entries()]
+    .map(([id, currentVolumeUsd]) => {
+      const previousVolumeUsd = previousVolumes.get(id) ?? 0
+      const increaseUsd = currentVolumeUsd - previousVolumeUsd
+      return {
+        timestamp,
+        id,
+        currentVolumeUsd,
+        previousVolumeUsd,
+        increaseUsd,
+      }
+    })
+    .filter((entry) => entry.increaseUsd > 0)
+
+  const top = maxBy(increases, (a, b) => {
+    if (a.increaseUsd !== b.increaseUsd) {
+      return b.increaseUsd - a.increaseUsd
+    }
+    return a.id.localeCompare(b.id)
+  })
+
+  return top ?? undefined
+}
+
+export function getLargestTokenVolumeIncrease(
+  currentRecords: AggregatedInteropTokenRecord[],
+  previousRecords: AggregatedInteropTokenRecord[],
+  timestamp: UnixTime,
+): AggregatedInteropTokenVolumeIncrease | undefined {
+  const currentVolumes = new Map<string, number>()
+  const previousVolumes = new Map<string, number>()
+
+  for (const record of currentRecords) {
+    if (record.srcChain === record.dstChain) {
+      continue
+    }
+    currentVolumes.set(
+      record.abstractTokenId,
+      (currentVolumes.get(record.abstractTokenId) ?? 0) + record.volume,
+    )
+  }
+
+  for (const record of previousRecords) {
+    if (record.srcChain === record.dstChain) {
+      continue
+    }
+    previousVolumes.set(
+      record.abstractTokenId,
+      (previousVolumes.get(record.abstractTokenId) ?? 0) + record.volume,
+    )
+  }
+
+  const increases = [...currentVolumes.entries()]
+    .map(([abstractTokenId, currentVolumeUsd]) => {
+      const previousVolumeUsd = previousVolumes.get(abstractTokenId) ?? 0
+      const increaseUsd = currentVolumeUsd - previousVolumeUsd
+      return {
+        abstractTokenId,
+        currentVolumeUsd,
+        previousVolumeUsd,
+        increaseUsd,
+      }
+    })
+    .filter((entry) => entry.increaseUsd > 0)
+
+  const top = maxBy(increases, (a, b) => {
+    if (a.increaseUsd !== b.increaseUsd) {
+      return b.increaseUsd - a.increaseUsd
+    }
+    return a.abstractTokenId.localeCompare(b.abstractTokenId)
+  })
+
+  if (!top) {
+    return undefined
+  }
+
+  return {
+    timestamp,
+    abstractTokenId: top.abstractTokenId,
+    currentVolumeUsd: top.currentVolumeUsd,
+    previousVolumeUsd: top.previousVolumeUsd,
+    increaseUsd: top.increaseUsd,
+  }
+}
+
+export function getLargestUopsCountIncrease(
+  currentRecords: ActivityRecord[],
+  previousRecords: ActivityRecord[],
+  olderRecords: ActivityRecord[],
+  timestamp: UnixTime,
+): ActivityUopsCountIncrease | undefined {
+  const projectsWithOlderSnapshot = new Set(
+    olderRecords.map((record) => record.projectId.toString()),
+  )
+  const previousCounts = new Map(
+    previousRecords.map((record) => [
+      record.projectId.toString(),
+      record.uopsCount ?? record.count,
+    ]),
+  )
+
+  const increases = currentRecords
+    .filter((record) =>
+      projectsWithOlderSnapshot.has(record.projectId.toString()),
+    )
+    .map((record) => {
+      const projectId = record.projectId.toString()
+      const previousUopsCount = previousCounts.get(projectId)
+      if (previousUopsCount === undefined || previousUopsCount <= 0) {
+        return undefined
+      }
+
+      const currentUopsCount = record.uopsCount ?? record.count
+      const increase = currentUopsCount - previousUopsCount
+      if (increase <= 0) {
+        return undefined
+      }
+
+      return {
+        projectId: record.projectId,
+        currentUopsCount,
+        previousUopsCount,
+        increase,
+        increasePercent: (increase / previousUopsCount) * 100,
+      }
+    })
+    .filter(
+      (
+        entry,
+      ): entry is {
+        projectId: ProjectId
+        currentUopsCount: number
+        previousUopsCount: number
+        increase: number
+        increasePercent: number
+      } => entry !== undefined,
+    )
+
+  const top = maxBy(increases, (a, b) => {
+    if (a.increasePercent !== b.increasePercent) {
+      return b.increasePercent - a.increasePercent
+    }
+    return a.projectId.toString().localeCompare(b.projectId.toString())
+  })
+
+  if (!top) {
+    return undefined
+  }
+
+  return {
+    timestamp,
+    projectId: top.projectId,
+    currentUopsCount: top.currentUopsCount,
+    previousUopsCount: top.previousUopsCount,
+    increase: top.increase,
+    increasePercent: top.increasePercent,
+  }
+}
+
+export function getLargestTvsIncrease(
+  currentRecords: TokenValueRecord[],
+  previousRecords: TokenValueRecord[],
+  olderRecords: TokenValueRecord[],
+  timestamp: UnixTime,
+): TokenValueTvsIncrease | undefined {
+  const projectsWithOlderSnapshot = new Set(
+    olderRecords.map((record) => record.projectId),
+  )
+  const previousTvs = new Map<string, number>()
+
+  for (const record of previousRecords) {
+    previousTvs.set(
+      record.projectId,
+      (previousTvs.get(record.projectId) ?? 0) + record.valueForProject,
+    )
+  }
+
+  const currentTvs = new Map<string, number>()
+  for (const record of currentRecords) {
+    currentTvs.set(
+      record.projectId,
+      (currentTvs.get(record.projectId) ?? 0) + record.valueForProject,
+    )
+  }
+
+  const increases = [...currentTvs.entries()]
+    .filter(([projectId]) => projectsWithOlderSnapshot.has(projectId))
+    .map(([projectId, currentTvsUsd]) => {
+      const previousTvsUsd = previousTvs.get(projectId)
+      if (previousTvsUsd === undefined) {
+        return undefined
+      }
+
+      const increaseUsd = currentTvsUsd - previousTvsUsd
+      if (increaseUsd <= 0) {
+        return undefined
+      }
+
+      return {
+        projectId,
+        currentTvsUsd,
+        previousTvsUsd,
+        increaseUsd,
+      }
+    })
+    .filter(
+      (
+        entry,
+      ): entry is {
+        projectId: string
+        currentTvsUsd: number
+        previousTvsUsd: number
+        increaseUsd: number
+      } => entry !== undefined,
+    )
+
+  const top = maxBy(increases, (a, b) => {
+    if (a.increaseUsd !== b.increaseUsd) {
+      return b.increaseUsd - a.increaseUsd
+    }
+    return a.projectId.localeCompare(b.projectId)
+  })
+
+  if (!top) {
+    return undefined
+  }
+
+  return {
+    timestamp,
+    projectId: top.projectId,
+    currentTvsUsd: top.currentTvsUsd,
+    previousTvsUsd: top.previousTvsUsd,
+    increaseUsd: top.increaseUsd,
+  }
+}
+
+function getTransferVolumeUsd(record: AggregatedInteropTransferRecord) {
+  const { srcValueUsd, dstValueUsd } = record
+
+  if (srcValueUsd !== undefined && dstValueUsd !== undefined) {
+    return Math.max(srcValueUsd, dstValueUsd)
+  }
+
+  return srcValueUsd ?? dstValueUsd ?? 0
+}
+
+function maxBy<T>(items: T[], compare: (a: T, b: T) => number) {
+  if (items.length === 0) {
+    return undefined
+  }
+
+  return items.reduce((best, current) =>
+    compare(current, best) < 0 ? current : best,
+  )
+}

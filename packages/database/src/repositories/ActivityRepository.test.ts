@@ -70,59 +70,6 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
-  describe(
-    ActivityRepository.prototype.getLargestUopsCountIncrease.name,
-    () => {
-      it('returns project with largest positive UOPS percentage increase', async () => {
-        const previousPreviousTimestamp = START
-        const previousTimestamp = START + UnixTime.DAY
-        const timestamp = START + 2 * UnixTime.DAY
-
-        await repository.upsertMany([
-          record('ethereum', previousPreviousTimestamp, 1, 18),
-          record('lighter', previousPreviousTimestamp, 1, 1100),
-          record('ethereum', previousTimestamp, 1, 20),
-          record('lighter', previousTimestamp, 1, 1200),
-          record('ethereum', timestamp, 1, 50),
-          record('lighter', timestamp, 1, 1250),
-        ])
-
-        const result = await repository.getLargestUopsCountIncrease(
-          timestamp,
-          previousTimestamp,
-        )
-
-        expect(result).toEqual({
-          timestamp,
-          projectId: ProjectId('arbitrum'),
-          currentUopsCount: 300,
-          previousUopsCount: 50,
-          increase: 250,
-          increasePercent: 500,
-        })
-      })
-
-      it('returns undefined when no project has positive UOPS increase', async () => {
-        const previousPreviousTimestamp = START
-        const previousTimestamp = START + UnixTime.DAY
-        const timestamp = START + 2 * UnixTime.DAY
-
-        await repository.upsertMany([
-          record('ethereum', previousPreviousTimestamp, 1, 110),
-          record('ethereum', previousTimestamp, 1, 100),
-          record('ethereum', timestamp, 1, 90),
-        ])
-
-        const result = await repository.getLargestUopsCountIncrease(
-          timestamp,
-          previousTimestamp,
-        )
-
-        expect(result).toEqual(undefined)
-      })
-    },
-  )
-
   describe(ActivityRepository.prototype.deleteByProjectIdFrom.name, () => {
     it('should delete all rows after a given timestamp and projectId', async () => {
       await repository.upsertMany([

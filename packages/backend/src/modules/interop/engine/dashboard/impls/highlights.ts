@@ -1,5 +1,14 @@
 import type { Database, TokenDatabase } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
+import {
+  getLargestProtocolVolumeIncrease,
+  getLargestSourceChainVolumeIncrease,
+  getLargestTokenVolumeIncrease,
+  getLargestTvsIncrease,
+  getLargestUopsCountIncrease,
+  getTopDestinationChainByInflowAtTimestamp,
+  getTopPathByVolumeAtTimestamp,
+} from './highlightsCalculations'
 
 export interface InteropHighlightsData {
   topPathByVolume: {
@@ -95,61 +104,122 @@ export async function getInteropHighlights(
     latestTvsTimestamp !== undefined
       ? latestTvsTimestamp - UnixTime.DAY
       : undefined
+  const olderActivityTimestamp =
+    previousActivityTimestamp !== undefined
+      ? previousActivityTimestamp - UnixTime.DAY
+      : undefined
+  const olderTvsTimestamp =
+    previousTvsTimestamp !== undefined
+      ? previousTvsTimestamp - UnixTime.DAY
+      : undefined
 
   const [
-    topPath,
-    topChainByInflow,
-    chainIncrease,
-    tokenIncrease,
-    protocolIncrease,
-    uopsIncrease,
-    tvsIncrease,
+    currentInteropRecords,
+    previousInteropRecords,
+    currentTokenRecords,
+    previousTokenRecords,
+    currentActivityRecords,
+    previousActivityRecords,
+    olderActivityRecords,
+    currentTvsRecords,
+    previousTvsRecords,
+    olderTvsRecords,
   ] = await Promise.all([
     latestInteropTimestamp !== undefined
-      ? db.aggregatedInteropTransfer.getTopPathByVolumeAtTimestamp(
-          latestInteropTimestamp,
-        )
-      : undefined,
+      ? db.aggregatedInteropTransfer.getByTimestamp(latestInteropTimestamp)
+      : [],
+    previousInteropTimestamp !== undefined
+      ? db.aggregatedInteropTransfer.getByTimestamp(previousInteropTimestamp)
+      : [],
     latestInteropTimestamp !== undefined
-      ? db.aggregatedInteropTransfer.getTopDestinationChainByInflowAtTimestamp(
-          latestInteropTimestamp,
-        )
-      : undefined,
-    latestInteropTimestamp !== undefined &&
+      ? db.aggregatedInteropToken.getByTimestamp(latestInteropTimestamp)
+      : [],
     previousInteropTimestamp !== undefined
-      ? db.aggregatedInteropTransfer.getLargestSourceChainVolumeIncrease(
-          latestInteropTimestamp,
-          previousInteropTimestamp,
-        )
-      : undefined,
-    latestInteropTimestamp !== undefined &&
-    previousInteropTimestamp !== undefined
-      ? db.aggregatedInteropToken.getLargestTokenVolumeIncrease(
-          latestInteropTimestamp,
-          previousInteropTimestamp,
-        )
-      : undefined,
-    latestInteropTimestamp !== undefined &&
-    previousInteropTimestamp !== undefined
-      ? db.aggregatedInteropTransfer.getLargestProtocolVolumeIncrease(
-          latestInteropTimestamp,
-          previousInteropTimestamp,
-        )
-      : undefined,
-    latestActivityTimestamp !== undefined &&
+      ? db.aggregatedInteropToken.getByTimestamp(previousInteropTimestamp)
+      : [],
+    latestActivityTimestamp !== undefined
+      ? db.activity.getByTimestamp(latestActivityTimestamp)
+      : [],
     previousActivityTimestamp !== undefined
-      ? db.activity.getLargestUopsCountIncrease(
-          latestActivityTimestamp,
-          previousActivityTimestamp,
-        )
-      : undefined,
-    latestTvsTimestamp !== undefined && previousTvsTimestamp !== undefined
-      ? db.tvsTokenValue.getLargestTvsIncrease(
-          latestTvsTimestamp,
-          previousTvsTimestamp,
-        )
-      : undefined,
+      ? db.activity.getByTimestamp(previousActivityTimestamp)
+      : [],
+    olderActivityTimestamp !== undefined
+      ? db.activity.getByTimestamp(olderActivityTimestamp)
+      : [],
+    latestTvsTimestamp !== undefined
+      ? db.tvsTokenValue.getByTimestamp(latestTvsTimestamp)
+      : [],
+    previousTvsTimestamp !== undefined
+      ? db.tvsTokenValue.getByTimestamp(previousTvsTimestamp)
+      : [],
+    olderTvsTimestamp !== undefined
+      ? db.tvsTokenValue.getByTimestamp(olderTvsTimestamp)
+      : [],
   ])
+
+  const topPath =
+    latestInteropTimestamp !== undefined
+      ? getTopPathByVolumeAtTimestamp(
+          currentInteropRecords,
+          latestInteropTimestamp,
+        )
+      : undefined
+  const topChainByInflow =
+    latestInteropTimestamp !== undefined
+      ? getTopDestinationChainByInflowAtTimestamp(
+          currentInteropRecords,
+          latestInteropTimestamp,
+        )
+      : undefined
+  const chainIncrease =
+    latestInteropTimestamp !== undefined &&
+    previousInteropTimestamp !== undefined
+      ? getLargestSourceChainVolumeIncrease(
+          currentInteropRecords,
+          previousInteropRecords,
+          latestInteropTimestamp,
+        )
+      : undefined
+  const tokenIncrease =
+    latestInteropTimestamp !== undefined &&
+    previousInteropTimestamp !== undefined
+      ? getLargestTokenVolumeIncrease(
+          currentTokenRecords,
+          previousTokenRecords,
+          latestInteropTimestamp,
+        )
+      : undefined
+  const protocolIncrease =
+    latestInteropTimestamp !== undefined &&
+    previousInteropTimestamp !== undefined
+      ? getLargestProtocolVolumeIncrease(
+          currentInteropRecords,
+          previousInteropRecords,
+          latestInteropTimestamp,
+        )
+      : undefined
+  const uopsIncrease =
+    latestActivityTimestamp !== undefined &&
+    previousActivityTimestamp !== undefined &&
+    olderActivityTimestamp !== undefined
+      ? getLargestUopsCountIncrease(
+          currentActivityRecords,
+          previousActivityRecords,
+          olderActivityRecords,
+          latestActivityTimestamp,
+        )
+      : undefined
+  const tvsIncrease =
+    latestTvsTimestamp !== undefined &&
+    previousTvsTimestamp !== undefined &&
+    olderTvsTimestamp !== undefined
+      ? getLargestTvsIncrease(
+          currentTvsRecords,
+          previousTvsRecords,
+          olderTvsRecords,
+          latestTvsTimestamp,
+        )
+      : undefined
 
   const tokenInfo = tokenIncrease
     ? await tokenDb.abstractToken.findById(tokenIncrease.abstractTokenId)
