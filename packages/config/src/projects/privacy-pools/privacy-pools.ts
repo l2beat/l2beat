@@ -106,11 +106,7 @@ The anonymity set consists of all whitelisted deposits of the same token with th
 ## Privacy can be lost if
 1. no relayer is available and the withdrawal must be submitted from an address that can be linked to the user.
 2. the ASP manager refuses to whitelist a deposit, forcing the user to either wait or exit publicly through ragequit.`,
-    upgradesAndGovernance: `Privacy pools Entrypoint contract is owned by a 2/4 Multisig ([0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159](https://etherscan.io/address/0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159)). 
-    
-    It is a powerful role that has the authority to upgrade the Entrypoint contract, through which all deposits go. It can also manage minimum deposit amount, deposit fee, disable deposits on pools and manage ASP postman address that manages whitelisted privacy pools deposits.
-    
-    Entrypoint owner cannot prevent private or public withdrawals from the pools.`,
+    upgradesAndGovernance: `The ${discovery.getMultisigStats('Privacy Pools Multisig')} Privacy Pools Multisig can instantly mutate the system’s crtical configs, including the Entrypoint implementation and ASP root used for private withdrawals. The guaranteed immutable escape hatch is pool-level ragequit (public withdrawal) to the original depositor, because that logic lives in the immutable pool contracts and does not depend on the Entrypoint registry and config. This means the system is permissioned deposit logic and deposit privacy, but non-custodial for deposited assets. Past, successful (non-ragequit) withdrawals can not be deanonymized by the protocol.`,
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
