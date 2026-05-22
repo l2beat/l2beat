@@ -1,7 +1,7 @@
 {
   "name": "railgun",
-  "timestamp": 1777550988,
-  "configHash": "0xb66e16c4dcff3f3e8ba7f31d2a79a11f21d464793e35da71e6c701634c6b986a",
+  "timestamp": 1779378858,
+  "configHash": "0x8d3c34a44997c37874729e98c3fe3b1a19b6bf4b5c3b2c933fbec1ec0f0fe439",
   "entries": [
     {
       "name": "IntervalPayouts",
@@ -661,6 +661,28 @@
         "eth:0xa863262Bf5E97e8CFeC47a71402aC360C0983060": "IntervalPayouts"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "RelayAdapt",
+      "address": "eth:0xAc9f360Ae85469B27aEDdEaFC579Ef2d052aD405",
+      "type": "Contract",
+      "template": "railgun/RelayAdapt",
+      "sourceHashes": [
+        "0x8727ddbfca515cb5994d3b867f0ac090e4c070425cd1d707eec73b742d8a2ab7"
+      ],
+      "proxyType": "immutable",
+      "description": "Execution adapter contract for Railgun. To interact with public contracts from shielded pools, tokens are unshielded to RelayAdapter, which performs specified calls and shields tokens back to the same user.",
+      "deployerAddress": "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
+      "sinceTimestamp": 1753718447,
+      "sinceBlock": 23018697,
+      "values": {
+        "$immutable": true,
+        "railgun": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+        "wBase": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "implementationNames": {
+        "eth:0xAc9f360Ae85469B27aEDdEaFC579Ef2d052aD405": "RelayAdapt"
+      }
     },
     {
       "address": "eth:0xaE8A17EB859E024cF6B541802B08932B2268dcEe",
@@ -1760,6 +1782,20 @@
       "function totalPayouts() view returns (uint256)",
       "function treasury() view returns (address)"
     ],
+    "eth:0xAc9f360Ae85469B27aEDdEaFC579Ef2d052aD405": [
+      "constructor(address _railgun, address _wBase)",
+      "error CallFailed(uint256 callIndex, bytes revertReason)",
+      "event CallError(uint256 callIndex, bytes revertReason)",
+      "function getAdaptParams(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bytes31 random, bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData) pure returns (bytes32)",
+      "function multicall(bool _requireSuccess, tuple(address to, bytes data, uint256 value)[] _calls) payable",
+      "function railgun() view returns (address)",
+      "function relay(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions, tuple(bytes31 random, bool requireSuccess, uint256 minGasLimit, tuple(address to, bytes data, uint256 value)[] calls) _actionData) payable",
+      "function shield(tuple(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) preimage, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey) ciphertext)[] _shieldRequests)",
+      "function transfer(tuple(tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, address to, uint256 value)[] _transfers)",
+      "function unwrapBase(uint256 _amount)",
+      "function wBase() view returns (address)",
+      "function wrapBase(uint256 _amount)"
+    ],
     "eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b": [
       "event Claim(address token, address account, uint256 amount, uint256 startInterval, uint256 endInterval)",
       "event Initialized(uint8 version)",
@@ -2021,6 +2057,7 @@
     "railgun/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "railgun/RailgunSmartWallet": "0x73f14bd8461facf56cca712201c02818c69035359f3c6d9f62ead7358c1abd92",
     "railgun/RailToken": "0x1accecbf363e089fe076d95372f29d46ba515d0a47882681e318a1dba85d0fd4",
+    "railgun/RelayAdapt": "0xe64239195c9b233532c77144e0b1161bdf296080b3fbe1d7857a20920c72f5df",
     "railgun/Staking": "0x7ae078e86e08252ca74cbf4a5615976c862e3b6be0ffaa85da6452a1c93a2a31",
     "railgun/Sweeper": "0x770b366e3e05222adc3601c01c4d6707431927b39692b296f886ae34d7c9f3a2",
     "railgun/SweeperLegacy": "0x2eb417aa4538dd13c156beb75374c4ab97c3a0e34a2e1616eaf4d440bed50af7",
@@ -2028,6 +2065,6 @@
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
     "railgun/Voting": "0xcf33f9d03116b81a59f25ba7bf17c38122eedecde0df775a365f78a34697bd68"
   },
-  "usedBlockNumbers": { "ethereum": 24992832 },
-  "permissionsConfigHash": "0xedd462c0e7d5c3b0e3a6430193cae24752e4898aa3ec197cb654cfeedced168f"
+  "usedBlockNumbers": { "ethereum": 25144649 },
+  "permissionsConfigHash": "0x56bb3ba002f719a35f1d9124f1e67edd6294599dc20dd69d0fcfcf0a7efc6a21"
 }
