@@ -739,6 +739,67 @@ describe(TokenIngestionProcessor.name, () => {
       ).toBeRejected()
     })
   })
+
+  describe(
+    TokenIngestionProcessor.prototype.getInteropTransferIndex.name,
+    () => {
+      it('builds the interop transfer index on first use and reuses it', async () => {
+        const address = token('ethereum', '0xaaa')
+        const getAll = mockFn().resolvesTo([
+          transfer({
+            srcChain: address.chain,
+            srcTokenAddress: address.address,
+          }),
+        ])
+        const processor = createProcessor({
+          db: mockObject<Database>({
+            interopTransfer: mockObject<Database['interopTransfer']>({
+              getAll,
+            }),
+          }),
+        })
+
+        const first = await processor.getInteropTransferIndex()
+        const second = await processor.getInteropTransferIndex()
+
+        expect(first.findInvolving(address).length).toEqual(1)
+        expect(second.findInvolving(address).length).toEqual(1)
+        expect(getAll).toHaveBeenCalledTimes(1)
+      })
+
+      it('refreshes the cached interop transfer index from the database', async () => {
+        const firstAddress = token('ethereum', '0xaaa')
+        const secondAddress = token('base', '0xbbb')
+        const getAll = mockFn()
+          .resolvesToOnce([
+            transfer({
+              srcChain: firstAddress.chain,
+              srcTokenAddress: firstAddress.address,
+            }),
+          ])
+          .resolvesToOnce([
+            transfer({
+              srcChain: secondAddress.chain,
+              srcTokenAddress: secondAddress.address,
+            }),
+          ])
+        const processor = createProcessor({
+          db: mockObject<Database>({
+            interopTransfer: mockObject<Database['interopTransfer']>({
+              getAll,
+            }),
+          }),
+        })
+
+        await processor.getInteropTransferIndex()
+        const refreshed = await processor.refreshInteropTransferIndex()
+
+        expect(refreshed.findInvolving(firstAddress).length).toEqual(0)
+        expect(refreshed.findInvolving(secondAddress).length).toEqual(1)
+        expect(getAll).toHaveBeenCalledTimes(2)
+      })
+    },
+  )
 })
 
 function createProcessor(deps: {

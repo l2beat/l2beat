@@ -47,6 +47,8 @@ describe('tokenIngestionQueueRouter', () => {
       const page = { entries: [entry], totalCount: 12 }
       const getPage = mockFn().resolvesTo(page)
       const deployedToken = mockObject<DeployedTokenRecord>({})
+      const transferIndex = { findInvolving: mockFn().returns([]) }
+      const getInteropTransferIndex = mockFn().resolvesTo(transferIndex)
       const plan = mockFn().resolvesTo({
         address: { chain: entry.chain, address: entry.address },
         steps: [],
@@ -61,12 +63,10 @@ describe('tokenIngestionQueueRouter', () => {
             },
           ),
         }),
-        db: mockObject<Database>({
-          interopTransfer: mockObject<Database['interopTransfer']>({
-            getAll: mockFn().resolvesTo([]),
-          }),
+        processor: mockObject<TokenIngestionProcessor>({
+          getInteropTransferIndex,
+          plan,
         }),
-        processor: mockObject<TokenIngestionProcessor>({ plan }),
       })
 
       const result = await caller.getPage({ page: 2, pageSize: 5 })
@@ -81,7 +81,46 @@ describe('tokenIngestionQueueRouter', () => {
         },
       ])
       expect(getPage).toHaveBeenCalledWith({ offset: 5, limit: 5 })
+      expect(getInteropTransferIndex).toHaveBeenCalledWith()
       expect(plan).toHaveBeenCalledTimes(1)
+      expect(plan).toHaveBeenCalledWith(entry, transferIndex)
+    })
+  })
+
+  describe('preview', () => {
+    it('uses the cached interop transfer index with plan and fetch', async () => {
+      const input = { chain: 'ethereum', address: '0x111' }
+      const transferIndex = { findInvolving: mockFn().returns([]) }
+      const getInteropTransferIndex = mockFn().resolvesTo(transferIndex)
+      const trace = {
+        id: 'ing_test',
+        address: input,
+        steps: [],
+        outcome: { kind: 'skip' as const, reason: 'test' },
+      }
+      const plan = mockFn().resolvesTo(trace)
+      const fetch = mockFn().resolvesTo(trace)
+
+      const caller = createRouter({
+        tokenDb: mockObject<TokenDatabase>({}),
+        processor: mockObject<TokenIngestionProcessor>({
+          getInteropTransferIndex,
+          plan,
+          fetch,
+        }),
+      })
+
+      const result = await caller.preview(input)
+
+      expect(result.outcome).toHaveSubset({
+        kind: 'skip',
+        reason: 'test',
+        description: expect.a(String),
+      })
+      expect(getInteropTransferIndex).toHaveBeenCalledWith()
+      expect(plan.calls[0]?.args[0]).toHaveSubset(input)
+      expect(plan.calls[0]?.args[1]).toEqual(transferIndex)
+      expect(fetch).toHaveBeenCalledWith(trace)
     })
   })
 

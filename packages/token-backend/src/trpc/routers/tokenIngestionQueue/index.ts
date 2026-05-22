@@ -6,7 +6,6 @@ import {
   toIngestionTraceView,
 } from '../../../ingestion/formatIngestionTrace'
 import type { IngestionOutcomeView } from '../../../ingestion/IngestionTrace'
-import { buildInteropTransferIndex } from '../../../ingestion/tokenIngestionUtils'
 import { readOnlyProcedure, readWriteProcedure } from '../../procedures'
 import { router } from '../../trpc'
 
@@ -35,8 +34,8 @@ export const tokenIngestionQueueRouter = router({
         limit: pageSize,
       })
 
-      const transfers = await ctx.db.interopTransfer.getAll()
-      const transferIndex = buildInteropTransferIndex(transfers)
+      const transferIndex =
+        await ctx.tokenIngestionProcessor.getInteropTransferIndex()
       const predictedOutcomes: IngestionOutcomeView[] = []
       for (const entry of result.entries) {
         const trace = await ctx.tokenIngestionProcessor.plan(
@@ -64,8 +63,8 @@ export const tokenIngestionQueueRouter = router({
   preview: readOnlyProcedure
     .input(QueueEntryAddress)
     .mutation(async ({ ctx, input }) => {
-      const transfers = await ctx.db.interopTransfer.getAll()
-      const transferIndex = buildInteropTransferIndex(transfers)
+      const transferIndex =
+        await ctx.tokenIngestionProcessor.getInteropTransferIndex()
       const entry = {
         chain: input.chain,
         address: input.address,

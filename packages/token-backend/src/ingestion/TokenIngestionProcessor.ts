@@ -39,6 +39,7 @@ import type {
   IngestionTrace,
 } from './IngestionTrace'
 import {
+  buildInteropTransferIndex,
   getTokenKey,
   type InteropTransferIndex,
   type InteropTransferMatch,
@@ -88,8 +89,22 @@ export class TokenIngestionProcessor {
   private coingeckoCoinMap:
     | Promise<Map<string, CoinListPlatformEntry>>
     | undefined
+  private interopTransferIndex: InteropTransferIndex | undefined
 
   constructor(private readonly deps: TokenIngestionProcessorDeps) {}
+
+  getInteropTransferIndex(): Promise<InteropTransferIndex> {
+    return this.interopTransferIndex
+      ? Promise.resolve(this.interopTransferIndex)
+      : this.refreshInteropTransferIndex()
+  }
+
+  async refreshInteropTransferIndex(): Promise<InteropTransferIndex> {
+    const transfers = await this.deps.db.interopTransfer.getAll()
+    const index = buildInteropTransferIndex(transfers)
+    this.interopTransferIndex = index
+    return index
+  }
 
   async process(
     entry: TokenIngestionQueueRecord,

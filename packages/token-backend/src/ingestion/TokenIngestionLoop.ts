@@ -6,10 +6,7 @@ import type {
 } from '@l2beat/database'
 import type { IngestionOutcome } from './IngestionTrace'
 import type { TokenIngestionProcessor } from './TokenIngestionProcessor'
-import {
-  buildInteropTransferIndex,
-  normalizeInteropTokenAddress,
-} from './tokenIngestionUtils'
+import { normalizeInteropTokenAddress } from './tokenIngestionUtils'
 
 const INTEROP_TRANSFERS_LAST_SERIAL_ID_KEY = 'interop-transfers:lastSerialId'
 const DEFAULT_MAX_PROCESSED_PER_RUN = 1_000
@@ -121,8 +118,10 @@ export class TokenIngestionLoop {
     const reprocessedAddresses = new Set<string>()
     let processed = 0
 
-    const transfers = await this.db.interopTransfer.getAll()
-    const transferIndex = buildInteropTransferIndex(transfers)
+    // Keep this refresh immediately before planning. The enqueue step above
+    // may have just discovered addresses from new transfers, and the drain must
+    // plan against a transfer index fresh enough to include that evidence.
+    const transferIndex = await this.processor.refreshInteropTransferIndex()
     let entry = await this.tokenDb.tokenIngestionQueue.findNextPending()
 
     while (entry && processed < this.maxProcessedPerRun) {

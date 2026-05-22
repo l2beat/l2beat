@@ -172,6 +172,8 @@ describe(TokenIngestionLoop.name, () => {
 
     it('stops draining when the processing limit is reached', async () => {
       const address = token('ethereum', '0xaaa')
+      const transferIndex = { findInvolving: mockFn().returns([]) }
+      const refreshInteropTransferIndex = mockFn().resolvesTo(transferIndex)
       const process = mockFn().resolvesTo({
         id: 'ing_test',
         address,
@@ -203,7 +205,10 @@ describe(TokenIngestionLoop.name, () => {
             },
           ),
         }),
-        mockObject({ process }) as unknown as TokenIngestionProcessor,
+        mockObject({
+          process,
+          refreshInteropTransferIndex,
+        }) as unknown as TokenIngestionProcessor,
         Logger.SILENT,
         { intervalMs: 60_000, maxProcessedPerRun: 3 },
       )
@@ -211,6 +216,7 @@ describe(TokenIngestionLoop.name, () => {
       await loop.runOnce()
 
       expect(process).toHaveBeenCalledTimes(3)
+      expect(refreshInteropTransferIndex).toHaveBeenCalledTimes(1)
       expect(findNextPending).toHaveBeenCalledTimes(4)
       expect(countPending).toHaveBeenCalledTimes(1)
     })

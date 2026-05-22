@@ -321,6 +321,14 @@ processed entry looks up its own transfers from this index — no per-entry
 DB queries for transfers. This is cheap because the interop table only
 retains the last ~24 hours.
 
+The drain refresh happens immediately after the pre-step and immediately
+before processing the queue. Do not replace it with a stale cached read:
+tokens enqueued from newly inserted transfers must be planned against an
+index that can see those same transfers. The refreshed index is kept on the
+processor as the latest UI cache. Preview and queue-page prediction reuse
+that cached index, falling back to building and caching one on demand when
+the loop has not run yet.
+
 The pre-step uses a separate insertion-order cursor
 (`interop-transfers:lastSerialId`, stored in `TokenDbSettings`) to find
 transfers added since the previous tick.
@@ -361,12 +369,15 @@ EVM addresses. Normalization:
 
 - Pre-step: reads from the interop database (`db`).
 - Drain: reads from both `db` (interop transfers) and `tokenDb` (TokenDB
-  state, queue, settings). Writes go to `tokenDb`.
+  state, queue, settings). Writes go to `tokenDb`. The drain always
+  refreshes the transfer index from `db` immediately before planning and
+  updates the processor's cached index for UI use.
 - Preview: `plan` + `fetch`, called from the `tokenIngestionQueue.preview`
-  tRPC route. Builds the transfer index on demand.
+  tRPC route. Uses the processor's cached transfer index, or builds and
+  caches one on demand if no drain has warmed it yet.
 - Queue page predicted outcomes: `plan` only, called once per row from
-  inside the `tokenIngestionQueue.getPage` tRPC route. Reuses a single
-  transfer index built for the request.
+  inside the `tokenIngestionQueue.getPage` tRPC route. Uses the same cached
+  transfer index/fallback path as preview.
 
 ## What this replaces
 
