@@ -218,8 +218,14 @@ export function toInteropProtocolTransferDetailsItem(
 ): InteropProtocolTransferDetailsItem {
   const srcDetails = chainDetailsById.get(transfer.srcChain)
   const dstDetails = chainDetailsById.get(transfer.dstChain)
-  const srcTxHashHref = getTxHashHref(srcDetails?.explorerUrl, transfer.srcTxHash)
-  const dstTxHashHref = getTxHashHref(dstDetails?.explorerUrl, transfer.dstTxHash)
+  const srcTxHashHref = getTxHashHref(
+    srcDetails?.explorerUrl,
+    transfer.srcTxHash,
+  )
+  const dstTxHashHref = getTxHashHref(
+    dstDetails?.explorerUrl,
+    transfer.dstTxHash,
+  )
 
   return {
     transferId: transfer.transferId,
