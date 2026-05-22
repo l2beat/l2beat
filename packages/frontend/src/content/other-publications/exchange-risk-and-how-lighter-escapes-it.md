@@ -1,6 +1,6 @@
 ---
 title: "Exchange risk, and how Lighter escapes it"
-description: "Across every centralized venue — crypto or tradFi — you trust the venue to give your money back. Lighter is the only active venue with a permissionless exit-path verified end-to-end."
+description: "Across every centralized venue — crypto or tradFi — you trust the venue to give your money back. Lighter is the only active exchange with a permissionless exit-path verified end-to-end."
 publishedOn: "2026-05-22"
 authorId: l2beat_research
 tag: Research
