@@ -142,9 +142,8 @@ describe(createHighlightsRouter.name, () => {
       .resolvesToOnce(currentTokens)
       .resolvesToOnce(previousTokens)
       .resolvesTo([])
-    const getActivityMaxTimestampAtOrBefore = mockFn().resolvesTo(
-      latestTimestamp,
-    )
+    const getActivityMaxTimestampAtOrBefore =
+      mockFn().resolvesTo(latestTimestamp)
     const getActivityByTimestamp = mockFn()
       .resolvesToOnce(currentActivity)
       .resolvesToOnce(previousActivity)
