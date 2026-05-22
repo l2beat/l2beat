@@ -1,7 +1,7 @@
 {
   "name": "earnm",
-  "timestamp": 1772656885,
-  "configHash": "0x8b5effae60ed865650de9f65ffffc3770c5d5e7702e73b949b5d314d9906ee4b",
+  "timestamp": 1779461890,
+  "configHash": "0x797108039a306eeae3952411963cd95f9203a9596db6453e5dfc59bd65224143",
   "entries": [
     {
       "address": "arb1:0x001271c57AeC639952B5201D052767c316755512",
@@ -109,7 +109,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 6050,
+        "batchCount": 7935,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0xe12128A5c958b299c7F033D1D52F90feb12De81D"],
         "bridge": "arb1:0xA9F4ee72439afC704db48dc049CbFb7E914aD300",
@@ -141,7 +141,7 @@
         "rollup": "arb1:0xc930fd48846e956b308f28524dA2d5E14c832e33",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 20,
+        "totalDelayedMessagesRead": 21,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -543,7 +543,7 @@
         "allowedOutboxList": [
           "arb1:0x39919941b42DAb335d9924Ef56dF7b9813b2D6d9"
         ],
-        "delayedMessageCount": 20,
+        "delayedMessageCount": 21,
         "inboxHistory": [
           "arb1:0x446626827f14F89B38D5bA1ab152B484cd7912fD",
           "arb1:0xAc9348017885a132F1A0614B508F632A56B90ec4"
@@ -553,8 +553,8 @@
         "outboxHistory": ["arb1:0x39919941b42DAb335d9924Ef56dF7b9813b2D6d9"],
         "rollup": "arb1:0xc930fd48846e956b308f28524dA2d5E14c832e33",
         "sequencerInbox": "arb1:0x38d41Ac2fbc3f13FcA7838F6638D8FbDb189e807",
-        "sequencerMessageCount": 6050,
-        "sequencerReportedSubMessageCount": 1590456
+        "sequencerMessageCount": 7935,
+        "sequencerReportedSubMessageCount": 2679403
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -656,7 +656,7 @@
         ],
         "$upgradeCount": 1,
         "anyTrustFastConfirmer": "arb1:0x0000000000000000000000000000000000000000",
-        "arbOsFromWmRoot": "ArbOS v40 wasmModuleRoot",
+        "arbOsFromWmRoot": "ArbOS v51.1 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "arb1:0xA9F4ee72439afC704db48dc049CbFb7E914aD300",
         "chainId": 32766,
@@ -665,13 +665,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 5876,
+        "firstUnresolvedNode": 7747,
         "inbox": "arb1:0x446626827f14F89B38D5bA1ab152B484cd7912fD",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22725487,
-        "latestConfirmed": 5875,
-        "latestNodeCreated": 6026,
+        "latestConfirmed": 7746,
+        "latestNodeCreated": 7898,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x39919941b42DAb335d9924Ef56dF7b9813b2D6d9",
@@ -689,7 +689,7 @@
         "validatorUtils": "arb1:0xa0d6E6b1B950aCC748B45F3419FeAd4b52f7389A",
         "validatorWalletCreator": "arb1:0xc8C95B8b35772Ce4bF9E602336082696C2dC0DB8",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a",
+        "wasmModuleRoot": "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -746,6 +746,7 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
+            "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -1620,6 +1621,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 438363032 },
+  "usedBlockNumbers": { "arbitrum": 465528945 },
   "permissionsConfigHash": "0x497e4997b5019439281eec59a23370cf55bab44cadac1475dacd4171ee8b599e"
 }

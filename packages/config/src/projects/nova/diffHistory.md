@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x2c9f82cf33e886fce1cb3d8c508df28cc2453799
+
+# Diff at Thu, 21 May 2026 21:42:44 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@af480cdcac217110f9e99ef400ba0185c35a6c55 block: 1779129417
+- current timestamp: 1779399699
+
+## Description
+
+Arbitrum DAO Security Council member sync executed: 2 members added, 2 removed (fred-Arbitrum-2, StevenThornton-OpenZeppelin) on the L1 `SecurityCouncil` and Nova's `L2SecurityCouncilEmergency`. Same change tracked on the `arbitrum` daily.
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    +++ description: None
+      values.$members.0:
++        "arb-nova:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D"
+      values.$members.1:
++        "arb-nova:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce"
+      values.$members.3:
+-        "arb-nova:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.9:
+-        "arb-nova:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
+```diff
+    contract SecurityCouncil (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D"
+      values.$members.1:
++        "eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce"
+      values.$members.3:
+-        "eth:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.9:
+-        "eth:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
 Generated with discovered.json: 0xb41ca0c4308f1ee46a6cbb5b8488c72cb2d8c9da
 
 # Diff at Mon, 18 May 2026 18:38:02 GMT:

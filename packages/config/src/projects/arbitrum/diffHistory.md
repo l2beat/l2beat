@@ -1,3 +1,59 @@
+Generated with discovered.json: 0xc642c76d98c34554f67143802ec02becca4bb830
+
+# Diff at Thu, 21 May 2026 21:42:24 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@af480cdcac217110f9e99ef400ba0185c35a6c55 block: 1779129406
+- current timestamp: 1779399672
+
+## Description
+
+Arbitrum DAO Security Council member sync executed (the scheduled L1Timelock txs from 2026-05-15 reached the 3-day delay). On `Arbitrum Security Council` (L1), `L2SecurityCouncilEmergency`, and `L2SecurityCouncilPropose`: 2 members added, 2 removed (fred-Arbitrum-2, StevenThornton-OpenZeppelin). Same change tracked on the `nova` daily (shared L1 SC).
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D"
+      values.$members.1:
++        "arb1:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce"
+      values.$members.3:
+-        "arb1:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.9:
+-        "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) [orbitstack/layer2/L2SecurityCouncilPropose] {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D"
+      values.$members.1:
++        "arb1:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce"
+      values.$members.3:
+-        "arb1:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.9:
+-        "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
+```diff
+    contract Arbitrum Security Council (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D"
+      values.$members.1:
++        "eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce"
+      values.$members.3:
+-        "eth:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.9:
+-        "eth:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
 Generated with discovered.json: 0xc2e5389f54eda250988b50f2fdc7c9c9bb9eb7cf
 
 # Diff at Mon, 18 May 2026 18:37:56 GMT:
