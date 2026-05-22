@@ -125,11 +125,7 @@ Tornado Cash frontend presents an attack surface that could expose user private 
 
 Also see [this guide](https://notes.ethereum.org/@GW1ZUbNKR5iRjjKYx6_dJQ/Bk8zsJ9xj) for more info.
 `,
-    links: {
-      websites: [
-        'ipfs://bafybeibr7xeb2sg6uiaeueh5lrw6vsoopkyti67wamiyimpo5gvrpua5by',
-      ],
-    },
+    links: {},
     badges: [],
   },
   escrows: BUCKETS.map((bucket) => ({
