@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x276ebce80f94e11bdc41acba26f3d32c25c84ba5
+Generated with discovered.json: 0xe90ba8913244653fd81feec99fc63a64478532b0
 
-# Diff at Fri, 22 May 2026 15:38:04 GMT:
+# Diff at Fri, 22 May 2026 09:37:07 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@1b7024bc804124af9b25421eca5fac952454cb09 block: 1771250356
-- current timestamp: 1771250356
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1771250356
+- current timestamp: 1779442556
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+For some reason, one EOA appeared on the disco frontend. No onchan changes.
 
 ## Config/verification related changes
 
