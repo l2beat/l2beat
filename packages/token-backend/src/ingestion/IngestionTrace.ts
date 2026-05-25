@@ -1,0 +1,99 @@
+import type { AbstractTokenRecord, DeployedTokenRecord } from '@l2beat/database'
+import type { DeployedTokenFacts } from '../chains/fetchDeployedTokenFacts'
+import type { AbstractTokenAssignmentProof } from '../commitTokenChanges'
+import type {
+  DeployedTokenPrimaryKey,
+  DeployedTokenUpdateable,
+} from '../schemas/DeployedToken'
+import type { TokenAddress } from './tokenIngestionUtils'
+
+export interface IngestionTrace {
+  id: string
+  address: TokenAddress
+  steps: IngestionStep[]
+  outcome: IngestionOutcome
+}
+
+export type AbstractTokenRef = { id: string; symbol: string }
+
+export type IngestionStep =
+  | { kind: 'invalid-address'; rawAddress: string }
+  | { kind: 'existing-token'; record: DeployedTokenRecord }
+  | { kind: 'no-existing-token' }
+  | {
+      kind: 'transfer-evidence'
+      total: number
+      nonSwapping: number
+      abstractTokens: AbstractTokenRef[]
+    }
+  | { kind: 'resolved-from-transfers'; abstractToken: AbstractTokenRef }
+  | { kind: 'resolved-from-existing'; abstractToken: AbstractTokenRef }
+  | { kind: 'coingecko-coin-found'; coinId: string; symbol: string }
+  | { kind: 'coingecko-coin-not-found' }
+  | {
+      kind: 'resolved-from-coingecko-existing-abstract'
+      abstractToken: AbstractTokenRef
+      coinId: string
+    }
+  | {
+      kind: 'resolved-from-coingecko-new-abstract'
+      coingeckoId: string
+      symbol: string
+    }
+  | { kind: 'fetched-coingecko-abstract'; record: AbstractTokenRecord }
+  | { kind: 'fetched-facts'; facts: DeployedTokenFacts }
+
+export type IngestionOutcome =
+  | { kind: 'skip'; reason: string }
+  | { kind: 'conflict'; message: string }
+  | { kind: 'error'; message: string }
+  | { kind: 'noop'; deployedToken: DeployedTokenRecord }
+  | {
+      kind: 'write'
+      newAbstractToken: AbstractTokenRecord | undefined
+      deployedToken: DeployedTokenWrite
+      neighborsToEnqueue: TokenAddress[]
+    }
+  | {
+      kind: 'pending'
+      operation: 'insert' | 'update'
+      existing: DeployedTokenRecord | undefined
+      abstract: PendingAbstract
+      symbolFallback: string | undefined
+      neighborsToEnqueue: TokenAddress[]
+      /** Decided at plan time; transferred onto the deployed-token write by
+       * `fetch()` once the abstract token id is known. */
+      proof: AbstractTokenAssignmentProof
+    }
+
+export type PendingAbstract =
+  | { kind: 'existing'; token: AbstractTokenRef }
+  | { kind: 'new-coingecko'; coingeckoId: string; symbol: string }
+
+export type DeployedTokenWrite =
+  | { type: 'insert'; record: DeployedTokenRecord }
+  | {
+      type: 'update'
+      pk: DeployedTokenPrimaryKey
+      existing: DeployedTokenRecord
+      update: DeployedTokenUpdateable
+    }
+
+/**
+ * Trace + already-rendered descriptions, used at the tRPC boundary so the UI
+ * doesn't need to call any value functions from `@l2beat/token-backend`.
+ * Every step and outcome carries a pre-rendered `description` text that the
+ * UI renders as-is.
+ */
+export type IngestionStepView = IngestionStep & { description: string }
+export type IngestionOutcomeView = IngestionOutcome & { description: string }
+export interface IngestionTraceView {
+  id: string
+  address: TokenAddress
+  steps: IngestionStepView[]
+  outcome: IngestionOutcomeView
+  /** Same text format that gets persisted to `TokenDbHistory.ingestionLog`
+   * after a successful write, so the queue preview and history detail can
+   * render the log identically. */
+  text: string
+}

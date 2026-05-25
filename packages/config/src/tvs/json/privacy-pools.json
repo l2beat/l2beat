@@ -4,6 +4,44 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "privacy-pools-BOLD",
+      "priceId": "liquity-bold-2",
+      "symbol": "BOLD",
+      "name": "BOLD Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/56069/large/BOLD_logo.png?1748265087",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6440f144b7e50D6a8439336510312d2F54beB01D",
+        "chain": "ethereum",
+        "escrowAddress": "0xb4b5Fd38Fd4788071d7287e3cB52948e0d10b23E",
+        "decimals": 18,
+        "sinceTimestamp": 1770806867
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-pools-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0x1c31C03B8CB2EE674D0F11De77135536db828257",
+        "decimals": 18,
+        "sinceTimestamp": 1752848471
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "privacy-pools-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -23,6 +61,25 @@
     },
     {
       "mode": "auto",
+      "id": "privacy-pools-frxUSD",
+      "priceId": "frax-usd",
+      "symbol": "frxUSD",
+      "name": "Frax USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53963/large/frxUSD.png?1737792154",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+        "chain": "ethereum",
+        "escrowAddress": "0xC6C769fac7AABEadd31a03fAe5Ca0Ec5B4C50f84",
+        "decimals": 18,
+        "sinceTimestamp": 1754583623
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "privacy-pools-fxUSD",
       "priceId": "f-x-protocol-fxusd",
       "symbol": "fxUSD",
@@ -36,7 +93,45 @@
         "decimals": 18,
         "sinceTimestamp": 1765446455
       },
-      "category": "other",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-pools-sUSDS",
+      "priceId": "susds",
+      "symbol": "sUSDS",
+      "name": "Savings USDS",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "chain": "ethereum",
+        "escrowAddress": "0xBBdA2173CDFEA1c3bD7F2908798F1265301d750c",
+        "decimals": 18,
+        "sinceTimestamp": 1752782999
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-pools-USD1",
+      "priceId": "usd1-wlfi",
+      "symbol": "USD1",
+      "name": "World Liberty Financial USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54977/large/USD1_1000x1000_transparent.png?1749297002",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
+        "chain": "ethereum",
+        "escrowAddress": "0xc0A8Bc0F4F982b4d4f1fFae8F4FCCb58c9B29c98",
+        "decimals": 18,
+        "sinceTimestamp": 1754583179
+      },
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
@@ -61,6 +156,25 @@
     },
     {
       "mode": "auto",
+      "id": "privacy-pools-USDS",
+      "priceId": "usds",
+      "symbol": "USDS",
+      "name": "USDS Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+        "chain": "ethereum",
+        "escrowAddress": "0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0",
+        "decimals": 18,
+        "sinceTimestamp": 1752503003
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "privacy-pools-USDT",
       "priceId": "tether",
       "symbol": "USDT",
@@ -75,6 +189,44 @@
         "sinceTimestamp": 1753352915
       },
       "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-pools-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0xF973f4B180A568157Cd7A0E6006449139E6Bfc32",
+        "decimals": 8,
+        "sinceTimestamp": 1753975703
+      },
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "privacy-pools-wOETH",
+      "priceId": "wrapped-oeth",
+      "symbol": "wOETH",
+      "name": "Wrapped OETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29734/large/woeth-200x200.png?1714796686",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xDcEe70654261AF21C44c093C300eD3Bb97b78192",
+        "chain": "ethereum",
+        "escrowAddress": "0x7d2959bCFb936a84531518e8391DdBa844e03ebE",
+        "decimals": 18,
+        "sinceTimestamp": 1756377743
+      },
+      "category": "ether",
       "source": "canonical",
       "isAssociated": false
     },

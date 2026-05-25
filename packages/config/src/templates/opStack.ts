@@ -1322,12 +1322,16 @@ function getRiskViewStateValidation(
           RISK_VIEW.STATE_FP_INT().description +
           ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
         sentiment: 'bad',
-        initialBond: formatEther(
-          templateVars.discovery.getContractValue<number[]>(
-            'DisputeGameFactory',
-            'initBonds',
-          )[1], // 1 is for permissioned games!
-        ),
+        initialBond: {
+          value: formatEther(
+            templateVars.discovery.getContractValue<number[]>(
+              'DisputeGameFactory',
+              'initBonds',
+            )[1], // 1 is for permissioned games!
+          ),
+        },
+        permissioned: true,
+        defenderAdvantage: 'not-applicable',
       }
     }
     case 'Permissionless': {
@@ -1336,12 +1340,19 @@ function getRiskViewStateValidation(
           getChallengePeriod(templateVars),
           getExecutionDelay(templateVars),
         ),
-        initialBond: formatEther(
-          templateVars.discovery.getContractValue<number[]>(
-            'DisputeGameFactory',
-            'initBonds',
-          )[0], // 0 is for permissionless games!
-        ),
+        initialBond: {
+          value: formatEther(
+            templateVars.discovery.getContractValue<number[]>(
+              'DisputeGameFactory',
+              'initBonds',
+            )[0], // 0 is for permissionless games!
+          ),
+        },
+        permissioned: false,
+        // OPFP: bonds scale by `exponentialBondsFactor` (1.09493) per depth,
+        // so the resource ratio is exactly that factor — slightly favors the
+        // attacker.
+        defenderAdvantage: { multiplier: 1 / 1.09493, shape: 'linear' },
       }
     }
     case 'Kailua':
@@ -1350,12 +1361,16 @@ function getRiskViewStateValidation(
         ...RISK_VIEW.STATE_FP_HYBRID_ZK,
         executionDelay: getExecutionDelay(templateVars),
         challengeDelay: getChallengePeriod(templateVars),
-        initialBond: formatEther(
-          templateVars.discovery.getContractValue<number>(
-            'KailuaTreasury',
-            'participationBond',
+        initialBond: {
+          value: formatEther(
+            templateVars.discovery.getContractValue<number>(
+              'KailuaTreasury',
+              'participationBond',
+            ),
           ),
-        ),
+        },
+        permissioned: false,
+        defenderAdvantage: 'not-assessed',
       }
     }
     case 'OpSuccinct': {
@@ -1373,12 +1388,16 @@ function getRiskViewStateValidation(
           ' The system currently operates with at least 5 whitelisted challengers external to the team.',
         executionDelay: getExecutionDelay(templateVars),
         challengeDelay: getChallengePeriod(templateVars),
-        initialBond: formatEther(
-          templateVars.discovery.getContractValue<number>(
-            'DisputeGameFactory',
-            'initBondGame42',
+        initialBond: {
+          value: formatEther(
+            templateVars.discovery.getContractValue<number>(
+              'DisputeGameFactory',
+              'initBondGame42',
+            ),
           ),
-        ),
+        },
+        permissioned: true,
+        defenderAdvantage: 'not-applicable',
       }
     }
   }

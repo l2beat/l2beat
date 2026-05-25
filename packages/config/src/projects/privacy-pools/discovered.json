@@ -1,7 +1,7 @@
 {
   "name": "privacy-pools",
   "timestamp": 1777567242,
-  "configHash": "0xf9192766dd26296bfd503dde39bf8c324db0c13e83768307818333d189865a4b",
+  "configHash": "0xaba67902f5dbe523b92627de9483b18c6d61e70a41985178c529337284c15e45",
   "entries": [
     {
       "name": "WithdrawalVerifier",

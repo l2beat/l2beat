@@ -371,7 +371,7 @@
   "static/images/architecture/stargate.png": "fb886285106fe5070f134983fdd0b6a7",
   "static/images/architecture/starkex.png": "8ede82eff84bce7368b76fb0fd14b6b1",
   "static/images/architecture/starknet.png": "8ce7d1d2b2c977fc5a14b53c059a62c4",
-  "static/images/architecture/taiko.png": "9779a7755a10f3e3cee86cce595925c7",
+  "static/images/architecture/taiko.png": "589a56e8c706d239420ef8b4b623345f",
   "static/images/architecture/witness.png": "d1de236e3ebfb6ac32a1d5caf9bb1abc",
   "static/images/architecture/zircuit.png": "f69b8ade382e67f07b5b5344a508b45b",
   "static/images/architecture/zklinknova.png": "a474c875103740836e93984bb542b8e8",
@@ -1514,6 +1514,7 @@
   "static/meta-images/scaling/projects/gnosis/opengraph-image.png": "01e0731723bb74a36e20f636a734c704",
   "static/images/architecture/gnosis.png": "0ac38f7f9a4a8c6cb29236cdf886458d",
   "static/meta-images/publications/monthly-update-2026-04.png": "f1c65bcbd457811e2faafa98e57b038a",
+  "static/meta-images/interop/token-frameworks/opengraph-image.png": "5590294486be13742d4e964a4e65c2cb",
   "static/meta-images/publications/governance-review-94.png": "6e1b0d61f58aca3772da51d84a672f7e",
   "static/meta-images/interop/projects/hyperliquid/opengraph-image.png": "2cfdd3521e297dd677c7b76052173b8d",
   "static/meta-images/interop/projects/lighter/opengraph-image.png": "f5b9d05fe294a44a115ba6e23c4bc74e",
@@ -1524,6 +1525,8 @@
   "static/images/architecture/privacy-pools.png": "64590435eaa447a115ad12faeca7729b",
   "static/images/architecture/railgun.png": "a6b31a49f7d959e4020a7f716b52eb1b",
   "static/images/architecture/tornado-cash.png": "9a2e963e2c9c43f2f0f9531f93b30932",
+  "static/images/upgrades-and-governance/taiko.png": "b597028181589c32deaf58a6f4f91283",
   "static/meta-images/publications/governance-review-95.png": "389deac4de10cc22c45b6d4b6e0e033c",
-  "static/meta-images/interop/projects/world/opengraph-image.png": "6f6bf28cd1b455547c20f46ec6cefd54"
+  "static/meta-images/interop/projects/world/opengraph-image.png": "6f6bf28cd1b455547c20f46ec6cefd54",
+  "static/meta-images/publications/exchange-risk-and-how-lighter-escapes-it.png": "991dcd64d992263321dc54e497ef7810"
 }

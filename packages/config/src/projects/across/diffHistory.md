@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x894e4eb696b7625cdb36481785432477e426b75c
+
+# Diff at Thu, 21 May 2026 09:26:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aa147da36dc2b8d307d8e09b17d18109b2286235 block: 1777369203
+- current timestamp: 1779355521
+
+## Description
+
+spoke contract on tron updated.
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.CrossChainContracts.728126428:
+-        "eth:0x284352bb448C65b75EbE004862e4f4531042d628"
++        "eth:0xc148aF9B50Bc03Cc0c616Cd85C66Aae9bD90cD80"
+    }
+```
+
 Generated with discovered.json: 0xdc112add3eec0ebe18ca57b97a994455c93b8aca
 
 # Diff at Fri, 15 May 2026 12:35:36 GMT:

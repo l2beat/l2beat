@@ -1,7 +1,7 @@
 {
   "name": "megaeth",
   "timestamp": 1778535511,
-  "configHash": "0x41ebe06aeb510eda130b32372516b66d975a6bf8b017740e4c327a31672c52f9",
+  "configHash": "0x9b9994487e9254dc545ccfde5416f80b79bc3d7c3638ff7521b015674f73bec3",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {

@@ -8,17 +8,19 @@ Generated with discovered.json: 0x431654b0927ee114a004618b5a49935e9447e464
 
 ## Description
 
-Op-contracts upgrade executed 2026-05-18 by Alchemy Multisig 1, the chain operator. Same upgrade applied to `settlus` and `shape`.
+**OP Contracts v5.2 upgrade**: `PermissionedDisputeGame` migrated to a shared implementation via CWIA clones. No permissions change.
 
-Implementation rotations (versions verified via on-chain `version()`):
-- **OptimismPortal2** `5.1.1` → `5.2.0` — [disco diff](https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B)
-- **SystemConfig** `3.11.0` → `3.13.1` — [disco diff](https://disco.l2beat.com/diff/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2) — adds `DELAYED_WETH_SLOT` storage constant, `isCustomGasToken()` getter, `getAddresses()` struct including `delayedWETH` (zero — not activated for this chain).
-- **DisputeGameFactory** `1.3.0` → `1.4.0` — [disco diff](https://disco.l2beat.com/diff/eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c) — cloning logic now embeds gameType in clone bytecode when gameArgs are present; `permissionedGameArgs` getter exposed (`challengerFromDGF`/`proposerFromDGF`/`wethFromDGF` now resolve to the same addresses the prior `PermissionedDisputeGame` already used — new visibility, not a permissions change).
-- **AnchorStateRegistry** `3.5.0` → `3.7.0` — [disco diff](https://disco.l2beat.com/diff/eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5) — adds `getStartingAnchorRoot`.
+Executed 2026-05-18 by Alchemy Multisig 1 (chain operator); same upgrade applied to `settlus` and `shape`.
 
-`gameImpls[1]` now points to the shared **PermissionedDisputeGameV2** at `eth:0x58bf355C…` (pre-existing since 2025-12-22), which moves per-chain params (VM, WETH, anchor registry, etc.) from constructor immutables into clone bytecode — so a single implementation now serves multiple chains via chain-specific CWIA clones. The shared **MIPS** FPVM at `eth:0x6463dEE3…` (pre-existing since 2025-11-04) appears in discovery because the new V2 references it.
+Implementation rotations:
+- **OptimismPortal2** `5.1.1` → `5.2.0` — [diff](https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B)
+- **SystemConfig** `3.11.0` → `3.13.1` — [diff](https://disco.l2beat.com/diff/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2) — adds `DELAYED_WETH_SLOT` (zero, not active) and `isCustomGasToken()` getter.
+- **DisputeGameFactory** `1.3.0` → `1.4.0` — [diff](https://disco.l2beat.com/diff/eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c) — clone bytecode now embeds gameType + chain-specific args; `*FromDGF` getters expose existing challenger/proposer/weth (new visibility, not new permissions).
+- **AnchorStateRegistry** `3.5.0` → `3.7.0` — [diff](https://disco.l2beat.com/diff/eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5) — adds `getStartingAnchorRoot`.
 
-`L1CrossDomainMessenger`, `L1StandardBridge`, `L1ERC721Bridge`, `OptimismMintableERC20Factory`, `DelayedWETH` saw an `upgradeToAndCall` against their existing implementation (no impl rotation, just re-initialization). All contracts remain templatized.
+`gameImpls[1]` now points to shared **PermissionedDisputeGameV2** `eth:0x58bf355C…` (deployed 2025-12-22). Shared **MIPS** FPVM `eth:0x6463dEE3…` appears in discovery because the new V2 references it.
+
+`L1CrossDomainMessenger`, `L1StandardBridge`, `L1ERC721Bridge`, `OptimismMintableERC20Factory`, `DelayedWETH`: `upgradeToAndCall` re-init only, no rotation.
 
 ## Watched changes
 
@@ -200,7 +202,7 @@ Implementation rotations (versions verified via on-chain `version()`):
  5 files changed, 2425 insertions(+), 2270 deletions(-)
 ```
 
-Generated with discovered.json: 0x24cae3ee12caab8259c315675e4b19131cd5cf35
+Generated with discovered.json: 0x207f47d59899e1e6d69dd8ea8fcbcd9ec45321c5
 
 # Diff at Fri, 15 May 2026 13:11:07 GMT:
 

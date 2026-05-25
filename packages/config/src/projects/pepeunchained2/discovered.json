@@ -1,7 +1,7 @@
 {
   "name": "pepeunchained2",
   "timestamp": 1777994296,
-  "configHash": "0x770be542ca876b6ecffdc082842971ce07acfd87579ba6e65e939589e92b113e",
+  "configHash": "0x7e085ab2761a1340100f1826dc7b2e4ff22624ae3b748afaa1fdf5839a4d2a87",
   "entries": [
     {
       "name": "RollupProxy",

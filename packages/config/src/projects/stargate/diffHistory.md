@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x5eae68ae3f69eb45c1dc32fe0027b1a4f4f7a379
+
+# Diff at Thu, 21 May 2026 09:34:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aa147da36dc2b8d307d8e09b17d18109b2286235 block: 1778503168
+- current timestamp: 1779355983
+
+## Description
+
+add required DNV for stargate.
+
+## Watched changes
+
+```diff
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2) [layerzero/ReceiveUln302] {
+    +++ description: LayerZero-deployed receive library, defining the validation of received messages.
+      values.getUlnConfig.requiredDVNCount:
+-        2
++        3
+      values.getUlnConfig.requiredDVNs.1:
++        "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DVN (eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd) [layerzero/DVN]
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
+
+## Source code changes
+
+```diff
+/dev/null => ./src/projects/stargate/.flat/DVN.sol | 6457 ++++++++++++++++++++
+ 1 file changed, 6457 insertions(+)
+```
+
 Generated with discovered.json: 0x1d5fb2354072bbe01688e8a01152d00a144b7725
 
 # Diff at Mon, 11 May 2026 12:40:47 GMT:

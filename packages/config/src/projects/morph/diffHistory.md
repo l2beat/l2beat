@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xb478957a73eebd7463f3c4e2cb2553b22af31066
+
+# Diff at Fri, 22 May 2026 09:46:38 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1775810477
+- current timestamp: 1779443124
+
+## Description
+
+Updated morph verifier to use SP1 v6.2.0. New program that is verified.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV1 (eth:0x059adC0Db833f7cCb12dC41BE0017626337AfA63) [morph/ZkEvmVerifierV1]
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) [morph/MultipleVersionRollupVerifier] {
+    +++ description: Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.
+      values.latestVerifier.0.verifier:
+-        "eth:0x059adC0Db833f7cCb12dC41BE0017626337AfA63"
++        "eth:0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624"
+      values.latestVerifier.0.startBatchIndex:
+-        51566
++        53283
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (eth:0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624.sol} | 85 ++++++++++++++--------
+ 1 file changed, 55 insertions(+), 30 deletions(-)
+```
+
 Generated with discovered.json: 0x622b2d29666e475f0c99f890d167b838ba742e4f
 
 # Diff at Fri, 08 May 2026 07:51:41 GMT:

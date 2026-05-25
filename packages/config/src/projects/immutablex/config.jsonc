@@ -9,7 +9,12 @@
   },
   "overrides": {
     "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": {
-      "ignoreMethods": ["getEthKey", "getQuantum"]
+      "ignoreMethods": ["getEthKey", "getQuantum"],
+      "fields": {
+        "HOLDER_1_ETH": {
+          "description": "HOLDER_i_ETH addresses are hardcoded into ImmutableX v2 rollup contract initializer, which assigns them custom amounts of VCO tokens (small amounts of worthless tokens). Tokens were already withdrawn."
+        }
+      }
     },
     "eth:0x58b5484F489f7858DC83a5a677338074b57de806": {
       "ignoreMethods": ["getEthKey", "getQuantum"]

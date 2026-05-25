@@ -4,6 +4,55 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "tornado-cash-cDAI",
+      "priceId": "cdai",
+      "symbol": "cDAI",
+      "name": "Compound Dai",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9281/large/cDAI.png?1696509390",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+            "chain": "ethereum",
+            "escrowAddress": "0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
+            "decimals": 8,
+            "sinceTimestamp": 1577297782
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+            "chain": "ethereum",
+            "escrowAddress": "0x03893a7c7463AE47D46bc7f091665f1893656003",
+            "decimals": 8,
+            "sinceTimestamp": 1616155055
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+            "chain": "ethereum",
+            "escrowAddress": "0x2717c5e28cf931547B621a5dddb772Ab6A35B701",
+            "decimals": 8,
+            "sinceTimestamp": 1616135923
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+            "chain": "ethereum",
+            "escrowAddress": "0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af",
+            "decimals": 8,
+            "sinceTimestamp": 1616115450
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "tornado-cash-DAI",
       "priceId": "dai",
       "symbol": "DAI",

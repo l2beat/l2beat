@@ -18,6 +18,7 @@ export class LineSelector implements EditorPlugin<ForType> {
   private selectionChangeListeners: Array<
     (selection: LineSelection | null) => void
   > = []
+  private disposables: monaco.IDisposable[] = []
 
   static encode(selection: LineSelection): string {
     const prefix = selection.side === 'left' ? 'L' : 'R'
@@ -49,6 +50,10 @@ export class LineSelector implements EditorPlugin<ForType> {
   }
 
   dispose() {
+    for (const d of this.disposables) {
+      d.dispose()
+    }
+    this.disposables = []
     this.leftDecorationIds = []
     this.rightDecorationIds = []
     this.selectionChangeListeners = []
@@ -112,19 +117,21 @@ export class LineSelector implements EditorPlugin<ForType> {
     ] as const
 
     for (const editor of editors) {
-      editor.editor.onMouseDown((e) => {
-        if (
-          e.target.type === monaco.editor.MouseTargetType.GUTTER_LINE_NUMBERS
-        ) {
-          this.handleLineClick(
-            editor.key,
-            e.target.position?.lineNumber ?? 0,
-            e.event.shiftKey,
-          )
-        } else {
-          this.clearSelection()
-        }
-      })
+      this.disposables.push(
+        editor.editor.onMouseDown((e) => {
+          if (
+            e.target.type === monaco.editor.MouseTargetType.GUTTER_LINE_NUMBERS
+          ) {
+            this.handleLineClick(
+              editor.key,
+              e.target.position?.lineNumber ?? 0,
+              e.event.shiftKey,
+            )
+          } else {
+            this.clearSelection()
+          }
+        }),
+      )
     }
   }
 
