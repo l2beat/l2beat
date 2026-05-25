@@ -313,10 +313,15 @@ function decodeExecuteCalls(
 export function logToProtocolData(
   log: Log,
   wormholeNetworks: { chain: string; wormholeChainId: number }[],
+  cctpNetworks: { chain: string; domain: number }[] = [],
 ): DecodedData | undefined {
   const parsed = parseForwarderLog(log)
   if (!parsed) return
-  const decoded = decodeMayanData(parsed.protocolData, wormholeNetworks, [])
+  const decoded = decodeMayanData(
+    parsed.protocolData,
+    wormholeNetworks,
+    cctpNetworks,
+  )
   if (!decoded) return
 
   return {
