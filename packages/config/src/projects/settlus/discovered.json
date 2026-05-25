@@ -1,7 +1,7 @@
 {
   "name": "settlus",
-  "timestamp": 1779310640,
-  "configHash": "0xc6c48fee5a0b564121f058f9c72a1ee4933d893ab5a1bbb27ce8c62a8e047eb1",
+  "timestamp": 1779699347,
+  "configHash": "0x4d3cae626f2ccefc8679b396172bd938a209a0d2b96d5c4bbb950f40dd8955d3",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -714,13 +714,13 @@
         ],
         "$upgradeCount": 2,
         "absolutePrestateFromGame": "0x03caa1871bb9fe7f9b11217c245c16e4ded33367df5b3ccb2c6d0a847a217d1b",
-        "anchorGame": "eth:0xE37590A4d1c3Db52E405E9c7d1301Ebe562273dB",
+        "anchorGame": "eth:0xB61B00A4f9cda969e2ee36f8F514fB978A04b04f",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xfee9a2b763b1362b321aada2843124cc9e1a18fa3769ab6852f7fe9e71513361",
-          38527755
+          "0x826bd4980c16665486aa010301fd423a6ab6f9cc0ddbc34607f23e8fcdea2e0c",
+          38917864
         ],
         "getStartingAnchorRoot": {
           "root": "0xc424cd12a1242e670af134a4a3ac7f1fb0f3e6ce6dbaba109618d9293040f07c",
@@ -1585,7 +1585,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 7234,
+        "gameCount": 7305,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -1600,7 +1600,7 @@
         "initVersion": 1,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
         "permissionedGameArgs": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb90863e956115f7618a95bb968ecef2e72e99cdba80f3f1ce63c69d437fdd9f5d5ad294f677a1b7db08b00000000000000000000000000000000000000000000000000000000000014fb1bc6df949b8edc8ee61adb99d578a7a6e6ff7310a4fb12d15eb85dc9284a7df0adbc8b696edbbf1d",
-        "permissionedGamesTotal": 7234,
+        "permissionedGamesTotal": 7305,
         "proposerFromDGF": "eth:0x1bC6Df949b8eDC8EE61adB99d578A7a6E6Ff7310",
         "proxyAdmin": "eth:0xd35FeF329Bb6569baa373BDa702F3dfF59D57321",
         "proxyAdminOwner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
@@ -2786,6 +2786,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25138984 },
+  "usedBlockNumbers": { "ethereum": 25171260 },
   "permissionsConfigHash": "0xe2cfb94eee1a93c7f8c834443b5d334adc423d086b7a094c5f53260fe8046471"
 }
