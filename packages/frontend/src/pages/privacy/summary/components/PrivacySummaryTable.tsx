@@ -24,7 +24,7 @@ const columnHelper = createColumnHelper<PrivacySummaryEntry>()
 const columns = [
   ...getCommonProjectColumns(columnHelper, (row) => row.href),
   columnHelper.accessor('name', {
-    header: 'Project',
+    header: 'Name',
     enableHiding: false,
     cell: (ctx) => (
       <TableLink href={ctx.row.original.href}>
