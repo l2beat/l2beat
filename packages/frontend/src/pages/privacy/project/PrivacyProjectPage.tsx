@@ -2,6 +2,7 @@ import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
+import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
@@ -16,7 +17,6 @@ import { MobileSectionNavigation } from '~/components/section-navigation/MobileS
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import { PrivacyAttributesCell } from '../summary/components/PrivacyAttributesCell'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 import type { PrivacyProjectEntry } from './getPrivacyProjectData'
 
@@ -95,11 +95,13 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                       />
 
                       {entry.attributes.length > 0 && (
-                        <div className="mt-4 md:mt-2">
-                          <PrivacyAttributesCell
-                            attributes={entry.attributes}
-                            className="py-0"
-                          />
+                        <div className="mt-4 flex flex-wrap gap-1 md:mt-2">
+                          {entry.attributes.map((attribute) => (
+                            <PrivacyAttributeTag
+                              key={attribute.id}
+                              attribute={attribute}
+                            />
+                          ))}
                         </div>
                       )}
 
