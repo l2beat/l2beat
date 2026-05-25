@@ -321,17 +321,6 @@ export async function getEthereumDaProjectSections({
 
   const throughputSection = await getDaThroughputSection(helpers, layer)
 
-  if (throughputSection) {
-    items.push({
-      type: 'ThroughputSection',
-      props: {
-        id: 'throughput',
-        title: 'Throughput',
-        ...throughputSection,
-      },
-    })
-  }
-
   if (interopData) {
     items.push({
       type: 'InteropFlowsSection',
@@ -342,6 +331,17 @@ export async function getEthereumDaProjectSections({
         protocols: interopData.protocols,
         defaultSelectedChains: interopData.defaultSelectedChains,
         defaultStatsChainId: interopData.chainId,
+      },
+    })
+  }
+
+  if (throughputSection) {
+    items.push({
+      type: 'ThroughputSection',
+      props: {
+        id: 'throughput',
+        title: 'Throughput',
+        ...throughputSection,
       },
     })
   }
