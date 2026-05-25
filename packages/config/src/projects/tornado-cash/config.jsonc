@@ -12,6 +12,25 @@
     "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888": "COMP",
     "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT",
     "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": "WBTC",
+    "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc": "Pool_0.1_ETH",
+    "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936": "Pool_1_ETH",
+    "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF": "Pool_10_ETH",
+    "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291": "Pool_100_ETH",
+    "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3": "Pool_100_DAI",
+    "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144": "Pool_1000_DAI",
+    "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730": "Pool_10K_DAI",
+    "eth:0x23773E65ed146A459791799d01336DB287f25334": "Pool_100K_DAI",
+    "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307": "Pool_100_USDC",
+    "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D": "Pool_1000_USDC",
+    "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B": "Pool_100_USDT",
+    "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f": "Pool_1000_USDT",
+    "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1": "Pool_0.1_WBTC",
+    "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4": "Pool_1_WBTC",
+    "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498": "Pool_10_WBTC",
+    "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b": "Pool_5K_cDAI",
+    "eth:0x03893a7c7463AE47D46bc7f091665f1893656003": "Pool_50K_cDAI",
+    "eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701": "Pool_500K_cDAI",
+    "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af": "Pool_5M_cDAI",
     "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226": "DepositTree",
     "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2": "PoseidonHasher",
     "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": "MiMCHasher",
@@ -25,10 +44,12 @@
       "description": "Unverified merkle tree instance that stores legacy Tornado deposit leaves for TornadoTreesV1."
     },
     "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": {
-      "description": "Unverified MiMC hasher used by newer Tornado pool generations for commitment-tree operations."
+      "description": "Unverified MiMC hasher used by newer Tornado pool generations for commitment-tree operations. If this contract were malicious or had a backdoor, all pools using it would be compromised.",
+      "category": "core"
     },
     "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2": {
-      "description": "Unverified Poseidon hasher used by the legacy Tornado Trees merkle trees."
+      "description": "Anonymity Mining - Unverified Poseidon hasher used by the legacy Tornado Trees merkle trees.",
+      "category": "bridge-external"
     },
     "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": {
       "ignoreDiscovery": true
@@ -50,6 +71,63 @@
     },
     "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": {
       "ignoreDiscovery": true
+    },
+    "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc": {
+      "description": "Fixed-denomination Tornado Cash pool for 0.1 ETH deposits."
+    },
+    "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936": {
+      "description": "Fixed-denomination Tornado Cash pool for 1 ETH deposits."
+    },
+    "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF": {
+      "description": "Fixed-denomination Tornado Cash pool for 10 ETH deposits."
+    },
+    "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291": {
+      "description": "Fixed-denomination Tornado Cash pool for 100 ETH deposits."
+    },
+    "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3": {
+      "description": "Fixed-denomination Tornado Cash pool for 100 DAI deposits."
+    },
+    "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144": {
+      "description": "Fixed-denomination Tornado Cash pool for 1000 DAI deposits."
+    },
+    "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730": {
+      "description": "Fixed-denomination Tornado Cash pool for 10K DAI deposits."
+    },
+    "eth:0x23773E65ed146A459791799d01336DB287f25334": {
+      "description": "Fixed-denomination Tornado Cash pool for 100K DAI deposits."
+    },
+    "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307": {
+      "description": "Fixed-denomination Tornado Cash pool for 100 USDC deposits."
+    },
+    "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D": {
+      "description": "Fixed-denomination Tornado Cash pool for 1000 USDC deposits."
+    },
+    "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B": {
+      "description": "Fixed-denomination Tornado Cash pool for 100 USDT deposits."
+    },
+    "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f": {
+      "description": "Fixed-denomination Tornado Cash pool for 1000 USDT deposits."
+    },
+    "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1": {
+      "description": "Fixed-denomination Tornado Cash pool for 0.1 WBTC deposits."
+    },
+    "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4": {
+      "description": "Fixed-denomination Tornado Cash pool for 1 WBTC deposits."
+    },
+    "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498": {
+      "description": "Fixed-denomination Tornado Cash pool for 10 WBTC deposits."
+    },
+    "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b": {
+      "description": "Fixed-denomination Tornado Cash pool for 5K cDAI deposits."
+    },
+    "eth:0x03893a7c7463AE47D46bc7f091665f1893656003": {
+      "description": "Fixed-denomination Tornado Cash pool for 50K cDAI deposits."
+    },
+    "eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701": {
+      "description": "Fixed-denomination Tornado Cash pool for 500K cDAI deposits."
+    },
+    "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af": {
+      "description": "Fixed-denomination Tornado Cash pool for 5M cDAI deposits."
     }
   }
 }

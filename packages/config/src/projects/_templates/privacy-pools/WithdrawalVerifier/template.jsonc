@@ -2,5 +2,5 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "WithdrawalVerifier",
   "category": "shared",
-  "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs. The verification key is hardcoded in the contract and there are no privileged roles or mutable configuration."
+  "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs."
 }

@@ -1,3 +1,283 @@
+Generated with discovered.json: 0x9a62af265633fda4fca4560ad7cdfb7fb5a9f3e4
+
+# Diff at Mon, 25 May 2026 09:49:42 GMT:
+
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@639891c3b013ffc79bd0575fa15360dd2e0e6ae1 block: 1779378858
+- current timestamp: 1779461009
+
+## Description
+
+config: description edits.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779378858 (main branch discovery), not current.
+
+```diff
+    contract IntervalPayouts (eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11) [railgun/IntervalPayouts] {
+    +++ description: Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.
+      description:
+-        "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule."
++        "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due."
++++ description: Amount transferred on each successful payout.
++++ severity: HIGH
+      values.amount:
+-        "1850000000000000000000000"
++        "1,850,000"
+      category.name:
+-        "Governance"
++        "External Bridges"
+      category.priority:
+-        3
++        1
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+```diff
+    contract GovernorRewardsSweeper (eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B) [railgun/Sweeper] {
+    +++ description: Helper that forwards all ETH or ERC20 balances it holds to a fixed receiver.
+      description:
+-        "Upgradeable helper that forwards all ETH or ERC20 balances it holds to a fixed receiver. If you trust this contract, you trust its proxy admin to upgrade, pause, or retarget the sweep behavior."
++        "Helper that forwards all ETH or ERC20 balances it holds to a fixed receiver."
+      category.name:
+-        "Governance"
++        "External Bridges"
+      category.priority:
+-        3
++        1
+    }
+```
+
+```diff
+    contract VerificationKeySetter_64DA (eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      description:
+-        "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, once Railgun governance switches the contract into COMMITTING state, can forward those keys to the Railgun smart wallet verifier through the Delegator. If you trust this contract, you trust its owner to stage and commit verifier-key changes and Railgun governance to authorize the commit phase."
++        "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier."
+    }
+```
+
+```diff
+    contract IntervalPayouts (eth:0x7673e2E62435D25EDBcb58fD0d88c4C95806b10F) [railgun/IntervalPayouts] {
+    +++ description: Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.
+      description:
+-        "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule."
++        "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due."
++++ description: Amount transferred on each successful payout.
++++ severity: HIGH
+      values.amount:
+-        "75000000000000000000000"
++        "75,000"
+      category.name:
+-        "Governance"
++        "External Bridges"
+      category.priority:
+-        3
++        1
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+```diff
+    contract IntervalPayouts (eth:0x859E0C1790b8a721F4943742603cDB685A73BA5D) [railgun/IntervalPayouts] {
+    +++ description: Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.
+      description:
+-        "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule."
++        "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due."
++++ description: Amount transferred on each successful payout.
++++ severity: HIGH
+      values.amount:
+-        "925000000000000000000000"
++        "925,000"
+      category.name:
+-        "Governance"
++        "External Bridges"
+      category.priority:
+-        3
++        1
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+```diff
+    contract VerificationKeySetter_9086 (eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      description:
+-        "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, once Railgun governance switches the contract into COMMITTING state, can forward those keys to the Railgun smart wallet verifier through the Delegator. If you trust this contract, you trust its owner to stage and commit verifier-key changes and Railgun governance to authorize the commit phase."
++        "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier."
+    }
+```
+
+```diff
+    contract GovernorRewards (eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f) [railgun/GovernorRewards] {
+    +++ description: Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.
+      description:
+-        "Upgradeable reward distributor that pulls assets from the Railgun treasury and allocates them to stakers using snapshot voting power. If you trust this contract, you trust its owner to set reward parameters and tracked assets, and its proxy admin to pause or upgrade the logic."
++        "Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting."
+    }
+```
+
+```diff
+    contract LegacySweeper (eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686) [railgun/SweeperLegacy] {
+    +++ description: Older Railgun sweeper generation that still holds Treasury transfer rights. It is upgradeable and forwards balances to an immutable receiver.
+      description:
+-        "Older Railgun sweeper generation that still holds Treasury transfer rights. It is upgradeable and forwards balances to an immutable receiver, but this specific deployment does not expose the receiver getter cleanly through discovery."
++        "Older Railgun sweeper generation that still holds Treasury transfer rights. It is upgradeable and forwards balances to an immutable receiver."
+    }
+```
+
+```diff
+    contract IntervalPayouts (eth:0xa863262Bf5E97e8CFeC47a71402aC360C0983060) [railgun/IntervalPayouts] {
+    +++ description: Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.
+      description:
+-        "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule."
++        "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due."
++++ description: Amount transferred on each successful payout.
++++ severity: HIGH
+      values.amount:
+-        "100000000000000000000000"
++        "100,000"
+      category.name:
+-        "Governance"
++        "External Bridges"
+      category.priority:
+-        3
++        1
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+```diff
+    contract Delegator (eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B) [railgun/Delegator] {
+    +++ description: Permission router proxy owned by Railgun governance.
+      description:
+-        "Permission router owned by Railgun governance. If you trust this contract, you trust its owner and any currently delegated callers to execute privileged calls through it on connected Railgun components."
++        "Permission router proxy owned by Railgun governance."
+    }
+```
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
+      description:
+-        "Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator; if you trust this contract, you trust RAIL voting power governed by these rules to change connected Railgun components."
++        "Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator."
+    }
+```
+
+```diff
+    contract IntervalPayouts (eth:0xCA9A2894e814305fAfc2BA83a70B34295b1DdE9D) [railgun/IntervalPayouts] {
+    +++ description: Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.
+      description:
+-        "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule."
++        "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due."
++++ description: Amount transferred on each successful payout.
++++ severity: HIGH
+      values.amount:
+-        "200000000000000000000000"
++        "200,000"
+      category.name:
+-        "Governance"
++        "External Bridges"
+      category.priority:
+-        3
++        1
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+```diff
+    contract Rail Token (eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D) [railgun/RailToken] {
+    +++ description: RAIL governance token contract with a capped (100,000,000 RAIL total supply) mint schedule and an early anti-bot transfer override.
+      description:
+-        "RAIL governance token contract with a capped mint schedule and an early anti-bot transfer override. If you trust this contract, you trust its owner to mint additional RAIL up to the hard cap."
++        "RAIL governance token contract with a capped (100,000,000 RAIL total supply) mint schedule and an early anti-bot transfer override."
++++ description: Hard cap on total RAIL supply.
+      values.cap:
+-        "100000000000000000000000000"
++        "100,000,000"
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+```diff
+    contract Treasury (eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40) [railgun/Treasury] {
+    +++ description: Collects Railgun fees. Managed through access control roles.
+      description:
+-        "Upgradeable treasury that collects Railgun fees, and can release ETH or ERC20s only to current TRANSFER_ROLE members. If you trust this contract, you trust its role admins to decide who can move treasury assets and its proxy admin to change the treasury logic."
++        "Collects Railgun fees. Managed through access control roles."
+    }
+```
+
+```diff
+    contract Getters (eth:0xe90275239D734899e8D94646139213F6F97bEB0E) [railgun/Getters] {
+    +++ description: Read-only helper contract that batches governance snapshot and reward-view calls.
+      description:
+-        "Read-only helper contract that batches governance snapshot and reward-view calls. It does not custody funds or hold privileged roles."
++        "Read-only helper contract that batches governance snapshot and reward-view calls."
+      category.name:
+-        "Shared Infrastructure"
++        "External Bridges"
+      category.priority:
+-        4
++        1
+    }
+```
+
+```diff
+    contract Staking (eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20) [railgun/Staking] {
+    +++ description: RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.
+      description:
+-        "Immutable RAIL staking contract that tracks delegated voting power, enforces a 30-day unstake delay, and snapshots balances for governance. It has no admin, but its parameters define the governance system's voting power."
++        "RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system."
+      values.SNAPSHOT_INTERVAL_fmt:
++        "1d"
+      values.STAKE_LOCKTIME_fmt:
++        "1mo"
+    }
+```
+
+```diff
+    contract IntervalPayouts (eth:0xf5F9d74FbFd04801DFf83425ff6C2002f60B921A) [railgun/IntervalPayouts] {
+    +++ description: Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.
+      description:
+-        "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule."
++        "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due."
++++ description: Amount transferred on each successful payout.
++++ severity: HIGH
+      values.amount:
+-        "150000000000000000000000"
++        "150,000"
+      category.name:
+-        "Governance"
++        "External Bridges"
+      category.priority:
+-        3
++        1
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+```diff
+    contract RailgunSmartWallet (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9) [railgun/RailgunSmartWallet] {
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+      description:
+-        "Upgradeable privacy pool contract that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree. If you trust this contract, you trust its owner to change fees, treasury routing, token compatibility, and SNARK safety vectors, and its proxy admin to pause or upgrade the logic."
++        "Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree."
+    }
+```
+
 Generated with discovered.json: 0x15acd29418ae7a1d5bd784a1f997519dcdbc04d2
 
 # Diff at Thu, 21 May 2026 16:01:07 GMT:
