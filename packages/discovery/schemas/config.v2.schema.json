@@ -77,7 +77,6 @@
                           "stateDeleterMetis",
                           "hotValidatorHyperliquid",
                           "coldValidatorHyperliquid",
-                          "acrossPropose",
                           "validateLighter",
                           "member",
                           "act",
@@ -304,6 +303,15 @@
                             "ignoreRelative": { "type": "boolean" },
                             "set": {},
                             "flatten": { "type": "boolean" },
+                            "dedupBy": {
+                              "anyOf": [
+                                { "type": "string" },
+                                {
+                                  "type": "array",
+                                  "items": { "type": "string" }
+                                }
+                              ]
+                            },
                             "add": {
                               "anyOf": [
                                 {

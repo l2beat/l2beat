@@ -56,7 +56,8 @@
         {
           "type": "interact",
           "description": "pause the system, manage all fees, bonds and security parameters, manage tokens and chain support, and critical emergency actions like admin functions on remote SpokePools or deleting proposals (can steal funds)."
-        }
+        },
+        { "type": "act" }
       ]
     },
     "paused": {
@@ -90,6 +91,14 @@
       },
       "edit": ["get", "spokePool"]
     },
+    "optimismSpokePool": {
+      "handler": {
+        "type": "call",
+        "method": "function crossChainContracts(uint256) view returns (address adapter, address spokePool)",
+        "args": ["10"]
+      },
+      "edit": ["pipe", ["get", "spokePool"], ["format", "OptimismAddress"]]
+    },
     "Adapters": {
       "handler": {
         "type": "event",
@@ -100,6 +109,30 @@
         "groupBy": "l2ChainId"
       },
       "edit": ["map_keys", ["format", "ChainIdToName"]]
+    },
+    "poolRebalanceRoutes": {
+      "handler": {
+        "type": "event",
+        "add": {
+          "event": "SetPoolRebalanceRoute"
+        },
+        "groupBy": "destinationChainId",
+        "dedupBy": "l1Token",
+        "select": ["l1Token", "destinationToken"],
+        "ignoreRelative": true
+      },
+      "edit": ["map_keys", ["format", "ChainIdToName"]]
+    },
+    "pooledTokens": {
+      "handler": {
+        "type": "event",
+        "add": {
+          "event": "L1TokenEnabledForLiquidityProvision"
+        },
+        "dedupBy": "l1Token",
+        "select": ["l1Token", "lpToken"],
+        "ignoreRelative": true
+      }
     }
   }
 }

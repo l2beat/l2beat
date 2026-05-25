@@ -36,7 +36,6 @@ export const RolePermissionEntries = [
   'stateDeleterMetis',
   'hotValidatorHyperliquid',
   'coldValidatorHyperliquid',
-  'acrossPropose',
   'validateLighter',
 ] as const
 

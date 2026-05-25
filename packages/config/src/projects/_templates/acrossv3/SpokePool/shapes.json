@@ -13,5 +13,11 @@
     "hash": "0x7c82111265c69f8a894d8029e30766541164d55fb1e814bf29ddacecaeee12c1",
     "address": "eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B",
     "blockNumber": 24375884
+  },
+  "Optimism_SpokePool": {
+    "hash": "0xa7af88e42066dce1580a5c39e3bd045de8511f8a453056cd46140e3df8b96f19",
+    "address": "oeth:0x0966F5034261CC50926fB9D5C1603A5034Ffa81c",
+    "chain": "optimism",
+    "blockNumber": 152052153
   }
 }

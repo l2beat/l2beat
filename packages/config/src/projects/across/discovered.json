@@ -1,7 +1,7 @@
 {
   "name": "across",
-  "timestamp": 1779355521,
-  "configHash": "0x7280d281feb04e5121935f95f9cad77e4599ed8c3737550e28177b1a8558022b",
+  "timestamp": 1779710546,
+  "configHash": "0x4a869aa965d8a6e7a23ff12ebc379d226da93f690b1d2f9fa5a207bb60cca509",
   "entries": [
     {
       "name": "VotingV2",
@@ -31,28 +31,28 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "19673894216140886130149593",
+        "cumulativeStake": "19705173803725152862161942",
         "currentActiveRequests": true,
         "delayFmt": "1d",
         "emissionRate": "130000000000000000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 10297,
+        "getCurrentRoundId": 10299,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 13,
-          "numberResolvedPriceRequests": 3321
+          "numberPendingPriceRequests": 71,
+          "numberResolvedPriceRequests": 3340
         },
         "getVotePhase": 0,
-        "lastRoundIdProcessed": 10297,
-        "lastUpdateTime": 1779355403,
+        "lastRoundIdProcessed": 10299,
+        "lastUpdateTime": 1779710531,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "eth:0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 13,
+        "nextPendingIndexToProcess": 71,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "eth:0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "797787397827615761",
-        "rewardPerTokenStored": "797786684191573717",
+        "rewardPerToken": "800131432281572231",
+        "rewardPerTokenStored": "800131353114546579",
         "slashingLibrary": "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -62,7 +62,8 @@
       },
       "implementationNames": {
         "eth:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac": "VotingV2"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "Zora_Adapter",
@@ -157,7 +158,7 @@
       "implementationNames": {
         "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B": "Universal_Adapter"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Redstone_Adapter",
@@ -346,7 +347,8 @@
       },
       "implementationNames": {
         "eth:0x3B03509645713718B78951126E0A6de6f10043f5": "AcrossConfigStore"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Registry",
@@ -517,7 +519,8 @@
       },
       "implementationNames": {
         "eth:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE": "Registry"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "Finder",
@@ -603,7 +606,8 @@
             "0x4f7074696d69737469634f7261636c6556330000000000000000000000000000": "OptimisticOracleV3"
           }
         }
-      ]
+      ],
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "AdapterStore",
@@ -622,9 +626,11 @@
         "$immutable": true,
         "owner": "eth:0xB524735356985D2f267FA010D681f061DfF03715"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x42df4D71f35ffBD28ae217d52E83C1DA0007D63b": "AdapterStore"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Tempo_Adapter",
@@ -654,7 +660,7 @@
       "implementationNames": {
         "eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c": "Universal_Adapter"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "ProposerV2",
@@ -683,7 +689,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1779355511,
+        "getCurrentTime": 1779710543,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -818,7 +824,8 @@
       },
       "implementationNames": {
         "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF": "Store"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "Linea_Adapter",
@@ -940,11 +947,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1779355511,
+        "getCurrentTime": 1779710543,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 3925511,
+        "numberOfDeposits": 3936326,
         "OFT_DST_EID": 0,
         "OFT_FEE_CAP": 0,
         "owner": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
@@ -954,11 +961,14 @@
         "withdrawalRecipient": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "wrappedNativeToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": { "crossDomainAdmin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5": "ERC1967Proxy",
         "eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B": "Ethereum_SpokePool"
       },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1027,7 +1037,7 @@
       "implementationNames": {
         "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b": "Universal_Adapter"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Alephzero_Adapter",
@@ -1186,7 +1196,7 @@
         "$immutable": true,
         "emergencyProposer": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1779355511,
+        "getCurrentTime": 1779710543,
         "getMember": [
           "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1243,7 +1253,8 @@
       "implementationNames": {
         "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": "Proxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
@@ -1272,7 +1283,35 @@
           "description": "update configuration values.",
           "role": ".owner",
           "via": [
-            { "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715" }
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x42df4D71f35ffBD28ae217d52E83C1DA0007D63b",
+          "description": "set the token-to-messenger mappings that adapters use to route OFT cross-chain transfers.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" },
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
           ]
         },
         {
@@ -1281,7 +1320,10 @@
           "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.",
           "role": ".owner",
           "via": [
-            { "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715" }
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
           ]
         },
         {
@@ -1290,7 +1332,10 @@
           "description": "pause the system, manage all fees, bonds and security parameters, manage tokens and chain support, and critical emergency actions like admin functions on remote SpokePools or deleting proposals (can steal funds).",
           "role": ".owner",
           "via": [
-            { "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715" }
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
           ]
         },
         {
@@ -1299,7 +1344,49 @@
           "description": "manage the proposer role.",
           "role": ".owner",
           "via": [
-            { "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715" }
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" },
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" },
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" },
+            {
+              "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+              "delay": 172800
+            }
           ]
         }
       ],
@@ -1307,6 +1394,7 @@
         {
           "permission": "act",
           "from": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
+          "delay": 172800,
           "role": ".GnosisSafe_modules"
         }
       ],
@@ -1347,7 +1435,8 @@
       "implementationNames": {
         "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor"
       },
-      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "Unichain_Adapter",
@@ -1443,7 +1532,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1779355511,
+        "getCurrentTime": 1779710543,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1453,7 +1542,8 @@
       "implementationNames": {
         "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": "EmergencyProposer"
       },
-      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9",
@@ -1480,7 +1570,8 @@
       },
       "implementationNames": {
         "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd": "FixedSlashSlashingLibrary"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
@@ -1573,7 +1664,7 @@
       "implementationNames": {
         "eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db": "Universal_Adapter"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "ZkSyncEra_Adapter",
@@ -1635,7 +1726,7 @@
       "implementationNames": {
         "eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363": "Universal_Adapter"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Across Multisig",
@@ -1656,6 +1747,21 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x42df4D71f35ffBD28ae217d52E83C1DA0007D63b",
+          "description": "set the token-to-messenger mappings that adapters use to route OFT cross-chain transfers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991",
           "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.",
           "role": ".owner"
@@ -1670,6 +1776,40 @@
           "permission": "interact",
           "from": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
           "description": "manage the proposer role.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
+          "role": ".crossDomainAdmin",
+          "via": [
+            { "address": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
           "role": ".owner"
         }
       ],
@@ -1700,7 +1840,8 @@
       "implementationNames": {
         "eth:0xB524735356985D2f267FA010D681f061DfF03715": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "Arbitrum_Adapter",
@@ -1759,12 +1900,25 @@
           "permission": "interact",
           "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
           "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
-          "role": ".owner"
+          "role": ".crossDomainAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
+          "role": ".crossDomainAdmin"
         },
         {
           "permission": "upgrade",
           "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-          "role": "admin"
+          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
+          "role": ".crossDomainAdmin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "description": "upgrade the SpokePool implementation. The admin is the HubPool on Ethereum; for L2 SpokePools it acts cross-chain via the canonical messenger.",
+          "role": ".crossDomainAdmin"
         }
       ],
       "ignoreInWatchMode": ["rootBundleProposal"],
@@ -1842,18 +1996,601 @@
         "liveness": 1800,
         "lpFeeRatePerSecond": 1500000000000,
         "lpTokenFactory": "eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d",
+        "optimismSpokePool": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
         "owner": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
         "paused": false,
+        "pooledTokens": [
+          {
+            "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "lpToken": "eth:0x28F77208728B0A45cAb24c4868334581Fe86F95B"
+          },
+          {
+            "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "lpToken": "eth:0xC9b09405959f63F72725828b5d449488b02be1cA"
+          },
+          {
+            "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "lpToken": "eth:0x59C1427c658E97a7d568541DaC780b2E5c8affb4"
+          },
+          {
+            "l1Token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+            "lpToken": "eth:0xB9921d28466304103a233fcD071833e498f12853"
+          },
+          {
+            "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "lpToken": "eth:0x4FaBacAC8C41466117D6A38F46d08ddD4948A0cB"
+          },
+          {
+            "l1Token": "eth:0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc",
+            "lpToken": "eth:0x9306B6f45263f8cB6a18EFF127313d10D06FcCB5"
+          },
+          {
+            "l1Token": "eth:0x3472A5A71965499acd81997a54BBA8D852C6E53d",
+            "lpToken": "eth:0xb5124b9Ae9efeA2ADD1FF768EEc75095e8d9D532"
+          },
+          {
+            "l1Token": "eth:0xba100000625a3754423978a60c9317c58a424e3D",
+            "lpToken": "eth:0xfacd2eC4647df2Cb758F684C2aAAB56A93288f9e"
+          },
+          {
+            "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "lpToken": "eth:0xC2faB88f215f62244d2E32c8a65E8F58DA8415a5"
+          },
+          {
+            "l1Token": "eth:0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
+            "lpToken": "eth:0xb0C8fEf534223B891D4A430e49537143829c4817"
+          },
+          {
+            "l1Token": "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+            "lpToken": "eth:0xe480f5A42E263ac0352D0c9C6e75C4A612eE52A7"
+          },
+          {
+            "l1Token": "eth:0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e",
+            "lpToken": "eth:0xC3f35d90EbCE372ded12029b72B22a23A2F637fD"
+          },
+          {
+            "l1Token": "eth:0x6033F7f88332B8db6ad452B7C6D5bB643990aE3f",
+            "lpToken": "eth:0xfd4a46D76Fb8fc13F5a77883519A0cfB656D3BEc"
+          },
+          {
+            "l1Token": "eth:0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a",
+            "lpToken": "eth:0xA6ABcB5530770C32fd489eBD90D29Cde99d91d7F"
+          },
+          {
+            "l1Token": "eth:0x163f8C2467924be0ae7B5347228CABF260318753",
+            "lpToken": "eth:0x933f3Dd62F33f6f65C5fB5f33ED2c2f32d392372"
+          },
+          {
+            "l1Token": "eth:0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74",
+            "lpToken": "eth:0x8d29B8f64237cf39E93111a96A73e5dC03Eb612d"
+          }
+        ],
+        "poolRebalanceRoutes": {
+          "Ethereum": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            },
+            {
+              "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "destinationToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+            },
+            {
+              "l1Token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+              "destinationToken": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
+            },
+            {
+              "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "destinationToken": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+            },
+            {
+              "l1Token": "eth:0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc",
+              "destinationToken": "eth:0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc"
+            },
+            {
+              "l1Token": "eth:0x3472A5A71965499acd81997a54BBA8D852C6E53d",
+              "destinationToken": "eth:0x3472A5A71965499acd81997a54BBA8D852C6E53d"
+            },
+            {
+              "l1Token": "eth:0xba100000625a3754423978a60c9317c58a424e3D",
+              "destinationToken": "eth:0xba100000625a3754423978a60c9317c58a424e3D"
+            },
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+            },
+            {
+              "l1Token": "eth:0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
+              "destinationToken": "eth:0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F"
+            },
+            {
+              "l1Token": "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+              "destinationToken": "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
+            },
+            {
+              "l1Token": "eth:0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e",
+              "destinationToken": "eth:0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e"
+            },
+            {
+              "l1Token": "eth:0x6033F7f88332B8db6ad452B7C6D5bB643990aE3f",
+              "destinationToken": "eth:0x6033F7f88332B8db6ad452B7C6D5bB643990aE3f"
+            },
+            {
+              "l1Token": "eth:0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a",
+              "destinationToken": "eth:0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a"
+            },
+            {
+              "l1Token": "eth:0x163f8C2467924be0ae7B5347228CABF260318753",
+              "destinationToken": "eth:0x163f8C2467924be0ae7B5347228CABF260318753"
+            },
+            {
+              "l1Token": "eth:0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74",
+              "destinationToken": "eth:0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74"
+            }
+          ],
+          "OP Mainnet": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x4200000000000000000000000000000000000006"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85"
+            },
+            {
+              "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "destinationToken": "eth:0x68f180fcCe6836688e9084f035309E29Bf0A2095"
+            },
+            {
+              "l1Token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+              "destinationToken": "eth:0xE7798f023fC62146e8Aa1b36Da45fb70855a77Ea"
+            },
+            {
+              "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "destinationToken": "eth:0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+            },
+            {
+              "l1Token": "eth:0xba100000625a3754423978a60c9317c58a424e3D",
+              "destinationToken": "eth:0xFE8B128bA8C78aabC59d4c64cEE7fF28e9379921"
+            },
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0x94b008aA00579c1307B0EF2c499aD98a8ce58e58"
+            },
+            {
+              "l1Token": "eth:0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
+              "destinationToken": "eth:0xFf733b2A3557a7ed6697007ab5D11B79FdD1b76B"
+            },
+            {
+              "l1Token": "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+              "destinationToken": "eth:0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4"
+            },
+            {
+              "l1Token": "eth:0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e",
+              "destinationToken": "eth:0x395Ae52bB17aef68C2888d941736A71dC6d4e125"
+            },
+            {
+              "l1Token": "eth:0x163f8C2467924be0ae7B5347228CABF260318753",
+              "destinationToken": "eth:0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1"
+            },
+            {
+              "l1Token": "eth:0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74",
+              "destinationToken": "eth:0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74"
+            }
+          ],
+          "Unichain": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x4200000000000000000000000000000000000006"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0x078D782b760474a361dDA0AF3839290b0EF57AD6"
+            }
+          ],
+          "Polygon PoS": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
+            },
+            {
+              "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "destinationToken": "eth:0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6"
+            },
+            {
+              "l1Token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+              "destinationToken": "eth:0x3066818837c5e6eD6601bd5a91B0762877A6B731"
+            },
+            {
+              "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "destinationToken": "eth:0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063"
+            },
+            {
+              "l1Token": "eth:0x3472A5A71965499acd81997a54BBA8D852C6E53d",
+              "destinationToken": "eth:0x1FcbE5937B0cc2adf69772D228fA4205aCF4D9b2"
+            },
+            {
+              "l1Token": "eth:0xba100000625a3754423978a60c9317c58a424e3D",
+              "destinationToken": "eth:0x9a71012B13CA4d3D0Cdc72A177DF3ef03b0E76A3"
+            },
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+            },
+            {
+              "l1Token": "eth:0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
+              "destinationToken": "eth:0xF328b73B6c685831F238c30a23Fc19140CB4D8FC"
+            },
+            {
+              "l1Token": "eth:0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e",
+              "destinationToken": "eth:0x25788a1a171ec66Da6502f9975a15B609fF54CF6"
+            }
+          ],
+          "Monad": [
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0x754704Bc059F8C67012fEd69BC8A327a5aafb603"
+            },
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0xe7cd86e13AC4309349F30B3435a9d337750fC82D"
+            }
+          ],
+          "Lens": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0xE5ecd226b3032910CEaa43ba92EE8232f8237553"
+            },
+            {
+              "l1Token": "eth:0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a",
+              "destinationToken": "eth:0x6bDc36E20D267Ff0dd6097799f82e78907105e2F"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0x88F08E304EC4f90D644Cec3Fb69b8aD414acf884"
+            }
+          ],
+          "Boba": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0x66a2A913e447d6b4BF33EFbec43aAeF87890FBbc"
+            },
+            {
+              "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "destinationToken": "eth:0xdc0486f8bf31DF57a952bcd3c1d3e166e3d9eC8b"
+            },
+            {
+              "l1Token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+              "destinationToken": "eth:0x780f33Ad21314d9A1Ffb6867Fe53d48a76Ec0D16"
+            },
+            {
+              "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "destinationToken": "eth:0xf74195Bb8a5cf652411867c5C2C5b8C2a402be35"
+            },
+            {
+              "l1Token": "eth:0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc",
+              "destinationToken": "eth:0xa18bF3994C0Cc6E3b63ac420308E5383f53120D7"
+            },
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0x5DE1677344D3Cb0D7D465c10b72A8f60699C062d"
+            },
+            {
+              "l1Token": "eth:0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
+              "destinationToken": "eth:0x96821b258955587069F680729cD77369C0892B40"
+            }
+          ],
+          "ZKsync Era": [
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4"
+            },
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0x493257fD37EDB34451f62EDf8D2a0C418852bA4C"
+            },
+            {
+              "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "destinationToken": "eth:0xBBeB516fb02a01611cBBE0453Fe3c580D7281011"
+            },
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91"
+            },
+            {
+              "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "destinationToken": "eth:0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656"
+            }
+          ],
+          "World Chain": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x4200000000000000000000000000000000000006"
+            },
+            {
+              "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "destinationToken": "eth:0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0x79A02482A880bCE3F13e09Da970dC34db4CD24d1"
+            },
+            {
+              "l1Token": "eth:0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e",
+              "destinationToken": "eth:0x7077C71B4AF70737a08287E279B717Dcf64fdC57"
+            },
+            {
+              "l1Token": "eth:0x163f8C2467924be0ae7B5347228CABF260318753",
+              "destinationToken": "eth:0x2cFc85d8E48F8EAB294be644d9E25C3030863003"
+            }
+          ],
+          "Redstone": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
+            }
+          ],
+          "HyperEVM": [
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0xb88339CB7199b77E23DB6E890353E22632Ba630f"
+            },
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb"
+            }
+          ],
+          "Lisk": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x4200000000000000000000000000000000000006"
+            },
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0x05D032ac25d322df992303dCa074EE7392C117b9"
+            },
+            {
+              "l1Token": "eth:0x6033F7f88332B8db6ad452B7C6D5bB643990aE3f",
+              "destinationToken": "eth:0xac485391EB2d7D88253a7F1eF18C37f4242D1A24"
+            },
+            {
+              "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "destinationToken": "eth:0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0xF242275d3a6527d877f2c927a82D9b057609cc71"
+            }
+          ],
+          "Soneium": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x4200000000000000000000000000000000000006"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0xbA9986D2381edf1DA03B0B9c1f8b00dc4AacC369"
+            }
+          ],
+          "MegaETH": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x4200000000000000000000000000000000000006"
+            }
+          ],
+          "Base": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x4200000000000000000000000000000000000006"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+            },
+            {
+              "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "destinationToken": "eth:0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb"
+            },
+            {
+              "l1Token": "eth:0xba100000625a3754423978a60c9317c58a424e3D",
+              "destinationToken": "eth:0x4158734D47Fc9692176B5085E0F52ee0Da5d47F1"
+            },
+            {
+              "l1Token": "eth:0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e",
+              "destinationToken": "eth:0xd652C5425aea2Afd5fb142e120FeCf79e18fafc3"
+            },
+            {
+              "l1Token": "eth:0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74",
+              "destinationToken": "eth:0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74"
+            },
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2"
+            }
+          ],
+          "Plasma": [
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb"
+            }
+          ],
+          "Mode": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x4200000000000000000000000000000000000006"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0xd988097fb8612cc24eeC14542bC03424c656005f"
+            },
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0xf0F161fDA2712DB8b566946122a5af183995e2eD"
+            },
+            {
+              "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "destinationToken": "eth:0xcDd475325D6F564d27247D1DddBb0DAc6fA0a5CF"
+            }
+          ],
+          "Aleph Zero": [
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
+            },
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
+            }
+          ],
+          "Arbitrum One": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+            },
+            {
+              "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "destinationToken": "eth:0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f"
+            },
+            {
+              "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "destinationToken": "eth:0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+            },
+            {
+              "l1Token": "eth:0x3472A5A71965499acd81997a54BBA8D852C6E53d",
+              "destinationToken": "eth:0xBfa641051Ba0a0Ad1b0AcF549a89536A0D76472E"
+            },
+            {
+              "l1Token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+              "destinationToken": "eth:0xd693Ec944A85eeca4247eC1c3b130DCa9B0C3b22"
+            },
+            {
+              "l1Token": "eth:0xba100000625a3754423978a60c9317c58a424e3D",
+              "destinationToken": "eth:0x040d1EdC9569d4Bab2D15287Dc5A4F10F56a56B8"
+            },
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+            },
+            {
+              "l1Token": "eth:0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
+              "destinationToken": "eth:0x53691596d1BCe8CEa565b84d4915e69e03d9C99d"
+            },
+            {
+              "l1Token": "eth:0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e",
+              "destinationToken": "eth:0xCF934E2402A5e072928a39a956964eb8F2B5B79C"
+            }
+          ],
+          "Ink": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x4200000000000000000000000000000000000006"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0x2D270e6886d130D724215A266106e6832161EAEd"
+            }
+          ],
+          "Linea": [
+            {
+              "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "destinationToken": "eth:0x4AF15ec2A0BD43Db75dd04E62FAA3B8EF36b00d5"
+            },
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0xA219439258ca9da29E9Cc4cE5596924745e12B93"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0x176211869cA2b568f2A7D4EE941E073a821EE1ff"
+            },
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
+            },
+            {
+              "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "destinationToken": "eth:0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4"
+            }
+          ],
+          "Blast": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x4300000000000000000000000000000000000004"
+            },
+            {
+              "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "destinationToken": "eth:0xF7bc58b8D8f97ADC129cfC4c9f45Ce3C0E1D2692"
+            },
+            {
+              "l1Token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "destinationToken": "eth:0x4300000000000000000000000000000000000003"
+            }
+          ],
+          "Scroll": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
+            },
+            {
+              "l1Token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
+            },
+            {
+              "l1Token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
+            },
+            {
+              "l1Token": "eth:0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e",
+              "destinationToken": "eth:0x0000000000000000000000000000000000000000"
+            }
+          ],
+          "Zora": [
+            {
+              "l1Token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "destinationToken": "eth:0x4200000000000000000000000000000000000006"
+            },
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0xCccCCccc7021b32EBb4e8C08314bD62F7c653EC4"
+            }
+          ],
+          "Solana": [
+            {
+              "l1Token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "destinationToken": "eth:0xaBc97431B1Bbe4C2D2f6E0E47ca60203452f5d61"
+            }
+          ]
+        },
         "protocolFeeCaptureAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0xe1c1654593925b29f971739a4d4002a1ed75415b6c1e648e6e669c38bae20419",
-          "relayerRefundRoot": "0x98068e2c958b541229bfe8d747689f1c1962dd5cefcb954676ce26fed77e9d34",
+          "poolRebalanceRoot": "0x553f063e054a42db0b287bea78874e87ed5e8d204cec37f54c095b14cde8068e",
+          "relayerRefundRoot": "0xa97a6985cb355efec9c5134cd6ff069c77f59b72f12e852d65e566637a708f9f",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           "unclaimedPoolRebalanceLeafCount": 20,
-          "challengePeriodEndTimestamp": 1779357095
+          "challengePeriodEndTimestamp": 1779711191
         },
         "spokePool": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -1900,7 +2637,8 @@
             "728126428": "Tron",
             "34268394551451": "Solana"
           }
-        }
+        },
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "oeth" } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1932,7 +2670,7 @@
       "implementationNames": {
         "eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452": "Universal_Adapter"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "eth:0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
@@ -2507,7 +3245,8 @@
             "0x7955534455534400000000000000000000000000000000000000000000000000": "yUSDUSD"
           }
         }
-      ]
+      ],
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "AddressWhitelist",
@@ -2533,7 +3272,8 @@
       },
       "implementationNames": {
         "eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7": "AddressWhitelist"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "MegaETH_Adapter",
@@ -2596,7 +3336,8 @@
       "fieldMeta": { "proposers": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": "BondToken"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "SkinnyOptimisticOracle",
@@ -2620,7 +3361,8 @@
       },
       "implementationNames": {
         "eth:0xeE3Afe347D5C74317041E2618C49534dAf887c24": "SkinnyOptimisticOracle"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "Lisk_Adapter",
@@ -2728,8 +3470,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "acrossPropose",
+          "permission": "interact",
           "from": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+          "description": "propose new root bundles (containing settlement info to refund relayers), which are validated optimistically by the UMA oracle.",
           "role": ".proposers"
         },
         {
@@ -2766,7 +3509,146 @@
       },
       "implementationNames": {
         "eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "address": "oeth:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Optimism_SpokePool",
+      "address": "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+      "type": "Contract",
+      "template": "acrossv3/SpokePool",
+      "sourceHashes": [
+        "0xd2812a145d2b7f3e3e1571f68022076a2cccd5fe82f8035d427714135197a6f1",
+        "0xa7af88e42066dce1580a5c39e3bd045de8511f8a453056cd46140e3df8b96f19"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.",
+      "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
+      "deployerAddress": "oeth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
+      "sinceTimestamp": 1682354696,
+      "sinceBlock": 93903076,
+      "values": {
+        "$admin": "oeth:0x0000000000000000000000000000000000000000",
+        "$implementation": "oeth:0x0966F5034261CC50926fB9D5C1603A5034Ffa81c",
+        "$pastUpgrades": [
+          [
+            "2023-04-24T16:44:56.000Z",
+            "0xf09b511734ba603400579c64ce6eeb8286e4429e11ab45e2f36df22f0eb59add",
+            ["oeth:0x618C854204834e110eB77f092e7063d7Ae2855d8"]
+          ],
+          [
+            "2023-06-09T12:53:43.000Z",
+            "0x28a173e69040f2f96ebcd4bf6b793c593bff7c2027a455905610119740e9564f",
+            ["oeth:0xEc88d3C08E2939562Ff8188B4e30A52236C3FF09"]
+          ],
+          [
+            "2023-08-23T13:12:55.000Z",
+            "0x792f7cc7f232d7c3616149394b8a2903b8000a3b28ef74c5cc9100aff6ffed42",
+            ["oeth:0xFd7F000C26B7205c1A3f9b846F44Dc11Ff5E6eb8"]
+          ],
+          [
+            "2023-10-03T13:49:57.000Z",
+            "0x14f1c15037cef66839ce570174aad27a4ea7f33a3e2496e36ba2bbb5b6650637",
+            ["oeth:0xC127c7A25e6D1e1999DF3dC1accddeF278A87303"]
+          ],
+          [
+            "2024-02-21T18:05:41.000Z",
+            "0xe34f46235ddb8e21d5fd4f490565d2a39664fc9603c77b15322004a6e5320a3a",
+            ["oeth:0xE287AAd8F3B99e411f1939492565C7D3F0e77FeF"]
+          ],
+          [
+            "2024-02-25T02:03:25.000Z",
+            "0xc0461376071132e3a21654c5f61a6d2ca2f3cebe1ec3ab263c67b91b07db4dcf",
+            ["oeth:0x2e69a3962E7fF2EEF0c98a76aC3B294b03Dc4C3D"]
+          ],
+          [
+            "2024-03-18T13:41:57.000Z",
+            "0x284c45850a83457ea38a5d25e2c0630ac5161026e839f7b27a8c88bfe22456ad",
+            ["oeth:0x5226a5D010F24F0df089963E94ce88E4c87EB53b"]
+          ],
+          [
+            "2024-05-15T17:38:49.000Z",
+            "0xaf6f0949809d1e81f126f9288e833e90eea180f5159a3637d53ad367b294e5ad",
+            ["oeth:0xAF0079c65Cf5D2f38472956032f5012Cce7b1ba4"]
+          ],
+          [
+            "2024-05-21T12:22:43.000Z",
+            "0x59d665d6c0c49dd5486bcc6809b21f485816efa779338497e7e67542fd7a5871",
+            ["oeth:0x0fDF0fa7FEA145c6c141BCa763c0D4c2e906b3e1"]
+          ],
+          [
+            "2024-09-03T15:50:35.000Z",
+            "0x216fb5f149aebdda4ca076d3c9bca9d36f85e307b510a425848b40bd8801f86a",
+            ["oeth:0xA084031BA301D874a24525450297c1D51b0BF8Bd"]
+          ],
+          [
+            "2025-01-29T00:46:29.000Z",
+            "0x055412f01d41dc49be4c853395e79f5ee4e10e736fe5420b5992997b0dc27add",
+            ["oeth:0x1a4b76a1366c9BceCd187289882823410512d8EB"]
+          ],
+          [
+            "2025-02-07T14:48:07.000Z",
+            "0xc530c24b7b6fd88197b9adb1ff44360bc12087aed26bffcf0c62ec0d789131bd",
+            ["oeth:0xF383FD9A49282C9e1C99eB07a819e27E0d7B956c"]
+          ],
+          [
+            "2025-06-30T17:23:35.000Z",
+            "0x612d2761ea8d8df4a72d12724c4b0d26d5ff8b1c1f17fe81d1e3012ba746072e",
+            ["oeth:0xD51099ac551350Bf3198c69104B5dc4694b3a536"]
+          ],
+          [
+            "2025-10-07T13:35:57.000Z",
+            "0xd68d8d6f62cdeb169f7c8b7cd6b8df87e45679f1fe8577bd03322fc1dceec71f",
+            ["oeth:0x21352B3495A6eE1Bd2921Bdb0a876FaDc3A9245E"]
+          ],
+          [
+            "2026-02-02T17:24:29.000Z",
+            "0xe3918b151a7edd22c00b59843b61403cbe665d76f55b6c47db1c1bfbf8454174",
+            ["oeth:0x0966F5034261CC50926fB9D5C1603A5034Ffa81c"]
+          ]
+        ],
+        "$upgradeCount": 15,
+        "cctpTokenMessenger": "oeth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+        "cctpV2": true,
+        "chainId": 10,
+        "crossDomainAdmin": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+        "depositQuoteTimeBuffer": 3600,
+        "EMPTY_MSG_BYTES": "0x",
+        "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EMPTY_REPAYMENT_CHAIN_ID": 0,
+        "fillDeadlineBuffer": 21600,
+        "getCurrentTime": 1779710545,
+        "INFINITE_FILL_DEADLINE": 4294967295,
+        "l1Gas": 5000000,
+        "l2Eth": "oeth:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+        "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
+        "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
+        "MESSENGER": "oeth:0x4200000000000000000000000000000000000007",
+        "numberOfDeposits": 3680556,
+        "OFT_DST_EID": 0,
+        "OFT_FEE_CAP": 0,
+        "pausedDeposits": false,
+        "pausedFills": false,
+        "recipientCircleDomainId": 0,
+        "UPDATE_BYTES32_DEPOSIT_DETAILS_HASH": "0x8d1994e2bbbd77564cdca06dd819e7ee2a5efa06c80dcb59a4a7b6e39edc538f",
+        "usdcToken": "oeth:0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+        "withdrawalRecipient": "oeth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+        "wrappedNativeToken": "oeth:0x4200000000000000000000000000000000000006"
+      },
+      "fieldMeta": { "crossDomainAdmin": { "severity": "HIGH" } },
+      "implementationNames": {
+        "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281": "ERC1967Proxy",
+        "oeth:0x0966F5034261CC50926fB9D5C1603A5034Ffa81c": "Optimism_SpokePool"
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],
   "abis": {
@@ -4035,16 +4917,163 @@
       "function stampAssertion(bytes32 assertionId) view returns (bytes)",
       "function syncUmaParams(bytes32 identifier, address currency)",
       "function transferOwnership(address newOwner)"
+    ],
+    "oeth:0x0966F5034261CC50926fB9D5C1603A5034Ffa81c": [
+      "constructor(address _wrappedNativeTokenAddress, uint32 _depositQuoteTimeBuffer, uint32 _fillDeadlineBuffer, address _l2Usdc, address _cctpTokenMessenger)",
+      "error ClaimedMerkleLeaf()",
+      "error DepositsArePaused()",
+      "error DisabledRoute()",
+      "error ExpiredFillDeadline()",
+      "error ExternalCallExecutionFailed()",
+      "error FillsArePaused()",
+      "error InsufficientSpokePoolBalanceToExecuteLeaf()",
+      "error InvalidBytes32()",
+      "error InvalidChainId()",
+      "error InvalidCrossDomainAdmin()",
+      "error InvalidDepositorSignature()",
+      "error InvalidExclusiveRelayer()",
+      "error InvalidFillDeadline()",
+      "error InvalidMerkleLeaf()",
+      "error InvalidMerkleProof()",
+      "error InvalidOutputToken()",
+      "error InvalidPayoutAdjustmentPct()",
+      "error InvalidQuoteTimestamp()",
+      "error InvalidSlowFillRequest()",
+      "error InvalidWithdrawalRecipient()",
+      "error LowLevelCallFailed(bytes data)",
+      "error MessageTooShort()",
+      "error MsgValueDoesNotMatchInputAmount()",
+      "error NoRelayerRefundToClaim()",
+      "error NoSlowFillsInExclusivityWindow()",
+      "error NotCrossChainCall()",
+      "error NotCrossDomainAdmin()",
+      "error NotEOA()",
+      "error NotExclusiveRelayer()",
+      "error OFTFeeUnderpaid()",
+      "error OFTTokenMismatch()",
+      "error OftFeeCapExceeded()",
+      "error OftIncorrectAmountReceivedLD()",
+      "error OftIncorrectAmountSentLD()",
+      "error OftInsufficientBalanceForFee()",
+      "error OftLzFeeNotZero()",
+      "error RelayFilled()",
+      "error RemovedFunction()",
+      "error WrongERC7683OrderId()",
+      "error ZeroAddressTarget()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event AdminExternalCallExecuted(address indexed target, bytes data)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ClaimedRelayerRefund(bytes32 indexed l2TokenAddress, bytes32 indexed refundAddress, uint256 amount, address indexed caller)",
+      "event EmergencyDeletedRootBundle(uint256 indexed rootBundleId)",
+      "event EnabledDepositRoute(address indexed originToken, uint256 indexed destinationChainId, bool enabled)",
+      "event ExecutedRelayerRefundRoot(uint256 amountToReturn, uint256 indexed chainId, uint256[] refundAmounts, uint32 indexed rootBundleId, uint32 indexed leafId, address l2TokenAddress, address[] refundAddresses, bool deferredRefunds, address caller)",
+      "event FilledRelay(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 exclusiveRelayer, bytes32 indexed relayer, bytes32 depositor, bytes32 recipient, bytes32 messageHash, tuple(bytes32 updatedRecipient, bytes32 updatedMessageHash, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)",
+      "event FilledV3Relay(address inputToken, address outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint32 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, address exclusiveRelayer, address indexed relayer, address depositor, address recipient, bytes message, tuple(address updatedRecipient, bytes updatedMessage, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)",
+      "event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)",
+      "event Initialized(uint8 version)",
+      "event PausedDeposits(bool isPaused)",
+      "event PausedFills(bool isPaused)",
+      "event RelayedRootBundle(uint32 indexed rootBundleId, bytes32 indexed relayerRefundRoot, bytes32 indexed slowRelayRoot)",
+      "event RequestedSlowFill(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed originChainId, uint256 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 exclusiveRelayer, bytes32 depositor, bytes32 recipient, bytes32 messageHash)",
+      "event RequestedSpeedUpDeposit(uint256 updatedOutputAmount, uint256 indexed depositId, bytes32 indexed depositor, bytes32 updatedRecipient, bytes updatedMessage, bytes depositorSignature)",
+      "event RequestedSpeedUpV3Deposit(uint256 updatedOutputAmount, uint32 indexed depositId, address indexed depositor, address updatedRecipient, bytes updatedMessage, bytes depositorSignature)",
+      "event RequestedV3SlowFill(address inputToken, address outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed originChainId, uint32 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, address exclusiveRelayer, address depositor, address recipient, bytes message)",
+      "event SetL1Gas(uint32 indexed newL1Gas)",
+      "event SetL2TokenBridge(address indexed l2Token, address indexed tokenBridge)",
+      "event SetOFTMessenger(address indexed token, address indexed messenger)",
+      "event SetRemoteL1Token(address indexed l2Token, address indexed l1Token)",
+      "event SetWithdrawalRecipient(address indexed newWithdrawalRecipient)",
+      "event SetXDomainAdmin(address indexed newAdmin)",
+      "event TokensBridged(uint256 amountToReturn, uint256 indexed chainId, uint32 indexed leafId, bytes32 indexed l2TokenAddress, address caller)",
+      "event Upgraded(address indexed implementation)",
+      "event V3FundsDeposited(address inputToken, address outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint32 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, address indexed depositor, address recipient, address exclusiveRelayer, bytes message)",
+      "function EMPTY_MSG_BYTES() view returns (bytes)",
+      "function EMPTY_RELAYER() view returns (bytes32)",
+      "function EMPTY_REPAYMENT_CHAIN_ID() view returns (uint256)",
+      "function INFINITE_FILL_DEADLINE() view returns (uint32)",
+      "function MAX_EXCLUSIVITY_PERIOD_SECONDS() view returns (uint32)",
+      "function MAX_TRANSFER_SIZE() view returns (uint256)",
+      "function MESSENGER() view returns (address)",
+      "function OFT_DST_EID() view returns (uint32)",
+      "function OFT_FEE_CAP() view returns (uint256)",
+      "function UPDATE_BYTES32_DEPOSIT_DETAILS_HASH() view returns (bytes32)",
+      "function __OvmSpokePool_init(uint32 _initialDepositId, address _crossDomainAdmin, address _withdrawalRecipient, address _l2Eth)",
+      "function __SpokePool_init(uint32 _initialDepositId, address _crossDomainAdmin, address _withdrawalRecipient)",
+      "function cctpTokenMessenger() view returns (address)",
+      "function cctpV2() view returns (bool)",
+      "function chainId() view returns (uint256)",
+      "function claimRelayerRefund(bytes32 l2TokenAddress, bytes32 refundAddress)",
+      "function crossDomainAdmin() view returns (address)",
+      "function deposit(bytes32 depositor, bytes32 recipient, bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 destinationChainId, bytes32 exclusiveRelayer, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityParameter, bytes message) payable",
+      "function depositDeprecated_5947912356(address, address, uint256, uint256, int64, uint32, bytes, uint256) payable",
+      "function depositFor(address, address, address, uint256, uint256, int64, uint32, bytes, uint256) payable",
+      "function depositNow(bytes32 depositor, bytes32 recipient, bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 destinationChainId, bytes32 exclusiveRelayer, uint32 fillDeadlineOffset, uint32 exclusivityParameter, bytes message) payable",
+      "function depositQuoteTimeBuffer() view returns (uint32)",
+      "function depositV3(address depositor, address recipient, address inputToken, address outputToken, uint256 inputAmount, uint256 outputAmount, uint256 destinationChainId, address exclusiveRelayer, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityParameter, bytes message) payable",
+      "function depositV3Now(address depositor, address recipient, address inputToken, address outputToken, uint256 inputAmount, uint256 outputAmount, uint256 destinationChainId, address exclusiveRelayer, uint32 fillDeadlineOffset, uint32 exclusivityParameter, bytes message) payable",
+      "function emergencyDeleteRootBundle(uint256 rootBundleId)",
+      "function executeExternalCall(bytes message) returns (bytes returnData)",
+      "function executeRelayerRefundLeaf(uint32 rootBundleId, tuple(uint256 amountToReturn, uint256 chainId, uint256[] refundAmounts, uint32 leafId, address l2TokenAddress, address[] refundAddresses) relayerRefundLeaf, bytes32[] proof) payable",
+      "function executeSlowRelayLeaf(tuple(tuple(bytes32 depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 originChainId, uint256 depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes message) relayData, uint256 chainId, uint256 updatedOutputAmount) slowFillLeaf, uint32 rootBundleId, bytes32[] proof)",
+      "function fill(bytes32 orderId, bytes originData, bytes fillerData)",
+      "function fillDeadlineBuffer() view returns (uint32)",
+      "function fillRelay(tuple(bytes32 depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 originChainId, uint256 depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes message) relayData, uint256 repaymentChainId, bytes32 repaymentAddress)",
+      "function fillRelayWithUpdatedDeposit(tuple(bytes32 depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 originChainId, uint256 depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes message) relayData, uint256 repaymentChainId, bytes32 repaymentAddress, uint256 updatedOutputAmount, bytes32 updatedRecipient, bytes updatedMessage, bytes depositorSignature)",
+      "function fillStatuses(bytes32) view returns (uint256)",
+      "function fillV3Relay(tuple(address depositor, address recipient, address exclusiveRelayer, address inputToken, address outputToken, uint256 inputAmount, uint256 outputAmount, uint256 originChainId, uint32 depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes message) relayData, uint256 repaymentChainId)",
+      "function getCurrentTime() view returns (uint256)",
+      "function getRelayerRefund(address l2TokenAddress, address refundAddress) view returns (uint256)",
+      "function getUnsafeDepositId(address msgSender, bytes32 depositor, uint256 depositNonce) pure returns (uint256)",
+      "function getV3RelayHash(tuple(bytes32 depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 originChainId, uint256 depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes message) relayData) view returns (bytes32)",
+      "function initialize(uint32 _initialDepositId, address _crossDomainAdmin, address _withdrawalRecipient)",
+      "function l1Gas() view returns (uint32)",
+      "function l2Eth() view returns (address)",
+      "function multicall(bytes[] data) returns (bytes[] results)",
+      "function numberOfDeposits() view returns (uint32)",
+      "function oftMessengers(address l2TokenAddress) view returns (address l2OftMessenger)",
+      "function pauseDeposits(bool pause)",
+      "function pauseFills(bool pause)",
+      "function pausedDeposits() view returns (bool)",
+      "function pausedFills() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function recipientCircleDomainId() view returns (uint32)",
+      "function relayRootBundle(bytes32 relayerRefundRoot, bytes32 slowRelayRoot)",
+      "function relayerRefund(address, address) view returns (uint256)",
+      "function remoteL1Tokens(address) view returns (address)",
+      "function requestSlowFill(tuple(bytes32 depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 originChainId, uint256 depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes message) relayData)",
+      "function rootBundles(uint256) view returns (bytes32 slowRelayRoot, bytes32 relayerRefundRoot)",
+      "function setCrossDomainAdmin(address newCrossDomainAdmin)",
+      "function setL1GasLimit(uint32 newl1Gas)",
+      "function setOftMessenger(address token, address messenger)",
+      "function setRemoteL1Token(address l2Token, address l1Token)",
+      "function setTokenBridge(address l2Token, address tokenBridge)",
+      "function setWithdrawalRecipient(address newWithdrawalRecipient)",
+      "function speedUpDeposit(bytes32 depositor, uint256 depositId, uint256 updatedOutputAmount, bytes32 updatedRecipient, bytes updatedMessage, bytes depositorSignature)",
+      "function speedUpV3Deposit(address depositor, uint256 depositId, uint256 updatedOutputAmount, address updatedRecipient, bytes updatedMessage, bytes depositorSignature)",
+      "function tokenBridges(address) view returns (address)",
+      "function tryMulticall(bytes[] data) returns (tuple(bool success, bytes returnData)[] results)",
+      "function unsafeDeposit(bytes32 depositor, bytes32 recipient, bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 destinationChainId, bytes32 exclusiveRelayer, uint256 depositNonce, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityParameter, bytes message) payable",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function usdcToken() view returns (address)",
+      "function withdrawalRecipient() view returns (address)",
+      "function wrappedNativeToken() view returns (address)"
+    ],
+    "oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ]
   },
   "usedTemplates": {
     "acrossv3/AcrossConfigStore": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "acrossv3/Adapter": "0x103d2d74360dacd5d1483aaaa09905c04c03d469c0d74c2040009d6ebe56f9e5",
-    "acrossv3/AdapterStore": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "acrossv3/AdapterStore": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "acrossv3/BondToken": "0x9bbb4f401a9c199b2f0dd48f9f1279e769c7040bdbc6ff1619b1eca5cf91a19a",
-    "acrossv3/HubPool": "0xd03281628aeebe9a31fe85783968c37d996d7647f86a45ec57c1e3b64bc8b213",
+    "acrossv3/HubPool": "0x43a19926b5627cf5abd7e9bbdcc781d445dec16a46ffd407401f02fdf1fc8753",
     "acrossv3/HubPoolStore": "0x3642c36edf2d3a762a4ba62c17f663d8b14f65861115a98004718b3c91ba7ac8",
-    "acrossv3/SpokePool": "0x129b82fd3037f5f22d4fc04c875c2da6b18d7fcf7cce7e51cce9126a2ed485d9",
+    "acrossv3/SpokePool": "0x69c1f7d1798c42d8f56f4628b4b737f269d5b93b80d61fa96be0099e165e722e",
     "acrossv3/universalAdapter": "0x0fe89d590abc56ee5cbf6e99497eeaeeecb6fff890d94a83dfd30ead4463b7e8",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "uma/AddressWhitelist": "0x69e6632f3173e459b6788df25788c8e5a53fc171a191bcdc60dbf6573a17ef38",
@@ -4061,6 +5090,6 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
-  "usedBlockNumbers": { "ethereum": 25142707 },
-  "permissionsConfigHash": "0x15dd5a284f2c2b1a231b52990e7b624ba6148351def2e3edb4a3b0a6eadd8fd6"
+  "usedBlockNumbers": { "ethereum": 25172191, "optimism": 152055884 },
+  "permissionsConfigHash": "0x203ed07123b3a5fec923f83b1b364524da8239ef80094e3e1a4dee01ebaebac3"
 }

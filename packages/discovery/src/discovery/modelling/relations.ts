@@ -1,4 +1,4 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import type {
   ContractPermission,
   RawPermissionConfiguration,
@@ -207,13 +207,17 @@ export function getPermissionsForAdmins(
   field: string
 })[] {
   const admins = get$Admins(structureEntry.values)
-  return admins.map((admin) => {
-    return {
-      to: admin,
-      type: 'upgrade',
-      delay: 0,
-      role: 'admin',
-      field: '$admin',
-    }
-  })
+  return admins
+    .filter(
+      (admin) => ChainSpecificAddress.address(admin) !== EthereumAddress.ZERO,
+    )
+    .map((admin) => {
+      return {
+        to: admin,
+        type: 'upgrade',
+        delay: 0,
+        role: 'admin',
+        field: '$admin',
+      }
+    })
 }
