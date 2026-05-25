@@ -39,7 +39,7 @@ function PrivacyAttributeTag({ attribute }: { attribute: PrivacyAttribute }) {
       <TooltipTrigger asChild>
         <div
           className={cn(
-            'inline-flex select-none items-center rounded px-1.5 py-0.5 font-medium text-xs',
+            'inline-flex select-none items-center rounded border px-1.5 py-0.5 font-medium text-xs',
             ATTRIBUTE_CLASS_NAMES[attribute.id],
           )}
         >
