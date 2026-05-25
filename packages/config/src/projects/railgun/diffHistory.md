@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xdfd9359b315eb39ad3aa00afd2741834f841899c
+Generated with discovered.json: 0x9a62af265633fda4fca4560ad7cdfb7fb5a9f3e4
 
-# Diff at Fri, 22 May 2026 14:44:56 GMT:
+# Diff at Mon, 25 May 2026 09:49:42 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@1b7024bc804124af9b25421eca5fac952454cb09 block: 1779378858
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@639891c3b013ffc79bd0575fa15360dd2e0e6ae1 block: 1779378858
 - current timestamp: 1779461009
 
 ## Description

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xfc4805cd1f351abaa9ded0fe94508c3c4874e8f2
+Generated with discovered.json: 0xacd792fd23bdfd9f25eab1b5e3422daa22bf351b
 
-# Diff at Fri, 22 May 2026 14:17:52 GMT:
+# Diff at Mon, 25 May 2026 09:49:02 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@1b7024bc804124af9b25421eca5fac952454cb09 block: 1777567242
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@639891c3b013ffc79bd0575fa15360dd2e0e6ae1 block: 1777567242
 - current timestamp: 1779457786
 
 ## Description
@@ -147,6 +147,15 @@ discovery. Values are for block 1777567242 (main branch discovery), not current.
       description:
 -        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
 +        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    EOA  (eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
++        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
     }
 ```
 
