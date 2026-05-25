@@ -39,6 +39,7 @@ const mayanSwiftDestAbi = parseAbi([
 
 const mayanFulfillHelperAbi = parseAbi([
   'function fulfillWithERC20(address tokenIn, uint256 amountIn, address router, address allowanceTarget, bytes swapCalldata, address mayan, bytes mayanCalldata, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
+  'function fulfillWithERC20(address tokenIn, uint256 amountIn, address router, address allowanceTarget, bytes swapCalldata, address mayan, (bytes, (uint8, bytes32, bytes32, uint16, bytes32, bytes32, uint64, uint64, uint64, uint64, uint64, uint8, uint8, bytes32), (uint16, bytes32, uint8, bytes32), (bytes32, bytes32, bool)) mayanParams, bytes32 recipient, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
   'function directFulfill(address tokenIn, uint256 amountIn, address mayan, bytes mayanCalldata, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
   'function fulfillWithEth(uint256 amountIn, address fulfillToken, address swapProtocol, bytes swapData, address mayan, bytes mayanCalldata)',
 ])
@@ -86,6 +87,13 @@ type MayanSwiftLegacyOrderParams = readonly [
   number,
   number,
   `0x${string}`,
+]
+
+type MayanSwiftStructuredFulfillParams = readonly [
+  `0x${string}`,
+  MayanSwiftDestOrderParams,
+  MayanSwiftDestExtraParams,
+  readonly [`0x${string}`, `0x${string}`, boolean],
 ]
 
 // Settlement message format:
@@ -248,11 +256,7 @@ function extractMayanSwiftFulfillDetailsFromCallData(
       return undefined
     }
 
-    const mayanCalldata = getMayanCalldataFromFulfillHelper(decoded)
-    if (typeof mayanCalldata !== 'string') return undefined
-    return extractMayanSwiftFulfillDetailsFromCallData(
-      mayanCalldata as `0x${string}`,
-    )
+    return getMayanFulfillHelperDetails(decoded)
   } catch {
     return undefined
   }
@@ -265,6 +269,36 @@ function getMayanCalldataFromFulfillHelper(decoded: {
   if (decoded.functionName === 'fulfillWithERC20') return decoded.args[6]
   if (decoded.functionName === 'directFulfill') return decoded.args[3]
   if (decoded.functionName === 'fulfillWithEth') return decoded.args[5]
+}
+
+function getMayanFulfillHelperDetails(decoded: {
+  functionName: string
+  args: readonly unknown[]
+}): MayanSwiftFulfillDetails | undefined {
+  const mayanPayload = getMayanCalldataFromFulfillHelper(decoded)
+  if (typeof mayanPayload === 'string') {
+    return extractMayanSwiftFulfillDetailsFromCallData(
+      mayanPayload as `0x${string}`,
+    )
+  }
+
+  if (Array.isArray(mayanPayload)) {
+    return extractMayanSwiftStructuredFulfillDetails(mayanPayload)
+  }
+}
+
+function extractMayanSwiftStructuredFulfillDetails(
+  mayanPayload: unknown[],
+): MayanSwiftFulfillDetails | undefined {
+  const params = mayanPayload as unknown as MayanSwiftStructuredFulfillParams
+  const orderParams = params[1]
+  const extraParams = params[2]
+  if (!orderParams || !extraParams) return undefined
+
+  return {
+    srcChainId: extraParams[0],
+    dstTokenAddress: toMayanTokenAddress(orderParams[5]),
+  }
 }
 
 function extractMayanSwiftDestFulfillDetailsFromCallData(

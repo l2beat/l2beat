@@ -37,9 +37,14 @@ export function isMayanCircleSender(sender: EthereumAddress): boolean {
 export function findMayanCircleDestinationChain(
   txLogs: Log[],
   wormholeNetworks: { chain: string; wormholeChainId: number }[],
+  cctpNetworks: { chain: string; domain: number }[] = [],
 ): string | undefined {
   for (const candidateLog of txLogs) {
-    const decoded = logToProtocolData(candidateLog, wormholeNetworks)
+    const decoded = logToProtocolData(
+      candidateLog,
+      wormholeNetworks,
+      cctpNetworks,
+    )
     if (decoded && isMayanCircleProtocolData(decoded)) {
       return decoded.dstChain
     }
