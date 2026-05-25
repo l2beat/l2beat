@@ -19,6 +19,7 @@ import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
 import { findParsedBefore } from './logScan'
 import {
+  findMayanWormholeChain,
   MAYAN_EVM_CHAINS,
   MAYAN_FORWARDER,
   MAYAN_PROTOCOLS,
@@ -335,7 +336,7 @@ function getChainFromWormholeId(
   wormholeNetworks: { chain: string; wormholeChainId: number }[],
   wormholeId: number,
 ) {
-  return findChain(wormholeNetworks, (x) => x.wormholeChainId, wormholeId)
+  return findMayanWormholeChain(wormholeNetworks, wormholeId)
 }
 
 export function getChainFromCctpDomain(

@@ -1593,6 +1593,93 @@
       ]
     }
   },
+  "mayan-swift-structured-helper-solana-onesided": {
+    "loadConfigs": ["wormhole"],
+    "description": "Staging Swift fulfillments via structured helper calldata from Solana",
+    "txs": [
+      {
+        "chain": "bsc",
+        "tx": "0xc03d7e4532aea4e613e64b5bca1f7b24b2b4dbd5bb3e912457645f788f1665d3"
+      },
+      {
+        "chain": "base",
+        "tx": "0xee76f10435c2fe057bb878e38d2d84c1dd9a42ad726f7edfce6cce55be5cbfd8"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xd50b2fe16497dadbca9a7aa4291fd609f93101a2c6a683e1ae2ab440d21428f4"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "mayan-swift.OrderFulfilled",
+          "args": { "$srcChain": "solana" },
+          "ctx": { "chain": "bsc" }
+        },
+        {
+          "type": "mayan-swift.OrderFulfilled",
+          "args": { "$srcChain": "solana" },
+          "ctx": { "chain": "base" }
+        },
+        {
+          "type": "mayan-swift.OrderFulfilled",
+          "args": { "$srcChain": "solana" },
+          "ctx": { "chain": "arbitrum" }
+        }
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "bsc" } } }
+        },
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "base" } } }
+        },
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "arbitrum" } } }
+        }
+      ]
+    }
+  },
+  "mayan-custom-wormhole-chain-ids": {
+    "loadConfigs": ["wormhole"],
+    "description": "Staging Mayan events with Wormhole IDs missing from dynamic config",
+    "txs": [
+      {
+        "chain": "bsc",
+        "tx": "0xe905a411573904b13b845e6017cb5f51919eebb4d5625e6665f35382d611e3b1"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x2289a035dbf056a7362e1ac316cd5f1246de1466239f186637b682e9168eff10"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "mayan-forwarder.MayanForwarded",
+          "args": { "$dstChain": "monad", "methodSignature": "0xa3a30834" }
+        },
+        {
+          "type": "mayan-swift.OrderCreated",
+          "args": { "$dstChain": "monad" }
+        },
+        {
+          "type": "mayan-forwarder.MayanForwarded",
+          "args": { "$dstChain": "sui", "methodSignature": "0x1c59b7fc" }
+        }
+      ],
+      "messages": [],
+      "transfers": []
+    }
+  },
   "mayan-swift-settlement-non-batched": {
     "loadConfigs": ["wormhole"],
     "txs": [
