@@ -73,12 +73,12 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
 
   return (
     <>
-      <div className="mb-3 grid grid-cols-2 gap-x-3 max-md:mt-2 max-lg:hidden">
+      <div className="mb-4 grid grid-cols-2 gap-x-3 max-md:mt-2 max-lg:hidden">
         <PrimaryCard>{tvlChart}</PrimaryCard>
         <PrimaryCard>{countsChart}</PrimaryCard>
       </div>
       <ChartTabs
-        className="mt-2 mb-3 lg:hidden"
+        className="mt-2 mb-4 lg:hidden"
         charts={[tvlChart, countsChart]}
       />
       <ChartControlsWrapper className="justify-end max-md:pr-4">
