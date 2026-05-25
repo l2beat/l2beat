@@ -36,10 +36,6 @@ export function createPrivacyRouter(
     res.status(200).send(html)
   })
 
-  router.get('/privacy/best-practices', (_req, res) => {
-    res.redirect(301, '/publications/privacy-best-practices')
-  })
-
   router.get(
     '/privacy/projects/:slug',
     validateRoute({
