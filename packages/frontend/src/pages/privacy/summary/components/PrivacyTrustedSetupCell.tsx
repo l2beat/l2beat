@@ -24,7 +24,7 @@ export function PrivacyTrustedSetupCell({
           className="shrink-0"
         />
         {trustedSetup.participantCount !== undefined && (
-          <span className="text-[11px] text-secondary leading-none">
+          <span className="font-medium text-[11px] text-secondary leading-none">
             {formatInteger(trustedSetup.participantCount)} participants
           </span>
         )}

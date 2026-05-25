@@ -11,7 +11,7 @@ export function PrivacyDepositsMetric({
   return (
     <div className="text-right">
       <div className="font-bold">{formatInteger(deposits)}</div>
-      <div className="text-[10px] text-secondary leading-none md:text-[11px]">
+      <div className="font-medium text-[10px] text-secondary leading-none md:text-[11px]">
         {formatCurrency(depositedValueUsd, 'usd')}
       </div>
     </div>
