@@ -1,6 +1,6 @@
 {
   "name": "superposition",
-  "timestamp": 1777390996,
+  "timestamp": 1779719746,
   "configHash": "0x1647d2d22303b240cedfe4da9064af0475c7d61f76e37c40a44c45ab18ede624",
   "entries": [
     {
@@ -44,7 +44,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 9751,
+        "nonce": 10441,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -588,7 +588,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 132,
+        "nonce": 135,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -948,7 +948,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 14510,
+        "batchCount": 15361,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90",
@@ -1003,7 +1003,7 @@
         "rollup": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 51552,
+        "totalDelayedMessagesRead": 52447,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1074,7 +1074,7 @@
         "allowedOutboxList": [
           "arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798"
         ],
-        "delayedMessageCount": 51553,
+        "delayedMessageCount": 52448,
         "inboxHistory": [
           "arb1:0x2EAf07A964c6601c4fAefd6D8969DF0B84f65e55",
           "arb1:0x31F535A566FE1Ef994858cf4D97b1207fC7388A8"
@@ -1082,8 +1082,8 @@
         "outboxHistory": ["arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798"],
         "rollup": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075",
         "sequencerInbox": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
-        "sequencerMessageCount": 14510,
-        "sequencerReportedSubMessageCount": 3049123
+        "sequencerMessageCount": 15361,
+        "sequencerReportedSubMessageCount": 3142801
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1168,7 +1168,7 @@
         "getValidators": ["arb1:0xd76a3aCEd4115B017301C54C211EC36aA5E37e05"],
         "inbox": "arb1:0x2EAf07A964c6601c4fAefd6D8969DF0B84f65e55",
         "isPostBoLD": true,
-        "latestConfirmed": "0x29057023ab5b2b4cc13ff506aee559dc3ddcc54eafcc6c85e7c870dcbcf0064f",
+        "latestConfirmed": "0xa1dd03e87f0075571ba8a6cdbabaff790d17be01cd8f8df00ba2e1f82f000ae4",
         "loserStakeEscrow": "arb1:0xd76a3aCEd4115B017301C54C211EC36aA5E37e05",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798",
@@ -1234,6 +1234,7 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
+            "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -2075,6 +2076,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 457277035 },
+  "usedBlockNumbers": { "arbitrum": 466550535 },
   "permissionsConfigHash": "0x833d179253d14a340b3fbd9f02c7e94bbe478d15c9f3c0bf0b80092ed79e8c30"
 }
