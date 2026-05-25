@@ -1,4 +1,4 @@
-import type { ProjectRedWarning } from '@l2beat/config'
+import type { PrivacyAttribute, ProjectRedWarning } from '@l2beat/config'
 import type { InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ProjectLink } from '~/components/projects/links/types'
@@ -39,6 +39,7 @@ export interface PrivacyProjectEntry {
   }
   bucketCount: number
   assetsCount: number
+  attributes: PrivacyAttribute[]
   summary: {
     totalValueLockedUsd: number
     deposits: {
@@ -290,6 +291,7 @@ export async function getPrivacyProjectData(
     discoUi,
     bucketCount,
     assetsCount: details.assets.length,
+    attributes: details.attributes,
     summary: {
       totalValueLockedUsd: details.summary.totalValueLockedUsd,
       deposits: {

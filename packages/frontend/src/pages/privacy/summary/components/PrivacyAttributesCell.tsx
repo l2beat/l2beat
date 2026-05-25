@@ -21,11 +21,13 @@ const ATTRIBUTE_CLASS_NAMES: Record<string, string> = {
 
 export function PrivacyAttributesCell({
   attributes,
+  className,
 }: {
   attributes: PrivacyAttribute[]
+  className?: string
 }) {
   return (
-    <div className="flex min-w-[220px] flex-wrap gap-1 py-1.5">
+    <div className={cn('flex min-w-[220px] flex-wrap gap-1 py-1.5', className)}>
       {attributes.map((attribute) => (
         <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
       ))}

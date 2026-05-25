@@ -1,4 +1,5 @@
 import type {
+  PrivacyAttribute,
   ProjectContracts,
   ProjectDisplay,
   ProjectPermissions,
@@ -33,6 +34,7 @@ export interface PrivacyProjectDetails {
   }
   riskSummary?: string
   upgradesAndGovernance?: string
+  attributes: PrivacyAttribute[]
   assets: PrivacyAsset[]
   summary: {
     totalValueLockedUsd: number
@@ -249,6 +251,7 @@ export async function getPrivacyProjectDetails(
     trustedSetup: project.privacyInfo.trustedSetup,
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
+    attributes: project.privacyInfo.attributes ?? [],
     assets: orderedAssets,
     summary: {
       totalValueLockedUsd: projectTotalTvl,

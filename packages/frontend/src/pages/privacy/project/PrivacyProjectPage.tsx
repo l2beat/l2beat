@@ -16,6 +16,7 @@ import { MobileSectionNavigation } from '~/components/section-navigation/MobileS
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { PrivacyAttributesCell } from '../summary/components/PrivacyAttributesCell'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 import type { PrivacyProjectEntry } from './getPrivacyProjectData'
 
@@ -92,6 +93,15 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                         bucketsCount={entry.bucketCount}
                         deposits={entry.summary.deposits}
                       />
+
+                      {entry.attributes.length > 0 && (
+                        <div className="mt-4 md:mt-2">
+                          <PrivacyAttributesCell
+                            attributes={entry.attributes}
+                            className="py-0"
+                          />
+                        </div>
+                      )}
 
                       <HorizontalSeparator className="my-4 max-md:hidden" />
                       <div className="max-md:hidden">
