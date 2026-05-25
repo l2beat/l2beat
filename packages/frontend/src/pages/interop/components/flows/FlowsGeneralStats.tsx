@@ -126,7 +126,16 @@ export function FlowsGeneralStats() {
             value={
               topChain && topChainData ? (
                 <div className="flex flex-col items-center gap-0.5 text-heading-18">
-                  <span className="text-brand">{topChainData.name}</span>
+                  {topChainData.href ? (
+                    <a
+                      href={topChainData.href}
+                      className="text-brand hover:underline"
+                    >
+                      {topChainData.name}
+                    </a>
+                  ) : (
+                    <span className="text-brand">{topChainData.name}</span>
+                  )}
                   <span className="text-center font-medium text-label-value-13 text-secondary leading-tight">
                     {formatPercent(topChainVolumeShare)} of volume (
                     {formatCurrency(topChain.totalVolume, 'usd')})
