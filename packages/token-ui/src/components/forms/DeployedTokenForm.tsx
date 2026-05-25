@@ -593,14 +593,14 @@ export function DeployedTokenForm({
                       <ArrowRightIcon />
                     </Link>
                   )}
-                  {tokenDetails.data?.data?.coingeckoId && !abstractToken && (
+                  {!abstractToken && (
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Link
                           to={buildUrlWithParams('/tokens/new', {
                             tab: 'abstract',
-                            coingeckoId: tokenDetails.data?.data?.coingeckoId,
                             redirectTo: 'deployed',
+                            coingeckoId: tokenDetails.data?.data?.coingeckoId,
                           })}
                           className={buttonVariants({
                             variant: 'outline',
