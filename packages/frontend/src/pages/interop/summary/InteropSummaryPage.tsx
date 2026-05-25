@@ -100,13 +100,11 @@ function Content({
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectedChains, isDirty, reset } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery(selectedChains)
 
   if (data === null) {
-    return (
-      <InteropEmptyState showResetButton={isDirty} onResetButtonClick={reset} />
-    )
+    return <InteropEmptyState />
   }
 
   const { lockAndMint, nonMinting, burnAndMint } = getBridgeTypeEntries(

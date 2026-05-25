@@ -45,29 +45,44 @@ export function MultiChainSelectorButton({
     (chain) => chain.isSelected[type],
   )
 
+  const singleSelectedChain =
+    selectedChainsWithDetails.length === 1
+      ? selectedChainsWithDetails[0]
+      : undefined
+
   const trigger = (
     <div className="flex h-10 items-center gap-1.5 rounded-lg bg-surface-primary px-4 py-[7px] text-xs leading-none max-md:w-full md:text-sm">
       <div className="font-semibold leading-none">
-        {selectedChainsCount} {pluralize(selectedChainsCount, 'chain')}
+        {singleSelectedChain
+          ? singleSelectedChain.name
+          : `${selectedChainsCount} ${pluralize(selectedChainsCount, 'chain')}`}
       </div>
-      <div className="flex items-center gap-1 max-md:hidden">
-        <div className="-space-x-3 md:-space-x-2 flex shrink-0 items-center">
-          {selectedChainsWithDetails.slice(0, 5).map((chain, i) => (
-            <img
-              key={chain.id}
-              src={chain.iconUrl}
-              alt={chain.name}
-              className="size-5 rounded-full bg-white shadow"
-              style={{ zIndex: selectedChainsCount - i }}
-            />
-          ))}
+      {singleSelectedChain ? (
+        <img
+          src={singleSelectedChain.iconUrl}
+          alt={singleSelectedChain.name}
+          className="size-5 rounded-full bg-white shadow"
+        />
+      ) : (
+        <div className="flex items-center gap-1 max-md:hidden">
+          <div className="-space-x-3 md:-space-x-2 flex shrink-0 items-center">
+            {selectedChainsWithDetails.slice(0, 5).map((chain, i) => (
+              <img
+                key={chain.id}
+                src={chain.iconUrl}
+                alt={chain.name}
+                className="size-5 rounded-full bg-white shadow"
+                style={{ zIndex: selectedChainsCount - i }}
+              />
+            ))}
+          </div>
+          {selectedChainsWithDetails.length > 5 && (
+            <span className="font-semibold text-xs leading-none">
+              +{selectedChainsWithDetails.length - 5}
+            </span>
+          )}
         </div>
-        {selectedChainsWithDetails.length > 5 && (
-          <span className="font-semibold text-xs leading-none">
-            +{selectedChainsWithDetails.length - 5}
-          </span>
-        )}
-      </div>
+      )}
     </div>
   )
 
