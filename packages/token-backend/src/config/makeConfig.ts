@@ -16,6 +16,15 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
     etherscanApiKey: env.optionalString('ETHERSCAN_API_KEY'),
     readOnlyAuthToken: env.optionalString('TOKEN_BACKEND_READONLY_AUTH_TOKEN'),
     jsonBodyLimitMb: env.integer('TOKEN_BACKEND_JSON_BODY_LIMIT_MB', 20),
+    tokenIngestion: {
+      enabled: env.boolean('TOKEN_INGESTION_ENABLED', false),
+      intervalMs: env.integer('TOKEN_INGESTION_INTERVAL_MS', 60_000),
+      autoApprove: env.boolean('TOKEN_INGESTION_AUTOAPPROVE', false),
+      maxProcessedPerRun: env.integer(
+        'TOKEN_INGESTION_MAX_PROCESSED_PER_RUN',
+        1_000,
+      ),
+    },
   }
 }
 
