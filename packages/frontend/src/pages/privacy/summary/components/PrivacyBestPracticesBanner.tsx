@@ -20,7 +20,7 @@ export function PrivacyBestPracticesBanner({
       <CustomLink
         variant="plain"
         underline={false}
-        href="/privacy/best-practices"
+        href="/publications/privacy-best-practices"
         className="group relative flex min-h-[128px] select-none overflow-hidden rounded-lg text-pure-white"
       >
         <div
