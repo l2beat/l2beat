@@ -33,7 +33,7 @@ export function PrivacyBestPracticesBanner({
             <div className="font-medium text-2xs uppercase transition-opacity group-hover:opacity-0">
               Ready for a new identity?
             </div>
-            <div className="origin-left text-balance font-bold text-2xl leading-tight! transition-[translate,scale] ease-in-out group-hover:translate-x-4 group-hover:scale-110 md:text-3xl">
+            <div className="group-hover:-translate-y-2 origin-left text-balance font-bold text-2xl leading-tight! transition-[translate,scale] ease-in-out group-hover:translate-x-4 group-hover:scale-110 md:text-3xl">
               Onchain privacy best practices
             </div>
           </div>
