@@ -1,3 +1,64 @@
+Generated with discovered.json: 0x1897894645aa4d6f35fa07cdf620dd5631140465
+
+# Diff at Thu, 21 May 2026 21:43:35 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@af480cdcac217110f9e99ef400ba0185c35a6c55 block: 1779198962
+- current timestamp: 1779399741
+
+## Description
+
+- Scroll Multisig 2: signer rotated.
+- Scroll Multisig 3: signer removed, threshold 3/5 → 2/4.
+
+## Watched changes
+
+```diff
+    contract Scroll Multisig 2 (eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
++        "eth:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "scr:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
++        "scr:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "scr:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x383434b92d31ccb35eefe561bd98fd400c3e63ad
 
 # Diff at Tue, 19 May 2026 13:57:16 GMT:

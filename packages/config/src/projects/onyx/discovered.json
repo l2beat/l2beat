@@ -1,7 +1,7 @@
 {
   "name": "onyx",
   "timestamp": 1778232986,
-  "configHash": "0xeecc67981b1e05d94a28e30ffc2d1b3bb167ea1c8549a1ef2eb278078fa0ed4f",
+  "configHash": "0x0d009cd8549a2a8579f86e778351721fa6648e079049c08d4e91ac351c016ca7",
   "entries": [
     {
       "name": "RollupEventInbox",

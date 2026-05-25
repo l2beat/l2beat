@@ -2457,6 +2457,21 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
 5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
     `,
   },
+  '0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c': {
+    ...WASM_MODULE_ROOT('v51.1'),
+    verificationStatus: 'notVerified',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v51.1/arbos',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v51.1\` . Commit hash should be  \`e5dab3512419c50893813f4226c0621c3bfe2bdc\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
+5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+    `,
+  },
   '0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39': {
     ...WASM_MODULE_ROOT('v32'),
     programUrl:

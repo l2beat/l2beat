@@ -1,11 +1,16 @@
 {
   "name": "nova",
-  "timestamp": 1779129417,
-  "configHash": "0x5a7cd41bde0abe64f017bc6ac611bd500068046810e45d16d2702602ddf4bf9a",
+  "timestamp": 1779399699,
+  "configHash": "0xd3ff0f54b39748bcf9d3436c09219471aa9d7232d5089096b087c983bc324c46",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
       "address": "arb-nova:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb-nova:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -280,8 +285,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "StevenThornton-OpenZeppelin",
-      "address": "arb-nova:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
+      "address": "arb-nova:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -530,16 +534,16 @@
         "$immutable": false,
         "$implementation": "arb-nova:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb-nova:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D",
+          "arb-nova:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
           "arb-nova:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
           "arb-nova:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
           "arb-nova:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
-          "arb-nova:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
           "arb-nova:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
           "arb-nova:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
           "arb-nova:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
           "arb-nova:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
           "arb-nova:0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
-          "arb-nova:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
           "arb-nova:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
           "arb-nova:0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
@@ -620,12 +624,6 @@
       "implementationNames": {
         "arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639": "UpgradeableBeacon"
       }
-    },
-    {
-      "name": "fred - Arbitrum 2",
-      "address": "arb-nova:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "BeaconProxyFactory",
@@ -822,6 +820,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
       "type": "EOA",
       "proxyType": "EOA",
@@ -962,7 +965,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "batchCount": 349925,
+        "batchCount": 350853,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -974,9 +977,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 300,
-          "prevBlockNumber": 25123819,
+          "prevBlockNumber": 25146149,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 25123890
+          "prevSequencedBlockNumber": 25146222
         },
         "dacKeyset": {
           "requiredSignatures": 5,
@@ -1009,7 +1012,7 @@
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 596026,
+        "totalDelayedMessagesRead": 596956,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1608,8 +1611,7 @@
       }
     },
     {
-      "name": "StevenThornton-OpenZeppelin",
-      "address": "eth:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
+      "address": "eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1939,7 +1941,7 @@
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 596028,
+        "delayedMessageCount": 596958,
         "inboxHistory": [
           "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
@@ -1947,8 +1949,8 @@
         "outboxHistory": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerInbox": "eth:0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 349925,
-        "sequencerReportedSubMessageCount": 84953467
+        "sequencerMessageCount": 350853,
+        "sequencerReportedSubMessageCount": 84964278
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -2271,12 +2273,6 @@
         "eth:0x3FFf9BdC3ce99d3D587b0d06Aa7C4a10075193b4": "Outbox"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "name": "fred - Arbitrum 2",
-      "address": "eth:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
@@ -5350,7 +5346,7 @@
         ],
         "inbox": "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isPostBoLD": true,
-        "latestConfirmed": "0xba1597460276922d1c0ea439e8c09b6a1b5b9d248ea42da1e737402908cf2928",
+        "latestConfirmed": "0x77433f01e2ff3c073bf1d3f2c373f5ce51d7bdd694f70be3e7e6767d872a09e0",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -5591,16 +5587,16 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D",
+          "eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
           "eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
           "eth:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
           "eth:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
-          "eth:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
           "eth:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
           "eth:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
           "eth:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
           "eth:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
           "eth:0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
-          "eth:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
           "eth:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
           "eth:0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
@@ -7157,6 +7153,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 25123928, "nova": 84953466 },
-  "permissionsConfigHash": "0x83d7d561e9fcab36fa5f13139fe3ac25509a678970a6671e5804b74dd35007f4"
+  "usedBlockNumbers": { "ethereum": 25146381, "nova": 84964277 },
+  "permissionsConfigHash": "0x15dd7485bdda672b4d8d5a1502baa36bd588055eba145c093df5daa91fbabd48"
 }

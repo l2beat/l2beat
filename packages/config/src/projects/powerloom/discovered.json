@@ -1,7 +1,7 @@
 {
   "name": "powerloom",
   "timestamp": 1777994321,
-  "configHash": "0x7a80b96a387ff0479bb163bef22ede78736680ef751c8e63f826976ef7cc2436",
+  "configHash": "0x5c9a59642ba6367f778e7b1f8f94fee6e866aa5e81ea8eb16af60a307b06488f",
   "entries": [
     {
       "name": "RollupEventInbox",
