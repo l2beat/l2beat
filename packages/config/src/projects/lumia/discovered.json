@@ -1,7 +1,7 @@
 {
   "name": "lumia",
   "timestamp": 1761895563,
-  "configHash": "0x2758191d8c5c462f005ef52f8d29890c5749f3270790c92c7c4b14ebd265300c",
+  "configHash": "0xca533beca2b09634a8ce92d2d807b952f54a2876e69c4508d5fddd5be9dc1b63",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

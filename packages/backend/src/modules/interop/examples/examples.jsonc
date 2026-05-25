@@ -1986,6 +1986,15 @@
   },
   "debridge-dln": {
     "txs": [
+      // intent fill with deBridge internal Monad chain id
+      {
+        "chain": "ethereum",
+        "tx": "0x876be7ce22fee0a6e77c6bca3612f98c2b3cf06fbd6a065044c7e664f1c7e61d"
+      },
+      {
+        "chain": "monad",
+        "tx": "0x889d4c07cd24c8169487d2466b2949fdcd92158dfdf79d9319574617324c34bb"
+      },
       // intent fill
       {
         "chain": "arbitrum",
@@ -2026,7 +2035,194 @@
         "chain": "ethereum",
         "tx": "0x20350493243d9255ce6cb8d179cd7369727bfae83964df4d8e33ed690d665473"
       }
-    ]
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "debridge-dln.CreatedOrder",
+          "args": {
+            "orderId": "0x7d59d14f000f465b3f811ffd0641d019bb287ba41fdb097ab6a1feb819cdee2d",
+            "$dstChain": "monad"
+          }
+        },
+        {
+          "type": "debridge-dln.FulfilledOrder",
+          "args": {
+            "orderId": "0x7d59d14f000f465b3f811ffd0641d019bb287ba41fdb097ab6a1feb819cdee2d",
+            "$srcChain": "ethereum"
+          }
+        },
+        {
+          "type": "debridge-dln.CreatedOrder",
+          "args": {
+            "orderId": "0xb9ac1f94cc5c2f2f334b0df790c6b0f671474ec6bc8424600c04be32af9d8104",
+            "fromToken": "native",
+            "$dstChain": "base"
+          }
+        },
+        {
+          "type": "debridge-dln.FulfilledOrder",
+          "args": {
+            "orderId": "0xb9ac1f94cc5c2f2f334b0df790c6b0f671474ec6bc8424600c04be32af9d8104",
+            "$srcChain": "arbitrum"
+          }
+        },
+        {
+          "type": "debridge-dln.CreatedOrder",
+          "args": {
+            "orderId": "0x82558f3963dc12a9fe19c05981dbda9bc9ccc6698daee8e468d842ccc4ba8d4c",
+            "fromToken": "0x000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+            "$dstChain": "ethereum"
+          }
+        },
+        {
+          "type": "debridge-dln.FulfilledOrder",
+          "args": {
+            "orderId": "0x82558f3963dc12a9fe19c05981dbda9bc9ccc6698daee8e468d842ccc4ba8d4c",
+            "$srcChain": "base"
+          }
+        },
+        {
+          "type": "debridge.Sent",
+          "args": {
+            "submissionId": "0x5297d90e64632cd194dcc3d2026fdd54672bf906b34fb4e1845a2ee07499db42",
+            "$dstChain": "arbitrum"
+          }
+        },
+        {
+          "type": "debridge-dln.SentOrderUnlock",
+          "args": {
+            "orderId": "0xb9ac1f94cc5c2f2f334b0df790c6b0f671474ec6bc8424600c04be32af9d8104",
+            "submissionId": "0x5297d90e64632cd194dcc3d2026fdd54672bf906b34fb4e1845a2ee07499db42"
+          }
+        },
+        {
+          "type": "debridge-dln.ClaimedUnlock",
+          "args": {
+            "orderId": "0xb9ac1f94cc5c2f2f334b0df790c6b0f671474ec6bc8424600c04be32af9d8104",
+            "giveAmount": "57596490622995373",
+            "giveTokenAddress": "native"
+          }
+        },
+        {
+          "type": "debridge.Claimed",
+          "args": {
+            "submissionId": "0x5297d90e64632cd194dcc3d2026fdd54672bf906b34fb4e1845a2ee07499db42",
+            "$srcChain": "base"
+          }
+        },
+        {
+          "type": "debridge-dln.SentOrderCancel",
+          "args": {
+            "orderId": "0xc4f6ddd114a60f11a94e3d2d79a19f6f89e3078e4a5b94319982874ff7817f46",
+            "submissionId": "0x7438c39c66e06e5be2871c9345c62de3b4bf1e863399e8b71fc258960dcf6765"
+          }
+        },
+        {
+          "type": "debridge-dln.ClaimedOrderCancel",
+          "args": {
+            "orderId": "0xc4f6ddd114a60f11a94e3d2d79a19f6f89e3078e4a5b94319982874ff7817f46"
+          }
+        },
+        {
+          "type": "debridge.Claimed",
+          "args": {
+            "submissionId": "0x7438c39c66e06e5be2871c9345c62de3b4bf1e863399e8b71fc258960dcf6765",
+            "$srcChain": "base"
+          }
+        }
+      ],
+      "messages": [
+        {
+          "type": "debridge.Message",
+          "app": "debridge-dln-settlement",
+          "src": {
+            "ctx": { "chain": "base" },
+            "args": {
+              "submissionId": "0x5297d90e64632cd194dcc3d2026fdd54672bf906b34fb4e1845a2ee07499db42"
+            }
+          },
+          "dst": { "ctx": { "chain": "arbitrum" } }
+        },
+        {
+          "type": "debridge.Message",
+          "app": "debridge-dln-cancellation",
+          "src": {
+            "ctx": { "chain": "base" },
+            "args": {
+              "submissionId": "0x7438c39c66e06e5be2871c9345c62de3b4bf1e863399e8b71fc258960dcf6765"
+            }
+          },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        },
+        {
+          "type": "debridge-dln.Message",
+          "app": "debridge-dln",
+          "src": {
+            "ctx": { "chain": "arbitrum" },
+            "args": {
+              "orderId": "0xb9ac1f94cc5c2f2f334b0df790c6b0f671474ec6bc8424600c04be32af9d8104"
+            }
+          },
+          "dst": { "ctx": { "chain": "base" } }
+        },
+        {
+          "type": "debridge-dln.Message",
+          "app": "debridge-dln",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "monad" } }
+        },
+        {
+          "type": "debridge-dln.Message",
+          "app": "debridge-dln",
+          "src": {
+            "ctx": { "chain": "base" },
+            "args": {
+              "orderId": "0x82558f3963dc12a9fe19c05981dbda9bc9ccc6698daee8e468d842ccc4ba8d4c"
+            }
+          },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "debridge-dln.Transfer",
+          "bridgeType": "nonMinting",
+          "src": {
+            "event": { "ctx": { "chain": "arbitrum" } },
+            "tokenAmount": "57596490622995373"
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "base" } },
+            "tokenAmount": "57451609211154112"
+          }
+        },
+        {
+          "type": "debridge-dln.Transfer",
+          "bridgeType": "nonMinting",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAmount": "147075647"
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "monad" } },
+            "tokenAmount": "5655601265366768073993"
+          }
+        },
+        {
+          "type": "debridge-dln.Transfer",
+          "bridgeType": "nonMinting",
+          "src": {
+            "event": { "ctx": { "chain": "base" } },
+            "tokenAmount": "200730392"
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAmount": "200262149"
+          }
+        }
+      ]
+    }
   },
   "debridgedln-onesided": {
     "txs": [

@@ -1,7 +1,7 @@
 {
   "name": "haust",
   "timestamp": 1762959021,
-  "configHash": "0x8138cfbe54968cbf22dedc9afc50bb76560ea18340bfd3e0c56478bd0687345d",
+  "configHash": "0xe8eb5d0e114d750d186a85737ca4cdb174e65a9a2fbe112fab7de28722a9bac2",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

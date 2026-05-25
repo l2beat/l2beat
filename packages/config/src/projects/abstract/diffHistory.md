@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xe90ba8913244653fd81feec99fc63a64478532b0
+
+# Diff at Fri, 22 May 2026 09:37:07 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1771250356
+- current timestamp: 1779442556
+
+## Description
+
+For some reason, one EOA appeared on the disco frontend. No onchan changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771250356 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
 Generated with discovered.json: 0x2a937095361ddbc160a70ac873eadc609cbc0a18
 
 # Diff at Fri, 15 May 2026 12:35:35 GMT:
