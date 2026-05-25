@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function MultiChainSelector({ chains, protocols }: Props) {
-  const { reset, isDirty, swapPaths } = useInteropSelectedChains()
+  const { isDirty, swapPaths } = useInteropSelectedChains()
 
   return (
     <div className="sticky top-0 z-30 md:pt-4">
@@ -25,15 +25,15 @@ export function MultiChainSelector({ chains, protocols }: Props) {
           <div className="h-10 w-px bg-black/16 max-[1024px]:hidden" />
           <div className="flex items-center gap-3 max-md:w-full">
             <MultiChainSelectorButton allChains={chains} type="from" />
-            <MultiChainSelectorButton allChains={chains} type="to" />
             <button
               type="button"
-              className="cursor-pointer rounded-lg border border-brand p-[11px] max-md:hidden"
+              className="cursor-pointer rounded-lg border border-brand p-[11px] max-md:self-end max-md:p-[7px]"
               onClick={swapPaths}
               title="Swap From and To"
             >
               <SwapIcon className="size-4 fill-brand" />
             </button>
+            <MultiChainSelectorButton allChains={chains} type="to" />
           </div>
         </div>
         <div
@@ -49,15 +49,6 @@ export function MultiChainSelector({ chains, protocols }: Props) {
               </span>
               <AllProtocolsDialog protocols={protocols} />
             </>
-          )}
-          {isDirty && (
-            <button
-              type="button"
-              className="font-semibold text-base leading-[115%] underline"
-              onClick={reset}
-            >
-              Reset
-            </button>
           )}
         </div>
       </div>

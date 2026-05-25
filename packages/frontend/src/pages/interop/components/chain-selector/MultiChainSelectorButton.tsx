@@ -14,7 +14,6 @@ import {
   PopoverTrigger,
 } from '~/components/core/Popover'
 import { InfoIcon } from '~/icons/Info'
-import { SwapIcon } from '~/icons/Swap'
 import { cn } from '~/utils/cn'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { ChainSelectorChainToggle } from './ChainSelectorChainToggle'
@@ -27,14 +26,8 @@ export function MultiChainSelectorButton({
   allChains: InteropChainWithIcon[]
   type: 'from' | 'to'
 }) {
-  const {
-    selectedChains,
-    toggleFrom,
-    toggleTo,
-    swapPaths,
-    selectAll,
-    deselectAll,
-  } = useInteropSelectedChains()
+  const { selectedChains, toggleFrom, toggleTo, selectAll, deselectAll } =
+    useInteropSelectedChains()
 
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
     id,
@@ -47,16 +40,19 @@ export function MultiChainSelectorButton({
   }))
 
   const selectedChainsCount = selectedChains[type].length
+  const toggleSelected = type === 'from' ? toggleFrom : toggleTo
+  const selectedChainsWithDetails = chainsWithDetails.filter(
+    (chain) => chain.isSelected[type],
+  )
 
   const trigger = (
-    <div className="flex h-10 items-center gap-1.5 rounded-lg bg-surface-primary px-4 py-[7px] text-xs leading-none md:text-sm">
+    <div className="flex h-10 items-center gap-1.5 rounded-lg bg-surface-primary px-4 py-[7px] text-xs leading-none max-md:w-full md:text-sm">
       <div className="font-semibold leading-none">
         {selectedChainsCount} {pluralize(selectedChainsCount, 'chain')}
       </div>
-      <div className="-space-x-3 md:-space-x-2 flex items-center">
-        {chainsWithDetails
-          .filter((chain) => chain.isSelected[type])
-          .map((chain, i) => (
+      <div className="flex items-center gap-1 max-md:hidden">
+        <div className="-space-x-3 md:-space-x-2 flex shrink-0 items-center">
+          {selectedChainsWithDetails.slice(0, 5).map((chain, i) => (
             <img
               key={chain.id}
               src={chain.iconUrl}
@@ -65,54 +61,43 @@ export function MultiChainSelectorButton({
               style={{ zIndex: selectedChainsCount - i }}
             />
           ))}
+        </div>
+        {selectedChainsWithDetails.length > 5 && (
+          <span className="font-semibold text-xs leading-none">
+            +{selectedChainsWithDetails.length - 5}
+          </span>
+        )}
       </div>
     </div>
   )
 
   return (
-    <div className="flex items-start gap-1 max-md:flex-col md:items-center md:gap-3">
+    <div className="flex items-start gap-1 max-md:min-w-0 max-md:flex-1 max-md:flex-col md:items-center md:gap-3">
       <div className="font-semibold capitalize max-md:hidden">{type}</div>
-      <div className="font-medium text-xs leading-none md:hidden">
-        <span className="capitalize">{type}</span> selected chains
+      <div className="font-medium text-xs capitalize leading-none md:hidden">
+        {type}
       </div>
       <Drawer>
-        <DrawerTrigger className="md:hidden">{trigger}</DrawerTrigger>
+        <DrawerTrigger className="max-md:w-full md:hidden">
+          {trigger}
+        </DrawerTrigger>
         <DrawerContent className="pb-4">
           <DrawerHeader className="mb-4 gap-2">
-            <DrawerTitle className="mb-0 font-semibold text-lg text-primary leading-none">
-              Chains
+            <DrawerTitle className="mb-0 font-semibold text-lg text-primary capitalize leading-none">
+              {type} chains
             </DrawerTitle>
             <DrawerDescription className="font-semibold text-secondary text-xs leading-none">
               Select the chains you want to include
             </DrawerDescription>
-            {(selectedChains.from.length === 0 ||
-              selectedChains.to.length === 0) && <EmptyStateError />}
+            {selectedChains[type].length === 0 && <EmptyStateError />}
           </DrawerHeader>
-          <div className="mb-2 font-semibold text-xs leading-none">From</div>
           <div className="flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
-                isSelected={chain.isSelected.from}
-                toggleSelected={toggleFrom}
-              />
-            ))}
-          </div>
-          <button
-            className="mt-3 w-fit cursor-pointer rounded-sm border border-brand p-[7px]"
-            onClick={swapPaths}
-          >
-            <SwapIcon className="size-4 rotate-90 fill-brand" />
-          </button>
-          <div className="mt-3 mb-2 font-semibold text-xs leading-none">To</div>
-          <div className="flex flex-wrap gap-1">
-            {chainsWithDetails.map((chain) => (
-              <ChainSelectorChainToggle
-                key={chain.id}
-                chain={chain}
-                isSelected={chain.isSelected.to}
-                toggleSelected={toggleTo}
+                isSelected={chain.isSelected[type]}
+                toggleSelected={toggleSelected}
               />
             ))}
           </div>
@@ -121,20 +106,14 @@ export function MultiChainSelectorButton({
             <ModifierButton
               label="Select all"
               className="p-2.5"
-              onClick={() => selectAll()}
-              disabled={
-                selectedChains.from.length === allChains.length &&
-                selectedChains.to.length === allChains.length
-              }
+              onClick={() => selectAll(type)}
+              disabled={selectedChains[type].length === allChains.length}
             />
             <ModifierButton
               label="Deselect all"
               className="p-2.5"
-              onClick={() => deselectAll()}
-              disabled={
-                selectedChains.from.length === 0 &&
-                selectedChains.to.length === 0
-              }
+              onClick={() => deselectAll(type)}
+              disabled={selectedChains[type].length === 0}
             />
           </div>
         </DrawerContent>

@@ -27,7 +27,6 @@ interface InteropSelectedChainsContextType {
   selectAll: (type?: 'from' | 'to') => void
   deselectAll: (type?: 'from' | 'to') => void
   swapPaths: () => void
-  reset: () => void
   isDirty: boolean
   buildUrl: (path: string) => string
 }
@@ -41,8 +40,6 @@ interface InteropSelectedChainsProviderProps {
   interopChains: InteropChainWithIcon[]
   initialSelection: InteropSelection
 }
-
-const DEFAULT_SELECTION: InteropSelection = { from: [], to: [] }
 
 export function InteropSelectedChainsProvider({
   children,
@@ -187,10 +184,6 @@ export function InteropSelectedChainsProvider({
     }))
   }, [])
 
-  const reset = useCallback(() => {
-    setSelection(DEFAULT_SELECTION)
-  }, [])
-
   const isDirty = useMemo(
     () => selection.from.length > 0 || selection.to.length > 0,
     [selection],
@@ -208,7 +201,6 @@ export function InteropSelectedChainsProvider({
         selectAll,
         deselectAll,
         swapPaths,
-        reset,
         isDirty,
         buildUrl,
       }}
