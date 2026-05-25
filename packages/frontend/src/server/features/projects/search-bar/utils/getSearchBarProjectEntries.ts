@@ -66,7 +66,6 @@ export function getSearchBarProjectEntries<
     id: project.id,
     name: project.name,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-    isUpcoming: false,
     projectAddresses: extractProjectAddresses(
       project.contracts,
       project.permissions,

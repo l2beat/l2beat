@@ -1,6 +1,6 @@
 {
   "name": "playblock",
-  "timestamp": 1778508927,
+  "timestamp": 1779128593,
   "configHash": "0x0ea5426b429d09d7b4db2b72dbdbdb16edb31dda0f08288cee495ea89891622a",
   "entries": [
     {
@@ -205,13 +205,13 @@
         "confirmPeriodBlocks": 150,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 18215,
+        "firstUnresolvedNode": 18226,
         "inbox": "arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
         "isERC20Enabled": false,
         "isPostBoLD": false,
-        "lastStakeBlock": 21894395,
-        "latestConfirmed": 18214,
-        "latestNodeCreated": 18214,
+        "lastStakeBlock": 25085892,
+        "latestConfirmed": 18225,
+        "latestNodeCreated": 18225,
         "loserStakeEscrow": "arb-nova:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
@@ -221,7 +221,7 @@
         "rollupEventInbox": "arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
         "sequencerInbox": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
         "setValidatorCount": 5,
-        "stakerCount": 2,
+        "stakerCount": 3,
         "stakeToken": "arb-nova:0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
@@ -756,7 +756,7 @@
         "allowedOutboxList": [
           "arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83"
         ],
-        "delayedMessageCount": 145703,
+        "delayedMessageCount": 145704,
         "inboxHistory": [
           "arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
           "arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591"
@@ -768,8 +768,8 @@
         ],
         "rollup": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
         "sequencerInbox": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-        "sequencerMessageCount": 186223,
-        "sequencerReportedSubMessageCount": 238475906
+        "sequencerMessageCount": 186442,
+        "sequencerReportedSubMessageCount": 240805811
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -836,7 +836,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 186223,
+        "batchCount": 186442,
         "batchPosterManager": "arb-nova:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb-nova:0x28a60eFd283Dc7FC6aa959bA733B5612C9982458"],
         "bridge": "arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
@@ -1587,6 +1587,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "nova": 84932031 },
+  "usedBlockNumbers": { "nova": 84953426 },
   "permissionsConfigHash": "0x6a8e05472fc24e8d30dddba33f69d2d17b53b1b1e46f21f9dcfc60dcb6b5ebbb"
 }

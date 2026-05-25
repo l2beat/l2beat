@@ -661,6 +661,7 @@ function abstractToken(
     coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
     comment: overrides.comment ?? null,
     reviewed: overrides.reviewed ?? false,
+    isPriceUnreliable: overrides.isPriceUnreliable ?? false,
   }
 }
 
@@ -691,6 +692,8 @@ function deployedToken(
         excludeFromTotal: false,
       },
     },
+    abstractTokenAssignmentProof:
+      overrides.abstractTokenAssignmentProof ?? null,
   }
 }
 

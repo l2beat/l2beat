@@ -14,6 +14,7 @@ import unionBy from 'lodash/unionBy'
 import {
   CONTRACTS,
   compareRisk,
+  computeBoldDefenderAdvantage,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
@@ -984,13 +985,28 @@ function getRiskView(
       templateVars.nonTemplateRiskView?.stateValidation ??
       (() => {
         if (validatorWhitelistDisabled) {
-          return RISK_VIEW.STATE_FP_INT(
-            challengePeriodSeconds,
-            challengeGracePeriodBlocks
-              ? Number(challengeGracePeriodBlocks) *
-                  blockNumberOpcodeTimeSeconds
-              : undefined,
+          const baseStake = templateVars.discovery.getContractValue<number>(
+            'RollupProxy',
+            'baseStake',
           )
+          const stakeAmounts = templateVars.discovery.getContractValue<
+            number[]
+          >('EdgeChallengeManager', 'stakeAmounts')
+          return {
+            ...RISK_VIEW.STATE_FP_INT(
+              challengePeriodSeconds,
+              challengeGracePeriodBlocks
+                ? Number(challengeGracePeriodBlocks) *
+                    blockNumberOpcodeTimeSeconds
+                : 0,
+              challengeGracePeriodBlocks ? 'if-challenged' : undefined,
+            ),
+            permissioned: false,
+            defenderAdvantage: computeBoldDefenderAdvantage(
+              baseStake,
+              stakeAmounts,
+            ),
+          }
         }
 
         const nOfChallengers = isPostBoLD
@@ -1011,21 +1027,24 @@ function getRiskView(
             challengeGracePeriodBlocks
               ? Number(challengeGracePeriodBlocks) *
                   blockNumberOpcodeTimeSeconds
-              : undefined,
+              : 0,
+            challengeGracePeriodBlocks ? 'if-challenged' : undefined,
           ),
-          initialBond: isPostBoLD
-            ? formatEther(
-                templateVars.discovery.getContractValue<number>(
-                  'RollupProxy',
-                  'baseStake',
+          initialBond: {
+            value: isPostBoLD
+              ? formatEther(
+                  templateVars.discovery.getContractValue<number>(
+                    'RollupProxy',
+                    'baseStake',
+                  ),
+                )
+              : formatEther(
+                  templateVars.discovery.getContractValue<number>(
+                    'RollupProxy',
+                    'currentRequiredStake',
+                  ),
                 ),
-              )
-            : formatEther(
-                templateVars.discovery.getContractValue<number>(
-                  'RollupProxy',
-                  'currentRequiredStake',
-                ),
-              ),
+          },
         }
       })(),
     dataAvailability:

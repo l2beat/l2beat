@@ -11,7 +11,7 @@ import {
   ContractCallApproved,
   ContractCallExecuted,
 } from './axelar'
-import { findParsedAround } from './logScan'
+import { findBestTransferLogByExactAmount } from './logScan'
 import {
   getBestEffortTokenFrameworkBridgeType,
   getTokenFrameworkBridgeType,
@@ -65,20 +65,12 @@ export class AxelarITSPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const interchainTransfer = parseInterchainTransfer(input.log, null)
     if (interchainTransfer) {
-      const transferInfo = findParsedAround(
+      const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
+        interchainTransfer.amount,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== interchainTransfer.amount) return
-          return {
-            address: Address32.from(log.address),
-            burned: Address32.from(transfer.to) === Address32.ZERO,
-          }
-        },
+        (log) => parseTransfer(log, null),
       )
 
       const $dstChain = findChain(
@@ -99,8 +91,10 @@ export class AxelarITSPlugin implements InteropPlugin {
         InterchainTransfer.create(input, {
           matchId,
           amount: interchainTransfer.amount,
-          tokenAddress: transferInfo?.address,
-          srcWasBurned: transferInfo?.burned,
+          tokenAddress: transferMatch.transfer?.logAddress,
+          srcWasBurned: transferMatch.transfer
+            ? transferMatch.transfer.to === Address32.ZERO
+            : undefined,
           $dstChain,
         }),
       ]
@@ -111,20 +105,12 @@ export class AxelarITSPlugin implements InteropPlugin {
       null,
     )
     if (interchainTransferReceived) {
-      const transferInfo = findParsedAround(
+      const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
+        interchainTransferReceived.amount,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== interchainTransferReceived.amount) return
-          return {
-            address: Address32.from(log.address),
-            minted: Address32.from(transfer.from) === Address32.ZERO,
-          }
-        },
+        (log) => parseTransfer(log, null),
       )
 
       const $srcChain = findChain(
@@ -145,8 +131,10 @@ export class AxelarITSPlugin implements InteropPlugin {
           matchId,
           commandId: interchainTransferReceived.commandId,
           amount: interchainTransferReceived.amount,
-          tokenAddress: transferInfo?.address,
-          dstWasMinted: transferInfo?.minted,
+          tokenAddress: transferMatch.transfer?.logAddress,
+          dstWasMinted: transferMatch.transfer
+            ? transferMatch.transfer.from === Address32.ZERO
+            : undefined,
           $srcChain,
         }),
       ]

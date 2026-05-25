@@ -139,7 +139,6 @@ describe('getProjects', () => {
       // It can be squashed, but it's more readable this way
       const target = [...layer2s, ...layer3s].filter(
         (project) =>
-          !project.isUpcoming &&
           !project.reviewStatus &&
           !project.archivedAt &&
           // It makes no sense to list them on the DA-BEAT
@@ -738,9 +737,7 @@ describe('getProjects', () => {
 
   describe('all new projects are discovery driven', () => {
     const isNormalProject = (p: BaseProject) => {
-      return (
-        p.scalingInfo && p.archivedAt === undefined && p.isUpcoming !== true
-      )
+      return p.scalingInfo && p.archivedAt === undefined
     }
 
     const filteredProjects = projects.filter(

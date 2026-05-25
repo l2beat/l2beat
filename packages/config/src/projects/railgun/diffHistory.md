@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x1d25c2d5970b631b60bcd29d2c96e2508035b380
+
+# Diff at Thu, 21 May 2026 16:01:07 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1777550988
+- current timestamp: 1779378858
+
+## Description
+
+Added Relay adapter to discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777550988 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract RelayAdapt (eth:0xAc9f360Ae85469B27aEDdEaFC579Ef2d052aD405) [railgun/RelayAdapt]
+    +++ description: Execution adapter contract for Railgun. To interact with public contracts from shielded pools, tokens are unshielded to RelayAdapter, which performs specified calls and shields tokens back to the same user.
+```
+
+Generated with discovered.json: 0xf4cf0474e43de803742779a2e4f647f18a803f53
+
+# Diff at Thu, 21 May 2026 07:19:18 GMT:
+
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@81af7a0da7d0a301e5b9686bebf53af2984b37b1 block: 1777550988
+- current timestamp: 1777550988
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777550988 (main branch discovery), not current.
+
+```diff
+    contract Rail Token (eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D) [railgun/RailToken] {
+    +++ description: RAIL governance token contract with a capped mint schedule and an early anti-bot transfer override. If you trust this contract, you trust its owner to mint additional RAIL up to the hard cap.
+      name:
+-        "RailToken"
++        "Rail Token"
+    }
+```
+
 Generated with discovered.json: 0x9d896aa554475323e31765e93cfd52a7fac2fb11
 
 # Diff at Thu, 14 May 2026 07:39:56 GMT:

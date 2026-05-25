@@ -159,7 +159,6 @@ export class ProjectDiscovery {
     excludedTokens,
     premintedTokens,
     upgradableBy,
-    isUpcoming,
     includeInTotal,
     source,
     bridgedUsing,
@@ -178,7 +177,6 @@ export class ProjectDiscovery {
     excludedTokens?: string[]
     premintedTokens?: string[]
     upgradableBy?: ProjectUpgradeableActor[]
-    isUpcoming?: boolean
     includeInTotal?: boolean
     source?: ProjectEscrow['source']
     bridgedUsing?: LegacyTokenBridgedUsing
@@ -209,7 +207,6 @@ export class ProjectDiscovery {
       excludedTokens,
       premintedTokens,
       contract,
-      isUpcoming,
       chain,
       includeInTotal:
         (includeInTotal ?? chain === 'ethereum') ? true : includeInTotal,
@@ -585,12 +582,6 @@ export class ProjectDiscovery {
   get$Implementations(contractIdentifier: string) {
     const contract = this.getContract(contractIdentifier)
     return get$Implementations(contract.values)
-  }
-
-  get$TokenData() {
-    return this.getContracts()
-      .flatMap((contract) => contract.values?.$tokenData)
-      .filter(notUndefined)
   }
 
   getAccessControlField(
