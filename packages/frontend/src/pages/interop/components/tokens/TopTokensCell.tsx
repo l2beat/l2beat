@@ -45,8 +45,9 @@ export function TopTokensCell({
           remainingCount: topItems.remainingCount,
         }}
         type="cell"
-        setIsOpen={setIsOpen}
-        hideDialog={hideDialog}
+        {...(hideDialog
+          ? { hideDialog: true as const }
+          : { hideDialog: false as const, setIsOpen })}
       />
       {!hideDialog && (
         <TokensDialog
