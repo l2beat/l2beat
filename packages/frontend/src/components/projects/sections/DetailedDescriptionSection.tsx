@@ -14,9 +14,11 @@ export function DetailedDescriptionSection({
 }: DetailedDescriptionSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <div className="mt-4 mb-2 text-paragraph-15 md:text-paragraph-16">
+      <div className="text-paragraph-15 md:text-paragraph-16">
         {description && <Markdown>{description}</Markdown>}
-        {detailedDescription && <Markdown>{detailedDescription}</Markdown>}
+        {detailedDescription && (
+          <Markdown className="mt-4">{detailedDescription}</Markdown>
+        )}
       </div>
     </ProjectSection>
   )
