@@ -1,3 +1,174 @@
+Generated with discovered.json: 0x1d25c2d5970b631b60bcd29d2c96e2508035b380
+
+# Diff at Thu, 21 May 2026 16:01:07 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1777550988
+- current timestamp: 1779378858
+
+## Description
+
+Added Relay adapter to discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777550988 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract RelayAdapt (eth:0xAc9f360Ae85469B27aEDdEaFC579Ef2d052aD405) [railgun/RelayAdapt]
+    +++ description: Execution adapter contract for Railgun. To interact with public contracts from shielded pools, tokens are unshielded to RelayAdapter, which performs specified calls and shields tokens back to the same user.
+```
+
+Generated with discovered.json: 0xf4cf0474e43de803742779a2e4f647f18a803f53
+
+# Diff at Thu, 21 May 2026 07:19:18 GMT:
+
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@81af7a0da7d0a301e5b9686bebf53af2984b37b1 block: 1777550988
+- current timestamp: 1777550988
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777550988 (main branch discovery), not current.
+
+```diff
+    contract Rail Token (eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D) [railgun/RailToken] {
+    +++ description: RAIL governance token contract with a capped mint schedule and an early anti-bot transfer override. If you trust this contract, you trust its owner to mint additional RAIL up to the hard cap.
+      name:
+-        "RailToken"
++        "Rail Token"
+    }
+```
+
+Generated with discovered.json: 0x9d896aa554475323e31765e93cfd52a7fac2fb11
+
+# Diff at Thu, 14 May 2026 07:39:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2fda6b248112f1ba028bea437a3e980acbfd8741 block: 1777550988
+- current timestamp: 1777550988
+
+## Description
+
+config: clean up some and remove 'act' permission from vkeysetter.owner.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777550988 (main branch discovery), not current.
+
+```diff
+    contract IntervalPayouts (eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11) [railgun/IntervalPayouts] {
+    +++ description: Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.
+      name:
+-        "Ae8AStreamPayout"
++        "IntervalPayouts"
+    }
+```
+
+```diff
+    EOA  (eth:0x5a02474A3083Bc969f20F92E7a8bd3824EC607f0) {
+    +++ description: None
+      name:
+-        "PayoutBeneficiary_5a02"
+    }
+```
+
+```diff
+    contract IntervalPayouts (eth:0x7673e2E62435D25EDBcb58fD0d88c4C95806b10F) [railgun/IntervalPayouts] {
+    +++ description: Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.
+      name:
+-        "Beneficiary5a02OneOffPayout"
++        "IntervalPayouts"
+    }
+```
+
+```diff
+    EOA  (eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624) {
+    +++ description: None
+      name:
+-        "SweeperProxyOwner"
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B","description":"update the Railgun smart wallet SNARK verifying keys through the Delegator.","role":".verificationKeyDelegates","via":[{"address":"eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46"}]}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46","role":".owner"}]
+    }
+```
+
+```diff
+    contract IntervalPayouts (eth:0x859E0C1790b8a721F4943742603cDB685A73BA5D) [railgun/IntervalPayouts] {
+    +++ description: Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.
+      name:
+-        "Ae8AOneOffPayout"
++        "IntervalPayouts"
+    }
+```
+
+```diff
+    EOA  (eth:0xA4f2eA0a81179362558eBC1d2Bc817c9a0134ee3) {
+    +++ description: None
+      name:
+-        "PayoutBeneficiary_A4f2"
+    }
+```
+
+```diff
+    contract IntervalPayouts (eth:0xa863262Bf5E97e8CFeC47a71402aC360C0983060) [railgun/IntervalPayouts] {
+    +++ description: Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.
+      name:
+-        "A4f2OneOffPayout"
++        "IntervalPayouts"
+    }
+```
+
+```diff
+    EOA  (eth:0xaE8A17EB859E024cF6B541802B08932B2268dcEe) {
+    +++ description: None
+      name:
+-        "PayoutBeneficiary_Ae8A"
+    }
+```
+
+```diff
+    EOA  (eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2) {
+    +++ description: None
+      name:
+-        "VKeySetterOwner_bbc2"
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B","description":"update the Railgun smart wallet SNARK verifying keys through the Delegator.","role":".verificationKeyDelegates","via":[{"address":"eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598"}]}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598","role":".owner"}]
+    }
+```
+
+```diff
+    contract IntervalPayouts (eth:0xCA9A2894e814305fAfc2BA83a70B34295b1DdE9D) [railgun/IntervalPayouts] {
+    +++ description: Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.
+      name:
+-        "A4f2StreamPayout"
++        "IntervalPayouts"
+    }
+```
+
+```diff
+    contract IntervalPayouts (eth:0xf5F9d74FbFd04801DFf83425ff6C2002f60B921A) [railgun/IntervalPayouts] {
+    +++ description: Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.
+      name:
+-        "Beneficiary5a02StreamPayout"
++        "IntervalPayouts"
+    }
+```
+
 Generated with discovered.json: 0x42a7033d1f9a3d7fe186bfb5dbb3ffa7136224b0
 
 # Diff at Fri, 08 May 2026 08:36:38 GMT:

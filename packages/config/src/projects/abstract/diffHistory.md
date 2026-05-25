@@ -1,3 +1,63 @@
+Generated with discovered.json: 0xf764f38788fb2897b676a30312acb18883fe5118
+
+# Diff at Fri, 22 May 2026 09:37:07 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1771250356
+- current timestamp: 1779442556
+
+## Description
+
+For some reason, one EOA appeared on the disco frontend. No onchan changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771250356 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+Generated with discovered.json: 0x2a937095361ddbc160a70ac873eadc609cbc0a18
+
+# Diff at Fri, 15 May 2026 12:35:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1771250356
+- current timestamp: 1771250356
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771250356 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x277D26a45Add5775F21256159F089769892CEa5B) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
++        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+    }
+```
+
 Generated with discovered.json: 0xd7815df287daf73e5534a451917c18d33524132a
 
 # Diff at Fri, 08 May 2026 07:50:59 GMT:

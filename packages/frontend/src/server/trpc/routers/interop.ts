@@ -5,10 +5,12 @@ import { getInteropTokenData } from '~/server/features/scaling/interop/getIntero
 import { getInteropTokensInfinite } from '~/server/features/scaling/interop/getInteropTokens'
 import { getInteropTokensPairsInfinite } from '~/server/features/scaling/interop/getInteropTokensPairs'
 import { getInteropTokenTransfers } from '~/server/features/scaling/interop/getInteropTokenTransfers'
+import { getTokenFrameworksData } from '~/server/features/scaling/interop/getTokenFrameworksData'
 import {
   InteropDashboardParams,
   InteropFlowsParams,
   InteropProtocolTransfersParams,
+  InteropSelectionInput,
   InteropTokenParams,
   InteropTokenTransfersParams,
   InteropTopItemsInfiniteParams,
@@ -25,6 +27,9 @@ export const interopRouter = router({
   tokenTransfers: procedure
     .input(InteropTokenTransfersParams)
     .query(({ input }) => getInteropTokenTransfers(input)),
+  tokenFrameworks: procedure
+    .input(InteropSelectionInput)
+    .query(({ input }) => getTokenFrameworksData(input)),
   tokens: procedure
     .input(InteropTopItemsInfiniteParams)
     .query(({ input }) => getInteropTokensInfinite(input)),

@@ -53,6 +53,8 @@ export interface ChainData {
   transfersIn: number
   transfersOut: number
   connectedChains: number
+  tokenCount: number
+  protocolCount: number
   topTokens: FlowToken[]
   topProtocols: FlowProtocol[]
 }
@@ -133,6 +135,8 @@ export async function getInteropFlows(
     chainPairTopTokens,
     chainTopProtocols,
     chainPairTopProtocols,
+    chainTokenCounts,
+    chainProtocolCounts,
     topToken: topTokenEntry,
     topProtocol: topProtocolEntry,
     tokenIds,
@@ -228,6 +232,8 @@ export async function getInteropFlows(
     params.chains,
     resolvedChainTokens,
     resolvedChainProtocols,
+    chainTokenCounts,
+    chainProtocolCounts,
   )
 
   const topChain = chainData.reduce<ChainData | undefined>((max, chain) => {
@@ -314,6 +320,8 @@ function computeChainsData(
   chainIds: string[],
   chainTopTokens: Map<string, FlowToken[]>,
   chainTopProtocols: Map<string, FlowProtocol[]>,
+  chainTokenCounts: Map<string, number>,
+  chainProtocolCounts: Map<string, number>,
 ): ChainData[] {
   const chains = new Map<
     string,
@@ -366,6 +374,8 @@ function computeChainsData(
       transfersIn: data?.transfersIn ?? 0,
       transfersOut: data?.transfersOut ?? 0,
       connectedChains: data?.connected.size ?? 0,
+      tokenCount: chainTokenCounts.get(chainId) ?? 0,
+      protocolCount: chainProtocolCounts.get(chainId) ?? 0,
       topTokens: chainTopTokens.get(chainId) ?? [],
       topProtocols: chainTopProtocols.get(chainId) ?? [],
     }
@@ -383,7 +393,14 @@ function getMockInteropFlows(): InteropFlowsData {
     }
   }
 
-  const chainData = computeChainsData(flows, chainIds, new Map(), new Map())
+  const chainData = computeChainsData(
+    flows,
+    chainIds,
+    new Map(),
+    new Map(),
+    new Map(),
+    new Map(),
+  )
 
   return {
     flows,

@@ -10,6 +10,7 @@ import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData
 import { getInteropProtocolPageData } from './protocol/getInteropProtocolPageData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
 import { getInteropTokenPageData } from './token/getInteropTokenPageData'
+import { getInteropTokenFrameworksData } from './token-frameworks/getInteropTokenFrameworksData'
 
 export type InteropQuery = v.infer<typeof InteropQuery>
 const InteropQuery = v
@@ -87,6 +88,12 @@ export function createInteropRouter(
       res.status(200).send(html)
     },
   )
+
+  router.get('/interop/token-frameworks', async (req, res) => {
+    const data = await getInteropTokenFrameworksData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
 
   router.get(
     '/interop/protocols/:slug',

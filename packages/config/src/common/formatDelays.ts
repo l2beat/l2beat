@@ -16,8 +16,15 @@ export function formatChallengePeriod(period: number | undefined) {
   return `${formatSeconds(period)} challenge period`
 }
 
-export function formatChallengeAndExecutionDelay(delay: number | undefined) {
-  if (delay === undefined) return undefined
-  if (delay === 0) return 'No challenge + execution delay'
-  return `${formatSeconds(delay)} challenge + execution delay`
+export function formatChallengeAndExecutionDelay(
+  challengeDelay: number | undefined,
+  executionDelay: number | undefined,
+) {
+  if (challengeDelay === undefined && executionDelay === undefined)
+    return undefined
+  if (!challengeDelay && !executionDelay)
+    return 'No challenge + execution delay'
+  if (!executionDelay) return formatChallengePeriod(challengeDelay)
+  if (!challengeDelay) return formatExecutionDelay(executionDelay)
+  return `${formatSeconds(challengeDelay)} challenge period\n+ ${formatSeconds(executionDelay)} execution delay`
 }

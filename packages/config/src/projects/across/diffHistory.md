@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x78fae1e0ea84a47b6f1d79d5c27fdc721bd43b6a
+
+# Diff at Thu, 21 May 2026 09:26:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aa147da36dc2b8d307d8e09b17d18109b2286235 block: 1777369203
+- current timestamp: 1779355521
+
+## Description
+
+spoke contract on tron updated.
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.CrossChainContracts.728126428:
+-        "eth:0x284352bb448C65b75EbE004862e4f4531042d628"
++        "eth:0xc148aF9B50Bc03Cc0c616Cd85C66Aae9bD90cD80"
+    }
+```
+
+Generated with discovered.json: 0xdc112add3eec0ebe18ca57b97a994455c93b8aca
+
+# Diff at Fri, 15 May 2026 12:35:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1777369203
+- current timestamp: 1777369203
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777369203 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
++        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+    }
+```
+
 Generated with discovered.json: 0xaa8d215fb8d76db1878cb20b4d1f50430b471b10
 
 # Diff at Fri, 08 May 2026 07:51:00 GMT:

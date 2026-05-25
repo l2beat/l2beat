@@ -1,6 +1,6 @@
 {
   "name": "zircuit",
-  "timestamp": 1774433075,
+  "timestamp": 1778832561,
   "configHash": "0xbbaa2e1b1eff42339e8e3910b0893c986677f882ef068e50241182eed41c6640",
   "entries": [
     {
@@ -101,8 +101,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 395077,
-          "prevBlockNum": 24733839
+          "prevBoughtGas": 312784,
+          "prevBlockNum": 25097936
         },
         "paused": false,
         "resolverRegistry": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
@@ -150,7 +150,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292640801",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641064",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -764,12 +764,12 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 27246224,
-        "latestOutputIndex": 38155,
+        "latestBlockNumber": 29445950,
+        "latestOutputIndex": 39372,
         "latestOutputProposedV2": 32836,
-        "latestOutputProposedV3": 38155,
-        "nextBlockNumber": 27246225,
-        "nextOutputIndex": 38156,
+        "latestOutputProposedV3": 39372,
+        "nextBlockNumber": 29445951,
+        "nextOutputIndex": 39373,
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "proposer": "eth:0x691b3588eB87E6163260650D3BB465883EB6A575",
@@ -1165,21 +1165,21 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 50008882,
+        "basefee": 130353046,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
-        "blobBaseFee": 2530624,
+        "blobBaseFee": 8067032,
         "blobBaseFeeScalar": 810949,
         "depositExclusions": "0x",
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x17ebb5c3708e2c5d6dcd447b71bf7030262926c3ad7147b94ca3ad1446e2f07f",
+        "hash": "0xf1957c1d5498338f3177524911a0e4d0a5be83bd337b13790e9a3ed617928c54",
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 24733851,
+        "number": 25099252,
         "operatorFeeConstant": 360000000000,
         "operatorFeeScalar": 4200000000,
-        "sequenceNumber": 8,
-        "timestamp": 1774433039,
+        "sequenceNumber": 3,
+        "timestamp": 1778832527,
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -2050,6 +2050,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24733854, "zircuit": 27248430 },
+  "usedBlockNumbers": { "ethereum": 25099254, "zircuit": 29448173 },
   "permissionsConfigHash": "0x0d41346ed04d5d74993a8436868d9c00c943253eb50fc5d66e084dc25612f029"
 }

@@ -1,5 +1,5 @@
 {
-  "description": "Shared bridge for Taiko chains for bridged ETH.",
+  "description": "Shared bridge escrow for Taiko chains for bridged ETH.",
   "ignoreMethods": ["getMessageMinGasLimit", "context"],
   "ignoreInWatchMode": ["nextMessageId"],
   "fields": {

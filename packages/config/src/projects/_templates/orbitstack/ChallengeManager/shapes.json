@@ -1,16 +1,16 @@
 {
   "ChallengeManager": {
-    "hash": "0x4486d66561eb3d5076721860a21de12f3da32a7c54d24ba3656406a47ab69aa3",
+    "hash": "0x72ed0e123083a10eef0939ecb6899f4fbda72b467caa37db25448ce083def16d",
     "address": "eth:0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43",
     "blockNumber": 22188285
   },
   "ChallengeManager_v10_2": {
-    "hash": "0x490d4a49e55c914833173824c2fc625ad7d1967012eead3e183675861b7d169c",
+    "hash": "0x9207e033d80161e9c72be5fe972e3491cc03b121904734b072ab87c1eacb7835",
     "address": "eth:0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
     "blockNumber": 22188285
   },
   "ChallengeManager_v32": {
-    "hash": "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693",
+    "hash": "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54",
     "address": "eth:0x02E05A9245C5853f895daDcc3A8216C953C8736B",
     "blockNumber": 22188285
   }

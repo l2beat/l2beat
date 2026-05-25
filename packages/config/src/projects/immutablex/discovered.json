@@ -1,7 +1,7 @@
 {
   "name": "immutablex",
-  "timestamp": 1772785651,
-  "configHash": "0x231f4d8c32a1011e4890ce6bc3ac51a6c7c9384a189deb4d0132aa32f58f524d",
+  "timestamp": 1779377712,
+  "configHash": "0xff4b637622fe59e05db1595da4bead0f073f11e51d9325bfa602e740be0c34c5",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000007B",
@@ -15,6 +15,16 @@
     },
     {
       "address": "eth:0x0000000000000000000000000000000000000FfF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x10cbBBb225BBEA137aC01F0F6D91CDB126BccaA6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x216e8577B504aC3dB213eDd261e47fffBb354248",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -69,6 +79,11 @@
     },
     {
       "address": "eth:0x3d395f623D8954d71132F5caC10778CA275806e0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x409F85D2207796b543b8abdB6a0E2490BB1483D1",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -160,12 +175,17 @@
       }
     },
     {
+      "address": "eth:0x5eBb994EBC1c44815FbF2fA61a6E1f8368dcB0C7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StarkExchange",
       "address": "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
       "type": "Contract",
       "sourceHashes": [
         "0x9df58caddb10d2d51a580ba113b2c0309e74321ee24b87442720de1822d20823",
-        "0xb71805b4d4f8f1e27f622cf275932a3b69fce577df37460525fce8b64adb1d00"
+        "0xc122235bc278c4eacd03c0bc862ed748a4d0c810460ff5348df2b85c2979c6a5"
       ],
       "proxyType": "StarkWare proxy",
       "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
@@ -174,7 +194,7 @@
       "values": {
         "$admin": "eth:0xD2C37fC6fD89563187f3679304975655e448D192",
         "$immutable": false,
-        "$implementation": "eth:0x58b5484F489f7858DC83a5a677338074b57de806",
+        "$implementation": "eth:0x273b65a7231321D4ee47a4c47408Ef43517455Ec",
         "$pastUpgrades": [
           [
             "2021-03-10T15:13:08.000Z",
@@ -220,12 +240,38 @@
             "2026-03-05T01:07:11.000Z",
             "0x07ac699d0dc30804af73843cc1cba5f50780135e25932cf78be69a3e6c11b194",
             ["eth:0x58b5484F489f7858DC83a5a677338074b57de806"]
+          ],
+          [
+            "2026-05-20T23:38:47.000Z",
+            "0x9af235b6b0759b9fa2b301c7bc7bf04e05e5bd15000abe74b405466e09fca332",
+            ["eth:0x273b65a7231321D4ee47a4c47408Ef43517455Ec"]
           ]
         ],
-        "$upgradeCount": 9,
+        "$upgradeCount": 10,
         "getAssetInfo": [],
         "getUpgradeActivationDelay": 1209600,
-        "implementation": "eth:0x58b5484F489f7858DC83a5a677338074b57de806",
+        "HOLDER_1_AMOUNT": 4900000000000,
+        "HOLDER_1_ETH": "eth:0x5eBb994EBC1c44815FbF2fA61a6E1f8368dcB0C7",
+        "HOLDER_1_KEY": "3538623774493345151179551783812164840645197873942623890310120442690648622931",
+        "HOLDER_2_AMOUNT": 125000000000,
+        "HOLDER_2_ETH": "eth:0x216e8577B504aC3dB213eDd261e47fffBb354248",
+        "HOLDER_2_KEY": "896591154720277861849412210959098837543990746331085354094151559066127293616",
+        "HOLDER_3_AMOUNT": 7540000000,
+        "HOLDER_3_ETH": "eth:0x10cbBBb225BBEA137aC01F0F6D91CDB126BccaA6",
+        "HOLDER_3_KEY": "2337782983793367352107417745440247520204745783973227763313597957897585144884",
+        "HOLDER_4_AMOUNT": 4900000000000,
+        "HOLDER_4_ETH": "eth:0x409F85D2207796b543b8abdB6a0E2490BB1483D1",
+        "HOLDER_4_KEY": "3515120365152864005724897321625748708134718892093672796597024618874380434380",
+        "HOLDER_5_AMOUNT": 382500000000,
+        "HOLDER_5_ETH": "eth:0xCE5A537D4dA620DE59efA6F74a0A065732600c71",
+        "HOLDER_5_KEY": "320866735717256483006023350708017670742221720926224055507147702459465353560",
+        "HOLDER_6_AMOUNT": "266488641810000000",
+        "HOLDER_6_ETH": "eth:0x941f54cb53Dc1478Cb126a2Ba8a83b2130419dB5",
+        "HOLDER_6_KEY": "1072283648975915474201171160655623968861623556483236771217709513165697501697",
+        "HOLDER_7_AMOUNT": 235000000000,
+        "HOLDER_7_ETH": "eth:0xBC6EeB5111fEa2B5e9B2Bc534bBcbCa9568999a4",
+        "HOLDER_7_KEY": "750813242579361465277803604892953637745780756132536315292318654687088446962",
+        "implementation": "eth:0x273b65a7231321D4ee47a4c47408Ef43517455Ec",
         "isFrozen": false,
         "isNotFinalized": true,
         "migrationManager": "eth:0xD2C37fC6fD89563187f3679304975655e448D192",
@@ -235,13 +281,19 @@
         "StarkWareProxy_upgradeDelay": 1209600,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "vaultRoot": "543280986076401044787518957175086881219650536676907070252569311042264623146",
+        "VCO_ASSET_TYPE": "1485183671027309009439509871835489442660821279230223034298428454062208985878",
         "VERSION": "StarkEx-IMX-Migration-1.0.0",
         "zkEVMBridge": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
         "zkEVMWithdrawalProcessor": "eth:0xCeA34C706C4A18E103575832Dd21fD3656026D1E"
       },
+      "fieldMeta": {
+        "HOLDER_1_ETH": {
+          "description": "HOLDER_i_ETH addresses are hardcoded into ImmutableX v2 rollup contract initializer, which assigns them custom amounts of VCO tokens (small amounts of worthless tokens). Tokens were already withdrawn."
+        }
+      },
       "implementationNames": {
         "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": "Proxy",
-        "eth:0x58b5484F489f7858DC83a5a677338074b57de806": "StarkExchangeMigration"
+        "eth:0x273b65a7231321D4ee47a4c47408Ef43517455Ec": "StarkExchangeMigrationV2"
       }
     },
     {
@@ -299,6 +351,11 @@
       "implementationNames": {
         "eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1": "ChildERC20"
       }
+    },
+    {
+      "address": "eth:0x941f54cb53Dc1478Cb126a2Ba8a83b2130419dB5",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x94e97260182B9537822687Dd3c301225c6f87a5e",
@@ -391,6 +448,16 @@
       }
     },
     {
+      "address": "eth:0xBC6EeB5111fEa2B5e9B2Bc534bBcbCa9568999a4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xCE5A537D4dA620DE59efA6F74a0A065732600c71",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xCeA34C706C4A18E103575832Dd21fD3656026D1E",
       "type": "EOA",
       "proxyType": "EOA"
@@ -455,7 +522,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 45,
+        "nonce": 48,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -621,6 +688,64 @@
       "function updateRootBridgeAdaptor(address newRootBridgeAdaptor)",
       "function withdrawalDelay() view returns (uint256)",
       "function withdrawalQueueActivated() view returns (bool)"
+    ],
+    "eth:0x273b65a7231321D4ee47a4c47408Ef43517455Ec": [
+      "error AmountExceedsBalance()",
+      "error ExcessBridgeFeeProvided()",
+      "error InsufficientBridgeFee()",
+      "error InvalidAddress()",
+      "error InvalidAmount()",
+      "error InvalidInitialization()",
+      "error NoMigrationDetails()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "error UnauthorizedMigrationInitiator()",
+      "event ERC20HoldingsMigration(address indexed token, uint256 amount, address indexed recipient, address indexed initiator)",
+      "event ETHHoldingsMigration(uint256 amount, address indexed recipient, address indexed initiator)",
+      "event Initialized(uint64 version)",
+      "event LogUserRegistered(address ethKey, uint256 starkKey, address sender)",
+      "event LogWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount, address recipient)",
+      "function HOLDER_1_AMOUNT() view returns (uint256)",
+      "function HOLDER_1_ETH() view returns (address)",
+      "function HOLDER_1_KEY() view returns (uint256)",
+      "function HOLDER_2_AMOUNT() view returns (uint256)",
+      "function HOLDER_2_ETH() view returns (address)",
+      "function HOLDER_2_KEY() view returns (uint256)",
+      "function HOLDER_3_AMOUNT() view returns (uint256)",
+      "function HOLDER_3_ETH() view returns (address)",
+      "function HOLDER_3_KEY() view returns (uint256)",
+      "function HOLDER_4_AMOUNT() view returns (uint256)",
+      "function HOLDER_4_ETH() view returns (address)",
+      "function HOLDER_4_KEY() view returns (uint256)",
+      "function HOLDER_5_AMOUNT() view returns (uint256)",
+      "function HOLDER_5_ETH() view returns (address)",
+      "function HOLDER_5_KEY() view returns (uint256)",
+      "function HOLDER_6_AMOUNT() view returns (uint256)",
+      "function HOLDER_6_ETH() view returns (address)",
+      "function HOLDER_6_KEY() view returns (uint256)",
+      "function HOLDER_7_AMOUNT() view returns (uint256)",
+      "function HOLDER_7_ETH() view returns (address)",
+      "function HOLDER_7_KEY() view returns (uint256)",
+      "function NATIVE_ETH() view returns (address)",
+      "function VCO_ASSET_TYPE() view returns (uint256)",
+      "function VERSION() view returns (string)",
+      "function getAssetInfo(uint256 assetType) view returns (bytes assetInfo)",
+      "function getEthKey(uint256 ownerKey) view returns (address)",
+      "function getQuantum(uint256 presumedAssetType) view returns (uint256 quantum)",
+      "function getWithdrawalBalance(uint256 ownerKey, uint256 assetId) view returns (uint256)",
+      "function initialize(bytes)",
+      "function isFrozen() pure returns (bool)",
+      "function migrateHoldings(tuple(address token, uint256 amount, uint256 bridgeFee)[] tokens) payable",
+      "function migrateVaultRoot() payable",
+      "function migrationManager() view returns (address)",
+      "function registerEthAddress(address ethKey, uint256 starkKey, bytes starkSignature)",
+      "function registerSender(uint256 starkKey, bytes starkSignature)",
+      "function rootSenderAdapter() view returns (address)",
+      "function vaultRoot() view returns (uint256)",
+      "function withdraw(uint256 ownerKey, uint256 assetType)",
+      "function zkEVMBridge() view returns (address)",
+      "function zkEVMWithdrawalProcessor() view returns (address)"
     ],
     "eth:0x2d5d7d31F671F86C782533cc367F14109a082712": [
       "error AlreadyInitialized()",
@@ -968,6 +1093,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24597221 },
-  "permissionsConfigHash": "0xc03a17928233e3d099eccb12ac3ff84d8976ac3a59dde784fab4069411f198e2"
+  "usedBlockNumbers": { "ethereum": 25144554 },
+  "permissionsConfigHash": "0x6ee71628435c37b719813ff2d8b7e1b312dcaae4576f42a057f05846fcd3c741"
 }

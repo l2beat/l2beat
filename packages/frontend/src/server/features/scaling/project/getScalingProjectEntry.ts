@@ -57,6 +57,10 @@ import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
+import {
+  getProjectScalingInteropData,
+  type ProjectScalingInteropData,
+} from './getProjectScalingInteropData'
 import { getScalingDaSolutions } from './getScalingDaSolutions'
 import type { ScalingRosette } from './getScalingRosetteValues'
 import { getScalingRosette } from './getScalingRosetteValues'
@@ -69,7 +73,6 @@ export interface ProjectScalingEntry {
   slug: string
   icon: string
   archivedAt: UnixTime | undefined
-  isUpcoming: boolean
   isAppchain: boolean
   colors:
     | {
@@ -121,6 +124,7 @@ export interface ProjectScalingEntry {
       uopsWeeklyChange: number
     }
     gasTokens?: string[]
+    interop?: ProjectScalingInteropData['summary']
   }
   rosette: ScalingRosette
   sections: ProjectDetailsSection[]
@@ -146,7 +150,6 @@ export async function getScalingProjectEntry(
     | 'scalingDa'
     | 'customDa'
     | 'chainConfig'
-    | 'isUpcoming'
     | 'archivedAt'
     | 'milestones'
     | 'trackedTxsConfig'
@@ -176,6 +179,7 @@ export async function getScalingProjectEntry(
     zkCatalogProjects,
     allProjectsWithContracts,
     allProjects,
+    interopProjects,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -197,6 +201,9 @@ export async function getScalingProjectEntry(
       select: ['display'],
       optional: ['daBridge', 'scalingInfo', 'daLayer'],
     }),
+    ps.getProjects({
+      select: ['interopConfig'],
+    }),
   ])
 
   const projectLiveness = liveness[project.id]
@@ -206,6 +213,11 @@ export async function getScalingProjectEntry(
   )
 
   const tvsProjectStats = tvsStats.projects[project.id]
+  const interopData = await getProjectScalingInteropData(
+    project.id,
+    interopProjects,
+    helpers,
+  )
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
@@ -259,6 +271,7 @@ export async function getScalingProjectEntry(
       .map((badge) => getBadgeWithParamsAndLink(badge, project))
       .filter((b) => !!b),
     gasTokens: project.chainConfig?.gasTokens,
+    interop: interopData?.summary,
   }
 
   const changes = projectsChangeReport.getChanges(project.id)
@@ -291,7 +304,6 @@ export async function getScalingProjectEntry(
       ...changes,
     }),
     archivedAt: project.archivedAt,
-    isUpcoming: !!project.isUpcoming,
     isAppchain: project.scalingInfo.capability === 'appchain',
     colors: {
       project: project.colors,
@@ -365,7 +377,7 @@ export async function getScalingProjectEntry(
 
   const projectWithIcon = withProjectIcon(project)
 
-  if (!project.isUpcoming && scalingTvsSection && tvsProjectStats) {
+  if (scalingTvsSection && tvsProjectStats) {
     sections.push({
       type: 'ScalingTvsSection',
       props: {
@@ -377,6 +389,20 @@ export async function getScalingProjectEntry(
         tvsInfo: project.tvsInfo,
         project: projectWithIcon,
         ...scalingTvsSection,
+      },
+    })
+  }
+
+  if (interopData) {
+    sections.push({
+      type: 'InteropFlowsSection',
+      props: {
+        id: 'interop-flows',
+        title: 'Volume and flows',
+        interopChains: interopData.interopChains,
+        protocols: interopData.protocols,
+        defaultSelectedChains: interopData.defaultSelectedChains,
+        defaultStatsChainId: interopData.chainId,
       },
     })
   }
@@ -395,7 +421,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (!project.isUpcoming && costsSection) {
+  if (costsSection) {
     sections.push({
       type: 'CostsSection',
       props: {
@@ -440,11 +466,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (
-    !project.isUpcoming &&
-    project.milestones &&
-    project.milestones.length > 0
-  ) {
+  if (project.milestones && project.milestones.length > 0) {
     sections.push({
       type: 'MilestonesAndIncidentsSection',
       props: {
@@ -487,14 +509,6 @@ export async function getScalingProjectEntry(
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
-  }
-
-  if (project.isUpcoming) {
-    sections.push({
-      type: 'UpcomingDisclaimer',
-      excludeFromNavigation: true,
-    })
-    return { ...common, sections }
   }
 
   if (hostChain && common.rosette.host) {

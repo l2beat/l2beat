@@ -67,7 +67,6 @@
   "ProxyAdmin_LayerZero.sol": {
     "hash": "0x130b90ae0c02f239d1ce8b414a1a9a49d97708bb4f07d7e9c69af4f7c8a8f5bc",
     "address": "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
-    "chain": "ethereum",
     "blockNumber": 24970797
   }
 }

@@ -20,6 +20,7 @@ export const AbstractTokenRecord = v.object({
   coingeckoListingTimestamp: v.union([v.number(), v.null()]),
   comment: v.union([v.string(), v.null()]),
   reviewed: v.boolean(),
+  isPriceUnreliable: v.boolean(),
 })
 
 type __ = Expect<Equal<AbstractTokenUpdateable, DbAbstractTokenUpdateable>>
@@ -35,4 +36,5 @@ export const AbstractTokenUpdateable = v.object({
   coingeckoListingTimestamp: v.union([v.number(), v.null()]).optional(),
   comment: v.union([v.string(), v.null()]).optional(),
   reviewed: v.boolean().optional(),
+  isPriceUnreliable: v.boolean().optional(),
 })

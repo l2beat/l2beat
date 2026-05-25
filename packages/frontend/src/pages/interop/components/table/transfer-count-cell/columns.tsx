@@ -241,7 +241,7 @@ function ChainCell({
 
   if (!href) {
     return (
-      <span className="inline-flex items-center gap-1.5 font-medium text-label-value-14 capitalize">
+      <span className="inline-flex items-center gap-1.5 font-medium text-label-value-14">
         {content}
       </span>
     )
@@ -252,7 +252,7 @@ function ChainCell({
       href={href}
       target="_blank"
       rel="noreferrer noopener"
-      className="flex items-center gap-1.5 font-medium text-label-value-14 text-link capitalize hover:underline"
+      className="flex items-center gap-1.5 font-medium text-label-value-14 text-link hover:underline"
     >
       {content}
     </a>

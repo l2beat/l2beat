@@ -4,7 +4,7 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { findParsedAround } from './logScan'
+import { findBestTransferLogByExactAmount } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -181,21 +181,17 @@ export class AgglayerPlugin implements InteropPluginResyncable {
         return [AgglayerBridgeEvent.create(input, baseArgs)]
       }
 
-      const transferInfo = findParsedAround(
+      const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
+        bridge.amount,
         input.log.logIndex ?? -1,
-        (log) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer || transfer.value !== bridge.amount) return
-          return {
-            address: Address32.from(log.address),
-            burned: Address32.from(transfer.to) === Address32.ZERO,
-          }
-        },
+        (log) => parseTransfer(log, null),
       )
 
-      let srcTokenAddress = transferInfo?.address
-      let srcWasBurned = transferInfo?.burned
+      let srcTokenAddress = transferMatch.transfer?.logAddress
+      let srcWasBurned = transferMatch.transfer
+        ? transferMatch.transfer.to === Address32.ZERO
+        : undefined
       if (!srcTokenAddress) {
         const isBridgeOnAssetOriginNetwork =
           localNetwork.networkId === assetOriginNetworkId
@@ -250,21 +246,18 @@ export class AgglayerPlugin implements InteropPluginResyncable {
       }
 
       let dstTokenAddress: Address32 | undefined
-      const transferInfo = findParsedAround(
+      const destinationAddress32 = Address32.from(destinationAddress)
+      const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
+        claim.amount,
         input.log.logIndex ?? -1,
-        (log) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer || transfer.value !== claim.amount) return
-          if (EthereumAddress(transfer.to) !== destinationAddress) return
-          return {
-            address: Address32.from(log.address),
-            minted: Address32.from(transfer.from) === Address32.ZERO,
-          }
-        },
+        (log) => parseTransfer(log, null),
+        (transfer) => transfer.to === destinationAddress32,
       )
-      dstTokenAddress = transferInfo?.address
-      let dstWasMinted = transferInfo?.minted
+      dstTokenAddress = transferMatch.transfer?.logAddress
+      let dstWasMinted = transferMatch.transfer
+        ? transferMatch.transfer.from === Address32.ZERO
+        : undefined
 
       // no transfer event and asset leaftype
       if (!dstTokenAddress) {
