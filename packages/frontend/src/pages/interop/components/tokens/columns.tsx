@@ -251,6 +251,7 @@ export const getTopTokensColumns = ({
     }),
     tokenColumnHelper.accessor('symbol', {
       header: 'Symbol',
+      enableSorting: false,
       cell: (ctx) => {
         const content = (
           <>

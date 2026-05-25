@@ -63,7 +63,7 @@ export function InteropTokenSummary({
         />
       </div>
       <HorizontalSeparator className="col-span-3 my-4 max-md:hidden" />
-      <div className="grid grid-cols-1 gap-x-3 max-md:gap-y-3 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-x-3 max-md:mt-3 max-md:gap-y-3 md:grid-cols-3">
         <StatsItem
           title="Last 24h avg. transfer time"
           isLoading={isLoading}
@@ -103,7 +103,7 @@ export function InteropTokenSummary({
         />
       </div>
       <HorizontalSeparator className="col-span-3 my-4 max-md:hidden" />
-      <div className="grid grid-cols-1 gap-x-3 max-md:gap-y-3 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-x-3 max-md:mt-3 max-md:gap-y-3 md:grid-cols-3">
         <StatsItem
           title="Protocols used"
           isLoading={isLoading}
@@ -158,11 +158,11 @@ function StatsItem({
   isLoading: boolean
 }) {
   return (
-    <div className="flex gap-1.5 max-md:justify-between md:flex-col">
-      <span className="font-medium text-paragraph-12 text-secondary">
+    <div className="flex gap-3 max-md:items-start max-md:justify-between md:flex-col md:gap-1.5">
+      <span className="shrink-0 font-medium text-paragraph-12 text-secondary">
         {title}
       </span>
-      <div className="font-bold text-label-value-16 leading-none">
+      <div className="min-w-0 text-right font-bold text-label-value-16 leading-none md:text-left">
         {isLoading ? <Skeleton className="h-5 w-24" /> : value}
       </div>
     </div>

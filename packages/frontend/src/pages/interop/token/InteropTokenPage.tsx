@@ -82,15 +82,11 @@ function Content({
     tokenId: token.id,
     ...selectionForApi,
   })
-  const isNavigationEmpty = navigationSections.length === 0
-
   return (
     <SideNavLayout childrenWrapperClassName="md:pt-0">
-      {!isNavigationEmpty && (
-        <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-40 lg:hidden">
-          <MobileSectionNavigation sections={navigationSections} />
-        </div>
-      )}
+      <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-40 lg:hidden">
+        <MobileSectionNavigation sections={navigationSections} />
+      </div>
       <div className="relative z-0 max-md:bg-surface-primary">
         <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
           <div className="pt-6 max-md:px-4 lg:pt-4">
@@ -123,19 +119,17 @@ function Content({
               />
             )}
           </div>
-          {!isNavigationEmpty && (
-            <div className="row-start-2 mt-4 hidden shrink-0 lg:block">
-              <DesktopProjectNavigation
-                project={{
-                  title: token.symbol,
-                  slug: token.slug,
-                  isUnderReview: false,
-                  icon: token.iconUrl,
-                }}
-                sections={navigationSections}
-              />
-            </div>
-          )}
+          <div className="row-start-2 mt-4 hidden shrink-0 lg:block">
+            <DesktopProjectNavigation
+              project={{
+                title: token.symbol,
+                slug: token.slug,
+                isUnderReview: false,
+                icon: token.iconUrl,
+              }}
+              sections={navigationSections}
+            />
+          </div>
         </div>
         <ScrollToTopButton />
       </div>

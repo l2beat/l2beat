@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { buildInteropUrl } from '../../utils/buildInteropUrl'
 import type { InteropSelection } from '../../utils/types'
@@ -13,8 +12,6 @@ export function TopProtocolsCell({
   protocols: ProtocolEntry[]
   apiSelection: InteropSelection
 }) {
-  const [, setIsOpen] = useState(false)
-
   const visible = protocols.slice(0, VISIBLE_PROTOCOL_COUNT)
   const remainingCount = protocols.length - visible.length
 
@@ -35,7 +32,6 @@ export function TopProtocolsCell({
         remainingCount,
       }}
       type="cell"
-      setIsOpen={setIsOpen}
       hideDialog
     />
   )

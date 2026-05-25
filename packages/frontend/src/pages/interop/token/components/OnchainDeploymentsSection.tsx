@@ -2,6 +2,12 @@ import { formatAddress } from '@l2beat/shared-pure'
 import { createColumnHelper, getCoreRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { ProjectSection } from '~/components/projects/sections/ProjectSection'
 import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
@@ -14,6 +20,7 @@ type DeploymentRow = InteropTokenDeploymentData &
   BasicTableRow & {
     chainName: string
     chainIconUrl: string | undefined
+    chainExplorerUrl: string | undefined
   }
 
 const columnHelper = createColumnHelper<DeploymentRow>()
@@ -37,6 +44,7 @@ const columns = [
   }),
   columnHelper.accessor('symbol', {
     header: 'Symbol',
+    enableSorting: false,
     cell: (ctx) => (
       <span className="font-medium text-label-value-15">
         {ctx.row.original.symbol}
@@ -45,11 +53,34 @@ const columns = [
   }),
   columnHelper.accessor('address', {
     header: 'Address',
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-15">
-        {formatAddress(ctx.row.original.address)}
-      </span>
-    ),
+    enableSorting: false,
+    cell: (ctx) => {
+      const { address, chainExplorerUrl } = ctx.row.original
+      const className = 'font-medium font-mono text-label-value-13'
+      const content = chainExplorerUrl ? (
+        <a
+          href={`${chainExplorerUrl}/address/${address}`}
+          target="_blank"
+          rel="noreferrer noopener"
+          className={`${className} text-link hover:underline`}
+        >
+          {formatAddress(address)}
+        </a>
+      ) : (
+        <span className={className}>{formatAddress(address)}</span>
+      )
+
+      return (
+        <Tooltip>
+          <TooltipTrigger asChild>{content}</TooltipTrigger>
+          <TooltipPortal>
+            <TooltipContent className="z-[1000] max-w-none font-mono text-label-value-13">
+              {address}
+            </TooltipContent>
+          </TooltipPortal>
+        </Tooltip>
+      )
+    },
   }),
   columnHelper.accessor('volume', {
     header: 'Last 24h\nVolume',
@@ -94,6 +125,7 @@ export function OnchainDeploymentsSection({
           ...deployment,
           chainName: chain?.name ?? deployment.chain,
           chainIconUrl: chain?.iconUrl,
+          chainExplorerUrl: chain?.explorerUrl,
         }
       }),
     [deployments, chainsById],

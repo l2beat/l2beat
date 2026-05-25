@@ -16,6 +16,13 @@ import {
   useInfiniteScrollTrigger,
 } from './infiniteScroll'
 
+const DEFAULT_SORTING: InteropTopItemsSorting = [
+  {
+    id: 'volume',
+    desc: true,
+  },
+]
+
 export type TokensQueryInput = {
   id: ProjectId | undefined
   from: string[]
@@ -36,12 +43,8 @@ export function TokensTable({
   showFlowsColumn?: boolean
 }) {
   const { selectedChains } = useInteropSelectedChains()
-  const [sorting, setSorting] = useState<InteropTopItemsSorting>([
-    {
-      id: 'volume',
-      desc: true,
-    },
-  ])
+  const [sorting, setSorting] =
+    useState<InteropTopItemsSorting>(DEFAULT_SORTING)
   const queryInputWithSort = useMemo(
     () => ({
       ...queryInput,
@@ -90,11 +93,12 @@ export function TokensTable({
     },
     onSortingChange: (updater) => {
       const nextSorting = functionalUpdate(updater, sorting)
+      const nextSingleSorting = nextSorting.slice(0, 1).map((nextSort) => ({
+        id: nextSort.id as InteropTopItemsSort['id'],
+        desc: nextSort.desc,
+      }))
       setSorting(
-        nextSorting.slice(0, 1).map((nextSort) => ({
-          id: nextSort.id as InteropTopItemsSort['id'],
-          desc: nextSort.desc,
-        })),
+        nextSingleSorting.length > 0 ? nextSingleSorting : DEFAULT_SORTING,
       )
     },
     initialState: {

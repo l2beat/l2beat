@@ -18,11 +18,17 @@ export type TopItem = {
   href?: string
 }
 
-type InteropTopItemsCellProps = {
-  topItems: TopItems<TopItem>
-  setIsOpen: (isOpen: boolean) => void
-  hideDialog?: boolean
-}
+type InteropTopItemsCellProps =
+  | {
+      topItems: TopItems<TopItem>
+      hideDialog: true
+      setIsOpen?: never
+    }
+  | {
+      topItems: TopItems<TopItem>
+      hideDialog?: false
+      setIsOpen: (isOpen: boolean) => void
+    }
 
 const buttonVariants = cva('group/dialog-trigger flex items-center', {
   variants: {

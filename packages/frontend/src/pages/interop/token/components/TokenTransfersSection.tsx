@@ -56,7 +56,7 @@ export function TokenTransfersSection({
     },
     {
       enabled:
-        !!data?.snapshotTimestamp &&
+        data?.snapshotTimestamp !== undefined &&
         selectedFrom.length > 0 &&
         selectedTo.length > 0,
       getNextPageParam: (lastPage) => lastPage.nextCursor,

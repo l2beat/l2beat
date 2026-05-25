@@ -19,8 +19,15 @@ const DEFAULT_PAGE_SIZE = 100
 const MAX_PAGE_SIZE = 100
 const RAW_BATCH_SIZE = 500
 
-const INTEROP_CHAIN_EXPLORER_URLS = new Map(
-  INTEROP_CHAINS.map((chain) => [chain.id, chain.explorerUrl]),
+const INTEROP_CHAIN_DETAILS = new Map(
+  INTEROP_CHAINS.map((chain) => [
+    chain.id,
+    {
+      name: chain.name,
+      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+      explorerUrl: chain.explorerUrl,
+    },
+  ]),
 )
 const INTEROP_CHAIN_ICON_URLS = new Map(
   INTEROP_CHAINS.map((chain) => [
@@ -75,7 +82,7 @@ export async function getInteropTokenTransfers({
     items: result.items.map((transfer) =>
       toInteropProtocolTransferDetailsItem(
         transfer,
-        INTEROP_CHAIN_EXPLORER_URLS,
+        INTEROP_CHAIN_DETAILS,
         tokensDetailsMap,
       ),
     ),
