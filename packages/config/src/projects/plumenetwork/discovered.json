@@ -1,7 +1,7 @@
 {
   "name": "plumenetwork",
   "timestamp": 1777994314,
-  "configHash": "0x03de245d1bb5ba85f96a7ff6db02a17a08d7fb3adaac7f4f09453e0cf979d600",
+  "configHash": "0xde571a5f6fa760321dd1a66b12c92d3e296002087484aa3ba1c660586cf23292",
   "entries": [
     {
       "name": "EdgeChallengeManager",

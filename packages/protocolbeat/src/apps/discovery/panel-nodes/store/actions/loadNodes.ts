@@ -60,7 +60,7 @@ export function loadNodes(
       BOTTOM_PADDING +
       hiddenFieldsHeight
     const savedColor = saved?.colors?.[node.id]
-    const color = typeof savedColor === 'number' ? savedColor : node.color
+    const color = savedColor ?? node.color
 
     if (!box) {
       nodesWithoutSavedLayout.add(node.id)

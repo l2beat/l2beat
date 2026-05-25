@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Entrypoint",
   "category": "core",
-  "description": "UUPS-upgradeable hub for Privacy Pools. It accepts deposits, relays withdrawals, tracks association-set roots published by the ASP, and maps each supported asset and scope to a pool. Trusting this contract means trusting OWNER_ROLE holders to upgrade it, manage pools and fees, and withdraw fees, and trusting ASP_POSTMAN holders to publish the latest association-set root used by withdrawals.",
+  "description": "Main hub for Privacy Pools. Entrypoint for deposits, relayed withdrawals, pool registry/configuration, ASP root updates, fee withdrawal, and wind-down management.",
   "ignoreInWatchMode": ["latestRoot"],
   "ignoreMethods": [
     "proxiableUUID",

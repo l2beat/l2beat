@@ -247,18 +247,23 @@ function getOnchainVerifier(
   contracts: ProjectContracts | undefined,
 ) {
   const addressKey = toPlainAddress(address)
+  const chainContracts = contracts?.addresses[chain] ?? []
 
-  const contract = contracts?.addresses[chain]?.find(
-    (c) => ChainSpecificAddress.address(c.address) === addressKey,
-  )
+  const contract =
+    chainContracts.find(
+      (c) => ChainSpecificAddress.address(c.address) === addressKey,
+    ) ??
+    chainContracts.find((c) =>
+      c.upgradeability?.implementations.some(
+        (impl) => ChainSpecificAddress.address(impl) === addressKey,
+      ),
+    )
 
   if (!contract?.url) return undefined
 
-  const plainEthAddress = ChainSpecificAddress.address(contract.address)
-
   return {
     name: contract.name,
-    href: explorerAddressPageUrl(contract.url, plainEthAddress),
+    href: explorerAddressPageUrl(contract.url, addressKey),
   }
 }
 

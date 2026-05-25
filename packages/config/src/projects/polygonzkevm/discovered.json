@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
   "timestamp": 1767608184,
-  "configHash": "0x733aa019a17b511ef699f2708d1db721100ab73d6f1f03005b1960e9b021c11a",
+  "configHash": "0x43e5871758116afc99449d92fe50aa1b1598723a0f29600e0493ff98b2dbc9c2",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5e033246ddb950d4c5961641935a6ffd1ad6c925
+Generated with discovered.json: 0x2de152558ff1f748eadb9ab897abfc38cc7f3911
 
-# Diff at Mon, 25 May 2026 12:03:35 GMT:
+# Diff at Mon, 25 May 2026 12:32:06 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@1b7024bc804124af9b25421eca5fac952454cb09 block: 1779355521
-- current timestamp: 1779710546
+- comparing to: main@f956a1829482ff8cca3de1993ffa6d584a1241e0 block: 1779355521
+- current timestamp: 1779712260
 
 ## Description
 
@@ -639,7 +639,7 @@ discovery. Values are for block 1779355521 (main branch discovery), not current.
     +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.
 ```
 
-Generated with discovered.json: 0x78fae1e0ea84a47b6f1d79d5c27fdc721bd43b6a
+Generated with discovered.json: 0x894e4eb696b7625cdb36481785432477e426b75c
 
 # Diff at Thu, 21 May 2026 09:26:54 GMT:
 

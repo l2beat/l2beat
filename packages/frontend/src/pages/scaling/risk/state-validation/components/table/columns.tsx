@@ -17,6 +17,16 @@ import type {
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 import { OptimisticProofSystemCell } from './OptimisticProofSystemCell'
 
+function defenderAdvantageLine(
+  da: ScalingRiskStateValidationOptimisticEntry['defenderAdvantage'],
+): string | undefined {
+  if (da === undefined || da === 'not-applicable' || da === 'not-assessed')
+    return undefined
+  if (da.shape === 'log') return 'Favors defender (log)'
+  if (da.multiplier >= 1) return `Favors defender ${da.multiplier.toFixed(2)}×`
+  return `Favors attacker ${(1 / da.multiplier).toFixed(2)}×`
+}
+
 function getTvsColumn<T extends CommonScalingEntry & { tvs: TvsData }>(
   columnHelper: ColumnHelper<T>,
 ) {
@@ -90,20 +100,27 @@ export const scalingRiskStateValidationValidityColumns = [
   }),
   validityColumnHelper.accessor('executionDelay', {
     header: 'Execution Delay',
-    cell: (ctx) => (
-      <TableValueCell
-        value={
-          ctx.row.original.executionDelay !== undefined
-            ? {
-                value: formatSeconds(ctx.row.original.executionDelay, {
-                  fullUnit: true,
-                }),
-              }
-            : undefined
-        }
-        emptyMode="n/a"
-      />
-    ),
+    cell: (ctx) => {
+      const { executionDelay, executionDelayMode } = ctx.row.original
+      return (
+        <TableValueCell
+          value={
+            executionDelay !== undefined
+              ? executionDelay <= 0
+                ? { value: 'None' }
+                : {
+                    value: formatSeconds(executionDelay, { fullUnit: true }),
+                    secondLine:
+                      executionDelayMode === 'if-challenged'
+                        ? 'only if challenged'
+                        : 'always applied',
+                  }
+              : undefined
+          }
+          emptyMode="n/a"
+        />
+      )
+    },
   }),
   validityColumnHelper.accessor('isa', {
     header: 'ISA',
@@ -185,35 +202,53 @@ export const scalingRiskStateValidationOptimisticColumns = [
   }),
   optimisticColumnHelper.accessor('executionDelay', {
     header: 'Execution Delay',
-    cell: (ctx) => (
-      <TableValueCell
-        value={
-          ctx.row.original.executionDelay !== undefined
-            ? {
-                value: formatSeconds(ctx.row.original.executionDelay, {
-                  fullUnit: true,
-                }),
-              }
-            : undefined
-        }
-        emptyMode="n/a"
-      />
-    ),
+    cell: (ctx) => {
+      const { executionDelay, executionDelayMode } = ctx.row.original
+      return (
+        <TableValueCell
+          value={
+            executionDelay !== undefined
+              ? executionDelay <= 0
+                ? { value: 'None' }
+                : {
+                    value: formatSeconds(executionDelay, { fullUnit: true }),
+                    secondLine:
+                      executionDelayMode === 'if-challenged'
+                        ? 'only if challenged'
+                        : 'always applied',
+                  }
+              : undefined
+          }
+          emptyMode="n/a"
+        />
+      )
+    },
   }),
   optimisticColumnHelper.accessor('initialBond', {
     header: 'Initial Bond',
-    cell: (ctx) => (
-      <TableValueCell
-        value={
-          ctx.row.original.initialBond !== undefined
-            ? {
-                value: 'Ξ' + ctx.row.original.initialBond,
-              }
-            : undefined
-        }
-        emptyMode="n/a"
-      />
-    ),
+    cell: (ctx) => {
+      const { initialBond, defenderAdvantage } = ctx.row.original
+      return (
+        <TableValueCell
+          value={
+            initialBond !== undefined
+              ? {
+                  value: initialBond.token
+                    ? `${initialBond.value} ${initialBond.token}`
+                    : 'Ξ' + initialBond.value,
+                  secondLine: defenderAdvantageLine(defenderAdvantage),
+                }
+              : undefined
+          }
+          emptyMode="n/a"
+          secondLineClassName="whitespace-nowrap"
+        />
+      )
+    },
+    meta: {
+      tooltip:
+        "Minimum bond required to propose or challenge a state root. When shown, the line below indicates how the bond economy favors one side in a resource-exhaustion attack: 'Favors defender N×' means an attacker needs N times the defender's funds to outlast them; 'Favors attacker N×' means defenders need N times the attacker's funds to keep up; 'Favors defender (log)' is a tournament-style protocol where defender funds grow only logarithmically. The line is omitted for whitelist-gated systems (where the bond is not an open economic barrier) and for protocols whose resource ratio has not yet been analyzed.",
+    },
   }),
   getTvsColumn(optimisticColumnHelper),
 ]

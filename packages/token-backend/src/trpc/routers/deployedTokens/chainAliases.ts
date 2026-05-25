@@ -1,5 +1,4 @@
-import type { DeployedTokenRecord } from '@l2beat/database'
-import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
+import type { ChainRecord, DeployedTokenRecord } from '@l2beat/database'
 
 export function buildAliasToChainMap(
   chains: ChainRecord[],

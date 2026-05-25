@@ -103,7 +103,7 @@ export function ChartRangeControls({
         <DrawerTrigger
           className={cn(
             selectTriggerClassnames,
-            'z-0 h-8 bg-surface-secondary',
+            'z-0 h-8 bg-surface-primary primary-card:bg-surface-secondary',
           )}
         >
           {selectedOption === 'custom' ? (

@@ -16,6 +16,9 @@ import { LivenessSection } from './sections/liveness/LivenessSection'
 import { MarkdownSection } from './sections/MarkdownSection'
 import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection'
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
+import { PrivacyAssetsBreakdownSection } from './sections/privacy/PrivacyAssetsBreakdownSection'
+import { PrivacyFlowsSection } from './sections/privacy/PrivacyFlowsSection'
+import { PrivacyTvlSection } from './sections/privacy/PrivacyTvlSection'
 import { ProgramHashesSection } from './sections/program-hashes/ProgramHashesSection'
 import { RiskAnalysisSection } from './sections/RiskAnalysisSection'
 import { RiskSummarySection } from './sections/RiskSummarySection'
@@ -291,6 +294,30 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'UpgradesAndGovernanceSection':
             return (
               <UpgradesAndGovernanceSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'PrivacyTvlSection':
+            return (
+              <PrivacyTvlSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'PrivacyFlowsSection':
+            return (
+              <PrivacyFlowsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'PrivacyAssetsBreakdownSection':
+            return (
+              <PrivacyAssetsBreakdownSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
