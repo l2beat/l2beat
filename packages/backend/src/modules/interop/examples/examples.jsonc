@@ -1986,6 +1986,15 @@
   },
   "debridge-dln": {
     "txs": [
+      // intent fill with deBridge internal Monad chain id
+      {
+        "chain": "ethereum",
+        "tx": "0x876be7ce22fee0a6e77c6bca3612f98c2b3cf06fbd6a065044c7e664f1c7e61d"
+      },
+      {
+        "chain": "monad",
+        "tx": "0x889d4c07cd24c8169487d2466b2949fdcd92158dfdf79d9319574617324c34bb"
+      },
       // intent fill
       {
         "chain": "arbitrum",
@@ -2026,7 +2035,47 @@
         "chain": "ethereum",
         "tx": "0x20350493243d9255ce6cb8d179cd7369727bfae83964df4d8e33ed690d665473"
       }
-    ]
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "debridge-dln.CreatedOrder",
+          "args": {
+            "orderId": "0x7d59d14f000f465b3f811ffd0641d019bb287ba41fdb097ab6a1feb819cdee2d",
+            "$dstChain": "monad"
+          }
+        },
+        {
+          "type": "debridge-dln.FulfilledOrder",
+          "args": {
+            "orderId": "0x7d59d14f000f465b3f811ffd0641d019bb287ba41fdb097ab6a1feb819cdee2d",
+            "$srcChain": "ethereum"
+          }
+        }
+      ],
+      "messages": [
+        {
+          "type": "debridge-dln.Message",
+          "app": "debridge-dln",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "monad" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "debridge-dln.Transfer",
+          "bridgeType": "nonMinting",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAmount": "147075647"
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "monad" } },
+            "tokenAmount": "5655601265366768073993"
+          }
+        }
+      ]
+    }
   },
   "debridgedln-onesided": {
     "txs": [
