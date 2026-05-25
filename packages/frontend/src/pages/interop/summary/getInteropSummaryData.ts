@@ -11,20 +11,13 @@ import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '../components/flows/consts'
 import type { InteropQuery } from '../InteropRouter'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
-import { toInteropApiSelection } from '../utils/toInteropApiSelection'
-import type { InteropMode, InteropSelection } from '../utils/types'
-
-interface GetInteropSummaryDataOptions {
-  mode?: InteropMode
-}
+import type { InteropSelection } from '../utils/types'
 
 export async function getInteropSummaryData(
   req: Request<unknown, unknown, unknown, InteropQuery>,
   manifest: Manifest,
   cache: InMemoryCache,
-  options?: GetInteropSummaryDataOptions,
 ): Promise<RenderData> {
-  const mode = options?.mode ?? 'public'
   const appLayoutProps = await getAppLayoutProps()
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
@@ -43,7 +36,6 @@ export async function getInteropSummaryData(
   const initialSelection = getInitialInteropSelection({
     query: req.query,
     interopChainsIds,
-    mode,
   })
 
   const queryState = await cache.get(
@@ -51,7 +43,6 @@ export async function getInteropSummaryData(
       key: [
         'interop',
         'summary',
-        mode,
         'prefetch',
         initialSelection.from.join(','),
         initialSelection.to.join(','),
@@ -62,7 +53,6 @@ export async function getInteropSummaryData(
     async () =>
       getCachedData(
         initialSelection,
-        mode,
         activeInteropChains.map((chain) => chain.id),
       ),
   )
@@ -88,14 +78,12 @@ export async function getInteropSummaryData(
         openGraph: {
           image: '/meta-images/interop/summary/opengraph-image.png',
         },
-        excludeFromSearchEngines: mode === 'internal',
       }),
     },
     ssr: {
       page: 'InteropSummaryPage',
       props: {
         ...appLayoutProps,
-        mode,
         ...queryState,
         interopChains: activeInteropChainsSortedByVolume,
         defaultSelectedFlowChains,
@@ -107,24 +95,20 @@ export async function getInteropSummaryData(
 
 async function getCachedData(
   initialSelection: InteropSelection,
-  mode: InteropMode,
   initialFlowsChains: string[],
 ) {
   const helpers = getSsrHelpers()
-  const apiSelection = toInteropApiSelection(initialSelection, mode)
   const [protocols] = await Promise.all([
     ps.getProjects({
       select: ['interopConfig'],
     }),
-    apiSelection.from.length > 0 && apiSelection.to.length > 0
-      ? helpers.interop.dashboard.prefetch({ ...apiSelection })
+    initialSelection.from.length > 0 && initialSelection.to.length > 0
+      ? helpers.interop.dashboard.prefetch({ ...initialSelection })
       : undefined,
   ])
 
   const shouldPrefetchFlows =
-    mode === 'public' &&
-    apiSelection.from.length === 0 &&
-    apiSelection.to.length === 0
+    initialSelection.from.length === 0 && initialSelection.to.length === 0
 
   let defaultFlowChainOrder = initialFlowsChains
 

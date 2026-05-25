@@ -9,6 +9,7 @@ export type InteropFlowData = {
   srcChain: string
   dstChain: string
   volume: number
+  transferCount?: number
 }
 
 export function getFlows(
@@ -16,18 +17,22 @@ export function getFlows(
   selection: InteropSelectionInput,
   subgroupProjects?: Set<ProjectId>,
 ): InteropFlowData[] {
-  const map = new Map<string, number>()
+  const volumeMap = new Map<string, number>()
+  const transferMap = new Map<string, number>()
 
   for (const record of records) {
     // Skip projects that are part of other projects to not double count
     if (subgroupProjects?.has(record.id as ProjectId)) continue
 
     const key = `${record.srcChain}${INTEROP_PAIR_SEPARATOR}${record.dstChain}`
-    const current = map.get(key) ?? 0
-    map.set(key, current + (getInteropTransferValue(record) ?? 0))
+    volumeMap.set(
+      key,
+      (volumeMap.get(key) ?? 0) + (getInteropTransferValue(record) ?? 0),
+    )
+    transferMap.set(key, (transferMap.get(key) ?? 0) + record.transferCount)
   }
 
-  const sortedFlows = flowsMapToSorted(map, selection)
+  const sortedFlows = flowsMapToSorted(volumeMap, selection, transferMap)
 
   if (sortedFlows.every((flow) => flow.volume === 0)) {
     return []
@@ -37,14 +42,20 @@ export function getFlows(
 }
 
 export function flowsMapToSorted(
-  flows: Map<string, number>,
+  volumes: Map<string, number>,
   selection: InteropSelectionInput,
+  transferCounts?: Map<string, number>,
 ): InteropFlowData[] {
   const selectedPairs = getSelectedFlowPairs(selection)
   return selectedPairs
     .map(({ srcChain, dstChain }) => {
-      const volume = flows.get(toFlowKey(srcChain, dstChain)) ?? 0
-      return { srcChain, dstChain, volume }
+      const key = toFlowKey(srcChain, dstChain)
+      return {
+        srcChain,
+        dstChain,
+        volume: volumes.get(key) ?? 0,
+        transferCount: transferCounts?.get(key),
+      }
     })
     .toSorted((a, b) => b.volume - a.volume)
 }

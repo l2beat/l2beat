@@ -80,7 +80,7 @@ export async function getInteropDashboardData(
   )
 
   return {
-    flows: getFlows(records, params, subgroupProjects).slice(0, 2),
+    flows: getFlows(records, params, subgroupProjects).slice(0, 3),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     topToken: getTopToken({
       records,
@@ -108,8 +108,18 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
   })
 
   const flows: InteropFlowData[] = [
-    { srcChain: 'ethereum', dstChain: 'optimism', volume: 35_000_000 },
-    { srcChain: 'optimism', dstChain: 'ethereum', volume: 30_000_000 },
+    {
+      srcChain: 'ethereum',
+      dstChain: 'optimism',
+      volume: 35_000_000,
+      transferCount: 5400,
+    },
+    {
+      srcChain: 'optimism',
+      dstChain: 'ethereum',
+      volume: 30_000_000,
+      transferCount: 4800,
+    },
   ]
 
   const topProtocols: InteropProtocolData[] = interopProjects

@@ -41,7 +41,7 @@ export function TransferCountCell({
   }
 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const { selectionForApi } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
 
   return (
     <>
@@ -55,7 +55,7 @@ export function TransferCountCell({
         protocol={protocol}
         type={type}
         snapshotTimestamp={snapshotTimestamp}
-        selectionForApi={selectionForApi}
+        selectionForApi={selectedChains}
         subtitle={<BetweenChainsInfo className="md:mt-1" />}
         isOpen={isOpen}
         setIsOpen={setIsOpen}

@@ -2,7 +2,6 @@ import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
-import { toInteropApiSelection } from '../utils/toInteropApiSelection'
 import type { InteropSelection } from '../utils/types'
 import type { InteropChainWithIcon } from './chain-selector/types'
 
@@ -67,13 +66,8 @@ export function InitialChainSelector({
               }
 
               utils.interop.dashboard.prefetch({
-                ...toInteropApiSelection(
-                  {
-                    from: [firstSelectedChainId],
-                    to: [chain.id],
-                  },
-                  'public',
-                ),
+                from: [firstSelectedChainId],
+                to: [chain.id],
                 type,
               })
             }}
