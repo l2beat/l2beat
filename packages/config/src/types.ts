@@ -581,14 +581,10 @@ export interface ProjectScalingDa {
   mode: TableReadyValue
 }
 
-export interface ProjectGovernanceInfoSection {
-  [property: string]: string
-}
-
 export interface ProjectGovernanceInfo {
-  securityCouncil?: ProjectGovernanceInfoSection
-  upgrades?: ProjectGovernanceInfoSection
-  tokenGovernance?: ProjectGovernanceInfoSection
+  securityCouncil?: Record<string, string>
+  upgrades?: Record<string, string>
+  tokenGovernance?: Record<string, string>
 }
 
 export interface ProjectScalingTechnology {
