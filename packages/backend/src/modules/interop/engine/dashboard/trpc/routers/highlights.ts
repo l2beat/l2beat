@@ -13,11 +13,7 @@ const interopProjectIds = INTEROP_CHAINS.map((chain) => chain.id)
 export function createHighlightsRouter(deps: HighlightsRouterDeps) {
   return router({
     latest: protectedProcedure.query(({ ctx }) => {
-      return getInteropHighlights(
-        ctx.db,
-        deps.tokenDbClient,
-        interopProjectIds,
-      )
+      return getInteropHighlights(ctx.db, deps.tokenDbClient, interopProjectIds)
     }),
   })
 }
