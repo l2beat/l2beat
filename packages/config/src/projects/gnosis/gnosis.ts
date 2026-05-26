@@ -257,7 +257,7 @@ export const gnosis: ScalingProject = {
         slotSeconds: gnosisSlotSeconds,
         target: 0.99,
         maxCensorFraction: 0.5,
-        afterChart:
+        description:
           'The chart uses the Ethereum-style single-proposer formula with Gnosis-specific constants. It excludes finality, inactivity leaks, validator-set changes, hard forks, and blanket-censorship resistance gadgets.',
       },
       censorshipResistance: `Gnosis Chain does not have dedicated censorship resistance gadgets, but the sequencer set is open and there are no committees that can block inclusion.

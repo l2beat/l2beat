@@ -66,14 +66,14 @@ export function SequencingSection({
             chart={inclusionDelayChart}
             projectName={projectName}
           />
-          {inclusionDelayChart.afterChart && (
+          {inclusionDelayChart.description && (
             <Markdown
               className={cn(
                 mdClassName,
                 'text-paragraph-15 md:text-paragraph-16',
               )}
             >
-              {inclusionDelayChart.afterChart}
+              {inclusionDelayChart.description}
             </Markdown>
           )}
         </>

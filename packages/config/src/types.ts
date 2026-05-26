@@ -76,7 +76,7 @@ export type ProjectInclusionDelayChart =
 interface ProjectInclusionDelayChartBase {
   target: number
   maxCensorFraction: number
-  afterChart?: string
+  description?: string
   entityStakeDistribution?: ProjectInclusionDelayChartEntityStakeDistribution
 }
 
