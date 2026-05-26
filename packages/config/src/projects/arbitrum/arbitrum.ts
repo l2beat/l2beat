@@ -444,6 +444,14 @@ export const arbitrum: ScalingProject = orbitStackL2({
   },
   milestones: [
     {
+      title: 'Bridge emergency upgrade',
+      url: 'https://forum.arbitrum.foundation/t/security-council-emergency-action-24-05-2026/30910',
+      date: '2026-05-24T00:00:00Z',
+      description:
+        'Security Council patches L2->L1 governance-DoS (Bridge renounces PROPOSER_ROLE). No funds at risk.',
+      type: 'incident',
+    },
+    {
       title: 'Security Council recovers KelpDAO exploiter funds',
       url: 'https://x.com/arbitrum/status/2046435443680346189',
       date: '2026-04-21T00:00:00Z',
