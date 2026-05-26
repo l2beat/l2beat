@@ -27,7 +27,7 @@ export function MultiChainSelector({ chains, protocols }: Props) {
             <MultiChainSelectorButton allChains={chains} type="from" />
             <button
               type="button"
-              className="cursor-pointer rounded-lg border border-brand p-[11px] max-md:self-end max-md:p-[7px]"
+              className="cursor-pointer rounded-lg border border-brand p-[11px] max-md:self-end"
               onClick={swapPaths}
               title="Swap From and To"
             >
