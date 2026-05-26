@@ -15,7 +15,8 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
     database: getDatabaseConfig(env, options),
     auth: options.isLocal ? false : getAuthConfig(env),
     coingeckoApiKey,
-    coingeckoCallsPerMinute: env.integer(
+    coingeckoCallsPerMinute: positiveInteger(
+      env,
       'COINGECKO_CALLS_PER_MINUTE',
       coingeckoApiKey ? 400 : 10,
     ),
@@ -32,6 +33,14 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
       ),
     },
   }
+}
+
+function positiveInteger(env: Env, key: string, fallback: number): number {
+  const value = env.integer(key, fallback)
+  if (value < 1) {
+    throw new Error(`Environment variable ${key} must be a positive integer!`)
+  }
+  return value
 }
 
 function getDatabaseConfig(

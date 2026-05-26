@@ -93,6 +93,12 @@ describe(CoingeckoClient.name, () => {
       'CoinGecko API error: 429 Too Many Requests',
     )
   })
+
+  it('rejects a non-positive rate limit', () => {
+    expect(() => new CoingeckoClient({ callsPerMinute: 0 })).toThrow(
+      'CoinGecko callsPerMinute must be a positive integer',
+    )
+  })
 })
 
 function mockFetch(
