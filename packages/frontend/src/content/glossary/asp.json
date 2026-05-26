@@ -1,0 +1,6 @@
+{
+  "term": "Association Set Provider (ASP)",
+  "match": ["ASP", "Association Set Provider", "Association Set Providers"],
+  "definition": "An Association Set Provider (ASP) is the compliance layer used in Privacy Pools. It maintains the set of approved deposits and updates the corresponding roots used by withdrawal proofs, allowing users to prove in zero knowledge that their withdrawal belongs to an approved set without revealing which deposit they are spending.",
+  "isSpicy": false
+}

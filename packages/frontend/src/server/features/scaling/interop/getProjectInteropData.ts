@@ -4,9 +4,9 @@ import type { InteropChainWithIcon } from '~/pages/interop/components/chain-sele
 import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
-import { getInteropChains } from '../interop/utils/getInteropChains'
+import { getInteropChains } from './utils/getInteropChains'
 
-export interface ProjectScalingInteropData {
+export interface ProjectInteropData {
   chainId: string
   interopChains: InteropChainWithIcon[]
   protocols: {
@@ -38,11 +38,11 @@ export interface ProjectScalingInteropData {
   }
 }
 
-export async function getProjectScalingInteropData(
+export async function getProjectInteropData(
   projectId: ProjectId,
   interopProjects: Project<'interopConfig'>[],
   helpers: SsrHelpers,
-): Promise<ProjectScalingInteropData | undefined> {
+): Promise<ProjectInteropData | undefined> {
   const interopChains = getInteropChains()
     .filter((chain) => !chain.isUpcoming)
     .map((chain) => ({

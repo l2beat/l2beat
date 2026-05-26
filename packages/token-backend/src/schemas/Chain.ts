@@ -27,6 +27,8 @@ export const ChainApiSchema = v.union([
   }),
 ])
 
+export type ChainApi = v.infer<typeof ChainApiSchema>
+
 export const ChainRecord = v.object({
   name: v.string(),
   chainId: v.number(),

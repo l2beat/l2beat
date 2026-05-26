@@ -1,8 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "IntervalPayouts",
-  "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.",
-  "category": "gov",
+  "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.",
+  "category": "bridge-external",
   "canActIndependently": false,
   "ignoreMethods": ["nextInterval", "ready"],
   "fields": {
@@ -22,7 +22,8 @@
     "amount": {
       "description": "Amount transferred on each successful payout.",
       "severity": "HIGH",
-      "type": "RISK_PARAMETER"
+      "type": "RISK_PARAMETER",
+      "edit": ["format", "Undecimal18"]
     },
     "intervalLength": {
       "description": "Minimum delay between payout intervals, in seconds.",

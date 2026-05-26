@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "WithdrawVerifier",
-  "description": "Verifier contract for Tornado anonymity-mining withdrawal proofs."
+  "description": "Anonymity Mining - Verifier contract for Tornado anonymity-mining withdrawal proofs.",
+  "category": "bridge-external"
 }

@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Staking",
-  "description": "Immutable RAIL staking contract that tracks delegated voting power, enforces a 30-day unstake delay, and snapshots balances for governance. It has no admin, but its parameters define the governance system's voting power.",
+  "description": "RAIL staking contract that tracks delegated voting power, enforces a {{STAKE_LOCKTIME_fmt}} unstake delay, and snapshots staking balances for governance every {{SNAPSHOT_INTERVAL_fmt}}. Its parameters define the governance voting system.",
   "category": "gov",
   "ignoreMethods": [
     "currentInterval",
@@ -21,10 +21,18 @@
       "severity": "HIGH",
       "type": "RISK_PARAMETER"
     },
+    "STAKE_LOCKTIME_fmt": {
+      "copy": "STAKE_LOCKTIME",
+      "edit": ["format", "FormatSeconds"]
+    },
     "SNAPSHOT_INTERVAL": {
       "description": "Length of the interval used when taking governance voting-power snapshots.",
       "severity": "HIGH",
       "type": "RISK_PARAMETER"
+    },
+    "SNAPSHOT_INTERVAL_fmt": {
+      "copy": "SNAPSHOT_INTERVAL",
+      "edit": ["format", "FormatSeconds"]
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "timestamp": 1779129406,
-  "configHash": "0x282ea8c2e76078f0802a72a955dc34fe0dce086c167b576d47dd8a3d5cdd03c7",
+  "timestamp": 1779399672,
+  "configHash": "0xe1750ee9589de599e177e1f45c318cef0784455485d9a7af1c0830738e9a366c",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -68,7 +68,7 @@
         "beaconProxyFactory": "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 43371,
+        "exitNum": 43440,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -456,16 +456,16 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb1:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D",
+          "arb1:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
           "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
           "arb1:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
           "arb1:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
-          "arb1:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
           "arb1:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
           "arb1:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
           "arb1:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
           "arb1:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
           "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
-          "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
           "arb1:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
           "arb1:0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
@@ -963,7 +963,7 @@
         "$upgradeCount": 2,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
-        "getTotalDelegation": "5443297087625925112022634460",
+        "getTotalDelegation": "5442994643881780749512225119",
         "l1Address": "arb1:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
         "MIN_MINT_INTERVAL": 31536000,
         "MINT_CAP_DENOMINATOR": 10000,
@@ -988,12 +988,6 @@
     },
     {
       "address": "arb1:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "StevenThornton-OpenZeppelin",
-      "address": "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1478,16 +1472,16 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb1:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D",
+          "arb1:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
           "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
           "arb1:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
           "arb1:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
-          "arb1:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
           "arb1:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
           "arb1:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
           "arb1:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
           "arb1:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
           "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
-          "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
           "arb1:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
           "arb1:0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
@@ -1688,7 +1682,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "arb1:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2318,
+        "exitNum": 2322,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -1950,12 +1944,6 @@
       "implementationNames": {
         "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86": "ProxyAdmin"
       }
-    },
-    {
-      "name": "fred - Arbitrum 2",
-      "address": "arb1:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "arb1:0xd92023E9d9911199a6711321D1277285e6d4e2db",
@@ -2750,6 +2738,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2977,7 +2970,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 1248589,
+        "batchCount": 1251462,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -2990,9 +2983,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 25123778,
+          "prevBlockNumber": 25146228,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 25123841
+          "prevSequencedBlockNumber": 25146306
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -3018,7 +3011,7 @@
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2444523,
+        "totalDelayedMessagesRead": 2448224,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -3376,7 +3369,7 @@
         "getValidators": [],
         "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x2938526eb553f147fdd30dbe06884dd0d1a641d00e16f9ad6f66225086200b5b",
+        "latestConfirmed": "0xf7e2cc612671699e0e9ef6f80b32ce6d07a43ee6a7019d91a9cef914ab6fa9bc",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -3442,6 +3435,7 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
+            "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -3847,7 +3841,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2444539,
+        "delayedMessageCount": 2448229,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -3861,8 +3855,8 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 1248589,
-        "sequencerReportedSubMessageCount": 441995302
+        "sequencerMessageCount": 1251462,
+        "sequencerReportedSubMessageCount": 443072892
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -3901,8 +3895,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "StevenThornton-OpenZeppelin",
-      "address": "eth:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
+      "address": "eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -4310,12 +4303,6 @@
         "eth:0xD3B5b60020504bc3489D6949d545893982BA3011": "L1DaiGateway"
       },
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "name": "fred - Arbitrum 2",
-      "address": "eth:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "OneStepProverMemory",
@@ -7293,16 +7280,16 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D",
+          "eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
           "eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
           "eth:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
           "eth:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
-          "eth:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
           "eth:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
           "eth:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D",
           "eth:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
           "eth:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
           "eth:0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
-          "eth:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
           "eth:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
           "eth:0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
@@ -9526,6 +9513,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 464203255, "ethereum": 25123927 },
-  "permissionsConfigHash": "0x2d3120c6863e2ce0482ba62d493856998b0c69001a6248cf70353cd7e2ebe346"
+  "usedBlockNumbers": { "arbitrum": 465281266, "ethereum": 25146379 },
+  "permissionsConfigHash": "0xdbaf73f7a3d002d4c159f96fdda8c53593e25f5eb7fda79f7ff2cdb0d89ea2fa"
 }

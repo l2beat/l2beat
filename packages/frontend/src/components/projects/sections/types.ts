@@ -16,6 +16,9 @@ import type { MarkdownSectionProps } from './MarkdownSection'
 import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncidentsSection'
 import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
+import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
+import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
+import type { PrivacyTvlSectionProps } from './privacy/PrivacyTvlSection'
 import type { ProgramHashesSectionProps } from './program-hashes/ProgramHashesSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import type { RiskSummarySectionProps } from './RiskSummarySection'
@@ -62,6 +65,9 @@ type SectionId =
   | 'interop-flows'
   | 'interop-transfers'
   | 'interop-tokens'
+  | 'privacy-tvl'
+  | 'privacy-flows'
+  | 'privacy-assets-breakdown'
 type GroupId = 'da-layer' | 'da-bridge'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
@@ -228,6 +234,21 @@ interface ProjectDetailsUpgradesAndGovernanceSection {
   props: ProjectDetailsProps<UpgradesAndGovernanceSectionProps>
 }
 
+interface ProjectDetailsPrivacyTvlSection {
+  type: 'PrivacyTvlSection'
+  props: ProjectDetailsProps<PrivacyTvlSectionProps>
+}
+
+interface ProjectDetailsPrivacyFlowsSection {
+  type: 'PrivacyFlowsSection'
+  props: ProjectDetailsProps<PrivacyFlowsSectionProps>
+}
+
+interface ProjectDetailsPrivacyAssetsBreakdownSection {
+  type: 'PrivacyAssetsBreakdownSection'
+  props: ProjectDetailsProps<PrivacyAssetsBreakdownSectionProps>
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
   sideNavTitle?: string
@@ -263,4 +284,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsInteropTransfersSection
   | ProjectDetailsInteropTokensSection
   | ProjectDetailsUpgradesAndGovernanceSection
+  | ProjectDetailsPrivacyTvlSection
+  | ProjectDetailsPrivacyFlowsSection
+  | ProjectDetailsPrivacyAssetsBreakdownSection
 )

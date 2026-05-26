@@ -1,3 +1,4 @@
+import type { ChainApi } from '@l2beat/token-backend'
 import { LinkIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
@@ -26,7 +27,6 @@ import { ExternalLink } from '~/components/ExternalLink'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
-import type { ChainApi } from '../../../../database/dist/repositories/ChainRepository'
 
 export function ChainsSummaryPage() {
   const { data, isLoading: isChainsLoading } = api.chains.getAll.useQuery()

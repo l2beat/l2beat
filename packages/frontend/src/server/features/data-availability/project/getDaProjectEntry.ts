@@ -16,6 +16,7 @@ import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getProjectInteropData } from '../../scaling/interop/getProjectInteropData'
 import { getLiveness } from '../../scaling/liveness/getLiveness'
 import type { ProjectVerificationWarnings } from '../../utils/getCommonProjectEntry'
 import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
@@ -288,6 +289,15 @@ export async function getEthereumDaProjectEntry(
     bridge.daBridge.risks,
   )
 
+  const interopProjects = await ps.getProjects({
+    select: ['interopConfig'],
+  })
+  const interopData = await getProjectInteropData(
+    layer.id,
+    interopProjects,
+    helpers,
+  )
+
   const [economicSecurity, tvsPerProject, sections, validators] =
     await Promise.all([
       getDaProjectEconomicSecurity(layer.id, layer.daLayer.economicSecurity),
@@ -299,6 +309,7 @@ export async function getEthereumDaProjectEntry(
         layerGrissiniValues,
         bridgeGrissiniValues,
         helpers,
+        interopData,
       }),
       getDaProjectValidators(layer.id, layer.daLayer.validators),
     ])

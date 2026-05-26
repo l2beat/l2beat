@@ -1,7 +1,7 @@
 {
   "name": "shared-sharp-verifier",
   "timestamp": 1777891441,
-  "configHash": "0x265fb8f2732803d362c9a17deb5b3cd671f7ab4368644157cc5a8db89ca42b70",
+  "configHash": "0xdd47aadec0ddd929395b66f3a78a3f8c76d15e679dc926eeb656a02b532fbfa1",
   "entries": [
     {
       "name": "EcdsaPointsXColumn",

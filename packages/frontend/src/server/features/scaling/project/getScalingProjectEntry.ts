@@ -53,14 +53,14 @@ import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
+import {
+  getProjectInteropData,
+  type ProjectInteropData,
+} from '../interop/getProjectInteropData'
 import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
-import {
-  getProjectScalingInteropData,
-  type ProjectScalingInteropData,
-} from './getProjectScalingInteropData'
 import { getScalingDaSolutions } from './getScalingDaSolutions'
 import type { ScalingRosette } from './getScalingRosetteValues'
 import { getScalingRosette } from './getScalingRosetteValues'
@@ -124,7 +124,7 @@ export interface ProjectScalingEntry {
       uopsWeeklyChange: number
     }
     gasTokens?: string[]
-    interop?: ProjectScalingInteropData['summary']
+    interop?: ProjectInteropData['summary']
   }
   rosette: ScalingRosette
   sections: ProjectDetailsSection[]
@@ -213,7 +213,7 @@ export async function getScalingProjectEntry(
   )
 
   const tvsProjectStats = tvsStats.projects[project.id]
-  const interopData = await getProjectScalingInteropData(
+  const interopData = await getProjectInteropData(
     project.id,
     interopProjects,
     helpers,

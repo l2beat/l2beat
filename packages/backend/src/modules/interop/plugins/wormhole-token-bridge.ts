@@ -8,7 +8,6 @@ import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
@@ -16,7 +15,7 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { WormholeConfig } from './wormhole/wormhole.config'
+import { findWormholeChain, WormholeConfig } from './wormhole/wormhole.config'
 import { LogMessagePublished } from './wormhole/wormhole.plugin'
 
 const transferRedeemedLog =
@@ -106,11 +105,7 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
     return [
       TransferRedeemed.create(input, {
         sequence: parsed.sequence,
-        $srcChain: findChain(
-          wormholeNetworks,
-          (x) => x.wormholeChainId,
-          parsed.emitterChainId,
-        ),
+        $srcChain: findWormholeChain(wormholeNetworks, parsed.emitterChainId),
         dstTokenAddress: nextLog && Address32.from(nextLog.address),
         dstAmount: transfer?.value,
         srcWormholeChainId: parsed.emitterChainId,

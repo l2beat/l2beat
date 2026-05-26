@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
+import type { ProjectInteropData } from '~/server/features/scaling/interop/getProjectInteropData'
 import { getLiveness } from '~/server/features/scaling/liveness/getLiveness'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
@@ -298,6 +299,7 @@ type EthereumDetailsParams = {
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
   helpers: SsrHelpers
+  interopData: ProjectInteropData | undefined
 }
 
 export async function getEthereumDaProjectSections({
@@ -307,6 +309,7 @@ export async function getEthereumDaProjectSections({
   layerGrissiniValues,
   bridgeGrissiniValues,
   helpers,
+  interopData,
 }: EthereumDetailsParams) {
   const riskSummarySection = getDaProjectRiskSummarySection(
     layer,
@@ -317,6 +320,20 @@ export async function getEthereumDaProjectSections({
   const items: ProjectDetailsSection[] = []
 
   const throughputSection = await getDaThroughputSection(helpers, layer)
+
+  if (interopData) {
+    items.push({
+      type: 'InteropFlowsSection',
+      props: {
+        id: 'interop-flows',
+        title: 'Volume and flows',
+        interopChains: interopData.interopChains,
+        protocols: interopData.protocols,
+        defaultSelectedChains: interopData.defaultSelectedChains,
+        defaultStatsChainId: interopData.chainId,
+      },
+    })
+  }
 
   if (throughputSection) {
     items.push({
