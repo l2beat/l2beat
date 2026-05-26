@@ -27,7 +27,6 @@ interface InteropSelectedChainsContextType {
   selectAll: (type?: 'from' | 'to') => void
   deselectAll: (type?: 'from' | 'to') => void
   swapPaths: () => void
-  buildUrl: (path: string) => string
 }
 
 export const InteropSelectedChainsContext = createContext<
@@ -68,11 +67,6 @@ export function InteropSelectedChainsProvider({
   const getChainById = useCallback(
     (chainId: string) => chainsById.get(chainId),
     [chainsById],
-  )
-
-  const buildUrl = useCallback(
-    (path: string) => buildInteropUrl(path, selection),
-    [selection],
   )
 
   const { track } = useTracking()
@@ -195,7 +189,6 @@ export function InteropSelectedChainsProvider({
         selectAll,
         deselectAll,
         swapPaths,
-        buildUrl,
       }}
     >
       {children}
