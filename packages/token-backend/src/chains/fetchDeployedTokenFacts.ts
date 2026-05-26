@@ -1,4 +1,5 @@
 import type { UnixTime } from '@l2beat/shared-pure'
+import { formatError } from '../utils/formatError'
 import type { Chain } from './Chain'
 import { getDeploymentTimestampFromRpc } from './clients/rpc/getDeploymentTimestampFromRpc'
 
@@ -215,11 +216,4 @@ async function fetchContractCodeStatus(
       ],
     }
   }
-}
-
-export function formatError(error: unknown): string {
-  if (error instanceof Error) {
-    return error.message
-  }
-  return String(error)
 }

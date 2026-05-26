@@ -22,14 +22,15 @@ export class CoingeckoClient {
   private readonly rateLimiter: RateLimiter
 
   constructor(config: CoingeckoClientConfig) {
-    const callsPerMinute = config.callsPerMinute ?? (config.apiKey ? 400 : 10)
-    if (callsPerMinute < 1) {
+    if (config.callsPerMinute < 1) {
       throw new Error('CoinGecko callsPerMinute must be a positive integer')
     }
 
     this.apiKey = config.apiKey
     this.baseUrl = config.apiKey ? PRO_API_URL : API_URL
-    this.rateLimiter = new RateLimiter({ callsPerMinute })
+    this.rateLimiter = new RateLimiter({
+      callsPerMinute: config.callsPerMinute,
+    })
   }
 
   async getCoinDataById(id: string): Promise<Coin> {

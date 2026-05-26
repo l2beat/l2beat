@@ -31,6 +31,7 @@ import {
   buildAliasToChainMap,
   platformsToChainAddressPairs,
 } from '../trpc/routers/deployedTokens/chainAliases'
+import { formatError } from '../utils/formatError'
 import { formatIngestionTrace } from './formatIngestionTrace'
 import type {
   AbstractTokenRef,
@@ -880,13 +881,6 @@ function getNewCoingeckoSymbolConflict(
   if (newAbstractToken.symbol === deployedTokenSymbol) return undefined
 
   return `CoinGecko would create abstract token ${newAbstractToken.id}:${newAbstractToken.symbol}, but the deployed token symbol is ${deployedTokenSymbol}.`
-}
-
-function formatError(error: unknown): string {
-  if (error instanceof Error) {
-    return error.message
-  }
-  return String(error)
 }
 
 function generateAbstractTokenId() {
