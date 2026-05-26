@@ -7,6 +7,7 @@ import { AggregatesPage } from './pages/interop/aggregates/AggregatesPage'
 import { AnomaliesPage } from './pages/interop/anomalies/AnomaliesPage'
 import { AnomalyDetailsPage } from './pages/interop/anomalies/AnomalyDetailsPage'
 import { SuspiciousTransfersPage } from './pages/interop/anomalies/SuspiciousTransfersPage'
+import { ChainsSummaryPage } from './pages/interop/chains-summary/ChainsSummaryPage'
 import { CoveragePiesPage } from './pages/interop/coverage-pies/CoveragePiesPage'
 import { EventDetailsPage } from './pages/interop/events/EventDetailsPage'
 import { EventsPage } from './pages/interop/events/EventsPage'
@@ -92,6 +93,10 @@ export function App() {
               <Route
                 path="/interop/insights/coverage-pies"
                 element={<CoveragePiesPage />}
+              />
+              <Route
+                path="/interop/insights/chains-summary"
+                element={<ChainsSummaryPage />}
               />
               <Route path="/interop/insights/memory" element={<MemoryPage />} />
               <Route

@@ -21,13 +21,14 @@ import {
   formatDollars,
   formatTransferTimestamp,
 } from '~/pages/interop/transfers/utils'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { DurationSplitCoverageTable } from './table/DurationSplitCoverageTable'
 import { NotIncludedByPluginTable } from './table/NotIncludedByPluginTable'
 import { NotIncludedTransfersTable } from './table/NotIncludedTransfersTable'
 import type { AggregatesResponse, ChainMetadata } from './types'
 
 export function AggregatesPage() {
+  const api = useBackendApi()
   const {
     data: aggregatesData,
     error: aggregatesError,

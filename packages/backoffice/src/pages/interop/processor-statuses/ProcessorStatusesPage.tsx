@@ -4,12 +4,13 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { ProcessorStatusesTable } from './table/ProcessorStatusesTable'
 import type { ProcessorStatusRow } from './types'
 import { formatProcessorTimestamp } from './utils'
 
 export function ProcessorStatusesPage() {
+  const api = useBackendApi()
   const { data, error, isError, isLoading, isFetching, refetch } =
     api.interop.status.processors.useQuery(undefined, {
       refetchInterval: 2_500,
