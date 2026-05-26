@@ -126,7 +126,9 @@ There were incidents of malicious frontend hash updates passing onchain governan
 An example of audit process with useful links could be found [here](https://gist.github.com/pcaversaccio/ea7f62fd21b6e22f301980007f7c767e) or [here](https://notes.ethereum.org/@GW1ZUbNKR5iRjjKYx6_dJQ/Bk8zsJ9xj).
 The frontend can then be accessed by running a local IPFS node that automatically fetches the verified frontend hash (e.g. in style of [dapp3.eth](https://github.com/apoorvlathey/dapp3)) and serves it in the browser locally.
 `,
-    links: {},
+    links: {
+      websites: ['https://app.ens.domains/tornadocash.eth?tab=records'],
+    },
     badges: [],
   },
   escrows: BUCKETS.map((bucket) => ({
@@ -146,7 +148,7 @@ The frontend can then be accessed by running a local IPFS node that automaticall
       PRIVACY_ATTRIBUTES.immutable,
       PRIVACY_ATTRIBUTES.uncensorable,
       PRIVACY_ATTRIBUTES.fixedAmounts,
-      PRIVACY_ATTRIBUTES.openSource,
+      PRIVACY_ATTRIBUTES.sourceAvailable,
     ],
     riskSummary: `## Funds can be stolen if
 1. the zk proof system is broken, allowing invalid withdrawals.

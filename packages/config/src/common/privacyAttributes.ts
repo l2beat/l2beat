@@ -35,11 +35,11 @@ export const PRIVACY_ATTRIBUTES = {
     description:
       'Pre-defined transfer amounts use distinct buckets (anonymity sets).',
   },
-  openSource: {
-    id: 'openSource',
-    label: 'Open source',
+  sourceAvailable: {
+    id: 'sourceAvailable',
+    label: 'Source available',
     description:
-      'There is at least one practical way to use exclusively open source software to interact with this protocol.',
+      'There is at least one practical way to use exclusively auditable, source-available software to interact with this protocol.',
   },
   immutable: {
     id: 'immutable',

@@ -176,7 +176,7 @@ Because Railgun allows private transfers and interactions with DeFi, its anonymi
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
-      PRIVACY_ATTRIBUTES.openSource,
+      PRIVACY_ATTRIBUTES.sourceAvailable,
     ],
     riskSummary: `## Funds can be stolen if
 1. the zk proof system is broken, allowing invalid spends or withdrawals.

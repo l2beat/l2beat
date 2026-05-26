@@ -74,7 +74,7 @@ ASP is designed to vouch that withdrawals from Privacy Pools are not related to 
 
 The anonymity set consists of all whitelisted deposits of the same token with the value greater than the withdrawal amount. Note that only deposits approved by the ASP add to the anonymity set. To maximize the anonymity set, users are recommended to withdraw smaller amounts and deposit popular tokens.`,
     links: {
-      websites: ['https://www.privacypools.com'],
+      websites: ['https://privacypools.com'],
     },
     badges: [],
   },
@@ -95,7 +95,7 @@ The anonymity set consists of all whitelisted deposits of the same token with th
       PRIVACY_ATTRIBUTES.immutable,
       PRIVACY_ATTRIBUTES.enforcedCompliance,
       PRIVACY_ATTRIBUTES.anyAmount,
-      PRIVACY_ATTRIBUTES.openSource,
+      PRIVACY_ATTRIBUTES.sourceAvailable,
     ],
     riskSummary: `## Funds can be stolen if
 1. the zk proof system is broken, allowing invalid withdrawals.
