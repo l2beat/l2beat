@@ -19,6 +19,7 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
+import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -207,6 +208,9 @@ export async function getScalingProjectEntry(
   ])
 
   const projectLiveness = liveness[project.id]
+  const discoveryUpdates = project.discoveryInfo?.hasDiscoUi
+    ? getDiscoveryUpdates(project.id)
+    : []
 
   const ongoingAnomalies = projectLiveness?.anomalies.filter(
     (a) => a.end === undefined,
@@ -614,19 +618,17 @@ export async function getScalingProjectEntry(
   }
 
   const allPastUpgrades = getProjectPastUpgrades(project.contracts)
+  const upgradesAndGovernance = project.scalingTechnology.upgradesAndGovernance
 
-  if (
-    project.scalingTechnology.upgradesAndGovernance ||
-    allPastUpgrades.length > 0
-  ) {
+  if (upgradesAndGovernance || allPastUpgrades.length > 0) {
     sections.push({
       type: 'UpgradesAndGovernanceSection',
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: project.scalingTechnology.upgradesAndGovernance
+        content: upgradesAndGovernance
           ? linkAddresses(
-              project.scalingTechnology.upgradesAndGovernance,
+              upgradesAndGovernance,
               project.contracts,
               project.permissions,
             )
@@ -638,6 +640,17 @@ export async function getScalingProjectEntry(
 
         pastUpgrades: getPastUpgradesData(allPastUpgrades),
         isUnderReview: !!project.statuses.reviewStatus,
+      },
+    })
+  }
+
+  if (discoveryUpdates.length > 0) {
+    sections.push({
+      type: 'UpdatesSection',
+      props: {
+        id: 'updates',
+        title: 'Updates',
+        updates: discoveryUpdates,
       },
     })
   }
