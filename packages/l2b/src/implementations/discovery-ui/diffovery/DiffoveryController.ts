@@ -52,7 +52,7 @@ function splitFlatSolidity(flat: string): Record<string, string> {
   )
 
   if (nameless.length > 0) {
-    result['Directives'] = nameless
+    result['#Directives'] = nameless
       .map((n) => getNodeContent(flat, n))
       .join('\n\n')
   }
