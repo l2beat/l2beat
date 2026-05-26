@@ -9,6 +9,8 @@ describe('interop trpc auth', () => {
     const callerFactory = createCallerFactory(
       createChainsRouter({
         getExplorerUrl: () => undefined,
+        chains: [],
+        oneSidedChains: [],
       }),
     )
     const caller = callerFactory({

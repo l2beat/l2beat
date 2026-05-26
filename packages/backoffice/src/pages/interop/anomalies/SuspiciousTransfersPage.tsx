@@ -5,7 +5,7 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
 import { formatDollars } from '~/pages/interop/transfers/utils'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { SuspiciousTransfersTable } from './table/SuspiciousTransfersTable'
 import type {
   SuspiciousTransferRow,
@@ -13,6 +13,7 @@ import type {
 } from './types'
 
 export function SuspiciousTransfersPage() {
+  const api = useBackendApi()
   const {
     data: suspiciousTransfersData,
     error: suspiciousTransfersError,

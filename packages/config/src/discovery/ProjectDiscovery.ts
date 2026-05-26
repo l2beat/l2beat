@@ -462,17 +462,40 @@ export class ProjectDiscovery {
     return this.formatPermissionedAccounts(addresses)
   }
 
+  withPermissionedAccountDisplayNames(
+    accounts: ProjectPermissionedAccount[],
+    displayNames: string[],
+  ): ProjectPermissionedAccount[] {
+    assert(
+      accounts.length === displayNames.length,
+      `Every permissioned account must have a display name. Found ${accounts.length} accounts and ${displayNames.length} display names.`,
+    )
+
+    return accounts.map((account, index) => ({
+      ...account,
+      displayName: displayNames[index],
+    }))
+  }
+
   getPermissionDetails(
     name: string,
     accounts: ProjectPermissionedAccount[],
     description: string,
     opts?: {
       references?: ReferenceLink[]
+      accountDisplayNames?: string[]
     },
   ): ProjectPermission {
+    const accountsWithDisplayNames = opts?.accountDisplayNames
+      ? this.withPermissionedAccountDisplayNames(
+          accounts,
+          opts.accountDisplayNames,
+        )
+      : accounts
+
     let chain = 'ethereum'
-    if (accounts.length > 0) {
-      const chains = accounts.map((a) =>
+    if (accountsWithDisplayNames.length > 0) {
+      const chains = accountsWithDisplayNames.map((a) =>
         ChainSpecificAddress.longChain(a.address),
       )
       const uniqueChains = unique(chains)
@@ -488,10 +511,10 @@ export class ProjectDiscovery {
     return {
       id: name,
       name,
-      accounts,
+      accounts: accountsWithDisplayNames,
       description,
       chain,
-      ...(opts ?? {}),
+      ...(opts?.references ? { references: opts.references } : {}),
     }
   }
 
@@ -912,7 +935,10 @@ export class ProjectDiscovery {
       return {
         id: name,
         name: name,
-        accounts: this.formatPermissionedAccounts([eoa.address]),
+        accounts: this.withPermissionedAccountDisplayNames(
+          this.formatPermissionedAccounts([eoa.address]),
+          [name],
+        ),
         chain: ChainSpecificAddress.longChain(eoa.address),
         description,
       }

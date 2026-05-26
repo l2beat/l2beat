@@ -138,6 +138,10 @@ const navGroups: NavigationGroup[] = [
             url: '/interop/insights/coverage-pies',
           },
           {
+            title: 'Chains summary',
+            url: '/interop/insights/chains-summary',
+          },
+          {
             title: 'Memory',
             url: '/interop/insights/memory',
           },

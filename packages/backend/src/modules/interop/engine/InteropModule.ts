@@ -153,6 +153,7 @@ export function createInteropModule({
     getPluginSyncStatuses: () => syncersManager.getPluginSyncStatuses(),
     getProcessorStatuses: () => getProcessorsStatus(processors),
     chains: config.interop.capture.chains,
+    oneSidedChains: config.interop.oneSidedChains,
     tokenDbClient,
   })
 
