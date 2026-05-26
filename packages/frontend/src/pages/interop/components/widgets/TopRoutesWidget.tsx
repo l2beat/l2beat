@@ -1,6 +1,12 @@
 import { assert } from '@l2beat/shared-pure'
 import times from 'lodash/times'
 import { Skeleton } from '~/components/core/Skeleton'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
@@ -219,15 +225,33 @@ function ChainBadge({
 }) {
   return (
     <div className="flex items-center gap-1.5">
-      <img
-        src={chain.iconUrl}
-        alt={chain.name}
+      <ChainIconWithTooltip
+        chain={chain}
         className={cn(isLarge ? 'size-6' : 'size-5')}
       />
       {isLarge && (
         <span className="font-semibold text-label-value-15">{chain.name}</span>
       )}
     </div>
+  )
+}
+
+function ChainIconWithTooltip({
+  chain,
+  className,
+}: {
+  chain: ChainDetails
+  className?: string
+}) {
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <img src={chain.iconUrl} alt={chain.name} className={className} />
+      </TooltipTrigger>
+      <TooltipPortal>
+        <TooltipContent fitContent>{chain.name}</TooltipContent>
+      </TooltipPortal>
+    </Tooltip>
   )
 }
 
@@ -245,12 +269,12 @@ function RouteRow({
   return (
     <div className="flex items-center justify-between gap-3 rounded-lg border border-divider px-3 py-2">
       <div className="flex min-w-0 items-center gap-1.5">
-        <img src={from.iconUrl} alt={from.name} className="size-5" />
+        <ChainIconWithTooltip chain={from} className="size-5" />
         <span className="@max-[465px]:hidden truncate font-medium text-label-value-15">
           {from.name}
         </span>
         <ArrowRightIcon className="size-4 fill-brand" />
-        <img src={to.iconUrl} alt={to.name} className="size-5" />
+        <ChainIconWithTooltip chain={to} className="size-5" />
         <span className="@max-[465px]:hidden truncate font-medium text-label-value-15">
           {to.name}
         </span>
