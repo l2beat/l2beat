@@ -18,32 +18,30 @@ export function GroupedActorAddresses({
   return (
     <div
       className={cn(
-        'flex flex-row flex-wrap items-center gap-x-1.5 gap-y-1 text-paragraph-15 md:text-paragraph-16',
+        'flex flex-row flex-wrap items-center gap-x-2 gap-y-1 text-paragraph-15 md:text-paragraph-16',
         className,
       )}
     >
-      {addresses.map((entry, i) => (
-        <span key={entry.address} className="inline-flex items-center gap-1">
-          {i > 0 && <span className="text-secondary">, </span>}
-          <HighlightableLink
-            variant={
-              entry.verificationStatus === 'unverified' ? 'danger' : undefined
-            }
-            href={entry.href}
-            address={entry.address}
-            className="inline-flex items-center gap-0.5"
-          >
-            {entry.verificationStatus === 'unverified' && (
-              <Tooltip>
-                <TooltipTrigger>
-                  <UnverifiedIcon className="fill-red-300" />
-                </TooltipTrigger>
-                <TooltipContent>This contract is not verified</TooltipContent>
-              </Tooltip>
-            )}
-            {entry.name}
-          </HighlightableLink>
-        </span>
+      {addresses.map((entry) => (
+        <HighlightableLink
+          key={entry.address}
+          variant={
+            entry.verificationStatus === 'unverified' ? 'danger' : undefined
+          }
+          href={entry.href}
+          address={entry.address}
+          className="inline-flex items-center gap-0.5"
+        >
+          {entry.verificationStatus === 'unverified' && (
+            <Tooltip>
+              <TooltipTrigger>
+                <UnverifiedIcon className="fill-red-300" />
+              </TooltipTrigger>
+              <TooltipContent>This contract is not verified</TooltipContent>
+            </Tooltip>
+          )}
+          {entry.name}
+        </HighlightableLink>
       ))}
     </div>
   )
