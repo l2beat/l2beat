@@ -77,10 +77,24 @@
 }
 
 .mdc table {
-  @apply w-full;
+  @apply w-full border border-divider rounded;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
 }
 
-.mdc table tr:not(:last-child) {
+.mdc table th:first-child,
+.mdc table td:first-child {
+  width: 32%;
+  @apply align-top;
+}
+
+.mdc table thead tr:has(th:empty) {
+  @apply hidden;
+}
+
+.mdc table tr:not(:last-child) > * {
   @apply border-b border-divider;
 }
 
