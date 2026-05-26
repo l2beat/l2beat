@@ -29,6 +29,7 @@ import { findHyperlaneChain, HyperlaneConfig } from './hyperlane.config'
 import {
   findBestTransferLog as findBestTransferLogWithParser,
   findParsedAround,
+  findParsedBefore,
   type ParsedTransferLog,
 } from './logScan'
 import {
@@ -206,7 +207,8 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
     const receivedTransferRemote = parseReceivedTransferRemote(input.log, null)
     if (receivedTransferRemote) {
       const recipientAddress = input.log.address.toLowerCase()
-      const messageId = findParsedAround(
+      // Batched deliveries can place the next Process right after this receive, we do not want to accidently consume those
+      const messageId = findParsedBefore(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,

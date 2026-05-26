@@ -1,11 +1,11 @@
-import type { Database, TokenDatabase } from '@l2beat/database'
-import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
 import type {
+  Database,
   DeployedTokenRecord,
-  DeployedTokenRepository,
-} from '@l2beat/database/dist/repositories/DeployedTokenRepository'
+  TokenDatabase,
+} from '@l2beat/database'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
+import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
 import type { AbstractTokenRecord } from '../../../schemas/AbstractToken'
 import { createCallerFactory } from '../../trpc'
 import { abstractTokensRouter } from './index'
@@ -39,7 +39,7 @@ describe('abstractTokensRouter', () => {
       ]
       const mockGetAll = mockFn().resolvesTo(abstractTokens)
       const mockTokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockGetAll,
         }),
       })
@@ -54,7 +54,7 @@ describe('abstractTokensRouter', () => {
 
     it('returns empty array when no tokens exist', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
@@ -144,10 +144,10 @@ describe('abstractTokensRouter', () => {
         },
       ] satisfies DeployedTokenRecord[]
       const mockTokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo(abstractTokens),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockFn().resolvesTo(deployedTokens),
         }),
       })
@@ -180,10 +180,10 @@ describe('abstractTokensRouter', () => {
         }),
       ]
       const mockTokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo(abstractTokens),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
@@ -241,10 +241,10 @@ describe('abstractTokensRouter', () => {
         },
       ] satisfies DeployedTokenRecord[]
       const mockTokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           findById: mockFn().resolvesTo(token),
         }),
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByAbstractTokenId: mockFn().resolvesTo(deployedTokens),
         }),
       })
@@ -261,7 +261,7 @@ describe('abstractTokensRouter', () => {
 
     it('returns null when abstract token does not exist', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           findById: mockFn().resolvesTo(undefined),
         }),
       })
@@ -404,6 +404,7 @@ function createRouter(
     },
     tokenDb: mockTokenDb,
     db: mockObject<Database>({}),
+    tokenIngestionProcessor: mockObject<TokenIngestionProcessor>({}),
   })
 }
 

@@ -18,6 +18,7 @@ export type DeployedTokenRecord = {
   decimals: number
   deploymentTimestamp: UnixTime
   metadata: DeployedTokenMetadata | null
+  abstractTokenAssignmentProof?: unknown
 }
 
 export type DeployedTokenMetadata = {
@@ -47,6 +48,7 @@ function toRecord(row: Selectable<DeployedToken>): DeployedTokenRecord {
     ...row,
     metadata: row.metadata as DeployedTokenMetadata,
     deploymentTimestamp: UnixTime.fromDate(row.deploymentTimestamp),
+    abstractTokenAssignmentProof: row.abstractTokenAssignmentProof,
   }
 }
 
@@ -140,6 +142,7 @@ export class DeployedTokenRepository extends BaseRepository {
         decimals: row.decimals,
         deploymentTimestamp: row.deploymentTimestamp,
         metadata: row.metadata as DeployedTokenMetadata,
+        abstractTokenAssignmentProof: row.abstractTokenAssignmentProof,
       }),
       abstractToken:
         row.AbstractToken_id === null ||

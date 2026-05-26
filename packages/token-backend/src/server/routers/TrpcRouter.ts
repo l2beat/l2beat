@@ -5,6 +5,7 @@ import * as trpcExpress from '@trpc/server/adapters/express'
 import express from 'express'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import type { Config } from '../../config/Config'
+import type { TokenIngestionProcessor } from '../../ingestion/TokenIngestionProcessor'
 import { getLogger } from '../../logger'
 import { createAppRouter } from '../../trpc/appRouter'
 import { createTRPCContext } from '../../trpc/trpc'
@@ -17,10 +18,18 @@ export interface CreateTrpcRouterDeps {
   tokenDb: TokenDatabase
   coingeckoClient: CoingeckoClient
   etherscanApiKey: string | undefined
+  tokenIngestionProcessor: TokenIngestionProcessor
 }
 
 export function createTrpcRouter(deps: CreateTrpcRouterDeps): express.Router {
-  const { config, db, tokenDb, coingeckoClient, etherscanApiKey } = deps
+  const {
+    config,
+    db,
+    tokenDb,
+    coingeckoClient,
+    etherscanApiKey,
+    tokenIngestionProcessor,
+  } = deps
 
   const router = express.Router()
 
@@ -38,6 +47,7 @@ export function createTrpcRouter(deps: CreateTrpcRouterDeps): express.Router {
           config,
           db,
           tokenDb,
+          tokenIngestionProcessor,
         }),
       onError: (opts) => {
         const logFn = getLogFn(opts.error)

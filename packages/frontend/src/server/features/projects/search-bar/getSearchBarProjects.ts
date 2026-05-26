@@ -36,6 +36,7 @@ export async function getSearchBarProjects(search: string) {
       'ecosystemConfig',
       'interopConfig',
       'zkCatalogInfo',
+      'privacyInfo',
       'contracts',
       'permissions',
       'aliases',

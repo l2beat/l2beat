@@ -19,6 +19,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { getInteropTransactionDataCandidates } from '../dto/interopTransaction'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
+  findMayanWormholeChain,
   isMayanSwiftSettlementSender,
   MAYAN_EVM_CHAINS,
   MAYAN_PROTOCOLS,
@@ -35,7 +36,6 @@ import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
@@ -112,7 +112,7 @@ export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
             maybeEmitterChainId !== undefined,
         )
       const $srcChain = emitterChainId
-        ? findChain(wormholeNetworks, (x) => x.wormholeChainId, emitterChainId)
+        ? findMayanWormholeChain(wormholeNetworks, emitterChainId)
         : undefined
 
       return [
@@ -143,9 +143,8 @@ export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
       // Create one SettlementSent event per order key in the batch
       const events: ReturnType<typeof SettlementSent.create>[] = []
       for (const entry of batchEntries) {
-        const $dstChain = findChain(
+        const $dstChain = findMayanWormholeChain(
           wormholeNetworks,
-          (x) => x.wormholeChainId,
           entry.dstChainId,
         )
 
