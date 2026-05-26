@@ -18,7 +18,7 @@ export function GroupedActorAddresses({
   return (
     <div
       className={cn(
-        'flex flex-row flex-wrap items-center gap-x-2 gap-y-1 text-paragraph-15 md:text-paragraph-16',
+        'flex flex-row flex-wrap items-center gap-x-1.5 gap-y-1 text-paragraph-15 md:text-paragraph-16',
         className,
       )}
     >
