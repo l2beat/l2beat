@@ -62,6 +62,7 @@ import type {
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
+  ProjectUpgradesAndGovernance,
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
@@ -257,7 +258,7 @@ interface OpStackConfigCommon {
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   interopConfig?: InteropConfig
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
 }

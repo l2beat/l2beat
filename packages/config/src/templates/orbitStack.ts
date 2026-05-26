@@ -65,6 +65,7 @@ import type {
   ProjectScalingStateValidationCategory,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
+  ProjectUpgradesAndGovernance,
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
@@ -189,7 +190,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   interopConfig?: InteropConfig
 }
 
