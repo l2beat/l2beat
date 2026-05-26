@@ -87,12 +87,15 @@ export function getInclusionDelayEntityLegendEntries(
     entityNames.push(entity.name)
 
     const stakeFraction = cumulativeStake / distribution.totalStake
+    if (stakeFraction > 1) break
+
+    const censorCount = Math.min(
+      Math.round(chart.validatorCount * stakeFraction),
+      chart.validatorCount,
+    )
     const delayDays =
       stakeFraction <= chart.maxCensorFraction
-        ? calculateProjectDelayDays(
-            chart,
-            Math.round(chart.validatorCount * stakeFraction),
-          )
+        ? calculateProjectDelayDays(chart, censorCount)
         : null
 
     const entityCount = i + 1
@@ -123,7 +126,7 @@ export function getInclusionDelayThresholdMarkers(
   )
 
   return thresholds.flatMap((threshold) => {
-    const censorCount = findFirstFiniteCensorCountAtOrAboveDelay(
+    const censorCount = findFirstCensorCountAtOrAboveDelay(
       chart,
       threshold.days,
       maxCensorCount,
@@ -131,7 +134,6 @@ export function getInclusionDelayThresholdMarkers(
     if (censorCount === undefined) return []
 
     const delayDays = calculateProjectDelayDays(chart, censorCount)
-    if (delayDays === null) return []
 
     return [
       {
@@ -149,7 +151,7 @@ export function getInclusionDelayThresholdMarkers(
   })
 }
 
-function findFirstFiniteCensorCountAtOrAboveDelay(
+function findFirstCensorCountAtOrAboveDelay(
   chart: ProjectInclusionDelayChart,
   thresholdDays: number,
   maxCensorCount: number,
@@ -170,18 +172,13 @@ function findFirstFiniteCensorCountAtOrAboveDelay(
     }
   }
 
-  if (result === undefined) return undefined
-
-  const delayDays = calculateProjectDelayDays(chart, result)
-  if (delayDays === null || delayDays < thresholdDays) return undefined
-
   return result
 }
 
 function interpolateCensoringFractionForDelay(
   chart: ProjectInclusionDelayChart,
   censorCount: number,
-  delayDays: number,
+  delayDays: number | null,
   thresholdDays: number,
 ) {
   if (censorCount === 0) return 0
@@ -191,7 +188,7 @@ function interpolateCensoringFractionForDelay(
     return censorCount / chart.validatorCount
   }
 
-  if (delayDays === previousDelayDays) {
+  if (delayDays === null || delayDays === previousDelayDays) {
     return censorCount / chart.validatorCount
   }
 

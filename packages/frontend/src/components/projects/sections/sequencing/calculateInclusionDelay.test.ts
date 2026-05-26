@@ -182,6 +182,12 @@ describe('calculateInclusionDelay', () => {
           censoringFraction: 0.35,
           delayDays: 50 / 86_400,
         },
+        {
+          id: 'delay-threshold-2m',
+          label: '2m delay',
+          censoringFraction: 0.5,
+          delayDays: 120 / 86_400,
+        },
       ])
     })
   })

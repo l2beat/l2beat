@@ -132,7 +132,7 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
             domain={yDomain}
             ticks={
               yAxisScale === 'log'
-                ? getLogDelayTicks(yDomain[0], yDomain[1])
+                ? getLogDelayTicks(yDomain[0], yDomain[1]) ?? undefined
                 : undefined
             }
             tickFormatter={(value) => formatDelayDays(Number(value))}
@@ -227,7 +227,7 @@ function EntityMarkersLegend({
   color: string | undefined
   hasStakeDistribution: boolean
 }) {
-  if (entries.length === 0 && hasStakeDistribution) return null
+  if (!hasStakeDistribution) return null
 
   return (
     <div className="mt-3 flex flex-col gap-2 font-medium text-label-value-13">
@@ -268,10 +268,10 @@ function InclusionDelayTooltip({
 }: CustomChartTooltipProps) {
   if (!payload || typeof censoringFraction !== 'number') return null
   const projectDelay = payload.find(
-    (entry) => entry.name === 'projectDelayDays',
+    (entry) => entry.dataKey === 'projectDelayDays',
   )?.value
   const ethereumDelay = payload.find(
-    (entry) => entry.name === 'ethereumDelayDays',
+    (entry) => entry.dataKey === 'ethereumDelayDays',
   )?.value
 
   return (
@@ -313,7 +313,9 @@ function getYDomain(
     ...thresholdMarkers.map((marker) => marker.delayDays),
   ].filter((value): value is number => value !== null && value > 0)
 
-  if (values.length === 0) return [0, 1]
+  if (values.length === 0) {
+    return scale === 'log' ? [1 / SECONDS_PER_DAY, 1] : [0, 1]
+  }
 
   const min = Math.min(...values)
   const max = Math.max(...values)
@@ -325,7 +327,10 @@ function getYDomain(
   return [0, max === 0 ? 1 : max * 1.1]
 }
 
-function getLogDelayTicks(minDays: number, maxDays: number) {
+function getLogDelayTicks(
+  minDays: number,
+  maxDays: number,
+): number[] | undefined {
   const ticksInSeconds = [
     1,
     2,
@@ -346,7 +351,7 @@ function getLogDelayTicks(minDays: number, maxDays: number) {
     .map((seconds) => seconds / SECONDS_PER_DAY)
     .filter((days) => days >= minDays && days <= maxDays)
 
-  return ticks.length >= 2 ? ticks : [minDays, maxDays]
+  return ticks.length >= 2 ? ticks : undefined
 }
 
 function getFractionTicks(maxCensorFraction: number) {
@@ -364,8 +369,9 @@ function formatCensoringFraction(value: number) {
 }
 
 function formatDelayDays(days: number) {
+  if (days <= 0) return '0s'
   const seconds = Math.round(days * SECONDS_PER_DAY)
-  if (seconds <= 0) return '<1s'
+  if (seconds === 0) return '<1s'
 
   return formatSeconds(seconds)
 }
@@ -383,11 +389,7 @@ function formatTooltipDelay(
 }
 
 function formatEntityMarkerName(entry: InclusionDelayEntityLegendEntry) {
-  const name = entry.entityNames.at(-1)
-  if (!name) return ''
-  if (entry.entityCount === 1) return name
-
-  return `+ ${name}`
+  return entry.entityNames.at(-1) ?? ''
 }
 
 function formatTarget(target: number) {
