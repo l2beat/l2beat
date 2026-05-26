@@ -32,19 +32,21 @@ export function getFlows(
     transferMap.set(key, (transferMap.get(key) ?? 0) + record.transferCount)
   }
 
-  const sortedFlows = flowsMapToSorted(volumeMap, selection, transferMap)
+  const sortedFlows = flowsMapToSorted(volumeMap, selection)
 
   if (sortedFlows.every((flow) => flow.volume === 0)) {
     return []
   }
 
-  return sortedFlows
+  return sortedFlows.map((flow) => ({
+    ...flow,
+    transferCount: transferMap.get(toFlowKey(flow.srcChain, flow.dstChain)),
+  }))
 }
 
 export function flowsMapToSorted(
   volumes: Map<string, number>,
   selection: InteropSelectionInput,
-  transferCounts: Map<string, number>,
 ): InteropFlowData[] {
   const selectedPairs = getSelectedFlowPairs(selection)
   return selectedPairs
@@ -54,7 +56,6 @@ export function flowsMapToSorted(
         srcChain,
         dstChain,
         volume: volumes.get(key) ?? 0,
-        transferCount: transferCounts.get(key),
       }
     })
     .toSorted((a, b) => b.volume - a.volume)
