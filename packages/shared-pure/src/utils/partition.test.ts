@@ -27,9 +27,8 @@ describe(partition.name, () => {
   })
 
   it('preserves the original order in both partitions', () => {
-    const [pass, fail] = partition(
-      ['a1', 'b2', 'a3', 'b4', 'a5'],
-      (s) => s.startsWith('a'),
+    const [pass, fail] = partition(['a1', 'b2', 'a3', 'b4', 'a5'], (s) =>
+      s.startsWith('a'),
     )
     expect(pass).toEqual(['a1', 'a3', 'a5'])
     expect(fail).toEqual(['b2', 'b4'])
