@@ -273,15 +273,17 @@ export const arbitrum: ScalingProject = orbitStackL2({
       { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
     ],
   },
-  upgradesAndGovernance: getNitroGovernance(
-    l2CoreQuorumPercent,
-    l2TimelockDelay,
-    challengeWindowSeconds,
-    l1TimelockDelay,
-    treasuryTimelockDelay,
-    l2TreasuryQuorumPercent,
-    challengeGracePeriodSeconds,
-  ),
+  upgradesAndGovernance: {
+    content: getNitroGovernance(
+      l2CoreQuorumPercent,
+      l2TimelockDelay,
+      challengeWindowSeconds,
+      l1TimelockDelay,
+      treasuryTimelockDelay,
+      l2TreasuryQuorumPercent,
+      challengeGracePeriodSeconds,
+    ),
+  },
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
       formatSeconds(totalDelay),

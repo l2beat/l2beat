@@ -51,7 +51,6 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
-  ProjectGovernanceInfo,
   ProjectPermission,
   ProjectRisk,
   ProjectScalingCapability,
@@ -66,6 +65,7 @@ import type {
   ProjectScalingStateValidationCategory,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
+  ProjectUpgradesAndGovernance,
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
@@ -190,8 +190,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
-  upgradesAndGovernance?: string
-  governanceInfo?: ProjectGovernanceInfo
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   interopConfig?: InteropConfig
 }
 
@@ -849,7 +848,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
         }
       : undefined,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
-    governanceInfo: templateVars.governanceInfo,
   }
 }
 

@@ -305,7 +305,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         'Universal',
         ...(templateVars.additionalPurposes ?? []),
       ],
-      upgradesAndGovernanceImage: 'zkstack',
       stacks: ['ZK Stack'],
       architectureImage:
         templateVars.daProvider !== undefined
@@ -485,8 +484,9 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
             ]
           : undefined),
     },
-    upgradesAndGovernance: (() => {
-      const description = `
+    upgradesAndGovernance: {
+      content: (() => {
+        const description = `
 There are two main paths for contract upgrades in the shared ZK stack ecosystem - standard and emergency - both converging on the shared upgrade management contract ProtocolUpgradeHandler.
 The standard path involves a governance proposal and voting through the DAO, multiple timelock delays and finally approval by the Guardians or ${scApprovalThreshold} SecurityCouncil participants.
 The emergency path allows for contract upgrades without any delay by the EmergencyUpgradeBoard, which acts as a 3/3 Multisig between SecurityCouncil, Guardians and the FoundationMultisig.
@@ -546,8 +546,10 @@ These chain-specific actions include critical operations like setting a transact
 For rollups, data availability on Ethereum is validated by a RollupL1DAValidator contract (or a RelayedSLDAValidator on the Gateway). Each rollup can become a permanent rollup (through their Chain Admin) which disallows DA changes to non-whitelisted sources or settlement layers in the future.
 The source of truth for rollup-compliant DA validator contracts is the RollupDAManager contract, which is administered via the ProtocolUpgradeHandler.
 ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cluster Admin* role in the shared ZK stack contracts.`
-      return description
-    })(),
+        return description
+      })(),
+      image: 'zkstack',
+    },
     permissions: mergePermissions(
       templateVars.discovery.getDiscoveredPermissions(),
       templateVars.nonTemplatePermissions ?? {},

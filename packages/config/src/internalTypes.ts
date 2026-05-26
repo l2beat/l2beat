@@ -21,7 +21,6 @@ import type {
   ProjectDiscoveryInfo,
   ProjectEcosystemInfo,
   ProjectEscrow,
-  ProjectGovernanceInfo,
   ProjectLinks,
   ProjectLivenessConfig,
   ProjectLivenessInfo,
@@ -39,6 +38,7 @@ import type {
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
+  ProjectUpgradesAndGovernance,
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from './types'
@@ -103,9 +103,7 @@ export interface ScalingProject {
   /** Discodrive markers - shouldn't be configured by a user */
   discoveryInfo: ProjectDiscoveryInfo
   /** Upgrades and governance explained */
-  upgradesAndGovernance?: string
-  /** Additional structured governance information */
-  governanceInfo?: ProjectGovernanceInfo
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** Interop configuration */
   interopConfig?: InteropConfig
 }
@@ -158,8 +156,6 @@ export interface ProjectScalingDisplay {
   architectureImage?: string
   /** Name of the state validation image to show in the state validation section if present, otherwise use slug */
   stateValidationImage?: string
-  /** Name of the upgrades and governance image to show in the upgrades and governance section if present, otherwise use slug */
-  upgradesAndGovernanceImage?: string
   /** Name of the sequencing image to show in the sequencing section if present, otherwise use slug */
   sequencingImage?: string
   /** Tooltip contents for liveness tab for given project */

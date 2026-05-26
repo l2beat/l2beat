@@ -43,7 +43,6 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
-  ProjectGovernanceInfo,
   ProjectPermissions,
   ProjectReviewStatus,
   ProjectRisk,
@@ -55,6 +54,7 @@ import type {
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
+  ProjectUpgradesAndGovernance,
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
@@ -100,8 +100,7 @@ interface AgglayerBaseConfig {
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
-  upgradesAndGovernance?: string
-  governanceInfo?: ProjectGovernanceInfo
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   stage?: ProjectScalingStage
   stateValidation?: ProjectScalingStateValidation
   associatedTokens?: string[]
@@ -259,8 +258,11 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     config.nonTemplatePermissions ?? {},
   )
 
-  const upgradesAndGovernance =
-    config.upgradesAndGovernance ?? buildUpgradesAndGovernance(context)
+  const upgradesAndGovernance: ProjectUpgradesAndGovernance = {
+    content: buildUpgradesAndGovernance(context),
+    image: 'agglayer',
+    ...config.upgradesAndGovernance,
+  }
 
   const fallbackActivityConfig =
     config.variant === 'cdk-opgeth-sovereign'
@@ -284,7 +286,6 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     ecosystemInfo: { id: ProjectId('agglayer') },
     display: {
       ...config.display,
-      upgradesAndGovernanceImage: 'agglayer',
       purposes: config.overridingPurposes ?? [
         'Universal',
         ...(config.additionalPurposes ?? []),
@@ -325,7 +326,6 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
       zkVerifiers: getAgglayerVerifiers(config.discovery),
     },
     upgradesAndGovernance,
-    governanceInfo: config.governanceInfo,
     milestones: config.milestones,
     badges: mergeBadges([BADGES.Infra.Agglayer], variantSections.badges),
     customDa: variantSections.customDa,

@@ -226,15 +226,17 @@ export const nova: ScalingProject = orbitStackL2({
     name: 'BoLD',
     challengeProtocol: 'Interactive',
   },
-  upgradesAndGovernance: getNitroGovernance(
-    l2CoreQuorumPercent,
-    l2TimelockDelay,
-    challengeWindowSeconds,
-    l1TimelockDelay,
-    treasuryTimelockDelay,
-    l2TreasuryQuorumPercent,
-    challengeGracePeriodSeconds,
-  ),
+  upgradesAndGovernance: {
+    content: getNitroGovernance(
+      l2CoreQuorumPercent,
+      l2TimelockDelay,
+      challengeWindowSeconds,
+      l1TimelockDelay,
+      treasuryTimelockDelay,
+      l2TreasuryQuorumPercent,
+      challengeGracePeriodSeconds,
+    ),
+  },
   nonTemplateRiskView: {
     exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
       l2TimelockDelay,

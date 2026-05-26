@@ -137,16 +137,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       stateValidation: p.stateValidation,
       stateValidationImage: p.display.stateValidationImage,
       upgradesAndGovernance:
-        p.type === 'layer2' &&
-        (p.upgradesAndGovernance ||
-          p.governanceInfo ||
-          p.display.upgradesAndGovernanceImage)
-          ? {
-              content: p.upgradesAndGovernance,
-              governanceInfo: p.governanceInfo,
-              image: p.display.upgradesAndGovernanceImage,
-            }
-          : undefined,
+        p.type === 'layer2' ? p.upgradesAndGovernance : undefined,
     },
     customDa: p.customDa,
     tvsInfo: {
