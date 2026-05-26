@@ -128,7 +128,7 @@ The frontend's root of trust is the IPFS content hash registered for [tornadocas
 The latest hash can be fetched from a trusted ethereum node (e.g. your own or trusted light node rpc). 
 There were incidents of malicious frontend hash updates passing onchain governance proposals before, so using a publicly audited or self-audited IPFS hash is advised. 
 An example of an audit process with useful links can be found [here](https://gist.github.com/pcaversaccio/ea7f62fd21b6e22f301980007f7c767e) or [here](https://notes.ethereum.org/@GW1ZUbNKR5iRjjKYx6_dJQ/Bk8zsJ9xj).
-The frontend can then be accessed by running a local IPFS node that automatically fetches the verified frontend hash (e.g. in style of [dapp3.eth](https://github.com/apoorvlathey/dapp3) or [kubo](https://github.com/ipfs/kubo) + [ipfs-companion](https://github.com/ipfs/ipfs-companion) and serves it in the browser locally.
+The frontend can then be accessed by running a local IPFS node that automatically fetches the verified frontend hash (e.g. [dapp3.eth](https://github.com/apoorvlathey/dapp3) or [kubo](https://github.com/ipfs/kubo) + [ipfs-companion](https://github.com/ipfs/ipfs-companion) and serves it in the browser locally.
 `,
     links: {
       websites: ['https://app.ens.domains/tornadocash.eth?tab=records'],
