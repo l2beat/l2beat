@@ -68,7 +68,7 @@ function Content({
   onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
 }) {
-  const { selectedChains, selectChain } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
 
   if (selectedChains.from.length === 0 && selectedChains.to.length === 0) {
     return (
@@ -78,8 +78,6 @@ function Content({
         </div>
         <InitialChainSelector
           interopChains={onboardingInteropChains}
-          selectedChains={selectedChains}
-          selectChain={selectChain}
           type="nonMinting"
         />
       </>
