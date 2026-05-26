@@ -165,6 +165,7 @@ export interface ProjectStatuses {
 
 export interface ProjectDisplay {
   description: string
+  detailedDescription?: string
   links: ProjectLinks
   badges: Badge[]
   redWarning?: ProjectRedWarning
@@ -580,6 +581,12 @@ export interface ProjectScalingDa {
   mode: TableReadyValue
 }
 
+export interface ProjectGovernanceInfo {
+  securityCouncil?: Record<string, string>
+  upgrades?: Record<string, string>
+  tokenGovernance?: Record<string, string>
+}
+
 export interface ProjectScalingTechnology {
   warning?: string
   detailedDescription?: string
@@ -592,12 +599,17 @@ export interface ProjectScalingTechnology {
   exitMechanisms?: ProjectTechnologyChoice[]
   massExit?: ProjectTechnologyChoice
   otherConsiderations?: ProjectTechnologyChoice[]
-  upgradesAndGovernance?: string
-  upgradesAndGovernanceImage?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   stateValidationImage?: string
   isUnderReview?: boolean
+}
+
+export interface ProjectUpgradesAndGovernance {
+  content?: string
+  governanceInfo?: ProjectGovernanceInfo
+  image?: string
 }
 
 export interface ProjectScalingStateDerivation {
@@ -863,6 +875,7 @@ export interface TrustedSetup {
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
+  participantCount?: number
 }
 
 // #endregion
@@ -872,13 +885,21 @@ export interface TrustedSetup {
 export interface ProjectPrivacyInfo {
   trustedSetup: TrustedSetup
   tokens: ProjectPrivacyToken[]
+  attributes?: PrivacyAttribute[]
   riskSummary?: string
   upgradesAndGovernance?: string
+}
+
+export interface PrivacyAttribute {
+  id: string
+  label: string
+  description: string
 }
 
 export interface ProjectPrivacyToken {
   token: {
     address: EthereumAddress
+    iconUrl: string | undefined
     symbol: string
     decimals: number
     priceId: string

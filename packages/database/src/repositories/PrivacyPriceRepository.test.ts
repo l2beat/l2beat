@@ -190,6 +190,64 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
     },
   )
 
+  describe(
+    PrivacyPriceRepository.prototype.getLatestPriceByPriceId.name,
+    () => {
+      it('returns latest price for given priceId', async () => {
+        await repository.upsertMany([
+          {
+            configurationId: 'cfg1'.padEnd(12),
+            timestamp: UnixTime(1000),
+            priceUsd: 1.5,
+            priceId: 'ethereum',
+          },
+          {
+            configurationId: 'cfg1'.padEnd(12),
+            timestamp: UnixTime(3000),
+            priceUsd: 3.5,
+            priceId: 'ethereum',
+          },
+          {
+            configurationId: 'cfg1'.padEnd(12),
+            timestamp: UnixTime(2000),
+            priceUsd: 2.5,
+            priceId: 'ethereum',
+          },
+          {
+            configurationId: 'cfg2'.padEnd(12),
+            timestamp: UnixTime(9000),
+            priceUsd: 0.5,
+            priceId: 'usd-coin',
+          },
+        ])
+
+        const result = await repository.getLatestPriceByPriceId('ethereum')
+
+        expect(result).toEqual({
+          configurationId: 'cfg1'.padEnd(12),
+          timestamp: UnixTime(3000),
+          priceUsd: 3.5,
+          priceId: 'ethereum',
+        })
+      })
+
+      it('returns undefined when no price for priceId', async () => {
+        await repository.upsertMany([
+          {
+            configurationId: 'cfg1'.padEnd(12),
+            timestamp: UnixTime(1000),
+            priceUsd: 1.5,
+            priceId: 'ethereum',
+          },
+        ])
+
+        const result = await repository.getLatestPriceByPriceId('bitcoin')
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
   describe(PrivacyPriceRepository.prototype.deleteByConfigs.name, () => {
     it('deletes records by config and range', async () => {
       const records = [

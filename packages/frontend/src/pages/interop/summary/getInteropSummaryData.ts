@@ -1,4 +1,5 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
@@ -22,10 +23,18 @@ export async function getInteropSummaryData(
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
+  const scalingProjects = await ps.getProjects({
+    select: ['scalingInfo'],
+  })
+  const scalingProjectSlugById = new Map(
+    scalingProjects.map((p) => [p.id, p.slug]),
+  )
+
   const interopChainsWithIcons: InteropChainWithIcon[] = interopChains.map(
     (chain) => ({
       ...chain,
       iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+      href: getInteropChainHref(chain.id, scalingProjectSlugById),
     }),
   )
 
@@ -91,6 +100,17 @@ export async function getInteropSummaryData(
       },
     },
   }
+}
+
+function getInteropChainHref(
+  chainId: string,
+  scalingProjectSlugById: Map<ProjectId, string>,
+): string | undefined {
+  if (chainId === ProjectId.ETHEREUM) {
+    return '/data-availability/projects/ethereum/ethereum'
+  }
+  const slug = scalingProjectSlugById.get(ProjectId(chainId))
+  return slug ? `/scaling/projects/${slug}` : undefined
 }
 
 async function getCachedData(

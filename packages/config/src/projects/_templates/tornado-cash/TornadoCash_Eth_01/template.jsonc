@@ -1,7 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TornadoCash_Eth_01",
-  "description": "Legacy fixed-denomination ETH mixer for 0.1 ETH deposits. This older pool generation keeps an operator role that can replace the withdrawal verifier and, for this instance, perform a one-time state migration.",
   "category": "core",
   "ignoreMethods": ["filledSubtrees", "roots", "zeros"],
   "fields": {
@@ -28,8 +27,8 @@
       "severity": "HIGH"
     },
     "isMigrated": {
-      "description": "Whether the one-time legacy state migration path has already been used.",
-      "severity": "LOW"
+      "description": "Whether the one-time legacy state migration path has already been used. If true, this pool behaves like the ones without this function.",
+      "severity": "HIGH"
     }
   },
   "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"]

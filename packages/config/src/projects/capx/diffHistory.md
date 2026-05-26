@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xa334a400197c78bc26e6bfa69d9b17eb7039a9eb
+
+# Diff at Mon, 25 May 2026 14:31:29 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6898129972dbc5b1b4f1389afaf9cb3fb7fd3380 block: 1771857554
+- current timestamp: 1779719416
+
+## Description
+
+Caldera Multisig 3 (shared chain-admin Safe upgrading appchain/capx/form/oevnetwork/sxt) rotated out one member and lowered threshold from 4/7 to 3/6.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x562f44604b9aebd126ad9af6b7ce145e0126661f
 
 # Diff at Fri, 22 May 2026 15:38:16 GMT:

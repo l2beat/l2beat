@@ -19,6 +19,7 @@ import {
   swapAndForwardedEthLog,
 } from './mayan-forwarder'
 import {
+  findMayanWormholeChain,
   isMayanSwiftSettlementSender,
   MAYAN_EVM_CHAINS,
   MAYAN_FORWARDER,
@@ -37,7 +38,6 @@ import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
@@ -182,11 +182,7 @@ function captureOrderFulfilled(
     settlementSent?.args.$dstChain ??
     (fulfilledSrcChainId === undefined || wormholeNetworks.length === 0
       ? undefined
-      : findChain(
-          wormholeNetworks,
-          (x) => x.wormholeChainId,
-          fulfilledSrcChainId,
-        ))
+      : findMayanWormholeChain(wormholeNetworks, fulfilledSrcChainId))
 
   const events: ReturnType<
     typeof OrderFulfilled.create | typeof SettlementSent.create
@@ -237,7 +233,7 @@ function findSingleSettlementSentInTx(
     const $dstChain =
       srcChainId === undefined
         ? undefined
-        : findChain(wormholeNetworks, (x) => x.wormholeChainId, srcChainId)
+        : findMayanWormholeChain(wormholeNetworks, srcChainId)
 
     return SettlementSent.create(
       { ...input, log },

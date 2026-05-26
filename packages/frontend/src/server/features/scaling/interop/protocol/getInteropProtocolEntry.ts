@@ -6,6 +6,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import type { InteropSelection } from '~/pages/interop/utils/types'
+import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { getProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
@@ -41,12 +42,15 @@ export interface InteropProtocolEntry {
 }
 
 export async function getInteropProtocolEntry(
-  project: Project<'interopConfig', 'display' | 'statuses'>,
+  project: Project<'interopConfig', 'display' | 'statuses' | 'discoveryInfo'>,
   apiSelection: InteropSelection,
   interopChains: InteropChainWithIcon[],
   data: InteropProtocolDashboardData,
 ): Promise<InteropProtocolEntry> {
   const isUnderReview = !!project.statuses?.reviewStatus
+  const discoveryUpdates = project.discoveryInfo?.hasDiscoUi
+    ? getDiscoveryUpdates(project.id)
+    : []
 
   const header: InteropProtocolEntry['header'] = {
     description: project.interopConfig.description,
@@ -112,6 +116,17 @@ export async function getInteropProtocolEntry(
         apiSelection,
         data,
         interopChains: sortedChains,
+      },
+    })
+  }
+
+  if (discoveryUpdates.length > 0) {
+    sections.push({
+      type: 'UpdatesSection',
+      props: {
+        id: 'updates',
+        title: 'Updates',
+        updates: discoveryUpdates,
       },
     })
   }
