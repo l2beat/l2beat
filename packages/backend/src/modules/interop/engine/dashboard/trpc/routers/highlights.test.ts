@@ -4,10 +4,10 @@ import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
   Database,
-  TokenDatabase,
   TokenValueRecord,
 } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { expect, mockFn, mockObject } from 'earl'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import {
@@ -399,11 +399,11 @@ function createCaller(options: {
 }) {
   const callerFactory = createCallerFactory(
     createHighlightsRouter({
-      tokenDb: mockObject<TokenDatabase>({
-        abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          findById: options.getAbstractTokenById ?? mockFn(),
-        }),
-      }),
+      tokenDbClient: mockObject<TokenDbClient>({
+        abstractTokens: {
+          getById: { query: options.getAbstractTokenById ?? mockFn() },
+        },
+      } as any),
     }),
   )
   return callerFactory({

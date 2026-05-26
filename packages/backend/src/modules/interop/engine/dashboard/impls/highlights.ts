@@ -1,4 +1,5 @@
-import type { Database, TokenDatabase } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { UnixTime } from '@l2beat/shared-pure'
 import {
   getLargestProtocolVolumeIncrease,
@@ -83,7 +84,7 @@ interface CountIncreaseHighlight {
 
 export async function getInteropHighlights(
   db: Database,
-  tokenDb: TokenDatabase,
+  tokenDbClient: TokenDbClient,
   interopProjectIds: readonly string[],
 ): Promise<InteropHighlightsData> {
   const latestTimestamp =
@@ -238,8 +239,10 @@ export async function getInteropHighlights(
       : undefined
 
   const tokenInfo = tokenIncrease
-    ? await tokenDb.abstractToken.findById(tokenIncrease.abstractTokenId)
-    : undefined
+    ? await tokenDbClient.abstractTokens.getById.query(
+        tokenIncrease.abstractTokenId,
+      )
+    : null
 
   const comparisonWindow =
     latestTimestamp !== undefined

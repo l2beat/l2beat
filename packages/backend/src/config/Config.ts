@@ -270,7 +270,6 @@ export interface InteropFeatureConfig {
   }
   inMemoryEventCap: number
   oneSidedChains: string[]
-  tokensDatabaseUrl: string
 }
 
 export interface BackofficeFeatureConfig {

@@ -68,7 +68,6 @@ export async function getInteropFeatureConfig(
       ),
     },
     inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
-    tokensDatabaseUrl: env.string('TOKENS_DATABASE_URL'),
     oneSidedChains: [
       ...INTEROP_ONE_SIDED_CHAINS.filter((chain) =>
         flags.isEnabled('interop', 'oneSidedChain', chain),
