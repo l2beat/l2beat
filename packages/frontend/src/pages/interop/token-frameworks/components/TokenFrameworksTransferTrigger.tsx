@@ -42,7 +42,7 @@ export function TokenFrameworksTransferTrigger({
         type={undefined}
         tokenId={tokenId}
         snapshotTimestamp={data?.snapshotTimestamp}
-        selectionForApi={dialogSelection}
+        selectedChains={dialogSelection}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
