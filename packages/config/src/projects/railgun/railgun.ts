@@ -50,7 +50,6 @@ const nftFee = discovery.getContractValue<number>(
   'RailgunSmartWallet',
   'nftFee',
 )
-const treasury = discovery.getAddressFromValue('RailgunSmartWallet', 'treasury')
 const stakeLocktime = discovery.getContractValue<number>(
   'Staking',
   'STAKE_LOCKTIME',
@@ -163,7 +162,7 @@ Practical privacy also depends on the timing and amounts of deposits and withdra
 
 ### Fees
 
-There are mandatory onchain protocol fees of ${formatBasisPoints(shieldFee)} for shields and ${formatBasisPoints(unshieldFee)} for unshields. The NFT fee field is currently set to ${nftFee}. Shield and unshield fees are sent to the Railgun Treasury (${ChainSpecificAddress.address(treasury)}).
+There are mandatory onchain protocol fees of ${formatBasisPoints(shieldFee)} for shields and ${formatBasisPoints(unshieldFee)} for unshields. The NFT fee field is currently set to ${nftFee}. Shield and unshield fees are sent to the Railgun Treasury.
 
 Relayers can charge additional offchain fees for submitting transactions on a user's behalf. These relayer fees are not set by the core protocol contracts.
 

@@ -246,7 +246,7 @@ function formatPrivacyPoolsFeeSummary(): string {
       const sortedSymbols = symbols.sort((a, b) =>
         a.localeCompare(b, undefined, { numeric: true }),
       )
-      return `${index + 1}. ${key}: ${sortedSymbols.join(', ')}.`
+      return `- ${key}: ${sortedSymbols.join(', ')}.`
     })
     .join('\n')
 }
