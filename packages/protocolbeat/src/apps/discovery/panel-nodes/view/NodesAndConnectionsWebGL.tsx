@@ -118,19 +118,17 @@ interface AtlasGlyph {
   v0: number
   u1: number
   v1: number
-  cellW: number
-  cellH: number
   advance: number
 }
 
+// Texture has a static ASCII slab and an LRU slab for runtime glyphs.
 interface FontAtlas {
   texture: WebGLTexture
   refSize: number
   cellW: number
   cellH: number
   baselineOffset: number
-  glyphs: Map<string, AtlasGlyph>
-  fallback: AtlasGlyph
+  getGlyph: (ch: string) => AtlasGlyph
 }
 
 interface IconAtlas {
@@ -342,66 +340,141 @@ function fontString(f: FontSpec, sizePx: number): string {
 // Glyph atlas
 // ============================================================================
 
+const ATLAS_COLS = 16
+const ATLAS_STATIC_ROWS = 6 // 95 ASCII glyphs + 1 fallback fit in 96 cells
+const ATLAS_DYNAMIC_ROWS = 6
+const ATLAS_FALLBACK_CH = '�'
+
 function buildFontAtlas(
   gl: WebGL2RenderingContext,
   font: FontSpec,
   dpr: number,
 ): FontAtlas {
   const refSize = font.size
-  const chars: string[] = []
-  for (let code = 32; code < 127; code++) chars.push(String.fromCharCode(code))
-
-  const px = (n: number) => n * dpr
   const padding = 2
-  const cellPxW = Math.ceil(px(refSize) + padding * 2)
-  const cellPxH = Math.ceil(px(refSize) * 1.6 + padding * 2)
-  const cols = 16
-  const rows = Math.ceil(chars.length / cols)
-  const atlasPxW = cellPxW * cols
-  const atlasPxH = cellPxH * rows
+  const cellPxW = Math.ceil(refSize * dpr + padding * 2)
+  const cellPxH = Math.ceil(refSize * dpr * 1.6 + padding * 2)
+  const atlasPxW = cellPxW * ATLAS_COLS
+  const atlasPxH = cellPxH * (ATLAS_STATIC_ROWS + ATLAS_DYNAMIC_ROWS)
 
-  const canvas = document.createElement('canvas')
-  canvas.width = atlasPxW
-  canvas.height = atlasPxH
-  const ctx = canvas.getContext('2d')
-  if (!ctx) throw new Error('failed to get atlas 2d context')
-
-  ctx.font = fontString(font, px(refSize))
-  ctx.textBaseline = 'alphabetic'
-  ctx.fillStyle = 'white'
-
-  const sample = ctx.measureText('Mg')
-  const ascentPx = sample.actualBoundingBoxAscent || px(refSize) * 0.8
+  const initCanvas = newFontCanvas(font, dpr, atlasPxW, atlasPxH)
+  const initCtx = initCanvas.getContext('2d') as CanvasRenderingContext2D
+  const ascentPx =
+    initCtx.measureText('Mg').actualBoundingBoxAscent || refSize * dpr * 0.8
+  const baselinePxY = ascentPx + padding
 
   const glyphs = new Map<string, AtlasGlyph>()
-  const cellW = cellPxW / dpr
-  const cellH = cellPxH / dpr
-  const baselineOffset = (ascentPx + padding) / dpr
+  const rasterize = (ch: string, pxX: number, pxY: number): AtlasGlyph => {
+    initCtx.fillText(ch, pxX + padding, pxY + baselinePxY)
+    return {
+      u0: pxX / atlasPxW,
+      v0: pxY / atlasPxH,
+      u1: (pxX + cellPxW) / atlasPxW,
+      v1: (pxY + cellPxH) / atlasPxH,
+      advance: initCtx.measureText(ch).width / dpr,
+    }
+  }
+  const staticCell = (i: number): [number, number] => [
+    (i % ATLAS_COLS) * cellPxW,
+    Math.floor(i / ATLAS_COLS) * cellPxH,
+  ]
+  for (let i = 0; i < 95; i++) {
+    const ch = String.fromCharCode(32 + i)
+    const [x, y] = staticCell(i)
+    glyphs.set(ch, rasterize(ch, x, y))
+  }
+  const [fx, fy] = staticCell(95)
+  const fallback = rasterize(ATLAS_FALLBACK_CH, fx, fy)
+  glyphs.set(ATLAS_FALLBACK_CH, fallback)
+  const texture = uploadCanvasTexture(gl, initCanvas)
 
-  for (let i = 0; i < chars.length; i++) {
-    const ch = chars[i] as string
-    const col = i % cols
-    const row = Math.floor(i / cols)
-    const cellPxX = col * cellPxW
-    const cellPxY = row * cellPxH
-    ctx.fillText(ch, cellPxX + padding, cellPxY + ascentPx + padding)
-    const m = ctx.measureText(ch)
-    glyphs.set(ch, {
-      u0: cellPxX / atlasPxW,
-      v0: cellPxY / atlasPxH,
-      u1: (cellPxX + cellPxW) / atlasPxW,
-      v1: (cellPxY + cellPxH) / atlasPxH,
-      cellW,
-      cellH,
-      advance: m.width / dpr,
-    })
+  // Map iteration order = LRU order; oldest is `keys().next()`, newest is
+  // the last `set`. Touching = delete + reinsert.
+  const freeSlots: [number, number][] = []
+  for (let r = ATLAS_DYNAMIC_ROWS - 1; r >= 0; r--) {
+    for (let c = ATLAS_COLS - 1; c >= 0; c--) {
+      freeSlots.push([c * cellPxW, (ATLAS_STATIC_ROWS + r) * cellPxH])
+    }
+  }
+  const occupiedSlots = new Map<string, [number, number]>()
+  const scratchCanvas = newFontCanvas(font, dpr, cellPxW, cellPxH)
+  const scratchCtx = scratchCanvas.getContext('2d') as CanvasRenderingContext2D
+
+  const getGlyph = (ch: string): AtlasGlyph => {
+    const cached = glyphs.get(ch)
+    if (cached) {
+      const slot = occupiedSlots.get(ch)
+      if (slot) {
+        occupiedSlots.delete(ch)
+        occupiedSlots.set(ch, slot)
+      }
+      return cached
+    }
+    const advancePx = scratchCtx.measureText(ch).width
+    if (advancePx === 0) {
+      glyphs.set(ch, fallback)
+      return fallback
+    }
+    let slot = freeSlots.pop()
+    if (!slot) {
+      const lruKey = occupiedSlots.keys().next().value as string
+      slot = occupiedSlots.get(lruKey) as [number, number]
+      occupiedSlots.delete(lruKey)
+      glyphs.delete(lruKey)
+    }
+    occupiedSlots.set(ch, slot)
+    const [pxX, pxY] = slot
+    scratchCtx.clearRect(0, 0, cellPxW, cellPxH)
+    scratchCtx.fillText(ch, padding, baselinePxY)
+    gl.activeTexture(gl.TEXTURE0)
+    gl.bindTexture(gl.TEXTURE_2D, texture)
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false)
+    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false)
+    gl.texSubImage2D(
+      gl.TEXTURE_2D,
+      0,
+      pxX,
+      pxY,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      scratchCanvas,
+    )
+    const glyph: AtlasGlyph = {
+      u0: pxX / atlasPxW,
+      v0: pxY / atlasPxH,
+      u1: (pxX + cellPxW) / atlasPxW,
+      v1: (pxY + cellPxH) / atlasPxH,
+      advance: advancePx / dpr,
+    }
+    glyphs.set(ch, glyph)
+    return glyph
   }
 
-  const texture = uploadCanvasTexture(gl, canvas)
-  const fallback = glyphs.get('?') ?? glyphs.get(' ')
-  if (!fallback) throw new Error('atlas missing fallback glyph')
+  return {
+    texture,
+    refSize,
+    cellW: cellPxW / dpr,
+    cellH: cellPxH / dpr,
+    baselineOffset: baselinePxY / dpr,
+    getGlyph,
+  }
+}
 
-  return { texture, refSize, cellW, cellH, baselineOffset, glyphs, fallback }
+function newFontCanvas(
+  font: FontSpec,
+  dpr: number,
+  w: number,
+  h: number,
+): HTMLCanvasElement {
+  const canvas = document.createElement('canvas')
+  canvas.width = w
+  canvas.height = h
+  const ctx = canvas.getContext('2d')
+  if (!ctx) throw new Error('failed to get 2d context')
+  ctx.font = fontString(font, font.size * dpr)
+  ctx.textBaseline = 'alphabetic'
+  ctx.fillStyle = 'white'
+  return canvas
 }
 
 // ============================================================================
@@ -1530,37 +1603,65 @@ function writeStringInstances(
   maxX: number,
   z: number,
 ): number {
-  let written = 0
+  // Truncates with "..." when the string doesn't fit in [cursorX, maxX].
+  const dot = atlas.getGlyph('.')
+  let totalWidth = 0
+  for (const ch of text) totalWidth += atlas.getGlyph(ch).advance
+  const fits = cursorX + totalWidth <= maxX
+  const ellipsisWidth = dot.advance * 3
+  const prefixLimit = fits ? maxX : maxX - ellipsisWidth
+
   let x = cursorX
+  let written = 0
+  const quadY = baselineY - atlas.baselineOffset
   for (const ch of text) {
-    const glyph = atlas.glyphs.get(ch) ?? atlas.fallback
-    if (x + glyph.advance > maxX) break
+    const g = atlas.getGlyph(ch)
+    if (x + g.advance > prefixLimit) break
     writeTextQuad(
       out,
       startInstance + written,
       x,
-      baselineY - atlas.baselineOffset,
+      quadY,
       atlas.cellW,
       atlas.cellH,
-      glyph.u0,
-      glyph.v0,
-      glyph.u1,
-      glyph.v1,
+      g.u0,
+      g.v0,
+      g.u1,
+      g.v1,
       color,
       z,
     )
     written++
-    x += glyph.advance
+    x += g.advance
+  }
+
+  if (!fits) {
+    for (let i = 0; i < 3; i++) {
+      if (x + dot.advance > maxX) break
+      writeTextQuad(
+        out,
+        startInstance + written,
+        x,
+        quadY,
+        atlas.cellW,
+        atlas.cellH,
+        dot.u0,
+        dot.v0,
+        dot.u1,
+        dot.v1,
+        color,
+        z,
+      )
+      written++
+      x += dot.advance
+    }
   }
   return written
 }
 
 function measureString(text: string, atlas: FontAtlas): number {
   let w = 0
-  for (const ch of text) {
-    const glyph = atlas.glyphs.get(ch) ?? atlas.fallback
-    w += glyph.advance
-  }
+  for (const ch of text) w += atlas.getGlyph(ch).advance
   return w
 }
 
