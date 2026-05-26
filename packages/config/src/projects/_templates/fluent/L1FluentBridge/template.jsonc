@@ -30,18 +30,6 @@
         }
       ]
     },
-    "relayerAC": {
-      "handler": {
-        "type": "accessControl",
-        "pickRoleMembers": "RELAYER_ROLE"
-      },
-      "permissions": [
-        {
-          "type": "relay",
-          "description": "legacy relayer role on the L1 bridge: it still gates the old receiveMessage entry point, but that function reverts with NOT_IMPLEMENTED on L1. The live proof-based receiveMessageWithProof path is permissionless."
-        }
-      ]
-    },
     "accessControl": { "handler": { "type": "accessControl" } }
   }
 }

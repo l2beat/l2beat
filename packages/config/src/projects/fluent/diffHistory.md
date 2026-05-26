@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6e9ca0b02480feea78b45d7818ac32bfa9738547
+Generated with discovered.json: 0xbca48c0bc697da093572be32b312899efe941021
 
-# Diff at Tue, 26 May 2026 15:20:19 GMT:
+# Diff at Tue, 26 May 2026 17:06:13 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@e7094edf4e66361e569a605db15b357404737bba block: 1778589577
-- current timestamp: 1779808754
+- current timestamp: 1779815103
 
 ## Description
 
@@ -27,7 +27,7 @@ L1FluentBridge implementation swapped by FluentMultisig on 2026-05-20: `0x047Aâ€
 +        3228
       values.nextBatchIndex:
 -        2210
-+        3402
++        3408
     }
 ```
 
@@ -50,13 +50,13 @@ L1FluentBridge implementation swapped by FluentMultisig on 2026-05-20: `0x047Aâ€
 +        550000
       values.getNonce:
 -        1023
-+        1297
++        1298
       values.getReceivedNonce:
 -        485
 +        545
       values.getSentMessageCursor:
 -        1023
-+        1297
++        1298
       implementationNames.eth:0x047AaDf25df7D17bB5B6b1FF31cecD1E4973C227:
 -        "L1FluentBridge"
       implementationNames.eth:0xF67255be817061139C9DeeA757f7276916cBF849:
@@ -80,9 +80,8 @@ discovery. Values are for block 1778589577 (main branch discovery), not current.
 ```diff
     EOA  (eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48) {
     +++ description: None
-      receivedPermissions.0.description:
--        "deliver L2->L1 messages on L1 via receiveMessageWithProof; this is the only entry point for first-time delivery, so user withdrawals progress only when a holder of this role acts (failed-execution retries via receiveFailedMessage are permissionless once a message has been delivered at least once)."
-+        "legacy relayer role on the L1 bridge: it still gates the old receiveMessage entry point, but that function reverts with NOT_IMPLEMENTED on L1. The live proof-based receiveMessageWithProof path is permissionless."
+      receivedPermissions:
+-        [{"permission":"relay","from":"eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc","description":"deliver L2->L1 messages on L1 via receiveMessageWithProof; this is the only entry point for first-time delivery, so user withdrawals progress only when a holder of this role acts (failed-execution retries via receiveFailedMessage are permissionless once a message has been delivered at least once).","role":".relayerAC"}]
     }
 ```
 
@@ -92,6 +91,8 @@ discovery. Values are for block 1778589577 (main branch discovery), not current.
       description:
 -        "Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets relayers process L2->L1 messages with two Merkle proofs against the latest preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE."
 +        "Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets anyone process L2->L1 messages with two Merkle proofs against a preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE."
+      values.relayerAC:
+-        ["eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48"]
     }
 ```
 
