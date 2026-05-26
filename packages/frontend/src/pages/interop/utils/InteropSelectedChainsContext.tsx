@@ -27,7 +27,6 @@ interface InteropSelectedChainsContextType {
   selectAll: (type?: 'from' | 'to') => void
   deselectAll: (type?: 'from' | 'to') => void
   swapPaths: () => void
-  isDirty: boolean
   buildUrl: (path: string) => string
 }
 
@@ -184,11 +183,6 @@ export function InteropSelectedChainsProvider({
     }))
   }, [])
 
-  const isDirty = useMemo(
-    () => selection.from.length > 0 || selection.to.length > 0,
-    [selection],
-  )
-
   return (
     <InteropSelectedChainsContext.Provider
       value={{
@@ -201,7 +195,6 @@ export function InteropSelectedChainsProvider({
         selectAll,
         deselectAll,
         swapPaths,
-        isDirty,
         buildUrl,
       }}
     >

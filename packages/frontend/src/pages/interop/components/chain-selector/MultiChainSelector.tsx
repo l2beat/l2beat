@@ -1,6 +1,5 @@
 import { SwapIcon } from '~/icons/Swap'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
-import { cn } from '~/utils/cn'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { AllProtocolsDialog } from './AllProtocolsDialog'
 import { MultiChainSelectorButton } from './MultiChainSelectorButton'
@@ -12,7 +11,7 @@ interface Props {
 }
 
 export function MultiChainSelector({ chains, protocols }: Props) {
-  const { isDirty, swapPaths } = useInteropSelectedChains()
+  const { swapPaths } = useInteropSelectedChains()
 
   return (
     <div className="sticky top-0 z-30 md:pt-4">
@@ -36,21 +35,14 @@ export function MultiChainSelector({ chains, protocols }: Props) {
             <MultiChainSelectorButton allChains={chains} type="to" />
           </div>
         </div>
-        <div
-          className={cn(
-            'flex items-center gap-3 max-md:hidden',
-            !isDirty && !protocols && 'hidden',
-          )}
-        >
-          {protocols && (
-            <>
-              <span className="font-medium text-base leading-none">
-                Across {protocols.length} protocols
-              </span>
-              <AllProtocolsDialog protocols={protocols} />
-            </>
-          )}
-        </div>
+        {protocols && (
+          <div className="flex items-center gap-3 max-md:hidden">
+            <span className="font-medium text-base leading-none">
+              Across {protocols.length} protocols
+            </span>
+            <AllProtocolsDialog protocols={protocols} />
+          </div>
+        )}
       </div>
     </div>
   )
