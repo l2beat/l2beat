@@ -1,13 +1,14 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getInteropTokenData } from '~/server/features/scaling/interop/getInteropTokenData'
 import { getAbstractTokenSlug } from '~/server/features/scaling/interop/token/getAbstractTokenSlug'
 import { getInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
+import { getInteropTokenEntry } from '~/server/features/scaling/interop/token/getInteropTokenEntry'
 import { resolveInteropTokenBySlug } from '~/server/features/scaling/interop/token/resolveInteropTokenBySlug'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
@@ -49,6 +50,7 @@ export async function getInteropTokenPageData(
         slug: req.params.slug,
         initialSelection,
         activeInteropChainIds,
+        manifest,
       }),
   )
 
@@ -76,11 +78,13 @@ export async function getInteropTokenPageData(
       page: 'InteropTokenPage',
       props: {
         ...appLayoutProps,
-        queryState: data.queryState,
         token: {
           ...data.token,
           iconUrl: data.token.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
         },
+        tokenEntry: data.tokenEntry,
+        tokenData: data.tokenData,
+        apiSelection: data.apiSelection,
         interopChains: interopChainsWithIcons,
         initialSelection,
       },
@@ -92,28 +96,39 @@ async function getCachedData({
   slug,
   initialSelection,
   activeInteropChainIds,
+  manifest,
 }: {
   slug: string
   initialSelection: InteropSelection
   activeInteropChainIds: string[]
+  manifest: Manifest
 }) {
   const abstractTokens = await getInteropAbstractTokens(activeInteropChainIds)
   const token = resolveInteropTokenBySlug(abstractTokens, slug)
   if (!token) return undefined
 
-  const helpers = getSsrHelpers()
   const apiSelection = toInteropApiSelection(initialSelection, 'public')
+  const interopChains = getInteropChains()
+    .filter((chain) => !chain.isUpcoming)
+    .map((chain) => ({
+      ...chain,
+      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+    }))
 
-  await helpers.interop.tokenDashboard.prefetch({
+  const tokenData = await getInteropTokenData({
     tokenId: token.id,
     ...apiSelection,
   })
 
+  const tokenEntry = getInteropTokenEntry(token.id, interopChains)
+
   return {
-    queryState: helpers.dehydrate(),
     token: {
       ...token,
       slug: getAbstractTokenSlug(token),
     },
+    tokenEntry,
+    tokenData,
+    apiSelection,
   }
 }

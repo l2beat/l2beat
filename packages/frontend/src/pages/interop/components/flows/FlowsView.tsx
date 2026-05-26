@@ -85,7 +85,10 @@ function FlowsViewContent({
       )}
     >
       <div className="h-full max-lg:order-3">
-        <FlowsGeneralStats />
+        <FlowsGeneralStats
+          title="General stats"
+          description="For past 24h between the selected chains and protocols"
+        />
       </div>
       <div className="flex h-full min-w-0 flex-col">
         <div className="group/flows flex h-full w-full min-w-0 flex-col items-center gap-10 pb-4 xl:h-[calc(100svh-12rem)]">

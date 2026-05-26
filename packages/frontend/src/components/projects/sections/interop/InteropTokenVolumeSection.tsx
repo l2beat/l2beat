@@ -1,9 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
+import { useMemo } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
-import { ProjectSection } from '~/components/projects/sections/ProjectSection'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
+  MAX_SELECTED_CHAINS,
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '~/pages/interop/components/flows/consts'
@@ -17,34 +18,38 @@ import {
   InteropFlowsProvider,
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
+import { useInteropTokenDashboard } from '~/pages/interop/token/InteropTokenDashboardContext'
 import type { InteropTokenDashboardData } from '~/server/features/scaling/interop/getInteropTokenData'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { ProjectSection } from '../ProjectSection'
+import type { ProjectSectionProps } from '../types'
 
-export function TokenVolumeSection({
-  tokenId,
-  data,
-  interopChains,
-  sectionOrder,
-}: {
+export interface InteropTokenVolumeSectionProps extends ProjectSectionProps {
   tokenId: string
-  data: InteropTokenDashboardData | undefined
   interopChains: InteropChainWithIcon[]
-  sectionOrder: string
-}) {
+}
+
+export function InteropTokenVolumeSection({
+  tokenId,
+  interopChains,
+  ...sectionProps
+}: InteropTokenVolumeSectionProps) {
+  const { data } = useInteropTokenDashboard()
   const protocols = data?.entries ?? []
-  const sortedChains = sortChainsByFlowVolume(interopChains, data?.flows ?? [])
-  const defaultSelectedChains = sortedChains
-    .slice(0, 15)
-    .map((chain) => chain.id)
+  const sortedChains = useMemo(
+    () => sortChainsByFlowVolume(interopChains, data?.flows ?? []),
+    [interopChains, data?.flows],
+  )
+  const defaultSelectedChains = useMemo(
+    () => sortedChains.slice(0, MAX_SELECTED_CHAINS).map((chain) => chain.id),
+    [sortedChains],
+  )
 
   return (
-    <ProjectSection
-      id="interop-volume"
-      title="Volume and flows"
-      sectionOrder={sectionOrder}
-    >
+    <ProjectSection {...sectionProps}>
       <InteropFlowsProvider
+        key={defaultSelectedChains.join(',')}
         chains={sortedChains}
         protocols={protocols}
         defaultSelectedChains={defaultSelectedChains}

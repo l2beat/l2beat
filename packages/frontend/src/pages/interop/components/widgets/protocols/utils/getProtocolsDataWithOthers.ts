@@ -32,7 +32,6 @@ export function getProtocolsDataWithOthers(
     {
       name: OTHERS_PROTOCOL_NAME,
       slug: undefined,
-      iconUrl: '',
       volume: {
         value: metricType === 'volume' ? othersValue : 0,
         share: metricType === 'volume' ? othersShare : 0,

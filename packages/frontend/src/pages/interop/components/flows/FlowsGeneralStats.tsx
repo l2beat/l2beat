@@ -16,14 +16,14 @@ import { useInteropFlows } from './utils/InteropFlowsContext'
 
 export function FlowsGeneralStats({
   tokenId,
-  title = 'General stats',
-  description = 'For past 24h between the selected chains and protocols',
+  title,
+  description,
   hideTokenStats = false,
   className,
 }: {
   tokenId?: string
-  title?: string
-  description?: string
+  title: string
+  description: string
   hideTokenStats?: boolean
   className?: string
 }) {
@@ -190,25 +190,10 @@ export function FlowsGeneralStats({
                 className="border-0 p-0!"
                 value={
                   topToken ? (
-                    <a
-                      href={getInteropTokenUrl(topToken, {
-                        from: selectedChains,
-                        to: selectedChains,
-                      })}
-                      className="flex items-center gap-1.5 hover:underline"
-                    >
-                      <img
-                        src={topToken.iconUrl}
-                        alt={topToken.symbol}
-                        className="size-5"
-                      />
-                      <span className="font-bold text-heading-20">
-                        {topToken.symbol}
-                      </span>
-                      <span className="font-medium text-label-value-14 text-secondary">
-                        {formatCurrency(topToken.volume, 'usd')}
-                      </span>
-                    </a>
+                    <TopTokenValue
+                      topToken={topToken}
+                      selectedChains={selectedChains}
+                    />
                   ) : (
                     '-'
                   )
@@ -252,6 +237,44 @@ export function FlowsGeneralStats({
         />
       )}
     </div>
+  )
+}
+
+function TopTokenValue({
+  topToken,
+  selectedChains,
+}: {
+  topToken: {
+    id: string
+    symbol: string
+    issuer: string | null
+    iconUrl: string
+    volume: number
+  }
+  selectedChains: string[]
+}) {
+  const content = (
+    <>
+      <img src={topToken.iconUrl} alt={topToken.symbol} className="size-5" />
+      <span className="font-bold text-heading-20">{topToken.symbol}</span>
+      <span className="font-medium text-label-value-14 text-secondary">
+        {formatCurrency(topToken.volume, 'usd')}
+      </span>
+    </>
+  )
+  const href = getInteropTokenUrl(topToken, {
+    from: selectedChains,
+    to: selectedChains,
+  })
+
+  if (!href) {
+    return <div className="flex items-center gap-1.5">{content}</div>
+  }
+
+  return (
+    <a href={href} className="flex items-center gap-1.5 hover:underline">
+      {content}
+    </a>
   )
 }
 

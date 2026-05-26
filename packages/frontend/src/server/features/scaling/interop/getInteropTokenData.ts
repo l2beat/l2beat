@@ -3,11 +3,7 @@ import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import type {
-  InteropTokenParams,
-  ProtocolEntry,
-  TokenData,
-} from './types'
+import type { InteropTokenParams, ProtocolEntry, TokenData } from './types'
 import { buildTokensDataMap } from './utils/buildTokensDataMap'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getAverageDuration } from './utils/getAverageDuration'

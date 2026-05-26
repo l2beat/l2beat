@@ -8,8 +8,6 @@ import {
   PaginationItem,
   PaginationLink,
 } from '~/components/Pagination'
-import { ChainMultiSelect } from '~/components/projects/sections/interop/ChainMultiSelect'
-import { ProjectSection } from '~/components/projects/sections/ProjectSection'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
@@ -17,26 +15,26 @@ import {
   getTransferColumns,
   type TransferRow,
 } from '~/pages/interop/components/table/transfer-count-cell/columns'
-import type { InteropSelection } from '~/pages/interop/utils/types'
-import type { InteropTokenDashboardData } from '~/server/features/scaling/interop/getInteropTokenData'
+import { useInteropTokenDashboard } from '~/pages/interop/token/InteropTokenDashboardContext'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
+import { ProjectSection } from '../ProjectSection'
+import type { ProjectSectionProps } from '../types'
+import { ChainMultiSelect } from './ChainMultiSelect'
 
 const TRANSFERS_PER_PAGE = 8
 
-export function TokenTransfersSection({
-  sectionOrder,
-  tokenId,
-  data,
-  interopChains,
-  apiSelection,
-}: {
-  sectionOrder: string
+export interface InteropTokenTransfersSectionProps extends ProjectSectionProps {
   tokenId: string
-  data: InteropTokenDashboardData | undefined
   interopChains: InteropChainWithIcon[]
-  apiSelection: InteropSelection
-}) {
+}
+
+export function InteropTokenTransfersSection({
+  tokenId,
+  interopChains,
+  ...sectionProps
+}: InteropTokenTransfersSectionProps) {
+  const { data, apiSelection } = useInteropTokenDashboard()
   const [selectedFrom, setSelectedFrom] = useState<string[]>(apiSelection.from)
   const [selectedTo, setSelectedTo] = useState<string[]>(apiSelection.to)
 
@@ -71,9 +69,14 @@ export function TokenTransfersSection({
   const loadedPageCount = Math.max(1, fetchedPageCount)
   const pageCount = loadedPageCount + (hasNextPage ? 1 : 0)
 
+  const columns = useMemo(
+    () => getTransferColumns({ from: selectedFrom, to: selectedTo }),
+    [selectedFrom, selectedTo],
+  )
+
   const table = useTable<TransferRow>({
     data: fetchedItems,
-    columns: getTransferColumns({ from: selectedFrom, to: selectedTo }),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     autoResetPageIndex: false,
@@ -129,11 +132,7 @@ export function TokenTransfersSection({
   }
 
   return (
-    <ProjectSection
-      id="interop-transfers"
-      title="Transfers"
-      sectionOrder={sectionOrder}
-    >
+    <ProjectSection {...sectionProps}>
       <div className="mb-4 flex flex-wrap items-center gap-3">
         <ChainMultiSelect
           label="From"

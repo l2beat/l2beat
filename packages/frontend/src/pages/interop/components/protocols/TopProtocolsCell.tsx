@@ -19,7 +19,7 @@ export function TopProtocolsCell({
     <InteropTopItems
       topItems={{
         items: visible.map((p) => ({
-          id: String(p.id),
+          id: p.id.toString(),
           displayName: p.name,
           iconUrl: p.iconUrl,
           volume: p.volume,

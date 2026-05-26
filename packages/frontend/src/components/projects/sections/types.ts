@@ -7,7 +7,10 @@ import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
 import type { InteropFlowsSectionProps } from './interop/InteropFlowsSection'
+import type { InteropTokenProtocolsSectionProps } from './interop/InteropTokenProtocolsSection'
 import type { InteropTokensSectionProps } from './interop/InteropTokensSection'
+import type { InteropTokenTransfersSectionProps } from './interop/InteropTokenTransfersSection'
+import type { InteropTokenVolumeSectionProps } from './interop/InteropTokenVolumeSection'
 import type { InteropTransfersSectionProps } from './interop/InteropTransfersSection'
 import type { InteropVolumeSectionProps } from './interop/InteropVolumeSection'
 import type { L3RiskAnalysisSectionProps } from './L3RiskAnalysisSection'
@@ -208,6 +211,21 @@ interface ProjectDetailsInteropTokensSection {
   props: ProjectDetailsProps<InteropTokensSectionProps>
 }
 
+interface ProjectDetailsInteropTokenVolumeSection {
+  type: 'InteropTokenVolumeSection'
+  props: ProjectDetailsProps<InteropTokenVolumeSectionProps>
+}
+
+interface ProjectDetailsInteropTokenProtocolsSection {
+  type: 'InteropTokenProtocolsSection'
+  props: ProjectDetailsProps<InteropTokenProtocolsSectionProps>
+}
+
+interface ProjectDetailsInteropTokenTransfersSection {
+  type: 'InteropTokenTransfersSection'
+  props: ProjectDetailsProps<InteropTokenTransfersSectionProps>
+}
+
 interface ProjectDetailsGroup {
   type: 'Group'
   props: ProjectDetailsProps<GroupSectionProps>
@@ -262,5 +280,8 @@ export type ProjectDetailsSection = {
   | ProjectDetailsInteropFlowsSection
   | ProjectDetailsInteropTransfersSection
   | ProjectDetailsInteropTokensSection
+  | ProjectDetailsInteropTokenVolumeSection
+  | ProjectDetailsInteropTokenProtocolsSection
+  | ProjectDetailsInteropTokenTransfersSection
   | ProjectDetailsUpgradesAndGovernanceSection
 )

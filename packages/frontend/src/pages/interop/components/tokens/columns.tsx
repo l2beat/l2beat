@@ -267,13 +267,14 @@ export const getTopTokensColumns = ({
           </>
         )
 
+        const tokenUrl = selectedChains
+          ? getInteropTokenUrl(ctx.row.original, selectedChains)
+          : undefined
+
         return (
           <TwoRowCell>
-            {selectedChains && ctx.row.original.id !== 'unknown' ? (
-              <a
-                href={getInteropTokenUrl(ctx.row.original, selectedChains)}
-                className="hover:underline"
-              >
+            {tokenUrl ? (
+              <a href={tokenUrl} className="hover:underline">
                 {content}
               </a>
             ) : (
@@ -378,15 +379,16 @@ function TokenPairSymbol({
   token: TokensPairRow['tokenA']
   selectedChains: InteropSelection | undefined
 }) {
-  if (!selectedChains || token.id === 'unknown') {
+  const tokenUrl = selectedChains
+    ? getInteropTokenUrl(token, selectedChains)
+    : undefined
+
+  if (!tokenUrl) {
     return <span>{token.symbol}</span>
   }
 
   return (
-    <a
-      href={getInteropTokenUrl(token, selectedChains)}
-      className="hover:underline"
-    >
+    <a href={tokenUrl} className="hover:underline">
       {token.symbol}
     </a>
   )

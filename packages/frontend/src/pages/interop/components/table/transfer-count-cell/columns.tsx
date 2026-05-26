@@ -156,8 +156,6 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
   ]
 }
 
-export const columns = getTransferColumns()
-
 function TokenAmount({
   amount,
   symbol,
@@ -207,14 +205,17 @@ function TokenAmount({
     return <span className={className}>{content}</span>
   }
 
+  const tokenUrl = getInteropTokenUrl(
+    { symbol, issuer },
+    selectedChains ?? { from: [], to: [] },
+  )
+
+  if (!tokenUrl) {
+    return <span className={className}>{content}</span>
+  }
+
   return (
-    <a
-      href={getInteropTokenUrl(
-        { symbol, issuer },
-        selectedChains ?? { from: [], to: [] },
-      )}
-      className={`${className} hover:underline`}
-    >
+    <a href={tokenUrl} className={`${className} hover:underline`}>
       {content}
     </a>
   )

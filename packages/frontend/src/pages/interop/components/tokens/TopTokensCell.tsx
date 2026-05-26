@@ -37,10 +37,9 @@ export function TopTokensCell({
           items: topItems.items.map((token) => ({
             ...token,
             displayName: token.symbol,
-            href:
-              hideDialog && token.id !== 'unknown'
-                ? getInteropTokenUrl(token, apiSelection)
-                : undefined,
+            href: hideDialog
+              ? getInteropTokenUrl(token, apiSelection)
+              : undefined,
           })),
           remainingCount: topItems.remainingCount,
         }}

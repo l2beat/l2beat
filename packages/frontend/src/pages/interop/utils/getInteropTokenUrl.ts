@@ -3,9 +3,13 @@ import { buildInteropUrl } from './buildInteropUrl'
 import type { InteropSelection } from './types'
 
 export function getInteropTokenUrl(
-  token: { symbol: string; issuer: string | null },
+  token: { id?: string; symbol: string; issuer: string | null },
   selection: InteropSelection,
-) {
+): string | undefined {
+  if (token.id === 'unknown') {
+    return undefined
+  }
+
   const path = `/interop/tokens/${getAbstractTokenSlug(token)}`
   return buildInteropUrl(path, selection, 'public')
 }

@@ -8,7 +8,10 @@ import { DataPostedSection } from './sections/data-posted/DataPostedSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
 import { InteropFlowsSection } from './sections/interop/InteropFlowsSection'
+import { InteropTokenProtocolsSection } from './sections/interop/InteropTokenProtocolsSection'
 import { InteropTokensSection } from './sections/interop/InteropTokensSection'
+import { InteropTokenTransfersSection } from './sections/interop/InteropTokenTransfersSection'
+import { InteropTokenVolumeSection } from './sections/interop/InteropTokenVolumeSection'
 import { InteropTransfersSection } from './sections/interop/InteropTransfersSection'
 import { InteropVolumeSection } from './sections/interop/InteropVolumeSection'
 import { L3RiskAnalysisSection } from './sections/L3RiskAnalysisSection'
@@ -211,6 +214,30 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'InteropTokensSection':
             return (
               <InteropTokensSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'InteropTokenVolumeSection':
+            return (
+              <InteropTokenVolumeSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'InteropTokenProtocolsSection':
+            return (
+              <InteropTokenProtocolsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'InteropTokenTransfersSection':
+            return (
+              <InteropTokenTransfersSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
