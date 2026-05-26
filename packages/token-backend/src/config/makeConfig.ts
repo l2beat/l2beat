@@ -8,11 +8,18 @@ interface MakeConfigOptions {
 }
 
 export function makeConfig(env: Env, options: MakeConfigOptions): Config {
+  const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
+
   return {
     tokenDatabase: getTokenDatabaseConfig(env, options),
     database: getDatabaseConfig(env, options),
     auth: options.isLocal ? false : getAuthConfig(env),
-    coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
+    coingeckoApiKey,
+    coingeckoCallsPerMinute: positiveInteger(
+      env,
+      'COINGECKO_CALLS_PER_MINUTE',
+      coingeckoApiKey ? 400 : 10,
+    ),
     etherscanApiKey: env.optionalString('ETHERSCAN_API_KEY'),
     readOnlyAuthToken: env.optionalString('TOKEN_BACKEND_READONLY_AUTH_TOKEN'),
     jsonBodyLimitMb: env.integer('TOKEN_BACKEND_JSON_BODY_LIMIT_MB', 20),
@@ -26,6 +33,14 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
       ),
     },
   }
+}
+
+function positiveInteger(env: Env, key: string, fallback: number): number {
+  const value = env.integer(key, fallback)
+  if (value < 1) {
+    throw new Error(`Environment variable ${key} must be a positive integer!`)
+  }
+  return value
 }
 
 function getDatabaseConfig(

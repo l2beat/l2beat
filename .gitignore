@@ -8,6 +8,7 @@ yarn-error.log
 # AI stuff
 .codex
 .claude
+.agents
 AGENTS.local.md
 .ocx
 .opencode

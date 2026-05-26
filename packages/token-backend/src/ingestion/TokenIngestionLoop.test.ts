@@ -487,6 +487,80 @@ describe(TokenIngestionLoop.name, () => {
       )
     })
 
+    it('marks a CoinGecko data failure as an entry error and continues draining', async () => {
+      const firstAddress = token('ethereum', '0xaaa')
+      const secondAddress = token('ethereum', '0xbbb')
+      const markError = mockFn().resolvesTo(1)
+      const remove = mockFn().resolvesTo(1)
+
+      const loop = createLoop({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+              latestSerialId: undefined,
+              transferCount: 0,
+              tokenAddresses: [],
+            }),
+            getAll: mockFn().resolvesTo([]),
+          }),
+        }),
+        tokenDb: mockObject<TokenDatabase>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
+            get: mockFn().resolvesTo(undefined),
+          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findNextPending: mockFn()
+                .resolvesToOnce(queueEntry(firstAddress))
+                .resolvesToOnce(queueEntry(secondAddress))
+                .resolvesToOnce(undefined),
+              markError,
+              remove,
+            },
+          ),
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            findByChainAndAddress: mockFn().resolvesTo(undefined),
+            getByPrimaryKeys: mockFn().resolvesTo([]),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            findByCoingeckoId: mockFn().resolvesTo(undefined),
+          }),
+          chain: mockObject<TokenDatabase['chain']>({
+            getAll: mockFn().resolvesTo([
+              {
+                name: 'ethereum',
+                chainId: 1,
+                explorerUrl: null,
+                aliases: ['eth'],
+                apis: null,
+              },
+            ]),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          getCoinList: mockFn().resolvesTo([
+            {
+              id: 'usd-coin',
+              name: 'USD Coin',
+              symbol: 'usdc',
+              platforms: { eth: firstAddress.address },
+            },
+          ]),
+          getCoinDataById: mockFn().rejectsWith(
+            new Error('CoinGecko API error: 429 Too Many Requests'),
+          ),
+        }),
+      })
+
+      await loop.runOnce()
+
+      expect(markError).toHaveBeenOnlyCalledWith(
+        queueEntry(firstAddress),
+        'Failed to fetch CoinGecko data for usd-coin: CoinGecko API error: 429 Too Many Requests.',
+      )
+      expect(remove).toHaveBeenOnlyCalledWith(queueEntry(secondAddress))
+    })
+
     it('creates an abstract token from CoinGecko before inserting a deployed token', async () => {
       const address = token('ethereum', '0xaaa')
       const abstractInsert = mockFn().resolvesTo('ABC123')
