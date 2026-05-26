@@ -581,6 +581,12 @@ export interface ProjectScalingDa {
   mode: TableReadyValue
 }
 
+export interface ProjectGovernanceInfo {
+  securityCouncil?: Record<string, string>
+  upgrades?: Record<string, string>
+  tokenGovernance?: Record<string, string>
+}
+
 export interface ProjectScalingTechnology {
   warning?: string
   detailedDescription?: string
@@ -593,12 +599,17 @@ export interface ProjectScalingTechnology {
   exitMechanisms?: ProjectTechnologyChoice[]
   massExit?: ProjectTechnologyChoice
   otherConsiderations?: ProjectTechnologyChoice[]
-  upgradesAndGovernance?: string
-  upgradesAndGovernanceImage?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   stateValidationImage?: string
   isUnderReview?: boolean
+}
+
+export interface ProjectUpgradesAndGovernance {
+  content?: string
+  governanceInfo?: ProjectGovernanceInfo
+  image?: string
 }
 
 export interface ProjectScalingStateDerivation {
