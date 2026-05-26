@@ -38,10 +38,10 @@ export function TopRoutesWidget({
     >
       <div className="flex h-full flex-col">
         <h2 className="font-bold text-heading-16 md:text-heading-20">
-          Last 24 hours
+          {subtitle}
         </h2>
         <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
-          {subtitle}
+          Last 24 hours
         </div>
         <div className="mt-3 flex-1 md:mt-4">
           {isLoading && <LoadingState flowCount={2} />}
