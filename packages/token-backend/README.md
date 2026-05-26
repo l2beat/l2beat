@@ -43,4 +43,4 @@ These documents MUST be kept up to date when their subjects change:
 - [Intent / Plan / Execute](../../docs/mdbook/specs/l2b_specs/token_db/intent_plan_execute.md) —
   the pipeline behind every human-driven write from token-UI (intents →
   plans → commands), and the rationale (visible blast radius +
-  concurrency safety).
+  concurrency safety)..
