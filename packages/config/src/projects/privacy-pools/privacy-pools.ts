@@ -242,7 +242,7 @@ function formatPrivacyPoolsFeeSummary(): string {
   }
 
   return Array.from(grouped.entries())
-    .map(([key, symbols], index) => {
+    .map(([key, symbols]) => {
       const sortedSymbols = symbols.sort((a, b) =>
         a.localeCompare(b, undefined, { numeric: true }),
       )
