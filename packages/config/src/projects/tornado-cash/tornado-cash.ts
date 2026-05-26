@@ -106,6 +106,10 @@ Tornado cash introduces a permissionless relayer network, which is essential for
 
 Practical privacy also depends on the timing of deposits and withdrawals, underlying network and browser used to interact with Tornado cash frontend (if used), RPC providers used to send transactions and query public blockchain state. Users are advised to research [OPSEC best practices](/publications/privacy-best-practices).
 
+### Fees
+
+The immutable Tornado Cash pools do not charge a protocol-level deposit or withdrawal fee. Withdrawals can include a relayer fee chosen offchain between the user and the relayer and passed to the pool withdrawal call.
+
 ### Compliance
 
 Tornado cash does not have any protocol-level compliance features. However, it provides an optional [Compliance Tool](https://docs.tornado.cash/tornado-cash-classic/compliance-tool), which allows users to generate a proof linking a withdrawal to a specific deposit without revealing this information publicly onchain. This enables users to selectively disclose the origin of funds to third parties, such as exchanges or regulators.

@@ -38,6 +38,19 @@ const TRACKED_TOKENS = [
 const RAIL_TOKEN = getTokenBySymbol('RAIL')
 
 const railgunCore = discovery.getContract('RailgunSmartWallet')
+const shieldFee = discovery.getContractValue<number>(
+  'RailgunSmartWallet',
+  'shieldFee',
+)
+const unshieldFee = discovery.getContractValue<number>(
+  'RailgunSmartWallet',
+  'unshieldFee',
+)
+const nftFee = discovery.getContractValue<number>(
+  'RailgunSmartWallet',
+  'nftFee',
+)
+const treasury = discovery.getAddressFromValue('RailgunSmartWallet', 'treasury')
 const stakeLocktime = discovery.getContractValue<number>(
   'Staking',
   'STAKE_LOCKTIME',
@@ -71,6 +84,10 @@ const executionEndOffset = discovery.getContractValue<number>(
   'EXECUTION_END_OFFSET',
 )
 const quorum = discovery.getContractValueBigInt('Voting', 'QUORUM')
+
+function formatBasisPoints(value: number): string {
+  return `${Number((value / 100).toFixed(4))}%`
+}
 
 const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
   const resolved = getTokenByAddress(token.address)
@@ -143,6 +160,12 @@ Railgun has a DAO governed by holders of the RAIL token. The DAO has the authori
 Railgun protocol supports [relayed withdrawals](https://docs.railgun.org/developer-guide/wallet/transactions/unshielding), in which a relayer processes withdrawals on the user's behalf for a fee, which enables sending funds to fresh addresses. Transactions from private addresses can be sent through relayers over the [Waku network](https://blog.waku.org/2024-04-26-railgun-case-study/), which increases network-level privacy. Railgun allows interactions between shielded tokens and DeFi, which allows depositing and withdrawing different tokens.
 
 Practical privacy also depends on the timing and amounts of deposits and withdrawals, as well as RPC providers used to send transactions and query the public blockchain state. Syncing a railgun wallet requires a user to make heavy rpc queries because they need to scan all deposits to the protocol to track their own balance. Running a full node or trusted rpc is recommended. Users are advised to research the best OPSEC practices. Users are advised to research [OPSEC best practices](/publications/privacy-best-practices).
+
+### Fees
+
+There are mandatory onchain protocol fees of ${formatBasisPoints(shieldFee)} for shields and ${formatBasisPoints(unshieldFee)} for unshields. The NFT fee field is currently set to ${nftFee}. Shield and unshield fees are sent to the Railgun Treasury (${ChainSpecificAddress.address(treasury)}).
+
+Relayers can charge additional offchain fees for submitting transactions on a user's behalf. These relayer fees are not set by the core protocol contracts.
 
 ### Compliance
 
