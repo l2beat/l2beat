@@ -24,7 +24,6 @@ export function InteropTokenSummary({
   apiSelection: InteropSelection
 }) {
   const token = data?.token
-  const activeChainCount = data?.deployments.length ?? 0
 
   return (
     <section
@@ -42,18 +41,9 @@ export function InteropTokenSummary({
           title="Last 24h volume"
           isLoading={isLoading}
           value={
-            <VolumeMetric
-              formattedVolume={
-                token?.volume !== null && token?.volume !== undefined
-                  ? formatCurrency(token.volume, 'usd')
-                  : EM_DASH
-              }
-              chainHint={
-                activeChainCount > 0
-                  ? `across ${formatInteger(activeChainCount)} chains`
-                  : undefined
-              }
-            />
+            token?.volume !== null && token?.volume !== undefined
+              ? formatCurrency(token.volume, 'usd')
+              : EM_DASH
           }
         />
         <StatsItem
@@ -118,33 +108,8 @@ export function InteropTokenSummary({
             )
           }
         />
-        <StatsItem
-          title="Onchain deployments tracked"
-          isLoading={isLoading}
-          value={formatInteger(data?.deployments.length ?? 0)}
-        />
       </div>
     </section>
-  )
-}
-
-function VolumeMetric({
-  formattedVolume,
-  chainHint,
-}: {
-  formattedVolume: string
-  chainHint: string | undefined
-}) {
-  return (
-    <span>
-      <span>{formattedVolume}</span>
-      {chainHint !== undefined ? (
-        <span className="font-medium text-paragraph-12 text-secondary">
-          {' '}
-          {chainHint}
-        </span>
-      ) : null}
-    </span>
   )
 }
 

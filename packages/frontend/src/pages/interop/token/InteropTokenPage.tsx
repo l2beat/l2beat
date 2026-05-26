@@ -21,7 +21,6 @@ import {
 } from '../utils/InteropSelectedChainsContext'
 import type { InteropSelection } from '../utils/types'
 import { InteropTokenSummary } from './components/InteropTokenSummary'
-import { OnchainDeploymentsSection } from './components/OnchainDeploymentsSection'
 import { TokenTopProtocolCard } from './components/TokenTopProtocolCard'
 import { TokenTransfersSection } from './components/TokenTransfersSection'
 import { TokenVolumeSection } from './components/TokenVolumeSection'
@@ -43,7 +42,6 @@ interface Props extends AppLayoutProps {
 const navigationSections: ProjectNavigationSection[] = [
   { id: 'summary', title: 'Summary' },
   { id: 'interop-volume', title: 'Volume and flows' },
-  { id: 'contracts', title: 'Onchain deployments' },
   { id: 'interop-tokens', title: 'Top protocols' },
   { id: 'interop-transfers', title: 'Transfers' },
 ]
@@ -172,16 +170,10 @@ function TokenDetails({
           interopChains={interopChains}
           sectionOrder="1"
         />
-        <OnchainDeploymentsSection
-          sectionOrder="2"
-          deployments={data?.deployments}
-          interopChains={interopChains}
-          isLoading={isLoading}
-        />
         <ProjectSection
           id="interop-tokens"
           title="Top protocols"
-          sectionOrder="3"
+          sectionOrder="2"
         >
           {data?.entries && data.entries.length > 0 && (
             <AllProtocolsTable
@@ -198,7 +190,7 @@ function TokenDetails({
           )}
         </ProjectSection>
         <TokenTransfersSection
-          sectionOrder="4"
+          sectionOrder="3"
           tokenId={tokenId}
           data={data}
           interopChains={interopChains}

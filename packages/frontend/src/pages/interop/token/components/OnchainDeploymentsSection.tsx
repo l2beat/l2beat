@@ -11,10 +11,17 @@ import {
 import { ProjectSection } from '~/components/projects/sections/ProjectSection'
 import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type { InteropTokenDeploymentData } from '~/server/features/scaling/interop/getInteropTokenData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { InteropChainWithIcon } from '../../components/chain-selector/types'
+
+export type InteropTokenDeploymentData = {
+  chain: string
+  symbol: string
+  address: string
+  volume: number
+  transferCount: number
+}
 
 type DeploymentRow = InteropTokenDeploymentData &
   BasicTableRow & {

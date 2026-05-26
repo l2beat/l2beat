@@ -1,11 +1,9 @@
 import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
-import { getTokenDb } from '~/server/tokenDb'
 import { getLogger } from '~/server/utils/logger'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
-  AggregatedInteropTransferWithTokens,
   InteropTokenParams,
   ProtocolEntry,
   TokenData,
@@ -34,7 +32,6 @@ export type InteropTokenDashboardData = {
   topProtocols: InteropProtocolData[]
   entries: ProtocolEntry[]
   zeroTransferProtocols: { name: string; iconUrl: string }[]
-  deployments: InteropTokenDeploymentData[]
   snapshotTimestamp: number | undefined
 }
 
@@ -42,14 +39,6 @@ export type InteropTokenTopPathData = {
   chainA: string
   chainB: string
   volume: number
-}
-
-export type InteropTokenDeploymentData = {
-  chain: string
-  symbol: string
-  address: string
-  volume: number
-  transferCount: number
 }
 
 export async function getInteropTokenData(
@@ -62,15 +51,10 @@ export async function getInteropTokenData(
   const interopProjects = await ps.getProjects({
     select: ['interopConfig'],
   })
-  const deployedTokensPromise = getTokenDb().deployedToken.getByAbstractTokenId(
-    params.tokenId,
-  )
   const selection = getTokenDataSelection(params)
 
-  const [{ records, snapshotTimestamp }, deployedTokens] = await Promise.all([
-    getLatestAggregatedInteropTransferWithTokens(selection),
-    deployedTokensPromise,
-  ])
+  const { records, snapshotTimestamp } =
+    await getLatestAggregatedInteropTransferWithTokens(selection)
   const tokenRecords = scopeRecordsToToken(records, params.tokenId)
 
   if (tokenRecords.length === 0) {
@@ -115,7 +99,6 @@ export async function getInteropTokenData(
       (a, b) => b.volume.value - a.volume.value,
     )[0],
     topProtocols,
-    deployments: getDeployments(deployedTokens, tokenRecords),
     snapshotTimestamp,
     ...getProtocolEntries(
       tokenRecords,
@@ -142,42 +125,6 @@ function getTokenDataSelection(params: InteropTokenParams): InteropTokenParams {
     from: activeInteropChainIds,
     to: activeInteropChainIds,
   }
-}
-
-function getDeployments(
-  deployedTokens: { chain: string; symbol: string; address: string }[],
-  tokenRecords: AggregatedInteropTransferWithTokens[],
-): InteropTokenDeploymentData[] {
-  const statsByChain = new Map<
-    string,
-    { volume: number; transferCount: number }
-  >()
-
-  for (const record of tokenRecords) {
-    for (const chain of [record.srcChain, record.dstChain]) {
-      const current = statsByChain.get(chain) ?? {
-        volume: 0,
-        transferCount: 0,
-      }
-      statsByChain.set(chain, {
-        volume:
-          current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
-        transferCount: current.transferCount + record.transferCount,
-      })
-    }
-  }
-
-  return deployedTokens
-    .map((token) => ({
-      chain: token.chain,
-      symbol: token.symbol,
-      address: token.address,
-      volume: statsByChain.get(token.chain)?.volume ?? 0,
-      transferCount: statsByChain.get(token.chain)?.transferCount ?? 0,
-    }))
-    .toSorted(
-      (a, b) => b.volume - a.volume || b.transferCount - a.transferCount,
-    )
 }
 
 function getTopPath(
@@ -246,22 +193,6 @@ function getMockInteropTokenData({
     topProtocols: [],
     entries: [],
     zeroTransferProtocols: [],
-    deployments: [
-      {
-        chain: srcChain,
-        symbol: token.symbol,
-        address: '0x0000000000000000000000000000000000000000',
-        volume: 10_000_000,
-        transferCount: 1000,
-      },
-      {
-        chain: dstChain,
-        symbol: token.symbol,
-        address: '0x0000000000000000000000000000000000000001',
-        volume: 10_000_000,
-        transferCount: 1000,
-      },
-    ],
     snapshotTimestamp: 0,
   }
 }
