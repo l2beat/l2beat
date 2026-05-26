@@ -21,7 +21,12 @@ type ChainDetails = {
   name: string
 }
 
-type Flow = InteropDashboardData['flows'][number]
+type EnrichedFlow = {
+  from: ChainDetails
+  to: ChainDetails
+  volume: number
+  transferCount: number | undefined
+}
 
 export function TopRoutesWidget({
   interopChains,
@@ -34,13 +39,20 @@ export function TopRoutesWidget({
   flows: InteropDashboardData['flows'] | undefined
   className?: string
 }) {
-  const getChainDetails = (id: string): ChainDetails => {
-    const chain = interopChains.find((c) => c.id === id)
-    assert(chain, `Chain not found: ${id}`)
-    return { id: chain.id, iconUrl: chain.iconUrl, name: chain.name }
-  }
+  const enrichedFlows = flows?.map((flow): EnrichedFlow => {
+    const from = interopChains.find((c) => c.id === flow.srcChain)
+    const to = interopChains.find((c) => c.id === flow.dstChain)
+    assert(from, `Chain not found: ${flow.srcChain}`)
+    assert(to, `Chain not found: ${flow.dstChain}`)
+    return {
+      from: { id: from.id, iconUrl: from.iconUrl, name: from.name },
+      to: { id: to.id, iconUrl: to.iconUrl, name: to.name },
+      volume: flow.volume,
+      transferCount: flow.transferCount,
+    }
+  })
 
-  const flowCount = flows?.length ?? 0
+  const flowCount = enrichedFlows?.length ?? 0
   const subtitle = flowCount > 2 ? 'Top routes by volume' : 'Flows by volume'
 
   return (
@@ -60,17 +72,14 @@ export function TopRoutesWidget({
         <div className="mt-3 flex-1 md:mt-4">
           {isLoading && <LoadingState flowCount={2} />}
           {!isLoading && flowCount === 0 && <EmptyState />}
-          {!isLoading && flowCount === 1 && flows?.[0] && (
-            <SinglePairLayout
-              flow={flows[0]}
-              getChainDetails={getChainDetails}
-            />
+          {!isLoading && flowCount === 1 && enrichedFlows?.[0] && (
+            <SinglePairLayout flow={enrichedFlows[0]} />
           )}
-          {!isLoading && flowCount === 2 && flows && (
-            <TwoPairsLayout flows={flows} getChainDetails={getChainDetails} />
+          {!isLoading && flowCount === 2 && enrichedFlows && (
+            <TwoPairsLayout flows={enrichedFlows} />
           )}
-          {!isLoading && flowCount >= 3 && flows && (
-            <TopRoutesList flows={flows} getChainDetails={getChainDetails} />
+          {!isLoading && flowCount >= 3 && enrichedFlows && (
+            <TopRoutesList flows={enrichedFlows} />
           )}
         </div>
       </div>
@@ -96,17 +105,11 @@ function LoadingState({ flowCount }: { flowCount: number }) {
   )
 }
 
-function SinglePairLayout({
-  flow,
-  getChainDetails,
-}: {
-  flow: Flow
-  getChainDetails: (id: string) => ChainDetails
-}) {
+function SinglePairLayout({ flow }: { flow: EnrichedFlow }) {
   return (
     <RouteCard
-      from={getChainDetails(flow.srcChain)}
-      to={getChainDetails(flow.dstChain)}
+      from={flow.from}
+      to={flow.to}
       volume={flow.volume}
       transferCount={flow.transferCount}
       size="lg"
@@ -114,20 +117,14 @@ function SinglePairLayout({
   )
 }
 
-function TwoPairsLayout({
-  flows,
-  getChainDetails,
-}: {
-  flows: Flow[]
-  getChainDetails: (id: string) => ChainDetails
-}) {
+function TwoPairsLayout({ flows }: { flows: EnrichedFlow[] }) {
   return (
     <div className="grid grid-cols-2 gap-3">
       {flows.map((flow) => (
         <RouteCard
-          key={flow.srcChain + flow.dstChain}
-          from={getChainDetails(flow.srcChain)}
-          to={getChainDetails(flow.dstChain)}
+          key={flow.from.id + flow.to.id}
+          from={flow.from}
+          to={flow.to}
           volume={flow.volume}
           transferCount={flow.transferCount}
           size="md"
@@ -137,20 +134,14 @@ function TwoPairsLayout({
   )
 }
 
-function TopRoutesList({
-  flows,
-  getChainDetails,
-}: {
-  flows: Flow[]
-  getChainDetails: (id: string) => ChainDetails
-}) {
+function TopRoutesList({ flows }: { flows: EnrichedFlow[] }) {
   return (
     <ul className="flex flex-col gap-1.5">
       {flows.map((flow) => (
-        <li key={flow.srcChain + flow.dstChain}>
+        <li key={flow.from.id + flow.to.id}>
           <RouteRow
-            from={getChainDetails(flow.srcChain)}
-            to={getChainDetails(flow.dstChain)}
+            from={flow.from}
+            to={flow.to}
             volume={flow.volume}
             transferCount={flow.transferCount}
           />
