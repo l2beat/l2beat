@@ -1,5 +1,10 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { CallParameters, HttpClient, IRpcClient } from '@l2beat/shared'
+import type {
+  CallParameters,
+  HttpClient,
+  IRpcClient,
+  MulticallV3Response,
+} from '@l2beat/shared'
 import {
   Bytes,
   ChainSpecificAddress,
@@ -265,7 +270,11 @@ export class WormholeConfigPlugin
 
       try {
         const block = await rpc.getBlock('latest', false)
-        const results = await rpc.multicall(calls, block.number)
+        const results = await callWithOptionalMulticall(
+          rpc,
+          calls,
+          block.number,
+        )
 
         const validContracts: {
           wormholeChainId: number
@@ -314,7 +323,7 @@ export class WormholeConfigPlugin
           tokenBridge: tokenBridgeByChain.get(docsChainName),
         }
       } catch (error) {
-        this.logger.debug('Failed to multicall for chain', {
+        this.logger.debug('Failed to resolve Wormhole core for chain', {
           chain: chain.name,
           error,
         })
@@ -327,4 +336,37 @@ export class WormholeConfigPlugin
 
     return mergeWormholeNetworks(chainIdNetworks, networks)
   }
+}
+
+export async function callWithOptionalMulticall(
+  rpc: Pick<IRpcClient, 'call' | 'isMulticallDeployed' | 'multicall'>,
+  calls: CallParameters[],
+  blockNumber: number,
+): Promise<MulticallV3Response[]> {
+  if (rpc.isMulticallDeployed(blockNumber)) {
+    return await rpc.multicall(calls, blockNumber)
+  }
+
+  const results: MulticallV3Response[] = []
+  for (const call of calls) {
+    try {
+      const data = await rpc.call(call, blockNumber)
+      results.push({ success: data.length !== 0, data })
+    } catch (error) {
+      if (!isCallRevertedError(error)) {
+        throw error
+      }
+      results.push({ success: false, data: Bytes.EMPTY })
+    }
+  }
+  return results
+}
+
+function isCallRevertedError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false
+  }
+
+  const message = error.message.toLowerCase()
+  return message.includes('revert') || message.includes('call_exception')
 }
