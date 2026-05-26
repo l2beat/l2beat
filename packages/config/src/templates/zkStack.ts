@@ -22,6 +22,7 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { PROGRAM_HASHES } from '../common/programHashes'
+import { getAltDaStage } from '../common/stages/getAltDaStage'
 import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
@@ -124,6 +125,23 @@ export interface ZkStackConfigCommon {
   interopConfig?: InteropConfig
   // For Stage 1 requirement. In theory could also be determined from discovery and zk catalog
   zkVerifierContractsReproducible?: boolean
+  // altDA stage inputs (used when the project is a Validium/Optimium)
+  daAttestedByIndependentParty?: boolean
+  daVerifierSecureOnL1?: boolean
+  daVerifier7DayExitWindow?: boolean
+  daVerifier30DayExitWindow?: boolean
+  daCommitteeDecentralized?: boolean
+  /** Override for the static economic-security check derived from the DA layer. */
+  daMechanismEconomicSecurity?: boolean
+  daVerifierLink?: string
+  proverSourceLink?: string
+  securityCouncilReference?: string
+  /** Override for altDA Stage 1 principle description (rollup keeps hardcoded). */
+  stage1PrincipleDescription?: string
+  /** Manual altDA Stage 1 principle verdict (defaults to false, matching rollup). */
+  stage1Principle?: boolean | 'UnderReview'
+  /** Stage 1: is the chain's own Security Council / ChainAdmin properly set up? */
+  hasProperSecurityCouncil?: boolean
 }
 
 export type Upgradeability = {
@@ -387,9 +405,54 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     stage:
       templateVars.stage ??
       (templateVars.daProvider !== undefined
-        ? {
-            stage: 'NotApplicable',
-          }
+        ? getAltDaStage(
+            {
+              stage0: {
+                callsItselfValidiumOrOptimium: true,
+                stateRootsPostedToL1: true,
+                stateVerificationOnL1: true,
+                daAttestedByIndependentParty:
+                  templateVars.daAttestedByIndependentParty ?? null,
+                nodeSourceAvailable: true,
+                fraudProofSystemAtLeast5Outsiders: null,
+              },
+              stage1: {
+                principle: templateVars.stage1Principle ?? false,
+                usersCanExitWithoutCooperation: false,
+                usersHave7DaysToExit: false,
+                securityCouncilProperlySetUp:
+                  templateVars.hasProperSecurityCouncil ?? false,
+                daVerifierSecureOnL1: templateVars.daVerifierSecureOnL1 ?? null,
+                daVerifier7DayExitWindow:
+                  templateVars.daVerifier7DayExitWindow ?? null,
+                daCommitteeDecentralized:
+                  templateVars.daCommitteeDecentralized ?? null,
+                noRedTrustedSetups: true,
+                proverSourcePublished: true,
+                verifierContractsReproducible:
+                  templateVars.zkVerifierContractsReproducible ?? null,
+                programHashesReproducible:
+                  programHashesReproducible(l2BootloaderHash),
+              },
+              stage2: {
+                fraudProofSystemIsPermissionless: null,
+                delayWith30DExitWindow: false,
+                proofSystemOverriddenOnlyInCaseOfABug: null,
+                daVerifier30DayExitWindow:
+                  templateVars.daVerifier30DayExitWindow ?? null,
+                daMechanismEconomicSecurity:
+                  templateVars.daMechanismEconomicSecurity ?? null,
+              },
+            },
+            {
+              nodeSourceLink: 'https://github.com/matter-labs/zksync-era',
+              proverSourceLink: templateVars.proverSourceLink,
+              securityCouncilReference: templateVars.securityCouncilReference,
+              stage1PrincipleDescription:
+                templateVars.stage1PrincipleDescription,
+              daVerifierLink: templateVars.daVerifierLink,
+            },
+          )
         : getRollupStage(
             {
               stage0: {

@@ -33,6 +33,7 @@ import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { PROGRAM_HASHES } from '../common/programHashes'
+import { getAltDaStage } from '../common/stages/getAltDaStage'
 import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
@@ -181,6 +182,24 @@ interface OrbitStackConfigCommon {
   celestiaProofSystemInactive?: boolean
   nonTemplateZkVerifiers?: ChainSpecificAddress[]
   nonTemplateProgramHashes?: ProjectScalingContractsProgramHash[]
+  // altDA stage inputs (used when the project is a Validium/Optimium)
+  daAttestedByIndependentParty?: boolean
+  daVerifierSecureOnL1?: boolean
+  daVerifier7DayExitWindow?: boolean
+  daVerifier30DayExitWindow?: boolean
+  daCommitteeDecentralized?: boolean
+  /** Override for the static economic-security check derived from the DA layer. */
+  daMechanismEconomicSecurity?: boolean
+  daVerifierLink?: string
+  proverSourceLink?: string
+  securityCouncilReference?: string
+  /** Stage 1: did the project's upgrade path provide ≥7d exit window? */
+  usersHave7DaysToExit?: boolean
+  /** Stage 1: is the project's Security Council properly set up? */
+  hasProperSecurityCouncil?: boolean
+  stage1PrincipleDescription?: string
+  /** Manual altDA Stage 1 principle verdict (no automation). */
+  stage1Principle?: boolean | 'UnderReview'
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -1347,48 +1366,95 @@ function extractDAs(daProviders: DAProvider[]): ProjectScalingDa[] {
 function computedStage(
   templateVars: OrbitStackConfigCommon,
 ): ProjectScalingStage {
-  const postsToL1 = postsToEthereum(templateVars)
-
   if (templateVars.stage !== undefined) {
     return templateVars.stage
-  }
-  if (!postsToL1) {
-    return { stage: 'NotApplicable' }
   }
 
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
     'RollupProxy',
     'wasmModuleRoot',
   )
-  return getRollupStage(
+
+  if (postsToEthereum(templateVars)) {
+    return getRollupStage(
+      {
+        stage0: {
+          callsItselfRollup: true,
+          stateRootsPostedToL1: true,
+          dataAvailabilityOnL1: true,
+          rollupNodeSourceAvailable:
+            templateVars.isNodeAvailable ?? 'UnderReview',
+          stateVerificationOnL1: true,
+          fraudProofSystemAtLeast5Outsiders: false,
+        },
+        stage1: {
+          principle: false,
+          usersHave7DaysToExit: false,
+          usersCanExitWithoutCooperation: true,
+          securityCouncilProperlySetUp: false,
+          noRedTrustedSetups: null,
+          programHashesReproducible: programHashesReproducible(wasmModuleRoot),
+          proverSourcePublished: null,
+          verifierContractsReproducible: null,
+        },
+        stage2: {
+          proofSystemOverriddenOnlyInCaseOfABug: false,
+          fraudProofSystemIsPermissionless: false,
+          delayWith30DExitWindow: false,
+        },
+      },
+      {
+        rollupNodeLink: templateVars.nodeSourceLink,
+      },
+    )
+  }
+
+  return getAltDaStage(
     {
       stage0: {
-        callsItselfRollup: true,
+        callsItselfValidiumOrOptimium: true,
         stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable:
-          templateVars.isNodeAvailable ?? 'UnderReview',
         stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: false,
+        daAttestedByIndependentParty:
+          templateVars.daAttestedByIndependentParty ?? null,
+        nodeSourceAvailable: templateVars.isNodeAvailable ?? 'UnderReview',
+        fraudProofSystemAtLeast5Outsiders:
+          templateVars.hasAtLeastFiveExternalChallengers ?? false,
       },
       stage1: {
-        principle: false,
-        usersHave7DaysToExit: false,
+        principle: templateVars.stage1Principle ?? null,
         usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: false,
+        usersHave7DaysToExit: templateVars.usersHave7DaysToExit ?? false,
+        securityCouncilProperlySetUp:
+          templateVars.hasProperSecurityCouncil ?? false,
+        daVerifierSecureOnL1: templateVars.daVerifierSecureOnL1 ?? null,
+        daVerifier7DayExitWindow: templateVars.daVerifier7DayExitWindow ?? null,
+        daCommitteeDecentralized: templateVars.daCommitteeDecentralized ?? null,
         noRedTrustedSetups: null,
-        programHashesReproducible: programHashesReproducible(wasmModuleRoot),
         proverSourcePublished: null,
         verifierContractsReproducible: null,
+        programHashesReproducible: programHashesReproducible(wasmModuleRoot),
       },
       stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
         fraudProofSystemIsPermissionless: false,
         delayWith30DExitWindow: false,
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        daVerifier30DayExitWindow:
+          templateVars.daVerifier30DayExitWindow ?? null,
+        daMechanismEconomicSecurity:
+          templateVars.daMechanismEconomicSecurity ?? null,
       },
     },
     {
-      rollupNodeLink: templateVars.nodeSourceLink,
+      nodeSourceLink:
+        templateVars.isNodeAvailable === true
+          ? (templateVars.nodeSourceLink ??
+            'https://github.com/OffchainLabs/nitro')
+          : templateVars.nodeSourceLink,
+      proverSourceLink: templateVars.proverSourceLink,
+      securityCouncilReference: templateVars.securityCouncilReference,
+      stage1PrincipleDescription: templateVars.stage1PrincipleDescription,
+      daVerifierLink: templateVars.daVerifierLink,
     },
   )
 }
