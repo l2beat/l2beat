@@ -62,6 +62,8 @@ export function describeIngestionStep(step: IngestionStep): string {
       return `Will create new abstract token for CoinGecko coin ${step.coingeckoId} (${step.symbol}).`
     case 'fetched-coingecko-abstract':
       return `Built abstract token ${step.record.id} (${step.record.symbol}) from CoinGecko coin ${step.record.coingeckoId}.`
+    case 'corrected-coingecko-symbol-casing':
+      return `Corrected CoinGecko symbol casing ${step.from} → ${step.to} from the deployed-token symbol.`
     case 'fetched-facts': {
       const base = `Fetched deployed-token facts: symbol=${String(step.facts.symbol)}, decimals=${String(step.facts.decimals)}, deploymentTimestamp=${String(step.facts.deploymentTimestamp)}, isContract=${String(step.facts.isContract)}.`
       if (step.facts.warnings.length === 0) return base

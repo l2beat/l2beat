@@ -223,12 +223,17 @@ export class TokenIngestionProcessor {
           outcome: { kind: 'conflict', message: conflict },
         }
       }
+      const finalAbstract = adoptDeployedTokenSymbolCasing(
+        newAbstractToken,
+        pending.existing.symbol,
+        steps,
+      )
       return {
         ...trace,
         steps,
         outcome: {
           kind: 'write',
-          newAbstractToken,
+          newAbstractToken: finalAbstract,
           deployedToken: {
             type: 'update',
             pk: { chain: trace.address.chain, address: trace.address.address },
@@ -270,12 +275,18 @@ export class TokenIngestionProcessor {
       }
     }
 
+    const finalAbstract = adoptDeployedTokenSymbolCasing(
+      newAbstractToken,
+      built.record.symbol,
+      steps,
+    )
+
     return {
       ...trace,
       steps,
       outcome: {
         kind: 'write',
-        newAbstractToken,
+        newAbstractToken: finalAbstract,
         deployedToken: {
           type: 'insert',
           record: {
@@ -878,9 +889,42 @@ function getNewCoingeckoSymbolConflict(
   deployedTokenSymbol: string,
 ): string | undefined {
   if (!newAbstractToken) return undefined
-  if (newAbstractToken.symbol === deployedTokenSymbol) return undefined
+  // CoinGecko's /coins/list and /coins/{platform}/contract/{addr} endpoints
+  // return symbols lower-cased (e.g. "susde", "wsteth"), so a casing-only
+  // difference vs. the RPC symbol never reflects a real mismatch. Compare
+  // case-insensitively here; the canonical casing is restored from the
+  // deployed-token symbol in `adoptDeployedTokenSymbolCasing`.
+  if (
+    newAbstractToken.symbol.toLowerCase() === deployedTokenSymbol.toLowerCase()
+  ) {
+    return undefined
+  }
 
   return `CoinGecko would create abstract token ${newAbstractToken.id}:${newAbstractToken.symbol}, but the deployed token symbol is ${deployedTokenSymbol}.`
+}
+
+/**
+ * CoinGecko returns symbols lower-cased, so a brand-new abstract built from a
+ * CoinGecko coin can't carry the correct casing on its own. The deployed
+ * token's symbol — read from RPC for inserts, or already canonical on the
+ * existing record for updates — is the source of truth, so we copy its
+ * casing onto the abstract before the write. The conflict check above has
+ * already proven the two symbols match case-insensitively. No-op when the
+ * casings already agree, so we don't pollute the trace with empty steps.
+ */
+function adoptDeployedTokenSymbolCasing(
+  newAbstractToken: AbstractTokenRecord | undefined,
+  deployedTokenSymbol: string,
+  steps: IngestionStep[],
+): AbstractTokenRecord | undefined {
+  if (!newAbstractToken) return undefined
+  if (newAbstractToken.symbol === deployedTokenSymbol) return newAbstractToken
+  steps.push({
+    kind: 'corrected-coingecko-symbol-casing',
+    from: newAbstractToken.symbol,
+    to: deployedTokenSymbol,
+  })
+  return { ...newAbstractToken, symbol: deployedTokenSymbol }
 }
 
 function generateAbstractTokenId() {
