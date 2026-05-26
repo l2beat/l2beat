@@ -28,8 +28,8 @@ export function PrivacySummaryPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
-          <MainPageHeader description="Daily aggregated privacy flows and live balances sourced from the configured onchain metric definitions for tracked privacy protocols.">
-            Privacy Dashboard
+          <MainPageHeader description="Analysis of privacy protocols on Ethereum focusing on CROPS principles (Censorship resistance, Resilience, Openness, Privacy, Security).">
+            Privacy
           </MainPageHeader>
           <PrivacySummaryChartsSection
             projects={entries.map((e) => ({ id: e.id, name: e.name }))}
