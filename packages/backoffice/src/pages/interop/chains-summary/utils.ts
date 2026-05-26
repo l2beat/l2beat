@@ -2,6 +2,7 @@ import type {
   ChainsSummaryBackendChain,
   ChainsSummaryFrontendChain,
   ChainsSummaryRow,
+  EnvironmentChainSummaryData,
 } from './types'
 
 const PRODUCTION_FRONTEND_URL = 'https://l2beat.com'
@@ -62,20 +63,12 @@ export function getChainsSummaryRows(input: {
         iconUrl: meta
           ? `${PRODUCTION_FRONTEND_URL}/icons/${meta.iconSlug}.png`
           : undefined,
-        enabledOnProductionFrontend: productionFrontend.has(id),
-        enabledOnProductionFrontendUpcoming:
-          productionFrontend.get(id)?.isUpcoming ?? false,
-        enabledOnProductionBackendCapture:
-          productionBackend.get(id)?.enabledOnCapture ?? false,
-        enabledOnProductionBackendOneSided:
-          productionBackend.get(id)?.enabledOnOneSided ?? false,
-        enabledOnStagingFrontend: stagingFrontend.has(id),
-        enabledOnStagingFrontendUpcoming:
-          stagingFrontend.get(id)?.isUpcoming ?? false,
-        enabledOnStagingBackendCapture:
-          stagingBackend.get(id)?.enabledOnCapture ?? false,
-        enabledOnStagingBackendOneSided:
-          stagingBackend.get(id)?.enabledOnOneSided ?? false,
+        production: buildEnvironmentData(
+          productionFrontend,
+          productionBackend,
+          id,
+        ),
+        staging: buildEnvironmentData(stagingFrontend, stagingBackend, id),
         missingTokensCount: countValue(missingTokenCounts, id),
         suspiciousTransfersCount: countValue(suspiciousTransferCounts, id),
         notIncludedTransfersCount: countValue(notIncludedTransferCounts, id),
@@ -97,9 +90,8 @@ export function getSummaryStats(rows: ChainsSummaryRow[]) {
     ).length,
     mismatchedCount: rows.filter(
       (row) =>
-        row.enabledOnProductionFrontend !==
-          row.enabledOnProductionBackendCapture ||
-        row.enabledOnStagingFrontend !== row.enabledOnStagingBackendCapture,
+        row.production.frontend.enabled !== row.production.backend.capture ||
+        row.staging.frontend.enabled !== row.staging.backend.capture,
     ).length,
   }
 }
@@ -108,25 +100,36 @@ function isEnabledSomewhere(row: ChainsSummaryRow) {
   return (
     isProdEnabled(row) ||
     isStagingEnabled(row) ||
-    row.enabledOnProductionFrontendUpcoming ||
-    row.enabledOnStagingFrontendUpcoming
+    row.production.frontend.upcoming ||
+    row.staging.frontend.upcoming
   )
 }
 
 function isProdEnabled(row: ChainsSummaryRow) {
-  return (
-    row.enabledOnProductionFrontend ||
-    row.enabledOnProductionBackendCapture ||
-    row.enabledOnProductionBackendOneSided
-  )
+  const { frontend, backend } = row.production
+  return frontend.enabled || backend.capture || backend.oneSided
 }
 
 function isStagingEnabled(row: ChainsSummaryRow) {
-  return (
-    row.enabledOnStagingFrontend ||
-    row.enabledOnStagingBackendCapture ||
-    row.enabledOnStagingBackendOneSided
-  )
+  const { frontend, backend } = row.staging
+  return frontend.enabled || backend.capture || backend.oneSided
+}
+
+function buildEnvironmentData(
+  frontend: Map<string, ChainsSummaryFrontendChain>,
+  backend: Map<string, ChainsSummaryBackendChain>,
+  id: string,
+): EnvironmentChainSummaryData {
+  return {
+    frontend: {
+      enabled: frontend.has(id),
+      upcoming: frontend.get(id)?.isUpcoming ?? false,
+    },
+    backend: {
+      capture: backend.get(id)?.enabledOnCapture ?? false,
+      oneSided: backend.get(id)?.enabledOnOneSided ?? false,
+    },
+  }
 }
 
 function indexById<T extends { id: string }>(items: T[] | undefined) {

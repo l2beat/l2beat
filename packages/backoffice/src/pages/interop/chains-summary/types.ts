@@ -8,20 +8,25 @@ export interface ChainsSummaryFrontendChain {
   isUpcoming: boolean
 }
 
+export type EnvironmentChainSummaryData = {
+  frontend: {
+    enabled: boolean
+    upcoming: boolean
+  }
+  backend: {
+    capture: boolean
+    oneSided: boolean
+  }
+}
+
 export interface ChainsSummaryRow {
   id: string
   name: string
   display: string
   color: string
   iconUrl: string | undefined
-  enabledOnProductionFrontend: boolean
-  enabledOnProductionFrontendUpcoming: boolean
-  enabledOnProductionBackendCapture: boolean
-  enabledOnProductionBackendOneSided: boolean
-  enabledOnStagingFrontend: boolean
-  enabledOnStagingFrontendUpcoming: boolean
-  enabledOnStagingBackendCapture: boolean
-  enabledOnStagingBackendOneSided: boolean
+  production: EnvironmentChainSummaryData
+  staging: EnvironmentChainSummaryData
   missingTokensCount: number | undefined
   suspiciousTransfersCount: number | undefined
   notIncludedTransfersCount: number | undefined

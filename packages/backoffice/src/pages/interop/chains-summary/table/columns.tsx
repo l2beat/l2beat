@@ -40,83 +40,89 @@ export const chainsSummaryColumns: TableOptions<ChainsSummaryRow>['columns'] = [
       getCsvValue: ({ row }) => row.original.name,
     },
   }),
-  columnHelper.accessor('enabledOnProductionFrontend', {
+  columnHelper.accessor((row) => row.production.frontend.enabled, {
+    id: 'production.frontend.enabled',
     header: 'Prod FE',
     cell: ({ row, getValue }) => (
       <StatusBadge
         enabled={getValue()}
         detail={
-          row.original.enabledOnProductionFrontendUpcoming
-            ? 'upcoming'
-            : undefined
+          row.original.production.frontend.upcoming ? 'upcoming' : undefined
         }
       />
     ),
     meta: {
       csvHeader: 'Enabled on prod FE',
-      getCsvValue: ({ row }) =>
-        String(row.original.enabledOnProductionFrontend),
+      getCsvValue: ({ row }) => String(row.original.production.frontend.enabled),
       filter: { kind: 'select' },
     },
   }),
-  columnHelper.accessor('enabledOnProductionBackendCapture', {
-    header: 'Prod BE',
-    cell: ({ row, getValue }) => (
-      <StatusBadge
-        enabled={getValue() || row.original.enabledOnProductionBackendOneSided}
-        detail={
-          row.original.enabledOnProductionBackendOneSided
-            ? 'one-sided'
-            : undefined
-        }
-      />
-    ),
-    meta: {
-      csvHeader: 'Enabled on prod BE',
-      getCsvValue: ({ row }) =>
-        String(
-          row.original.enabledOnProductionBackendCapture ||
-            row.original.enabledOnProductionBackendOneSided,
-        ),
-      filter: { kind: 'select' },
+  columnHelper.accessor(
+    (row) =>
+      row.production.backend.capture || row.production.backend.oneSided,
+    {
+      id: 'production.backend.enabled',
+      header: 'Prod BE',
+      cell: ({ row, getValue }) => (
+        <StatusBadge
+          enabled={getValue()}
+          detail={
+            row.original.production.backend.oneSided ? 'one-sided' : undefined
+          }
+        />
+      ),
+      meta: {
+        csvHeader: 'Enabled on prod BE',
+        getCsvValue: ({ row }) =>
+          String(
+            row.original.production.backend.capture ||
+              row.original.production.backend.oneSided,
+          ),
+        filter: { kind: 'select' },
+      },
     },
-  }),
-  columnHelper.accessor('enabledOnStagingFrontend', {
+  ),
+  columnHelper.accessor((row) => row.staging.frontend.enabled, {
+    id: 'staging.frontend.enabled',
     header: 'Staging FE',
     cell: ({ row, getValue }) => (
       <StatusBadge
         enabled={getValue()}
         detail={
-          row.original.enabledOnStagingFrontendUpcoming ? 'upcoming' : undefined
+          row.original.staging.frontend.upcoming ? 'upcoming' : undefined
         }
       />
     ),
     meta: {
       csvHeader: 'Enabled on staging FE',
-      getCsvValue: ({ row }) => String(row.original.enabledOnStagingFrontend),
+      getCsvValue: ({ row }) => String(row.original.staging.frontend.enabled),
       filter: { kind: 'select' },
     },
   }),
-  columnHelper.accessor('enabledOnStagingBackendCapture', {
-    header: 'Staging BE',
-    cell: ({ row, getValue }) => (
-      <StatusBadge
-        enabled={getValue() || row.original.enabledOnStagingBackendOneSided}
-        detail={
-          row.original.enabledOnStagingBackendOneSided ? 'one-sided' : undefined
-        }
-      />
-    ),
-    meta: {
-      csvHeader: 'Enabled on staging BE',
-      getCsvValue: ({ row }) =>
-        String(
-          row.original.enabledOnStagingBackendCapture ||
-            row.original.enabledOnStagingBackendOneSided,
-        ),
-      filter: { kind: 'select' },
+  columnHelper.accessor(
+    (row) => row.staging.backend.capture || row.staging.backend.oneSided,
+    {
+      id: 'staging.backend.enabled',
+      header: 'Staging BE',
+      cell: ({ row, getValue }) => (
+        <StatusBadge
+          enabled={getValue()}
+          detail={
+            row.original.staging.backend.oneSided ? 'one-sided' : undefined
+          }
+        />
+      ),
+      meta: {
+        csvHeader: 'Enabled on staging BE',
+        getCsvValue: ({ row }) =>
+          String(
+            row.original.staging.backend.capture ||
+              row.original.staging.backend.oneSided,
+          ),
+        filter: { kind: 'select' },
+      },
     },
-  }),
+  ),
   columnHelper.accessor('missingTokensCount', {
     header: 'Missing tokens',
     cell: ({ getValue }) => (
