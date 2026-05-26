@@ -15,9 +15,29 @@ export const MAYAN_PROTOCOLS = {
   mayanSwap2: EthereumAddress('0x238856DE6d9d32EA3Dd4e9e7dbfe08b23cD5048c'),
 } as const satisfies Record<string, EthereumAddressValue>
 
-const MAYAN_SWIFT_DEST = EthereumAddress(
+// Swift v1 used a single contract for source and destination operations.
+export const MAYAN_SWIFT_V1_CONTRACT = MAYAN_PROTOCOLS.mayanSwift
+
+// Swift v2 splits source and destination responsibilities. Mayan deploys the
+// same source address and the same destination address on every supported EVM.
+export const MAYAN_SWIFT_V2_SOURCE_CONTRACT = EthereumAddress(
+  '0x40fFE85A28DC9993541449464d7529a922142960',
+)
+export const MAYAN_SWIFT_V2_DESTINATION_CONTRACT = EthereumAddress(
   '0xD78D199f8C402e7B5Cc2abE278dF0412400a3BAe',
 )
+
+export const MAYAN_SWIFT_SOURCE_CONTRACTS = [
+  MAYAN_SWIFT_V1_CONTRACT,
+  MAYAN_SWIFT_V2_SOURCE_CONTRACT,
+] as const
+
+export const MAYAN_SWIFT_DESTINATION_CONTRACTS = [
+  MAYAN_SWIFT_V1_CONTRACT,
+  MAYAN_SWIFT_V2_DESTINATION_CONTRACT,
+] as const
+
+export const MAYAN_SWIFT_SETTLEMENT_SENDERS = MAYAN_SWIFT_DESTINATION_CONTRACTS
 
 interface MayanChainConfig {
   chain: string
@@ -137,7 +157,22 @@ const MAYAN_CHAINS: MayanChainConfig[] = [
 export function isMayanSwiftSettlementSender(
   sender: EthereumAddressValue,
 ): boolean {
-  return sender === MAYAN_PROTOCOLS.mayanSwift || sender === MAYAN_SWIFT_DEST
+  return (
+    MAYAN_SWIFT_SETTLEMENT_SENDERS as readonly EthereumAddressValue[]
+  ).includes(sender)
+}
+
+export function isMayanSwiftProtocolAddress(
+  address: EthereumAddressValue,
+): boolean {
+  return (
+    (MAYAN_SWIFT_SOURCE_CONTRACTS as readonly EthereumAddressValue[]).includes(
+      address,
+    ) ||
+    (
+      MAYAN_SWIFT_DESTINATION_CONTRACTS as readonly EthereumAddressValue[]
+    ).includes(address)
+  )
 }
 
 // Chains where Mayan contracts are deployed
@@ -189,4 +224,13 @@ export function toChainSpecificAddresses(
     }
   }
   return addresses
+}
+
+export function toChainSpecificAddressesForMany(
+  chains: readonly string[],
+  addresses: readonly EthereumAddressValue[],
+): ChainSpecificAddress[] {
+  return addresses.flatMap((address) =>
+    toChainSpecificAddresses(chains, address),
+  )
 }

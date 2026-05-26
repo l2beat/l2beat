@@ -1725,6 +1725,29 @@
         "chain": "base",
         "tx": "0x4c63d872d324fda368e1612e8f5ce8df3e61a13913d4b6c6bd8b30b93773aa07"
       },
+      // Flow 3: BSC → Ethereum Swift v2, split source/destination contracts
+      // Order key: 0xfbca22b56368dacde8fcba293c4ba5cff578cc220b3cd49004b5085e5228b174
+      // 3a. Source: OrderCreated + MayanForwarded on BSC, SwiftSource 0x40fF...
+      {
+        "chain": "bsc",
+        "tx": "0xee3024757573bea10f37ca3763176d0da0f0300b724105ad2e0aec15f8302a25"
+      },
+      // 3b. Destination: OrderFulfilled + SettlementSent on Ethereum, SwiftDest 0xD78D...
+      {
+        "chain": "ethereum",
+        "tx": "0xaee597e43c773115b0372c33280095b94370fd71c34b235f4c55e4f50faa0e61"
+      },
+      // 3c. Source: OrderUnlocked on BSC, SwiftSource 0x40fF...
+      {
+        "chain": "bsc",
+        "tx": "0x8f36276ce9ac32fe1f5e4f8f02ddf31f96de5f73d4c30b372165e482f024df6c"
+      },
+      // Swift v2 compressed postBatch settlement payload (0x05).
+      // These are settlement-only events for Solana-sourced orders, so no EVM unlock tx follows.
+      {
+        "chain": "bsc",
+        "tx": "0x79990846c8a817e43c132dbaa03a6c8a6fad78c636cbdb807e52935d2c838adc"
+      },
       // Flow 1: Ethereum → BSC batch (8 orders)
       // Order key: 0xa2178dd759b8ca5aa843e4f541b6dc8b10bf2ec40da84cd501659150731e6528
       // 1a. Source: OrderCreated on Ethereum
@@ -1780,15 +1803,89 @@
         "mayan-swift.OrderCreated",
         "mayan-swift.OrderFulfilled",
         "mayan-swift.SettlementSent",
-        "mayan-swift.OrderUnlocked"
+        "mayan-swift.OrderUnlocked",
+        {
+          "type": "mayan-swift.OrderCreated",
+          "ctx": {
+            "chain": "bsc",
+            "txHash": "0xee3024757573bea10f37ca3763176d0da0f0300b724105ad2e0aec15f8302a25"
+          },
+          "args": { "$dstChain": "ethereum" }
+        },
+        {
+          "type": "mayan-forwarder.MayanForwarded",
+          "ctx": {
+            "chain": "bsc",
+            "txHash": "0xee3024757573bea10f37ca3763176d0da0f0300b724105ad2e0aec15f8302a25"
+          },
+          "args": {
+            "$dstChain": "ethereum",
+            "mayanProtocol": "0x40fFE85A28DC9993541449464d7529a922142960",
+            "methodSignature": "0xa3a30834"
+          }
+        },
+        {
+          "type": "mayan-swift.OrderFulfilled",
+          "ctx": {
+            "chain": "ethereum",
+            "txHash": "0xaee597e43c773115b0372c33280095b94370fd71c34b235f4c55e4f50faa0e61"
+          },
+          "args": { "$srcChain": "bsc" }
+        },
+        {
+          "type": "mayan-swift.SettlementSent",
+          "ctx": {
+            "chain": "ethereum",
+            "txHash": "0xaee597e43c773115b0372c33280095b94370fd71c34b235f4c55e4f50faa0e61"
+          },
+          "args": { "$dstChain": "bsc" }
+        },
+        {
+          "type": "mayan-swift.OrderUnlocked",
+          "ctx": {
+            "chain": "bsc",
+            "txHash": "0x8f36276ce9ac32fe1f5e4f8f02ddf31f96de5f73d4c30b372165e482f024df6c"
+          },
+          "args": { "$srcChain": "ethereum" }
+        },
+        {
+          "type": "mayan-swift.SettlementSent",
+          "ctx": {
+            "chain": "bsc",
+            "txHash": "0x79990846c8a817e43c132dbaa03a6c8a6fad78c636cbdb807e52935d2c838adc"
+          },
+          "args": {
+            "key": "0xf4e31de8704721b1b09856bf370c98618ea7bf3c53b2ef8ac92534f50ac90527"
+          }
+        }
       ],
       "messages": [
         "mayan-swift.Message",
         "mayan-swift.SettlementMessage",
         "mayan-swift.Message",
-        "mayan-swift.SettlementMessage"
+        "mayan-swift.SettlementMessage",
+        {
+          "type": "mayan-swift.Message",
+          "app": "mayan-swift",
+          "src": { "ctx": { "chain": "bsc" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        },
+        {
+          "type": "mayan-swift.SettlementMessage",
+          "app": "mayan-swift",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "bsc" } }
+        }
       ],
-      "transfers": ["mayan-swift.Transfer", "mayan-swift.Transfer"]
+      "transfers": [
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "event": { "ctx": { "chain": "bsc" } } },
+          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        }
+      ]
     }
   },
   "circle-gateway": {

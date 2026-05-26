@@ -22,15 +22,17 @@ import {
   findMayanWormholeChain,
   isMayanSwiftSettlementSender,
   MAYAN_EVM_CHAINS,
-  MAYAN_PROTOCOLS,
-  toChainSpecificAddresses,
+  MAYAN_SWIFT_SOURCE_CONTRACTS,
+  toChainSpecificAddressesForMany,
 } from './mayan-shared'
 import { SettlementSent } from './mayan-swift'
 import {
   extractMayanSwiftBatchOrderKeys,
+  extractMayanSwiftPostBatchOrderKeys,
   extractWormholeEmitterChainFromTxData,
   getMayanSwiftSettlementMsgType,
   MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK,
+  MAYAN_SWIFT_MSG_TYPE_COMPRESSED_UNLOCK,
 } from './mayan-swift.utils'
 import {
   createEventParser,
@@ -56,6 +58,7 @@ const orderUnlockedLog = 'event OrderUnlocked(bytes32 key)'
 const parseLogMessagePublished = createEventParser(logMessagePublishedLog)
 
 const parseOrderUnlocked = createEventParser(orderUnlockedLog)
+const orderSourceContracts = [...MAYAN_SWIFT_SOURCE_CONTRACTS]
 
 // OrderUnlocked event emitted on source chain when settlement is processed
 // $srcChain is the chain where SettlementSent was emitted (the transfer destination chain)
@@ -72,9 +75,9 @@ export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
   constructor(private configs: InteropConfigStore) {}
 
   getDataRequests(): DataRequest[] {
-    const mayanSwiftAddresses = toChainSpecificAddresses(
+    const mayanSwiftSourceAddresses = toChainSpecificAddressesForMany(
       MAYAN_EVM_CHAINS,
-      MAYAN_PROTOCOLS.mayanSwift,
+      orderSourceContracts,
     )
     const wormholeCoreAddresses = getWormholeCoreAddresses(
       this.configs.get(WormholeConfig) ?? [],
@@ -85,11 +88,12 @@ export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
         type: 'event',
         signature: orderUnlockedLog,
         includeTx: true, // Need tx.data to extract emitter chain from VAA
-        addresses: mayanSwiftAddresses,
+        addresses: mayanSwiftSourceAddresses,
       },
       {
         type: 'event',
         signature: logMessagePublishedLog,
+        includeTx: true, // Need tx.data for Swift v2 compressed postBatch order keys
         addresses: wormholeCoreAddresses,
       },
     ]
@@ -99,9 +103,7 @@ export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
     const wormholeNetworks = this.configs.get(WormholeConfig) ?? []
 
     // Capture OrderUnlocked events
-    const orderUnlocked = parseOrderUnlocked(input.log, [
-      MAYAN_PROTOCOLS.mayanSwift,
-    ])
+    const orderUnlocked = parseOrderUnlocked(input.log, orderSourceContracts)
     if (orderUnlocked) {
       // Extract emitter chain from the Wormhole VAA in transaction input
       // This tells us which chain the settlement message came from
@@ -135,6 +137,21 @@ export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
       isMayanSwiftSettlementSender(EthereumAddress(logMsg.sender))
     ) {
       const msgType = getMayanSwiftSettlementMsgType(logMsg.payload)
+      if (msgType === MAYAN_SWIFT_MSG_TYPE_COMPRESSED_UNLOCK) {
+        const orderKeys = getInteropTransactionDataCandidates(input.tx)
+          .map((txData) => extractMayanSwiftPostBatchOrderKeys(txData))
+          .find(
+            (maybeOrderKeys): maybeOrderKeys is string[] =>
+              maybeOrderKeys !== undefined,
+          )
+
+        return orderKeys?.map((key) =>
+          SettlementSent.create(input, {
+            key,
+          }),
+        )
+      }
+
       if (msgType !== MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK) return
 
       const batchEntries = extractMayanSwiftBatchOrderKeys(logMsg.payload)
