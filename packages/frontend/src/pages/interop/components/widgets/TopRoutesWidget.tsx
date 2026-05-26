@@ -72,13 +72,26 @@ export function TopRoutesWidget({
         <div className="mt-3 flex-1 md:mt-4">
           {isLoading && <LoadingState flowCount={2} />}
           {!isLoading && flowCount === 0 && <EmptyState />}
-          {!isLoading && flowCount === 1 && enrichedFlows?.[0] && (
-            <SinglePairLayout flow={enrichedFlows[0]} />
+          {!isLoading && enrichedFlows && flowCount > 0 && flowCount <= 2 && (
+            <div
+              className={cn(
+                'grid h-full gap-3',
+                flowCount === 2 && 'grid-cols-2',
+              )}
+            >
+              {enrichedFlows.map((flow) => (
+                <RouteCard
+                  key={flow.from.id + flow.to.id}
+                  from={flow.from}
+                  to={flow.to}
+                  volume={flow.volume}
+                  transferCount={flow.transferCount}
+                  size={flowCount === 1 ? 'lg' : 'md'}
+                />
+              ))}
+            </div>
           )}
-          {!isLoading && flowCount === 2 && enrichedFlows && (
-            <TwoPairsLayout flows={enrichedFlows} />
-          )}
-          {!isLoading && flowCount >= 3 && enrichedFlows && (
+          {!isLoading && enrichedFlows && flowCount >= 3 && (
             <TopRoutesList flows={enrichedFlows} />
           )}
         </div>
@@ -100,35 +113,6 @@ function LoadingState({ flowCount }: { flowCount: number }) {
     <div className="grid grid-cols-2 gap-3">
       {times(flowCount).map((index) => (
         <Skeleton key={index} className="h-[110px] w-full" />
-      ))}
-    </div>
-  )
-}
-
-function SinglePairLayout({ flow }: { flow: EnrichedFlow }) {
-  return (
-    <RouteCard
-      from={flow.from}
-      to={flow.to}
-      volume={flow.volume}
-      transferCount={flow.transferCount}
-      size="lg"
-    />
-  )
-}
-
-function TwoPairsLayout({ flows }: { flows: EnrichedFlow[] }) {
-  return (
-    <div className="grid grid-cols-2 gap-3">
-      {flows.map((flow) => (
-        <RouteCard
-          key={flow.from.id + flow.to.id}
-          from={flow.from}
-          to={flow.to}
-          volume={flow.volume}
-          transferCount={flow.transferCount}
-          size="md"
-        />
       ))}
     </div>
   )
