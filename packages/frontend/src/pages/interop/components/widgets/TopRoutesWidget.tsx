@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/shared-pure'
 import times from 'lodash/times'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -9,50 +8,25 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
-import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
+import type {
+  InteropDashboardData,
+  InteropDashboardFlow,
+  InteropDashboardFlowChain,
+} from '~/server/features/scaling/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
-type ChainDetails = {
-  id: string
-  iconUrl: string
-  name: string
-}
-
-type EnrichedFlow = {
-  from: ChainDetails
-  to: ChainDetails
-  volume: number
-  transferCount: number | undefined
-}
-
 export function TopRoutesWidget({
-  interopChains,
   isLoading,
   flows,
   className,
 }: {
-  interopChains: InteropChainWithIcon[]
   isLoading: boolean
   flows: InteropDashboardData['flows'] | undefined
   className?: string
 }) {
-  const enrichedFlows = flows?.map((flow): EnrichedFlow => {
-    const from = interopChains.find((c) => c.id === flow.srcChain)
-    const to = interopChains.find((c) => c.id === flow.dstChain)
-    assert(from, `Chain not found: ${flow.srcChain}`)
-    assert(to, `Chain not found: ${flow.dstChain}`)
-    return {
-      from: { id: from.id, iconUrl: from.iconUrl, name: from.name },
-      to: { id: to.id, iconUrl: to.iconUrl, name: to.name },
-      volume: flow.volume,
-      transferCount: flow.transferCount,
-    }
-  })
-
-  const flowCount = enrichedFlows?.length ?? 0
+  const flowCount = flows?.length ?? 0
   const subtitle = flowCount > 2 ? 'Top routes by volume' : 'Flows by volume'
 
   return (
@@ -72,18 +46,18 @@ export function TopRoutesWidget({
         <div className="mt-3 flex-1 md:mt-4">
           {isLoading && <LoadingState flowCount={2} />}
           {!isLoading && flowCount === 0 && <EmptyState />}
-          {!isLoading && enrichedFlows && flowCount > 0 && flowCount <= 2 && (
+          {!isLoading && flows && flowCount > 0 && flowCount <= 2 && (
             <div
               className={cn(
                 'grid h-full gap-3',
                 flowCount === 2 && 'grid-cols-2',
               )}
             >
-              {enrichedFlows.map((flow) => (
+              {flows.map((flow) => (
                 <RouteCard
-                  key={flow.from.id + flow.to.id}
-                  from={flow.from}
-                  to={flow.to}
+                  key={flow.srcChain.id + flow.dstChain.id}
+                  from={flow.srcChain}
+                  to={flow.dstChain}
                   volume={flow.volume}
                   transferCount={flow.transferCount}
                   size={flowCount === 1 ? 'lg' : 'md'}
@@ -91,8 +65,8 @@ export function TopRoutesWidget({
               ))}
             </div>
           )}
-          {!isLoading && enrichedFlows && flowCount >= 3 && (
-            <TopRoutesList flows={enrichedFlows} />
+          {!isLoading && flows && flowCount >= 3 && (
+            <TopRoutesList flows={flows} />
           )}
         </div>
       </div>
@@ -118,14 +92,14 @@ function LoadingState({ flowCount }: { flowCount: number }) {
   )
 }
 
-function TopRoutesList({ flows }: { flows: EnrichedFlow[] }) {
+function TopRoutesList({ flows }: { flows: InteropDashboardFlow[] }) {
   return (
     <ul className="flex flex-col gap-1.5">
       {flows.map((flow) => (
-        <li key={flow.from.id + flow.to.id}>
+        <li key={flow.srcChain.id + flow.dstChain.id}>
           <RouteRow
-            from={flow.from}
-            to={flow.to}
+            from={flow.srcChain}
+            to={flow.dstChain}
             volume={flow.volume}
             transferCount={flow.transferCount}
           />
@@ -142,8 +116,8 @@ function RouteCard({
   transferCount,
   size,
 }: {
-  from: ChainDetails
-  to: ChainDetails
+  from: InteropDashboardFlowChain
+  to: InteropDashboardFlowChain
   volume: number
   transferCount: number | undefined
   size: 'md' | 'lg'
@@ -195,7 +169,7 @@ function ChainBadge({
   chain,
   isLarge,
 }: {
-  chain: ChainDetails
+  chain: InteropDashboardFlowChain
   isLarge: boolean
 }) {
   return (
@@ -215,7 +189,7 @@ function ChainIconWithTooltip({
   chain,
   className,
 }: {
-  chain: ChainDetails
+  chain: InteropDashboardFlowChain
   className?: string
 }) {
   return (
@@ -236,8 +210,8 @@ function RouteRow({
   volume,
   transferCount,
 }: {
-  from: ChainDetails
-  to: ChainDetails
+  from: InteropDashboardFlowChain
+  to: InteropDashboardFlowChain
   volume: number
   transferCount: number | undefined
 }) {

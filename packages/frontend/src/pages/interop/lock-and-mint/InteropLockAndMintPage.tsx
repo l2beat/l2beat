@@ -115,11 +115,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       data-hide-overflow-x
     >
       <div className="z-10">
-        <TopRoutesWidget
-          interopChains={interopChains}
-          isLoading={isLoading}
-          flows={data?.flows}
-        />
+        <TopRoutesWidget isLoading={isLoading} flows={data?.flows} />
       </div>
       <div className="h-full max-[1600px]:hidden">
         <TopProtocolsByVolume
