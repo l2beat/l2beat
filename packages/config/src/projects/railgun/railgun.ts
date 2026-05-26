@@ -150,7 +150,7 @@ export const railgun: BaseProject = {
 
 A shield transaction moves assets from a public address on Ethereum into the Railgun contract and creates encrypted commitments in a Merkle-tree state. Later private transfers or unshields use zk-SNARK proofs to spend those commitments without revealing the sender, recipient, token type, or amount. Notes created by deposits and private transactions represents ownership of tokens in Railgun, users must keep them secret and make sure the notes are not lost.
 
-Railgun supports private transfers and cross-contract interactions without fragmenting liquidity across denominations. External DeFi calls are executed through the Relay Adapt flow, which temporarily unshields tokens into an adapter contract, performs a sequence of contract calls, and shields the resulting assets back into a private balance in a single transaction.
+Railgun supports private transfers and cross-contract interactions without fragmenting liquidity across denominations. DeFi calls can be executed through the RelayAdapt contract, which temporarily unshields tokens to Ethereum L1, performs a sequence of contract calls, and shields the resulting assets back into Railgun in a single transaction (facilitated by a relayer).
 
 Railgun has a DAO governed by holders of the RAIL token. The DAO has the authority to arbitrarily change the logic of the protocol and its shielded tokens.
 
