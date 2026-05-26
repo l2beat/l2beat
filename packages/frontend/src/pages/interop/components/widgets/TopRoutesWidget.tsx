@@ -64,10 +64,7 @@ export function TopRoutesWidget({
             <TwoPairsLayout flows={flows} getChainDetails={getChainDetails} />
           )}
           {!isLoading && flowCount >= 3 && flows && (
-            <TopRoutesList
-              flows={flows.slice(0, 3)}
-              getChainDetails={getChainDetails}
-            />
+            <TopRoutesList flows={flows} getChainDetails={getChainDetails} />
           )}
         </div>
       </div>
@@ -120,7 +117,7 @@ function TwoPairsLayout({
 }) {
   return (
     <div className="grid grid-cols-2 gap-3">
-      {flows.slice(0, 2).map((flow) => (
+      {flows.map((flow) => (
         <RouteCard
           key={flow.srcChain + flow.dstChain}
           from={getChainDetails(flow.srcChain)}

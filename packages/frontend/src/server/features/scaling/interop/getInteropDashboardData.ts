@@ -120,6 +120,12 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       volume: 30_000_000,
       transferCount: 4800,
     },
+    {
+      srcChain: 'arbitrum',
+      dstChain: 'base',
+      volume: 18_000_000,
+      transferCount: 2100,
+    },
   ]
 
   const topProtocols: InteropProtocolData[] = interopProjects

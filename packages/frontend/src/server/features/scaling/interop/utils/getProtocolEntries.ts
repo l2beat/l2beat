@@ -174,7 +174,7 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
-          flows: flowsMapToSorted(data.lockAndMint.flows, selection),
+          flows: flowsMapToSorted(data.lockAndMint.flows, selection, new Map()),
           netMintedValue: getNetMintedValueUsd(data.lockAndMint),
         }
       : undefined,
@@ -199,7 +199,7 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
-          flows: flowsMapToSorted(data.nonMinting.flows, selection),
+          flows: flowsMapToSorted(data.nonMinting.flows, selection, new Map()),
           averageValueInFlight: data.nonMinting.averageValueInFlight,
         }
       : undefined,
@@ -225,7 +225,7 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
-          flows: flowsMapToSorted(data.burnAndMint.flows, selection),
+          flows: flowsMapToSorted(data.burnAndMint.flows, selection, new Map()),
         }
       : undefined,
     unknown: data.unknown
@@ -249,7 +249,7 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
-          flows: flowsMapToSorted(data.unknown.flows, selection),
+          flows: flowsMapToSorted(data.unknown.flows, selection, new Map()),
         }
       : undefined,
   }

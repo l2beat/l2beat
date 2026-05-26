@@ -44,7 +44,7 @@ export function getFlows(
 export function flowsMapToSorted(
   volumes: Map<string, number>,
   selection: InteropSelectionInput,
-  transferCounts?: Map<string, number>,
+  transferCounts: Map<string, number>,
 ): InteropFlowData[] {
   const selectedPairs = getSelectedFlowPairs(selection)
   return selectedPairs
@@ -54,7 +54,7 @@ export function flowsMapToSorted(
         srcChain,
         dstChain,
         volume: volumes.get(key) ?? 0,
-        transferCount: transferCounts?.get(key),
+        transferCount: transferCounts.get(key),
       }
     })
     .toSorted((a, b) => b.volume - a.volume)
