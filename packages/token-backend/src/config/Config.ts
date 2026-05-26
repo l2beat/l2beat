@@ -5,6 +5,7 @@ export interface Config {
   readonly database: DatabaseConfig
   readonly auth: AuthConfig | false
   readonly coingeckoApiKey: string | undefined
+  readonly coingeckoCallsPerMinute: number
   readonly etherscanApiKey: string | undefined
   readonly readOnlyAuthToken?: string
   readonly jsonBodyLimitMb: number

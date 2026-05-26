@@ -191,9 +191,15 @@ export class TokenIngestionProcessor {
       abstractTokenId = pending.abstract.token.id
       newAbstractToken = undefined
     } else {
-      newAbstractToken = await this.buildAbstractToken(
-        pending.abstract.coingeckoId,
-      )
+      const result = await this.buildAbstractToken(pending.abstract.coingeckoId)
+      if (result.type === 'error') {
+        return {
+          ...trace,
+          steps,
+          outcome: { kind: 'error', message: result.message },
+        }
+      }
+      newAbstractToken = result.record
       abstractTokenId = newAbstractToken.id
       steps.push({
         kind: 'fetched-coingecko-abstract',
@@ -714,20 +720,36 @@ export class TokenIngestionProcessor {
 
   private async buildAbstractToken(
     coingeckoId: string,
-  ): Promise<AbstractTokenRecord> {
-    const coin = await this.deps.coingeckoClient.getCoinDataById(coingeckoId)
+  ): Promise<
+    | { type: 'ready'; record: AbstractTokenRecord }
+    | { type: 'error'; message: string }
+  > {
+    let coin: Coin
+    try {
+      coin = await this.deps.coingeckoClient.getCoinDataById(coingeckoId)
+    } catch (error) {
+      return {
+        type: 'error',
+        message: `Failed to fetch CoinGecko data for ${coingeckoId}: ${formatError(error)}.`,
+      }
+    }
 
     return {
-      id: await this.generateUniqueAbstractTokenId(),
-      issuer: null,
-      symbol: coin.symbol.toUpperCase(),
-      category: null,
-      iconUrl: coin.image.large,
-      coingeckoId: coin.id,
-      coingeckoListingTimestamp: await this.findCoingeckoListingTimestamp(coin),
-      comment: null,
-      reviewed: false,
-      isPriceUnreliable: false,
+      type: 'ready',
+      record: {
+        id: await this.generateUniqueAbstractTokenId(),
+        issuer: null,
+        symbol: coin.symbol.toUpperCase(),
+        category: null,
+        iconUrl: coin.image.large,
+        coingeckoId: coin.id,
+        coingeckoListingTimestamp: await this.findCoingeckoListingTimestamp(
+          coin.id,
+        ),
+        comment: null,
+        reviewed: false,
+        isPriceUnreliable: false,
+      },
     }
   }
 
@@ -744,11 +766,11 @@ export class TokenIngestionProcessor {
     throw new Error('Could not generate a unique abstract token id')
   }
 
-  private async findCoingeckoListingTimestamp(coin: Coin) {
+  private async findCoingeckoListingTimestamp(coingeckoId: string) {
     try {
       const marketChart =
         await this.deps.coingeckoClient.getCoinMarketChartRange(
-          coin.id,
+          coingeckoId,
           'usd',
           UnixTime.fromDate(new Date('2000-01-01')),
           UnixTime.fromDate(new Date()),
@@ -858,6 +880,13 @@ function getNewCoingeckoSymbolConflict(
   if (newAbstractToken.symbol === deployedTokenSymbol) return undefined
 
   return `CoinGecko would create abstract token ${newAbstractToken.id}:${newAbstractToken.symbol}, but the deployed token symbol is ${deployedTokenSymbol}.`
+}
+
+function formatError(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message
+  }
+  return String(error)
 }
 
 function generateAbstractTokenId() {

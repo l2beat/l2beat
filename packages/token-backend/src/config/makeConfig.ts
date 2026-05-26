@@ -8,11 +8,17 @@ interface MakeConfigOptions {
 }
 
 export function makeConfig(env: Env, options: MakeConfigOptions): Config {
+  const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
+
   return {
     tokenDatabase: getTokenDatabaseConfig(env, options),
     database: getDatabaseConfig(env, options),
     auth: options.isLocal ? false : getAuthConfig(env),
-    coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
+    coingeckoApiKey,
+    coingeckoCallsPerMinute: env.integer(
+      'COINGECKO_CALLS_PER_MINUTE',
+      coingeckoApiKey ? 400 : 10,
+    ),
     etherscanApiKey: env.optionalString('ETHERSCAN_API_KEY'),
     readOnlyAuthToken: env.optionalString('TOKEN_BACKEND_READONLY_AUTH_TOKEN'),
     jsonBodyLimitMb: env.integer('TOKEN_BACKEND_JSON_BODY_LIMIT_MB', 20),

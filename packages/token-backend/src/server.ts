@@ -21,6 +21,7 @@ function main() {
 
   const coingeckoClient = new CoingeckoClient({
     apiKey: config.coingeckoApiKey,
+    callsPerMinute: config.coingeckoCallsPerMinute,
   })
 
   const newQueueState = config.tokenIngestion.autoApprove ? 'pending' : 'staged'
