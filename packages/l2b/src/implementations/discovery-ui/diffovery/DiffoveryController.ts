@@ -1,5 +1,9 @@
 import { findLeadingCommentStart } from '@l2beat/discovery'
-import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  type ChainSpecificAddress,
+  partition,
+} from '@l2beat/shared-pure'
 import { type ASTNode, parse } from '@mradomski/fast-solidity-parser'
 import type { FlatSourceClient } from './FlatSourceClient'
 
@@ -42,18 +46,32 @@ function splitFlatSolidity(flat: string): Record<string, string> {
   const result: Record<string, string> = {}
 
   const AST = parse(flat, { range: true })
-  for (const child of AST.children) {
+  const [named, nameless] = partition(
+    AST.children,
+    (child) => getASTTopLevelChildName(child) !== undefined,
+  )
+
+  if (nameless.length > 0) {
+    result['Directives'] = nameless
+      .map((n) => getNodeContent(flat, n))
+      .join('\n\n')
+  }
+
+  for (const child of named) {
     const childName = getASTTopLevelChildName(child)
-
     assert(childName !== undefined)
-    assert(child.range !== undefined)
 
-    const left = findLeadingCommentStart(flat, child.range[0])
-    const childContent = flat.substring(left, child.range[1] + 1)
-    result[childName] = childContent
+    result[childName] = getNodeContent(flat, child)
   }
 
   return result
+}
+
+function getNodeContent(flat: string, node: ASTNode): string {
+  assert(node.range !== undefined)
+
+  const left = findLeadingCommentStart(flat, node.range[0])
+  return flat.substring(left, node.range[1] + 1)
 }
 
 // NOTE(radomski): This function needs to handle all nodes listed in
