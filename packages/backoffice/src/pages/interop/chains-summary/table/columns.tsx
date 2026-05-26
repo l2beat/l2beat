@@ -53,13 +53,13 @@ export const chainsSummaryColumns: TableOptions<ChainsSummaryRow>['columns'] = [
     ),
     meta: {
       csvHeader: 'Enabled on prod FE',
-      getCsvValue: ({ row }) => String(row.original.production.frontend.enabled),
+      getCsvValue: ({ row }) =>
+        String(row.original.production.frontend.enabled),
       filter: { kind: 'select' },
     },
   }),
   columnHelper.accessor(
-    (row) =>
-      row.production.backend.capture || row.production.backend.oneSided,
+    (row) => row.production.backend.capture || row.production.backend.oneSided,
     {
       id: 'production.backend.enabled',
       header: 'Prod BE',
@@ -88,9 +88,7 @@ export const chainsSummaryColumns: TableOptions<ChainsSummaryRow>['columns'] = [
     cell: ({ row, getValue }) => (
       <StatusBadge
         enabled={getValue()}
-        detail={
-          row.original.staging.frontend.upcoming ? 'upcoming' : undefined
-        }
+        detail={row.original.staging.frontend.upcoming ? 'upcoming' : undefined}
       />
     ),
     meta: {
