@@ -62,6 +62,7 @@ export function TokenIngestionQueuePage() {
   const queue = queuePage?.entries ?? []
   const predictedOutcomes = queuePage?.predictedOutcomes ?? []
   const totalCount = queuePage?.totalCount ?? 0
+  const stagedEntries = queue.filter((entry) => entry.state === 'staged')
   const pageCount = queuePage
     ? Math.max(1, Math.ceil(queuePage.totalCount / PAGE_SIZE))
     : page
@@ -83,6 +84,13 @@ export function TokenIngestionQueuePage() {
     },
     onError: (error) => toast.error(error.message),
     onSettled: () => setApprovingKey(undefined),
+  })
+  const approveMany = api.tokenIngestionQueue.approveMany.useMutation({
+    onSuccess: async ({ approved }) => {
+      await utils.tokenIngestionQueue.getPage.invalidate()
+      toast.success(`Approved ${approved} queue entries`)
+    },
+    onError: (error) => toast.error(error.message),
   })
   const retry = api.tokenIngestionQueue.retry.useMutation({
     onSuccess: async () => {
@@ -114,6 +122,23 @@ export function TokenIngestionQueuePage() {
     previewMutation.mutate({ chain: entry.chain, address: entry.address })
   }
 
+  function approveAllOnPage() {
+    if (stagedEntries.length === 0) {
+      return
+    }
+
+    const confirmed = window.confirm(
+      `Approve ${stagedEntries.length} staged queue entries on this page?`,
+    )
+    if (!confirmed) {
+      return
+    }
+
+    approveMany.mutate(
+      stagedEntries.map(({ chain, address }) => ({ chain, address })),
+    )
+  }
+
   return (
     <AppLayout>
       <Card className="flex h-[calc(100vh-16px)] flex-col">
@@ -124,32 +149,45 @@ export function TokenIngestionQueuePage() {
               {formatQueueRange(page, totalCount)}
             </CardDescription>
           )}
-          {queuePage && totalCount > PAGE_SIZE && (
+          {queuePage && (
             <CardAction>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
+              <div className="flex flex-wrap items-center justify-end gap-2">
+                <ButtonWithSpinner
                   size="sm"
-                  disabled={page <= 1}
-                  onClick={() => setPage((page) => Math.max(1, page - 1))}
+                  isLoading={approveMany.isPending}
+                  disabled={stagedEntries.length === 0}
+                  onClick={approveAllOnPage}
                 >
-                  <ChevronLeftIcon />
-                  Previous
-                </Button>
-                <div className="whitespace-nowrap text-muted-foreground text-sm tabular-nums">
-                  Page {page} of {pageCount}
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={page >= pageCount}
-                  onClick={() =>
-                    setPage((page) => Math.min(pageCount, page + 1))
-                  }
-                >
-                  Next
-                  <ChevronRightIcon />
-                </Button>
+                  <CheckIcon />
+                  Approve all on this page
+                </ButtonWithSpinner>
+                {totalCount > PAGE_SIZE && (
+                  <>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={page <= 1}
+                      onClick={() => setPage((page) => Math.max(1, page - 1))}
+                    >
+                      <ChevronLeftIcon />
+                      Previous
+                    </Button>
+                    <div className="whitespace-nowrap text-muted-foreground text-sm tabular-nums">
+                      Page {page} of {pageCount}
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={page >= pageCount}
+                      onClick={() =>
+                        setPage((page) => Math.min(pageCount, page + 1))
+                      }
+                    >
+                      Next
+                      <ChevronRightIcon />
+                    </Button>
+                  </>
+                )}
               </div>
             </CardAction>
           )}

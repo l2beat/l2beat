@@ -60,6 +60,16 @@ export const tokenIngestionQueueRouter = router({
 
       return { success: true }
     }),
+  approveMany: readWriteProcedure
+    .input(v.array(QueueEntryAddress))
+    .mutation(async ({ ctx, input }) => {
+      let approved = 0
+      for (const entry of input) {
+        approved += await ctx.tokenDb.tokenIngestionQueue.approve(entry)
+      }
+
+      return { success: true, approved }
+    }),
   retry: readWriteProcedure
     .input(QueueEntryAddress)
     .mutation(async ({ ctx, input }) => {
