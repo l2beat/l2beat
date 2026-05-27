@@ -45,7 +45,7 @@ export function InteropFlowsProvider({
   children,
   chains,
   protocols,
-  defaultSelectedChains,
+  defaultSelectedChains = [],
 }: InteropFlowsProviderProps) {
   const allChainIds = useMemo(() => chains.map((c) => c.id), [chains])
   const allProtocolIds = useMemo(

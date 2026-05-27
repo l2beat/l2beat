@@ -17,10 +17,14 @@ import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { EM_DASH } from '~/consts/characters'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
+import {
+  getOverviewSparklineYAxisProps,
+  OVERVIEW_SPARKLINE_Y_AXIS_TICK_CLASS,
+} from '../overviewChartHeight'
 
 export type OverviewSparklineColor = 'pink' | 'cyan' | 'sky' | 'purple'
 
-type SparklineHeight = 44 | 48 | 56 | 60 | 80 | 96 | 100 | 120 | 140 | 160
+type SparklineHeight = 44 | 48 | 56 | 60 | 80 | 96 | 100 | 108 | 120 | 140 | 160
 
 export interface OverviewSparklineDataPoint {
   timestamp: number
@@ -60,6 +64,7 @@ const HEIGHT_OVERRIDE: Record<SparklineHeight, string> = {
   80: '[&_.recharts-responsive-container]:!h-[80px] [&_.recharts-responsive-container]:!min-h-[80px]',
   96: '[&_.recharts-responsive-container]:!h-[96px] [&_.recharts-responsive-container]:!min-h-[96px]',
   100: '[&_.recharts-responsive-container]:!h-[100px] [&_.recharts-responsive-container]:!min-h-[100px]',
+  108: '[&_.recharts-responsive-container]:!h-[108px] [&_.recharts-responsive-container]:!min-h-[108px]',
   120: '[&_.recharts-responsive-container]:!h-[120px] [&_.recharts-responsive-container]:!min-h-[120px]',
   140: '[&_.recharts-responsive-container]:!h-[140px] [&_.recharts-responsive-container]:!min-h-[140px]',
   160: '[&_.recharts-responsive-container]:!h-[160px] [&_.recharts-responsive-container]:!min-h-[160px]',
@@ -97,19 +102,25 @@ export function OverviewSparkline({
     [stroke, tooltipLabel],
   )
 
+  const chartMargin = showYAxis
+    ? { top: 10, right: 1, bottom: 0, left: 0 }
+    : { top: 6, right: 1, bottom: 0, left: 0 }
+
   return (
-    <div className={cn(HEIGHT_OVERRIDE[height], className)}>
+    <div
+      className={cn(
+        HEIGHT_OVERRIDE[height],
+        showYAxis && OVERVIEW_SPARKLINE_Y_AXIS_TICK_CLASS,
+        className,
+      )}
+    >
       <ChartContainer
         meta={meta}
         data={data}
         isLoading={isLoading}
         size="small"
       >
-        <AreaChart
-          responsive
-          data={data}
-          margin={{ top: 6, right: 1, bottom: 0, left: 0 }}
-        >
+        <AreaChart responsive data={data} margin={chartMargin}>
           <defs>
             {color === 'pink' && <PinkFillGradientDef id={fillId} />}
             {color === 'cyan' && <CyanFillGradientDef id={fillId} />}
@@ -145,7 +156,8 @@ export function OverviewSparkline({
             <ChartCommonComponents
               data={data}
               isLoading={isLoading}
-              yAxis={{ tickCount: 3, tickFormatter: formatValue }}
+              hideXAxis
+              yAxis={getOverviewSparklineYAxisProps(formatValue)}
               syncedUntil={syncedUntil}
             />
           ) : (
@@ -198,17 +210,17 @@ function SparklineTooltip({
           </span>
         </div>
         {breakdown !== undefined ? (
-          <div className="mt-1 border-divider border-t pt-2 font-medium text-label-value-12 leading-snug text-secondary">
+          <div className="mt-1 border-divider border-t pt-2 font-medium text-label-value-12 text-secondary leading-snug">
             <p className="text-pretty">
               <span className="text-primary">Rollups</span>{' '}
-              <span className="tabular-nums text-primary">
+              <span className="text-primary tabular-nums">
                 {breakdown.rollups !== null && breakdown.rollups !== undefined
                   ? formatValue(breakdown.rollups)
                   : EM_DASH}
               </span>
               <span> · </span>
               <span className="text-primary">Validiums & Optimiums</span>{' '}
-              <span className="tabular-nums text-primary">
+              <span className="text-primary tabular-nums">
                 {breakdown.validiumsAndOptimiums !== null &&
                 breakdown.validiumsAndOptimiums !== undefined
                   ? formatValue(breakdown.validiumsAndOptimiums)

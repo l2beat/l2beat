@@ -27,6 +27,10 @@ import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
+import {
+  getOverviewSparklineYAxisProps,
+  OVERVIEW_SPARKLINE_Y_AXIS_TICK_CLASS,
+} from '../overviewChartHeight'
 
 export type StackedSparklineColor = 'pink' | 'cyan' | 'yellow'
 
@@ -102,19 +106,25 @@ export function OverviewStackedSparkline({
     [series],
   )
 
+  const chartMargin = showYAxis
+    ? { top: 10, right: 1, bottom: 0, left: 0 }
+    : { top: 6, right: 1, bottom: 0, left: 0 }
+
   return (
-    <div className={cn(HEIGHT_OVERRIDE[height], className)}>
+    <div
+      className={cn(
+        HEIGHT_OVERRIDE[height],
+        showYAxis && OVERVIEW_SPARKLINE_Y_AXIS_TICK_CLASS,
+        className,
+      )}
+    >
       <ChartContainer
         meta={meta}
         data={data}
         isLoading={isLoading}
         size="small"
       >
-        <AreaChart
-          responsive
-          data={data}
-          margin={{ top: 6, right: 1, bottom: 0, left: 0 }}
-        >
+        <AreaChart responsive data={data} margin={chartMargin}>
           <defs>
             {series.map((s) => (
               <GradientDefs key={s.dataKey} color={s.color} idBase={idBase} />
@@ -139,7 +149,8 @@ export function OverviewStackedSparkline({
             <ChartCommonComponents
               data={data}
               isLoading={isLoading}
-              yAxis={{ tickCount: 3, tickFormatter: formatValue }}
+              hideXAxis
+              yAxis={getOverviewSparklineYAxisProps(formatValue)}
               syncedUntil={syncedUntil}
             />
           ) : (

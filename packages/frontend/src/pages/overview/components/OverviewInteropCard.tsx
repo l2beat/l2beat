@@ -18,6 +18,7 @@ import { api } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { OVERVIEW_INTEROP_CARD_CLASS } from './overviewChartHeight'
 
 interface InteropProtocol {
   id: string
@@ -109,7 +110,9 @@ function OverviewInteropCardContent({
   const statsLoading = isLoading && data === undefined
 
   return (
-    <PrimaryCard className="flex h-full flex-col">
+    <PrimaryCard
+      className={cn(OVERVIEW_INTEROP_CARD_CLASS, 'flex h-full flex-col')}
+    >
       <Header totalVolume={liveTotalVolume} isLoading={statsLoading} />
       <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
         <StatTile
@@ -177,7 +180,7 @@ function OverviewInteropCardContent({
           }
         />
       </div>
-      <div className="-mx-2 mt-2 flex min-h-[190px] flex-1 flex-col">
+      <div className="-mx-2 mt-2 flex min-h-[190px] flex-1 flex-col pb-1">
         <FlowsGraphPanel
           activeChains={activeChains}
           data={data}

@@ -22,11 +22,7 @@ export function PrivacyIcon({ className, ...props }: SvgIconProps) {
         d="M3.85 10C3.85 9.91716 3.91716 9.85 4 9.85H16C16.0828 9.85 16.15 9.91716 16.15 10V17.5C16.15 17.5828 16.0828 17.65 16 17.65H4C3.91716 17.65 3.85 17.5828 3.85 17.5V10Z"
         strokeWidth="1.7"
       />
-      <path
-        d="M10 12.5V15"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-      />
+      <path d="M10 12.5V15" strokeWidth="1.7" strokeLinecap="round" />
     </SvgIcon>
   )
 }

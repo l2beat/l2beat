@@ -2,6 +2,9 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import type { OverviewRecentProject } from '../getOverviewData'
+import { OVERVIEW_CARD_PADDING_CLASS } from './overviewChartHeight'
+
+const VISIBLE_RECENT_PROJECTS_COUNT = 6
 
 const CATEGORY_LABEL: Record<OverviewRecentProject['category'], string> = {
   scaling: 'Scaling project',
@@ -12,20 +15,23 @@ const CATEGORY_LABEL: Record<OverviewRecentProject['category'], string> = {
 
 interface Props {
   projects: OverviewRecentProject[]
+  className?: string
 }
 
-export function OverviewRecentProjectsCard({ projects }: Props) {
-  const visibleProjects = projects.slice(0, 3)
+export function OverviewRecentProjectsCard({ projects, className }: Props) {
+  const visibleProjects = projects.slice(0, VISIBLE_RECENT_PROJECTS_COUNT)
 
   if (visibleProjects.length === 0) {
     return null
   }
   return (
-    <PrimaryCard className="flex flex-col">
+    <PrimaryCard
+      className={cn(OVERVIEW_CARD_PADDING_CLASS, 'flex flex-col', className)}
+    >
       <div className="flex items-center justify-between">
         <span className="font-bold text-xl">Recently added projects</span>
       </div>
-      <ul className="mt-2 flex flex-col gap-1.5">
+      <ul className="mt-2 grid grid-cols-1 gap-1.5 md:grid-cols-2 xl:grid-cols-1">
         {visibleProjects.map((project) => (
           <li key={project.id}>
             <RecentProjectCard project={project} />

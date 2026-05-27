@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { ReactNode } from 'react'
 import { useMemo } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -15,9 +14,10 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { ChartRange } from '~/utils/range/range'
 import type { OverviewSparklineDataPoint } from './charts/OverviewSparkline'
 import { OverviewSparkline } from './charts/OverviewSparkline'
+import { OverviewChartSection } from './OverviewChartSection'
 import {
-  OVERVIEW_CARD_PADDING_CLASS,
-  OVERVIEW_CHART_RIGHT_INSET_CLASS,
+  OVERVIEW_CHART_PERIOD_LABEL,
+  OVERVIEW_CHART_WIDGET_CARD_CLASS,
 } from './overviewChartHeight'
 
 interface Props {
@@ -71,21 +71,18 @@ export function OverviewScalingCard({
 
   const tvsChartData = useMemo<OverviewSparklineDataPoint[] | undefined>(
     () =>
-      tvsSeriesPoints?.map(
-        ({ timestamp, rollups, validiumsAndOptimiums }) => {
-          const hasAny = rollups !== null || validiumsAndOptimiums !== null
-          const total =
-            (rollups ?? 0) + (validiumsAndOptimiums ?? 0)
-          return {
-            timestamp,
-            value: hasAny ? total : null,
-            tvsBreakdown: {
-              rollups,
-              validiumsAndOptimiums,
-            },
-          }
-        },
-      ),
+      tvsSeriesPoints?.map(({ timestamp, rollups, validiumsAndOptimiums }) => {
+        const hasAny = rollups !== null || validiumsAndOptimiums !== null
+        const total = (rollups ?? 0) + (validiumsAndOptimiums ?? 0)
+        return {
+          timestamp,
+          value: hasAny ? total : null,
+          tvsBreakdown: {
+            rollups,
+            validiumsAndOptimiums,
+          },
+        }
+      }),
     [tvsSeriesPoints],
   )
 
@@ -135,24 +132,21 @@ export function OverviewScalingCard({
 
   return (
     <PrimaryCard
-      className={cn(
-        OVERVIEW_CARD_PADDING_CLASS,
-        'flex h-full flex-col pb-4',
-        compactCharts && 'xl:pt-5 xl:pb-3',
-      )}
+      className={cn(OVERVIEW_CHART_WIDGET_CARD_CLASS, 'flex h-full flex-col')}
     >
       <Header counts={scalingCategoryCounts} />
-      <HorizontalSeparator className={cn(compactCharts ? 'my-2' : 'my-3')} />
+      <HorizontalSeparator className={cn(compactCharts ? 'my-3' : 'my-4')} />
       <div
         className={cn(
           'grid grid-cols-1',
-          compactCharts ? 'gap-3' : 'gap-3.5',
-          !compactCharts && 'md:grid-cols-2 md:gap-6',
+          compactCharts
+            ? 'gap-5 md:grid-cols-2 md:gap-4 xl:grid-cols-1 xl:gap-5'
+            : 'gap-3.5 md:grid-cols-2 md:gap-6',
         )}
       >
-        <SparklineSection
+        <OverviewChartSection
           label="Total value secured"
-          compactCharts={compactCharts}
+          periodLabel={OVERVIEW_CHART_PERIOD_LABEL}
           stat={
             isTvsLoading ? (
               <Skeleton className="h-4 w-32" />
@@ -174,14 +168,15 @@ export function OverviewScalingCard({
             isLoading={isTvsLoading}
             color="pink"
             height={chartHeight}
+            showYAxis
             tooltipLabel="Total value secured"
             formatValue={(value) => formatCurrency(value, 'usd')}
             syncedUntil={tvs?.syncedUntil}
           />
-        </SparklineSection>
-        <SparklineSection
+        </OverviewChartSection>
+        <OverviewChartSection
           label="Scaling activity (UOPS)"
-          compactCharts={compactCharts}
+          periodLabel={OVERVIEW_CHART_PERIOD_LABEL}
           stat={
             isActivityLoading ? (
               <Skeleton className="h-4 w-20" />
@@ -205,11 +200,12 @@ export function OverviewScalingCard({
             isLoading={isActivityLoading}
             color="cyan"
             height={chartHeight}
+            showYAxis
             tooltipLabel="UOPS"
             formatValue={(value) => formatActivityCount(value)}
             syncedUntil={activity?.syncedUntil}
           />
-        </SparklineSection>
+        </OverviewChartSection>
       </div>
     </PrimaryCard>
   )
@@ -269,44 +265,6 @@ function CountsLine({
         </li>
       ))}
     </ul>
-  )
-}
-
-function SparklineSection({
-  label,
-  stat,
-  statFooter,
-  compactCharts: _compactCharts,
-  children,
-}: {
-  label: string
-  stat?: ReactNode
-  statFooter?: ReactNode
-  compactCharts?: boolean
-  children: ReactNode
-}) {
-  const statsColumn =
-    statFooter !== undefined && statFooter !== null ? (
-      <div className="flex min-w-0 shrink-0 flex-col items-end gap-0.5 text-right">
-        {stat}
-        {statFooter}
-      </div>
-    ) : (
-      stat
-    )
-
-  return (
-    <div className="flex min-w-0 flex-col gap-1">
-      <div className="flex min-w-0 flex-nowrap items-start justify-between gap-x-2">
-        <span className="min-w-0 shrink font-medium text-label-value-12 text-secondary leading-tight">
-          {label}
-        </span>
-        <div className="min-w-0 shrink-0">{statsColumn}</div>
-      </div>
-      <div className={cn('min-w-0', OVERVIEW_CHART_RIGHT_INSET_CLASS)}>
-        {children}
-      </div>
-    </div>
   )
 }
 

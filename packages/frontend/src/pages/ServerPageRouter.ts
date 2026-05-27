@@ -49,7 +49,7 @@ export function createServerPageRouter(
   })
 
   router.get('/', (_req, res) => {
-    res.redirect(301, '/overview')
+    res.redirect(301, '/home')
   })
 
   const routers = [

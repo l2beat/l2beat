@@ -36,7 +36,7 @@ export async function getOverviewData(
     head: {
       manifest: manifestArg,
       metadata: getMetadata(manifestArg, {
-        title: 'Overview - L2BEAT',
+        title: 'Home - L2BEAT',
         description:
           'Bird-eye view of the Ethereum scaling ecosystem: total value secured, activity, interoperability, recent additions and what L2BEAT is currently tracking.',
         url: req.originalUrl,
@@ -94,6 +94,13 @@ async function getCachedData() {
   const defaultSelectedFlowChains = sortedChains
     .slice(0, MAX_SELECTED_CHAINS)
     .map((chain) => chain.id)
+
+  if (defaultSelectedFlowChains.length > 0) {
+    await helpers.interop.dashboard.prefetch({
+      from: defaultSelectedFlowChains,
+      to: defaultSelectedFlowChains,
+    })
+  }
 
   const totalInterop24hVolume = 0
   const chainVolumeMap: Record<string, number> = {}

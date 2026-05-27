@@ -11,7 +11,11 @@ export function createOverviewRouter(
 ) {
   const router = express.Router()
 
-  router.get(['/overview', '/home'], async (req, res) => {
+  router.get('/overview', (_req, res) => {
+    res.redirect(301, '/home')
+  })
+
+  router.get('/home', async (req, res) => {
     const data = await getOverviewData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)

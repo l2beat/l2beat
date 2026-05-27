@@ -7,8 +7,11 @@ export function isLinkActive({ href, pathname }: Params) {
   // Strip query parameters from href for comparison
   const hrefPath = href.split('?')[0]
   if (
-    (hrefPath === '/overview' || hrefPath === '/home') &&
-    (pathname === '/overview' || pathname === '/home')
+    hrefPath === '/home' &&
+    (pathname === '/home' ||
+      pathname === '/home/' ||
+      pathname === '/overview' ||
+      pathname === '/overview/')
   ) {
     return true
   }

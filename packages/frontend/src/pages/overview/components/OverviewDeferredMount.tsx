@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 
 /**
@@ -28,19 +28,28 @@ export function OverviewDeferredMount({
     return () => clearTimeout(timeout)
   }, [])
 
-  return ready ? children : fallback
+  return ready ? <div className="contents">{children}</div> : fallback
 }
 
-/** Placeholders for overview columns 2–3 (Ethereum / Scaling + Interop). */
+/** Placeholders for overview columns 2–3 (Scaling / Ethereum + Interop). */
 export function OverviewChartColumnsSkeleton() {
   return (
-    <>
+    <div className="contents">
       <Skeleton className="min-h-[300px] w-full rounded-xl" />
       <Skeleton className="min-h-[400px] w-full rounded-xl" />
-    </>
+    </div>
   )
 }
 
 export function OverviewTopChainsSkeleton() {
-  return <Skeleton className="min-h-[260px] w-full rounded-xl" />
+  return <OverviewTablesSkeleton />
+}
+
+export function OverviewTablesSkeleton() {
+  return (
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
+      <Skeleton className="min-h-[280px] w-full rounded-xl" />
+      <Skeleton className="min-h-[280px] w-full rounded-xl" />
+    </div>
+  )
 }

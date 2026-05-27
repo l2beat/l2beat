@@ -50,26 +50,27 @@ function WhatsNewItemCard({ item }: { item: WhatsNewItem }) {
     <a
       href={item.href}
       className={cn(
-        'group relative flex flex-1 flex-col overflow-hidden rounded-lg border border-divider',
+        'group relative flex flex-1 flex-row overflow-hidden rounded-lg border border-divider',
         'transition-colors duration-200 hover:border-link-stroke',
+        'xl:flex-col',
       )}
     >
-      <div className="relative aspect-[16/5] w-full overflow-hidden bg-surface-secondary">
+      <div className="relative w-[7.25rem] shrink-0 overflow-hidden bg-surface-secondary sm:w-32 xl:aspect-[16/5] xl:w-full">
         <img
           src={item.imageSrc}
           alt={item.imageAlt}
           loading="lazy"
-          className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+          className="size-full min-h-[5.5rem] object-cover object-left transition-transform duration-300 group-hover:scale-[1.02] xl:min-h-0"
         />
       </div>
-      <div className="flex flex-1 flex-col gap-1 p-3">
-        <span className="font-bold text-heading-16 leading-tight">
+      <div className="flex min-w-0 flex-1 flex-col justify-center gap-0.5 p-2.5 xl:gap-1 xl:p-3">
+        <span className="font-bold text-label-value-14 leading-tight xl:text-heading-16">
           {item.title}
         </span>
-        <p className="line-clamp-2 text-label-value-13 text-secondary leading-snug">
+        <p className="line-clamp-2 text-label-value-12 text-secondary leading-snug xl:text-label-value-13">
           {item.description}
         </p>
-        <span className="mt-auto flex items-center gap-1 pt-1 font-bold text-link text-xs">
+        <span className="mt-0.5 flex items-center gap-1 font-bold text-link text-xs xl:mt-auto xl:pt-1">
           Explore
           <ArrowRightIcon className="size-3 fill-current transition-transform group-hover:translate-x-0.5" />
         </span>

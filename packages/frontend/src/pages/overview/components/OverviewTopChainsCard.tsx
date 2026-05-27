@@ -15,6 +15,8 @@ import {
   ProjectNameInfoTooltip,
 } from '~/components/table/cells/ProjectNameCell'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
@@ -25,9 +27,11 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { toTableRows } from '~/pages/scaling/summary/utils/toTableRows'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { api } from '~/trpc/React'
+import { cn } from '~/utils/cn'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
+import { OVERVIEW_CARD_PADDING_CLASS } from './overviewChartHeight'
 
 interface Props {
   entries: ScalingSummaryEntry[]
@@ -67,7 +71,12 @@ export function OverviewTopChainsCard({ entries, chainVolumeMap }: Props) {
   })
 
   return (
-    <PrimaryCard className="flex h-full flex-col">
+    <PrimaryCard
+      className={cn(
+        OVERVIEW_CARD_PADDING_CLASS,
+        'flex h-full min-w-0 flex-col',
+      )}
+    >
       <Header />
       <div className="mt-3 flex-1">
         <BasicTable table={table} />
@@ -101,17 +110,6 @@ function getScalingType(row: OverviewTopChainRow) {
   return row.filterable?.find((item) => item.id === 'type')?.value
 }
 
-function formatScalingType(type: string) {
-  switch (type) {
-    case 'Optimistic Rollup':
-      return 'OP Rollup'
-    case 'ZK Rollup':
-      return 'ZK Rollup'
-    default:
-      return type
-  }
-}
-
 function getOverviewTopChainsColumns(opts?: { isTvsLoading?: boolean }) {
   return [
     ...getCommonProjectColumns(
@@ -135,19 +133,23 @@ function getOverviewTopChainsColumns(opts?: { isTvsLoading?: boolean }) {
       id: 'type',
       header: 'Type',
       cell: (ctx) => {
-        const value = ctx.getValue()
+        const value = getScalingType(ctx.row.original)
         if (!value) {
           return <span className="text-secondary">{EM_DASH}</span>
         }
         return (
-          <span className="whitespace-nowrap font-medium text-label-value-13">
-            {formatScalingType(value)}
-          </span>
+          <TwoRowCell>
+            <TwoRowCell.First>
+              <TypeInfo stacks={ctx.row.original.stacks ?? []}>
+                {value}
+              </TypeInfo>
+            </TwoRowCell.First>
+          </TwoRowCell>
         )
       },
       meta: {
         tooltip:
-          'Project type, such as OP Rollup, ZK Rollup, Validium, Optimium, or Other.',
+          'Project type, such as Optimistic Rollup, ZK Rollup, Validium, Optimium, or Other.',
       },
     }),
     columnHelper.display({

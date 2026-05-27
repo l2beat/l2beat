@@ -21,11 +21,12 @@ import { InteropSelectedChainsContext } from '~/pages/interop/utils/InteropSelec
 import { cn } from '~/utils/cn'
 import { createOrderedSort } from '~/utils/sort'
 
-const LOGO_LINK = '/overview'
+const LOGO_LINK = '/home'
 
 export interface SideNavLayoutProps {
   children: React.ReactNode
   childrenWrapperClassName?: string
+  contentAreaClassName?: string
   maxWidth?: 'default' | 'wide'
   /** Full-width content, no fixed desktop sidebar, top bar on all breakpoints, secondary links above footer. */
   homepageLayout?: boolean
@@ -34,6 +35,7 @@ export interface SideNavLayoutProps {
 export function SideNavLayout({
   children,
   childrenWrapperClassName,
+  contentAreaClassName,
   maxWidth = 'default',
   homepageLayout = false,
 }: SideNavLayoutProps) {
@@ -54,9 +56,9 @@ export function SideNavLayout({
       compact<NavGroup>([
         {
           type: 'single',
-          title: 'Overview',
-          match: 'overview',
-          href: '/overview',
+          title: 'Home',
+          match: 'home',
+          href: '/home',
           icon: (
             <OverviewIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
           ),
@@ -268,6 +270,7 @@ export function SideNavLayout({
                 maxWidth === 'default' &&
                 'max-w-(--breakpoint-lg)',
               !homepageLayout && maxWidth === 'wide' && 'max-w-412',
+              contentAreaClassName,
             )}
           >
             {children}

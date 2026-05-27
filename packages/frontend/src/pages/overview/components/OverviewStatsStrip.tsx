@@ -9,6 +9,7 @@ import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { cn } from '~/utils/cn'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { OverviewProjectCounts } from '../getOverviewProjectCounts'
+import { OVERVIEW_CARD_PADDING_CLASS } from './overviewChartHeight'
 
 interface Tile {
   label: string
@@ -73,12 +74,7 @@ export function OverviewStatsStrip({
   const narrow = variant === 'overviewRightColumn'
 
   return (
-    <PrimaryCard
-      className={cn(
-        'p-3 md:p-3',
-        narrow ? 'xl:px-6 xl:py-3' : 'lg:px-6 lg:py-3',
-      )}
-    >
+    <PrimaryCard className={OVERVIEW_CARD_PADDING_CLASS}>
       <ul
         className={cn(
           'grid grid-cols-2 gap-2 md:grid-cols-3',

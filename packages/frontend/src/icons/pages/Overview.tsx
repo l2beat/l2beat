@@ -9,7 +9,7 @@ export function OverviewIcon({ className, ...props }: SvgIconProps) {
       height="20"
       viewBox="0 0 20 20"
       fill="none"
-      aria-label="Overview icon"
+      aria-label="Home icon"
       className={cn('stroke-primary', className)}
       {...props}
     >

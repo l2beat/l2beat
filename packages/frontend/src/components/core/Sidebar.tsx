@@ -121,7 +121,9 @@ function Sidebar({
         )}
         {...props}
       >
-        <div className="flex size-full flex-col gap-6 bg-background">{children}</div>
+        <div className="flex size-full flex-col gap-6 bg-background">
+          {children}
+        </div>
       </div>
     </div>
   )

@@ -9,16 +9,17 @@ import {
 import { NoDataPatternDef } from './defs/NoDataPatternDef'
 import { getXAxisProps } from './utils/getXAxisProps'
 
-interface ChartCommonComponentsProps<
+export interface ChartCommonComponentsProps<
   T extends {
     timestamp: number
   },
 > {
   data: T[] | undefined
-  yAxis?: Omit<YAxisProps, 'tick'>
+  yAxis?: YAxisProps
   chartType?: 'bar' | 'line'
   isLoading: boolean | undefined
   syncedUntil: number | undefined
+  hideXAxis?: boolean
 }
 
 export function ChartCommonComponents<T extends { timestamp: number }>({
@@ -27,8 +28,14 @@ export function ChartCommonComponents<T extends { timestamp: number }>({
   isLoading,
   chartType = 'line',
   syncedUntil,
+  hideXAxis = false,
 }: ChartCommonComponentsProps<T>) {
-  const { tickCount, yAxisId, ...rest } = yAxis ?? {}
+  const {
+    tickCount,
+    yAxisId,
+    tick: yAxisTick = { width: 350 },
+    ...rest
+  } = yAxis ?? {}
   const lastSyncedTimestamp =
     syncedUntil &&
     (chartType === 'line'
@@ -52,11 +59,15 @@ export function ChartCommonComponents<T extends { timestamp: number }>({
         mirror
         tickCount={tickCount ?? 3}
         dy={-10}
-        tick={{ width: 350 }}
+        tick={yAxisTick}
         yAxisId={yAxisId}
         {...rest}
       />
-      <XAxis key="x-axis" {...getXAxisProps(data)} />
+      {hideXAxis ? (
+        <XAxis key="x-axis" dataKey="timestamp" hide />
+      ) : (
+        <XAxis key="x-axis" {...getXAxisProps(data)} />
+      )}
       {lastSyncedTimestamp && (
         <ReferenceArea
           yAxisId={yAxis?.yAxisId}

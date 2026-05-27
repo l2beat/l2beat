@@ -49,13 +49,15 @@ export function TransferCountCell({
       >
         {transferCount}
       </button>
-      <TransferDetailsDialog
-        protocol={protocol}
-        type={type}
-        snapshotTimestamp={snapshotTimestamp}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
+      {isOpen ? (
+        <TransferDetailsDialog
+          protocol={protocol}
+          type={type}
+          snapshotTimestamp={snapshotTimestamp}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
+      ) : null}
     </>
   )
 }
