@@ -12,6 +12,7 @@ import { getInteropChains } from './utils/getInteropChains'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getProtocolEntries } from './utils/getProtocolEntries'
 import { getTokensData } from './utils/getTokensData'
+import { getTopPath, type InteropTopPathData } from './utils/getTopPath'
 import {
   getTopProtocols,
   type InteropProtocolData,
@@ -23,18 +24,12 @@ const logger = getLogger().for('getInteropTokenData')
 export type InteropTokenDashboardData = {
   token: TokenData | undefined
   flows: InteropFlowData[]
-  topPath: InteropTokenTopPathData | undefined
+  topPath: InteropTopPathData | undefined
   topProtocol: InteropProtocolData | undefined
   topProtocols: InteropProtocolData[]
   entries: ProtocolEntry[]
   zeroTransferProtocols: { name: string; iconUrl: string }[]
   snapshotTimestamp: number | undefined
-}
-
-export type InteropTokenTopPathData = {
-  chainA: string
-  chainB: string
-  volume: number
 }
 
 export async function getInteropTokenData(
@@ -121,28 +116,6 @@ function getTokenDataSelection(params: InteropTokenParams): InteropTokenParams {
     from: activeInteropChainIds,
     to: activeInteropChainIds,
   }
-}
-
-function getTopPath(
-  flows: InteropFlowData[] | undefined,
-): InteropTokenTopPathData | undefined {
-  const paths = new Map<string, InteropTokenTopPathData>()
-
-  for (const flow of flows ?? []) {
-    if (flow.volume === 0) continue
-
-    const [firstChain, secondChain] = [flow.srcChain, flow.dstChain].toSorted()
-    const key = `${firstChain}-${secondChain}`
-    const current = paths.get(key)
-
-    paths.set(key, {
-      chainA: current?.chainA ?? flow.srcChain,
-      chainB: current?.chainB ?? flow.dstChain,
-      volume: (current?.volume ?? 0) + flow.volume,
-    })
-  }
-
-  return Array.from(paths.values()).toSorted((a, b) => b.volume - a.volume)[0]
 }
 
 function getMockInteropTokenData({
