@@ -1,19 +1,15 @@
-import type { ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
-import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
-import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
-import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { InteropTokenDashboardData } from '~/server/features/scaling/interop/getInteropTokenData'
 import type { InteropTokenEntry } from '~/server/features/scaling/interop/token/getInteropTokenEntry'
 import { api } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { InteropEntityPageLayout } from '../components/InteropEntityPageLayout'
 import { InteropEmptyState } from '../summary/components/InteropEmptyState'
 import {
   InteropSelectedChainsProvider,
@@ -97,15 +93,36 @@ function Content({
     data === null ? [] : projectDetailsToNavigationSections(tokenEntry.sections)
   const isNavigationEmpty = navigationSections.length <= 1
 
+  const navigationProject = {
+    title: token.symbol,
+    slug: token.slug,
+    isUnderReview: false,
+    icon: token.iconUrl,
+  }
+  const header = (
+    <>
+      <ProjectHeader
+        project={{
+          name: token.symbol,
+          slug: token.slug,
+          icon: token.iconUrl,
+        }}
+        secondLine={token.issuer ? `Issued by ${token.issuer}` : undefined}
+      />
+      <HorizontalSeparator className="my-4 md:hidden" />
+    </>
+  )
+
   if (data === null) {
     return (
-      <PageLayout
-        token={token}
+      <InteropEntityPageLayout
         navigationSections={navigationSections}
         isNavigationEmpty={isNavigationEmpty}
+        navigationProject={navigationProject}
+        header={header}
       >
         <InteropEmptyState />
-      </PageLayout>
+      </InteropEntityPageLayout>
     )
   }
 
@@ -116,13 +133,14 @@ function Content({
       apiSelection={selectedChains}
       tokenId={token.id}
     >
-      <PageLayout
-        token={token}
+      <InteropEntityPageLayout
         navigationSections={navigationSections}
         isNavigationEmpty={isNavigationEmpty}
+        navigationProject={navigationProject}
+        header={header}
       >
         <TokenPageContent token={token} tokenEntry={tokenEntry} />
-      </PageLayout>
+      </InteropEntityPageLayout>
     </InteropTokenDashboardProvider>
   )
 }
@@ -153,60 +171,6 @@ function TokenPageContent({
         <ProjectDetails items={tokenEntry.sections} />
       </HighlightableLinkContextProvider>
     </>
-  )
-}
-
-function PageLayout({
-  token,
-  navigationSections,
-  isNavigationEmpty,
-  children,
-}: {
-  token: Props['token']
-  navigationSections: ReturnType<typeof projectDetailsToNavigationSections>
-  isNavigationEmpty: boolean
-  children: ReactNode
-}) {
-  return (
-    <SideNavLayout childrenWrapperClassName="md:pt-0">
-      {!isNavigationEmpty && (
-        <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-40 lg:hidden">
-          <MobileSectionNavigation sections={navigationSections} />
-        </div>
-      )}
-      <div className="relative z-0 max-md:bg-surface-primary">
-        <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
-          <div className="pt-6 max-md:px-4 lg:pt-4">
-            <ProjectHeader
-              project={{
-                name: token.symbol,
-                slug: token.slug,
-                icon: token.iconUrl,
-              }}
-              secondLine={
-                token.issuer ? `Issued by ${token.issuer}` : undefined
-              }
-            />
-            <HorizontalSeparator className="my-4 md:hidden" />
-          </div>
-          <div className="row-start-2">{children}</div>
-          {!isNavigationEmpty && (
-            <div className="row-start-2 mt-4 hidden shrink-0 lg:block">
-              <DesktopProjectNavigation
-                project={{
-                  title: token.symbol,
-                  slug: token.slug,
-                  isUnderReview: false,
-                  icon: token.iconUrl,
-                }}
-                sections={navigationSections}
-              />
-            </div>
-          )}
-        </div>
-        <ScrollToTopButton />
-      </div>
-    </SideNavLayout>
   )
 }
 
