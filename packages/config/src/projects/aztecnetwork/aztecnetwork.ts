@@ -25,7 +25,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { Sentiment } from '../../types'
-import entityStakeDistribution from './entity-stake-distribution.json'
+import stakeDistribution from './stake-distribution.json'
 
 const discovery = new ProjectDiscovery('aztecnetwork')
 
@@ -484,7 +484,7 @@ export const aztecnetwork: ScalingProject = {
         blockingThreshold: Math.floor((targetCommitteeSize - 1) / 3),
         target: 0.99,
         maxCensorFraction: 0.5,
-        entityStakeDistribution,
+        stakeDistribution,
         description:
           'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
       },

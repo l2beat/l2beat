@@ -119,7 +119,7 @@ describe('calculateInclusionDelay', () => {
         slotSeconds: 10,
         target: 0.99,
         maxCensorFraction: 0.5,
-        entityStakeDistribution: {
+        stakeDistribution: {
           stakeToken: 'TEST',
           totalStake: 100,
           entities: [

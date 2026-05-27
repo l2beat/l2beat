@@ -1,4 +1,4 @@
-import type { ProjectInclusionDelayChartEntityStakeDistribution } from '@l2beat/config'
+import type { ProjectInclusionDelayChartStakeDistribution } from '@l2beat/config'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import fs from 'fs/promises'
 import fetch from 'node-fetch'
@@ -24,7 +24,7 @@ interface StakingDataset {
 }
 
 interface ExtractedStakingProjectData
-  extends ProjectInclusionDelayChartEntityStakeDistribution {
+  extends ProjectInclusionDelayChartStakeDistribution {
   project: StakingProjectId
 }
 
@@ -168,7 +168,7 @@ export class StakeDistributionFetcher {
     data: ExtractedStakingProjectData[],
   ):
     | ExtractedStakingProjectData[]
-    | ProjectInclusionDelayChartEntityStakeDistribution {
+    | ProjectInclusionDelayChartStakeDistribution {
     if (this.project === 'all') {
       return data
     }

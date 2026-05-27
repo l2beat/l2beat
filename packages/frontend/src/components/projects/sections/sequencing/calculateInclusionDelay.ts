@@ -67,7 +67,7 @@ export function getInclusionDelayChartData(
 export function getInclusionDelayEntityLegendEntries(
   chart: ProjectInclusionDelayChart,
 ): InclusionDelayEntityLegendEntry[] {
-  const distribution = chart.entityStakeDistribution
+  const distribution = chart.stakeDistribution
   if (
     !distribution ||
     !Number.isFinite(distribution.totalStake) ||

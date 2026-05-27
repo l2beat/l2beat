@@ -27,7 +27,7 @@ const ProjectSelection = oneOf([
 export const GetStakeDistrib = command({
   name: 'getstakedistrib',
   description:
-    'Fetch the largest staking entities from supported staking APIs and write normalized JSON output. Project-specific output can be used directly as inclusionDelayChart.entityStakeDistribution config.',
+    'Fetch the largest staking entities from supported staking APIs and write normalized JSON output. Project-specific output can be used directly as inclusionDelayChart.stakeDistribution config.',
   args: {
     project: option({
       type: ProjectSelection,

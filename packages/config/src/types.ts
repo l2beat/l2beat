@@ -77,10 +77,10 @@ interface ProjectInclusionDelayChartBase {
   target: number
   maxCensorFraction: number
   description?: string
-  entityStakeDistribution?: ProjectInclusionDelayChartEntityStakeDistribution
+  stakeDistribution?: ProjectInclusionDelayChartStakeDistribution
 }
 
-export interface ProjectInclusionDelayChartEntityStakeDistribution {
+export interface ProjectInclusionDelayChartStakeDistribution {
   stakeToken: string
   totalStake: number
   entities: ProjectInclusionDelayChartEntityStake[]

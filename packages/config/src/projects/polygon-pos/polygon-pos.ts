@@ -16,7 +16,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import entityStakeDistribution from './entity-stake-distribution.json'
+import stakeDistribution from './stake-distribution.json'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -300,7 +300,7 @@ export const polygonpos: ScalingProject = {
         blockSeconds: polygonBlockSeconds,
         target: 0.99,
         maxCensorFraction: 0.33,
-        entityStakeDistribution,
+        stakeDistribution,
         description:
           'The chart models live-chain selective censorship only. Since proposing is stake-weighted, the x-axis represents the censoring POL stake, and does not cover validator-set changes, or blanket-censorship resistance gadgets.',
       },

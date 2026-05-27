@@ -115,7 +115,7 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
           <ChartLegend
             content={
               <ChartLegendContent>
-                {chart.entityStakeDistribution !== undefined && (
+                {chart.stakeDistribution !== undefined && (
                   <div className="order-last flex shrink-0 items-center gap-[3px] pl-2">
                     <ChartDataIndicator
                       type={{ shape: 'square' }}
@@ -228,7 +228,7 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
       </ChartContainer>
       <EntityMarkersLegend
         entries={entityLegendEntries}
-        hasStakeDistribution={chart.entityStakeDistribution !== undefined}
+        hasStakeDistribution={chart.stakeDistribution !== undefined}
       />
     </div>
   )
