@@ -41,7 +41,7 @@ export function TransferCountCell({
   }
 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const { selectionForApi } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
 
   return (
     <>
@@ -55,7 +55,7 @@ export function TransferCountCell({
         protocol={protocol}
         type={type}
         snapshotTimestamp={snapshotTimestamp}
-        selectionForApi={selectionForApi}
+        selectedChains={selectedChains}
         subtitle={<BetweenChainsInfo className="md:mt-1" />}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -69,7 +69,7 @@ export function TransferDetailsDialog({
   type,
   tokenId,
   snapshotTimestamp,
-  selectionForApi,
+  selectedChains,
   subtitle,
   isOpen,
   setIsOpen,
@@ -83,7 +83,7 @@ export function TransferDetailsDialog({
   type: KnownInteropBridgeType | undefined
   tokenId?: string
   snapshotTimestamp: number | undefined
-  selectionForApi: { from: string[]; to: string[] }
+  selectedChains: { from: string[]; to: string[] }
   subtitle?: ReactNode
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
@@ -94,7 +94,7 @@ export function TransferDetailsDialog({
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     api.interop.transfers.useInfiniteQuery(
       {
-        ...selectionForApi,
+        ...selectedChains,
         id: protocol.id,
         type,
         tokenId,

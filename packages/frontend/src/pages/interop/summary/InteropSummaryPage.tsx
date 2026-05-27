@@ -6,20 +6,19 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
-import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import { MultiChainSelector } from '../components/chain-selector/MultiChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { FlowsView } from '../components/flows/FlowsView'
-import { FlowsWidget } from '../components/widgets/FlowsWidget'
 import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCarouselWidget'
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
+import { TopRoutesWidget } from '../components/widgets/TopRoutesWidget'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
-import type { InteropMode, InteropSelection } from '../utils/types'
+import type { InteropSelection } from '../utils/types'
 import { BreakdownByTransferType } from './components/BreakdownByTransferType'
 import { InteropEmptyState } from './components/InteropEmptyState'
 import { TokenCount } from './components/TokenCount'
@@ -31,7 +30,6 @@ import { getBridgeTypeEntries } from './components/table-widgets/tables/getBridg
 import { getTransferTypeBreakdown } from './utils/getTransferTypeBreakdown'
 
 interface Props extends AppLayoutProps {
-  mode: InteropMode
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
   protocols: (ProtocolDisplayable & {
@@ -42,7 +40,6 @@ interface Props extends AppLayoutProps {
 }
 
 export function InteropSummaryPage({
-  mode,
   interopChains,
   queryState,
   initialSelection,
@@ -54,14 +51,12 @@ export function InteropSummaryPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <InteropSelectedChainsProvider
-          mode={mode}
           interopChains={interopChains}
           initialSelection={initialSelection}
         >
           <SideNavLayout maxWidth="wide">
             <MainPageHeader>Interoperability</MainPageHeader>
             <Content
-              mode={mode}
               interopChains={interopChains}
               protocols={protocols}
               defaultSelectedFlowChains={defaultSelectedFlowChains}
@@ -74,12 +69,10 @@ export function InteropSummaryPage({
 }
 
 function Content({
-  mode,
   interopChains,
   protocols,
   defaultSelectedFlowChains,
 }: {
-  mode: InteropMode
   interopChains: InteropChainWithIcon[]
   protocols: (ProtocolDisplayable & {
     id: string
@@ -88,10 +81,7 @@ function Content({
 }) {
   const { selectedChains } = useInteropSelectedChains()
 
-  if (
-    mode === 'public' &&
-    (selectedChains.from.length !== 1 || selectedChains.to.length !== 1)
-  ) {
+  if (selectedChains.from.length === 0 && selectedChains.to.length === 0) {
     return (
       <FlowsView
         interopChains={interopChains}
@@ -103,27 +93,18 @@ function Content({
 
   return (
     <>
-      {mode === 'public' ? (
-        <ChainSelector chains={interopChains} protocols={protocols} />
-      ) : (
-        <MultiChainSelector chains={interopChains} />
-      )}
+      <MultiChainSelector chains={interopChains} protocols={protocols} />
       <Widgets interopChains={interopChains} />
     </>
   )
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectionForApi, mode, isDirty, reset } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery(selectionForApi)
+  const { selectedChains } = useInteropSelectedChains()
+  const { data, isLoading } = api.interop.dashboard.useQuery(selectedChains)
 
   if (data === null) {
-    return (
-      <InteropEmptyState
-        showResetButton={mode === 'internal' && isDirty}
-        onResetButtonClick={reset}
-      />
-    )
+    return <InteropEmptyState />
   }
 
   const { lockAndMint, nonMinting, burnAndMint } = getBridgeTypeEntries(
@@ -137,11 +118,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       data-hide-overflow-x
     >
       <div className="z-10">
-        <FlowsWidget
-          interopChains={interopChains}
-          isLoading={isLoading}
-          flows={data?.flows}
-        />
+        <TopRoutesWidget isLoading={isLoading} flows={data?.flows} />
       </div>
       <div className="h-full max-[1600px]:hidden">
         <TopProtocolsByVolume

@@ -11,10 +11,10 @@ export function NonMintingTable({
 }: {
   entries: NonMintingProtocolEntry[]
 }) {
-  const { selectionForApi } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const columns = useMemo(
-    () => getNonMintingColumns(selectionForApi),
-    [selectionForApi],
+    () => getNonMintingColumns(selectedChains),
+    [selectedChains],
   )
   const table = useTable<NonMintingProtocolRow>({
     data: entries,

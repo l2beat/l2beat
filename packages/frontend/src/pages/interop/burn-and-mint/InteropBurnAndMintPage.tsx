@@ -7,25 +7,23 @@ import type { ProtocolDisplayable } from '~/server/features/scaling/interop/type
 import { api } from '~/trpc/React'
 import type { WithProjectIcon } from '~/utils/withProjectIcon'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
-import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import { MultiChainSelector } from '../components/chain-selector/MultiChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InitialChainSelector } from '../components/InitialChainSelector'
-import { FlowsWidget } from '../components/widgets/FlowsWidget'
 import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCarouselWidget'
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
+import { TopRoutesWidget } from '../components/widgets/TopRoutesWidget'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import { InteropEmptyState } from '../summary/components/InteropEmptyState'
 import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
-import type { InteropMode, InteropSelection } from '../utils/types'
+import type { InteropSelection } from '../utils/types'
 import { HeaderWithDescription } from './components/HeaderWithDescription'
 
 interface Props extends AppLayoutProps {
-  mode: InteropMode
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
   onboardingInteropChains: InteropChainWithIcon[]
@@ -34,7 +32,6 @@ interface Props extends AppLayoutProps {
 }
 
 export function InteropBurnAndMintPage({
-  mode,
   interopChains,
   onboardingInteropChains,
   queryState,
@@ -46,13 +43,11 @@ export function InteropBurnAndMintPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <InteropSelectedChainsProvider
-          mode={mode}
           interopChains={interopChains}
           initialSelection={initialSelection}
         >
           <SideNavLayout maxWidth="wide">
             <Content
-              mode={mode}
               interopChains={interopChains}
               onboardingInteropChains={onboardingInteropChains}
               protocols={protocols}
@@ -65,22 +60,17 @@ export function InteropBurnAndMintPage({
 }
 
 function Content({
-  mode,
   interopChains,
   onboardingInteropChains,
   protocols,
 }: {
-  mode: InteropMode
   interopChains: InteropChainWithIcon[]
   onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
 }) {
-  const { selectedChains, selectChain } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
 
-  if (
-    mode === 'public' &&
-    (selectedChains.from.length !== 1 || selectedChains.to.length !== 1)
-  ) {
+  if (selectedChains.from.length === 0 && selectedChains.to.length === 0) {
     return (
       <>
         <div className="max-md:hidden">
@@ -88,8 +78,6 @@ function Content({
         </div>
         <InitialChainSelector
           interopChains={onboardingInteropChains}
-          selectedChains={selectedChains}
-          selectChain={selectChain}
           type="burnAndMint"
         />
       </>
@@ -101,11 +89,7 @@ function Content({
       <div className="max-md:hidden">
         <HeaderWithDescription />
       </div>
-      {mode === 'public' ? (
-        <ChainSelector chains={interopChains} protocols={protocols} />
-      ) : (
-        <MultiChainSelector chains={interopChains} />
-      )}
+      <MultiChainSelector chains={interopChains} protocols={protocols} />
       <div className="max-md:bg-surface-primary md:hidden">
         <HeaderWithDescription />
       </div>
@@ -115,19 +99,14 @@ function Content({
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectionForApi, mode, isDirty, reset } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    ...selectionForApi,
+    ...selectedChains,
     type: 'burnAndMint',
   })
 
   if (data === null) {
-    return (
-      <InteropEmptyState
-        showResetButton={mode === 'internal' && isDirty}
-        onResetButtonClick={reset}
-      />
-    )
+    return <InteropEmptyState />
   }
 
   return (
@@ -136,11 +115,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       data-hide-overflow-x
     >
       <div className="z-10">
-        <FlowsWidget
-          interopChains={interopChains}
-          isLoading={isLoading}
-          flows={data?.flows}
-        />
+        <TopRoutesWidget isLoading={isLoading} flows={data?.flows} />
       </div>
       <div className="h-full max-[1600px]:hidden">
         <TopProtocolsByVolume
