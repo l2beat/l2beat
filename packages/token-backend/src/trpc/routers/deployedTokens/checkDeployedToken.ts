@@ -7,10 +7,8 @@ import type {
 import { Address32 } from '@l2beat/shared-pure'
 import { Chain } from '../../../chains/Chain'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
-import {
-  fetchDeployedTokenFacts,
-  formatError,
-} from '../../../chains/fetchDeployedTokenFacts'
+import { fetchDeployedTokenFacts } from '../../../chains/fetchDeployedTokenFacts'
+import { formatError } from '../../../utils/formatError'
 import {
   buildAliasToChainMap,
   findUnregisteredPlatformTokens,

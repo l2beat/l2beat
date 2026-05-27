@@ -75,7 +75,14 @@ export function TokenHistoryPage() {
       staleTime: 0,
     },
   )
-  const { data: abstractTokens } = api.abstractTokens.getAll.useQuery()
+  const { data: abstractTokens } = api.abstractTokens.getAll.useQuery(
+    undefined,
+    {
+      refetchInterval: 10_000,
+      refetchOnMount: 'always',
+      staleTime: 0,
+    },
+  )
   const abstractTokensById = useMemo(
     () =>
       new Map(

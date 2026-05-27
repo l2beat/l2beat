@@ -10,9 +10,10 @@ import {
 } from '~/components/core/Card'
 import { ErrorState } from '~/components/ErrorState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 
 export function FinancialActionsPage() {
+  const api = useBackendApi()
   const refreshFinancials = api.interop.financials.refresh.useMutation({
     onSuccess: (data) => {
       toast.success('Financials refresh requested', {

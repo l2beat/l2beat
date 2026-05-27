@@ -5,7 +5,7 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { EventDetailsTable } from './table/details/EventDetailsTable'
 import type {
   ChainMetadata,
@@ -48,6 +48,7 @@ function getKind(kind: string | undefined): InteropEventKind | undefined {
 }
 
 export function EventDetailsPage() {
+  const api = useBackendApi()
   const params = useParams<{ kind: string; type: string }>()
   const kind = getKind(params.kind)
   const type = decodeRouteParam(params.type)

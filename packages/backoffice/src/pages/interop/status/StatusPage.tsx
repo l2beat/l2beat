@@ -31,7 +31,7 @@ import {
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { PluginStatusesTable } from './table/PluginStatusesTable'
 
 const RESYNC_OPTIONS: ReadonlyArray<{
@@ -69,6 +69,7 @@ function buildResyncPayload(
 }
 
 export function StatusPage() {
+  const api = useBackendApi()
   const utils = api.useUtils()
   const [autoRefresh, setAutoRefresh] = useState(true)
   const [restartDialogPlugin, setRestartDialogPlugin] = useState<string | null>(

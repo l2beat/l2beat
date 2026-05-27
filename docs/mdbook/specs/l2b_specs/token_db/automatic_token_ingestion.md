@@ -127,7 +127,8 @@ The processor splits each tick into three phases:
    fact fetcher. It either upgrades the outcome to `write` (with a full
    deployed-token record), downgrades it to `conflict` when a newly
    materialized CoinGecko abstract has a different symbol than the deployed
-   token, or downgrades it to `error` when required facts are missing.
+   token, or downgrades it to `error` when CoinGecko data or required
+   deployed-token facts cannot be fetched.
 3. **`apply(entry, trace)`** — writes only. Switches on the final
    outcome and does the corresponding TokenDB and queue mutations. Throws
    if it ever sees `pending` (a sign `fetch` was skipped). For the
@@ -204,7 +205,8 @@ update, possibly with a newly built CoinGecko abstract), `conflict`
   `apply` removes the queue entry. No write.
 - **`conflict`** — disagreement detected. `apply` moves the entry to the
   `conflict` state with a message.
-- **`error`** — abstract resolved but the deployed-token facts are
+- **`error`** — abstract resolution required CoinGecko data that could not
+  be fetched, or the abstract resolved but the deployed-token facts are
   incomplete (missing `symbol`, `decimals`, or `deploymentTimestamp`).
   `apply` moves the entry to `error` with a message.
 - **`noop`** — token already exists with the resolved abstract; nothing to
@@ -335,18 +337,24 @@ transfers added since the previous tick.
 
 ## CoinGecko: never called from `plan`
 
-CoinGecko calls cost money and are rate-limited. The processor builds a
-chain-keyed map of all coin platforms once (per processor instance) and
-looks up addresses in-memory after that. For new abstract tokens,
-`getCoinDataById` and the listing-timestamp lookup are deferred to the
-`fetch` phase — they are never called from `plan`, so populating the
-queue page's "Will do" column for hundreds of rows costs zero per-coin
-CoinGecko calls.
+CoinGecko calls cost money and are rate-limited. The client is configured
+with a calls-per-minute limiter, and the processor builds a chain-keyed
+map of all coin platforms once (per processor instance) and looks up
+addresses in-memory after that. For new abstract tokens, `getCoinDataById`
+and the listing-timestamp lookup are deferred to the `fetch` phase — they
+are never called from `plan`, so populating the queue page's "Will do"
+column for hundreds of rows costs zero per-coin CoinGecko calls.
+
+Per-coin calls in `fetch` are intentionally not cached. In the normal
+auto-approve path, a new abstract is materialized once, and later tokens
+with the same CoinGecko id reuse the stored abstract token from TokenDB.
+The listing timestamp is optional; if the market-chart call fails,
+ingestion keeps the abstract with a `null` listing timestamp.
 
 The processor instance is hoisted to server startup so it lives for the
 whole server lifetime — that is, the coin map cache spans the whole
-session, not just one tick. The CoinGecko client itself does not cache;
-caching is the processor's concern.
+session, not just one tick. The CoinGecko client itself rate-limits but
+does not cache; caching is the processor's concern.
 
 There is no "we tried this address and dropped it" record. A dropped
 address simply disappears from the queue. If audit history is needed
