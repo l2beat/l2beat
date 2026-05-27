@@ -24,24 +24,33 @@ export function SequencerSetSpecSheet({ spec }: Props) {
 
   return (
     <div className="my-6 overflow-hidden rounded-lg border border-divider">
-      <div className="bg-surface-secondary px-4 py-3 font-bold text-heading-16 md:text-heading-18">
-        Sequencer set spec sheet
-      </div>
-      <dl className="divide-y divide-divider">
-        {rows.map((row) => (
-          <div
-            key={row.label}
-            className="grid gap-1 px-4 py-3 md:grid-cols-[minmax(220px,0.42fr)_1fr] md:gap-4"
-          >
-            <dt className="font-bold text-label-value-13 text-secondary">
-              {row.label}
-            </dt>
-            <dd className="font-medium text-label-value-14">
-              <SpecValue value={row.value} />
-            </dd>
-          </div>
-        ))}
-      </dl>
+      <table className="w-full border-collapse">
+        <thead>
+          <tr>
+            <th
+              colSpan={2}
+              className="bg-surface-secondary px-4 py-3 text-left font-bold text-heading-16 md:text-heading-18"
+            >
+              Sequencer set spec sheet
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.label} className="border-divider border-t">
+              <th
+                scope="row"
+                className="px-4 py-3 text-left align-top font-bold text-label-value-13 text-secondary md:w-[42%] md:min-w-[220px]"
+              >
+                {row.label}
+              </th>
+              <td className="px-4 py-3 align-top font-medium text-label-value-14">
+                <SpecValue value={row.value} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }
