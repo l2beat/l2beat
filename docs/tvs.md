@@ -19,7 +19,7 @@ or type
 
 ## Configuration
 
-TVS configuration is represented as a set of JSON documents (one for each project) located in `/packages/config/src/tvs`. Each file represents an explicit list of tokens, along with all required properties which will be used to calculate project's TVS.
+TVS configuration is represented as a set of JSON documents (one for each project) located next to project configs as `/packages/config/src/projects/<project>/tvs.json`. Each file represents an explicit list of tokens, along with all required properties which will be used to calculate project's TVS.
 
 
    - `mode` - it can be either  `auto` or  `custom` (more on this subject in [Automatic vs manual configuration](#Automatic-vs-manual-configuration) section)
@@ -265,4 +265,3 @@ Both scripts `tvs:generate` and `tvs:execute` use share the same data and there 
 
 - local cache - it is enabled by default and persisted in JSON file: `/packages/backend/scripts/tvs/local-data.json`. It can grow in size pretty quickly so make sure you clean (delete) it once in a while
 - DB connection - some of the data required to execute TVS may have already been fetched by our BE. If you provide connection string to via `TVS_DB_URL` env var the script will check it first. Make sure that you use READONLY credentials.
-
