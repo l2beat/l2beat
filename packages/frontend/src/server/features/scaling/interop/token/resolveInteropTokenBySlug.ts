@@ -5,7 +5,5 @@ export function resolveInteropTokenBySlug(
   tokens: InteropAbstractToken[],
   slug: string,
 ): InteropAbstractToken | undefined {
-  return new Map(
-    tokens.map((token) => [getAbstractTokenSlug(token), token]),
-  ).get(slug)
+  return tokens.find((token) => getAbstractTokenSlug(token) === slug)
 }

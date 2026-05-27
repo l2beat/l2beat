@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { InteropDurationSplit, Project } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { UNKNOWN_ABSTRACT_TOKEN_ID } from '../consts'
 import type { TokenData } from '../types'
 import type { TokenInteropData } from './buildTokensDataMap'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
@@ -67,7 +68,7 @@ export function getTokensData({
 
   if (unknownTransfersCount > 0) {
     tokensData.push({
-      id: 'unknown',
+      id: UNKNOWN_ABSTRACT_TOKEN_ID,
       symbol: 'Unknown',
       issuer: null,
       iconUrl: TOKEN_PLACEHOLDER_ICON_URL,

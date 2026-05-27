@@ -3,6 +3,7 @@ import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { TOKEN_DASHBOARD_TOP_FLOWS_LIMIT } from './consts'
 import type { InteropTokenParams, ProtocolEntry, TokenData } from './types'
 import { buildTokensDataMap } from './utils/buildTokensDataMap'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
@@ -84,7 +85,7 @@ export async function getInteropTokenData(
 
   return {
     token,
-    flows: flows.slice(0, 2),
+    flows: flows.slice(0, TOKEN_DASHBOARD_TOP_FLOWS_LIMIT),
     topPath: getTopPath(flows),
     topProtocol: topProtocols.toSorted(
       (a, b) => b.volume.value - a.volume.value,

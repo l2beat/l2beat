@@ -1,10 +1,11 @@
 import { expect } from 'earl'
+import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/scaling/interop/consts'
 import { getInteropTokenUrl } from './getInteropTokenUrl'
 
 describe(getInteropTokenUrl.name, () => {
   it('returns undefined for unknown tokens', () => {
     const result = getInteropTokenUrl(
-      { id: 'unknown', issuer: null, symbol: 'Unknown' },
+      { id: UNKNOWN_ABSTRACT_TOKEN_ID, issuer: null, symbol: 'Unknown' },
       { from: ['ethereum'], to: ['arbitrum'] },
     )
 

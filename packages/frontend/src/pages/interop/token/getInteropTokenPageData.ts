@@ -14,6 +14,7 @@ import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import type { InteropQuery } from '../InteropRouter'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
+import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import type { InteropSelection } from '../utils/types'
 
 export async function getInteropTokenPageData(
@@ -25,6 +26,10 @@ export async function getInteropTokenPageData(
   const interopChains = getInteropChains()
   const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)
   const activeInteropChainIds = activeInteropChains.map((chain) => chain.id)
+  const interopChainsWithIcons = mapInteropChainsToWithIcons(
+    manifest,
+    activeInteropChains,
+  )
 
   const initialSelection = getInitialInteropSelection({
     query: req.query,
@@ -48,17 +53,11 @@ export async function getInteropTokenPageData(
         slug: req.params.slug,
         initialSelection,
         activeInteropChainIds,
-        manifest,
+        interopChainsWithIcons,
       }),
   )
 
   if (!data) return undefined
-
-  const interopChainsWithIcons: InteropChainWithIcon[] =
-    activeInteropChains.map((chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-    }))
 
   return {
     head: {
@@ -94,31 +93,25 @@ async function getCachedData({
   slug,
   initialSelection,
   activeInteropChainIds,
-  manifest,
+  interopChainsWithIcons,
 }: {
   slug: string
   initialSelection: InteropSelection
   activeInteropChainIds: string[]
-  manifest: Manifest
+  interopChainsWithIcons: InteropChainWithIcon[]
 }) {
   const abstractTokens = await getInteropAbstractTokens(activeInteropChainIds)
   const token = resolveInteropTokenBySlug(abstractTokens, slug)
   if (!token) return undefined
 
   const apiSelection = initialSelection
-  const interopChains = getInteropChains()
-    .filter((chain) => !chain.isUpcoming)
-    .map((chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-    }))
 
   const tokenData = await getInteropTokenData({
     tokenId: token.id,
     ...apiSelection,
   })
 
-  const tokenEntry = getInteropTokenEntry(token.id, interopChains)
+  const tokenEntry = getInteropTokenEntry(token.id, interopChainsWithIcons)
 
   return {
     token: {

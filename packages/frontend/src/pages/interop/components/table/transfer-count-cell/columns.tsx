@@ -11,7 +11,8 @@ import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
-import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
+import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
+import { getAbstractTokenSlug } from '~/server/features/scaling/interop/token/getAbstractTokenSlug'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/scaling/interop/types'
 import { formatTimestamp } from '~/utils/dates'
@@ -205,14 +206,10 @@ function TokenAmount({
     return <span className={className}>{content}</span>
   }
 
-  const tokenUrl = getInteropTokenUrl(
-    { symbol, issuer },
+  const tokenUrl = buildInteropUrl(
+    `/interop/tokens/${getAbstractTokenSlug({ symbol, issuer })}`,
     selectedChains ?? { from: [], to: [] },
   )
-
-  if (!tokenUrl) {
-    return <span className={className}>{content}</span>
-  }
 
   return (
     <a href={tokenUrl} className={`${className} hover:underline`}>
