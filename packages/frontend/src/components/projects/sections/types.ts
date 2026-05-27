@@ -70,6 +70,7 @@ type SectionId =
   | 'interop-flows'
   | 'interop-transfers'
   | 'interop-tokens'
+  | 'interop-protocols'
   | 'privacy-tvl'
   | 'privacy-flows'
   | 'privacy-assets-breakdown'

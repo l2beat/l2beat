@@ -23,7 +23,7 @@ export function getInteropTokenEntry(
       {
         type: 'InteropTokenProtocolsSection',
         props: {
-          id: 'interop-tokens',
+          id: 'interop-protocols',
           title: 'Top protocols',
         },
       },

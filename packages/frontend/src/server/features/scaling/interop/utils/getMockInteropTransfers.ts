@@ -32,12 +32,14 @@ export function getMockInteropTransfers({
       timestamp: timestamp - i * 60,
       srcAmount: 1_000,
       srcSymbol: symbol,
+      srcAbstractTokenId: tokenId ?? 'eth',
       srcTokenIssuer: issuer,
       srcTokenIconUrl: isTokenMock
         ? (INTEROP_CHAIN_DETAILS.get(srcChain)?.iconUrl ?? '')
         : ethIcon,
       dstAmount: 1_000,
       dstSymbol: symbol,
+      dstAbstractTokenId: tokenId ?? 'eth',
       dstTokenIssuer: issuer,
       dstTokenIconUrl: isTokenMock
         ? (INTEROP_CHAIN_DETAILS.get(dstChain)?.iconUrl ?? '')

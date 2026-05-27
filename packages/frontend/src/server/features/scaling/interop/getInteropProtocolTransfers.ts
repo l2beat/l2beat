@@ -115,6 +115,7 @@ export function toInteropProtocolTransferDetailsItem(
     timestamp: transfer.timestamp,
     srcAmount: transfer.srcAmount,
     srcSymbol: transfer.srcSymbol ?? UNKNOWN_TOKEN_SYMBOL,
+    srcAbstractTokenId: transfer.srcAbstractTokenId,
     srcTokenIssuer:
       transfer.srcAbstractTokenId !== undefined
         ? (tokensDetailsMap.get(transfer.srcAbstractTokenId)?.issuer ?? null)
@@ -125,6 +126,7 @@ export function toInteropProtocolTransferDetailsItem(
     ),
     dstAmount: transfer.dstAmount,
     dstSymbol: transfer.dstSymbol ?? UNKNOWN_TOKEN_SYMBOL,
+    dstAbstractTokenId: transfer.dstAbstractTokenId,
     dstTokenIssuer:
       transfer.dstAbstractTokenId !== undefined
         ? (tokensDetailsMap.get(transfer.dstAbstractTokenId)?.issuer ?? null)
