@@ -85,7 +85,9 @@ export async function getPrivacyProjectData(
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
   const helpers = getSsrHelpers()
-  const defaultChartRange = optionToRange('1y', { offset: -UnixTime.DAY })
+  // Flows show the last full day (yesterday); TVL shows today's midnight.
+  const flowsChartRange = optionToRange('1y', { offset: -UnixTime.DAY })
+  const tvlChartRange = optionToRange('1y')
   const [
     appLayoutProps,
     details,
@@ -118,11 +120,11 @@ export async function getPrivacyProjectData(
   await Promise.all([
     helpers.privacy.flowsChart.prefetch({
       projectIds: [details.id],
-      range: defaultChartRange,
+      range: flowsChartRange,
     }),
     helpers.privacy.tvlChart.prefetch({
       projectIds: [details.id],
-      range: defaultChartRange,
+      range: tvlChartRange,
     }),
   ])
 
@@ -190,7 +192,7 @@ export async function getPrivacyProjectData(
     props: {
       id: 'privacy-tvl',
       title: 'Value Locked',
-      defaultRange: defaultChartRange,
+      defaultRange: tvlChartRange,
       project: chartProject,
     },
   })
@@ -200,7 +202,7 @@ export async function getPrivacyProjectData(
     props: {
       id: 'privacy-flows',
       title: 'Flows',
-      defaultRange: defaultChartRange,
+      defaultRange: flowsChartRange,
       project: chartProject,
     },
   })

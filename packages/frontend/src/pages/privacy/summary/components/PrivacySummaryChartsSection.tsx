@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
@@ -19,10 +20,19 @@ interface Props {
 export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const projectIds = useMemo(() => projects.map((p) => p.id), [projects])
+  // Both charts share one control
+  // TVL wants today's midnight, which is exactly one day later.
+  const tvlRange = useMemo<ChartRange>(
+    () => [
+      range[0] === null ? null : range[0] + UnixTime.DAY,
+      range[1] + UnixTime.DAY,
+    ],
+    [range],
+  )
   const { data: flowsData, isLoading: isFlowsLoading } =
     api.privacy.flowsChart.useQuery({ projectIds, range })
   const { data: tvlData, isLoading: isTvlLoading } =
-    api.privacy.tvlChart.useQuery({ projectIds, range })
+    api.privacy.tvlChart.useQuery({ projectIds, range: tvlRange })
 
   const flowChartTimeRange = useMemo(
     () =>

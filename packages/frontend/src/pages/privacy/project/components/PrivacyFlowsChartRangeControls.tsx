@@ -5,9 +5,15 @@ import type { ChartRange } from '~/utils/range/range'
 interface Props {
   range: ChartRange
   setRange: (range: ChartRange) => void
+  // Flows end on the last full day (-DAY); TVL ends on today's midnight (0).
+  offset?: UnixTime
 }
 
-export function PrivacyFlowsChartRangeControls({ range, setRange }: Props) {
+export function PrivacyFlowsChartRangeControls({
+  range,
+  setRange,
+  offset = -UnixTime.DAY,
+}: Props) {
   return (
     <ChartRangeControls
       name="privacyProjectChart"
@@ -20,7 +26,7 @@ export function PrivacyFlowsChartRangeControls({ range, setRange }: Props) {
         { value: '1y', label: '1Y' },
         { value: 'max', label: 'MAX' },
       ]}
-      offset={-UnixTime.DAY}
+      offset={offset}
     />
   )
 }

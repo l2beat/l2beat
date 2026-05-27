@@ -44,7 +44,11 @@ export function PrivacyTvlSection({
     <ProjectSection {...projectSectionProps}>
       <ChartControlsWrapper className="mb-4">
         <ProjectChartTimeRange timeRange={timeRange} />
-        <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
+        <PrivacyFlowsChartRangeControls
+          range={range}
+          setRange={setRange}
+          offset={0}
+        />
       </ChartControlsWrapper>
       <PrivacyTvlChart
         data={chartData}

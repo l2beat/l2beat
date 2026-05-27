@@ -73,7 +73,13 @@ async function getCachedData() {
     }),
     helpers.privacy.tvlChart.prefetch({
       projectIds,
-      range: defaultChartRange,
+      // TVL shows today's midnight: one day after the flows (full-day) range.
+      range: [
+        defaultChartRange[0] === null
+          ? null
+          : defaultChartRange[0] + UnixTime.DAY,
+        defaultChartRange[1] + UnixTime.DAY,
+      ],
     }),
   ])
   return {
