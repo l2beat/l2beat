@@ -1,3 +1,434 @@
+Generated with discovered.json: 0x45a4747db3671d5c559191701fb67de465b3e3d5
+
+# Diff at Wed, 27 May 2026 14:22:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779198836
+- current timestamp: 1779891623
+
+## Description
+
+op-contracts upgrade tx `0x75b1c9b2090ba2b311d6be08c319340b87dc1aabfae2505d126e7a0f1fc6b11c`, 2026-05-26T19:59:59Z.
+
+`OptimismPortal2` impl `0x97cEbbf8` → `0x66d94eE8`. `proofMaturityDelaySeconds` 604800 (7d) → 86400 (1d); `disputeGameFinalityDelaySeconds` 302400 (3.5d) → 0; `respectedGameType` 0 → 621 (now read from AnchorStateRegistry). https://disco.l2beat.com/diff/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B/eth:0x66d94eE8F529b683ED6013729784e8bb44697A64
+
+`DisputeGameFactory` impl `0xc040F392` → `0x468C2345`. `gameCount` 13536 → 13757. https://disco.l2beat.com/diff/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c/eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c
+
+`AnchorStateRegistry` (0x909f6cf4) impl `0x36398155` → `0x4483F964`. Now stores `respectedGameType` (621) and `retirementTimestamp` (1779825599); legacy `vmFromGame`, `wethFromGame`, `oracleFromVm`, `challengePeriodFromOracle`, `absolutePrestateFromGame` removed. Anchor root → `0xc34c9f98…` @ L2 block 46302960. https://disco.l2beat.com/diff/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5/eth:0x4483F964F6711Cb55f633820ED174E780369b99D
+
+Game type 621 = AggregateVerifier (TEE+ZK) at `0x4c0DAF5d9ABe92e8A26a60698a657B03538a3028`, v0.1.0, bond 0.05 ETH. `TEE_VERIFIER=0x1FbA0C57…2228` (v0.2.0), `ZK_VERIFIER=0x9e51DeFb…3c3b` (v0.1.0), `DELAYED_WETH=0xd0D07924…EF71` (1d delay), `SLOW_FINALIZATION_DELAY=7d`, `FAST_FINALIZATION_DELAY=1d`, `PROOF_THRESHOLD=1`, `BLOCK_INTERVAL=600`, `INTERMEDIATE_BLOCK_INTERVAL=30`. Source: github.com/base/contracts/src/L1/proofs/AggregateVerifier.sol. Confirmed via cast against the deployed bytecode; not yet persisted in discovery.
+
+Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeGame v2.2.0, fallback), 621 = AggregateVerifier (respected). All other types empty.
+
+`ProxyAdmin` upgrade rights moved from deleted DelayedWETHs to new `DelayedWETH_PermissionlessGames` and second ASR. `Base Governance Multisig` gained emergency-withdraw on `DelayedWETH_PermissionlessGames`.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.2:
+-        {"permission":"upgrade","from":"eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec","role":"admin"}
+      directlyReceivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D","role":"admin"}
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8","role":"admin"}
+      directlyReceivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0xdB9091e48B1C42992A1213e6916184f9eBDbfEDf","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [N/A] {
+    +++ description: None
+      template:
+-        "opstack/DisputeGameFactory"
+      sourceHashes.1:
+-        "0x8f21dbc160582c568a2a925ddad1b2bb889a9f72bac2067c6e72d43b662ef538"
++        "0x780eaf9d8daa77c3325b79e5f3467c1bd8eec57b5d7e84651bdf2d24754d6838"
+      description:
+-        "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them."
+      values.$implementation:
+-        "eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"
++        "eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c"
+      values.$pastUpgrades.5:
++        ["2026-05-26T19:59:59.000Z","0x75b1c9b2090ba2b311d6be08c319340b87dc1aabfae2505d126e7a0f1fc6b11c",["eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.challengerFromDGF:
+-        "eth:0x8Ca1E12404d16373Aef756179B185F27b2994F3a"
+      values.game1337:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.game2000:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.game42:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.gameCount:
+-        13536
++        13757
+      values.gameImpls:
+-        ["eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499","eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"]
+      values.initBondGame42:
+-        0
+      values.initBonds:
+-        ["80000000000000000","80000000000000000",0,0,0]
+      values.permissionedGameArgs:
+-        "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb908909f6cf47ed12f010a796527f562bfc26c7f4e7264ae5250958cdeb83f6b61f913b5ac6ebe8efd4d0000000000000000000000000000000000000000000000000000000000002105642229f238fb9de03374be34b0ed8d9de80752c58ca1e12404d16373aef756179b185f27b2994f3a"
+      values.permissionedGamesTotal:
+-        0
+      values.proposerFromDGF:
+-        "eth:0x642229f238fb9dE03374Be34B0eD8D9De80752c5"
+      values.wethFromDGF:
+-        "eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D"
+      values.gameAtIndex:
++        [[0,1728508871,"eth:0x063E796B4ECD31d51291893e6F519e581950c034"],[0,1728508991,"eth:0x85604124C78EA506704e361b28eAaBFA31B10Cf9"],[0,1729096775,"eth:0xAbdFf131ADbaEc38BB8962a906a6058d2F4465e7"],[0,1729246427,"eth:0x3CfF1E3617f1ABD92f19cf4E798457d2F5eF652b"],[0,1729246931,"eth:0xbEBeA705dc6D47BaFF5E971d77DeFB5e71fB2299"]]
+      fieldMeta:
+-        {"gameImpls":{"severity":"HIGH"},"game1337":{"severity":"HIGH"},"game2000":{"severity":"HIGH"},"game42":{"severity":"HIGH"}}
+      implementationNames.eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c:
+-        "DisputeGameFactory"
+      implementationNames.eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c:
++        "DisputeGameFactory"
+      usedTypes:
+-        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"gameAtIndex":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [N/A] {
+    +++ description: None
+      template:
+-        "opstack/OptimismPortal2"
+      sourceHashes.1:
+-        "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
++        "0x247eac30dea3a06b4a7142ac53d0b9ad882952c87406f165ec8721b0d97bd6da"
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
+      values.$implementation:
+-        "eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"
++        "eth:0x66d94eE8F529b683ED6013729784e8bb44697A64"
+      values.$pastUpgrades.10:
++        ["2026-05-26T19:59:59.000Z","0x75b1c9b2090ba2b311d6be08c319340b87dc1aabfae2505d126e7a0f1fc6b11c",["eth:0x66d94eE8F529b683ED6013729784e8bb44697A64"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.disputeGameFinalityDelaySeconds:
+-        302400
++        0
+      values.params.prevBoughtGas:
+-        310736
++        516470
+      values.params.prevBlockNum:
+-        25129672
++        25187220
+      values.proofMaturityDelaySeconds:
+-        604800
++        86400
+      values.RespectedGameString:
+-        "FaultDisputeGame"
+      values.respectedGameType:
+-        0
++        621
+      values.respectedGameTypeUpdatedAt:
+-        1759862579
++        1779825599
+      fieldMeta:
+-        {"respectedGameType":{"severity":"HIGH"},"paused":{"severity":"HIGH","description":"Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."}}
+      implementationNames.eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B:
+-        "OptimismPortal2"
+      implementationNames.eth:0x66d94eE8F529b683ED6013729784e8bb44697A64:
++        "OptimismPortal2"
+      usedTypes:
+-        [{"typeCaster":"Mapping","arg":{"0":"FaultDisputeGame","1":"PermissionedDisputeGame","1337":"KailuaGame"}}]
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame]
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8","description":"can pull funds from the contract in case of emergency.","role":".owner"}
+      receivedPermissions.3:
+-        {"permission":"upgrade","from":"eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec","role":"admin","via":[{"address":"eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D","role":"admin","via":[{"address":"eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8","role":"admin","via":[{"address":"eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"eth:0xdB9091e48B1C42992A1213e6916184f9eBDbfEDf","role":"admin","via":[{"address":"eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72) [N/A] {
+    +++ description: None
+      template:
+-        "opstack/AnchorStateRegistry_post13"
+      sourceHashes.1:
+-        "0xfdabc8b9b4db9b7aa78227b26e936abaf24f058502b96e8d9a293d49b1e89b47"
++        "0x9340bfba7b4bbba23fe6fc74f5da06cee233a4745de93049330a76ef3ce23972"
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
+      values.$implementation:
+-        "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5"
++        "eth:0x4483F964F6711Cb55f633820ED174E780369b99D"
+      values.$pastUpgrades.2:
++        ["2026-05-26T19:59:59.000Z","0x75b1c9b2090ba2b311d6be08c319340b87dc1aabfae2505d126e7a0f1fc6b11c",["eth:0x4483F964F6711Cb55f633820ED174E780369b99D"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.absolutePrestateFromGame:
+-        "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e"
+      values.anchorGame:
+-        "eth:0x90314660261671794A9f0227eE14D16f25d68B37"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.challengePeriodFromOracle:
+-        86400
+      values.disputeGameFinalityDelaySeconds:
+-        302400
++        0
+      values.getAnchorRoot.0:
+-        "0x36c9d364cec20b1c47534ebb211d258ab71578c722f14c6495f2aeeed7bc95b9"
++        "0xc34c9f98b74b2fb85a516e302f86bc9bedcf5623ab078a671d40beac0e120329"
+      values.getAnchorRoot.1:
+-        45901581
++        46302960
+      values.getStartingAnchorRoot.root:
+-        "0x9a37fe32cd2b49385bec0236b7b5c2177e71176bb306d19a49a8a77651ce2cd0"
++        "0xc34c9f98b74b2fb85a516e302f86bc9bedcf5623ab078a671d40beac0e120329"
+      values.getStartingAnchorRoot.l2SequenceNumber:
+-        36233266
++        46302960
+      values.initVersion:
+-        1
++        2
+      values.oracleFromVm:
+-        "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3"
+      values.RespectedGameString:
+-        "FaultDisputeGame"
+      values.respectedGameType:
+-        0
++        621
+      values.retirementTimestamp:
+-        1759862579
++        1779825599
+      values.vmFromGame:
+-        "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908"
+      values.wethFromGame:
+-        "eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec"
+      fieldMeta:
+-        {"respectedGameType":{"severity":"HIGH"}}
+      implementationNames.eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5:
+-        "AnchorStateRegistry"
+      implementationNames.eth:0x4483F964F6711Cb55f633820ED174E780369b99D:
++        "AnchorStateRegistry"
+      usedTypes:
+-        [{"typeCaster":"Mapping","arg":{"0":"FaultDisputeGame","1":"PermissionedDisputeGame","1337":"KailuaGame"}}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LivenessModule (eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748) [gnosisSafeModules/LivenessModule]
+    +++ description: used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (eth:0x063E796B4ECD31d51291893e6F519e581950c034) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25) [gnosisSafeModules/LivenessGuard]
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (eth:0x3CfF1E3617f1ABD92f19cf4E798457d2F5eF652b) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) [opstack/DeputyPauseModule]
+    +++ description: Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+```
+
+```diff
++   Status: CREATED
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (eth:0x85604124C78EA506704e361b28eAaBFA31B10Cf9) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry]
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (eth:0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH_PermissionlessGames (eth:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes]
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (eth:0xAbdFf131ADbaEc38BB8962a906a6058d2F4465e7) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (eth:0xbEBeA705dc6D47BaFF5E971d77DeFB5e71fB2299) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (eth:0xdB9091e48B1C42992A1213e6916184f9eBDbfEDf) [opstack/AnchorStateRegistry]
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager]
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+## Source code changes
+
+```diff
+...0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2.sol} |    0
+ ...:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F.sol |  177 +
+ .../AnchorStateRegistry.sol                        |  181 +-
+ .../Proxy.p.sol                                    |    0
+ .../AnchorStateRegistry.sol                        | 1413 ++++++
+ .../Proxy.p.sol                                    |    0
+ .../DelayedWETH.sol                                |  601 +--
+ .../DelayedWETH_PermissionlessGames}/Proxy.p.sol   |    0
+ .../src/projects/base/.flat/DeputyPauseModule.sol  | 2534 ++++++++++
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  124 +-
+ ...0x063E796B4ECD31d51291893e6F519e581950c034.sol} | 3906 ++++++----------
+ ...0x3CfF1E3617f1ABD92f19cf4E798457d2F5eF652b.sol} | 3997 ++++++----------
+ ...:0x85604124C78EA506704e361b28eAaBFA31B10Cf9.sol | 4718 +++++++++++++++++++
+ ...:0xAbdFf131ADbaEc38BB8962a906a6058d2F4465e7.sol | 4718 +++++++++++++++++++
+ ...:0xbEBeA705dc6D47BaFF5E971d77DeFB5e71fB2299.sol | 4718 +++++++++++++++++++
+ .../src/projects/base/.flat/LivenessGuard.sol      | 1632 +++++++
+ .../src/projects/base/.flat/LivenessModule.sol     | 1298 ++++++
+ .../base/{.flat@1779198836 => .flat}/MIPS.sol      | 3168 +++----------
+ .../OpFoundationUpgradeSafe/GnosisSafeProxy.p.sol  |   38 +
+ .../base/.flat/OpFoundationUpgradeSafe/Safe.sol    | 1216 +++++
+ .../Optimism Guardian Multisig/GnosisSafe.sol      | 1026 ++++
+ .../GnosisSafeProxy.p.sol                          |   38 +
+ .../.flat/Optimism Security Council/GnosisSafe.sol | 1026 ++++
+ .../GnosisSafeProxy.p.sol                          |   38 +
+ .../OptimismPortal2/OptimismPortal2.sol            |  461 +-
+ .../{.flat@1779198836 => .flat}/PreimageOracle.sol |  218 +-
+ .../src/projects/base/.flat/SaferSafes.sol         | 4916 ++++++++++++++++++++
+ .../Proxy.p.sol                                    | 1389 ++++++
+ .../SuperchainConfig.sol}                          | 1458 +++---
+ .../Proxy.p.sol                                    |    0
+ .../SuperchainConfig.sol                           |    0
+ .../projects/base/.flat/SuperchainProxyAdmin.sol   |  427 ++
+ .../.flat/SuperchainProxyAdminOwner/GnosisSafe.sol | 1026 ++++
+ .../GnosisSafeProxy.p.sol                          |   38 +
+ 34 files changed, 37428 insertions(+), 9072 deletions(-)
+```
+
 Generated with discovered.json: 0x2527024ac04992905aab58dbe5d4a3b956093038
 
 # Diff at Wed, 20 May 2026 10:24:31 GMT:
