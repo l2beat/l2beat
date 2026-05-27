@@ -17,6 +17,23 @@ import type { InteropSelection } from '../../utils/types'
 
 type TopProtocol = NonNullable<InteropTokenDashboardData['topProtocol']>
 
+const TOP_PROTOCOL_STATS = [
+  {
+    label: 'Volume',
+    tooltip:
+      "The total USD value of this token's transfers handled by the protocol in the past 24 hours.",
+    format: (topProtocol: TopProtocol) =>
+      formatCurrency(topProtocol.volume.value, 'usd'),
+  },
+  {
+    label: 'Transaction count',
+    tooltip:
+      "The total number of this token's transfers handled by the protocol in the past 24 hours.",
+    format: (topProtocol: TopProtocol) =>
+      formatInteger(topProtocol.transfers.value),
+  },
+] as const
+
 interface Props {
   data: InteropTokenDashboardData | undefined
   isLoading: boolean
@@ -48,24 +65,27 @@ export function TokenTopProtocolCard({
             isLoading={isLoading}
           />
           <div className="hidden xl:grid xl:flex-1 xl:grid-cols-2 xl:gap-2.5">
-            <TopProtocolStatCards
+            <TopProtocolStats
               topProtocol={topProtocol}
               isLoading={isLoading}
+              variant="card"
             />
           </div>
         </div>
 
         <div className="hidden md:grid md:grid-cols-2 md:gap-3 xl:hidden">
-          <TopProtocolStatCards
+          <TopProtocolStats
             topProtocol={topProtocol}
             isLoading={isLoading}
+            variant="card"
           />
         </div>
 
         <div className="md:hidden">
-          <TopProtocolStatRows
+          <TopProtocolStats
             topProtocol={topProtocol}
             isLoading={isLoading}
+            variant="row"
           />
         </div>
       </div>
@@ -131,120 +151,81 @@ function TopProtocolIdentity({
   )
 }
 
-function TopProtocolStatCards({
+function TopProtocolStats({
   topProtocol,
   isLoading,
+  variant,
 }: {
   topProtocol: TopProtocol | undefined
   isLoading: boolean
+  variant: 'card' | 'row'
 }) {
-  return (
+  const stats = TOP_PROTOCOL_STATS.map((stat) => (
+    <ProtocolStat
+      key={stat.label}
+      variant={variant}
+      label={stat.label}
+      tooltip={stat.tooltip}
+      isLoading={isLoading}
+      value={formatStatValue(topProtocol, stat.format)}
+    />
+  ))
+
+  if (variant === 'row') {
+    return <div className="flex flex-col gap-2">{stats}</div>
+  }
+
+  return <>{stats}</>
+}
+
+function formatStatValue(
+  topProtocol: TopProtocol | undefined,
+  format: (protocol: TopProtocol) => ReactNode,
+) {
+  return topProtocol ? (
+    format(topProtocol)
+  ) : (
+    <span className="text-label-value-15">{EM_DASH}</span>
+  )
+}
+
+function ProtocolStat({
+  variant,
+  label,
+  tooltip,
+  value,
+  isLoading,
+}: {
+  variant: 'card' | 'row'
+  label: string
+  tooltip: string
+  value: ReactNode
+  isLoading: boolean
+}) {
+  const labelContent = (
     <>
-      <ProtocolStatCard
-        label="Volume"
-        tooltip="The total USD value of this token's transfers handled by the protocol in the past 24 hours."
-        isLoading={isLoading}
-        value={
-          topProtocol ? (
-            formatCurrency(topProtocol.volume.value, 'usd')
-          ) : (
-            <span className="text-label-value-15">{EM_DASH}</span>
-          )
-        }
-      />
-      <ProtocolStatCard
-        label="Transaction count"
-        tooltip="The total number of this token's transfers handled by the protocol in the past 24 hours."
-        isLoading={isLoading}
-        value={
-          topProtocol ? (
-            formatInteger(topProtocol.transfers.value)
-          ) : (
-            <span className="text-label-value-15">{EM_DASH}</span>
-          )
-        }
-      />
+      {label}
+      <InfoTooltip>{tooltip}</InfoTooltip>
     </>
   )
-}
 
-function TopProtocolStatRows({
-  topProtocol,
-  isLoading,
-}: {
-  topProtocol: TopProtocol | undefined
-  isLoading: boolean
-}) {
-  return (
-    <div className="flex flex-col gap-2">
-      <ProtocolStatRow
-        label="Volume"
-        tooltip="The total USD value of this token's transfers handled by the protocol in the past 24 hours."
-        isLoading={isLoading}
-        value={
-          topProtocol ? (
-            formatCurrency(topProtocol.volume.value, 'usd')
-          ) : (
-            <span className="text-label-value-15">{EM_DASH}</span>
-          )
-        }
-      />
-      <ProtocolStatRow
-        label="Transaction count"
-        tooltip="The total number of this token's transfers handled by the protocol in the past 24 hours."
-        isLoading={isLoading}
-        value={
-          topProtocol ? (
-            formatInteger(topProtocol.transfers.value)
-          ) : (
-            <span className="text-label-value-15">{EM_DASH}</span>
-          )
-        }
-      />
-    </div>
-  )
-}
-
-function ProtocolStatCard({
-  label,
-  tooltip,
-  value,
-  isLoading,
-}: {
-  label: string
-  tooltip?: ReactNode
-  value: ReactNode
-  isLoading: boolean
-}) {
-  return (
-    <div className="flex h-14 flex-col justify-center rounded border border-divider px-4">
-      <div className="flex items-center justify-center text-center font-medium text-2xs text-secondary leading-none">
-        {label}
-        {tooltip ? <InfoTooltip>{tooltip}</InfoTooltip> : null}
+  if (variant === 'card') {
+    return (
+      <div className="flex h-14 flex-col justify-center rounded border border-divider px-4">
+        <div className="flex items-center justify-center text-center font-medium text-2xs text-secondary leading-none">
+          {labelContent}
+        </div>
+        <div className="mt-1.5 text-center font-bold text-label-value-15 leading-none">
+          {isLoading ? <Skeleton className="mx-auto h-[15px] w-20" /> : value}
+        </div>
       </div>
-      <div className="mt-1.5 text-center font-bold text-label-value-15 leading-none">
-        {isLoading ? <Skeleton className="mx-auto h-[15px] w-20" /> : value}
-      </div>
-    </div>
-  )
-}
+    )
+  }
 
-function ProtocolStatRow({
-  label,
-  tooltip,
-  value,
-  isLoading,
-}: {
-  label: string
-  tooltip?: ReactNode
-  value: ReactNode
-  isLoading: boolean
-}) {
   return (
     <div className="flex items-center justify-between gap-3">
       <div className="flex items-center gap-1 font-medium text-label-value-14 text-secondary leading-none">
-        {label}
-        {tooltip ? <InfoTooltip>{tooltip}</InfoTooltip> : null}
+        {labelContent}
       </div>
       <div className="text-right font-bold text-label-value-15 leading-none">
         {isLoading ? <Skeleton className="h-4 w-20" /> : value}
