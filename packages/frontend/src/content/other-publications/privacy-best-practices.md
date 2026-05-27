@@ -1,12 +1,14 @@
 ---
 title: "Onchain privacy best practice"
-description: "Basic tips for using privacy protocols on Ethereum without accidentally linking deposits, withdrawals, and offchain identity."
+description: "How to reveal only what you choose while onchain"
 publishedOn: "2026-05-25"
 authorId: l2beat_research
 tag: Research
 ---
 
 ## Basic tips for using privacy protocols on Ethereum
+
+[<-- back to Privacy Summary](/privacy/summary)
 
 ### Blockchains are not like banks
 
@@ -45,3 +47,5 @@ Even before TornadoCash was put on the OFAC blacklist, it tried to comply with s
 ![A schematic 'root of trust' image showing how information gets from the blockchain to the user](/images/privacy/best-practices-root.png)
 
 Even the onchain root of trust for the frontend, the ipfs content hash in the ENS resolver contract, was compromised later, for ~2 months, by [a governance proposal](https://etherscan.io/tx/0xd0702bce5e0608d042c7673bc382a605f7eb94dd354c36c56220b4238c1ab0d1/advanced#eventlog) that hid a javascript snippet in the frontend code which would steal all private notes at deposit time. Since TornadoCash notes act like private keys for the deposited assets, trusting the onchain ipfs hash and the TORN DAO during those two months (even if using local nodes and best practice) would have resulted in losing all deposited funds. The only protection against this attack vector would have been to deeply audit the frontend code before using it (which the governance system did not do) or developing a custom interface to interact with the smart contracts directly. The frontend code was rolled back to an uncompromised version [in a later proposal](https://etherscan.io/tx/0x4fb9cbe37f0f44a5f8da248649481c42607601b37b60fff1017fdebb0c85f1da/advanced#eventlog), but there have since been many proposals that changed the ipfs to newer versions...
+
+[<-- back to Privacy Summary](/privacy/summary)
