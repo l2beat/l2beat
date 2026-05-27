@@ -1,12 +1,14 @@
 ---
 title: "Onchain privacy best practice"
-description: "Basic tips for using privacy protocols on Ethereum without accidentally linking deposits, withdrawals, and offchain identity."
+description: "How to reveal only what you choose while onchain"
 publishedOn: "2026-05-25"
 authorId: l2beat_research
 tag: Research
 ---
 
 ## Basic tips for using privacy protocols on Ethereum
+
+[<-- back to Privacy](/privacy/summary)
 
 ### Blockchains are not like banks
 
