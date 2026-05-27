@@ -21,7 +21,7 @@ export async function getScalingTvsEntries() {
       select: ['statuses', 'scalingInfo', 'tvsInfo', 'display'],
       optional: ['contracts'],
       where: ['scalingInfo'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      whereNot: ['archivedAt'],
     }),
   ])
 

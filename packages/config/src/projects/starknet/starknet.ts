@@ -390,13 +390,15 @@ export const starknet: ScalingProject = {
     programHashesDescription:
       'Starknet state transition function could be proven with unverified ZK programs (bootloaders) on older versions of verifiers. Compliance with the rules of L2 STF can not be independently verified without the sources of these programs.',
   },
-  upgradesAndGovernance: `
+  upgradesAndGovernance: {
+    content: `
 The Starknet zk Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the main Starknet rollup contract and its core bridge escrows (ETHBridge, STRKBridge) is currently split between the ${scThreshold} Security Council with instant upgrade capability and the ${discovery.getMultisigStats('Starkware Multisig 2')} Starkware Multisig 2 who can upgrade with a ${discovery.getContractValue('DelayedExecutor', 'executionDelayFmt')} delay. The former Multisig also governs most other bridge escrows with instant upgradeability. The shared SHARP verifier used for state validation can be changed by the ${sharpMsThreshold} SHARP Multisig with and a ${discovery.getContractValue('SHARPVerifierCallProxy', 'upgradeActivationDelayFmt')} delay, affecting all rollups like Starknet that are sharing it. 
 
 The Operator role in the Starknet contract is permissioned to update the state of the Starknet rollup by supplying valid (zk) state transition proofs. Since this role is not permissionless, Starknet implements a StarknetSCMinorityMultisig with the Operator role, which allows a ${discovery.getMultisigStats('Starkware SCMinority Multisig')} minority of the StarknetSecurityCouncil to enforce censorship resistance by including transactions that are not included by regular Operators.
 
 All bridge escrows allow enabling a withdrawal throttle of 5% of the locked funds per 24h period. Enabling it is permissioned to a Multisig while disabling it in the core bridge escrows (STRKBridge, ETHBridge) can be done by a ${discovery.getMultisigStats('Starkware SCMinority Multisig')} minority of the Security Council.
 `,
+  },
   milestones: [
     {
       title: 'Starknet reverts 18mins of history',

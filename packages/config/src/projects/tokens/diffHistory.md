@@ -1,3 +1,97 @@
+Generated with discovered.json: 0xf1075f2b86a529f61dc02b8e6a34c63644607867
+
+# Diff at Fri, 15 May 2026 12:37:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778679898
+- current timestamp: 1778679898
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778679898 (main branch discovery), not current.
+
+```diff
+    contract TokenMessengerV2 (base:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d) [tokens/circle/TokenMessenger] {
+    +++ description: Part of CCTP
+      sourceHashes.1:
+-        "0xefd6cf6974dbc8ebc44a033c50de8a6af99f518aa4a52795c663ea82600bf3e8"
++        "0xc7716814991dd09cd5c16dec694aea6f3c06a42531df261c804cf65fc2342841"
+    }
+```
+
+```diff
+    contract MessageTransmitterV2 (base:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64) [tokens/circle/MessageTransmitter] {
+    +++ description: Part of CCTP
+      sourceHashes.1:
+-        "0x99288de90f33d10f63dc39e2f12ca10d87f185a937f01ecf49ae82f0c70612b6"
++        "0xb1b996883e893bf22c3220218684d23097e100c26c9467bf95428b8bb1e2b576"
+    }
+```
+
+```diff
+    contract ValidatorExitDelayVerifier (eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xb62b25f0b67746b7e3bf482df8a768f79427d2dbb4367a0e913c73c4bf1261ef"
++        "0x2d45d09afa27ef4bdab79c0c9c40dffdc2e828937a1b2c962dc9d4e9ef39a954"
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) [tokens/Lido/CSModule] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x4b8eaaad7448f56079390c14b2f7e2ee8285fd0f55208880a2e5d95a9c1715f1"
++        "0x415b0abee07f0a91a3208b51454b2914b46d714595716a4f7ff7e9e742a791bf"
+    }
+```
+
+```diff
+    contract PredepositGuarantee (eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x80d0adbcca3e958f1bffc81ef35108d4a2e88a2c44e4626228459ebc0031d1e7"
++        "0xb97b8a0c7648d3d10372c1719e32bb311cb254066843bdef5d9cef60fe290494"
+    }
+```
+
+Generated with discovered.json: 0x7fa4c2f397421cbec5a2dccef8b3c67a3446fc90
+
+# Diff at Wed, 13 May 2026 13:47:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b18d53b57004d29236893505e028d7202c63b265 block: 1776866286
+- current timestamp: 1778679898
+
+## Description
+
+one lido vault pauses deposits. one oeth-related safe adds a member.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) [GnosisSafe] {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "base:0xf633980A61E9F90a41d030676059Dc201D9d4A37"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711) [tokens/Lido/StakingVault] {
+    +++ description: None
+      values.beaconChainDepositsPaused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x6868667d94c3a07f27718ffcc36bf6d94754c178
 
 # Diff at Fri, 08 May 2026 07:52:35 GMT:

@@ -14,6 +14,7 @@ import unionBy from 'lodash/unionBy'
 import {
   CONTRACTS,
   compareRisk,
+  computeBoldDefenderAdvantage,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
@@ -32,6 +33,7 @@ import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { PROGRAM_HASHES } from '../common/programHashes'
+import { getAltDaStage } from '../common/stages/getAltDaStage'
 import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
@@ -64,6 +66,7 @@ import type {
   ProjectScalingStateValidationCategory,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
+  ProjectUpgradesAndGovernance,
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
@@ -146,7 +149,7 @@ interface OrbitStackConfigCommon {
   nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   activityConfig?: ProjectActivityConfig
   milestones?: Milestone[]
-  trackedTxs?: Layer2TxConfig[]
+  additionalTrackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
   additionalBadges?: Badge[]
   stage?: ProjectScalingStage
@@ -179,6 +182,24 @@ interface OrbitStackConfigCommon {
   celestiaProofSystemInactive?: boolean
   nonTemplateZkVerifiers?: ChainSpecificAddress[]
   nonTemplateProgramHashes?: ProjectScalingContractsProgramHash[]
+  // altDA stage inputs (used when the project is a Validium/Optimium)
+  daAttestedByIndependentParty?: boolean
+  daVerifierSecureOnL1?: boolean
+  daVerifier7DayExitWindow?: boolean
+  daVerifier30DayExitWindow?: boolean
+  daCommitteeDecentralized?: boolean
+  /** Override for the static economic-security check derived from the DA layer. */
+  daMechanismEconomicSecurity?: boolean
+  daVerifierLink?: string
+  proverSourceLink?: string
+  securityCouncilReference?: string
+  /** Stage 1: did the project's upgrade path provide ≥7d exit window? */
+  usersHave7DaysToExit?: boolean
+  /** Stage 1: is the project's Security Council properly set up? */
+  hasProperSecurityCouncil?: boolean
+  stage1PrincipleDescription?: string
+  /** Manual altDA Stage 1 principle verdict (no automation). */
+  stage1Principle?: boolean | 'UnderReview'
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -188,7 +209,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   interopConfig?: InteropConfig
 }
 
@@ -984,13 +1005,28 @@ function getRiskView(
       templateVars.nonTemplateRiskView?.stateValidation ??
       (() => {
         if (validatorWhitelistDisabled) {
-          return RISK_VIEW.STATE_FP_INT(
-            challengePeriodSeconds,
-            challengeGracePeriodBlocks
-              ? Number(challengeGracePeriodBlocks) *
-                  blockNumberOpcodeTimeSeconds
-              : undefined,
+          const baseStake = templateVars.discovery.getContractValue<number>(
+            'RollupProxy',
+            'baseStake',
           )
+          const stakeAmounts = templateVars.discovery.getContractValue<
+            number[]
+          >('EdgeChallengeManager', 'stakeAmounts')
+          return {
+            ...RISK_VIEW.STATE_FP_INT(
+              challengePeriodSeconds,
+              challengeGracePeriodBlocks
+                ? Number(challengeGracePeriodBlocks) *
+                    blockNumberOpcodeTimeSeconds
+                : 0,
+              challengeGracePeriodBlocks ? 'if-challenged' : undefined,
+            ),
+            permissioned: false,
+            defenderAdvantage: computeBoldDefenderAdvantage(
+              baseStake,
+              stakeAmounts,
+            ),
+          }
         }
 
         const nOfChallengers = isPostBoLD
@@ -1011,21 +1047,24 @@ function getRiskView(
             challengeGracePeriodBlocks
               ? Number(challengeGracePeriodBlocks) *
                   blockNumberOpcodeTimeSeconds
-              : undefined,
+              : 0,
+            challengeGracePeriodBlocks ? 'if-challenged' : undefined,
           ),
-          initialBond: isPostBoLD
-            ? formatEther(
-                templateVars.discovery.getContractValue<number>(
-                  'RollupProxy',
-                  'baseStake',
+          initialBond: {
+            value: isPostBoLD
+              ? formatEther(
+                  templateVars.discovery.getContractValue<number>(
+                    'RollupProxy',
+                    'baseStake',
+                  ),
+                )
+              : formatEther(
+                  templateVars.discovery.getContractValue<number>(
+                    'RollupProxy',
+                    'currentRequiredStake',
+                  ),
                 ),
-              )
-            : formatEther(
-                templateVars.discovery.getContractValue<number>(
-                  'RollupProxy',
-                  'currentRequiredStake',
-                ),
-              ),
+          },
         }
       })(),
     dataAvailability:
@@ -1292,62 +1331,6 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
       query: {
         formula: 'functionCall',
         address: ChainSpecificAddress.address(sequencerInbox.address),
-        selector: '0x37501551',
-        functionSignature:
-          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, bytes quote)',
-        sinceTimestamp: UnixTime(genesisTimestamp),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: ChainSpecificAddress.address(sequencerInbox.address),
-        selector: '0x3e5aa082',
-        functionSignature:
-          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: UnixTime(genesisTimestamp),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: ChainSpecificAddress.address(sequencerInbox.address),
-        selector: '0x6e620055',
-        functionSignature:
-          'function addSequencerL2BatchDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
-        sinceTimestamp: UnixTime(genesisTimestamp),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: ChainSpecificAddress.address(sequencerInbox.address),
-        selector: '0x917cf8ac',
-        functionSignature:
-          'function addSequencerL2BatchFromBlobsDelayProof(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
-        sinceTimestamp: UnixTime(genesisTimestamp),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: ChainSpecificAddress.address(sequencerInbox.address),
         selector: '0x69cacded',
         functionSignature:
           'function addSequencerL2BatchFromOriginDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
@@ -1368,6 +1351,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         sinceTimestamp: UnixTime(genesisTimestamp),
       },
     },
+    ...(templateVars.additionalTrackedTxs ?? []),
   ]
 }
 
@@ -1382,48 +1366,95 @@ function extractDAs(daProviders: DAProvider[]): ProjectScalingDa[] {
 function computedStage(
   templateVars: OrbitStackConfigCommon,
 ): ProjectScalingStage {
-  const postsToL1 = postsToEthereum(templateVars)
-
   if (templateVars.stage !== undefined) {
     return templateVars.stage
-  }
-  if (!postsToL1) {
-    return { stage: 'NotApplicable' }
   }
 
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
     'RollupProxy',
     'wasmModuleRoot',
   )
-  return getRollupStage(
+
+  if (postsToEthereum(templateVars)) {
+    return getRollupStage(
+      {
+        stage0: {
+          callsItselfRollup: true,
+          stateRootsPostedToL1: true,
+          dataAvailabilityOnL1: true,
+          rollupNodeSourceAvailable:
+            templateVars.isNodeAvailable ?? 'UnderReview',
+          stateVerificationOnL1: true,
+          fraudProofSystemAtLeast5Outsiders: false,
+        },
+        stage1: {
+          principle: false,
+          usersHave7DaysToExit: false,
+          usersCanExitWithoutCooperation: true,
+          securityCouncilProperlySetUp: false,
+          noRedTrustedSetups: null,
+          programHashesReproducible: programHashesReproducible(wasmModuleRoot),
+          proverSourcePublished: null,
+          verifierContractsReproducible: null,
+        },
+        stage2: {
+          proofSystemOverriddenOnlyInCaseOfABug: false,
+          fraudProofSystemIsPermissionless: false,
+          delayWith30DExitWindow: false,
+        },
+      },
+      {
+        rollupNodeLink: templateVars.nodeSourceLink,
+      },
+    )
+  }
+
+  return getAltDaStage(
     {
       stage0: {
-        callsItselfRollup: true,
+        callsItselfValidiumOrOptimium: true,
         stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable:
-          templateVars.isNodeAvailable ?? 'UnderReview',
         stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: false,
+        daAttestedByIndependentParty:
+          templateVars.daAttestedByIndependentParty ?? null,
+        nodeSourceAvailable: templateVars.isNodeAvailable ?? 'UnderReview',
+        fraudProofSystemAtLeast5Outsiders:
+          templateVars.hasAtLeastFiveExternalChallengers ?? false,
       },
       stage1: {
-        principle: false,
-        usersHave7DaysToExit: false,
+        principle: templateVars.stage1Principle ?? null,
         usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: false,
+        usersHave7DaysToExit: templateVars.usersHave7DaysToExit ?? false,
+        securityCouncilProperlySetUp:
+          templateVars.hasProperSecurityCouncil ?? false,
+        daVerifierSecureOnL1: templateVars.daVerifierSecureOnL1 ?? null,
+        daVerifier7DayExitWindow: templateVars.daVerifier7DayExitWindow ?? null,
+        daCommitteeDecentralized: templateVars.daCommitteeDecentralized ?? null,
         noRedTrustedSetups: null,
-        programHashesReproducible: programHashesReproducible(wasmModuleRoot),
         proverSourcePublished: null,
         verifierContractsReproducible: null,
+        programHashesReproducible: programHashesReproducible(wasmModuleRoot),
       },
       stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
         fraudProofSystemIsPermissionless: false,
         delayWith30DExitWindow: false,
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        daVerifier30DayExitWindow:
+          templateVars.daVerifier30DayExitWindow ?? null,
+        daMechanismEconomicSecurity:
+          templateVars.daMechanismEconomicSecurity ?? null,
       },
     },
     {
-      rollupNodeLink: templateVars.nodeSourceLink,
+      nodeSourceLink:
+        templateVars.isNodeAvailable === true
+          ? (templateVars.nodeSourceLink ??
+            'https://github.com/OffchainLabs/nitro')
+          : templateVars.nodeSourceLink,
+      proverSourceLink: templateVars.proverSourceLink,
+      securityCouncilReference: templateVars.securityCouncilReference,
+      stage1PrincipleDescription: templateVars.stage1PrincipleDescription,
+      daVerifierLink: templateVars.daVerifierLink,
     },
   )
 }

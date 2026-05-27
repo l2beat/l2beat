@@ -9,6 +9,7 @@ import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMint
 import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
 import { getInteropProtocolPageData } from './protocol/getInteropProtocolPageData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
+import { getInteropTokenFrameworksData } from './token-frameworks/getInteropTokenFrameworksData'
 
 export type InteropQuery = v.infer<typeof InteropQuery>
 const InteropQuery = v
@@ -18,10 +19,6 @@ const InteropQuery = v
       .transform((v) => v?.split(','))
       .optional(),
     to: v
-      .string()
-      .transform((v) => v?.split(','))
-      .optional(),
-    selectedChains: v
       .string()
       .transform((v) => v?.split(','))
       .optional(),
@@ -87,6 +84,12 @@ export function createInteropRouter(
     },
   )
 
+  router.get('/interop/token-frameworks', async (req, res) => {
+    const data = await getInteropTokenFrameworksData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
   router.get(
     '/interop/protocols/:slug',
     validateRoute({
@@ -98,62 +101,6 @@ export function createInteropRouter(
         res.status(404).send('Not found')
         return
       }
-      const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
-    },
-  )
-
-  router.get(
-    '/interop/summary/internal',
-    validateRoute({
-      query: InteropQuery,
-    }),
-    async (req, res) => {
-      const data = await getInteropSummaryData(req, manifest, cache, {
-        mode: 'internal',
-      })
-      const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
-    },
-  )
-
-  router.get(
-    '/interop/non-minting/internal',
-    validateRoute({
-      query: InteropQuery,
-    }),
-    async (req, res) => {
-      const data = await getInteropNonMintingData(req, manifest, cache, {
-        mode: 'internal',
-      })
-      const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
-    },
-  )
-
-  router.get(
-    '/interop/lock-and-mint/internal',
-    validateRoute({
-      query: InteropQuery,
-    }),
-    async (req, res) => {
-      const data = await getInteropLockAndMintData(req, manifest, cache, {
-        mode: 'internal',
-      })
-      const html = await render(data, req.originalUrl)
-      res.status(200).send(html)
-    },
-  )
-
-  router.get(
-    '/interop/burn-and-mint/internal',
-    validateRoute({
-      query: InteropQuery,
-    }),
-    async (req, res) => {
-      const data = await getInteropBurnAndMintData(req, manifest, cache, {
-        mode: 'internal',
-      })
       const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },

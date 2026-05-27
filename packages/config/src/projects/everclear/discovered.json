@@ -1,6 +1,6 @@
 {
   "name": "everclear",
-  "timestamp": 1777390984,
+  "timestamp": 1779399692,
   "configHash": "0xd3e30ff2b1e182de03b5692c2b14f9676fa11e5c19453de15168dab99f37af87",
   "entries": [
     {
@@ -9,7 +9,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
-        "0xd64745a0edbb2ada69b81d849f2737d7c082d18ca14a715c23c4165e4eecc637"
+        "0x081875b93df655e91ec23245390ad21db0990c12125dad497f1cbf118501ccc2"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -33,11 +33,6 @@
           "role": ".batchPosters"
         }
       ]
-    },
-    {
-      "address": "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "ERC20Gateway",
@@ -83,7 +78,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
-        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
+        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -93,6 +88,150 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB": "OneStepProverMemory"
+      }
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0x1e0Ef0ebC026142cC5EFAE90534F438aD79c313A",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x149e3df73d9D48cb6573555De9256cc1456F50B5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
+            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
+            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4eb4fB614e1aa3634513319F4Ec7334bC4321356",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
+            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7B0517E0104dB60198f9d573C0aB8d480207827E",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
+            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
+            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA880b3fC75928695ac75e06793277aC4bEA84a3E",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
+            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
+            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
+            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xdE3fdE71a026236b6b5C35505643FF4155EAb20D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
+            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
+          "role": ".executors"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD976faAa19135dB4B846e43DdAaA9C66db842B7B",
+      "sinceTimestamp": 1774283003,
+      "sinceBlock": 24721385,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0xD976faAa19135dB4B846e43DdAaA9C66db842B7B",
+          "eth:0xBb25051d1E9cB359bD8229180F34E59120567b72",
+          "eth:0xd19b52aC8f76cAb936D51b70b2206eBb60161bA4",
+          "eth:0x2eEd1440842990Fa61F0c396f981375Fa6004131",
+          "eth:0xC26af184F3F5a63CEde9545aF8780747621EECbB"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x2ba940cf6e17b176ed4bf578274bf64bd99c9cc4f26327d465ca1192b6d7476e",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 9,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x1e0Ef0ebC026142cC5EFAE90534F438aD79c313A": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -132,7 +271,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
-        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
+        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -143,6 +282,11 @@
       "implementationNames": {
         "eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5": "OneStepProver0"
       }
+    },
+    {
+      "address": "eth:0x2eEd1440842990Fa61F0c396f981375Fa6004131",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
@@ -301,7 +445,7 @@
           "eth:0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
         ],
         "allowedOutboxList": ["eth:0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"],
-        "delayedMessageCount": 1378,
+        "delayedMessageCount": 1399,
         "inboxHistory": [
           "eth:0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
           "eth:0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
@@ -309,8 +453,8 @@
         "outboxHistory": ["eth:0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"],
         "rollup": "eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerInbox": "eth:0x7B0517E0104dB60198f9d573C0aB8d480207827E",
-        "sequencerMessageCount": 1189,
-        "sequencerReportedSubMessageCount": 4776378
+        "sequencerMessageCount": 1210,
+        "sequencerReportedSubMessageCount": 4779859
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -335,45 +479,6 @@
         "eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F": "Bridge"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0x547D0F472309e4239b296D01e03bEDc101241a26",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682",
-      "type": "EOA",
-      "sourceHashes": [
-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
-      ],
-      "proxyType": "EIP7702 EOA",
-      "values": {
-        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
-        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
-        "DOMAIN_VERSION": "1",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "EIP7702StatelessDeleGator",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
-        "getDeposit": 0,
-        "getDomainHash": "0xd917081b48992d80de39a3221072d3c1b453c5b6063c39322280b45abc776792",
-        "getNonce": 0,
-        "NAME": "EIP7702StatelessDeleGator",
-        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
-        "VERSION": "1.3.0"
-      }
     },
     {
       "address": "eth:0x75feC8Bb2d99076D776A5D46D1E3d42686520eF1",
@@ -424,7 +529,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 1189,
+        "batchCount": 1210,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -461,7 +566,7 @@
         "rollup": "eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1377,
+        "totalDelayedMessagesRead": 1395,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -495,17 +600,12 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "OneStepProofEntry",
       "address": "eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC",
       "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
-        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
+        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -570,6 +670,19 @@
       "address": "eth:0x9EcE0898142303Ef0f97567F5E37a9DF7F52ac87",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
     },
     {
       "name": "GatewayRouter",
@@ -663,13 +776,13 @@
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"]
+            "members": ["eth:0x1e0Ef0ebC026142cC5EFAE90534F438aD79c313A"]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "executors": ["eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"]
+        "executors": ["eth:0x1e0Ef0ebC026142cC5EFAE90534F438aD79c313A"]
       },
       "implementationNames": {
         "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B": "TransparentUpgradeableProxy",
@@ -678,148 +791,14 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "Gelato Multisig",
-      "address": "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x149e3df73d9D48cb6573555De9256cc1456F50B5",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
-            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
-            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x4eb4fB614e1aa3634513319F4Ec7334bC4321356",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
-            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7B0517E0104dB60198f9d573C0aB8d480207827E",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
-            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
-            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA880b3fC75928695ac75e06793277aC4bEA84a3E",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
-            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
-            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
-            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xdE3fdE71a026236b6b5C35505643FF4155EAb20D",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
-            { "address": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-          "role": ".executors"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c",
-      "sinceTimestamp": 1711489163,
-      "sinceBlock": 19521321,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
-          "eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682",
-          "eth:0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
-          "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
-          "eth:0x547D0F472309e4239b296D01e03bEDc101241a26"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 49,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
+      "address": "eth:0xBb25051d1E9cB359bD8229180F34E59120567b72",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xC26af184F3F5a63CEde9545aF8780747621EECbB",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xC410B8657FBB2CdbF0c5c5d5128576974467ba5e",
@@ -841,7 +820,7 @@
       "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
         "0xb739f8156f36efd1dca81c7048413241da1e5bf4a5f98001523a474136b8defd",
-        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
+        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
@@ -887,32 +866,33 @@
         "challengeManager": "eth:0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8",
         "challenges": [],
         "confirmPeriodBlocks": 45818,
-        "currentRequiredStake": "100000000000000000",
+        "currentRequiredStake": "400000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1183,
+        "firstUnresolvedNode": 1198,
         "inbox": "eth:0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21895344,
-        "latestConfirmed": 1182,
-        "latestNodeCreated": 1182,
+        "latestConfirmed": 1197,
+        "latestNodeCreated": 1198,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "eth:0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa",
         "owner": "eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-        "paused": false,
+        "paused": true,
         "rollupDeploymentBlock": 20684364,
         "rollupEventInbox": "eth:0xdE3fdE71a026236b6b5C35505643FF4155EAb20D",
         "sequencerInbox": "eth:0x7B0517E0104dB60198f9d573C0aB8d480207827E",
-        "setValidatorCount": 4,
-        "stakerCount": 2,
+        "setValidatorCount": 5,
+        "stakerCount": 0,
         "stakeToken": "eth:0x0000000000000000000000000000000000000000",
-        "totalWithdrawableFunds": 0,
+        "totalWithdrawableFunds": "100000000000000000",
         "VALIDATOR_AFK_BLOCKS": 45818,
         "validators": [
           "eth:0x262711cA4DA6409Da795D8af9E18DDaF47397f80",
           "eth:0x3648e2c562F00DeEA11B0b335Cf55C5EB2Df3A5F",
           "eth:0x75feC8Bb2d99076D776A5D46D1E3d42686520eF1",
+          "eth:0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA",
           "eth:0xD19ee3f6Bf22A3A23eCd25B5ED0C655a2a56F65E",
           "eth:0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501",
           "eth:0xe778F5Bf5dDB8614a1ab6321Cc557EDbC90e615f"
@@ -921,9 +901,12 @@
         "validatorWalletCreator": "eth:0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
         "validatorWhitelistDisabled": false,
         "wasmModuleRoot": "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a",
-        "zombieAddress": [],
-        "zombieCount": 0,
-        "zombieLatestStakedNode": []
+        "zombieAddress": [
+          "eth:0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA",
+          "eth:0xe778F5Bf5dDB8614a1ab6321Cc557EDbC90e615f"
+        ],
+        "zombieCount": 2,
+        "zombieLatestStakedNode": [324, 1198]
       },
       "fieldMeta": {
         "minimumAssertionPeriod": {
@@ -1005,7 +988,7 @@
       "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
+        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
@@ -1059,6 +1042,11 @@
       }
     },
     {
+      "address": "eth:0xd19b52aC8f76cAb936D51b70b2206eBb60161bA4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xD19ee3f6Bf22A3A23eCd25B5ED0C655a2a56F65E",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1070,6 +1058,11 @@
           "role": ".validators"
         }
       ]
+    },
+    {
+      "address": "eth:0xD976faAa19135dB4B846e43DdAaA9C66db842B7B",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "RollupEventInbox",
@@ -1146,7 +1139,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 947,
+        "nonce": 962,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1291,6 +1284,9 @@
     "eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
+    "eth:0x1e0Ef0ebC026142cC5EFAE90534F438aD79c313A": [
+      "constructor(address _singleton)"
+    ],
     "eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC": [
       "error AlreadyInit()",
       "error AlreadySpent(uint256 index)",
@@ -1365,6 +1361,54 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "eth:0x4eb4fB614e1aa3634513319F4Ec7334bC4321356": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1462,58 +1506,6 @@
       "function zombieAddress(uint256 zombieNum) view returns (address)",
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
-    ],
-    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
-      "constructor(address _delegationManager, address _entryPoint)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ExecutionFailed()",
-      "error InvalidEIP712NameLength()",
-      "error InvalidEIP712VersionLength()",
-      "error InvalidShortString()",
-      "error NotDelegationManager()",
-      "error NotEntryPoint()",
-      "error NotEntryPointOrSelf()",
-      "error NotSelf()",
-      "error StringTooLong(string str)",
-      "error UnauthorizedCallContext()",
-      "error UnsupportedCallType(bytes1 callType)",
-      "error UnsupportedExecType(bytes1 execType)",
-      "event EIP712DomainChanged()",
-      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
-      "event SetDelegationManager(address indexed newDelegationManager)",
-      "event SetEntryPoint(address indexed entryPoint)",
-      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
-      "function DOMAIN_VERSION() view returns (string)",
-      "function NAME() view returns (string)",
-      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
-      "function VERSION() view returns (string)",
-      "function addDeposit() payable",
-      "function delegationManager() view returns (address)",
-      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
-      "function entryPoint() view returns (address)",
-      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
-      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
-      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
-      "function getDeposit() view returns (uint256)",
-      "function getDomainHash() view returns (bytes32)",
-      "function getNonce(uint192 _key) view returns (uint256)",
-      "function getNonce() view returns (uint256)",
-      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
-      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
-      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
-      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
-      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
-      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
-      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
-      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
-      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
-      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
     ],
     "eth:0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D": [
       "event DefaultGatewayUpdated(address newDefaultGateway)",
@@ -1775,9 +1767,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb": [
-      "constructor(address _singleton)"
-    ],
     "eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1798,55 +1787,6 @@
     ],
     "eth:0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
-    ],
-    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "eth:0xdE3fdE71a026236b6b5C35505643FF4155EAb20D": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2006,6 +1946,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24979530 },
-  "permissionsConfigHash": "0xfdb9f1a3dece9cf67a64ae1e9f70243ee982de6d2d25c5450c2273d414ac6181"
+  "usedBlockNumbers": { "ethereum": 25146380 },
+  "permissionsConfigHash": "0x2dc24a2d9d6357cf9004a0f58d6f690257437efbbcacf47dee4a0af44805670d"
 }

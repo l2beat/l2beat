@@ -296,8 +296,10 @@ export const optimism: ScalingProject = opStackL2({
   hasProperSecurityCouncil: true,
   nodeSourceLink:
     'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
-  upgradesAndGovernance:
-    'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that limits the Optimism Foundation to act through it to stop withdrawals in the whole Superchain or specific individual chains. Each pause automatically expires after 3 months if not extended or unpaused by the Security Council. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `OpFoundationOperationsSafe` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
+  upgradesAndGovernance: {
+    content:
+      'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that limits the Optimism Foundation to act through it to stop withdrawals in the whole Superchain or specific individual chains. Each pause automatically expires after 3 months if not extended or unpaused by the Security Council. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `OpFoundationOperationsSafe` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
+  },
   milestones: [
     {
       title: 'Upgrade 17 - Jovian Hardfork and Fusaka Readiness',

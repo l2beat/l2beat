@@ -23,6 +23,21 @@
     "eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF": {
       "proxyType": "zkSync Lite proxy",
       "fields": {
+        "l1ClaimDistributor": {
+          "handler": {
+            "type": "event",
+            "select": "claimDistributor",
+            "set": { "event": "L1ClaimDistributorSet" }
+          }
+        },
+        "migratedTokens": {
+          "handler": {
+            "type": "event",
+            "select": "token",
+            "add": { "event": "TokenMigrationExecuted" },
+            "ignoreRelative": true
+          }
+        },
         "upgradePreparationActive": {
           "handler": { "type": "storage", "slot": 0, "returnType": "number" }
         },
@@ -85,7 +100,8 @@
         "totalBlocksExecuted",
         "totalBlocksProven",
         "totalOpenPriorityRequests"
-      ]
+      ],
+      "ignoreInWatchMode": ["migratedTokens"]
     },
     "eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": {
       "fields": {
@@ -156,6 +172,14 @@
     },
     "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": {
       "ignoreDiscovery": true
+    },
+    "eth:0x0a14B696350546110a0D8acDb86226983af9D2a0": {
+      "ignoreMethods": ["isClaimed"],
+      "fields": { "paused": { "severity": "HIGH" } },
+      "description": "Distributor smart contract that holds tokens migrated from zksync lite rollup contract and allows users withdrawing them."
+    },
+    "eth:0xDc7009bCAabD4069391C0aa9445D58a759fE1c7d": {
+      "ignoreRelatives": ["owner"]
     }
   }
 }

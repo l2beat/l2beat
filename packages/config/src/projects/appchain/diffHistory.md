@@ -1,3 +1,154 @@
+Generated with discovered.json: 0x992d4f84d241faf2134ce9039c2f15dd480db7e8
+
+# Diff at Mon, 25 May 2026 14:31:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6898129972dbc5b1b4f1389afaf9cb3fb7fd3380 block: 1778232916
+- current timestamp: 1779719407
+
+## Description
+
+Caldera Multisig 3 (shared chain-admin Safe upgrading appchain/capx/form/oevnetwork/sxt) rotated out one member and lowered threshold from 4/7 to 3/6.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x60e99331dff89be8e82323c78103f142ef764be0
+
+# Diff at Fri, 22 May 2026 15:38:11 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1b7024bc804124af9b25421eca5fac952454cb09 block: 1778232916
+- current timestamp: 1778232916
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778232916 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x28293c7855797B0441000EF144119727f3cBCA9B) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0xadb6c8a1061da2462a868d5816e4568c6eca51d7
+
+# Diff at Fri, 15 May 2026 12:35:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778232916
+- current timestamp: 1778232916
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778232916 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x28293c7855797B0441000EF144119727f3cBCA9B) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.1:
+-        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
++        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x5F8FE936F629AF71e7af6C7844692f98019d6163) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
++        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
+    }
+```
+
+```diff
+    contract ChallengeManager (eth:0xB9B007aE55B81dd1498Bc500a54ad9Ae53234c9C) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
++        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (eth:0xd79fd59b73c814D9607aB93C4A1aDCea06F91692) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xd64745a0edbb2ada69b81d849f2737d7c082d18ca14a715c23c4165e4eecc637"
++        "0x081875b93df655e91ec23245390ad21db0990c12125dad497f1cbf118501ccc2"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0xf6a307A5868eB9c4a00F5efbD1EF8462AC63783f) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
++        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0xFe95b1f7cf7D7D14E9e38dEE0EFE1c9D3AaA3e69) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
++        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
+    }
+```
+
+Generated with discovered.json: 0xf031b5d8dcf40925bf2791d377a2c99b64e07519
+
+# Diff at Fri, 08 May 2026 09:36:21 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1776422736
+- current timestamp: 1778232916
+
+## Description
+
+Shared Safe (`eth:0x6Dc61D9E...`) — signer `0x5582a8A4` removed. Threshold unchanged at 2; total signers 4 → 3 (50% → 67%). Same shared multisig is referenced on `apechain`, `molten`, `rari` (arb1 deployments).
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x5582a8A4f2B04341697cEA4Cf4289a01814C26e6"
+      values.multisigThreshold:
+-        "2 of 4 (50%)"
++        "2 of 3 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x4bfc8c730d71d84451644fdd17826a7abed9fa63
 
 # Diff at Fri, 08 May 2026 07:51:03 GMT:

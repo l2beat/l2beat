@@ -14,7 +14,7 @@ export async function getScalingTvsData(
     unknown,
     unknown,
     unknown,
-    { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed' }
+    { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' }
   >,
   manifest: Manifest,
   cache: InMemoryCache,
@@ -57,7 +57,7 @@ export async function getScalingTvsData(
 
 async function getCachedData(
   cache: InMemoryCache,
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others',
 ) {
   const entries = await getScalingTvsEntries()
 
@@ -77,15 +77,10 @@ async function getCachedData(
 }
 
 async function getQueryState(
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others',
   entries: Awaited<ReturnType<typeof getScalingTvsEntries>>,
 ) {
   const helpers = getSsrHelpers()
-
-  // Skip prefetching for underReview tab as it doesn't have chart data
-  if (tab === 'notReviewed') {
-    return helpers.dehydrate()
-  }
 
   await Promise.all([
     helpers.tvs.detailedChart.prefetch({

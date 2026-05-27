@@ -38,6 +38,7 @@ import type {
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
+  ProjectUpgradesAndGovernance,
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from './types'
@@ -57,8 +58,6 @@ export interface ScalingProject {
   addedAt: UnixTime
   /** Date of archiving of the project */
   archivedAt?: UnixTime
-  /** Is this project an upcoming rollup? */
-  isUpcoming?: boolean
   /** What is the review status of this project? */
   reviewStatus?: ProjectReviewStatus
   /** Colors used in the project's branding. E.g. ecosystem gradient, project page accents */
@@ -104,7 +103,7 @@ export interface ScalingProject {
   /** Discodrive markers - shouldn't be configured by a user */
   discoveryInfo: ProjectDiscoveryInfo
   /** Upgrades and governance explained */
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** Interop configuration */
   interopConfig?: InteropConfig
 }
@@ -157,8 +156,6 @@ export interface ProjectScalingDisplay {
   architectureImage?: string
   /** Name of the state validation image to show in the state validation section if present, otherwise use slug */
   stateValidationImage?: string
-  /** Name of the upgrades and governance image to show in the upgrades and governance section if present, otherwise use slug */
-  upgradesAndGovernanceImage?: string
   /** Name of the sequencing image to show in the sequencing section if present, otherwise use slug */
   sequencingImage?: string
   /** Tooltip contents for liveness tab for given project */
@@ -253,7 +250,6 @@ export interface Bridge {
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
   archivedAt?: UnixTime
-  isUpcoming?: boolean
   reviewStatus?: ProjectReviewStatus
   interopConfig?: InteropConfig
   display: BridgeDisplay

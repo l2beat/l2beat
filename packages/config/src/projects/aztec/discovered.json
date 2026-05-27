@@ -1,7 +1,7 @@
 {
   "name": "aztec",
   "timestamp": 1747043363,
-  "configHash": "0xe30954f1f437d3dd2685463c8dddb83df21223564ab948e06157f53a08165b70",
+  "configHash": "0x8bdd1aa50abfc09ed92238ffe164f8c0c4acbafe5eec0abbac4f6eed15481d7c",
   "entries": [
     {
       "address": "eth:0x1D93fE338A035f297819EA867275661a4f5B4fdD",
@@ -14,7 +14,7 @@
       "type": "Contract",
       "template": "aztecv1/AztecFeeDistributor",
       "sourceHashes": [
-        "0x56ca2c5458055de0d08eedc65f6be38927e931bd328c77eb4db1ef43b752bbed"
+        "0xe40f63f80dfb4ee0a5cdacbc4527030d3aa33252e5dd11fcae487ffba3ee38ef"
       ],
       "proxyType": "immutable",
       "description": "Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.",

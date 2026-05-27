@@ -28,6 +28,9 @@ import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { PROGRAM_HASHES } from '../common/programHashes'
+
+import { getAltDaStage } from '../common/stages/getAltDaStage'
+
 import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
@@ -62,6 +65,7 @@ import type {
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
+  ProjectUpgradesAndGovernance,
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
@@ -202,6 +206,7 @@ interface OpStackConfigCommon {
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   additionalStateValidationReferences?: { title: string; url: string }[]
+  kailuaVanguardAppliesToAllProposals?: boolean
   milestones?: Milestone[]
   ecosystemInfo?: ProjectEcosystemInfo
   nonTemplateProofSystem?: ProjectScalingProofSystem
@@ -253,10 +258,24 @@ interface OpStackConfigCommon {
   isPartOfSuperchain?: boolean
   // For Stage 1 requirement. In theory could also be determined from discovery and zk catalog
   zkVerifierContractsReproducible?: boolean
+  // altDA stage inputs (used when the project is a Validium/Optimium)
+  daAttestedByIndependentParty?: boolean
+  daVerifierSecureOnL1?: boolean
+  daVerifier7DayExitWindow?: boolean
+  daVerifier30DayExitWindow?: boolean
+  daCommitteeDecentralized?: boolean
+  /** Override for the static economic-security check derived from the DA layer. */
+  daMechanismEconomicSecurity?: boolean
+  daVerifierLink?: string
+  proverSourceLink?: string
+  securityCouncilReference?: string
+  stage1PrincipleDescription?: string
+  /** Manual altDA Stage 1 principle verdict (no automation). */
+  stage1Principle?: boolean | 'UnderReview'
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   interopConfig?: InteropConfig
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
 }
@@ -470,9 +489,7 @@ function opStackCommon(
     stateDerivation: templateVars.stateDerivation,
     stateValidation: getStateValidation(templateVars, explorerUrl),
     riskView: getRiskView(templateVars, daProvider),
-    stage:
-      templateVars.stage ??
-      computedStage(templateVars, postsToEthereum(templateVars)),
+    stage: templateVars.stage ?? computedStage(templateVars),
     dataAvailability: extractDA(daProvider),
     scopeOfAssessment: templateVars.scopeOfAssessment,
     discoveryInfo: getDiscoveryInfo(allDiscoveries),
@@ -882,7 +899,9 @@ function getStateValidation(
       const vanguardDescription =
         vanguardAdvantage === 0
           ? 'The **Vanguard** is configured with `vanguardAdvantage = 0`, so this advantage is currently disabled (not active) and child proposals are permissionless immediately.'
-          : `The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`
+          : templateVars.kailuaVanguardAppliesToAllProposals
+            ? `The **Vanguard** is the only address that can submit any proposal (first child or conflicting sibling) on a parent state root during the \`vanguardAdvantage\` window of ${formatSeconds(vanguardAdvantage)}. Faulty Vanguard proposals can be flagged via ZK fault proofs (\`proveOutputFault\`) but cannot be replaced by an honest sibling, so the chain stalls at that tournament until the Vanguard submits a correct state root.`
+            : `The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`
       return {
         categories: [
           {
@@ -919,9 +938,13 @@ ${vanguardDescription}`,
           {
             title: 'Challenges',
             description: `
-Any conflicting sibling proposals within a tournament that are made within the ${formatSeconds(maxClockDuration)} challenge period of a proposal they are challenging, delay resolving the tournament until sufficient ZK proofs are published to leave one single tournament survivor.
+${
+  templateVars.kailuaVanguardAppliesToAllProposals
+    ? `Any actor can submit a ZK fault proof against an existing child proposal via \`proveOutputFault\` to mark it faulty during the ${formatSeconds(maxClockDuration)} challenge period; this blocks the wrong proposal from resolving but does not, by itself, advance the chain. Conflicting sibling proposals (which would survive the tournament and resolve in place of a faulty proposal) can only be submitted by the Vanguard during the \`vanguardAdvantage\` window.`
+    : `Any conflicting sibling proposals within a tournament that are made within the ${formatSeconds(maxClockDuration)} challenge period of a proposal they are challenging, delay resolving the tournament until sufficient ZK proofs are published to leave one single tournament survivor.`
+}
 
-In the tree of proposed state roots, each parent node can have multiple children. These children are indirectly challenging each other in a tournament, which can only be resolved if but a single child survives. A state root can be resolved if it is **the only remaining proposal** due to any combination of the following elimination methods: 
+In the tree of proposed state roots, each parent node can have multiple children. These children are indirectly challenging each other in a tournament, which can only be resolved if but a single child survives. A state root can be resolved if it is **the only remaining proposal** due to any combination of the following elimination methods:
 1. the proposal's challenge period of ${formatSeconds(maxClockDuration)} has ended before a conflicting proposal was made
 2. the proposal is proven correct with a full validity proof (invalidates all conflicting proposals)
 3. a conflicting sibling proposal is proven faulty
@@ -1315,12 +1338,16 @@ function getRiskViewStateValidation(
           RISK_VIEW.STATE_FP_INT().description +
           ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
         sentiment: 'bad',
-        initialBond: formatEther(
-          templateVars.discovery.getContractValue<number[]>(
-            'DisputeGameFactory',
-            'initBonds',
-          )[1], // 1 is for permissioned games!
-        ),
+        initialBond: {
+          value: formatEther(
+            templateVars.discovery.getContractValue<number[]>(
+              'DisputeGameFactory',
+              'initBonds',
+            )[1], // 1 is for permissioned games!
+          ),
+        },
+        permissioned: true,
+        defenderAdvantage: 'not-applicable',
       }
     }
     case 'Permissionless': {
@@ -1329,12 +1356,19 @@ function getRiskViewStateValidation(
           getChallengePeriod(templateVars),
           getExecutionDelay(templateVars),
         ),
-        initialBond: formatEther(
-          templateVars.discovery.getContractValue<number[]>(
-            'DisputeGameFactory',
-            'initBonds',
-          )[0], // 0 is for permissionless games!
-        ),
+        initialBond: {
+          value: formatEther(
+            templateVars.discovery.getContractValue<number[]>(
+              'DisputeGameFactory',
+              'initBonds',
+            )[0], // 0 is for permissionless games!
+          ),
+        },
+        permissioned: false,
+        // OPFP: bonds scale by `exponentialBondsFactor` (1.09493) per depth,
+        // so the resource ratio is exactly that factor — slightly favors the
+        // attacker.
+        defenderAdvantage: { multiplier: 1 / 1.09493, shape: 'linear' },
       }
     }
     case 'Kailua':
@@ -1343,12 +1377,16 @@ function getRiskViewStateValidation(
         ...RISK_VIEW.STATE_FP_HYBRID_ZK,
         executionDelay: getExecutionDelay(templateVars),
         challengeDelay: getChallengePeriod(templateVars),
-        initialBond: formatEther(
-          templateVars.discovery.getContractValue<number>(
-            'KailuaTreasury',
-            'participationBond',
+        initialBond: {
+          value: formatEther(
+            templateVars.discovery.getContractValue<number>(
+              'KailuaTreasury',
+              'participationBond',
+            ),
           ),
-        ),
+        },
+        permissioned: false,
+        defenderAdvantage: 'not-assessed',
       }
     }
     case 'OpSuccinct': {
@@ -1366,12 +1404,16 @@ function getRiskViewStateValidation(
           ' The system currently operates with at least 5 whitelisted challengers external to the team.',
         executionDelay: getExecutionDelay(templateVars),
         challengeDelay: getChallengePeriod(templateVars),
-        initialBond: formatEther(
-          templateVars.discovery.getContractValue<number>(
-            'DisputeGameFactory',
-            'initBondGame42',
+        initialBond: {
+          value: formatEther(
+            templateVars.discovery.getContractValue<number>(
+              'DisputeGameFactory',
+              'initBondGame42',
+            ),
           ),
-        ),
+        },
+        permissioned: true,
+        defenderAdvantage: 'not-applicable',
       }
     }
   }
@@ -1434,11 +1476,8 @@ function getRiskViewProposerFailure(
   }
 }
 
-function computedStage(
-  templateVars: OpStackConfigCommon,
-  postsToEthereum: boolean,
-): ProjectScalingStage {
-  if (!postsToEthereum || templateVars.isNodeAvailable === undefined) {
+function computedStage(templateVars: OpStackConfigCommon): ProjectScalingStage {
+  if (templateVars.isNodeAvailable === undefined) {
     return { stage: 'NotApplicable' }
   }
 
@@ -1453,57 +1492,117 @@ function computedStage(
     OpSuccinctFDP: null,
   }
 
-  return getRollupStage(
+  if (postsToEthereum(templateVars)) {
+    return getRollupStage(
+      {
+        stage0: {
+          callsItselfRollup: true,
+          stateRootsPostedToL1: true,
+          dataAvailabilityOnL1: true,
+          rollupNodeSourceAvailable: templateVars.isNodeAvailable,
+          stateVerificationOnL1: fraudProofType !== 'None',
+          fraudProofSystemAtLeast5Outsiders: fraudProofMapping[fraudProofType],
+        },
+        stage1: {
+          principle:
+            fraudProofType === 'Permissionless' &&
+            (templateVars.hasProperSecurityCouncil ?? false),
+          usersHave7DaysToExit:
+            fraudProofType === 'Permissionless' &&
+            (templateVars.hasProperSecurityCouncil ?? false),
+          usersCanExitWithoutCooperation:
+            fraudProofType === 'Permissionless' ||
+            fraudProofType === 'Kailua' ||
+            fraudProofType === 'KailuaSoon',
+          securityCouncilProperlySetUp:
+            templateVars.hasProperSecurityCouncil ?? null,
+          noRedTrustedSetups:
+            fraudProofType === 'Kailua' || fraudProofType === 'KailuaSoon'
+              ? true
+              : null,
+          programHashesReproducible: programHashesReproducible(templateVars),
+          proverSourcePublished:
+            fraudProofType === 'Kailua' ||
+            fraudProofType === 'KailuaSoon' ||
+            fraudProofType === 'OpSuccinct' ||
+            fraudProofType === 'OpSuccinctFDP'
+              ? true
+              : null,
+          verifierContractsReproducible:
+            templateVars.zkVerifierContractsReproducible ?? null,
+        },
+        stage2: {
+          proofSystemOverriddenOnlyInCaseOfABug:
+            fraudProofType === 'None' ? null : false,
+          fraudProofSystemIsPermissionless: fraudProofMapping[fraudProofType],
+          delayWith30DExitWindow: false,
+        },
+      },
+      {
+        rollupNodeLink:
+          templateVars.isNodeAvailable === true
+            ? (templateVars.nodeSourceLink ??
+              'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
+            : '',
+      },
+    )
+  }
+
+  return getAltDaStage(
     {
       stage0: {
-        callsItselfRollup: true,
+        callsItselfValidiumOrOptimium: true,
         stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: templateVars.isNodeAvailable,
         stateVerificationOnL1: fraudProofType !== 'None',
+        daAttestedByIndependentParty:
+          templateVars.daAttestedByIndependentParty ?? null,
+        nodeSourceAvailable: templateVars.isNodeAvailable,
         fraudProofSystemAtLeast5Outsiders: fraudProofMapping[fraudProofType],
       },
       stage1: {
-        principle:
-          fraudProofType === 'Permissionless' &&
-          (templateVars.hasProperSecurityCouncil ?? false),
-        usersHave7DaysToExit:
-          fraudProofType === 'Permissionless' &&
-          (templateVars.hasProperSecurityCouncil ?? false),
+        principle: templateVars.stage1Principle ?? null,
         usersCanExitWithoutCooperation:
           fraudProofType === 'Permissionless' ||
           fraudProofType === 'Kailua' ||
           fraudProofType === 'KailuaSoon',
+        usersHave7DaysToExit:
+          fraudProofType === 'Permissionless' &&
+          (templateVars.hasProperSecurityCouncil ?? false),
         securityCouncilProperlySetUp:
           templateVars.hasProperSecurityCouncil ?? null,
+        daVerifierSecureOnL1: templateVars.daVerifierSecureOnL1 ?? null,
+        daVerifier7DayExitWindow: templateVars.daVerifier7DayExitWindow ?? null,
+        daCommitteeDecentralized: templateVars.daCommitteeDecentralized ?? null,
         noRedTrustedSetups:
           fraudProofType === 'Kailua' || fraudProofType === 'KailuaSoon'
             ? true
             : null,
-        programHashesReproducible: programHashesReproducible(templateVars),
-        proverSourcePublished:
-          fraudProofType === 'Kailua' ||
-          fraudProofType === 'KailuaSoon' ||
-          fraudProofType === 'OpSuccinct' ||
-          fraudProofType === 'OpSuccinctFDP'
-            ? true
-            : null,
+        proverSourcePublished: templateVars.proverSourceLink ? true : null,
         verifierContractsReproducible:
           templateVars.zkVerifierContractsReproducible ?? null,
+        programHashesReproducible: programHashesReproducible(templateVars),
       },
       stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug:
-          fraudProofType === 'None' ? null : false,
         fraudProofSystemIsPermissionless: fraudProofMapping[fraudProofType],
         delayWith30DExitWindow: false,
+        proofSystemOverriddenOnlyInCaseOfABug:
+          fraudProofType === 'None' ? null : false,
+        daVerifier30DayExitWindow:
+          templateVars.daVerifier30DayExitWindow ?? null,
+        daMechanismEconomicSecurity:
+          templateVars.daMechanismEconomicSecurity ?? null,
       },
     },
     {
-      rollupNodeLink:
+      nodeSourceLink:
         templateVars.isNodeAvailable === true
           ? (templateVars.nodeSourceLink ??
             'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
-          : '',
+          : templateVars.nodeSourceLink,
+      proverSourceLink: templateVars.proverSourceLink,
+      securityCouncilReference: templateVars.securityCouncilReference,
+      stage1PrincipleDescription: templateVars.stage1PrincipleDescription,
+      daVerifierLink: templateVars.daVerifierLink,
     },
   )
 }

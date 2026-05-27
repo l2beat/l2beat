@@ -1,3 +1,110 @@
+Generated with discovered.json: 0x3b07aa1050cf1fb1a8df421493705e7bb5f329a6
+
+# Diff at Fri, 15 May 2026 12:36:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778535511
+- current timestamp: 1778535511
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778535511 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+      sourceHashes.0:
+-        "0x19c3fbedf93ee852d83096519dd22f26409f70fc13f7843307acaecb508981d6"
++        "0x20f30107695bee36a63acac61a5ba93d47cbb8ad79df70f6dd9b16d15db66ad3"
+    }
+```
+
+Generated with discovered.json: 0xd6fb873eb77a64098e57a7eecd575d5b753f84fc
+
+# Diff at Mon, 11 May 2026 21:39:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@da451cba8e944a28754be7e17bcb7555d857f312 block: 1777390966
+- current timestamp: 1778535511
+
+## Description
+
+Kailua `game1337` impl rotated `0x78F8F8FE...` → `0x8c0Ed8Dd...` ([diff](https://disco.l2beat.com/diff/eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9/eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84)). Active `KailuaTreasury` is now `0x01853F26...`; `OptimismPortal2.setRespectedGameType(1337)` re-pointed the bridge.
+
+The `proposalParent.childCount() == 1` gate around the vanguard check was removed: `vanguardAdvantage` applies to every proposal (first child and every sibling). With `vanguardAdvantage ≈ 2^60s`, only the Vanguard can submit any proposal. Faulty Vanguard proposals can be marked faulty via `proveOutputFault` but no honest sibling can replace them — chain halts until the Vanguard submits a correct state root.
+
+Plumbing: `megaeth.ts` resolves the active game/treasury dynamically via `OptimismPortal2.respectedGameType` → `DisputeGameFactory.game{N}` → its `KAILUA_TREASURY`; `risc0/KailuaGame` and `megaeth/KailuaTreasury` shapes extended for the new contracts.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x63eCafD27E0B86B37903c8aA64beD47244Ad909A) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xEd71403a0cC46ED68E57997A225a9620b5Cf0872"
+      values.multisigThreshold:
+-        "1 of 4 (25%)"
++        "1 of 5 (20%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9) [risc0/KailuaGame]
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      values.respectedGameTypeUpdatedAt:
+-        1762796999
++        1778245595
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x8546840adF796875cD9AAcc5B3B048f6B2c9D563) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9"
++        "eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (eth:0xE4e456c64B9b0de5FE8a90d809180cA71534D623) [megaeth/KailuaTreasury]
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.00001 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0x01853F268B170D4A15D0c3AE905757b5Ec8375f3) [megaeth/KailuaTreasury]
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.00001 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84) [risc0/KailuaGame]
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1777390966 => .flat}/KailuaGame.sol     | 24 ++++++++++++++--------
+ .../{.flat@1777390966 => .flat}/KailuaTreasury.sol | 24 ++++++++++++++--------
+ 2 files changed, 32 insertions(+), 16 deletions(-)
+```
+
 Generated with discovered.json: 0x6483611ae3af483c00014bcc31fbe41aea3ad958
 
 # Diff at Fri, 08 May 2026 07:51:37 GMT:

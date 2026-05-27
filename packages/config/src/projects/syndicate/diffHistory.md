@@ -1,4 +1,67 @@
-Generated with discovered.json: 0x8fc62805708d4b5fbdf0676405aad3f7d0731df1
+Generated with discovered.json: 0xf0225a32059b00f3028a5b8de444e869e090c56f
+
+# Diff at Fri, 15 May 2026 12:37:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1775599220
+- current timestamp: 1775599220
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775599220 (main branch discovery), not current.
+
+```diff
+    contract OneStepProver0 (eth:0x2420b6bF83B8fEEab576F2f3e5B5d130F2376b2F) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
++        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0x27CD0B994cc40a74962Db2fA6b973bf7d19f6Ec6) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
++        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (eth:0x6D25E739016f42B70885E63629C7356C2E29a2D7) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x90744f5ef4ff8b3eef422b08ec15bbdb0aefe2599d0d0cd4010c7f35b05ef145"
++        "0x9eae78e35e5c868cd5e3de5bdfb2bef13871657ad2b01fbdf5f384035290f16f"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0xa8aA9784FA7eC40Dc81d298130746c2FA4785EC8) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
++        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
+    }
+```
+
+```diff
+    contract ChallengeManager (eth:0xABf2988264170a7f94E6Fa76ECA5965B906E229d) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
++        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
+    }
+```
+
+Generated with discovered.json: 0x6307509651ef5204268f28a9a4f47915ab070b7d
 
 # Diff at Fri, 08 May 2026 07:52:32 GMT:
 

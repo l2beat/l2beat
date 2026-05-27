@@ -14,6 +14,7 @@ interface FlowsGraphProps {
   size: number
   isSmallScreen: boolean
   baseDollarsPerParticle?: number
+  topChainId?: string
 }
 
 export function FlowsGraph({
@@ -23,11 +24,18 @@ export function FlowsGraph({
   size,
   isSmallScreen,
   baseDollarsPerParticle,
+  topChainId,
 }: FlowsGraphProps) {
   const layout = useMemo(
     () =>
-      computeGraphLayout(visibleChainIds, data.chainData, size, isSmallScreen),
-    [visibleChainIds, data.chainData, size, isSmallScreen],
+      computeGraphLayout(
+        visibleChainIds,
+        data.chainData,
+        size,
+        isSmallScreen,
+        topChainId,
+      ),
+    [visibleChainIds, data.chainData, size, isSmallScreen, topChainId],
   )
 
   const center = size / 2

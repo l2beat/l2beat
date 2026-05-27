@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../types'
 
 export const monad: BaseProject = {
@@ -24,5 +24,13 @@ export const monad: BaseProject = {
     chainId: 143,
     explorerUrl: 'https://monadscan.com',
     apis: [{ type: 'rpc', url: 'https://rpc4.monad.xyz' }],
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 9248132,
+        version: '3',
+      },
+    ],
   },
 }

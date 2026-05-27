@@ -144,9 +144,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                       </div>
                       {project.scalingCategory && (
                         <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
-                          {project.isUpcoming
-                            ? 'Upcoming'
-                            : project.scalingCategory}
+                          {project.scalingCategory}
                         </div>
                       )}
                     </div>
@@ -195,9 +193,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                         </div>
                         {item.type === 'project' && item.scalingCategory && (
                           <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
-                            {item.isUpcoming
-                              ? 'Upcoming'
-                              : item.scalingCategory}
+                            {item.scalingCategory}
                           </div>
                         )}
                       </div>
@@ -274,6 +270,8 @@ function entryToLabel(entry: AnySearchBarEntry) {
       return 'ZK Project'
     case 'ecosystem':
       return 'Ecosystem'
+    case 'privacy':
+      return 'Privacy'
     default:
       assertUnreachable(entry.kind)
   }

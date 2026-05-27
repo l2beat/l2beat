@@ -1,3 +1,167 @@
+Generated with discovered.json: 0xa4902879430cbb45bfdbfab88ea0707b3384e028
+
+# Diff at Tue, 19 May 2026 13:57:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@307f5c3dfdab6a4f88448861a0bb75f0043b762b block: 1779128593
+- current timestamp: 1779198937
+
+## Description
+
+RollupProxy `currentRequiredStake` (computed: rises above `baseStake` while the first unresolved node is past its deadline) increased from `0.6 ETH` to `0.7 ETH`. Automatic on-chain reaction — `baseStake` unchanged.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "600000000000000000"
++        "700000000000000000"
+    }
+```
+
+Generated with discovered.json: 0xf1079508cc0cc3025017f07d754cd01b2a6bed4d
+
+# Diff at Mon, 18 May 2026 18:25:03 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b70f892b88d1263a724194cd3b4ec927d71a6fd9 block: 1778508954
+- current timestamp: 1779128593
+
+## Description
+
+RollupProxy `currentRequiredStake` (computed: rises above `baseStake` when the first unresolved node is past its deadline; enforced only on `_newStake`/`reduceDeposit`, not on every proposal) increased from `0.3 ETH` to `0.6 ETH`. This is an automatic on-chain reaction to an overdue unresolved node, not a governance config change — `baseStake` is unchanged.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "300000000000000000"
++        "600000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x652a4e9893937b606f3dc3cf05b621af27e8fd2f
+
+# Diff at Fri, 15 May 2026 12:36:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778508954
+- current timestamp: 1778508954
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778508954 (main branch discovery), not current.
+
+```diff
+    contract ChallengeManager (arb1:0x1f269F38196484ef81e58C0144AaD2c5F6394bB4) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
++        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x2D81591AfB19e1a1C1c932303790370c7257f454) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
++        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0x5C864714456935f05cd74D78CFE05Bcc726CddEe) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
++        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x5D1E3dC946fC8F2DD6C96C018e5a120CC2b76368) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
++        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.1:
+-        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
++        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0xE13987CcaFD999397021222630DEC78BaAa9fE15) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xd64745a0edbb2ada69b81d849f2737d7c082d18ca14a715c23c4165e4eecc637"
++        "0x081875b93df655e91ec23245390ad21db0990c12125dad497f1cbf118501ccc2"
+    }
+```
+
+Generated with discovered.json: 0x38fc195764b90fd30ee7db4db3d1bb5c823df25f
+
+# Diff at Mon, 11 May 2026 14:18:01 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@37cdce03260dfa5682c2b693e3c1d4a9ccb125af block: 1778233023
+- current timestamp: 1778508954
+
+## Description
+
+RollupProxy (`arb1:0x9A59EdF7...`) — `currentRequiredStake` raised from 0.2 ETH → 0.3 ETH. Continued ramp from the 0.1 → 0.2 ETH increase on 2026-05-08.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "200000000000000000"
++        "300000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x3a92b231501aef6ed93faf96a4d556e2bf2496f1
+
+# Diff at Fri, 08 May 2026 09:38:24 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1746206122
+- current timestamp: 1778233023
+
+## Description
+
+RollupProxy (`arb1:0x9A59EdF7...`) — `currentRequiredStake` doubled from 0.1 ETH → 0.2 ETH. Pure parameter change; validator set unaffected.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "100000000000000000"
++        "200000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x776dc227aa381560a95d6752f184876156314f77
 
 # Diff at Fri, 08 May 2026 07:51:52 GMT:

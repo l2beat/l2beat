@@ -1,7 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "cTornado",
-  "description": "Fixed-denomination cToken-based mixer pool. Anyone can sweep accrued COMP rewards, but the claimed COMP is always sent to the governance address.",
   "category": "core",
   "ignoreMethods": ["filledSubtrees", "roots", "zeros"],
   "fields": {
@@ -9,9 +8,7 @@
       "description": "Fixed cToken amount accepted by this pool.",
       "severity": "LOW"
     },
-    "token": {
-      "description": "cToken accepted by this mixer instance."
-    },
+    "token": { "description": "cToken accepted by this mixer instance." },
     "verifier": {
       "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
       "severity": "HIGH"
@@ -25,5 +22,6 @@
     "governance": {
       "description": "Recipient of claimed COMP rewards from this pool."
     }
-  }
+  },
+  "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"]
 }

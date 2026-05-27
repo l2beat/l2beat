@@ -17,7 +17,7 @@ export async function getOverviewProjectCounts(): Promise<OverviewProjectCounts>
   const [scaling, daLayers, zkProjects, ecosystems] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      whereNot: ['archivedAt'],
     }),
     ps.getProjects({
       where: ['daLayer'],

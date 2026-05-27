@@ -1,8 +1,7 @@
 import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { CCTPV1Config, CCTPV2Config } from '../cctp/cctp.config'
 import { findParsedAfter, findTransferLogBefore } from '../logScan'
-import { isMayanSwiftSettlementSender } from '../mayan-shared'
-import { isMayanSwiftSettlementPayload } from '../mayan-swift.utils'
 import {
   findMayanCircleDestinationChain,
   isMayanCircleSender,
@@ -16,7 +15,11 @@ import {
   type LogToCapture,
 } from '../types'
 import { FOLKS_CHAIN_ID_TO_CHAIN } from './folks-finance'
-import { getWormholeCoreAddresses, WormholeConfig } from './wormhole.config'
+import {
+  findWormholeChain,
+  getWormholeCoreAddresses,
+  WormholeConfig,
+} from './wormhole.config'
 
 const logMessagePublishedLog =
   'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)'
@@ -88,21 +91,18 @@ export class WormholePlugin implements InteropPluginResyncable {
 
     const senderAddress = EthereumAddress(parsed.sender)
 
-    // Mayan Swift settlement messages are handled by mayan-swift.ts and
-    // mayan-swift-settlement.ts, which extract order keys for OrderUnlocked matching.
-    if (
-      isMayanSwiftSettlementSender(senderAddress) &&
-      isMayanSwiftSettlementPayload(parsed.payload)
-    ) {
-      return
-    }
-
-    // Mayan Circle (MCTP) messages: extract $dstChain from the companion Mayan Forwarder
-    // event in the same tx. Source-side messages always have a ForwardedERC20/ForwardedEth.
-    // Destination-side confirmations (bridgeWithLockedFee) have no forwarder event and are
-    // never matchable, so we skip them.
+    // Mayan Circle (MCTP) messages usually expose $dstChain through a companion
+    // Mayan Forwarder event. Destination-side confirmations have no forwarder,
+    // so keep the event with an unsupported placeholder chain.
     if (isMayanCircleSender(senderAddress)) {
-      const $dstChain = findMayanCircleDestinationChain(input.txLogs, networks)
+      const cctpNetworks = [
+        ...(this.configs.get(CCTPV1Config) ?? []),
+        ...(this.configs.get(CCTPV2Config) ?? []),
+      ]
+      const $dstChain =
+        findMayanCircleDestinationChain(input.txLogs, networks, cctpNetworks) ??
+        'Unknown_mayanCircle'
+
       return [
         LogMessagePublished.create(input, {
           payload: parsed.payload,
@@ -142,8 +142,7 @@ export class WormholePlugin implements InteropPluginResyncable {
     ) {
       const toChainId = extractTokenBridgeDestChain(parsed.payload)
       if (toChainId !== undefined) {
-        const dstNetwork = networks.find((n) => n.wormholeChainId === toChainId)
-        $dstChain = dstNetwork?.chain ?? `Unknown_${toChainId}`
+        $dstChain = findWormholeChain(networks, toChainId)
       }
     }
 

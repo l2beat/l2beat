@@ -1,5 +1,5 @@
 import compact from 'lodash/compact'
-import { useContext, useMemo } from 'react'
+import { useMemo } from 'react'
 import { SidebarProvider } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
@@ -11,13 +11,14 @@ import { useWhatsNewContext } from '~/components/whats-new/WhatsNewContext'
 import { WhatsNewWidgetCloseable } from '~/components/whats-new/WhatsNewWidgetCloseable'
 import { getNavSecondaryLinks } from '~/consts/navSecondaryLinks'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
+import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { OverviewIcon } from '~/icons/pages/Overview'
+import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
-import { InteropSelectedChainsContext } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { cn } from '~/utils/cn'
 import { createOrderedSort } from '~/utils/sort'
 
@@ -48,8 +49,6 @@ export function SideNavLayout({
       )}
     />
   )
-
-  const selectedChainsContext = useContext(InteropSelectedChainsContext)
 
   const groups = useMemo(
     () =>
@@ -127,22 +126,8 @@ export function SideNavLayout({
               href: '/interop/summary',
             },
             {
-              title: 'Non-minting protocols',
-              href:
-                selectedChainsContext?.buildUrl('/interop/non-minting') ??
-                '/interop/non-minting',
-            },
-            {
-              title: 'Lock & Mint protocols',
-              href:
-                selectedChainsContext?.buildUrl('/interop/lock-and-mint') ??
-                '/interop/lock-and-mint',
-            },
-            {
-              title: 'Burn & Mint protocols',
-              href:
-                selectedChainsContext?.buildUrl('/interop/burn-and-mint') ??
-                '/interop/burn-and-mint',
+              title: 'Token frameworks',
+              href: '/interop/token-frameworks',
             },
           ],
         },
@@ -190,6 +175,15 @@ export function SideNavLayout({
             <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
           ),
         },
+        env.CLIENT_SIDE_PRIVACY_ENABLED && {
+          type: 'single',
+          title: 'Privacy',
+          match: 'privacy',
+          href: '/privacy',
+          icon: (
+            <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
+        },
         {
           type: 'multiple',
           title: 'Ecosystems',
@@ -224,7 +218,7 @@ export function SideNavLayout({
             })),
         },
       ]),
-    [selectedChainsContext],
+    [],
   )
 
   const sideLinks = useMemo(() => getNavSecondaryLinks(), [])

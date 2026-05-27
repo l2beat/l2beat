@@ -1,17 +1,15 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "RewardSwap",
-  "description": "Liquidity schedule that pays out TORN rewards for anonymity mining. Only the Miner contract can draw from it or adjust the reward weight.",
-  "category": "core",
-  "ignoreMethods": ["getExpectedReturn"],
+  "description": "Anonymity Mining - Liquidity schedule that pays out TORN rewards for anonymity mining. Only the Miner contract can draw from it or adjust the reward weight.",
+  "category": "bridge-external",
+  "ignoreMethods": ["getExpectedReturn", "getTimestamp"],
   "fields": {
     "miner": {
       "description": "Only this contract can distribute TORN rewards from the swap pool and adjust the pool weight.",
       "severity": "HIGH"
     },
-    "torn": {
-      "description": "TORN token dispensed as mining rewards."
-    },
+    "torn": { "description": "TORN token dispensed as mining rewards." },
     "poolWeight": {
       "description": "Weight parameter controlling how many TORN rewards are distributed through the swap curve.",
       "severity": "LOW"

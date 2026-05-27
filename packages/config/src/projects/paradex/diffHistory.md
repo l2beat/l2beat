@@ -1,14 +1,68 @@
-Generated with discovered.json: 0xa7d30caa5e2e96eee9329e8541083017461cb72a
+Generated with discovered.json: 0x3c7379c7c9a84fef641b6767ddf7820373539efd
 
-# Diff at Fri, 08 May 2026 07:51:45 GMT:
+# Diff at Tue, 12 May 2026 09:55:12 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1771848139
-- current timestamp: 1771848139
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e08a4d47318721a3851fee0bc0991367ebd1fb4 block: 1771848139
+- current timestamp: 1778579646
 
 ## Description
 
-Use the new flattener implementation
+Upgraded Paradex rollup contract by adding small check on l1 to l2 msg hash: https://disco.l2beat.com/diff/eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04/eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A. Also, updated program hashes to already verified versions.
+
+Config: use the new flattener implementation
+
+## Watched changes
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) [starknet/Starknet] {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.1:
+-        "0xfee7303d7ae61327a9f6516d410a6efbe76c07d2ca3406be62e5bb3baa5532c9"
++        "0xef60960a959a9506c3f6eece9374f7fbcd095a488763801577ae88e427fd3d51"
+      values.$implementation:
+-        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"
+      values.$pastUpgrades.4:
++        ["2026-05-10T13:30:11.000Z","0x1e964f795063d0e9b55f3f260bcbd3f11b3f3b43df658b9da2b78ce919bd4009",["eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.aggregatorHashMapped:
+-        "1701025211190912681772481128523426351562426117847395998223683709327746845867"
++        "2571508110958925737463010241874806654058743535666147712534445437599630018294"
+      values.aggregatorProgramHash:
+-        "1701025211190912681772481128523426351562426117847395998223683709327746845867"
++        "2571508110958925737463010241874806654058743535666147712534445437599630018294"
+      values.identify:
+-        "StarkWare_Starknet_2025_10"
++        "StarkWare_Starknet_2026_11"
+      values.implementation:
+-        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "918745833886511857768061986591752808672496300091957204265383861063635175685"
++        "2733003247060056328192560178934419513655729851806095615814023997114795707702"
+      values.programHashHistory.8:
++        "918745833886511857768061986591752808672496300091957204265383861063635175685"
+      values.programHashMapped:
+-        "918745833886511857768061986591752808672496300091957204265383861063635175685"
++        "2733003247060056328192560178934419513655729851806095615814023997114795707702"
+      implementationNames.eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04:
+-        "Starknet"
+      implementationNames.eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A:
++        "Starknet"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Paradex/Starknet.sol                           | 29 +++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 4 deletions(-)
+```
 
 ## Config/verification related changes
 

@@ -2,17 +2,10 @@ import { ChevronLeftIcon, RefreshCwIcon } from 'lucide-react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '~/components/core/Card'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
-import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { TablePageLayout } from '~/components/table/TablePageLayout'
+import { useBackendApi } from '~/react-query/trpc'
 import { MessageDetailsTable } from './table/details/MessageDetailsTable'
 import type {
   ChainMetadata,
@@ -22,6 +15,7 @@ import type {
 import { decodeRouteParam, parseOptionalSearchParam } from './utils'
 
 export function MessageDetailsPage() {
+  const api = useBackendApi()
   const params = useParams<{ type: string }>()
   const [searchParams] = useSearchParams()
   const type = decodeRouteParam(params.type)
@@ -72,88 +66,76 @@ export function MessageDetailsPage() {
   }
 
   return (
-    <AppLayout>
-      <div className="flex flex-col gap-4">
-        <Card className="gap-4">
-          <CardHeader className="flex flex-row items-start justify-between gap-3">
-            <div className="space-y-1">
-              <CardTitle>Message details</CardTitle>
-              <CardDescription>
-                Drill into a message type and optional plugin/chain filters.
-              </CardDescription>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button asChild variant="outline" size="sm">
-                <Link to="/interop/messages">
-                  <ChevronLeftIcon />
-                  Back to messages
-                </Link>
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => void refetchAll()}
-                disabled={
-                  !hasValidParams || isMessagesFetching || isChainsFetching
-                }
-              >
-                <RefreshCwIcon
-                  className={
-                    isMessagesFetching || isChainsFetching ? 'animate-spin' : ''
-                  }
-                />
-                Refresh
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
-            <Badge variant={hasValidParams ? 'secondary' : 'destructive'}>
-              Type: {type ?? 'invalid route'}
-            </Badge>
-            <Badge variant="secondary">Plugin: {plugin ?? 'all'}</Badge>
-            <Badge variant="secondary">Source chain: {srcChain ?? 'all'}</Badge>
-            <Badge variant="secondary">
-              Destination chain: {dstChain ?? 'all'}
-            </Badge>
-            <Badge variant="secondary">{rows.length} messages</Badge>
-            <Badge variant="secondary">{uniquePlugins} plugins</Badge>
-          </CardContent>
-        </Card>
+    <TablePageLayout
+      title="Message details"
+      description="Drill into a message type and optional plugin/chain filters."
+      actions={
+        <>
+          <Button asChild variant="outline" size="sm">
+            <Link to="/interop/messages">
+              <ChevronLeftIcon />
+              Back to messages
+            </Link>
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => void refetchAll()}
+            disabled={!hasValidParams || isMessagesFetching || isChainsFetching}
+          >
+            <RefreshCwIcon
+              className={
+                isMessagesFetching || isChainsFetching ? 'animate-spin' : ''
+              }
+            />
+            Refresh
+          </Button>
+        </>
+      }
+      summary={
+        <>
+          <Badge variant={hasValidParams ? 'secondary' : 'destructive'}>
+            Type: {type ?? 'invalid route'}
+          </Badge>
+          <Badge variant="secondary">Plugin: {plugin ?? 'all'}</Badge>
+          <Badge variant="secondary">Source chain: {srcChain ?? 'all'}</Badge>
+          <Badge variant="secondary">
+            Destination chain: {dstChain ?? 'all'}
+          </Badge>
+          <Badge variant="secondary">{rows.length} messages</Badge>
+          <Badge variant="secondary">{uniquePlugins} plugins</Badge>
+        </>
+      }
+    >
+      {!hasValidParams ? (
+        <ErrorState
+          className="m-6"
+          cause="Invalid route. Expected /messages/:type."
+        />
+      ) : null}
 
-        <Card className="gap-0 py-0">
-          <CardContent className="px-0">
-            {!hasValidParams ? (
-              <ErrorState
-                className="m-6"
-                cause="Invalid route. Expected /messages/:type."
-              />
-            ) : null}
+      {hasValidParams && isMessagesLoading ? (
+        <LoadingState className="m-6" />
+      ) : null}
 
-            {hasValidParams && isMessagesLoading ? (
-              <LoadingState className="m-6" />
-            ) : null}
+      {hasValidParams && isMessagesError ? (
+        <ErrorState className="m-6" cause={messagesError.message} />
+      ) : null}
 
-            {hasValidParams && isMessagesError ? (
-              <ErrorState className="m-6" cause={messagesError.message} />
-            ) : null}
+      {isChainsError ? (
+        <div className="px-6 py-4 text-destructive text-sm">
+          Failed to load chain metadata ({chainsError.message}). Tx hashes are
+          shown without explorer links.
+        </div>
+      ) : null}
 
-            {isChainsError ? (
-              <div className="px-6 py-4 text-destructive text-sm">
-                Failed to load chain metadata ({chainsError.message}). Tx hashes
-                are shown without explorer links.
-              </div>
-            ) : null}
-
-            {hasValidParams && !isMessagesLoading && !isMessagesError ? (
-              <MessageDetailsTable
-                data={rows}
-                getExplorerUrl={(chain) => explorerUrlsByChain.get(chain)}
-                enableCsvExport
-              />
-            ) : null}
-          </CardContent>
-        </Card>
-      </div>
-    </AppLayout>
+      {hasValidParams && !isMessagesLoading && !isMessagesError ? (
+        <MessageDetailsTable
+          data={rows}
+          getExplorerUrl={(chain) => explorerUrlsByChain.get(chain)}
+          enableCsvExport
+        />
+      ) : null}
+    </TablePageLayout>
   )
 }

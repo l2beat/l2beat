@@ -4,6 +4,7 @@ import { BinaryReader } from '../../../tools/BinaryReader'
 
 export const MAYAN_SWIFT_MSG_TYPE_UNLOCK = 0x02
 export const MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK = 0x04
+export const MAYAN_SWIFT_MSG_TYPE_COMPRESSED_UNLOCK = 0x05
 
 interface MayanSwiftUnlockPayload {
   msgType: typeof MAYAN_SWIFT_MSG_TYPE_UNLOCK
@@ -16,15 +17,27 @@ interface MayanSwiftBatchUnlockPayload {
   entries: Array<{ key: string; dstChainId: number }>
 }
 
+interface MayanSwiftCompressedUnlockPayload {
+  msgType: typeof MAYAN_SWIFT_MSG_TYPE_COMPRESSED_UNLOCK
+  count: number
+  payloadHash: string
+}
+
 type MayanSwiftSettlementPayload =
   | MayanSwiftUnlockPayload
   | MayanSwiftBatchUnlockPayload
+  | MayanSwiftCompressedUnlockPayload
 
 const mayanSwiftUnlockAbi = parseAbi([
   'function unlockSingle(bytes encodedVm)',
   // Kept for older deployments/wrappers. Current verified Swift contracts use unlockSingle.
   'function unlockOrder(bytes encodedVm)',
   'function unlockBatch(bytes encodedVm)',
+  'function unlockCompressedBatch(bytes encodedVm, bytes encodedPayload, uint16[] indexes)',
+])
+
+const mayanSwiftPostBatchAbi = parseAbi([
+  'function postBatch(bytes32[] orderHashes)',
 ])
 
 const mayanSwiftLegacyAbi = parseAbi([
@@ -39,6 +52,7 @@ const mayanSwiftDestAbi = parseAbi([
 
 const mayanFulfillHelperAbi = parseAbi([
   'function fulfillWithERC20(address tokenIn, uint256 amountIn, address router, address allowanceTarget, bytes swapCalldata, address mayan, bytes mayanCalldata, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
+  'function fulfillWithERC20(address tokenIn, uint256 amountIn, address router, address allowanceTarget, bytes swapCalldata, address mayan, (bytes, (uint8, bytes32, bytes32, uint16, bytes32, bytes32, uint64, uint64, uint64, uint64, uint64, uint8, uint8, bytes32), (uint16, bytes32, uint8, bytes32), (bytes32, bytes32, bool)) mayanParams, bytes32 recipient, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
   'function directFulfill(address tokenIn, uint256 amountIn, address mayan, bytes mayanCalldata, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
   'function fulfillWithEth(uint256 amountIn, address fulfillToken, address swapProtocol, bytes swapData, address mayan, bytes mayanCalldata)',
 ])
@@ -88,10 +102,20 @@ type MayanSwiftLegacyOrderParams = readonly [
   `0x${string}`,
 ]
 
-// Settlement message format:
-// - UNLOCK: 0x02 + orderKey(32) + dstChainId(2) + tokenAddr(32) + recipient(32)
-// - BATCH_UNLOCK: 0x04 + count(2) + [orderKey(32) + dstChainId(2) + tokenAddr(32) + recipient(32)] * count
+type MayanSwiftStructuredFulfillParams = readonly [
+  `0x${string}`,
+  MayanSwiftDestOrderParams,
+  MayanSwiftDestExtraParams,
+  readonly [`0x${string}`, `0x${string}`, boolean],
+]
+
+// Settlement message formats:
+// - v1 UNLOCK: 0x02 + orderKey(32) + dstChainId(2) + tokenAddr(32) + recipient(32)
+// - v1 BATCH_UNLOCK: 0x04 + count(2) + [orderKey(32) + dstChainId(2) + tokenAddr(32) + recipient(32)] * count
+// - v2 UNLOCK: 0x02 + orderKey(32) + dstChainId(2) + tokenAddr(32) + referrer/fee/receiver metadata...
+// - v2 COMPRESSED_UNLOCK: 0x05 + count(2) + keccak256(encoded full unlock messages)
 const MAYAN_SWIFT_UNLOCK_ENTRY_BYTES = 98
+const MAYAN_SWIFT_COMPRESSED_UNLOCK_HEADER_BYTES = 34
 const WORMHOLE_SIGNATURE_BYTES = 66
 
 function decodeMayanSwiftSettlementPayload(
@@ -131,6 +155,17 @@ function decodeMayanSwiftSettlementPayload(
 
       return { msgType: MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK, entries }
     }
+
+    if (msgType === MAYAN_SWIFT_MSG_TYPE_COMPRESSED_UNLOCK) {
+      if (reader.length < MAYAN_SWIFT_COMPRESSED_UNLOCK_HEADER_BYTES) {
+        return undefined
+      }
+      return {
+        msgType: MAYAN_SWIFT_MSG_TYPE_COMPRESSED_UNLOCK,
+        count: reader.readUint16(),
+        payloadHash: reader.readBytes(32),
+      }
+    }
   } catch {
     return undefined
   }
@@ -146,7 +181,8 @@ export function isMayanSwiftSettlementPayload(payload: string): boolean {
   const msgType = getMayanSwiftSettlementMsgType(payload)
   return (
     msgType === MAYAN_SWIFT_MSG_TYPE_UNLOCK ||
-    msgType === MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK
+    msgType === MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK ||
+    msgType === MAYAN_SWIFT_MSG_TYPE_COMPRESSED_UNLOCK
   )
 }
 
@@ -174,6 +210,22 @@ export function extractMayanSwiftBatchOrderKeys(
   return decoded.entries
 }
 
+export function extractMayanSwiftPostBatchOrderKeys(
+  txData: string | undefined,
+): string[] | undefined {
+  try {
+    if (!txData) return undefined
+    const decoded = decodeFunctionData({
+      abi: mayanSwiftPostBatchAbi,
+      data: txData as `0x${string}`,
+    })
+    if (decoded.functionName !== 'postBatch') return undefined
+    return [...decoded.args[0]]
+  } catch {
+    return undefined
+  }
+}
+
 // The unlock methods carry Wormhole VAA bytes.
 // VAA format starts with:
 // version(1) + guardianSetIndex(4) + numSigs(1) + sigs(66*n) + timestamp(4) + nonce(4) + emitterChain(2) + ...
@@ -190,7 +242,8 @@ export function extractWormholeEmitterChainFromTxData(
     if (
       decoded.functionName !== 'unlockSingle' &&
       decoded.functionName !== 'unlockOrder' &&
-      decoded.functionName !== 'unlockBatch'
+      decoded.functionName !== 'unlockBatch' &&
+      decoded.functionName !== 'unlockCompressedBatch'
     ) {
       return undefined
     }
@@ -248,11 +301,7 @@ function extractMayanSwiftFulfillDetailsFromCallData(
       return undefined
     }
 
-    const mayanCalldata = getMayanCalldataFromFulfillHelper(decoded)
-    if (typeof mayanCalldata !== 'string') return undefined
-    return extractMayanSwiftFulfillDetailsFromCallData(
-      mayanCalldata as `0x${string}`,
-    )
+    return getMayanFulfillHelperDetails(decoded)
   } catch {
     return undefined
   }
@@ -265,6 +314,36 @@ function getMayanCalldataFromFulfillHelper(decoded: {
   if (decoded.functionName === 'fulfillWithERC20') return decoded.args[6]
   if (decoded.functionName === 'directFulfill') return decoded.args[3]
   if (decoded.functionName === 'fulfillWithEth') return decoded.args[5]
+}
+
+function getMayanFulfillHelperDetails(decoded: {
+  functionName: string
+  args: readonly unknown[]
+}): MayanSwiftFulfillDetails | undefined {
+  const mayanPayload = getMayanCalldataFromFulfillHelper(decoded)
+  if (typeof mayanPayload === 'string') {
+    return extractMayanSwiftFulfillDetailsFromCallData(
+      mayanPayload as `0x${string}`,
+    )
+  }
+
+  if (Array.isArray(mayanPayload)) {
+    return extractMayanSwiftStructuredFulfillDetails(mayanPayload)
+  }
+}
+
+function extractMayanSwiftStructuredFulfillDetails(
+  mayanPayload: unknown[],
+): MayanSwiftFulfillDetails | undefined {
+  const params = mayanPayload as unknown as MayanSwiftStructuredFulfillParams
+  const orderParams = params[1]
+  const extraParams = params[2]
+  if (!orderParams || !extraParams) return undefined
+
+  return {
+    srcChainId: extraParams[0],
+    dstTokenAddress: toMayanTokenAddress(orderParams[5]),
+  }
 }
 
 function extractMayanSwiftDestFulfillDetailsFromCallData(

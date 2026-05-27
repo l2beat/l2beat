@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { updateConfigFile } from '../../../api/api'
 import { useDebouncedCallback } from '../../../utils/debounce'
@@ -17,19 +17,20 @@ type Props = {
 
 export function useConfigModel({ project, config, selectedAddress }: Props) {
   const queryClient = useQueryClient()
-  const [configModel, setConfigModel] = useState(
+  const [prevConfig, setPrevConfig] = useState(config)
+  const [configModel, setConfigModel] = useState(() =>
     ConfigModel.fromRawJsonc(config ?? '{}'),
   )
+  if (config !== prevConfig) {
+    setPrevConfig(config)
+    setConfigModel(ConfigModel.fromRawJsonc(config ?? '{}'))
+  }
 
   const debouncedInvalidateSyncStatus = useDebouncedCallback(() =>
     queryClient.invalidateQueries({
       queryKey: ['config-sync-status', project],
     }),
   )
-
-  useEffect(() => {
-    setConfigModel(ConfigModel.fromRawJsonc(config ?? '{}'))
-  }, [config])
 
   const toggleIgnoreMethods = (fieldName: string) => {
     const current = configModel.getIgnoredMethods(selectedAddress) ?? []
@@ -74,6 +75,10 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
 
   const getFieldDescription = (fieldName: string) => {
     return configModel.getFieldDescription(selectedAddress, fieldName)
+  }
+
+  const getFieldPermissions = (fieldName: string) => {
+    return configModel.getFieldPermissions(selectedAddress, fieldName)
   }
 
   const setFieldDescription = (
@@ -123,6 +128,14 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
 
   const getFieldHandlerString = (fieldName: string) => {
     return configModel.getFieldHandlerString(selectedAddress, fieldName)
+  }
+
+  const getFieldEdit = (fieldName: string) => {
+    return configModel.getFieldEdit(selectedAddress, fieldName)
+  }
+
+  const getFieldEditString = (fieldName: string) => {
+    return configModel.getFieldEditString(selectedAddress, fieldName)
   }
 
   const configString = useMemo(() => {
@@ -177,9 +190,12 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     getFieldSeverity,
     getFieldDescription,
     setFieldDescription,
+    getFieldPermissions,
     setFieldHandler,
     getFieldHandler,
     getFieldHandlerString,
+    getFieldEdit,
+    getFieldEditString,
     setCategory,
     setDescription,
 

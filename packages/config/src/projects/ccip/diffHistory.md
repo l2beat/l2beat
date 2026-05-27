@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x6bec2c25376bc21af34e4c3b02ec41fbf6c51100
+
+# Diff at Fri, 15 May 2026 12:35:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1777388210
+- current timestamp: 1777388210
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777388210 (main branch discovery), not current.
+
+```diff
+    contract GHOEthereumTokenPool (eth:0x06179f7C1be40863405f374E7f5F8806c728660A) [transporter/TokenPool] {
+    +++ description: GHO lock-and-release token pool on Ethereum. It trusts configured Arbitrum remote pools and only accepts inbound token releases routed through CCIP OffRamps.
+      sourceHashes.1:
+-        "0x39415a58cb2a072d97bd39f2f579e01c82ace7c06e80bf5619dc0be2bf2620e8"
++        "0x9c4424aa5c0675489f24e9cf8b9bf148ee3c51c282747bbf58f9bbba8bfd05d9"
+    }
+```
+
 Generated with discovered.json: 0x30eee331d2405cf28886220483944dc18a02653e
 
 # Diff at Fri, 08 May 2026 07:51:11 GMT:

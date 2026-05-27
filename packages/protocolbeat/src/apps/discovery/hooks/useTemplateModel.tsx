@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { writeTemplateFile } from '../../../api/api'
 import { useDebouncedCallback } from '../../../utils/debounce'
@@ -20,19 +20,20 @@ type Props = {
 
 export function useTemplateModel({ templateId, files }: Props) {
   const queryClient = useQueryClient()
-  const [templateModel, setTemplateModel] = useState(
+  const [prevTemplate, setPrevTemplate] = useState(files.template)
+  const [templateModel, setTemplateModel] = useState(() =>
     ContractConfigModel.fromRawJsonc(files.template),
   )
+  if (files.template !== prevTemplate) {
+    setPrevTemplate(files.template)
+    setTemplateModel(ContractConfigModel.fromRawJsonc(files.template))
+  }
 
   const debouncedInvalidateSyncStatus = useDebouncedCallback(() =>
     queryClient.invalidateQueries({
       queryKey: ['config-sync-status'],
     }),
   )
-
-  useEffect(() => {
-    setTemplateModel(ContractConfigModel.fromRawJsonc(files.template))
-  }, [files.template])
 
   const toggleIgnoreMethods = (fieldName: string) => {
     const current = templateModel.ignoreMethods ?? []
@@ -87,6 +88,10 @@ export function useTemplateModel({ templateId, files }: Props) {
     return templateModel.getFieldDescription(fieldName)
   }
 
+  const getFieldPermissions = (fieldName: string) => {
+    return templateModel.getFieldPermissions(fieldName)
+  }
+
   const setFieldDescription = (
     fieldName: string,
     description: string | undefined,
@@ -111,6 +116,14 @@ export function useTemplateModel({ templateId, files }: Props) {
 
   const getFieldHandlerString = (fieldName: string) => {
     return templateModel.getFieldHandlerString(fieldName)
+  }
+
+  const getFieldEdit = (fieldName: string) => {
+    return templateModel.getFieldEdit(fieldName)
+  }
+
+  const getFieldEditString = (fieldName: string) => {
+    return templateModel.getFieldEditString(fieldName)
   }
 
   const saveMutation = useMutation({
@@ -169,15 +182,19 @@ export function useTemplateModel({ templateId, files }: Props) {
     getFieldSeverity,
     getFieldDescription,
     setFieldDescription,
+    getFieldPermissions,
     setFieldHandler,
     getFieldHandler,
     getFieldHandlerString,
+    getFieldEdit,
+    getFieldEditString,
     setCategory,
     setDescription,
 
     save: saveRaw,
 
-    hasTemplate: templateId,
+    hasTemplate: !!templateId,
+    templateId,
 
     files: {
       template: templateString,

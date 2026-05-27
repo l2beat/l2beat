@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -20,11 +21,29 @@ const discovery = new ProjectDiscovery('megaeth', undefined, {
   },
 })
 
+const respectedGameType = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'respectedGameType',
+)
+const activeKailuaGame = discovery.getContractValue<ChainSpecificAddress>(
+  'DisputeGameFactory',
+  `game${respectedGameType}`,
+)
+const activeKailuaTreasury = discovery.getContractValue<ChainSpecificAddress>(
+  activeKailuaGame,
+  'KAILUA_TREASURY',
+)
+const vanguardAdvantage = discovery.getContractValue<number>(
+  activeKailuaTreasury,
+  'vanguardAdvantage',
+)
+
 export const megaeth: ScalingProject = opStackL2({
   addedAt: UnixTime(1764143601),
   discovery,
   daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
   additionalBadges: [BADGES.Stack.OPKailua],
+  kailuaVanguardAppliesToAllProposals: true,
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
@@ -37,12 +56,46 @@ export const megaeth: ScalingProject = opStackL2({
   },
   nonTemplateProgramHashes: [
     PROGRAM_HASHES(
-      discovery.getContractValue<string>('KailuaTreasury', 'FPVM_IMAGE_ID'),
+      discovery.getContractValue<string>(activeKailuaGame, 'FPVM_IMAGE_ID'),
     ),
   ],
 
   architectureImage: 'megaeth',
   stateValidationImage: 'megaeth',
+  interopConfig: {
+    name: 'MegaETH Canonical',
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: [
+            'opstack.L1ToL2Transfer',
+            'opstack-standardbridge.L1ToL2Transfer',
+          ],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: [
+            'opstack.L2ToL1Transfer',
+            'opstack-standardbridge.L2ToL1Transfer',
+          ],
+        },
+      ],
+    },
+    plugins: [
+      {
+        chain: 'megaeth',
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'megaeth',
+        plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+  },
   display: {
     name: 'MegaETH',
     slug: 'megaeth',
@@ -72,23 +125,24 @@ export const megaeth: ScalingProject = opStackL2({
   nonTemplateRiskView: {
     stateValidation: {
       value: 'Fraud proofs (1R, ZK)',
-      description:
-        'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof eliminates a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used. Since the node source is not available, challengers cannot watch the chain independently.',
+      description: `Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof eliminates a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used. Since the node source is not available, challengers cannot watch the chain independently. \`vanguardAdvantage\` applies to every proposal and is set to ${formatSeconds(vanguardAdvantage)}, so only the Vanguard can submit state proposals; faulty proposals can be flagged but not replaced, halting the chain until the Vanguard proposes a correct state root.`,
       sentiment: 'bad',
       executionDelay: discovery.getContractValue<number>(
         'OptimismPortal2',
         'disputeGameFinalityDelaySeconds',
       ),
       challengeDelay: discovery.getContractValue<number>(
-        'KailuaGame',
+        activeKailuaGame,
         'MAX_CLOCK_DURATION',
       ),
-      initialBond: formatEther(
-        discovery.getContractValue<number>(
-          'KailuaTreasury',
-          'participationBond',
+      initialBond: {
+        value: formatEther(
+          discovery.getContractValue<number>(
+            activeKailuaTreasury,
+            'participationBond',
+          ),
         ),
-      ),
+      },
       orderHint: Number.NEGATIVE_INFINITY,
     },
   },

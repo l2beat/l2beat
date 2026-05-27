@@ -2,17 +2,10 @@ import { ChevronLeftIcon, RefreshCwIcon } from 'lucide-react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '~/components/core/Card'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
-import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { TablePageLayout } from '~/components/table/TablePageLayout'
+import { useBackendApi } from '~/react-query/trpc'
 import { TransferDetailsTable } from './table/details/TransferDetailsTable'
 import type {
   ChainMetadata,
@@ -22,6 +15,7 @@ import type {
 import { decodeRouteParam, parseOptionalSearchParam } from './utils'
 
 export function TransferDetailsPage() {
+  const api = useBackendApi()
   const params = useParams<{ type: string }>()
   const [searchParams] = useSearchParams()
   const type = decodeRouteParam(params.type)
@@ -71,89 +65,77 @@ export function TransferDetailsPage() {
   }
 
   return (
-    <AppLayout>
-      <div className="flex flex-col gap-4">
-        <Card className="gap-4">
-          <CardHeader className="flex flex-row items-start justify-between gap-3">
-            <div className="space-y-1">
-              <CardTitle>Transfer details</CardTitle>
-              <CardDescription>
-                Drill into a single transfer type and optional chain filters.
-              </CardDescription>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button asChild variant="outline" size="sm">
-                <Link to="/interop/transfers">
-                  <ChevronLeftIcon />
-                  Back to transfers
-                </Link>
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => void refetchAll()}
-                disabled={
-                  !hasValidParams || isTransfersFetching || isChainsFetching
-                }
-              >
-                <RefreshCwIcon
-                  className={
-                    isTransfersFetching || isChainsFetching
-                      ? 'animate-spin'
-                      : ''
-                  }
-                />
-                Refresh
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
-            <Badge variant={hasValidParams ? 'secondary' : 'destructive'}>
-              Type: {type ?? 'invalid route'}
-            </Badge>
-            <Badge variant="secondary">Plugin: {plugin ?? 'all'}</Badge>
-            <Badge variant="secondary">Source chain: {srcChain ?? 'all'}</Badge>
-            <Badge variant="secondary">
-              Destination chain: {dstChain ?? 'all'}
-            </Badge>
-            <Badge variant="secondary">{rows.length} transfers</Badge>
-          </CardContent>
-        </Card>
+    <TablePageLayout
+      title="Transfer details"
+      description="Drill into a single transfer type and optional chain filters."
+      actions={
+        <>
+          <Button asChild variant="outline" size="sm">
+            <Link to="/interop/transfers">
+              <ChevronLeftIcon />
+              Back to transfers
+            </Link>
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => void refetchAll()}
+            disabled={
+              !hasValidParams || isTransfersFetching || isChainsFetching
+            }
+          >
+            <RefreshCwIcon
+              className={
+                isTransfersFetching || isChainsFetching ? 'animate-spin' : ''
+              }
+            />
+            Refresh
+          </Button>
+        </>
+      }
+      summary={
+        <>
+          <Badge variant={hasValidParams ? 'secondary' : 'destructive'}>
+            Type: {type ?? 'invalid route'}
+          </Badge>
+          <Badge variant="secondary">Plugin: {plugin ?? 'all'}</Badge>
+          <Badge variant="secondary">Source chain: {srcChain ?? 'all'}</Badge>
+          <Badge variant="secondary">
+            Destination chain: {dstChain ?? 'all'}
+          </Badge>
+          <Badge variant="secondary">{rows.length} transfers</Badge>
+        </>
+      }
+    >
+      {!hasValidParams ? (
+        <ErrorState
+          className="m-6"
+          cause="Invalid route. Expected /transfers/:type."
+        />
+      ) : null}
 
-        <Card className="gap-0 py-0">
-          <CardContent className="px-0">
-            {!hasValidParams ? (
-              <ErrorState
-                className="m-6"
-                cause="Invalid route. Expected /transfers/:type."
-              />
-            ) : null}
+      {hasValidParams && isTransfersLoading ? (
+        <LoadingState className="m-6" />
+      ) : null}
 
-            {hasValidParams && isTransfersLoading ? (
-              <LoadingState className="m-6" />
-            ) : null}
+      {hasValidParams && isTransfersError ? (
+        <ErrorState className="m-6" cause={transfersError.message} />
+      ) : null}
 
-            {hasValidParams && isTransfersError ? (
-              <ErrorState className="m-6" cause={transfersError.message} />
-            ) : null}
+      {isChainsError ? (
+        <div className="px-6 py-4 text-destructive text-sm">
+          Failed to load chain metadata ({chainsError.message}). Tx hashes are
+          shown without explorer links.
+        </div>
+      ) : null}
 
-            {isChainsError ? (
-              <div className="px-6 py-4 text-destructive text-sm">
-                Failed to load chain metadata ({chainsError.message}). Tx hashes
-                are shown without explorer links.
-              </div>
-            ) : null}
-
-            {hasValidParams && !isTransfersLoading && !isTransfersError ? (
-              <TransferDetailsTable
-                data={rows}
-                getExplorerUrl={(chain) => explorerUrlsByChain.get(chain)}
-                enableCsvExport
-              />
-            ) : null}
-          </CardContent>
-        </Card>
-      </div>
-    </AppLayout>
+      {hasValidParams && !isTransfersLoading && !isTransfersError ? (
+        <TransferDetailsTable
+          data={rows}
+          getExplorerUrl={(chain) => explorerUrlsByChain.get(chain)}
+          enableCsvExport
+        />
+      ) : null}
+    </TablePageLayout>
   )
 }

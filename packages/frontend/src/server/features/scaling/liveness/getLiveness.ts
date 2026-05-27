@@ -42,7 +42,7 @@ async function getLivenessData(projectId?: ProjectId) {
     ps.getProjects({
       select: ['trackedTxsConfig'],
       optional: ['livenessConfig'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      whereNot: ['archivedAt'],
     }),
   ])
 

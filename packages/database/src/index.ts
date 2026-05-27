@@ -21,6 +21,11 @@ export type { AggregatedLivenessRecord } from './repositories/AggregatedLiveness
 export type { AnomalyRecord } from './repositories/AnomaliesRepository'
 export type { AnomalyStatsRecord } from './repositories/AnomalyStatsRepository'
 export type { BlobPairCount, BlobRecord } from './repositories/BlobsRepository'
+export type {
+  ChainApi,
+  ChainRecord,
+  ChainUpdateable,
+} from './repositories/ChainRepository'
 export type { CurrentPriceRecord } from './repositories/CurrentPriceRepository'
 export type {
   DataAvailabilityRecord,
@@ -71,6 +76,13 @@ export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
 export type { NotificationRecord } from './repositories/NotificationsRepository'
 export type {
+  PrivacyFlowBucketTotalRecord,
+  PrivacyFlowDailyRecord,
+  PrivacyFlowDirection,
+  PrivacyFlowEventRecord,
+} from './repositories/PrivacyFlowEventRepository'
+export type { PrivacyPriceRecord } from './repositories/PrivacyPriceRepository'
+export type {
   RealTimeAnomalyRecord,
   RealTimeAnomalyStatus,
 } from './repositories/RealTimeAnomaliesRepository'
@@ -84,7 +96,19 @@ export type {
   TokenConnectionRecord,
   TokenConnectionUpdateable,
 } from './repositories/TokenConnectionRepository'
+export type {
+  TokenDbHistoryEntryInsert,
+  TokenDbHistoryEntryRecord,
+  TokenDbHistoryPage,
+  TokenDbHistorySource,
+} from './repositories/TokenDbHistoryRepository'
+export type { TokenDbSettingRecord } from './repositories/TokenDbSettingRepository'
 export type { TokenFactInputRecord } from './repositories/TokenFactInputRepository'
+export type {
+  TokenIngestionQueueAddress,
+  TokenIngestionQueueRecord,
+  TokenIngestionQueueState,
+} from './repositories/TokenIngestionQueueRepository'
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,

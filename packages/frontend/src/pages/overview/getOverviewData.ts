@@ -135,7 +135,7 @@ async function getRecentProjectsForOverview(): Promise<
 > {
   const projects = await ps.getProjects({
     optional: ['scalingInfo', 'daLayer', 'ecosystemConfig', 'zkCatalogInfo'],
-    whereNot: ['isUpcoming', 'archivedAt'],
+    whereNot: ['archivedAt'],
   })
 
   return projects

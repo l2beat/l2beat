@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x3fa1db78fc103ea9b1420835a5c70ff2f7737e55
+
+# Diff at Mon, 18 May 2026 10:22:24 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@81908b566e918425ebf298c08aed66029316c1ad block: 1777891434
+- current timestamp: 1779099631
+
+## Description
+
+Myria is frozen (state could not be updated).
+
+## Watched changes
+
+```diff
+    contract StarkExchange (eth:0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7) [starkex/StarkExchange] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.isFrozen:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0xf9cf71c7d78edf1e627e5d128d6a3a626fa4d305
 
 # Diff at Fri, 08 May 2026 07:51:41 GMT:

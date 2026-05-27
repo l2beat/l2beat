@@ -1,7 +1,6 @@
 import type { TableReadyValue } from '@l2beat/config'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
-import { UpcomingBadge } from '~/components/badge/UpcomingBadge'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
@@ -21,10 +20,16 @@ import { TwoRowCell } from './TwoRowCell'
 interface Props {
   value: TableReadyValue | undefined
   href?: string
-  emptyMode?: 'em-dash' | 'no-info' | 'n/a' | 'no-data' | 'upcoming'
+  emptyMode?: 'em-dash' | 'no-info' | 'n/a' | 'no-data'
+  secondLineClassName?: string
 }
 
-export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
+export function TableValueCell({
+  value,
+  href,
+  emptyMode = 'no-info',
+  secondLineClassName,
+}: Props) {
   if (!value) {
     if (emptyMode === 'em-dash') {
       return (
@@ -38,9 +43,6 @@ export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
     }
     if (emptyMode === 'no-data') {
       return <NoDataBadge />
-    }
-    if (emptyMode === 'upcoming') {
-      return <UpcomingBadge />
     }
     return <NoInfoCell />
   }
@@ -69,7 +71,9 @@ export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
           )}
         </TwoRowCell.First>
         {value.secondLine && (
-          <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          <TwoRowCell.Second className={secondLineClassName}>
+            {value.secondLine}
+          </TwoRowCell.Second>
         )}
       </TwoRowCell>
     </TableLink>

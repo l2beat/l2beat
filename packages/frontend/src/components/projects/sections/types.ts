@@ -6,6 +6,7 @@ import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSecti
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
+import type { InteropFlowsSectionProps } from './interop/InteropFlowsSection'
 import type { InteropTokensSectionProps } from './interop/InteropTokensSection'
 import type { InteropTransfersSectionProps } from './interop/InteropTransfersSection'
 import type { InteropVolumeSectionProps } from './interop/InteropVolumeSection'
@@ -15,6 +16,9 @@ import type { MarkdownSectionProps } from './MarkdownSection'
 import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncidentsSection'
 import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
+import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
+import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
+import type { PrivacyTvlSectionProps } from './privacy/PrivacyTvlSection'
 import type { ProgramHashesSectionProps } from './program-hashes/ProgramHashesSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import type { RiskSummarySectionProps } from './RiskSummarySection'
@@ -27,6 +31,7 @@ import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
 import type { ScalingTvsSectionProps } from './tvs/ScalingTvsSection'
 import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
+import type { UpdatesSectionProps } from './UpdatesSection'
 import type { UpgradesAndGovernanceSectionProps } from './UpgradesAndGovernanceSection'
 import type { VerifiersSectionProps } from './verifiers/VerifiersSection'
 
@@ -48,6 +53,7 @@ type SectionId =
   | 'state-derivation'
   | 'state-validation'
   | 'upgrades-and-governance'
+  | 'updates'
   | 'permissions'
   | 'contracts'
   | 'sequencing'
@@ -58,8 +64,12 @@ type SectionId =
   | 'verifiers'
   | 'program-hashes'
   | 'interop-volume'
+  | 'interop-flows'
   | 'interop-transfers'
   | 'interop-tokens'
+  | 'privacy-tvl'
+  | 'privacy-flows'
+  | 'privacy-assets-breakdown'
 type GroupId = 'da-layer' | 'da-bridge'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
@@ -191,6 +201,11 @@ interface ProjectDetailsInteropVolumeSection {
   props: ProjectDetailsProps<InteropVolumeSectionProps>
 }
 
+interface ProjectDetailsInteropFlowsSection {
+  type: 'InteropFlowsSection'
+  props: ProjectDetailsProps<InteropFlowsSectionProps>
+}
+
 interface ProjectDetailsInteropTransfersSection {
   type: 'InteropTransfersSection'
   props: ProjectDetailsProps<InteropTransfersSectionProps>
@@ -199,11 +214,6 @@ interface ProjectDetailsInteropTransfersSection {
 interface ProjectDetailsInteropTokensSection {
   type: 'InteropTokensSection'
   props: ProjectDetailsProps<InteropTokensSectionProps>
-}
-
-interface ProjectDetailsUpcomingDisclaimer {
-  type: 'UpcomingDisclaimer'
-  excludeFromNavigation: true
 }
 
 interface ProjectDetailsGroup {
@@ -224,6 +234,26 @@ interface ProjectDetailsZkCatalogTvsSection {
 interface ProjectDetailsUpgradesAndGovernanceSection {
   type: 'UpgradesAndGovernanceSection'
   props: ProjectDetailsProps<UpgradesAndGovernanceSectionProps>
+}
+
+interface ProjectDetailsUpdatesSection {
+  type: 'UpdatesSection'
+  props: ProjectDetailsProps<UpdatesSectionProps>
+}
+
+interface ProjectDetailsPrivacyTvlSection {
+  type: 'PrivacyTvlSection'
+  props: ProjectDetailsProps<PrivacyTvlSectionProps>
+}
+
+interface ProjectDetailsPrivacyFlowsSection {
+  type: 'PrivacyFlowsSection'
+  props: ProjectDetailsProps<PrivacyFlowsSectionProps>
+}
+
+interface ProjectDetailsPrivacyAssetsBreakdownSection {
+  type: 'PrivacyAssetsBreakdownSection'
+  props: ProjectDetailsProps<PrivacyAssetsBreakdownSectionProps>
 }
 
 export type ProjectDetailsSection = {
@@ -247,7 +277,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsPermissionsSection
   | ProjectDetailsContractsSection
   | ProjectDetailsDataPostedSection
-  | ProjectDetailsUpcomingDisclaimer
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection
   | ProjectDetailsThroughputSection
@@ -258,7 +287,12 @@ export type ProjectDetailsSection = {
   | ProjectDetailsProgramHashesSection
   | ProjectDetailsZkCatalogTvsSection
   | ProjectDetailsInteropVolumeSection
+  | ProjectDetailsInteropFlowsSection
   | ProjectDetailsInteropTransfersSection
   | ProjectDetailsInteropTokensSection
   | ProjectDetailsUpgradesAndGovernanceSection
+  | ProjectDetailsUpdatesSection
+  | ProjectDetailsPrivacyTvlSection
+  | ProjectDetailsPrivacyFlowsSection
+  | ProjectDetailsPrivacyAssetsBreakdownSection
 )

@@ -20,7 +20,7 @@ You also MUST install an environment file called `.env` in the `packages/config`
 - `l2b discover [chain] [project]` run discovery for the project (e.g., `pnpm discover ethereum optimism`)
 - `l2b discover --help` print out all the possible switches for discovery
 
-A list of currently supported chains is [here](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts).
+A list of currently supported chains is [here](./src/config/chains.ts).
 In the case you have discovery of the same project on multiple chains, you can discover all of them for a single project running: `l2b discover all [project]`.
 It's possible to discover all projects that contain a given address by running `l2b discover (<chain> | all) [address]`, it's useful when a change to a shared multisig has occurred.
 
@@ -37,7 +37,7 @@ Discovery is based on two sources of information: the chain's RPC and it's explo
 To run you will need to provide the RPC url to use: (`CHAIN_RPC_URL_FOR_DISCOVERY`).
 Explorer is also required, most chains use Etherscan, for those that do use it, it's enough to configure only (`ETHERSCAN_API_KEY_FOR_DISCOVERY`).
 If your chain uses Blockscout you don't need to provide it.
-Chain information is already precompiled in the file mentioned [above](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts).
+Chain information is already precompiled in the file mentioned [above](./src/config/chains.ts).
 It stores information as the name, chain id, configuration of the multicall contract and the explorer instance.
 Adding a new chain boils down to just adding a new entry to the array and filling out all the data.
 

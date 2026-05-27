@@ -19,6 +19,7 @@ export function TopTokensCell({
   protocol: {
     id: ProjectId
     name: string
+    slug: string
     iconUrl: string
     bridgeTypes?: KnownInteropBridgeType[]
   }
@@ -50,12 +51,14 @@ export function TopTokensCell({
           title={
             <>
               <span>Top tokens & pairs by volume for </span>
-              <img
-                src={protocol.iconUrl}
-                alt={protocol.name}
-                className="relative bottom-px mx-1 inline-block size-6"
-              />
-              <span>{protocol.name}</span>
+              <a href={`/interop/protocols/${protocol.slug}`}>
+                <img
+                  src={protocol.iconUrl}
+                  alt={protocol.name}
+                  className="relative bottom-px mx-1 inline-block size-6"
+                />
+                <span>{protocol.name}</span>
+              </a>
             </>
           }
           showNetMintedValueColumn={showNetMintedValueColumn}

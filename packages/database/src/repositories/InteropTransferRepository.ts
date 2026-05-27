@@ -87,6 +87,17 @@ export interface InteropTransferTokenInfo {
   tokenAddress: string
 }
 
+export interface InteropTransferTokenAddress {
+  chain: string
+  address: string
+}
+
+export interface InteropTransferTokenAddressBatch {
+  latestSerialId: string | undefined
+  transferCount: number
+  tokenAddresses: InteropTransferTokenAddress[]
+}
+
 interface PartialAbstractTokenFilter {
   chain: string
   address: Address32
@@ -412,6 +423,41 @@ export class InteropTransferRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getTokenAddressesAfterSerialId(
+    serialId: string,
+  ): Promise<InteropTransferTokenAddressBatch> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .select([
+        'serialId',
+        'srcChain',
+        'srcTokenAddress',
+        'dstChain',
+        'dstTokenAddress',
+      ])
+      .where('serialId', '>', serialId)
+      .orderBy('serialId', 'asc')
+      .execute()
+
+    const tokenAddresses = new Map<string, InteropTransferTokenAddress>()
+    for (const row of rows) {
+      if (row.srcTokenAddress) {
+        const address = { chain: row.srcChain, address: row.srcTokenAddress }
+        tokenAddresses.set(`${address.chain}:${address.address}`, address)
+      }
+      if (row.dstTokenAddress) {
+        const address = { chain: row.dstChain, address: row.dstTokenAddress }
+        tokenAddresses.set(`${address.chain}:${address.address}`, address)
+      }
+    }
+
+    return {
+      latestSerialId: rows.at(-1)?.serialId,
+      transferCount: rows.length,
+      tokenAddresses: Array.from(tokenAddresses.values()),
+    }
   }
 
   async getWithPartialAbstractTokenIds(): Promise<InteropTransferRecord[]> {

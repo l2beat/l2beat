@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TornadoStakingRewards",
-  "description": "Upgradeable staking rewards contract that holds relayer stake, distributes burn-derived rewards to locked TORN holders, and lets governance recover TORN from the contract.",
+  "description": "Staking contract that escrows TORN staked by relayers. With time, their stake is subtracted from for being officially registered as relayers and receiving fees from each withdrawal, and is redirected as TORN rewards for governance participants who are locking their TORN for voting/staking.",
   "category": "gov",
   "fields": {
     "$admin": {
@@ -47,5 +47,7 @@
       "description": "Scaling factor based on total TORN supply used in reward calculations.",
       "severity": "LOW"
     }
-  }
+  },
+  "ignoreMethods": ["accumulatedRewardPerTorn"],
+  "ignoreInWatchMode": ["accumulatedRewardPerTorn"]
 }

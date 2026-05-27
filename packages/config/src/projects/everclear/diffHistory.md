@@ -1,3 +1,218 @@
+Generated with discovered.json: 0x1b280b96d8b4af3bb679843c7b6297180b35e707
+
+# Diff at Thu, 21 May 2026 21:42:38 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@af480cdcac217110f9e99ef400ba0185c35a6c55 block: 1779128593
+- current timestamp: 1779399692
+
+## Description
+
+RollupProxy `currentRequiredStake` (computed: rises above `baseStake` while the first unresolved node is past its deadline) increased from `0.3 ETH` to `0.4 ETH`. Automatic on-chain reaction — `baseStake` unchanged.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "300000000000000000"
++        "400000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x85d3d1227eab13fb3480722d8d7d66cef7be2a65
+
+# Diff at Mon, 18 May 2026 18:24:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b70f892b88d1263a724194cd3b4ec927d71a6fd9 block: 1778232956
+- current timestamp: 1779128593
+
+## Description
+
+RollupProxy `currentRequiredStake` (computed: rises above `baseStake` when the first unresolved node is past its deadline; enforced only on `_newStake`/`reduceDeposit`, not on every proposal) increased from `0.1 ETH` to `0.3 ETH`. This is an automatic on-chain reaction to an overdue unresolved node, not a governance config change — `baseStake` is unchanged.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "100000000000000000"
++        "300000000000000000"
+    }
+```
+
+Generated with discovered.json: 0xc9127ce58f7aef833c6a0a3a546d1bef6c31fe61
+
+# Diff at Fri, 15 May 2026 12:35:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778232956
+- current timestamp: 1778232956
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778232956 (main branch discovery), not current.
+
+```diff
+    contract OneStepProverHostIo (eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xd64745a0edbb2ada69b81d849f2737d7c082d18ca14a715c23c4165e4eecc637"
++        "0x081875b93df655e91ec23245390ad21db0990c12125dad497f1cbf118501ccc2"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
++        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
++        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
++        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.1:
+-        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
++        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
+    }
+```
+
+```diff
+    contract ChallengeManager (eth:0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
++        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
+    }
+```
+
+Generated with discovered.json: 0xc25fc0b706be0be82ea70acf0de322592f687627
+
+# Diff at Fri, 08 May 2026 09:37:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1777390984
+- current timestamp: 1778232956
+
+## Description
+
+**Everclear Hub L3 halt and ownership transfer.** Chain stopped producing blocks on 2026-05-01.
+
+L1 changes (Ethereum):
+- **RollupProxy** (`eth:0xc6CAd31D...`) — `paused: false → true`.
+- `stakerCount` 2 → 0; `setValidatorCount` 4 → 5; new validator `0xA7275dd1...` added; zombie validators `0xA7275dd1` and `0xe778F5Bf` appear with `latestStakedNode` 324 and 1198.
+- `totalWithdrawableFunds` 0 → 0.1 ETH (bond withdrawal in progress).
+- **Gelato Multisig** (`eth:0xBeA2Bc85...`) deleted; UpgradeExecutor `EXECUTOR_ROLE` member 0 reassigned to a new **SafeL2** at `0x1e0Ef0eb...`.
+
+L3 (chainId 25327):
+- Last block 4779858 at 2026-05-01 21:13 UTC; `transactions_today: 0`. Historical block time ~10 min — current gap is ~80x normal cadence.
+
+Public statements: no shutdown announcement on `everclear.org/blog`, `docs.everclear.org`, or in indexed `@EverclearOrg` X posts at time of writing. The Everclear clearing-layer protocol (CLEAR token, supported L2s) remains operational; the halt is specific to the Hub L3.
+
+Project file updated: `archivedAt` set to the L3 halt timestamp, `chainConfig.untilTimestamp` set to the same, `redWarning` added describing the halt and ownership transfer, and an incident milestone recorded for 2026-05-01.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682)
+    +++ description: None
+```
+
+```diff
+    contract UpgradeExecutor (eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0x1e0Ef0ebC026142cC5EFAE90534F438aD79c313A"
+      values.executors.0:
+-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0x1e0Ef0ebC026142cC5EFAE90534F438aD79c313A"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract RollupProxy (eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.paused:
+-        false
++        true
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        4
++        5
+      values.stakerCount:
+-        2
++        0
+      values.totalWithdrawableFunds:
+-        0
++        "100000000000000000"
+      values.validators.3:
++        "eth:0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA"
+      values.zombieAddress.0:
++        "eth:0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA"
+      values.zombieAddress.1:
++        "eth:0xe778F5Bf5dDB8614a1ab6321Cc557EDbC90e615f"
+      values.zombieCount:
+-        0
++        2
+      values.zombieLatestStakedNode.0:
++        324
+      values.zombieLatestStakedNode.1:
++        1198
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x1e0Ef0ebC026142cC5EFAE90534F438aD79c313A) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => .flat/Safe/Safe.sol}         | 848 +++++++++++++--------
+ .../Safe/SafeProxy.p.sol}                          |  18 +-
+ 2 files changed, 530 insertions(+), 336 deletions(-)
+```
+
 Generated with discovered.json: 0xb2aac575d1781747fe831bc706ae36d9c0adee5b
 
 # Diff at Fri, 08 May 2026 07:51:19 GMT:

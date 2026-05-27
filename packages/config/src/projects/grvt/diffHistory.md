@@ -1,14 +1,114 @@
-Generated with discovered.json: 0x9644392d7c70ac175c45112a4b95ee7238687ad9
+Generated with discovered.json: 0xfaa7f54d444bc1f412d30add572e0f27a60d33b4
 
-# Diff at Fri, 08 May 2026 07:51:23 GMT:
+# Diff at Wed, 20 May 2026 11:56:59 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777295886
-- current timestamp: 1777295886
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f59f0d404af9ed9bb5c23cd4f8a0378debc582c7 block: 1779097887
+- current timestamp: 1779278156
 
 ## Description
 
-Use the new flattener implementation
+One gov-approved transaction to grvt L2: https://tools.l2beat.com/decoder-new/?hash=0x52609446fe9a7597280df6778648d25af4bf6f389765ef506f1f759d6e6d9b41&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        44
++        45
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        44
++        45
+    }
+```
+
+Generated with discovered.json: 0xce54eb014b95aab36918916f8f619ff6048d75f8
+
+# Diff at Mon, 18 May 2026 10:00:55 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@81908b566e918425ebf298c08aed66029316c1ad block: 1778579058
+- current timestamp: 1779097887
+
+## Description
+
+Upgraded GRVT bridge to align with ZK stack state of the art: https://disco.l2beat.com/diff/eth:0xf7B67bDDb74B5eD3De49e1a6Da4D1d7460F00780/eth:0x7F9FCdaf7f65Fd5737De61d8bF5617A9AA8cFaF1. Changes are:
+
+- Interfaces upgraded to the same versions as zksync era has
+- Added bridging ETH
+- Switched to using standard L1AssetRouter
+- Also increased `L2_GAS_LIMIT_DEPOSIT` by the factor of two (the amount of gas that could be used to consume deposit trx on L2).
+
+## Watched changes
+
+```diff
+    contract GRVTBridgeProxy (eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65) [N/A] {
+    +++ description: Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.
+      sourceHashes.1:
+-        "0xf5ebf18a9d794626fa9f7aaa9d607e40298981f57ecc7ad15d41e03d8d756e4f"
++        "0x5061251553a3aefbac60a53a4ca37e0da1a7979b38e33e09934e41db023506be"
+      values.$implementation:
+-        "eth:0xf7B67bDDb74B5eD3De49e1a6Da4D1d7460F00780"
++        "eth:0x7F9FCdaf7f65Fd5737De61d8bF5617A9AA8cFaF1"
+      values.$pastUpgrades.1:
++        ["2026-05-14T06:34:35.000Z","0xa6b1d1369e7a967309819edfff49e2b878bd97f58bcec51a1f9739c28f4163e3",["eth:0xE9C6E19CaA23801B904335E20a7F2BDFE112CAF8"]]
+      values.$pastUpgrades.2:
++        ["2026-05-14T09:56:47.000Z","0xbc38229556154bce739a2fc9f896f5360edb78dd453f44ed9b0284e9ac8d9a6d",["eth:0x7F9FCdaf7f65Fd5737De61d8bF5617A9AA8cFaF1"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.L2_GAS_LIMIT_DEPOSIT:
+-        1200000
++        2400000
+      values.ETH_TOKEN_ADDRESS:
++        "eth:0x0000000000000000000000000000000000000001"
+      implementationNames.eth:0xf7B67bDDb74B5eD3De49e1a6Da4D1d7460F00780:
+-        "GRVTBridgeProxy"
+      implementationNames.eth:0x7F9FCdaf7f65Fd5737De61d8bF5617A9AA8cFaF1:
++        "GRVTBridgeProxy"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GRVTBridgeProxy/GRVTBridgeProxy.sol            | 1459 ++++++++++++++------
+ 1 file changed, 1019 insertions(+), 440 deletions(-)
+```
+
+Generated with discovered.json: 0xc8b78505484e9dab480c3c4101ff5382fee35097
+
+# Diff at Tue, 12 May 2026 09:45:26 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e08a4d47318721a3851fee0bc0991367ebd1fb4 block: 1777295886
+- current timestamp: 1778579058
+
+## Description
+
+Two gov-approved transactions to grvt L2: https://tools.l2beat.com/decoder-new/?hash=0x9c4720dca52947f376a85b3e00f1a8f4fd6866a2c128d5b6857fc77b604c832f&data=AwA, https://tools.l2beat.com/decoder-new/?hash=0xbb0d5b5663bccfe8a0b73211149f0a469e32f6dfaf348f88df8117623b26b2f5&data=AwA.
+
+Config: use the new flattener implementation.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        42
++        44
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        42
++        44
+    }
+```
 
 ## Config/verification related changes
 

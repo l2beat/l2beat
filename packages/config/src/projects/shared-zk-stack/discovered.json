@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
-  "timestamp": 1777882868,
-  "configHash": "0x2a97090a1f82df157cf39326ea5d38bd428032ba90248499c341e4e15917100f",
+  "timestamp": 1779278363,
+  "configHash": "0x3cfbef9b419550ca818702997dd476035cf856077dc776dc57bf78ae7be2c697",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -73,38 +73,6 @@
       "address": "eth:0x12B2925293169a3eC4e794C44840c0F5737658fb",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "eth:0x13f07d9BF17615f6a17F272fe1A913168C275A66",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x2A71F929fC583Db245B1563996de76Ab9d9A3DAf",
-      "sinceTimestamp": 1721774711,
-      "sinceBlock": 20372302,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": ["eth:0x2A71F929fC583Db245B1563996de76Ab9d9A3DAf"],
-        "$threshold": 1,
-        "domainSeparator": "0x137d80acd37e6f99adb2ae75c778cc6a1703622be1426b67579475db8a184b86",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 0,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0x13f07d9BF17615f6a17F272fe1A913168C275A66": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      },
-      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "eth:0x160669864cDe95c190364ad01eDfbAA32E9DA430",
@@ -212,11 +180,6 @@
       "implementationNames": {
         "eth:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B": "ProxyAdmin"
       }
-    },
-    {
-      "address": "eth:0x2A71F929fC583Db245B1563996de76Ab9d9A3DAf",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "GnosisSafe",
@@ -646,41 +609,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GnosisSafe",
-      "address": "eth:0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x53e94a4Cb27BDa5493ccDfb852324B276aa36F77",
-      "sinceTimestamp": 1722184895,
-      "sinceBlock": 20406309,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0xB1072fD3a5EA72B42e063e5A61963d00eeF655DF",
-          "eth:0xEE8fAC9051243379dAAA02c24e07D29F22d73b4E"
-        ],
-        "$threshold": 1,
-        "domainSeparator": "0xd496775f892bc2f3850436422dcf9f0fadf93882c5a23e5da215381f7cad0fa4",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 2,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
       "name": "L1GenesisUpgrade",
       "address": "eth:0x390bc10e854e137d2625573272b3fEe2C615eBA4",
       "type": "Contract",
@@ -707,11 +635,6 @@
     },
     {
       "address": "eth:0x41814626a9256173B6E6441d8133F9286F02AA16",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -908,6 +831,89 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "name": "SecurityCouncil",
+      "address": "eth:0x59195219d1176E42f8e607e9AC114926D47f9035",
+      "type": "Contract",
+      "template": "shared-zk-stack/SecurityCouncil",
+      "sourceHashes": [
+        "0x6d6fce824c07d524aa2280e5844059f4c2861d8c87a2509db5ed374984be5094"
+      ],
+      "proxyType": "immutable",
+      "description": "Custom Multisig implementation that has a general threshold of 6 but also specific thresholds for upgrade approvals (4) or soft freezes (3).",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "description": "soft freeze, hard freeze, approve a protocol upgrade.",
+          "role": ".securityCouncil"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
+          "description": "one of its 3/3 signers.",
+          "role": ".SECURITY_COUNCIL"
+        }
+      ],
+      "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
+      "sinceTimestamp": 1776678539,
+      "sinceBlock": 24920314,
+      "values": {
+        "$immutable": true,
+        "$members": [
+          "eth:0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a",
+          "eth:0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F",
+          "eth:0x69462a81ba94D64c404575f1899a464F123497A2",
+          "eth:0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0",
+          "eth:0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803",
+          "eth:0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44",
+          "eth:0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e",
+          "eth:0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231"
+        ],
+        "$threshold": 6,
+        "APPROVE_UPGRADE_SECURITY_COUNCIL_THRESHOLD": 4,
+        "EIP1271_THRESHOLD": 6,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "SecurityCouncil",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x59195219d1176E42f8e607e9AC114926D47f9035",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "HARD_FREEZE_THRESHOLD": 6,
+        "hardFreezeNonce": 0,
+        "PROTOCOL_UPGRADE_HANDLER": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+        "RECOMMENDED_SOFT_FREEZE_THRESHOLD": 3,
+        "SOFT_FREEZE_CONSERVATIVE_THRESHOLD": 6,
+        "softFreezeNonce": 0,
+        "softFreezeThreshold": 3,
+        "softFreezeThresholdSettingNonce": 0,
+        "UNFREEZE_THRESHOLD": 6,
+        "unfreezeNonce": 0
+      },
+      "fieldMeta": {
+        "softFreezeNonce": {
+          "severity": "HIGH",
+          "description": "Increments with each softFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for SOFT_FREEZE_PERIOD"
+        },
+        "hardFreezeNonce": {
+          "severity": "HIGH",
+          "description": "Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"
+        }
+      },
+      "implementationNames": {
+        "eth:0x59195219d1176E42f8e607e9AC114926D47f9035": "SecurityCouncil"
+      },
+      "references": [
+        {
+          "text": "Security Council members - ZK Nation docs",
+          "href": "https://docs.zknation.io/zksync-governance/schedule-3-zksync-security-council"
+        }
+      ],
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
       "address": "eth:0x5C7E59Dba6557C7dAB3B69ccd3E309d1965Cf1B1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -987,7 +993,7 @@
         },
         {
           "permission": "interact",
-          "from": "eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "from": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
           "description": "one of its 3/3 signers.",
           "role": ".GUARDIANS"
         }
@@ -1090,93 +1096,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SecurityCouncil",
-      "address": "eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
-      "type": "Contract",
-      "template": "shared-zk-stack/SecurityCouncil",
-      "sourceHashes": [
-        "0x4f09812169eacbbd38ee512ee26569b5aa3cf693dbb7cc030cb8ed7f140e89e4"
-      ],
-      "proxyType": "immutable",
-      "description": "Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "soft freeze, hard freeze, approve a protocol upgrade.",
-          "role": ".securityCouncil"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "description": "one of its 3/3 signers.",
-          "role": ".SECURITY_COUNCIL"
-        }
-      ],
-      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
-      "sinceTimestamp": 1738855991,
-      "sinceBlock": 21788384,
-      "values": {
-        "$immutable": true,
-        "$members": [
-          "eth:0x13f07d9BF17615f6a17F272fe1A913168C275A66",
-          "eth:0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a",
-          "eth:0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F",
-          "eth:0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F",
-          "eth:0x69462a81ba94D64c404575f1899a464F123497A2",
-          "eth:0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A",
-          "eth:0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0",
-          "eth:0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88",
-          "eth:0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803",
-          "eth:0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44",
-          "eth:0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e",
-          "eth:0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231"
-        ],
-        "$threshold": 9,
-        "APPROVE_UPGRADE_SECURITY_COUNCIL_THRESHOLD": 6,
-        "EIP1271_THRESHOLD": 9,
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "SecurityCouncil",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "HARD_FREEZE_THRESHOLD": 9,
-        "hardFreezeNonce": 0,
-        "PROTOCOL_UPGRADE_HANDLER": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-        "RECOMMENDED_SOFT_FREEZE_THRESHOLD": 3,
-        "SOFT_FREEZE_CONSERVATIVE_THRESHOLD": 9,
-        "softFreezeNonce": 0,
-        "softFreezeThreshold": 3,
-        "softFreezeThresholdSettingNonce": 0,
-        "UNFREEZE_THRESHOLD": 9,
-        "unfreezeNonce": 0
-      },
-      "fieldMeta": {
-        "softFreezeNonce": {
-          "severity": "HIGH",
-          "description": "Increments with each softFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for SOFT_FREEZE_PERIOD"
-        },
-        "hardFreezeNonce": {
-          "severity": "HIGH",
-          "description": "Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"
-        }
-      },
-      "implementationNames": {
-        "eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410": "SecurityCouncil"
-      },
-      "references": [
-        {
-          "text": "Security Council members - ZK Nation docs",
-          "href": "https://docs.zknation.io/zksync-governance/schedule-3-zksync-security-council"
-        }
-      ],
-      "category": { "name": "Governance", "priority": 3 }
-    },
-    {
       "address": "eth:0x670B24610DF99b1685aEAC0dfD5307B92e0cF4d7",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1268,11 +1187,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x6F2A8Ee9452ba7d336b3fba03caC27f7818AeAD6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1295,38 +1209,6 @@
         "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119": "RollupL1DAValidator"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "eth:0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x72BA1965320ab5352FD6D68235Cc3C5306a6FFA2",
-      "sinceTimestamp": 1721854115,
-      "sinceBlock": 20378889,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": ["eth:0x6F2A8Ee9452ba7d336b3fba03caC27f7818AeAD6"],
-        "$threshold": 1,
-        "domainSeparator": "0x0ced660004f5095df7762f0dbefcbf5716e6c3bac0d6b138f3184debb19a425a",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 3,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      },
-      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "eth:0x7408A268e5E6e8F08917c5b71015F4B9044970C7",
@@ -1457,42 +1339,6 @@
     },
     {
       "name": "GnosisSafe",
-      "address": "eth:0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0xcD6998D20876155D37aEC0dB4C19d63EEAEf058F",
-      "sinceTimestamp": 1721748419,
-      "sinceBlock": 20370122,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5",
-          "eth:0xd9f8460f3081dC29dF1e3b6e5404B245B96F4A30",
-          "eth:0xcD6998D20876155D37aEC0dB4C19d63EEAEf058F"
-        ],
-        "$threshold": 1,
-        "domainSeparator": "0xf9b2e53195bad3bbaff6d49c13c65400176ea7f034402528250b7875f990ea27",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 4,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "GnosisSafe",
       "address": "eth:0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1551,7 +1397,31 @@
     {
       "address": "eth:0xa5D0084A766203b463b3164DFc49D91509C12daB",
       "type": "EOA",
-      "proxyType": "EOA"
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xa5D0084A766203b463b3164DFc49D91509C12daB",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x7ae1b89ca3e105dc1aea89eb8fe060b288b2180a436d4cdcd92bca09b870a96a",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
     },
     {
       "address": "eth:0xaaAdAa000867fb883089B7e528d7eA96937b777f",
@@ -1565,11 +1435,6 @@
     },
     {
       "address": "eth:0xafc7805c640C4A9E5D28f6A5Eae23b50e59B831c",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xB1072fD3a5EA72B42e063e5A61963d00eeF655DF",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1642,7 +1507,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "from": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
           "description": "one of its 3/3 signers.",
           "role": ".ZK_FOUNDATION_SAFE"
         }
@@ -1919,11 +1784,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xcD6998D20876155D37aEC0dB4C19d63EEAEf058F",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xCe20135Ac0253650E28Ea14911c69F1fADD8b06f",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2038,11 +1898,6 @@
         "eth:0x71759C4eA628293F5a99aAB1585dF1c8dA4718e0": "L1Nullifier"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "address": "eth:0xd9f8460f3081dC29dF1e3b6e5404B245B96F4A30",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "ChainAssetHandler",
@@ -2192,7 +2047,7 @@
         "BRIDGE_HUB": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "CHAIN_ASSET_HANDLER": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
         "CHAIN_TYPE_MANAGER": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "emergencyUpgradeBoard": "eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+        "emergencyUpgradeBoard": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
         "emergencyUpgradesExecuted": [
           "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13",
           "0x09a5358047d9d0898d14c31823e9ea544f5f33c280441d1f34d5cc6dafe7a055",
@@ -2215,7 +2070,7 @@
         "L2_PROTOCOL_GOVERNOR": "eth:0x085b8B6407f150D62adB1EF926F7f304600ec714",
         "lastFreezeStatusInUpgradeCycle": 0,
         "protocolFrozenUntil": 0,
-        "securityCouncil": "eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
+        "securityCouncil": "eth:0x59195219d1176E42f8e607e9AC114926D47f9035",
         "SOFT_FREEZE_PERIOD": 43200,
         "STANDARD_LEGAL_VETO_PERIOD": 259200,
         "UPGRADE_DELAY_PERIOD": 86400,
@@ -2290,15 +2145,25 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xf10697cd80FFc0A70bc8E9ab03D6D6596cc143E0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xF3d913D11dd577DDe5da4f2AA9611Aa799185C46",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EmergencyUpgradeBoard",
-      "address": "eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+      "address": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
       "type": "Contract",
       "template": "shared-zk-stack/EmergencyUpgradeBoard",
       "sourceHashes": [
         "0xcc8c88f4e176df41bb0e3248fc3c1a10a4f055732c3e5babc17f322b6aa5d10d"
       ],
       "proxyType": "immutable",
-      "description": "A custom contract allowing a 3/3 of eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.",
+      "description": "A custom contract allowing a 3/3 of eth:0x59195219d1176E42f8e607e9AC114926D47f9035, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2443,9 +2308,9 @@
           "role": ".emergencyUpgradeBoard"
         }
       ],
-      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
-      "sinceTimestamp": 1738856003,
-      "sinceBlock": 21788385,
+      "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
+      "sinceTimestamp": 1776678563,
+      "sinceBlock": 24920316,
       "values": {
         "$immutable": true,
         "eip712Domain": {
@@ -2453,34 +2318,19 @@
           "name": "EmergencyUpgradeBoard",
           "version": "1",
           "chainId": 1,
-          "verifyingContract": "eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "verifyingContract": "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111",
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
         "GUARDIANS": "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
         "PROTOCOL_UPGRADE_HANDLER": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-        "SECURITY_COUNCIL": "eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
+        "SECURITY_COUNCIL": "eth:0x59195219d1176E42f8e607e9AC114926D47f9035",
         "ZK_FOUNDATION_SAFE": "eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
       },
       "implementationNames": {
-        "eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6": "EmergencyUpgradeBoard"
+        "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111": "EmergencyUpgradeBoard"
       },
       "category": { "name": "Governance", "priority": 3 }
-    },
-    {
-      "address": "eth:0xEE8fAC9051243379dAAA02c24e07D29F22d73b4E",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xf10697cd80FFc0A70bc8E9ab03D6D6596cc143E0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xF3d913D11dd577DDe5da4f2AA9611Aa799185C46",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xFAdb20191Ab38362C50f52909817B74214CA79AE",
@@ -2694,7 +2544,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1777882868,
+        "clock": 1779278347,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -2716,7 +2566,7 @@
         "MinterAdmin": ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"],
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "14667178499732409664459870497"
+        "totalSupply": "14673669819845790321982481640"
       },
       "implementationNames": {
         "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "TransparentUpgradeableProxy",
@@ -2802,7 +2652,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1777882868,
+        "clock": 1779278347,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -2912,7 +2762,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1777882868,
+        "clock": 1779278347,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -3184,7 +3034,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1777882868,
+        "clock": 1779278347,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -3279,9 +3129,6 @@
       "function transferOwnership(address newOwner)"
     ],
     "eth:0x015318c16AE443a20DE0A776dB06a59F0D279057": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0x13f07d9BF17615f6a17F272fe1A913168C275A66": [
       "constructor(address _singleton)"
     ],
     "eth:0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D": [
@@ -3469,9 +3316,6 @@
       "function upgradeState(bytes32 _id) view returns (uint8)",
       "function upgradeStatus(bytes32 upgradeId) view returns (uint48 creationTimestamp, uint48 securityCouncilApprovalTimestamp, bool guardiansApproval, bool guardiansExtendedLegalVeto, bool executed)"
     ],
-    "eth:0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F": [
-      "constructor(address _singleton)"
-    ],
     "eth:0x390bc10e854e137d2625573272b3fEe2C615eBA4": [
       "error AddressHasNoCode(address)",
       "error DelegateCallFailed(bytes returnData)",
@@ -3628,6 +3472,33 @@
     "eth:0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69": [
       "constructor(address _singleton)"
     ],
+    "eth:0x59195219d1176E42f8e607e9AC114926D47f9035": [
+      "constructor(address _protocolUpgradeHandler, address[] _members)",
+      "error InvalidShortString()",
+      "error StringTooLong(string str)",
+      "event EIP712DomainChanged()",
+      "function APPROVE_UPGRADE_SECURITY_COUNCIL_THRESHOLD() view returns (uint256)",
+      "function EIP1271_THRESHOLD() view returns (uint256)",
+      "function HARD_FREEZE_THRESHOLD() view returns (uint256)",
+      "function PROTOCOL_UPGRADE_HANDLER() view returns (address)",
+      "function RECOMMENDED_SOFT_FREEZE_THRESHOLD() view returns (uint256)",
+      "function SOFT_FREEZE_CONSERVATIVE_THRESHOLD() view returns (uint256)",
+      "function UNFREEZE_THRESHOLD() view returns (uint256)",
+      "function approveUpgradeSecurityCouncil(bytes32 _id, address[] _signers, bytes[] _signatures)",
+      "function checkSignatures(bytes32 _digest, address[] _signers, bytes[] _signatures, uint256 _threshold) view",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function hardFreeze(uint256 _validUntil, address[] _signers, bytes[] _signatures)",
+      "function hardFreezeNonce() view returns (uint256)",
+      "function isValidSignature(bytes32 _digest, bytes _signature) view returns (bytes4)",
+      "function members(uint256) view returns (address)",
+      "function setSoftFreezeThreshold(uint256 _threshold, uint256 _validUntil, address[] _signers, bytes[] _signatures)",
+      "function softFreeze(uint256 _validUntil, address[] _signers, bytes[] _signatures)",
+      "function softFreezeNonce() view returns (uint256)",
+      "function softFreezeThreshold() view returns (uint256)",
+      "function softFreezeThresholdSettingNonce() view returns (uint256)",
+      "function unfreeze(uint256 _validUntil, address[] _signers, bytes[] _signatures)",
+      "function unfreezeNonce() view returns (uint256)"
+    ],
     "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -3663,6 +3534,58 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    ],
     "eth:0x669ed5BB1377C917333e7d4223ce3419EE4099fD": [
       "constructor(address _bridgehub, uint256 _l1ChainId)",
       "error ChainExists()",
@@ -3691,33 +3614,6 @@
       "function initialize()",
       "function sharedTree() view returns (uint256 _height, uint256 _leafNumber)",
       "function updateFullTree()"
-    ],
-    "eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410": [
-      "constructor(address _protocolUpgradeHandler, address[] _members)",
-      "error InvalidShortString()",
-      "error StringTooLong(string str)",
-      "event EIP712DomainChanged()",
-      "function APPROVE_UPGRADE_SECURITY_COUNCIL_THRESHOLD() view returns (uint256)",
-      "function EIP1271_THRESHOLD() view returns (uint256)",
-      "function HARD_FREEZE_THRESHOLD() view returns (uint256)",
-      "function PROTOCOL_UPGRADE_HANDLER() view returns (address)",
-      "function RECOMMENDED_SOFT_FREEZE_THRESHOLD() view returns (uint256)",
-      "function SOFT_FREEZE_CONSERVATIVE_THRESHOLD() view returns (uint256)",
-      "function UNFREEZE_THRESHOLD() view returns (uint256)",
-      "function approveUpgradeSecurityCouncil(bytes32 _id, address[] _signers, bytes[] _signatures)",
-      "function checkSignatures(bytes32 _digest, address[] _signers, bytes[] _signatures, uint256 _threshold) view",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function hardFreeze(uint256 _validUntil, address[] _signers, bytes[] _signatures)",
-      "function hardFreezeNonce() view returns (uint256)",
-      "function isValidSignature(bytes32 _digest, bytes _signature) view returns (bytes4)",
-      "function members(uint256) view returns (address)",
-      "function setSoftFreezeThreshold(uint256 _threshold, uint256 _validUntil, address[] _signers, bytes[] _signatures)",
-      "function softFreeze(uint256 _validUntil, address[] _signers, bytes[] _signatures)",
-      "function softFreezeNonce() view returns (uint256)",
-      "function softFreezeThreshold() view returns (uint256)",
-      "function softFreezeThresholdSettingNonce() view returns (uint256)",
-      "function unfreeze(uint256 _validUntil, address[] _signers, bytes[] _signatures)",
-      "function unfreezeNonce() view returns (uint256)"
     ],
     "eth:0x69462a81ba94D64c404575f1899a464F123497A2": [
       "constructor(address _singleton)"
@@ -3812,9 +3708,6 @@
       "function publishBlobs(bytes _pubdataCommitments)",
       "function publishedBlobCommitments(bytes32 blobCommitment) view returns (uint256 blockOfPublishing)"
     ],
-    "eth:0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A": [
-      "constructor(address _singleton)"
-    ],
     "eth:0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0": [
       "constructor(address _singleton)"
     ],
@@ -3891,9 +3784,6 @@
       "function tryRegisterTokenFromBurnData(bytes _burnData, bytes32 _expectedAssetId)",
       "function unpause()",
       "function updateChainBalancesFromSharedBridge(address _token, uint256 _targetChainId)"
-    ],
-    "eth:0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88": [
-      "constructor(address _singleton)"
     ],
     "eth:0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803": [
       "constructor(address _singleton)"
@@ -4164,7 +4054,7 @@
       "function transferOwnership(address newOwner)",
       "function updateDAPair(address _l1DAValidator, address _l2DAValidator, bool _status)"
     ],
-    "eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6": [
+    "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111": [
       "constructor(address _protocolUpgradeHandler, address _securityCouncil, address _guardians, address _zkFoundation)",
       "error InvalidShortString()",
       "error StringTooLong(string str)",
@@ -4615,6 +4505,6 @@
     "shared-zk-stack/ZkGovernor": "0x0d0c5f1209dfd254e3b76edce6803b2c607f359320da39df8a032f146ab1c46c",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
-  "usedBlockNumbers": { "ethereum": 25020404, "zksync2": 69893170 },
-  "permissionsConfigHash": "0x787109b667032e5b93d07d994dcb86a16417ce0cb5a17ba36a7e00a8b41bfd3a"
+  "usedBlockNumbers": { "ethereum": 25136302, "zksync2": 70187317 },
+  "permissionsConfigHash": "0x9f57ec20a0f0bd4fe187930fffb3c1d52423bce6434a2bc3b562ae1488a8e20e"
 }

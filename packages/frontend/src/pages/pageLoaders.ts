@@ -26,9 +26,6 @@ export const pageLoaders = {
   ScalingArchivedPage: async () =>
     (await import('./scaling/archived/ScalingArchivedPage'))
       .ScalingArchivedPage,
-  ScalingUpcomingPage: async () =>
-    (await import('./scaling/upcoming/ScalingUpcomingPage'))
-      .ScalingUpcomingPage,
   ScalingProjectPage: async () =>
     (await import('./scaling/project/ScalingProjectPage')).ScalingProjectPage,
   ScalingProjectTvsBreakdownPage: async () =>
@@ -57,6 +54,9 @@ export const pageLoaders = {
   InteropProtocolPage: async () =>
     (await import('./interop/protocol/InteropProtocolPage'))
       .InteropProtocolPage,
+  InteropTokenFrameworksPage: async () =>
+    (await import('./interop/token-frameworks/InteropTokenFrameworksPage'))
+      .InteropTokenFrameworksPage,
   DataAvailabilitySummaryPage: async () =>
     (await import('./data-availability/summary/DataAvailabilitySummaryPage'))
       .DataAvailabilitySummaryPage,
@@ -78,6 +78,10 @@ export const pageLoaders = {
   DataAvailabilityArchivedPage: async () =>
     (await import('./data-availability/archived/DataAvailabilityArchivedPage'))
       .DataAvailabilityArchivedPage,
+  PrivacySummaryPage: async () =>
+    (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
+  PrivacyProjectPage: async () =>
+    (await import('./privacy/project/PrivacyProjectPage')).PrivacyProjectPage,
   ZkCatalogPage: async () =>
     (await import('./zk-catalog/v2/ZkCatalogPage')).ZkCatalogPage,
   ZkCatalogProjectPage: async () =>

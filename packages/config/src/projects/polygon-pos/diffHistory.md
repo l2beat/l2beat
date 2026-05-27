@@ -1,3 +1,74 @@
+Generated with discovered.json: 0x8eb45392a9502b63371f95e673071e4c86d8ac7e
+
+# Diff at Tue, 19 May 2026 11:44:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1d630d9c64f2d9431ff75a101bb6e0338cdffc9e block: 1778679802
+- current timestamp: 1778679802
+
+## Description
+
+All shapes have to be defined on an implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778679802 (main branch discovery), not current.
+
+```diff
+    contract RootChainManager (eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) [polygonposbridge/RootChainManagerMigrator] {
+    +++ description: None
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD","description":"move any tokens to or from the escrow.","role":".managersAC"}
+    }
+```
+
+```diff
+    contract ERC721Predicate (eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) [polygonposbridge/predicate] {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+      template:
++        "polygonposbridge/predicate"
+    }
+```
+
+```diff
+    contract PolygonMultisig (eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+    }
+```
+
+Generated with discovered.json: 0xefad4ab01eb138033d007fe802dffdbc1b8818fb
+
+# Diff at Wed, 13 May 2026 13:45:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b18d53b57004d29236893505e028d7202c63b265 block: 1777964012
+- current timestamp: 1778679802
+
+## Description
+
+adjust staking reward.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [N/A] {
+    +++ description: None
+      values.CHECKPOINT_REWARD:
+-        "34695980000000000000000"
++        "29414916286149162861491"
+    }
+```
+
 Generated with discovered.json: 0x5c4d889da3d26778734b8745a8c633d9d1355a89
 
 # Diff at Fri, 08 May 2026 07:51:48 GMT:

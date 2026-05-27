@@ -3,32 +3,22 @@
   "description": "Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).",
   "ignoreMethods": ["canExecute", "getProposal", "proxiableUUID"],
   "fields": {
-    // "getProposal": {
-    //   "handler": {
-    //     "type": "array",
-    //     "maxLength": 20
-    //   },
-    //   "description": "encrypted emergency proposals",
-    //   "edit": [
-    //     "map",
-    //     [
-    //       "shape",
-    //       "executed",
-    //       "approvals",
-    //       "parameters",
-    //       "encryptedPayloadURI",
-    //       "publicMetadataUriHash",
-    //       "destinationActionsHash",
-    //       "destinationPlugin"
-    //     ]
-    //   ]
-    // }
-    // TODO: set severity high as soon as gov is live
-    // "multisigSettings":{
-    //     "severity": "HIGH"
-    // },
-    // "proposalCount":{
-    //     "severity": "HIGH"
-    // }
+    "multisigSettings": { "severity": "HIGH" },
+    "proposalCount": {
+      "description": "total standard proposal count.",
+      "severity": "HIGH"
+    },
+    "dao": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage critical settings (e.g. threshold and multisig settings) for the standard proposal governance path."
+        }
+      ]
+    },
+    "minApprovals": {
+      "copy": "multisigSettings",
+      "edit": ["get", "minApprovals"]
+    }
   }
 }

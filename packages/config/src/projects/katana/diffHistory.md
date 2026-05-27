@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xa9cc009f3c137deb4732a8e3a64b9059552d4b55
+
+# Diff at Fri, 15 May 2026 12:36:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778675724
+- current timestamp: 1778675724
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778675724 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
++        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+    }
+```
+
+Generated with discovered.json: 0x4d8fadab31298992bbc352ba7910c7320f30e8ae
+
+# Diff at Wed, 13 May 2026 12:37:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd13366f13be78635363f6f5a496347735f4ea4e block: 1777451715
+- current timestamp: 1778675724
+
+## Description
+
+ms member change.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1"
++        "eth:0xFAc88BB6229F47A31A78F0Ba91E5a541Cb1866a3"
+    }
+```
+
 Generated with discovered.json: 0x3e2fbb7e627e10c95bbd7a3491e0e2a9cb62d6a4
 
 # Diff at Fri, 08 May 2026 07:51:30 GMT:

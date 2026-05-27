@@ -63,5 +63,10 @@
     "hash": "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9",
     "address": "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c",
     "blockNumber": 22535105
+  },
+  "ProxyAdmin_LayerZero.sol": {
+    "hash": "0x130b90ae0c02f239d1ce8b414a1a9a49d97708bb4f07d7e9c69af4f7c8a8f5bc",
+    "address": "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
+    "blockNumber": 24970797
   }
 }

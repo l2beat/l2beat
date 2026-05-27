@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x22c2c59c3fa75cd7617ea8c5867128b5464f00a1
+
+# Diff at Fri, 15 May 2026 12:35:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1773320760
+- current timestamp: 1773320760
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773320760 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      sourceHashes.0:
+-        "0x6d31c3046dca02d527c9c812462cb52b4402d54884c3abe822cb6ac8371e4a5b"
++        "0xba12695f53ef79b4c552abf284ab9133ca47c0fc1908e05a8b941e5a176795cb"
+    }
+```
+
+```diff
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier] {
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+      sourceHashes.0:
+-        "0xbe8d5d7346b3a0c693ac88e25f6f3d4479a63d664b7760a277a0291be6ca2f81"
++        "0xd12e5ce718cbb92c582928b83200e21985fc933c614e710418f28a4e6d425685"
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+      sourceHashes.0:
+-        "0x3bc7088771e0885ea308b56e1dd5ff9818b17e6ad8856232189a849e5db10cac"
++        "0xa39c2d6256fc134bea7f86fee8cb7b0cdb6bcafe0c25f69d86fe3309a298dc52"
+    }
+```
+
 Generated with discovered.json: 0x4061049f25662896532596c9725ba5fa0e5d136e
 
 # Diff at Fri, 08 May 2026 07:51:09 GMT:

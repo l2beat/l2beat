@@ -1,7 +1,7 @@
 {
   "name": "debridge",
   "timestamp": 1753092647,
-  "configHash": "0xd590d1551c404df7f2edf192acb7e6640f7e8b526d3ac934a4471eee72c58e44",
+  "configHash": "0xb038d013c7e857515431ece8b01e825737bc185963604d1d1c9bf3bc78415ffa",
   "entries": [
     {
       "address": "eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205",

@@ -92,6 +92,10 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
     ],
     projectsForTvs: [
       {
+        projectId: ProjectId('fluent'),
+        sinceTimestamp: UnixTime(1776599267), // first onchain commitBatch 2026-04-19
+      },
+      {
         projectId: ProjectId('celo'),
         sinceTimestamp: UnixTime(1771445567),
       },
@@ -144,8 +148,28 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
         projectId: ProjectId('mantle'),
         sinceTimestamp: UnixTime(1778001356),
       },
+      {
+        projectId: ProjectId('morph'),
+        sinceTimestamp: UnixTime(1779354407),
+      },
     ],
     verifierHashes: [
+      {
+        hash: '0x4388a21c687fdd5f218d7e3d13190cac4c5355818d3605fd5fb811df468ee696',
+        name: 'SP1 Hypercube Groth16 v6.1.0',
+        sourceLink:
+          'https://github.com/succinctlabs/sp1/tree/v6.1.0/crates/prover',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
       {
         hash: '0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac',
         name: 'SP1 Hypercube Plonk v6.1.0',
@@ -163,6 +187,12 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
             address: ChainSpecificAddress.fromLong(
               'arbitrum',
               '0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624',
             ),
           },
         ],

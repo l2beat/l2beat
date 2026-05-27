@@ -207,6 +207,18 @@ export const INTEROP_CHAINS: InteropChain[] = [
     color: '#3CFF72',
     explorerUrl: 'https://app.hyperliquid.xyz/explorer',
   },
+  {
+    id: 'lighter',
+    name: 'Lighter',
+    type: 'evm',
+    display: 'LIGHTER',
+    color: '#1E88E5',
+    explorerUrl: 'https://app.lighter.xyz',
+  },
 ] as const
 
-export const INTEROP_ONE_SIDED_CHAINS = ['solana', 'hyperliquid'] as const
+export const INTEROP_ONE_SIDED_CHAINS = [
+  'solana',
+  'hyperliquid',
+  'lighter',
+] as const

@@ -112,6 +112,16 @@ const DEBRIDGE_CHAIN_LOOKUP = [
   { chainId: '32769', chain: 'zilliqa' },
   { chainId: '25', chain: 'cronos' },
   { chainId: '4326', chain: 'megaeth' },
+  // DLN orders can use deBridge-specific internal chain ids.
+  { chainId: '100000009', chain: 'flow' },
+  { chainId: '100000013', chain: 'story' },
+  { chainId: '100000019', chain: 'cronos' },
+  { chainId: '100000022', chain: 'hyperevm' },
+  { chainId: '100000027', chain: 'sei' },
+  { chainId: '100000030', chain: 'monad' },
+  { chainId: '100000026', chain: 'tron' },
+  { chainId: '100000029', chain: 'injective' },
+  { chainId: '100000031', chain: 'megaeth' },
   // tempo unsupported
 ]
 
@@ -130,6 +140,7 @@ export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
   { chainId: '59144', chain: 'linea' },
   { chainId: '999', chain: 'hyperevm' },
   { chainId: '143', chain: 'monad' },
+  { chainId: '4326', chain: 'megaeth' },
   // tempo unsupported
 ])
 

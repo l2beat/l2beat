@@ -7,6 +7,7 @@ import { AggregatesPage } from './pages/interop/aggregates/AggregatesPage'
 import { AnomaliesPage } from './pages/interop/anomalies/AnomaliesPage'
 import { AnomalyDetailsPage } from './pages/interop/anomalies/AnomalyDetailsPage'
 import { SuspiciousTransfersPage } from './pages/interop/anomalies/SuspiciousTransfersPage'
+import { ChainsSummaryPage } from './pages/interop/chains-summary/ChainsSummaryPage'
 import { CoveragePiesPage } from './pages/interop/coverage-pies/CoveragePiesPage'
 import { EventDetailsPage } from './pages/interop/events/EventDetailsPage'
 import { EventsPage } from './pages/interop/events/EventsPage'
@@ -23,6 +24,8 @@ import { TransferDetailsPage } from './pages/interop/transfers/TransferDetailsPa
 import { TransfersPage } from './pages/interop/transfers/TransfersPage'
 import { BackofficeLandingPage } from './pages/landing/BackofficeLandingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { DailyChecksPage } from './pages/website/daily-checks/DailyChecksPage'
+import { DaTrackingStatusPage } from './pages/website/status/da-tracking/DaTrackingStatusPage'
 import { TrackedTxsStatusPage } from './pages/website/status/tracked-txs/TrackedTxsStatusPage'
 import { TRPCReactProvider } from './react-query/trpc'
 
@@ -91,10 +94,22 @@ export function App() {
                 path="/interop/insights/coverage-pies"
                 element={<CoveragePiesPage />}
               />
+              <Route
+                path="/interop/insights/chains-summary"
+                element={<ChainsSummaryPage />}
+              />
               <Route path="/interop/insights/memory" element={<MemoryPage />} />
               <Route
                 path="/website/status/tracked-txs"
                 element={<TrackedTxsStatusPage />}
+              />
+              <Route
+                path="/website/status/da-tracking"
+                element={<DaTrackingStatusPage />}
+              />
+              <Route
+                path="/website/daily-checks"
+                element={<DailyChecksPage />}
               />
               <Route path="/not-found" element={<NotFoundPage />} />
               <Route path="*" element={<NotFoundPage />} />

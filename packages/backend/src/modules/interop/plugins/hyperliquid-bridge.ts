@@ -22,7 +22,8 @@ const ARB_USDC = ChainSpecificAddress(
   'arb1:0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
 )
 
-const HYPERLIQUID_BRIDGE_EOA = ChainSpecificAddress.address(HYPERLIQUID_BRIDGE)
+const HYPERLIQUID_BRIDGE_ADDRESS =
+  ChainSpecificAddress.address(HYPERLIQUID_BRIDGE)
 const ARB_USDC_TOKEN = Address32.from(ChainSpecificAddress.address(ARB_USDC))
 
 const transferLog =
@@ -80,7 +81,7 @@ export class HyperliquidBridgePlugin implements InteropPluginResyncable {
     if (input.chain !== 'arbitrum') return
 
     const finalizedWithdrawal = parseFinalizedWithdrawal(input.log, [
-      HYPERLIQUID_BRIDGE_EOA,
+      HYPERLIQUID_BRIDGE_ADDRESS,
     ])
     if (finalizedWithdrawal) {
       return [
@@ -97,7 +98,7 @@ export class HyperliquidBridgePlugin implements InteropPluginResyncable {
 
     const transfer = parseTransfer(input.log, null)
     if (!transfer) return
-    if (EthereumAddress(transfer.to) !== HYPERLIQUID_BRIDGE_EOA) return
+    if (EthereumAddress(transfer.to) !== HYPERLIQUID_BRIDGE_ADDRESS) return
 
     return [
       HyperliquidDeposit.create(input, {

@@ -16,8 +16,10 @@ import {
   DrawerTrigger,
 } from '~/components/core/Drawer'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
+import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { InfoIcon } from '~/icons/Info'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import { cn } from '~/utils/cn'
 import { MIN_SELECTED_PROTOCOLS } from './consts'
 import { useInteropFlows } from './utils/InteropFlowsContext'
 
@@ -35,12 +37,15 @@ export function FlowsProtocolsSelector({
     deselectAllProtocols,
   } = useInteropFlows()
 
-  const protocolsWithDetails = allProtocols.map(({ id, name, iconUrl }) => ({
-    id,
-    name,
-    iconUrl,
-    isSelected: selectedProtocols.includes(id),
-  }))
+  const protocolsWithDetails = allProtocols.map(
+    ({ id, name, iconUrl, slug }) => ({
+      id,
+      name,
+      iconUrl,
+      slug,
+      isSelected: selectedProtocols.includes(id),
+    }),
+  )
 
   const selectedProtocolsWithDetails = protocolsWithDetails.filter(
     (protocol) => protocol.isSelected,
@@ -126,24 +131,13 @@ export function FlowsProtocolsSelector({
           </DrawerHeader>
           <ScrollWithGradient className="min-h-0">
             {protocolsWithDetails.map((protocol) => (
-              <Checkbox
+              <ProtocolRow
                 key={protocol.id}
-                name={protocol.name}
-                className="flex h-10 w-full flex-row-reverse items-center justify-between px-4 py-2.5 hover:bg-surface-secondary"
-                checked={protocol.isSelected}
-                onCheckedChange={() => toggleProtocolSelection(protocol.id)}
-              >
-                <div className="flex items-center gap-2">
-                  <img
-                    src={protocol.iconUrl}
-                    alt={protocol.name}
-                    className="size-4"
-                  />
-                  <span className="font-semibold text-xs leading-none">
-                    {protocol.name}
-                  </span>
-                </div>
-              </Checkbox>
+                protocol={protocol}
+                onToggle={toggleProtocolSelection}
+                nameClassName="font-semibold text-xs leading-none"
+                rowClassName="px-4"
+              />
             ))}
           </ScrollWithGradient>
           <div className="mt-4 px-4">{footer}</div>
@@ -164,29 +158,59 @@ export function FlowsProtocolsSelector({
           </DialogHeader>
           <ScrollWithGradient>
             {protocolsWithDetails.map((protocol) => (
-              <Checkbox
+              <ProtocolRow
                 key={protocol.id}
-                name={protocol.name}
-                className="flex h-10 w-full flex-row-reverse items-center justify-between px-3 py-2.5 hover:bg-surface-secondary"
-                checked={protocol.isSelected}
-                onCheckedChange={() => toggleProtocolSelection(protocol.id)}
-              >
-                <div className="flex items-center gap-2">
-                  <img
-                    src={protocol.iconUrl}
-                    alt={protocol.name}
-                    className="size-4"
-                  />
-                  <span className="font-bold text-label-value-16">
-                    {protocol.name}
-                  </span>
-                </div>
-              </Checkbox>
+                protocol={protocol}
+                onToggle={toggleProtocolSelection}
+                nameClassName="font-bold text-label-value-16"
+                rowClassName="px-3"
+              />
             ))}
           </ScrollWithGradient>
           <div className="mt-1">{footer}</div>
         </DialogContent>
       </Dialog>
     </div>
+  )
+}
+
+function ProtocolRow({
+  protocol,
+  onToggle,
+  nameClassName,
+  rowClassName,
+}: {
+  protocol: {
+    id: string
+    name: string
+    iconUrl: string
+    slug: string
+    isSelected: boolean
+  }
+  onToggle: (id: string) => void
+  nameClassName: string
+  rowClassName?: string
+}) {
+  return (
+    <Checkbox
+      name={protocol.name}
+      className={cn(
+        'flex h-10 w-full flex-row-reverse items-center justify-between py-2.5 hover:bg-surface-secondary',
+        rowClassName,
+      )}
+      checked={protocol.isSelected}
+      onCheckedChange={() => onToggle(protocol.id)}
+    >
+      <div className="flex items-center gap-2">
+        <img src={protocol.iconUrl} alt={protocol.name} className="size-4" />
+        <a
+          href={`/interop/protocols/${protocol.slug}`}
+          className="group inline-flex items-center gap-1"
+        >
+          <span className={nameClassName}>{protocol.name}</span>
+          <ArrowRightIcon className="size-3 shrink-0 fill-brand opacity-0 transition-opacity group-hover:opacity-100" />
+        </a>
+      </div>
+    </Checkbox>
   )
 }

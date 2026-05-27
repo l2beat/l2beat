@@ -1,6 +1,6 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel } from '@tanstack/react-table'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Dialog,
   DialogClose,
@@ -36,10 +36,12 @@ export function TransferCountCell({
   protocol: {
     id: ProjectId
     name: string
+    slug: string
     iconUrl: string
   }
 }) {
   const [isOpen, setIsOpen] = useState(false)
+  const { selectedChains } = useInteropSelectedChains()
 
   return (
     <>
@@ -54,6 +56,8 @@ export function TransferCountCell({
           protocol={protocol}
           type={type}
           snapshotTimestamp={snapshotTimestamp}
+          selectedChains={selectedChains}
+          subtitle={<BetweenChainsInfo className="md:mt-1" />}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
         />
@@ -62,33 +66,40 @@ export function TransferCountCell({
   )
 }
 
-function TransferDetailsDialog({
+export function TransferDetailsDialog({
   protocol,
   type,
+  tokenId,
   snapshotTimestamp,
+  selectedChains,
+  subtitle,
   isOpen,
   setIsOpen,
 }: {
   protocol: {
     id: ProjectId
     name: string
+    slug: string
     iconUrl: string
   }
   type: KnownInteropBridgeType | undefined
+  tokenId?: string
   snapshotTimestamp: number | undefined
+  selectedChains: { from: string[]; to: string[] }
+  subtitle?: ReactNode
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
 }) {
   const breakpoint = useBreakpoint()
-  const { selectionForApi } = useInteropSelectedChains()
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     api.interop.transfers.useInfiniteQuery(
       {
-        ...selectionForApi,
+        ...selectedChains,
         id: protocol.id,
         type,
+        tokenId,
         snapshotTimestamp: snapshotTimestamp ?? 0,
       },
       {
@@ -143,14 +154,16 @@ function TransferDetailsDialog({
           <DrawerHeader className="mb-2">
             <DrawerTitle className="mb-0 text-xl">
               <span>Transfers for </span>
-              <img
-                src={protocol.iconUrl}
-                alt={protocol.name}
-                className="relative bottom-px mx-1 inline-block size-6"
-              />
-              <span>{protocol.name}</span>
+              <a href={`/interop/protocols/${protocol.slug}`}>
+                <img
+                  src={protocol.iconUrl}
+                  alt={protocol.name}
+                  className="relative bottom-px mx-1 inline-block size-6"
+                />
+                <span>{protocol.name}</span>
+              </a>
             </DrawerTitle>
-            <BetweenChainsInfo />
+            {subtitle}
           </DrawerHeader>
           <div
             ref={scrollContainerRef}
@@ -181,14 +194,16 @@ function TransferDetailsDialog({
         <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary px-6 pt-6 pb-4">
           <DialogTitle>
             <span>Transfers for </span>
-            <img
-              src={protocol.iconUrl}
-              alt={protocol.name}
-              className="relative bottom-0.5 mx-1 inline-block size-6"
-            />
-            <span>{protocol.name}</span>
+            <a href={`/interop/protocols/${protocol.slug}`}>
+              <img
+                src={protocol.iconUrl}
+                alt={protocol.name}
+                className="relative bottom-0.5 mx-1 inline-block size-6"
+              />
+              <span>{protocol.name}</span>
+            </a>
           </DialogTitle>
-          <BetweenChainsInfo className="mt-1" />
+          {subtitle}
         </DialogHeader>
         <div
           ref={scrollContainerRef}
