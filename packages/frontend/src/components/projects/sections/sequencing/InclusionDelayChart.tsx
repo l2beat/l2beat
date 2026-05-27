@@ -18,6 +18,7 @@ import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
+  ChartLegendItemLabel,
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
@@ -111,7 +112,23 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
           data={data}
           margin={{ top: 20, right: 8, left: 0, bottom: 4 }}
         >
-          <ChartLegend content={<ChartLegendContent />} />
+          <ChartLegend
+            content={
+              <ChartLegendContent>
+                {chart.entityStakeDistribution !== undefined && (
+                  <div className="order-last flex shrink-0 items-center gap-[3px] pl-2">
+                    <ChartDataIndicator
+                      type={{ shape: 'square' }}
+                      backgroundColor={ENTITY_MARKER_COLOR}
+                    />
+                    <ChartLegendItemLabel>
+                      Largest staking entities
+                    </ChartLegendItemLabel>
+                  </div>
+                )}
+              </ChartLegendContent>
+            }
+          />
           <CartesianGrid
             vertical={false}
             syncWithTicks
@@ -211,7 +228,6 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
       </ChartContainer>
       <EntityMarkersLegend
         entries={entityLegendEntries}
-        color={ENTITY_MARKER_COLOR}
         hasStakeDistribution={chart.entityStakeDistribution !== undefined}
       />
     </div>
@@ -220,24 +236,15 @@ export function InclusionDelayChart({ chart, projectName }: Props) {
 
 function EntityMarkersLegend({
   entries,
-  color,
   hasStakeDistribution,
 }: {
   entries: InclusionDelayEntityLegendEntry[]
-  color: string | undefined
   hasStakeDistribution: boolean
 }) {
   if (!hasStakeDistribution) return null
 
   return (
-    <div className="mt-3 flex flex-col gap-2 font-medium text-label-value-13">
-      <div className="flex items-center gap-1.5 text-secondary">
-        <ChartDataIndicator
-          type={{ shape: 'square' }}
-          backgroundColor={color}
-        />
-        <span>Largest staking entities</span>
-      </div>
+    <div className="mt-3 font-medium text-label-value-13">
       {entries.length > 0 ? (
         <div className="grid gap-x-6 gap-y-1.5 md:grid-cols-2">
           {entries.map((entry) => (
