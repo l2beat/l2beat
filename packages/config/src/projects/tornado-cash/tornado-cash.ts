@@ -104,7 +104,7 @@ The core mixer contracts are immutable and have no admin, pause, or upgrade path
 
 Tornado cash introduces a permissionless relayer network, which is essential for practical privacy. Relayers process withdrawals from Tornado cash pools on user's behalf for a fee, which enables withdrawals to fresh addresses without funding them before the withdrawal. Without an active relayer network, practical privacy of Tornado cash deteriorates significantly.
 
-Practical privacy also depends on the timing of deposits and withdrawals, underlying network and browser used to interact with Tornado cash frontend (if used), RPC providers used to send transactions and query public blockchain state. Users are advised to research [OPSEC best practices](/publications/privacy-best-practices).
+Practical privacy also depends on the timing of deposits and withdrawals, underlying network and browser used to interact with Tornado cash frontend (if used), RPC providers used to send transactions and query public blockchain state. Users are advised to research [OPSEC best practice](/publications/privacy-best-practices).
 
 ### Fees
 
@@ -128,7 +128,7 @@ The frontend's root of trust is the IPFS content hash registered for [tornadocas
 The latest hash can be fetched from a trusted ethereum node (e.g. your own or trusted light node rpc). 
 There were incidents of malicious frontend hash updates passing onchain governance proposals before, so using a publicly audited or self-audited IPFS hash is advised. 
 An example of an audit process with useful links can be found [here](https://gist.github.com/pcaversaccio/ea7f62fd21b6e22f301980007f7c767e) or [here](https://notes.ethereum.org/@GW1ZUbNKR5iRjjKYx6_dJQ/Bk8zsJ9xj).
-The frontend can then be accessed by running a local IPFS node that automatically fetches the verified frontend hash (e.g. in style of [dapp3.eth](https://github.com/apoorvlathey/dapp3) or [kubo](https://github.com/ipfs/kubo) + [ipfs-companion](https://github.com/ipfs/ipfs-companion) and serves it in the browser locally.
+The frontend can then be accessed by running a local IPFS node that automatically fetches the verified frontend hash (e.g. [dapp3.eth](https://github.com/apoorvlathey/dapp3) or [kubo](https://github.com/ipfs/kubo) + [ipfs-companion](https://github.com/ipfs/ipfs-companion) and serves it in the browser locally.
 `,
     links: {
       websites: ['https://app.ens.domains/tornadocash.eth?tab=records'],
@@ -162,7 +162,7 @@ The frontend can then be accessed by running a local IPFS node that automaticall
 1. a user loses the note secrets required to withdraw.  
 <br>
 ## Privacy can be lost if
-1. no relayer is available and the withdrawal must be submitted from an address that can be linked to the user (see [best practices page](/publications/privacy-best-practices) for more info).`,
+1. no relayer is available and the withdrawal must be submitted from an address that can be linked to the user (see [best practice page](/publications/privacy-best-practices) for more info).`,
     upgradesAndGovernance: `
 Tornado cash has a TORN DAO, which does not have the authority to upgrade or modify existing pools in any way. However it controls a significant portion of the Tornado cash protocol and periphery, including:
 

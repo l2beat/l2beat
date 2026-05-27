@@ -62,6 +62,7 @@ const INITIAL_STATE: State = {
     enableDimming: true,
     hideLargeArrays: true,
     highlightOverlapping: true,
+    useExperimentalRenderer: false,
   },
   loaded: false,
 }
