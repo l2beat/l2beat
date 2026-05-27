@@ -239,7 +239,7 @@ The \`PROVER\`, \`EMERGENCY\`, and \`CHALLENGER\` roles on the Rollup are gated 
         ...EXITS.REGULAR_WITHDRAWAL('zk', finalizationDelay),
         description:
           EXITS.REGULAR_WITHDRAWAL('zk', finalizationDelay).description +
-          " On Fluent, the message hash enters the block's withdrawal root which becomes part of the next batch root; once the batch is finalized, anyone can deliver the message on L1 via receiveMessageWithProof with two Merkle proofs (block-against-batch and message-against-block). If the first L1-side execution reverts, anyone can retry via the permissionless receiveFailedMessage. Preconfirmed batches additionally power the separate fast-withdrawal path described below.",
+          " On Fluent, the message hash enters the block's withdrawal root which becomes part of the next batch root; once the batch is finalized, anyone can deliver the message on L1 via receiveMessageWithProof with two Merkle proofs (block-against-batch and message-against-block).",
         references: [
           {
             title: 'Fluent Bridge Architecture',
