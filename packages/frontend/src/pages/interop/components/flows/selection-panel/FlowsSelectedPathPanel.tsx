@@ -25,11 +25,12 @@ export function FlowsSelectedPathPanel({
 
   const detailsUrl = buildInteropUrl(
     '/interop/summary',
-    {
-      from: [chainA.id],
-      to: chainB ? [chainB.id] : [],
-    },
-    'public',
+    chainB
+      ? {
+          from: [chainA.id, chainB.id],
+          to: [chainA.id, chainB.id],
+        }
+      : { from: [], to: [] },
   )
 
   return (
