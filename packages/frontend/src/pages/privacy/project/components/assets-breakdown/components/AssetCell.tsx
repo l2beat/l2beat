@@ -28,7 +28,7 @@ export function AssetCell({ row }: { row: Row<PrivacyAsset> }) {
       aria-expanded={isExpanded}
       onClick={row.getToggleExpandedHandler()}
     >
-      <div className="flex items-center gap-1.5">
+      <div className="flex shrink-0 items-center gap-1.5">
         <img
           src={asset.iconUrl}
           alt={asset.symbol}
