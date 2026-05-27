@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import type { ChartScale } from '~/components/chart/types'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
@@ -26,6 +27,7 @@ export function PrivacyFlowsSection({
 }: PrivacyFlowsSectionProps) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<FlowsMetric>('count')
+  const [scale, setScale] = useState<ChartScale>('linear')
   const { data, isLoading } = api.privacy.flowsChart.useQuery({
     projectIds: [project.id],
     range,
@@ -50,20 +52,34 @@ export function PrivacyFlowsSection({
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
         metric={metric}
+        scale={scale}
         project={project}
       />
       <div className="mt-2 flex items-center justify-between gap-2">
         {isLoading ? (
-          <Skeleton className="h-8 w-[120px]" />
+          <>
+            <Skeleton className="h-8 w-[120px]" />
+            <Skeleton className="h-8 w-[91px] md:w-[95px]" />
+          </>
         ) : (
-          <RadioGroup
-            name="privacyFlowsMetric"
-            value={metric}
-            onValueChange={(value) => setMetric(value as FlowsMetric)}
-          >
-            <RadioGroupItem value="count">COUNT</RadioGroupItem>
-            <RadioGroupItem value="value">USD</RadioGroupItem>
-          </RadioGroup>
+          <>
+            <RadioGroup
+              name="privacyFlowsMetric"
+              value={metric}
+              onValueChange={(value) => setMetric(value as FlowsMetric)}
+            >
+              <RadioGroupItem value="count">COUNT</RadioGroupItem>
+              <RadioGroupItem value="value">USD</RadioGroupItem>
+            </RadioGroup>
+            <RadioGroup
+              name="privacyFlowsScale"
+              value={scale}
+              onValueChange={(value) => setScale(value as ChartScale)}
+            >
+              <RadioGroupItem value="symlog">LOG</RadioGroupItem>
+              <RadioGroupItem value="linear">LIN</RadioGroupItem>
+            </RadioGroup>
+          </>
         )}
       </div>
     </ProjectSection>

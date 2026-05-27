@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
+import type { ChartScale } from '~/components/chart/types'
 import type {
   ChartMeta,
   ChartProject,
@@ -29,6 +30,7 @@ interface Props {
   syncedUntil: number | undefined
   isLoading: boolean
   metric: 'count' | 'value'
+  scale?: ChartScale
   project?: ChartProject
 }
 
@@ -50,6 +52,7 @@ export function PrivacyFlowChart({
   syncedUntil,
   isLoading,
   metric,
+  scale = 'linear',
   project,
 }: Props) {
   const chartData = useMemo(
@@ -126,6 +129,8 @@ export function PrivacyFlowChart({
           data={chartData}
           isLoading={isLoading}
           yAxis={{
+            scale: scale === 'linear' ? 'auto' : scale,
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             tickCount: 4,
             tickFormatter: (value) =>
               metric === 'count'
