@@ -6,12 +6,13 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageSummaryCard } from '~/components/table/TablePageSummaryCard'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { MessagesTable } from './table/MessagesTable'
 import type { MessageStatsRow } from './types'
 import { formatKnownAppCoverage } from './utils'
 
 export function MessagesPage() {
+  const api = useBackendApi()
   const { data, error, isError, isLoading, isFetching, refetch } =
     api.interop.messages.stats.useQuery()
 

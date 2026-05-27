@@ -1,4 +1,201 @@
-Generated with discovered.json: 0x839297ea25bf32308e0a894c36ab14046d4332d2
+Generated with discovered.json: 0xacd792fd23bdfd9f25eab1b5e3422daa22bf351b
+
+# Diff at Mon, 25 May 2026 09:49:02 GMT:
+
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@639891c3b013ffc79bd0575fa15360dd2e0e6ae1 block: 1777567242
+- current timestamp: 1779457786
+
+## Description
+
+Clean up disco configs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777567242 (main branch discovery), not current.
+
+```diff
+    contract WithdrawalVerifier (eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d) [privacy-pools/WithdrawalVerifier] {
+    +++ description: Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs.
+      description:
+-        "Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs. The verification key is hardcoded in the contract and there are no privileged roles or mutable configuration."
++        "Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs."
+    }
+```
+
+```diff
+    contract PrivacyPoolUSDS (eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    contract PrivacyPoolWstETH (eth:0x1A604E9DFa0EFDC7FFda378AF16Cb81243b61633) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    contract PrivacyPoolDAI (eth:0x1c31C03B8CB2EE674D0F11De77135536db828257) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    EOA  (eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187) {
+    +++ description: None
+      name:
+-        "PrivacyPoolsASPPostman"
+    }
+```
+
+```diff
+    contract PrivacyPoolsEntrypoint (eth:0x6818809EefCe719E480a7526D76bD3e561526b46) [privacy-pools/Entrypoint] {
+    +++ description: Main hub for Privacy Pools. Entrypoint for deposits, relayed withdrawals, pool registry/configuration, ASP root updates, fee withdrawal, and wind-down management.
+      description:
+-        "UUPS-upgradeable hub for Privacy Pools. It accepts deposits, relays withdrawals, tracks association-set roots published by the ASP, and maps each supported asset and scope to a pool. Trusting this contract means trusting OWNER_ROLE holders to upgrade it, manage pools and fees, and withdraw fees, and trusting ASP_POSTMAN holders to publish the latest association-set root used by withdrawals."
++        "Main hub for Privacy Pools. Entrypoint for deposits, relayed withdrawals, pool registry/configuration, ASP root updates, fee withdrawal, and wind-down management."
+    }
+```
+
+```diff
+    contract PrivacyPoolWOETH (eth:0x7d2959bCFb936a84531518e8391DdBa844e03ebE) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    contract RagequitVerifier (eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6) [privacy-pools/CommitmentVerifier] {
+    +++ description: Stateless Groth16 verifier used by Privacy Pool contracts to verify ragequit proofs.
+      description:
+-        "Stateless Groth16 verifier used by Privacy Pool contracts to verify ragequit proofs. The verification key is hardcoded in the contract and there are no privileged roles or mutable configuration."
++        "Stateless Groth16 verifier used by Privacy Pool contracts to verify ragequit proofs."
+    }
+```
+
+```diff
+    contract Privacy Pools Multisig (eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "PrivacyPoolsAdminSafe"
++        "Privacy Pools Multisig"
+    }
+```
+
+```diff
+    contract PrivacyPoolUSDC (eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    contract PrivacyPoolBOLD (eth:0xb4b5Fd38Fd4788071d7287e3cB52948e0d10b23E) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    contract PrivacyPoolSUSDS (eth:0xBBdA2173CDFEA1c3bD7F2908798F1265301d750c) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    contract PrivacyPoolUSD1 (eth:0xc0A8Bc0F4F982b4d4f1fFae8F4FCCb58c9B29c98) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    contract PrivacyPoolFrxUSD (eth:0xC6C769fac7AABEadd31a03fAe5Ca0Ec5B4C50f84) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    contract PrivacyPoolFxUSD (eth:0xD14F4B36E1D1D98c218db782c49149876042BC56) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    EOA  (eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
++        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
+    }
+```
+
+```diff
+    contract PrivacyPoolUSDe (eth:0xe6D36B33b00A7C0cB0C2a8d39D07e7dB0c526Abc) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    contract PrivacyPoolUSDT (eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    contract PrivacyPoolETH (eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB) [privacy-pools/PrivacyPoolSimple] {
+    +++ description: Native-asset Privacy Pool that escrows ETH commitments for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "Native-asset Privacy Pool that escrows ETH commitments for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "Native-asset Privacy Pool that escrows ETH commitments for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+```diff
+    contract PrivacyPoolWBTC (eth:0xF973f4B180A568157Cd7A0E6006449139E6Bfc32) [privacy-pools/PrivacyPoolComplex] {
+    +++ description: ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.
+      description:
+-        "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
++        "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint."
+    }
+```
+
+Generated with discovered.json: 0x6f1771d051b135165b4e7c1653ebd3d4b535ddc5
 
 # Diff at Fri, 15 May 2026 12:36:19 GMT:
 

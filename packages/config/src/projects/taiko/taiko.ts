@@ -427,7 +427,8 @@ export const taiko: ScalingProject = {
       },
     ],
   },
-  upgradesAndGovernance: `
+  upgradesAndGovernance: {
+    content: `
 Taiko Alethia has a governance structure relying primarily on a ${discovery.getMultisigStats('SignerList (Security Council)')} Security Council, checked by a token DAO that is limited to veto permissions. The closed operator whitelists are managed by the ${discovery.getMultisigStats('Taiko Multisig')} Taiko Multisig and related EOAs. Governance proposals (both paths) hold all important upgrade and config permissions in the system.
 # Standard proposals
 A threshold of ${discovery.getContractValue('Multisig', 'minApprovals')} approving Security Council members is required to create a Standard proposal. It is delayed while being publicly auditable by ${discovery.getContractValue('OptimisticTokenVotingPlugin', 'governanceSettings_timelockPeriod_fmt')} in the OptimisticTokenVotingPlugin contract and can be vetoed by ${discovery.getContractValue('OptimisticTokenVotingPlugin', 'minVetoPercent')}% of votable TAIKO tokens during that time. If not vetoed, the standard proposal passes and can be executed.
@@ -437,6 +438,7 @@ Emergency proposals are encrypted at proposal time and can only be read by Secur
 # Proof system and operators
 The proof system currently does not require zk proofs to validate state transitions and state can be finalized with SGX proofs only. The optional zk verifier contracts can be upgraded by Multisigs. Operator roles (sequencer, proposer) are closed and the whitelist is managed by the Taiko Multisig and related EOAs.
 `,
+  },
   technology: {
     dataAvailability: {
       name: 'All data required for proofs is published on chain',

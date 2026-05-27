@@ -5,7 +5,7 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { MessageDetailsTable } from './table/details/MessageDetailsTable'
 import type {
   ChainMetadata,
@@ -15,6 +15,7 @@ import type {
 import { decodeRouteParam, parseOptionalSearchParam } from './utils'
 
 export function MessageDetailsPage() {
+  const api = useBackendApi()
   const params = useParams<{ type: string }>()
   const [searchParams] = useSearchParams()
   const type = decodeRouteParam(params.type)

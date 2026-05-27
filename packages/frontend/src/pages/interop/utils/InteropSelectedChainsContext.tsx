@@ -15,13 +15,10 @@ import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
 import { getValidInteropSelection } from './getValidInteropSelection'
 import { parseInteropSelectionFromSearchParams } from './parseInteropSelectionFromSearchParams'
-import { toInteropApiSelection } from './toInteropApiSelection'
-import type { InteropMode, InteropSelection } from './types'
+import type { InteropSelection } from './types'
 
 interface InteropSelectedChainsContextType {
-  mode: InteropMode
   selectedChains: InteropSelection
-  selectionForApi: InteropSelection
   allChainIds: string[]
   getChainById: (chainId: string) => InteropChainWithIcon | undefined
   selectChain: (type: 'from' | 'to', chainId: string | null) => void
@@ -30,9 +27,6 @@ interface InteropSelectedChainsContextType {
   selectAll: (type?: 'from' | 'to') => void
   deselectAll: (type?: 'from' | 'to') => void
   swapPaths: () => void
-  reset: () => void
-  isDirty: boolean
-  buildUrl: (path: string, options?: { mode?: InteropMode }) => string
 }
 
 export const InteropSelectedChainsContext = createContext<
@@ -41,14 +35,12 @@ export const InteropSelectedChainsContext = createContext<
 
 interface InteropSelectedChainsProviderProps {
   children: ReactNode
-  mode: InteropMode
   interopChains: InteropChainWithIcon[]
   initialSelection: InteropSelection
 }
 
 export function InteropSelectedChainsProvider({
   children,
-  mode,
   interopChains,
   initialSelection,
 }: InteropSelectedChainsProviderProps) {
@@ -61,30 +53,12 @@ export function InteropSelectedChainsProvider({
     [interopChains],
   )
 
-  const defaultSelectionByMode = useMemo(
-    () => ({
-      public: {
-        from: [],
-        to: [],
-      },
-      internal: {
-        from: [...allChainIds],
-        to: [...allChainIds],
-      },
-    }),
-    [allChainIds],
-  )
-
   const normalizedInitialSelection = useMemo(
     () => getValidInteropSelection(initialSelection, allChainIds),
     [initialSelection, allChainIds],
   )
 
   const [selection, setSelection] = useState(normalizedInitialSelection)
-  const selectionForApi = useMemo(
-    () => toInteropApiSelection(selection, mode),
-    [selection, mode],
-  )
 
   useEffect(() => {
     setSelection(normalizedInitialSelection)
@@ -93,15 +67,6 @@ export function InteropSelectedChainsProvider({
   const getChainById = useCallback(
     (chainId: string) => chainsById.get(chainId),
     [chainsById],
-  )
-
-  const buildUrl = useCallback(
-    (path: string, options?: { mode?: InteropMode }) => {
-      const targetMode = options?.mode ?? mode
-      const targetPath = toInteropPathMode(path, targetMode)
-      return buildInteropUrl(targetPath, selection, targetMode)
-    },
-    [mode, selection],
   )
 
   const { track } = useTracking()
@@ -115,9 +80,8 @@ export function InteropSelectedChainsProvider({
     }
 
     const nextUrl = buildInteropUrl(
-      toInteropPathMode(window.location.pathname, mode),
+      window.location.pathname,
       debouncedSelection,
-      mode,
     )
 
     const currentUrl = window.location.pathname + window.location.search
@@ -136,7 +100,7 @@ export function InteropSelectedChainsProvider({
       chains,
       page: window.location.pathname,
     })
-  }, [debouncedSelection, mode, track])
+  }, [debouncedSelection, track])
 
   useEventListener('popstate', () => {
     skipNextUrlUpdate.current = true
@@ -144,7 +108,6 @@ export function InteropSelectedChainsProvider({
     const parsedSelection = parseInteropSelectionFromSearchParams({
       searchParams: new URLSearchParams(window.location.search),
       interopChainsIds: allChainIds,
-      mode,
     })
 
     setSelection(getValidInteropSelection(parsedSelection, allChainIds))
@@ -214,23 +177,10 @@ export function InteropSelectedChainsProvider({
     }))
   }, [])
 
-  const reset = useCallback(() => {
-    setSelection(defaultSelectionByMode[mode])
-  }, [defaultSelectionByMode, mode])
-
-  const isDirty = useMemo(
-    () =>
-      !isSameSelection(selection.from, defaultSelectionByMode[mode].from) ||
-      !isSameSelection(selection.to, defaultSelectionByMode[mode].to),
-    [selection, defaultSelectionByMode, mode],
-  )
-
   return (
     <InteropSelectedChainsContext.Provider
       value={{
-        mode,
         selectedChains: selection,
-        selectionForApi,
         allChainIds,
         getChainById,
         selectChain,
@@ -239,9 +189,6 @@ export function InteropSelectedChainsProvider({
         selectAll,
         deselectAll,
         swapPaths,
-        reset,
-        isDirty,
-        buildUrl,
       }}
     >
       {children}
@@ -262,34 +209,6 @@ function toggleSelection(
   }
 
   return allChainIds.filter((id) => nextSet.has(id))
-}
-
-function toInteropPathMode(path: string, mode: InteropMode) {
-  const internalPathSuffix = '/internal'
-  const normalizedPath = path.endsWith('/') ? path.slice(0, -1) : path
-  const pathWithoutInternalSuffix = normalizedPath.endsWith(internalPathSuffix)
-    ? normalizedPath.slice(0, -internalPathSuffix.length)
-    : normalizedPath
-
-  if (/^\/interop\/tokens\/[^/]+$/.test(pathWithoutInternalSuffix)) {
-    return pathWithoutInternalSuffix
-  }
-
-  if (mode === 'internal') {
-    if (normalizedPath.endsWith(internalPathSuffix)) {
-      return normalizedPath
-    }
-    return `${normalizedPath}${internalPathSuffix}`
-  }
-
-  return pathWithoutInternalSuffix
-}
-
-function isSameSelection(left: string[], right: string[]) {
-  return (
-    left.length === right.length &&
-    left.every((value, index) => value === right[index])
-  )
 }
 
 export function useInteropSelectedChains() {

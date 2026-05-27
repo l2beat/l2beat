@@ -11,23 +11,25 @@ describe(getInteropTokenUrl.name, () => {
     expect(result).toEqual(undefined)
   })
 
-  it('builds token URL preserving selectedChains', () => {
+  it('builds token URL preserving chain selection', () => {
     const result = getInteropTokenUrl(
       { id: 'usdc', issuer: 'circle', symbol: 'USDC' },
       { from: ['ethereum'], to: ['arbitrum'] },
     )
 
     expect(result).toEqual(
-      '/interop/tokens/circle-usdc?selectedChains=ethereum%2Carbitrum',
+      '/interop/tokens/circle-usdc?from=ethereum&to=arbitrum',
     )
   })
 
-  it('returns path without query when selection is not one pair', () => {
+  it('returns path with query when selection has multiple chains', () => {
     const result = getInteropTokenUrl(
       { id: 'eth', issuer: null, symbol: 'ETH' },
       { from: ['ethereum', 'arbitrum'], to: ['base'] },
     )
 
-    expect(result).toEqual('/interop/tokens/eth')
+    expect(result).toEqual(
+      '/interop/tokens/eth?from=ethereum%2Carbitrum&to=base',
+    )
   })
 })

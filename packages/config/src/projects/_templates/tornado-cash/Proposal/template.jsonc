@@ -1,8 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Proposal",
-  "description": "One-off governance proposal payload that deployed the newer Tornado Trees and proxy wiring, migrated legacy tree state, and disabled old mineable instances on the legacy proxy.",
-  "category": "gov",
+  "description": "Anonymity Mining - One-off governance proposal payload that deployed the newer Tornado Trees and proxy wiring, migrated legacy tree state, and disabled old mineable instances on the legacy proxy.",
+  "category": "spam",
   "fields": {
     "getInstances": {
       "description": "List of pool instances and their target enabled/disabled state used during the migration.",

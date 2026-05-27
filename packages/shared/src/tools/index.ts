@@ -1,5 +1,6 @@
 export * from './celestia'
 export * from './createTrackedTxConfigId'
+export * from './DiffHistoryParser'
 export * from './EventTracker'
 export * from './getBlockNumberAtOrBefore'
 export * from './hashJson'

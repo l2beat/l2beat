@@ -55,7 +55,6 @@ export function InteropTokenPage({
   return (
     <AppLayout {...props}>
       <InteropSelectedChainsProvider
-        mode="public"
         interopChains={interopChains}
         initialSelection={initialSelection}
       >
@@ -81,14 +80,14 @@ function Content({
   tokenData: InteropTokenDashboardData | null
   apiSelection: InteropSelection
 }) {
-  const { selectionForApi, isDirty, reset } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.tokenDashboard.useQuery(
     {
       tokenId: token.id,
-      ...selectionForApi,
+      ...selectedChains,
     },
     {
-      initialData: isSameSelection(selectionForApi, apiSelection)
+      initialData: isSameSelection(selectedChains, apiSelection)
         ? tokenData
         : undefined,
     },
@@ -105,10 +104,7 @@ function Content({
         navigationSections={navigationSections}
         isNavigationEmpty={isNavigationEmpty}
       >
-        <InteropEmptyState
-          showResetButton={isDirty}
-          onResetButtonClick={reset}
-        />
+        <InteropEmptyState />
       </PageLayout>
     )
   }
@@ -117,7 +113,7 @@ function Content({
     <InteropTokenDashboardProvider
       data={data}
       isLoading={isLoading}
-      apiSelection={selectionForApi}
+      apiSelection={selectedChains}
       tokenId={token.id}
     >
       <PageLayout

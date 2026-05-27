@@ -270,6 +270,8 @@ function entryToLabel(entry: AnySearchBarEntry) {
       return 'ZK Project'
     case 'ecosystem':
       return 'Ecosystem'
+    case 'privacy':
+      return 'Privacy'
     default:
       assertUnreachable(entry.kind)
   }

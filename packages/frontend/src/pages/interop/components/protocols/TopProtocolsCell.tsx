@@ -23,11 +23,7 @@ export function TopProtocolsCell({
           displayName: p.name,
           iconUrl: p.iconUrl,
           volume: p.volume,
-          href: buildInteropUrl(
-            `/interop/protocols/${p.slug}`,
-            apiSelection,
-            'public',
-          ),
+          href: buildInteropUrl(`/interop/protocols/${p.slug}`, apiSelection),
         })),
         remainingCount,
       }}

@@ -14,7 +14,6 @@ import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import type { InteropQuery } from '../InteropRouter'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
-import { toInteropApiSelection } from '../utils/toInteropApiSelection'
 import type { InteropSelection } from '../utils/types'
 
 export async function getInteropTokenPageData(
@@ -30,7 +29,6 @@ export async function getInteropTokenPageData(
   const initialSelection = getInitialInteropSelection({
     query: req.query,
     interopChainsIds: activeInteropChainIds,
-    mode: 'public',
   })
 
   const data = await cache.get(
@@ -107,7 +105,7 @@ async function getCachedData({
   const token = resolveInteropTokenBySlug(abstractTokens, slug)
   if (!token) return undefined
 
-  const apiSelection = toInteropApiSelection(initialSelection, 'public')
+  const apiSelection = initialSelection
   const interopChains = getInteropChains()
     .filter((chain) => !chain.isUpcoming)
     .map((chain) => ({

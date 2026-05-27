@@ -7,7 +7,7 @@ interface TokenInfo {
   decimals: number
   coingeckoId: string
   coingeckoListingTimestamp: UnixTime
-  iconUrl?: string
+  iconUrl: string | undefined
   address?: string
   chainId: number
 }
@@ -22,9 +22,9 @@ for (const raw of generated.tokens) {
     decimals: parsed.decimals,
     coingeckoId: parsed.coingeckoId.toString(),
     coingeckoListingTimestamp: parsed.coingeckoListingTimestamp,
+    iconUrl: parsed.iconUrl,
     address: parsed.address?.toString(),
     chainId: Number(parsed.chainId),
-    iconUrl: parsed.iconUrl?.toString(),
   }
 
   if (token.address) {

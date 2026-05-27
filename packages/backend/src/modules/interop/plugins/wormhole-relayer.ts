@@ -11,7 +11,6 @@ import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
@@ -19,7 +18,7 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { WormholeConfig } from './wormhole/wormhole.config'
+import { findWormholeChain, WormholeConfig } from './wormhole/wormhole.config'
 import { LogMessagePublished } from './wormhole/wormhole.plugin'
 
 const deliveryLog =
@@ -92,9 +91,8 @@ export class WormholeRelayerPlugin implements InteropPluginResyncable {
           recipientContract: parsed.recipientContract,
           sourceChain: parsed.sourceChain,
           deliveryVaaHash: parsed.deliveryVaaHash,
-          $srcChain: findChain(
+          $srcChain: findWormholeChain(
             wormholeNetworks,
-            (x) => x.wormholeChainId,
             Number(parsed.sourceChain),
           ),
           sequence: parsed.sequence,

@@ -11,5 +11,5 @@ export function getInteropTokenUrl(
   }
 
   const path = `/interop/tokens/${getAbstractTokenSlug(token)}`
-  return buildInteropUrl(path, selection, 'public')
+  return buildInteropUrl(path, selection)
 }

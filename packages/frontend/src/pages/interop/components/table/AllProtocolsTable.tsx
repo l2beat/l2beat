@@ -22,13 +22,13 @@ export function AllProtocolsTable({
   showNetMintedValueColumn?: boolean
   hideTokensColumn?: boolean
 }) {
-  const { selectionForApi } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
 
   const columns = useMemo(
     () =>
       getAllProtocolsColumns(
         type,
-        selectionForApi,
+        selectedChains,
         hideTypeColumn,
         showAverageInFlightValueColumn,
         showNetMintedValueColumn,
@@ -36,7 +36,7 @@ export function AllProtocolsTable({
       ),
     [
       type,
-      selectionForApi,
+      selectedChains,
       hideTypeColumn,
       showAverageInFlightValueColumn,
       showNetMintedValueColumn,

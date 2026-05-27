@@ -1,8 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TornadoTreesV2",
-  "description": "Upgradeable batch-based Tornado Trees contract that reuses legacy tree state, queues new leaves from the newer proxy, and accepts batched root updates proven by a verifier.",
-  "category": "core",
+  "description": "Anonymity Mining - Upgradeable batch-based Tornado Trees contract that reuses legacy tree state, queues new leaves from the newer proxy, and accepts batched root updates proven by a verifier.",
+  "category": "bridge-external",
   "ignoreMethods": [
     "deposits",
     "withdrawals",

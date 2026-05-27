@@ -19,6 +19,9 @@ import type { MarkdownSectionProps } from './MarkdownSection'
 import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncidentsSection'
 import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
+import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
+import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
+import type { PrivacyTvlSectionProps } from './privacy/PrivacyTvlSection'
 import type { ProgramHashesSectionProps } from './program-hashes/ProgramHashesSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import type { RiskSummarySectionProps } from './RiskSummarySection'
@@ -31,6 +34,7 @@ import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
 import type { ScalingTvsSectionProps } from './tvs/ScalingTvsSection'
 import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
+import type { UpdatesSectionProps } from './UpdatesSection'
 import type { UpgradesAndGovernanceSectionProps } from './UpgradesAndGovernanceSection'
 import type { VerifiersSectionProps } from './verifiers/VerifiersSection'
 
@@ -52,6 +56,7 @@ type SectionId =
   | 'state-derivation'
   | 'state-validation'
   | 'upgrades-and-governance'
+  | 'updates'
   | 'permissions'
   | 'contracts'
   | 'sequencing'
@@ -65,6 +70,9 @@ type SectionId =
   | 'interop-flows'
   | 'interop-transfers'
   | 'interop-tokens'
+  | 'privacy-tvl'
+  | 'privacy-flows'
+  | 'privacy-assets-breakdown'
 type GroupId = 'da-layer' | 'da-bridge'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
@@ -246,6 +254,26 @@ interface ProjectDetailsUpgradesAndGovernanceSection {
   props: ProjectDetailsProps<UpgradesAndGovernanceSectionProps>
 }
 
+interface ProjectDetailsUpdatesSection {
+  type: 'UpdatesSection'
+  props: ProjectDetailsProps<UpdatesSectionProps>
+}
+
+interface ProjectDetailsPrivacyTvlSection {
+  type: 'PrivacyTvlSection'
+  props: ProjectDetailsProps<PrivacyTvlSectionProps>
+}
+
+interface ProjectDetailsPrivacyFlowsSection {
+  type: 'PrivacyFlowsSection'
+  props: ProjectDetailsProps<PrivacyFlowsSectionProps>
+}
+
+interface ProjectDetailsPrivacyAssetsBreakdownSection {
+  type: 'PrivacyAssetsBreakdownSection'
+  props: ProjectDetailsProps<PrivacyAssetsBreakdownSectionProps>
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
   sideNavTitle?: string
@@ -284,4 +312,8 @@ export type ProjectDetailsSection = {
   | ProjectDetailsInteropTokenProtocolsSection
   | ProjectDetailsInteropTokenTransfersSection
   | ProjectDetailsUpgradesAndGovernanceSection
+  | ProjectDetailsUpdatesSection
+  | ProjectDetailsPrivacyTvlSection
+  | ProjectDetailsPrivacyFlowsSection
+  | ProjectDetailsPrivacyAssetsBreakdownSection
 )
