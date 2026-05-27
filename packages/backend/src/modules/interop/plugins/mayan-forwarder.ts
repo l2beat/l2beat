@@ -20,6 +20,7 @@ import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
 import { findParsedBefore } from './logScan'
 import {
   findMayanWormholeChain,
+  isMayanSwiftProtocolAddress,
   MAYAN_EVM_CHAINS,
   MAYAN_FORWARDER,
   MAYAN_PROTOCOLS,
@@ -352,11 +353,13 @@ export function getChainFromCctpDomain(
 }
 
 const abiItems = parseAbi([
-  // mayanSwift 0xC38e4e6A15593f908255214653d3D947CA1c2338
+  // Mayan Swift v1: 0xC38e4e6A15593f908255214653d3D947CA1c2338
   'function createOrderWithToken(address tokenIn, uint256 amountIn, (bytes32 trader, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, uint8 referrerBps, uint8 auctionMode, bytes32 random))',
-  'function createOrderWithToken(address tokenIn, uint256 amountIn, (uint8 traderType, bytes32 trader, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, uint8 referrerBps, uint8 auctionMode, bytes32 random), bytes customPayload)',
   'function createOrderWithEth((bytes32 trader, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, uint8 referrerBps, uint8 auctionMode, bytes32 random))',
   'function createOrderWithSig(address tokenIn, uint256 amountIn, (bytes32 trader, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, uint8 referrerBps, uint8 auctionMode, bytes32 random), uint256 submissionFee, bytes signedOrderHash, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
+  // Mayan Swift v2 source: 0x40fFE85A28DC9993541449464d7529a922142960
+  'function createOrderWithToken(address tokenIn, uint256 amountIn, (uint8 payloadType, bytes32 trader, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, uint8 referrerBps, uint8 auctionMode, bytes32 random), bytes customPayload)',
+  'function createOrderWithSig(address tokenIn, uint256 amountIn, (uint8 payloadType, bytes32 trader, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, uint8 referrerBps, uint8 auctionMode, bytes32 random), bytes customPayload, uint256 submissionFee, bytes signedOrderHash, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
   // mayanCircle 0x875d6d37EC55c8cF220B9E5080717549d8Aa8EcA
   'function createOrder((address tokenIn, uint256 amountIn, uint64 _a, bytes32 _b, uint16 destChain, bytes32 tokenOut, uint64 minAmountOut, uint64 _c, uint64 _d, bytes32 _e, uint8 _f))',
   'function bridgeWithFee(address tokenIn, uint256 amountIn, uint64 redeemFee, uint64 gasDrop, bytes32 destAddr, uint32 destDomain, uint8 payloadType, bytes customPayload) returns (uint64 sequence)', // 0x2072197f
@@ -374,6 +377,7 @@ const SELECTOR_CREATE_ORDER_WITH_TOKEN = '0x8e8d142b'
 const SELECTOR_CREATE_ORDER_WITH_TOKEN_V2 = '0xa3a30834'
 const SELECTOR_CREATE_ORDER_WITH_ETH = '0xb866e173'
 const SELECTOR_CREATE_ORDER_WITH_SIG = '0x3a30b37f'
+const SELECTOR_CREATE_ORDER_WITH_SIG_V2 = '0x6147435b'
 const SELECTOR_CREATE_ORDER_MAYAN_CIRCLE = '0x1c59b7fc'
 const SELECTOR_BRIDGE_WITH_FEE = '0x2072197f'
 const SELECTOR_BRIDGE_WITH_LOCKED_FEE = '0x9be95bb4'
@@ -387,6 +391,7 @@ const MAYAN_SWIFT_METHODS = new Set([
   SELECTOR_CREATE_ORDER_WITH_TOKEN_V2,
   SELECTOR_CREATE_ORDER_WITH_ETH,
   SELECTOR_CREATE_ORDER_WITH_SIG,
+  SELECTOR_CREATE_ORDER_WITH_SIG_V2,
 ])
 
 const MAYAN_CIRCLE_METHODS = new Set([
@@ -412,7 +417,7 @@ interface DecodedData {
 export function isMayanSwiftForwarded(event: MayanForwardedEvent): boolean {
   return isForwardedToProtocolOrMethods(
     event.args,
-    MAYAN_PROTOCOLS.mayanSwift,
+    isMayanSwiftProtocolAddress,
     MAYAN_SWIFT_METHODS,
   )
 }
@@ -424,7 +429,7 @@ export function isMayanCircleForwarded(event: MayanForwardedEvent): boolean {
 export function isMayanCircleProtocolData(data: MayanProtocolData): boolean {
   return isForwardedToProtocolOrMethods(
     data,
-    MAYAN_PROTOCOLS.mayanCircle,
+    (address) => address === MAYAN_PROTOCOLS.mayanCircle,
     MAYAN_CIRCLE_METHODS,
   )
 }
@@ -434,7 +439,7 @@ export function isMayanCctpForwarded(event: MayanForwardedEvent): boolean {
     isMayanCircleProtocolData(event.args) ||
     isForwardedToProtocolOrMethods(
       event.args,
-      MAYAN_PROTOCOLS.fastMCTP,
+      (address) => address === MAYAN_PROTOCOLS.fastMCTP,
       MAYAN_FAST_MCTP_METHODS,
     )
   )
@@ -442,11 +447,12 @@ export function isMayanCctpForwarded(event: MayanForwardedEvent): boolean {
 
 function isForwardedToProtocolOrMethods(
   data: MayanProtocolData,
-  protocol: EthereumAddress,
+  isProtocolAddress: (address: EthereumAddress) => boolean,
   methodSignatures: Set<string>,
 ): boolean {
   return (
-    data.mayanProtocol === protocol ||
+    (data.mayanProtocol !== undefined &&
+      isProtocolAddress(data.mayanProtocol)) ||
     methodSignatures.has(data.methodSignature)
   )
 }
@@ -523,6 +529,28 @@ export function decodeMayanData(
         tokenIn: Address32.from(res.args[0]),
         amountIn: res.args[1],
         tokenOut: zeroAddressToNative(res.args[2].tokenOut),
+      }
+    }
+    case SELECTOR_CREATE_ORDER_WITH_SIG_V2: {
+      if (res.functionName !== 'createOrderWithSig') return
+      const args = res.args as unknown as readonly [
+        `0x${string}`,
+        bigint,
+        {
+          destChainId: number
+          tokenOut: `0x${string}`
+        },
+        `0x${string}`,
+        bigint,
+        `0x${string}`,
+        unknown,
+      ]
+      return {
+        methodSignature,
+        dstChain: getChainFromWormholeId(wormholeNetworks, args[2].destChainId),
+        tokenIn: zeroAddressToNative(args[0]),
+        amountIn: args[1],
+        tokenOut: zeroAddressToNative(args[2].tokenOut),
       }
     }
     case SELECTOR_CREATE_ORDER_MAYAN_CIRCLE: {

@@ -23,8 +23,9 @@ import {
   isMayanSwiftSettlementSender,
   MAYAN_EVM_CHAINS,
   MAYAN_FORWARDER,
-  MAYAN_PROTOCOLS,
-  toChainSpecificAddresses,
+  MAYAN_SWIFT_DESTINATION_CONTRACTS,
+  MAYAN_SWIFT_SOURCE_CONTRACTS,
+  toChainSpecificAddressesForMany,
 } from './mayan-shared'
 import {
   extractMayanSwiftFulfillDestTokenFromTxData,
@@ -68,6 +69,9 @@ const parseOrderRefunded = createEventParser(orderRefundedLog)
 
 const parseLogMessagePublished = createEventParser(logMessagePublishedLog)
 const parseTransfer = createEventParser(transferLog)
+
+const orderSourceContracts = [...MAYAN_SWIFT_SOURCE_CONTRACTS]
+const orderDestinationContracts = [...MAYAN_SWIFT_DESTINATION_CONTRACTS]
 
 export const OrderCreated = createInteropEventType<{
   key: string
@@ -148,7 +152,10 @@ function captureOrderFulfilled(
   input: LogToCapture,
   wormholeNetworks: WormholeNetwork[],
 ) {
-  const orderFulfilled = parseOrderFulfilled(input.log, null)
+  const orderFulfilled = parseOrderFulfilled(
+    input.log,
+    orderDestinationContracts,
+  )
   if (!orderFulfilled) return
 
   const settlementSent = findSingleSettlementSentInTx(
@@ -250,12 +257,12 @@ function captureOrderCreated(
   input: LogToCapture,
   wormholeNetworks: WormholeNetwork[],
 ) {
-  const orderCreated = parseOrderCreated(input.log, null)
+  const orderCreated = parseOrderCreated(input.log, orderSourceContracts)
   if (!orderCreated) return
 
   const parsed = findOrderData(input, wormholeNetworks)
   const nativeAmount = findNativeAmountInTx(input, [
-    MAYAN_PROTOCOLS.mayanSwift,
+    ...orderSourceContracts,
     MAYAN_FORWARDER,
   ])
   const srcTokenAddress =
@@ -277,7 +284,7 @@ function captureOrderCreated(
 }
 
 function captureOrderRefunded(input: LogToCapture) {
-  const orderRefunded = parseOrderRefunded(input.log, null)
+  const orderRefunded = parseOrderRefunded(input.log, orderSourceContracts)
   if (!orderRefunded) return
   return [
     OrderRefunded.create(input, {
@@ -364,9 +371,13 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
   ) {}
 
   getDataRequests(): DataRequest[] {
-    const mayanSwiftAddresses = toChainSpecificAddresses(
+    const mayanSwiftSourceAddresses = toChainSpecificAddressesForMany(
       MAYAN_EVM_CHAINS,
-      MAYAN_PROTOCOLS.mayanSwift,
+      orderSourceContracts,
+    )
+    const mayanSwiftDestinationAddresses = toChainSpecificAddressesForMany(
+      MAYAN_EVM_CHAINS,
+      orderDestinationContracts,
     )
 
     return [
@@ -380,19 +391,19 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
           swapAndForwardedEthLog,
           swapAndForwardedERC20Log,
         ],
-        addresses: mayanSwiftAddresses,
+        addresses: mayanSwiftSourceAddresses,
       },
       {
         type: 'event',
         signature: orderFulfilledLog,
         includeTxEvents: [logMessagePublishedLog],
         includeTx: true,
-        addresses: mayanSwiftAddresses,
+        addresses: mayanSwiftDestinationAddresses,
       },
       {
         type: 'event',
         signature: orderRefundedLog,
-        addresses: mayanSwiftAddresses,
+        addresses: mayanSwiftSourceAddresses,
       },
     ]
   }

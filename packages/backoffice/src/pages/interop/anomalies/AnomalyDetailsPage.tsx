@@ -13,12 +13,13 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { formatDollars } from '~/pages/interop/transfers/utils'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { AggregateSeriesCharts } from './charts/AggregateSeriesCharts'
 import type { AggregateDetailsInput, AggregateSeriesPoint } from './types'
 import { decodeRouteParam } from './utils'
 
 export function AnomalyDetailsPage() {
+  const api = useBackendApi()
   const params = useParams<{ id: string }>()
   const id = decodeRouteParam(params.id)
   const hasValidParams = id !== undefined

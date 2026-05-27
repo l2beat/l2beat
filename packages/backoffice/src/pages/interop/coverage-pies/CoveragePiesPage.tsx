@@ -22,7 +22,7 @@ import { Label as FieldLabel } from '~/components/core/Label'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import type { CoveragePieChart, CoveragePieSlice } from './types'
 
 const DEFAULT_COLLAPSE_THRESHOLD_PCT = 2
@@ -182,6 +182,7 @@ function CoveragePieCard(props: { chart: CoveragePieChart }) {
 }
 
 export function CoveragePiesPage() {
+  const api = useBackendApi()
   const [thresholdInput, setThresholdInput] = useState<string>(
     String(DEFAULT_COLLAPSE_THRESHOLD_PCT),
   )

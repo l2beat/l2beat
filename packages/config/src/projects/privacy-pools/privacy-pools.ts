@@ -20,6 +20,16 @@ const PRIVACY_POOLS_DEPOSIT_EVENT =
 const PRIVACY_POOLS_WITHDRAWAL_EVENT =
   '0x75e161b3e824b114fc1a33274bd7091918dd4e639cede50b78b15a4eea956a21'
 
+function formatBasisPoints(value: number): string {
+  return `${Number((value / 100).toFixed(4))}%`
+}
+
+interface PrivacyPoolsAssetConfig {
+  minimumDepositAmount: string | number
+  vettingFeeBPS: number
+  maxRelayFeeBPS: number
+}
+
 interface PrivacyPoolBucket {
   id: string
   address: ChainSpecificAddress
@@ -31,6 +41,7 @@ interface PrivacyPoolBucket {
     iconUrl: string | undefined
   }
   sinceTimestamp: UnixTime
+  feeConfig: PrivacyPoolsAssetConfig
   depositEvent: string
   withdrawalEvent: string
 }
@@ -56,13 +67,20 @@ export const privacyPools: BaseProject = {
       'A selective-disclosure privacy system for Ethereum that adds compliance-aware association sets.',
     detailedDescription: `Privacy Pools is a non-custodial privacy protocol on Ethereum built around asset-specific pools and private withdrawals, adding compliance by whitelisting all legitimate deposits. A deposit creates a commitment, which is represented by secret and nullifier, and a later withdrawal uses a zero-knowledge proof to spend that commitment, either partially or in full, without revealing the matching deposit. Losing the secret and the nullifier would effectively mean losing deposited tokens.
 
-Privacy Pools are controlled by a 2/4 multisig, which has authority to stop deposits and manage the deposit whitelist, but users always have an option to publicly withdraw deposited tokens, linking their withdrawal to their deposit.
+Privacy Pools are controlled by a ${discovery.getMultisigStats('Privacy Pools Multisig')} multisig, which has authority to stop deposits and manage the deposit whitelist, but users always have an option to publicly withdraw deposited tokens, linking their withdrawal to their deposit.
 
 ### Privacy considerations
 
 Privacy Pools protocol supports [relayed withdrawals](https://etherscan.io/address/0x15e355024de1cdc74addea7ebdf98418ba5b1a2c#code#F1#L133), in which relayer processes withdrawals on user's behalf for a fee, which enables sending funds to fresh addresses.
 
-Practical privacy also depends on the timing and amounts of deposits and withdrawals, underlying network and browser used to interact with Privacy Pools frontend (if used), RPC providers used to send transactions and query public blockchain state. Users are advised to research the best OPSEC practices.
+Practical privacy also depends on the timing and amounts of deposits and withdrawals, underlying network and browser used to interact with Privacy Pools frontend (if used), RPC providers used to send transactions and query public blockchain state. Users are advised to research [OPSEC best practices](/publications/privacy-best-practices).
+
+### Fees
+
+Privacy Pools charges a mandatory onchain vetting fee on deposits and caps relayed-withdrawal fees per asset:
+${formatPrivacyPoolsFeeSummary()}
+
+The vetting fees are accumulated in the Entrypoint and can be withdrawn by its owner. Relayer fees are paid on withdrawals to the selected relayer and cannot exceed the per-asset cap; relayers can still choose their own quote below that cap and users can self-relay to not pay the fee.
 
 ### Compliance
 
@@ -74,7 +92,7 @@ ASP is designed to vouch that withdrawals from Privacy Pools are not related to 
 
 The anonymity set consists of all whitelisted deposits of the same token with the value greater than the withdrawal amount. Note that only deposits approved by the ASP add to the anonymity set. To maximize the anonymity set, users are recommended to withdraw smaller amounts and deposit popular tokens.`,
     links: {
-      websites: ['https://www.privacypools.com'],
+      websites: ['https://privacypools.com'],
     },
     badges: [],
   },
@@ -95,7 +113,7 @@ The anonymity set consists of all whitelisted deposits of the same token with th
       PRIVACY_ATTRIBUTES.immutable,
       PRIVACY_ATTRIBUTES.enforcedCompliance,
       PRIVACY_ATTRIBUTES.anyAmount,
-      PRIVACY_ATTRIBUTES.openSource,
+      PRIVACY_ATTRIBUTES.sourceAvailable,
     ],
     riskSummary: `## Funds can be stolen if
 1. the zk proof system is broken, allowing invalid withdrawals.
@@ -187,6 +205,9 @@ function getPrivacyPoolBuckets(): PrivacyPoolBucket[] {
         )
     const resolved = getTokenByAddress(tokenAddress.toString())
     assert(resolved, `Unknown asset ${asset}`)
+    const feeConfig = pool.values
+      ?.assetConfigFromEntrypoint as unknown as PrivacyPoolsAssetConfig
+    assert(feeConfig, `Missing fee config for ${pool.name}`)
 
     return {
       id: `privacy-pools-${resolved.symbol}`,
@@ -199,8 +220,33 @@ function getPrivacyPoolBuckets(): PrivacyPoolBucket[] {
         iconUrl: resolved.iconUrl,
       },
       sinceTimestamp: UnixTime(pool.sinceTimestamp ?? 0),
+      feeConfig,
       depositEvent: PRIVACY_POOLS_DEPOSIT_EVENT,
       withdrawalEvent: PRIVACY_POOLS_WITHDRAWAL_EVENT,
     }
   })
+}
+
+function formatPrivacyPoolsFeeSummary(): string {
+  const grouped = new Map<string, string[]>()
+
+  for (const bucket of BUCKETS) {
+    const key = `${formatBasisPoints(
+      bucket.feeConfig.vettingFeeBPS,
+    )} vetting fee, ${formatBasisPoints(
+      bucket.feeConfig.maxRelayFeeBPS,
+    )} maximum relayer fee`
+    const symbols = grouped.get(key) ?? []
+    symbols.push(bucket.tokenInfo.symbol)
+    grouped.set(key, symbols)
+  }
+
+  return Array.from(grouped.entries())
+    .map(([key, symbols]) => {
+      const sortedSymbols = symbols.sort((a, b) =>
+        a.localeCompare(b, undefined, { numeric: true }),
+      )
+      return `- ${key}: ${sortedSymbols.join(', ')}.`
+    })
+    .join('\n')
 }

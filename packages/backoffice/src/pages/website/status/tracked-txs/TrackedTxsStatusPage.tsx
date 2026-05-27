@@ -4,11 +4,12 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { TrackedTxsStatusTable } from './table/TrackedTxsStatusTable'
 import type { TrackedTxsStatusRow } from './types'
 
 export function TrackedTxsStatusPage() {
+  const api = useBackendApi()
   const { data, error, isError, isLoading, isFetching, refetch } =
     api.trackedTxs.status.configs.useQuery(undefined, {
       refetchInterval: 3600_000,
