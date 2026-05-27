@@ -16,6 +16,7 @@
   - [Propagation](#propagation)
   - [Reading the interop transfer table](#reading-the-interop-transfer-table)
   - [CoinGecko: never called from `plan`](#coingecko-never-called-from-plan)
+  - [CoinGecko symbol casing](#coingecko-symbol-casing)
   - [Address normalization](#address-normalization)
   - [What runs where](#what-runs-where)
   - [What this replaces](#what-this-replaces)
@@ -184,7 +185,10 @@ strategies, tried in order:
    if the deployed token symbol matches the new abstract token symbol. Since
    inserts learn the deployed token symbol from RPC/explorer facts, this
    mismatch check happens in `fetch`; a mismatch becomes `conflict`, while
-   a missing deployed token symbol remains an `error`.
+   a missing deployed token symbol remains an `error`. The symbol comparison
+   is case-insensitive, because the CoinGecko endpoints we call
+   (`/coins/list` and `/coins/{id}`) return symbols lower-cased (`susde`,
+   `wsteth`) — see *CoinGecko symbol casing* below.
 
 If none of the three resolves anything, the outcome is `skip` and the
 entry is removed. RPC/explorer fact fetching only runs in the `fetch`
@@ -360,6 +364,40 @@ There is no "we tried this address and dropped it" record. A dropped
 address simply disappears from the queue. If audit history is needed
 later, the natural place to store it is alongside the deployed token
 itself — see *Future: persistent audit*.
+
+## CoinGecko symbol casing
+
+The two CoinGecko endpoints this pipeline calls — `/coins/list`
+(used by `plan` to find the coin from `(chain, address)`) and
+`/coins/{id}` (used by `fetch` to materialize a new abstract token) —
+both return the `symbol` field lower-cased regardless of the token's
+actual casing (`susde` for `sUSDe`, `wsteth` for `wstETH`, `susd` for
+`sUSD`). The `name` field preserves casing across both endpoints, but
+it's a full name rather than a symbol. The RPC call against the
+deployed token returns the true casing, so RPC is the source of truth
+for the symbol.
+
+Two places treat this as a casing-only normalization rather than a real
+mismatch:
+
+- The conflict check that gates creating a new CoinGecko-sourced abstract
+  compares the candidate symbol against the deployed-token symbol
+  **case-insensitively**. A casing-only difference is not a conflict; a
+  real symbol mismatch (e.g. `USDC` vs. `DAI`) still is.
+- When the check passes and a new abstract is about to be written, `fetch`
+  copies the deployed-token's casing onto the abstract record so the row
+  persisted to TokenDB carries the canonical casing — not CoinGecko's
+  lower-cased value or our previous upper-cased placeholder. A
+  `corrected-coingecko-symbol-casing` step is appended to the trace so the
+  preview dialog and the persisted ingestion log both make the correction
+  visible.
+
+Both of these live inside the existing `fetch` phase: that's the moment we
+already have both the materialized CoinGecko abstract and the
+deployed-token symbol in hand, so no additional plumbing is needed. If
+CoinGecko ever starts returning properly cased symbols, the substitution
+becomes a no-op (the values already match) and can be removed without
+touching the rest of the pipeline.
 
 ## Address normalization
 

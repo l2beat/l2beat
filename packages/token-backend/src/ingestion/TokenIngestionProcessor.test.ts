@@ -413,6 +413,83 @@ describe(TokenIngestionProcessor.name, () => {
       ).toEqual(true)
     })
 
+    it('adopts deployed-token casing on the new CoinGecko abstract when symbols match case-insensitively', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<TokenDatabase['chain']>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            findById: mockFn().resolvesTo(undefined),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          getCoinDataById: mockFn().resolvesTo({
+            id: 'ethena-staked-usde',
+            symbol: 'susde',
+            image: { large: 'https://example.com/susde.png' },
+            platforms: {},
+          }),
+          getCoinMarketChartRange: mockFn().resolvesTo({
+            prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
+            marketCaps: [],
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'sUSDe',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+        generateAbstractTokenId: () => 'ABC123',
+      })
+
+      const result = await processor.fetch({
+        id: 'ing_test',
+        address,
+        steps: [],
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: {
+            kind: 'new-coingecko',
+            coingeckoId: 'ethena-staked-usde',
+            symbol: 'susde',
+          },
+          symbolFallback: 'SUSDE',
+          neighborsToEnqueue: [],
+          proof: { kind: 'coingecko' },
+        },
+      })
+
+      expect(result.outcome.kind).toEqual('write')
+      if (result.outcome.kind !== 'write') return
+      expect(result.outcome.newAbstractToken?.symbol).toEqual('sUSDe')
+      expect(
+        result.outcome.deployedToken.type === 'insert' &&
+          result.outcome.deployedToken.record.symbol,
+      ).toEqual('sUSDe')
+      const correctionStep = result.steps.find(
+        (step) => step.kind === 'corrected-coingecko-symbol-casing',
+      )
+      expect(correctionStep).toEqual({
+        kind: 'corrected-coingecko-symbol-casing',
+        from: 'SUSDE',
+        to: 'sUSDe',
+      })
+    })
+
     it('downgrades pending insert with a new CoinGecko abstract to conflict when symbols differ', async () => {
       const address = token('ethereum', '0xaaa')
 
