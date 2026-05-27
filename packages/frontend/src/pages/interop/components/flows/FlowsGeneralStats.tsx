@@ -15,16 +15,12 @@ import { useScaledParticleCounts } from './graph/utils/useScaledParticleCounts'
 import { useInteropFlows } from './utils/InteropFlowsContext'
 
 export function FlowsGeneralStats({
-  tokenId,
-  title,
-  description,
-  hideTokenStats = false,
+  title = 'General stats',
+  description = 'For past 24h between the selected chains and protocols',
   className,
 }: {
-  tokenId?: string
-  title: string
-  description: string
-  hideTokenStats?: boolean
+  title?: string
+  description?: string
   className?: string
 }) {
   const [isTokensDialogOpen, setIsTokensDialogOpen] = useState(false)
@@ -33,7 +29,6 @@ export function FlowsGeneralStats({
   const queryInput = {
     chains: selectedChains,
     protocolIds: selectedProtocols,
-    tokenId,
   }
   const tokensQueryInput = {
     from: selectedChains,
@@ -97,21 +92,19 @@ export function FlowsGeneralStats({
             value={formatInteger(data?.stats.totalTransferCount ?? 0)}
             isLoading={isLoading}
           />
-          {!hideTokenStats && (
-            <Card
-              title="Unique tokens"
-              value={formatInteger(data?.stats.tokenCount ?? 0)}
-              isLoading={isLoading}
-              footer={
-                <UniqueTokensFooter
-                  isLoading={isLoading}
-                  tokenCount={data?.stats.tokenCount}
-                  topTokens={data?.stats.topTokens}
-                  setIsOpen={setIsTokensDialogOpen}
-                />
-              }
-            />
-          )}
+          <Card
+            title="Unique tokens"
+            value={formatInteger(data?.stats.tokenCount ?? 0)}
+            isLoading={isLoading}
+            footer={
+              <UniqueTokensFooter
+                isLoading={isLoading}
+                tokenCount={data?.stats.tokenCount}
+                topTokens={data?.stats.topTokens}
+                setIsOpen={setIsTokensDialogOpen}
+              />
+            }
+          />
         </div>
         <HorizontalSeparator className="my-4" />
         <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-divider bg-surface-primary p-4">
@@ -190,26 +183,22 @@ export function FlowsGeneralStats({
               )
             }
           />
-          {!hideTokenStats && (
-            <>
-              <HorizontalSeparator />
-              <Card
-                title="Top token"
-                isLoading={isLoading}
-                className="border-0 p-0!"
-                value={
-                  topToken ? (
-                    <TopTokenValue
-                      topToken={topToken}
-                      selectedChains={selectedChains}
-                    />
-                  ) : (
-                    '-'
-                  )
-                }
-              />
-            </>
-          )}
+          <HorizontalSeparator />
+          <Card
+            title="Top token"
+            isLoading={isLoading}
+            className="border-0 p-0!"
+            value={
+              topToken ? (
+                <TopTokenValue
+                  topToken={topToken}
+                  selectedChains={selectedChains}
+                />
+              ) : (
+                '-'
+              )
+            }
+          />
         </div>
       </div>
       <div className="mt-auto space-y-1 pt-4 text-center font-medium text-label-value-14 text-secondary">
@@ -236,15 +225,13 @@ export function FlowsGeneralStats({
           </>
         )}
       </div>
-      {!hideTokenStats && (
-        <TokensDialog
-          isOpen={isTokensDialogOpen}
-          setIsOpen={setIsTokensDialogOpen}
-          queryInput={tokensQueryInput}
-          title="All tokens & pairs by volume"
-          showFlowsColumn={false}
-        />
-      )}
+      <TokensDialog
+        isOpen={isTokensDialogOpen}
+        setIsOpen={setIsTokensDialogOpen}
+        queryInput={tokensQueryInput}
+        title="All tokens & pairs by volume"
+        showFlowsColumn={false}
+      />
     </div>
   )
 }
