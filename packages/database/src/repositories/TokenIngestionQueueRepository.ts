@@ -224,7 +224,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
       .updateTable('TokenIngestionQueue')
       .set({
         state,
-        message,
+        message: sanitizePostgresText(message),
         updatedAt: new Date(),
       })
       .where('chain', '=', normalized.chain)
@@ -233,4 +233,8 @@ export class TokenIngestionQueueRepository extends BaseRepository {
 
     return Number(result.numUpdatedRows)
   }
+}
+
+function sanitizePostgresText(value: string): string {
+  return value.replace(/\0/g, '\\0')
 }

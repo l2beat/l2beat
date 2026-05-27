@@ -118,6 +118,16 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
         { ...error, state: 'error', message: 'RPC failed' },
       ])
     })
+
+    it('escapes NUL bytes in messages before writing them', async () => {
+      const address = { chain: 'ethereum', address: '0x111' }
+      await repository.enqueue(address)
+
+      await repository.markError(address, 'RPC returned U\0SDC')
+
+      const entries = await repository.getByStates(['error'])
+      expect(entries[0]?.message).toEqual('RPC returned U\\0SDC')
+    })
   })
 
   describe(TokenIngestionQueueRepository.prototype.getPage.name, () => {
