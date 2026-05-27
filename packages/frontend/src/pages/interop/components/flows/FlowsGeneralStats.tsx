@@ -100,6 +100,7 @@ export function FlowsGeneralStats({
                 isLoading={isLoading}
                 tokenCount={data?.stats.tokenCount}
                 topTokens={data?.stats.topTokens}
+                selectedChains={selectedChains}
                 setIsOpen={setIsTokensDialogOpen}
               />
             }
@@ -259,6 +260,7 @@ function UniqueTokensFooter({
   isLoading,
   tokenCount,
   topTokens,
+  selectedChains,
   setIsOpen,
 }: {
   isLoading: boolean
@@ -275,6 +277,7 @@ function UniqueTokensFooter({
         remainingCount: number
       }
     | undefined
+  selectedChains: string[]
   setIsOpen: (isOpen: boolean) => void
 }) {
   const hasTokens =
@@ -306,6 +309,10 @@ function UniqueTokensFooter({
           issuer: token.issuer,
           iconUrl: token.iconUrl,
           volume: token.volume,
+          href: getInteropTokenUrl(token, {
+            from: selectedChains,
+            to: selectedChains,
+          }),
         })),
         remainingCount: topTokens.remainingCount,
       }}

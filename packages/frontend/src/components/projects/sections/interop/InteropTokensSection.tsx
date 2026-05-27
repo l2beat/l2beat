@@ -53,8 +53,12 @@ export function InteropTokensSection({
     )
 
   const columns = useMemo(
-    () => getTopTokensColumns({ showFlowsColumn: false }),
-    [],
+    () =>
+      getTopTokensColumns({
+        showFlowsColumn: false,
+        selectedChains: apiSelection,
+      }),
+    [apiSelection],
   )
 
   const tableData = useMemo(() => tokensData?.items ?? [], [tokensData])

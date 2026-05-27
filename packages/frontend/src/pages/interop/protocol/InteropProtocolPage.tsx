@@ -98,6 +98,7 @@ function Content({
         isLoading={false}
         hideProtocol
         hideChainsInfo
+        apiSelection={apiSelection}
       />
 
       <HighlightableLinkContextProvider>

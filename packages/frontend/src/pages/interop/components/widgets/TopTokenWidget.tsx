@@ -14,6 +14,7 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import { InteropSelectedChainsContext } from '../../utils/InteropSelectedChainsContext'
+import type { InteropSelection } from '../../utils/types'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
 
 interface Props {
@@ -21,6 +22,7 @@ interface Props {
   isLoading: boolean
   hideProtocol?: boolean
   hideChainsInfo?: boolean
+  apiSelection?: InteropSelection
   className?: string
 }
 
@@ -29,6 +31,7 @@ export function TopTokenWidget({
   isLoading,
   hideProtocol,
   hideChainsInfo,
+  apiSelection,
   className,
 }: Props) {
   return (
@@ -41,7 +44,11 @@ export function TopTokenWidget({
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between xl:flex-row xl:items-center xl:justify-start xl:gap-10">
           <TopTokenHeading hideChainsInfo={hideChainsInfo} />
-          <TopTokenIdentity topToken={topToken} isLoading={isLoading} />
+          <TopTokenIdentity
+            topToken={topToken}
+            isLoading={isLoading}
+            apiSelection={apiSelection}
+          />
           <div
             className={cn(
               'hidden xl:grid xl:flex-1 xl:gap-2.5',
@@ -100,14 +107,18 @@ function TopTokenHeading({ hideChainsInfo }: { hideChainsInfo?: boolean }) {
 function TopTokenIdentity({
   topToken,
   isLoading,
+  apiSelection,
 }: {
   topToken: InteropDashboardData['topToken'] | undefined
   isLoading: boolean
+  apiSelection?: InteropSelection
 }) {
   const selectedChainsContext = useContext(InteropSelectedChainsContext)
+  const selection =
+    apiSelection ?? selectedChainsContext?.selectedChains ?? undefined
   const href =
-    topToken && selectedChainsContext
-      ? getInteropTokenUrl(topToken, selectedChainsContext.selectedChains)
+    topToken && selection
+      ? getInteropTokenUrl(topToken, selection)
       : undefined
   const content = isLoading ? (
     <Skeleton className="h-8 w-28" />
