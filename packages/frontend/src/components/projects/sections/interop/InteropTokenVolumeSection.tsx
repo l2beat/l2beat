@@ -1,14 +1,15 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import { useMemo } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
+  EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE,
   MAX_SELECTED_CHAINS,
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '~/pages/interop/components/flows/consts'
 import { FlowsChainsSelector } from '~/pages/interop/components/flows/FlowsChainsSelector'
+import { FlowsParticleLegend } from '~/pages/interop/components/flows/FlowsParticleLegend'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
 import { InactiveChainsDialog } from '~/pages/interop/components/flows/graph/InactiveChainsDialog'
 import { useScaledParticleCounts } from '~/pages/interop/components/flows/graph/utils/useScaledParticleCounts'
@@ -21,7 +22,6 @@ import {
 import { useInteropTokenDashboard } from '~/pages/interop/token/InteropTokenDashboardContext'
 import type { InteropTokenDashboardData } from '~/server/features/scaling/interop/getInteropTokenData'
 import { api } from '~/trpc/React'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
@@ -105,37 +105,19 @@ function Content({
     selectedChains,
     data?.chainData,
     data?.flows,
-    25,
+    EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE,
   )
-  const avgValuePerSecond = (data?.stats.totalVolume ?? 0) / UnixTime.DAY
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex min-h-5 flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <FlowsChainsSelector allChains={interopChains} />
         {!isLoading && data && (
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-medium text-label-value-11 text-secondary md:text-label-value-12">
-            <span>
-              Avg value per second ≈{' '}
-              <span className="font-bold text-brand">
-                {formatCurrency(avgValuePerSecond, 'usd')}
-              </span>
-            </span>
-            {dollarsPerParticle && (
-              <>
-                <span className="text-tertiary">|</span>
-                <span className="inline-flex items-center gap-1">
-                  <span className="size-1.5 rounded-full bg-brand" />1 particle
-                  ≈{' '}
-                  <span className="font-bold text-brand">
-                    {formatCurrency(dollarsPerParticle, 'usd', {
-                      decimals: 0,
-                    })}
-                  </span>
-                </span>
-              </>
-            )}
-          </div>
+          <FlowsParticleLegend
+            layout="inline"
+            totalVolume={data.stats.totalVolume}
+            dollarsPerParticle={dollarsPerParticle}
+          />
         )}
       </div>
       <FlowsGraphPanel
@@ -144,7 +126,7 @@ function Content({
         hasEnoughChains={hasEnoughChains}
         hasEnoughProtocols={hasEnoughProtocols}
         isLoading={isLoading}
-        baseDollarsPerParticle={25}
+        baseDollarsPerParticle={EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE}
       />
       {shouldShowInactiveChainsInfo && (
         <div className="flex min-h-6 w-full items-center justify-center gap-1 max-lg:order-3">
