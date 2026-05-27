@@ -31,8 +31,7 @@ export function FlowsParticleLegend({
 
   const particleLine = dollarsPerParticle ? (
     <>
-      <span className="size-1.5 rounded-full bg-brand" />
-      1 particle ≈{' '}
+      <span className="size-1.5 rounded-full bg-brand" />1 particle ≈{' '}
       <span className="font-bold text-brand">
         {formatCurrency(dollarsPerParticle, 'usd', { decimals: 0 })}
       </span>
@@ -51,7 +50,9 @@ export function FlowsParticleLegend({
         {particleLine && (
           <>
             <span className="text-tertiary">|</span>
-            <span className="inline-flex items-center gap-1">{particleLine}</span>
+            <span className="inline-flex items-center gap-1">
+              {particleLine}
+            </span>
           </>
         )}
       </div>

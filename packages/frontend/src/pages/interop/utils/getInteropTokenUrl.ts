@@ -1,7 +1,7 @@
 import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/scaling/interop/consts'
 import {
-  getAbstractTokenSlug,
   type AbstractTokenSlugData,
+  getAbstractTokenSlug,
 } from '~/server/features/scaling/interop/token/getAbstractTokenSlug'
 import { buildInteropUrl } from './buildInteropUrl'
 import type { InteropSelection } from './types'

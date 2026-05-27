@@ -7,8 +7,8 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
 import { SelectedChainsTokensDialog } from '../../components/tokens/TokensDialog'
 import { InteropTopItems } from '../../components/top-items/TopItems'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
+import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
 export function TokenCount({
   isLoading,
