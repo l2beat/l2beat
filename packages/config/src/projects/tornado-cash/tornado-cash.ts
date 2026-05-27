@@ -104,7 +104,7 @@ The core mixer contracts are immutable and have no admin, pause, or upgrade path
 
 Tornado cash introduces a permissionless relayer network, which is essential for practical privacy. Relayers process withdrawals from Tornado cash pools on user's behalf for a fee, which enables withdrawals to fresh addresses without funding them before the withdrawal. Without an active relayer network, practical privacy of Tornado cash deteriorates significantly.
 
-Practical privacy also depends on the timing of deposits and withdrawals, underlying network and browser used to interact with Tornado cash frontend (if used), RPC providers used to send transactions and query public blockchain state. Users are advised to research [OPSEC best practices](/publications/privacy-best-practices).
+Practical privacy also depends on the timing of deposits and withdrawals, underlying network and browser used to interact with Tornado cash frontend (if used), RPC providers used to send transactions and query public blockchain state. Users are advised to research [OPSEC best practice](/publications/privacy-best-practices).
 
 ### Fees
 
@@ -162,7 +162,7 @@ The frontend can then be accessed by running a local IPFS node that automaticall
 1. a user loses the note secrets required to withdraw.  
 <br>
 ## Privacy can be lost if
-1. no relayer is available and the withdrawal must be submitted from an address that can be linked to the user (see [best practices page](/publications/privacy-best-practices) for more info).`,
+1. no relayer is available and the withdrawal must be submitted from an address that can be linked to the user (see [best practice page](/publications/privacy-best-practices) for more info).`,
     upgradesAndGovernance: `
 Tornado cash has a TORN DAO, which does not have the authority to upgrade or modify existing pools in any way. However it controls a significant portion of the Tornado cash protocol and periphery, including:
 
