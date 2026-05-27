@@ -207,6 +207,21 @@ export type AggregatedInteropTransferWithTokens =
     >[]
   }
 
+export type ScopedInteropTransfer = Pick<
+  AggregatedInteropTransferWithTokens,
+  'id' | 'timestamp' | 'bridgeType' | 'srcChain' | 'dstChain'
+> &
+  CommonInteropData & {
+    tokens: [AggregatedInteropTransferWithTokens['tokens'][number]]
+    volume: number
+    identifiedCount: number
+    avgValueInFlight: undefined
+  }
+
+export type InteropTransferWithTokens =
+  | AggregatedInteropTransferWithTokens
+  | ScopedInteropTransfer
+
 export type CommonInteropData = {
   volume: number
   transferCount: number
