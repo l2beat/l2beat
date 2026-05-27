@@ -12,10 +12,13 @@
     "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
     "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
     "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
-    "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855"
+    "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
+    "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
   ],
   "overrides": {
-    // name generic vaultBridge tokens
+    "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {
+      "displayName": "upgradeProxy"
+    },
     "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F": {
       "displayName": "vbWBTC"
     },
@@ -31,7 +34,6 @@
     "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF": {
       "displayName": "vbETH"
     },
-    // hide unused op stack contracts
     "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe": {
       "category": "spam"
     },
@@ -55,6 +57,21 @@
     },
     "eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E": {
       "category": "spam"
+    },
+    "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": {
+      "description": "Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.",
+      "category": "bridge-canonical"
+    },
+    "katana:0xb30C032b183525de7427f04e79F45Cd19866E124": {
+      "category": "bridge-canonical",
+      "description": "Utility library contract for the AgglayerBridgeL2."
+    },
+    "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA": {
+      "category": "bridge-canonical",
+      "description": "Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots."
+    },
+    "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c": {
+      "description": "An ERC-20 implementation designed for cross-chain assets on the L2. It restricts token minting or burning strictly to the primary bridge contract."
     }
   }
 }

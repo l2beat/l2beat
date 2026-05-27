@@ -1,7 +1,7 @@
 {
   "name": "katana",
-  "timestamp": 1778675724,
-  "configHash": "0x098a3205b9c2f228f092e47e2fa3faf3d54d41d2826a4c8b7da2b83afb04c8dd",
+  "timestamp": 1779885204,
+  "configHash": "0x86a08e0b8ecefd50bd9605705edfce9d814ccc601231280d51b158d4ea8dbeef",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -119,12 +119,12 @@
         "lastAccInputHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
-        "latestBlockNumber": 31927713,
-        "latestOutputIndex": 7365,
+        "latestBlockNumber": 33137705,
+        "latestOutputIndex": 7697,
         "MAX_AGGCHAIN_SIGNERS": 255,
         "networkName": "katana",
-        "nextBlockNumber": 31927714,
-        "nextOutputIndex": 7366,
+        "nextBlockNumber": 33137706,
+        "nextOutputIndex": 7698,
         "optimisticMode": false,
         "optimisticModeManager": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
         "pendingAdmin": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
@@ -294,13 +294,13 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x5E5D6f849Fa86c058f148E9D3f643C8F4c43f20b",
+          "eth:0x5250077c42627cBd112988f32D482acC9ff40bDB",
+          "eth:0xC357eE8a8DdE88Dd5a3Ea54847Adef6846A28c51",
+          "eth:0xFcc3796370e1538F8cC60bec19A8be5457f2C74F",
+          "eth:0xFafFb75e14faFf9f11315E44a2E54A22872c7a34",
           "eth:0x80a3887BA60F76acAb48EE4aEAd0a71A0774A8B2",
           "eth:0xB13C8f58a233607569D2F8411B912148aeC4aEe2",
-          "eth:0xBD5f1429Ab467E69BEeba51E547C00A21F2a2092",
-          "eth:0x787aba336583f4A1D4f8cBBFDFFD49f3a38De665",
-          "eth:0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C",
-          "eth:0xd0002c648CCa8DeE2f2b8D70D542Ccde8ad6EC03",
-          "eth:0x1b5f15DCb82d25f91c65b53CEe151E8b9fBdD271",
           "eth:0x0Dca0FDC170baA4CA9c1dCd37Ffe01f97bCfD504"
         ],
         "$threshold": 3,
@@ -308,7 +308,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 3234,
+        "nonce": 3256,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -391,11 +391,6 @@
       "implementationNames": {
         "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832": "ProxyAdmin"
       }
-    },
-    {
-      "address": "eth:0x1b5f15DCb82d25f91c65b53CEe151E8b9fBdD271",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "PreimageOracle",
@@ -562,23 +557,20 @@
       "proxyType": "EOA"
     },
     {
-      "name": "OptimismPortal2_neutered",
+      "name": "OptimismPortal2",
       "address": "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
       "type": "Contract",
-      "template": "opstack/OptimismPortal2_noForce",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x4cc0e4525ed77b81565c05c0e673e043a93d9878924197f772581f72c11c91c5"
+        "0xfcecb325a86c39482f8e9d29272f25089eec0b5fbefe21444fd1ea690c911f0c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.",
-      "ignoreInWatchMode": ["params", "balance"],
       "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
       "values": {
         "$admin": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832",
-        "$implementation": "eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4",
+        "$implementation": "eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a",
         "$pastUpgrades": [
           [
             "2025-05-08T22:20:11.000Z",
@@ -619,9 +611,14 @@
             "2026-03-03T15:49:23.000Z",
             "0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961",
             ["eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4"]
+          ],
+          [
+            "2026-05-22T16:31:35.000Z",
+            "0x46d8e0a3a5383c133292ef51e4d7eef96fddc443b892d38e62c39b1186055691",
+            ["eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a"]
           ]
         ],
-        "$upgradeCount": 8,
+        "$upgradeCount": 9,
         "anchorStateRegistry": "eth:0xaA8a62563CFe4E36118ED479B5486F503b438376",
         "disputeGameFactory": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
         "disputeGameFinalityDelaySeconds": 302400,
@@ -631,37 +628,23 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 0,
-          "prevBlockNum": 22441727
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 25169124
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
         "proxyAdmin": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832",
         "proxyAdminOwner": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
-        "RespectedGameString": "PermissionedDisputeGame",
         "respectedGameType": 1,
         "respectedGameTypeUpdatedAt": 1772552963,
         "superchainConfig": "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
         "systemConfig": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
-        "version": "5.1.1"
-      },
-      "fieldMeta": {
-        "paused": {
-          "severity": "HIGH",
-          "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
-        }
+        "version": "agg3.15.0"
       },
       "implementationNames": {
         "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E": "Proxy",
-        "eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4": "OptimismPortal2"
-      },
-      "usedTypes": [
-        {
-          "typeCaster": "Mapping",
-          "arg": { "0": "FaultDisputeGame", "1": "PermissionedDisputeGame" }
-        }
-      ],
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+        "eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a": "OptimismPortal2"
+      }
     },
     {
       "name": "Safe",
@@ -691,7 +674,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 334,
+        "nonce": 338,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -788,7 +771,7 @@
           }
         },
         "asset": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "backingDifference": { "positive": true, "difference": 9833 },
+        "backingDifference": { "positive": true, "difference": 82 },
         "decimals": 8,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0x7317613d3079fd0c32c0dda038dce0e4bd277cdaa8af2d5aece3fd671e98171d",
@@ -813,13 +796,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 46085766935,
+        "stakedAssets": 75543641804,
         "symbol": "vbWBTC",
-        "totalAssets": 46085766935,
-        "totalSupply": 46085757102,
+        "totalAssets": 75543641804,
+        "totalSupply": 75543641722,
         "underlyingToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "version": "0.5.0",
-        "yield": 9833,
+        "yield": 82,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x812B2C6Ab3f4471c0E43D4BB61098a9211017427",
@@ -830,11 +813,6 @@
         "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
       },
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "address": "eth:0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "vbETH",
@@ -892,7 +870,7 @@
         "asset": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "backingDifference": {
           "positive": true,
-          "difference": "307639727342665546"
+          "difference": "519201672790962089"
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -918,13 +896,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": "9389050292762197768231",
+        "stakedAssets": "13799950383949184357634",
         "symbol": "vbETH",
-        "totalAssets": "9389050292762197768231",
-        "totalSupply": "9388742653034855102685",
+        "totalAssets": "13799950383949184357634",
+        "totalSupply": "13799431182276393395545",
         "underlyingToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "version": "0.5.0",
-        "yield": "307639727342665546",
+        "yield": "519201672790962089",
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x31A5684983EeE865d943A696AAC155363bA024f9",
@@ -1252,7 +1230,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 338,
+        "nonce": 342,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1381,7 +1359,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 270,
+        "nonce": 273,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1455,6 +1433,11 @@
       "targetProject": "shared-polygon-cdk"
     },
     {
+      "address": "eth:0x5250077c42627cBd112988f32D482acC9ff40bDB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "vbUSDC",
       "address": "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e",
       "type": "Contract",
@@ -1508,7 +1491,7 @@
           }
         },
         "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "backingDifference": { "positive": true, "difference": 3707115438 },
+        "backingDifference": { "positive": true, "difference": 1757964700 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xf208e01223892bb2dfb35c2d306f682552de4492b4e45dff4876243fc048a8c2",
@@ -1533,13 +1516,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 40997974084027,
+        "stakedAssets": 18349145075788,
         "symbol": "vbUSDC",
-        "totalAssets": 40997974084027,
-        "totalSupply": 40994266968589,
+        "totalAssets": 18349145075788,
+        "totalSupply": 18347387111088,
         "underlyingToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "version": "0.5.0",
-        "yield": 3707115438,
+        "yield": 1757964700,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
@@ -1565,6 +1548,11 @@
     },
     {
       "address": "eth:0x59cE4e1709c7E462F3b72Ca3e1256dFa7358FC29",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x5E5D6f849Fa86c058f148E9D3f643C8F4c43f20b",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1738,7 +1726,7 @@
           }
         },
         "asset": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "backingDifference": { "positive": true, "difference": 1761159874 },
+        "backingDifference": { "positive": true, "difference": 552168491 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xb80a4f7d2a2cc76fdaf2e936f017dddaca3e63f59cc318bc7506fafc54b81d3c",
@@ -1763,13 +1751,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 33304690460919,
+        "stakedAssets": 12608546337154,
         "symbol": "vbUSDT",
-        "totalAssets": 33304690460919,
-        "totalSupply": 33302929301045,
+        "totalAssets": 12608546337154,
+        "totalSupply": 12607994168663,
         "underlyingToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "version": "0.5.0",
-        "yield": 1761159874,
+        "yield": 552168491,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xc54b4E08C1Dcc199fdd35c6b5Ab589ffD3428a8d",
@@ -1788,11 +1776,6 @@
     },
     {
       "address": "eth:0x73D8846324B30477EA3Ac055589e40F39DE497F8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x787aba336583f4A1D4f8cBBFDFFD49f3a38De665",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1836,7 +1819,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 234,
+        "nonce": 243,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2464,11 +2447,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0xBD5f1429Ab467E69BEeba51E547C00A21F2a2092",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439",
       "type": "EOA",
       "proxyType": "EOA",
@@ -2483,17 +2461,17 @@
       ]
     },
     {
+      "address": "eth:0xC357eE8a8DdE88Dd5a3Ea54847Adef6846A28c51",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xcB1e45481461aeF38E6B0a34F1444E9C5D647645",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0xcC771952fdE840E30C6802734e5ad20479c2959f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xd0002c648CCa8DeE2f2b8D70D542Ccde8ad6EC03",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2648,7 +2626,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 45,
+        "nonce": 46,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2952,7 +2930,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 7 (29%)",
-        "nonce": 120,
+        "nonce": 125,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2966,10 +2944,278 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xFafFb75e14faFf9f11315E44a2E54A22872c7a34",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xFcc3796370e1538F8cC60bec19A8be5457f2C74F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
       "type": "Reference",
       "targetType": "EOA",
       "targetProject": "shared-polygon-cdk"
+    },
+    {
+      "address": "katana:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "upgradeProxy",
+      "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": ""
+      }
+    },
+    {
+      "name": "AgglayerBridgeL2",
+      "address": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "type": "Contract",
+      "template": "katana/AgglayerBridgeL2",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x58919872e6c1e5657db0567384b63912ecdcc1ace8029bb576131fd436a79d78"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.",
+      "ignoreInWatchMode": ["depositCount", "lastUpdatedDepositCount"],
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+        "$implementation": "katana:0x094B1B2322F1A8927B61dfAf686CA78d71C6cbf6",
+        "$pastUpgrades": [
+          [
+            "2025-05-21T15:44:26.000Z",
+            "0xb3c92e7a065f876cfe017a4bed5a966e28075d693b5ef221fa49b2ff0d727c7c",
+            ["katana:0xd4AC5935c9AeA32FC120D52B22Ee41C9C5f82DEe"]
+          ],
+          [
+            "2025-06-26T09:04:29.000Z",
+            "0x2095014c39cf800cb6f965f51435d55108c75ef70ff4e83f148ba99fd115684a",
+            ["katana:0xc8EC6E02AF5D7E2EBf590601979401A696Bf820e"]
+          ],
+          [
+            "2025-06-27T22:04:28.000Z",
+            "0xe21aaf644474404b9c5441f48e95467afaaec140d8435b9d3f31474e59a05dd2",
+            ["katana:0xe3E6F722b047Ce3B1F733D9c5B0609DA4e9D1FAb"]
+          ],
+          [
+            "2026-03-03T17:53:49.000Z",
+            "0xff4926542308f9cea5b8b77f9c6d20a840b61878991d25981ca96b55c3a830ec",
+            ["katana:0x094B1B2322F1A8927B61dfAf686CA78d71C6cbf6"]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "bridgeLib": "katana:0xb30C032b183525de7427f04e79F45Cd19866E124",
+        "bridgeManager": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+        "claimedGlobalIndexHashChain": "0x097b4e693ca6f8c43ee37c0485b6049a58faa622bdab30dc0d0e38381623f1fd",
+        "depositCount": 20418,
+        "emergencyBridgePauser": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+        "emergencyBridgeUnpauser": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+        "gasTokenAddress": "katana:0x0000000000000000000000000000000000000000",
+        "gasTokenMetadata": "0x",
+        "gasTokenNetwork": 0,
+        "getProxiedTokensManager": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+        "getRoot": "0x9a6c08d1124e1d49ce2c1f762a7a17779034e154c3e55111374a37fcc2d3d1f0",
+        "getWrappedTokenBridgeImplementation": "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c",
+        "globalExitRootManager": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+        "isEmergencyState": false,
+        "lastUpdatedDepositCount": 20418,
+        "networkID": 20,
+        "pendingEmergencyBridgePauser": "katana:0x0000000000000000000000000000000000000000",
+        "pendingEmergencyBridgeUnpauser": "katana:0x0000000000000000000000000000000000000000",
+        "pendingProxiedTokensManager": "katana:0x0000000000000000000000000000000000000000",
+        "polygonRollupManager": "katana:0x0000000000000000000000000000000000000000",
+        "unsetGlobalIndexHashChain": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "version": "v1.2.0",
+        "WETHToken": "katana:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "TransparentUpgradeableProxy",
+        "katana:0x094B1B2322F1A8927B61dfAf686CA78d71C6cbf6": "AgglayerBridgeL2"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "katana:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0x3138BBdAeAd339d34F084445192B2be9dd4B9f27",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "katana:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
+      "sinceTimestamp": 1747208518,
+      "sinceBlock": 465707,
+      "values": {
+        "$immutable": false,
+        "$implementation": "katana:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "katana:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
+          "katana:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72",
+          "katana:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B",
+          "katana:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
+          "katana:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x2a4651d105ba08c29b9f73aeca09709e92e9fcd2ea301e1c84af2920cb529e06",
+        "getChainId": 747474,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 21,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a": "GnosisSafeProxy",
+        "katana:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
+    },
+    {
+      "address": "katana:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GlobalExitRootManagerL2SovereignChain",
+      "address": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+      "type": "Contract",
+      "template": "katana/GlobalExitRootManagerL2SovereignChain",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x7ecabfbcffc6f7cabd7d4bb90bd1ef08ccac6f5c03de16fda3d2398b3c5fdf4a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.",
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+        "$implementation": "katana:0x0200143Fa295EE4dffEF22eE2616c2E008D81688",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "bridgeAddress": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "GER_SOVEREIGN_VERSION": "al-v0.3.0",
+        "globalExitRootRemover": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+        "globalExitRootUpdater": "katana:0x3138BBdAeAd339d34F084445192B2be9dd4B9f27",
+        "insertedGERHashChain": "0x66da94262913704ee096ee35648f011c19d7481facb36615119108ec015a36a3",
+        "lastRollupExitRoot": "0x9a6c08d1124e1d49ce2c1f762a7a17779034e154c3e55111374a37fcc2d3d1f0",
+        "pendingGlobalExitRootRemover": "katana:0x0000000000000000000000000000000000000000",
+        "pendingGlobalExitRootUpdater": "katana:0x0000000000000000000000000000000000000000",
+        "removedGERHashChain": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA": "TransparentUpgradeableProxy",
+        "katana:0x0200143Fa295EE4dffEF22eE2616c2E008D81688": "GlobalExitRootManagerL2SovereignChain"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "BridgeLib",
+      "address": "katana:0xb30C032b183525de7427f04e79F45Cd19866E124",
+      "type": "Contract",
+      "template": "katana/BridgeLib",
+      "sourceHashes": [
+        "0x54f1ceed33ba094c9a75b50862e78440641ee509a8420d8ba3162ed92147aeed"
+      ],
+      "proxyType": "immutable",
+      "description": "Utility library contract for the AgglayerBridgeL2.",
+      "deployerAddress": "katana:0x14567c0dCF79c20fE1A21E36EC975d1775a1905C",
+      "sinceTimestamp": 1772018458,
+      "sinceBlock": 25275647,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "katana:0xb30C032b183525de7427f04e79F45Cd19866E124": "BridgeLib"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "katana:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "TokenWrappedBridgeUpgradeable",
+      "address": "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c",
+      "type": "Contract",
+      "template": "katana/TokenWrappedBridgeUpgradeable",
+      "sourceHashes": [
+        "0xc3921c6996f73a34c3166ea826cfe68cbf4a872214f258db6874cf2d125cad6e"
+      ],
+      "proxyType": "immutable",
+      "description": "An ERC-20 implementation designed for cross-chain assets on the L2. It restricts token minting or burning strictly to the primary bridge contract.",
+      "deployerAddress": "katana:0x14567c0dCF79c20fE1A21E36EC975d1775a1905C",
+      "sinceTimestamp": 1772018458,
+      "sinceBlock": 25275647,
+      "values": {
+        "$immutable": true,
+        "bridgeAddress": "katana:0x0000000000000000000000000000000000000000",
+        "decimals": 0,
+        "DOMAIN_SEPARATOR": "0x9486815ea730877b17013e40fc7543ef74943b8f97fcd63032ae3af196d78c15",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "",
+          "version": "",
+          "chainId": 747474,
+          "verifyingContract": "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "name": "",
+        "symbol": "",
+        "totalSupply": 0
+      },
+      "implementationNames": {
+        "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c": "TokenWrappedBridgeUpgradeable"
+      }
     }
   ],
   "abis": {
@@ -3324,74 +3570,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4": [
-      "constructor(uint256 _proofMaturityDelaySeconds)",
-      "error ContentLengthMismatch()",
-      "error EmptyItem()",
-      "error InvalidDataRemainder()",
-      "error InvalidHeader()",
-      "error OptimismPortal_AlreadyFinalized()",
-      "error OptimismPortal_BadTarget()",
-      "error OptimismPortal_CallPaused()",
-      "error OptimismPortal_CalldataTooLarge()",
-      "error OptimismPortal_GasEstimation()",
-      "error OptimismPortal_GasLimitTooLow()",
-      "error OptimismPortal_ImproperDisputeGame()",
-      "error OptimismPortal_InvalidDisputeGame()",
-      "error OptimismPortal_InvalidLockboxState()",
-      "error OptimismPortal_InvalidMerkleProof()",
-      "error OptimismPortal_InvalidOutputRootProof()",
-      "error OptimismPortal_InvalidProofTimestamp()",
-      "error OptimismPortal_InvalidRootClaim()",
-      "error OptimismPortal_NoReentrancy()",
-      "error OptimismPortal_ProofNotOldEnough()",
-      "error OptimismPortal_Unproven()",
-      "error OutOfGas()",
-      "error ProxyAdminOwnedBase_NotProxyAdmin()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
-      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
-      "error ReinitializableBase_ZeroInitVersion()",
-      "error UnexpectedList()",
-      "error UnexpectedString()",
-      "event Initialized(uint8 version)",
-      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
-      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
-      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
-      "event WithdrawalProvenExtension1(bytes32 indexed withdrawalHash, address indexed proofSubmitter)",
-      "function anchorStateRegistry() view returns (address)",
-      "function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) view",
-      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
-      "function disputeGameBlacklist(address _disputeGame) view returns (bool)",
-      "function disputeGameFactory() view returns (address)",
-      "function disputeGameFinalityDelaySeconds() view returns (uint256)",
-      "function donateETH() payable",
-      "function ethLockbox() view returns (address)",
-      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
-      "function finalizeWithdrawalTransactionExternalProof(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, address _proofSubmitter)",
-      "function finalizedWithdrawals(bytes32) view returns (bool)",
-      "function guardian() view returns (address)",
-      "function initVersion() view returns (uint8)",
-      "function initialize(address _systemConfig, address _anchorStateRegistry)",
-      "function l2Sender() view returns (address)",
-      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
-      "function numProofSubmitters(bytes32 _withdrawalHash) view returns (uint256)",
-      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
-      "function paused() view returns (bool)",
-      "function proofMaturityDelaySeconds() view returns (uint256)",
-      "function proofSubmitters(bytes32, uint256) view returns (address)",
-      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _disputeGameIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
-      "function provenWithdrawals(bytes32, address) view returns (address disputeGameProxy, uint64 timestamp)",
-      "function proxyAdmin() view returns (address)",
-      "function proxyAdminOwner() view returns (address)",
-      "function respectedGameType() view returns (uint32)",
-      "function respectedGameTypeUpdatedAt() view returns (uint64)",
-      "function superchainConfig() view returns (address)",
-      "function systemConfig() view returns (address)",
-      "function version() pure returns (string)"
-    ],
     "eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21": [
       "constructor(address _singleton)"
     ],
@@ -3481,6 +3659,74 @@
       "error ProxyDeniedAdminAccess()",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a": [
+      "constructor(uint256 _proofMaturityDelaySeconds)",
+      "error ContentLengthMismatch()",
+      "error EmptyItem()",
+      "error InvalidDataRemainder()",
+      "error InvalidHeader()",
+      "error OptimismPortal_AlreadyFinalized()",
+      "error OptimismPortal_BadTarget()",
+      "error OptimismPortal_CallPaused()",
+      "error OptimismPortal_CalldataTooLarge()",
+      "error OptimismPortal_GasEstimation()",
+      "error OptimismPortal_GasLimitTooLow()",
+      "error OptimismPortal_ImproperDisputeGame()",
+      "error OptimismPortal_InvalidDisputeGame()",
+      "error OptimismPortal_InvalidLockboxState()",
+      "error OptimismPortal_InvalidMerkleProof()",
+      "error OptimismPortal_InvalidOutputRootProof()",
+      "error OptimismPortal_InvalidProofTimestamp()",
+      "error OptimismPortal_InvalidRootClaim()",
+      "error OptimismPortal_NoReentrancy()",
+      "error OptimismPortal_ProofNotOldEnough()",
+      "error OptimismPortal_Unproven()",
+      "error OutOfGas()",
+      "error ProxyAdminOwnedBase_NotProxyAdmin()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
+      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
+      "error ReinitializableBase_ZeroInitVersion()",
+      "error UnexpectedList()",
+      "error UnexpectedString()",
+      "event Initialized(uint8 version)",
+      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
+      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
+      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
+      "event WithdrawalProvenExtension1(bytes32 indexed withdrawalHash, address indexed proofSubmitter)",
+      "function anchorStateRegistry() view returns (address)",
+      "function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) view",
+      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
+      "function disputeGameBlacklist(address _disputeGame) view returns (bool)",
+      "function disputeGameFactory() view returns (address)",
+      "function disputeGameFinalityDelaySeconds() view returns (uint256)",
+      "function donateETH() payable",
+      "function ethLockbox() view returns (address)",
+      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
+      "function finalizeWithdrawalTransactionExternalProof(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, address _proofSubmitter)",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
+      "function guardian() view returns (address)",
+      "function initVersion() view returns (uint8)",
+      "function initialize(address _systemConfig, address _anchorStateRegistry)",
+      "function l2Sender() view returns (address)",
+      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
+      "function numProofSubmitters(bytes32 _withdrawalHash) view returns (uint256)",
+      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
+      "function paused() view returns (bool)",
+      "function proofMaturityDelaySeconds() view returns (uint256)",
+      "function proofSubmitters(bytes32, uint256) view returns (address)",
+      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _disputeGameIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
+      "function provenWithdrawals(bytes32, address) view returns (address disputeGameProxy, uint64 timestamp)",
+      "function proxyAdmin() view returns (address)",
+      "function proxyAdminOwner() view returns (address)",
+      "function respectedGameType() view returns (uint32)",
+      "function respectedGameTypeUpdatedAt() view returns (uint64)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function version() pure returns (string)"
     ],
     "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A": [
       "constructor()",
@@ -4661,12 +4907,318 @@
     ],
     "eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb": [
       "constructor(address _singleton)"
+    ],
+    "katana:0x0200143Fa295EE4dffEF22eE2616c2E008D81688": [
+      "constructor(address _bridgeAddress)",
+      "error GlobalExitRootAlreadySet()",
+      "error GlobalExitRootNotFound()",
+      "error InvalidZeroAddress()",
+      "error OnlyAllowedContracts()",
+      "error OnlyGlobalExitRootRemover()",
+      "error OnlyGlobalExitRootUpdater()",
+      "error OnlyPendingGlobalExitRootRemover()",
+      "error OnlyPendingGlobalExitRootUpdater()",
+      "event AcceptGlobalExitRootRemover(address oldGlobalExitRootRemover, address newGlobalExitRootRemover)",
+      "event AcceptGlobalExitRootUpdater(address oldGlobalExitRootUpdater, address newGlobalExitRootUpdater)",
+      "event Initialized(uint8 version)",
+      "event TransferGlobalExitRootRemover(address currentGlobalExitRootRemover, address pendingGlobalExitRootRemover)",
+      "event TransferGlobalExitRootUpdater(address currentGlobalExitRootUpdater, address pendingGlobalExitRootUpdater)",
+      "event UpdateHashChainValue(bytes32 indexed newGlobalExitRoot, bytes32 indexed newHashChainValue)",
+      "event UpdateRemovalHashChainValue(bytes32 indexed removedGlobalExitRoot, bytes32 indexed newRemovalHashChainValue)",
+      "function GER_SOVEREIGN_VERSION() view returns (string)",
+      "function acceptGlobalExitRootRemover()",
+      "function acceptGlobalExitRootUpdater()",
+      "function bridgeAddress() view returns (address)",
+      "function globalExitRootMap(bytes32) view returns (uint256)",
+      "function globalExitRootRemover() view returns (address)",
+      "function globalExitRootUpdater() view returns (address)",
+      "function initialize(address _globalExitRootUpdater, address _globalExitRootRemover)",
+      "function insertGlobalExitRoot(bytes32 _newRoot)",
+      "function insertedGERHashChain() view returns (bytes32)",
+      "function lastRollupExitRoot() view returns (bytes32)",
+      "function pendingGlobalExitRootRemover() view returns (address)",
+      "function pendingGlobalExitRootUpdater() view returns (address)",
+      "function removeGlobalExitRoots(bytes32[] gersToRemove)",
+      "function removedGERHashChain() view returns (bytes32)",
+      "function transferGlobalExitRootRemover(address _newGlobalExitRootRemover)",
+      "function transferGlobalExitRootUpdater(address _newGlobalExitRootUpdater)",
+      "function updateExitRoot(bytes32 newRoot)"
+    ],
+    "katana:0x094B1B2322F1A8927B61dfAf686CA78d71C6cbf6": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error AlreadyClaimed()",
+      "error AmountDoesNotMatchMsgValue()",
+      "error BridgeAddressNotAllowed()",
+      "error ClaimNotSet()",
+      "error DestinationNetworkInvalid()",
+      "error EmergencyStateNotAllowed()",
+      "error EtherTransferFailed()",
+      "error FailedInnerCall()",
+      "error FailedProxyDeployment()",
+      "error GasTokenNetworkMustBeZeroOnEther()",
+      "error GlobalExitRootInvalid()",
+      "error InputArraysLengthMismatch()",
+      "error InvalidDepositCount()",
+      "error InvalidExpectedLER()",
+      "error InvalidGlobalIndex()",
+      "error InvalidInitializeFunction()",
+      "error InvalidLBTLeaf()",
+      "error InvalidLeafType()",
+      "error InvalidLeavesLength()",
+      "error InvalidProxyAdmin(address proxyAdmin)",
+      "error InvalidSmtProof()",
+      "error InvalidSovereignWETHAddressParams()",
+      "error InvalidSubtreeFrontier()",
+      "error InvalidZeroAddress()",
+      "error InvalidZeroNetworkID()",
+      "error InvalidZeroProxyAdminOwner(address proxyAdmin)",
+      "error LocalBalanceTreeOverflow(uint32 originNetwork, address originTokenAddress, uint256 amount, uint256 localBalanceTreeAmount)",
+      "error LocalBalanceTreeUnderflow(uint32 originNetwork, address originTokenAddress, uint256 amount, uint256 localBalanceTreeAmount)",
+      "error MerkleTreeFull()",
+      "error MessageFailed()",
+      "error MsgValueNotZero()",
+      "error NativeTokenIsEther()",
+      "error NewDepositCountExceedsMax()",
+      "error NoValueInMessagesOnGasTokenNetworks()",
+      "error NonZeroValueForUnusedFrontier()",
+      "error NotValidAmount()",
+      "error OnlyBridgeManager()",
+      "error OnlyDeployer()",
+      "error OnlyEmergencyBridgePauser()",
+      "error OnlyEmergencyBridgeUnpauser()",
+      "error OnlyEmergencyState()",
+      "error OnlyGlobalExitRootRemover()",
+      "error OnlyNotEmergencyState()",
+      "error OnlyPendingEmergencyBridgePauser()",
+      "error OnlyPendingEmergencyBridgeUnpauser()",
+      "error OnlyPendingProxiedTokensManager()",
+      "error OnlyProxiedTokensManager()",
+      "error OnlyRollupManager()",
+      "error OriginNetworkInvalid()",
+      "error SafeERC20FailedOperation(address token)",
+      "error SubtreeFrontierMismatch()",
+      "error TokenAlreadyMapped()",
+      "error TokenAlreadyUpdated()",
+      "error TokenNotMapped()",
+      "error TokenNotRemapped()",
+      "error WETHRemappingNotSupportedOnGasTokenNetworks()",
+      "event AcceptEmergencyBridgePauserRole(address oldEmergencyBridgePauser, address newEmergencyBridgePauser)",
+      "event AcceptEmergencyBridgeUnpauserRole(address oldEmergencyBridgeUnpauser, address newEmergencyBridgeUnpauser)",
+      "event AcceptProxiedTokensManagerRole(address oldProxiedTokensManager, address newProxiedTokensManager)",
+      "event BackwardLET(uint256 previousDepositCount, bytes32 previousRoot, uint256 newDepositCount, bytes32 newRoot)",
+      "event BridgeEvent(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata, uint32 depositCount)",
+      "event ClaimEvent(uint256 globalIndex, uint32 originNetwork, address originAddress, address destinationAddress, uint256 amount)",
+      "event DetailedClaimEvent(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 indexed globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint8 leafType, uint32 originNetwork, address originTokenAddress, uint32 destinationNetwork, address indexed destinationAddress, uint256 amount, bytes metadata)",
+      "event EmergencyStateActivated()",
+      "event EmergencyStateDeactivated()",
+      "event ForwardLET(uint256 previousDepositCount, bytes32 previousRoot, uint256 newDepositCount, bytes32 newRoot, bytes newLeaves)",
+      "event Initialized(uint8 version)",
+      "event MigrateLegacyToken(address sender, address legacyTokenAddress, address updatedTokenAddress, uint256 amount)",
+      "event NewWrappedToken(uint32 originNetwork, address originTokenAddress, address wrappedTokenAddress, bytes metadata)",
+      "event RemoveLegacySovereignTokenAddress(address sovereignTokenAddress)",
+      "event SetBridgeManager(address bridgeManager)",
+      "event SetClaim(bytes32 globalIndex)",
+      "event SetLocalBalanceTree(uint32 indexed originNetwork, address indexed originTokenAddress, uint256 newAmount)",
+      "event SetSovereignTokenAddress(uint32 originNetwork, address originTokenAddress, address sovereignTokenAddress, bool isNotMintable)",
+      "event SetSovereignWETHAddress(address sovereignWETHTokenAddress, bool isNotMintable)",
+      "event TransferEmergencyBridgePauserRole(address currentEmergencyBridgePauser, address newEmergencyBridgePauser)",
+      "event TransferEmergencyBridgeUnpauserRole(address currentEmergencyBridgeUnpauser, address newEmergencyBridgeUnpauser)",
+      "event TransferProxiedTokensManagerRole(address currentProxiedTokensManager, address newProxiedTokensManager)",
+      "event UpdatedClaimedGlobalIndexHashChain(bytes32 claimedGlobalIndex, bytes32 newClaimedGlobalIndexHashChain)",
+      "event UpdatedUnsetGlobalIndexHashChain(bytes32 unsetGlobalIndex, bytes32 newUnsetGlobalIndexHashChain)",
+      "function INIT_BYTECODE_TRANSPARENT_PROXY() view returns (bytes)",
+      "function WETHToken() view returns (address)",
+      "function acceptEmergencyBridgePauserRole()",
+      "function acceptEmergencyBridgeUnpauserRole()",
+      "function acceptProxiedTokensManagerRole()",
+      "function activateEmergencyState()",
+      "function backwardLET(uint256 newDepositCount, bytes32[32] newFrontier, bytes32 nextLeaf, bytes32[32] proof)",
+      "function bridgeAsset(uint32 destinationNetwork, address destinationAddress, uint256 amount, address token, bool forceUpdateGlobalExitRoot, bytes permitData) payable",
+      "function bridgeLib() view returns (address)",
+      "function bridgeManager() view returns (address)",
+      "function bridgeMessage(uint32 destinationNetwork, address destinationAddress, bool forceUpdateGlobalExitRoot, bytes metadata) payable",
+      "function bridgeMessageWETH(uint32 destinationNetwork, address destinationAddress, uint256 amountWETH, bool forceUpdateGlobalExitRoot, bytes metadata)",
+      "function claimAsset(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint32 originNetwork, address originTokenAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)",
+      "function claimMessage(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)",
+      "function claimedBitMap(uint256) view returns (uint256)",
+      "function claimedGlobalIndexHashChain() view returns (bytes32)",
+      "function computeTokenProxyAddress(uint32 originNetwork, address originTokenAddress) view returns (address)",
+      "function deactivateEmergencyState()",
+      "function deployWrappedTokenAndRemap(uint32 originNetwork, address originTokenAddress, bool isNotMintable)",
+      "function depositCount() view returns (uint256)",
+      "function emergencyBridgePauser() view returns (address)",
+      "function emergencyBridgeUnpauser() view returns (address)",
+      "function forceEmitDetailedClaimEvent(tuple(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)[] claims)",
+      "function forwardLET(tuple(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)[] newLeaves, bytes32 expectedLER)",
+      "function gasTokenAddress() view returns (address)",
+      "function gasTokenMetadata() view returns (bytes)",
+      "function gasTokenNetwork() view returns (uint32)",
+      "function getProxiedTokensManager() view returns (address)",
+      "function getRoot() view returns (bytes32)",
+      "function getTokenMetadata(address token) view returns (bytes)",
+      "function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)",
+      "function getWrappedTokenBridgeImplementation() view returns (address)",
+      "function globalExitRootManager() view returns (address)",
+      "function initialize(uint32 _networkID, address _gasTokenAddress, uint32 _gasTokenNetwork, address _globalExitRootManager, address _polygonRollupManager, bytes _gasTokenMetadata, address _bridgeManager, address _sovereignWETHAddress, bool _sovereignWETHAddressIsNotMintable, address _emergencyBridgePauser, address _emergencyBridgeUnpauser, address _proxiedTokensManager)",
+      "function initialize(uint32, address, uint32, address, address, bytes)",
+      "function isClaimed(uint32 leafIndex, uint32 sourceBridgeNetwork) view returns (bool)",
+      "function isEmergencyState() view returns (bool)",
+      "function lastUpdatedDepositCount() view returns (uint32)",
+      "function localBalanceTree(bytes32 tokenInfoHash) view returns (uint256 amount)",
+      "function migrateLegacyToken(address legacyTokenAddress, uint256 amount, bytes permitData)",
+      "function networkID() view returns (uint32)",
+      "function pendingEmergencyBridgePauser() view returns (address)",
+      "function pendingEmergencyBridgeUnpauser() view returns (address)",
+      "function pendingProxiedTokensManager() view returns (address)",
+      "function polygonRollupManager() view returns (address)",
+      "function removeLegacySovereignTokenAddress(address legacySovereignTokenAddress)",
+      "function setBridgeManager(address _bridgeManager)",
+      "function setLocalBalanceTree(uint32[] originNetworkArray, address[] originTokenAddressArray, uint256[] amountArray)",
+      "function setMultipleClaims(uint256[] globalIndexes)",
+      "function setMultipleSovereignTokenAddress(uint32[] originNetworks, address[] originTokenAddresses, address[] sovereignTokenAddresses, bool[] isNotMintable)",
+      "function setSovereignWETHAddress(address sovereignWETHTokenAddress, bool isNotMintable)",
+      "function tokenInfoToWrappedToken(bytes32) view returns (address)",
+      "function transferEmergencyBridgePauserRole(address newEmergencyBridgePauser)",
+      "function transferEmergencyBridgeUnpauserRole(address newEmergencyBridgeUnpauser)",
+      "function transferProxiedTokensManagerRole(address newProxiedTokensManager)",
+      "function unsetGlobalIndexHashChain() view returns (bytes32)",
+      "function unsetMultipleClaims(uint256[] globalIndexes)",
+      "function updateGlobalExitRoot()",
+      "function version() pure returns (string)",
+      "function wrappedAddressIsNotMintable(address wrappedAddress) view returns (bool isNotMintable)",
+      "function wrappedTokenToTokenInfo(address) view returns (uint32 originNetwork, address originTokenAddress)"
+    ],
+    "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "katana:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a": [
+      "constructor(address _singleton)"
+    ],
+    "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "katana:0xb30C032b183525de7427f04e79F45Cd19866E124": [
+      "error NotValidOwner()",
+      "error NotValidSignature()",
+      "error NotValidSpender()",
+      "function INIT_BYTECODE_TRANSPARENT_PROXY() view returns (bytes)",
+      "function getTokenMetadata(address token) view returns (bytes)",
+      "function safeDecimals(address token) view returns (uint8)",
+      "function safeName(address token) view returns (string)",
+      "function safeSymbol(address token) view returns (string)",
+      "function validateAndProcessPermit(address token, bytes permitData, address expectedOwner, address expectedSpender) returns (bool success)"
+    ],
+    "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c": [
+      "constructor()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC2612ExpiredSignature(uint256 deadline)",
+      "error ERC2612InvalidSigner(address signer, address owner)",
+      "error InvalidAccountNonce(address account, uint256 currentNonce)",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OnlyBridge()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function bridgeAddress() view returns (address)",
+      "function burn(address account, uint256 value)",
+      "function decimals() view returns (uint8)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function initialize(string name, string symbol, uint8 __decimals)",
+      "function mint(address to, uint256 value)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)"
     ]
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "katana/AggchainFEP_post035": "0x428b3edaf13fa3a14d448eeef5e3718dd7f95d5a299666a436ce66a0def4d9d9",
+    "katana/AgglayerBridgeL2": "0x39421ff59c81d86dac23f6e5fb82ba5c8f2273330e0dc617dbb37c001170f0bc",
+    "katana/BridgeLib": "0xb8ad695e33fde1c15595da1cbf166d648c6be57a47ec43405d330e10b3d6e6ec",
+    "katana/GlobalExitRootManagerL2SovereignChain": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "katana/TokenWrappedBridgeUpgradeable": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
@@ -4676,7 +5228,6 @@
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2_noForce": "0x7ac072ef679e441e8543bbc677bcba6f25016b1232f4ee456519a28e3c3e2dee",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -4684,6 +5235,6 @@
     "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
-  "usedBlockNumbers": { "ethereum": 25086251 },
-  "permissionsConfigHash": "0x0b6ce2bd53afe1e31e09531348d3b532196268ea524ec2a7b1d668a3e39b091a"
+  "usedBlockNumbers": { "ethereum": 25186695, "katana": 33142393 },
+  "permissionsConfigHash": "0x648df8458a7c6b7937f29118862e2f9c5c44d72e823243a30d1544fddc62e857"
 }
