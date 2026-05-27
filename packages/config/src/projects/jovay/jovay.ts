@@ -25,6 +25,7 @@ export const jovay: ScalingProject = {
   id: ProjectId('jovay'),
   capability: 'universal',
   addedAt: UnixTime(1754392609),
+  archivedAt: UnixTime(1779881695), // Wed, 27 May 2026
   hasTestnet: true,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
@@ -197,6 +198,7 @@ export const jovay: ScalingProject = {
         callsPerMinute: 300,
       },
     ],
+    untilTimestamp: UnixTime(1779881695), // Wed, 27 May 2026
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
 }
