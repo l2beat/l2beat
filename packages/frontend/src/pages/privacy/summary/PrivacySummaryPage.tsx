@@ -28,7 +28,7 @@ export function PrivacySummaryPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
-          <MainPageHeader description="Analysis of privacy protocols on Ethereum focusing on CROPS principles (Censorship resistance, Resilience, Openness, Privacy, Security).">
+          <MainPageHeader description="Analysis of privacy protocols on Ethereum focusing on CROPS principles (Censorship Resistance, Openness, Privacy, Security).">
             Privacy
           </MainPageHeader>
           <PrivacySummaryChartsSection
