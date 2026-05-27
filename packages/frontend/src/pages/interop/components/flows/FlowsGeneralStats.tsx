@@ -15,7 +15,12 @@ import { useInteropFlows } from './utils/InteropFlowsContext'
 
 export function FlowsGeneralStats() {
   const [isTokensDialogOpen, setIsTokensDialogOpen] = useState(false)
-  const { selectedChains, allChains, selectedProtocols } = useInteropFlows()
+  const {
+    selectedChains,
+    allChains,
+    selectedProtocols,
+    setHighlightedChainPair,
+  } = useInteropFlows()
 
   const queryInput = {
     chains: selectedChains,
@@ -100,7 +105,13 @@ export function FlowsGeneralStats() {
             className="border-0 p-0!"
             value={
               srcChain && dstChain ? (
-                <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setHighlightedChainPair(srcChain.id, dstChain.id)
+                  }
+                  className="flex items-center gap-1.5 rounded p-1 transition-opacity hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
+                >
                   <img
                     src={srcChain.iconUrl}
                     alt={srcChain.id}
@@ -112,7 +123,7 @@ export function FlowsGeneralStats() {
                     alt={dstChain.id}
                     className="size-5"
                   />
-                </div>
+                </button>
               ) : (
                 '-'
               )
