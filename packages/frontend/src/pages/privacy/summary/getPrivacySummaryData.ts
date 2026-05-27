@@ -1,4 +1,4 @@
-import type { InMemoryCache } from '@l2beat/shared-pure'
+import { type InMemoryCache, UnixTime } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacySummaryEntries } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { ps } from '~/server/projects'
@@ -54,7 +54,7 @@ export async function getPrivacySummaryData(
 async function getCachedData() {
   const helpers = getSsrHelpers()
 
-  const defaultChartRange = optionToRange('1y')
+  const defaultChartRange = optionToRange('1y', { offset: -UnixTime.DAY })
   const projects = (
     await ps.getProjects({
       where: ['privacyInfo'],

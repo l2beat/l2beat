@@ -1,5 +1,9 @@
 import type { PrivacyAttribute, ProjectRedWarning } from '@l2beat/config'
-import type { InMemoryCache, ProjectId } from '@l2beat/shared-pure'
+import {
+  type InMemoryCache,
+  type ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -81,7 +85,7 @@ export async function getPrivacyProjectData(
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
   const helpers = getSsrHelpers()
-  const defaultChartRange = optionToRange('1y')
+  const defaultChartRange = optionToRange('1y', { offset: -UnixTime.DAY })
   const [
     appLayoutProps,
     details,
