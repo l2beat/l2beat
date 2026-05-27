@@ -5,6 +5,7 @@ import {
   ChevronRightIcon,
   EyeIcon,
   ListChecksIcon,
+  RotateCwIcon,
 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
@@ -49,6 +50,7 @@ const PAGE_SIZE = 100
 export function TokenIngestionQueuePage() {
   const utils = api.useUtils()
   const [approvingKey, setApprovingKey] = useState<string | undefined>()
+  const [retryingKey, setRetryingKey] = useState<string | undefined>()
   const [preview, setPreview] = useState<IngestionPreviewState | undefined>()
   const [page, setPage] = useState(1)
   const { data: queuePage, isLoading } =
@@ -81,6 +83,14 @@ export function TokenIngestionQueuePage() {
     },
     onError: (error) => toast.error(error.message),
     onSettled: () => setApprovingKey(undefined),
+  })
+  const retry = api.tokenIngestionQueue.retry.useMutation({
+    onSuccess: async () => {
+      await utils.tokenIngestionQueue.getPage.invalidate()
+      toast.success('Queue entry queued for retry')
+    },
+    onError: (error) => toast.error(error.message),
+    onSettled: () => setRetryingKey(undefined),
   })
   const previewMutation = api.tokenIngestionQueue.preview.useMutation({
     onSuccess: (trace) => {
@@ -235,6 +245,24 @@ export function TokenIngestionQueuePage() {
                             >
                               <CheckIcon />
                               Approve
+                            </ButtonWithSpinner>
+                          )}
+                          {(entry.state === 'conflict' ||
+                            entry.state === 'error') && (
+                            <ButtonWithSpinner
+                              variant="outline"
+                              size="sm"
+                              isLoading={retry.isPending && retryingKey === key}
+                              onClick={() => {
+                                setRetryingKey(key)
+                                retry.mutate({
+                                  chain: entry.chain,
+                                  address: entry.address,
+                                })
+                              }}
+                            >
+                              <RotateCwIcon />
+                              Retry
                             </ButtonWithSpinner>
                           )}
                         </div>

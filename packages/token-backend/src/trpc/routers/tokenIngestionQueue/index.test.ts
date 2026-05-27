@@ -160,6 +160,43 @@ describe('tokenIngestionQueueRouter', () => {
       ).toBeRejectedWith(TRPCError)
     })
   })
+
+  describe('retry', () => {
+    it('retries a conflict or error entry', async () => {
+      const retry = mockFn().resolvesTo(1)
+      const caller = createRouter(
+        mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              retry,
+            },
+          ),
+        }),
+      )
+
+      const input = { chain: 'ethereum', address: '0x111' }
+      const result = await caller.retry(input)
+
+      expect(result).toEqual({ success: true })
+      expect(retry).toHaveBeenCalledWith(input)
+    })
+
+    it('fails when the entry is not in conflict or error', async () => {
+      const caller = createRouter(
+        mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              retry: mockFn().resolvesTo(0),
+            },
+          ),
+        }),
+      )
+
+      await expect(
+        caller.retry({ chain: 'ethereum', address: '0x111' }),
+      ).toBeRejectedWith(TRPCError)
+    })
+  })
 })
 
 function createRouter(
