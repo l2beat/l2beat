@@ -25,6 +25,7 @@ import { InteropPluginSyncedRangeRepository } from './repositories/InteropPlugin
 import { InteropPluginSyncStateRepository } from './repositories/InteropPluginSyncStateRepository'
 import { InteropRecentPricesRepository } from './repositories/InteropRecentPricesRepository'
 import { InteropTransferRepository } from './repositories/InteropTransferRepository'
+import { KeyValueRepository } from './repositories/KeyValueRepository'
 import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
 import { L2CostRepository } from './repositories/L2CostRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
@@ -112,6 +113,7 @@ export function createDatabase(
     realTimeLiveness: new RealTimeLivenessRepository(db),
     syncMetadata: new SyncMetadataRepository(db),
     notifications: new NotificationsRepository(db),
+    keyValue: new KeyValueRepository(db),
     // #endregion
 
     // #region Privacy

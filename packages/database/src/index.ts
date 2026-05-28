@@ -71,6 +71,7 @@ export type {
   InteropTransferTypeStats,
   InteropTransferTypeStatsMap,
 } from './repositories/InteropTransferTypeStats'
+export type { KeyValueRecord } from './repositories/KeyValueRepository'
 export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
