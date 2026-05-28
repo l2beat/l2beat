@@ -157,6 +157,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     .map((project, i) => ({
       name: project.interopConfig.name ?? project.name,
       slug: project.slug,
+      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       volume: { value: 20_000_000 - i * 3_000_000, share: 20 - i * 3 },
       transfers: { value: 5000 - i * 800, share: 20 - i * 3 },
     }))
@@ -250,7 +251,9 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
   const firstMockToken = mockTokens[0]
   const topToken: InteropTopTokenData | undefined = firstMockToken
     ? {
+        id: firstMockToken.id,
         symbol: firstMockToken.symbol,
+        issuer: firstMockToken.issuer,
         iconUrl: firstMockToken.iconUrl,
         volume: firstMockToken.volume ?? 0,
         transferCount: firstMockToken.transferCount,

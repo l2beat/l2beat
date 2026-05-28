@@ -11,8 +11,9 @@ import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
 import { useProtocolColorMap } from './useProtocolColorMap'
 import { getProtocolsDataWithOthers } from './utils/getProtocolsDataWithOthers'
 
-export type DisplayProtocol = Omit<InteropProtocolData, 'slug'> & {
+export type DisplayProtocol = Omit<InteropProtocolData, 'slug' | 'iconUrl'> & {
   slug?: string
+  iconUrl?: string
   color: string
   othersCount?: number
 }

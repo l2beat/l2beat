@@ -311,11 +311,7 @@ function InteropMetric({
       <p className="mb-2 font-medium text-label-value-12 text-secondary">
         {title}
       </p>
-      <InteropTopItems
-        topItems={items}
-        setIsOpen={() => undefined}
-        hideDialog
-      />
+      <InteropTopItems topItems={items} hideDialog />
     </div>
   )
 }

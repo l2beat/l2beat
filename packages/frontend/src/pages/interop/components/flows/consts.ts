@@ -4,6 +4,8 @@ export const MIN_SELECTED_PROTOCOLS = 1
 
 // Base particle value — each particle starts at 50 USD of volume per second
 export const DOLLARS_PER_PARTICLE = 50
+// Lower base for embedded volume graphs (token page, project sections)
+export const EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE = 25
 // Step size when increasing particle value to satisfy constraints
 export const DOLLARS_PER_PARTICLE_STEP = 25
 // Travel time (seconds) for the longest path — shorter paths take proportionally less

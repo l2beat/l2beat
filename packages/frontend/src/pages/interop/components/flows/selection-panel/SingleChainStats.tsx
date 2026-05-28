@@ -7,17 +7,20 @@ import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { TopItemsList } from './TopItemsList'
 
 export function SingleChainStats({
   chainId,
   selectedChains,
+  tokenId,
   linkTopProtocols,
   hideTopProtocols,
 }: {
   chainId: string
   selectedChains: string[]
+  tokenId?: string
   linkTopProtocols?: boolean
   hideTopProtocols?: boolean
 }) {
@@ -25,6 +28,7 @@ export function SingleChainStats({
   const { data, isLoading } = api.interop.flows.useQuery({
     chains: selectedChains,
     protocolIds: selectedProtocols,
+    tokenId,
   })
 
   if (!data || isLoading) {
@@ -43,6 +47,10 @@ export function SingleChainStats({
           items={chainData.topTokens.map((t) => ({
             ...t,
             title: t.symbol,
+            href: getInteropTokenUrl(t, {
+              from: selectedChains,
+              to: selectedChains,
+            }),
           }))}
         />
       )}
