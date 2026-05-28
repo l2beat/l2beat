@@ -16,6 +16,10 @@ import type {
   InteropTransferAnalyzer,
   InteropTransferAnalyzerRecord,
 } from '../InteropTransferAnalyzer'
+import type {
+  InteropNotifier,
+  InteropSkippedTransferValuationNotification,
+} from '../notifications/InteropNotifier'
 import { DeployedTokenId } from './DeployedTokenId'
 
 export type TokenInfos = Map<
@@ -32,10 +36,34 @@ export type TokenInfos = Map<
 interface InteropFinancialsLoopOptions {
   analyzer?: InteropTransferAnalyzer
   intervalMs?: number
+  notifier?: InteropNotifier
+  maxTokenPriceUsd?: number
+  maxTransferValueUsd?: number
+}
+
+interface GeneratedTokenUpdate {
+  abstractTokenId: string
+  symbol: string
+  price?: number
+  amount: number
+  valueUsd?: number
+  skippedValuation?: Omit<
+    InteropSkippedTransferValuationNotification,
+    | 'plugin'
+    | 'type'
+    | 'transferId'
+    | 'srcChain'
+    | 'dstChain'
+    | 'side'
+    | 'symbol'
+  >
 }
 
 export class InteropFinancialsLoop extends TimeLoop {
   private readonly analyzer: InteropTransferAnalyzer | undefined
+  private readonly notifier: InteropNotifier | undefined
+  private readonly maxTokenPriceUsd: number
+  private readonly maxTransferValueUsd: number
 
   constructor(
     private chains: { id: string; type: 'evm' }[],
@@ -47,6 +75,10 @@ export class InteropFinancialsLoop extends TimeLoop {
     super({ intervalMs: options.intervalMs ?? 10_000 })
     this.logger = logger.for(this)
     this.analyzer = options.analyzer
+    this.notifier = options.notifier
+    this.maxTokenPriceUsd = options.maxTokenPriceUsd ?? Number.POSITIVE_INFINITY
+    this.maxTransferValueUsd =
+      options.maxTransferValueUsd ?? Number.POSITIVE_INFINITY
   }
 
   async run() {
@@ -97,29 +129,39 @@ export class InteropFinancialsLoop extends TimeLoop {
       UnixTime.DAY,
     )
 
+    const skippedValuations: InteropSkippedTransferValuationNotification[] = []
+
     const updates = unprocessed.map((t) => {
       const update: InteropTransferUpdate = getEmptyFinancialUpdate()
       if (t.srcId) {
-        this.applyTokenUpdate(
+        const skipped = this.applyTokenUpdate(
           tokenInfos,
           prices,
           t.srcId,
           t.transfer.srcRawAmount,
           t.transfer.srcTime ?? t.transfer.timestamp,
+          t.transfer,
           'src',
           update,
         )
+        if (skipped) {
+          skippedValuations.push(skipped)
+        }
       }
       if (t.dstId) {
-        this.applyTokenUpdate(
+        const skipped = this.applyTokenUpdate(
           tokenInfos,
           prices,
           t.dstId,
           t.transfer.dstRawAmount,
           t.transfer.dstTime ?? t.transfer.timestamp,
+          t.transfer,
           'dst',
           update,
         )
+        if (skipped) {
+          skippedValuations.push(skipped)
+        }
       }
       return {
         id: t.transfer.transferId,
@@ -128,11 +170,18 @@ export class InteropFinancialsLoop extends TimeLoop {
       }
     })
 
+    const processedAt = UnixTime.now()
+
     await this.db.transaction(async () => {
       for (const { id, update } of updates) {
         await this.db.interopTransfer.updateFinancials(id, update)
       }
     })
+
+    this.notifier?.notifySkippedTransferValuations(
+      processedAt,
+      skippedValuations,
+    )
 
     this.logger.info('Transfers processed', {
       transfers: updates.length,
@@ -143,7 +192,7 @@ export class InteropFinancialsLoop extends TimeLoop {
 
     const processedTransfers = updates.map((update) => update.transfer)
     if (this.analyzer) {
-      this.analyzer.handleProcessedTransfers(processedTransfers, UnixTime.now())
+      this.analyzer.handleProcessedTransfers(processedTransfers, processedAt)
     }
   }
 
@@ -153,9 +202,13 @@ export class InteropFinancialsLoop extends TimeLoop {
     id: DeployedTokenId,
     rawAmount: bigint | undefined,
     priceTimestamp: UnixTime,
+    transfer: Pick<
+      InteropTransferRecord,
+      'plugin' | 'type' | 'transferId' | 'srcChain' | 'dstChain'
+    >,
     prefix: 'src' | 'dst',
     update: InteropTransferUpdate,
-  ) {
+  ): InteropSkippedTransferValuationNotification | undefined {
     const tokenUpdate = this.generateTokenUpdate(
       tokenInfos,
       prices,
@@ -163,7 +216,7 @@ export class InteropFinancialsLoop extends TimeLoop {
       rawAmount,
       priceTimestamp,
     )
-    if (!tokenUpdate) return
+    if (!tokenUpdate) return undefined
 
     const fieldMapping = {
       abstractTokenId: `${prefix}AbstractTokenId`,
@@ -173,11 +226,28 @@ export class InteropFinancialsLoop extends TimeLoop {
       valueUsd: `${prefix}ValueUsd`,
     } as const
 
-    Object.entries(tokenUpdate).forEach(([key, value]) => {
+    const { skippedValuation, ...financialFields } = tokenUpdate
+
+    Object.entries(financialFields).forEach(([key, value]) => {
       const updateKey = fieldMapping[key as keyof typeof fieldMapping]
       // biome-ignore lint/suspicious/noExplicitAny: generic type
       ;(update as any)[updateKey] = value
     })
+
+    if (!skippedValuation) {
+      return undefined
+    }
+
+    return {
+      plugin: transfer.plugin,
+      type: transfer.type,
+      transferId: transfer.transferId,
+      srcChain: transfer.srcChain,
+      dstChain: transfer.dstChain,
+      side: prefix,
+      symbol: tokenUpdate.symbol,
+      ...skippedValuation,
+    }
   }
 
   private generateTokenUpdate(
@@ -186,7 +256,7 @@ export class InteropFinancialsLoop extends TimeLoop {
     id: DeployedTokenId,
     rawAmount: bigint | undefined,
     priceTimestamp: UnixTime,
-  ) {
+  ): GeneratedTokenUpdate | undefined {
     const tokenInfo = tokenInfos.get(id)
     if (!tokenInfo) return
 
@@ -215,12 +285,47 @@ export class InteropFinancialsLoop extends TimeLoop {
       return
     }
 
+    if (price > this.maxTokenPriceUsd) {
+      return {
+        abstractTokenId: tokenInfo.abstractId,
+        symbol: tokenInfo.symbol,
+        price,
+        amount,
+        skippedValuation: {
+          coingeckoId: tokenInfo.coingeckoId,
+          priceUsd: price,
+          amount,
+          valueUsd: undefined,
+          reason: 'priceAboveThreshold',
+          thresholdUsd: this.maxTokenPriceUsd,
+        },
+      }
+    }
+
+    const valueUsd = price * amount
+    if (valueUsd > this.maxTransferValueUsd) {
+      return {
+        abstractTokenId: tokenInfo.abstractId,
+        symbol: tokenInfo.symbol,
+        price,
+        amount,
+        skippedValuation: {
+          coingeckoId: tokenInfo.coingeckoId,
+          priceUsd: price,
+          amount,
+          valueUsd,
+          reason: 'valueAboveThreshold',
+          thresholdUsd: this.maxTransferValueUsd,
+        },
+      }
+    }
+
     return {
       abstractTokenId: tokenInfo.abstractId,
       symbol: tokenInfo.symbol,
       price,
       amount,
-      valueUsd: price * amount,
+      valueUsd,
     }
   }
 }

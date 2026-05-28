@@ -181,7 +181,12 @@ export function createInteropModule({
     db,
     tokenDbClient,
     logger,
-    { analyzer: transferAnalyzer },
+    {
+      analyzer: transferAnalyzer,
+      notifier: notificationClient,
+      maxTokenPriceUsd: config.interop.financials.maxTokenPriceUsd,
+      maxTransferValueUsd: config.interop.financials.maxTransferValueUsd,
+    },
   )
 
   const relayApiClient = new RelayApiClient(new HttpClient())

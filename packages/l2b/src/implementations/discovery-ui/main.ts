@@ -221,31 +221,6 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
   })
 
-  app.get('/api/config/sync-status', (_, res) => {
-    templateService.reload()
-    const allProjects = configReader.readAllDiscoveredProjects()
-
-    const reasons = allProjects.flatMap((project) => {
-      const discovery = configReader.readDiscovery(project)
-      const config = configReader.readConfig(project)
-
-      const reasons = templateService.discoveryNeedsRefresh(discovery, config)
-
-      if (reasons.length === 0) {
-        return []
-      }
-
-      return {
-        project,
-        reasons,
-      }
-    })
-
-    res.json({
-      reasons,
-    })
-  })
-
   app.get('/api/config-files/:project', (req, res) => {
     const query = projectParamsSchema.safeParse(req.params)
 

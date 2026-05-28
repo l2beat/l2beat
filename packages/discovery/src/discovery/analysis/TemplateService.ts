@@ -69,6 +69,11 @@ export interface Shape {
   hashes: Hash256[]
 }
 
+interface Template {
+  criteria?: ShapeCriteria
+  shapePath: string | undefined
+}
+
 export class TemplateService {
   private loadedTemplates: Record<string, unknown> = {}
   private shapeHashes: Record<string, Shape> | undefined
@@ -88,40 +93,41 @@ export class TemplateService {
     return existsSync(join(resolvedRootPath, template, 'template.jsonc'))
   }
 
-  /**
-   * @returns A record where the keys are template IDs (relative paths from the templates
-   *          root directory) and the values are arrays of paths to the Solidity shape
-   *          files for each template.
-   */
-  listAllTemplates() {
-    const result: Record<
-      string,
-      { criteria?: ShapeCriteria; shapePath: string | undefined }
-    > = {}
+  private loadTemplateFromPath(path: string): Template | undefined {
+    if (!existsSync(join(path, 'template.jsonc'))) return undefined
+    const shapePath = join(path, 'shapes.json')
+
+    const hasShape = existsSync(shapePath)
+    const criteriaPath = join(path, 'criteria.json')
+    const criteria = existsSync(criteriaPath)
+      ? JSON.parse(readFileSync(criteriaPath, 'utf8'))
+      : undefined
+
+    return { criteria, shapePath: hasShape ? shapePath : undefined }
+  }
+
+  listAllTemplates(): Record<string, Template> {
+    const result: Record<string, Template> = {}
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
     if (!fileExistsCaseSensitive(resolvedRootPath)) {
       return {}
     }
     const templatePaths = listAllPaths(resolvedRootPath)
     for (const path of templatePaths) {
-      if (!existsSync(join(path, 'template.jsonc'))) {
-        continue
-      }
-      const shapePath = join(path, 'shapes.json')
-
-      const hasShape = existsSync(shapePath)
-      const criteriaPath = join(path, 'criteria.json')
-      const criteria = existsSync(criteriaPath)
-        ? JSON.parse(readFileSync(criteriaPath, 'utf8'))
-        : undefined
-
-      const templateId = path.substring(resolvedRootPath.length + 1)
-      result[templateId] = {
-        criteria,
-        shapePath: hasShape ? shapePath : undefined,
+      const template = this.loadTemplateFromPath(path)
+      if (template !== undefined) {
+        const templateId = path.substring(resolvedRootPath.length + 1)
+        result[templateId] = template
       }
     }
     return result
+  }
+
+  getTemplateById(templateId: string): Template | undefined {
+    const templatePath = path.join(this.rootPath, TEMPLATES_PATH, templateId)
+    if (!fileExistsCaseSensitive(templatePath)) return undefined
+
+    return this.loadTemplateFromPath(templatePath)
   }
 
   findMatchingTemplates(
@@ -482,8 +488,7 @@ export class TemplateService {
   }
 
   findShapeByTemplateAndHash(templateId: string, hash: Hash256) {
-    const allTemplates = this.listAllTemplates()
-    const entry = allTemplates[templateId]
+    const entry = this.getTemplateById(templateId)
     if (!entry || !entry.shapePath) {
       return undefined
     }

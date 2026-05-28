@@ -1,9 +1,7 @@
-import { getInteropTransferValue, type ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { INTEROP_PAIR_SEPARATOR } from '../consts'
-import type {
-  AggregatedInteropTransferWithTokens,
-  InteropSelectionInput,
-} from '../types'
+import type { InteropSelectionInput, InteropTransferWithTokens } from '../types'
+import { getInteropTransferRecordValue } from './getInteropTransferRecordValue'
 
 export type InteropFlowData = {
   srcChain: string
@@ -13,7 +11,7 @@ export type InteropFlowData = {
 }
 
 export function getFlows(
-  records: AggregatedInteropTransferWithTokens[],
+  records: InteropTransferWithTokens[],
   selection: InteropSelectionInput,
   subgroupProjects?: Set<ProjectId>,
 ): InteropFlowData[] {
@@ -27,7 +25,7 @@ export function getFlows(
     const key = `${record.srcChain}${INTEROP_PAIR_SEPARATOR}${record.dstChain}`
     volumeMap.set(
       key,
-      (volumeMap.get(key) ?? 0) + (getInteropTransferValue(record) ?? 0),
+      (volumeMap.get(key) ?? 0) + (getInteropTransferRecordValue(record) ?? 0),
     )
     transferMap.set(key, (transferMap.get(key) ?? 0) + record.transferCount)
   }

@@ -20,7 +20,7 @@ import { useTable } from '~/hooks/useTable'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'
-import { columns, type TransferRow } from './columns'
+import { getTransferColumns, type TransferRow } from './columns'
 
 const SCROLL_LOAD_THRESHOLD_PX = 120
 
@@ -140,7 +140,7 @@ export function TransferDetailsDialog({
 
   const table = useTable<TransferRow>({
     data: transferRows,
-    columns,
+    columns: getTransferColumns(selectedChains),
     getCoreRowModel: getCoreRowModel(),
     manualFiltering: true,
   })

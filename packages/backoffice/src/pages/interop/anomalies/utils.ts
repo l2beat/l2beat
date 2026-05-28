@@ -1,5 +1,15 @@
-export function buildAnomalyDetailsPath(id: string) {
-  return `/interop/insights/anomalies/aggregate/${encodeURIComponent(id)}`
+export function buildAnomalyDetailsPath(group: {
+  id: string
+  bridgeType: string
+  srcChain: string
+  dstChain: string
+}) {
+  const params = new URLSearchParams({
+    bridgeType: group.bridgeType,
+    srcChain: group.srcChain,
+    dstChain: group.dstChain,
+  })
+  return `/interop/insights/anomalies/aggregate/${encodeURIComponent(group.id)}?${params.toString()}`
 }
 
 export function parseOptionalSearchParam(value: string | null) {

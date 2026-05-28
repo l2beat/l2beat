@@ -9,6 +9,7 @@ import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMint
 import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
 import { getInteropProtocolPageData } from './protocol/getInteropProtocolPageData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
+import { getInteropTokenPageData } from './token/getInteropTokenPageData'
 import { getInteropTokenFrameworksData } from './token-frameworks/getInteropTokenFrameworksData'
 
 export type InteropQuery = v.infer<typeof InteropQuery>
@@ -97,6 +98,23 @@ export function createInteropRouter(
     }),
     async (req, res) => {
       const data = await getInteropProtocolPageData(req, manifest, cache)
+      if (!data) {
+        res.status(404).send('Not found')
+        return
+      }
+      const html = await render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
+
+  router.get(
+    '/interop/tokens/:slug',
+    validateRoute({
+      params: v.object({ slug: v.string() }),
+      query: InteropQuery,
+    }),
+    async (req, res) => {
+      const data = await getInteropTokenPageData(req, manifest, cache)
       if (!data) {
         res.status(404).send('Not found')
         return

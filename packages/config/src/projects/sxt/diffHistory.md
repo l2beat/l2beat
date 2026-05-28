@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xabd05a7160bb60773c933536b9fd22c4108ffb00
+
+# Diff at Thu, 28 May 2026 10:03:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1771584033
+- current timestamp: 1779962529
+
+## Description
+
+caldera msig member removed, threshold decreased to 3.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xae4296c7efe72593d9aee9e2227cc2d3ca5e7674
 
 # Diff at Fri, 08 May 2026 07:52:28 GMT:

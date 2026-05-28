@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "canActIndependently": false,
   "ignoreMethods": [
     "getNops",
     "getAllowList",
@@ -63,6 +64,44 @@
         "args": [0],
         "ignoreRelative": true
       }
+    },
+    "getStaticConfig": {
+      "description": "Immutable lane config: Ethereum source selector, Arbitrum destination selector, previous OnRamp, RMN proxy, LINK token, and token admin registry."
+    },
+    "getDynamicConfig": {
+      "description": "Mutable outbound config: Router, PriceRegistry, message size and gas limits, token limits, destination gas overheads, fee defaults, and ordered-execution policy."
+    },
+    "getTokenLimitAdmin": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the aggregate outbound value rate limit for Ethereum-to-Arbitrum sends."
+        },
+        {
+          "type": "interact",
+          "description": "replace the token limit admin for this OnRamp."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change Router, PriceRegistry, message size, token count, gas limit, and fee parameters for outbound messages."
+        },
+        {
+          "type": "interact",
+          "description": "add, remove, or reprice fee tokens accepted by this OnRamp."
+        },
+        {
+          "type": "interact",
+          "description": "change token transfer fee configuration and node operator fee weights."
+        },
+        {
+          "type": "interact",
+          "description": "withdraw accumulated non-LINK fee tokens."
+        }
+      ]
     }
   }
 }
