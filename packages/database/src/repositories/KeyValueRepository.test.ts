@@ -11,7 +11,9 @@ describeDatabase(KeyValueRepository.name, (db) => {
 
   describe(KeyValueRepository.prototype.get.name, () => {
     it('returns undefined when value is missing', async () => {
-      const result = await repository.get('missing-key')
+      const result = await repository.get(
+        'interop-aggregate-timestamp-override',
+      )
 
       expect(result).toEqual(undefined)
     })
@@ -20,16 +22,18 @@ describeDatabase(KeyValueRepository.name, (db) => {
   describe(KeyValueRepository.prototype.set.name, () => {
     it('inserts a value', async () => {
       await repository.set({
-        key: 'feature-flag',
-        value: 'enabled',
+        key: 'interop-aggregate-timestamp-override',
+        value: 1234,
         updatedBy: 'test',
       })
 
-      const result = await repository.get('feature-flag')
+      const result = await repository.get(
+        'interop-aggregate-timestamp-override',
+      )
 
       expect(result).toEqual({
-        key: 'feature-flag',
-        value: 'enabled',
+        key: 'interop-aggregate-timestamp-override',
+        value: 1234,
         updatedAt: expect.a(Number),
         updatedBy: 'test',
       })
@@ -37,21 +41,23 @@ describeDatabase(KeyValueRepository.name, (db) => {
 
     it('updates an existing value', async () => {
       await repository.set({
-        key: 'feature-flag',
-        value: 'enabled',
+        key: 'interop-aggregate-timestamp-override',
+        value: 1234,
         updatedBy: 'test',
       })
       await repository.set({
-        key: 'feature-flag',
-        value: 'disabled',
+        key: 'interop-aggregate-timestamp-override',
+        value: 5678,
         updatedBy: 'test-2',
       })
 
-      const result = await repository.get('feature-flag')
+      const result = await repository.get(
+        'interop-aggregate-timestamp-override',
+      )
 
       expect(result).toEqual({
-        key: 'feature-flag',
-        value: 'disabled',
+        key: 'interop-aggregate-timestamp-override',
+        value: 5678,
         updatedAt: expect.a(Number),
         updatedBy: 'test-2',
       })

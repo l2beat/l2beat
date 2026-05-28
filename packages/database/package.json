@@ -22,6 +22,7 @@
     "@l2beat/discovery": "workspace:*",
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
+    "@l2beat/validate": "workspace:*",
     "kysely": "^0.27.3",
     "lodash": "^4.17.21",
     "pg": "^8.8.0"

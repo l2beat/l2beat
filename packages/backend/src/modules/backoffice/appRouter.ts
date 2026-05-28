@@ -6,6 +6,7 @@ import type {
 import { router as createRouter } from '../../trpc/init'
 import type { DataAvailabilityTrpcRouter } from '../data-availability/trpc/router'
 import type { InteropTrpcRouter } from '../interop/engine/dashboard/trpc/router'
+import type { KeyValueTrpcRouter } from '../key-value/trpc/router'
 import type { TrackedTxsTrpcRouter } from '../tracked-txs/trpc/router'
 import type { TrpcContribution } from '../types'
 
@@ -15,6 +16,7 @@ import type { TrpcContribution } from '../types'
  * (type-only — no runtime import). Runtime wiring happens in Application.ts.
  */
 type BackendManifest = readonly [
+  TrpcContribution<'keyValue', KeyValueTrpcRouter>,
   TrpcContribution<'interop', InteropTrpcRouter>,
   TrpcContribution<'trackedTxs', TrackedTxsTrpcRouter>,
   TrpcContribution<'dataAvailability', DataAvailabilityTrpcRouter>,

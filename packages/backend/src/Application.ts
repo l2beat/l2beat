@@ -12,6 +12,7 @@ import { initDataAvailabilityModule } from './modules/data-availability/DataAvai
 import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createInteropModule } from './modules/interop/engine/InteropModule'
+import { createKeyValueModule } from './modules/key-value/KeyValueModule'
 import { createPrivacyModule } from './modules/privacy/PrivacyModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
@@ -53,8 +54,10 @@ export class Application {
     const interopModule = createInteropModule(deps)
     const trackedTxsModule = createTrackedTxsModule(deps)
     const dataAvailabilityModule = initDataAvailabilityModule(deps)
+    const keyValueModule = createKeyValueModule()
 
     const modulesWithTrpc = [
+      keyValueModule,
       interopModule,
       trackedTxsModule,
       dataAvailabilityModule,
@@ -84,6 +87,7 @@ export class Application {
       createDailyChecksModule(deps),
 
       interopModule,
+      keyValueModule,
       backofficeModule,
     ]
 
