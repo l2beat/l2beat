@@ -10,7 +10,7 @@ Generated with discovered.json: 0x43224b844070e418d75d6d3ed8247a54bbb3623d
 
 minimal diff upgrade to the OptiPortal that adds deposited transactions! https://flat.l2beat.com/diff/ink:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016/katana:0xFBF44D0341C03098A1D9C0336e3d5C34E8BFdf1A
 
-users can now force transactions that do not relate to bridging (they still cannot force ETH- or token deposits)
+users can now force transactions that do not relate to bridging (they still cannot force ETH- or token deposits). the force tx delay in op stack (or op-succinct) depends on the node config/programHash and both are unverified for katana. as soon as we have a source, we should look for `sequencerWindowSize` (OP stack standard is 3600). we will assume standard and show the delay as 12h but say that this is unverified.
 
 proposals are also still permissioned, meaning that inclusion is roughly as before, assuming sequencer and proposer/prover are the same entity.
 
