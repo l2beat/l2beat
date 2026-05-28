@@ -1,16 +1,33 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { searchEntries } from '~/components/search-bar/searchBarResults'
+import { getInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
+import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getLogger } from '../../../utils/logger'
-import type { SearchBarProjectEntry } from './types'
+import type { SearchBarProjectEntry, SearchBarTokenEntry } from './types'
 import { getSearchBarProjectEntries } from './utils/getSearchBarProjectEntries'
+import { getSearchBarTokenEntries } from './utils/getSearchBarTokenEntries'
 
-type SearchBarProjectSearchEntry = SearchBarProjectEntry & {
+type SearchBarSearchEntry = (SearchBarProjectEntry | SearchBarTokenEntry) & {
   searchMatchKind: 'direct' | 'fuzzy'
   searchScore: number
 }
 
-function formatSearchResult(entry: SearchBarProjectSearchEntry) {
+function formatSearchResult(entry: SearchBarSearchEntry) {
+  if (entry.type === 'token') {
+    return {
+      category: entry.category,
+      name: entry.name,
+      href: entry.href,
+      type: entry.type,
+      id: entry.id,
+      iconUrl: entry.iconUrl,
+      issuer: entry.issuer,
+      searchMatchKind: entry.searchMatchKind,
+      searchScore: entry.searchScore,
+    }
+  }
+
   return {
     category: entry.category,
     name: entry.name,
@@ -66,14 +83,21 @@ export async function getSearchBarProjects(search: string) {
     return matched.map(formatSearchResult)
   }
 
-  const result = searchEntries(search, searchBarEntries, {
+  const activeInteropChainIds = getInteropChains()
+    .filter((chain) => !chain.isUpcoming)
+    .map((chain) => chain.id)
+  const tokens = await getInteropAbstractTokens(activeInteropChainIds)
+  const tokenEntries = getSearchBarTokenEntries(tokens)
+
+  const result = searchEntries(search, [...searchBarEntries, ...tokenEntries], {
     limit: 15,
-    scoreMultiplier: (entry) => (entry.category === 'zkCatalog' ? 0.9 : 1),
+    scoreMultiplier: (entry) =>
+      entry.category === 'zkCatalog' || entry.category === 'tokens' ? 0.9 : 1,
   }).map(formatSearchResult)
 
   logger.info('Search bar projects result', {
     search,
-    projectIds: result.map((r) => r.id),
+    resultIds: result.map((r) => r.id),
     type: 'name',
   })
   return result

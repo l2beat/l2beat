@@ -89,7 +89,11 @@ export function groupSearchResults<T extends SearchableSearchBarEntry>(
     grouped.set(entry.category, [entry])
   }
 
-  return [...grouped.entries()]
+  return [...grouped.entries()].sort(([left], [right]) => {
+    if (left === 'tokens') return 1
+    if (right === 'tokens') return -1
+    return 0
+  })
 }
 
 export function isDirectMatch(

@@ -1,13 +1,16 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getSearchBarProjects } from './getSearchBarProjects'
 
 describe(getSearchBarProjects.name, () => {
   const originalGetProjects = ps.getProjects.bind(ps)
+  const originalMock = env.MOCK
 
   afterEach(() => {
     ps.getProjects = originalGetProjects
+    env.MOCK = originalMock
   })
 
   it('keeps only direct project matches when they exist', async () => {
@@ -39,6 +42,28 @@ describe(getSearchBarProjects.name, () => {
 
     expect(result.map((entry) => entry.name)).toEqual(['Jetstream'])
     expect(result[0]?.searchMatchKind).toEqual('fuzzy')
+  })
+
+  it('allows searching interop tokens by symbol', async () => {
+    env.MOCK = true
+    ps.getProjects = async () => [] as never
+
+    const result = await getSearchBarProjects('usdc')
+
+    expect(result.map(({ searchScore, ...entry }) => entry)).toEqual([
+      {
+        category: 'tokens',
+        name: 'USDC',
+        href: '/interop/tokens/circle-usdc',
+        type: 'token',
+        id: 'usdc01',
+        iconUrl:
+          'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
+        issuer: 'circle',
+        searchMatchKind: 'direct',
+      },
+    ])
+    expect(result[0]?.searchScore).toBeA(Number)
   })
 })
 

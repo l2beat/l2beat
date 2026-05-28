@@ -189,6 +189,15 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                           height={20}
                         />
                       )}
+                      {item.type === 'token' && (
+                        <img
+                          src={item.iconUrl}
+                          alt={`${item.name} icon`}
+                          className="rounded-full"
+                          width={20}
+                          height={20}
+                        />
+                      )}
                       <div className="flex flex-col">
                         <div className="font-medium text-sm leading-none tracking-[-1%]">
                           {item.name}
@@ -196,6 +205,11 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                         {item.type === 'project' && item.scalingCategory && (
                           <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
                             {item.scalingCategory}
+                          </div>
+                        )}
+                        {item.type === 'token' && item.issuer && (
+                          <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
+                            {item.issuer}
                           </div>
                         )}
                       </div>
@@ -254,11 +268,17 @@ function entryToValue(entry: AnySearchBarEntry) {
     return `${entry.category}-${entry.name}-${entry.type}`
   }
 
+  if (entry.type === 'token') {
+    return `${entry.category}-${entry.id}-${entry.type}`
+  }
+
   return `${entry.category}-${entry.id}-${entry.type}-${entry.kind}`
 }
 
 function entryToLabel(entry: AnySearchBarEntry) {
   if (entry.type === 'page') return 'Page'
+  if (entry.type === 'token') return 'Token'
+
   switch (entry.kind) {
     case 'layer2':
       return 'Layer 2'
