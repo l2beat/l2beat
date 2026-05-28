@@ -3,5 +3,11 @@
     "hash": "0x8ee929b67fce68f8daf1dac67514e5e05678a9f554e8d6e676fa28fe81874844",
     "address": "oeth:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537",
     "blockNumber": 135717996
+  },
+  "OperatorFeeVault_katana": {
+    "hash": "0xee5dca77d41cb3095dbb6dbb7f542e32ec79f4ebfb289ca0622873a493080ffb",
+    "address": "katana:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537",
+    "chain": "katana",
+    "blockNumber": 33142393
   }
 }

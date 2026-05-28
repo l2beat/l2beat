@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["INIT_BYTECODE_TRANSPARENT_PROXY", "claimedBitMap"],
-  "ignoreInWatchMode": ["depositCount", "lastUpdatedDepositCount"]
+  "ignoreInWatchMode": ["depositCount", "lastUpdatedDepositCount"],
+  "category": "core",
+  "description": "Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against."
 }
