@@ -1,9 +1,13 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "katana",
-  "import": ["../globalConfig.jsonc"],
+  "import": [
+    "../globalConfig.jsonc"
+  ],
   "maxAddresses": 200,
-  "sharedModules": ["shared-polygon-cdk"],
+  "sharedModules": [
+    "shared-polygon-cdk"
+  ],
   "initialAddresses": [
     "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E", // l1crossdomainmessenger
     "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666", // aggchainFEP
@@ -93,7 +97,56 @@
       "category": "spam"
     },
     "katana:0x420000000000000000000000000000000000001A": {
-      "description": "Collects the L1 portion of the L2 transaction fees."
+      "description": "Collects the L1 portion of the L2 transaction fees.",
+      "fields": {
+        "recipient": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "receive fees."
+            }
+          ]
+        }
+      }
+    },
+    "katana:0x4200000000000000000000000000000000000019": {
+      "description": "Collects EIP-1559 base fees",
+      "fields": {
+        "recipient": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "receive fees."
+            }
+          ]
+        }
+      }
+    },
+    "katana:0x4200000000000000000000000000000000000011": {
+      "description": "Collects the sequencer fees.",
+      "fields": {
+        "recipient": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "receive fees."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "katana:0x420000000000000000000000000000000000001b": {
+    "description": "Collects the sequencer fees.",
+    "fields": {
+      "recipient": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "receive fees."
+          }
+        ]
+      }
     }
   }
 }

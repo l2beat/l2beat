@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x0a79a8204e06f1551269e2cab36cc438df7b97ce
+Generated with discovered.json: 0xafe92d96a69d623a73a300b75bd88e715d7e76cf
 
-# Diff at Thu, 28 May 2026 10:42:35 GMT:
+# Diff at Thu, 28 May 2026 10:50:19 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1778675724
@@ -158,7 +158,7 @@ discovery. Values are for block 1778675724 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract SequencerFeeVault (katana:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault]
-    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+    +++ description: Collects the sequencer fees.
 ```
 
 ```diff
@@ -206,7 +206,7 @@ discovery. Values are for block 1778675724 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract BaseFeeVault (katana:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault]
-    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+    +++ description: Collects EIP-1559 base fees
 ```
 
 ```diff

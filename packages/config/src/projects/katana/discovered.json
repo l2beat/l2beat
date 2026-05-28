@@ -1,7 +1,7 @@
 {
   "name": "katana",
   "timestamp": 1779956198,
-  "configHash": "0x1081ea3eea7e341f577c03a68341ac0b77358b15e4e92c8a19053053e9a01b36",
+  "configHash": "0x51e9a1d124627ec162565408622ec2758fae1cd7affaa535ade5f0e9d33c1ca1",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -3247,7 +3247,7 @@
         "0x93752bf6627e91f3f4f031a686b0a57c754db8b6b8b88401d16e26724cb44f08"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.",
+      "description": "Collects the sequencer fees.",
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
       "sinceBlock": 0,
@@ -3580,15 +3580,7 @@
         "0xe1e57baf3de85a14ad342b23be3bc829de637a5ac1336b089f49fcab12d6226a"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "katana:0x420000000000000000000000000000000000001b",
-          "description": "receive fees.",
-          "role": ".recipient"
-        }
-      ],
+      "description": "Collects EIP-1559 base fees",
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
       "sinceBlock": 0,
@@ -6670,18 +6662,18 @@
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
-    "opstack/Layer2/BaseFeeVault": "0xd8a7cb83cdae1502e9676ed95278280ff23886719e692a795cb501daab9216bc",
+    "opstack/Layer2/BaseFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
-    "opstack/Layer2/L1FeeVault": "0xd8a7cb83cdae1502e9676ed95278280ff23886719e692a795cb501daab9216bc",
+    "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/L2CrossDomainMessenger": "0xe22f4bc25e3233f9cbc95891feb31bb13e525003e5dac36ec019619b44a06b89",
     "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060",
-    "opstack/Layer2/OperatorFeeVault": "0xfd1de1977ec0947571527a84733673f9f2b44c133fb8708c4f3de26e9a3bb829",
+    "opstack/Layer2/OperatorFeeVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/SequencerFeeVault": "0xd8a7cb83cdae1502e9676ed95278280ff23886719e692a795cb501daab9216bc",
+    "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
@@ -6692,5 +6684,5 @@
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
   "usedBlockNumbers": { "ethereum": 25192587, "katana": 33213387 },
-  "permissionsConfigHash": "0xddefbe9ba94a2b1fa77f6c7ceb28ec32c0bc102682f2c0d07e954de183016559"
+  "permissionsConfigHash": "0xe0fafd5be4f300dd8093df412cda0cef65d1b3902697967dcedccb3c2d089f9d"
 }
