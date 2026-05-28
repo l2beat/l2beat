@@ -4,7 +4,7 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { KnownAppsTable } from './table/KnownAppsTable'
 import type { KnownAppsRow } from './types'
 
@@ -22,6 +22,7 @@ function sortKnownAppsRows(rows: KnownAppsRow[]) {
 }
 
 export function KnownAppsPage() {
+  const api = useBackendApi()
   const { data, error, isError, isLoading, isFetching, refetch } =
     api.interop.knownApps.list.useQuery()
 

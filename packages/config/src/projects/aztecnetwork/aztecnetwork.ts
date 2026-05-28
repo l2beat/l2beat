@@ -371,6 +371,7 @@ export const aztecnetwork: ScalingProject = {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN, // UltraHonk and CHONK (Client-side Highly Optimized ploNK)
       executionDelay: 0, // a proposed checkpoint can be immediately proven
+      permissioned: false,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: exitWindowObject,
@@ -598,7 +599,8 @@ The SlashVeto Council is a ${slashVetoStats} Multisig that can veto specific pro
     risks: [], // 30d delay for the canonical rollup pointer and config but main contracts are immutable
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
-  upgradesAndGovernance: `
+  upgradesAndGovernance: {
+    content: `
 # Standard Path (Signaling)
 Because sequencers stake AZTEC tokens to secure the L2 network, they are also the primary governors of the system. Any governance proposal must be encoded and deployed as a smart contract payload on Ethereum. While core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a ${governanceExecutionDelayString} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system. These permissions can only be accessed through the process described below.
 
@@ -633,6 +635,7 @@ There is a protective **Vetoer** role held by the SlashVeto Council. The Council
 ### Economics & Treasury
 *   **Coin Issuer:** The \`CoinIssuer\` contract is owned by Governance and is authorized to mint new AZTEC tokens up to a cap of ${coinIssuerNominalAnnualPercentageCapString}.
 *   **Protocol Treasury:** Funds owned by the DAO sit in the \`ProtocolTreasury\`. The Treasury has a hardcoded timestamp (approx. ${protocolTreasuryGatedUntilString}). Before this date, the DAO cannot spend Treasury funds. After this date, Treasury funds and token ownership can be moved with a Governance Proposal.`,
+  },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
     {

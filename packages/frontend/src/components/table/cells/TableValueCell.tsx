@@ -21,9 +21,15 @@ interface Props {
   value: TableReadyValue | undefined
   href?: string
   emptyMode?: 'em-dash' | 'no-info' | 'n/a' | 'no-data'
+  secondLineClassName?: string
 }
 
-export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
+export function TableValueCell({
+  value,
+  href,
+  emptyMode = 'no-info',
+  secondLineClassName,
+}: Props) {
   if (!value) {
     if (emptyMode === 'em-dash') {
       return (
@@ -65,7 +71,9 @@ export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
           )}
         </TwoRowCell.First>
         {value.secondLine && (
-          <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          <TwoRowCell.Second className={secondLineClassName}>
+            {value.secondLine}
+          </TwoRowCell.Second>
         )}
       </TwoRowCell>
     </TableLink>

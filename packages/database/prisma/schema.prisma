@@ -410,6 +410,8 @@ model InteropMessage {
 }
 
 model InteropTransfer {
+  serialId BigInt @default(autoincrement()) @db.BigInt
+
   plugin     String   @db.VarChar(64)
   transferId String   @db.VarChar(40)
   type       String   @db.VarChar(64)
@@ -451,6 +453,7 @@ model InteropTransfer {
   isProcessed Boolean
 
   @@id([transferId])
+  @@unique([serialId])
   @@index([type])
   @@index([isProcessed])
   @@index([isProcessed, srcValueUsd, dstValueUsd])
@@ -493,14 +496,15 @@ model AbstractToken {
 }
 
 model DeployedToken {
-  chain               String   @db.VarChar(32)
-  address             String   @db.VarChar(255)
-  abstractTokenId     String?  @db.Char(6)
-  symbol              String   @db.VarChar(255)
-  decimals            Int
-  deploymentTimestamp DateTime @db.Timestamp(6)
-  comment             String?  @db.Text
-  metadata            Json?
+  chain                        String   @db.VarChar(32)
+  address                      String   @db.VarChar(255)
+  abstractTokenId              String?  @db.Char(6)
+  symbol                       String   @db.VarChar(255)
+  decimals                     Int
+  deploymentTimestamp          DateTime @db.Timestamp(6)
+  comment                      String?  @db.Text
+  metadata                     Json?
+  abstractTokenAssignmentProof Json?
 
   chainRelation   Chain?            @relation(fields: [chain], references: [name], onDelete: Restrict)
   abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
@@ -509,6 +513,39 @@ model DeployedToken {
 
   @@id([chain, address])
   @@index([abstractTokenId])
+}
+
+model TokenIngestionQueue {
+  chain     String   @db.VarChar(32)
+  address   String   @db.VarChar(255)
+  state     String   @default("pending") @db.VarChar(32)
+  message   String?  @db.Text
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  @@id([chain, address])
+  @@index([state, updatedAt])
+}
+
+model TokenDbSettings {
+  key       String   @db.VarChar(255)
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  @@id([key])
+}
+
+model TokenDbHistory {
+  id           BigInt   @id @default(autoincrement())
+  timestamp    DateTime @db.Timestamp(6)
+  source       String   @db.VarChar(32)
+  userEmail    String?  @db.VarChar(255)
+  commandType  String   @db.VarChar(64)
+  command      Json
+  ingestionLog String?  @db.Text
+
+  @@index([timestamp])
+  @@index([commandType, timestamp])
 }
 
 model TokenConnection {

@@ -32,13 +32,15 @@ export const STATE_FP_1R: ProjectScalingRiskView['stateValidation'] = {
 
 export function STATE_FP_INT(
   challengePeriodSeconds?: number,
-  executionDelaySeconds?: number,
+  executionDelaySeconds = 0,
+  executionDelayMode?: 'always' | 'if-challenged',
 ): ProjectScalingRiskView['stateValidation'] {
   return {
     value: 'Fraud proofs (INT)',
     description:
       'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
     executionDelay: executionDelaySeconds,
+    executionDelayMode,
     challengeDelay: challengePeriodSeconds,
     sentiment: 'good',
     orderHint: Number.POSITIVE_INFINITY,
@@ -83,6 +85,7 @@ export const STATE_ZKP_SN: ProjectScalingRiskView['stateValidation'] = {
     'SNARKs are succinct zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
+  permissioned: true,
 }
 
 export const STATE_ZKP_ST: ProjectScalingRiskView['stateValidation'] = {
@@ -91,6 +94,7 @@ export const STATE_ZKP_ST: ProjectScalingRiskView['stateValidation'] = {
     'STARKs are zero knowledge proofs that ensure state correctness.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
+  permissioned: true,
 }
 
 export const STATE_ZKP_ST_SN_WRAP: ProjectScalingRiskView['stateValidation'] = {
@@ -99,6 +103,7 @@ export const STATE_ZKP_ST_SN_WRAP: ProjectScalingRiskView['stateValidation'] = {
     'STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
+  permissioned: true,
 }
 
 export function STATE_ZKP_L3(
@@ -109,6 +114,7 @@ export function STATE_ZKP_L3(
     description: `Zero knowledge cryptography is used to ensure state correctness. Proofs are first verified on ${L2} and finally on Ethereum.`,
     sentiment: 'good',
     orderHint: Number.POSITIVE_INFINITY,
+    permissioned: true,
   }
 }
 
@@ -125,6 +131,7 @@ export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
   hasAtLeastFiveExternalChallengers?: boolean,
   challengeWindowSeconds?: number,
   executionDelaySeconds?: number,
+  executionDelayMode?: 'always' | 'if-challenged',
 ): ProjectScalingRiskView['stateValidation'] {
   const challengePeriod = challengeWindowSeconds
     ? ` There is a ${formatSeconds(challengeWindowSeconds)} challenge period.`
@@ -161,10 +168,26 @@ export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
     value: 'Fraud proofs (INT)',
     description: descriptionBase + challengePeriod,
     executionDelay: executionDelaySeconds,
+    executionDelayMode,
     challengeDelay: challengeWindowSeconds,
+    permissioned: true,
+    defenderAdvantage: 'not-applicable',
     sentiment: sentiment,
     orderHint: nOfChallengers,
   }
+}
+
+export function computeBoldDefenderAdvantage(
+  baseStake: number | string | bigint,
+  stakeAmounts: (number | string | bigint)[],
+): { multiplier: number; shape: 'linear' } {
+  const levels = [BigInt(baseStake), ...stakeAmounts.slice(1).map(BigInt)]
+  let worstRatio = 0
+  for (let i = 1; i < levels.length; i++) {
+    const ratio = Number(levels[i]) / Number(levels[i - 1])
+    if (ratio > worstRatio) worstRatio = ratio
+  }
+  return { multiplier: 1 / worstRatio, shape: 'linear' }
 }
 
 // Data availability

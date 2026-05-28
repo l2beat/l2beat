@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x0df91c3df1b4518f1b93f59d035ebf6e48e5ab67
+
+# Diff at Mon, 25 May 2026 14:35:01 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6898129972dbc5b1b4f1389afaf9cb3fb7fd3380 block: 1779399699
+- current timestamp: 1779719590
+
+## Description
+
+Picked up the new `ArbOS v51.1 wasmModuleRoot` label from the globalConfig type map. Config-only — chain's own wasmModuleRoot is unchanged.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779399699 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x9bf4d57f373ac88834ffab67d4cb93c06f560674
+
+# Diff at Thu, 21 May 2026 21:42:44 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@af480cdcac217110f9e99ef400ba0185c35a6c55 block: 1779129417
+- current timestamp: 1779399699
+
+## Description
+
+Arbitrum DAO Security Council member sync executed: 2 members added, 2 removed (fred-Arbitrum-2, StevenThornton-OpenZeppelin) on the L1 `SecurityCouncil` and Nova's `L2SecurityCouncilEmergency`. Same change tracked on the `arbitrum` daily.
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    +++ description: None
+      values.$members.0:
++        "arb-nova:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D"
+      values.$members.1:
++        "arb-nova:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce"
+      values.$members.3:
+-        "arb-nova:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.9:
+-        "arb-nova:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
+```diff
+    contract SecurityCouncil (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D"
+      values.$members.1:
++        "eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce"
+      values.$members.3:
+-        "eth:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.9:
+-        "eth:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
 Generated with discovered.json: 0xb41ca0c4308f1ee46a6cbb5b8488c72cb2d8c9da
 
 # Diff at Mon, 18 May 2026 18:38:02 GMT:

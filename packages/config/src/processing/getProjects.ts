@@ -138,7 +138,6 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       stateValidationImage: p.display.stateValidationImage,
       upgradesAndGovernance:
         p.type === 'layer2' ? p.upgradesAndGovernance : undefined,
-      upgradesAndGovernanceImage: p.display.upgradesAndGovernanceImage,
     },
     customDa: p.customDa,
     tvsInfo: {
@@ -210,7 +209,8 @@ function getProcessedRiskView(
   let secondLine: string | undefined
   if (challengeDelay !== undefined && executionDelay !== undefined) {
     secondLine = formatChallengeAndExecutionDelay(
-      challengeDelay + executionDelay,
+      challengeDelay,
+      executionDelay,
     )
   } else if (challengeDelay !== undefined) {
     secondLine = formatChallengePeriod(challengeDelay)
@@ -331,8 +331,8 @@ export function adjustDiscoveryInfo(
 }
 
 function getTvsConfig(project: { id: ProjectId }): TvsToken[] | undefined {
-  const fileName = `${project.id.replace('=', '').replace(';', '')}.json`
-  const filePath = join(__dirname, `../../src/tvs/json/${fileName}`)
+  const projectPath = project.id.replace('=', '').replace(';', '')
+  const filePath = join(__dirname, `../../src/projects/${projectPath}/tvs.json`)
 
   if (!existsSync(filePath)) {
     return undefined
