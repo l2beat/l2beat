@@ -257,7 +257,7 @@ export const base: ScalingProject = opStackL2({
         securityCouncilProperlySetUp: true,
         noRedTrustedSetups: null,
         programHashesReproducible: null,
-        proverSourcePublished: null,
+        proverSourcePublished: true,
         verifierContractsReproducible: null,
       },
       stage2: {
@@ -268,6 +268,7 @@ export const base: ScalingProject = opStackL2({
     },
     {
       rollupNodeLink: 'https://github.com/base-org/node',
+      proverSourceLink: 'https://github.com/succinctlabs/op-succinct',
     },
   ),
   milestones: [
