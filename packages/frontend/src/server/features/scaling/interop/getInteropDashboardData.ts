@@ -230,6 +230,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     name: project.interopConfig.name ?? project.name,
     shortName: project.interopConfig.shortName,
     description: project.interopConfig.description,
+    type: project.interopConfig.type,
     isAggregate: project.interopConfig.isAggregate,
     subgroup: undefined,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
@@ -245,6 +246,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     byBridgeType: undefined,
     averageValueInFlight: undefined,
     netMintedValue: undefined,
+    topRoute: undefined,
     snapshotTimestamp: undefined,
   }))
 

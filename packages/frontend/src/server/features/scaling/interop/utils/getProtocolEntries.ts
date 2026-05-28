@@ -3,6 +3,7 @@ import type { Project } from '@l2beat/config'
 import type { KnownInteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
+import { INTEROP_PAIR_SEPARATOR } from '../consts'
 import type {
   ByBridgeTypeData,
   InteropSelectionInput,
@@ -51,6 +52,7 @@ export function getProtocolEntries(
       (p) => p.id === project.interopConfig.subgroupId,
     )
 
+    const byBridgeData = protocolsDataByBridgeTypeMap.get(project.id)
     const byBridgeType = getByBridgeTypeData(
       project,
       protocolsDataByBridgeTypeMap,
@@ -58,6 +60,7 @@ export function getProtocolEntries(
       logger,
       selection,
     )
+    const topRoute = byBridgeData ? getTopRoute(byBridgeData) : undefined
 
     const bridgeTypes = getRelevantBridgeTypes(project, undefined).sort(
       sortBridgeTypesFn,
@@ -109,6 +112,7 @@ export function getProtocolEntries(
       name: project.interopConfig.name ?? project.name,
       shortName: project.interopConfig.shortName,
       description: project.interopConfig.description,
+      type: project.interopConfig.type,
       bridgeTypes,
       isAggregate: project.interopConfig.isAggregate,
       subgroup: subgroupProject
@@ -131,6 +135,7 @@ export function getProtocolEntries(
       averageDuration,
       averageValueInFlight: data.averageValueInFlight,
       netMintedValue: getNetMintedValueUsd(data),
+      topRoute,
       snapshotTimestamp,
     })
   }
@@ -262,4 +267,33 @@ function sortBridgeTypesFn(
   b: KnownInteropBridgeType,
 ): number {
   return bridgeTypesOrder.indexOf(a) - bridgeTypesOrder.indexOf(b)
+}
+
+/**
+ * Unions flows across bridge types for a single protocol and returns the
+ * highest-volume cross-chain route (excludes same-chain).
+ */
+function getTopRoute(
+  data: ProtocolDataByBridgeType,
+): ProtocolEntry['topRoute'] {
+  const merged = new Map<string, number>()
+  for (const sub of [
+    data.lockAndMint,
+    data.nonMinting,
+    data.burnAndMint,
+    data.unknown,
+  ]) {
+    if (!sub) continue
+    for (const [key, volume] of sub.flows) {
+      merged.set(key, (merged.get(key) ?? 0) + volume)
+    }
+  }
+
+  let top: ProtocolEntry['topRoute']
+  for (const [key, volume] of merged) {
+    const [srcChain, dstChain] = key.split(INTEROP_PAIR_SEPARATOR)
+    if (!srcChain || !dstChain || srcChain === dstChain) continue
+    if (!top || volume > top.volume) top = { srcChain, dstChain, volume }
+  }
+  return top
 }

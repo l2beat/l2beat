@@ -1,3 +1,4 @@
+import type { InteropType } from '@l2beat/config'
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
@@ -15,6 +16,7 @@ export type ProtocolEntry = {
   name: string
   shortName: string | undefined
   description: string | undefined
+  type: InteropType
   bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:
@@ -34,6 +36,7 @@ export type ProtocolEntry = {
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
   netMintedValue: number | undefined
+  topRoute: { srcChain: string; dstChain: string; volume: number } | undefined
   snapshotTimestamp: number | undefined
 }
 
