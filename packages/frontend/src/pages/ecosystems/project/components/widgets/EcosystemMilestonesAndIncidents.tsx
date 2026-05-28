@@ -58,7 +58,7 @@ export function EcosystemMilestonesAndIncidents({
                
                 className="-right-0.5 -top-1 absolute fill-secondary"
               >
-                <path d="M12 4.177L-3.93401e-07 8.99996L0 -4.55091e-05L12 4.177Z" />
+                <path d="M12 4.177 0 9V0z" />
               </svg>
               <Timeline
                 timestamps={timestamps}

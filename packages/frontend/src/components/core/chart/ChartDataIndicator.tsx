@@ -50,7 +50,7 @@ function LineShape({
      
     >
       <path
-        d="M0 2H12"
+        d="M0 2h12"
         stroke={backgroundColor}
         strokeWidth="4"
         strokeDasharray={type.strokeDasharray ? '5 2' : undefined}

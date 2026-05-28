@@ -17,13 +17,13 @@ export function PlusIcon(props: SvgIconProps) {
         className="fill-icon-secondary stroke-2 stroke-icon-secondary"
       />
       <path
-        d="M7 12H17Z"
+        d="M7 12h10Z"
         className="stroke-2 stroke-surface-primary"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M12 7V17Z"
+        d="M12 7v10Z"
         className="stroke-2 stroke-surface-primary"
         strokeLinecap="round"
         strokeLinejoin="round"

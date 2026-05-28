@@ -13,12 +13,12 @@ export function PrivacyIcon({ className, ...props }: SvgIconProps) {
       {...props}
     >
       <path
-        d="M10 2.5L4.5 4.5V8.9C4.5 12.5 6.78 15.79 10 17.5C13.22 15.79 15.5 12.5 15.5 8.9V4.5L10 2.5Z"
+        d="m10 2.5-5.5 2v4.4c0 3.6 2.28 6.89 5.5 8.6 3.22-1.71 5.5-5 5.5-8.6V4.5z"
         strokeWidth="1.7"
         strokeLinejoin="round"
       />
       <path
-        d="M7.75 9.75L9.25 11.25L12.5 8"
+        d="m7.75 9.75 1.5 1.5L12.5 8"
         strokeWidth="1.7"
         strokeLinecap="round"
         strokeLinejoin="round"
