@@ -55,10 +55,11 @@ export class ConfigHealthService {
         configuredMethods,
         possibleValues,
       )
-      const excessRelatives = this.filterOverspecified(
-        configuredRelatives,
-        possibleValues,
-      )
+      // ignoreRelatives === true is a wildcard, nothing can be overspecified
+      const excessRelatives =
+        configuredRelatives === true
+          ? []
+          : this.filterOverspecified(configuredRelatives, possibleValues)
 
       if (anyNonEmpty(excessWatchMode, excessMethods, excessRelatives)) {
         hints.push({
@@ -111,10 +112,11 @@ export class ConfigHealthService {
       configuredMethods,
       allPossibleValues,
     )
-    const excessRelatives = this.filterOverspecified(
-      configuredRelatives,
-      allPossibleValues,
-    )
+    // ignoreRelatives === true is a wildcard, nothing can be overspecified
+    const excessRelatives =
+      configuredRelatives === true
+        ? []
+        : this.filterOverspecified(configuredRelatives, allPossibleValues)
 
     if (anyNonEmpty(excessWatchMode, excessMethods, excessRelatives)) {
       hints.push({

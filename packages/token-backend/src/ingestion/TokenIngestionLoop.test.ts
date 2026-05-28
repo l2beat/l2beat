@@ -561,6 +561,63 @@ describe(TokenIngestionLoop.name, () => {
       expect(remove).toHaveBeenOnlyCalledWith(queueEntry(secondAddress))
     })
 
+    it('marks an unexpected entry failure as an error and continues draining', async () => {
+      const firstAddress = token('ethereum', '0xaaa')
+      const secondAddress = token('ethereum', '0xbbb')
+      const transferIndex = { findInvolving: mockFn().returns([]) }
+      const refreshInteropTransferIndex = mockFn().resolvesTo(transferIndex)
+      const process = mockFn()
+        .rejectsWithOnce(new Error('boom'))
+        .resolvesToOnce({
+          id: 'ing_test',
+          address: secondAddress,
+          steps: [],
+          outcome: { kind: 'skip', reason: 'test' },
+        } satisfies IngestionTrace)
+      const markError = mockFn().resolvesTo(1)
+
+      const loop = new TokenIngestionLoop(
+        mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+              latestSerialId: undefined,
+              transferCount: 0,
+              tokenAddresses: [],
+            }),
+            getAll: mockFn().resolvesTo([]),
+          }),
+        }),
+        mockObject<TokenDatabase>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
+            get: mockFn().resolvesTo(undefined),
+          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findNextPending: mockFn()
+                .resolvesToOnce(queueEntry(firstAddress))
+                .resolvesToOnce(queueEntry(secondAddress))
+                .resolvesToOnce(undefined),
+              markError,
+            },
+          ),
+        }),
+        mockObject({
+          process,
+          refreshInteropTransferIndex,
+        }) as unknown as TokenIngestionProcessor,
+        Logger.SILENT,
+        { intervalMs: 60_000 },
+      )
+
+      await loop.runOnce()
+
+      expect(process).toHaveBeenCalledTimes(2)
+      expect(markError).toHaveBeenOnlyCalledWith(
+        queueEntry(firstAddress),
+        'Unexpected token ingestion error: boom.',
+      )
+    })
+
     it('creates an abstract token from CoinGecko before inserting a deployed token', async () => {
       const address = token('ethereum', '0xaaa')
       const abstractInsert = mockFn().resolvesTo('ABC123')

@@ -1,6 +1,6 @@
 {
   "name": "polygon-pos",
-  "timestamp": 1778679802,
+  "timestamp": 1779963546,
   "configHash": "0x76377d49aa426ba48ebae5098f9928517a2351102a1465831f022000f577d935",
   "entries": [
     {
@@ -145,7 +145,7 @@
       "sinceBlock": 10167763,
       "values": {
         "$immutable": true,
-        "counter": 3167120,
+        "counter": 3170922,
         "isOwner": false,
         "owner": "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -471,7 +471,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 808,
+        "nonce": 809,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -536,7 +536,7 @@
         ],
         "symbol": "MV",
         "tokenURI": ["", "", "", ""],
-        "totalSupply": 136
+        "totalSupply": 137
       },
       "implementationNames": {
         "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F": "StakingNFT"
@@ -710,13 +710,13 @@
         "CHECKPOINT_REWARD": "29414916286149162861491",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 103000,
-        "currentValidatorSetSize": 103,
-        "currentValidatorSetTotalStake": "3599026903915339498667055586",
+        "currentEpoch": 103720,
+        "currentValidatorSetSize": 104,
+        "currentValidatorSetTotalStake": "3601249287457279081682441558",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 103000,
+        "epoch": 103720,
         "eventsHub": "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "eth:0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -730,7 +730,7 @@
         "minDeposit": "100000000000000000000000",
         "minHeimdallFee": "1000000000000000000",
         "NFTContract": "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
-        "NFTCounter": 203,
+        "NFTCounter": 205,
         "owner": "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "ownerOf": [
           "eth:0x21A5418009C5d70db1552e7206Ed884F9Adb903A",
@@ -744,20 +744,20 @@
         "registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "3462617769145164719100731",
+        "rewardPerStake": "3473136047633803600236175",
         "rootChain": "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "tokenMatic": "eth:0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "12308939209428901681108",
+        "totalHeimdallFee": "12347939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "159928120565295323092294075",
-        "totalStaked": "11720703737334340300083706",
+        "totalRewardsLiquidated": "160917526508950472406034549",
+        "totalStaked": "11827878720422456057266711",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3599026903915339498667055586",
-          "stakerCount": 103
+          "amount": "3601249287457279081682441558",
+          "stakerCount": 104
         },
         "validatorThreshold": 105,
         "WITHDRAWAL_DELAY": 80,
@@ -948,7 +948,7 @@
       "sinceTimestamp": 1590849960,
       "sinceBlock": 10167725,
       "values": {
-        "_nextHeaderBlock": 1030000000,
+        "_nextHeaderBlock": 1037200000,
         "$immutable": false,
         "$implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -957,8 +957,8 @@
           "_registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 1029990000,
-        "getLastChildBlock": 86821797,
+        "currentHeaderBlock": 1037190000,
+        "getLastChildBlock": 87554981,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -3954,7 +3954,8 @@
           "eth:0x4790C6A7ABDD39dc28B2622AB4980618cb602f3a": "eth:0xd18289baDcFfd67cB5413edf3E8F2A87E1AF489C",
           "eth:0xeA9b27Ce184D3Fb27828bB9c2f4F8BbA68907E03": "eth:0x5Ae5D1bCd10fD74dc0d9e3E3Bfb3D202037FfC19",
           "eth:0x3B790d651e950497c7723D47B24E6f61534f7969": "eth:0xd1CD49A08AeF3Af93457aEc17C786C2b7F48eCd7",
-          "eth:0xbe07AA35c08190B5385f42F5eB80c3BcFbcf5aa8": "eth:0x3B38FcB144Db6c16E09c6414e2AB84C7fEF1BB0C"
+          "eth:0xbe07AA35c08190B5385f42F5eB80c3BcFbcf5aa8": "eth:0x3B38FcB144Db6c16E09c6414e2AB84C7fEF1BB0C",
+          "eth:0x57C3571f10767E49C9d7b60feb6c67804783B7aE": "eth:0x3319d8A0A7f742AAC63D586E7bb846a9ee8218Ab"
         },
         "USDT_ADDRESS": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
@@ -5740,6 +5741,6 @@
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25086587 },
+  "usedBlockNumbers": { "ethereum": 25193199 },
   "permissionsConfigHash": "0xe5bd6484e6c3309c29d81cec4b336f4edd93d1701f98aaf3b05080f726f04350"
 }

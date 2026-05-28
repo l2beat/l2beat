@@ -41,7 +41,12 @@
             "items": { "type": "string" }
           },
           "ignoreMethods": { "type": "array", "items": { "type": "string" } },
-          "ignoreRelatives": { "type": "array", "items": { "type": "string" } },
+          "ignoreRelatives": {
+            "anyOf": [
+              { "type": "array", "items": { "type": "string" } },
+              { "const": true }
+            ]
+          },
           "fields": {
             "type": "object",
             "propertyNames": { "type": "string" },
@@ -304,6 +309,15 @@
                             "ignoreRelative": { "type": "boolean" },
                             "set": {},
                             "flatten": { "type": "boolean" },
+                            "dedupBy": {
+                              "anyOf": [
+                                { "type": "string" },
+                                {
+                                  "type": "array",
+                                  "items": { "type": "string" }
+                                }
+                              ]
+                            },
                             "add": {
                               "anyOf": [
                                 {
@@ -502,6 +516,15 @@
                       "type": "object",
                       "properties": {
                         "type": { "const": "layerZeroMultisig" }
+                      },
+                      "additionalProperties": false,
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "manyChainMultiSig" },
+                        "ignoreRelative": { "type": "boolean" }
                       },
                       "additionalProperties": false,
                       "required": ["type"]

@@ -13,12 +13,14 @@ export function AllProtocolsTable({
   entries,
   showAverageInFlightValueColumn,
   showNetMintedValueColumn,
+  hideTokensColumn,
 }: {
   type: KnownInteropBridgeType | undefined
   entries: ProtocolEntry[]
   hideTypeColumn?: boolean
   showAverageInFlightValueColumn?: boolean
   showNetMintedValueColumn?: boolean
+  hideTokensColumn?: boolean
 }) {
   const { selectedChains } = useInteropSelectedChains()
 
@@ -30,6 +32,7 @@ export function AllProtocolsTable({
         hideTypeColumn,
         showAverageInFlightValueColumn,
         showNetMintedValueColumn,
+        hideTokensColumn,
       ),
     [
       type,
@@ -37,6 +40,7 @@ export function AllProtocolsTable({
       hideTypeColumn,
       showAverageInFlightValueColumn,
       showNetMintedValueColumn,
+      hideTokensColumn,
     ],
   )
 

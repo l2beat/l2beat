@@ -13,7 +13,7 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
-  columns,
+  getTransferColumns,
   type TransferRow,
 } from '~/pages/interop/components/table/transfer-count-cell/columns'
 import type { InteropSelection } from '~/pages/interop/utils/types'
@@ -76,6 +76,11 @@ export function InteropTransfersSection({
   const fetchedPageCount = Math.ceil(fetchedItems.length / TRANSFERS_PER_PAGE)
   const loadedPageCount = Math.max(1, fetchedPageCount)
   const pageCount = loadedPageCount + (hasNextPage ? 1 : 0)
+
+  const columns = useMemo(
+    () => getTransferColumns({ from: selectedFrom, to: selectedTo }),
+    [selectedFrom, selectedTo],
+  )
 
   const table = useTable<TransferRow>({
     data: fetchedItems,

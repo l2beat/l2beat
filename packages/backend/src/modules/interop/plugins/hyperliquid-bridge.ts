@@ -24,7 +24,8 @@ const ARB_USDC = ChainSpecificAddress(
 
 const HYPERLIQUID_BRIDGE_ADDRESS =
   ChainSpecificAddress.address(HYPERLIQUID_BRIDGE)
-const ARB_USDC_TOKEN = Address32.from(ChainSpecificAddress.address(ARB_USDC))
+const ARB_USDC_ADDRESS = ChainSpecificAddress.address(ARB_USDC)
+const ARB_USDC_TOKEN = Address32.from(ARB_USDC_ADDRESS)
 
 const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
@@ -96,7 +97,7 @@ export class HyperliquidBridgePlugin implements InteropPluginResyncable {
       ]
     }
 
-    const transfer = parseTransfer(input.log, null)
+    const transfer = parseTransfer(input.log, [ARB_USDC_ADDRESS])
     if (!transfer) return
     if (EthereumAddress(transfer.to) !== HYPERLIQUID_BRIDGE_ADDRESS) return
 

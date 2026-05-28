@@ -7,11 +7,14 @@ import type { AddressesWithTemplates } from './AddressAnalyzer'
 
 export function getRelativesWithSuggestedTemplates(
   parameters: HandlerResult[],
-  ignoredFields?: string[],
+  ignoredFields?: string[] | true,
   ignoredAddresses?: ChainSpecificAddress[],
   fields?: { [field: string]: StructureContractField },
 ): AddressesWithTemplates {
   const result: AddressesWithTemplates = {}
+  if (ignoredFields === true) {
+    return result
+  }
   for (const param of parameters) {
     if (param.ignoreRelative || ignoredFields?.includes(param.field)) {
       continue

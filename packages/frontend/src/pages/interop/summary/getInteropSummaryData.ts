@@ -8,10 +8,10 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import { type Manifest, manifest } from '~/utils/Manifest'
-import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '../components/flows/consts'
 import type { InteropQuery } from '../InteropRouter'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
+import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import type { InteropSelection } from '../utils/types'
 
 export async function getInteropSummaryData(
@@ -30,13 +30,13 @@ export async function getInteropSummaryData(
     scalingProjects.map((p) => [p.id, p.slug]),
   )
 
-  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains.map(
-    (chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-      href: getInteropChainHref(chain.id, scalingProjectSlugById),
-    }),
-  )
+  const interopChainsWithIcons = mapInteropChainsToWithIcons(
+    manifest,
+    interopChains,
+  ).map((chain) => ({
+    ...chain,
+    href: getInteropChainHref(chain.id, scalingProjectSlugById),
+  }))
 
   const activeInteropChains = interopChainsWithIcons.filter(
     (chain) => !chain.isUpcoming,
