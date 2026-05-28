@@ -10,7 +10,7 @@ export function GovernanceHeaderIllustration({
       viewBox="0 0 499 364"
       fill="none"
       className={className}
-      xmlns="http://www.w3.org/2000/svg"
+     
     >
       <path
         opacity="0.8"

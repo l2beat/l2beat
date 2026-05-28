@@ -6,7 +6,7 @@ export function OfficeHoursIllustration(props: SvgIconProps) {
       width="400"
       height="82"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+     
       {...props}
     >
       <mask id="b" fill="#fff">

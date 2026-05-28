@@ -7,7 +7,7 @@ export function ClockIcon(props: SvgIconProps) {
       height="16"
       viewBox="0 0 16 16"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+     
       {...props}
     >
       <g clipPath="url(#clip0_6337_40212)">

@@ -8,7 +8,7 @@ export function QuantumResistanceIcon(props: SVGProps<SVGSVGElement>) {
       viewBox="0 0 32 32"
       fill="none"
       {...props}
-      xmlns="http://www.w3.org/2000/svg"
+     
     >
       <g clip-path="url(#clip0_1250_76)">
         <g clip-path="url(#clip1_1250_76)">

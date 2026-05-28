@@ -3,7 +3,7 @@ import { SvgIcon, type SvgIconProps } from './SvgIcon'
 export function ThreeHorizontalDotsIcon(props: SvgIconProps) {
   return (
     <SvgIcon
-      xmlns="http://www.w3.org/2000/svg"
+     
       width="16"
       height="16"
       viewBox="0 0 16 16"
