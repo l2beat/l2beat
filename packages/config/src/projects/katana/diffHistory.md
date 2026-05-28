@@ -12,7 +12,7 @@ minimal diff upgrade to the OptiPortal that adds deposited transactions! https:/
 
 users can now force transactions that do not relate to bridging (they still cannot force ETH- or token deposits). the force tx delay in op stack (or op-succinct) depends on the node config/programHash and both are unverified for katana. as soon as we have a source, we should look for `sequencerWindowSize` (OP stack standard is 3600). we will assume standard and show the delay as 12h but say that this is unverified.
 
-proposals are also still permissioned, meaning that inclusion is roughly as before, assuming sequencer and proposer/prover are the same entity.
+proposals are also still permissioned, meaning that, assuming sequencer and proposer/prover are the same entity, the system changed from 'sequencer can cherry-pick/censor' to 'proposer must blanket-censor, no cherry-pick'.
 
 the agglayer bridge is separate from the OP stack proof system and bridge and has its own proof system and l2 smart contract. this includes the gas token (ETH) bridge. the oracle on L2 that allows to update the agglayer bridge state roots is permissioned to an EOA atm.
 
