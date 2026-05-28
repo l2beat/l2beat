@@ -22,7 +22,6 @@ export function ProjectInclusionDelayChart({
   entityLegendEntries,
   thresholdMarkers,
   maxCensorFraction,
-  hasStakeDistribution,
 }: Props) {
   const [yAxisScale, setYAxisScale] =
     useState<InclusionDelayYAxisScale>('linear')
@@ -39,6 +38,16 @@ export function ProjectInclusionDelayChart({
 
   return (
     <div className="my-6 flex flex-col">
+      <div className="mt-4 mb-3">
+        <InclusionDelayChart
+          data={data}
+          chartMeta={chartMeta}
+          maxCensorFraction={maxCensorFraction}
+          yAxisScale={yAxisScale}
+          thresholdMarkers={thresholdMarkers}
+          entityMarkers={entityLegendEntries.filter(hasFiniteDelay)}
+        />
+      </div>
       <ChartControlsWrapper className="justify-end">
         <RadioGroup
           name={`${projectName}-inclusion-delay-y-axis`}
@@ -51,57 +60,39 @@ export function ProjectInclusionDelayChart({
           <RadioGroupItem value="log">LOG</RadioGroupItem>
         </RadioGroup>
       </ChartControlsWrapper>
-      <div className="mt-4 mb-3">
-        <InclusionDelayChart
-          data={data}
-          chartMeta={chartMeta}
-          maxCensorFraction={maxCensorFraction}
-          yAxisScale={yAxisScale}
-          thresholdMarkers={thresholdMarkers}
-          entityMarkers={entityLegendEntries.filter(hasFiniteDelay)}
-          hasStakeDistribution={hasStakeDistribution}
-        />
-      </div>
-      <EntityMarkersLegend
-        entries={entityLegendEntries}
-        hasStakeDistribution={hasStakeDistribution}
-      />
+      <EntityMarkersLegend entries={entityLegendEntries} />
     </div>
   )
 }
 
 function EntityMarkersLegend({
   entries,
-  hasStakeDistribution,
 }: {
   entries: InclusionDelayEntityLegendEntry[]
-  hasStakeDistribution: boolean
 }) {
-  if (!hasStakeDistribution) return null
+  if (entries.length === 0) {
+    return (
+      <div className="mt-3 w-fit rounded bg-warning/15 px-2 py-1 font-medium text-label-value-13 text-warning">
+        No data about stake distribution among entities available
+      </div>
+    )
+  }
 
   return (
-    <div className="mt-3 font-medium text-label-value-13">
-      {entries.length > 0 ? (
-        <div className="grid gap-x-6 gap-y-1.5 md:grid-cols-2">
-          {entries.map((entry, index) => (
-            <div
-              key={entry.id}
-              className="min-w-0 truncate"
-              title={entry.entityNames.join(', ')}
-            >
-              <span className="text-primary">{entry.label}:</span>{' '}
-              <span className="text-secondary">
-                {index > 0 ? '+' : ''}
-                {formatEntityMarkerName(entry)}
-              </span>
-            </div>
-          ))}
+    <div className="mt-3 grid gap-x-6 gap-y-1.5 font-medium text-label-value-13 md:grid-cols-2">
+      {entries.map((entry, index) => (
+        <div
+          key={entry.id}
+          className="min-w-0 truncate"
+          title={entry.entityNames.join(', ')}
+        >
+          <span className="text-primary">{entry.label}:</span>{' '}
+          <span className="text-secondary">
+            {index > 0 ? '+' : ''}
+            {formatEntityMarkerName(entry)}
+          </span>
         </div>
-      ) : (
-        <div className="w-fit rounded bg-warning/15 px-2 py-1 text-warning">
-          No data about stake distribution among entities available
-        </div>
-      )}
+      ))}
     </div>
   )
 }

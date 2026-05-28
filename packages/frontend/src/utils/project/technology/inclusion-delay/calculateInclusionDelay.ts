@@ -50,7 +50,6 @@ export interface InclusionDelayData {
 
 export interface InclusionDelayChartProps extends InclusionDelayData {
   maxCensorFraction: number
-  hasStakeDistribution: boolean
 }
 
 export function prepareInclusionDelay(
@@ -59,7 +58,6 @@ export function prepareInclusionDelay(
   return {
     ...getInclusionDelayData(chart),
     maxCensorFraction: chart.maxCensorFraction,
-    hasStakeDistribution: chart.stakeDistribution !== undefined,
   }
 }
 

@@ -44,7 +44,6 @@ interface Props {
   yAxisScale: InclusionDelayYAxisScale
   thresholdMarkers: InclusionDelayThresholdMarker[]
   entityMarkers: InclusionDelayEntityMarker[]
-  hasStakeDistribution: boolean
 }
 
 export function InclusionDelayChart({
@@ -54,7 +53,6 @@ export function InclusionDelayChart({
   yAxisScale,
   thresholdMarkers,
   entityMarkers,
-  hasStakeDistribution,
 }: Props) {
   const yDomain = getYDomain(data, yAxisScale, thresholdMarkers)
 
@@ -68,7 +66,7 @@ export function InclusionDelayChart({
         <ChartLegend
           content={
             <ChartLegendContent>
-              {hasStakeDistribution && (
+              {entityMarkers.length > 0 && (
                 <div className="order-last flex shrink-0 items-center gap-[3px] pl-2">
                   <ChartDataIndicator
                     type={{ shape: 'square' }}
