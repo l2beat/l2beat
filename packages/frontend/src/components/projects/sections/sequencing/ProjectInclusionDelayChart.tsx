@@ -5,6 +5,7 @@ import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import type {
   InclusionDelayChartProps,
   InclusionDelayEntityLegendEntry,
+  InclusionDelayEntityMarker,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 import {
   InclusionDelayChart,
@@ -34,10 +35,7 @@ export function ProjectInclusionDelayChart({
       })),
     [chartData],
   )
-  const chartMeta = useMemo(
-    () => getInclusionDelayChartMeta(projectName),
-    [projectName],
-  )
+  const chartMeta = getInclusionDelayChartMeta(projectName)
 
   return (
     <div className="my-6 flex flex-col">
@@ -125,7 +123,7 @@ function getInclusionDelayChartMeta(projectName: string) {
 
 function hasFiniteDelay(
   entry: InclusionDelayEntityLegendEntry,
-): entry is InclusionDelayEntityLegendEntry & { delayDays: number } {
+): entry is InclusionDelayEntityMarker {
   return entry.delayDays !== null
 }
 

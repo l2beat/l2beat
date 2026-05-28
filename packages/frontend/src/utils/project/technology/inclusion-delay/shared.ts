@@ -38,15 +38,33 @@ export function calculateSingleProposerDelayDays({
   missedOpportunitySeconds: number
   minHonestFraction: number
 }): number | null {
-  const honestCount = validatorCount - censorCount
-  if (honestCount <= minHonestFraction * validatorCount) return null
+  return singleProposerDelayDaysFromHonestProbability({
+    honestOpportunityProbability:
+      (validatorCount - censorCount) / validatorCount,
+    target,
+    firstOpportunitySeconds,
+    missedOpportunitySeconds,
+    minHonestProbability: minHonestFraction,
+  })
+}
 
-  const honestOpportunityProbability = honestCount / validatorCount
+export function singleProposerDelayDaysFromHonestProbability({
+  honestOpportunityProbability,
+  target,
+  firstOpportunitySeconds,
+  missedOpportunitySeconds,
+  minHonestProbability,
+}: {
+  honestOpportunityProbability: number
+  target: number
+  firstOpportunitySeconds: number
+  missedOpportunitySeconds: number
+  minHonestProbability: number
+}): number | null {
+  if (honestOpportunityProbability <= minHonestProbability) return null
   if (honestOpportunityProbability >= 1) {
     return firstOpportunitySeconds / SECONDS_PER_DAY
   }
-
-  if (honestOpportunityProbability <= 0) return null
 
   const targetOpportunities = ceilWithTolerance(
     Math.log(1 - target) / Math.log(1 - honestOpportunityProbability),

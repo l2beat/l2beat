@@ -4,7 +4,7 @@ import type {
   ProjectInclusionDelayChartStakeDistribution,
 } from '@l2beat/config'
 import { createInclusionDelayModel } from './createModel'
-import { ceilWithTolerance, SECONDS_PER_DAY } from './shared'
+import { singleProposerDelayDaysFromHonestProbability } from './shared'
 import type { InclusionDelayModel } from './types'
 
 const ETHEREUM_COMPARISON_SLOT_SECONDS = 12
@@ -29,6 +29,10 @@ export interface InclusionDelayEntityLegendEntry {
   entityNames: string[]
   stakeFraction: number
   delayDays: number | null
+}
+
+export type InclusionDelayEntityMarker = InclusionDelayEntityLegendEntry & {
+  delayDays: number
 }
 
 export interface InclusionDelayThresholdMarker {
@@ -209,30 +213,30 @@ function calculateEthereumComparisonDelayDaysForFraction({
   slotSeconds: number
   target: number
 }): number | null {
-  if (censoringFraction >= 0.5) return null
-  if (censoringFraction <= 0) return slotSeconds / SECONDS_PER_DAY
-
-  const targetSlots = ceilWithTolerance(
-    Math.log(1 - target) / Math.log(censoringFraction),
-  )
-
-  return (targetSlots * slotSeconds) / SECONDS_PER_DAY
+  return singleProposerDelayDaysFromHonestProbability({
+    honestOpportunityProbability: 1 - censoringFraction,
+    target,
+    firstOpportunitySeconds: slotSeconds,
+    missedOpportunitySeconds: slotSeconds,
+    minHonestProbability: 0.5,
+  })
 }
+
+const MAX_CURVE_SAMPLE_POINTS = 501
 
 function getSampledCensorCounts(model: InclusionDelayModel) {
   const maxCensorCount = Math.floor(
     model.validatorCount * model.maxCensorFraction,
   )
-  const maxPoints = 501
 
-  if (maxCensorCount + 1 <= maxPoints) {
+  if (maxCensorCount + 1 <= MAX_CURVE_SAMPLE_POINTS) {
     return Array.from({ length: maxCensorCount + 1 }, (_, i) => i)
   }
 
-  const step = maxCensorCount / (maxPoints - 1)
+  const step = maxCensorCount / (MAX_CURVE_SAMPLE_POINTS - 1)
   const counts = new Set([0, maxCensorCount])
 
-  for (let i = 0; i < maxPoints; i++) {
+  for (let i = 0; i < MAX_CURVE_SAMPLE_POINTS; i++) {
     counts.add(Math.round(i * step))
   }
 

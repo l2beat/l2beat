@@ -155,6 +155,65 @@ describe('calculateInclusionDelay', () => {
       ])
     })
 
+    it('samples down to 501 points when validatorCount is large', () => {
+      const chart = {
+        type: 'ethereumlike',
+        validatorCount: 100_000,
+        slotSeconds: 10,
+        target: 0.99,
+        maxCensorFraction: 0.5,
+      } satisfies ProjectEthereumLikeInclusionDelayChart
+
+      const { chartData } = getInclusionDelayData(chart)
+      // 501 evenly-spaced samples plus two critical censor counts
+      expect(chartData.length <= 503).toEqual(true)
+      expect(chartData[0]?.censoringFraction).toEqual(0)
+      const last = chartData[chartData.length - 1]
+      expect(last?.censoringFraction).toEqual(0.5)
+    })
+
+    it('produces a single sample when maxCensorFraction is 0', () => {
+      const chart = {
+        type: 'ethereumlike',
+        validatorCount: 10,
+        slotSeconds: 10,
+        target: 0.99,
+        maxCensorFraction: 0,
+      } satisfies ProjectEthereumLikeInclusionDelayChart
+
+      expect(getInclusionDelayData(chart).chartData).toEqual([
+        {
+          censoringFraction: 0,
+          projectDelayDays: 10 / 86_400,
+          ethereumDelayDays: 12 / 86_400,
+        },
+      ])
+    })
+
+    it('interpolates threshold markers across flat regions', () => {
+      const chart = {
+        type: 'ethereumlike',
+        validatorCount: 10,
+        slotSeconds: 10,
+        target: 0.99,
+        maxCensorFraction: 0.5,
+      } satisfies ProjectEthereumLikeInclusionDelayChart
+
+      // 20s falls between censorCount=0 (10s) and censorCount=2 (30s);
+      // at censorCount=1 the value is 20s as well (flat region exact match).
+      expect(
+        getInclusionDelayData(chart, [{ label: '20s', days: 20 / 86_400 }])
+          .thresholdMarkers,
+      ).toEqual([
+        {
+          id: 'delay-threshold-20s',
+          label: '20s delay',
+          censoringFraction: 0.1,
+          delayDays: 20 / 86_400,
+        },
+      ])
+    })
+
     it('returns markers on exact delay thresholds', () => {
       const chart = {
         type: 'ethereumlike',

@@ -21,12 +21,12 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-
 import type {
   InclusionDelayChartPoint,
-  InclusionDelayEntityLegendEntry,
+  InclusionDelayEntityMarker,
   InclusionDelayThresholdMarker,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
+import { SECONDS_PER_DAY } from '~/utils/project/technology/inclusion-delay/shared'
 
 export type InclusionDelayYAxisScale = 'linear' | 'log'
 
@@ -34,9 +34,8 @@ export type InclusionDelayChartDataPoint = InclusionDelayChartPoint & {
   timestamp: number
 }
 
-export const INCLUSION_DELAY_ENTITY_MARKER_COLOR = 'var(--chart-cyan)'
+const INCLUSION_DELAY_ENTITY_MARKER_COLOR = 'var(--chart-cyan)'
 const DELAY_THRESHOLD_COLOR = 'var(--chart-yellow)'
-const SECONDS_PER_DAY = 86_400
 
 interface Props {
   data: InclusionDelayChartDataPoint[]
@@ -44,7 +43,7 @@ interface Props {
   maxCensorFraction: number
   yAxisScale: InclusionDelayYAxisScale
   thresholdMarkers: InclusionDelayThresholdMarker[]
-  entityMarkers: (InclusionDelayEntityLegendEntry & { delayDays: number })[]
+  entityMarkers: InclusionDelayEntityMarker[]
   hasStakeDistribution: boolean
 }
 
@@ -217,11 +216,10 @@ function getYDomain(
   thresholdMarkers: InclusionDelayThresholdMarker[],
 ): [number, number] {
   const values = [
-    ...data.flatMap((point) =>
-      [point.projectDelayDays, point.ethereumDelayDays].filter(
-        (value): value is number => value !== null && value > 0,
-      ),
-    ),
+    ...data.flatMap((point) => [
+      point.projectDelayDays,
+      point.ethereumDelayDays,
+    ]),
     ...thresholdMarkers.map((marker) => marker.delayDays),
   ].filter((value): value is number => value !== null && value > 0)
 
