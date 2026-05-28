@@ -1,8 +1,8 @@
 import type {
   DropTarget,
   Edge,
-  GroupNode,
   LayoutNode,
+  LeafNode,
   NodeId,
   SplitDirection,
   SplitNode,
@@ -21,12 +21,8 @@ export function newId(): NodeId {
   return `n${nextId}`
 }
 
-export function newGroup(tabs: TabId[], active?: TabId): GroupNode {
-  assert(tabs.length > 0, 'group must have at least one tab')
-  const activeTab = active ?? tabs[0]
-  assert(activeTab !== undefined, 'group active tab undefined')
-  assert(tabs.includes(activeTab), 'active must be one of tabs')
-  return { kind: 'group', id: newId(), tabs: [...tabs], active: activeTab }
+export function newLeaf(tab: TabId): LeafNode {
+  return { kind: 'leaf', id: newId(), tab }
 }
 
 export function newSplit(
@@ -66,37 +62,35 @@ export function* iterNodes(root: LayoutNode): Generator<LayoutNode> {
   }
 }
 
-export function findGroup(
-  root: LayoutNode,
-  groupId: NodeId,
-): GroupNode | undefined {
-  for (const node of iterNodes(root)) {
-    if (node.kind === 'group' && node.id === groupId) {
-      return node
-    }
-  }
-  return undefined
-}
-
-export function findGroupOfTab(
+export function findLeafByTab(
   root: LayoutNode,
   tab: TabId,
-): GroupNode | undefined {
+): LeafNode | undefined {
   for (const node of iterNodes(root)) {
-    if (node.kind === 'group' && node.tabs.includes(tab)) {
+    if (node.kind === 'leaf' && node.tab === tab) {
       return node
     }
   }
   return undefined
 }
 
-export function findFirstGroup(root: LayoutNode): GroupNode {
+export function findLeafById(
+  root: LayoutNode,
+  leafId: NodeId,
+): LeafNode | undefined {
   for (const node of iterNodes(root)) {
-    if (node.kind === 'group') {
+    if (node.kind === 'leaf' && node.id === leafId) {
       return node
     }
   }
-  assert(false, 'tree has no groups')
+  return undefined
+}
+
+export function findFirstLeaf(root: LayoutNode): LeafNode {
+  for (const node of iterNodes(root)) {
+    if (node.kind === 'leaf') return node
+  }
+  assert(false, 'tree has no leaves')
 }
 
 export function findParent(
@@ -106,9 +100,7 @@ export function findParent(
   for (const node of iterNodes(root)) {
     if (node.kind !== 'split') continue
     const index = node.children.findIndex((child) => child.id === nodeId)
-    if (index >= 0) {
-      return { parent: node, index }
-    }
+    if (index >= 0) return { parent: node, index }
   }
   return undefined
 }
@@ -118,9 +110,7 @@ export function findSplit(
   splitId: NodeId,
 ): SplitNode | undefined {
   for (const node of iterNodes(root)) {
-    if (node.kind === 'split' && node.id === splitId) {
-      return node
-    }
+    if (node.kind === 'split' && node.id === splitId) return node
   }
   return undefined
 }
@@ -128,20 +118,25 @@ export function findSplit(
 export function allTabs(root: LayoutNode): TabId[] {
   const tabs: TabId[] = []
   for (const node of iterNodes(root)) {
-    if (node.kind === 'group') {
-      tabs.push(...node.tabs)
-    }
+    if (node.kind === 'leaf') tabs.push(node.tab)
   }
   return tabs
 }
 
-export function validateLayout(root: LayoutNode): void {
+export function leafCount(root: LayoutNode): number {
+  let count = 0
   for (const node of iterNodes(root)) {
-    if (node.kind === 'group') {
-      assert(node.tabs.length > 0, 'empty group')
-      assert(node.tabs.includes(node.active), 'group active not in tabs')
-      const set = new Set(node.tabs)
-      assert(set.size === node.tabs.length, 'duplicate tab in group')
+    if (node.kind === 'leaf') count += 1
+  }
+  return count
+}
+
+export function validateLayout(root: LayoutNode): void {
+  const seen = new Set<TabId>()
+  for (const node of iterNodes(root)) {
+    if (node.kind === 'leaf') {
+      assert(!seen.has(node.tab), `duplicate tab in tree: ${node.tab}`)
+      seen.add(node.tab)
     } else {
       assert(node.children.length >= 2, 'single-child split must collapse')
       assert(
@@ -155,71 +150,23 @@ export function validateLayout(root: LayoutNode): void {
   }
 }
 
-export function insertTabInGroup(
-  root: LayoutNode,
-  groupId: NodeId,
-  tab: TabId,
-  index: number,
-): LayoutNode {
-  const clone = cloneTree(root)
-  const group = findGroup(clone, groupId)
-  assert(group !== undefined, `insertTabInGroup: group ${groupId} not found`)
-  assert(!group.tabs.includes(tab), 'tab already in target group')
-  const clamped = Math.max(0, Math.min(index, group.tabs.length))
-  group.tabs.splice(clamped, 0, tab)
-  group.active = tab
-  validateLayout(clone)
-  return clone
-}
-
-export function reorderTabInGroup(
-  root: LayoutNode,
-  groupId: NodeId,
-  tab: TabId,
-  index: number,
-): LayoutNode {
-  const clone = cloneTree(root)
-  const group = findGroup(clone, groupId)
-  assert(group !== undefined, 'reorderTabInGroup: group not found')
-  const from = group.tabs.indexOf(tab)
-  assert(from >= 0, 'reorderTabInGroup: tab not in group')
-  const clamped = Math.max(0, Math.min(index, group.tabs.length - 1))
-  if (from === clamped) return clone
-  group.tabs.splice(from, 1)
-  group.tabs.splice(clamped, 0, tab)
-  group.active = tab
-  validateLayout(clone)
-  return clone
-}
-
 export function canRemoveTab(root: LayoutNode, tab: TabId): boolean {
-  const group = findGroupOfTab(root, tab)
-  if (!group) return false
-  const tabs = allTabs(root)
-  return tabs.length > 1
+  if (!findLeafByTab(root, tab)) return false
+  return leafCount(root) > 1
 }
 
-export function removeTab(
-  root: LayoutNode,
-  tab: TabId,
-): { tree: LayoutNode; removedFrom: NodeId | undefined } {
-  if (!canRemoveTab(root, tab)) {
-    return { tree: root, removedFrom: undefined }
-  }
+export function removeTab(root: LayoutNode, tab: TabId): LayoutNode {
+  if (!canRemoveTab(root, tab)) return root
   const clone = cloneTree(root)
-  const group = findGroupOfTab(clone, tab)
-  assert(group !== undefined, 'removeTab: group disappeared after clone')
-  const removedFrom = group.id
-  const at = group.tabs.indexOf(tab)
-  group.tabs.splice(at, 1)
-  if (group.active === tab && group.tabs.length > 0) {
-    const fallback = group.tabs[Math.min(at, group.tabs.length - 1)]
-    assert(fallback !== undefined, 'no fallback tab after removal')
-    group.active = fallback
-  }
+  const leaf = findLeafByTab(clone, tab)
+  assert(leaf !== undefined, 'removeTab: leaf disappeared after clone')
+  const parent = findParent(clone, leaf.id)
+  assert(parent !== undefined, 'removeTab: leaf must have a parent')
+  parent.parent.children.splice(parent.index, 1)
+  parent.parent.sizes.splice(parent.index, 1)
   const collapsed = collapseTree(clone)
   validateLayout(collapsed)
-  return { tree: collapsed, removedFrom }
+  return collapsed
 }
 
 function collapseTree(root: LayoutNode): LayoutNode {
@@ -232,44 +179,11 @@ function collapseTree(root: LayoutNode): LayoutNode {
 }
 
 function collapseStep(root: LayoutNode): LayoutNode {
-  const empty = findEmptyGroupParent(root)
-  if (empty !== undefined) {
-    return removeChildAt(root, empty.parentId, empty.index)
-  }
   const singleton = findSingletonSplit(root)
   if (singleton !== undefined) {
     return collapseSingletonSplit(root, singleton)
   }
   return root
-}
-
-function findEmptyGroupParent(
-  root: LayoutNode,
-): { parentId: NodeId; index: number } | undefined {
-  for (const node of iterNodes(root)) {
-    if (node.kind !== 'split') continue
-    for (let i = 0; i < node.children.length; i++) {
-      const child = node.children[i]
-      assert(child !== undefined, 'child hole')
-      if (child.kind === 'group' && child.tabs.length === 0) {
-        return { parentId: node.id, index: i }
-      }
-    }
-  }
-  return undefined
-}
-
-function removeChildAt(
-  root: LayoutNode,
-  parentId: NodeId,
-  index: number,
-): LayoutNode {
-  const clone = cloneTree(root)
-  const split = findSplit(clone, parentId)
-  assert(split !== undefined, 'removeChildAt: parent not found')
-  split.children.splice(index, 1)
-  split.sizes.splice(index, 1)
-  return clone
 }
 
 function findSingletonSplit(root: LayoutNode): NodeId | undefined {
@@ -298,52 +212,50 @@ function collapseSingletonSplit(root: LayoutNode, splitId: NodeId): LayoutNode {
   return clone
 }
 
-export function splitGroup(
+export function splitLeaf(
   root: LayoutNode,
-  targetGroupId: NodeId,
+  targetLeafId: NodeId,
   edge: Edge,
-  insertGroup: GroupNode,
+  newTab: TabId,
 ): LayoutNode {
   const direction: SplitDirection =
     edge === 'left' || edge === 'right' ? 'row' : 'column'
   const before = edge === 'left' || edge === 'top'
-  if (root.kind === 'group' && root.id === targetGroupId) {
-    const targetClone = cloneTree(root) as GroupNode
-    const newGroupClone = cloneTree(insertGroup) as GroupNode
-    const children = before
-      ? [newGroupClone, targetClone]
-      : [targetClone, newGroupClone]
+  const newLeafNode = newLeaf(newTab)
+
+  if (root.kind === 'leaf' && root.id === targetLeafId) {
+    const targetClone = cloneTree(root) as LeafNode
+    const children: LayoutNode[] = before
+      ? [newLeafNode, targetClone]
+      : [targetClone, newLeafNode]
     return newSplit(direction, children, [1, 1])
   }
-  return splitGroupNested(root, targetGroupId, edge, insertGroup)
+  return splitLeafNested(root, targetLeafId, newLeafNode, direction, before)
 }
 
-function splitGroupNested(
+function splitLeafNested(
   root: LayoutNode,
-  targetGroupId: NodeId,
-  edge: Edge,
-  insertGroup: GroupNode,
+  targetLeafId: NodeId,
+  newLeafNode: LeafNode,
+  direction: SplitDirection,
+  before: boolean,
 ): LayoutNode {
   const clone = cloneTree(root)
-  const direction: SplitDirection =
-    edge === 'left' || edge === 'right' ? 'row' : 'column'
-  const before = edge === 'left' || edge === 'top'
-  const parent = findParent(clone, targetGroupId)
-  assert(parent !== undefined, 'splitGroupNested: parent not found')
+  const parent = findParent(clone, targetLeafId)
+  assert(parent !== undefined, 'splitLeafNested: parent not found')
   const targetIndex = parent.index
   const target = parent.parent.children[targetIndex]
-  assert(target !== undefined && target.kind === 'group', 'target not group')
-  const newGroupClone = cloneTree(insertGroup) as GroupNode
+  assert(target !== undefined && target.kind === 'leaf', 'target not leaf')
   if (parent.parent.direction === direction) {
     const insertAt = before ? targetIndex : targetIndex + 1
     const targetSize = parent.parent.sizes[targetIndex] ?? 1
-    parent.parent.children.splice(insertAt, 0, newGroupClone)
+    parent.parent.children.splice(insertAt, 0, newLeafNode)
     parent.parent.sizes.splice(insertAt, 0, targetSize / 2)
     parent.parent.sizes[before ? targetIndex + 1 : targetIndex] = targetSize / 2
   } else {
     const wrapped = newSplit(
       direction,
-      before ? [newGroupClone, target] : [target, newGroupClone],
+      before ? [newLeafNode, target] : [target, newLeafNode],
       [1, 1],
     )
     parent.parent.children.splice(targetIndex, 1, wrapped)
@@ -357,28 +269,14 @@ export function moveTab(
   tab: TabId,
   target: DropTarget,
 ): LayoutNode {
-  const source = findGroupOfTab(root, tab)
+  const source = findLeafByTab(root, tab)
   if (!source) return root
-  if (target.kind === 'into-group' && source.id === target.groupId) {
-    return reorderTabInGroup(root, target.groupId, tab, target.index)
-  }
-  if (
-    target.kind === 'split' &&
-    source.id === target.groupId &&
-    source.tabs.length === 1
-  ) {
-    return root
-  }
+  if (source.id === target.leafId) return root
+  if (leafCount(root) <= 1) return root
   const removed = removeTab(root, tab)
-  if (target.kind === 'into-group') {
-    const targetGroup = findGroup(removed.tree, target.groupId)
-    if (!targetGroup) return removed.tree
-    return insertTabInGroup(removed.tree, target.groupId, tab, target.index)
-  }
-  const targetGroup = findGroup(removed.tree, target.groupId)
-  if (!targetGroup) return removed.tree
-  const inserted = newGroup([tab])
-  return splitGroup(removed.tree, target.groupId, target.edge, inserted)
+  const targetLeaf = findLeafById(removed, target.leafId)
+  if (!targetLeaf) return removed
+  return splitLeaf(removed, target.leafId, target.edge, tab)
 }
 
 export function resizeSplit(
@@ -401,25 +299,17 @@ export function resizeSplit(
   return clone
 }
 
-export function ensureTab(root: LayoutNode, tab: TabId): LayoutNode {
-  const existing = findGroupOfTab(root, tab)
-  if (existing) return root
-  const clone = cloneTree(root)
-  const target = findFirstGroup(clone)
-  target.tabs.push(tab)
-  target.active = tab
-  validateLayout(clone)
-  return clone
-}
-
-export function activateTab(root: LayoutNode, tab: TabId): LayoutNode {
-  const existing = findGroupOfTab(root, tab)
-  if (!existing) return root
-  const clone = cloneTree(root)
-  const group = findGroupOfTab(clone, tab)
-  assert(group !== undefined, 'group missing after clone')
-  group.active = tab
-  return clone
+export function ensureTab(
+  root: LayoutNode,
+  tab: TabId,
+  anchorLeafId?: NodeId,
+): LayoutNode {
+  if (findLeafByTab(root, tab)) return root
+  const anchor =
+    (anchorLeafId !== undefined
+      ? findLeafById(root, anchorLeafId)
+      : undefined) ?? findFirstLeaf(root)
+  return splitLeaf(root, anchor.id, 'right', tab)
 }
 
 export function resetSizes(root: LayoutNode): LayoutNode {

@@ -15,8 +15,7 @@ export function DragOverlay() {
       setHoverRect(null)
       return
     }
-    const rect = computeHoverRect(dragHover)
-    setHoverRect(rect)
+    setHoverRect(computeSplitRect(dragHover))
   }, [dragHover, mouse.x, mouse.y])
 
   if (pickedUpTab === undefined) return null
@@ -44,67 +43,22 @@ export function DragOverlay() {
   )
 }
 
-function computeHoverRect(target: DropTarget): DOMRect | null {
-  if (target.kind === 'into-group') {
-    return computeIntoGroupRect(target.groupId, target.index)
-  }
-  return computeSplitRect(target.groupId, target.edge)
-}
-
-function computeIntoGroupRect(groupId: string, index: number): DOMRect | null {
+function computeSplitRect(target: DropTarget): DOMRect | null {
   const body = document.querySelector<HTMLElement>(
-    `[data-group-body-id="${cssAttr(groupId)}"]`,
-  )
-  if (!body) return null
-  const strip = document.querySelector<HTMLElement>(
-    `[data-tab-strip-group-id="${cssAttr(groupId)}"]`,
-  )
-  if (!strip) return body.getBoundingClientRect()
-  const tabs = strip.querySelectorAll<HTMLElement>('[data-tab-id]')
-  if (tabs.length === 0) {
-    return strip.getBoundingClientRect()
-  }
-  const stripRect = strip.getBoundingClientRect()
-  let lineX = stripRect.left
-  if (index >= tabs.length) {
-    const last = tabs[tabs.length - 1]
-    if (last) lineX = last.getBoundingClientRect().right
-  } else {
-    const target = tabs[index]
-    if (target) lineX = target.getBoundingClientRect().left
-  }
-  const bodyRect = body.getBoundingClientRect()
-  return new DOMRect(
-    lineX - 2,
-    stripRect.top,
-    4,
-    stripRect.height + bodyRect.height,
-  )
-}
-
-function computeSplitRect(
-  groupId: string,
-  edge: 'top' | 'right' | 'bottom' | 'left',
-): DOMRect | null {
-  const body = document.querySelector<HTMLElement>(
-    `[data-group-body-id="${cssAttr(groupId)}"]`,
+    `[data-leaf-body-id="${CSS.escape(target.leafId)}"]`,
   )
   if (!body) return null
   const rect = body.getBoundingClientRect()
   const halfW = rect.width / 2
   const halfH = rect.height / 2
-  if (edge === 'left') {
+  if (target.edge === 'left') {
     return new DOMRect(rect.left, rect.top, halfW, rect.height)
   }
-  if (edge === 'right') {
+  if (target.edge === 'right') {
     return new DOMRect(rect.left + halfW, rect.top, halfW, rect.height)
   }
-  if (edge === 'top') {
+  if (target.edge === 'top') {
     return new DOMRect(rect.left, rect.top, rect.width, halfH)
   }
   return new DOMRect(rect.left, rect.top + halfH, rect.width, halfH)
-}
-
-function cssAttr(value: string): string {
-  return CSS.escape(value)
 }

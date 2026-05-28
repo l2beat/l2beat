@@ -1,13 +1,12 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { type DockingHook, DockingProvider } from './context'
 import { DragOverlay } from './DragOverlay'
 import { NodeView } from './NodeView'
-import { findGroup, findGroupOfTab } from './tree'
+import { findLeafById } from './tree'
 import type { DropTarget, Edge, LayoutNode, NodeId } from './types'
 
 const DRAG_THRESHOLD_PX = 5
 const MIN_PANE_PX = 120
-const EDGE_FRACTION = 0.25
 
 interface ResizingState {
   splitId: NodeId
@@ -17,7 +16,7 @@ interface ResizingState {
 }
 
 interface PendingDragState {
-  tabId: string
+  tab: string
   startX: number
   startY: number
 }
@@ -25,7 +24,6 @@ interface PendingDragState {
 export function Docking(props: { useStore: DockingHook }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const useStore = props.useStore
-  const fullScreenTab = useStore((state) => state.fullScreenTab)
   const tree = useStore((state) => state.tree)
   const pickedUpTab = useStore((state) => state.pickedUpTab)
 
@@ -39,15 +37,14 @@ export function Docking(props: { useStore: DockingHook }) {
     pendingDragRef,
   })
 
-  const fullScreenGroup = useMemo(() => {
-    if (fullScreenTab === undefined) return undefined
-    return findGroupOfTab(tree, fullScreenTab)
-  }, [tree, fullScreenTab])
-
   return (
     <DockingProvider value={useStore}>
-      <div ref={containerRef} className="relative flex h-full w-full flex-col">
-        <NodeView node={fullScreenGroup ?? tree} />
+      <div
+        ref={containerRef}
+        className="relative flex h-full w-full flex-col"
+        data-docking-root="true"
+      >
+        <NodeView node={tree} />
         {pickedUpTab !== undefined && <DragOverlay />}
       </div>
     </DockingProvider>
@@ -73,17 +70,16 @@ function useGlobalMouseHandlers(args: {
         e.preventDefault()
         return
       }
-      const tab = target.closest<HTMLElement>('[data-tab-id]')
-      if (tab) {
-        pendingDragRef.current = {
-          tabId: tab.dataset.tabId ?? '',
-          startX: e.clientX,
-          startY: e.clientY,
-        }
-        const groupId = tab.dataset.tabGroupId
-        const tabId = tab.dataset.tabId
-        if (groupId && tabId) {
-          activateTabInGroup(useStore, groupId, tabId)
+      const header = target.closest<HTMLElement>('[data-leaf-id]')
+      if (header) {
+        const tab = header.dataset.leafTab
+        if (tab) {
+          pendingDragRef.current = {
+            tab,
+            startX: e.clientX,
+            startY: e.clientY,
+          }
+          useStore.getState().activateTab(tab)
         }
       }
     }
@@ -99,7 +95,7 @@ function useGlobalMouseHandlers(args: {
         const dx = e.clientX - pending.startX
         const dy = e.clientY - pending.startY
         if (Math.hypot(dx, dy) > DRAG_THRESHOLD_PX) {
-          useStore.getState().pickUpTab(pending.tabId)
+          useStore.getState().pickUpTab(pending.tab)
           pendingDragRef.current = null
         }
       }
@@ -182,20 +178,6 @@ function applyResize(
   useStore.getState().resizeSplit(state.splitId, state.index, clamped)
 }
 
-function activateTabInGroup(
-  useStore: DockingHook,
-  groupId: string,
-  tabId: string,
-): void {
-  const state = useStore.getState()
-  const group = findGroup(state.tree, groupId)
-  if (!group) return
-  if (!group.tabs.includes(tabId)) return
-  if (state.activeTab !== tabId || group.active !== tabId) {
-    useStore.getState().activateTab(tabId)
-  }
-}
-
 function hitTestDropTarget(
   x: number,
   y: number,
@@ -204,73 +186,28 @@ function hitTestDropTarget(
 ): DropTarget | undefined {
   const el = document.elementFromPoint(x, y) as HTMLElement | null
   if (!el) return undefined
-  const tabEl = el.closest<HTMLElement>('[data-tab-id]')
-  if (tabEl) return hitTab(tabEl, x)
-  const stripEl = el.closest<HTMLElement>('[data-tab-strip-group-id]')
-  if (stripEl) return hitStrip(stripEl, x, draggedTab, tree)
-  const bodyEl = el.closest<HTMLElement>('[data-group-body-id]')
-  if (bodyEl) return hitBody(bodyEl, x, y, draggedTab, tree)
-  return undefined
-}
-
-function hitTab(tabEl: HTMLElement, x: number): DropTarget | undefined {
-  const groupId = tabEl.dataset.tabGroupId
-  if (!groupId) return undefined
-  const tabs = Array.from(
-    tabEl.parentElement?.querySelectorAll<HTMLElement>('[data-tab-id]') ?? [],
+  const bodyEl = el.closest<HTMLElement>('[data-leaf-body-id]')
+  const headerEl = el.closest<HTMLElement>('[data-leaf-id]')
+  const target = bodyEl ?? headerEl
+  if (!target) return undefined
+  const leafId = bodyEl?.dataset.leafBodyId ?? headerEl?.dataset.leafId
+  if (!leafId) return undefined
+  const leaf = findLeafById(tree, leafId)
+  if (!leaf || leaf.tab === draggedTab) return undefined
+  const rect = target.getBoundingClientRect()
+  const edge = pickEdge(
+    (x - rect.left) / rect.width,
+    (y - rect.top) / rect.height,
   )
-  const idx = tabs.indexOf(tabEl)
-  if (idx < 0) return undefined
-  const rect = tabEl.getBoundingClientRect()
-  const insertAfter = x > rect.left + rect.width / 2
-  return {
-    kind: 'into-group',
-    groupId,
-    index: insertAfter ? idx + 1 : idx,
-  }
+  return { kind: 'split', leafId, edge }
 }
 
-function hitStrip(
-  stripEl: HTMLElement,
-  _x: number,
-  _draggedTab: string,
-  tree: LayoutNode,
-): DropTarget | undefined {
-  const groupId = stripEl.dataset.tabStripGroupId
-  if (!groupId) return undefined
-  const group = findGroup(tree, groupId)
-  if (!group) return undefined
-  return { kind: 'into-group', groupId, index: group.tabs.length }
-}
-
-function hitBody(
-  bodyEl: HTMLElement,
-  x: number,
-  y: number,
-  _draggedTab: string,
-  tree: LayoutNode,
-): DropTarget | undefined {
-  const groupId = bodyEl.dataset.groupBodyId
-  if (!groupId) return undefined
-  const rect = bodyEl.getBoundingClientRect()
-  const dx = (x - rect.left) / rect.width
-  const dy = (y - rect.top) / rect.height
-  const edge = pickEdge(dx, dy)
-  if (edge === undefined) {
-    const group = findGroup(tree, groupId)
-    if (!group) return undefined
-    return { kind: 'into-group', groupId, index: group.tabs.length }
-  }
-  return { kind: 'split', groupId, edge }
-}
-
-function pickEdge(dx: number, dy: number): Edge | undefined {
+function pickEdge(dx: number, dy: number): Edge {
   const fromLeft = dx
   const fromRight = 1 - dx
   const fromTop = dy
   const fromBottom = 1 - dy
   const min = Math.min(fromLeft, fromRight, fromTop, fromBottom)
-  if (min >= EDGE_FRACTION) return undefined
   if (min === fromLeft) return 'left'
   if (min === fromRight) return 'right'
   if (min === fromTop) return 'top'
@@ -283,12 +220,5 @@ function sameTarget(
 ): boolean {
   if (a === b) return true
   if (!a || !b) return false
-  if (a.kind !== b.kind) return false
-  if (a.kind === 'into-group' && b.kind === 'into-group') {
-    return a.groupId === b.groupId && a.index === b.index
-  }
-  if (a.kind === 'split' && b.kind === 'split') {
-    return a.groupId === b.groupId && a.edge === b.edge
-  }
-  return false
+  return a.leafId === b.leafId && a.edge === b.edge
 }

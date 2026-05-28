@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import { TabGroupView } from './TabGroupView'
+import { LeafView } from './LeafView'
 import type { LayoutNode, SplitNode } from './types'
 
 // JSX naturally mirrors the tree; depth is bounded by the user's layout
@@ -7,8 +7,8 @@ import type { LayoutNode, SplitNode } from './types'
 // AGENTS.md warns about.
 
 export function NodeView(props: { node: LayoutNode }) {
-  if (props.node.kind === 'group') {
-    return <TabGroupView node={props.node} />
+  if (props.node.kind === 'leaf') {
+    return <LeafView node={props.node} />
   }
   return <SplitView node={props.node} />
 }
@@ -20,6 +20,7 @@ function SplitView(props: { node: SplitNode }) {
       className={
         isRow ? 'flex h-full w-full flex-row' : 'flex h-full w-full flex-col'
       }
+      data-split-id={props.node.id}
     >
       {props.node.children.map((child, i) => (
         <Fragment key={child.id}>
@@ -32,6 +33,7 @@ function SplitView(props: { node: SplitNode }) {
               flex: `${props.node.sizes[i]} ${props.node.sizes[i]} 0`,
               flexBasis: 0,
             }}
+            data-node-id={child.id}
           >
             <NodeView node={child} />
           </div>

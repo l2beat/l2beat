@@ -1,7 +1,7 @@
 import type { FC, JSX } from 'react'
 import {
   type DockingConfig,
-  newGroup,
+  newLeaf,
   newSplit,
 } from '../../../components/docking'
 import { IS_READONLY } from '../../../config/readonly'
@@ -107,12 +107,12 @@ function renderTabExtras(props: { id: string }): JSX.Element {
 
 const defaultLayout = newSplit(
   'row',
-  [newGroup(['list']), newGroup(['values']), newGroup(['nodes'])],
+  [newLeaf('list'), newLeaf('values'), newLeaf('nodes')],
   [0.5, 1, 1],
 )
 
 export const dockingConfig: DockingConfig = {
-  storageKey: 'docking/v1:discovery',
+  storageKey: 'docking/v2:discovery',
   availableTabs: PANEL_IDS,
   filterTab: (id) => !(IS_READONLY && id === 'terminal'),
   defaultLayout,

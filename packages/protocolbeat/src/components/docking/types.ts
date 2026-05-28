@@ -6,6 +6,12 @@ export type NodeId = string
 export type SplitDirection = 'row' | 'column'
 export type Edge = 'top' | 'right' | 'bottom' | 'left'
 
+export type LeafNode = {
+  kind: 'leaf'
+  id: NodeId
+  tab: TabId
+}
+
 export type SplitNode = {
   kind: 'split'
   id: NodeId
@@ -14,18 +20,13 @@ export type SplitNode = {
   children: LayoutNode[]
 }
 
-export type GroupNode = {
-  kind: 'group'
-  id: NodeId
-  tabs: TabId[]
-  active: TabId
+export type LayoutNode = LeafNode | SplitNode
+
+export type DropTarget = {
+  kind: 'split'
+  leafId: NodeId
+  edge: Edge
 }
-
-export type LayoutNode = SplitNode | GroupNode
-
-export type DropTarget =
-  | { kind: 'into-group'; groupId: NodeId; index: number }
-  | { kind: 'split'; groupId: NodeId; edge: Edge }
 
 export interface DockingConfig {
   storageKey: string
@@ -35,5 +36,5 @@ export interface DockingConfig {
   maxLayouts?: number
   renderBody: (id: TabId) => ReactNode
   renderTabLabel: (id: TabId) => ReactNode
-  renderTabExtras?: (props: { id: TabId; groupId: NodeId }) => ReactNode
+  renderTabExtras?: (props: { id: TabId; leafId: NodeId }) => ReactNode
 }

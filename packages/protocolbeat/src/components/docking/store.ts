@@ -3,10 +3,9 @@ import { create, type StoreApi, type UseBoundStore } from 'zustand'
 import {
   allTabs,
   canRemoveTab,
-  findFirstGroup,
-  findGroupOfTab,
+  findFirstLeaf,
+  findLeafByTab,
   nextAvailableTab,
-  activateTab as treeActivateTab,
   ensureTab as treeEnsureTab,
   moveTab as treeMoveTab,
   removeTab as treeRemoveTab,
@@ -54,16 +53,15 @@ export interface DockingActions {
 
 export type DockingStore = DockingState & DockingActions
 
-const zGroup = v.object({
-  kind: v.literal('group'),
+const zLeaf = v.object({
+  kind: v.literal('leaf'),
   id: v.string(),
-  tabs: v.array(v.string()),
-  active: v.string(),
+  tab: v.string(),
 })
 
 const zLayoutNode: Validator<LayoutNode> = v.lazy(() =>
   v.union([
-    zGroup,
+    zLeaf,
     v.object({
       kind: v.literal('split'),
       id: v.string(),
@@ -133,9 +131,8 @@ function readSelected(config: DockingConfig): number {
   return 0
 }
 
-function activeOf(tree: LayoutNode): TabId | undefined {
-  const group = findFirstGroup(tree)
-  return group.active
+function firstTab(tree: LayoutNode): TabId | undefined {
+  return findFirstLeaf(tree).tab
 }
 
 function withTree(
@@ -148,6 +145,12 @@ function withTree(
       i === state.selectedLayout ? tree : layout,
     ),
   }
+}
+
+function anchorLeafId(state: DockingState): NodeId | undefined {
+  if (state.activeTab === undefined) return undefined
+  const leaf = findLeafByTab(state.tree, state.activeTab)
+  return leaf?.id
 }
 
 export function createDockingStore(
@@ -163,7 +166,7 @@ export function createDockingStore(
     tree: initialTree,
     layouts,
     selectedLayout: selected,
-    activeTab: activeOf(initialTree),
+    activeTab: firstTab(initialTree),
     fullScreenTab: undefined,
     pickedUpTab: undefined,
     dragHover: undefined,
@@ -172,13 +175,10 @@ export function createDockingStore(
     ensureTab: (id) =>
       set((state) => {
         if (!config.availableTabs.includes(id)) return state
-        if (findGroupOfTab(state.tree, id)) {
-          return {
-            ...withTree(state, treeActivateTab(state.tree, id)),
-            activeTab: id,
-          }
+        if (findLeafByTab(state.tree, id)) {
+          return { activeTab: id }
         }
-        const tree = treeEnsureTab(state.tree, id)
+        const tree = treeEnsureTab(state.tree, id, anchorLeafId(state))
         return { ...withTree(state, tree), activeTab: id }
       }),
     addTab: () =>
@@ -187,7 +187,7 @@ export function createDockingStore(
         const allowed = config.availableTabs.filter(filter)
         const next = nextAvailableTab(state.tree, allowed)
         if (!next) return state
-        const tree = treeEnsureTab(state.tree, next)
+        const tree = treeEnsureTab(state.tree, next, anchorLeafId(state))
         return { ...withTree(state, tree), activeTab: next }
       }),
     removeTab: (id) =>
@@ -195,8 +195,9 @@ export function createDockingStore(
         const targetId = id ?? state.activeTab
         if (!targetId) return state
         if (!canRemoveTab(state.tree, targetId)) return state
-        const { tree } = treeRemoveTab(state.tree, targetId)
-        const newActive = activeOf(tree)
+        const tree = treeRemoveTab(state.tree, targetId)
+        const newActive =
+          state.activeTab === targetId ? firstTab(tree) : state.activeTab
         return {
           ...withTree(state, tree),
           activeTab: newActive,
@@ -206,13 +207,12 @@ export function createDockingStore(
       }),
     activateTab: (id) =>
       set((state) => {
-        if (!findGroupOfTab(state.tree, id)) return state
-        const tree = treeActivateTab(state.tree, id)
-        return { ...withTree(state, tree), activeTab: id }
+        if (!findLeafByTab(state.tree, id)) return state
+        return { activeTab: id }
       }),
     moveTab: (id, target) =>
       set((state) => {
-        if (!findGroupOfTab(state.tree, id)) return state
+        if (!findLeafByTab(state.tree, id)) return state
         const tree = treeMoveTab(state.tree, id, target)
         return { ...withTree(state, tree), activeTab: id }
       }),
@@ -241,7 +241,7 @@ export function createDockingStore(
         if (!tab || !target) {
           return { pickedUpTab: undefined, dragHover: undefined }
         }
-        if (!findGroupOfTab(state.tree, tab)) {
+        if (!findLeafByTab(state.tree, tab)) {
           return { pickedUpTab: undefined, dragHover: undefined }
         }
         const tree = treeMoveTab(state.tree, tab, target)
@@ -261,7 +261,7 @@ export function createDockingStore(
         return {
           tree: layout,
           selectedLayout: n,
-          activeTab: activeOf(layout),
+          activeTab: firstTab(layout),
           fullScreenTab: undefined,
         }
       }),
