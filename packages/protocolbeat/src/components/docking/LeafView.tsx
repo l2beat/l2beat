@@ -1,5 +1,6 @@
 import * as RadixSelect from '@radix-ui/react-select'
 import clsx from 'clsx'
+import { useCallback } from 'react'
 import { IconChecked } from '../../icons/IconChcked'
 import { IconChevronDown } from '../../icons/IconChevronDown'
 import { IconClose } from '../../icons/IconClose'
@@ -17,12 +18,18 @@ export function LeafView(props: { node: LeafNode }) {
   const toggleFullScreen = useStore((state) => state.toggleFullScreen)
   const removeTab = useStore((state) => state.removeTab)
   const changeTab = useStore((state) => state.changeTab)
+  const setPlaceholder = useStore((state) => state.setPlaceholder)
 
   const hiddenByFullScreen =
     fullScreenTab !== undefined && fullScreenTab !== props.node.tab
   const isActive = activeTab === props.node.tab
   const isFullScreen = fullScreenTab === props.node.tab
   const isPickedUp = pickedUpTab === props.node.tab
+
+  const setBodyPlaceholder = useCallback(
+    (el: HTMLDivElement | null) => setPlaceholder(props.node.tab, el),
+    [props.node.tab, setPlaceholder],
+  )
 
   const filter = config.filterTab ?? (() => true)
   const availableTabs = config.availableTabs.filter(filter)
@@ -111,9 +118,9 @@ export function LeafView(props: { node: LeafNode }) {
         </div>
       </div>
       <div
+        ref={setBodyPlaceholder}
         className="relative min-h-0 flex-1"
         data-leaf-body-id={props.node.id}
-        data-body-placeholder={props.node.tab}
       />
     </div>
   )

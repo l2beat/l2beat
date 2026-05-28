@@ -25,6 +25,7 @@ export function PositionedBody(props: {
   const tree = useStore((state) => state.tree)
   const fullScreenTab = useStore((state) => state.fullScreenTab)
   const config = useStore((state) => state.config)
+  const placeholder = useStore((state) => state.placeholders[props.tab] ?? null)
   const [rect, setRect] = useState<Rect | null>(null)
 
   const isFullScreen = fullScreenTab === props.tab
@@ -34,10 +35,11 @@ export function PositionedBody(props: {
   useLayoutEffect(() => {
     const root = props.rootRef.current
     if (!root) return undefined
-    let observed: HTMLElement | null = null
 
     function measure() {
       if (!root) return
+      const currentPlaceholder =
+        useStore.getState().placeholders[props.tab] ?? null
       const rootRect = root.getBoundingClientRect()
       if (isFullScreen) {
         setRectIfChanged(setRect, {
@@ -48,16 +50,8 @@ export function PositionedBody(props: {
         })
         return
       }
-      const placeholder = document.querySelector<HTMLElement>(
-        `[data-body-placeholder="${CSS.escape(props.tab)}"]`,
-      )
-      if (!placeholder) return
-      if (placeholder !== observed) {
-        if (observed) ro.unobserve(observed)
-        ro.observe(placeholder)
-        observed = placeholder
-      }
-      const phRect = placeholder.getBoundingClientRect()
+      if (!currentPlaceholder) return
+      const phRect = currentPlaceholder.getBoundingClientRect()
       setRectIfChanged(setRect, {
         left: phRect.left - rootRect.left,
         top: phRect.top - rootRect.top,
@@ -68,9 +62,14 @@ export function PositionedBody(props: {
 
     const ro = new ResizeObserver(measure)
     ro.observe(root)
+    if (placeholder) ro.observe(placeholder)
     measure()
-    return () => ro.disconnect()
-  }, [props.tab, tree, isFullScreen, props.rootRef])
+    const frame = requestAnimationFrame(measure)
+    return () => {
+      cancelAnimationFrame(frame)
+      ro.disconnect()
+    }
+  }, [props.tab, placeholder, isFullScreen, tree, props.rootRef, useStore])
 
   const leaf = findLeafByTab(tree, props.tab)
   const effective = isHiddenByFullScreen ? OFFSCREEN : (rect ?? OFFSCREEN)

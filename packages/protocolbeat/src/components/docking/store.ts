@@ -34,6 +34,7 @@ export interface DockingState {
   pickedUpTab: TabId | undefined
   dragHover: DropTarget | undefined
   mouse: { x: number; y: number }
+  placeholders: Record<TabId, HTMLElement | null>
   config: DockingConfig
 }
 
@@ -52,6 +53,7 @@ export interface DockingActions {
   dropTab: () => void
   setMouse: (x: number, y: number) => void
   loadLayout: (n: number) => void
+  setPlaceholder: (tab: TabId, el: HTMLElement | null) => void
 }
 
 export type DockingStore = DockingState & DockingActions
@@ -174,6 +176,7 @@ export function createDockingStore(
     pickedUpTab: undefined,
     dragHover: undefined,
     mouse: { x: 0, y: 0 },
+    placeholders: {},
     config,
     ensureTab: (id) =>
       set((state) => {
@@ -274,6 +277,11 @@ export function createDockingStore(
           activeTab: firstTab(layout),
           fullScreenTab: undefined,
         }
+      }),
+    setPlaceholder: (tab, el) =>
+      set((state) => {
+        if (state.placeholders[tab] === el) return state
+        return { placeholders: { ...state.placeholders, [tab]: el } }
       }),
   }))
 
