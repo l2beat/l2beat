@@ -3106,7 +3106,15 @@
     {
       "address": "katana:0x3138BBdAeAd339d34F084445192B2be9dd4B9f27",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "description": "update the global exit root (GER) that is used for L2 deposits.",
+          "role": ".globalExitRootUpdater"
+        }
+      ]
     },
     {
       "name": "DeployerWhitelist",
@@ -3762,6 +3770,45 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "manage token mappings and deployments.",
+          "role": ".bridgeManager"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "own and upgrade default L2 token contracts deployed by the bridge.",
+          "role": ".getProxiedTokensManager"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "pause the bridge.",
+          "role": ".emergencyBridgePauser"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "unpause the bridge.",
+          "role": ".emergencyBridgeUnpauser"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "description": "manage 'claimed' status of global deposit indexes (can freeze bridge transactions), remove global exit roots (used for L2 deposits).",
+          "role": ".globalExitRootRemover"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "description": "roll back or insert leaves into the local exit tree (LET) that enables withdrawals from the L2. (can steal)",
+          "role": ".globalExitRootRemover",
+          "condition": "if the bridge is paused"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "katana:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747208518,
@@ -6649,9 +6696,9 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "katana/AggchainFEP_post035": "0x428b3edaf13fa3a14d448eeef5e3718dd7f95d5a299666a436ce66a0def4d9d9",
-    "katana/AgglayerBridgeL2": "0x39421ff59c81d86dac23f6e5fb82ba5c8f2273330e0dc617dbb37c001170f0bc",
+    "katana/AgglayerBridgeL2": "0x76fb4560437452552548806054207cbbf8cbe13cd151c755db126d74a43a579f",
     "katana/BridgeLib": "0xb8ad695e33fde1c15595da1cbf166d648c6be57a47ec43405d330e10b3d6e6ec",
-    "katana/GlobalExitRootManagerL2SovereignChain": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "katana/GlobalExitRootManagerL2SovereignChain": "0x9d452d1c90056ade0235968c589413c417cf9166cfab9c962ca34d20ffcbd180",
     "katana/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
     "katana/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
     "katana/TokenWrappedBridgeUpgradeable": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -6684,5 +6731,5 @@
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
   "usedBlockNumbers": { "ethereum": 25192587, "katana": 33213387 },
-  "permissionsConfigHash": "0xe0fafd5be4f300dd8093df412cda0cef65d1b3902697967dcedccb3c2d089f9d"
+  "permissionsConfigHash": "0x01e56d2d77872a6f31e510aa01ee743f2e3cd788dbdefbb218ca34c48b4795c7"
 }
