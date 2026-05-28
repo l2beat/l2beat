@@ -736,12 +736,16 @@ function getProgramHashes(
       return opSuccinctProgramHashes.map((el) => PROGRAM_HASHES(el))
     }
     case 'AggregateProof': {
-      const rangeHash = templateVars.discovery.getContractValueOrUndefined<
-        string
-      >('AggregateVerifier', 'ZK_RANGE_HASH')
-      const aggregateHash = templateVars.discovery.getContractValueOrUndefined<
-        string
-      >('AggregateVerifier', 'ZK_AGGREGATE_HASH')
+      const rangeHash =
+        templateVars.discovery.getContractValueOrUndefined<string>(
+          'AggregateVerifier',
+          'ZK_RANGE_HASH',
+        )
+      const aggregateHash =
+        templateVars.discovery.getContractValueOrUndefined<string>(
+          'AggregateVerifier',
+          'ZK_AGGREGATE_HASH',
+        )
       const hashes: string[] = []
       if (rangeHash) hashes.push(rangeHash)
       if (aggregateHash) hashes.push(aggregateHash)
@@ -1246,9 +1250,11 @@ The Kailua state validation system is primarily optimistically resolved, so no v
           'AggregateVerifier',
           'INTERMEDIATE_BLOCK_INTERVAL',
         )
-      const initBond = templateVars.discovery.getContractValueOrUndefined<
-        number
-      >('DisputeGameFactory', 'initBondGame621')
+      const initBond =
+        templateVars.discovery.getContractValueOrUndefined<number>(
+          'DisputeGameFactory',
+          'initBondGame621',
+        )
       return {
         categories: [
           {
