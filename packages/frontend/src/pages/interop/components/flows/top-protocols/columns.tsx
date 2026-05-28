@@ -1,5 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
+import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
 import { TopTokensCell } from '~/pages/interop/components/tokens/TopTokensCell'
@@ -9,32 +10,27 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { TopRouteCell } from './TopRouteCell'
 
-export type TopProtocolRow = ProtocolEntry & BasicTableRow
+export type TopProtocolRow = ProtocolEntry & BasicTableRow & { icon: string }
 
 const columnHelper = createColumnHelper<TopProtocolRow>()
 
 export const topProtocolsColumns = [
-  columnHelper.display({
-    id: 'name',
+  ...getCommonProjectColumns(
+    columnHelper,
+    (row) => `/interop/protocols/${row.slug}`,
+  ),
+  columnHelper.accessor('name', {
     header: 'Name',
     cell: (ctx) => (
       <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
-        <div className="flex items-center gap-2">
-          <img
-            className="min-h-5 min-w-5"
-            src={ctx.row.original.iconUrl}
-            width={20}
-            height={20}
-            alt={`${ctx.row.original.name} logo`}
-          />
-          <span className="font-bold text-label-value-15">
-            {ctx.row.original.name}
-          </span>
-        </div>
+        <span className="font-bold text-label-value-15">
+          {ctx.row.original.name}
+        </span>
       </TableLink>
     ),
     meta: {
-      headClassName: 'text-2xs',
+      cellClassName: 'whitespace-normal md:pl-2!',
+      headClassName: 'text-2xs md:pl-2!',
     },
   }),
   columnHelper.accessor('type', {
