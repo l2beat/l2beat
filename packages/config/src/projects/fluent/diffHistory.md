@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xbca48c0bc697da093572be32b312899efe941021
+Generated with discovered.json: 0xbb6448495bf44e05a3fa38fdf9afa16f8bbdbdaf
 
-# Diff at Tue, 26 May 2026 17:06:13 GMT:
+# Diff at Thu, 28 May 2026 12:39:26 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@e7094edf4e66361e569a605db15b357404737bba block: 1778589577
-- current timestamp: 1779815103
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778589577
+- current timestamp: 1779971902
 
 ## Description
 
@@ -24,10 +24,10 @@ L1FluentBridge implementation swapped by FluentMultisig on 2026-05-20: `0x047Aâ€
     +++ description: Core Fluent rollup contract. Sequencers commit batch roots and EIP-4844 blob hashes; an AWS Nitro Enclave preconfirms each batch via a signature whose key is bound to a PCR0 measurement verified by SP1; participants holding CHALLENGER_ROLE can dispute and the prover resolves disputes with SP1 ZK proofs; batches finalize after a block-count delay or immediately once all blocks are proven.
       values.lastFinalizedBatchIndex:
 -        2039
-+        3228
++        3391
       values.nextBatchIndex:
 -        2210
-+        3408
++        3561
     }
 ```
 
@@ -50,13 +50,13 @@ L1FluentBridge implementation swapped by FluentMultisig on 2026-05-20: `0x047Aâ€
 +        550000
       values.getNonce:
 -        1023
-+        1298
++        1331
       values.getReceivedNonce:
 -        485
-+        545
++        551
       values.getSentMessageCursor:
 -        1023
-+        1298
++        1331
       implementationNames.eth:0x047AaDf25df7D17bB5B6b1FF31cecD1E4973C227:
 -        "L1FluentBridge"
       implementationNames.eth:0xF67255be817061139C9DeeA757f7276916cBF849:
@@ -86,6 +86,16 @@ discovery. Values are for block 1778589577 (main branch discovery), not current.
 ```
 
 ```diff
+    contract SP1Verifier (eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      template:
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.0.0)."
+    }
+```
+
+```diff
     contract L1FluentBridge (eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc) [fluent/L1FluentBridge] {
     +++ description: Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets anyone process L2->L1 messages with two Merkle proofs against a preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE.
       description:
@@ -93,6 +103,16 @@ discovery. Values are for block 1778589577 (main branch discovery), not current.
 +        "Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets anyone process L2->L1 messages with two Merkle proofs against a preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE."
       values.relayerAC:
 -        ["eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48"]
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      template:
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.1.0)."
     }
 ```
 
