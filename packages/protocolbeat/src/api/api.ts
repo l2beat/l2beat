@@ -8,7 +8,6 @@ import type {
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
   ApiDiffHistoryResponse,
-  ApiGlobalConfigSyncStatusResponse,
   ApiHandlersResponse,
   ApiListTemplatesResponse,
   ApiPreviewResponse,
@@ -184,15 +183,6 @@ export async function getConfigSyncStatus(
   }
   const data = await res.json()
   return data as ApiConfigSyncStatusResponse
-}
-
-export async function getGlobalConfigSyncStatus(): Promise<ApiGlobalConfigSyncStatusResponse> {
-  const res = await fetch('/api/config/sync-status')
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiGlobalConfigSyncStatusResponse
 }
 
 export async function getConfigHealth(): Promise<ApiConfigHealthResponse> {

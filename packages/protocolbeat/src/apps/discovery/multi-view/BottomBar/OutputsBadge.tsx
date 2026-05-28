@@ -1,5 +1,4 @@
 import type { RefreshReason } from '@l2beat/discovery'
-import { Fragment } from 'react'
 import { Loader } from '../../../../components/Loader'
 import {
   Tooltip,
@@ -8,10 +7,7 @@ import {
 } from '../../../../components/Tooltip'
 import { IconChecked } from '../../../../icons/IconChcked'
 import { IconTriangleAlert } from '../../../../icons/IconTriangleAlert'
-import {
-  useConfigSyncStatus,
-  useGlobalConfigSyncStatus,
-} from '../../hooks/useConfigSyncStatus'
+import { useConfigSyncStatus } from '../../hooks/useConfigSyncStatus'
 
 type Props = {
   project: string
@@ -21,7 +17,7 @@ export function OutputsSyncBadge(props: Props) {
   const { reasons, isPending, isError } = useConfigSyncStatus({ project })
 
   const { icon, tooltipContent } = toStatusBundle({
-    payload: { type: 'single', reasons: reasons ?? [] },
+    reasons: reasons ?? [],
     isError: isError,
     isPending: isPending,
   })
@@ -30,27 +26,6 @@ export function OutputsSyncBadge(props: Props) {
     <Tooltip>
       <TooltipTrigger>
         <div className="flex items-center gap-1 text-xs">Project {icon}</div>
-      </TooltipTrigger>
-      <TooltipContent>{tooltipContent}</TooltipContent>
-    </Tooltip>
-  )
-}
-
-export function GlobalOutputsSyncBadge(props: { project: string }) {
-  const { reasons, isPending, isError } = useGlobalConfigSyncStatus()
-
-  const filtered = reasons?.filter(({ project }) => project !== props.project)
-
-  const { icon, tooltipContent } = toStatusBundle({
-    payload: { type: 'many', reasons: filtered ?? [] },
-    isError: isError,
-    isPending: isPending,
-  })
-
-  return (
-    <Tooltip>
-      <TooltipTrigger>
-        <div className="flex items-center gap-1 text-xs">Global {icon}</div>
       </TooltipTrigger>
       <TooltipContent>{tooltipContent}</TooltipContent>
     </Tooltip>
@@ -101,12 +76,7 @@ function formatReason(reason: RefreshReason) {
 }
 
 function toStatusBundle(props: {
-  payload:
-    | { type: 'single'; reasons: RefreshReason[] }
-    | {
-        type: 'many'
-        reasons: { project: string; reasons: RefreshReason[] }[]
-      }
+  reasons: RefreshReason[]
   isError: boolean
   isPending: boolean
 }) {
@@ -124,27 +94,10 @@ function toStatusBundle(props: {
     }
   }
 
-  if (props.payload.reasons.length === 0) {
+  if (props.reasons.length === 0) {
     return {
       icon: <IconChecked className="text-aux-green" />,
       tooltipContent: 'Outputs are in sync.',
-    }
-  }
-
-  if (props.payload.type === 'single') {
-    return {
-      icon: <IconTriangleAlert className="text-aux-yellow" />,
-      tooltipContent: (
-        <>
-          There are some config changes not yet reflected in the project
-          discovery. Consider rerunning discovery.
-          <ol className="mt-1.5 ml-4 list-decimal space-y-1">
-            {props.payload.reasons.map((reason, idx) => (
-              <li key={idx}>{formatReason(reason)}</li>
-            ))}
-          </ol>
-        </>
-      ),
     }
   }
 
@@ -152,21 +105,12 @@ function toStatusBundle(props: {
     icon: <IconTriangleAlert className="text-aux-yellow" />,
     tooltipContent: (
       <>
-        There are some config changes not yet reflected in the following
-        projects. Consider rerunning discovery.
+        There are some config changes not yet reflected in the project
+        discovery. Consider rerunning discovery.
         <ol className="mt-1.5 ml-4 list-decimal space-y-1">
-          {props.payload.reasons.map(({ project, reasons }) => {
-            return (
-              <Fragment key={project}>
-                <li>{project}:</li>
-                <ol className="ml-4 list-disc space-y-1">
-                  {reasons.map((reason, idx) => (
-                    <li key={idx}>{formatReason(reason)}</li>
-                  ))}
-                </ol>
-              </Fragment>
-            )
-          })}
+          {props.reasons.map((reason, idx) => (
+            <li key={idx}>{formatReason(reason)}</li>
+          ))}
         </ol>
       </>
     ),
