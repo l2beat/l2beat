@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { writeTemplateFile } from '../../../api/api'
 import { useDebouncedCallback } from '../../../utils/debounce'
@@ -20,19 +20,20 @@ type Props = {
 
 export function useTemplateModel({ templateId, files }: Props) {
   const queryClient = useQueryClient()
-  const [templateModel, setTemplateModel] = useState(
+  const [prevTemplate, setPrevTemplate] = useState(files.template)
+  const [templateModel, setTemplateModel] = useState(() =>
     ContractConfigModel.fromRawJsonc(files.template),
   )
+  if (files.template !== prevTemplate) {
+    setPrevTemplate(files.template)
+    setTemplateModel(ContractConfigModel.fromRawJsonc(files.template))
+  }
 
   const debouncedInvalidateSyncStatus = useDebouncedCallback(() =>
     queryClient.invalidateQueries({
       queryKey: ['config-sync-status'],
     }),
   )
-
-  useEffect(() => {
-    setTemplateModel(ContractConfigModel.fromRawJsonc(files.template))
-  }, [files.template])
 
   const toggleIgnoreMethods = (fieldName: string) => {
     const current = templateModel.ignoreMethods ?? []
@@ -43,8 +44,10 @@ export function useTemplateModel({ templateId, files }: Props) {
   }
 
   const toggleIgnoreRelatives = (fieldName: string) => {
-    const current = templateModel.ignoreRelatives ?? []
-    const updated = toggleInList(fieldName, current)
+    const current = templateModel.ignoreRelatives
+    // wildcard `true` ignores every field already; toggle is a no-op
+    if (current === true) return
+    const updated = toggleInList(fieldName, current ?? [])
     const newModel = templateModel.setIgnoreRelatives(updated)
     setTemplateModel(newModel)
     saveModelContents(newModel)
@@ -192,7 +195,8 @@ export function useTemplateModel({ templateId, files }: Props) {
 
     save: saveRaw,
 
-    hasTemplate: templateId,
+    hasTemplate: !!templateId,
+    templateId,
 
     files: {
       template: templateString,

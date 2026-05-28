@@ -2,6 +2,7 @@ import type { Database, TokenDatabase } from '@l2beat/database'
 import { initTRPC } from '@trpc/server'
 import type { jwtVerify } from 'jose'
 import type { Config } from '../config/Config'
+import type { TokenIngestionProcessor } from '../ingestion/TokenIngestionProcessor'
 import { getSession } from '../utils/getSession'
 
 export const createTRPCContext = async (opts: {
@@ -9,15 +10,18 @@ export const createTRPCContext = async (opts: {
   config: Config
   db: Database
   tokenDb: TokenDatabase
+  tokenIngestionProcessor: TokenIngestionProcessor
   jwtVerifyFn?: typeof jwtVerify
 }) => {
-  const { headers, config, db, tokenDb, jwtVerifyFn } = opts
+  const { headers, config, db, tokenDb, tokenIngestionProcessor, jwtVerifyFn } =
+    opts
   const session = await getSession(headers, config, { jwtVerifyFn })
 
   return {
     headers,
     db,
     tokenDb,
+    tokenIngestionProcessor,
     session,
   }
 }

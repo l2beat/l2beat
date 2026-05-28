@@ -46,11 +46,17 @@ export function CodePanel() {
     }
 
     return sources.length > 1
-  }, [codeResponse.isPending, selectedAddress])
+  }, [codeResponse.data])
 
   const files = useMemo(
     () => getCodeFiles(codeResponse, selectedAddress, hasCode),
-    [codeResponse, selectedAddress, hasCode],
+    [
+      codeResponse.data,
+      codeResponse.isPending,
+      codeResponse.isError,
+      selectedAddress,
+      hasCode,
+    ],
   )
 
   const showRediscoverInfo = codeResponse.isError && !IS_READONLY

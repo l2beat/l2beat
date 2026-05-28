@@ -43,7 +43,9 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
     },
     {
       tag: 'ignore:relative',
-      isActive: templateModel.ignoreRelatives?.includes(field.name),
+      isActive:
+        templateModel.ignoreRelatives === true ||
+        templateModel.ignoreRelatives?.includes(field.name),
       onClick: canModifyTemplate
         ? () => templateModel.toggleIgnoreRelatives(field.name)
         : undefined,
@@ -79,7 +81,9 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
     },
     {
       tag: 'ignore:relative',
-      isActive: configModel.ignoreRelatives?.includes(field.name),
+      isActive:
+        configModel.ignoreRelatives === true ||
+        configModel.ignoreRelatives?.includes(field.name),
       onClick: canModify
         ? () => configModel.toggleIgnoreRelatives(field.name)
         : undefined,

@@ -21,6 +21,18 @@ export function Settings({ className }: { className?: string }) {
     })
   }, [preferences.hideLargeArrays, setPreferences])
 
+  const toggleHighlightOverlapping = useCallback(() => {
+    setPreferences({
+      highlightOverlapping: preferences.highlightOverlapping === false,
+    })
+  }, [preferences.highlightOverlapping, setPreferences])
+
+  const toggleUseExperimentalRenderer = useCallback(() => {
+    setPreferences({
+      useExperimentalRenderer: preferences.useExperimentalRenderer !== true,
+    })
+  }, [preferences.useExperimentalRenderer, setPreferences])
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -61,6 +73,34 @@ export function Settings({ className }: { className?: string }) {
             <div className="pl-5 font-light text-coffee-400 text-xs">
               Fields containing long arrays are collapsed by default to keep
               nodes compact and the graph readable.
+            </div>
+          </div>
+          <div>
+            <div
+              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
+              onClick={toggleHighlightOverlapping}
+            >
+              <Checkbox checked={preferences.highlightOverlapping !== false} />
+              Highlight overlapping nodes
+            </div>
+            <div className="pl-5 font-light text-coffee-400 text-xs">
+              Draw an accent outline around nodes whose bounding boxes
+              intersect, so a smaller node hidden behind a larger one is still
+              visible.
+            </div>
+          </div>
+          <div>
+            <div
+              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
+              onClick={toggleUseExperimentalRenderer}
+            >
+              <Checkbox
+                checked={preferences.useExperimentalRenderer === true}
+              />
+              Use experimental renderer
+            </div>
+            <div className="pl-5 font-light text-coffee-400 text-xs">
+              Faster, but less robust and with minor visual differences.
             </div>
           </div>
         </div>

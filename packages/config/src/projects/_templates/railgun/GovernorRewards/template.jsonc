@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "GovernorRewards",
-  "description": "Upgradeable reward distributor that pulls assets from the Railgun treasury and allocates them to stakers using snapshot voting power. If you trust this contract, you trust its owner to set reward parameters and tracked assets, and its proxy admin to pause or upgrade the logic.",
+  "description": "Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.",
   "category": "gov",
   "canActIndependently": false,
   "ignoreMethods": [

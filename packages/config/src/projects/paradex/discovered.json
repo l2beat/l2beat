@@ -1,8 +1,14 @@
 {
   "name": "paradex",
-  "timestamp": 1778579646,
-  "configHash": "0xe147a2dfbb62ca52636bca43d754a5bae4e40213e358dabc4b775b0f9edfeb52",
+  "timestamp": 1779962809,
+  "configHash": "0xbb00111652aefbd1f8cb91f3ad989bd7152c23ee6c7637ab4588e2620a088aab",
   "entries": [
+    {
+      "address": "eth:0x0405107a60391Eb51821be373ff978115Ee58488",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-sharp-verifier"
+    },
     {
       "name": "Paradex Multisig",
       "address": "eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
@@ -33,18 +39,19 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x0405107a60391Eb51821be373ff978115Ee58488",
           "eth:0x64F4396bb0669C72858Cc50C779b48EB25F45770",
-          "eth:0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
+          "eth:0xCe958D997F4a5824D4d503A128216322C6C223a0",
           "eth:0x804d60CB1ade94511f7915A2062948685Ca8C81f",
           "eth:0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6",
           "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0x9bbbe1c3f31b5879894b5efd7e825b6185426f8e8859a7ad70d4d0c32cdde81b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 17,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -160,11 +167,6 @@
         "eth:0xc23D17BaeE6b2026d0e76914feD78d24b25548e3": "StarkgateManager"
       },
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "address": "eth:0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
@@ -317,6 +319,11 @@
           "role": ".operators"
         }
       ]
+    },
+    {
+      "address": "eth:0xCe958D997F4a5824D4d503A128216322C6C223a0",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199",
@@ -552,7 +559,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 32800,
+        "l1ToL2MessageNonce": 32895,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -572,9 +579,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "2365657457133231395904860334624001356306471269792229939677992012105270162864",
-        "stateBlockNumber": 1964785,
-        "stateRoot": "1547411863540145520619226637260493282658311569246842149751680164767093371613",
+        "stateBlockHash": "2439120014627996552125306555082327457756085230957610000925241200177678382608",
+        "stateBlockNumber": 2004685,
+        "stateRoot": "3330685967276052759448065075514058340763116104910308857817241402907154242565",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -710,7 +717,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 57,
+        "nonce": 60,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1189,6 +1196,6 @@
     "starknet/Starknet": "0x94ec7824dea8f420d9b02624ccb3fee6ea169600cf6665c49d0c82cbc2651cc3",
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
-  "usedBlockNumbers": { "ethereum": 25078268 },
-  "permissionsConfigHash": "0x83626713d39e56baba32892529b290338f1639b1b278909a7fe2c1e37b7eb062"
+  "usedBlockNumbers": { "ethereum": 25193138 },
+  "permissionsConfigHash": "0x66fa664adbb12c09dcdb044c4468224c705da4dc795743f950fb13dcf7ad2b03"
 }

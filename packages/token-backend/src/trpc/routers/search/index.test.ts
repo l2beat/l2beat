@@ -1,8 +1,7 @@
 import type { Database, TokenDatabase } from '@l2beat/database'
-import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
-import type { ChainRepository } from '@l2beat/database/dist/repositories/ChainRepository'
-import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
+import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
+import type { AbstractTokenRecord } from '../../../schemas/AbstractToken'
 import { createCallerFactory } from '../../trpc'
 import { searchRouter } from './index'
 
@@ -21,13 +20,13 @@ describe('searchRouter', () => {
         },
       ]
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockFn().resolvesTo(deployedTokens),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
@@ -46,7 +45,7 @@ describe('searchRouter', () => {
 
     it('returns fuzzy search results', async () => {
       const abstractTokens = [
-        {
+        abstractToken({
           id: 'TK0001',
           symbol: 'Bitcoin',
           category: 'btc' as const,
@@ -56,8 +55,8 @@ describe('searchRouter', () => {
           comment: null,
           coingeckoListingTimestamp: null,
           reviewed: false,
-        },
-        {
+        }),
+        abstractToken({
           id: 'TK0002',
           symbol: 'Ethereum',
           category: 'ether' as const,
@@ -67,7 +66,7 @@ describe('searchRouter', () => {
           comment: null,
           coingeckoListingTimestamp: null,
           reviewed: false,
-        },
+        }),
       ]
       const deployedTokens = [
         {
@@ -84,13 +83,13 @@ describe('searchRouter', () => {
       const mockGetAllAbstract = mockFn().resolvesTo(abstractTokens)
       const mockGetAllChains = mockFn().resolvesTo([])
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockGetAllDeployed,
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockGetAllAbstract,
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockGetAllChains,
         }),
       })
@@ -107,13 +106,13 @@ describe('searchRouter', () => {
 
     it('returns empty arrays when no tokens exist', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
@@ -129,17 +128,13 @@ describe('searchRouter', () => {
     })
 
     it('limits results to 15 items per type', async () => {
-      const abstractTokens = Array.from({ length: 20 }, (_, i) => ({
-        id: `TK${String(i).padStart(4, '0')}`,
-        symbol: `Token${i}`,
-        category: 'other' as const,
-        issuer: null,
-        coingeckoId: null,
-        iconUrl: null,
-        comment: null,
-        coingeckoListingTimestamp: null,
-        reviewed: false,
-      }))
+      const abstractTokens = Array.from({ length: 20 }, (_, i) =>
+        abstractToken({
+          id: `TK${String(i).padStart(4, '0')}`,
+          symbol: `Token${i}`,
+          category: 'other' as const,
+        }),
+      )
       const deployedTokens = Array.from({ length: 20 }, (_, i) => ({
         chain: 'ethereum',
         address: `0x${String(i).padStart(40, '0')}`,
@@ -150,13 +145,13 @@ describe('searchRouter', () => {
         deploymentTimestamp: 0,
       }))
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockFn().resolvesTo(deployedTokens),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo(abstractTokens),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
@@ -194,13 +189,13 @@ describe('searchRouter', () => {
         },
       ]
       const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<DeployedTokenRepository>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
-        abstractToken: mockObject<AbstractTokenRepository>({
+        abstractToken: mockObject<TokenDatabase['abstractToken']>({
           getAll: mockFn().resolvesTo([]),
         }),
-        chain: mockObject<ChainRepository>({
+        chain: mockObject<TokenDatabase['chain']>({
           getAll: mockFn().resolvesTo(chains),
         }),
       })
@@ -224,5 +219,23 @@ function createRouter(mockTokenDb: TokenDatabase) {
     },
     db: mockObject<Database>({}),
     tokenDb: mockTokenDb,
+    tokenIngestionProcessor: mockObject<TokenIngestionProcessor>({}),
   })
+}
+
+function abstractToken(
+  overrides: Partial<AbstractTokenRecord> & Pick<AbstractTokenRecord, 'id'>,
+): AbstractTokenRecord {
+  return {
+    id: overrides.id,
+    symbol: overrides.symbol ?? 'TOKEN',
+    category: overrides.category ?? null,
+    issuer: overrides.issuer ?? null,
+    coingeckoId: overrides.coingeckoId ?? null,
+    iconUrl: overrides.iconUrl ?? null,
+    comment: overrides.comment ?? null,
+    coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
+    reviewed: overrides.reviewed ?? false,
+    isPriceUnreliable: overrides.isPriceUnreliable ?? false,
+  }
 }

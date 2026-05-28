@@ -179,17 +179,15 @@ function getNodeFields(
   }
 
   if (value.type === 'object') {
-    return value.values.flatMap(([key, value]) =>
-      [
-        getNodeFields(
-          `${path}.${extractFieldValue(key)}`,
-          value,
-          bannedKeys,
-          bannedValues,
-        ),
-        getNodeFields(`${path}.#key`, key, bannedKeys, bannedValues),
-      ].flat(),
-    )
+    return value.values.flatMap(([key, value]) => {
+      const entryPath = `${path}.${extractFieldValue(key)}`
+      const valueIsComplex = value.type === 'object' || value.type === 'array'
+      const keyPath = valueIsComplex ? `${entryPath}.#key` : `${entryPath}#key`
+      return [
+        getNodeFields(entryPath, value, bannedKeys, bannedValues),
+        getNodeFields(keyPath, key, bannedKeys, bannedValues),
+      ].flat()
+    })
   }
   if (value.type === 'array') {
     return value.values.flatMap((value, i) =>

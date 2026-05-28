@@ -1,28 +1,4 @@
-Generated with discovered.json: 0xee1e0b3984b6f562c1b28fbb9dccb22f2599a2f0
-
-# Diff at Sun, 17 May 2026 17:04:07 GMT:
-
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@cf3bf7a9136a4f4590db8680800c1576a3790dc2 block: 1772615972
-- current timestamp: 1779037350
-
-## Description
-
-config: ignore relatives.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1772615972 (main branch discovery), not current.
-
-```diff
--   Status: DELETED
-    contract Merkle (eth:0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2) [polygonposbridge/Merkle]
-    +++ description: None
-```
-
-Generated with discovered.json: 0x1474c483b37982e6c923a283ce85d2500c284f1d
+Generated with discovered.json: 0xc18f7111a304365459da93ad0980b4b04302abb3
 
 # Diff at Fri, 08 May 2026 07:52:20 GMT:
 

@@ -402,7 +402,7 @@ export const taiko: ScalingProject = {
     categories: [
       {
         title: 'Validity proofs',
-        description: `Taiko uses a multi-proof system to validate state transitions. The system requires two proofs among four available verifiers: SGX (Geth), SGX (Reth), SP1, and RISC0. The use of SGX (Geth) is mandatory, while the other three can be used interchangeably. This means that a proposal range can be proven without providing a ZK proof if SGX (Geth) and SGX (Reth) are used together. New proposals target a proof submission cadence of ${formatSeconds(mainnetInboxConfig.provingWindow)}. Proving is currently centralized behind ProverWhitelist with ${whitelistedProverCount} whitelisted prover${whitelistedProverCount === 1 ? '' : 's'}. Non-whitelisted actors must wait ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} before the whitelist is dropped, and MainnetInbox currently sets minBond=${mainnetInboxConfig.minBond} and livenessBond=${mainnetInboxConfig.livenessBond}. The multi-proof system allows detecting bugs in the verifiers if they produce different results for the same proposal range. If such a bug is detected, the system gets automatically paused.`,
+        description: `Taiko uses a multi-proof system to validate state transitions. The system requires two proofs among four available verifiers: SGX (Geth), SGX (Reth), SP1, and RISC0. This means that a proposal range can be proven without providing a ZK proof if SGX (Geth) and SGX (Reth) are used together. New proposals target a proof submission cadence of ${formatSeconds(mainnetInboxConfig.provingWindow)}. Proving is currently centralized behind ProverWhitelist with ${whitelistedProverCount} whitelisted prover${whitelistedProverCount === 1 ? '' : 's'}. Non-whitelisted actors must wait ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} before the whitelist is dropped, and MainnetInbox currently sets minBond=${mainnetInboxConfig.minBond} and livenessBond=${mainnetInboxConfig.livenessBond}. The multi-proof system allows detecting bugs in the verifiers if they produce different results for the same proposal range. If such a bug is detected, the system gets automatically paused.`,
         references: [
           {
             title:
@@ -426,6 +426,18 @@ export const taiko: ScalingProject = {
         ],
       },
     ],
+  },
+  upgradesAndGovernance: {
+    content: `
+Taiko Alethia has a governance structure relying primarily on a ${discovery.getMultisigStats('SignerList (Security Council)')} Security Council, checked by a token DAO that is limited to veto permissions. The closed operator whitelists are managed by the ${discovery.getMultisigStats('Taiko Multisig')} Taiko Multisig and related EOAs. Governance proposals (both paths) hold all important upgrade and config permissions in the system.
+# Standard proposals
+A threshold of ${discovery.getContractValue('Multisig', 'minApprovals')} approving Security Council members is required to create a Standard proposal. It is delayed while being publicly auditable by ${discovery.getContractValue('OptimisticTokenVotingPlugin', 'governanceSettings_timelockPeriod_fmt')} in the OptimisticTokenVotingPlugin contract and can be vetoed by ${discovery.getContractValue('OptimisticTokenVotingPlugin', 'minVetoPercent')}% of votable TAIKO tokens during that time. If not vetoed, the standard proposal passes and can be executed.
+# Emergency proposals
+Emergency proposals are encrypted at proposal time and can only be read by Security Council members. If approved by ${discovery.getContractValue('EmergencyMultisig', 'minApprovals')} Security Council members, they can be immediately decrypted and executed.
+
+# Proof system and operators
+The proof system currently does not require zk proofs to validate state transitions and state can be finalized with SGX proofs only. The optional zk verifier contracts can be upgraded by Multisigs. Operator roles (sequencer, proposer) are closed and the whitelist is managed by the Taiko Multisig and related EOAs.
+`,
   },
   technology: {
     dataAvailability: {

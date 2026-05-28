@@ -1,14 +1,37 @@
-Generated with discovered.json: 0xa1c21a0d93e3291a86a0d6c1a76ddf838e0d3a3f
+Generated with discovered.json: 0x0e655ef7ed0ce877dea09c221b3174ec14c4a03e
 
-# Diff at Sun, 17 May 2026 14:40:11 GMT:
+# Diff at Thu, 28 May 2026 10:20:54 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@cf3bf7a9136a4f4590db8680800c1576a3790dc2 block: 1778679802
+- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1778679802
+- current timestamp: 1779963546
+
+## Description
+
+vali added (permissioned).
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [N/A] {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        103
++        104
+    }
+```
+
+Generated with discovered.json: 0x8eb45392a9502b63371f95e673071e4c86d8ac7e
+
+# Diff at Tue, 19 May 2026 11:44:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1d630d9c64f2d9431ff75a101bb6e0338cdffc9e block: 1778679802
 - current timestamp: 1778679802
 
 ## Description
 
-config: format mindeposit, ignore relatives.
+All shapes have to be defined on an implementation
 
 ## Config/verification related changes
 
@@ -17,25 +40,33 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1778679802 (main branch discovery), not current.
 
 ```diff
-    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    contract RootChainManager (eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) [polygonposbridge/RootChainManagerMigrator] {
     +++ description: None
-+++ description: min POL stake for new validators
-      values.minDeposit:
--        "100000000000000000000000"
-+        "100,000"
-      template:
-+        "polygon-pos/StakeManager"
-      fieldMeta:
-+        {"minDeposit":{"description":"min POL stake for new validators"}}
-      usedTypes:
-+        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD","description":"move any tokens to or from the escrow.","role":".managersAC"}
     }
 ```
 
 ```diff
--   Status: DELETED
-    contract  (eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861) [N/A]
+    contract ERC721Predicate (eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) [polygonposbridge/predicate] {
     +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+      template:
++        "polygonposbridge/predicate"
+    }
+```
+
+```diff
+    contract PolygonMultisig (eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+    }
 ```
 
 Generated with discovered.json: 0xefad4ab01eb138033d007fe802dffdbc1b8818fb

@@ -179,6 +179,7 @@ export const zircuit: ScalingProject = {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
       executionDelay: ZIRCUIT_FINALIZATION_PERIOD_SECONDS,
+      permissioned: true,
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,

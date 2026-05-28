@@ -21,7 +21,7 @@ export async function getScalingActivityEntries() {
     select: ['statuses', 'scalingInfo', 'activityConfig', 'display'],
     optional: ['contracts'],
     where: ['scalingInfo'],
-    whereNot: ['isUpcoming', 'archivedAt'],
+    whereNot: ['archivedAt'],
   })
   const projects = unfilteredProjects.filter(
     (p) => !env.EXCLUDED_ACTIVITY_PROJECTS?.includes(p.id.toString()),

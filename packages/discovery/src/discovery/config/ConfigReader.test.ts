@@ -64,23 +64,6 @@ describe('resolveImports', () => {
 describe('config and discovery resolution', () => {
   afterEach(() => mockFs.restore())
 
-  describe('isGroupingFolder', () => {
-    it('should identify grouping folders correctly', () => {
-      const reader = new ConfigReader('/base')
-
-      expect(reader.isGroupingFolder('(tokens)')).toEqual(true)
-      expect(reader.isGroupingFolder('(defi)')).toEqual(true)
-      expect(reader.isGroupingFolder('(bridges)')).toEqual(true)
-      expect(reader.isGroupingFolder('(l2s)')).toEqual(true)
-
-      expect(reader.isGroupingFolder('tokens')).toEqual(false)
-      expect(reader.isGroupingFolder('(tokens')).toEqual(false)
-      expect(reader.isGroupingFolder('tokens)')).toEqual(false)
-      expect(reader.isGroupingFolder('_private')).toEqual(false)
-      expect(reader.isGroupingFolder('')).toEqual(false)
-    })
-  })
-
   describe('resolveProjectPath', () => {
     it('should find projects in root directory', () => {
       mockFs({
@@ -98,57 +81,9 @@ describe('config and discovery resolution', () => {
       expect(reader.resolveProjectPath('project2')).toEqual('/base/project2')
     })
 
-    it('should find projects in grouping folders', () => {
-      mockFs({
-        '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(tokens)/dai/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(defi)/uniswap/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-      })
-
-      const reader = new ConfigReader('/base')
-
-      expect(reader.resolveProjectPath('usdc')).toEqual('/base/(tokens)/usdc')
-      expect(reader.resolveProjectPath('dai')).toEqual('/base/(tokens)/dai')
-      expect(reader.resolveProjectPath('uniswap')).toEqual(
-        '/base/(defi)/uniswap',
-      )
-    })
-
-    it('should find projects in nested grouping folders', () => {
-      mockFs({
-        '/base/(tokens)/(stablecoins)/usdc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(tokens)/(stablecoins)/dai/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(tokens)/(wrapped)/wbtc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-      })
-
-      const reader = new ConfigReader('/base')
-
-      expect(reader.resolveProjectPath('usdc')).toEqual(
-        '/base/(tokens)/(stablecoins)/usdc',
-      )
-      expect(reader.resolveProjectPath('dai')).toEqual(
-        '/base/(tokens)/(stablecoins)/dai',
-      )
-      expect(reader.resolveProjectPath('wbtc')).toEqual(
-        '/base/(tokens)/(wrapped)/wbtc',
-      )
-    })
-
     it('should throw error when project not found', () => {
       mockFs({
-        '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
+        '/base/usdc/config.jsonc': JSON.stringify({
           chains: { ethereum: {} },
         }),
       })
@@ -160,47 +95,14 @@ describe('config and discovery resolution', () => {
       )
     })
 
-    it('should throw error when multiple projects with same name exist', () => {
+    it('should throw when directory exists but has no config.jsonc', () => {
       mockFs({
-        '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(defi)/usdc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
+        '/base/usdc/somefile.txt': '',
       })
 
       const reader = new ConfigReader('/base')
 
       expect(() => reader.resolveProjectPath('usdc')).toThrow(
-        'Multiple projects named "usdc" found in grouping folders',
-      )
-    })
-
-    it('should prioritize direct children over grouped projects', () => {
-      mockFs({
-        '/base/usdc/config.jsonc': JSON.stringify({ chains: { ethereum: {} } }),
-        '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-      })
-
-      const reader = new ConfigReader('/base')
-
-      expect(reader.resolveProjectPath('usdc')).toEqual('/base/usdc')
-    })
-
-    it('should ignore directories starting with underscore', () => {
-      mockFs({
-        '/base/(tokens)/_internal/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-      })
-
-      const reader = new ConfigReader('/base')
-
-      // This should not be found because directories starting with _ are ignored
-      expect(() => reader.resolveProjectPath('_internal')).toThrow(
         'Project not found, check if case matches',
       )
     })
@@ -223,61 +125,12 @@ describe('config and discovery resolution', () => {
       expect(result).toEqual(['/base/project1', '/base/project2'])
     })
 
-    it('should enumerate projects in grouping folders', () => {
-      mockFs({
-        '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(tokens)/dai/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(defi)/uniswap/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-      })
-
-      const reader = new ConfigReader('/base')
-
-      const result = reader.enumerateProjectDirectories()
-      expect(result).toEqual([
-        '/base/(tokens)/dai',
-        '/base/(tokens)/usdc',
-        '/base/(defi)/uniswap',
-      ])
-    })
-
-    it('should enumerate projects in nested grouping folders', () => {
-      mockFs({
-        '/base/(tokens)/(stablecoins)/usdc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(tokens)/(stablecoins)/dai/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(tokens)/(wrapped)/wbtc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-      })
-
-      const reader = new ConfigReader('/base')
-
-      const result = reader.enumerateProjectDirectories()
-      expect(result).toEqual([
-        '/base/(tokens)/(wrapped)/wbtc',
-        '/base/(tokens)/(stablecoins)/dai',
-        '/base/(tokens)/(stablecoins)/usdc',
-      ])
-    })
-
     it('should ignore directories starting with underscore', () => {
       mockFs({
         '/base/project1/config.jsonc': JSON.stringify({
           chains: { ethereum: {} },
         }),
         '/base/_private/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(tokens)/_internal/config.jsonc': JSON.stringify({
           chains: { ethereum: {} },
         }),
       })
@@ -287,130 +140,27 @@ describe('config and discovery resolution', () => {
       const result = reader.enumerateProjectDirectories()
       expect(result).toEqual(['/base/project1'])
     })
-
-    it('should handle mixed structure with root and grouped projects', () => {
-      mockFs({
-        '/base/project1/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(defi)/uniswap/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-      })
-
-      const reader = new ConfigReader('/base')
-
-      const result = reader.enumerateProjectDirectories()
-      expect(result).toEqual([
-        '/base/project1',
-        '/base/(tokens)/usdc',
-        '/base/(defi)/uniswap',
-      ])
-    })
   })
 
-  describe('getProjectsInGroup', () => {
-    it('should return projects in specified group', () => {
-      mockFs({
-        '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(tokens)/dai/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(defi)/uniswap/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(defi)/aave/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-      })
-
-      const reader = new ConfigReader('/base')
-
-      expect(reader.getProjectsInGroup('tokens')).toEqual(['dai', 'usdc'])
-      expect(reader.getProjectsInGroup('defi')).toEqual(['aave', 'uniswap'])
-    })
-
-    it('should return empty array for non-existent group', () => {
-      mockFs({
-        '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-      })
-
-      const reader = new ConfigReader('/base')
-
-      expect(reader.getProjectsInGroup('nonexistent')).toEqual([])
-    })
-
-    it('should return empty array for empty group', () => {
-      mockFs({
-        '/base/(empty)/.gitkeep': '',
-      })
-
-      const reader = new ConfigReader('/base')
-
-      expect(reader.getProjectsInGroup('empty')).toEqual([])
-    })
-
-    it('should handle nested grouping folders correctly', () => {
-      mockFs({
-        '/base/(tokens)/(stablecoins)/usdc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(tokens)/(stablecoins)/dai/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-        '/base/(tokens)/(wrapped)/wbtc/config.jsonc': JSON.stringify({
-          chains: { ethereum: {} },
-        }),
-      })
-
-      const reader = new ConfigReader('/base')
-
-      expect(reader.getProjectsInGroup('stablecoins')).toEqual(['dai', 'usdc'])
-      expect(reader.getProjectsInGroup('wrapped')).toEqual(['wbtc'])
-    })
-  })
-
-  describe('readAllDiscoveredProjects with grouping', () => {
-    it('should read all discovered projects including grouped ones', () => {
+  describe('readAllDiscoveredProjects', () => {
+    it('should read all projects that have discovered.json', () => {
       mockFs({
         '/base/project1/discovered.json': JSON.stringify({}),
-        '/base/(tokens)/usdc/discovered.json': JSON.stringify({}),
-        '/base/(defi)/uniswap/discovered.json': JSON.stringify({}),
-        '/base/(defi)/aave/discovered.json': JSON.stringify({}),
+        '/base/project2/discovered.json': JSON.stringify({}),
+        '/base/project3/config.jsonc': JSON.stringify({}),
       })
 
       const reader = new ConfigReader('/base')
       const result = reader.readAllDiscoveredProjects()
 
-      expect(result).toEqual(['project1', 'usdc', 'aave', 'uniswap'])
-    })
-
-    it('should skip projects in skipTokens group', () => {
-      mockFs({
-        '/base/project1/discovered.json': JSON.stringify({}),
-        '/base/(tokens)/usdc/discovered.json': JSON.stringify({}),
-        '/base/(defi)/uniswap/discovered.json': JSON.stringify({}),
-        '/base/(defi)/aave/discovered.json': JSON.stringify({}),
-      })
-
-      const reader = new ConfigReader('/base')
-      const result = reader.readAllDiscoveredProjects({ skipGroup: 'defi' })
-
-      expect(result).toEqual(['project1', 'usdc'])
+      expect(result).toEqual(['project1', 'project2'])
     })
   })
 
-  describe('readConfig with grouping', () => {
-    it('should read config from grouped project', () => {
+  describe('readConfig', () => {
+    it('should read config from project', () => {
       mockFs({
-        '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
+        '/base/usdc/config.jsonc': JSON.stringify({
           name: 'usdc',
           maxAddresses: 10,
           initialAddresses: ['eth:0x1234567890123456789012345678901234567890'],
@@ -425,15 +175,15 @@ describe('config and discovery resolution', () => {
     })
   })
 
-  describe('readDiscovery with grouping', () => {
-    it('should read discovery from grouped project', () => {
+  describe('readDiscovery', () => {
+    it('should read discovery from project', () => {
       const discoveryData = { entries: [], abis: {} }
 
       mockFs({
-        '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
+        '/base/usdc/config.jsonc': JSON.stringify({
           initialAddresses: [],
         }),
-        '/base/(tokens)/usdc/discovered.json': JSON.stringify(discoveryData),
+        '/base/usdc/discovered.json': JSON.stringify(discoveryData),
       })
 
       const reader = new ConfigReader('/base')

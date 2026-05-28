@@ -4,6 +4,7 @@ import type {
   ProjectPermissions,
 } from '@l2beat/config'
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import { manifest } from '~/utils/Manifest'
 import type { SearchBarProjectEntry } from '../types'
 
@@ -37,6 +38,7 @@ export function getSearchBarProjectEntries<
     | 'interopConfig'
     | 'ecosystemConfig'
     | 'zkCatalogInfo'
+    | 'privacyInfo'
     | 'contracts'
     | 'permissions'
     | 'aliases'
@@ -49,7 +51,8 @@ export function getSearchBarProjectEntries<
     !project.daBridge &&
     !project.ecosystemConfig &&
     !project.interopConfig &&
-    !project.zkCatalogInfo
+    !project.zkCatalogInfo &&
+    !project.privacyInfo
   ) {
     return []
   }
@@ -66,7 +69,6 @@ export function getSearchBarProjectEntries<
     id: project.id,
     name: project.name,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-    isUpcoming: false,
     projectAddresses: extractProjectAddresses(
       project.contracts,
       project.permissions,
@@ -144,6 +146,15 @@ export function getSearchBarProjectEntries<
       href: `/zk-catalog/${project.slug}`,
       category: 'zkCatalog',
       kind: 'zkCatalog',
+    })
+  }
+
+  if (project.privacyInfo && env.CLIENT_SIDE_PRIVACY_ENABLED) {
+    results.push({
+      ...common,
+      href: `/privacy/projects/${project.slug}`,
+      category: 'privacy',
+      kind: 'privacy',
     })
   }
 

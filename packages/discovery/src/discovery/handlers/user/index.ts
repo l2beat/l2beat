@@ -66,6 +66,10 @@ import {
   LineaRolesModuleHandlerDefinition,
 } from './LineaRolesModuleHandler'
 import {
+  ManyChainMultiSigHandler,
+  ManyChainMultiSigHandlerDefinition,
+} from './ManyChainMultiSigHandler'
+import {
   OpStackDAHandler,
   OpStackDAHandlerDefinition,
 } from './OpDaHandler/OpDAHandler'
@@ -127,6 +131,7 @@ const DEFINITIONS = [
   HardCodedDefinition,
   StarkWareGovernanceHandlerDefinition,
   LayerZeroMultisigHandlerDefinition,
+  ManyChainMultiSigHandlerDefinition,
   ArbitrumActorsHandlerDefinition,
   ArbitrumScheduledTransactionsHandlerDefinition,
   OpStackDAHandlerDefinition,
@@ -167,6 +172,7 @@ export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
   hardcoded: HardCodedDefinition,
   starkWareGovernance: StarkWareGovernanceHandlerDefinition,
   layerZeroMultisig: LayerZeroMultisigHandlerDefinition,
+  manyChainMultiSig: ManyChainMultiSigHandlerDefinition,
   arbitrumActors: ArbitrumActorsHandlerDefinition,
   arbitrumScheduledTransactions: ArbitrumScheduledTransactionsHandlerDefinition,
   opStackDA: OpStackDAHandlerDefinition,
@@ -223,6 +229,8 @@ export function getUserHandler(
       return new StarkWareGovernanceHandler(field, definition, abi)
     case 'layerZeroMultisig':
       return new LayerZeroMultisigHandler(field, abi)
+    case 'manyChainMultiSig':
+      return new ManyChainMultiSigHandler(field, definition)
     case 'arbitrumActors':
       return new ArbitrumActorsHandler(field, definition)
     case 'arbitrumScheduledTransactions':

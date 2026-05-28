@@ -221,6 +221,14 @@ export interface NotificationsConfig {
         discordWebhookUrl: string
       }
     | false
+  readonly dailyChecks:
+    | {
+        discordWebhookUrl: string
+        discordUserIds: string[]
+        timezone: string
+        hour: number
+      }
+    | false
 }
 
 export interface AnomaliesConfig {
@@ -254,6 +262,8 @@ export interface InteropFeatureConfig {
     enabled: boolean
     tokenDbApiUrl: string
     tokenDbAuthToken?: string
+    maxTokenPriceUsd: number
+    maxTransferValueUsd: number
   }
   config: {
     enabled: boolean

@@ -1,7 +1,7 @@
 {
   "name": "cbridge",
-  "timestamp": 1778678924,
-  "configHash": "0x438a736573ac183a85ead3f548487de0b0fc12707bb43fbdd7f05f9716e76eb4",
+  "timestamp": 1779355836,
+  "configHash": "0x634828873cc74ae5a6f0a647a5ab5048eb31401f96bffabfe8f4f18fe6a84b4d",
   "entries": [
     {
       "name": "PeggedTokenBridge",
@@ -79,8 +79,8 @@
           ]
         ],
         "$upgradeCount": 2,
-        "feeBase": 15000000000000,
-        "feePerByte": 150000000000,
+        "feeBase": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "feePerByte": 0,
         "liquidityBridge": "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
         "owner": "eth:0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175",
         "pegBridge": "eth:0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB",
@@ -172,7 +172,7 @@
       "sinceBlock": 13719989,
       "values": {
         "$immutable": true,
-        "addseq": 6786,
+        "addseq": 6796,
         "delayPeriod": 21600,
         "epochLength": 21600,
         "governors": [
@@ -194,8 +194,8 @@
           "eth:0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0x26cdfcf9580e50a8128cb8619c358addad2721a5d3bfc36724e582f33293f07c",
-        "triggerTime": 1778477423
+        "ssHash": "0x54300c7089193f6ce728b01d8d4834e7c342960d95077597b7cc4cee6642d271",
+        "triggerTime": 1779274543
       },
       "implementationNames": {
         "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": "Bridge"
@@ -219,7 +219,7 @@
             "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
             "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
             "eth:0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
-            "eth:0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
+            "eth:0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
             "eth:0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
           ],
           [10000, 10000, 10000, 10000, 10000]
@@ -316,11 +316,6 @@
       "implementationNames": {
         "eth:0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b": "TransferAgent"
       }
-    },
-    {
-      "address": "eth:0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "OriginalTokenVault",
@@ -1027,6 +1022,6 @@
     "cbridge/PeggedTokenBridgeV2": "0x08b47d97e35ec94bae1a461f262ce3c4c61103671e9ed5ad6b8caa683860bfbd",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 25086514 },
-  "permissionsConfigHash": "0x608f2f69275f3da0b810339f9fa5c9696f9f363fe6cc9a88193b8802fc601ec5"
+  "usedBlockNumbers": { "ethereum": 25142734 },
+  "permissionsConfigHash": "0x17f9d772d70b3d074b16bc0c586165280767da45e2191e5e810f401eb6cde10b"
 }

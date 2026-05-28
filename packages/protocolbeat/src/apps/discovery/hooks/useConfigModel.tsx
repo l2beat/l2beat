@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { updateConfigFile } from '../../../api/api'
 import { useDebouncedCallback } from '../../../utils/debounce'
@@ -17,19 +17,20 @@ type Props = {
 
 export function useConfigModel({ project, config, selectedAddress }: Props) {
   const queryClient = useQueryClient()
-  const [configModel, setConfigModel] = useState(
+  const [prevConfig, setPrevConfig] = useState(config)
+  const [configModel, setConfigModel] = useState(() =>
     ConfigModel.fromRawJsonc(config ?? '{}'),
   )
+  if (config !== prevConfig) {
+    setPrevConfig(config)
+    setConfigModel(ConfigModel.fromRawJsonc(config ?? '{}'))
+  }
 
   const debouncedInvalidateSyncStatus = useDebouncedCallback(() =>
     queryClient.invalidateQueries({
       queryKey: ['config-sync-status', project],
     }),
   )
-
-  useEffect(() => {
-    setConfigModel(ConfigModel.fromRawJsonc(config ?? '{}'))
-  }, [config])
 
   const toggleIgnoreMethods = (fieldName: string) => {
     const current = configModel.getIgnoredMethods(selectedAddress) ?? []
@@ -40,8 +41,10 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
   }
 
   const toggleIgnoreRelatives = (fieldName: string) => {
-    const current = configModel.getIgnoreRelatives(selectedAddress) ?? []
-    const updated = toggleInList(fieldName, current)
+    const current = configModel.getIgnoreRelatives(selectedAddress)
+    // wildcard `true` ignores every field already; toggle is a no-op
+    if (current === true) return
+    const updated = toggleInList(fieldName, current ?? [])
     const newModel = configModel.setIgnoreRelatives(selectedAddress, updated)
     setConfigModel(newModel)
     saveModelContents(newModel)

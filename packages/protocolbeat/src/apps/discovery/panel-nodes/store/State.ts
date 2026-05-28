@@ -9,6 +9,8 @@ export interface State {
   readonly userPreferences: {
     readonly enableDimming: boolean
     readonly hideLargeArrays: boolean
+    readonly highlightOverlapping: boolean
+    readonly useExperimentalRenderer: boolean
   }
   readonly transform: {
     readonly offsetX: number

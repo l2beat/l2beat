@@ -1,3 +1,128 @@
+Generated with discovered.json: 0x1897894645aa4d6f35fa07cdf620dd5631140465
+
+# Diff at Thu, 21 May 2026 21:43:35 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@af480cdcac217110f9e99ef400ba0185c35a6c55 block: 1779198962
+- current timestamp: 1779399741
+
+## Description
+
+- Scroll Multisig 2: signer rotated.
+- Scroll Multisig 3: signer removed, threshold 3/5 → 2/4.
+
+## Watched changes
+
+```diff
+    contract Scroll Multisig 2 (eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
++        "eth:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "scr:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
++        "scr:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "scr:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 4 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x383434b92d31ccb35eefe561bd98fd400c3e63ad
+
+# Diff at Tue, 19 May 2026 13:57:16 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@307f5c3dfdab6a4f88448861a0bb75f0043b762b block: 1774953745
+- current timestamp: 1779198962
+
+## Description
+
+Scroll Multisig 1 (`0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f`, same Safe on both Ethereum and Scroll L2) — member[0] rotated from `0xEe9bb388...` to `0x716f84f7...`. Permission entries for the `.Executor` role on both chains follow the new signer.
+
+## Watched changes
+
+```diff
+    contract Scroll Multisig 1 (eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
++        "eth:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831"
+    }
+```
+
+```diff
+    EOA  (eth:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+    }
+```
+
+```diff
+    EOA  (eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+    }
+```
+
+```diff
+    contract Scroll Multisig 1 (scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "scr:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
++        "scr:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831"
+    }
+```
+
+```diff
+    EOA  (scr:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+    }
+```
+
+```diff
+    EOA  (scr:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]},{"permission":"interact","from":"scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}]
+    }
+```
+
 Generated with discovered.json: 0x2bf139624266472ad9b58462ab976a9c24265f67
 
 # Diff at Fri, 08 May 2026 07:51:57 GMT:

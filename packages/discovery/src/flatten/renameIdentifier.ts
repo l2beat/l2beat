@@ -31,6 +31,20 @@ export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
       if (to !== undefined) {
         replacements.push({ start, end, newName: to })
       }
+    } else if (node.type === 'UsingForDeclaration') {
+      const usingDecl = node as AST.UsingForDeclaration
+      const name = usingDecl.libraryName
+      if (name !== null) {
+        const newName = pairMap.get(name)
+        if (newName !== undefined) {
+          const libStart = findUsingLibraryNameStart(source, start)
+          replacements.push({
+            start: libStart,
+            end: libStart + name.length,
+            newName,
+          })
+        }
+      }
     } else if (node.type === 'UserDefinedTypeName') {
       const udt = node as AST.UserDefinedTypeName
       const to = pairMap.get(udt.namePath)
@@ -117,12 +131,19 @@ function findDeclNameRange(
   rangeStart: number,
   name: string,
 ): { start: number; end: number } | undefined {
-  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const regex = new RegExp(`\\b${escaped}\\b`)
-  const match = regex.exec(source.slice(rangeStart))
-  if (match !== null) {
-    const start = rangeStart + match.index
-    return { start, end: start + name.length }
-  }
+  const start = source.indexOf(name, rangeStart)
+  if (start !== -1) return { start, end: start + name.length }
   return undefined
+}
+
+function findUsingLibraryNameStart(source: string, rangeStart: number): number {
+  const usingEnd = rangeStart + 'using'.length
+  return skipWhitespace(source, usingEnd)
+}
+
+function skipWhitespace(source: string, index: number): number {
+  while (source[index] === ' ' || source[index] === '\n') {
+    index++
+  }
+  return index
 }

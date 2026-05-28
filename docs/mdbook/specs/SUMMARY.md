@@ -35,3 +35,7 @@
 - [Contracts section](./l2b_specs/contracts.md)
 - [Finality page](./l2b_specs/finality.md)
 - [Stages edge cases](./l2b_specs/stages_edgecases.md)
+- [Diffovery](./l2b_specs/diffovery.md)
+- [TokenDB](./l2b_specs/token_db/README.md)
+    - [Automatic token ingestion](./l2b_specs/token_db/automatic_token_ingestion.md)
+    - [Intent / Plan / Execute](./l2b_specs/token_db/intent_plan_execute.md)

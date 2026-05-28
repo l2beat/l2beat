@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x2527024ac04992905aab58dbe5d4a3b956093038
+
+# Diff at Wed, 20 May 2026 10:24:31 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@307f5c3dfdab6a4f88448861a0bb75f0043b762b block: 1775028919
+- current timestamp: 1779198836
+
+## Description
+
+Base Multisig 1: 4 signers swapped (4 added, 4 removed). Threshold unchanged at 3.
+
+## Watched changes
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xD56C6462DC3A943596c7a54d6B0Dba404490E206"
+      values.$members.1:
++        "eth:0x8faB0B6b31A0b50A2c3d1FFBE6C0e1125699aE9d"
+      values.$members.2:
++        "eth:0x0c1Ea3aCA9fc2cFa3640fec98a3214A849715b43"
+      values.$members.3:
++        "eth:0x082Cc00d1031a57d53496aBf6dAD8A6247159452"
+      values.$members.3:
+-        "eth:0x4427683AA1f0ff25ccDC4a5Db83010c1DE9b5fF4"
+      values.$members.4:
+-        "eth:0xA31E1c38d5c37D8ECd0e94C80C0F7FD624d009A3"
+      values.$members.6:
+-        "eth:0x24c3AE1AeDB8142D32BB6d3B988f5910F272D53b"
+      values.$members.9:
+-        "eth:0x5468985B560D966dEDEa2DAF493f5756101137DC"
+    }
+```
+
 Generated with discovered.json: 0x3469650e4f081da242b2615e6f1b59785f3d8436
 
 # Diff at Fri, 08 May 2026 07:51:08 GMT:

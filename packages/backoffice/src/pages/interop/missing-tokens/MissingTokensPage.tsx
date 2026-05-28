@@ -5,13 +5,14 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { MissingTokenStatusBadge } from './MissingTokenStatusBadge'
 import { MissingTokenStatusGuide } from './MissingTokenStatusGuide'
 import { MissingTokensTable } from './table/MissingTokensTable'
 import type { ChainMetadata, MissingTokenRow } from './types'
 
 export function MissingTokensPage() {
+  const api = useBackendApi()
   const {
     data: missingTokensData,
     error: missingTokensError,

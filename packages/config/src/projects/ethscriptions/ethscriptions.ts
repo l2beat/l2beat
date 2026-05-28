@@ -199,7 +199,9 @@ export const ethscriptions: ScalingProject = {
       ...RISK_VIEW.STATE_ZKP_OPTIMISTIC,
       challengeDelay: MAX_CHALLENGE_SECS,
       executionDelay: 0,
-      initialBond: formatEther(proposerBond),
+      initialBond: { value: formatEther(proposerBond) },
+      permissioned: false,
+      defenderAdvantage: 'not-assessed',
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,

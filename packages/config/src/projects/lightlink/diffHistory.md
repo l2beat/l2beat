@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x631d9ab34e379acb2f8c0a2dabbc296f258853d4
+
+# Diff at Fri, 15 May 2026 12:36:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1743926099
+- current timestamp: 1743926099
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1743926099 (main branch discovery), not current.
+
+```diff
+    contract Challenge (eth:0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) [lightlink/Challenge] {
+    +++ description: Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: false. Header challenges are enabled: true. L2 Header challenges are enabled: false.
+      sourceHashes.1:
+-        "0xe563047b74b5666137a2ab48df689f3f5edc03f85a4604080bfd9c311b2eb637"
++        "0xf376de5dc61e8c2cdbf725e0994e0b208ed444b3fae6ba2d34d9cc57020bcbec"
+    }
+```
+
+```diff
+    contract ChainOracle (eth:0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04) [lightlink/ChainOracle] {
+    +++ description: Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used.
+      sourceHashes.1:
+-        "0x49a381812e10b2dc362ad30ece7f61e050e06e13d3056a64a03607f51f993361"
++        "0x7d73ad5b833f2974bd9713f13a56432a7676676aee93a8ab85c6fa5f3b1ad7ac"
+    }
+```
+
 Generated with discovered.json: 0x48b5d870e193334a9781d821d21f3315adffe619
 
 # Diff at Fri, 08 May 2026 07:51:32 GMT:

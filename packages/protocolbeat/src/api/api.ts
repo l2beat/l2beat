@@ -8,7 +8,6 @@ import type {
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
   ApiDiffHistoryResponse,
-  ApiGlobalConfigSyncStatusResponse,
   ApiHandlersResponse,
   ApiListTemplatesResponse,
   ApiPreviewResponse,
@@ -186,15 +185,6 @@ export async function getConfigSyncStatus(
   return data as ApiConfigSyncStatusResponse
 }
 
-export async function getGlobalConfigSyncStatus(): Promise<ApiGlobalConfigSyncStatusResponse> {
-  const res = await fetch('/api/config/sync-status')
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiGlobalConfigSyncStatusResponse
-}
-
 export async function getConfigHealth(): Promise<ApiConfigHealthResponse> {
   const res = await fetch('/api/config/health')
   if (!res.ok) {
@@ -206,7 +196,6 @@ export async function getConfigHealth(): Promise<ApiConfigHealthResponse> {
 
 export async function createConfigFile(
   project: string,
-  type: 'project' | 'token',
   initialAddresses: string[],
   overwrite: boolean,
   maxDepth?: number,
@@ -216,7 +205,6 @@ export async function createConfigFile(
     method: 'POST',
     body: JSON.stringify({
       project,
-      type,
       initialAddresses,
       overwrite,
       maxDepth,

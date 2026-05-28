@@ -11,11 +11,12 @@ import {
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { DaTrackingStatusTable } from './table/DaTrackingStatusTable'
 import type { DaTrackingStatusRow } from './types'
 
 export function DaTrackingStatusPage() {
+  const api = useBackendApi()
   const { data, error, isError, isLoading, isFetching, refetch } =
     api.dataAvailability.status.configs.useQuery(undefined, {
       refetchInterval: 3600_000,

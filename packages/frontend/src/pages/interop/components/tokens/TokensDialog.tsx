@@ -156,13 +156,13 @@ export function SelectedChainsTokensDialog({
   type?: KnownInteropBridgeType
   apiSelection?: InteropSelection
 }) {
-  const { selectionForApi } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
 
   return (
     <TokensDialog
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      queryInput={{ ...(apiSelection ?? selectionForApi), id, type }}
+      queryInput={{ ...(apiSelection ?? selectedChains), id, type }}
       title={title}
       subtitle={<BetweenChainsInfo className="mt-1" />}
       showNetMintedValueColumn={showNetMintedValueColumn}

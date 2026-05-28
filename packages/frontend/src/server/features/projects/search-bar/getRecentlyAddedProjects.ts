@@ -12,11 +12,11 @@ export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
       'ecosystemConfig',
       'interopConfig',
       'zkCatalogInfo',
+      'privacyInfo',
       'contracts',
       'permissions',
       'aliases',
     ],
-    whereNot: ['isUpcoming'],
   })
 
   return projects
