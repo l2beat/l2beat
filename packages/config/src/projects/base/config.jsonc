@@ -27,6 +27,7 @@
     "eth:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8": "DelayedWETH_PermissionlessGames",
     "eth:0x3E8a0B63f57e975c268d610ece93da5f78c01321": "DelayedWETH_PermissionedGames",
     "eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A": "SkyLink Bridge",
+    "eth:0x0000F90827F1C53a10cb7A02335B175320002935": "HistoryStorage",
 
     "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d": "Base Governance Multisig - L2 Alias"
   },
@@ -53,6 +54,10 @@
     "eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A": {
       "description": "Custom bridge for USDS and sUSDS managed by Sky governance.",
       "ignoreMethods": ["proxiableUUID"]
+    },
+    "eth:0x4c0DAF5d9ABe92e8A26a60698a657B03538a3028": {
+      "description": "Implementation of the AggregateVerifier dispute game (type 621) combining a TEE arm and a ZK arm. PROOF_THRESHOLD = 1 means a single un-nullified proof of either type can resolve a game.",
+      "ignoreMethods": ["intermediateOutputRoot", "intermediateOutputRoots"]
     }
   }
 }

@@ -152,6 +152,10 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
         projectId: ProjectId('morph'),
         sinceTimestamp: UnixTime(1779354407),
       },
+      {
+        projectId: ProjectId('base'),
+        sinceTimestamp: UnixTime(1779825599), // 2026-05-26 AggregateVerifier upgrade
+      },
     ],
     verifierHashes: [
       {

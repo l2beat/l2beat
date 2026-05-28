@@ -728,6 +728,13 @@ function getProgramHashes(
 
       return opSuccinctProgramHashes.map((el) => PROGRAM_HASHES(el))
     }
+    case 'AggregateProof': {
+      // AggregateVerifier ZK and TEE image hashes are immutable on the game
+      // implementation. Discovery does not yet template that contract; until it
+      // does, return no program hashes so the template does not claim
+      // reproducibility status it cannot evaluate.
+      return []
+    }
   }
 }
 
@@ -1206,6 +1213,22 @@ The Kailua state validation system is primarily optimistically resolved, so no v
         ],
       }
     }
+    case 'AggregateProof': {
+      // Project MUST override templateVars.stateValidation. Conservative default
+      // surfaces a minimal section instead of pretending a standard OPFP
+      // narrative applies to an AggregateVerifier deployment.
+      return {
+        categories: [
+          {
+            title: 'Fraud proofs',
+            description:
+              'This chain uses an AggregateVerifier game type combining multiple proof systems.',
+            risks: [],
+            references: additionalRefs,
+          },
+        ],
+      }
+    }
   }
 }
 
@@ -1416,6 +1439,13 @@ function getRiskViewStateValidation(
         defenderAdvantage: 'not-applicable',
       }
     }
+    case 'AggregateProof': {
+      // Project MUST override nonTemplateRiskView.stateValidation. Conservative
+      // default keeps the rosette honest if the override is missed.
+      return {
+        ...RISK_VIEW.STATE_NONE,
+      }
+    }
   }
 }
 
@@ -1473,6 +1503,11 @@ function getRiskViewProposerFailure(
     case 'OpSuccinct':
     case 'OpSuccinctFDP':
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
+    case 'AggregateProof':
+      // Project MUST override nonTemplateRiskView.proposerFailure. Conservative
+      // default: AggregateVerifier proposer authorization depends on the proof
+      // arms' allowlists, which the template cannot evaluate generically.
+      return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
   }
 }
 
@@ -1490,6 +1525,7 @@ function computedStage(templateVars: OpStackConfigCommon): ProjectScalingStage {
     KailuaSoon: true,
     OpSuccinct: null,
     OpSuccinctFDP: null,
+    AggregateProof: null,
   }
 
   if (postsToEthereum(templateVars)) {
@@ -2356,7 +2392,8 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
     case 'Permissionless':
     case 'Kailua':
     case 'KailuaSoon':
-    case 'OpSuccinctFDP': {
+    case 'OpSuccinctFDP':
+    case 'AggregateProof': {
       return templateVars.discovery.getContractValue<number>(
         'OptimismPortal2',
         'proofMaturityDelaySeconds',
@@ -2416,6 +2453,15 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
         'maxChallengeDuration',
       )
     }
+    case 'AggregateProof': {
+      // AggregateVerifier's SLOW/FAST finalization is held in immutables on the
+      // game implementation; discovery does not currently template it. Fall back
+      // to the Portal2 proof-maturity delay as the nearest available bound.
+      return templateVars.discovery.getContractValue<number>(
+        'OptimismPortal2',
+        'proofMaturityDelaySeconds',
+      )
+    }
   }
 }
 
@@ -2429,7 +2475,8 @@ function getExecutionDelay(
     case 'Permissionless':
     case 'Kailua':
     case 'KailuaSoon':
-    case 'OpSuccinctFDP': {
+    case 'OpSuccinctFDP':
+    case 'AggregateProof': {
       return templateVars.discovery.getContractValue<number>(
         portal.name ?? portal.address,
         'disputeGameFinalityDelaySeconds',
@@ -2448,6 +2495,7 @@ type FraudProofType =
   | 'KailuaSoon'
   | 'OpSuccinct'
   | 'OpSuccinctFDP'
+  | 'AggregateProof'
 
 function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   const portal = getOptimismPortal(templateVars)
@@ -2483,6 +2531,9 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   }
   if (respectedGameType === 42) {
     return 'OpSuccinctFDP'
+  }
+  if (respectedGameType === 621) {
+    return 'AggregateProof'
   }
   throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
