@@ -1,4 +1,4 @@
-import { useMultiViewStore } from '../../../multi-view/store'
+import { useDockingStore } from '../../../multi-view/store'
 import { useSearchStore } from '../../../search/store'
 import { useStore } from '../../store/store'
 
@@ -24,7 +24,7 @@ export function useDesktopControls({
   viewRef,
   containerRef,
 }: Props): DesktopControls {
-  const currentPanel = useMultiViewStore((state) => state.active)
+  const currentPanel = useDockingStore((state) => state.activeTab)
   const searchOpened = useSearchStore((state) => state.opened)
 
   const onKeyDown = useStore((state) => state.onKeyDown)
