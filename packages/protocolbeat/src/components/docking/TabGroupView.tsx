@@ -11,7 +11,7 @@ export function TabGroupView(props: { node: GroupNode }) {
   const fullScreenTab = useStore((state) => state.fullScreenTab)
   const config = useStore((state) => state.config)
   const hiddenByFullScreen =
-    fullScreenTab !== undefined && fullScreenTab !== activeTab
+    fullScreenTab !== undefined && !props.node.tabs.includes(fullScreenTab)
 
   return (
     <div

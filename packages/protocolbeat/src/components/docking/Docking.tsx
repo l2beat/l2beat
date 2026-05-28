@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import { type DockingHook, DockingProvider } from './context'
 import { DragOverlay } from './DragOverlay'
 import { NodeView } from './NodeView'
-import { findGroup } from './tree'
+import { findGroup, findGroupOfTab } from './tree'
 import type { DropTarget, Edge, LayoutNode, NodeId } from './types'
 
 const DRAG_THRESHOLD_PX = 5
@@ -39,45 +39,19 @@ export function Docking(props: { useStore: DockingHook }) {
     pendingDragRef,
   })
 
-  const fullScreenGroupId = useMemo(() => {
+  const fullScreenGroup = useMemo(() => {
     if (fullScreenTab === undefined) return undefined
-    for (const node of iterateGroups(tree)) {
-      if (node.tabs.includes(fullScreenTab)) {
-        return node.id
-      }
-    }
-    return undefined
+    return findGroupOfTab(tree, fullScreenTab)
   }, [tree, fullScreenTab])
 
   return (
     <DockingProvider value={useStore}>
-      <div
-        ref={containerRef}
-        className="relative flex h-full w-full flex-col"
-        data-docking-root="true"
-        data-fullscreen-group={fullScreenGroupId ?? ''}
-      >
-        <NodeView node={tree} />
+      <div ref={containerRef} className="relative flex h-full w-full flex-col">
+        <NodeView node={fullScreenGroup ?? tree} />
         {pickedUpTab !== undefined && <DragOverlay />}
       </div>
     </DockingProvider>
   )
-}
-
-function* iterateGroups(tree: LayoutNode) {
-  const stack: LayoutNode[] = [tree]
-  while (stack.length > 0) {
-    const node = stack.pop()
-    if (!node) continue
-    if (node.kind === 'group') {
-      yield node
-    } else {
-      for (let i = node.children.length - 1; i >= 0; i--) {
-        const child = node.children[i]
-        if (child) stack.push(child)
-      }
-    }
-  }
 }
 
 function useGlobalMouseHandlers(args: {

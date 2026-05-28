@@ -20,7 +20,6 @@ function SplitView(props: { node: SplitNode }) {
       className={
         isRow ? 'flex h-full w-full flex-row' : 'flex h-full w-full flex-col'
       }
-      data-split-id={props.node.id}
     >
       {props.node.children.map((child, i) => (
         <Fragment key={child.id}>
@@ -33,7 +32,6 @@ function SplitView(props: { node: SplitNode }) {
               flex: `${props.node.sizes[i]} ${props.node.sizes[i]} 0`,
               flexBasis: 0,
             }}
-            data-node-id={child.id}
           >
             <NodeView node={child} />
           </div>
