@@ -304,6 +304,10 @@
       {
         "chain": "arbitrum",
         "tx": "0xfea525a89c615980ce8a77407a7cabd25e44a4b42b94f7ad01f352ff45475d11"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x0fa1d62afe91f99fa5292db2afd0988e5a9fcc5346ae44296814722e5011ef49"
       }
     ],
     "expects": {
