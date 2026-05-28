@@ -1,15 +1,18 @@
 import type { UnixTime } from '@l2beat/shared-pure'
-import { env } from '~/env'
 import { getDb } from '~/server/database'
 
-export function getAggregatedInteropSnapshotTimestamp(): Promise<
+export async function getAggregatedInteropSnapshotTimestamp(): Promise<
   UnixTime | undefined
 > {
   const db = getDb()
 
-  if (env.INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE !== undefined) {
+  const timestampOverride = await db.keyValue.get(
+    'interop-aggregate-timestamp-override',
+  )
+
+  if (timestampOverride) {
     return db.aggregatedInteropTransfer.getEarliestTimestampForDay(
-      env.INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE,
+      timestampOverride.value,
     )
   }
 
