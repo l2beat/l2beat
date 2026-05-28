@@ -84,6 +84,7 @@ async function getCachedData() {
   const protocols = interopProtocols.map((protocol) => ({
     id: protocol.id,
     name: protocol.interopConfig.name ?? protocol.name,
+    slug: protocol.slug,
     iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
   }))
 

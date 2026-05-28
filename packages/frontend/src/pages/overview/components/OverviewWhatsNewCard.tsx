@@ -2,6 +2,15 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { cn } from '~/utils/cn'
 import { OVERVIEW_CARD_PADDING_CLASS } from './overviewChartHeight'
+import {
+  OVERVIEW_WHATS_NEW_BODY_CLASS,
+  OVERVIEW_WHATS_NEW_DESCRIPTION_CLASS,
+  OVERVIEW_WHATS_NEW_LINK_CLASS,
+  OVERVIEW_WHATS_NEW_LIST_GAP_CLASS,
+  OVERVIEW_WHATS_NEW_STACK_CLASS,
+  OVERVIEW_WHATS_NEW_TITLE_CLASS,
+  OVERVIEW_WIDGET_TITLE_CLASS,
+} from './overviewResponsive'
 
 interface WhatsNewItem {
   id: string
@@ -31,10 +40,14 @@ export function OverviewWhatsNewCard() {
   }
   return (
     <PrimaryCard
-      className={cn(OVERVIEW_CARD_PADDING_CLASS, 'flex flex-col gap-3')}
+      className={cn(
+        OVERVIEW_CARD_PADDING_CLASS,
+        'flex flex-col',
+        OVERVIEW_WHATS_NEW_STACK_CLASS,
+      )}
     >
-      <span className="font-bold text-xl">What's new</span>
-      <ul className="flex flex-1 flex-col gap-2">
+      <span className={OVERVIEW_WIDGET_TITLE_CLASS}>What's new</span>
+      <ul className={OVERVIEW_WHATS_NEW_LIST_GAP_CLASS}>
         {WHATS_NEW_ITEMS.map((item) => (
           <li key={item.id} className="flex flex-1">
             <WhatsNewItemCard item={item} />
@@ -63,14 +76,12 @@ function WhatsNewItemCard({ item }: { item: WhatsNewItem }) {
           className="size-full min-h-[5.5rem] object-cover object-left transition-transform duration-300 group-hover:scale-[1.02] md:min-h-0"
         />
       </div>
-      <div className="flex min-w-0 flex-1 flex-col justify-center gap-0.5 p-2.5 md:gap-1 md:p-3">
-        <span className="font-bold text-label-value-14 leading-tight md:text-heading-16">
-          {item.title}
-        </span>
-        <p className="line-clamp-2 text-label-value-12 text-secondary leading-snug md:text-label-value-13">
+      <div className={OVERVIEW_WHATS_NEW_BODY_CLASS}>
+        <span className={OVERVIEW_WHATS_NEW_TITLE_CLASS}>{item.title}</span>
+        <p className={OVERVIEW_WHATS_NEW_DESCRIPTION_CLASS}>
           {item.description}
         </p>
-        <span className="mt-0.5 flex items-center gap-1 font-bold text-link text-xs md:mt-auto md:pt-1">
+        <span className={OVERVIEW_WHATS_NEW_LINK_CLASS}>
           Explore
           <ArrowRightIcon className="size-3 fill-current transition-transform group-hover:translate-x-0.5" />
         </span>

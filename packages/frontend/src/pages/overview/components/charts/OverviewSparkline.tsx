@@ -24,7 +24,21 @@ import {
 
 export type OverviewSparklineColor = 'pink' | 'cyan' | 'sky' | 'purple'
 
-type SparklineHeight = 44 | 48 | 56 | 60 | 80 | 96 | 100 | 108 | 120 | 140 | 160
+export type OverviewSparklineHeight =
+  | 44
+  | 48
+  | 52
+  | 56
+  | 60
+  | 80
+  | 96
+  | 100
+  | 104
+  | 108
+  | 112
+  | 120
+  | 140
+  | 160
 
 export interface OverviewSparklineDataPoint {
   timestamp: number
@@ -43,7 +57,7 @@ interface Props {
   tooltipLabel: string
   formatValue: (value: number) => string
   syncedUntil?: number
-  height?: SparklineHeight
+  height?: OverviewSparklineHeight
   showYAxis?: boolean
   className?: string
 }
@@ -56,15 +70,18 @@ const STROKE_COLOR: Record<OverviewSparklineColor, string> = {
 }
 
 // Tailwind needs to see every full class string statically.
-const HEIGHT_OVERRIDE: Record<SparklineHeight, string> = {
+const HEIGHT_OVERRIDE: Record<OverviewSparklineHeight, string> = {
   44: '[&_.recharts-responsive-container]:!h-[44px] [&_.recharts-responsive-container]:!min-h-[44px]',
   48: '[&_.recharts-responsive-container]:!h-[48px] [&_.recharts-responsive-container]:!min-h-[48px]',
+  52: '[&_.recharts-responsive-container]:!h-[52px] [&_.recharts-responsive-container]:!min-h-[52px]',
   56: '[&_.recharts-responsive-container]:!h-[56px] [&_.recharts-responsive-container]:!min-h-[56px]',
   60: '[&_.recharts-responsive-container]:!h-[60px] [&_.recharts-responsive-container]:!min-h-[60px]',
   80: '[&_.recharts-responsive-container]:!h-[80px] [&_.recharts-responsive-container]:!min-h-[80px]',
   96: '[&_.recharts-responsive-container]:!h-[96px] [&_.recharts-responsive-container]:!min-h-[96px]',
   100: '[&_.recharts-responsive-container]:!h-[100px] [&_.recharts-responsive-container]:!min-h-[100px]',
+  104: '[&_.recharts-responsive-container]:!h-[104px] [&_.recharts-responsive-container]:!min-h-[104px]',
   108: '[&_.recharts-responsive-container]:!h-[108px] [&_.recharts-responsive-container]:!min-h-[108px]',
+  112: '[&_.recharts-responsive-container]:!h-[112px] [&_.recharts-responsive-container]:!min-h-[112px]',
   120: '[&_.recharts-responsive-container]:!h-[120px] [&_.recharts-responsive-container]:!min-h-[120px]',
   140: '[&_.recharts-responsive-container]:!h-[140px] [&_.recharts-responsive-container]:!min-h-[140px]',
   160: '[&_.recharts-responsive-container]:!h-[160px] [&_.recharts-responsive-container]:!min-h-[160px]',

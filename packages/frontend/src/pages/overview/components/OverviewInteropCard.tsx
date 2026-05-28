@@ -14,21 +14,16 @@ import {
   InteropFlowsProvider,
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
+import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { OVERVIEW_INTEROP_CARD_CLASS } from './overviewChartHeight'
 
-interface InteropProtocol {
-  id: string
-  name: string
-  iconUrl: string
-}
-
 interface Props {
   interopChains: InteropChainWithIcon[]
-  interopProtocols: InteropProtocol[]
+  interopProtocols: (ProtocolDisplayable & { id: string })[]
   defaultSelectedFlowChains: string[]
   totalInterop24hVolume: number
 }

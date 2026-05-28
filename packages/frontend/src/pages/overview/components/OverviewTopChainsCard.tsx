@@ -32,6 +32,12 @@ import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 import { OVERVIEW_CARD_PADDING_CLASS } from './overviewChartHeight'
+import {
+  OVERVIEW_HEADER_ROW_CLASS,
+  OVERVIEW_TABLE_SECTION_MT_CLASS,
+  OVERVIEW_VIEW_DETAILS_LINK_CLASS,
+  OVERVIEW_WIDGET_TITLE_CLASS,
+} from './overviewResponsive'
 
 interface Props {
   entries: ScalingSummaryEntry[]
@@ -78,7 +84,7 @@ export function OverviewTopChainsCard({ entries, chainVolumeMap }: Props) {
       )}
     >
       <Header />
-      <div className="mt-3 flex-1">
+      <div className={cn(OVERVIEW_TABLE_SECTION_MT_CLASS, 'flex-1')}>
         <BasicTable table={table} />
       </div>
     </PrimaryCard>
@@ -87,12 +93,9 @@ export function OverviewTopChainsCard({ entries, chainVolumeMap }: Props) {
 
 function Header() {
   return (
-    <div className="flex items-center gap-3">
-      <span className="font-bold text-xl">Top chains</span>
-      <a
-        className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 font-bold text-[13px] text-link leading-none"
-        href="/scaling/summary"
-      >
+    <div className={OVERVIEW_HEADER_ROW_CLASS}>
+      <span className={OVERVIEW_WIDGET_TITLE_CLASS}>Top chains</span>
+      <a className={OVERVIEW_VIEW_DETAILS_LINK_CLASS} href="/scaling/summary">
         View all
         <ChevronIcon className="-rotate-90 size-2.5 fill-current" />
       </a>

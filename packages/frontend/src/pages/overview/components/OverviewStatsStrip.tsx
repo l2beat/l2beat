@@ -10,6 +10,15 @@ import { cn } from '~/utils/cn'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { OverviewProjectCounts } from '../getOverviewProjectCounts'
 import { OVERVIEW_CARD_PADDING_CLASS } from './overviewChartHeight'
+import {
+  OVERVIEW_STAT_STRIP_GRID_CLASS,
+  OVERVIEW_STAT_TILE_COUNT_CLASS,
+  OVERVIEW_STAT_TILE_ICON_CLASS,
+  OVERVIEW_STAT_TILE_INSET_CLASS,
+  OVERVIEW_STAT_TILE_LABEL_CLASS,
+  OVERVIEW_STAT_TILE_LINK_NARROW_CLASS,
+  OVERVIEW_STAT_TILE_SUFFIX_CLASS,
+} from './overviewResponsive'
 
 interface Tile {
   label: string
@@ -21,7 +30,7 @@ interface Tile {
 
 export function OverviewStatsStrip({
   counts,
-  variant = 'default',
+  variant: _variant = 'default',
 }: {
   counts: OverviewProjectCounts
   variant?: 'default' | 'overviewRightColumn'
@@ -71,21 +80,17 @@ export function OverviewStatsStrip({
     },
   ]
 
-  const narrow = variant === 'overviewRightColumn'
-
   return (
     <PrimaryCard className={OVERVIEW_CARD_PADDING_CLASS}>
       <ul
         className={cn(
-          'grid grid-cols-2 gap-2 md:grid-cols-3',
-          narrow
-            ? 'lg:grid-cols-1 lg:gap-0 lg:divide-y lg:divide-divider'
-            : 'lg:grid-cols-1 lg:gap-0 lg:divide-y lg:divide-divider',
+          OVERVIEW_STAT_STRIP_GRID_CLASS,
+          'lg:grid-cols-1 lg:gap-0 lg:divide-y lg:divide-divider',
         )}
       >
         {tiles.map((tile) => (
           <li key={tile.label}>
-            <StatTile tile={tile} narrow={narrow} />
+            <StatTile tile={tile} />
           </li>
         ))}
       </ul>
@@ -93,58 +98,25 @@ export function OverviewStatsStrip({
   )
 }
 
-function StatTile({ tile, narrow }: { tile: Tile; narrow: boolean }) {
+function StatTile({ tile }: { tile: Tile }) {
   const labelSuffix = tile.label === 'Interop' ? 'chains' : 'projects'
   return (
     <a
       href={tile.href}
       className={cn(
-        'group flex h-full items-center gap-2.5 rounded-lg border border-divider px-2.5 py-2',
-        'transition-colors duration-200 hover:border-link-stroke hover:bg-surface-secondary',
-        narrow
-          ? 'lg:-mx-3 lg:gap-2 lg:rounded-md lg:border-0 lg:px-3 lg:py-1.5 lg:hover:border-transparent'
-          : 'lg:-mx-3 lg:gap-2 lg:rounded-md lg:border-0 lg:px-3 lg:py-1.5 lg:hover:border-transparent',
+        'group flex h-full items-center transition-colors duration-200 hover:border-link-stroke hover:bg-surface-secondary',
+        OVERVIEW_STAT_TILE_INSET_CLASS,
+        OVERVIEW_STAT_TILE_LINK_NARROW_CLASS,
       )}
     >
-      <div
-        className={cn(
-          'flex size-8 shrink-0 items-center justify-center rounded-md',
-          narrow
-            ? 'lg:size-6 lg:rounded [&>svg]:lg:size-3.5'
-            : 'lg:size-6 lg:rounded [&>svg]:lg:size-3.5',
-          tile.iconBgClassName,
-        )}
-      >
+      <div className={cn(OVERVIEW_STAT_TILE_ICON_CLASS, tile.iconBgClassName)}>
         {tile.icon}
       </div>
-      <div
-        className={cn(
-          'flex min-w-0 flex-1 flex-col justify-center',
-          narrow
-            ? 'lg:flex-row lg:items-baseline lg:gap-2'
-            : 'lg:flex-row lg:items-baseline lg:gap-2',
-        )}
-      >
-        <span
-          className={cn(
-            'truncate font-medium text-label-value-12 text-secondary leading-tight',
-            narrow
-              ? 'lg:flex-1 lg:text-label-value-13 lg:text-primary'
-              : 'lg:flex-1 lg:text-label-value-13 lg:text-primary',
-          )}
-        >
-          {tile.label}
-        </span>
-        <span
-          className={cn(
-            'flex items-baseline gap-1 whitespace-nowrap font-bold text-label-value-16 leading-tight',
-            narrow ? 'lg:text-label-value-13' : 'lg:text-label-value-13',
-          )}
-        >
+      <div className="flex min-w-0 flex-1 flex-col justify-center lg:flex-row lg:items-baseline lg:gap-2 min-[1536px]:lg:gap-2.5 min-[1700px]:lg:gap-3">
+        <span className={OVERVIEW_STAT_TILE_LABEL_CLASS}>{tile.label}</span>
+        <span className={OVERVIEW_STAT_TILE_COUNT_CLASS}>
           {formatInteger(tile.count)}
-          <span className="font-medium text-label-value-12 text-secondary">
-            {labelSuffix}
-          </span>
+          <span className={OVERVIEW_STAT_TILE_SUFFIX_CLASS}>{labelSuffix}</span>
         </span>
       </div>
       <ChevronIcon className="-rotate-90 size-2.5 shrink-0 fill-secondary transition-colors group-hover:fill-link" />

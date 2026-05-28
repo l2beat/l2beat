@@ -7,6 +7,7 @@ import { TvsDisplayControlsContextProvider } from '~/components/table/display/co
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { optionToRange } from '~/utils/range/range'
 import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
@@ -31,19 +32,13 @@ import {
   OVERVIEW_TVS_CHART_RANGE_ARGS,
 } from './overviewChartRanges'
 
-interface InteropProtocol {
-  id: string
-  name: string
-  iconUrl: string
-}
-
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   projectCounts: OverviewProjectCounts
   topChains: ScalingSummaryEntry[]
   recentProjects: OverviewRecentProject[]
   interopChains: InteropChainWithIcon[]
-  interopProtocols: InteropProtocol[]
+  interopProtocols: (ProtocolDisplayable & { id: string })[]
   defaultSelectedFlowChains: string[]
   totalInterop24hVolume: number
   chainVolumeMap: Record<string, number>
