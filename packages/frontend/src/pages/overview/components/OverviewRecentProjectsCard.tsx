@@ -26,12 +26,12 @@ export function OverviewRecentProjectsCard({ projects, className }: Props) {
   }
   return (
     <PrimaryCard
-      className={cn(OVERVIEW_CARD_PADDING_CLASS, 'flex flex-col', className)}
+      className={cn(OVERVIEW_CARD_PADDING_CLASS, 'flex h-full flex-col', className)}
     >
       <div className="flex items-center justify-between">
         <span className="font-bold text-xl">Recently added projects</span>
       </div>
-      <ul className="mt-2 grid grid-cols-1 gap-1.5 md:grid-cols-2 xl:grid-cols-1">
+      <ul className="mt-2 grid grid-cols-1 gap-1.5 md:grid-cols-2 lg:grid-cols-1">
         {visibleProjects.map((project) => (
           <li key={project.id}>
             <RecentProjectCard project={project} />

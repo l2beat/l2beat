@@ -84,7 +84,8 @@ export function OverviewPage({
         >
           <SideNavLayout
             homepageLayout
-            contentAreaClassName="max-xl:bg-surface-primary"
+            childrenWrapperClassName="xl:bg-surface-secondary"
+            contentAreaClassName="max-xl:bg-surface-primary min-[1920px]:max-w-[1840px]"
           >
             <header className="flex items-center gap-4 pt-[18px] pb-5 max-lg:hidden">
               <a href="/home" aria-label="Go to home">
@@ -98,7 +99,7 @@ export function OverviewPage({
               </div>
             </header>
             <div className="flex flex-col gap-4 max-md:px-0 md:gap-6">
-              <div className="grid grid-cols-1 items-stretch gap-4 xl:grid-cols-[minmax(260px,300px)_minmax(340px,390px)_minmax(0,1fr)] xl:gap-6 xl:pb-1">
+              <div className="grid grid-cols-1 items-stretch gap-4 xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)] xl:gap-6 xl:pb-1">
                 <div className="flex h-full min-w-0 flex-col gap-4 xl:gap-6">
                   <OverviewStatsStrip
                     counts={projectCounts}
@@ -106,27 +107,31 @@ export function OverviewPage({
                   />
                   <OverviewWhatsNewCard />
                   <OverviewRecentProjectsCard
-                    className="hidden xl:flex"
+                    className="hidden min-h-0 flex-1 xl:flex"
                     projects={recentProjects}
                   />
                 </div>
                 <OverviewDeferredMount
                   fallback={<OverviewChartColumnsSkeleton />}
                 >
-                  <div className="flex h-full min-w-0 flex-col gap-4 xl:gap-6">
-                    <OverviewScalingCard
-                      tvsRange={tvsChartRange}
-                      activityRange={activityChartRange}
-                      scalingCategoryCounts={scalingCategoryCounts}
-                      compactCharts
-                    />
-                    <OverviewEthereumCard
-                      activityRange={activityChartRange}
-                      daRange={daChartRange}
-                      compactCharts
-                    />
+                  <div className="flex h-full min-h-0 min-w-0 flex-col gap-4 xl:gap-6">
+                    <div className="flex min-h-0 flex-1 flex-col">
+                      <OverviewScalingCard
+                        tvsRange={tvsChartRange}
+                        activityRange={activityChartRange}
+                        scalingCategoryCounts={scalingCategoryCounts}
+                        compactCharts
+                      />
+                    </div>
+                    <div className="flex min-h-0 flex-1 flex-col">
+                      <OverviewEthereumCard
+                        activityRange={activityChartRange}
+                        daRange={daChartRange}
+                        compactCharts
+                      />
+                    </div>
                   </div>
-                  <div className="flex h-full min-w-0 flex-col">
+                  <div className="flex h-full min-h-0 min-w-0 flex-col">
                     <OverviewInteropCard
                       interopChains={interopChains}
                       interopProtocols={interopProtocols}

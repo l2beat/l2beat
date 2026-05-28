@@ -52,25 +52,25 @@ function WhatsNewItemCard({ item }: { item: WhatsNewItem }) {
       className={cn(
         'group relative flex flex-1 flex-row overflow-hidden rounded-lg border border-divider',
         'transition-colors duration-200 hover:border-link-stroke',
-        'xl:flex-col',
+        'md:flex-col',
       )}
     >
-      <div className="relative w-[7.25rem] shrink-0 overflow-hidden bg-surface-secondary sm:w-32 xl:aspect-[16/5] xl:w-full">
+      <div className="relative w-[7.25rem] shrink-0 overflow-hidden bg-surface-secondary sm:w-32 md:aspect-[16/5] md:w-full">
         <img
           src={item.imageSrc}
           alt={item.imageAlt}
           loading="lazy"
-          className="size-full min-h-[5.5rem] object-cover object-left transition-transform duration-300 group-hover:scale-[1.02] xl:min-h-0"
+          className="size-full min-h-[5.5rem] object-cover object-left transition-transform duration-300 group-hover:scale-[1.02] md:min-h-0"
         />
       </div>
-      <div className="flex min-w-0 flex-1 flex-col justify-center gap-0.5 p-2.5 xl:gap-1 xl:p-3">
-        <span className="font-bold text-label-value-14 leading-tight xl:text-heading-16">
+      <div className="flex min-w-0 flex-1 flex-col justify-center gap-0.5 p-2.5 md:gap-1 md:p-3">
+        <span className="font-bold text-label-value-14 leading-tight md:text-heading-16">
           {item.title}
         </span>
-        <p className="line-clamp-2 text-label-value-12 text-secondary leading-snug xl:text-label-value-13">
+        <p className="line-clamp-2 text-label-value-12 text-secondary leading-snug md:text-label-value-13">
           {item.description}
         </p>
-        <span className="mt-0.5 flex items-center gap-1 font-bold text-link text-xs xl:mt-auto xl:pt-1">
+        <span className="mt-0.5 flex items-center gap-1 font-bold text-link text-xs md:mt-auto md:pt-1">
           Explore
           <ArrowRightIcon className="size-3 fill-current transition-transform group-hover:translate-x-0.5" />
         </span>

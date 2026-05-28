@@ -35,8 +35,11 @@ export function OverviewDeferredMount({
 export function OverviewChartColumnsSkeleton() {
   return (
     <div className="contents">
-      <Skeleton className="min-h-[300px] w-full rounded-xl" />
-      <Skeleton className="min-h-[400px] w-full rounded-xl" />
+      <div className="flex h-full min-h-0 min-w-0 flex-col gap-4 xl:gap-6">
+        <Skeleton className="min-h-0 flex-1 w-full rounded-xl" />
+        <Skeleton className="min-h-0 flex-1 w-full rounded-xl" />
+      </div>
+      <Skeleton className="h-full min-h-[400px] w-full rounded-xl" />
     </div>
   )
 }
