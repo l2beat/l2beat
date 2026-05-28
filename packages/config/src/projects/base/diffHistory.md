@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x0eba078eb4b41d7e6645e724b408a1a1e59a89d2
+Generated with discovered.json: 0x80e87a2458c471c06f7306a3ecd37c67e15cda34
 
-# Diff at Thu, 28 May 2026 11:33:28 GMT:
+# Diff at Thu, 28 May 2026 11:49:54 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779198836
-- current timestamp: 1779967940
+- current timestamp: 1779968926
 
 ## Description
 
@@ -243,14 +243,14 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
-    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [N/A]
-    +++ description: None
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry]
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
 ```
 
 ```diff
 +   Status: CREATED
-    contract TEEVerifier (eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228) [N/A]
-    +++ description: None
+    contract TEEVerifier (eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228) [base/TEEVerifier]
+    +++ description: Stateless verifier that validates AggregateVerifier TEE proofs by recovering an ECDSA signature over the journal and checking the recovered signer against TEEProverRegistry. Enforces PCR0 match by comparing the signer's registered image hash to the AggregateVerifier's TEE_IMAGE_HASH. Can be permanently nullified by a successful AggregateVerifier.nullify call.
 ```
 
 ```diff
@@ -273,26 +273,26 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
-    contract NitroEnclaveVerifier (eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb) [N/A]
-    +++ description: None
+    contract NitroEnclaveVerifier (eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb) [base/NitroEnclaveVerifier]
+    +++ description: ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI.
 ```
 
 ```diff
 +   Status: CREATED
-    contract SP1Verifier (eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508) [N/A]
-    +++ description: None
+    contract SP1Verifier (eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
 ```
 
 ```diff
 +   Status: CREATED
-    contract ZkVerifier (eth:0x9e51DeFb019D1942d1210767f4A21bE5E24E3c3b) [N/A]
-    +++ description: None
+    contract ZkVerifier (eth:0x9e51DeFb019D1942d1210767f4A21bE5E24E3c3b) [base/ZkVerifier]
+    +++ description: Thin router that forwards SP1 ZK proof verification from the AggregateVerifier game to the SP1 verifier gateway. Can be permanently nullified by a successful AggregateVerifier.nullify call.
 ```
 
 ```diff
 +   Status: CREATED
-    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [N/A]
-    +++ description: None
+    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
 ```
 
 ```diff
@@ -303,8 +303,8 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
-    contract DelayedWETH (eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71) [N/A]
-    +++ description: None
+    contract DelayedWETH (eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
 ```
 
 ## Source code changes
@@ -331,6 +331,22 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
  .../src/projects/base/.flat/TEEVerifier.sol        | 4402 ++++++++++++++++++++
  .../src/projects/base/.flat/ZkVerifier.sol         | 1862 +++++++++
  20 files changed, 15679 insertions(+), 9104 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779198836 (main branch discovery), not current.
+
+```diff
+    contract SkyLink Bridge (eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A) [maker/SkyLinkBridge] {
+    +++ description: Custom bridge for USDS and sUSDS managed by Sky governance.
+      template:
++        "maker/SkyLinkBridge"
+      fieldMeta:
++        {"escrow":{"severity":"HIGH"},"messenger":{"severity":"HIGH"},"otherBridge":{"severity":"HIGH"}}
+    }
 ```
 
 Generated with discovered.json: 0x2527024ac04992905aab58dbe5d4a3b956093038

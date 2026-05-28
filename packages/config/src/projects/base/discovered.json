@@ -1,6 +1,6 @@
 {
   "name": "base",
-  "timestamp": 1779967940,
+  "timestamp": 1779968926,
   "configHash": "0xe87f78918105f7799a28c33e85c577518c3de352f567f239372b2ec4d6136fe1",
   "entries": [
     {
@@ -300,10 +300,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 188727423,
+        "basefee": 189897075,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 10228576,
+        "blobBaseFee": 11188910,
         "blobBaseFeeScalar": 1055762,
         "daFootprintGasScalar": 148,
         "DEPOSITOR_ACCOUNT": "base:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -313,15 +313,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x11de7a8825cd73e0df0fe2659748f8d064c8635e30321098e5339191579d5c6b",
+        "hash": "0x540e8faf97d8a7b84c7b69101cc872c8117609ad57065df148aba0b2098c2b22",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 25193560,
+        "number": 25193642,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "sequenceNumber": 1,
-        "timestamp": 1779967883,
+        "timestamp": 1779968867,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -1043,11 +1043,13 @@
       "name": "TEEProverRegistry",
       "address": "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA",
       "type": "Contract",
+      "template": "base/TEEProverRegistry",
       "sourceHashes": [
         "0xa4c6eec89ca5a138c3f0f983a01542174071c7f37870aaa0fba0ef9613c2f530",
         "0x9831f0365a1629899a27a5e77f1445d6b78de4d90376053079da107921dda3a2"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.",
       "deployerAddress": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
       "sinceTimestamp": 1779394811,
       "sinceBlock": 25145975,
@@ -1068,18 +1070,25 @@
         "getRegisteredSigners": [
           "eth:0x9dAbf54D4F5Fb342800c4118B526a2ECFFa3a22d",
           "eth:0x3E8F0c5C917C309e671F14a2293ec2BBcB41f634",
-          "eth:0x8d4c685f083202895c58523EfD246A5270f10bE1",
+          "eth:0xd385B55eC3F617F08eBf942C4a7eE0f0558A984c",
           "eth:0xA4Fc29381806652C618F6FB98bd75FF883963F75",
           "eth:0xeb5B66D626F945BCC644d53056f289504d59Fb91",
           "eth:0xFe9fCb6A443DC120DFc19b8EaE13450016B03e0E",
           "eth:0x3Ece3bDB01069aEfEF82f8AF36C437d1e7B4F87f",
-          "eth:0xd385B55eC3F617F08eBf942C4a7eE0f0558A984c"
+          "eth:0x8d4c685f083202895c58523EfD246A5270f10bE1"
         ],
         "manager": "eth:0xd87488Dbb5b6F47cc6c15Dd95Bb60c83D3031b04",
         "MAX_AGE": 3600,
         "NITRO_VERIFIER": "eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb",
         "owner": "eth:0x9855054731540A48b28990B63DcF4f33d8AE46A1",
         "version": "0.5.0"
+      },
+      "fieldMeta": {
+        "NITRO_VERIFIER": { "severity": "HIGH" },
+        "DISPUTE_GAME_FACTORY": { "severity": "HIGH" },
+        "gameType": { "severity": "HIGH" },
+        "getRegisteredSigners": { "severity": "HIGH" },
+        "getExpectedImageHash": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA": "Proxy",
@@ -1100,10 +1109,12 @@
       "name": "TEEVerifier",
       "address": "eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228",
       "type": "Contract",
+      "template": "base/TEEVerifier",
       "sourceHashes": [
         "0x3b192657a1f796d615500b86b546c112f7bdb0274db66e6840ec5ed9c4cea6e7"
       ],
       "proxyType": "immutable",
+      "description": "Stateless verifier that validates AggregateVerifier TEE proofs by recovering an ECDSA signature over the journal and checking the recovered signer against TEEProverRegistry. Enforces PCR0 match by comparing the signer's registered image hash to the AggregateVerifier's TEE_IMAGE_HASH. Can be permanently nullified by a successful AggregateVerifier.nullify call.",
       "deployerAddress": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
       "sinceTimestamp": 1779394835,
       "sinceBlock": 25145977,
@@ -1113,6 +1124,11 @@
         "nullified": false,
         "TEE_PROVER_REGISTRY": "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA",
         "version": "0.2.0"
+      },
+      "fieldMeta": {
+        "TEE_PROVER_REGISTRY": { "severity": "HIGH" },
+        "ANCHOR_STATE_REGISTRY": { "severity": "HIGH" },
+        "nullified": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228": "TEEVerifier"
@@ -1361,7 +1377,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
         "game621": "eth:0x4c0DAF5d9ABe92e8A26a60698a657B03538a3028",
-        "gameCount": 14029,
+        "gameCount": 14033,
         "initBondGame0": "80000000000000000",
         "initBondGame1": "80000000000000000",
         "initBondGame42": 0,
@@ -1479,8 +1495,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 1547362,
-          "prevBlockNum": 25193540
+          "prevBoughtGas": 1326609,
+          "prevBlockNum": 25193633
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -2281,10 +2297,12 @@
       "name": "NitroEnclaveVerifier",
       "address": "eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb",
       "type": "Contract",
+      "template": "base/NitroEnclaveVerifier",
       "sourceHashes": [
         "0x6875614343c44c17725ea9130ec54130f6c984cf9d817c28d0017defa57340db"
       ],
       "proxyType": "immutable",
+      "description": "ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI.",
       "deployerAddress": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
       "sinceTimestamp": 1779394727,
       "sinceBlock": 25145968,
@@ -2377,7 +2395,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293184896",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293184902",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2568,10 +2586,12 @@
       "name": "SP1Verifier",
       "address": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x42f46686613948c377586d511d315e6d67b9fd747a18225cce7c4cf32d14c7be"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.0.0).",
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1771375907,
       "sinceBlock": 24480252,
@@ -2673,10 +2693,12 @@
       "name": "ZkVerifier",
       "address": "eth:0x9e51DeFb019D1942d1210767f4A21bE5E24E3c3b",
       "type": "Contract",
+      "template": "base/ZkVerifier",
       "sourceHashes": [
         "0x68474d87d0ac0a78246d07f7a3ff8d5b74d28b181ad81f1192415e6f6f9e8c81"
       ],
       "proxyType": "immutable",
+      "description": "Thin router that forwards SP1 ZK proof verification from the AggregateVerifier game to the SP1 verifier gateway. Can be permanently nullified by a successful AggregateVerifier.nullify call.",
       "deployerAddress": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
       "sinceTimestamp": 1779394835,
       "sinceBlock": 25145977,
@@ -2686,6 +2708,11 @@
         "nullified": false,
         "SP1_VERIFIER": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
         "version": "0.1.0"
+      },
+      "fieldMeta": {
+        "SP1_VERIFIER": { "severity": "HIGH" },
+        "ANCHOR_STATE_REGISTRY": { "severity": "HIGH" },
+        "nullified": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x9e51DeFb019D1942d1210767f4A21bE5E24E3c3b": "ZkVerifier"
@@ -2710,6 +2737,7 @@
       "name": "SkyLink Bridge",
       "address": "eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A",
       "type": "Contract",
+      "template": "maker/SkyLinkBridge",
       "sourceHashes": [
         "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
         "0x2eb865904d6c13775d52bc759e65f0b7601de45c32b313acd13d7c96ab7157d1"
@@ -2737,6 +2765,11 @@
         "otherBridge": "eth:0xee44cdb68D618d58F75d9fe0818B640BD7B8A7B7",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "version": "1"
+      },
+      "fieldMeta": {
+        "escrow": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A": "ERC1967Proxy",
@@ -2815,10 +2848,12 @@
       "name": "SP1Verifier",
       "address": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172379,
       "sinceBlock": 24878255,
@@ -2889,11 +2924,14 @@
       "name": "DelayedWETH",
       "address": "eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71",
       "type": "Contract",
+      "template": "opstack/DelayedWETH",
       "sourceHashes": [
         "0xa4c6eec89ca5a138c3f0f983a01542174071c7f37870aaa0fba0ef9613c2f530",
         "0x4b82fc44fb8ad926da28ed0fd3498b0a27057822ac7776bdfdcd9276d1d25db0"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
+      "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
       "sinceTimestamp": 1779394823,
       "sinceBlock": 25145976,
@@ -2917,7 +2955,7 @@
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
-        "totalSupply": "15950000000000000000",
+        "totalSupply": "16150000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -4621,10 +4659,15 @@
     ]
   },
   "usedTemplates": {
+    "base/NitroEnclaveVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "base/TEEProverRegistry": "0xddbd05a690b9cc9afcfa4816033c01bfc9e89fe794eda589288fd93ada6a6ef8",
+    "base/TEEVerifier": "0xd353a0d8f6b61132c9755a4cb45874afdfb6bb8cf17aab377be161e29a252f82",
+    "base/ZkVerifier": "0x1be48ad361a820e9558587a145dbfb6f18b2ad785a4f394e3f6753defe4151dd",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "lido/L1ERC20TokenBridge": "0x1dbfb76725d8a5de94df533062c2232ad27f9bd9988b137706333c26e2ffc4d7",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
+    "maker/SkyLinkBridge": "0xf70bddcf366c7944313a6fa9a91cccfeb78e4742b69a11ae40242f7ea49fc0e2",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AggregateVerifier": "0x560de594aea8408d01b0e088f70b8337ec8b370fb11e27cddde4a57e3341e93a",
     "opstack/AnchorStateRegistry_post20": "0x07d8c31ea56316391e42cff263e7d6106b24edda84d3aa0f708619d27cda98ca",
@@ -4655,6 +4698,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "base": 46589296, "ethereum": 25193564 },
+  "usedBlockNumbers": { "base": 46589789, "ethereum": 25193646 },
   "permissionsConfigHash": "0xa66843bc9c60ef11afe9910c2bb95fb35afb78245e124774e94288bd9abde847"
 }

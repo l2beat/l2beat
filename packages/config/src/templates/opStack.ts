@@ -418,11 +418,18 @@ function opStackCommon(
                 zkCatalogId: ProjectId('sp1hypercube'),
                 challengeProtocol: 'Single-step',
               }
-            : {
-                type: 'Optimistic',
-                name: 'OPFP',
-                challengeProtocol: 'Interactive',
-              }),
+            : fraudProofType === 'AggregateProof'
+              ? {
+                  type: 'Optimistic',
+                  name: 'SP1',
+                  zkCatalogId: ProjectId('sp1hypercube'),
+                  challengeProtocol: 'Single-step',
+                }
+              : {
+                  type: 'Optimistic',
+                  name: 'OPFP',
+                  challengeProtocol: 'Interactive',
+                }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(

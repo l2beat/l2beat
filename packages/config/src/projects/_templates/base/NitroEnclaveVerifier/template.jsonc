@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NitroEnclaveVerifier",
+  "description": "ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI."
+}

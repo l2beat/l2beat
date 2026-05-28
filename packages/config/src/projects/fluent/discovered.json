@@ -592,10 +592,12 @@
       "name": "SP1Verifier",
       "address": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x42f46686613948c377586d511d315e6d67b9fd747a18225cce7c4cf32d14c7be"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.0.0).",
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1771375907,
       "sinceBlock": 24480252,
@@ -734,10 +736,12 @@
       "name": "SP1Verifier",
       "address": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172379,
       "sinceBlock": 24878255,

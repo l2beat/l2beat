@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TEEProverRegistry",
+  "description": "Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.",
+  "fields": {
+    "NITRO_VERIFIER": {
+      "severity": "HIGH"
+    },
+    "DISPUTE_GAME_FACTORY": {
+      "severity": "HIGH"
+    },
+    "gameType": {
+      "severity": "HIGH"
+    },
+    "getRegisteredSigners": {
+      "severity": "HIGH"
+    },
+    "getExpectedImageHash": {
+      "severity": "HIGH"
+    }
+  }
+}
