@@ -272,6 +272,14 @@ export const base: ScalingProject = opStackL2({
   ),
   milestones: [
     {
+      title: 'Base Azul: multi-proof',
+      url: 'https://blog.base.dev/introducing-base-azul',
+      date: '2026-05-26T00:00:00Z',
+      description:
+        'Multiproof activated: a TEE attestation or an SP1 ZK proof resolves an AggregateVerifier game.',
+      type: 'general',
+    },
+    {
       title: 'Base leaves the Superchain',
       url: 'https://blog.base.dev/next-chapter-for-base-chain-1',
       date: '2026-03-04T00:00:00Z',

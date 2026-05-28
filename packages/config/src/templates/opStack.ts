@@ -2503,12 +2503,12 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
       )
     }
     case 'AggregateProof': {
-      // AggregateVerifier's SLOW/FAST finalization is held in immutables on the
-      // game implementation; discovery does not currently template it. Fall back
-      // to the Portal2 proof-maturity delay as the nearest available bound.
+      // Worst-case challenge window: single-proof resolution. With both arms
+      // committed the resolution drops to FAST_FINALIZATION_DELAY (1d), but the
+      // risk view shows the conservative bound a challenger has to act within.
       return templateVars.discovery.getContractValue<number>(
-        'OptimismPortal2',
-        'proofMaturityDelaySeconds',
+        'AggregateVerifier',
+        'SLOW_FINALIZATION_DELAY',
       )
     }
   }
