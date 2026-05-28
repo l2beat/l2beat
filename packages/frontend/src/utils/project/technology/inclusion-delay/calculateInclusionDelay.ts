@@ -175,9 +175,9 @@ function findFractionAtDelay(
 ): number | undefined {
   for (let i = 0; i < curve.length; i++) {
     const point = curve[i]
-    if (!point) continue
+    if (!point || point.projectDelayDays === null) continue
     const delay = point.projectDelayDays
-    if (delay !== null && delay < thresholdDays) continue
+    if (delay < thresholdDays) continue
 
     const prev = i > 0 ? curve[i - 1] : undefined
     const prevDelay = prev?.projectDelayDays ?? null
@@ -186,7 +186,6 @@ function findFractionAtDelay(
       !prev ||
       prevDelay === null ||
       prevDelay >= thresholdDays ||
-      delay === null ||
       delay === prevDelay
     ) {
       return point.censoringFraction

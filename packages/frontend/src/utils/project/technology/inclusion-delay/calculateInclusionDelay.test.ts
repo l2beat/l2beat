@@ -214,6 +214,26 @@ describe('calculateInclusionDelay', () => {
       ])
     })
 
+    it('omits threshold markers the project delay line does not reach', () => {
+      const chart = {
+        type: 'ethereumlike',
+        validatorCount: 10,
+        slotSeconds: 10,
+        target: 0.99,
+        maxCensorFraction: 0.5,
+      } satisfies ProjectEthereumLikeInclusionDelayChart
+
+      // Project delay caps out below 7d before going null; the 7d/30d
+      // thresholds are never crossed and must not produce markers.
+      expect(
+        getInclusionDelayData(chart, [
+          { label: '1m', days: 60 / 86_400 },
+          { label: '7d', days: 7 },
+          { label: '30d', days: 30 },
+        ]).thresholdMarkers.map((m) => m.label),
+      ).toEqual(['1m delay'])
+    })
+
     it('returns markers on exact delay thresholds', () => {
       const chart = {
         type: 'ethereumlike',
@@ -226,7 +246,7 @@ describe('calculateInclusionDelay', () => {
       expect(
         getInclusionDelayData(chart, [
           { label: '50s', days: 50 / 86_400 },
-          { label: '2m', days: 120 / 86_400 },
+          { label: '60s', days: 60 / 86_400 },
         ]).thresholdMarkers,
       ).toEqual([
         {
@@ -236,10 +256,10 @@ describe('calculateInclusionDelay', () => {
           delayDays: 50 / 86_400,
         },
         {
-          id: 'delay-threshold-2m',
-          label: '2m delay',
-          censoringFraction: 0.5,
-          delayDays: 120 / 86_400,
+          id: 'delay-threshold-60s',
+          label: '60s delay',
+          censoringFraction: 0.4,
+          delayDays: 60 / 86_400,
         },
       ])
     })
