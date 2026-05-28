@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x8c574e2ba582b5bffe61610cb5181ae812199b9e
+Generated with discovered.json: 0x0a79a8204e06f1551269e2cab36cc438df7b97ce
 
-# Diff at Thu, 28 May 2026 08:22:34 GMT:
+# Diff at Thu, 28 May 2026 10:42:35 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@42ec6ccd3eb3987d93254260a860a262cb7c4eee block: 1778675724
+- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1778675724
 - current timestamp: 1779956198
 
 ## Description
@@ -212,7 +212,7 @@ discovery. Values are for block 1778675724 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract L1FeeVault (katana:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault]
-    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+    +++ description: Collects the L1 portion of the L2 transaction fees.
 ```
 
 ```diff

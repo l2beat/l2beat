@@ -91,6 +91,9 @@
     },
     "katana:0x4200000000000000000000000000000000000017": {
       "category": "spam"
+    },
+    "katana:0x420000000000000000000000000000000000001A": {
+      "description": "Collects the L1 portion of the L2 transaction fees."
     }
   }
 }

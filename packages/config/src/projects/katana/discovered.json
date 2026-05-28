@@ -1,7 +1,7 @@
 {
   "name": "katana",
   "timestamp": 1779956198,
-  "configHash": "0xbe57fe141fe55aeb3f1258865021c999c557b84be2d4de682171f940226d2b6e",
+  "configHash": "0x1081ea3eea7e341f577c03a68341ac0b77358b15e4e92c8a19053053e9a01b36",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -3581,6 +3581,14 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0x420000000000000000000000000000000000001b",
+          "description": "receive fees.",
+          "role": ".recipient"
+        }
+      ],
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
       "sinceBlock": 0,
@@ -3618,7 +3626,7 @@
         "0xe6ecd83f7dc6c3a0896d3311ac56023fae6df18d6b4059195c2dfc1d65717687"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.",
+      "description": "Collects the L1 portion of the L2 transaction fees.",
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
       "sinceBlock": 0,
@@ -3814,6 +3822,26 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0x4200000000000000000000000000000000000011",
+          "description": "receive fees.",
+          "role": ".recipient"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x4200000000000000000000000000000000000019",
+          "description": "receive fees.",
+          "role": ".recipient"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x420000000000000000000000000000000000001A",
+          "description": "receive fees.",
+          "role": ".recipient"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "katana:0xbd8F5d8eB7Bc4aA01b98438F7103200Df4433f8C",
       "sinceTimestamp": 1750868616,
@@ -6642,18 +6670,18 @@
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
-    "opstack/Layer2/BaseFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/BaseFeeVault": "0xd8a7cb83cdae1502e9676ed95278280ff23886719e692a795cb501daab9216bc",
     "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
-    "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/L1FeeVault": "0xd8a7cb83cdae1502e9676ed95278280ff23886719e692a795cb501daab9216bc",
     "opstack/Layer2/L2CrossDomainMessenger": "0xe22f4bc25e3233f9cbc95891feb31bb13e525003e5dac36ec019619b44a06b89",
     "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060",
-    "opstack/Layer2/OperatorFeeVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/OperatorFeeVault": "0xfd1de1977ec0947571527a84733673f9f2b44c133fb8708c4f3de26e9a3bb829",
     "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/SequencerFeeVault": "0xd8a7cb83cdae1502e9676ed95278280ff23886719e692a795cb501daab9216bc",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
@@ -6664,5 +6692,5 @@
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
   "usedBlockNumbers": { "ethereum": 25192587, "katana": 33213387 },
-  "permissionsConfigHash": "0xe3bbf5f727065cdf8c1476b67b3c0fd0bfa8d6be3d6aa9dfc9ed4afa8c18b769"
+  "permissionsConfigHash": "0xddefbe9ba94a2b1fa77f6c7ceb28ec32c0bc102682f2c0d07e954de183016559"
 }

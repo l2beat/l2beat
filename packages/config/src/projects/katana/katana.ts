@@ -182,10 +182,6 @@ export const katana: ScalingProject = {
         'There is no window for users to exit in case of an unwanted upgrade since the Security Council can remove the delay on upgrades.',
       sentiment: 'bad',
       orderHint: -1, // worse than forced tx available but instantly upgradable
-      regular: {
-        value: upgradeDelayString,
-        sentiment: 'warning',
-      },
       warning: {
         value: `Even though there is a ${upgradeDelayString} Timelock for non-emergency upgrades, self-proposing is disabled.`,
         sentiment: 'warning',
