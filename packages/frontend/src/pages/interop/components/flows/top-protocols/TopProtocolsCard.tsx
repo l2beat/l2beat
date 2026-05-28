@@ -27,7 +27,7 @@ export function TopProtocolsCard({
   }, [allChains])
 
   return (
-    <PrimaryCard className="mt-4 flex flex-col md:mt-5">
+    <PrimaryCard className="flex flex-col border-divider max-md:border-t md:mt-5">
       <div className="flex items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
