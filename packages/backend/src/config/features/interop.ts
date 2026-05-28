@@ -56,6 +56,14 @@ export async function getInteropFeatureConfig(
       enabled: flags.isEnabled('interop', 'financials'),
       tokenDbApiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
       tokenDbAuthToken: env.optionalString('TOKEN_BACKEND_CF_TOKEN'),
+      maxTokenPriceUsd: env.integer(
+        'INTEROP_FINANCIALS_MAX_TOKEN_PRICE_USD',
+        1_000_000,
+      ),
+      maxTransferValueUsd: env.integer(
+        'INTEROP_FINANCIALS_MAX_TRANSFER_VALUE_USD',
+        1_000_000_000,
+      ),
     },
     config: {
       enabled: flags.isEnabled('interop', 'config'),

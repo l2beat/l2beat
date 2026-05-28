@@ -138,4 +138,58 @@ describe(InteropNotifier.name, () => {
     expect(message.includes('$600.00 vs $100.00')).toEqual(true)
     expect(message.includes('6.00x src/dst')).toEqual(true)
   })
+
+  it('queues and sends skipped valuation notifications', async () => {
+    const webhookClient = mockObject<DiscordClient>({
+      sendMessage: async () => '1',
+    })
+    const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
+
+    notifier.notifySkippedTransferValuations(UnixTime(2_000_000), [
+      {
+        plugin: 'stargate',
+        type: 'deposit',
+        transferId: 'msg-1',
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        side: 'src',
+        symbol: 'MEGA',
+        coingeckoId: 'mega-token',
+        priceUsd: 1_500_000,
+        amount: 1,
+        valueUsd: undefined,
+        reason: 'priceAboveThreshold',
+        thresholdUsd: 1_000_000,
+      },
+      {
+        plugin: 'stargate',
+        type: 'deposit',
+        transferId: 'msg-2',
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        side: 'dst',
+        symbol: 'WHALE',
+        coingeckoId: 'whale-token',
+        priceUsd: 20_000,
+        amount: 100_000,
+        valueUsd: 2_000_000_000,
+        reason: 'valueAboveThreshold',
+        thresholdUsd: 1_000_000_000,
+      },
+    ])
+    await notifier._TEST_ONLY_waitTillEmpty()
+
+    expect(webhookClient.sendMessage).toHaveBeenCalledTimes(1)
+    const message = webhookClient.sendMessage.calls[0]?.args[0] as string
+
+    expect(message.includes('Interop financials skipped')).toEqual(true)
+    expect(
+      message.includes('price $1,500,000.00 is above $1,000,000.00'),
+    ).toEqual(true)
+    expect(
+      message.includes(
+        'skipped value $2,000,000,000.00 above $1,000,000,000.00',
+      ),
+    ).toEqual(true)
+  })
 })
