@@ -2,13 +2,7 @@ import type { SvgIconProps } from '~/icons/SvgIcon'
 
 export function OfficeHoursIllustration(props: SvgIconProps) {
   return (
-    <svg
-      width="400"
-      height="82"
-      fill="none"
-     
-      {...props}
-    >
+    <svg width="400" height="82" fill="none" {...props}>
       <mask id="b" fill="#fff">
         <path d="M0 0h400v81.27H0z" />
       </mask>

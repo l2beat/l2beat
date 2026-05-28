@@ -55,7 +55,6 @@ export function EcosystemMilestonesAndIncidents({
                 height="9"
                 viewBox="0 0 12 9"
                 fill="none"
-               
                 className="-right-0.5 -top-1 absolute fill-secondary"
               >
                 <path d="M12 4.177 0 9V0z" />

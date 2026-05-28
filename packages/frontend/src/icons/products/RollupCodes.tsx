@@ -5,10 +5,7 @@ export function RollupCodesIcon(props: SvgIconProps) {
   return (
     <SvgIcon width="16" height="16" viewBox="0 0 16 16" {...props}>
       <g clipPath="url(#clip0_279_74441)">
-        <path
-          d="M16 8A8 8 0 100 8a8 8 0 0016 0"
-          fill="white"
-        />
+        <path d="M16 8A8 8 0 100 8a8 8 0 0016 0" fill="white" />
         <path
           d="M7.735 8.832v1.757H6.719V9.067l-.449-.508H4.641v2.03H3.625V5.286h3.28l.8.818V7.71l-.508.523zM4.64 7.71h1.801l.262-.265v-1.03l-.262-.266h-1.8z"
           fill="black"

@@ -10,7 +10,6 @@ export function GovernanceHeaderIllustration({
       viewBox="0 0 499 364"
       fill="none"
       className={className}
-     
     >
       <path
         opacity="0.8"

@@ -19,7 +19,6 @@ export function Logo({
       height="36"
       viewBox={`0 0 ${small ? '36' : '88'} 36`}
       fill="none"
-     
       role="img"
       aria-label="L2BEAT logo"
       {...props}

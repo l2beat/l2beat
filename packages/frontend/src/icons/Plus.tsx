@@ -2,14 +2,7 @@ import type { SvgIconProps } from './SvgIcon'
 
 export function PlusIcon(props: SvgIconProps) {
   return (
-    <svg
-     
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      {...props}
-    >
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" {...props}>
       <circle
         cx="12"
         cy="12"

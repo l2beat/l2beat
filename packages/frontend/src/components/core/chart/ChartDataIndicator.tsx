@@ -42,13 +42,7 @@ function LineShape({
   backgroundColor: string | undefined
 }) {
   return (
-    <svg
-      width="12"
-      height="4"
-      viewBox="0 0 12 4"
-      fill="none"
-     
-    >
+    <svg width="12" height="4" viewBox="0 0 12 4" fill="none">
       <path
         d="M0 2h12"
         stroke={backgroundColor}

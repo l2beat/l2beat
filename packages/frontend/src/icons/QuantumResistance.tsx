@@ -2,14 +2,7 @@ import type { SVGProps } from 'react'
 
 export function QuantumResistanceIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      width="32"
-      height="32"
-      viewBox="0 0 32 32"
-      fill="none"
-      {...props}
-     
-    >
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" {...props}>
       <g clip-path="url(#clip0_1250_76)">
         <g clip-path="url(#clip1_1250_76)">
           <path
