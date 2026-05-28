@@ -8,9 +8,9 @@ import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { withProjectIcon } from '~/utils/withProjectIcon'
-import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import type { InteropQuery } from '../InteropRouter'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
+import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import type { InteropSelection } from '../utils/types'
 
 export async function getInteropBurnAndMintData(
@@ -42,11 +42,9 @@ export async function getInteropBurnAndMintData(
     async () => getCachedData(initialSelection),
   )
 
-  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains.map(
-    (chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-    }),
+  const interopChainsWithIcons = mapInteropChainsToWithIcons(
+    manifest,
+    interopChains,
   )
 
   return {
