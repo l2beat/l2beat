@@ -391,7 +391,9 @@ function opStackCommon(
             ? 'kailua'
             : fraudProofType === 'OpSuccinct'
               ? 'opsuccinct'
-              : undefined),
+              : fraudProofType === 'AggregateProof'
+                ? 'aggverifier'
+                : undefined),
       stacks: ['OP Stack'],
       warning:
         templateVars.display.warning === undefined && fraudProofType === 'None'
