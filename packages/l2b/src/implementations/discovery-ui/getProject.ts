@@ -15,9 +15,11 @@ import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
 import { getContractType } from './getContractType'
+import { getEntrypointGroups } from './getEntrypointGroups'
 import { getMeta } from './getMeta'
 import { parseFieldValue } from './parseFieldValue'
 import type {
+  ApiAddressAppearance,
   ApiAbiEntry,
   ApiAddressEntry,
   ApiAddressReference,
@@ -37,6 +39,7 @@ export function getProject(
 ): ApiProjectResponse {
   const discoveries = configReader.readDiscoveryWithReferences(project)
   const discovery = discoveries[0]
+  const projectConfig = configReader.readConfig(project)
   const data = discoveries.map((discovery) => ({
     discovery,
     config: configReader.readConfig(discovery.name),
@@ -50,7 +53,16 @@ export function getProject(
     maxDepth,
   ).map((x) => x.address)
 
-  const response: ApiProjectResponse = { entries: [] }
+  const response: ApiProjectResponse = {
+    entries: [],
+    entrypointGroups: getEntrypointGroups(
+      project,
+      projectConfig.structure.entrypoints,
+      discovery,
+      data.map((x) => x.discovery),
+    ),
+  }
+  const appearancesByAddress = getAddressAppearances(configReader)
   const meta = getMeta(data.map((x) => x.discovery))
   for (const { config, discovery } of data) {
     const contracts = discovery.entries
@@ -85,6 +97,8 @@ export function getProject(
           discovery.abis,
           template,
           reachableEntries,
+          discovery.name,
+          appearancesByAddress,
         )
       })
       .sort(orderAddressEntries)
@@ -115,6 +129,11 @@ export function getProject(
             address: x.address,
             chain: ChainSpecificAddress.longChain(x.address),
             isReachable: reachableEntries.includes(x.address),
+            ...getAppearanceInfo(
+              x.address,
+              discovery.name,
+              appearancesByAddress,
+            ),
           }
         })
         .sort(orderAddressEntries),
@@ -180,6 +199,8 @@ function contractFromDiscovery(
   abis: DiscoveryOutput['abis'],
   template: ApiProjectContract['template'],
   reachableEntries: ChainSpecificAddress[],
+  ownProject: string,
+  appearancesByAddress: Map<ChainSpecificAddress, ApiAddressAppearance[]>,
 ): ApiProjectContract {
   const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {
     const field = contractConfig.fields[name]
@@ -227,6 +248,74 @@ function contractFromDiscovery(
     })),
     implementationNames: contract.implementationNames,
     isReachable: reachableEntries.includes(contract.address),
+    ...getAppearanceInfo(contract.address, ownProject, appearancesByAddress),
+  }
+}
+
+function getAddressAppearances(
+  configReader: ConfigReader,
+): Map<ChainSpecificAddress, ApiAddressAppearance[]> {
+  const result = new Map<
+    ChainSpecificAddress,
+    Map<string, ApiAddressAppearance>
+  >()
+
+  for (const project of configReader.readAllDiscoveredProjects()) {
+    const discovery = configReader.readDiscovery(project)
+    const config = configReader.readConfig(project)
+    const addresses = new Set<ChainSpecificAddress>()
+    const entrypoints = new Set<ChainSpecificAddress>(
+      Object.keys(config.structure.entrypoints ?? {}).map((x) =>
+        ChainSpecificAddress(x),
+      ),
+    )
+
+    for (const entry of discovery.entries) {
+      if (entry.type === 'Reference') {
+        continue
+      }
+      addresses.add(entry.address)
+    }
+    for (const address of config.structure.initialAddresses) {
+      addresses.add(address)
+    }
+
+    for (const address of addresses) {
+      const projects = result.get(address) ?? new Map<string, ApiAddressAppearance>()
+      const existing = projects.get(project)
+      const hasEntrypoint = entrypoints.has(address)
+      projects.set(project, {
+        project,
+        hasEntrypoint: existing ? existing.hasEntrypoint || hasEntrypoint : hasEntrypoint,
+      })
+      result.set(address, projects)
+    }
+  }
+
+  return new Map(
+    [...result.entries()].map(([address, projects]) => [
+      address,
+      [...projects.values()].sort((a, b) => a.project.localeCompare(b.project)),
+    ]),
+  )
+}
+
+function getAppearanceInfo(
+  address: ChainSpecificAddress,
+  ownProject: string,
+  appearancesByAddress: Map<ChainSpecificAddress, ApiAddressAppearance[]>,
+): Pick<
+  ApiAddressEntry,
+  'appearsInProjects' | 'appearsInProjectsCount' | 'allAppearances'
+> {
+  const allAppearances = appearancesByAddress.get(address) ?? []
+  const appearsInProjects = allAppearances.filter(
+    (entry) => entry.project !== ownProject,
+  )
+  return {
+    allAppearances,
+    appearsInProjects,
+    appearsInProjectsCount: appearsInProjects.length,
   }
 }
 

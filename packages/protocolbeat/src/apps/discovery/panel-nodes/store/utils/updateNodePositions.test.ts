@@ -210,6 +210,8 @@ function buildState(nodes: Node[]): State {
   return updateNodePositions({
     projectId: 'test',
     nodes,
+    entrypointGroups: [],
+    collapsedEntrypointGroups: [],
     selected: [],
     hidden: [],
     history: {

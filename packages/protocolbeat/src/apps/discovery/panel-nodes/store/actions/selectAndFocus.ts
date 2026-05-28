@@ -1,7 +1,14 @@
 import type { State } from '../State'
+import {
+  getVisibleDisplayedNodes,
+  resolveFocusNodeId,
+} from '../utils/entrypointGroups'
 
 export function selectAndFocus(state: State, selected: string): Partial<State> {
-  const node = state.nodes.find((x) => x.id === selected)
+  const focusId = resolveFocusNodeId(selected, state)
+  const node =
+    getVisibleDisplayedNodes(state).find((x) => x.id === focusId) ??
+    state.nodes.find((x) => x.id === focusId)
 
   if (!node) {
     return state
@@ -35,6 +42,6 @@ export function selectAndFocus(state: State, selected: string): Partial<State> {
       offsetX,
       offsetY,
     },
-    selected: [selected],
+    selected: [focusId],
   }
 }

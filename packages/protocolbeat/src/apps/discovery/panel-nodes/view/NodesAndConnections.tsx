@@ -2,6 +2,14 @@ import { useMemo } from 'react'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
+import { getResolvedFieldConnection } from '../store/utils/connections'
+import {
+  applyEntrypointCollapse,
+  expandSelectionForHighlighting,
+  isSelectionTargetHighlighted,
+  normalizeSelectionForDisplay,
+  resolveFieldTarget,
+} from '../store/utils/entrypointGroups'
 import { Connection, type ConnectionProps } from './Connection'
 import { NodeView } from './NodeView'
 
@@ -38,26 +46,44 @@ export function NodesAndConnections() {
   const markUnreachableEntries = useGlobalSettingsStore(
     (s) => s.markUnreachableEntries,
   )
+  const entrypointGroups = useStore((s) => s.entrypointGroups)
+  const collapsedEntrypointGroups = useStore((s) => s.collapsedEntrypointGroups)
 
-  const view = useMemo<DerivedView>(
-    () =>
-      buildView(
-        nodes,
-        hidden,
-        selected,
-        enableDimming,
-        highlightOverlapping,
-        markUnreachableEntries,
-      ),
-    [
-      nodes,
+  const view = useMemo<DerivedView>(() => {
+    const collapsed = applyEntrypointCollapse(nodes, hidden, {
+      groups: entrypointGroups,
+      collapsedGroupIds: collapsedEntrypointGroups,
+    })
+    const displaySelected = normalizeSelectionForDisplay(selected, {
+      entrypointGroups,
+      collapsedEntrypointGroups,
       hidden,
-      selected,
+    })
+    const highlightSelection = expandSelectionForHighlighting(selected, {
+      entrypointGroups,
+      collapsedEntrypointGroups,
+      hidden,
+    })
+    return buildView(
+      collapsed.nodes,
+      collapsed.hidden,
+      displaySelected,
+      highlightSelection,
       enableDimming,
       highlightOverlapping,
       markUnreachableEntries,
-    ],
-  )
+      collapsed.targetResolver,
+    )
+  }, [
+    nodes,
+    hidden,
+    selected,
+    enableDimming,
+    highlightOverlapping,
+    markUnreachableEntries,
+    entrypointGroups,
+    collapsedEntrypointGroups,
+  ])
 
   const bounds = view.bounds
   const svg = bounds && (
@@ -142,13 +168,16 @@ function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
 function buildView(
   nodes: readonly Node[],
   hidden: readonly string[],
-  selected: readonly string[],
+  displaySelected: readonly string[],
+  highlightSelection: ReadonlySet<string>,
   enableDimming: boolean,
   highlightOverlapping: boolean,
   markUnreachableEntries: boolean,
+  targetResolver: Map<string, string> = new Map(),
 ): DerivedView {
   const hiddenSet = new Set(hidden)
-  const selectedSet = new Set(selected)
+  const displaySelectedSet = new Set(displaySelected)
+  const effectiveDimming = enableDimming
   const visible: Node[] = []
   const visibleById = new Map<string, Node>()
 
@@ -163,18 +192,15 @@ function buildView(
     ? computeOverlappingIds(visible)
     : new Set<string>()
 
-  // Highlight set: selected nodes plus, when dimming is on, every node either
-  // pointed-at by a selected node or pointing at a selected node through a
-  // non-hidden field.
-  const highlightedSet = new Set<string>(selectedSet)
-  if (enableDimming && selected.length > 0) {
-    for (const node of visible) {
-      if (!selectedSet.has(node.id)) continue
+  const highlightedSet = new Set<string>(displaySelectedSet)
+  if (effectiveDimming && displaySelected.length > 0) {
+    for (const node of nodes) {
+      if (!highlightSelection.has(node.id)) continue
       const hiddenFields =
         node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
       for (const field of node.fields) {
         if (hiddenFields?.has(field.name)) continue
-        highlightedSet.add(field.target)
+        highlightedSet.add(resolveFieldTarget(field.target, targetResolver))
       }
     }
     for (const node of visible) {
@@ -183,7 +209,15 @@ function buildView(
         node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
       for (const field of node.fields) {
         if (hiddenFields?.has(field.name)) continue
-        if (selectedSet.has(field.target)) {
+        const resolvedTarget = resolveFieldTarget(field.target, targetResolver)
+        if (
+          isSelectionTargetHighlighted(
+            field.target,
+            resolvedTarget,
+            displaySelectedSet,
+            highlightSelection,
+          )
+        ) {
           highlightedSet.add(node.id)
           break
         }
@@ -199,9 +233,9 @@ function buildView(
   let maxY = Number.NEGATIVE_INFINITY
 
   for (const node of visible) {
-    const isSelected = selectedSet.has(node.id)
+    const isSelected = displaySelectedSet.has(node.id)
     const isDimmed =
-      enableDimming && selected.length > 0 && !highlightedSet.has(node.id)
+      effectiveDimming && displaySelected.length > 0 && !highlightedSet.has(node.id)
     const isGrayedOut = markUnreachableEntries && !node.isReachable
     const isOverlapping = overlappingIds.has(node.id)
 
@@ -215,26 +249,41 @@ function buildView(
       const field = node.fields[i]
       if (!field) continue
 
-      const targetSelected = selectedSet.has(field.target)
-      const targetHidden = hiddenSet.has(field.target)
+      const resolvedTarget = resolveFieldTarget(field.target, targetResolver)
+      const targetSelected = isSelectionTargetHighlighted(
+        field.target,
+        resolvedTarget,
+        displaySelectedSet,
+        highlightSelection,
+      )
+      const targetNode = visibleById.get(resolvedTarget)
+      const targetHidden = targetNode === undefined
       fieldHighlightedMask += targetSelected ? '1' : '0'
       fieldTargetHiddenMask += targetHidden ? '1' : '0'
 
       const fieldHidden = hiddenFieldsSet?.has(field.name) ?? false
       if (fieldHidden || targetHidden) continue
 
-      const targetNode = visibleById.get(field.target)
+      const connection = getResolvedFieldConnection(
+        node,
+        field,
+        i,
+        visibleById,
+        targetResolver,
+      )
+      if (!connection) continue
+
       const isDashed =
-        targetNode?.addressType === 'EOA' ||
-        targetNode?.addressType === 'EOAPermissioned'
+        targetNode.addressType === 'EOA' ||
+        targetNode.addressType === 'EOAPermissioned'
       const isHighlighted = isSelected || targetSelected
       const isConnDimmed =
-        enableDimming && selected.length > 0 && !isHighlighted
+        effectiveDimming && displaySelected.length > 0 && !isHighlighted
       const isConnGrayedOut =
-        markUnreachableEntries && !(node.isReachable && targetNode?.isReachable)
+        markUnreachableEntries && !(node.isReachable && targetNode.isReachable)
 
-      const from = field.connection.from
-      const to = field.connection.to
+      const from = connection.from
+      const to = connection.to
       connections.push({
         key: `${node.id}-${i}-${field.target}`,
         fromX: from.x,

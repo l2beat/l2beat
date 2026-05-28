@@ -1,8 +1,10 @@
-import type { ApiAddressType } from '../../../../api/types'
+import type { ApiAddressType, ApiEntrypointGroup } from '../../../../api/types'
 
 export interface State {
   readonly projectId: string
   readonly nodes: readonly Node[]
+  readonly entrypointGroups: readonly ApiEntrypointGroup[]
+  readonly collapsedEntrypointGroups: readonly string[]
   readonly selected: readonly string[]
   readonly hidden: readonly string[]
   readonly history: HistoryState
@@ -37,11 +39,23 @@ export interface State {
     | 'select'
     | 'select-add'
     | 'resize-node'
+    | 'expand-entrypoint'
+  readonly entrypointExpandGroupId?: string
   readonly selection?: Box
   readonly positionsBeforeMove: Readonly<
     Record<string, { readonly x: number; readonly y: number }>
   >
   readonly loaded: boolean
+}
+
+export interface EntrypointGroupInfo {
+  readonly groupId: string
+  readonly label: string
+  readonly sourceProject: string
+  readonly contractCount: number
+  readonly eoaCount: number
+  readonly bridgeAddress: string
+  readonly summary: string
 }
 
 export interface Node {
@@ -58,6 +72,11 @@ export interface Node {
   readonly hueShift: number
   readonly data: unknown
   readonly isReachable: boolean
+  readonly appearsInProjectsCount?: number
+  readonly appearsInProjects?: readonly { project: string; hasEntrypoint: boolean }[]
+  readonly entrypointGroup?: EntrypointGroupInfo
+  /** Set when this node belongs to a collapsible external entrypoint module. */
+  readonly entrypointMemberOf?: string
 }
 
 export interface HistoryState {

@@ -12,6 +12,17 @@ export interface ApiProjectEntry {
 
 export interface ApiProjectResponse {
   entries: ApiProjectChain[]
+  entrypointGroups: ApiEntrypointGroup[]
+}
+
+export interface ApiEntrypointGroup {
+  id: string
+  label: string
+  sourceProject: string
+  memberAddresses: ChainSpecificAddress[]
+  bridgeAddresses: ChainSpecificAddress[]
+  contractCount: number
+  eoaCount: number
 }
 
 export interface ApiPreviewResponse {
@@ -67,6 +78,15 @@ export interface ApiAddressEntry {
   address: ChainSpecificAddress
   chain: string
   isReachable: boolean
+  appearsInProjectsCount: number
+  appearsInProjects: ApiAddressAppearance[]
+  /** Unfiltered per-project appearances (includes the contract's home project). */
+  allAppearances: ApiAddressAppearance[]
+}
+
+export interface ApiAddressAppearance {
+  project: string
+  hasEntrypoint: boolean
 }
 
 export interface ApiAddressReference extends AddressFieldValue {
@@ -166,6 +186,11 @@ export interface ApiAbiEntry {
 export interface ApiCodeResponse {
   entryName: string | undefined
   sources: { name: string; code: string }[]
+}
+
+export interface ApiEntrypointsFileResponse {
+  content: string
+  exists: boolean
 }
 
 export interface ApiCodeSearchResponse {

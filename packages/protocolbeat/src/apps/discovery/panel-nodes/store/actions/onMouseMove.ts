@@ -6,6 +6,12 @@ import {
 } from '../utils/constants'
 import { boxContains, intersects, isResizable } from '../utils/containment'
 import { toViewCoordinates } from '../utils/coordinates'
+import {
+  getVisibleDisplayedNodes,
+  normalizeSelectionForDisplay,
+  resolveFocusNodeId,
+  resolvePhysicalNodeId,
+} from '../utils/entrypointGroups'
 import { toContainerCoordinates } from '../utils/toContainerCoordinates'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
@@ -19,17 +25,16 @@ export function onMouseMove(
 ): Partial<State> {
   if (!state.input.lmbPressed && !state.input.mmbPressed) {
     const { x, y } = toViewCoordinates(event, container, state.transform)
-    const node = state.nodes.find((node) => boxContains(node.box, x, y))
+    const interactiveNodes = getVisibleDisplayedNodes(state)
+    const node = interactiveNodes.find((node) => boxContains(node.box, x, y))
+    const displayId = node ? resolveFocusNodeId(node.id, state) : undefined
     const next =
       node && isResizable(node.box, state.transform.scale, x)
-        ? node.id
+        ? resolvePhysicalNodeId(displayId ?? node.id, state)
         : undefined
 
-    // Returning the same state ref makes Zustand's setState bail on
-    // Object.is and skip notifying every subscriber. Without this, every
-    // native mousemove (60-120 Hz) re-evaluates every selector in the tree.
     if (next === state.resizingNode) {
-      return state
+      return {}
     }
     return { resizingNode: next }
   }
@@ -113,27 +118,26 @@ export function onMouseMove(
           height: Math.abs(input.mouseStartY - input.mouseY),
         }
 
-        // Select-box doesn't move any nodes, so skip updateNodePositions —
-        // it would rebuild every node and connection per mousemove for no
-        // reason. Only the selection rectangle and selected ids change.
         const hiddenSet = new Set(state.hidden)
         const previousSelected =
           state.mouseMoveAction === 'select-add'
             ? new Set(state.selected)
             : undefined
         const selected: string[] = []
-        for (const node of state.nodes) {
+        const interactiveNodes = getVisibleDisplayedNodes(state)
+        for (const node of interactiveNodes) {
           if (hiddenSet.has(node.id)) continue
+          const displayId = resolveFocusNodeId(node.id, state)
           if (
             intersects(node.box, selection) ||
-            previousSelected?.has(node.id)
+            previousSelected?.has(displayId)
           ) {
-            selected.push(node.id)
+            selected.push(displayId)
           }
         }
 
         return {
-          selected,
+          selected: normalizeSelectionForDisplay(selected, state),
           mouseUpAction: undefined,
           input,
           selection: toContainerCoordinates(selection, state.transform),

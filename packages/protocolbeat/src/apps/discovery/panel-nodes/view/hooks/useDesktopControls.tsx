@@ -17,6 +17,7 @@ export type DesktopControls = {
   onKeyDown: (event: KeyboardEvent) => void
   onKeyUp: (event: KeyboardEvent) => void
   onMouseUp: (event: MouseEvent) => void
+  onNodeDoubleClick: (event: MouseEvent) => void
   isResizing: boolean
 }
 
@@ -32,10 +33,15 @@ export function useDesktopControls({
   const onMouseDown = useStore((state) => state.onMouseDown)
   const onMouseMove = useStore((state) => state.onMouseMove)
   const onMouseUp = useStore((state) => state.onMouseUp)
+  const onNodeDoubleClick = useStore((state) => state.onNodeDoubleClick)
   const onWheel = useStore((state) => state.onWheel)
   const undo = useStore((state) => state.undo)
   const redo = useStore((state) => state.redo)
-  const isResizing = useStore((state) => state.resizingNode !== undefined)
+  const isResizing = useStore(
+    (state) =>
+      state.resizingNode !== undefined ||
+      state.mouseMoveAction === 'expand-entrypoint',
+  )
 
   // Always capture if we're not in panel mode, or if we're in nodes panel
   const shouldCapture =
@@ -49,6 +55,11 @@ export function useDesktopControls({
   function handleMouseDown(event: MouseEvent) {
     if (!containerRef.current) return
     onMouseDown(event, containerRef.current)
+  }
+
+  function handleDoubleClick(event: MouseEvent) {
+    if (!containerRef.current) return
+    onNodeDoubleClick(event, containerRef.current)
   }
 
   function handleMouseMove(
@@ -82,6 +93,7 @@ export function useDesktopControls({
   return {
     onWheel: handleWheel,
     onMouseDown: handleMouseDown,
+    onNodeDoubleClick: handleDoubleClick,
     onMouseMove: handleMouseMove,
     onKeyDown: handleKeyDown,
     onKeyUp: onKeyUp,

@@ -15,7 +15,11 @@ export function useProjectData() {
   const projectResponse = useQuery(useProjectQueryOptions(project))
 
   const selected = projectResponse.data
-    ? findSelected(projectResponse.data.entries, selectedAddress)
+    ? findSelected(
+        projectResponse.data.entries,
+        selectedAddress,
+        projectResponse.data.entrypointGroups,
+      )
     : undefined
 
   return {

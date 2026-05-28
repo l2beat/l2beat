@@ -2,7 +2,11 @@ import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import type { ApiAddressEntry, ApiProjectChain } from '../../../api/types'
+import type {
+  ApiAddressEntry,
+  ApiEntrypointGroup,
+  ApiProjectChain,
+} from '../../../api/types'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
@@ -30,6 +34,9 @@ export function ListPanel() {
   if (response.isError) {
     return <ErrorState />
   }
+  const entrypointProjects = new Set(
+    response.data.entrypointGroups.map((group) => group.sourceProject),
+  )
   return (
     <div className="h-full w-full overflow-x-hidden">
       <ol>
@@ -38,6 +45,7 @@ export function ListPanel() {
             key={`${chain.project}-${i}`}
             entry={chain}
             first={i === 0}
+            isEntrypointProject={entrypointProjects.has(chain.project)}
           />
         ))}
       </ol>
@@ -45,7 +53,11 @@ export function ListPanel() {
   )
 }
 
-function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
+function ListItemChain(props: {
+  entry: ApiProjectChain
+  first: boolean
+  isEntrypointProject: boolean
+}) {
   const [open, setOpen] = useState(true)
 
   function onFocus() {
@@ -58,16 +70,21 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
         key={chain}
         className={clsx(!props.first && 'border-t border-t-coffee-600')}
       >
-        <div className="group flex min-h-[22px] items-center justify-between pr-1 hover:bg-aux-brown">
+        <div className="group flex min-h-[22px] items-start justify-between gap-2 pr-1 hover:bg-aux-brown">
           <button
             onClick={() => setOpen((open) => !open)}
-            className="flex w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"
+            className="flex min-w-0 flex-1 cursor-pointer select-none items-center justify-start gap-1 text-left font-bold text-xs uppercase"
           >
             {open && <IconChevronDown />}
             {!open && <IconChevronRight />}
-            {`${props.entry.project} on ${chain}`}
+            <span className="text-left leading-tight">{`${props.entry.project} on ${chain}`}</span>
+            {props.isEntrypointProject && (
+              <span className="inline-flex h-5 shrink-0 items-center rounded border border-coffee-500 px-1 text-[10px] text-coffee-300 normal-case">
+                Entrypoint
+              </span>
+            )}
           </button>
-          <span className="whitespace-nowrap text-coffee-400 text-xs italic group-hover:text-coffee-200">
+          <span className="shrink-0 whitespace-nowrap pt-0.5 text-coffee-400 text-xs italic group-hover:text-coffee-200">
             @ {blockNumber}
           </span>
         </div>

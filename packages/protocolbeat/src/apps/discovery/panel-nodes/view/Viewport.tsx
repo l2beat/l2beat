@@ -61,6 +61,7 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
       passive: false,
     })
     target?.addEventListener('mousedown', desktopControls.onMouseDown)
+    target?.addEventListener('dblclick', desktopControls.onNodeDoubleClick)
     target?.addEventListener('touchstart', touchControls.onTouchStart, {
       passive: false,
     })
@@ -85,6 +86,7 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
     return () => {
       target?.removeEventListener('wheel', desktopControls.onWheel)
       target?.removeEventListener('mousedown', desktopControls.onMouseDown)
+      target?.removeEventListener('dblclick', desktopControls.onNodeDoubleClick)
       target?.removeEventListener('touchstart', touchControls.onTouchStart)
       target?.removeEventListener('touchmove', touchControls.onTouchMove)
       target?.removeEventListener('touchend', touchControls.onTouchEnd)

@@ -5,6 +5,8 @@ import {
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
 } from './constants'
+import { getNodeSummaryLineCount } from './entrypointGroups'
+import { processConnection } from './connections'
 
 // Apply a partial state update, then recompute node, field, and connection
 // geometry against the previous state so unchanged refs can still be reused.
@@ -39,10 +41,12 @@ export function updateNodePositions(
       0,
       node.fields.length - node.hiddenFields.length,
     )
+    const summaryHeight = getNodeSummaryLineCount(node) * FIELD_HEIGHT
     const nextBox: Box = {
       width: node.box.width,
       height:
         HEADER_HEIGHT +
+        summaryHeight +
         visibleFieldsCount * FIELD_HEIGHT +
         BOTTOM_PADDING +
         hiddenFieldsHeight,
@@ -91,6 +95,7 @@ export function updateNodePositions(
     let visibleIndex = 0
     let anyFieldChanged = false
     const nextFields: Field[] = new Array(node.fields.length)
+    const fieldOffsetY = getNodeSummaryLineCount(node) * FIELD_HEIGHT
     for (let i = 0; i < node.fields.length; i++) {
       const field = node.fields[i] as Field
       const targetBox = nextBoxes.get(field.target)
@@ -105,7 +110,11 @@ export function updateNodePositions(
 
       const nextFieldBox: Box = {
         x: nextBox.x,
-        y: nextBox.y + HEADER_HEIGHT + currentVisibleIndex * FIELD_HEIGHT,
+        y:
+          nextBox.y +
+          HEADER_HEIGHT +
+          fieldOffsetY +
+          currentVisibleIndex * FIELD_HEIGHT,
         width: nextBox.width,
         height: FIELD_HEIGHT,
       }
@@ -113,6 +122,7 @@ export function updateNodePositions(
         currentVisibleIndex,
         nextBox,
         targetBox,
+        fieldOffsetY,
       )
 
       if (
@@ -178,48 +188,3 @@ function connectionsEqual(a: Connection, b: Connection): boolean {
   )
 }
 
-function processConnection(
-  index: number,
-  from: { x: number; y: number; width: number },
-  to: { x: number; y: number; width: number },
-): Connection {
-  const fromY = from.y + HEADER_HEIGHT + FIELD_HEIGHT * (index + 0.5)
-  const toY = to.y + HEADER_HEIGHT / 2
-
-  const left = from.x
-  const right = from.x + from.width
-
-  const leftToLeft = Math.abs(to.x - left)
-  const leftToRight = Math.abs(to.x + to.width - left)
-  const rightToLeft = Math.abs(to.x - right)
-  const rightToRight = Math.abs(to.x + to.width - right)
-
-  const min = Math.min(leftToLeft, leftToRight, rightToLeft, rightToRight)
-
-  if (min === leftToLeft) {
-    return {
-      from: { direction: 'left', x: from.x, y: fromY },
-      to: { direction: 'left', x: to.x, y: toY },
-    }
-  }
-  if (min === leftToRight) {
-    return {
-      from: { direction: 'left', x: from.x, y: fromY },
-      to: { direction: 'right', x: to.x + to.width, y: toY },
-    }
-  }
-  if (min === rightToLeft) {
-    return {
-      from: { direction: 'right', x: from.x + from.width, y: fromY },
-      to: { direction: 'left', x: to.x, y: toY },
-    }
-  }
-  if (min === rightToRight) {
-    return {
-      from: { direction: 'right', x: from.x + from.width, y: fromY },
-      to: { direction: 'right', x: to.x + to.width, y: toY },
-    }
-  }
-
-  throw new Error('impossible min result')
-}

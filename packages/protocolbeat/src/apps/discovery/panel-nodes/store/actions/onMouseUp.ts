@@ -3,10 +3,11 @@ import {
   CLICKED_LEFT_MOUSE_BUTTON,
   CLICKED_MIDDLE_MOUSE_BUTTON,
 } from '../utils/constants'
+import { normalizeSelectionForDisplay } from '../utils/entrypointGroups'
 
 export function onMouseUp(state: State, event: MouseEvent): Partial<State> {
   if (event.button === CLICKED_LEFT_MOUSE_BUTTON) {
-    let selected = state.selected
+    let selected = normalizeSelectionForDisplay(state.selected, state)
     if (state.mouseUpAction?.type === 'DeselectOne') {
       const removeId = state.mouseUpAction.id
       selected = selected.filter((id) => id !== removeId)
@@ -19,6 +20,7 @@ export function onMouseUp(state: State, event: MouseEvent): Partial<State> {
       positionsBeforeMove: {},
       input: { ...state.input, lmbPressed: false },
       mouseMoveAction: undefined,
+      entrypointExpandGroupId: undefined,
       selection: undefined,
     }
   }

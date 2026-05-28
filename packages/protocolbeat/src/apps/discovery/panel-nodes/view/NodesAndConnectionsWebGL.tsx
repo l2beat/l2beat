@@ -6,6 +6,16 @@ import { IconInitial } from '../../../../icons/IconInitial'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
+import { getResolvedFieldConnection } from '../store/utils/connections'
+import {
+  applyEntrypointCollapse,
+  expandSelectionForHighlighting,
+  formatAppearsInProjectsLabel,
+  getNodeSummaryLineCount,
+  isSelectionTargetHighlighted,
+  normalizeSelectionForDisplay,
+  resolveFieldTarget,
+} from '../store/utils/entrypointGroups'
 import {
   FIELD_HEIGHT,
   HEADER_HEIGHT,
@@ -90,8 +100,10 @@ interface DrawData {
   visibleById: Map<string, Node>
   flags: Map<string, NodeFlags>
   enableDimming: boolean
+  effectiveDimming: boolean
   markUnreachableEntries: boolean
   anyNodeSelected: boolean
+  targetResolver: Map<string, string>
 }
 
 interface VisibleField {
@@ -981,7 +993,8 @@ class WebGLRenderer {
 
       for (const { index, visibleRow } of rn.visibleFields) {
         if (flags.fieldHighlighted[index]) {
-          const rowY = y + HEADER_HEIGHT + visibleRow * FIELD_HEIGHT
+          const rowY =
+            y + HEADER_HEIGHT + getFieldYOffset(node) + visibleRow * FIELD_HEIGHT
           const pillRadius = FIELD_HEIGHT / 2
           writeRound(
             buf,
@@ -1068,7 +1081,8 @@ class WebGLRenderer {
       // cell size of 4*DOT_RADIUS (=20) to get a 10-wide visible disc.
       for (const { field, index, visibleRow } of rn.visibleFields) {
         if (!flags.fieldTargetHidden[index]) {
-          const rowY = y + HEADER_HEIGHT + visibleRow * FIELD_HEIGHT
+          const rowY =
+            y + HEADER_HEIGHT + getFieldYOffset(node) + visibleRow * FIELD_HEIGHT
           const isLeft = field.connection.from.direction === 'left'
           const dotX = isLeft ? x : x + width
           const dotY = rowY + FIELD_HEIGHT / 2
@@ -1125,7 +1139,9 @@ class WebGLRenderer {
 
   private buildHeaderText(renderNodes: readonly RenderNode[]): number {
     let maxChars = 0
-    for (const { node } of renderNodes) maxChars += node.name.length
+    for (const { node } of renderNodes) {
+      maxChars += getHeaderLabel(node).length
+    }
     if (maxChars === 0) return 0
     const buf = this.ensureText(maxChars)
     const atlas = this.headerAtlas
@@ -1146,7 +1162,7 @@ class WebGLRenderer {
       n += writeStringInstances(
         buf,
         n,
-        node.name,
+        getHeaderLabel(node),
         startX,
         baselineY,
         atlas,
@@ -1161,6 +1177,9 @@ class WebGLRenderer {
   private buildFieldText(renderNodes: readonly RenderNode[]): number {
     let maxChars = 0
     for (const rn of renderNodes) {
+      if (rn.node.entrypointGroup) {
+        maxChars += rn.node.entrypointGroup.summary.length
+      }
       for (const { field } of rn.visibleFields) maxChars += field.name.length
     }
     if (maxChars === 0) return 0
@@ -1168,8 +1187,30 @@ class WebGLRenderer {
     const atlas = this.fieldAtlas
     let n = 0
     for (const { node, flags, z, alpha, visibleFields } of renderNodes) {
+      if (node.entrypointGroup) {
+        const rowY = node.box.y + HEADER_HEIGHT
+        const baselineY = rowY + FIELD_HEIGHT / 2 + atlas.refSize / 2 - 2
+        const color = flags.isGrayedOut
+          ? desaturate(withAlpha(COFFEE_200, alpha))
+          : withAlpha(COFFEE_200, alpha)
+        n += writeStringInstances(
+          buf,
+          n,
+          node.entrypointGroup.summary,
+          node.box.x + HEADER_PADDING,
+          baselineY,
+          atlas,
+          color,
+          node.box.x + node.box.width - HEADER_PADDING,
+          z,
+        )
+      }
       for (const { field, index, visibleRow } of visibleFields) {
-        const rowY = node.box.y + HEADER_HEIGHT + visibleRow * FIELD_HEIGHT
+        const rowY =
+          node.box.y +
+          HEADER_HEIGHT +
+          getFieldYOffset(node) +
+          visibleRow * FIELD_HEIGHT
         const baselineY = rowY + FIELD_HEIGHT / 2 + atlas.refSize / 2 - 2
         const baseColor = flags.fieldHighlighted[index] ? BLACK : COFFEE_200
         const color = flags.isGrayedOut
@@ -1248,14 +1289,25 @@ class WebGLRenderer {
     data: DrawData,
   ): number {
     let maxVertices = 0
-    for (const { flags, visibleFields } of renderNodes) {
+    for (const { node, flags, visibleFields } of renderNodes) {
       for (const { field, index } of visibleFields) {
         if (flags.fieldTargetHidden[index]) continue
-        const target = data.visibleById.get(field.target)
+        const target = data.visibleById.get(
+          resolveFieldTarget(field.target, data.targetResolver),
+        )
         if (!target) continue
 
-        const from = field.connection.from
-        const to = field.connection.to
+        const connection = getResolvedFieldConnection(
+          node,
+          field,
+          index,
+          data.visibleById,
+          data.targetResolver,
+        )
+        if (!connection) continue
+
+        const from = connection.from
+        const to = connection.to
         const c1x = from.x + (from.direction === 'left' ? -50 : 50)
         const c2x = to.x + (to.direction === 'left' ? -50 : 50)
         const isDashed =
@@ -1277,18 +1329,29 @@ class WebGLRenderer {
     for (const { node, flags, visibleFields } of renderNodes) {
       for (const { field, index } of visibleFields) {
         if (flags.fieldTargetHidden[index]) continue
-        const target = data.visibleById.get(field.target)
+        const target = data.visibleById.get(
+          resolveFieldTarget(field.target, data.targetResolver),
+        )
         if (!target) continue
 
-        const from = field.connection.from
-        const to = field.connection.to
+        const connection = getResolvedFieldConnection(
+          node,
+          field,
+          index,
+          data.visibleById,
+          data.targetResolver,
+        )
+        if (!connection) continue
+
+        const from = connection.from
+        const to = connection.to
         const c1x = from.x + (from.direction === 'left' ? -50 : 50)
         const c2x = to.x + (to.direction === 'left' ? -50 : 50)
 
         const isHighlighted =
           flags.isSelected || flags.fieldHighlighted[index] === 1
         const isConnDimmed =
-          data.enableDimming && data.anyNodeSelected && !isHighlighted
+          data.effectiveDimming && data.anyNodeSelected && !isHighlighted
         const isGrayed =
           data.markUnreachableEntries &&
           !(node.isReachable && target.isReachable)
@@ -1500,7 +1563,10 @@ function buildRenderNodes(data: DrawData): RenderNode[] {
   for (const node of data.visible) {
     const flags = data.flags.get(node.id)
     if (!flags) continue
-    const fullHeight = node.addressType === 'EOA' && node.fields.length === 0
+    const fullHeight =
+      node.addressType === 'EOA' &&
+      node.fields.length === 0 &&
+      !node.entrypointGroup
     const renderNode: RenderNode = {
       node,
       flags,
@@ -2073,6 +2139,17 @@ function cssRgbToRgba(css: string): RGBA {
   return [r, g, b, 1]
 }
 
+function getFieldYOffset(node: Node): number {
+  return getNodeSummaryLineCount(node) * FIELD_HEIGHT
+}
+
+function getHeaderLabel(node: Node): string {
+  if (node.appearsInProjectsCount === undefined) {
+    return node.name
+  }
+  return `${node.name} ${formatAppearsInProjectsLabel(node.appearsInProjectsCount)}`
+}
+
 function getVisibleFields(node: Node): VisibleField[] {
   const hiddenFields =
     node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
@@ -2093,13 +2170,16 @@ function getVisibleFields(node: Node): VisibleField[] {
 function buildDrawData(
   nodes: readonly Node[],
   hidden: readonly string[],
-  selected: readonly string[],
+  displaySelected: readonly string[],
+  highlightSelection: ReadonlySet<string>,
   enableDimming: boolean,
   highlightOverlapping: boolean,
   markUnreachableEntries: boolean,
+  targetResolver: Map<string, string> = new Map(),
 ): DrawData {
   const hiddenSet = new Set(hidden)
-  const selectedSet = new Set(selected)
+  const displaySelectedSet = new Set(displaySelected)
+  const effectiveDimming = enableDimming
   const visible: Node[] = []
   const visibleById = new Map<string, Node>()
   for (const node of nodes) {
@@ -2113,20 +2193,29 @@ function buildDrawData(
     ? computeOverlappingIds(visible)
     : new Set<string>()
 
-  const anyNodeSelected = selected.length > 0
-  const highlightedSet = new Set<string>(selectedSet)
-  if (enableDimming && anyNodeSelected) {
-    for (const node of visible) {
-      if (!selectedSet.has(node.id)) continue
+  const anyNodeSelected = displaySelected.length > 0
+  const highlightedSet = new Set<string>(displaySelectedSet)
+  if (effectiveDimming && anyNodeSelected) {
+    for (const node of nodes) {
+      if (!highlightSelection.has(node.id)) continue
       for (const { field } of getVisibleFields(node)) {
-        highlightedSet.add(field.target)
+        highlightedSet.add(resolveFieldTarget(field.target, targetResolver))
       }
     }
     for (const node of visible) {
       if (highlightedSet.has(node.id)) continue
       for (const { field } of getVisibleFields(node)) {
-        if (selectedSet.has(field.target)) {
+        const resolvedTarget = resolveFieldTarget(field.target, targetResolver)
+        if (
+          isSelectionTargetHighlighted(
+            field.target,
+            resolvedTarget,
+            displaySelectedSet,
+            highlightSelection,
+          )
+        ) {
           highlightedSet.add(node.id)
+          break
         }
       }
     }
@@ -2140,15 +2229,25 @@ function buildDrawData(
     for (let i = 0; i < node.fields.length; i++) {
       const field = node.fields[i]
       if (!field) continue
-      if (selectedSet.has(field.target)) {
+      const resolvedTarget = resolveFieldTarget(field.target, targetResolver)
+      if (
+        isSelectionTargetHighlighted(
+          field.target,
+          resolvedTarget,
+          displaySelectedSet,
+          highlightSelection,
+        )
+      ) {
         fieldHighlighted[i] = 1
       }
-      if (hiddenSet.has(field.target)) fieldTargetHidden[i] = 1
+      if (!visibleById.has(resolvedTarget)) {
+        fieldTargetHidden[i] = 1
+      }
     }
     flags.set(node.id, {
-      isSelected: selectedSet.has(node.id),
+      isSelected: displaySelectedSet.has(node.id),
       isDimmed:
-        enableDimming && anyNodeSelected && !highlightedSet.has(node.id),
+        effectiveDimming && anyNodeSelected && !highlightedSet.has(node.id),
       isGrayedOut: markUnreachableEntries && !node.isReachable,
       isOverlapping: overlappingIds.has(node.id),
       fieldHighlighted,
@@ -2161,8 +2260,10 @@ function buildDrawData(
     visibleById,
     flags,
     enableDimming,
+    effectiveDimming,
     markUnreachableEntries,
     anyNodeSelected,
+    targetResolver,
   }
 }
 
@@ -2218,26 +2319,44 @@ export function NodesAndConnectionsWebGL() {
   const markUnreachableEntries = useGlobalSettingsStore(
     (s) => s.markUnreachableEntries,
   )
+  const entrypointGroups = useStore((s) => s.entrypointGroups)
+  const collapsedEntrypointGroups = useStore((s) => s.collapsedEntrypointGroups)
 
-  const data = useMemo(
-    () =>
-      buildDrawData(
-        nodes,
-        hidden,
-        selected,
-        enableDimming,
-        highlightOverlapping,
-        markUnreachableEntries,
-      ),
-    [
-      nodes,
+  const data = useMemo(() => {
+    const collapsed = applyEntrypointCollapse(nodes, hidden, {
+      groups: entrypointGroups,
+      collapsedGroupIds: collapsedEntrypointGroups,
+    })
+    const displaySelected = normalizeSelectionForDisplay(selected, {
+      entrypointGroups,
+      collapsedEntrypointGroups,
       hidden,
-      selected,
+    })
+    const highlightSelection = expandSelectionForHighlighting(selected, {
+      entrypointGroups,
+      collapsedEntrypointGroups,
+      hidden,
+    })
+    return buildDrawData(
+      collapsed.nodes,
+      collapsed.hidden,
+      displaySelected,
+      highlightSelection,
       enableDimming,
       highlightOverlapping,
       markUnreachableEntries,
-    ],
-  )
+      collapsed.targetResolver,
+    )
+  }, [
+    nodes,
+    hidden,
+    selected,
+    enableDimming,
+    highlightOverlapping,
+    markUnreachableEntries,
+    entrypointGroups,
+    collapsedEntrypointGroups,
+  ])
   dataRef.current = data
 
   const scheduleDraw = useRef(() => {})

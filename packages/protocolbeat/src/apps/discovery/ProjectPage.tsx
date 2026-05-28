@@ -28,14 +28,12 @@ export function ProjectPage() {
   const selectedAddress = usePanelStore((state) => state.selected)
   useEffect(() => {
     if (response.data) {
-      // Check if the currently selected contract still exists in the new data
       const currentlySelectedStillExists = findSelected(
         response.data.entries,
         selectedAddress,
+        response.data.entrypointGroups,
       )
 
-      // Only reset to the first contract if no contract is selected
-      // or the selected contract no longer exists
       if (!currentlySelectedStillExists) {
         const first = response.data.entries[0]?.initialContracts[0]?.address
         select(first)

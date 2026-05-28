@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
+import { EntrypointButton } from './EntrypointButton'
 import { HideButton } from './HideButton'
 import { HideNodesButton } from './HideNodesButton'
 import { LayoutFileButtons } from './LayoutFileButtons'
@@ -24,6 +25,7 @@ export function Controls() {
         <ControlGroup>
           <ShowButton />
           <HideNodesButton />
+          <EntrypointButton />
         </ControlGroup>
         <ControlGroup>
           <HideButton />

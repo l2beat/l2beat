@@ -2,6 +2,32 @@ import type { State } from '../State'
 import type { NodeLocations } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
+export function toggleEntrypointGroup(
+  state: State,
+  groupId: string,
+): Partial<State> {
+  const collapsed = new Set(state.collapsedEntrypointGroups)
+  if (collapsed.has(groupId)) {
+    collapsed.delete(groupId)
+  } else {
+    collapsed.add(groupId)
+  }
+  return { collapsedEntrypointGroups: [...collapsed] }
+}
+
+export function setEntrypointGroups(
+  state: State,
+  entrypointGroups: State['entrypointGroups'],
+): Partial<State> {
+  const validIds = new Set(entrypointGroups.map((group) => group.id))
+  return {
+    entrypointGroups,
+    collapsedEntrypointGroups: state.collapsedEntrypointGroups.filter((id) =>
+      validIds.has(id),
+    ),
+  }
+}
+
 export function hideSelected(state: State): Partial<State> {
   return {
     hidden: [...new Set([...state.hidden, ...state.selected])],
@@ -49,6 +75,8 @@ export function clear(): Partial<State> {
   return {
     projectId: '',
     nodes: [],
+    entrypointGroups: [],
+    collapsedEntrypointGroups: [],
     hidden: [],
     selected: [],
     loaded: false,

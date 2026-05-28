@@ -1,12 +1,28 @@
-import type { ApiProjectChain } from '../api/types'
+import type { ApiProjectChain, ApiProjectResponse } from '../api/types'
+import { getEntrypointGroupIdFromNodeId } from '../apps/discovery/panel-nodes/store/utils/entrypointGroups'
 
 export function findSelected(
   chains: ApiProjectChain[],
   address: string | undefined,
+  entrypointGroups: ApiProjectResponse['entrypointGroups'] = [],
 ) {
   if (!address) {
     return
   }
+
+  const groupId = getEntrypointGroupIdFromNodeId(address)
+  if (groupId) {
+    const group = entrypointGroups.find((entry) => entry.id === groupId)
+    if (group) {
+      const bridgeAddress =
+        group.bridgeAddresses[0] ?? group.memberAddresses[0]
+      if (bridgeAddress) {
+        return findSelected(chains, bridgeAddress, entrypointGroups)
+      }
+      return group
+    }
+  }
+
   for (const chain of chains) {
     for (const contract of chain.initialContracts) {
       if (contract.address === address) {

@@ -13,6 +13,7 @@ const NodeLocations = v.record(
 const NodeColors = v.record(v.string(), v.number())
 const NodeHiddenFields = v.record(v.string(), v.array(v.string()))
 const HiddenNodes = v.array(v.string())
+const CollapsedEntrypointGroups = v.array(v.string())
 
 export const LayoutV2 = v.object({
   version: v.literal(2),
@@ -21,6 +22,7 @@ export const LayoutV2 = v.object({
   colors: NodeColors.optional(),
   hiddenFields: NodeHiddenFields.optional(),
   hiddenNodes: HiddenNodes.optional(),
+  collapsedEntrypointGroups: CollapsedEntrypointGroups.optional(),
 })
 
 export type LayoutV2 = v.infer<typeof LayoutV2>

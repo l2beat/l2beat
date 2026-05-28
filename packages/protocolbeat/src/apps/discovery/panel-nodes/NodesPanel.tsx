@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type {
   Field as ApiField,
@@ -14,6 +14,7 @@ import { Controls } from './controls/Controls'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
+import { buildEntrypointMemberMap, normalizeSelectionForDisplay, resolveFocusNodeId } from './store/utils/entrypointGroups'
 import { Viewport } from './view/Viewport'
 
 export function NodesPanel() {
@@ -46,6 +47,7 @@ export function NodesPanel() {
 function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
   const clear = useNodeStore((state) => state.clear)
   const loadNodes = useNodeStore((state) => state.loadNodes)
+  const setEntrypointGroups = useNodeStore((state) => state.setEntrypointGroups)
   const preferences = useNodeStore((state) => state.userPreferences)
 
   useEffect(() => {
@@ -53,15 +55,18 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
     if (!data) {
       return
     }
+    setEntrypointGroups(data.entrypointGroups ?? [])
+    const entrypointMembers = buildEntrypointMemberMap(data.entrypointGroups ?? [])
     const nodes: Node[] = []
     for (const chain of data.entries) {
-      const hueShift = chain.project.startsWith('shared') ? 90 : 0
+      const chainHueShift = chain.project.startsWith('shared') ? 90 : 0
 
       const initialAddresses = chain.initialContracts.map((x) => x.address)
       for (const contract of [
         ...chain.initialContracts,
         ...chain.discoveredContracts,
       ]) {
+        const hueShift = entrypointMembers.has(contract.address) ? 55 : chainHueShift
         const [prefix, address] = contract.address.split(':') as [
           string,
           string,
@@ -85,12 +90,16 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           data: null,
           fields: toNodeFields(contract.fields),
           hiddenFields: keysToHideOnLoad,
+          appearsInProjectsCount: contract.appearsInProjectsCount,
+          appearsInProjects: contract.appearsInProjects,
+          entrypointMemberOf: entrypointMembers.get(contract.address),
         }
         nodes.push(node)
       }
       for (const eoa of chain.eoas) {
         const [prefix, address] = eoa.address.split(':') as [string, string]
         const fallback = `EOA ${prefix}:${address.slice(0, 6)}…${address.slice(-4)}`
+        const hueShift = entrypointMembers.has(eoa.address) ? 55 : chainHueShift
         const node: Node = {
           id: eoa.address,
           isInitial: false,
@@ -105,12 +114,15 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           data: null,
           fields: [],
           hiddenFields: [],
+          appearsInProjectsCount: undefined,
+          appearsInProjects: undefined,
+          entrypointMemberOf: entrypointMembers.get(eoa.address),
         }
         nodes.push(node)
       }
     }
     loadNodes(project, nodes)
-  }, [project, data, clear, loadNodes])
+  }, [project, data, clear, loadNodes, setEntrypointGroups])
 }
 
 function eq(a: readonly string[], b: readonly string[]) {
@@ -120,32 +132,62 @@ function eq(a: readonly string[], b: readonly string[]) {
 function useSynchronizeSelection() {
   const loaded = useStore((state) => state.loaded)
   const [lastSelection, rememberSelection] = useState<readonly string[]>([])
+  const graphSelectionSyncRef = useRef(false)
   const selectedGlobal = usePanelStore((state) => state.selected)
   const highlightGlobal = usePanelStore((state) => state.highlight)
   const selectGlobal = usePanelStore((state) => state.select)
   const selectedNodes = useStore((state) => state.selected)
   const hiddenNodes = useStore((state) => state.hidden)
-  const selectAndFocus = useStore((state) => state.selectAndFocus)
+  const selectNodes = useStore((state) => state.selectNodes)
 
   useEffect(() => {
-    const visibleSelectedNodes = selectedNodes.filter(
-      (id) => !hiddenNodes.includes(id),
-    )
+    const nodeState = useNodeStore.getState()
+    const visibleSelectedNodes = normalizeSelectionForDisplay(
+      selectedNodes,
+      nodeState,
+    ).filter((id) => !hiddenNodes.includes(id))
     highlightGlobal(visibleSelectedNodes)
   }, [selectedNodes, hiddenNodes, highlightGlobal])
 
   useEffect(() => {
     if (selectedNodes.length > 0 && !eq(lastSelection, selectedNodes)) {
       rememberSelection(selectedNodes)
-      selectGlobal(selectedNodes[0])
-    } else if (
-      selectedGlobal &&
-      !lastSelection.includes(selectedGlobal) &&
-      loaded
-    ) {
-      rememberSelection([selectedGlobal])
-      selectAndFocus(selectedGlobal)
+      graphSelectionSyncRef.current = true
+      const displayId = normalizeSelectionForDisplay(
+        selectedNodes,
+        useNodeStore.getState(),
+      )[0]
+      if (displayId) {
+        selectGlobal(displayId)
+      }
+      return
     }
+
+    if (!selectedGlobal || !loaded) {
+      return
+    }
+
+    if (graphSelectionSyncRef.current) {
+      graphSelectionSyncRef.current = false
+      return
+    }
+
+    const nodeState = useNodeStore.getState()
+    const focusId = resolveFocusNodeId(selectedGlobal, nodeState)
+
+    const alreadySelected = selectedNodes.some(
+      (id) =>
+        id === focusId ||
+        id === selectedGlobal ||
+        resolveFocusNodeId(id, nodeState) === focusId,
+    )
+
+    if (alreadySelected) {
+      return
+    }
+
+    rememberSelection([focusId])
+    selectNodes([focusId])
   }, [
     lastSelection,
     rememberSelection,
@@ -153,7 +195,7 @@ function useSynchronizeSelection() {
     selectGlobal,
     selectedNodes,
     hiddenNodes,
-    selectAndFocus,
+    selectNodes,
     loaded,
   ])
 }

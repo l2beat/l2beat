@@ -40,6 +40,7 @@ export function buildStoredNodeLayout(state: State): StoredNodeLayout {
         .map((n) => [n.id, n.hiddenFields]),
     ),
     hiddenNodes: [...state.hidden],
+    collapsedEntrypointGroups: [...state.collapsedEntrypointGroups],
   }
 }
 

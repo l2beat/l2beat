@@ -9,6 +9,7 @@ import {
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
 } from '../store/utils/constants'
+import { formatAppearsInProjectsLabel } from '../store/utils/entrypointGroups'
 import { getColor } from './colors/colors'
 
 export interface NodeViewProps {
@@ -30,9 +31,13 @@ function NodeViewImpl(props: NodeViewProps) {
     props.node.hiddenFields.length > 0
       ? new Set(props.node.hiddenFields)
       : undefined
+  const entrypointGroup = props.node.entrypointGroup
+  const appearsInProjectsCount = props.node.appearsInProjectsCount
 
   const fullHeight =
-    props.node.addressType === 'EOA' && props.node.fields.length === 0
+    props.node.addressType === 'EOA' &&
+    props.node.fields.length === 0 &&
+    !entrypointGroup
 
   return (
     <>
@@ -64,14 +69,32 @@ function NodeViewImpl(props: NodeViewProps) {
           }}
         >
           <AddressIcon type={props.node.addressType} />
-          <div className="truncate">{props.node.name}</div>
-          <div className="flex items-center">
+          <div className="flex min-w-0 flex-1 items-center gap-1 overflow-hidden">
+            <div className="truncate">{props.node.name}</div>
+            {appearsInProjectsCount !== undefined && (
+              <span className="shrink-0 font-mono text-[11px] opacity-75">
+                {formatAppearsInProjectsLabel(appearsInProjectsCount)}
+              </span>
+            )}
+          </div>
+          <div className="flex shrink-0 items-center">
             {props.node.isInitial && <IconInitial className="text-aux-green" />}
             {props.node.hasTemplate && (
               <IconInitial className="text-aux-orange" />
             )}
           </div>
         </div>
+        {entrypointGroup && (
+          <div
+            className="truncate px-2 font-mono text-coffee-200 text-xs"
+            style={{
+              height: FIELD_HEIGHT,
+              lineHeight: FIELD_HEIGHT + 'px',
+            }}
+          >
+            {entrypointGroup.summary}
+          </div>
+        )}
         {props.node.fields.map((field, i) => {
           if (hiddenFields?.has(field.name)) return null
           return (

@@ -6,7 +6,19 @@ import type {
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
+import { join } from 'path'
 import { projectParamsSchema } from '../main'
+import {
+  ensureProjectEntrypointsImport,
+  ensureProjectSharedModule,
+  validateEntrypointsFileContent,
+} from './entrypointsFile'
+
+const updateEntrypointsFileSchema = z.object({
+  content: z.string(),
+  linkConsumerProject: z.string().optional(),
+})
 
 const updateConfigFileSchema = z.object({
   content: z.string(),
@@ -29,6 +41,72 @@ export function attachConfigRouter(
   configWriter: ConfigWriter,
   templateService: TemplateService,
 ) {
+  app.get('/api/entrypoints-files/:project', (req, res) => {
+    const query = projectParamsSchema.safeParse(req.params)
+    if (!query.success) {
+      res.status(400).json({ errors: query.message })
+      return
+    }
+
+    const projectPath = configReader.getProjectPath(query.data.project)
+    const filePath = join(projectPath, 'entrypoints.json')
+    if (!existsSync(filePath)) {
+      res.json({ content: '', exists: false })
+      return
+    }
+
+    res.json({
+      content: readFileSync(filePath, 'utf-8'),
+      exists: true,
+    })
+  })
+
+  app.put('/api/entrypoints-files/:project', (req, res) => {
+    const query = projectParamsSchema.safeParse(req.params)
+    const data = updateEntrypointsFileSchema.safeParse(req.body)
+
+    if (!query.success) {
+      res.status(400).json({ errors: query.message })
+      return
+    }
+
+    if (!data.success) {
+      res.status(400).json({ errors: data.message })
+      return
+    }
+
+    const validation = validateEntrypointsFileContent(data.data.content)
+    if (!validation.success) {
+      res.status(400).json({ errors: validation.message })
+      return
+    }
+
+    const moduleProject = query.data.project
+    const projectPath = configReader.getProjectPath(moduleProject)
+    mkdirSync(projectPath, { recursive: true })
+    const filePath = join(projectPath, 'entrypoints.json')
+    writeFileSync(filePath, data.data.content)
+
+    const importAdded = ensureProjectEntrypointsImport(
+      configReader,
+      configWriter,
+      moduleProject,
+    )
+    const sharedModuleLinked =
+      data.data.linkConsumerProject !== undefined
+        ? ensureProjectSharedModule(
+            configReader,
+            configWriter,
+            data.data.linkConsumerProject,
+            moduleProject,
+          )
+        : false
+    configReader.clearImportedCache()
+    templateService.reload()
+
+    res.json({ success: true, importAdded, sharedModuleLinked })
+  })
+
   app.put('/api/config-files/:project', (req, res) => {
     const query = projectParamsSchema.safeParse(req.params)
     const data = updateConfigFileSchema.safeParse(req.body)

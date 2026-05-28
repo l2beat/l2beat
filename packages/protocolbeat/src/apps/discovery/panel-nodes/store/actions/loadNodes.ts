@@ -13,6 +13,7 @@ import {
   reconcileHiddenFields,
   type StoredNodeLayout,
 } from '../utils/storage'
+import { getNodeSummaryLineCount } from '../utils/entrypointGroups'
 import { updateNodePositions } from '../utils/updateNodePositions'
 import { layout } from './other'
 
@@ -56,6 +57,7 @@ export function loadNodes(
     )
     const height =
       HEADER_HEIGHT +
+      getNodeSummaryLineCount(node) * FIELD_HEIGHT +
       visibleFieldsCount * FIELD_HEIGHT +
       BOTTOM_PADDING +
       hiddenFieldsHeight
@@ -83,6 +85,12 @@ export function loadNodes(
   const hiddenNodes = [
     ...new Set([...savedHiddenNodes, ...baseHiddenNodes]),
   ].filter((id) => allNodeIds.has(id))
+
+  const savedCollapsedGroups = saved?.collapsedEntrypointGroups ?? []
+  const shouldReuseCollapsedGroups = state.projectId === projectId
+  const collapsedEntrypointGroups = shouldReuseCollapsedGroups
+    ? state.collapsedEntrypointGroups
+    : savedCollapsedGroups
   const visibleNodes = allNodes.filter((node) => !hiddenNodes.includes(node.id))
   const hasSavedLayout =
     !!saved && allNodes.some((node) => saved.locations[node.id] !== undefined)
@@ -90,6 +98,7 @@ export function loadNodes(
   const baseState = {
     ...state,
     hidden: hiddenNodes,
+    collapsedEntrypointGroups,
     nodes: allNodes,
     projectId,
     loaded: true,
@@ -126,6 +135,7 @@ export function loadNodes(
 
   return updateNodePositions(state, {
     hidden: hiddenNodes,
+    collapsedEntrypointGroups,
     nodes: nodesWithFallback,
     projectId,
     loaded: true,

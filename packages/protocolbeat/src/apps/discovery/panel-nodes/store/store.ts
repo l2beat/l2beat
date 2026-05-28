@@ -9,6 +9,7 @@ import { onKeyUp } from './actions/onKeyUp'
 import { onMouseDown } from './actions/onMouseDown'
 import { onMouseMove } from './actions/onMouseMove'
 import { onMouseUp } from './actions/onMouseUp'
+import { onNodeDoubleClick } from './actions/onNodeDoubleClick'
 import { onWheel } from './actions/onWheel'
 import {
   clear,
@@ -16,12 +17,15 @@ import {
   hideSelected,
   hideUnreachable,
   layout,
+  setEntrypointGroups,
   setPreferences,
   showHidden,
   showUnreachable,
+  toggleEntrypointGroup,
 } from './actions/other'
 import { registerViewportContainer } from './actions/registerViewportContainer'
 import { selectAndFocus } from './actions/selectAndFocus'
+import { selectNodes } from './actions/selectNodes'
 import { setNodes } from './actions/setNodes'
 import type { State } from './State'
 import {
@@ -39,6 +43,8 @@ const INITIAL_STATE: State = {
   selected: [],
   hidden: [],
   nodes: [],
+  entrypointGroups: [],
+  collapsedEntrypointGroups: [],
   history: emptyHistoryState(),
   transform: { offsetX: 0, offsetY: 0, scale: 1 },
   viewportContainer: undefined,
@@ -72,6 +78,8 @@ export const useStore = create<StoreState>()(
     (set) => ({
       ...INITIAL_STATE,
       loadNodes: wrapHistoryResetAction(set, loadNodes),
+      setEntrypointGroups: wrapAction(set, setEntrypointGroups),
+      toggleEntrypointGroup: wrapAction(set, toggleEntrypointGroup),
       setNodes: wrapUndoableAction(set, setNodes),
       colorSelected: wrapUndoableAction(set, colorSelected),
       undo: wrapAction(set, undo),
@@ -84,6 +92,8 @@ export const useStore = create<StoreState>()(
       layout: wrapUndoableAction(set, layout),
       applyStoredLayout: wrapAction(set, applyStoredLayout),
       selectAndFocus: wrapAction(set, selectAndFocus),
+      selectNodes: wrapAction(set, selectNodes),
+      onNodeDoubleClick: wrapAction(set, onNodeDoubleClick),
       registerViewportContainer: wrapAction(set, registerViewportContainer),
       setPreferences: wrapAction(set, setPreferences),
 
@@ -102,6 +112,7 @@ export const useStore = create<StoreState>()(
           projectId: state.projectId,
           nodes: state.nodes,
           hidden: state.hidden,
+          collapsedEntrypointGroups: state.collapsedEntrypointGroups,
           userPreferences: state.userPreferences,
         }
       },
@@ -221,7 +232,14 @@ function wrapWithReducer<A extends unknown[]>(
   set: StoreSetter,
   reducer: (state: StoreState, ...args: A) => Partial<State>,
 ): (...args: A) => void {
-  return (...args: A) => set((state) => reducer(state, ...args))
+  return (...args: A) =>
+    set((state) => {
+      const partial = reducer(state, ...args)
+      if (partial === state || Object.keys(partial).length === 0) {
+        return state
+      }
+      return { ...state, ...partial }
+    })
 }
 
 function mergeState(state: StoreState, partial: Partial<State>): StoreState {

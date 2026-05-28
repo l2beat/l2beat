@@ -19,6 +19,10 @@ export interface Actions {
   onWheel: (event: WheelEvent, view: HTMLElement) => void
 
   loadNodes: (projectId: string, nodes: Node[]) => void
+  setEntrypointGroups: (
+    entrypointGroups: State['entrypointGroups'],
+  ) => void
+  toggleEntrypointGroup: (groupId: string) => void
   setNodes: (nodes: Node[]) => void
   colorSelected: (color: number) => void
   layout: (locations: NodeLocations) => void
@@ -31,6 +35,8 @@ export interface Actions {
   showHidden: () => void
   clear: () => void
   selectAndFocus: (selected: string) => void
+  selectNodes: (selected: readonly string[]) => void
+  onNodeDoubleClick: (event: MouseEvent, container: HTMLElement) => void
   registerViewportContainer: (container: HTMLElement | null) => void
 
   setPreferences: (preferences: Partial<State['userPreferences']>) => void

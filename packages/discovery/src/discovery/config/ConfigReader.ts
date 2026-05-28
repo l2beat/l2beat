@@ -205,6 +205,10 @@ export class ConfigReader {
     return this.resolveProjectPath(project)
   }
 
+  clearImportedCache(): void {
+    this.importedCache.clear()
+  }
+
   resolveImports(
     basePath: string,
     imports: string[],

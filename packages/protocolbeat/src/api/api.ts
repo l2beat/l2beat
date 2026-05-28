@@ -8,6 +8,7 @@ import type {
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
   ApiDiffHistoryResponse,
+  ApiEntrypointsFileResponse,
   ApiGlobalConfigSyncStatusResponse,
   ApiHandlersResponse,
   ApiListTemplatesResponse,
@@ -158,6 +159,22 @@ export async function readConfigFile(
   return data as ApiConfigFileResponse
 }
 
+export async function readEntrypointsFile(
+  project?: string,
+): Promise<ApiEntrypointsFileResponse> {
+  if (!project) {
+    return { content: '', exists: false }
+  }
+
+  const res = await fetch(`/api/entrypoints-files/${project}`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+
+  return data as ApiEntrypointsFileResponse
+}
+
 export async function getDiffHistory(
   project: string,
   offset: number,
@@ -243,6 +260,30 @@ export async function updateConfigFile(project: string, content: string) {
 
   if (!res.ok) {
     throw new Error(res.statusText)
+  }
+}
+
+export async function updateEntrypointsFile(
+  moduleProject: string,
+  content: string,
+  linkConsumerProject?: string,
+) {
+  const res = await fetch(`/api/entrypoints-files/${moduleProject}`, {
+    method: 'PUT',
+    body: JSON.stringify({ content, linkConsumerProject }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+
+  return (await res.json()) as {
+    success: boolean
+    importAdded: boolean
+    sharedModuleLinked: boolean
   }
 }
 
