@@ -25,7 +25,7 @@ export class Env {
   }
 
   static key(...inputs: string[]): string {
-    return inputs.join('_').replace(/-/g, '').toUpperCase()
+    return inputs.flatMap((x) => x.trim().split(/[-_\s]+/)).filter(Boolean).join('_').toUpperCase()
   }
 
   string(key: string | string[], fallback?: string): string {

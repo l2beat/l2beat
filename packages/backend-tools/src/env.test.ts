@@ -6,7 +6,11 @@ describe(Env.name, () => {
   describe(Env.key.name, () => {
     it('returns correct environment variable key', () => {
       const result = Env.key('polygon-pos', 'RPC_URL')
-      expect(result).toEqual('POLYGONPOS_RPC_URL')
+      expect(result).toEqual('POLYGON_POS_RPC_URL')
+    })
+
+    it('does not collapse distinct identifiers', () => {
+      expect(Env.key('service-a')).not.toEqual(Env.key('servicea'))
     })
   })
 
