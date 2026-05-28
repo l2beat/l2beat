@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3bef697f11f62aba7d2cb647d508e03888c4af8b
+Generated with discovered.json: 0x6891ac2fc305b4594ac3f91512d969db75064b4d
 
-# Diff at Thu, 21 May 2026 13:56:18 GMT:
+# Diff at Thu, 28 May 2026 07:10:30 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@3f32b799a8ae1f1caacd37bf2e2cc7b1dec2ddeb block: 1777388210
+- comparing to: main@34661de313dadbb53c93e91c93a9af52eee4d335 block: 1777388210
 - current timestamp: 1778572081
 
 ## Description
@@ -1347,7 +1347,7 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
     +++ description: Token accepted as fee token for sending outgoing messages.
 ```
 
-Generated with discovered.json: 0xbf06d64d74f8a96d44023635c14ffc4afa14299e
+Generated with discovered.json: 0x6bec2c25376bc21af34e4c3b02ec41fbf6c51100
 
 # Diff at Fri, 15 May 2026 12:35:46 GMT:
 
