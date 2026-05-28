@@ -36,7 +36,13 @@ export type ProtocolEntry = {
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
   netMintedValue: number | undefined
-  topRoute: { srcChain: string; dstChain: string; volume: number } | undefined
+  topRoute:
+    | {
+        srcChain: { id: string; name: string; iconUrl: string }
+        dstChain: { id: string; name: string; iconUrl: string }
+        volume: number
+      }
+    | undefined
   snapshotTimestamp: number | undefined
 }
 

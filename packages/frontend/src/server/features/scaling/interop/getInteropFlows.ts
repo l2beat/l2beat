@@ -1,5 +1,6 @@
 import { assert, notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
+import { mapInteropChainsToWithIcons } from '~/pages/interop/utils/mapInteropChainsToWithIcons'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { INTEROP_PAIR_SEPARATOR } from './consts'
@@ -407,10 +408,18 @@ function getMockInteropFlows(): InteropFlowsData {
     },
   ]
 
-  const mockRoute = (volume: number): ProtocolEntry['topRoute'] =>
-    chainIds[0] && chainIds[1]
-      ? { srcChain: chainIds[0], dstChain: chainIds[1], volume }
-      : undefined
+  const chainsById = new Map(
+    mapInteropChainsToWithIcons(manifest, getInteropChains()).map((chain) => [
+      chain.id,
+      { id: chain.id, name: chain.name, iconUrl: chain.iconUrl },
+    ]),
+  )
+  const mockRoute = (volume: number): ProtocolEntry['topRoute'] => {
+    const [srcId, dstId] = chainIds
+    const srcChain = srcId ? chainsById.get(srcId) : undefined
+    const dstChain = dstId ? chainsById.get(dstId) : undefined
+    return srcChain && dstChain ? { srcChain, dstChain, volume } : undefined
+  }
 
   const mockEntry = (
     overrides: Pick<

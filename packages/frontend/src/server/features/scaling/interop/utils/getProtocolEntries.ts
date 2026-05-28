@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Project } from '@l2beat/config'
 import type { KnownInteropBridgeType, UnixTime } from '@l2beat/shared-pure'
+import { mapInteropChainsToWithIcons } from '~/pages/interop/utils/mapInteropChainsToWithIcons'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
 import { INTEROP_PAIR_SEPARATOR } from '../consts'
@@ -15,6 +16,7 @@ import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { getAverageDuration, getDurationSplit } from './getAverageDuration'
 import { getChainsData } from './getChainsData'
 import { flowsMapToSorted } from './getFlows'
+import { getInteropChains } from './getInteropChains'
 import { getNetMintedValueUsd } from './getNetMintedValueUsd'
 import {
   getProtocolsDataMap,
@@ -41,6 +43,12 @@ export function getProtocolEntries(
 } {
   const protocolsDataMap = getProtocolsDataMap(records)
   const protocolsDataByBridgeTypeMap = getProtocolsDataMapByBridgeType(records)
+  const chainsById = new Map(
+    mapInteropChainsToWithIcons(manifest, getInteropChains()).map((chain) => [
+      chain.id,
+      { id: chain.id, name: chain.name, iconUrl: chain.iconUrl },
+    ]),
+  )
 
   const entries: ProtocolEntry[] = []
   const zeroTransferProtocols: ProtocolDisplayable[] = []
@@ -60,7 +68,9 @@ export function getProtocolEntries(
       logger,
       selection,
     )
-    const topRoute = byBridgeData ? getTopRoute(byBridgeData) : undefined
+    const topRoute = byBridgeData
+      ? getTopRoute(byBridgeData, chainsById)
+      : undefined
 
     const bridgeTypes = getRelevantBridgeTypes(project, undefined).sort(
       sortBridgeTypesFn,
@@ -270,13 +280,26 @@ function sortBridgeTypesFn(
 }
 
 /**
- * Unions flows across bridge types for a single protocol and returns the
- * highest-volume cross-chain route (excludes same-chain).
+ * Returns the highest-volume cross-chain route across all bridge types for a
+ * single protocol, with src/dst chain names and icon URLs resolved for direct
+ * rendering. Same-chain entries are skipped.
  */
 function getTopRoute(
   data: ProtocolDataByBridgeType,
+  chainsById: Map<
+    string,
+    {
+      id: string
+      name: string
+      iconUrl: string
+    }
+  >,
 ): ProtocolEntry['topRoute'] {
-  const merged = new Map<string, number>()
+  let topSrcId: string | undefined
+  let topDstId: string | undefined
+  let topVolume = 0
+  const seen = new Map<string, number>()
+
   for (const sub of [
     data.lockAndMint,
     data.nonMinting,
@@ -285,15 +308,23 @@ function getTopRoute(
   ]) {
     if (!sub) continue
     for (const [key, volume] of sub.flows) {
-      merged.set(key, (merged.get(key) ?? 0) + volume)
+      const total = (seen.get(key) ?? 0) + volume
+      seen.set(key, total)
+
+      const [srcId, dstId] = key.split(INTEROP_PAIR_SEPARATOR)
+      if (!srcId || !dstId || srcId === dstId) continue
+      if (total > topVolume) {
+        topSrcId = srcId
+        topDstId = dstId
+        topVolume = total
+      }
     }
   }
 
-  let top: ProtocolEntry['topRoute']
-  for (const [key, volume] of merged) {
-    const [srcChain, dstChain] = key.split(INTEROP_PAIR_SEPARATOR)
-    if (!srcChain || !dstChain || srcChain === dstChain) continue
-    if (!top || volume > top.volume) top = { srcChain, dstChain, volume }
-  }
-  return top
+  if (!topSrcId || !topDstId) return undefined
+  const srcChain = chainsById.get(topSrcId)
+  const dstChain = chainsById.get(topDstId)
+  if (!srcChain || !dstChain) return undefined
+
+  return { srcChain, dstChain, volume: topVolume }
 }
