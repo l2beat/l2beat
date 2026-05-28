@@ -18,6 +18,7 @@ import type { TopTokenItem } from '~/server/features/scaling/interop/getTokenFra
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
 import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
 import { Last24HoursBadge } from './Last24HoursBadge'
@@ -35,6 +36,8 @@ export function TopTokensWidget({
     from: selectedChains,
     to: selectedChains,
   })
+
+  const apiSelection = { from: selectedChains, to: selectedChains }
 
   const frameworksById = new Map(tokenFrameworks.map((f) => [f.id, f]))
 
@@ -108,6 +111,7 @@ export function TopTokensWidget({
                     token={token}
                     framework={framework}
                     showFrameworkBadge={activeTab === 'all'}
+                    href={getInteropTokenUrl(token, apiSelection)}
                   />
                 )
               })}
@@ -123,21 +127,34 @@ function TokenRow({
   token,
   framework,
   showFrameworkBadge,
+  href,
 }: {
   token: TopTokenItem
   framework: InteropTokenFramework | undefined
   showFrameworkBadge: boolean
+  href: string | undefined
 }) {
   const txsLabel = `${formatInteger(token.transferCount)} txs`
+  const identity = (
+    <>
+      <img
+        src={token.iconUrl}
+        alt={token.symbol}
+        className="size-6 shrink-0 rounded-full"
+      />
+      <span className="font-bold text-heading-16">{token.symbol}</span>
+    </>
+  )
   return (
     <div className="flex items-center justify-between gap-2">
       <div className="flex min-w-0 items-center gap-2">
-        <img
-          src={token.iconUrl}
-          alt={token.symbol}
-          className="size-6 shrink-0 rounded-full"
-        />
-        <span className="font-bold text-heading-16">{token.symbol}</span>
+        {href ? (
+          <a href={href} className="flex items-center gap-2 hover:underline">
+            {identity}
+          </a>
+        ) : (
+          identity
+        )}
         {showFrameworkBadge && framework && (
           <Tooltip>
             <TooltipTrigger asChild>

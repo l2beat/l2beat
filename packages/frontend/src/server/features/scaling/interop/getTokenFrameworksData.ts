@@ -65,6 +65,7 @@ export type TopTokenChainRoute = {
 export type TopTokenItem = {
   id: string
   symbol: string
+  issuer: string | null
   iconUrl: string
   volume: number
   transferCount: number
@@ -250,6 +251,7 @@ export function getUnknownTokenItemsByFramework(
     const current = result.get(frameworkId) ?? {
       id: `unknown-${frameworkId}`,
       symbol: 'Unknown',
+      issuer: null,
       iconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       volume: 0,
       transferCount: 0,
@@ -358,6 +360,7 @@ export function buildTopTokens(
     items.push({
       id: abstractTokenId,
       symbol: details.symbol,
+      issuer: details.issuer,
       iconUrl: details.iconUrl,
       volume: data.volume,
       transferCount: data.transferCount,
@@ -478,6 +481,7 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
     {
       id: 'usdt0',
       symbol: 'USDT0',
+      issuer: 'tether',
       iconUrl:
         'https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663',
       volume: 110_110_000,
@@ -491,6 +495,7 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
     {
       id: 'usdt',
       symbol: 'USDT',
+      issuer: 'tether',
       iconUrl:
         'https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663',
       volume: 46_670_000,
@@ -504,6 +509,7 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
     {
       id: 'susde',
       symbol: 'sUSDe',
+      issuer: 'ethena',
       iconUrl:
         'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
       volume: 38_100_000,
@@ -517,6 +523,7 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
     {
       id: 'usdt0-2',
       symbol: 'USDT0',
+      issuer: 'tether',
       iconUrl:
         'https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663',
       volume: 30_500_000,
@@ -530,6 +537,7 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
     {
       id: 'usde',
       symbol: 'USDe',
+      issuer: 'ethena',
       iconUrl:
         'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
       volume: 10_130_000,

@@ -6,28 +6,45 @@ import type {
 } from '~/server/features/scaling/interop/getTokenFrameworksData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
+import type { InteropSelection } from '../../../utils/types'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import { TokenFrameworksTransferTrigger } from '../TokenFrameworksTransferTrigger'
 
 export function TokenRow({
   token,
   framework,
+  apiSelection,
 }: {
   token: TopTokenItem
   framework: InteropTokenFramework
+  apiSelection: InteropSelection
 }) {
+  const href = getInteropTokenUrl(token, apiSelection)
+  const identity = (
+    <>
+      <img
+        src={token.iconUrl}
+        alt={token.symbol}
+        className="size-4 shrink-0 rounded-sm"
+      />
+      <span className="truncate font-medium text-label-value-13">
+        {token.symbol}
+      </span>
+    </>
+  )
   return (
     <div className="flex h-7 shrink-0 items-center justify-between gap-2">
-      <div className="flex min-w-0 items-center gap-1.5">
-        <img
-          src={token.iconUrl}
-          alt={token.symbol}
-          className="size-4 shrink-0 rounded-sm"
-        />
-        <span className="truncate font-medium text-label-value-13">
-          {token.symbol}
-        </span>
-      </div>
+      {href ? (
+        <a
+          href={href}
+          className="flex min-w-0 items-center gap-1.5 hover:underline"
+        >
+          {identity}
+        </a>
+      ) : (
+        <div className="flex min-w-0 items-center gap-1.5">{identity}</div>
+      )}
       <RowStats
         volume={token.volume}
         transferCount={token.transferCount}
