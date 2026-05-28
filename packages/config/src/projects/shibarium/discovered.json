@@ -297,7 +297,7 @@
       "sinceBlock": 17849217,
       "values": {
         "$immutable": true,
-        "counter": 41907,
+        "counter": 41883,
         "isOwner": false,
         "owner": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
         "REGISTRATIONS": [
@@ -509,18 +509,18 @@
         "CHECKPOINT_REWARD": "100000000000000000000",
         "checkPointBlockInterval": 1024,
         "checkpointRewardDelta": 0,
-        "currentEpoch": 34438,
+        "currentEpoch": 33705,
         "currentValidatorSetSize": 11,
         "currentValidatorSetTotalStake": "10974090167514730948320174",
         "delegationEnabled": true,
         "delegatorsReward": [
-          "7430378013854778686688",
-          "6722012864726227352423",
-          "4187434182153699680158",
-          "3072731261706843753509"
+          "210975338394165244701",
+          "2763262760844474275671",
+          "1782345025938981979802",
+          "405618133441902228408"
         ],
         "dynasty": 30,
-        "epoch": 34438,
+        "epoch": 33705,
         "eventsHub": "eth:0x12185669Dac70749f717247971E0B8819b2e472e",
         "extensionCode": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
         "getRegistry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
@@ -547,7 +547,7 @@
         "registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
         "replacementCoolDown": 29342,
         "rewardDecreasePerCheckpoint": 0,
-        "rewardPerStake": "2014444741830172328231111",
+        "rewardPerStake": "1912012559950754480189565",
         "rootChain": "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
         "signerUpdateLimit": 100,
         "token": "eth:0x9813037ee2218799597d83D4a5B6F3b6778218d9",
@@ -1083,7 +1083,7 @@
       "sinceTimestamp": 1691243771,
       "sinceBlock": 17849204,
       "values": {
-        "_nextHeaderBlock": 344350000,
+        "_nextHeaderBlock": 337020000,
         "$immutable": false,
         "$implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "CHAINID": 109,
@@ -1092,8 +1092,8 @@
           "_registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
           "_heimdallId": "heimdall-109"
         },
-        "currentHeaderBlock": 344340000,
-        "getLastChildBlock": 17266716,
+        "currentHeaderBlock": 337010000,
+        "getLastChildBlock": 15987740,
         "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
         "implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "isOwner": false,
@@ -2034,6 +2034,6 @@
     "polygonposbridge/ValidatorRegistry": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "shibarium/WithdrawManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 25116273 },
+  "usedBlockNumbers": { "ethereum": 24583152 },
   "permissionsConfigHash": "0x32a4cab100c0f4e26adb5a456a4c0e11a2906cfdda31d98f142e5734a85b3b4e"
 }
