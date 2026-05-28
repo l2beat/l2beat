@@ -26,7 +26,11 @@ export function OverviewRecentProjectsCard({ projects, className }: Props) {
   }
   return (
     <PrimaryCard
-      className={cn(OVERVIEW_CARD_PADDING_CLASS, 'flex h-full flex-col', className)}
+      className={cn(
+        OVERVIEW_CARD_PADDING_CLASS,
+        'flex h-full flex-col',
+        className,
+      )}
     >
       <div className="flex items-center justify-between">
         <span className="font-bold text-xl">Recently added projects</span>
