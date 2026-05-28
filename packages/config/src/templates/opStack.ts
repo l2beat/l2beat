@@ -350,6 +350,9 @@ function opStackCommon(
   if (fraudProofType === 'OpSuccinct' || fraudProofType === 'OpSuccinctFDP') {
     architectureImage.push('opsuccinct')
   }
+  if (fraudProofType === 'AggregateProof') {
+    architectureImage.push('aggverifier')
+  }
 
   const nativeContractRisks: ProjectRisk[] = [
     templateVars.nonTemplateContractRisks ??
@@ -391,9 +394,7 @@ function opStackCommon(
             ? 'kailua'
             : fraudProofType === 'OpSuccinct'
               ? 'opsuccinct'
-              : fraudProofType === 'AggregateProof'
-                ? 'aggverifier'
-                : undefined),
+              : undefined),
       stacks: ['OP Stack'],
       warning:
         templateVars.display.warning === undefined && fraudProofType === 'None'
