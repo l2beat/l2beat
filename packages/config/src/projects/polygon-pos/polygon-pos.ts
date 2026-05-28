@@ -301,9 +301,9 @@ export const polygonpos: ScalingProject = {
         target: 0.99,
         maxCensorFraction: 0.33,
         stakeDistribution,
-        description:
-          'The chart models live-chain selective censorship only. Since proposing is stake-weighted, the x-axis represents the censoring POL stake, and does not cover validator-set changes, or blanket-censorship resistance gadgets.',
       },
+      inclusionDelayChartDescription:
+        'The chart models live-chain selective censorship only. Since proposing is stake-weighted, the x-axis represents the censoring POL stake, and does not cover validator-set changes, or blanket-censorship resistance gadgets.',
       censorshipResistance: `The validator set is closed and capped, but includes a diverse set of known entities who share block production rights. There are no specific censorship resistance gadgets built into the Polygon PoS protocol.
 ### Selective censorship
 As long as the Polygon PoS blockchain is producing blocks, users can expect to include their transactions due to the rotating, diverse block producers, even if they are censored by some of them. Unfortunately, the rotation is very slow (see *span* time) and even a few entities censoring can cause long inclusion delays.

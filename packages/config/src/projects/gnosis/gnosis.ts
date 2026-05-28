@@ -257,9 +257,9 @@ export const gnosis: ScalingProject = {
         slotSeconds: gnosisSlotSeconds,
         target: 0.99,
         maxCensorFraction: 0.5,
-        description:
-          'The chart uses the Ethereum-style single-proposer formula with Gnosis-specific constants. It excludes finality, inactivity leaks, validator-set changes, hard forks, and blanket-censorship resistance gadgets.',
       },
+      inclusionDelayChartDescription:
+        'The chart uses the Ethereum-style single-proposer formula with Gnosis-specific constants. It excludes finality, inactivity leaks, validator-set changes, hard forks, and blanket-censorship resistance gadgets.',
       censorshipResistance: `Gnosis Chain does not have dedicated censorship resistance gadgets, but the sequencer set is open and there are no committees that can block inclusion.
 ### Selective censorship
 Even with high percentages of stake censoring, users have very fast inclusion times. There are also initial tests of an out-of-protocol solution for encrypting transactions in the mempool (Shutterized Gnosis Chain).

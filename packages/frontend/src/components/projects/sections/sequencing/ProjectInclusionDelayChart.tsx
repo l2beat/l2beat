@@ -1,51 +1,43 @@
-import type { ProjectInclusionDelayChart as ProjectInclusionDelayChartConfig } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
-import {
-  getInclusionDelayChartData,
-  getInclusionDelayEntityLegendEntries,
-  getInclusionDelayThresholdMarkers,
-  type InclusionDelayEntityLegendEntry,
-} from './calculateInclusionDelay'
+import type {
+  InclusionDelayChartProps,
+  InclusionDelayEntityLegendEntry,
+} from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 import {
   InclusionDelayChart,
   type InclusionDelayYAxisScale,
 } from './InclusionDelayChart'
 
-interface Props {
-  chart: ProjectInclusionDelayChartConfig
+interface Props extends InclusionDelayChartProps {
   projectName: string
 }
 
-export function ProjectInclusionDelayChart({ chart, projectName }: Props) {
-  const [yAxisScale, setYAxisScale] = useState<InclusionDelayYAxisScale>(
-    'linear',
-  )
+export function ProjectInclusionDelayChart({
+  projectName,
+  chartData,
+  entityLegendEntries,
+  thresholdMarkers,
+  maxCensorFraction,
+  hasStakeDistribution,
+}: Props) {
+  const [yAxisScale, setYAxisScale] =
+    useState<InclusionDelayYAxisScale>('linear')
 
   const data = useMemo(
     () =>
-      getInclusionDelayChartData(chart).map((point) => ({
+      chartData.map((point) => ({
         ...point,
         timestamp: point.censoringFraction,
       })),
-    [chart],
-  )
-  const entityLegendEntries = useMemo(
-    () => getInclusionDelayEntityLegendEntries(chart),
-    [chart],
-  )
-  const thresholdMarkers = useMemo(
-    () => getInclusionDelayThresholdMarkers(chart),
-    [chart],
+    [chartData],
   )
   const chartMeta = useMemo(
     () => getInclusionDelayChartMeta(projectName),
     [projectName],
   )
-
-  const hasStakeDistribution = chart.stakeDistribution !== undefined
 
   return (
     <div className="my-6 flex flex-col">
@@ -65,7 +57,7 @@ export function ProjectInclusionDelayChart({ chart, projectName }: Props) {
         <InclusionDelayChart
           data={data}
           chartMeta={chartMeta}
-          maxCensorFraction={chart.maxCensorFraction}
+          maxCensorFraction={maxCensorFraction}
           yAxisScale={yAxisScale}
           thresholdMarkers={thresholdMarkers}
           entityMarkers={entityLegendEntries.filter(hasFiniteDelay)}
@@ -93,7 +85,7 @@ function EntityMarkersLegend({
     <div className="mt-3 font-medium text-label-value-13">
       {entries.length > 0 ? (
         <div className="grid gap-x-6 gap-y-1.5 md:grid-cols-2">
-          {entries.map((entry) => (
+          {entries.map((entry, index) => (
             <div
               key={entry.id}
               className="min-w-0 truncate"
@@ -101,6 +93,7 @@ function EntityMarkersLegend({
             >
               <span className="text-primary">{entry.label}:</span>{' '}
               <span className="text-secondary">
+                {index > 0 ? '+' : ''}
                 {formatEntityMarkerName(entry)}
               </span>
             </div>

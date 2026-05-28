@@ -485,9 +485,9 @@ export const aztecnetwork: ScalingProject = {
         target: 0.99,
         maxCensorFraction: 0.5,
         stakeDistribution,
-        description:
-          'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
       },
+      inclusionDelayChartDescription:
+        'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
       censorshipResistance: `The committee and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations. The bond is ${escapeHatchBondString}, a high amount that is supposed to protect the single-proof system in case of bugs while still providing a last resort opportunity to circumvent the sequencer set. Aztec has developed a full private execution environment on the L2. This can benefit users because they cannot be censored based on their transaction content.
 ### Selective censorship
 On a live Aztec L2 with a given fraction of censoring sequencers, users can either send private transactions or wait for a non-censoring committee and proposing sequencer to include their public transaction.

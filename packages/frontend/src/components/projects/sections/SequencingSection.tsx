@@ -1,11 +1,8 @@
-import type {
-  ProjectInclusionDelayChart as ProjectInclusionDelayChartConfig,
-  ProjectSequencerSetSpec,
-  ReferenceLink,
-} from '@l2beat/config'
+import type { ProjectSequencerSetSpec, ReferenceLink } from '@l2beat/config'
 import { DiagramImage } from '~/components/DiagramImage'
 import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
+import type { InclusionDelayChartProps } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 import { Markdown } from '../../markdown/Markdown'
 import { ProjectSection } from './ProjectSection'
 import { ReferenceList } from './ReferenceList'
@@ -21,7 +18,8 @@ export interface SequencingSectionProps extends ProjectSectionProps {
   diagram?: DiagramParams
   content: string
   sequencerSetSpec?: ProjectSequencerSetSpec
-  inclusionDelayChart?: ProjectInclusionDelayChartConfig
+  inclusionDelay?: InclusionDelayChartProps
+  inclusionDelayChartDescription?: string
   censorshipResistance?: string
   mdClassName?: string
   risks?: TechnologyRisk[]
@@ -34,7 +32,8 @@ export function SequencingSection({
   diagram,
   content,
   sequencerSetSpec,
-  inclusionDelayChart,
+  inclusionDelay,
+  inclusionDelayChartDescription,
   censorshipResistance,
   mdClassName,
   risks,
@@ -60,20 +59,20 @@ export function SequencingSection({
         {content}
       </Markdown>
       {sequencerSetSpec && <SequencerSetSpecSheet spec={sequencerSetSpec} />}
-      {inclusionDelayChart && (
+      {inclusionDelay && (
         <>
           <ProjectInclusionDelayChart
-            chart={inclusionDelayChart}
+            {...inclusionDelay}
             projectName={projectName}
           />
-          {inclusionDelayChart.description && (
+          {inclusionDelayChartDescription && (
             <Markdown
               className={cn(
                 mdClassName,
                 'text-paragraph-15 md:text-paragraph-16',
               )}
             >
-              {inclusionDelayChart.description}
+              {inclusionDelayChartDescription}
             </Markdown>
           )}
         </>

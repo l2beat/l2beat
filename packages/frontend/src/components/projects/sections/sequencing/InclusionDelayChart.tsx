@@ -26,7 +26,7 @@ import type {
   InclusionDelayChartPoint,
   InclusionDelayEntityLegendEntry,
   InclusionDelayThresholdMarker,
-} from './calculateInclusionDelay'
+} from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 
 export type InclusionDelayYAxisScale = 'linear' | 'log'
 
@@ -103,7 +103,7 @@ export function InclusionDelayChart({
           domain={yDomain}
           ticks={
             yAxisScale === 'log'
-              ? getLogDelayTicks(yDomain[0], yDomain[1]) ?? undefined
+              ? (getLogDelayTicks(yDomain[0], yDomain[1]) ?? undefined)
               : undefined
           }
           tickFormatter={(value) => formatDelayDays(Number(value))}
@@ -174,10 +174,7 @@ export function InclusionDelayChart({
             ifOverflow="discard"
           />
         ))}
-        <ChartTooltip
-          filterNull={false}
-          content={<InclusionDelayTooltip />}
-        />
+        <ChartTooltip filterNull={false} content={<InclusionDelayTooltip />} />
       </ComposedChart>
     </ChartContainer>
   )

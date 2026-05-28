@@ -52,6 +52,7 @@ export interface ProjectTechnologyChoice {
   risks: ProjectRisk[]
   sequencerSetSpec?: ProjectSequencerSetSpec
   inclusionDelayChart?: ProjectInclusionDelayChart
+  inclusionDelayChartDescription?: string
   censorshipResistance?: string
   isIncomplete?: boolean
   isUnderReview?: boolean
@@ -76,7 +77,6 @@ export type ProjectInclusionDelayChart =
 interface ProjectInclusionDelayChartBase {
   target: number
   maxCensorFraction: number
-  description?: string
   stakeDistribution?: ProjectInclusionDelayChartStakeDistribution
 }
 

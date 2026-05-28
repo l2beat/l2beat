@@ -9,9 +9,7 @@ import {
   calculateCommitteeLikeDelayDays,
   calculateEthereumLikeDelayDays,
   calculateSpanLikeDelayDays,
-  getInclusionDelayChartData,
-  getInclusionDelayEntityLegendEntries,
-  getInclusionDelayThresholdMarkers,
+  getInclusionDelayData,
 } from './calculateInclusionDelay'
 
 describe('calculateInclusionDelay', () => {
@@ -81,7 +79,7 @@ describe('calculateInclusionDelay', () => {
     })
   })
 
-  describe(getInclusionDelayChartData.name, () => {
+  describe(getInclusionDelayData.name, () => {
     it('adds an ethereum comparison series at the project censoring fractions', () => {
       const chart = {
         type: 'ethereumlike',
@@ -91,7 +89,7 @@ describe('calculateInclusionDelay', () => {
         maxCensorFraction: 0.5,
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
-      expect(getInclusionDelayChartData(chart)).toEqual([
+      expect(getInclusionDelayData(chart).chartData).toEqual([
         {
           censoringFraction: 0,
           projectDelayDays: 5 / 86_400,
@@ -109,9 +107,7 @@ describe('calculateInclusionDelay', () => {
         },
       ])
     })
-  })
 
-  describe(getInclusionDelayEntityLegendEntries.name, () => {
     it('includes the next cumulative entity that cannot be drawn on the chart', () => {
       const chart = {
         type: 'ethereumlike',
@@ -131,7 +127,7 @@ describe('calculateInclusionDelay', () => {
         },
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
-      expect(getInclusionDelayEntityLegendEntries(chart)).toEqual([
+      expect(getInclusionDelayData(chart).entityLegendEntries).toEqual([
         {
           id: '1-First',
           label: 'Top 1',
@@ -158,9 +154,7 @@ describe('calculateInclusionDelay', () => {
         },
       ])
     })
-  })
 
-  describe(getInclusionDelayThresholdMarkers.name, () => {
     it('returns markers on exact delay thresholds', () => {
       const chart = {
         type: 'ethereumlike',
@@ -171,10 +165,10 @@ describe('calculateInclusionDelay', () => {
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
       expect(
-        getInclusionDelayThresholdMarkers(chart, [
+        getInclusionDelayData(chart, [
           { label: '50s', days: 50 / 86_400 },
           { label: '2m', days: 120 / 86_400 },
-        ]),
+        ]).thresholdMarkers,
       ).toEqual([
         {
           id: 'delay-threshold-50s',
