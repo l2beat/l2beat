@@ -30,7 +30,8 @@ function SplitView(props: { node: SplitNode }) {
           <div
             className="flex min-h-0 min-w-0 overflow-hidden"
             style={{
-              flex: `${props.node.sizes[i]} ${props.node.sizes[i]} 0`,
+              flexGrow: props.node.sizes[i],
+              flexShrink: props.node.sizes[i],
               flexBasis: 0,
             }}
             data-node-id={child.id}

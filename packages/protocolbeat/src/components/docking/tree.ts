@@ -299,6 +299,25 @@ export function resizeSplit(
   return clone
 }
 
+export function changeTab(
+  root: LayoutNode,
+  leafId: NodeId,
+  newTab: TabId,
+): LayoutNode {
+  const clone = cloneTree(root)
+  const leaf = findLeafById(clone, leafId)
+  assert(leaf !== undefined, `changeTab: leaf ${leafId} not found`)
+  if (leaf.tab === newTab) return root
+  const other = findLeafByTab(clone, newTab)
+  const previousTab = leaf.tab
+  leaf.tab = newTab
+  if (other) {
+    other.tab = previousTab
+  }
+  validateLayout(clone)
+  return clone
+}
+
 export function ensureTab(
   root: LayoutNode,
   tab: TabId,

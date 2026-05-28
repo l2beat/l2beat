@@ -4,8 +4,10 @@ import {
   allTabs,
   canRemoveTab,
   findFirstLeaf,
+  findLeafById,
   findLeafByTab,
   nextAvailableTab,
+  changeTab as treeChangeTab,
   ensureTab as treeEnsureTab,
   moveTab as treeMoveTab,
   removeTab as treeRemoveTab,
@@ -40,6 +42,7 @@ export interface DockingActions {
   addTab: () => void
   removeTab: (id?: TabId) => void
   activateTab: (id: TabId) => void
+  changeTab: (leafId: NodeId, newTab: TabId) => void
   moveTab: (id: TabId, target: DropTarget) => void
   resizeSplit: (splitId: NodeId, index: number, fraction: number) => void
   resetSizes: () => void
@@ -209,6 +212,13 @@ export function createDockingStore(
       set((state) => {
         if (!findLeafByTab(state.tree, id)) return state
         return { activeTab: id }
+      }),
+    changeTab: (leafId, newTab) =>
+      set((state) => {
+        if (!config.availableTabs.includes(newTab)) return state
+        if (!findLeafById(state.tree, leafId)) return state
+        const tree = treeChangeTab(state.tree, leafId, newTab)
+        return { ...withTree(state, tree), activeTab: newTab }
       }),
     moveTab: (id, target) =>
       set((state) => {

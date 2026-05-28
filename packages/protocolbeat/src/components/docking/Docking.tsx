@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { type DockingHook, DockingProvider } from './context'
 import { DragOverlay } from './DragOverlay'
 import { NodeView } from './NodeView'
-import { findLeafById } from './tree'
+import { PositionedBody } from './PositionedBody'
+import { allTabs, findLeafById } from './tree'
 import type { DropTarget, Edge, LayoutNode, NodeId } from './types'
 
 const DRAG_THRESHOLD_PX = 5
@@ -37,14 +38,21 @@ export function Docking(props: { useStore: DockingHook }) {
     pendingDragRef,
   })
 
+  const visibleTabs = useMemo(() => allTabs(tree), [tree])
+
   return (
     <DockingProvider value={useStore}>
       <div
         ref={containerRef}
-        className="relative flex h-full w-full flex-col"
+        className="relative h-full w-full"
         data-docking-root="true"
       >
-        <NodeView node={tree} />
+        <div className="absolute inset-0 flex flex-col">
+          <NodeView node={tree} />
+        </div>
+        {visibleTabs.map((tab) => (
+          <PositionedBody key={tab} tab={tab} rootRef={containerRef} />
+        ))}
         {pickedUpTab !== undefined && <DragOverlay />}
       </div>
     </DockingProvider>
