@@ -2764,4 +2764,26 @@ Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/f
     // 3. Build client program for the mainnet within docker: \`make build-client-docker NETWORK=mainnet\`. This command will create \`rsp-client-mainnet.vkey\` file with the program hash string.
     //     `
   },
+  '0x5d6ea48b16e1c18602eb2c1d7d7c0f2e73bba152580c930f4324cd972b1358b6': {
+    title: 'Range program of Base AggregateVerifier',
+    description:
+      'Proves correct state transition function of the Base rollup over a sub-range of L2 blocks. Compiled from the op-succinct range crate against the Base rollup config; the resulting vkey is baked into the deployed AggregateVerifier game implementation as ZK_RANGE_HASH.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/main/programs/range',
+    verificationStatus: 'notVerified',
+    verificationSteps:
+      'L2BEAT has not yet reproduced the vkey from source. To verify, pin an op-succinct release that includes Base support, configure with Base rollup parameters (chain ID 8453, genesis), build the range program via cargo prove, and compare the resulting vkey to this hash.',
+  },
+  '0x003147cde8e7d519d3dbae6b76f1198a70d4ff477a3aaea73bee4153f250288a': {
+    title: 'Aggregation program of Base AggregateVerifier',
+    description:
+      'Aggregates range proofs of correct execution for several consecutive sub-ranges of Base L2 blocks. Compiled from the op-succinct aggregation crate; the resulting vkey is baked into the deployed AggregateVerifier game implementation as ZK_AGGREGATE_HASH.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/main/programs/aggregation',
+    verificationStatus: 'notVerified',
+    verificationSteps:
+      'L2BEAT has not yet reproduced the vkey from source. To verify, pin an op-succinct release that includes Base support, configure with Base rollup parameters (chain ID 8453, genesis), build the aggregation program via cargo prove, and compare the resulting vkey to this hash.',
+  },
 }

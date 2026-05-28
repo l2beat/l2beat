@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf0123ff86060eaa3e854eb46f0e0077e2ee4ffbb
+Generated with discovered.json: 0x0eba078eb4b41d7e6645e724b408a1a1e59a89d2
 
-# Diff at Thu, 28 May 2026 10:16:03 GMT:
+# Diff at Thu, 28 May 2026 11:33:28 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779198836
-- current timestamp: 1779963296
+- current timestamp: 1779967940
 
 ## Description
 
@@ -261,7 +261,7 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
-    contract AggregateVerifier (eth:0x4c0DAF5d9ABe92e8A26a60698a657B03538a3028) [N/A]
+    contract AggregateVerifier (eth:0x4c0DAF5d9ABe92e8A26a60698a657B03538a3028) [opstack/AggregateVerifier]
     +++ description: Implementation of the AggregateVerifier dispute game (type 621) combining a TEE arm and a ZK arm. PROOF_THRESHOLD = 1 means a single un-nullified proof of either type can resolve a game.
 ```
 
