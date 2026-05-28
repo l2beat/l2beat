@@ -11,6 +11,7 @@ import { boolean, command, flag, positional, string } from 'cmd-ts'
 import partition from 'lodash/partition'
 import {
   effectiveIgnoreRelatives,
+  isFieldIgnored,
   proxyFilteredAddresses,
 } from './discoveryRelatives'
 import { ChainSpecificAddressValue } from './types'
@@ -76,9 +77,9 @@ export const Why = command({
         if (!toAddressArray(value).includes(address)) continue
         const ignoreSource = isProxyIgnored
           ? 'proxy'
-          : ignoredFields.template.has(field)
+          : isFieldIgnored(ignoredFields.template, field)
             ? 'template'
-            : ignoredFields.override.has(field)
+            : isFieldIgnored(ignoredFields.override, field)
               ? 'override'
               : undefined
         hits.push({
@@ -175,7 +176,11 @@ function findShortestRootPath(
     const proxyFiltered = proxyFilteredAddresses(entry)
     const out: Edge[] = []
     for (const [field, value] of Object.entries(entry.values)) {
-      if (ignored.template.has(field) || ignored.override.has(field)) continue
+      if (
+        isFieldIgnored(ignored.template, field) ||
+        isFieldIgnored(ignored.override, field)
+      )
+        continue
       for (const addr of toAddressArray(value)) {
         if (proxyFiltered.has(addr)) continue
         out.push({ to: addr, field })
