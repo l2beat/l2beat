@@ -34,11 +34,7 @@ export function PositionedBody(props: {
   useLayoutEffect(() => {
     const root = props.rootRef.current
     if (!root) return undefined
-    const placeholder = isFullScreen
-      ? null
-      : document.querySelector<HTMLElement>(
-          `[data-body-placeholder="${CSS.escape(props.tab)}"]`,
-        )
+    let observed: HTMLElement | null = null
 
     function measure() {
       if (!root) return
@@ -52,7 +48,15 @@ export function PositionedBody(props: {
         })
         return
       }
+      const placeholder = document.querySelector<HTMLElement>(
+        `[data-body-placeholder="${CSS.escape(props.tab)}"]`,
+      )
       if (!placeholder) return
+      if (placeholder !== observed) {
+        if (observed) ro.unobserve(observed)
+        ro.observe(placeholder)
+        observed = placeholder
+      }
       const phRect = placeholder.getBoundingClientRect()
       setRectIfChanged(setRect, {
         left: phRect.left - rootRect.left,
@@ -62,10 +66,9 @@ export function PositionedBody(props: {
       })
     }
 
-    measure()
     const ro = new ResizeObserver(measure)
     ro.observe(root)
-    if (placeholder) ro.observe(placeholder)
+    measure()
     return () => ro.disconnect()
   }, [props.tab, tree, isFullScreen, props.rootRef])
 
