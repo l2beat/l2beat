@@ -111,7 +111,11 @@ export function TopTokensWidget({
                     token={token}
                     framework={framework}
                     showFrameworkBadge={activeTab === 'all'}
-                    href={getInteropTokenUrl(token, apiSelection)}
+                    href={
+                      token.isUnknown
+                        ? undefined
+                        : getInteropTokenUrl(token, apiSelection)
+                    }
                   />
                 )
               })}

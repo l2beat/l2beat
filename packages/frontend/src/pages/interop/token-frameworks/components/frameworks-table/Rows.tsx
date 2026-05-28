@@ -20,7 +20,9 @@ export function TokenRow({
   framework: InteropTokenFramework
   apiSelection: InteropSelection
 }) {
-  const href = getInteropTokenUrl(token, apiSelection)
+  const href = token.isUnknown
+    ? undefined
+    : getInteropTokenUrl(token, apiSelection)
   const identity = (
     <>
       <img
