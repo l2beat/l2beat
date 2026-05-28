@@ -7,7 +7,7 @@ import { createKeyValueTrpcRouter } from './router'
 describe(createKeyValueTrpcRouter.name, () => {
   it('gets a value by key', async () => {
     const record = {
-      key: 'interop-aggregate-timestamp-override',
+      key: 'interop-aggregate-timestamp-override' as const,
       value: 1_779_920_000,
       updatedAt: UnixTime(1_779_920_000),
       updatedBy: 'dev@l2beat.com',
@@ -15,9 +15,7 @@ describe(createKeyValueTrpcRouter.name, () => {
     const get = mockFn().resolvesTo(record)
     const caller = createCaller({ get })
 
-    const result = await caller.get({
-      key: 'interop-aggregate-timestamp-override',
-    })
+    const result = await caller.get('interop-aggregate-timestamp-override')
 
     expect(get).toHaveBeenOnlyCalledWith('interop-aggregate-timestamp-override')
     expect(result).toEqual(record)
@@ -29,7 +27,7 @@ describe(createKeyValueTrpcRouter.name, () => {
 
     await caller.set({
       key: 'interop-aggregate-timestamp-override',
-      value: '1779920000',
+      value: 1779920000,
     })
 
     expect(set).toHaveBeenOnlyCalledWith({
