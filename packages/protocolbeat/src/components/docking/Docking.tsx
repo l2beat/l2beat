@@ -3,7 +3,7 @@ import { type DockingHook, DockingProvider } from './context'
 import { DragOverlay } from './DragOverlay'
 import { NodeView } from './NodeView'
 import { findGroup } from './tree'
-import type { DropTarget, Edge, NodeId } from './types'
+import type { DropTarget, Edge, LayoutNode, NodeId } from './types'
 
 const DRAG_THRESHOLD_PX = 5
 const MIN_PANE_PX = 120
@@ -64,8 +64,8 @@ export function Docking(props: { useStore: DockingHook }) {
   )
 }
 
-function* iterateGroups(tree: import('./types').LayoutNode) {
-  const stack: import('./types').LayoutNode[] = [tree]
+function* iterateGroups(tree: LayoutNode) {
+  const stack: LayoutNode[] = [tree]
   while (stack.length > 0) {
     const node = stack.pop()
     if (!node) continue
@@ -226,7 +226,7 @@ function hitTestDropTarget(
   x: number,
   y: number,
   draggedTab: string,
-  tree: import('./types').LayoutNode,
+  tree: LayoutNode,
 ): DropTarget | undefined {
   const el = document.elementFromPoint(x, y) as HTMLElement | null
   if (!el) return undefined
@@ -260,7 +260,7 @@ function hitStrip(
   stripEl: HTMLElement,
   _x: number,
   _draggedTab: string,
-  tree: import('./types').LayoutNode,
+  tree: LayoutNode,
 ): DropTarget | undefined {
   const groupId = stripEl.dataset.tabStripGroupId
   if (!groupId) return undefined
@@ -274,7 +274,7 @@ function hitBody(
   x: number,
   y: number,
   _draggedTab: string,
-  tree: import('./types').LayoutNode,
+  tree: LayoutNode,
 ): DropTarget | undefined {
   const groupId = bodyEl.dataset.groupBodyId
   if (!groupId) return undefined
