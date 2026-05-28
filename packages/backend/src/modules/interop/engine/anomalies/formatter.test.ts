@@ -32,17 +32,19 @@ describe(describeSignal.name, () => {
     ).toEqual('Source volume dropped (-90%, $1M → $100K)')
   })
 
-  it('describes a moderate dst-volume spike with the "moderately" qualifier', () => {
+  it('labels the action by the sign of the change, not the signal kind', () => {
+    // Robust-Z spike can fire on a sharp drop when prior history is tight.
+    // The action word must follow the actual direction.
     expect(
       describeSignal({
-        metric: 'dstVolume',
+        metric: 'srcVolume',
         kind: 'zScoreSpike',
-        severity: 'moderate',
-        baseline: 1_000_000,
-        current: 1_300_000,
-        changePercent: 30,
+        severity: 'severe',
+        baseline: 143_000,
+        current: 7_600,
+        changePercent: -95,
       }),
-    ).toEqual('Destination volume moderately spiked (+30%, $1M → $1.3M)')
+    ).toEqual('Source volume dropped (-95%, $143K → $7.6K)')
   })
 
   it('describes a flat line', () => {
@@ -86,11 +88,11 @@ describe(formatAnomalyReasons.name, () => {
         },
         {
           metric: 'srcVolume',
-          kind: 'zScoreSpike',
-          severity: 'moderate',
-          baseline: 1_000_000,
-          current: 1_300_000,
-          changePercent: 30,
+          kind: 'ratioSpike',
+          severity: 'severe',
+          baseline: 100_000,
+          current: 5_000_000,
+          changePercent: 4_900,
         },
       ],
       sideMismatch: {
@@ -103,8 +105,65 @@ describe(formatAnomalyReasons.name, () => {
 
     expect(reasons).toHaveLength(3)
     expect(reasons[0]).toEqual('Transfer count spiked (+200%, 100 → 300)')
+    expect(reasons[1]).toEqual('Source volume spiked (+4900%, $100K → $5M)')
     expect(reasons[2]).toEqual(
       'Src/Dst volume mismatch (40%, $2M src vs $1.2M dst)',
+    )
+  })
+
+  it('collapses paired src+dst signals of the same kind into a single Volume row', () => {
+    const reasons = formatAnomalyReasons({
+      signals: [
+        {
+          metric: 'srcVolume',
+          kind: 'ratioSpike',
+          severity: 'severe',
+          baseline: 100_000,
+          current: 5_000_000,
+          changePercent: 4_900,
+        },
+        {
+          metric: 'dstVolume',
+          kind: 'ratioSpike',
+          severity: 'severe',
+          baseline: 100_000,
+          current: 5_000_000,
+          changePercent: 4_900,
+        },
+      ],
+      sideMismatch: null,
+    })
+
+    expect(reasons).toEqual(['Volume spiked (+4900%, $100K → $5M)'])
+  })
+
+  it('keeps separate rows when src and dst have different signal kinds', () => {
+    const reasons = formatAnomalyReasons({
+      signals: [
+        {
+          metric: 'srcVolume',
+          kind: 'ratioSpike',
+          severity: 'severe',
+          baseline: 100_000,
+          current: 5_000_000,
+          changePercent: 4_900,
+        },
+        {
+          metric: 'dstVolume',
+          kind: 'ratioDrop',
+          severity: 'severe',
+          baseline: 100_000,
+          current: 500,
+          changePercent: -99.5,
+        },
+      ],
+      sideMismatch: null,
+    })
+
+    expect(reasons).toHaveLength(2)
+    expect(reasons[0]).toEqual('Source volume spiked (+4900%, $100K → $5M)')
+    expect(reasons[1]).toEqual(
+      'Destination volume dropped (-100%, $100K → $500)',
     )
   })
 
