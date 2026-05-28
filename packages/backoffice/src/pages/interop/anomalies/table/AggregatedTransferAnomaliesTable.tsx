@@ -30,7 +30,8 @@ export function AggregatedTransferAnomaliesTable({
     data,
     columns,
     initialSorting: [{ id: 'timestamp', desc: true }],
-    getRowId: (row) => row.id,
+    getRowId: (row) =>
+      `${row.id}::${row.bridgeType}::${row.srcChain}::${row.dstChain}`,
     searchPlaceholder: 'Search aggregate IDs, days, and alerts',
   })
 

@@ -74,9 +74,30 @@ describe(InteropNotifier.name, () => {
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
           reasons: [
-            'significant increase in transfer count (1900.00%, from 1,000 to 20,000)',
-            'src volume increased 2900.00%, from $2,000,000.00 to $60,000,000.00',
+            'Transfer count spiked (+1900%, 1,000 → 20,000)',
+            'Source volume spiked (+2900%, $2M → $60M)',
           ],
+          evaluation: {
+            signals: [
+              {
+                metric: 'count',
+                kind: 'ratioSpike',
+                severity: 'severe',
+                baseline: 1_000,
+                current: 20_000,
+                changePercent: 1_900,
+              },
+              {
+                metric: 'srcVolume',
+                kind: 'ratioSpike',
+                severity: 'severe',
+                baseline: 2_000_000,
+                current: 60_000_000,
+                changePercent: 2_900,
+              },
+            ],
+            sideMismatch: null,
+          },
         },
       ],
     })
@@ -90,9 +111,7 @@ describe(InteropNotifier.name, () => {
     expect(
       message.includes('nonMinting transfers on the ethereum -> arbitrum path'),
     ).toEqual(true)
-    expect(message.includes('significant increase in transfer count')).toEqual(
-      true,
-    )
+    expect(message.includes('Transfer count spiked')).toEqual(true)
   })
 
   it('queues and sends suspicious transfer notifications', async () => {
