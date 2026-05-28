@@ -13,32 +13,7 @@ export async function getInteropAbstractTokens(
   chainIds: string[],
 ): Promise<InteropAbstractToken[]> {
   if (env.MOCK) {
-    return [
-      {
-        id: 'eth001',
-        symbol: 'ETH',
-        issuer: 'ethereum',
-        iconUrl:
-          'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-        category: 'ether',
-      },
-      {
-        id: 'usdc01',
-        symbol: 'USDC',
-        issuer: 'circle',
-        iconUrl:
-          'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
-        category: 'stablecoin',
-      },
-      {
-        id: 'usdt01',
-        symbol: 'USDT',
-        issuer: 'tether',
-        iconUrl:
-          'https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663',
-        category: 'stablecoin',
-      },
-    ]
+    return MOCK_INTEROP_ABSTRACT_TOKENS
   }
 
   const { records } = await getLatestAggregatedInteropTransferWithTokens({
@@ -52,15 +27,32 @@ export async function getInteropAbstractTokens(
   )
   if (tokenIds.length === 0) return []
 
-  const tokens = await getTokenDb().abstractToken.getAll()
-  const relevantTokenIds = new Set(tokenIds)
-  return tokens
-    .filter((token) => relevantTokenIds.has(token.id))
-    .map(({ id, symbol, issuer, iconUrl, category }) => ({
-      id,
-      symbol,
-      issuer,
-      iconUrl,
-      category,
-    }))
+  return getTokenDb().abstractToken.getByIds(tokenIds)
 }
+
+const MOCK_INTEROP_ABSTRACT_TOKENS: InteropAbstractToken[] = [
+  {
+    id: 'eth001',
+    symbol: 'ETH',
+    issuer: 'ethereum',
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
+    category: 'ether',
+  },
+  {
+    id: 'usdc01',
+    symbol: 'USDC',
+    issuer: 'circle',
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
+    category: 'stablecoin',
+  },
+  {
+    id: 'usdt01',
+    symbol: 'USDT',
+    issuer: 'tether',
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663',
+    category: 'stablecoin',
+  },
+]
