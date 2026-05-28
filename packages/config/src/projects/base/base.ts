@@ -276,7 +276,7 @@ export const base: ScalingProject = opStackL2({
       url: 'https://blog.base.dev/introducing-base-azul',
       date: '2026-05-26T00:00:00Z',
       description:
-        'Multiproof activated: a TEE attestation or an SP1 ZK proof resolves an AggregateVerifier game.',
+        'Base activates the multiproof system combining TEE attestations and SP1 ZK proofs.',
       type: 'general',
     },
     {
