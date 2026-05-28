@@ -50,8 +50,70 @@ export interface ProjectTechnologyChoice {
   description: string
   references: ReferenceLink[]
   risks: ProjectRisk[]
+  sequencerSetSpec?: ProjectSequencerSetSpec
+  inclusionDelayChart?: ProjectInclusionDelayChart
+  inclusionDelayChartDescription?: string
+  censorshipResistance?: string
   isIncomplete?: boolean
   isUnderReview?: boolean
+}
+
+export interface ProjectSequencerSetSpec {
+  slotTime?: TableReadyValue
+  epochTime?: TableReadyValue
+  sequencerCount?: TableReadyValue
+  blockProductionAccess?: TableReadyValue
+  stakePerValidator?: TableReadyValue
+  rateLimit?: TableReadyValue
+  deterministicCrGadget?: TableReadyValue
+  additionalCrGadgets?: TableReadyValue
+}
+
+export type ProjectInclusionDelayChart =
+  | ProjectEthereumLikeInclusionDelayChart
+  | ProjectCommitteeLikeInclusionDelayChart
+  | ProjectSpanLikeInclusionDelayChart
+
+interface ProjectInclusionDelayChartBase {
+  target: number
+  maxCensorFraction: number
+  stakeDistribution?: ProjectInclusionDelayChartStakeDistribution
+}
+
+export interface ProjectInclusionDelayChartStakeDistribution {
+  stakeToken: string
+  totalStake: number
+  entities: ProjectInclusionDelayChartEntityStake[]
+}
+
+export interface ProjectInclusionDelayChartEntityStake {
+  name: string
+  stake: number
+}
+
+export interface ProjectEthereumLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'ethereumlike'
+  validatorCount: number
+  slotSeconds: number
+}
+
+export interface ProjectCommitteeLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'committeelike'
+  validatorCount: number
+  committeeSize: number
+  epochSlots: number
+  slotSeconds: number
+  blockingThreshold: number
+}
+
+export interface ProjectSpanLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'spanlike'
+  validatorCount: number
+  spanBlocks: number
+  blockSeconds: number
 }
 
 export interface ReferenceLink {

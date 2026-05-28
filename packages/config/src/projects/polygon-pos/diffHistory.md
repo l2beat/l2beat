@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x9a772ae3d06ca307ac85a0cf4c5804ff022f494f
+
+# Diff at Thu, 28 May 2026 13:08:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@66dc249f7108a6fbf8b6581aed0b7625deeebb2a block: 1779963546
+- current timestamp: 1779963546
+
+## Description
+
+config: format values
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779963546 (main branch discovery), not current.
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: None
++++ description: min POL stake for new validators
+      values.minDeposit:
+-        "100000000000000000000000"
++        "100,000"
+      template:
++        "polygon-pos/StakeManager"
+      fieldMeta:
++        {"minDeposit":{"description":"min POL stake for new validators"}}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861) [N/A]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x0e655ef7ed0ce877dea09c221b3174ec14c4a03e
 
 # Diff at Thu, 28 May 2026 10:20:54 GMT:

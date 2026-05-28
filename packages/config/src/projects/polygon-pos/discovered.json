@@ -636,6 +636,7 @@
       "name": "StakeManager",
       "address": "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
       "type": "Contract",
+      "template": "polygon-pos/StakeManager",
       "sourceHashes": [
         "0xb67879bcf8a6042a86ae7689dda6879e93241b0d8a0a4f82adb4d00ab828cd13",
         "0xc1bf1e1ffffdb1c23aebc663048d79f349bed55ade9d09b835d75d291c6d4f61"
@@ -727,7 +728,7 @@
         "logger": "eth:0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B",
         "maxRewardedCheckpoints": 3,
         "migration": "eth:0x29e7DF7b6A1B2b07b731457f499E1696c60E2C4e",
-        "minDeposit": "100000000000000000000000",
+        "minDeposit": "100,000",
         "minHeimdallFee": "1000000000000000000",
         "NFTContract": "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
         "NFTCounter": 205,
@@ -763,10 +764,14 @@
         "WITHDRAWAL_DELAY": 80,
         "withdrawalDelay": 80
       },
+      "fieldMeta": {
+        "minDeposit": { "description": "min POL stake for new validators" }
+      },
       "implementationNames": {
         "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": "StakeManagerProxy",
         "eth:0x3AD88467E40399dc6Ae10427f8B0842348d9076c": "StakeManager"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
       "address": "eth:0x62a8029CDAf8576e337b86187B82474EFcE712d8",
@@ -4190,20 +4195,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "",
-      "address": "eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
-      "sinceTimestamp": 1590839660,
-      "sinceBlock": 10166989,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861": ""
-      }
-    },
-    {
       "address": "eth:0xdA66Df3920091eF4B54782B9463587c314DAdD41",
       "type": "EOA",
       "proxyType": "EOA"
@@ -5729,11 +5720,12 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "polygonposbridge/DepositManager": "0x6f4da1313c9430a0d74b2b699e6c30210705857922f30262c4533dc9c0e2690e",
+    "polygon-pos/StakeManager": "0x731db3ce857a5889fe514706270338cfc7bea9b427ebf6317c7dcae626ca0932",
+    "polygonposbridge/DepositManager": "0x2a3771ea95277fc830da4bc0578c3e86f9d869b0935a283538ec041ac28b3274",
     "polygonposbridge/ExitNFT": "0x60ea045776cab9e4486806a9ce5a117ed68399ec7dc959eadd4b46a91b5531a1",
     "polygonposbridge/Governance": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "polygonposbridge/predicate": "0x15319e6e8947d37c32a6ecf4e3356cfe7300b2e28d7a48036dabb989f6d98ca7",
-    "polygonposbridge/Registry": "0x5c5fe510503231c55babf2ac08b7e9cec266f6131495611ee1af5bd4a215c7a1",
+    "polygonposbridge/Registry": "0x153babaec9d06d0263f00b77d5d0270b5b20922d4895e1889e72f6100fea5a28",
     "polygonposbridge/RootChain": "0x951f1afb2394ca6912e53ebaac34bb72e9a1c3b6e65eca9bdba31dfe0f8ff656",
     "polygonposbridge/RootChainManagerMigrator": "0xf7e0f5bf7cac929e6259503b0d677eca1b1dda96c7a8f0ba63e2a18fc5b8813a",
     "polygonposbridge/StakingInfo": "0x829f5c8f53e24e460b0c9e3d62696df2e750bdef5977d52d9d9085c223fdb77b",
@@ -5742,5 +5734,5 @@
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25193199 },
-  "permissionsConfigHash": "0xe5bd6484e6c3309c29d81cec4b336f4edd93d1701f98aaf3b05080f726f04350"
+  "permissionsConfigHash": "0x14fab4e4cfd9fd4617cfd6808541fec88508cb96d1aff071a91eafc9057703e2"
 }

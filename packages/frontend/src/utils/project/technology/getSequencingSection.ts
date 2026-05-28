@@ -1,22 +1,31 @@
 import type { Project } from '@l2beat/config'
 import { getDiagramParams } from '../getDiagramParams'
+import { prepareInclusionDelay } from './inclusion-delay/calculateInclusionDelay'
 
 export function getSequencingSection(
   project: Project<'statuses' | 'scalingTechnology'>,
 ) {
-  if (!project.scalingTechnology.sequencing) return undefined
+  const sequencing = project.scalingTechnology.sequencing
+  if (!sequencing) return undefined
   return {
-    name: project.scalingTechnology.sequencing.name,
+    projectName: project.name,
+    name: sequencing.name,
     diagram: getDiagramParams(
       'sequencing',
       project.scalingTechnology.sequencingImage ?? project.slug,
     ),
-    content: project.scalingTechnology.sequencing.description,
+    content: sequencing.description,
+    sequencerSetSpec: sequencing.sequencerSetSpec,
+    inclusionDelay: sequencing.inclusionDelayChart
+      ? prepareInclusionDelay(sequencing.inclusionDelayChart)
+      : undefined,
+    inclusionDelayChartDescription: sequencing.inclusionDelayChartDescription,
+    censorshipResistance: sequencing.censorshipResistance,
     isUnderReview: !!project.statuses.reviewStatus,
-    risks: project.scalingTechnology.sequencing.risks.map((r) => ({
+    risks: sequencing.risks.map((r) => ({
       text: `${r.category} ${r.text}`,
       isCritical: !!r.isCritical,
     })),
-    references: project.scalingTechnology.sequencing.references,
+    references: sequencing.references,
   }
 }
