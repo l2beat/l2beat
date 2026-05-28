@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
-import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
+import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
 import { TopTokensCell } from '~/pages/interop/components/tokens/TopTokensCell'
@@ -15,10 +15,39 @@ export type TopProtocolRow = ProtocolEntry & BasicTableRow & { icon: string }
 const columnHelper = createColumnHelper<TopProtocolRow>()
 
 export const topProtocolsColumns = [
-  ...getCommonProjectColumns(
-    columnHelper,
-    (row) => `/interop/protocols/${row.slug}`,
-  ),
+  columnHelper.accessor((_, index) => index + 1, {
+    header: '#',
+    cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
+    sortDescFirst: false,
+    meta: {
+      headClassName: 'w-0',
+    },
+    size: 40,
+    enableHiding: false,
+  }),
+  columnHelper.display({
+    id: 'logo',
+    cell: (ctx) => {
+      return (
+        <a href={`/interop/protocols/${ctx.row.original.slug}`}>
+          <img
+            className="min-h-[20px] min-w-[20px]"
+            src={ctx.row.original.icon}
+            width={20}
+            height={20}
+            fetchPriority="low"
+            alt={`${ctx.row.original.name} logo`}
+          />
+        </a>
+      )
+    },
+    meta: {
+      headClassName: 'w-0',
+      cellClassName: 'lg:pr-1.5!',
+    },
+    size: 28,
+    enableHiding: false,
+  }),
   columnHelper.accessor('name', {
     header: 'Name',
     cell: (ctx) => (
