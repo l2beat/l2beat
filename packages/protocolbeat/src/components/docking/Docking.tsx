@@ -60,11 +60,13 @@ function useGlobalMouseHandlers(args: {
       if (e.button !== 0) return
       if (!containerContains(containerRef.current, e.target)) return
       const target = e.target as HTMLElement
-      const handle = target.closest<HTMLElement>('[data-leaf-handle]')
-      const tab = handle?.dataset.leafHandle
-      if (tab) {
+      const tab =
+        target.closest<HTMLElement>('[data-leaf-tab]')?.dataset.leafTab
+      if (!tab) return
+      useStore.getState().activateTab(tab)
+      // Only the header (nested in the pane) is a drag handle; the body just focuses.
+      if (target.closest('[data-leaf-handle]')) {
         pendingDragRef.current = { tab, startX: e.clientX, startY: e.clientY }
-        useStore.getState().activateTab(tab)
       }
     }
 

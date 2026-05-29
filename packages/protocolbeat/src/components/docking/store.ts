@@ -213,7 +213,11 @@ export function createDockingStore(
       set((state) => {
         if (!config.availableTabs.includes(newTab)) return state
         if (!findLeafByTab(state.tree, tab)) return state
-        return applyTree(state, treeChangeTab(state.tree, tab, newTab), newTab)
+        return {
+          ...applyTree(state, treeChangeTab(state.tree, tab, newTab), newTab),
+          fullScreenTab:
+            state.fullScreenTab === tab ? newTab : state.fullScreenTab,
+        }
       }),
     moveTab: (id, target) =>
       set((state) => {
