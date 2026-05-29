@@ -12,6 +12,15 @@ describe(getInteropTokenUrl.name, () => {
     expect(result).toEqual(undefined)
   })
 
+  it('returns undefined for synthetic unknown tokens', () => {
+    const result = getInteropTokenUrl(
+      { id: 'unknown-cctp', issuer: null, symbol: 'Unknown', isUnknown: true },
+      { from: ['ethereum'], to: ['arbitrum'] },
+    )
+
+    expect(result).toEqual(undefined)
+  })
+
   it('builds token URL preserving chain selection', () => {
     const result = getInteropTokenUrl(
       { id: 'usdc', issuer: 'circle', symbol: 'USDC' },

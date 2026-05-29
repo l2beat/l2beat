@@ -61,11 +61,7 @@ export function FrameworkColumn({
                   key={token.id}
                   token={token}
                   framework={framework}
-                  href={
-                    token.isUnknown
-                      ? undefined
-                      : getInteropTokenUrl(token, apiSelection)
-                  }
+                  href={getInteropTokenUrl(token, apiSelection)}
                 />
               ))
             )}
