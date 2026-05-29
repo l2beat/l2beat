@@ -221,7 +221,9 @@ const CENSORING_FRACTION_STEP = 0.001
 // actual curve point rather than landing between samples (which would show as a
 // marker slightly off the line, most visibly in log scale).
 function roundToCensoringStep(fraction: number): number {
-  return Math.round(fraction / CENSORING_FRACTION_STEP) * CENSORING_FRACTION_STEP
+  return (
+    Math.round(fraction / CENSORING_FRACTION_STEP) * CENSORING_FRACTION_STEP
+  )
 }
 
 // Samples the censoring-fraction axis from 0 to maxCensorFraction in fixed 0.1%
