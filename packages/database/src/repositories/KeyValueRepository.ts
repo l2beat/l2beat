@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { type Validator, v } from '@l2beat/validate'
+import { type Parser, v } from '@l2beat/validate'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { KeyValue } from '../kysely/generated/types'
@@ -13,13 +13,13 @@ export type KeyValuePair = v.infer<typeof KeyValuePair>
 export const KeyValuePair = v.union([
   v.object({
     key: v.literal('interopAggregatesTimestampOverride'),
-    value: v.number(),
+    value: v.string().transform((v) => Number(v)),
   }),
   v.object({
     key: v.literal('example'),
-    value: v.boolean(),
+    value: v.string(),
   }),
-]) satisfies Validator<{
+]) satisfies Parser<{
   key: KeyValueKey
   value: unknown
 }>
