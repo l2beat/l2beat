@@ -5,7 +5,7 @@ import { IconChatbot } from '../../../icons/IconChatbot'
 import { findSelected } from '../../../utils/findSelected'
 import { getProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
-import type { PanelId } from './store'
+import type { PanelId } from './config'
 
 const COPYABLE_PANELS: PanelId[] = ['code', 'values', 'list', 'nodes']
 
