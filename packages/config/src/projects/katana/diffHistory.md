@@ -1,3 +1,181 @@
+Generated with discovered.json: 0xe824b1443430c192ebe87217a567053c8b28e80e
+
+# Diff at Fri, 29 May 2026 13:34:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@443bb13c9fd1bf4ce2a2df0f1b00bfcf0933f006 block: 1779956198
+- current timestamp: 1780060245
+
+## Description
+
+Standard L2 contract sources have been verified.
+
+## Watched changes
+
+```diff
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2] {
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+      values.claimedGlobalIndexHashChain:
+-        "0x5fede20963bde12c20e3076c4426550f570914a8a035c1381bc98f8bed306a46"
++        "0xdef05ec6820a531b383dc3f9dbbc1aac9846e2eab7a821929b5a07cc51659e4c"
+      values.getRoot:
+-        "0x1d743ae7262c7410af3fb680660e6c1f336b2f49609f709a69a9fd8b9ad21bb2"
++        "0x5ed5cfaf86b2b848194a0a9ebfa969a88ddee6b8f6f007a0ef658482f2665402"
+    }
+```
+
+```diff
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain] {
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+      values.insertedGERHashChain:
+-        "0xaae24c57922b6453c1812383dba7b31cf9788b57cfc281e208b4e2911e5feee7"
++        "0x59bc3b88b56a09b106e04e1ffe3fd6dc754bf81029ef9cfe2723275b8f5b347c"
+      values.lastRollupExitRoot:
+-        "0x1d743ae7262c7410af3fb680660e6c1f336b2f49609f709a69a9fd8b9ad21bb2"
++        "0x5ed5cfaf86b2b848194a0a9ebfa969a88ddee6b8f6f007a0ef658482f2665402"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779956198 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) [global/ProxyAdmin] {
+    +++ description: None
+      name:
+-        "upgradeProxy"
++        "ProxyAdmin"
+      unverified:
+-        true
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","role":"admin"},{"permission":"upgrade","from":"katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA","role":"admin"}]
+      values.owner:
++        "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13"
+      implementationNames.katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","role":"admin"},{"permission":"upgrade","from":"katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA","role":"admin"}]
+    }
+```
+
+```diff
+    contract GasPriceOracle (katana:0x420000000000000000000000000000000000000F) [opstack/Layer2/GasPriceOracle] {
+    +++ description: Provides the current gas price for L2 transactions.
+      unverified:
+-        true
+      values.baseFee:
++        0
+      values.baseFeeScalar:
++        1368
+      values.decimals:
++        6
+      values.DECIMALS:
++        6
+      values.gasPrice:
++        0
+      values.isEcotone:
++        true
+      values.isFjord:
++        true
+      values.isIsthmus:
++        true
+      values.isJovian:
++        true
+      values.version:
++        "1.6.0"
+      implementationNames.katana:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1:
+-        ""
++        "GasPriceOracle"
+      template:
++        "opstack/Layer2/GasPriceOracle"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x2a3c7909036a30543d4aaa8e9501caab6f998a671d40cc3822f89c6239e6b8ab"]
+      description:
++        "Provides the current gas price for L2 transactions."
+    }
+```
+
+```diff
+    contract L1Block (katana:0x4200000000000000000000000000000000000015) [opstack/Layer2/L1Block] {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      unverified:
+-        true
+      values.baseFeeScalar:
++        1368
+      values.batcherHash:
++        "0x0000000000000000000000001ffda89c755f6d4af069897d77ccabb580fd412a"
+      values.daFootprintGasScalar:
++        400
+      values.DEPOSITOR_ACCOUNT:
++        "katana:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+      values.gasPayingToken:
++        {"addr_":"katana:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
++        "Ether"
+      values.gasPayingTokenSymbol:
++        "ETH"
+      values.isCustomGasToken:
++        false
+      values.l1FeeOverhead:
++        0
+      values.l1FeeScalar:
++        0
+      values.version:
++        "1.7.0"
+      implementationNames.katana:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C:
+-        ""
++        "L1Block"
+      template:
++        "opstack/Layer2/L1Block"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x399e57fff478211b47d61c5acb60592a4df8ffa5716959a1a6ee2ccabc44915e"]
+      description:
++        "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain."
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"interact","from":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"description":"propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.","role":".timelockAdminAC","condition":"(no delay if in emergency state)"}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","role":"admin","via":[{"address":"katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"condition":"(no delay if in emergency state)"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA","role":"admin","via":[{"address":"katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"condition":"(no delay if in emergency state)"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"role":".timelockAdminAC","condition":"(no delay if in emergency state)"}]
+    }
+```
+
+```diff
+    contract SafeL2 (katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"description":"propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.","role":".timelockAdminAC","condition":"(no delay if in emergency state)"}
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","role":"admin","via":[{"address":"katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"condition":"(no delay if in emergency state)"}]}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA","role":"admin","via":[{"address":"katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"condition":"(no delay if in emergency state)"}]}
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"role":".timelockAdminAC","condition":"(no delay if in emergency state)"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L2Timelock (katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13) [polygon-cdk/L2Timelock]
+    +++ description: A timelock with access control. The current minimum delay is 12h.
+```
+
 Generated with discovered.json: 0xff12c061a5c326f80ec4e60917a1c65d9a03f1ce
 
 # Diff at Thu, 28 May 2026 12:57:31 GMT:
