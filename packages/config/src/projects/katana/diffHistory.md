@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xb522c5b1ce94a57df1bf5be75e7d2acd5a31dee2
+Generated with discovered.json: 0xe824b1443430c192ebe87217a567053c8b28e80e
 
-# Diff at Fri, 29 May 2026 13:18:10 GMT:
+# Diff at Fri, 29 May 2026 13:34:21 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@443bb13c9fd1bf4ce2a2df0f1b00bfcf0933f006 block: 1779956198
@@ -172,8 +172,8 @@ discovery. Values are for block 1779956198 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract Timelock (katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13) [polygon-cdk/Timelock]
-    +++ description: A timelock with access control. In the case of an activated emergency state in the katana:0x0000000000000000000000000000000000000000, all transactions through this timelock are immediately executable. The current minimum delay is 12h.
+    contract L2Timelock (katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13) [polygon-cdk/L2Timelock]
+    +++ description: A timelock with access control. The current minimum delay is 12h.
 ```
 
 Generated with discovered.json: 0xff12c061a5c326f80ec4e60917a1c65d9a03f1ce

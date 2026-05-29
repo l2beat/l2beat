@@ -4088,15 +4088,15 @@
       }
     },
     {
-      "name": "Timelock",
+      "name": "L2Timelock",
       "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
       "type": "Contract",
-      "template": "polygon-cdk/Timelock",
+      "template": "polygon-cdk/L2Timelock",
       "sourceHashes": [
         "0x67f85a797c33748d0cf0e92068621982669b7239a53ca2136d5bcd3ff78973f5"
       ],
       "proxyType": "immutable",
-      "description": "A timelock with access control. In the case of an activated emergency state in the katana:0x0000000000000000000000000000000000000000, all transactions through this timelock are immediately executable. The current minimum delay is 12h.",
+      "description": "A timelock with access control. The current minimum delay is 12h.",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -4210,6 +4210,12 @@
           "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
           "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
         ]
+      },
+      "fieldMeta": {
+        "polygonZkEVM": {
+          "severity": "HIGH",
+          "description": "This is immutably the 0 address in this particular contract, which means emergency mode is never active"
+        }
       },
       "implementationNames": {
         "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13": "PolygonZkEVMTimelock"
@@ -7117,9 +7123,9 @@
     "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
-    "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
-    "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb"
+    "polygon-cdk/L2Timelock": "0xa68acff21822229ec6117f6af99e810af110069ec1e2217cc3ac6c1e832f528e",
+    "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
   "usedBlockNumbers": { "ethereum": 25201231, "katana": 33317434 },
-  "permissionsConfigHash": "0x9fbce35d5dbe1655b2a0c9e3ca5fd99cfd86ff0dd0728ec93f600564c6b095bd"
+  "permissionsConfigHash": "0x15dd9e4749349759a61ee577a592284763ed76731d46b3951478ec539eb1aa68"
 }
