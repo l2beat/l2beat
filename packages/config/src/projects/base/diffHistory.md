@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x80e87a2458c471c06f7306a3ecd37c67e15cda34
+Generated with discovered.json: 0x157278b29e159d7bea9174a0145c56ce02bd1c5c
 
-# Diff at Thu, 28 May 2026 11:49:54 GMT:
+# Diff at Fri, 29 May 2026 10:56:37 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779198836
-- current timestamp: 1779968926
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@42ec6ccd3eb3987d93254260a860a262cb7c4eee block: 1779198836
+- current timestamp: 1780037029
 
 ## Description
 
@@ -243,6 +243,12 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+```
+
+```diff
++   Status: CREATED
     contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry]
     +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
 ```
@@ -251,6 +257,12 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 +   Status: CREATED
     contract TEEVerifier (eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228) [base/TEEVerifier]
     +++ description: Stateless verifier that validates AggregateVerifier TEE proofs by recovering an ECDSA signature over the journal and checking the recovered signer against TEEProverRegistry. Enforces PCR0 match by comparing the signer's registered image hash to the AggregateVerifier's TEE_IMAGE_HASH. Can be permanently nullified by a successful AggregateVerifier.nullify call.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe]
+    +++ description: None
 ```
 
 ```diff
@@ -267,6 +279,12 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier]
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+```
+
+```diff
++   Status: CREATED
     contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) [succinct/SP1Verifier]
     +++ description: Verifier contract for SP1 proofs (v5.0.0).
 ```
@@ -275,6 +293,12 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 +   Status: CREATED
     contract NitroEnclaveVerifier (eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb) [base/NitroEnclaveVerifier]
     +++ description: ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter]
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
 ```
 
 ```diff
@@ -320,17 +344,22 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
  .../projects/base/.flat/NitroEnclaveVerifier.sol   | 1393 +++++++
  .../OptimismPortal2/OptimismPortal2.sol            |  461 +-
  .../PreimageOracle.sol => /dev/null                | 1463 -------
+ .../projects/base/.flat/RiscZeroSetVerifier.sol    |  900 ++++
+ .../projects/base/.flat/RiscZeroVerifierRouter.sol |  282 ++
  ...:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5.sol |  614 +++
  ...:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508.sol |  661 +++
  ...:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2.sol |  664 +++
  .../src/projects/base/.flat/SP1VerifierGateway.sol |  271 ++
  .../SP1VerifierGatewayMultisig/GnosisSafe.sol      | 1026 +++++
  .../GnosisSafeProxy.p.sol                          |   38 +
+ .../src/projects/base/.flat/Safe/Safe.sol          | 1216 ++++++
+ .../src/projects/base/.flat/Safe/SafeProxy.p.sol   |   42 +
  .../base/.flat/TEEProverRegistry/Proxy.p.sol       |  244 ++
  .../.flat/TEEProverRegistry/TEEProverRegistry.sol  | 2364 +++++++++++
  .../src/projects/base/.flat/TEEVerifier.sol        | 4402 ++++++++++++++++++++
+ .../src/projects/base/.flat/TimelockController.sol | 1111 +++++
  .../src/projects/base/.flat/ZkVerifier.sol         | 1862 +++++++++
- 20 files changed, 15679 insertions(+), 9104 deletions(-)
+ 25 files changed, 19230 insertions(+), 9104 deletions(-)
 ```
 
 ## Config/verification related changes

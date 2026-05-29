@@ -1,5 +1,37 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "NitroEnclaveVerifier",
-  "description": "ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI."
+  "description": "ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI.",
+  "fields": {
+    "zkConfigRiscZero": {
+      "handler": { "type": "call", "method": "getZkConfig", "args": [1] },
+      "description": "RiscZero (ZkCoProcessorType=1) config: single-attestation verifier program ID, batch aggregator program ID, and the default ZK verifier contract used when no per-selector route override applies.",
+      "severity": "HIGH"
+    },
+    "zkConfigSuccinct": {
+      "handler": { "type": "call", "method": "getZkConfig", "args": [2] },
+      "description": "Succinct SP1 (ZkCoProcessorType=2) config: single-attestation verifier program ID, batch aggregator program ID, and the default ZK verifier contract used when no per-selector route override applies.",
+      "severity": "HIGH"
+    },
+    "verifierProofIdRiscZero": {
+      "handler": { "type": "call", "method": "getVerifierProofId", "args": [1] },
+      "description": "verifier VK identifier matched against the batch journal during RiscZero (=1) aggregated verification.",
+      "severity": "HIGH"
+    },
+    "verifierProofIdSuccinct": {
+      "handler": { "type": "call", "method": "getVerifierProofId", "args": [2] },
+      "description": "verifier VK identifier matched against the batch journal during Succinct SP1 (=2) aggregated verification.",
+      "severity": "HIGH"
+    },
+    "zkVerifierRoutes": {
+      "handler": {
+        "type": "event",
+        "add": { "event": "ZkRouteAdded" },
+        "remove": { "event": "ZkRouteWasFrozen" },
+        "dedupBy": ["zkCoProcessor", "selector"]
+      },
+      "description": "Per-(coprocessor, proof selector) verifier address overrides for the private _zkVerifierRoutes mapping, reconstructed from ZkRouteAdded logs with frozen routes (ZkRouteWasFrozen) removed. Empty means every coprocessor falls back to its default zkVerifier from zkConfig.",
+      "severity": "HIGH"
+    }
+  }
 }
