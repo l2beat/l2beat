@@ -32,5 +32,3 @@ export type SearchBarProject = Pick<
   SearchBarProjectEntry,
   (typeof SEARCH_BAR_PROJECT_KEYS)[number]
 >
-
-export type SearchBarToken = SearchBarTokenEntry

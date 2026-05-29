@@ -1,6 +1,6 @@
 import type {
   SearchBarProject,
-  SearchBarToken,
+  SearchBarTokenEntry,
 } from '~/server/features/projects/search-bar/types'
 import type { SearchBarCategory } from './searchBarCategories'
 import type { SearchBarPage } from './searchBarPages'
@@ -14,4 +14,4 @@ export interface SearchBarEntry {
 export type AnySearchBarEntry =
   | SearchBarPage
   | SearchBarProject
-  | SearchBarToken
+  | SearchBarTokenEntry
