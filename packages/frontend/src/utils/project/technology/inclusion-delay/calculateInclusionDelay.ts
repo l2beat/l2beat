@@ -222,6 +222,37 @@ function calculateEthereumComparisonDelayDaysForFraction({
 const MAX_CURVE_SAMPLE_POINTS = 501
 
 function getSampledCensorCounts(model: InclusionDelayModel) {
+  // Models whose delay is continuous in the censoring fraction are sampled at a
+  // fixed resolution so the curve granularity does not depend on the validator
+  // count. Otherwise the resolution would be 1/validatorCount, which is coarse
+  // for small sets (e.g. ~1% for a 104-validator set) and fine for large ones.
+  if (model.supportsFractionalCensorCount) {
+    return getFractionalCensorCounts(model)
+  }
+  return getIntegerCensorCounts(model)
+}
+
+function getFractionalCensorCounts(model: InclusionDelayModel) {
+  const maxCensorCount = model.validatorCount * model.maxCensorFraction
+  if (maxCensorCount <= 0) return [0]
+
+  const step = maxCensorCount / (MAX_CURVE_SAMPLE_POINTS - 1)
+  const counts = new Set<number>([0, maxCensorCount])
+
+  for (let i = 0; i < MAX_CURVE_SAMPLE_POINTS; i++) {
+    counts.add(i * step)
+  }
+
+  for (const count of model.criticalCensorCounts) {
+    if (count >= 0 && count <= maxCensorCount) {
+      counts.add(count)
+    }
+  }
+
+  return [...counts].sort((a, b) => a - b)
+}
+
+function getIntegerCensorCounts(model: InclusionDelayModel) {
   const maxCensorCount = Math.floor(
     model.validatorCount * model.maxCensorFraction,
   )

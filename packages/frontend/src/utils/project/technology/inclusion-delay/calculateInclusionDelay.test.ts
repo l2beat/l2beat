@@ -89,23 +89,27 @@ describe('calculateInclusionDelay', () => {
         maxCensorFraction: 0.5,
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
-      expect(getInclusionDelayData(chart).chartData).toEqual([
-        {
-          censoringFraction: 0,
-          projectDelayDays: 5 / 86_400,
-          ethereumDelayDays: 12 / 86_400,
-        },
-        {
-          censoringFraction: 0.25,
-          projectDelayDays: 20 / 86_400,
-          ethereumDelayDays: 48 / 86_400,
-        },
-        {
-          censoringFraction: 0.5,
-          projectDelayDays: null,
-          ethereumDelayDays: null,
-        },
-      ])
+      // Continuous models are sampled at a fixed resolution, so the curve spans
+      // the full fraction range with both series computed at every point.
+      const { chartData } = getInclusionDelayData(chart)
+      const at = (fraction: number) =>
+        chartData.find((point) => point.censoringFraction === fraction)
+
+      expect(at(0)).toEqual({
+        censoringFraction: 0,
+        projectDelayDays: 5 / 86_400,
+        ethereumDelayDays: 12 / 86_400,
+      })
+      expect(at(0.25)).toEqual({
+        censoringFraction: 0.25,
+        projectDelayDays: 20 / 86_400,
+        ethereumDelayDays: 48 / 86_400,
+      })
+      expect(at(0.5)).toEqual({
+        censoringFraction: 0.5,
+        projectDelayDays: null,
+        ethereumDelayDays: null,
+      })
     })
 
     it('includes the next cumulative entity that cannot be drawn on the chart', () => {
@@ -190,7 +194,7 @@ describe('calculateInclusionDelay', () => {
       ])
     })
 
-    it('interpolates threshold markers across flat regions', () => {
+    it('places threshold markers at the start of the matching delay plateau', () => {
       const chart = {
         type: 'ethereumlike',
         validatorCount: 10,
@@ -199,8 +203,8 @@ describe('calculateInclusionDelay', () => {
         maxCensorFraction: 0.5,
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
-      // 20s falls between censorCount=0 (10s) and censorCount=2 (30s);
-      // at censorCount=1 the value is 20s as well (flat region exact match).
+      // The delay steps from 10s to 20s once censoring crosses ~1%, so the 20s
+      // marker sits at the first sampled fraction on the 20s plateau.
       expect(
         getInclusionDelayData(chart, [{ label: '20s', days: 20 / 86_400 }])
           .thresholdMarkers,
@@ -208,7 +212,7 @@ describe('calculateInclusionDelay', () => {
         {
           id: 'delay-threshold-20s',
           label: '20s delay',
-          censoringFraction: 0.1,
+          censoringFraction: 0.011,
           delayDays: 20 / 86_400,
         },
       ])
@@ -252,13 +256,13 @@ describe('calculateInclusionDelay', () => {
         {
           id: 'delay-threshold-50s',
           label: '50s delay',
-          censoringFraction: 0.35,
+          censoringFraction: 0.317,
           delayDays: 50 / 86_400,
         },
         {
           id: 'delay-threshold-60s',
           label: '60s delay',
-          censoringFraction: 0.4,
+          censoringFraction: 0.399,
           delayDays: 60 / 86_400,
         },
       ])

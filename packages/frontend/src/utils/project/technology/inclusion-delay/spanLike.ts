@@ -16,6 +16,7 @@ export function createSpanLikeModel(
       Math.ceil(chart.validatorCount / 3) - 1,
       Math.ceil(chart.validatorCount / 3),
     ],
+    supportsFractionalCensorCount: true,
   }
 }
 

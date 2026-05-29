@@ -16,6 +16,7 @@ export function createEthereumLikeModel(
       Math.floor((chart.validatorCount - 1) / 2),
       Math.ceil(chart.validatorCount / 2),
     ],
+    supportsFractionalCensorCount: true,
   }
 }
 

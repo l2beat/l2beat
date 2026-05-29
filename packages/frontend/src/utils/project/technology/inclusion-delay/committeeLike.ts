@@ -18,6 +18,7 @@ export function createCommitteeLikeModel(
     calculateDelayDays: (censorCount) =>
       calculateCommitteeLikeDelayDays(chart, censorCount, logFactorials),
     criticalCensorCounts: [],
+    supportsFractionalCensorCount: false,
   }
 }
 
