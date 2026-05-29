@@ -7,11 +7,11 @@ import {
   findLeafById,
   findLeafByTab,
   nextAvailableTab,
+  normalizeTree,
   changeTab as treeChangeTab,
   ensureTab as treeEnsureTab,
   moveTab as treeMoveTab,
   removeTab as treeRemoveTab,
-  resetSizes as treeResetSizes,
   resizeSplit as treeResizeSplit,
   validateLayout,
 } from './tree'
@@ -34,7 +34,6 @@ export interface DockingState {
   pickedUpTab: TabId | undefined
   dragHover: DropTarget | undefined
   mouse: { x: number; y: number }
-  placeholders: Record<TabId, HTMLElement | null>
   config: DockingConfig
 }
 
@@ -46,14 +45,13 @@ export interface DockingActions {
   changeTab: (leafId: NodeId, newTab: TabId) => void
   moveTab: (id: TabId, target: DropTarget) => void
   resizeSplit: (splitId: NodeId, index: number, fraction: number) => void
-  resetSizes: () => void
+  resetLayout: () => void
   toggleFullScreen: (id?: TabId) => void
   pickUpTab: (id: TabId) => void
   setDragHover: (target: DropTarget | undefined) => void
   dropTab: () => void
   setMouse: (x: number, y: number) => void
   loadLayout: (n: number) => void
-  setPlaceholder: (tab: TabId, el: HTMLElement | null) => void
 }
 
 export type DockingStore = DockingState & DockingActions
@@ -110,7 +108,7 @@ function readLayouts(config: DockingConfig): LayoutNode[] {
     for (let i = 0; i < max; i++) {
       const candidate = parsed[i]
       if (candidate && isValidLayout(candidate, config.availableTabs)) {
-        fallback[i] = candidate
+        fallback[i] = normalizeTree(candidate)
       }
     }
   } catch (e) {
@@ -176,7 +174,6 @@ export function createDockingStore(
     pickedUpTab: undefined,
     dragHover: undefined,
     mouse: { x: 0, y: 0 },
-    placeholders: {},
     config,
     ensureTab: (id) =>
       set((state) => {
@@ -234,8 +231,15 @@ export function createDockingStore(
         const tree = treeResizeSplit(state.tree, splitId, index, fraction)
         return withTree(state, tree)
       }),
-    resetSizes: () =>
-      set((state) => withTree(state, treeResetSizes(state.tree))),
+    resetLayout: () =>
+      set((state) => {
+        const tree = structuredClone(config.defaultLayout)
+        return {
+          ...withTree(state, tree),
+          activeTab: firstTab(tree),
+          fullScreenTab: undefined,
+        }
+      }),
     toggleFullScreen: (id) =>
       set((state) => {
         const targetId = id ?? state.activeTab
@@ -277,11 +281,6 @@ export function createDockingStore(
           activeTab: firstTab(layout),
           fullScreenTab: undefined,
         }
-      }),
-    setPlaceholder: (tab, el) =>
-      set((state) => {
-        if (state.placeholders[tab] === el) return state
-        return { placeholders: { ...state.placeholders, [tab]: el } }
       }),
   }))
 

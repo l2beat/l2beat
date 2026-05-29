@@ -63,30 +63,10 @@ const PANELS: Record<PanelId, () => JSX.Element> = {
   diffHistory: DiffHistoryPanel,
 }
 
-const READONLY_PANELS: Record<
-  Exclude<PanelId, 'terminal'>,
-  () => JSX.Element
-> = {
-  list: ListPanel,
-  values: ValuesPanel,
-  nodes: NodesPanel,
-  preview: PreviewPanel,
-  code: CodePanel,
-  template: TemplatePanel,
-  config: ConfigPanel,
-  diffHistory: DiffHistoryPanel,
-}
-
 function renderBody(id: string): JSX.Element {
   const panelId = id as PanelId
-  if (IS_READONLY) {
-    const Component =
-      panelId in READONLY_PANELS
-        ? READONLY_PANELS[panelId as Exclude<PanelId, 'terminal'>]
-        : ListPanel
-    return <Component />
-  }
-  const Component = PANELS[panelId]
+  const Component =
+    IS_READONLY && panelId === 'terminal' ? ListPanel : PANELS[panelId]
   return <Component />
 }
 

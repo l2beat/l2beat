@@ -15,6 +15,7 @@ export function TopBar(props: { project: string }) {
   const layouts = useDockingStore((state) => state.layouts)
   const selectedLayout = useDockingStore((state) => state.selectedLayout)
   const loadLayout = useDockingStore((state) => state.loadLayout)
+  const resetLayout = useDockingStore((state) => state.resetLayout)
   const addTab = useDockingStore((state) => state.addTab)
   const { command } = useTerminalStore()
   const { killCommand, discover } = useDiscoveryCommand()
@@ -78,6 +79,14 @@ export function TopBar(props: { project: string }) {
           <Button size="small" className="rounded-sm" onClick={() => addTab()}>
             <IconPlus />
             <span className="max-lg:hidden">Panel</span>
+          </Button>
+          <Button
+            size="small"
+            className="rounded-sm"
+            onClick={() => resetLayout()}
+            title="Reset to default layout"
+          >
+            <span>Reset</span>
           </Button>
         </div>
 

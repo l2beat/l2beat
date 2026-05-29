@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { type DockingHook, DockingProvider } from './context'
 import { DragOverlay } from './DragOverlay'
+import { LeafView } from './LeafView'
 import { NodeView } from './NodeView'
-import { PositionedBody } from './PositionedBody'
-import { allTabs, findLeafById } from './tree'
+import { findLeafById, findLeafByTab } from './tree'
 import type { DropTarget, Edge, LayoutNode, NodeId } from './types'
 
 const DRAG_THRESHOLD_PX = 5
@@ -26,6 +26,7 @@ export function Docking(props: { useStore: DockingHook }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const useStore = props.useStore
   const tree = useStore((state) => state.tree)
+  const fullScreenTab = useStore((state) => state.fullScreenTab)
   const pickedUpTab = useStore((state) => state.pickedUpTab)
 
   const resizingRef = useRef<ResizingState | null>(null)
@@ -38,7 +39,8 @@ export function Docking(props: { useStore: DockingHook }) {
     pendingDragRef,
   })
 
-  const visibleTabs = useMemo(() => allTabs(tree), [tree])
+  const fullScreenLeaf =
+    fullScreenTab !== undefined ? findLeafByTab(tree, fullScreenTab) : undefined
 
   return (
     <DockingProvider value={useStore}>
@@ -48,11 +50,12 @@ export function Docking(props: { useStore: DockingHook }) {
         data-docking-root="true"
       >
         <div className="absolute inset-0 flex flex-col">
-          <NodeView node={tree} />
+          {fullScreenLeaf ? (
+            <LeafView node={fullScreenLeaf} />
+          ) : (
+            <NodeView node={tree} />
+          )}
         </div>
-        {visibleTabs.map((tab) => (
-          <PositionedBody key={tab} tab={tab} rootRef={containerRef} />
-        ))}
         {pickedUpTab !== undefined && <DragOverlay />}
       </div>
     </DockingProvider>
@@ -78,7 +81,7 @@ function useGlobalMouseHandlers(args: {
         e.preventDefault()
         return
       }
-      const header = target.closest<HTMLElement>('[data-leaf-id]')
+      const header = target.closest<HTMLElement>('[data-leaf-tab]')
       if (header) {
         const tab = header.dataset.leafTab
         if (tab) {
@@ -194,11 +197,9 @@ function hitTestDropTarget(
 ): DropTarget | undefined {
   const el = document.elementFromPoint(x, y) as HTMLElement | null
   if (!el) return undefined
-  const bodyEl = el.closest<HTMLElement>('[data-leaf-body-id]')
-  const headerEl = el.closest<HTMLElement>('[data-leaf-id]')
-  const target = bodyEl ?? headerEl
+  const target = el.closest<HTMLElement>('[data-leaf-id]')
   if (!target) return undefined
-  const leafId = bodyEl?.dataset.leafBodyId ?? headerEl?.dataset.leafId
+  const leafId = target.dataset.leafId
   if (!leafId) return undefined
   const leaf = findLeafById(tree, leafId)
   if (!leaf || leaf.tab === draggedTab) return undefined

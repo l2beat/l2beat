@@ -164,35 +164,66 @@ export function removeTab(root: LayoutNode, tab: TabId): LayoutNode {
   assert(parent !== undefined, 'removeTab: leaf must have a parent')
   parent.parent.children.splice(parent.index, 1)
   parent.parent.sizes.splice(parent.index, 1)
-  const collapsed = collapseTree(clone)
-  validateLayout(collapsed)
-  return collapsed
+  const normalized = normalizeTree(clone)
+  validateLayout(normalized)
+  return normalized
 }
 
-function collapseTree(root: LayoutNode): LayoutNode {
-  let current = root
-  while (true) {
-    const step = collapseStep(current)
-    if (step === current) return current
-    current = step
-  }
-}
+// Tree invariant: a split never holds a singleton, and never holds a child
+// split of its own direction (row-in-row / column-in-column). Enforcing this
+// after every mutation keeps layouts flat and shallow, so panes stay
+// resizable instead of decaying into unreachable slivers.
+type NormalizeTarget =
+  | { kind: 'singleton'; splitId: NodeId }
+  | { kind: 'flatten'; splitId: NodeId; childIndex: number }
 
-function collapseStep(root: LayoutNode): LayoutNode {
-  const singleton = findSingletonSplit(root)
-  if (singleton !== undefined) {
-    return collapseSingletonSplit(root, singleton)
-  }
-  return root
-}
-
-function findSingletonSplit(root: LayoutNode): NodeId | undefined {
+function findNormalizeTarget(root: LayoutNode): NormalizeTarget | undefined {
   for (const node of iterNodes(root)) {
-    if (node.kind === 'split' && node.children.length === 1) {
-      return node.id
+    if (node.kind !== 'split') continue
+    if (node.children.length === 1) {
+      return { kind: 'singleton', splitId: node.id }
+    }
+    const childIndex = node.children.findIndex(
+      (child) => child.kind === 'split' && child.direction === node.direction,
+    )
+    if (childIndex >= 0) {
+      return { kind: 'flatten', splitId: node.id, childIndex }
     }
   }
   return undefined
+}
+
+export function normalizeTree(root: LayoutNode): LayoutNode {
+  let current = root
+  while (true) {
+    const target = findNormalizeTarget(current)
+    if (target === undefined) return current
+    current =
+      target.kind === 'singleton'
+        ? collapseSingletonSplit(current, target.splitId)
+        : flattenSplit(current, target.splitId, target.childIndex)
+  }
+}
+
+function flattenSplit(
+  root: LayoutNode,
+  splitId: NodeId,
+  childIndex: number,
+): LayoutNode {
+  const clone = cloneTree(root)
+  const split = findSplit(clone, splitId)
+  assert(split !== undefined, 'flattenSplit: split missing')
+  const child = split.children[childIndex]
+  assert(child?.kind === 'split', 'flattenSplit: target not a split')
+  assert(child.direction === split.direction, 'flattenSplit: direction differs')
+  const parentWeight = split.sizes[childIndex]
+  assert(parentWeight !== undefined, 'flattenSplit: missing parent weight')
+  const childTotal = child.sizes.reduce((sum, size) => sum + size, 0)
+  assert(childTotal > 0, 'flattenSplit: child sizes must be positive')
+  const scaled = child.sizes.map((size) => (size * parentWeight) / childTotal)
+  split.children.splice(childIndex, 1, ...child.children)
+  split.sizes.splice(childIndex, 1, ...scaled)
+  return clone
 }
 
 function collapseSingletonSplit(root: LayoutNode, splitId: NodeId): LayoutNode {
@@ -248,10 +279,10 @@ function splitLeafNested(
   assert(target !== undefined && target.kind === 'leaf', 'target not leaf')
   if (parent.parent.direction === direction) {
     const insertAt = before ? targetIndex : targetIndex + 1
-    const targetSize = parent.parent.sizes[targetIndex] ?? 1
+    const sizes = parent.parent.sizes
+    const fairSize = sizes.reduce((sum, size) => sum + size, 0) / sizes.length
     parent.parent.children.splice(insertAt, 0, newLeafNode)
-    parent.parent.sizes.splice(insertAt, 0, targetSize / 2)
-    parent.parent.sizes[before ? targetIndex + 1 : targetIndex] = targetSize / 2
+    parent.parent.sizes.splice(insertAt, 0, fairSize)
   } else {
     const wrapped = newSplit(
       direction,
@@ -260,8 +291,9 @@ function splitLeafNested(
     )
     parent.parent.children.splice(targetIndex, 1, wrapped)
   }
-  validateLayout(clone)
-  return clone
+  const normalized = normalizeTree(clone)
+  validateLayout(normalized)
+  return normalized
 }
 
 export function moveTab(
@@ -329,16 +361,6 @@ export function ensureTab(
       ? findLeafById(root, anchorLeafId)
       : undefined) ?? findFirstLeaf(root)
   return splitLeaf(root, anchor.id, 'right', tab)
-}
-
-export function resetSizes(root: LayoutNode): LayoutNode {
-  const clone = cloneTree(root)
-  for (const node of iterNodes(clone)) {
-    if (node.kind === 'split') {
-      node.sizes = node.children.map(() => 1)
-    }
-  }
-  return clone
 }
 
 export function nextAvailableTab(

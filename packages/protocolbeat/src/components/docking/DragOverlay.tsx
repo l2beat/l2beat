@@ -45,7 +45,7 @@ export function DragOverlay() {
 
 function computeSplitRect(target: DropTarget): DOMRect | null {
   const body = document.querySelector<HTMLElement>(
-    `[data-leaf-body-id="${CSS.escape(target.leafId)}"]`,
+    `[data-leaf-id="${CSS.escape(target.leafId)}"]`,
   )
   if (!body) return null
   const rect = body.getBoundingClientRect()
