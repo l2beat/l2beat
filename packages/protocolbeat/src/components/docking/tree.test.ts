@@ -1,7 +1,6 @@
 import { expect } from 'earl'
 import {
   allTabs,
-  findLeafByTab,
   iterNodes,
   leafCount,
   moveTab,
@@ -34,12 +33,6 @@ function assertWellFormed(root: LayoutNode): void {
   }
 }
 
-function leafIdForTab(root: LayoutNode, tab: TabId): string {
-  const leaf = findLeafByTab(root, tab)
-  expect(leaf !== undefined).toEqual(true)
-  return leaf!.id
-}
-
 function sortedTabs(root: LayoutNode): TabId[] {
   return [...allTabs(root)].sort()
 }
@@ -48,7 +41,7 @@ describe('docking/tree', () => {
   describe('splitLeaf', () => {
     it('keeps same-direction splits flat instead of nesting', () => {
       const root = newSplit('row', [newLeaf('a'), newLeaf('b')], [1, 1])
-      const next = splitLeaf(root, leafIdForTab(root, 'b'), 'right', 'c')
+      const next = splitLeaf(root, 'b', 'right', 'c')
       assertWellFormed(next)
       expect(next.kind).toEqual('split')
       const split = next as Extract<LayoutNode, { kind: 'split' }>
@@ -60,7 +53,7 @@ describe('docking/tree', () => {
 
     it('nests exactly one level for a perpendicular split', () => {
       const root = newSplit('row', [newLeaf('a'), newLeaf('b')], [1, 1])
-      const next = splitLeaf(root, leafIdForTab(root, 'b'), 'bottom', 'c')
+      const next = splitLeaf(root, 'b', 'bottom', 'c')
       assertWellFormed(next)
       expect(sortedTabs(next)).toEqual(['a', 'b', 'c'])
     })
@@ -80,7 +73,7 @@ describe('docking/tree', () => {
       let active = 'c'
       for (let i = 0; i < 20; i++) {
         const tab = `p${i}`
-        tree = splitLeaf(tree, leafIdForTab(tree, active), 'right', tab)
+        tree = splitLeaf(tree, active, 'right', tab)
         active = tab
       }
       assertWellFormed(tree)
@@ -144,11 +137,7 @@ describe('docking/tree', () => {
         [newLeaf('a'), newLeaf('b'), newLeaf('c')],
         [1, 1, 1],
       )
-      const target = {
-        kind: 'split' as const,
-        leafId: leafIdForTab(root, 'c'),
-        edge: 'bottom' as Edge,
-      }
+      const target = { tab: 'c', edge: 'bottom' as Edge }
       const moved = moveTab(root, 'a', target)
       assertWellFormed(moved)
       expect(sortedTabs(moved)).toEqual(['a', 'b', 'c'])
@@ -170,10 +159,10 @@ describe('docking/tree', () => {
         const tabs = allTabs(tree)
         const pick = random()
         if (pick < 0.5 || tabs.length < 2) {
-          const anchor = tabs[Math.floor(random() * tabs.length)]
-          const edge = edges[Math.floor(random() * edges.length)]
+          const anchor = tabs[Math.floor(random() * tabs.length)]!
+          const edge = edges[Math.floor(random() * edges.length)]!
           const tab = `t${nextTab++}`
-          tree = splitLeaf(tree, leafIdForTab(tree, anchor!), edge!, tab)
+          tree = splitLeaf(tree, anchor, edge, tab)
         } else if (pick < 0.8) {
           const source = tabs[Math.floor(random() * tabs.length)]!
           let target = tabs[Math.floor(random() * tabs.length)]!
@@ -181,11 +170,7 @@ describe('docking/tree', () => {
             target = tabs[(tabs.indexOf(source) + 1) % tabs.length]!
           }
           const edge = edges[Math.floor(random() * edges.length)]!
-          tree = moveTab(tree, source, {
-            kind: 'split',
-            leafId: leafIdForTab(tree, target),
-            edge,
-          })
+          tree = moveTab(tree, source, { tab: target, edge })
         } else {
           const victim = tabs[Math.floor(random() * tabs.length)]
           tree = removeTab(tree, victim!)

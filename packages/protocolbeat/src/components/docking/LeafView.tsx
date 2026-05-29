@@ -27,19 +27,19 @@ export function LeafView(props: { node: LeafNode }) {
 
   return (
     <div
-      data-leaf-id={props.node.id}
+      data-leaf-tab={props.node.tab}
       className={clsx(
         'flex h-full w-full flex-col bg-coffee-900',
         isPickedUp && 'opacity-50',
       )}
     >
       <div
-        data-leaf-tab={props.node.tab}
+        data-leaf-handle={props.node.tab}
         className="flex h-[36px] shrink-0 cursor-move select-none items-center gap-2 border-coffee-600 border-y bg-coffee-800 pr-2"
       >
         <RadixSelect.Root
           value={props.node.tab}
-          onValueChange={(v) => changeTab(props.node.id, v)}
+          onValueChange={(v) => changeTab(props.node.tab, v)}
         >
           <RadixSelect.Trigger
             aria-label="Panel"
@@ -83,10 +83,7 @@ export function LeafView(props: { node: LeafNode }) {
         </RadixSelect.Root>
         <div className="flex-1" />
         <div className="flex items-center gap-1">
-          {config.renderTabExtras?.({
-            id: props.node.tab,
-            leafId: props.node.id,
-          })}
+          {config.renderTabExtras?.({ id: props.node.tab })}
           <button
             type="button"
             className="w-4 text-coffee-200 hover:text-coffee-100"

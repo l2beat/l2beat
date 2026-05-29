@@ -6,9 +6,10 @@ export type NodeId = string
 export type SplitDirection = 'row' | 'column'
 export type Edge = 'top' | 'right' | 'bottom' | 'left'
 
+// A leaf is identified by its tab. validateLayout enforces tab uniqueness
+// across the tree, so the tab is the leaf's identity; no separate id needed.
 export type LeafNode = {
   kind: 'leaf'
-  id: NodeId
   tab: TabId
 }
 
@@ -23,8 +24,7 @@ export type SplitNode = {
 export type LayoutNode = LeafNode | SplitNode
 
 export type DropTarget = {
-  kind: 'split'
-  leafId: NodeId
+  tab: TabId
   edge: Edge
 }
 
@@ -36,5 +36,5 @@ export interface DockingConfig {
   maxLayouts?: number
   renderBody: (id: TabId) => ReactNode
   renderTabLabel: (id: TabId) => ReactNode
-  renderTabExtras?: (props: { id: TabId; leafId: NodeId }) => ReactNode
+  renderTabExtras?: (props: { id: TabId }) => ReactNode
 }

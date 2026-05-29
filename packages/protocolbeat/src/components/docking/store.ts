@@ -4,7 +4,6 @@ import {
   allTabs,
   canRemoveTab,
   findFirstLeaf,
-  findLeafById,
   findLeafByTab,
   nextAvailableTab,
   normalizeTree,
@@ -42,7 +41,7 @@ export interface DockingActions {
   addTab: () => void
   removeTab: (id?: TabId) => void
   activateTab: (id: TabId) => void
-  changeTab: (leafId: NodeId, newTab: TabId) => void
+  changeTab: (tab: TabId, newTab: TabId) => void
   moveTab: (id: TabId, target: DropTarget) => void
   resizeSplit: (splitId: NodeId, index: number, fraction: number) => void
   resetLayout: () => void
@@ -58,7 +57,6 @@ export type DockingStore = DockingState & DockingActions
 
 const zLeaf = v.object({
   kind: v.literal('leaf'),
-  id: v.string(),
   tab: v.string(),
 })
 
@@ -138,22 +136,21 @@ function firstTab(tree: LayoutNode): TabId | undefined {
   return findFirstLeaf(tree).tab
 }
 
-function withTree(
+// Every structural action writes the new tree into both `tree` and the active
+// slot of `layouts`, and usually sets the focused tab. Centralizing that here
+// keeps the actions to a single expressive line each.
+function applyTree(
   state: DockingState,
   tree: LayoutNode,
+  activeTab: TabId | undefined = state.activeTab,
 ): Partial<DockingState> {
   return {
     tree,
     layouts: state.layouts.map((layout, i) =>
       i === state.selectedLayout ? tree : layout,
     ),
+    activeTab,
   }
-}
-
-function anchorLeafId(state: DockingState): NodeId | undefined {
-  if (state.activeTab === undefined) return undefined
-  const leaf = findLeafByTab(state.tree, state.activeTab)
-  return leaf?.id
 }
 
 export function createDockingStore(
@@ -178,65 +175,60 @@ export function createDockingStore(
     ensureTab: (id) =>
       set((state) => {
         if (!config.availableTabs.includes(id)) return state
-        if (findLeafByTab(state.tree, id)) {
-          return { activeTab: id }
-        }
-        const tree = treeEnsureTab(state.tree, id, anchorLeafId(state))
-        return { ...withTree(state, tree), activeTab: id }
+        if (findLeafByTab(state.tree, id)) return { activeTab: id }
+        const tree = treeEnsureTab(state.tree, id, state.activeTab)
+        return applyTree(state, tree, id)
       }),
     addTab: () =>
       set((state) => {
         const filter = config.filterTab ?? (() => true)
-        const allowed = config.availableTabs.filter(filter)
-        const next = nextAvailableTab(state.tree, allowed)
+        const next = nextAvailableTab(
+          state.tree,
+          config.availableTabs.filter(filter),
+        )
         if (!next) return state
-        const tree = treeEnsureTab(state.tree, next, anchorLeafId(state))
-        return { ...withTree(state, tree), activeTab: next }
+        const tree = treeEnsureTab(state.tree, next, state.activeTab)
+        return applyTree(state, tree, next)
       }),
     removeTab: (id) =>
       set((state) => {
         const targetId = id ?? state.activeTab
-        if (!targetId) return state
-        if (!canRemoveTab(state.tree, targetId)) return state
+        if (!targetId || !canRemoveTab(state.tree, targetId)) return state
         const tree = treeRemoveTab(state.tree, targetId)
-        const newActive =
-          state.activeTab === targetId ? firstTab(tree) : state.activeTab
         return {
-          ...withTree(state, tree),
-          activeTab: newActive,
+          ...applyTree(
+            state,
+            tree,
+            state.activeTab === targetId ? firstTab(tree) : state.activeTab,
+          ),
           fullScreenTab:
             state.fullScreenTab === targetId ? undefined : state.fullScreenTab,
         }
       }),
     activateTab: (id) =>
-      set((state) => {
-        if (!findLeafByTab(state.tree, id)) return state
-        return { activeTab: id }
-      }),
-    changeTab: (leafId, newTab) =>
+      set((state) =>
+        findLeafByTab(state.tree, id) ? { activeTab: id } : state,
+      ),
+    changeTab: (tab, newTab) =>
       set((state) => {
         if (!config.availableTabs.includes(newTab)) return state
-        if (!findLeafById(state.tree, leafId)) return state
-        const tree = treeChangeTab(state.tree, leafId, newTab)
-        return { ...withTree(state, tree), activeTab: newTab }
+        if (!findLeafByTab(state.tree, tab)) return state
+        return applyTree(state, treeChangeTab(state.tree, tab, newTab), newTab)
       }),
     moveTab: (id, target) =>
       set((state) => {
         if (!findLeafByTab(state.tree, id)) return state
-        const tree = treeMoveTab(state.tree, id, target)
-        return { ...withTree(state, tree), activeTab: id }
+        return applyTree(state, treeMoveTab(state.tree, id, target), id)
       }),
     resizeSplit: (splitId, index, fraction) =>
-      set((state) => {
-        const tree = treeResizeSplit(state.tree, splitId, index, fraction)
-        return withTree(state, tree)
-      }),
+      set((state) =>
+        applyTree(state, treeResizeSplit(state.tree, splitId, index, fraction)),
+      ),
     resetLayout: () =>
       set((state) => {
         const tree = structuredClone(config.defaultLayout)
         return {
-          ...withTree(state, tree),
-          activeTab: firstTab(tree),
+          ...applyTree(state, tree, firstTab(tree)),
           fullScreenTab: undefined,
         }
       }),
@@ -263,8 +255,7 @@ export function createDockingStore(
         }
         const tree = treeMoveTab(state.tree, tab, target)
         return {
-          ...withTree(state, tree),
-          activeTab: tab,
+          ...applyTree(state, tree, tab),
           pickedUpTab: undefined,
           dragHover: undefined,
         }

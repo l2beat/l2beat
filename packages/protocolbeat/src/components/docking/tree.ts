@@ -22,7 +22,7 @@ export function newId(): NodeId {
 }
 
 export function newLeaf(tab: TabId): LeafNode {
-  return { kind: 'leaf', id: newId(), tab }
+  return { kind: 'leaf', tab }
 }
 
 export function newSplit(
@@ -74,18 +74,6 @@ export function findLeafByTab(
   return undefined
 }
 
-export function findLeafById(
-  root: LayoutNode,
-  leafId: NodeId,
-): LeafNode | undefined {
-  for (const node of iterNodes(root)) {
-    if (node.kind === 'leaf' && node.id === leafId) {
-      return node
-    }
-  }
-  return undefined
-}
-
 export function findFirstLeaf(root: LayoutNode): LeafNode {
   for (const node of iterNodes(root)) {
     if (node.kind === 'leaf') return node
@@ -95,14 +83,22 @@ export function findFirstLeaf(root: LayoutNode): LeafNode {
 
 export function findParent(
   root: LayoutNode,
-  nodeId: NodeId,
+  match: (node: LayoutNode) => boolean,
 ): { parent: SplitNode; index: number } | undefined {
   for (const node of iterNodes(root)) {
     if (node.kind !== 'split') continue
-    const index = node.children.findIndex((child) => child.id === nodeId)
+    const index = node.children.findIndex(match)
     if (index >= 0) return { parent: node, index }
   }
   return undefined
+}
+
+function isLeafTab(tab: TabId): (node: LayoutNode) => boolean {
+  return (node) => node.kind === 'leaf' && node.tab === tab
+}
+
+function isSplitId(splitId: NodeId): (node: LayoutNode) => boolean {
+  return (node) => node.kind === 'split' && node.id === splitId
 }
 
 export function findSplit(
@@ -158,9 +154,7 @@ export function canRemoveTab(root: LayoutNode, tab: TabId): boolean {
 export function removeTab(root: LayoutNode, tab: TabId): LayoutNode {
   if (!canRemoveTab(root, tab)) return root
   const clone = cloneTree(root)
-  const leaf = findLeafByTab(clone, tab)
-  assert(leaf !== undefined, 'removeTab: leaf disappeared after clone')
-  const parent = findParent(clone, leaf.id)
+  const parent = findParent(clone, isLeafTab(tab))
   assert(parent !== undefined, 'removeTab: leaf must have a parent')
   parent.parent.children.splice(parent.index, 1)
   parent.parent.sizes.splice(parent.index, 1)
@@ -235,7 +229,7 @@ function collapseSingletonSplit(root: LayoutNode, splitId: NodeId): LayoutNode {
   const clone = cloneTree(root)
   const split = findSplit(clone, splitId)
   assert(split !== undefined, 'collapseSingletonSplit: split missing')
-  const parent = findParent(clone, splitId)
+  const parent = findParent(clone, isSplitId(splitId))
   assert(parent !== undefined, 'collapseSingletonSplit: parent missing')
   const sole = split.children[0]
   assert(sole !== undefined, 'sole child missing')
@@ -245,7 +239,7 @@ function collapseSingletonSplit(root: LayoutNode, splitId: NodeId): LayoutNode {
 
 export function splitLeaf(
   root: LayoutNode,
-  targetLeafId: NodeId,
+  targetTab: TabId,
   edge: Edge,
   newTab: TabId,
 ): LayoutNode {
@@ -254,25 +248,25 @@ export function splitLeaf(
   const before = edge === 'left' || edge === 'top'
   const newLeafNode = newLeaf(newTab)
 
-  if (root.kind === 'leaf' && root.id === targetLeafId) {
+  if (root.kind === 'leaf' && root.tab === targetTab) {
     const targetClone = cloneTree(root) as LeafNode
     const children: LayoutNode[] = before
       ? [newLeafNode, targetClone]
       : [targetClone, newLeafNode]
     return newSplit(direction, children, [1, 1])
   }
-  return splitLeafNested(root, targetLeafId, newLeafNode, direction, before)
+  return splitLeafNested(root, targetTab, newLeafNode, direction, before)
 }
 
 function splitLeafNested(
   root: LayoutNode,
-  targetLeafId: NodeId,
+  targetTab: TabId,
   newLeafNode: LeafNode,
   direction: SplitDirection,
   before: boolean,
 ): LayoutNode {
   const clone = cloneTree(root)
-  const parent = findParent(clone, targetLeafId)
+  const parent = findParent(clone, isLeafTab(targetTab))
   assert(parent !== undefined, 'splitLeafNested: parent not found')
   const targetIndex = parent.index
   const target = parent.parent.children[targetIndex]
@@ -301,14 +295,12 @@ export function moveTab(
   tab: TabId,
   target: DropTarget,
 ): LayoutNode {
-  const source = findLeafByTab(root, tab)
-  if (!source) return root
-  if (source.id === target.leafId) return root
+  if (!findLeafByTab(root, tab)) return root
+  if (tab === target.tab) return root
   if (leafCount(root) <= 1) return root
   const removed = removeTab(root, tab)
-  const targetLeaf = findLeafById(removed, target.leafId)
-  if (!targetLeaf) return removed
-  return splitLeaf(removed, target.leafId, target.edge, tab)
+  if (!findLeafByTab(removed, target.tab)) return removed
+  return splitLeaf(removed, target.tab, target.edge, tab)
 }
 
 export function resizeSplit(
@@ -333,18 +325,17 @@ export function resizeSplit(
 
 export function changeTab(
   root: LayoutNode,
-  leafId: NodeId,
+  tab: TabId,
   newTab: TabId,
 ): LayoutNode {
+  if (tab === newTab) return root
   const clone = cloneTree(root)
-  const leaf = findLeafById(clone, leafId)
-  assert(leaf !== undefined, `changeTab: leaf ${leafId} not found`)
-  if (leaf.tab === newTab) return root
+  const leaf = findLeafByTab(clone, tab)
+  assert(leaf !== undefined, `changeTab: leaf ${tab} not found`)
   const other = findLeafByTab(clone, newTab)
-  const previousTab = leaf.tab
   leaf.tab = newTab
   if (other) {
-    other.tab = previousTab
+    other.tab = tab
   }
   validateLayout(clone)
   return clone
@@ -353,14 +344,13 @@ export function changeTab(
 export function ensureTab(
   root: LayoutNode,
   tab: TabId,
-  anchorLeafId?: NodeId,
+  anchorTab?: TabId,
 ): LayoutNode {
   if (findLeafByTab(root, tab)) return root
   const anchor =
-    (anchorLeafId !== undefined
-      ? findLeafById(root, anchorLeafId)
-      : undefined) ?? findFirstLeaf(root)
-  return splitLeaf(root, anchor.id, 'right', tab)
+    (anchorTab !== undefined ? findLeafByTab(root, anchorTab) : undefined) ??
+    findFirstLeaf(root)
+  return splitLeaf(root, anchor.tab, 'right', tab)
 }
 
 export function nextAvailableTab(
