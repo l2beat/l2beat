@@ -159,6 +159,25 @@ describe('calculateInclusionDelay', () => {
       ])
     })
 
+    it('snaps entity stake fractions to the sampling step', () => {
+      const chart = {
+        type: 'ethereumlike',
+        validatorCount: 100_000,
+        slotSeconds: 10,
+        target: 0.99,
+        maxCensorFraction: 0.5,
+        stakeDistribution: {
+          stakeToken: 'TEST',
+          totalStake: 800,
+          // 123 / 800 = 0.15375, which rounds to the nearest 0.1% step.
+          entities: [{ name: 'A', stake: 123 }],
+        },
+      } satisfies ProjectEthereumLikeInclusionDelayChart
+
+      const [entry] = getInclusionDelayData(chart).entityLegendEntries
+      expect(entry?.stakeFraction).toEqual(0.154)
+    })
+
     it('samples at a fixed 0.1% resolution regardless of validator count', () => {
       const chart = {
         type: 'ethereumlike',
@@ -265,6 +284,30 @@ describe('calculateInclusionDelay', () => {
           label: '60s delay',
           censoringFraction: 0.399,
           delayDays: 60 / 86_400,
+        },
+      ])
+    })
+
+    it('snaps threshold markers that cross between samples to the step', () => {
+      const chart = {
+        type: 'ethereumlike',
+        validatorCount: 10,
+        slotSeconds: 10,
+        target: 0.99,
+        maxCensorFraction: 0.5,
+      } satisfies ProjectEthereumLikeInclusionDelayChart
+
+      // 25s falls between the 20s and 30s plateaus, so the interpolated crossing
+      // (~0.1005) lands off the 0.1% grid and is snapped onto it.
+      expect(
+        getInclusionDelayData(chart, [{ label: '25s', days: 25 / 86_400 }])
+          .thresholdMarkers,
+      ).toEqual([
+        {
+          id: 'delay-threshold-25s',
+          label: '25s delay',
+          censoringFraction: 0.101,
+          delayDays: 25 / 86_400,
         },
       ])
     })

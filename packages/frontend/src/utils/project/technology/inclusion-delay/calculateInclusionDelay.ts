@@ -120,7 +120,9 @@ function buildEntityLegendEntries(
     cumulativeStake += entity.stake
     entityNames.push(entity.name)
 
-    const stakeFraction = cumulativeStake / distribution.totalStake
+    const stakeFraction = roundToCensoringStep(
+      cumulativeStake / distribution.totalStake,
+    )
     if (stakeFraction > 1) break
 
     const delayDays =
@@ -156,7 +158,7 @@ function buildThresholdMarkers(
       {
         id: `delay-threshold-${threshold.label}`,
         label: `${threshold.label} delay`,
-        censoringFraction,
+        censoringFraction: roundToCensoringStep(censoringFraction),
         delayDays: threshold.days,
       },
     ]
@@ -214,6 +216,13 @@ function calculateEthereumComparisonDelayDaysForFraction({
 }
 
 const CENSORING_FRACTION_STEP = 0.001
+
+// Snaps a censoring fraction to the sampling grid so markers line up with an
+// actual curve point rather than landing between samples (which would show as a
+// marker slightly off the line, most visibly in log scale).
+function roundToCensoringStep(fraction: number): number {
+  return Math.round(fraction / CENSORING_FRACTION_STEP) * CENSORING_FRACTION_STEP
+}
 
 // Samples the censoring-fraction axis from 0 to maxCensorFraction in fixed 0.1%
 // steps, always ending exactly on maxCensorFraction. The resolution is therefore
