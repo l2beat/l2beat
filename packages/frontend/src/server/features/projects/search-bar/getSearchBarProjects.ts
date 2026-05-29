@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, InMemoryCache, UnixTime } from '@l2beat/shared-pure'
 import { searchEntries } from '~/components/search-bar/searchBarResults'
 import { getInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
@@ -83,11 +83,7 @@ export async function getSearchBarProjects(search: string) {
     return matched.map(formatSearchResult)
   }
 
-  const activeInteropChainIds = getInteropChains()
-    .filter((chain) => !chain.isUpcoming)
-    .map((chain) => chain.id)
-  const tokens = await getInteropAbstractTokens(activeInteropChainIds)
-  const tokenEntries = getSearchBarTokenEntries(tokens)
+  const tokenEntries = await getCachedTokenEntries()
 
   const result = searchEntries(search, [...searchBarEntries, ...tokenEntries], {
     limit: 15,
@@ -101,4 +97,23 @@ export async function getSearchBarProjects(search: string) {
     type: 'name',
   })
   return result
+}
+
+const inMemoryCache = new InMemoryCache()
+function getCachedTokenEntries() {
+  return inMemoryCache.get(
+    {
+      key: ['searchBar', 'tokenEntries'],
+      ttl: 5 * UnixTime.MINUTE,
+      staleWhileRevalidate: 25 * UnixTime.MINUTE,
+    },
+    async () => {
+      const activeInteropChainIds = getInteropChains()
+        .filter((chain) => !chain.isUpcoming)
+        .map((chain) => chain.id)
+      const tokens = await getInteropAbstractTokens(activeInteropChainIds)
+      const tokenEntries = getSearchBarTokenEntries(tokens)
+      return tokenEntries
+    },
+  )
 }
