@@ -159,7 +159,7 @@ describe('calculateInclusionDelay', () => {
       ])
     })
 
-    it('samples down to 501 points when validatorCount is large', () => {
+    it('samples at a fixed 0.1% resolution regardless of validator count', () => {
       const chart = {
         type: 'ethereumlike',
         validatorCount: 100_000,
@@ -169,9 +169,10 @@ describe('calculateInclusionDelay', () => {
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
       const { chartData } = getInclusionDelayData(chart)
-      // 501 evenly-spaced samples plus two critical censor counts
-      expect(chartData.length <= 503).toEqual(true)
+      // 0 to 0.5 in 0.001 steps => 501 evenly-spaced samples.
+      expect(chartData.length).toEqual(501)
       expect(chartData[0]?.censoringFraction).toEqual(0)
+      expect(chartData[1]?.censoringFraction).toEqual(0.001)
       const last = chartData[chartData.length - 1]
       expect(last?.censoringFraction).toEqual(0.5)
     })

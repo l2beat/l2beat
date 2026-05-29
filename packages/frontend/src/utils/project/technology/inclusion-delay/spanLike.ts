@@ -7,16 +7,13 @@ export function createSpanLikeModel(
 ): InclusionDelayModel {
   validate(chart)
   return {
-    validatorCount: chart.validatorCount,
     maxCensorFraction: chart.maxCensorFraction,
     target: chart.target,
-    calculateDelayDays: (censorCount) =>
-      calculateSpanLikeDelayDays(chart, censorCount),
-    criticalCensorCounts: [
-      Math.ceil(chart.validatorCount / 3) - 1,
-      Math.ceil(chart.validatorCount / 3),
-    ],
-    supportsFractionalCensorCount: true,
+    calculateDelayDays: (censoringFraction) =>
+      calculateSpanLikeDelayDays(
+        chart,
+        censoringFraction * chart.validatorCount,
+      ),
   }
 }
 

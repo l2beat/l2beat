@@ -7,16 +7,13 @@ export function createEthereumLikeModel(
 ): InclusionDelayModel {
   validate(chart)
   return {
-    validatorCount: chart.validatorCount,
     maxCensorFraction: chart.maxCensorFraction,
     target: chart.target,
-    calculateDelayDays: (censorCount) =>
-      calculateEthereumLikeDelayDays(chart, censorCount),
-    criticalCensorCounts: [
-      Math.floor((chart.validatorCount - 1) / 2),
-      Math.ceil(chart.validatorCount / 2),
-    ],
-    supportsFractionalCensorCount: true,
+    calculateDelayDays: (censoringFraction) =>
+      calculateEthereumLikeDelayDays(
+        chart,
+        censoringFraction * chart.validatorCount,
+      ),
   }
 }
 

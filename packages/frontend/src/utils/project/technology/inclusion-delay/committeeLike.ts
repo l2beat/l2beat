@@ -12,13 +12,16 @@ export function createCommitteeLikeModel(
   validate(chart)
   const logFactorials = getLogFactorials(chart.validatorCount)
   return {
-    validatorCount: chart.validatorCount,
     maxCensorFraction: chart.maxCensorFraction,
     target: chart.target,
-    calculateDelayDays: (censorCount) =>
-      calculateCommitteeLikeDelayDays(chart, censorCount, logFactorials),
-    criticalCensorCounts: [],
-    supportsFractionalCensorCount: false,
+    // Committee math relies on integer combinatorics, so the fraction is mapped
+    // onto a whole number of censoring validators.
+    calculateDelayDays: (censoringFraction) =>
+      calculateCommitteeLikeDelayDays(
+        chart,
+        Math.round(censoringFraction * chart.validatorCount),
+        logFactorials,
+      ),
   }
 }
 

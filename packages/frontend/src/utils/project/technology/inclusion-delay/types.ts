@@ -1,14 +1,10 @@
 export interface InclusionDelayModel {
-  validatorCount: number
   maxCensorFraction: number
   target: number
-  calculateDelayDays: (censorCount: number) => number | null
-  criticalCensorCounts: number[]
   /**
-   * Whether `calculateDelayDays` is well-defined for a fractional censor count.
-   * When true the curve is sampled at a fixed resolution in censoring-fraction
-   * space regardless of validator count; when false (e.g. committee models that
-   * rely on integer combinatorics) only whole validator counts are sampled.
+   * Inclusion delay as a function of the censoring fraction (0..1). Each model
+   * maps the fraction onto its validator set internally, so the chart can be
+   * sampled at a fixed fraction resolution regardless of validator count.
    */
-  supportsFractionalCensorCount: boolean
+  calculateDelayDays: (censoringFraction: number) => number | null
 }
