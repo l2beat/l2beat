@@ -318,7 +318,7 @@ The script will generate Plonk verifier smart contract with verification keys an
       },
       {
         hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',
-        name: 'SP1 Turbo Plonk Morph verifier',
+        name: 'SP1 Turbo Plonk verifier',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
