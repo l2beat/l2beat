@@ -1,6 +1,7 @@
 import type { FrameworkTableEntry } from '~/server/features/scaling/interop/getTokenFrameworksData'
 import { cn } from '~/utils/cn'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import type { InteropSelection } from '../../../utils/types'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import { BridgingTypeBreakdown } from './BridgingTypeBreakdown'
@@ -60,7 +61,11 @@ export function FrameworkColumn({
                   key={token.id}
                   token={token}
                   framework={framework}
-                  apiSelection={apiSelection}
+                  href={
+                    token.isUnknown
+                      ? undefined
+                      : getInteropTokenUrl(token, apiSelection)
+                  }
                 />
               ))
             )}

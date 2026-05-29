@@ -6,23 +6,18 @@ import type {
 } from '~/server/features/scaling/interop/getTokenFrameworksData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
-import type { InteropSelection } from '../../../utils/types'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import { TokenFrameworksTransferTrigger } from '../TokenFrameworksTransferTrigger'
 
 export function TokenRow({
   token,
   framework,
-  apiSelection,
+  href,
 }: {
   token: TopTokenItem
   framework: InteropTokenFramework
-  apiSelection: InteropSelection
+  href: string | undefined
 }) {
-  const href = token.isUnknown
-    ? undefined
-    : getInteropTokenUrl(token, apiSelection)
   const identity = (
     <>
       <img
