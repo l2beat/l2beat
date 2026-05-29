@@ -8,7 +8,7 @@ Generated with discovered.json: 0xe824b1443430c192ebe87217a567053c8b28e80e
 
 ## Description
 
-Standard L2 Contract Sources Have Been Verified.
+Standard L2 contract sources have been verified.
 
 ## Watched changes
 
