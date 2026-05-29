@@ -1,78 +1,41 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { type Parser, v } from '@l2beat/validate'
+import { type Validator, v } from '@l2beat/validate'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { KeyValue } from '../kysely/generated/types'
 
-const KEY_VALUE_SCHEMAS = {
-  'interop-aggregate-timestamp-override': v.union([
-    v.number(),
-    v
-      .string()
-      .transform((s) => Number(s))
-      .check((n) => !isNaN(n) && Number.isSafeInteger(n)),
-  ]),
-} as const satisfies Record<string, Parser<unknown>>
+const KEYS = ['interopAggregatesTimestampOverride', 'example'] as const
 
-type KeyValueSchemas = typeof KEY_VALUE_SCHEMAS
+export type KeyValueKey = v.infer<typeof KeyValueKey>
+export const KeyValueKey = v.enum(KEYS)
 
-export type KeyValueKey = keyof KeyValueSchemas & string
-export type KeyValuePair = {
-  [K in KeyValueKey]: { key: K; value: v.infer<KeyValueSchemas[K]> }
-}[KeyValueKey]
+export type KeyValuePair = v.infer<typeof KeyValuePair>
+export const KeyValuePair = v.union([
+  v.object({
+    key: v.literal('interopAggregatesTimestampOverride'),
+    value: v.number(),
+  }),
+  v.object({
+    key: v.literal('example'),
+    value: v.boolean(),
+  }),
+]) satisfies Validator<{
+  key: KeyValueKey
+  value: unknown
+}>
 
-const keys = Object.keys(KEY_VALUE_SCHEMAS) as [KeyValueKey, ...KeyValueKey[]]
+type ValueForKey<K extends KeyValuePair['key']> = Extract<
+  KeyValuePair,
+  { key?: K }
+>['value']
 
-function unionOf<T>(items: readonly [Parser<T>, ...Parser<T>[]]): Parser<T> {
-  if (items.length === 1) return items[0]
-  return v.union(items as unknown as [Parser<T>, Parser<T>, ...Parser<T>[]])
-}
-
-export const KeyValueKey: Parser<KeyValueKey> = unionOf(
-  keys.map((k) => v.literal(k)) as unknown as [
-    Parser<KeyValueKey>,
-    ...Parser<KeyValueKey>[],
-  ],
-)
-
-export const KeyValuePair: Parser<KeyValuePair> = unionOf(
-  keys.map((k) =>
-    v.object({ key: v.literal(k), value: KEY_VALUE_SCHEMAS[k] }),
-  ) as unknown as [Parser<KeyValuePair>, ...Parser<KeyValuePair>[]],
-)
-
-type KeyToValue = {
-  [K in KeyValuePair['key']]: Extract<KeyValuePair, { key: K }>['value']
-}
-
-export interface KeyValueRecord<T extends KeyValuePair['key']> {
+export interface KeyValueRecord<
+  T extends KeyValuePair['key'] = KeyValuePair['key'],
+> {
   key: T
-  value: KeyToValue[T]
+  value: ValueForKey<T>
   updatedAt: UnixTime
   updatedBy: string
-}
-
-export function toRecord<T extends KeyValuePair['key']>(
-  row: Selectable<KeyValue>,
-): KeyValueRecord<T> {
-  const parsed = KeyValuePair.parse({ key: row.key, value: row.value })
-  return {
-    key: parsed.key as T,
-    value: parsed.value,
-    updatedAt: UnixTime.fromDate(row.updatedAt),
-    updatedBy: row.updatedBy,
-  }
-}
-
-export function toRow<T extends KeyValuePair['key']>(
-  record: Omit<KeyValueRecord<T>, 'id'>,
-): Insertable<KeyValue> {
-  return {
-    key: record.key,
-    value: record.value.toString(),
-    updatedAt: UnixTime.toDate(record.updatedAt),
-    updatedBy: record.updatedBy,
-  }
 }
 
 export class KeyValueRepository extends BaseRepository {
@@ -102,5 +65,28 @@ export class KeyValueRepository extends BaseRepository {
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('KeyValue').executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+}
+
+function toRecord<T extends KeyValuePair['key']>(
+  row: Selectable<KeyValue>,
+): KeyValueRecord<T> {
+  const parsed = KeyValuePair.parse({ key: row.key, value: row.value })
+  return {
+    key: parsed.key as T,
+    value: parsed.value as ValueForKey<T>,
+    updatedAt: UnixTime.fromDate(row.updatedAt),
+    updatedBy: row.updatedBy,
+  }
+}
+
+function toRow<T extends KeyValuePair['key']>(
+  record: Omit<KeyValueRecord<T>, 'id'>,
+): Insertable<KeyValue> {
+  return {
+    key: record.key,
+    value: record.value.toString(),
+    updatedAt: UnixTime.toDate(record.updatedAt),
+    updatedBy: record.updatedBy,
   }
 }

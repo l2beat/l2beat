@@ -11,9 +11,7 @@ describeDatabase(KeyValueRepository.name, (db) => {
 
   describe(KeyValueRepository.prototype.get.name, () => {
     it('returns undefined when value is missing', async () => {
-      const result = await repository.get(
-        'interop-aggregate-timestamp-override',
-      )
+      const result = await repository.get('interopAggregatesTimestampOverride')
 
       expect(result).toEqual(undefined)
     })
@@ -22,17 +20,15 @@ describeDatabase(KeyValueRepository.name, (db) => {
   describe(KeyValueRepository.prototype.set.name, () => {
     it('inserts a value', async () => {
       await repository.set({
-        key: 'interop-aggregate-timestamp-override',
+        key: 'interopAggregatesTimestampOverride',
         value: 1234,
         updatedBy: 'test',
       })
 
-      const result = await repository.get(
-        'interop-aggregate-timestamp-override',
-      )
+      const result = await repository.get('interopAggregatesTimestampOverride')
 
       expect(result).toEqual({
-        key: 'interop-aggregate-timestamp-override',
+        key: 'interopAggregatesTimestampOverride',
         value: 1234,
         updatedAt: expect.a(Number),
         updatedBy: 'test',
@@ -41,22 +37,20 @@ describeDatabase(KeyValueRepository.name, (db) => {
 
     it('updates an existing value', async () => {
       await repository.set({
-        key: 'interop-aggregate-timestamp-override',
+        key: 'interopAggregatesTimestampOverride',
         value: 1234,
         updatedBy: 'test',
       })
       await repository.set({
-        key: 'interop-aggregate-timestamp-override',
+        key: 'interopAggregatesTimestampOverride',
         value: 5678,
         updatedBy: 'test-2',
       })
 
-      const result = await repository.get(
-        'interop-aggregate-timestamp-override',
-      )
+      const result = await repository.get('interopAggregatesTimestampOverride')
 
       expect(result).toEqual({
-        key: 'interop-aggregate-timestamp-override',
+        key: 'interopAggregatesTimestampOverride',
         value: 5678,
         updatedAt: expect.a(Number),
         updatedBy: 'test-2',
