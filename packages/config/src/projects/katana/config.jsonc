@@ -32,15 +32,6 @@
     "katana:0x420000000000000000000000000000000000001b"
   ],
   "overrides": {
-    "katana:0x4200000000000000000000000000000000000015": {
-      "displayName": "L1Block"
-    },
-    "katana:0x420000000000000000000000000000000000000F": {
-      "displayName": "GasPriceOracle"
-    },
-    "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {
-      "displayName": "upgradeProxy"
-    },
     "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F": {
       "displayName": "vbWBTC"
     },
