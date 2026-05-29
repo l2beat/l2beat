@@ -12,10 +12,35 @@
     "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
     "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
     "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
-    "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855"
+    "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
+    "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+    "katana:0x4200000000000000000000000000000000000010",
+    "katana:0x4200000000000000000000000000000000000016",
+    "katana:0x4200000000000000000000000000000000000014",
+    "katana:0x4200000000000000000000000000000000000011",
+    "katana:0x4200000000000000000000000000000000000012",
+    "katana:0x4200000000000000000000000000000000000017",
+    "katana:0x4200000000000000000000000000000000000015",
+    "katana:0x420000000000000000000000000000000000000F",
+    "katana:0x4200000000000000000000000000000000000002",
+    "katana:0x4200000000000000000000000000000000000013",
+    "katana:0x4200000000000000000000000000000000000019",
+    "katana:0x420000000000000000000000000000000000001A",
+    "katana:0x4200000000000000000000000000000000000042",
+    "katana:0x4200000000000000000000000000000000000020",
+    "katana:0x4200000000000000000000000000000000000021",
+    "katana:0x420000000000000000000000000000000000001b"
   ],
   "overrides": {
-    // name generic vaultBridge tokens
+    "katana:0x4200000000000000000000000000000000000015": {
+      "displayName": "L1Block"
+    },
+    "katana:0x420000000000000000000000000000000000000F": {
+      "displayName": "GasPriceOracle"
+    },
+    "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {
+      "displayName": "upgradeProxy"
+    },
     "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F": {
       "displayName": "vbWBTC"
     },
@@ -31,7 +56,6 @@
     "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF": {
       "displayName": "vbETH"
     },
-    // hide unused op stack contracts
     "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe": {
       "category": "spam"
     },
@@ -55,6 +79,70 @@
     },
     "eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E": {
       "category": "spam"
+    },
+    "katana:0x4200000000000000000000000000000000000010": {
+      "category": "spam"
+    },
+    "katana:0x4200000000000000000000000000000000000014": {
+      "category": "spam"
+    },
+    "katana:0x4200000000000000000000000000000000000012": {
+      "category": "spam"
+    },
+    "katana:0x4200000000000000000000000000000000000017": {
+      "category": "spam"
+    },
+    "katana:0x420000000000000000000000000000000000001A": {
+      "description": "Collects the L1 portion of the L2 transaction fees.",
+      "fields": {
+        "recipient": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "receive fees."
+            }
+          ]
+        }
+      }
+    },
+    "katana:0x4200000000000000000000000000000000000019": {
+      "description": "Collects EIP-1559 base fees",
+      "fields": {
+        "recipient": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "receive fees."
+            }
+          ]
+        }
+      }
+    },
+    "katana:0x4200000000000000000000000000000000000011": {
+      "description": "Collects the sequencer fees.",
+      "fields": {
+        "recipient": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "receive fees."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "katana:0x420000000000000000000000000000000000001b": {
+    "description": "Collects the sequencer fees.",
+    "fields": {
+      "recipient": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "receive fees."
+          }
+        ]
+      }
     }
   }
 }

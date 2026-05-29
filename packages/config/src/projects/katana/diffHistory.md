@@ -1,3 +1,274 @@
+Generated with discovered.json: 0xff12c061a5c326f80ec4e60917a1c65d9a03f1ce
+
+# Diff at Thu, 28 May 2026 12:57:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@66dc249f7108a6fbf8b6581aed0b7625deeebb2a block: 1778675724
+- current timestamp: 1779956198
+
+## Description
+
+minimal diff upgrade to the OptiPortal that adds deposited transactions! https://flat.l2beat.com/diff/ink:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016/katana:0xFBF44D0341C03098A1D9C0336e3d5C34E8BFdf1A
+
+users can now force transactions that do not relate to bridging (they still cannot force ETH- or token deposits). the force tx delay in op stack (or op-succinct) depends on the node config/programHash and both are unverified for katana. as soon as we have a source, we should look for `sequencerWindowSize` (OP stack standard is 3600). we will assume standard and show the delay as 12h but say that this is unverified.
+
+proposals are also still permissioned, meaning that, assuming sequencer and proposer/prover are the same entity, the system changed from 'sequencer can cherry-pick/censor' to 'proposer must blanket-censor, no cherry-pick'.
+
+the agglayer bridge is separate from the OP stack proof system and bridge and has its own proof system and l2 smart contract. this includes the gas token (ETH) bridge. the oracle on L2 that allows to update the agglayer bridge state roots is permissioned to an EOA atm.
+
+## Watched changes
+
+```diff
+    contract Yearn Strategist Multisig (eth:0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x5E5D6f849Fa86c058f148E9D3f643C8F4c43f20b"
+      values.$members.1:
++        "eth:0x5250077c42627cBd112988f32D482acC9ff40bDB"
+      values.$members.2:
++        "eth:0xC357eE8a8DdE88Dd5a3Ea54847Adef6846A28c51"
+      values.$members.3:
++        "eth:0xFcc3796370e1538F8cC60bec19A8be5457f2C74F"
+      values.$members.4:
++        "eth:0xFafFb75e14faFf9f11315E44a2E54A22872c7a34"
+      values.$members.2:
+-        "eth:0xBD5f1429Ab467E69BEeba51E547C00A21F2a2092"
+      values.$members.3:
+-        "eth:0x787aba336583f4A1D4f8cBBFDFFD49f3a38De665"
+      values.$members.4:
+-        "eth:0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C"
+      values.$members.5:
+-        "eth:0xd0002c648CCa8DeE2f2b8D70D542Ccde8ad6EC03"
+      values.$members.6:
+-        "eth:0x1b5f15DCb82d25f91c65b53CEe151E8b9fBdD271"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) [katana/OptimismPortal2] {
+    +++ description: Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions.
+      name:
+-        "OptimismPortal2_neutered"
++        "OptimismPortal2"
+      template:
+-        "opstack/OptimismPortal2_noForce"
++        "katana/OptimismPortal2"
+      sourceHashes.1:
+-        "0x4cc0e4525ed77b81565c05c0e673e043a93d9878924197f772581f72c11c91c5"
++        "0xfcecb325a86c39482f8e9d29272f25089eec0b5fbefe21444fd1ea690c911f0c"
+      description:
+-        "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system."
++        "Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions."
+      values.$implementation:
+-        "eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4"
++        "eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a"
+      values.$pastUpgrades.8:
++        ["2026-05-22T16:31:35.000Z","0x46d8e0a3a5383c133292ef51e4d7eef96fddc443b892d38e62c39b1186055691",["eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a"]]
+      values.$upgradeCount:
+-        8
++        9
+      values.version:
+-        "5.1.1"
++        "agg3.15.0"
+      fieldMeta.respectedGameType:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4:
+-        "OptimismPortal2"
+      implementationNames.eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a:
++        "OptimismPortal2"
+      usedTypes.0.arg.1337:
++        "KailuaGame"
+    }
+```
+
+```diff
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2] {
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+      values.claimedGlobalIndexHashChain:
+-        "0xfcb94fe6eae1dd3db9426645c49bdd5a55f574591df36333e3822c2e28a6aa5d"
++        "0x5fede20963bde12c20e3076c4426550f570914a8a035c1381bc98f8bed306a46"
+      values.getRoot:
+-        "0x77b2c19aaa8daa89496903e91a84dfdf09cbc2821671eb351e953ed0c646be5b"
++        "0x1d743ae7262c7410af3fb680660e6c1f336b2f49609f709a69a9fd8b9ad21bb2"
+    }
+```
+
+```diff
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain] {
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+      values.insertedGERHashChain:
+-        "0x64bc5ca77fa29cfc3cd117f2314df1d7c1c5f3d01f31f2c58bd277f3e75b1016"
++        "0xaae24c57922b6453c1812383dba7b31cf9788b57cfc281e208b4e2911e5feee7"
+      values.lastRollupExitRoot:
+-        "0x77b2c19aaa8daa89496903e91a84dfdf09cbc2821671eb351e953ed0c646be5b"
++        "0x1d743ae7262c7410af3fb680660e6c1f336b2f49609f709a69a9fd8b9ad21bb2"
+    }
+```
+
+## Source code changes
+
+```diff
+.../OptimismPortal2}/OptimismPortal2.sol           | 25 +++++++++++++++-------
+ .../OptimismPortal2}/Proxy.p.sol                   |  0
+ 2 files changed, 17 insertions(+), 8 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778675724 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract upgradeProxy (katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2]
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+```
+
+```diff
++   Status: CREATED
+    contract DeployerWhitelist (katana:0x4200000000000000000000000000000000000002) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2CrossDomainMessenger (katana:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger]
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+```
+
+```diff
++   Status: CREATED
+    contract GasPriceOracle (katana:0x420000000000000000000000000000000000000F) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2StandardBridge (katana:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge]
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+```
+
+```diff
++   Status: CREATED
+    contract SequencerFeeVault (katana:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault]
+    +++ description: Collects the sequencer fees.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (katana:0x4200000000000000000000000000000000000012) [opstack/Layer2/OptimismMintableERC20Factory]
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract L1BlockNumber (katana:0x4200000000000000000000000000000000000013) [opstack/Layer2/L1BlockNumber]
+    +++ description: Simple contract that returns the latest L1 block number.
+```
+
+```diff
++   Status: CREATED
+    contract L2ERC721Bridge (katana:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge]
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+```
+
+```diff
++   Status: CREATED
+    contract L1Block (katana:0x4200000000000000000000000000000000000015) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ToL1MessagePasser (katana:0x4200000000000000000000000000000000000016) [katana/L2ToL1MessagePasser]
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1. It can also be used directly as a low-level interface.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC721Factory (katana:0x4200000000000000000000000000000000000017) [opstack/Layer2/OptimismMintableERC721Factory]
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (katana:0x4200000000000000000000000000000000000018) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BaseFeeVault (katana:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault]
+    +++ description: Collects EIP-1559 base fees
+```
+
+```diff
++   Status: CREATED
+    contract L1FeeVault (katana:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault]
+    +++ description: Collects the L1 portion of the L2 transaction fees.
+```
+
+```diff
++   Status: CREATED
+    contract OperatorFeeVault (katana:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault]
+    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+```
+
+```diff
++   Status: CREATED
+    contract SchemaRegistry (katana:0x4200000000000000000000000000000000000020) [opstack/Layer2/SchemaRegistry]
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+```
+
+```diff
++   Status: CREATED
+    contract EAS (katana:0x4200000000000000000000000000000000000021) [opstack/Layer2/EAS]
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain]
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+```
+
+```diff
++   Status: CREATED
+    contract BridgeLib (katana:0xb30C032b183525de7427f04e79F45Cd19866E124) [katana/BridgeLib]
+    +++ description: Utility library contract for the AgglayerBridgeL2.
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenWrappedBridgeUpgradeable (katana:0xF0777a825470092b3Debc9af291634460b8E1a2c) [katana/TokenWrappedBridgeUpgradeable]
+    +++ description: An ERC-20 implementation designed for cross-chain assets on the L2. It restricts token minting or burning strictly to the primary bridge contract.
+```
+
 Generated with discovered.json: 0xa9cc009f3c137deb4732a8e3a64b9059552d4b55
 
 # Diff at Fri, 15 May 2026 12:36:04 GMT:

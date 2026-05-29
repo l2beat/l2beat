@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.",
+  "fields": {
+    "globalExitRootRemover": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage 'claimed' status of global deposit indexes (can freeze bridge transactions), remove global exit roots (used for L2 deposits)."
+        },
+        {
+          "type": "interact",
+          "description": "roll back or insert leaves into the local exit tree (LET) that enables withdrawals from the L2. (can steal)",
+          "condition": "if the bridge is paused"
+        }
+      ]
+    },
+    "globalExitRootUpdater": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update the global exit root (GER) that is used for L2 deposits."
+        }
+      ]
+    }
+  }
+}
