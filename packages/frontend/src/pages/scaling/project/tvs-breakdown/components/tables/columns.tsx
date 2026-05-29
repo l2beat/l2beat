@@ -5,6 +5,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { PercentChange } from '~/components/PercentChange'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -94,21 +95,27 @@ export const columns = [
       return <TokenAddressCell {...address} />
     },
   }),
-  columnHelper.accessor('priceUsd', {
+  columnHelper.accessor((row) => row.priceUsd.value, {
     id: 'priceUsd',
     header: 'Price',
     meta: {
       align: 'right',
     },
     cell: (ctx) => {
+      const { priceUsd } = ctx.row.original
       return (
-        <div className="font-medium text-xs">
-          {formatCurrency(ctx.row.original.priceUsd, 'usd')}
+        <div className="flex items-center justify-end gap-1">
+          <div className="font-medium text-xs">
+            {formatCurrency(priceUsd.value, 'usd')}
+          </div>
+          {priceUsd.change !== undefined && (
+            <PercentChange value={priceUsd.change} />
+          )}
         </div>
       )
     },
   }),
-  columnHelper.accessor('valueForProject', {
+  columnHelper.accessor((row) => row.valueForProject.value, {
     id: 'value',
     header: 'TVS-Adjusted Value',
     meta: {
