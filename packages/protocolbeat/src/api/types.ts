@@ -26,9 +26,13 @@ export interface ApiEntrypointGroup {
   label: string
   sourceProject: string
   memberAddresses: string[]
+  /** Addresses declared in entrypoints.json (before propagation). */
+  declaredMemberAddresses?: string[]
   bridgeAddresses: string[]
   contractCount: number
   eoaCount: number
+  /** Palette index from module entrypoints.json (1–10). Omitted when unset or auto (0). */
+  color?: number
 }
 
 export interface ApiPreviewResponse {

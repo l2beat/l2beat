@@ -1,0 +1,10 @@
+{
+  "entrypoints": {
+    "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": {
+      "type": "Contract",
+      "project": "ink",
+      "name": "SuperchainProxyAdmin"
+    }
+  },
+  "color": 7
+}

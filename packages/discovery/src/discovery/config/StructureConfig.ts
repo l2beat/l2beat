@@ -83,6 +83,11 @@ export const Entrypoint = v.object({
 })
 
 export const _EntrypointsFile = {
+  /** Node palette index for this module's entrypoint group (0 = auto, 1–10). */
+  color: v
+    .number()
+    .check((x) => Number.isInteger(x) && x >= 0 && x <= 10)
+    .optional(),
   entrypoints: v
     .record(
       v.string().transform((v) => ChainSpecificAddress(v)),

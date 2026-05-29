@@ -15,6 +15,8 @@ import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
 import { getContractType } from './getContractType'
+import { collectMergedEntrypoints } from './collectMergedEntrypoints'
+import { readEntrypointsModuleColor } from './configs/entrypointsFile'
 import { getEntrypointGroups } from './getEntrypointGroups'
 import { getMeta } from './getMeta'
 import { parseFieldValue } from './parseFieldValue'
@@ -53,14 +55,23 @@ export function getProject(
     maxDepth,
   ).map((x) => x.address)
 
+  const mergedEntrypoints = collectMergedEntrypoints(
+    configReader,
+    project,
+    discoveries,
+  )
+
   const response: ApiProjectResponse = {
     entries: [],
     entrypointGroups: getEntrypointGroups(
       project,
-      projectConfig.structure.entrypoints,
+      mergedEntrypoints,
       discovery,
       data.map((x) => x.discovery),
-    ),
+    ).map((group) => ({
+      ...group,
+      color: readEntrypointsModuleColor(configReader, group.sourceProject),
+    })),
   }
   const appearancesByAddress = getAddressAppearances(configReader)
   const meta = getMeta(data.map((x) => x.discovery))

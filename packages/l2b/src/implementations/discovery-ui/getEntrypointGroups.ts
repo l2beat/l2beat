@@ -3,6 +3,23 @@ import type { Entrypoint } from '@l2beat/discovery/dist/discovery/config/Structu
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { ApiEntrypointGroup } from './types'
 
+export function entrypointGroupId(
+  sourceProject: string,
+  address: ChainSpecificAddress,
+): string {
+  return `${sourceProject}::${address}`
+}
+
+function formatDeclaredEntrypointLabel(
+  entrypoint: Entrypoint,
+  sourceProject: string,
+): string {
+  if (entrypoint.name) {
+    return `${sourceProject}: ${entrypoint.name}`
+  }
+  return `${sourceProject}/entrypoints.json`
+}
+
 export function getEntrypointGroups(
   projectName: string,
   entrypoints: Record<ChainSpecificAddress, Entrypoint> | undefined,
@@ -11,44 +28,6 @@ export function getEntrypointGroups(
 ): ApiEntrypointGroup[] {
   if (!entrypoints) {
     return []
-  }
-
-  const loadedAddresses = new Set(
-    loadedDiscoveries
-      .flatMap((discovery) => discovery.entries)
-      .filter((entry) => entry.type !== 'Reference')
-      .map((entry) => entry.address),
-  )
-
-  const bySourceProject = new Map<
-    string,
-    {
-      memberAddresses: ChainSpecificAddress[]
-      contractCount: number
-      eoaCount: number
-    }
-  >()
-
-  for (const [address, entrypoint] of Object.entries(entrypoints)) {
-    if (entrypoint.project === projectName || entrypoint.isLegacy) {
-      continue
-    }
-    if (!loadedAddresses.has(address as ChainSpecificAddress)) {
-      continue
-    }
-
-    const group = bySourceProject.get(entrypoint.project) ?? {
-      memberAddresses: [],
-      contractCount: 0,
-      eoaCount: 0,
-    }
-    group.memberAddresses.push(address as ChainSpecificAddress)
-    if (entrypoint.type === 'Contract') {
-      group.contractCount++
-    } else {
-      group.eoaCount++
-    }
-    bySourceProject.set(entrypoint.project, group)
   }
 
   const bridgeAddressesByProject = new Map<string, ChainSpecificAddress[]>()
@@ -61,55 +40,66 @@ export function getEntrypointGroups(
     bridgeAddressesByProject.set(entry.targetProject, bridges)
   }
 
+  const projectsWithDeclaredEntrypoints = new Set<string>()
+  const groups: ApiEntrypointGroup[] = []
+
+  for (const [address, entrypoint] of Object.entries(entrypoints)) {
+    if (entrypoint.isLegacy) {
+      continue
+    }
+
+    projectsWithDeclaredEntrypoints.add(entrypoint.project)
+    const chainAddress = address as ChainSpecificAddress
+    const projectBridges = bridgeAddressesByProject.get(entrypoint.project) ?? []
+    const bridgeAddresses = projectBridges.includes(chainAddress)
+      ? [chainAddress]
+      : projectBridges
+
+    groups.push({
+      id: entrypointGroupId(entrypoint.project, chainAddress),
+      label: formatDeclaredEntrypointLabel(entrypoint, entrypoint.project),
+      sourceProject: entrypoint.project,
+      memberAddresses: [chainAddress],
+      bridgeAddresses,
+      contractCount: entrypoint.type === 'Contract' ? 1 : 0,
+      eoaCount: entrypoint.type === 'EOA' ? 1 : 0,
+    })
+  }
+
   for (const refDiscovery of loadedDiscoveries) {
     if (refDiscovery.name === projectName) {
       continue
     }
-    if (bySourceProject.has(refDiscovery.name)) {
+    if (projectsWithDeclaredEntrypoints.has(refDiscovery.name)) {
       continue
     }
 
-    const group = {
-      memberAddresses: [] as ChainSpecificAddress[],
-      contractCount: 0,
-      eoaCount: 0,
-    }
+    const memberAddresses: ChainSpecificAddress[] = []
+    let contractCount = 0
+    let eoaCount = 0
     for (const entry of refDiscovery.entries) {
       if (entry.type === 'Reference') {
         continue
       }
-      group.memberAddresses.push(entry.address)
+      memberAddresses.push(entry.address)
       if (entry.type === 'Contract') {
-        group.contractCount++
+        contractCount++
       } else if (entry.type === 'EOA') {
-        group.eoaCount++
+        eoaCount++
       }
     }
-    if (group.memberAddresses.length > 0) {
-      bySourceProject.set(refDiscovery.name, group)
-    }
-  }
-
-  const groups: ApiEntrypointGroup[] = []
-  for (const [sourceProject, group] of bySourceProject) {
-    if (group.memberAddresses.length === 0) {
+    if (memberAddresses.length === 0) {
       continue
     }
 
-    const hasEntrypointsFile = Object.values(entrypoints).some(
-      (entrypoint) => entrypoint.project === sourceProject,
-    )
-
     groups.push({
-      id: sourceProject,
-      label: hasEntrypointsFile
-        ? `${sourceProject}/entrypoints.json`
-        : sourceProject,
-      sourceProject,
-      memberAddresses: group.memberAddresses,
-      bridgeAddresses: bridgeAddressesByProject.get(sourceProject) ?? [],
-      contractCount: group.contractCount,
-      eoaCount: group.eoaCount,
+      id: refDiscovery.name,
+      label: refDiscovery.name,
+      sourceProject: refDiscovery.name,
+      memberAddresses,
+      bridgeAddresses: bridgeAddressesByProject.get(refDiscovery.name) ?? [],
+      contractCount,
+      eoaCount,
     })
   }
 

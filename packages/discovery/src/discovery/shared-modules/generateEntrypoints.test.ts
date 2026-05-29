@@ -72,6 +72,31 @@ describe(generateEntrypoints.name, () => {
     expect(result?.entrypoints).toEqual(generated.entrypoints)
   })
 
+  it('preserves module color when regenerating entrypoints', () => {
+    const old = {
+      color: 5,
+      entrypoints: {
+        [ChainSpecificAddress.from('eth', '0x01')]: entrypoint1,
+      },
+    }
+    const generated = {
+      entrypoints: {
+        [ChainSpecificAddress.from('eth', '0x02')]: entrypoint2,
+      },
+    }
+    const generator = mockFn().returns(generated)
+    const result = generateEntrypoints(
+      'testProject',
+      old,
+      generator,
+      Logger.SILENT,
+      { updateOnly: true, keepLegacy: false },
+    )
+
+    expect(result?.color).toEqual(5)
+    expect(result?.entrypoints).toEqual(generated.entrypoints)
+  })
+
   it('keeps legacy entrypoints when keepLegacy is true, overwrites existing', () => {
     const old = {
       entrypoints: {

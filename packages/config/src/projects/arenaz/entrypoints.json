@@ -1,0 +1,10 @@
+{
+  "entrypoints": {
+    "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C": {
+      "type": "Contract",
+      "project": "arenaz",
+      "name": "SuperchainConfig"
+    }
+  },
+  "color": 6
+}

@@ -2,7 +2,7 @@ import type { DiscoveryOutput } from '@l2beat/discovery'
 import type { Entrypoint } from '@l2beat/discovery/dist/discovery/config/StructureConfig'
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { getEntrypointGroups } from './getEntrypointGroups'
+import { entrypointGroupId, getEntrypointGroups } from './getEntrypointGroups'
 
 const addr = (n: string) => ChainSpecificAddress.from('eth', n)
 
@@ -22,7 +22,7 @@ function discovery(
 }
 
 describe(getEntrypointGroups.name, () => {
-  it('returns groups for external entrypoints with bridge references', () => {
+  it('returns one group per declared entrypoint with bridge references', () => {
     const bridge = addr('0x0000000000000000000000000000000000000001')
     const member = addr('0x0000000000000000000000000000000000000002')
     const entrypoints: Record<ChainSpecificAddress, Entrypoint> = {
@@ -54,18 +54,77 @@ describe(getEntrypointGroups.name, () => {
 
     expect(groups).toEqual([
       {
-        id: 'shared-module',
-        label: 'shared-module/entrypoints.json',
+        id: entrypointGroupId('shared-module', bridge),
+        label: 'shared-module: Bridge',
         sourceProject: 'shared-module',
-        memberAddresses: [bridge, member],
+        memberAddresses: [bridge],
         bridgeAddresses: [bridge],
         contractCount: 1,
+        eoaCount: 0,
+      },
+      {
+        id: entrypointGroupId('shared-module', member),
+        label: 'shared-module/entrypoints.json',
+        sourceProject: 'shared-module',
+        memberAddresses: [member],
+        bridgeAddresses: [bridge],
+        contractCount: 0,
         eoaCount: 1,
       },
     ])
   })
 
-  it('skips legacy entrypoints and the current project', () => {
+  it('includes entrypoints declared for the open project', () => {
+    const entry = addr('0x0000000000000000000000000000000000000002')
+    const entrypoints: Record<ChainSpecificAddress, Entrypoint> = {
+      [entry]: {
+        type: 'Contract',
+        project: 'apex',
+        name: 'HomeEntry',
+      },
+    }
+    const base = discovery('apex', [
+      { type: 'Contract', address: entry, name: 'HomeEntry' },
+    ])
+
+    expect(getEntrypointGroups('apex', entrypoints, base, [base])).toEqual([
+      {
+        id: entrypointGroupId('apex', entry),
+        label: 'apex: HomeEntry',
+        sourceProject: 'apex',
+        memberAddresses: [entry],
+        bridgeAddresses: [],
+        contractCount: 1,
+        eoaCount: 0,
+      },
+    ])
+  })
+
+  it('lists declared entrypoints even when not present in loaded discoveries', () => {
+    const entry = addr('0x0000000000000000000000000000000000000002')
+    const entrypoints: Record<ChainSpecificAddress, Entrypoint> = {
+      [entry]: {
+        type: 'Contract',
+        project: 'mode',
+        name: 'DeputyPauseModule',
+      },
+    }
+    const base = discovery('celo', [])
+
+    expect(getEntrypointGroups('celo', entrypoints, base, [base])).toEqual([
+      {
+        id: entrypointGroupId('mode', entry),
+        label: 'mode: DeputyPauseModule',
+        sourceProject: 'mode',
+        memberAddresses: [entry],
+        bridgeAddresses: [],
+        contractCount: 1,
+        eoaCount: 0,
+      },
+    ])
+  })
+
+  it('skips legacy entrypoints', () => {
     const member = addr('0x0000000000000000000000000000000000000002')
     const entrypoints: Record<ChainSpecificAddress, Entrypoint> = {
       [member]: {

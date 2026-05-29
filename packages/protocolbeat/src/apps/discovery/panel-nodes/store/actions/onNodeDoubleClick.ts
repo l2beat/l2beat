@@ -2,9 +2,8 @@ import type { State } from '../State'
 import { boxContains } from '../utils/containment'
 import { toViewCoordinates } from '../utils/coordinates'
 import {
-  getEntrypointGroupIdFromNodeId,
+  getEntrypointGroupIdForNode,
   getVisibleDisplayedNodes,
-  isEntrypointGroupNodeId,
 } from '../utils/entrypointGroups'
 import { toggleEntrypointGroup } from './other'
 
@@ -21,11 +20,9 @@ export function onNodeDoubleClick(
     return {}
   }
 
-  if (isEntrypointGroupNodeId(node.id)) {
-    const groupId = getEntrypointGroupIdFromNodeId(node.id)
-    if (groupId) {
-      return toggleEntrypointGroup(state, groupId)
-    }
+  const groupId = getEntrypointGroupIdForNode(node, state.entrypointGroups)
+  if (groupId) {
+    return toggleEntrypointGroup(state, groupId)
   }
 
   return {}

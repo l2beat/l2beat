@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { parse, stringify } from 'comment-json'
-import { type ReactNode, useMemo, useState } from 'react'
+import { type ReactNode, useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import {
   readEntrypointsFile,
@@ -10,6 +10,16 @@ import { Dialog } from '../../../../components/Dialog'
 import { removeJSONTrailingCommas } from '../../../../utils/removeJSONTrailingCommas'
 import { getProjectQueryOptions } from '../../hooks/projectQuery'
 import { useProjectData } from '../../hooks/useProjectData'
+import {
+  collectUsedEntrypointColors,
+  pickUnusedEntrypointColor,
+  readEntrypointsFileColor,
+} from '../entrypointColors'
+import { useTerminalStore } from '../../panel-terminal/store'
+import { useStore } from '../store/store'
+import { ColorPicker } from './ColorPicker'
+
+const REFRESH_DISCOVERY_TOAST_ID = 'entrypoints.discovery.refresh'
 
 interface ManageEntrypointsDialogProps {
   open: boolean
@@ -22,6 +32,7 @@ type AddEntrypointForm = {
   name: string
   type: EntrypointType
   project: string
+  color: number
 }
 
 export function ManageEntrypointsDialog(props: ManageEntrypointsDialogProps) {
@@ -32,9 +43,13 @@ export function ManageEntrypointsDialog(props: ManageEntrypointsDialogProps) {
     name: '',
     type: 'Contract',
     project: '',
+    color: 1,
   })
+  const [colorInitialized, setColorInitialized] = useState(false)
 
   const saveTargetProject = addModalOpen ? form.project.trim() : project
+  const projectResponse = useQuery(getProjectQueryOptions(project))
+  const nodes = useStore((state) => state.nodes)
 
   const entrypointsFileQuery = useQuery({
     queryKey: ['entrypoints-files', saveTargetProject],
@@ -56,6 +71,50 @@ export function ManageEntrypointsDialog(props: ManageEntrypointsDialogProps) {
     const withoutEntrypoint = appearances.filter((entry) => !entry.hasEntrypoint)
     return [withEntrypoint, withoutEntrypoint]
   }, [appearances])
+  const otherProjectNames = useMemo(
+    () => [...new Set(otherProjects.map((entry) => entry.project))],
+    [otherProjects],
+  )
+
+  const discover = useTerminalStore((state) => state.discover)
+  const discoveryInFlight = useTerminalStore((state) => state.command.inFlight)
+
+  const refreshDiscoveriesMutation = useMutation({
+    mutationFn: async (projects: readonly string[]) => {
+      for (let index = 0; index < projects.length; index++) {
+        const targetProject = projects[index]
+        toast.loading(
+          `Discovering ${targetProject} (${index + 1}/${projects.length})…`,
+          { id: REFRESH_DISCOVERY_TOAST_ID },
+        )
+        const ok = await discover(targetProject)
+        if (!ok) {
+          throw new Error(`Discovery failed for ${targetProject}`)
+        }
+      }
+    },
+    onSuccess: async (_, projects) => {
+      await queryClient.invalidateQueries(getProjectQueryOptions(project))
+      for (const targetProject of projects) {
+        await queryClient.invalidateQueries({
+          queryKey: ['projects', targetProject],
+        })
+        await queryClient.invalidateQueries({
+          queryKey: ['config-sync-status', targetProject],
+        })
+      }
+      toast.success(
+        `Discovery finished for ${projects.length} project${projects.length === 1 ? '' : 's'}`,
+        { id: REFRESH_DISCOVERY_TOAST_ID },
+      )
+    },
+    onError: (error) => {
+      toast.error('Discovery refresh stopped', {
+        id: REFRESH_DISCOVERY_TOAST_ID,
+        description: String(error),
+      })
+    },
+  })
 
   const saveMutation = useMutation({
     mutationFn: async ({
@@ -86,16 +145,54 @@ export function ManageEntrypointsDialog(props: ManageEntrypointsDialogProps) {
     },
   })
 
+  useEffect(() => {
+    if (!addModalOpen) {
+      setColorInitialized(false)
+      return
+    }
+    if (colorInitialized || entrypointsFileQuery.isLoading) {
+      return
+    }
+    const fileColor = readEntrypointsFileColor(entrypointsFileQuery.data?.content)
+    if (fileColor !== undefined && fileColor > 0) {
+      setForm((current) => ({ ...current, color: fileColor }))
+      setColorInitialized(true)
+      return
+    }
+    const used = collectUsedEntrypointColors(
+      projectResponse.data?.entrypointGroups ?? [],
+      nodes,
+    )
+    setForm((current) => ({
+      ...current,
+      color: pickUnusedEntrypointColor(used),
+    }))
+    setColorInitialized(true)
+  }, [
+    addModalOpen,
+    colorInitialized,
+    entrypointsFileQuery.data,
+    entrypointsFileQuery.isLoading,
+    nodes,
+    projectResponse.data?.entrypointGroups,
+  ])
+
   const openAddModal = (sourceProject: string) => {
     const defaultType: EntrypointType =
       selected?.type === 'EOA' || selected?.type === 'EOAPermissioned'
         ? 'EOA'
         : 'Contract'
+    const used = collectUsedEntrypointColors(
+      projectResponse.data?.entrypointGroups ?? [],
+      nodes,
+    )
     setForm({
       name: selected?.name ?? '',
       type: defaultType,
       project: sourceProject,
+      color: pickUnusedEntrypointColor(used),
     })
+    setColorInitialized(false)
     setAddModalOpen(true)
   }
 
@@ -124,6 +221,11 @@ export function ManageEntrypointsDialog(props: ManageEntrypointsDialogProps) {
       }
       entrypoints[selected.address] = nextEntrypoint
       parsed.entrypoints = entrypoints
+      if (form.color > 0) {
+        parsed.color = form.color
+      } else {
+        delete parsed.color
+      }
 
       const nextContent = stringify(parsed, null, 2)
       saveMutation.mutate({
@@ -182,6 +284,22 @@ export function ManageEntrypointsDialog(props: ManageEntrypointsDialogProps) {
                 title="Other projects"
                 description="Projects where this address appears but is not in entrypoints yet. Saving updates that project's entrypoints.json and adds it to this project's sharedModules."
               >
+                {otherProjectNames.length > 0 && (
+                  <button
+                    type="button"
+                    disabled={
+                      discoveryInFlight || refreshDiscoveriesMutation.isPending
+                    }
+                    className="w-full rounded border border-coffee-500 bg-coffee-800 px-3 py-2 text-coffee-100 text-sm hover:bg-coffee-700 disabled:cursor-not-allowed disabled:opacity-50"
+                    onClick={() =>
+                      refreshDiscoveriesMutation.mutate(otherProjectNames)
+                    }
+                  >
+                    {refreshDiscoveriesMutation.isPending
+                      ? 'Refreshing discovery…'
+                      : 'Refresh discovery for entrypoints'}
+                  </button>
+                )}
                 {otherProjects.length === 0 && (
                   <EmptyRow message="No additional projects found." />
                 )}
@@ -251,11 +369,23 @@ export function ManageEntrypointsDialog(props: ManageEntrypointsDialogProps) {
             <Label title="Project folder">
               <input
                 value={form.project}
-                onChange={(e) => setForm({ ...form, project: e.target.value })}
+                onChange={(e) => {
+                  setColorInitialized(false)
+                  setForm({ ...form, project: e.target.value })
+                }}
                 aria-label="Project folder for entrypoints.json"
                 className="w-full border border-coffee-600 bg-coffee-800 px-3 py-2 text-coffee-100 text-sm"
               />
             </Label>
+            <div className="rounded border border-coffee-600 bg-coffee-800 p-3">
+              <ColorPicker
+                value={form.color}
+                onChange={(color) => setForm({ ...form, color })}
+                title="Entrypoint color"
+                description="Applied to all contracts in this entrypoint group."
+                showAutoOption={false}
+              />
+            </div>
             <div className="flex justify-end gap-2 pt-2">
               <button
                 type="button"

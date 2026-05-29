@@ -33,7 +33,9 @@ export function buildStoredNodeLayout(state: State): StoredNodeLayout {
     version: CURRENT_LAYOUT_VERSION,
     projectId: state.projectId,
     locations: Object.fromEntries(state.nodes.map((n) => [n.id, n.box])),
-    colors: Object.fromEntries(state.nodes.map((n) => [n.id, n.color])),
+    colors: Object.fromEntries(
+      state.nodes.filter((n) => n.color !== 0).map((n) => [n.id, n.color]),
+    ),
     hiddenFields: Object.fromEntries(
       state.nodes
         .filter((n) => n.hiddenFields.length > 0)

@@ -10,7 +10,7 @@ import {
   HIDDEN_FIELDS_FOOTER_HEIGHT,
 } from '../store/utils/constants'
 import { formatAppearsInProjectsLabel } from '../store/utils/entrypointGroups'
-import { getColor } from './colors/colors'
+import { getColor, getTitleBackgroundCss } from './colors/colors'
 
 export interface NodeViewProps {
   node: Node
@@ -65,7 +65,7 @@ function NodeViewImpl(props: NodeViewProps) {
           )}
           style={{
             height: fullHeight ? HEADER_HEIGHT : HEADER_HEIGHT - 4,
-            background: getTitleBackground(props.node),
+            background: getTitleBackgroundCss(props.node),
           }}
         >
           <AddressIcon type={props.node.addressType} />
@@ -148,25 +148,6 @@ export const NodeView = memo(NodeViewImpl, (prev, next) => {
     prev.fieldTargetHiddenMask === next.fieldTargetHiddenMask
   )
 })
-
-function getTitleBackground(node: Node): string {
-  const { color, isDark } = getColor(node)
-  if (!node.isInitial) {
-    return color
-  }
-
-  const baseColor = color
-
-  const contrastColorCSS = isDark
-    ? `color-mix(in oklch, ${baseColor}, black 15%)`
-    : `color-mix(in oklch, ${baseColor}, white 15%)`
-
-  return `repeating-radial-gradient(
-    circle,
-    ${contrastColorCSS} 0px,
-    ${baseColor} 15px
-  )`
-}
 
 interface NodeFieldProps {
   field: Field

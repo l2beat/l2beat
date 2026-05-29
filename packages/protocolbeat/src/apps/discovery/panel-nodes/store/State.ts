@@ -69,6 +69,8 @@ export interface Node {
   readonly hiddenFields: string[]
   readonly box: Box
   readonly color: number
+  /** Distinct entrypoint palette indices for split header coloring. */
+  readonly entrypointColors?: readonly number[]
   readonly hueShift: number
   readonly data: unknown
   readonly isReachable: boolean

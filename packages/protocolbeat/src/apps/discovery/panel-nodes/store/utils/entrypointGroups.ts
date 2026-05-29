@@ -1,5 +1,5 @@
 import type { ApiEntrypointGroup } from '../../../../../api/types'
-import type { Node, State } from '../State'
+import type { EntrypointGroupInfo, Node, State } from '../State'
 import {
   BOTTOM_PADDING,
   FIELD_HEIGHT,
@@ -7,6 +7,7 @@ import {
   HIDDEN_FIELDS_FOOTER_HEIGHT,
   NODE_WIDTH,
 } from './constants'
+import { processConnection } from './connectionGeometry'
 
 const ENTRYPOINT_SUMMARY_LINES = 1
 
@@ -21,6 +22,70 @@ export function getEntrypointGroupIdFromNodeId(id: string): string | undefined {
     return undefined
   }
   return id.slice('entrypoint:'.length)
+}
+
+export function findDeclaredEntrypointGroupId(
+  address: string,
+  groups: readonly ApiEntrypointGroup[],
+): string | undefined {
+  let fallback: string | undefined
+  for (const group of groups) {
+    if (!getDeclaredEntrypointAddresses(group).includes(address)) {
+      continue
+    }
+    if (isPerEntrypointGroup(group)) {
+      return group.id
+    }
+    fallback ??= group.id
+  }
+  return fallback
+}
+
+export function getEntrypointGroupIdForNode(
+  node: Pick<Node, 'id' | 'entrypointMemberOf' | 'entrypointGroup'>,
+  groups?: readonly ApiEntrypointGroup[],
+): string | undefined {
+  if (isEntrypointGroupNodeId(node.id)) {
+    return getEntrypointGroupIdFromNodeId(node.id)
+  }
+  if (node.entrypointGroup) {
+    return node.entrypointGroup.groupId
+  }
+  if (groups) {
+    const declaredGroup = findDeclaredEntrypointGroupId(node.id, groups)
+    if (declaredGroup) {
+      return declaredGroup
+    }
+  }
+  return node.entrypointMemberOf
+}
+
+export function getDeclaredEntrypointAddresses(
+  group: Pick<ApiEntrypointGroup, 'declaredMemberAddresses' | 'memberAddresses'>,
+): readonly string[] {
+  return group.declaredMemberAddresses ?? group.memberAddresses
+}
+
+/** Per-entrypoint groups use `project::address` ids; module-wide groups use the project name. */
+export function isPerEntrypointGroup(
+  group: Pick<ApiEntrypointGroup, 'id'>,
+): boolean {
+  return group.id.includes('::')
+}
+
+export function getCollapseSeedAddresses(
+  group: Pick<
+    ApiEntrypointGroup,
+    'id' | 'declaredMemberAddresses' | 'memberAddresses' | 'bridgeAddresses'
+  >,
+): readonly string[] {
+  if (isPerEntrypointGroup(group)) {
+    return getDeclaredEntrypointAddresses(group)
+  }
+  if (group.bridgeAddresses.length > 0) {
+    return group.bridgeAddresses
+  }
+  return group.memberAddresses
 }
 
 export interface EntrypointCollapseContext {
@@ -174,7 +239,16 @@ export function getEntrypointBridgeAddress(
   groups: readonly ApiEntrypointGroup[],
 ): string | undefined {
   const group = groups.find((entry) => entry.id === groupId)
-  return group?.bridgeAddresses[0] ?? group?.memberAddresses[0]
+  if (!group) {
+    return undefined
+  }
+  const declared = getDeclaredEntrypointAddresses(group)
+  return (
+    group.bridgeAddresses.find((address) => declared.includes(address)) ??
+    declared[0] ??
+    group.bridgeAddresses[0] ??
+    group.memberAddresses[0]
+  )
 }
 
 export function getDragPositionsForSelection(
@@ -214,6 +288,14 @@ export function getDragPositionsForSelection(
   return positions
 }
 
+interface CollapsePlan {
+  group: ApiEntrypointGroup
+  groupNodeId: string
+  memberIds: Set<string>
+  bridgeNode: Node
+  entrypointGroup: EntrypointGroupInfo
+}
+
 export function applyEntrypointCollapse(
   nodes: readonly Node[],
   hidden: readonly string[],
@@ -227,7 +309,7 @@ export function applyEntrypointCollapse(
   const nodesById = new Map(nodes.map((node) => [node.id, node]))
   const hiddenSet = new Set(hidden)
   const targetResolver = new Map<string, string>()
-  const groupNodes: Node[] = []
+  const plans: CollapsePlan[] = []
 
   for (const group of context.groups) {
     if (!collapsed.has(group.id)) {
@@ -238,68 +320,114 @@ export function applyEntrypointCollapse(
     const memberIds = new Set(
       group.memberAddresses.filter((address) => nodesById.has(address)),
     )
+    for (const address of getDeclaredEntrypointAddresses(group)) {
+      if (nodesById.has(address)) {
+        memberIds.add(address)
+      }
+    }
     if (memberIds.size === 0) {
       continue
     }
 
+    const declaredAddresses = getDeclaredEntrypointAddresses(group)
     const bridgeAddress =
       group.bridgeAddresses.find((address) => nodesById.has(address)) ??
+      declaredAddresses.find((address) => nodesById.has(address)) ??
       group.memberAddresses.find((address) => nodesById.has(address))
     const bridgeNode = bridgeAddress ? nodesById.get(bridgeAddress) : undefined
     if (!bridgeNode) {
       continue
     }
 
+    let contractCount = 0
+    let eoaCount = 0
     for (const memberId of memberIds) {
-      hiddenSet.add(memberId)
-      targetResolver.set(memberId, groupNodeId)
+      const memberNode = nodesById.get(memberId)
+      if (!memberNode) {
+        continue
+      }
+      if (
+        memberNode.addressType === 'EOA' ||
+        memberNode.addressType === 'EOAPermissioned'
+      ) {
+        eoaCount++
+      } else {
+        contractCount++
+      }
     }
 
-    const visibleFields = bridgeNode.fields.filter(
-      (field) => !memberIds.has(field.target),
-    )
+    plans.push({
+      group,
+      groupNodeId,
+      memberIds,
+      bridgeNode,
+      entrypointGroup: {
+        groupId: group.id,
+        label: group.label,
+        sourceProject: group.sourceProject,
+        contractCount,
+        eoaCount,
+        bridgeAddress: bridgeNode.id,
+        summary: formatEntrypointSummary(contractCount, eoaCount),
+      },
+    })
+  }
+
+  for (const plan of plans) {
+    for (const memberId of plan.memberIds) {
+      hiddenSet.add(memberId)
+      targetResolver.set(memberId, plan.groupNodeId)
+    }
+  }
+
+  const displayNodesById = new Map(nodesById)
+  const groupNodes: Node[] = []
+
+  for (const plan of plans) {
     const hiddenFieldsHeight =
-      bridgeNode.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
+      plan.bridgeNode.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
+    const syntheticBox = {
+      ...plan.bridgeNode.box,
+      width: plan.bridgeNode.box.width,
+    }
+    const visibleFields = buildCollapsedGroupFields(
+      { box: syntheticBox, hiddenFields: plan.bridgeNode.hiddenFields },
+      plan.bridgeNode,
+      plan.memberIds,
+      displayNodesById,
+      targetResolver,
+      plan.entrypointGroup,
+    )
     const visibleFieldsCount = Math.max(
       0,
       visibleFields.length -
-        bridgeNode.hiddenFields.filter((name) =>
+        plan.bridgeNode.hiddenFields.filter((name) =>
           visibleFields.some((field) => field.name === name),
         ).length,
     )
-    const entrypointGroup = {
-      groupId: group.id,
-      label: group.label,
-      sourceProject: group.sourceProject,
-      contractCount: group.contractCount,
-      eoaCount: group.eoaCount,
-      bridgeAddress: bridgeNode.id,
-      summary: formatEntrypointSummary(group.contractCount, group.eoaCount),
-    }
-
     const height =
       HEADER_HEIGHT +
-      getNodeSummaryLineCount({ entrypointGroup }) *
+      getNodeSummaryLineCount({ entrypointGroup: plan.entrypointGroup }) *
         FIELD_HEIGHT +
       visibleFieldsCount * FIELD_HEIGHT +
       BOTTOM_PADDING +
       hiddenFieldsHeight
 
-    groupNodes.push({
-      ...bridgeNode,
-      id: groupNodeId,
-      name: `Entrypoint: ${group.label}`,
+    const syntheticNode: Node = {
+      ...plan.bridgeNode,
+      id: plan.groupNodeId,
+      name: `Entrypoint: ${plan.group.label}`,
       isInitial: false,
-      entrypointGroup,
+      entrypointGroup: plan.entrypointGroup,
       fields: visibleFields,
       box: {
-        ...bridgeNode.box,
-        // Keep the synthetic node width in sync with the underlying bridge
-        // node so right-edge resize behaves like a regular node.
-        width: bridgeNode.box.width,
+        ...syntheticBox,
         height,
       },
-    })
+    }
+
+    groupNodes.push(syntheticNode)
+    displayNodesById.set(plan.groupNodeId, syntheticNode)
   }
 
   return {
@@ -324,6 +452,88 @@ export function resolveFieldTarget(
   targetResolver: Map<string, string>,
 ): string {
   return targetResolver.get(target) ?? target
+}
+
+/** Outward and cross-entrypoint links shown on a collapsed entrypoint node. */
+export function buildCollapsedGroupFields(
+  sourceNode: Pick<Node, 'box' | 'hiddenFields'>,
+  bridgeNode: Node,
+  memberIds: ReadonlySet<string>,
+  nodesById: Map<string, Node>,
+  targetResolver: Map<string, string>,
+  entrypointGroup?: EntrypointGroupInfo,
+): Node['fields'] {
+  const hiddenFieldsSet =
+    sourceNode.hiddenFields.length > 0
+      ? new Set(sourceNode.hiddenFields)
+      : undefined
+  const fieldOffsetY =
+    getNodeSummaryLineCount({ entrypointGroup }) * FIELD_HEIGHT
+  const fields: Node['fields'] = []
+  const seen = new Set<string>()
+
+  const consider = (name: string, rawTarget: string) => {
+    if (hiddenFieldsSet?.has(name)) {
+      return
+    }
+    const resolvedTarget = resolveFieldTarget(rawTarget, targetResolver)
+    const isCrossEntrypoint = isEntrypointGroupNodeId(resolvedTarget)
+    const isInternal =
+      !isCrossEntrypoint &&
+      (memberIds.has(rawTarget) || memberIds.has(resolvedTarget))
+    if (isInternal) {
+      return
+    }
+
+    const dedupeKey = `${name}\0${resolvedTarget}`
+    if (seen.has(dedupeKey)) {
+      return
+    }
+    seen.add(dedupeKey)
+
+    const targetNode = nodesById.get(resolvedTarget)
+    if (!targetNode) {
+      return
+    }
+
+    fields.push({
+      name,
+      target: resolvedTarget,
+      box: { x: 0, y: 0, width: 0, height: 0 },
+      connection: processConnection(
+        fields.length,
+        sourceNode.box,
+        targetNode.box,
+        fieldOffsetY,
+      ),
+    })
+  }
+
+  for (const field of bridgeNode.fields) {
+    consider(field.name, field.target)
+  }
+
+  for (const memberId of memberIds) {
+    if (memberId === bridgeNode.id) {
+      continue
+    }
+    const memberNode = nodesById.get(memberId)
+    if (!memberNode) {
+      continue
+    }
+    const memberHidden =
+      memberNode.hiddenFields.length > 0
+        ? new Set(memberNode.hiddenFields)
+        : undefined
+    for (const field of memberNode.fields) {
+      if (memberHidden?.has(field.name)) {
+        continue
+      }
+      consider(field.name, field.target)
+    }
+  }
+
+  return fields
 }
 
 export function buildEntrypointMemberMap(

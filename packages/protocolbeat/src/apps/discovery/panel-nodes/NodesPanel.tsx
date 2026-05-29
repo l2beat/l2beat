@@ -14,7 +14,18 @@ import { Controls } from './controls/Controls'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
-import { buildEntrypointMemberMap, normalizeSelectionForDisplay, resolveFocusNodeId } from './store/utils/entrypointGroups'
+import {
+  buildEntrypointColorAssignments,
+  buildDisplayEntrypointColorMap,
+  enrichEntrypointGroupsForCollapse,
+  getPrimaryEntrypointColor,
+} from './entrypointColors'
+import {
+  buildEntrypointMemberMap,
+  findDeclaredEntrypointGroupId,
+  normalizeSelectionForDisplay,
+  resolveFocusNodeId,
+} from './store/utils/entrypointGroups'
 import { Viewport } from './view/Viewport'
 
 export function NodesPanel() {
@@ -55,9 +66,41 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
     if (!data) {
       return
     }
-    setEntrypointGroups(data.entrypointGroups ?? [])
-    const entrypointMembers = buildEntrypointMemberMap(data.entrypointGroups ?? [])
-    const nodes: Node[] = []
+    const entrypointGroups = data.entrypointGroups ?? []
+    const enrichedEntrypointGroups = enrichEntrypointGroupsForCollapse(
+      entrypointGroups,
+      data.entries,
+    )
+    setEntrypointGroups(enrichedEntrypointGroups)
+    const entrypointColors = buildEntrypointColorAssignments(
+      entrypointGroups,
+      data.entries,
+    )
+    const displayEntrypointColors = buildDisplayEntrypointColorMap(
+      entrypointColors,
+      enrichedEntrypointGroups,
+      data.entries,
+    )
+    const entrypointMemberMap = buildEntrypointMemberMap(enrichedEntrypointGroups)
+
+    function resolveEntrypointMemberOf(address: string): string | undefined {
+      const declaredGroup = findDeclaredEntrypointGroupId(
+        address,
+        enrichedEntrypointGroups,
+      )
+      if (declaredGroup) {
+        return declaredGroup
+      }
+      return (
+        entrypointMemberMap.get(address) ??
+        entrypointColors.get(address)?.[0]?.groupId
+      )
+    }
+
+    function resolveNodeEntrypointColors(address: string): readonly number[] {
+      return displayEntrypointColors.get(address) ?? []
+    }
+    const nodesById = new Map<string, Node>()
     for (const chain of data.entries) {
       const chainHueShift = chain.project.startsWith('shared') ? 90 : 0
 
@@ -66,7 +109,13 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         ...chain.initialContracts,
         ...chain.discoveredContracts,
       ]) {
-        const hueShift = entrypointMembers.has(contract.address) ? 55 : chainHueShift
+        const assignments = entrypointColors.get(contract.address)
+        const memberGroupId = resolveEntrypointMemberOf(contract.address)
+        const palette = resolveNodeEntrypointColors(contract.address)
+        const entrypointColor =
+          palette[0] ?? getPrimaryEntrypointColor(assignments)
+        const hueShift =
+          memberGroupId && palette.length > 0 ? 0 : memberGroupId ? 55 : chainHueShift
         const [prefix, address] = contract.address.split(':') as [
           string,
           string,
@@ -85,21 +134,28 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           addressType: contract.type,
           address,
           box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
-          color: 0,
+          color: entrypointColor,
+          entrypointColors: palette.length > 0 ? palette : undefined,
           hueShift,
           data: null,
           fields: toNodeFields(contract.fields),
           hiddenFields: keysToHideOnLoad,
           appearsInProjectsCount: contract.appearsInProjectsCount,
           appearsInProjects: contract.appearsInProjects,
-          entrypointMemberOf: entrypointMembers.get(contract.address),
+          entrypointMemberOf: memberGroupId,
         }
-        nodes.push(node)
+        nodesById.set(contract.address, node)
       }
       for (const eoa of chain.eoas) {
         const [prefix, address] = eoa.address.split(':') as [string, string]
         const fallback = `EOA ${prefix}:${address.slice(0, 6)}…${address.slice(-4)}`
-        const hueShift = entrypointMembers.has(eoa.address) ? 55 : chainHueShift
+        const assignments = entrypointColors.get(eoa.address)
+        const memberGroupId = resolveEntrypointMemberOf(eoa.address)
+        const palette = resolveNodeEntrypointColors(eoa.address)
+        const entrypointColor =
+          palette[0] ?? getPrimaryEntrypointColor(assignments)
+        const hueShift =
+          memberGroupId && palette.length > 0 ? 0 : memberGroupId ? 55 : chainHueShift
         const node: Node = {
           id: eoa.address,
           isInitial: false,
@@ -109,19 +165,20 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           addressType: eoa.type,
           address,
           box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
-          color: 0,
+          color: entrypointColor,
+          entrypointColors: palette.length > 0 ? palette : undefined,
           hueShift,
           data: null,
           fields: [],
           hiddenFields: [],
           appearsInProjectsCount: undefined,
           appearsInProjects: undefined,
-          entrypointMemberOf: entrypointMembers.get(eoa.address),
+          entrypointMemberOf: memberGroupId,
         }
-        nodes.push(node)
+        nodesById.set(eoa.address, node)
       }
     }
-    loadNodes(project, nodes)
+    loadNodes(project, [...nodesById.values()])
   }, [project, data, clear, loadNodes, setEntrypointGroups])
 }
 

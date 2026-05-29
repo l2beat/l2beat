@@ -1,0 +1,10 @@
+{
+  "entrypoints": {
+    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": {
+      "type": "Contract",
+      "project": "taiko",
+      "name": "2/3 67% SP1VerifierGatewayMultisig"
+    }
+  },
+  "color": 5
+}

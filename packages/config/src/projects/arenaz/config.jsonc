@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "arenaz",
-  "import": ["../globalConfig.jsonc"],
+  "import": ["../globalConfig.jsonc", "./entrypoints.json"],
   "initialAddresses": ["eth:0x564Eb0CeFCcA86160649a8986C419693c82F3678"],
   "overrides": {
     "eth:0x658656A14AFdf9c507096aC406564497d13EC754": {

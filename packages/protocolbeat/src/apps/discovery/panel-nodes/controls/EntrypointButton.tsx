@@ -3,6 +3,7 @@ import { IconFolder } from '../../../../icons/IconFolder'
 import { cn } from '../../../../utils/cn'
 import { usePanelStore } from '../../store/panel-store'
 import { useStore } from '../store/store'
+import { getDeclaredEntrypointAddresses } from '../store/utils/entrypointGroups'
 import { ControlDropdownButton } from './ControlDropdownButton'
 import { ManageEntrypointsDialog } from './ManageEntrypointsDialog'
 
@@ -19,7 +20,7 @@ export function EntrypointButton({ className }: { className?: string }) {
     const isCollapsed = collapsedEntrypointGroups.includes(group.id)
     return {
       label: isCollapsed ? `Expand ${group.label}` : `Collapse ${group.label}`,
-      count: group.contractCount + group.eoaCount,
+      count: getDeclaredEntrypointAddresses(group).length,
       icon: <IconFolder className="size-3.5" />,
       onSelect: () => toggleEntrypointGroup(group.id),
     }

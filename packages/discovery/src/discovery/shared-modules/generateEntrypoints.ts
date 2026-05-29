@@ -34,6 +34,11 @@ export function generateEntrypoints(
       ...Object.fromEntries(legacyEntries),
     }
   }
+
+  if (existingFile?.color !== undefined) {
+    entrypoints.color = existingFile.color
+  }
+
   return entrypoints
 }
 

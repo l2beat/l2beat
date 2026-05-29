@@ -21,7 +21,7 @@ import {
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
 } from '../store/utils/constants'
-import { getColor } from './colors/colors'
+import { getColor, getHeaderPaletteColors } from './colors/colors'
 
 // ============================================================================
 // Constants
@@ -969,27 +969,37 @@ class WebGLRenderer {
         z,
       )
 
-      const { color: headerCssColor } = getColor(node)
-      const headerRgb = cssRgbToRgba(headerCssColor)
-      const headerColor = flags.isGrayedOut ? desaturate(headerRgb) : headerRgb
-      headerColor[3] = alpha
+      const headerPalette = getHeaderPaletteColors(node)
       const headerBR = rn.fullHeight ? corner : 0
       const headerBL = rn.fullHeight ? corner : 0
-      writeRound(
-        buf,
-        n++,
-        x,
-        y,
-        width,
-        headerH,
-        headerColor,
-        corner,
-        corner,
-        headerBR,
-        headerBL,
-        0,
-        z,
-      )
+      const sliceWidth = width / headerPalette.length
+      for (let sliceIndex = 0; sliceIndex < headerPalette.length; sliceIndex++) {
+        const headerCssColor = headerPalette[sliceIndex]
+        if (!headerCssColor) {
+          continue
+        }
+        const headerRgb = cssRgbToRgba(headerCssColor)
+        const headerColor = flags.isGrayedOut ? desaturate(headerRgb) : headerRgb
+        headerColor[3] = alpha
+        const sliceX = x + sliceIndex * sliceWidth
+        const isFirst = sliceIndex === 0
+        const isLast = sliceIndex === headerPalette.length - 1
+        writeRound(
+          buf,
+          n++,
+          sliceX,
+          y,
+          sliceWidth,
+          headerH,
+          headerColor,
+          isFirst ? corner : 0,
+          isLast ? corner : 0,
+          isLast ? headerBR : 0,
+          isFirst ? headerBL : 0,
+          0,
+          z,
+        )
+      }
 
       for (const { index, visibleRow } of rn.visibleFields) {
         if (flags.fieldHighlighted[index]) {

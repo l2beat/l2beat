@@ -20,15 +20,24 @@ export function getColor({
   id,
   color,
   hueShift,
+  entrypointColors,
 }: {
   id: string
   color: number
   hueShift: number
+  entrypointColors?: readonly number[]
 }): { color: string; isDark: boolean } {
+  const paletteIndex =
+    entrypointColors && entrypointColors.length > 0
+      ? entrypointColors[0]
+      : color
   const result =
-    color === 0
+    paletteIndex === 0
       ? getChainColor(id.split(':')[0] ?? '')
-      : (SELECTABLE_COLORS[color - 1] ?? { color: colors.white, isDark: false })
+      : (SELECTABLE_COLORS[paletteIndex - 1] ?? {
+          color: colors.white,
+          isDark: false,
+        })
 
   const colorCopy = {
     ...result.color,
@@ -38,6 +47,63 @@ export function getColor({
     color: oklchColorToCSS(colorCopy),
     isDark: result.isDark,
   }
+}
+
+export function getHeaderPaletteColors(node: {
+  id: string
+  color: number
+  hueShift: number
+  entrypointColors?: readonly number[]
+}): string[] {
+  const indices =
+    node.entrypointColors && node.entrypointColors.length > 0
+      ? node.entrypointColors
+      : node.color > 0
+        ? [node.color]
+        : [0]
+
+  return indices.map((index) =>
+    getColor({
+      id: node.id,
+      color: index,
+      hueShift: index > 0 ? 0 : node.hueShift,
+    }).color,
+  )
+}
+
+export function getTitleBackgroundCss(node: {
+  id: string
+  color: number
+  hueShift: number
+  entrypointColors?: readonly number[]
+  isInitial: boolean
+}): string {
+  const palette = getHeaderPaletteColors(node)
+  if (palette.length > 1) {
+    const stops = palette
+      .map((cssColor, index) => {
+        const start = (index / palette.length) * 100
+        const end = ((index + 1) / palette.length) * 100
+        return `${cssColor} ${start}%, ${cssColor} ${end}%`
+      })
+      .join(', ')
+    return `linear-gradient(to right, ${stops})`
+  }
+
+  const { color, isDark } = getColor(node)
+  if (!node.isInitial) {
+    return color
+  }
+
+  const contrastColorCSS = isDark
+    ? `color-mix(in oklch, ${color}, black 15%)`
+    : `color-mix(in oklch, ${color}, white 15%)`
+
+  return `repeating-radial-gradient(
+    circle,
+    ${contrastColorCSS} 0px,
+    ${color} 15px
+  )`
 }
 
 function getChainColor(chain: string): {

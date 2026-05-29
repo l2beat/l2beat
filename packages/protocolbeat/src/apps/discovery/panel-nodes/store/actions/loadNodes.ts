@@ -13,6 +13,7 @@ import {
   reconcileHiddenFields,
   type StoredNodeLayout,
 } from '../utils/storage'
+import { resolveNodeColorOnLoad } from '../../entrypointColors'
 import { getNodeSummaryLineCount } from '../utils/entrypointGroups'
 import { updateNodePositions } from '../utils/updateNodePositions'
 import { layout } from './other'
@@ -25,12 +26,19 @@ export function loadNodes(
   projectId: string,
   nodes: Node[],
 ): Partial<State> {
+  const saved = recallNodeLayout(projectId)
   const toAddRaw: Node[] = nodes.filter(
     (x) => !state.nodes.some((y) => x.id === y.id),
   )
   const existingRaw: Node[] = state.nodes.map((node) => {
     const newNode = nodes.find((x) => x.id === node.id)
-    return newNode ? { ...newNode, box: node.box, color: node.color } : node
+    return newNode
+      ? {
+          ...newNode,
+          box: node.box,
+          color: resolveNodeColorOnLoad(newNode, saved?.colors),
+        }
+      : node
   })
   const knownIds = new Set([...toAddRaw, ...existingRaw].map((node) => node.id))
   const dropDanglingFields = (node: Node): Node => ({
@@ -40,7 +48,6 @@ export function loadNodes(
   const toAdd = toAddRaw.map(dropDanglingFields)
   const existing = existingRaw.map(dropDanglingFields)
 
-  const saved = recallNodeLayout(projectId)
   const nodesWithoutSavedLayout = new Set<string>()
   const added = toAdd.map((node) => {
     const hiddenFields = combinedHiddenFields(node, saved)
@@ -61,8 +68,7 @@ export function loadNodes(
       visibleFieldsCount * FIELD_HEIGHT +
       BOTTOM_PADDING +
       hiddenFieldsHeight
-    const savedColor = saved?.colors?.[node.id]
-    const color = savedColor ?? node.color
+    const color = resolveNodeColorOnLoad(node, saved?.colors)
 
     if (!box) {
       nodesWithoutSavedLayout.add(node.id)

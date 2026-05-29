@@ -47,7 +47,7 @@ export function applyStoredLayout(
         },
       }
     }
-    if (savedColor !== undefined) {
+    if (savedColor !== undefined && savedColor !== 0) {
       next = { ...next, color: savedColor }
     }
     if (savedHiddenFields !== undefined) {
