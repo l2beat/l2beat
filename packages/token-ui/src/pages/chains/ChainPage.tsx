@@ -1,3 +1,4 @@
+import type { ChainRecord } from '@l2beat/token-backend'
 import { TrashIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
@@ -14,7 +15,6 @@ import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import { validateResolver } from '~/utils/validateResolver'
-import type { ChainRecord } from '../../../../database/dist/repositories/ChainRepository'
 
 export function ChainPage() {
   const { name } = useParams()

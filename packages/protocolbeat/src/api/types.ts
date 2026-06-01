@@ -127,13 +127,6 @@ export interface ApiConfigSyncStatusResponse {
   reasons: RefreshReason[]
 }
 
-export interface ApiGlobalConfigSyncStatusResponse {
-  reasons: {
-    project: string
-    reasons: RefreshReason[]
-  }[]
-}
-
 export type ApiCreateShapeResponse =
   | {
       success: true

@@ -148,6 +148,10 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
         projectId: ProjectId('mantle'),
         sinceTimestamp: UnixTime(1778001356),
       },
+      {
+        projectId: ProjectId('morph'),
+        sinceTimestamp: UnixTime(1779354407),
+      },
     ],
     verifierHashes: [
       {
@@ -183,6 +187,12 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
             address: ChainSpecificAddress.fromLong(
               'arbitrum',
               '0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624',
             ),
           },
         ],

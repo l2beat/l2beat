@@ -115,6 +115,10 @@
   @apply dark:invert max-w-full align-[unset] my-4;
 }
 
+.mdc.sequencing-censorship-resistance h3 {
+  @apply mt-5 mb-2 text-heading-16;
+}
+
 .mdc.zk-description h1 {
   @apply text-xl font-bold;
 }

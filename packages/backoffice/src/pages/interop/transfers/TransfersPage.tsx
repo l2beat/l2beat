@@ -6,12 +6,13 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageSummaryCard } from '~/components/table/TablePageSummaryCard'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { TransfersTable } from './table/TransfersTable'
 import type { TransferStatsRow } from './types'
 import { formatDollars } from './utils'
 
 export function TransfersPage() {
+  const api = useBackendApi()
   const { data, error, isError, isLoading, isFetching, refetch } =
     api.interop.transfers.stats.useQuery()
 

@@ -1,7 +1,7 @@
 {
   "name": "lightlink",
   "timestamp": 1743926099,
-  "configHash": "0xa628d0d5c31eb91738a93bab27c1ec08dbcdfff24b196ffcf56637343aca3325",
+  "configHash": "0x4db3fe3445de794725c3f71f6c58127dfc8ef7555ed3e672c62828924df75ccb",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

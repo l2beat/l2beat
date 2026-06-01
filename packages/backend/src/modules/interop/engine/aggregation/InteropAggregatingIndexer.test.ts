@@ -503,9 +503,20 @@ describe(InteropAggregatingIndexer.name, () => {
               bridgeType: 'nonMinting',
               srcChain: 'ethereum',
               dstChain: 'arbitrum',
-              reasons: [
-                'significant increase in transfer count (1900.00%, from 1,000 to 20,000)',
-              ],
+              reasons: ['Transfer count spiked (+1900%, 1,000 → 20,000)'],
+              evaluation: {
+                signals: [
+                  {
+                    metric: 'count',
+                    kind: 'ratioSpike',
+                    severity: 'severe',
+                    baseline: 1_000,
+                    current: 20_000,
+                    changePercent: 1_900,
+                  },
+                ],
+                sideMismatch: null,
+              },
             },
           ],
         }),
@@ -534,20 +545,15 @@ describe(InteropAggregatingIndexer.name, () => {
       await indexer.update(from, to)
 
       expect(aggregationAnalyzer.analyze).toHaveBeenCalledWith(to, [])
-      expect(notifier.notifySuspiciousAggregates).toHaveBeenCalledWith(to, {
-        checkedGroups: 2,
-        suspiciousGroups: [
-          {
-            id: 'stargate',
-            bridgeType: 'nonMinting',
-            srcChain: 'ethereum',
-            dstChain: 'arbitrum',
-            reasons: [
-              'significant increase in transfer count (1900.00%, from 1,000 to 20,000)',
-            ],
-          },
-        ],
-      })
+      expect(notifier.notifySuspiciousAggregates).toHaveBeenCalledTimes(1)
+      const callArgs = notifier.notifySuspiciousAggregates.calls[0]?.args
+      expect(callArgs?.[0]).toEqual(to)
+      expect(callArgs?.[1].checkedGroups).toEqual(2)
+      expect(callArgs?.[1].suspiciousGroups).toHaveLength(1)
+      expect(callArgs?.[1].suspiciousGroups[0]?.id).toEqual('stargate')
+      expect(
+        callArgs?.[1].suspiciousGroups[0]?.evaluation.signals[0]?.metric,
+      ).toEqual('count')
     })
 
     it('notifies when a historically active group drops to zero in the current snapshot', async () => {
@@ -649,11 +655,11 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(analysis?.checkedGroups).toEqual(1)
       expect(analysis?.suspiciousGroups).toHaveLength(1)
       expect(analysis?.suspiciousGroups[0]?.id).toEqual('stargate')
-      expect(
-        analysis?.suspiciousGroups[0]?.reasons.some((reason) =>
-          reason.includes('significant decrease in transfer count'),
-        ),
-      ).toEqual(true)
+      const firstGroup = analysis?.suspiciousGroups[0]
+      expect(firstGroup?.evaluation.signals[0]?.metric).toEqual('count')
+      expect(['ratioDrop', 'zScoreDrop']).toInclude(
+        firstGroup?.evaluation.signals[0]?.kind,
+      )
     })
 
     it('still persists aggregates when analysis fails', async () => {

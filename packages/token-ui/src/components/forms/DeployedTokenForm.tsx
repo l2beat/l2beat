@@ -1,4 +1,9 @@
-import type { AbstractTokenRecord, RouterOutputs } from '@l2beat/token-backend'
+import type {
+  AbstractTokenRecord,
+  ChainApi,
+  ChainRecord,
+  RouterOutputs,
+} from '@l2beat/token-backend'
 import { v } from '@l2beat/validate'
 import {
   ArrowRightIcon,
@@ -43,10 +48,6 @@ import { minLengthCheck, minNumberCheck } from '~/utils/checks'
 import { cn } from '~/utils/cn'
 import { getAbstractTokenDisplayId } from '~/utils/getDisplayId'
 import { parseDateTimePaste } from '~/utils/parseDate'
-import type {
-  ChainApi,
-  ChainRecord,
-} from '../../../../database/dist/repositories/ChainRepository'
 import { AutoFillIndicator } from '../AutoFillIndicator'
 import { CardActionButton, CardActionButtons } from '../CardActionButtons'
 import { Badge } from '../core/Badge'
@@ -592,14 +593,14 @@ export function DeployedTokenForm({
                       <ArrowRightIcon />
                     </Link>
                   )}
-                  {tokenDetails.data?.data?.coingeckoId && !abstractToken && (
+                  {!abstractToken && (
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Link
                           to={buildUrlWithParams('/tokens/new', {
                             tab: 'abstract',
-                            coingeckoId: tokenDetails.data?.data?.coingeckoId,
                             redirectTo: 'deployed',
+                            coingeckoId: tokenDetails.data?.data?.coingeckoId,
                           })}
                           className={buttonVariants({
                             variant: 'outline',

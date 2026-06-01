@@ -21,7 +21,7 @@ export function applyStoredLayout(
     if (mode === 'replace') {
       return {
         ...node,
-        color: typeof savedColor === 'number' ? savedColor : 0,
+        color: savedColor ?? 0,
         hiddenFields: reconcileHiddenFields(
           fieldNamesOf(node),
           savedHiddenFields ?? [],
@@ -47,7 +47,7 @@ export function applyStoredLayout(
         },
       }
     }
-    if (typeof savedColor === 'number') {
+    if (savedColor !== undefined) {
       next = { ...next, color: savedColor }
     }
     if (savedHiddenFields !== undefined) {

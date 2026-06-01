@@ -4,11 +4,12 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 import { AggregatedTransferAnomaliesTable } from './table/AggregatedTransferAnomaliesTable'
 import type { AggregatedAnomalyRow, AnomaliesSummaryResponse } from './types'
 
 export function AnomaliesPage() {
+  const api = useBackendApi()
   const { data, error, isError, isLoading, isFetching, refetch } =
     api.interop.anomalies.summary.useQuery()
 

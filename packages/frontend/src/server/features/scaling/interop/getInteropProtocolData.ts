@@ -11,6 +11,7 @@ import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getFlows, type InteropFlowData } from './utils/getFlows'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getProtocolEntries } from './utils/getProtocolEntries'
+import { getTopPath, type InteropTopPathData } from './utils/getTopPath'
 import { getTopToken, type InteropTopTokenData } from './utils/getTopToken'
 import {
   getTransferSizeChartData,
@@ -23,12 +24,6 @@ export type InteropProtocolDashboardData = {
   topPath: InteropTopPathData | undefined
   transferSize: TransferSizeDataPoint | undefined
   topToken: InteropTopTokenData | undefined
-}
-
-export type InteropTopPathData = {
-  chainA: string
-  chainB: string
-  volume: number
 }
 
 export async function getInteropProtocolData(
@@ -95,28 +90,6 @@ export async function getInteropProtocolData(
     topPath: getTopPath(flows),
     transferSize: getTransferSizeChartData(records, [interopProject])?.[0],
   }
-}
-
-function getTopPath(
-  flows: InteropFlowData[] | undefined,
-): InteropTopPathData | undefined {
-  const paths = new Map<string, InteropTopPathData>()
-
-  for (const flow of flows ?? []) {
-    if (flow.volume === 0) continue
-
-    const [firstChain, secondChain] = [flow.srcChain, flow.dstChain].toSorted()
-    const key = `${firstChain}-${secondChain}`
-    const current = paths.get(key)
-
-    paths.set(key, {
-      chainA: current?.chainA ?? flow.srcChain,
-      chainB: current?.chainB ?? flow.dstChain,
-      volume: (current?.volume ?? 0) + flow.volume,
-    })
-  }
-
-  return Array.from(paths.values()).toSorted((a, b) => b.volume - a.volume)[0]
 }
 
 async function getMockInteropProtocolData(

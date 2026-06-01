@@ -5,9 +5,11 @@ export interface Config {
   readonly database: DatabaseConfig
   readonly auth: AuthConfig | false
   readonly coingeckoApiKey: string | undefined
+  readonly coingeckoCallsPerMinute: number
   readonly etherscanApiKey: string | undefined
   readonly readOnlyAuthToken?: string
   readonly jsonBodyLimitMb: number
+  readonly tokenIngestion: TokenIngestionConfig
 }
 
 export interface DatabaseConfig {
@@ -27,4 +29,11 @@ export interface AuthConfig {
   JWKS: ReturnType<typeof createRemoteJWKSet>
   aud: string
   teamDomain: string
+}
+
+export interface TokenIngestionConfig {
+  enabled: boolean
+  intervalMs: number
+  autoApprove: boolean
+  maxProcessedPerRun: number
 }

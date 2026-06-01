@@ -85,7 +85,7 @@ export const columns = [
       </div>
     ),
   }),
-  columnHelper.accessor('priceUsd', {
+  columnHelper.accessor((row) => row.priceUsd.value, {
     id: 'priceUsd',
     header: 'Price',
     meta: {
@@ -94,12 +94,12 @@ export const columns = [
     cell: (ctx) => {
       return (
         <div className="font-medium text-xs">
-          {formatCurrency(ctx.row.original.priceUsd, 'usd')}
+          {formatCurrency(ctx.row.original.priceUsd.value, 'usd')}
         </div>
       )
     },
   }),
-  columnHelper.accessor('valueForProject', {
+  columnHelper.accessor((row) => row.valueForProject.value, {
     id: 'value',
     header: 'TVS-Adjusted Value',
     meta: {

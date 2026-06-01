@@ -126,6 +126,7 @@ export function getAllProtocolsColumns(
   hideTypeColumn?: boolean,
   showAverageInFlightValueColumn?: boolean,
   showNetMintedValueColumn?: boolean,
+  hideTokensColumn?: boolean,
 ) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
@@ -294,32 +295,33 @@ export function getAllProtocolsColumns(
           )
         },
       }),
-    columnHelper.accessor('tokens', {
-      header: 'Tokens\nby volume',
-      meta: {
-        cellClassName: '!pr-0',
-        headClassName: 'text-2xs',
-        tooltip:
-          'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
-      },
-      cell: (ctx) => {
-        if (ctx.row.original.tokens.items.length === 0) return EM_DASH
-        return (
-          <TopTokensCell
-            topItems={ctx.row.original.tokens}
-            type={type}
-            apiSelection={apiSelection}
-            protocol={{
-              id: ctx.row.original.id,
-              name: ctx.row.original.name,
-              slug: ctx.row.original.slug,
-              iconUrl: ctx.row.original.iconUrl,
-              bridgeTypes: ctx.row.original.bridgeTypes,
-            }}
-            showNetMintedValueColumn={showNetMintedValueColumn}
-          />
-        )
-      },
-    }),
+    !hideTokensColumn &&
+      columnHelper.accessor('tokens', {
+        header: 'Tokens\nby volume',
+        meta: {
+          cellClassName: '!pr-0',
+          headClassName: 'text-2xs',
+          tooltip:
+            'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
+        },
+        cell: (ctx) => {
+          if (ctx.row.original.tokens.items.length === 0) return EM_DASH
+          return (
+            <TopTokensCell
+              topItems={ctx.row.original.tokens}
+              type={type}
+              apiSelection={apiSelection}
+              protocol={{
+                id: ctx.row.original.id,
+                name: ctx.row.original.name,
+                slug: ctx.row.original.slug,
+                iconUrl: ctx.row.original.iconUrl,
+                bridgeTypes: ctx.row.original.bridgeTypes,
+              }}
+              showNetMintedValueColumn={showNetMintedValueColumn}
+            />
+          )
+        },
+      }),
   ])
 }

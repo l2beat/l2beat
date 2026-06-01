@@ -18,6 +18,7 @@ import {
 } from 'cmd-ts'
 import {
   effectiveIgnoreRelatives,
+  isFieldIgnored,
   proxyFilteredAddresses,
 } from './discoveryRelatives'
 import { ChainSpecificAddressValue } from './types'
@@ -193,8 +194,8 @@ export function analyzeOutgoing(
       if (allAddrs.length === 0) continue
       const addrs = allAddrs.filter((a) => !proxyFiltered.has(a))
       if (addrs.length === 0) continue
-      const inTemplate = ignored.template.has(field)
-      const inOverride = ignored.override.has(field)
+      const inTemplate = isFieldIgnored(ignored.template, field)
+      const inOverride = isFieldIgnored(ignored.override, field)
       const newAddrs = addrs.filter((a) => !index.nameByAddress.has(a))
       const ignore: RelativeIgnore = inTemplate
         ? { status: 'ignored', source: 'template' }

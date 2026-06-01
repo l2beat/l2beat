@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Aave GHO CCIP steward. It can update bridge and rate limits for the GHO Ethereum token pool only when called by the Aave Risk Council.",
+  "ignoreRelatives": ["GHO_TOKEN", "GHO_TOKEN_POOL", "RISK_COUNCIL"],
+  "fields": {
+    "RISK_COUNCIL": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update the GHO bridge limit through the GhoCcipSteward, subject to the steward delay and bounds."
+        },
+        {
+          "type": "interact",
+          "description": "update inbound and outbound GHO rate limits through the GhoCcipSteward, subject to the steward delay and bounds."
+        }
+      ]
+    }
+  }
+}

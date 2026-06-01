@@ -12,10 +12,10 @@ export function createAggregatedAnomalyColumns(): TableOptions<AggregatedAnomaly
     columnHelper.accessor('timestamp', {
       header: 'Day (UTC)',
       cell: ({ row }) => (
-        <div className="flex min-w-[8rem] flex-col">
-          <span>{row.original.timestamp}</span>
-          <span className="text-muted-foreground text-xs">
-            {row.original.dataPoints.length}d history
+        <div className="flex min-w-[6.5rem] flex-col gap-0.5 text-xs">
+          <span className="font-medium">{row.original.timestamp}</span>
+          <span className="text-muted-foreground">
+            {row.original.dataPoints.length}d
           </span>
         </div>
       ),
@@ -26,23 +26,76 @@ export function createAggregatedAnomalyColumns(): TableOptions<AggregatedAnomaly
     columnHelper.accessor('id', {
       header: 'Aggregate ID',
       cell: ({ row }) => (
-        <div className="flex min-w-[12rem] flex-col gap-1">
-          <CellLink to={buildAnomalyDetailsPath(row.original.id)}>
+        <div className="flex min-w-[9rem] flex-col">
+          <CellLink
+            to={buildAnomalyDetailsPath(row.original)}
+            className="text-xs"
+          >
             {row.original.id}
           </CellLink>
-          <span className="text-muted-foreground text-xs">Open charts</span>
         </div>
       ),
       enableSorting: false,
       meta: {
-        csvHeader: 'Transfer ID',
+        csvHeader: 'Aggregate ID',
       },
     }),
+    columnHelper.accessor('interpretation', {
+      header: 'Alert',
+      cell: ({ row }) => {
+        const alerts = row.original.interpretation
+          .split('\n')
+          .map((alert) => alert.trim())
+          .filter((alert) => alert.length > 0)
+
+        return alerts.length > 0 ? (
+          <ul
+            className="w-[14rem] min-w-[14rem] list-disc space-y-1 pl-4 text-xs leading-4"
+            title={row.original.interpretation}
+          >
+            {alerts.map((alert) => (
+              <li key={alert} className="whitespace-normal break-words">
+                {alert}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <span className="text-muted-foreground text-xs">-</span>
+        )
+      },
+      meta: {
+        csvHeader: 'Interpretation',
+        getCsvValue: ({ row }) => row.original.interpretation || '-',
+      },
+    }),
+    columnHelper.accessor(
+      (row: AggregatedAnomalyRow) => `${row.srcChain} -> ${row.dstChain}`,
+      {
+        id: 'route',
+        header: 'Route',
+        cell: ({ row }) => (
+          <div className="flex min-w-[7rem] flex-col gap-0.5 text-xs">
+            <span className="font-medium">{row.original.srcChain}</span>
+            <span className="text-muted-foreground">
+              → {row.original.dstChain}
+            </span>
+          </div>
+        ),
+        meta: {
+          csvHeader: 'Route',
+          getCsvValue: ({ row }) =>
+            `${row.original.srcChain} -> ${row.original.dstChain}`,
+        },
+      },
+    ),
     columnHelper.accessor((row: AggregatedAnomalyRow) => row.counts.last, {
       id: 'count',
       header: 'Count',
       cell: ({ row }) => (
-        <CellLink to={buildAnomalyDetailsPath(row.original.id)}>
+        <CellLink
+          to={buildAnomalyDetailsPath(row.original)}
+          className="text-xs"
+        >
           {Math.round(row.original.counts.last).toLocaleString()}
         </CellLink>
       ),
@@ -57,7 +110,7 @@ export function createAggregatedAnomalyColumns(): TableOptions<AggregatedAnomaly
         id: 'volumeUsd',
         header: 'Volume (USD)',
         cell: ({ row }) => (
-          <div className="flex min-w-[10rem] flex-col">
+          <div className="flex min-w-[8rem] flex-col gap-0.5 text-xs">
             <MetricLine>
               Src {formatDollars(row.original.srcVolume.valueUsd.last)}
             </MetricLine>
@@ -81,7 +134,7 @@ export function createAggregatedAnomalyColumns(): TableOptions<AggregatedAnomaly
         header: 'Src/Dst diff %',
         cell: ({ row }) => {
           return (
-            <div className="flex min-w-[10rem] flex-col">
+            <div className="flex min-w-[8rem] flex-col gap-0.5">
               <span
                 className="text-xs"
                 style={{
@@ -110,18 +163,15 @@ export function createAggregatedAnomalyColumns(): TableOptions<AggregatedAnomaly
         },
       },
     ),
-    columnHelper.accessor('interpretation', {
-      header: 'Alert',
+    columnHelper.accessor('bridgeType', {
+      header: 'Bridge type',
       cell: ({ row }) =>
-        row.original.interpretation.length > 0 ? (
-          <div className="min-w-[18rem]">{row.original.interpretation}</div>
+        row.original.bridgeType ? (
+          <span className="text-xs">{row.original.bridgeType}</span>
         ) : (
-          <span className="text-muted-foreground">-</span>
+          <span className="text-muted-foreground text-xs">-</span>
         ),
-      meta: {
-        csvHeader: 'Interpretation',
-        getCsvValue: ({ row }) => row.original.interpretation || '-',
-      },
+      meta: { csvHeader: 'Bridge type' },
     }),
   ]
 }

@@ -50,8 +50,70 @@ export interface ProjectTechnologyChoice {
   description: string
   references: ReferenceLink[]
   risks: ProjectRisk[]
+  sequencerSetSpec?: ProjectSequencerSetSpec
+  inclusionDelayChart?: ProjectInclusionDelayChart
+  inclusionDelayChartDescription?: string
+  censorshipResistance?: string
   isIncomplete?: boolean
   isUnderReview?: boolean
+}
+
+export interface ProjectSequencerSetSpec {
+  slotTime?: TableReadyValue
+  epochTime?: TableReadyValue
+  sequencerCount?: TableReadyValue
+  blockProductionAccess?: TableReadyValue
+  stakePerValidator?: TableReadyValue
+  rateLimit?: TableReadyValue
+  deterministicCrGadget?: TableReadyValue
+  additionalCrGadgets?: TableReadyValue
+}
+
+export type ProjectInclusionDelayChart =
+  | ProjectEthereumLikeInclusionDelayChart
+  | ProjectCommitteeLikeInclusionDelayChart
+  | ProjectSpanLikeInclusionDelayChart
+
+interface ProjectInclusionDelayChartBase {
+  target: number
+  maxCensorFraction: number
+  stakeDistribution?: ProjectInclusionDelayChartStakeDistribution
+}
+
+export interface ProjectInclusionDelayChartStakeDistribution {
+  stakeToken: string
+  totalStake: number
+  entities: ProjectInclusionDelayChartEntityStake[]
+}
+
+export interface ProjectInclusionDelayChartEntityStake {
+  name: string
+  stake: number
+}
+
+export interface ProjectEthereumLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'ethereumlike'
+  validatorCount: number
+  slotSeconds: number
+}
+
+export interface ProjectCommitteeLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'committeelike'
+  validatorCount: number
+  committeeSize: number
+  epochSlots: number
+  slotSeconds: number
+  blockingThreshold: number
+}
+
+export interface ProjectSpanLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'spanlike'
+  validatorCount: number
+  spanBlocks: number
+  blockSeconds: number
 }
 
 export interface ReferenceLink {
@@ -165,6 +227,7 @@ export interface ProjectStatuses {
 
 export interface ProjectDisplay {
   description: string
+  detailedDescription?: string
   links: ProjectLinks
   badges: Badge[]
   redWarning?: ProjectRedWarning
@@ -542,10 +605,31 @@ export interface ProjectRiskView {
   stateValidation: TableReadyValue & {
     /** @unit seconds */
     executionDelay?: number
+    /** Whether `executionDelay` is applied on every withdrawal or only when a
+     *  challenge is raised. Treated as 'always' when omitted. */
+    executionDelayMode?: 'always' | 'if-challenged'
     /** @unit seconds */
     challengeDelay?: number
-    /** @unit ETH */
-    initialBond?: string
+    /** Defaults to ETH (rendered with Ξ prefix). Set `token` when the bond is
+     *  paid in a non-ETH token; the value is then rendered as
+     *  "<value> <token>". */
+    initialBond?: {
+      value: string
+      token?: string
+    }
+    /** Whether challenging is restricted to a whitelist. When true, the bond
+     *  amount is set by the project rather than reflecting an open economic
+     *  barrier, so values across permissioned systems aren't comparable to
+     *  permissionless ones. */
+    permissioned?: boolean
+    /** Worst-case ratio of defender funds to attacker funds required to
+     *  protect the chain in a resource-exhaustion attack. See
+     *  https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a. */
+    defenderAdvantage?:
+      | { multiplier: number; shape: 'linear' }
+      | { shape: 'log' }
+      | 'not-applicable'
+      | 'not-assessed'
   }
   dataAvailability: TableReadyValue
   exitWindow: ExitWindowRisk
@@ -557,6 +641,12 @@ export interface ProjectScalingDa {
   layer: TableReadyValue & { projectId?: ProjectId }
   bridge: TableReadyValue & { projectId?: ProjectId }
   mode: TableReadyValue
+}
+
+export interface ProjectGovernanceInfo {
+  securityCouncil?: Record<string, string>
+  upgrades?: Record<string, string>
+  tokenGovernance?: Record<string, string>
 }
 
 export interface ProjectScalingTechnology {
@@ -571,12 +661,17 @@ export interface ProjectScalingTechnology {
   exitMechanisms?: ProjectTechnologyChoice[]
   massExit?: ProjectTechnologyChoice
   otherConsiderations?: ProjectTechnologyChoice[]
-  upgradesAndGovernance?: string
-  upgradesAndGovernanceImage?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   stateValidationImage?: string
   isUnderReview?: boolean
+}
+
+export interface ProjectUpgradesAndGovernance {
+  content?: string
+  governanceInfo?: ProjectGovernanceInfo
+  image?: string
 }
 
 export interface ProjectScalingStateDerivation {
@@ -842,6 +937,7 @@ export interface TrustedSetup {
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
+  participantCount?: number
 }
 
 // #endregion
@@ -851,13 +947,21 @@ export interface TrustedSetup {
 export interface ProjectPrivacyInfo {
   trustedSetup: TrustedSetup
   tokens: ProjectPrivacyToken[]
+  attributes?: PrivacyAttribute[]
   riskSummary?: string
   upgradesAndGovernance?: string
+}
+
+export interface PrivacyAttribute {
+  id: string
+  label: string
+  description: string
 }
 
 export interface ProjectPrivacyToken {
   token: {
     address: EthereumAddress
+    iconUrl: string | undefined
     symbol: string
     decimals: number
     priceId: string
@@ -1132,6 +1236,7 @@ export interface ProjectPermission {
 
 export interface ProjectPermissionedAccount {
   name: string
+  displayName?: string
   url: string
   address: ChainSpecificAddress
   isVerified: boolean

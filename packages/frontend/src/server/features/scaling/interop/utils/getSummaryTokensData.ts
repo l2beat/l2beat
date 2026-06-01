@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { getLogger } from '~/server/utils/logger'
-import type { AggregatedInteropTransferWithTokens, TokenData } from '../types'
+import type { InteropTransferWithTokens, TokenData } from '../types'
 import { buildTokensDataMap } from './buildTokensDataMap'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { getTokensData } from './getTokensData'
@@ -8,7 +8,7 @@ import { getTokensData } from './getTokensData'
 const logger = getLogger().for('getSummaryTokensData')
 
 export function getSummaryTokensData(
-  records: AggregatedInteropTransferWithTokens[],
+  records: InteropTransferWithTokens[],
   tokensDetailsMap: TokensDetailsMap,
   interopProjects: Project<'interopConfig'>[],
 ): TokenData[] {

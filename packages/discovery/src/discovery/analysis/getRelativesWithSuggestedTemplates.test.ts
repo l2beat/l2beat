@@ -55,6 +55,19 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
     })
   })
 
+  it('ignores every field when ignoreFields is true', () => {
+    const relatives = getRelativesWithSuggestedTemplates(
+      [
+        { field: 'a', value: ADDRESS_A.toString() },
+        { field: 'b', value: ADDRESS_B.toString() },
+        { field: 'c', value: ADDRESS_C.toString() },
+      ],
+      true,
+    )
+
+    expect(relatives).toEqual({})
+  })
+
   it('ignores fields in the ignoreFields array', () => {
     const relatives = getRelativesWithSuggestedTemplates(
       [

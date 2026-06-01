@@ -196,6 +196,38 @@ describe(EventHandler.name, () => {
       expect(result.value).toEqual([ChainSpecificAddress.address(U2)])
     })
 
+    it('dedupBy lets dedup by one field while keeping others in the output', async () => {
+      const U1 = ChainSpecificAddress.random()
+      const U2 = ChainSpecificAddress.random()
+      const provider = mockObject<IProvider>({
+        chain: 'ethereum',
+        getLogs: getLogsStub([
+          Update(U1, true),
+          Update(U2, true),
+          Update(U1, false),
+        ]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['user', 'added'],
+          dedupBy: 'user',
+          add: { event: 'Update' },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+      // Without dedupBy, three different (user, added) tuples → three rows.
+      // With dedupBy=user, latest per user wins → U1's added=false, U2's added=true.
+      expect(result.value).toEqual([
+        { user: ChainSpecificAddress.address(U1), added: false },
+        { user: ChainSpecificAddress.address(U2), added: true },
+      ])
+    })
+
     it('flattens selected event arrays before adding and removing', async () => {
       const U1 = ChainSpecificAddress.random()
       const U2 = ChainSpecificAddress.random()

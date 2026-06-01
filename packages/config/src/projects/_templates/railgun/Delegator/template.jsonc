@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Delegator",
-  "description": "Permission router owned by Railgun governance. If you trust this contract, you trust its owner and any currently delegated callers to execute privileged calls through it on connected Railgun components.",
+  "description": "Permission router proxy owned by Railgun governance.",
   "category": "gov",
   "ignoreRelatives": ["delegatedCallers", "verificationKeyDelegates"],
   "fields": {

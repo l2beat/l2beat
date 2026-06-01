@@ -98,6 +98,20 @@ export class PrivacyPriceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getLatestPriceByPriceId(
+    priceId: string,
+  ): Promise<PrivacyPriceRecord | undefined> {
+    const row = await this.db
+      .selectFrom('PrivacyPrice')
+      .selectAll()
+      .where('priceId', '=', priceId)
+      .orderBy('timestamp', 'desc')
+      .limit(1)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async deleteByConfigs(
     configs: {
       configurationId: string

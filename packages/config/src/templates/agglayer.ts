@@ -54,6 +54,7 @@ import type {
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
+  ProjectUpgradesAndGovernance,
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
@@ -99,7 +100,7 @@ interface AgglayerBaseConfig {
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   stage?: ProjectScalingStage
   stateValidation?: ProjectScalingStateValidation
   associatedTokens?: string[]
@@ -257,8 +258,11 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     config.nonTemplatePermissions ?? {},
   )
 
-  const upgradesAndGovernance =
-    config.upgradesAndGovernance ?? buildUpgradesAndGovernance(context)
+  const upgradesAndGovernance: ProjectUpgradesAndGovernance = {
+    content: buildUpgradesAndGovernance(context),
+    image: 'agglayer',
+    ...config.upgradesAndGovernance,
+  }
 
   const fallbackActivityConfig =
     config.variant === 'cdk-opgeth-sovereign'
@@ -282,7 +286,6 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     ecosystemInfo: { id: ProjectId('agglayer') },
     display: {
       ...config.display,
-      upgradesAndGovernanceImage: 'agglayer',
       purposes: config.overridingPurposes ?? [
         'Universal',
         ...(config.additionalPurposes ?? []),

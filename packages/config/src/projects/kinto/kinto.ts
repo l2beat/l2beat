@@ -207,7 +207,8 @@ Contracts outside of the ones necessary to interact with the smart wallet and to
       },
     },
   ),
-  upgradesAndGovernance: `
+  upgradesAndGovernance: {
+    content: `
 All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is held by the ${discovery.getMultisigStats('Kinto Security Council')} Kinto Security Council on Layer 1 and can be executed without any delay.
 On the Kinto Layer 2, critical permissions are mostly guarded by an AccessManager contract, and then passed down with configurable delays to both the Security Council and the ${discovery.getMultisigStats('Kinto Multisig 2')} Kinto Multisig 2.
 
@@ -224,6 +225,7 @@ Additionally, each smart wallet must use a recoverer address custodied by Turnke
 It also necessitates a recovery delay to prevent turnkey from maliciously using their recoverer permission. During this period of ${formatSeconds(discovery.getContractValue<number>('Kinto Multisig 2', 'RECOVERY_TIME'))}, the user can cancel the recovery process with any transaction in their smart wallet.
 
 The permissioned sanctions logic by KYC providers necessitates at least an ${formatSeconds(l2critDelay)} delay on all upgrades that aren't executed by the Security Council, allowing the user at least 7d to exit.`,
+  },
   nonTemplateTechnology: {
     otherConsiderations: [
       {

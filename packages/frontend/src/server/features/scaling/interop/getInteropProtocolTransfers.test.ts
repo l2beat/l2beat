@@ -16,8 +16,22 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
         dstValueUsd: 12.34,
       }),
       new Map([
-        ['ethereum', 'https://etherscan.io'],
-        ['arbitrum', 'https://arbiscan.io'],
+        [
+          'ethereum',
+          {
+            name: 'Ethereum',
+            iconUrl: '/icons/ethereum.png',
+            explorerUrl: 'https://etherscan.io',
+          },
+        ],
+        [
+          'arbitrum',
+          {
+            name: 'Arbitrum One',
+            iconUrl: '/icons/arbitrum.png',
+            explorerUrl: 'https://arbiscan.io',
+          },
+        ],
       ]),
       new Map(),
     )
@@ -27,17 +41,21 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       timestamp: 123,
       srcAmount: undefined,
       srcSymbol: 'Unknown',
+      srcAbstractTokenId: 'eth',
+      srcTokenIssuer: null,
       srcTokenIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       dstAmount: 12.34,
       dstSymbol: 'USDC',
+      dstAbstractTokenId: 'eth',
+      dstTokenIssuer: null,
       dstTokenIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       valueUsd: 12.34,
       duration: 60,
-      srcChain: 'ethereum',
+      srcChain: 'Ethereum',
       srcChainIconUrl: '/icons/ethereum.png',
       srcTxHash: '0xsrc',
       srcTxHashHref: 'https://etherscan.io/tx/0xsrc',
-      dstChain: 'arbitrum',
+      dstChain: 'Arbitrum One',
       dstChainIconUrl: '/icons/arbitrum.png',
       dstTxHash: '0xdst',
       dstTxHashHref: 'https://arbiscan.io/tx/0xdst',
@@ -48,8 +66,22 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
     const result = toInteropProtocolTransferDetailsItem(
       transfer(),
       new Map([
-        ['ethereum', 'https://etherscan.io'],
-        ['arbitrum', 'https://arbiscan.io'],
+        [
+          'ethereum',
+          {
+            name: 'Ethereum',
+            iconUrl: '/icons/ethereum.png',
+            explorerUrl: 'https://etherscan.io',
+          },
+        ],
+        [
+          'arbitrum',
+          {
+            name: 'Arbitrum One',
+            iconUrl: '/icons/arbitrum.png',
+            explorerUrl: 'https://arbiscan.io',
+          },
+        ],
       ]),
       new Map([
         [
@@ -73,8 +105,22 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
         duration: undefined,
       }),
       new Map([
-        ['ethereum', 'https://etherscan.io'],
-        ['arbitrum', 'https://arbiscan.io'],
+        [
+          'ethereum',
+          {
+            name: 'Ethereum',
+            iconUrl: '/icons/ethereum.png',
+            explorerUrl: 'https://etherscan.io',
+          },
+        ],
+        [
+          'arbitrum',
+          {
+            name: 'Arbitrum One',
+            iconUrl: '/icons/arbitrum.png',
+            explorerUrl: 'https://arbiscan.io',
+          },
+        ],
       ]),
       new Map(),
     )

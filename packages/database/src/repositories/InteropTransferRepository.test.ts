@@ -508,6 +508,63 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropTransferRepository.prototype.getTokenAddressesAfterSerialId.name,
+    () => {
+      it('returns unique token addresses from transfers after the cursor', async () => {
+        const first = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+        first.srcChain = 'ethereum'
+        first.srcTokenAddress = '0xaaa'
+        first.dstChain = 'arbitrum'
+        first.dstTokenAddress = '0xbbb'
+
+        const second = transfer('plugin1', 'msg2', 'deposit', UnixTime(200))
+        second.srcChain = 'ethereum'
+        second.srcTokenAddress = '0xaaa'
+        second.dstChain = 'base'
+        second.dstTokenAddress = undefined
+
+        await repository.insertMany([first, second])
+
+        const batch = await repository.getTokenAddressesAfterSerialId('0')
+
+        expect(batch.latestSerialId).not.toEqual(undefined)
+        expect(batch.tokenAddresses).toEqualUnsorted([
+          { chain: 'ethereum', address: '0xaaa' },
+          { chain: 'arbitrum', address: '0xbbb' },
+        ])
+      })
+
+      it('uses insertion order instead of transfer timestamp', async () => {
+        const oldEvent = transfer('plugin1', 'msg1', 'deposit', UnixTime(300))
+        oldEvent.srcTokenAddress = '0x111'
+        oldEvent.dstTokenAddress = '0x222'
+        await repository.insertMany([oldEvent])
+
+        const cursor = (await repository.getTokenAddressesAfterSerialId('0'))
+          .latestSerialId
+        expect(cursor).not.toEqual(undefined)
+
+        const lateArrival = transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          UnixTime(100),
+        )
+        lateArrival.srcTokenAddress = '0x333'
+        lateArrival.dstTokenAddress = '0x444'
+        await repository.insertMany([lateArrival])
+
+        const batch = await repository.getTokenAddressesAfterSerialId(cursor!)
+
+        expect(batch.tokenAddresses).toEqualUnsorted([
+          { chain: lateArrival.srcChain, address: '0x333' },
+          { chain: lateArrival.dstChain, address: '0x444' },
+        ])
+      })
+    },
+  )
+
   describe(InteropTransferRepository.prototype.updateFinancials.name, () => {
     it('updates financial data and marks transfer as processed', async () => {
       const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))

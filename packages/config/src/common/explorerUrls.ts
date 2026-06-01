@@ -39,4 +39,5 @@ export const EXPLORER_URLS: Record<string, string> = {
   ethereal: 'https://explorer.ethereal.trade',
   ethscriptions: 'https://explorer.ethscriptions.com',
   sepolia: 'https://sepolia.etherscan.io',
+  katana: 'https://katanascan.com',
 }

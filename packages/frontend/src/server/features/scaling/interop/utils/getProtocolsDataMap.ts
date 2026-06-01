@@ -1,12 +1,13 @@
-import { assertUnreachable, getInteropTransferValue } from '@l2beat/shared-pure'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { INTEROP_PAIR_SEPARATOR } from '../consts'
 import type {
-  AggregatedInteropTransferWithTokens,
   CommonInteropData,
+  InteropTransferWithTokens,
   TokenFlowData,
 } from '../types'
 import { accumulateChains, accumulateTokens } from './accumulate'
 import type { TokenInteropData } from './buildTokensDataMap'
+import { getInteropTransferRecordValue } from './getInteropTransferRecordValue'
 import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 export interface ProtocolDataByBridgeType {
@@ -57,7 +58,7 @@ export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
  * Used by getProtocolEntries where we need separate entries per bridge type.
  */
 export function getProtocolsDataMapByBridgeType(
-  records: AggregatedInteropTransferWithTokens[],
+  records: InteropTransferWithTokens[],
 ): Map<string, ProtocolDataByBridgeType> {
   const protocolsDataMap = new Map<string, ProtocolDataByBridgeType>()
 
@@ -132,7 +133,7 @@ export function getProtocolsDataMapByBridgeType(
  * Used by getAllProtocolEntries where we aggregate all bridge types together.
  */
 export function getProtocolsDataMap(
-  records: AggregatedInteropTransferWithTokens[],
+  records: InteropTransferWithTokens[],
 ): Map<string, ProtocolData> {
   const protocolsDataMap = new Map<string, ProtocolData>()
 
@@ -140,7 +141,7 @@ export function getProtocolsDataMap(
     const current =
       protocolsDataMap.get(record.id) ?? createInitialProtocolData()
     protocolsDataMap.set(record.id, {
-      volume: current.volume + (getInteropTransferValue(record) ?? 0),
+      volume: current.volume + (getInteropTransferRecordValue(record) ?? 0),
       tokens: mergeTokensData(current.tokens, record),
       chains: mergeChainsData(current.chains, record),
       transferCount: current.transferCount + (record.transferCount ?? 0),
@@ -205,10 +206,11 @@ function createInitialProtocolData(): ProtocolData {
 
 function mergeProtocolDataByBridgeTypeCommon(
   previous: ProtocolDataByBridgeTypeCommon | undefined,
-  record: AggregatedInteropTransferWithTokens,
+  record: InteropTransferWithTokens,
 ): ProtocolDataByBridgeTypeCommon {
   return {
-    volume: (previous?.volume ?? 0) + (getInteropTransferValue(record) ?? 0),
+    volume:
+      (previous?.volume ?? 0) + (getInteropTransferRecordValue(record) ?? 0),
     tokens: mergeTokensData(previous?.tokens, record),
     flows: mergeFlowsData(previous?.flows, record),
     transferCount: (previous?.transferCount ?? 0) + record.transferCount,
@@ -233,7 +235,7 @@ function mergeProtocolDataByBridgeTypeCommon(
 
 function mergeTokensData(
   currentTokens: Map<string, TokenInteropData> | undefined,
-  record: AggregatedInteropTransferWithTokens,
+  record: InteropTransferWithTokens,
 ): Map<string, TokenInteropData> {
   const result = new Map(currentTokens)
 
@@ -258,18 +260,18 @@ function mergeTokensData(
 
 function mergeFlowsData(
   currentFlows: Map<string, number> | undefined,
-  record: AggregatedInteropTransferWithTokens,
+  record: InteropTransferWithTokens,
 ): Map<string, number> {
   const result = new Map(currentFlows)
   const key = `${record.srcChain}${INTEROP_PAIR_SEPARATOR}${record.dstChain}`
   const current = result.get(key) ?? 0
-  result.set(key, current + (getInteropTransferValue(record) ?? 0))
+  result.set(key, current + (getInteropTransferRecordValue(record) ?? 0))
   return result
 }
 
 function mergeChainsData(
   currentChains: Map<string, CommonInteropData>,
-  record: AggregatedInteropTransferWithTokens,
+  record: InteropTransferWithTokens,
 ): Map<string, CommonInteropData> {
   const result = new Map(currentChains)
 

@@ -74,11 +74,13 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
 
   function onItemSelect(item: SearchBarProject | AnySearchBarEntry) {
     setOpen(false)
-    setValue('')
     router.push(item.href)
     track('searchBarProjectSelected', {
       name: item.name,
     })
+    // Clear after the dialog's close animation (duration-200) so the input
+    // doesn't visibly reset and flash the "Recently added" list mid-close.
+    setTimeout(() => setValue(''), 200)
   }
 
   // Hide virtual keyboard on touch start
@@ -270,6 +272,8 @@ function entryToLabel(entry: AnySearchBarEntry) {
       return 'ZK Project'
     case 'ecosystem':
       return 'Ecosystem'
+    case 'privacy':
+      return 'Privacy'
     default:
       assertUnreachable(entry.kind)
   }

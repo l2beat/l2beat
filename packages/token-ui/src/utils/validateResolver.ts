@@ -1,6 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import type { Validator } from '@l2beat/validate'
-import type { ImpDefinition } from 'node_modules/@l2beat/validate/dist/esm/validate'
+import type { ImpDefinition, Validator } from '@l2beat/validate'
 import type { FieldErrors, FieldValues, Resolver } from 'react-hook-form'
 
 export function validateResolver<Input extends FieldValues, Context, Output>(

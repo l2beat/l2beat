@@ -1,3 +1,4 @@
+import type { ProjectInclusionDelayChartStakeDistribution } from '@l2beat/config'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import fs from 'fs/promises'
 import fetch from 'node-fetch'
@@ -22,14 +23,9 @@ interface StakingDataset {
   entities: StakingEntity[]
 }
 
-interface ExtractedStakingProjectData {
+interface ExtractedStakingProjectData
+  extends ProjectInclusionDelayChartStakeDistribution {
   project: StakingProjectId
-  stakeToken: string
-  totalStake: number
-  entities: {
-    name: string
-    stake: number
-  }[]
 }
 
 interface PolygonValidator {
@@ -164,8 +160,26 @@ export class StakeDistributionFetcher {
     await fs.mkdir(path.dirname(this.outputFilePath), { recursive: true })
     await fs.writeFile(
       this.outputFilePath,
-      `${JSON.stringify(data, null, 2)}\n`,
+      `${JSON.stringify(this.getJsonOutput(data), null, 2)}\n`,
     )
+  }
+
+  private getJsonOutput(
+    data: ExtractedStakingProjectData[],
+  ):
+    | ExtractedStakingProjectData[]
+    | ProjectInclusionDelayChartStakeDistribution {
+    if (this.project === 'all') {
+      return data
+    }
+
+    const projectData = data[0]
+    if (!projectData) {
+      throw new Error(`No staking data fetched for ${this.project}`)
+    }
+
+    const { project: _, ...stakeDistribution } = projectData
+    return stakeDistribution
   }
 }
 

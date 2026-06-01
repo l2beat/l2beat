@@ -4,9 +4,9 @@ import type { KnownInteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
 import type {
-  AggregatedInteropTransferWithTokens,
   ByBridgeTypeData,
   InteropSelectionInput,
+  InteropTransferWithTokens,
   ProtocolDisplayable,
   ProtocolEntry,
 } from '../types'
@@ -28,7 +28,7 @@ const TOP_ITEMS_LIMIT = 3
 const logger = getLogger().for('getAllProtocolEntries')
 
 export function getProtocolEntries(
-  records: AggregatedInteropTransferWithTokens[],
+  records: InteropTransferWithTokens[],
   tokensDetailsMap: TokensDetailsMap,
   interopProjects: Project<'interopConfig'>[],
   type: KnownInteropBridgeType | undefined,
