@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x157278b29e159d7bea9174a0145c56ce02bd1c5c
+Generated with discovered.json: 0x0614c000dc91a8e66ebfa7ed3f0f908875e42063
 
-# Diff at Fri, 29 May 2026 10:56:37 GMT:
+# Diff at Mon, 01 Jun 2026 07:08:48 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@42ec6ccd3eb3987d93254260a860a262cb7c4eee block: 1779198836
-- current timestamp: 1780037029
+- comparing to: main@06302879db359284808c0757621d4cf59b7e1a57 block: 1779198836
+- current timestamp: 1780297656
 
 ## Description
 
@@ -81,7 +81,7 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 +        "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A"
 +++ severity: HIGH
       values.game621:
-+        "eth:0x4c0DAF5d9ABe92e8A26a60698a657B03538a3028"
++        "eth:0x327DdE84C9173DD799A4f74b04a69d9d385D31a4"
       values.initBondGame0:
 +        "80000000000000000"
       values.initBondGame1:
@@ -267,14 +267,14 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
-    contract SP1VerifierGateway (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) [succinct/SP1VerifierGateway]
-    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+    contract AggregateVerifier (eth:0x327DdE84C9173DD799A4f74b04a69d9d385D31a4) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (7d) to FAST_FINALIZATION_DELAY (1d).
 ```
 
 ```diff
 +   Status: CREATED
-    contract AggregateVerifier (eth:0x4c0DAF5d9ABe92e8A26a60698a657B03538a3028) [opstack/AggregateVerifier]
-    +++ description: Implementation of the AggregateVerifier dispute game (type 621) combining a TEE arm and a ZK arm. PROOF_THRESHOLD = 1 means a single un-nullified proof of either type can resolve a game.
+    contract SP1VerifierGateway (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) [succinct/SP1VerifierGateway]
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
 ```
 
 ```diff
