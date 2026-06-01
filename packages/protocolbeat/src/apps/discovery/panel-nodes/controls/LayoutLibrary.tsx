@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import {
   getProjectLayout,
@@ -8,6 +8,7 @@ import {
 } from '../../../../api/api'
 import { Button } from '../../../../components/Button'
 import { Checkbox } from '../../../../components/Checkbox'
+import { InlineCode } from '../../../../components/Code'
 import { Dialog } from '../../../../components/Dialog'
 import { Input, InputDescription } from '../../../../components/Input'
 import { Tabs } from '../../../../components/Tabs'
@@ -35,6 +36,19 @@ interface PendingLayout {
 interface LoadError {
   sourceLabel: string
   message: string
+}
+
+const DESCRIPTION_CLAMP_STYLE: Record<2 | 4, CSSProperties> = {
+  2: {
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 2,
+  },
+  4: {
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 4,
+  },
 }
 
 export function LayoutLibrary(props?: { className?: string }) {
@@ -251,24 +265,29 @@ export function LayoutLibrary(props?: { className?: string }) {
                       ) : (layoutsQuery.data?.length ?? 0) === 0 ? (
                         <EmptyState>No committed layouts found.</EmptyState>
                       ) : (
-                        <div className="divide-y divide-coffee-500">
+                        <div className="divide-y divide-coffee-400">
                           {layoutsQuery.data?.map((layout) => (
                             <div
                               key={layout.name}
                               className="flex items-start justify-between gap-3 p-2.5"
                             >
-                              <div className="min-w-0">
-                                <div className="font-medium text-sm">
+                              <div className="min-w-0 flex-1">
+                                <div
+                                  className="truncate font-medium text-sm"
+                                  title={layout.name}
+                                >
                                   {layout.name}
                                 </div>
-                                <div className="mt-1 text-coffee-200 text-xs">
-                                  {layout.description ?? 'No description'}
-                                </div>
+                                <CollapsedDescription
+                                  className="mt-1 text-coffee-200 text-xs"
+                                  text={layout.description ?? 'No description'}
+                                />
                               </div>
                               <Button
                                 size="small"
                                 onClick={() => loadMutation.mutate(layout.name)}
                                 disabled={loadingName !== null}
+                                className="shrink-0"
                               >
                                 {loadingName === layout.name
                                   ? 'Loading...'
@@ -335,11 +354,6 @@ export function LayoutLibrary(props?: { className?: string }) {
                   ? `packages/config/src/projects/${projectId}/layouts/${normalizeLayoutName(layoutName) || '<name>'}.json`
                   : 'Load a project first'}
               </InputDescription>
-              {IS_READONLY && (
-                <div className="border border-coffee-400 bg-coffee-700/40 p-2 text-coffee-200 text-xs">
-                  Save to repo is disabled in read-only mode.
-                </div>
-              )}
               {overwriteArmed && (
                 <div className="border border-aux-orange/60 bg-aux-orange/10 p-2 text-aux-orange text-xs">
                   Layout already exists. Click overwrite to replace it.
@@ -356,22 +370,24 @@ export function LayoutLibrary(props?: { className?: string }) {
                   </span>
                   Download
                 </Button>
-                <Button
-                  size="small"
-                  variant={overwriteArmed ? 'destructive' : 'solid'}
-                  onClick={onSaveCurrent}
-                  disabled={
-                    IS_READONLY ||
-                    !canPersistCurrentLayout ||
-                    saveMutation.isPending
-                  }
-                >
-                  {saveMutation.isPending
-                    ? 'Saving...'
-                    : overwriteArmed
-                      ? 'Overwrite'
-                      : 'Save to repo'}
-                </Button>
+                {!IS_READONLY && (
+                  <Button
+                    size="small"
+                    variant={overwriteArmed ? 'destructive' : 'solid'}
+                    onClick={onSaveCurrent}
+                    disabled={
+                      IS_READONLY ||
+                      !canPersistCurrentLayout ||
+                      saveMutation.isPending
+                    }
+                  >
+                    {saveMutation.isPending
+                      ? 'Saving...'
+                      : overwriteArmed
+                        ? 'Overwrite'
+                        : 'Save to repo'}
+                  </Button>
+                )}
               </div>
             </Tabs.Content>
           </Tabs.Root>
@@ -441,6 +457,29 @@ function EmptyState({ children }: { children: React.ReactNode }) {
   )
 }
 
+function CollapsedDescription({
+  text,
+  className,
+  lines = 2,
+}: {
+  text: string
+  className?: string
+  lines?: 2 | 4
+}) {
+  return (
+    <div
+      className={cn(
+        'overflow-hidden whitespace-pre-wrap break-words',
+        className,
+      )}
+      style={DESCRIPTION_CLAMP_STYLE[lines]}
+      title={text}
+    >
+      {text}
+    </div>
+  )
+}
+
 function ConfirmLoadDialog({
   pending,
   onClose,
@@ -477,16 +516,31 @@ function ConfirmLoadDialog({
     <Dialog.Body>
       <Dialog.Title>Load layout</Dialog.Title>
       <div className="mb-3 text-coffee-200 text-xs">
-        <div>Source: {pending.sourceLabel}</div>
+        <div>
+          Source:{' '}
+          <InlineCode className="bg-coffee-700" content={pending.sourceLabel} />
+        </div>
         {pending.data.metadata?.description && (
-          <div className="mt-1 whitespace-pre-wrap text-coffee-100">
-            {pending.data.metadata.description}
-          </div>
+          <CollapsedDescription
+            className="mt-1 text-coffee-100"
+            text={pending.data.metadata.description}
+            lines={4}
+          />
         )}
         <div>
-          Layout version: v{pending.migratedFrom}
-          {pending.migratedFrom !== pending.data.version &&
-            ` (migrated to v${pending.data.version})`}
+          Layout version:{' '}
+          <InlineCode
+            className="bg-coffee-700"
+            content={`v${pending.migratedFrom}`}
+          />
+          {pending.migratedFrom !== pending.data.version && ' (migrated to '}
+          {pending.migratedFrom !== pending.data.version && (
+            <InlineCode
+              className="bg-coffee-700"
+              content={`v${pending.data.version}`}
+            />
+          )}
+          {pending.migratedFrom !== pending.data.version && ')'}
         </div>
         <div className="mt-1 grid grid-cols-2 gap-x-4">
           <span>Positions: {positions}</span>
