@@ -13,7 +13,7 @@ export type KeyValuePair = v.infer<typeof KeyValuePair>
 export const KeyValuePair = v.union([
   v.object({
     key: v.literal('interopAggregatesTimestampOverride'),
-    value: v.string().transform((v) => Number(v)),
+    value: v.union([v.string().transform((v) => Number(v)), v.number()]),
   }),
   v.object({
     key: v.literal('example'),
