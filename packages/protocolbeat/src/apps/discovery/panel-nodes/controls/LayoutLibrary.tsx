@@ -10,7 +10,9 @@ import { Button } from '../../../../components/Button'
 import { Checkbox } from '../../../../components/Checkbox'
 import { Dialog } from '../../../../components/Dialog'
 import { Input, InputDescription } from '../../../../components/Input'
+import { Tabs } from '../../../../components/Tabs'
 import { TextArea } from '../../../../components/TextArea'
+import { IS_READONLY } from '../../../../config/readonly'
 import { IconDownload } from '../../../../icons/IconDownload'
 import { IconFileUp } from '../../../../icons/IconFileUp'
 import { IconFolder } from '../../../../icons/IconFolder'
@@ -81,6 +83,11 @@ export function LayoutLibrary(props?: { className?: string }) {
       name: string
       overwrite: boolean
     }) => {
+      if (IS_READONLY) {
+        throw new Error(
+          'Saving layouts to the repo is disabled in read-only mode.',
+        )
+      }
       const state = useStore.getState()
       if (state.nodes.length === 0 || !state.projectId) {
         throw new Error('Load a project before saving a layout.')
@@ -181,6 +188,9 @@ export function LayoutLibrary(props?: { className?: string }) {
   }
 
   const onSaveCurrent = () => {
+    if (IS_READONLY) {
+      return
+    }
     const normalizedName = normalizeLayoutName(layoutName)
     setLayoutName(normalizedName)
 
@@ -207,97 +217,99 @@ export function LayoutLibrary(props?: { className?: string }) {
           <ControlButton
             className={props?.className}
             disabled={!projectId}
-            aria-label="Layout library"
-            title="Layout library"
+            aria-label="Layout manager"
+            title="Layout manager"
           >
             <IconFolder />
           </ControlButton>
         </Dialog.Trigger>
-        <Dialog.Body className="max-w-[720px]">
-          <Dialog.Title>Layout library</Dialog.Title>
-          <Dialog.Description className="mb-4 text-coffee-200">
-            Load a committed layout, import one from a JSON file, or save the
-            current view to the repo.
+        <Dialog.Body>
+          <Dialog.Title>Layout manager</Dialog.Title>
+          <Dialog.Description className="text-coffee-200">
+            Load a committed layout, import one from JSON, or export the current
+            view.
           </Dialog.Description>
 
-          <div className="flex flex-col gap-4">
-            <Section title="Committed layouts">
-              {projectId ? (
-                <>
-                  <div className="max-h-56 overflow-y-auto border border-coffee-400 bg-coffee-400/10">
-                    {layoutsQuery.isPending ? (
-                      <EmptyState>Loading committed layouts...</EmptyState>
-                    ) : layoutsQuery.isError ? (
-                      <EmptyState>Failed to load committed layouts.</EmptyState>
-                    ) : (layoutsQuery.data?.length ?? 0) === 0 ? (
-                      <EmptyState>
-                        No committed layouts in{' '}
-                        <code>{`packages/config/src/projects/${projectId}/layouts`}</code>
-                        .
-                      </EmptyState>
-                    ) : (
-                      <div className="divide-y divide-coffee-500">
-                        {layoutsQuery.data?.map((layout) => (
-                          <div
-                            key={layout.name}
-                            className="flex items-start justify-between gap-3 p-3"
-                          >
-                            <div className="min-w-0">
-                              <div className="font-medium text-sm">
-                                {layout.name}
-                              </div>
-                              <div className="mt-1 text-coffee-200 text-xs">
-                                {layout.description ?? 'No description'}
-                              </div>
-                            </div>
-                            <Button
-                              size="small"
-                              onClick={() => loadMutation.mutate(layout.name)}
-                              disabled={loadingName !== null}
+          <Tabs.Root defaultValue="load">
+            <Tabs.List>
+              <Tabs.Trigger value="load">Load</Tabs.Trigger>
+              <Tabs.Trigger value="current">Current</Tabs.Trigger>
+            </Tabs.List>
+
+            <Tabs.Content value="load" className="space-y-3">
+              <div className="space-y-2">
+                <div className="font-medium text-sm">Committed layouts</div>
+                {projectId ? (
+                  <>
+                    <div className="max-h-48 overflow-y-auto border border-coffee-400 bg-coffee-400/10">
+                      {layoutsQuery.isPending ? (
+                        <EmptyState>Loading committed layouts...</EmptyState>
+                      ) : layoutsQuery.isError ? (
+                        <EmptyState>
+                          Failed to load committed layouts.
+                        </EmptyState>
+                      ) : (layoutsQuery.data?.length ?? 0) === 0 ? (
+                        <EmptyState>No committed layouts found.</EmptyState>
+                      ) : (
+                        <div className="divide-y divide-coffee-500">
+                          {layoutsQuery.data?.map((layout) => (
+                            <div
+                              key={layout.name}
+                              className="flex items-start justify-between gap-3 p-2.5"
                             >
-                              {loadingName === layout.name
-                                ? 'Loading...'
-                                : 'Load'}
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <InputDescription>
-                    Files are read from{' '}
-                    <code>{`packages/config/src/projects/${projectId}/layouts/*.json`}</code>
-                  </InputDescription>
-                </>
-              ) : (
-                <EmptyState>Project is not loaded yet.</EmptyState>
-              )}
-            </Section>
-
-            <Section title="Import from file">
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-coffee-200 text-sm">
-                  Load a shared JSON layout from disk, then choose merge or
-                  replace before applying it.
-                </p>
-                <Button onClick={onUploadClick}>
-                  <span className="mr-2">
-                    <IconFileUp />
-                  </span>
-                  Upload
-                </Button>
+                              <div className="min-w-0">
+                                <div className="font-medium text-sm">
+                                  {layout.name}
+                                </div>
+                                <div className="mt-1 text-coffee-200 text-xs">
+                                  {layout.description ?? 'No description'}
+                                </div>
+                              </div>
+                              <Button
+                                size="small"
+                                onClick={() => loadMutation.mutate(layout.name)}
+                                disabled={loadingName !== null}
+                              >
+                                {loadingName === layout.name
+                                  ? 'Loading...'
+                                  : 'Load'}
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <InputDescription>
+                      <code>{`packages/config/src/projects/${projectId}/layouts/*.json`}</code>
+                    </InputDescription>
+                  </>
+                ) : (
+                  <EmptyState>Project is not loaded yet.</EmptyState>
+                )}
               </div>
-              <input
-                ref={inputRef}
-                type="file"
-                accept="application/json,.json"
-                className="hidden"
-                onChange={onFileChange}
-              />
-            </Section>
 
-            <Section title="Current layout">
-              <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+              <div className="space-y-2">
+                <div className="font-medium text-sm">Import from file</div>
+                <div
+                  className="flex cursor-pointer items-center justify-between gap-3 border border-coffee-400 bg-coffee-700/40 p-3 hover:bg-coffee-400/50"
+                  onClick={onUploadClick}
+                >
+                  <p className="text-coffee-200 text-xs">
+                    Load a shared JSON layout and choose merge or replace before
+                    applying it.
+                  </p>
+                  <Button size="small" variant="icon">
+                    <span className="mr-2">
+                      <IconFileUp />
+                    </span>
+                    Upload
+                  </Button>
+                </div>
+              </div>
+            </Tabs.Content>
+
+            <Tabs.Content value="current" className="space-y-3">
+              <div className="grid gap-3">
                 <label className="flex flex-col gap-1">
                   <span className="font-medium text-xs">Name</span>
                   <Input
@@ -307,33 +319,35 @@ export function LayoutLibrary(props?: { className?: string }) {
                     disabled={!canPersistCurrentLayout}
                   />
                 </label>
-                <label className="flex flex-col gap-1 md:col-span-2">
+                <label className="flex flex-col gap-1">
                   <span className="font-medium text-xs">Description</span>
                   <TextArea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="What this layout is for."
-                    className="min-h-20"
+                    className="min-h-16"
                     disabled={!canPersistCurrentLayout}
                   />
                 </label>
               </div>
               <InputDescription>
-                Save path:{' '}
-                <code>
-                  {projectId
-                    ? `packages/config/src/projects/${projectId}/layouts/${normalizeLayoutName(layoutName) || '<name>'}.json`
-                    : 'Load a project first'}
-                </code>
+                {projectId
+                  ? `packages/config/src/projects/${projectId}/layouts/${normalizeLayoutName(layoutName) || '<name>'}.json`
+                  : 'Load a project first'}
               </InputDescription>
+              {IS_READONLY && (
+                <div className="border border-coffee-400 bg-coffee-700/40 p-2 text-coffee-200 text-xs">
+                  Save to repo is disabled in read-only mode.
+                </div>
+              )}
               {overwriteArmed && (
                 <div className="border border-aux-orange/60 bg-aux-orange/10 p-2 text-aux-orange text-xs">
-                  Layout already exists. Click overwrite to replace the
-                  committed file.
+                  Layout already exists. Click overwrite to replace it.
                 </div>
               )}
               <div className="flex flex-wrap justify-end gap-2">
                 <Button
+                  size="small"
                   onClick={onDownloadCurrent}
                   disabled={!canPersistCurrentLayout}
                 >
@@ -343,9 +357,14 @@ export function LayoutLibrary(props?: { className?: string }) {
                   Download
                 </Button>
                 <Button
+                  size="small"
                   variant={overwriteArmed ? 'destructive' : 'solid'}
                   onClick={onSaveCurrent}
-                  disabled={!canPersistCurrentLayout || saveMutation.isPending}
+                  disabled={
+                    IS_READONLY ||
+                    !canPersistCurrentLayout ||
+                    saveMutation.isPending
+                  }
                 >
                   {saveMutation.isPending
                     ? 'Saving...'
@@ -354,8 +373,16 @@ export function LayoutLibrary(props?: { className?: string }) {
                       : 'Save to repo'}
                 </Button>
               </div>
-            </Section>
-          </div>
+            </Tabs.Content>
+          </Tabs.Root>
+
+          <input
+            ref={inputRef}
+            type="file"
+            accept="application/json,.json"
+            className="hidden"
+            onChange={onFileChange}
+          />
         </Dialog.Body>
       </Dialog.Root>
 
@@ -406,21 +433,6 @@ export function LayoutLibrary(props?: { className?: string }) {
       migratedFrom: result.migratedFrom,
     })
   }
-}
-
-function Section({
-  title,
-  children,
-}: {
-  title: string
-  children: React.ReactNode
-}) {
-  return (
-    <section className="flex flex-col gap-2 border border-coffee-400 bg-coffee-700/40 p-3">
-      <h3 className="font-medium text-sm">{title}</h3>
-      {children}
-    </section>
-  )
 }
 
 function EmptyState({ children }: { children: React.ReactNode }) {
