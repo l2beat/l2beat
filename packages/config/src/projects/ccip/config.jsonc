@@ -140,23 +140,23 @@
   },
   "overrides": {
     "arb1:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae": {
-      "description": "v1.6 OffRamp on Arbitrum One. Added only to inspect its OCR signing set; relatives are ignored so no other Arbitrum CCIP contracts are pulled into discovery.",
+      "description": "v1.6 OffRamp on Arbitrum One.",
       "ignoreRelatives": true
     },
     "base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13": {
-      "description": "v1.6 OffRamp on Base. Added only to inspect its OCR signing set; relatives are ignored so no other Base CCIP contracts are pulled into discovery.",
+      "description": "v1.6 OffRamp on Base.",
       "ignoreRelatives": true
     },
     "oeth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae": {
-      "description": "v1.6 OffRamp on OP Mainnet. Added only to inspect its OCR signing set; relatives are ignored so no other Optimism CCIP contracts are pulled into discovery.",
+      "description": "v1.6 OffRamp on OP Mainnet.",
       "ignoreRelatives": true
     },
     "bnb:0xA27056438FfA1f286AB197488808692F0db93F8B": {
-      "description": "v1.6 OffRamp on BNB Chain. Added only to inspect its OCR signing set; relatives are ignored so no other BSC CCIP contracts are pulled into discovery.",
+      "description": "v1.6 OffRamp on BNB Chain.",
       "ignoreRelatives": true
     },
     "matic:0x77FDbd20ED582794b1d9F1a8a94e4a60494D677e": {
-      "description": "v1.6 OffRamp on Polygon PoS. Added only to inspect its OCR signing set; relatives are ignored so no other Polygon CCIP contracts are pulled into discovery.",
+      "description": "v1.6 OffRamp on Polygon PoS.",
       "ignoreRelatives": true
     },
     "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A": {

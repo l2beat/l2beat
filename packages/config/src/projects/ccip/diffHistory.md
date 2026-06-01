@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xaf73983fe23f35c2b4e417cf4d0bc468901c9738
+Generated with discovered.json: 0x0f4d1f1adc62b76883472c4f8641f4b84e6abbfd
 
-# Diff at Mon, 01 Jun 2026 13:15:16 GMT:
+# Diff at Mon, 01 Jun 2026 17:11:33 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@da5b4d500646b8c717656c8973ab39377e0251ae block: 1778572081
@@ -19,31 +19,31 @@ discovery. Values are for block 1778572081 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract ArbitrumOffRamp_v1_6 (arb1:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae) [transporter/OfframpV3]
-    +++ description: v1.6 OffRamp on Arbitrum One. Added only to inspect its OCR signing set; relatives are ignored so no other Arbitrum CCIP contracts are pulled into discovery.
+    +++ description: v1.6 OffRamp on Arbitrum One.
 ```
 
 ```diff
 +   Status: CREATED
     contract BaseOffRamp_v1_6 (base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13) [transporter/OfframpV3]
-    +++ description: v1.6 OffRamp on Base. Added only to inspect its OCR signing set; relatives are ignored so no other Base CCIP contracts are pulled into discovery.
+    +++ description: v1.6 OffRamp on Base.
 ```
 
 ```diff
 +   Status: CREATED
     contract BscOffRamp_v1_6 (bnb:0xA27056438FfA1f286AB197488808692F0db93F8B) [transporter/OfframpV3]
-    +++ description: v1.6 OffRamp on BNB Chain. Added only to inspect its OCR signing set; relatives are ignored so no other BSC CCIP contracts are pulled into discovery.
+    +++ description: v1.6 OffRamp on BNB Chain.
 ```
 
 ```diff
 +   Status: CREATED
     contract PolygonPosOffRamp_v1_6 (matic:0x77FDbd20ED582794b1d9F1a8a94e4a60494D677e) [transporter/OfframpV3]
-    +++ description: v1.6 OffRamp on Polygon PoS. Added only to inspect its OCR signing set; relatives are ignored so no other Polygon CCIP contracts are pulled into discovery.
+    +++ description: v1.6 OffRamp on Polygon PoS.
 ```
 
 ```diff
 +   Status: CREATED
     contract OptimismOffRamp_v1_6 (oeth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae) [transporter/OfframpV3]
-    +++ description: v1.6 OffRamp on OP Mainnet. Added only to inspect its OCR signing set; relatives are ignored so no other Optimism CCIP contracts are pulled into discovery.
+    +++ description: v1.6 OffRamp on OP Mainnet.
 ```
 
 Generated with discovered.json: 0x6891ac2fc305b4594ac3f91512d969db75064b4d

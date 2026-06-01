@@ -12,7 +12,7 @@
         "0x0cd580f4aedce3a2a8da2a7e6013b1b7de5c18db2e1a41549e880bccece5ed06"
       ],
       "proxyType": "immutable",
-      "description": "v1.6 OffRamp on Arbitrum One. Added only to inspect its OCR signing set; relatives are ignored so no other Arbitrum CCIP contracts are pulled into discovery.",
+      "description": "v1.6 OffRamp on Arbitrum One.",
       "deployerAddress": "arb1:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1744752931,
       "sinceBlock": 326753465,
@@ -402,7 +402,7 @@
         "0x0cd580f4aedce3a2a8da2a7e6013b1b7de5c18db2e1a41549e880bccece5ed06"
       ],
       "proxyType": "immutable",
-      "description": "v1.6 OffRamp on Base. Added only to inspect its OCR signing set; relatives are ignored so no other Base CCIP contracts are pulled into discovery.",
+      "description": "v1.6 OffRamp on Base.",
       "deployerAddress": "base:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1744752947,
       "sinceBlock": 28981800,
@@ -828,7 +828,7 @@
         "0x0cd580f4aedce3a2a8da2a7e6013b1b7de5c18db2e1a41549e880bccece5ed06"
       ],
       "proxyType": "immutable",
-      "description": "v1.6 OffRamp on BNB Chain. Added only to inspect its OCR signing set; relatives are ignored so no other BSC CCIP contracts are pulled into discovery.",
+      "description": "v1.6 OffRamp on BNB Chain.",
       "deployerAddress": "bnb:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1744752951,
       "sinceBlock": 48390369,
@@ -12711,7 +12711,7 @@
         "0x0cd580f4aedce3a2a8da2a7e6013b1b7de5c18db2e1a41549e880bccece5ed06"
       ],
       "proxyType": "immutable",
-      "description": "v1.6 OffRamp on Polygon PoS. Added only to inspect its OCR signing set; relatives are ignored so no other Polygon CCIP contracts are pulled into discovery.",
+      "description": "v1.6 OffRamp on Polygon PoS.",
       "deployerAddress": "matic:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1751314698,
       "sinceBlock": 73419108,
@@ -13035,7 +13035,7 @@
         "0x0cd580f4aedce3a2a8da2a7e6013b1b7de5c18db2e1a41549e880bccece5ed06"
       ],
       "proxyType": "immutable",
-      "description": "v1.6 OffRamp on OP Mainnet. Added only to inspect its OCR signing set; relatives are ignored so no other Optimism CCIP contracts are pulled into discovery.",
+      "description": "v1.6 OffRamp on OP Mainnet.",
       "deployerAddress": "oeth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1744753005,
       "sinceBlock": 134577114,
