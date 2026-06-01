@@ -138,6 +138,8 @@ describe(createHighlightsRouter.name, () => {
       .resolvesToOnce(currentTransfers)
       .resolvesToOnce(previousTransfers)
       .resolvesTo([])
+    const getTransferMaxTimestampAtOrBefore =
+      mockFn().resolvesTo(previousTimestamp)
     const getTokenByTimestamp = mockFn()
       .resolvesToOnce(currentTokens)
       .resolvesToOnce(previousTokens)
@@ -162,6 +164,7 @@ describe(createHighlightsRouter.name, () => {
     const caller = createCaller({
       latestTimestamp,
       getTransferByTimestamp,
+      getTransferMaxTimestampAtOrBefore,
       getTokenByTimestamp,
       getActivityMaxTimestampAtOrBefore,
       getActivityByTimestamp,
@@ -218,6 +221,9 @@ describe(createHighlightsRouter.name, () => {
     )
 
     expect(getTransferByTimestamp).toHaveBeenCalledTimes(2)
+    expect(getTransferMaxTimestampAtOrBefore).toHaveBeenCalledWith(
+      previousTimestamp,
+    )
     expect(getTokenByTimestamp).toHaveBeenCalledTimes(2)
     expect(getActivityByTimestamp).toHaveBeenCalledTimes(3)
     expect(getTvsByTimestamp).toHaveBeenCalledTimes(3)
@@ -385,10 +391,192 @@ describe(createHighlightsRouter.name, () => {
       largestTvsIncreaseByChain: null,
     })
   })
+
+  it('uses the latest available previous interop snapshot for volume deltas', async () => {
+    const latestTimestamp = UnixTime(1_700_000_000)
+    const fallbackPreviousTimestamp =
+      latestTimestamp - UnixTime.DAY - UnixTime.HOUR
+
+    const currentTransfers = [
+      transferRecord({
+        id: 'across',
+        timestamp: latestTimestamp,
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        srcValueUsd: 100,
+      }),
+      transferRecord({
+        id: 'stargate',
+        timestamp: latestTimestamp,
+        srcChain: 'base',
+        dstChain: 'arbitrum',
+        srcValueUsd: 150,
+      }),
+    ]
+    const previousTransfers = [
+      transferRecord({
+        id: 'across',
+        timestamp: fallbackPreviousTimestamp,
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        srcValueUsd: 20,
+      }),
+      transferRecord({
+        id: 'stargate',
+        timestamp: fallbackPreviousTimestamp,
+        srcChain: 'base',
+        dstChain: 'arbitrum',
+        srcValueUsd: 140,
+      }),
+    ]
+    const currentTokens = [
+      tokenRecord({
+        id: 'across',
+        timestamp: latestTimestamp,
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        abstractTokenId: 'ETH',
+        volume: 100,
+      }),
+      tokenRecord({
+        id: 'stargate',
+        timestamp: latestTimestamp,
+        srcChain: 'base',
+        dstChain: 'arbitrum',
+        abstractTokenId: 'USDC',
+        volume: 150,
+      }),
+    ]
+    const previousTokens = [
+      tokenRecord({
+        id: 'across',
+        timestamp: fallbackPreviousTimestamp,
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        abstractTokenId: 'ETH',
+        volume: 20,
+      }),
+      tokenRecord({
+        id: 'stargate',
+        timestamp: fallbackPreviousTimestamp,
+        srcChain: 'base',
+        dstChain: 'arbitrum',
+        abstractTokenId: 'USDC',
+        volume: 140,
+      }),
+    ]
+
+    const getTransferByTimestamp = mockFn()
+      .resolvesToOnce(currentTransfers)
+      .resolvesToOnce(previousTransfers)
+      .resolvesTo([])
+    const getTokenByTimestamp = mockFn()
+      .resolvesToOnce(currentTokens)
+      .resolvesToOnce(previousTokens)
+      .resolvesTo([])
+
+    const caller = createCaller({
+      latestTimestamp,
+      getTransferMaxTimestampAtOrBefore: mockFn().resolvesTo(
+        fallbackPreviousTimestamp,
+      ),
+      getTransferByTimestamp,
+      getTokenByTimestamp,
+    })
+
+    const result = await caller.latest()
+
+    expect(getTransferByTimestamp).toHaveBeenCalledWith(latestTimestamp)
+    expect(getTransferByTimestamp).toHaveBeenCalledWith(
+      fallbackPreviousTimestamp,
+    )
+    expect(getTokenByTimestamp).toHaveBeenCalledWith(latestTimestamp)
+    expect(getTokenByTimestamp).toHaveBeenCalledWith(fallbackPreviousTimestamp)
+    expect(result.largestVolumeIncreaseByChain).toEqual({
+      windowStart: latestTimestamp - UnixTime.DAY,
+      windowEnd: latestTimestamp,
+      previousWindowStart: fallbackPreviousTimestamp - UnixTime.DAY,
+      previousWindowEnd: fallbackPreviousTimestamp,
+      chain: 'ethereum',
+      currentVolumeUsd: 100,
+      previousVolumeUsd: 20,
+      increaseUsd: 80,
+    })
+    expect(result.largestVolumeIncreaseByToken).toEqual({
+      windowStart: latestTimestamp - UnixTime.DAY,
+      windowEnd: latestTimestamp,
+      previousWindowStart: fallbackPreviousTimestamp - UnixTime.DAY,
+      previousWindowEnd: fallbackPreviousTimestamp,
+      token: {
+        id: 'ETH',
+        symbol: 'ETH',
+        issuer: null,
+        iconUrl: null,
+      },
+      currentVolumeUsd: 100,
+      previousVolumeUsd: 20,
+      increaseUsd: 80,
+    })
+    expect(result.largestVolumeIncreaseByProtocol).toEqual({
+      windowStart: latestTimestamp - UnixTime.DAY,
+      windowEnd: latestTimestamp,
+      previousWindowStart: fallbackPreviousTimestamp - UnixTime.DAY,
+      previousWindowEnd: fallbackPreviousTimestamp,
+      id: 'across',
+      currentVolumeUsd: 100,
+      previousVolumeUsd: 20,
+      increaseUsd: 80,
+    })
+  })
+
+  it('returns no volume deltas when no previous interop snapshot exists', async () => {
+    const latestTimestamp = UnixTime(1_700_000_000)
+    const currentTransfers = [
+      transferRecord({
+        id: 'across',
+        timestamp: latestTimestamp,
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        srcValueUsd: 100,
+      }),
+    ]
+    const currentTokens = [
+      tokenRecord({
+        id: 'across',
+        timestamp: latestTimestamp,
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        abstractTokenId: 'ETH',
+        volume: 100,
+      }),
+    ]
+    const getTransferByTimestamp = mockFn()
+      .resolvesToOnce(currentTransfers)
+      .resolvesTo([])
+    const getTokenByTimestamp = mockFn()
+      .resolvesToOnce(currentTokens)
+      .resolvesTo([])
+
+    const caller = createCaller({
+      latestTimestamp,
+      getTransferMaxTimestampAtOrBefore: mockFn().resolvesTo(undefined),
+      getTransferByTimestamp,
+      getTokenByTimestamp,
+    })
+
+    const result = await caller.latest()
+
+    expect(getTransferByTimestamp).toHaveBeenCalledTimes(1)
+    expect(getTokenByTimestamp).toHaveBeenCalledTimes(1)
+    expect(result.largestVolumeIncreaseByChain).toEqual(null)
+    expect(result.largestVolumeIncreaseByToken).toEqual(null)
+    expect(result.largestVolumeIncreaseByProtocol).toEqual(null)
+  })
 })
 
 function createCaller(options: {
   latestTimestamp: UnixTime | undefined
+  getTransferMaxTimestampAtOrBefore?: ReturnType<typeof mockFn>
   getTransferByTimestamp?: ReturnType<typeof mockFn>
   getTokenByTimestamp?: ReturnType<typeof mockFn>
   getActivityMaxTimestampAtOrBefore?: ReturnType<typeof mockFn>
@@ -400,10 +588,13 @@ function createCaller(options: {
   const callerFactory = createCallerFactory(
     createHighlightsRouter({
       tokenDbClient: mockObject<TokenDbClient>({
-        abstractTokens: {
-          getById: { query: options.getAbstractTokenById ?? mockFn() },
-        },
-      } as any),
+        abstractTokens: mockObject<TokenDbClient['abstractTokens']>({
+          getById: mockObject<TokenDbClient['abstractTokens']['getById']>({
+            query:
+              options.getAbstractTokenById ?? mockFn().resolvesTo(undefined),
+          }),
+        }),
+      }),
     }),
   )
   return callerFactory({
@@ -413,6 +604,9 @@ function createCaller(options: {
         Database['aggregatedInteropTransfer']
       >({
         getLatestTimestamp: mockFn().resolvesTo(options.latestTimestamp),
+        getMaxTimestampAtOrBefore:
+          options.getTransferMaxTimestampAtOrBefore ??
+          mockFn().resolvesTo(undefined),
         getByTimestamp:
           options.getTransferByTimestamp ?? mockFn().resolvesTo([]),
       }),

@@ -936,6 +936,54 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
   )
 
   describe(
+    AggregatedInteropTransferRepository.prototype.getMaxTimestampAtOrBefore
+      .name,
+    () => {
+      it('returns the latest timestamp at or before the requested timestamp', async () => {
+        await repository.insertMany([
+          record({
+            id: 'id1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+          }),
+          record({
+            id: 'id2',
+            timestamp: UnixTime(200),
+            srcChain: 'arbitrum',
+            dstChain: 'ethereum',
+          }),
+          record({
+            id: 'id3',
+            timestamp: UnixTime(300),
+            srcChain: 'polygon',
+            dstChain: 'ethereum',
+          }),
+        ])
+
+        const result = await repository.getMaxTimestampAtOrBefore(UnixTime(250))
+
+        expect(result).toEqual(UnixTime(200))
+      })
+
+      it('returns undefined when no timestamp is available at or before the requested timestamp', async () => {
+        await repository.insertMany([
+          record({
+            id: 'id1',
+            timestamp: UnixTime(200),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+          }),
+        ])
+
+        const result = await repository.getMaxTimestampAtOrBefore(UnixTime(100))
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
     AggregatedInteropTransferRepository.prototype.getByTimestamp.name,
     () => {
       it('returns records with matching timestamp', async () => {

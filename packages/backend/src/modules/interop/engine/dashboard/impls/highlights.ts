@@ -92,7 +92,11 @@ export async function getInteropHighlights(
   const interopProjects = new Set(interopProjectIds)
 
   const previousTimestamp =
-    latestTimestamp !== undefined ? latestTimestamp - UnixTime.DAY : undefined
+    latestTimestamp !== undefined
+      ? await db.aggregatedInteropTransfer.getMaxTimestampAtOrBefore(
+          latestTimestamp - UnixTime.DAY,
+        )
+      : undefined
 
   let activityTimestamp =
     latestTimestamp !== undefined
@@ -246,7 +250,7 @@ export async function getInteropHighlights(
 
   const comparisonWindow =
     latestTimestamp !== undefined
-      ? getComparisonWindow(latestTimestamp)
+      ? getComparisonWindow(latestTimestamp, previousTimestamp)
       : undefined
   const activityWindow =
     activityTimestamp !== undefined
@@ -338,11 +342,14 @@ export async function getInteropHighlights(
   }
 }
 
-function getComparisonWindow(windowEnd: UnixTime) {
+function getComparisonWindow(
+  windowEnd: UnixTime,
+  previousWindowEnd = windowEnd - UnixTime.DAY,
+) {
   return {
     windowStart: windowEnd - UnixTime.DAY,
     windowEnd,
-    previousWindowStart: windowEnd - 2 * UnixTime.DAY,
-    previousWindowEnd: windowEnd - UnixTime.DAY,
+    previousWindowStart: previousWindowEnd - UnixTime.DAY,
+    previousWindowEnd,
   }
 }
