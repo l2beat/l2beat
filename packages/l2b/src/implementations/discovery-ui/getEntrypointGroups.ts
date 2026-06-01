@@ -25,6 +25,12 @@ export function getEntrypointGroups(
   entrypoints: Record<ChainSpecificAddress, Entrypoint> | undefined,
   baseDiscovery: DiscoveryOutput,
   loadedDiscoveries: DiscoveryOutput[],
+  /**
+   * Projects that ship an entrypoints.json. These are entrypoint-managed: when
+   * they declare no entrypoints we emit no group for them, instead of the
+   * whole-module fallback group. Reference modules without the file still group.
+   */
+  entrypointManagedProjects: ReadonlySet<string> = new Set(),
 ): ApiEntrypointGroup[] {
   if (!entrypoints) {
     return []
@@ -44,9 +50,12 @@ export function getEntrypointGroups(
   const groups: ApiEntrypointGroup[] = []
 
   for (const [address, entrypoint] of Object.entries(entrypoints)) {
-    if (entrypoint.isLegacy) {
-      continue
-    }
+    // `isLegacy` only means the *declaring* module's own discovery no longer
+    // emits this address (e.g. shared-sp1 dropped its eth deployment in favour
+    // of arb/base). In a consumer project (e.g. mantle uses the eth gateway)
+    // the address is still a real, present entrypoint, so we must still form a
+    // collapsible group for it — otherwise the whole eth subgraph it owns can
+    // never fold up to the entrypoint.
 
     projectsWithDeclaredEntrypoints.add(entrypoint.project)
     const chainAddress = address as ChainSpecificAddress
@@ -71,6 +80,9 @@ export function getEntrypointGroups(
       continue
     }
     if (projectsWithDeclaredEntrypoints.has(refDiscovery.name)) {
+      continue
+    }
+    if (entrypointManagedProjects.has(refDiscovery.name)) {
       continue
     }
 

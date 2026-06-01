@@ -135,6 +135,57 @@ describe(buildEntrypointCollapseMembers.name, () => {
     expect(sp1Members.has(multisig)).toEqual(true)
     expect(sp1Members.has(memberEoa)).toEqual(true)
   })
+
+  it('collapses a legacy/global entrypoint whose seed lives in the consumer project graph', () => {
+    // The declaring module (shared-sp1) has its own discovery chain present,
+    // but it does NOT contain this (eth) gateway — that node lives in the
+    // consumer project's graph (mantle). Keying adjacency purely on
+    // sourceProject would yield an empty cluster; we must follow the graph that
+    // actually contains the seed.
+    const otherSp1Address = 'eth:0x00000000000000000000000000000000000000c1'
+    const groups: ApiEntrypointGroup[] = [
+      {
+        id: 'shared-sp1::' + gateway,
+        label: 'shared-sp1: SP1VerifierGateway',
+        sourceProject: 'shared-sp1',
+        memberAddresses: [gateway],
+        bridgeAddresses: [],
+        contractCount: 1,
+        eoaCount: 0,
+        color: 1,
+      },
+    ]
+
+    const entries: ApiProjectChain[] = [
+      {
+        project: 'shared-sp1',
+        initialContracts: [],
+        // shared-sp1's own discovery: a different deployment, not the gateway.
+        discoveredContracts: [contract(otherSp1Address, [])],
+        eoas: [],
+        blockNumbers: {},
+      },
+      {
+        project: 'mantle',
+        initialContracts: [],
+        discoveredContracts: [
+          contract(gateway, [addressField('activeVerifiers', verifier)]),
+          contract(verifier, []),
+        ],
+        eoas: [],
+        blockNumbers: {},
+      },
+    ]
+
+    const members = new Set(
+      buildEntrypointCollapseMembers(groups, entries).get(
+        'shared-sp1::' + gateway,
+      ),
+    )
+
+    expect(members.has(gateway)).toEqual(true)
+    expect(members.has(verifier)).toEqual(true)
+  })
 })
 
 describe(buildEntrypointColorAssignments.name, () => {

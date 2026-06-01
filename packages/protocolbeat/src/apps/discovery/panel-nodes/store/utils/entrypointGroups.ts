@@ -66,6 +66,26 @@ export function getDeclaredEntrypointAddresses(
   return group.declaredMemberAddresses ?? group.memberAddresses
 }
 
+/**
+ * Addresses explicitly declared as entrypoints (in some project's
+ * entrypoints.json). Excludes module-wide fallback groups, whose members are
+ * just "everything in the module", not declared entrypoints.
+ */
+export function buildDeclaredEntrypointAddressSet(
+  groups: readonly ApiEntrypointGroup[],
+): Set<string> {
+  const result = new Set<string>()
+  for (const group of groups) {
+    if (!isPerEntrypointGroup(group)) {
+      continue
+    }
+    for (const address of getDeclaredEntrypointAddresses(group)) {
+      result.add(address)
+    }
+  }
+  return result
+}
+
 /** Per-entrypoint groups use `project::address` ids; module-wide groups use the project name. */
 export function isPerEntrypointGroup(
   group: Pick<ApiEntrypointGroup, 'id'>,
@@ -471,12 +491,22 @@ export function buildCollapsedGroupFields(
     getNodeSummaryLineCount({ entrypointGroup }) * FIELD_HEIGHT
   const fields: Node['fields'] = []
   const seen = new Set<string>()
+  // A link from one member to another member of *this same* group resolves to
+  // this group's own collapsed node. That's an internal edge — showing it would
+  // render a self-referential field/loop (and a noisy node) instead of the
+  // clean header + summary we want.
+  const ownGroupNodeId = entrypointGroup
+    ? entrypointGroupNodeId(entrypointGroup.groupId)
+    : undefined
 
   const consider = (name: string, rawTarget: string) => {
     if (hiddenFieldsSet?.has(name)) {
       return
     }
     const resolvedTarget = resolveFieldTarget(rawTarget, targetResolver)
+    if (ownGroupNodeId !== undefined && resolvedTarget === ownGroupNodeId) {
+      return
+    }
     const isCrossEntrypoint = isEntrypointGroupNodeId(resolvedTarget)
     const isInternal =
       !isCrossEntrypoint &&

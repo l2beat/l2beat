@@ -16,7 +16,10 @@ import { utils } from 'ethers'
 import { getContractName } from './getContractName'
 import { getContractType } from './getContractType'
 import { collectMergedEntrypoints } from './collectMergedEntrypoints'
-import { readEntrypointsModuleColor } from './configs/entrypointsFile'
+import {
+  hasEntrypointsFile,
+  readEntrypointsModuleColor,
+} from './configs/entrypointsFile'
 import { getEntrypointGroups } from './getEntrypointGroups'
 import { getMeta } from './getMeta'
 import { parseFieldValue } from './parseFieldValue'
@@ -61,13 +64,22 @@ export function getProject(
     discoveries,
   )
 
+  const entrypointManagedProjects = new Set<string>()
+  for (const { discovery } of data) {
+    if (hasEntrypointsFile(configReader, discovery.name)) {
+      entrypointManagedProjects.add(discovery.name)
+    }
+  }
+
   const response: ApiProjectResponse = {
     entries: [],
+    sharedModules: projectConfig.structure.sharedModules ?? [],
     entrypointGroups: getEntrypointGroups(
       project,
       mergedEntrypoints,
       discovery,
       data.map((x) => x.discovery),
+      entrypointManagedProjects,
     ).map((group) => ({
       ...group,
       color: readEntrypointsModuleColor(configReader, group.sourceProject),

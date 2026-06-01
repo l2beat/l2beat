@@ -210,12 +210,21 @@ export function buildEntrypointCollapseMembers(
   const membersByGroup = new Map<string, Set<string>>()
 
   for (const group of groups) {
-    const adjacency =
-      adjacencyByProject.get(group.sourceProject) ?? globalAdjacency
     const seeds = getCollapseSeedAddresses(group).filter((address) =>
       isPerEntrypointGroup(group)
         ? explicitEntrypointByAddress.get(address) === group.id
         : true,
+    )
+    // Use whichever project graph actually contains the seed. A legacy/global
+    // entrypoint (e.g. shared-sp1's eth gateway) is present in the *consumer*
+    // project's graph (mantle), not in its declaring module's own discovery, so
+    // keying purely on sourceProject yields an empty cluster and nothing folds.
+    // This mirrors the adjacency selection used for color propagation.
+    const adjacency = getAdjacencyForGroup(
+      group.sourceProject,
+      seeds,
+      adjacencyByProject,
+      globalAdjacency,
     )
     const visited = new Set<string>()
     const members = new Set<string>()

@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type {
   ApiAddressEntry,
-  ApiEntrypointGroup,
   ApiProjectChain,
 } from '../../../api/types'
+import { buildDeclaredEntrypointAddressSet } from '../panel-nodes/store/utils/entrypointGroups'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
@@ -34,8 +34,12 @@ export function ListPanel() {
   if (response.isError) {
     return <ErrorState />
   }
-  const entrypointProjects = new Set(
-    response.data.entrypointGroups.map((group) => group.sourceProject),
+  // Only projects explicitly linked via sharedModules get the "Shared module"
+  // badge. The opened project itself never gets it, even if it declares
+  // entrypoints.
+  const sharedModules = new Set(response.data.sharedModules)
+  const entrypointAddresses = buildDeclaredEntrypointAddressSet(
+    response.data.entrypointGroups,
   )
   return (
     <div className="h-full w-full overflow-x-hidden">
@@ -45,7 +49,10 @@ export function ListPanel() {
             key={`${chain.project}-${i}`}
             entry={chain}
             first={i === 0}
-            isEntrypointProject={entrypointProjects.has(chain.project)}
+            isSharedModule={
+              chain.project !== project && sharedModules.has(chain.project)
+            }
+            entrypointAddresses={entrypointAddresses}
           />
         ))}
       </ol>
@@ -56,7 +63,8 @@ export function ListPanel() {
 function ListItemChain(props: {
   entry: ApiProjectChain
   first: boolean
-  isEntrypointProject: boolean
+  isSharedModule: boolean
+  entrypointAddresses: ReadonlySet<string>
 }) {
   const [open, setOpen] = useState(true)
 
@@ -78,9 +86,9 @@ function ListItemChain(props: {
             {open && <IconChevronDown />}
             {!open && <IconChevronRight />}
             <span className="text-left leading-tight">{`${props.entry.project} on ${chain}`}</span>
-            {props.isEntrypointProject && (
+            {props.isSharedModule && (
               <span className="inline-flex h-5 shrink-0 items-center rounded border border-coffee-500 px-1 text-[10px] text-coffee-300 normal-case">
-                Entrypoint
+                Shared module
               </span>
             )}
           </button>
@@ -95,12 +103,14 @@ function ListItemChain(props: {
               onFocus={onFocus}
               entries={props.entry.initialContracts}
               chain={chain}
+              entrypointAddresses={props.entrypointAddresses}
             />
             <ListItemContracts
               title="Discovered"
               onFocus={onFocus}
               entries={props.entry.discoveredContracts}
               chain={chain}
+              entrypointAddresses={props.entrypointAddresses}
             />
             <ListItemContracts
               startClosed
@@ -108,6 +118,7 @@ function ListItemChain(props: {
               onFocus={onFocus}
               entries={props.entry.eoas}
               chain={chain}
+              entrypointAddresses={props.entrypointAddresses}
             />
           </>
         )}
@@ -122,6 +133,7 @@ function ListItemContracts(props: {
   onFocus?: () => void
   startClosed?: boolean
   chain: string
+  entrypointAddresses: ReadonlySet<string>
 }) {
   const [open, setOpen] = useState(!props.startClosed)
   const selected = usePanelStore((state) => state.selected)
@@ -168,7 +180,11 @@ function ListItemContracts(props: {
           {filteredEntries
             .toSorted((a, b) => b.type.localeCompare(a.type))
             .map((entry) => (
-              <AddressEntry key={entry.address} entry={entry} />
+              <AddressEntry
+                key={entry.address}
+                entry={entry}
+                isEntrypoint={props.entrypointAddresses.has(entry.address)}
+              />
             ))}
         </ol>
       )}
@@ -176,7 +192,13 @@ function ListItemContracts(props: {
   )
 }
 
-function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
+function AddressEntry({
+  entry,
+  isEntrypoint,
+}: {
+  entry: ApiAddressEntry
+  isEntrypoint: boolean
+}) {
   const isSelected = usePanelStore((state) => state.selected === entry.address)
   const select = usePanelStore((state) => state.select)
   const markUnreachableEntries = useGlobalSettingsStore(
@@ -205,6 +227,19 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
       <span className="overflow-hidden text-ellipsis tabular-nums">
         {entry.name ?? toShortenedAddress(entry.address)}
       </span>
+      {isEntrypoint && (
+        <span
+          title="Declared as an entrypoint"
+          className={clsx(
+            'shrink-0 rounded border px-1 text-[9px] uppercase leading-[14px] tracking-wide',
+            isSelected
+              ? 'border-black/40 text-black/70'
+              : 'border-coffee-500 text-coffee-300',
+          )}
+        >
+          entrypoint
+        </span>
+      )}
       <div className="mr-1 ml-auto flex gap-1 text-coffee-400">
         {isHidden && <IconEyeClosed />}
         {!entry.isReachable && <IconUnlinked />}

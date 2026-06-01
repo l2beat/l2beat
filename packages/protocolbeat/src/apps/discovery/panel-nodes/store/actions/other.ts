@@ -1,4 +1,5 @@
 import type { State } from '../State'
+import { entrypointGroupNodeId } from '../utils/entrypointGroups'
 import type { NodeLocations } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
@@ -7,12 +8,69 @@ export function toggleEntrypointGroup(
   groupId: string,
 ): Partial<State> {
   const collapsed = new Set(state.collapsedEntrypointGroups)
-  if (collapsed.has(groupId)) {
-    collapsed.delete(groupId)
-  } else {
+  const willCollapse = !collapsed.has(groupId)
+  if (willCollapse) {
     collapsed.add(groupId)
+  } else {
+    collapsed.delete(groupId)
   }
-  return { collapsedEntrypointGroups: [...collapsed] }
+
+  // When expanding, the synthetic group node disappears. If it was the
+  // selected node, the selection would be stranded on a node that no longer
+  // exists (visually a deselect). Remap it onto a real member of the group so
+  // the selection survives the expand.
+  const selected = willCollapse
+    ? state.selected
+    : remapSelectionOffGroupNode(state, [groupId])
+
+  return { collapsedEntrypointGroups: [...collapsed], selected }
+}
+
+/**
+ * Sets the collapsed state for several entrypoint groups at once. Used to
+ * collapse/expand a whole module (all of its entrypoint clusters) from a single
+ * control, instead of toggling each declared entrypoint individually.
+ */
+export function setEntrypointGroupsCollapsed(
+  state: State,
+  groupIds: readonly string[],
+  collapsed: boolean,
+): Partial<State> {
+  const next = new Set(state.collapsedEntrypointGroups)
+  for (const groupId of groupIds) {
+    if (collapsed) {
+      next.add(groupId)
+    } else {
+      next.delete(groupId)
+    }
+  }
+  const selected = collapsed
+    ? state.selected
+    : remapSelectionOffGroupNode(state, groupIds)
+  return { collapsedEntrypointGroups: [...next], selected }
+}
+
+/**
+ * When a group is expanded its synthetic node disappears; move any selection
+ * that pointed at it onto a real member so the selection isn't lost.
+ */
+function remapSelectionOffGroupNode(
+  state: State,
+  groupIds: readonly string[],
+): readonly string[] {
+  let selected: readonly string[] = state.selected
+  for (const groupId of groupIds) {
+    const groupNodeId = entrypointGroupNodeId(groupId)
+    if (!selected.includes(groupNodeId)) {
+      continue
+    }
+    const group = state.entrypointGroups.find((entry) => entry.id === groupId)
+    const member = group?.bridgeAddresses[0] ?? group?.memberAddresses[0]
+    selected = selected.flatMap((id) =>
+      id === groupNodeId ? (member ? [member] : []) : [id],
+    )
+  }
+  return selected
 }
 
 export function setEntrypointGroups(

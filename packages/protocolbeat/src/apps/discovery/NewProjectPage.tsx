@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { createConfigFile } from '../../api/api'
 import { Button } from '../../components/Button'
 import { Checkbox } from '../../components/Checkbox'
@@ -14,11 +14,21 @@ import { useTerminalStore } from './panel-terminal/store'
 export function NewProjectPage() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+  const [searchParams] = useSearchParams()
 
   const { discover, setDevMode, killCommand } = useTerminalStore()
 
   const [title, setTitle] = useState('')
-  const [initialAddresses, setInitialAddresses] = useState<string[]>([])
+  // Prefill from `?address=` query params (supports repeated and comma-separated
+  // values), e.g. when launched from "Create new project" in Manage entrypoints.
+  const [initialAddresses, setInitialAddresses] = useState<string[]>(() => {
+    const fromQuery = searchParams
+      .getAll('address')
+      .flatMap((value) => value.split(','))
+      .map((value) => value.trim())
+      .filter((value) => value.length > 0)
+    return [...new Set(fromQuery)]
+  })
 
   const [overwrite, setOverwrite] = useState(false)
 

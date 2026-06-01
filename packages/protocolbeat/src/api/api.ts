@@ -267,10 +267,15 @@ export async function updateEntrypointsFile(
   moduleProject: string,
   content: string,
   linkConsumerProject?: string,
+  unlinkConsumerProject?: string,
 ) {
   const res = await fetch(`/api/entrypoints-files/${moduleProject}`, {
     method: 'PUT',
-    body: JSON.stringify({ content, linkConsumerProject }),
+    body: JSON.stringify({
+      content,
+      linkConsumerProject,
+      unlinkConsumerProject,
+    }),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -284,7 +289,46 @@ export async function updateEntrypointsFile(
     success: boolean
     importAdded: boolean
     sharedModuleLinked: boolean
+    sharedModuleUnlinked: boolean
   }
+}
+
+export async function addSharedModule(
+  consumerProject: string,
+  moduleProject: string,
+) {
+  const res = await fetch(`/api/shared-modules/${consumerProject}`, {
+    method: 'POST',
+    body: JSON.stringify({ moduleProject }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+
+  return (await res.json()) as { success: boolean; linked: boolean }
+}
+
+export async function removeSharedModule(
+  consumerProject: string,
+  moduleProject: string,
+) {
+  const res = await fetch(`/api/shared-modules/${consumerProject}`, {
+    method: 'DELETE',
+    body: JSON.stringify({ moduleProject }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+
+  return (await res.json()) as { success: boolean; unlinked: boolean }
 }
 
 export async function writeTemplateFile(templateId: string, content: string) {

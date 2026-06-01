@@ -86,6 +86,44 @@ export function ensureProjectSharedModule(
   return true
 }
 
+/** Reverse of {@link ensureProjectSharedModule}: drop the link when an
+ * entrypoint that pulled the module in is removed. */
+export function removeProjectSharedModule(
+  configReader: ConfigReader,
+  configWriter: ConfigWriter,
+  consumerProject: string,
+  moduleProject: string,
+): boolean {
+  if (consumerProject === moduleProject) {
+    return false
+  }
+
+  const configPath = configReader.getConfigPath(consumerProject)
+  const raw = parseJsonc(readFileSync(configPath, 'utf-8')) as {
+    sharedModules?: string[]
+  }
+  const sharedModules = raw.sharedModules ?? []
+
+  if (!sharedModules.includes(moduleProject)) {
+    return false
+  }
+
+  const nextSharedModules = sharedModules.filter(
+    (module) => module !== moduleProject,
+  )
+  const nextRaw: { sharedModules?: string[] } & Record<string, unknown> = {
+    ...raw,
+  }
+  if (nextSharedModules.length > 0) {
+    nextRaw.sharedModules = nextSharedModules
+  } else {
+    delete nextRaw.sharedModules
+  }
+
+  configWriter.updateRawConfigFile(consumerProject, formatJson(nextRaw))
+  return true
+}
+
 export function ensureProjectEntrypointsImport(
   configReader: ConfigReader,
   configWriter: ConfigWriter,
@@ -109,6 +147,26 @@ export function ensureProjectEntrypointsImport(
     }),
   )
   return true
+}
+
+/**
+ * Whether a project ships an entrypoints.json at all. Such a project is
+ * "entrypoint-managed": its declared list is authoritative, so an empty list
+ * means no entrypoint groups (rather than falling back to a whole-module group).
+ */
+export function hasEntrypointsFile(
+  configReader: ConfigReader,
+  moduleProject: string,
+): boolean {
+  try {
+    const filePath = join(
+      configReader.getProjectPath(moduleProject),
+      'entrypoints.json',
+    )
+    return existsSync(filePath)
+  } catch {
+    return false
+  }
 }
 
 export function readModuleEntrypoints(

@@ -9,6 +9,7 @@ import { IconShape } from '../../../icons/IconShape'
 import { useConfigModels } from '../hooks/useConfigModels'
 import { useModelUtils } from '../hooks/useModelUtils'
 import { useProjectData } from '../hooks/useProjectData'
+import { buildDeclaredEntrypointAddressSet } from '../panel-nodes/store/utils/entrypointGroups'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
 import { ContractConfigDialog } from './contract-config-dialog/ContractConfigDialog'
@@ -23,7 +24,7 @@ export function ValuesPanel() {
     throw new Error('Cannot use component outside of project page!')
   }
 
-  const { selected, isError, isPending } = useProjectData()
+  const { selected, isError, isPending, projectResponse } = useProjectData()
 
   if (isPending) {
     return <LoadingState />
@@ -31,6 +32,10 @@ export function ValuesPanel() {
   if (isError) {
     return <ErrorState />
   }
+
+  const entrypointAddresses = buildDeclaredEntrypointAddressSet(
+    projectResponse.data?.entrypointGroups ?? [],
+  )
 
   return (
     <div className="h-full w-full">
@@ -40,6 +45,7 @@ export function ValuesPanel() {
           project={project}
           selected={selected}
           blockNumber={selected.blockNumber}
+          isEntrypoint={entrypointAddresses.has(selected.address)}
         />
       )}
     </div>
@@ -50,10 +56,12 @@ function Display({
   project,
   blockNumber,
   selected,
+  isEntrypoint,
 }: {
   project: string
   selected: ApiProjectContract | ApiAddressEntry
   blockNumber: number
+  isEntrypoint: boolean
 }) {
   const { configModel, templateModel, canModify } = useConfigModels()
   const canModifyTemplate = canModify && templateModel.hasTemplate
@@ -114,6 +122,14 @@ function Display({
             {selected.name ?? 'Unknown'}
             {selected.type === 'Unverified' && (
               <span className="text-aux-red"> (Unverified)</span>
+            )}
+            {isEntrypoint && (
+              <span
+                title="Declared as an entrypoint"
+                className="rounded border border-coffee-500 px-1 py-0.5 text-[10px] text-coffee-300 uppercase tracking-wide"
+              >
+                entrypoint
+              </span>
             )}
           </div>
           <div className="flex items-center gap-2">

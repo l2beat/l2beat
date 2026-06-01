@@ -124,17 +124,78 @@ describe(getEntrypointGroups.name, () => {
     ])
   })
 
-  it('skips legacy entrypoints', () => {
+  it('does not emit a module-wide group for an entrypoint-managed project with no declarations', () => {
+    const member = addr('0x0000000000000000000000000000000000000002')
+    const base = discovery('apex', [
+      {
+        type: 'Reference',
+        address: member,
+        targetProject: 'taiko',
+        targetType: 'Contract',
+      },
+    ])
+    const taiko = discovery('taiko', [
+      { type: 'Contract', address: member, name: 'Shared' },
+    ])
+
+    expect(
+      getEntrypointGroups('apex', {}, base, [base, taiko], new Set(['taiko'])),
+    ).toEqual([])
+  })
+
+  it('still emits a module-wide group for reference modules without an entrypoints file', () => {
+    const member = addr('0x0000000000000000000000000000000000000002')
+    const base = discovery('apex', [
+      {
+        type: 'Reference',
+        address: member,
+        targetProject: 'optimism',
+        targetType: 'Contract',
+      },
+    ])
+    const optimism = discovery('optimism', [
+      { type: 'Contract', address: member, name: 'Shared' },
+    ])
+
+    expect(
+      getEntrypointGroups('apex', {}, base, [base, optimism], new Set()),
+    ).toEqual([
+      {
+        id: 'optimism',
+        label: 'optimism',
+        sourceProject: 'optimism',
+        memberAddresses: [member],
+        bridgeAddresses: [member],
+        contractCount: 1,
+        eoaCount: 0,
+      },
+    ])
+  })
+
+  it('still groups legacy entrypoints so consumer projects can collapse them', () => {
     const member = addr('0x0000000000000000000000000000000000000002')
     const entrypoints: Record<ChainSpecificAddress, Entrypoint> = {
       [member]: {
         type: 'Contract',
-        project: 'apex',
+        project: 'shared-module',
+        name: 'LegacyGateway',
         isLegacy: true,
       },
     }
-    const base = discovery('apex', [])
+    const base = discovery('apex', [
+      { type: 'Contract', address: member, name: 'LegacyGateway' },
+    ])
 
-    expect(getEntrypointGroups('apex', entrypoints, base, [base])).toEqual([])
+    expect(getEntrypointGroups('apex', entrypoints, base, [base])).toEqual([
+      {
+        id: entrypointGroupId('shared-module', member),
+        label: 'shared-module: LegacyGateway',
+        sourceProject: 'shared-module',
+        memberAddresses: [member],
+        bridgeAddresses: [],
+        contractCount: 1,
+        eoaCount: 0,
+      },
+    ])
   })
 })

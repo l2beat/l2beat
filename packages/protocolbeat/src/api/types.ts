@@ -19,6 +19,8 @@ export interface ApiProjectEntry {
 export interface ApiProjectResponse {
   entries: ApiProjectChain[]
   entrypointGroups: ApiEntrypointGroup[]
+  /** sharedModules declared in this project's config.jsonc. */
+  sharedModules: string[]
 }
 
 export interface ApiEntrypointGroup {

@@ -11,6 +11,7 @@ import {
   LOCAL_ENTRYPOINTS_IMPORT,
   parseEntrypointColor,
   readEntrypointsModuleColor,
+  removeProjectSharedModule,
   validateEntrypointsFileContent,
 } from './entrypointsFile'
 
@@ -143,6 +144,66 @@ describe(ensureProjectSharedModule.name, () => {
       readFileSync(join(root, 'celo', 'config.jsonc'), 'utf-8'),
     ) as { sharedModules: string[] }
     expect(config.sharedModules).toEqual(['shared-sp1'])
+  })
+})
+
+describe(removeProjectSharedModule.name, () => {
+  it('removes a shared module from the consumer project config', () => {
+    const root = join(tmpdir(), `remove-shared-module-${randomUUID()}`)
+    const projectPath = join(root, 'celo')
+    mkdirSync(projectPath, { recursive: true })
+    writeFileSync(
+      join(projectPath, 'config.jsonc'),
+      formatJson({
+        name: 'celo',
+        import: ['../globalConfig.jsonc'],
+        initialAddresses: ['eth:0x0000000000000000000000000000000000000001'],
+        sharedModules: ['taiko', 'shared-sp1'],
+      }),
+    )
+
+    const configReader = new ConfigReader(root)
+    const configWriter = new ConfigWriter(configReader, root)
+
+    expect(
+      removeProjectSharedModule(configReader, configWriter, 'celo', 'taiko'),
+    ).toEqual(true)
+    // Removing again is a no-op.
+    expect(
+      removeProjectSharedModule(configReader, configWriter, 'celo', 'taiko'),
+    ).toEqual(false)
+
+    const config = JSON.parse(
+      readFileSync(join(projectPath, 'config.jsonc'), 'utf-8'),
+    ) as { sharedModules: string[] }
+    expect(config.sharedModules).toEqual(['shared-sp1'])
+  })
+
+  it('drops the sharedModules key when the last module is removed', () => {
+    const root = join(tmpdir(), `remove-shared-module-${randomUUID()}`)
+    const projectPath = join(root, 'celo')
+    mkdirSync(projectPath, { recursive: true })
+    writeFileSync(
+      join(projectPath, 'config.jsonc'),
+      formatJson({
+        name: 'celo',
+        import: ['../globalConfig.jsonc'],
+        initialAddresses: ['eth:0x0000000000000000000000000000000000000001'],
+        sharedModules: ['taiko'],
+      }),
+    )
+
+    const configReader = new ConfigReader(root)
+    const configWriter = new ConfigWriter(configReader, root)
+
+    expect(
+      removeProjectSharedModule(configReader, configWriter, 'celo', 'taiko'),
+    ).toEqual(true)
+
+    const config = JSON.parse(
+      readFileSync(join(projectPath, 'config.jsonc'), 'utf-8'),
+    ) as { sharedModules?: string[] }
+    expect(config.sharedModules).toEqual(undefined)
   })
 })
 

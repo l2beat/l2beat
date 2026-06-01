@@ -12,16 +12,22 @@ import { projectParamsSchema } from '../main'
 import {
   ensureProjectEntrypointsImport,
   ensureProjectSharedModule,
+  removeProjectSharedModule,
   validateEntrypointsFileContent,
 } from './entrypointsFile'
 
 const updateEntrypointsFileSchema = z.object({
   content: z.string(),
   linkConsumerProject: z.string().optional(),
+  unlinkConsumerProject: z.string().optional(),
 })
 
 const updateConfigFileSchema = z.object({
   content: z.string(),
+})
+
+const addSharedModuleSchema = z.object({
+  moduleProject: z.string().check((v) => v.length > 0),
 })
 
 const createConfigFileSchema = z.object({
@@ -101,10 +107,74 @@ export function attachConfigRouter(
             moduleProject,
           )
         : false
+    const sharedModuleUnlinked =
+      data.data.unlinkConsumerProject !== undefined
+        ? removeProjectSharedModule(
+            configReader,
+            configWriter,
+            data.data.unlinkConsumerProject,
+            moduleProject,
+          )
+        : false
     configReader.clearImportedCache()
     templateService.reload()
 
-    res.json({ success: true, importAdded, sharedModuleLinked })
+    res.json({
+      success: true,
+      importAdded,
+      sharedModuleLinked,
+      sharedModuleUnlinked,
+    })
+  })
+
+  app.post('/api/shared-modules/:project', (req, res) => {
+    const query = projectParamsSchema.safeParse(req.params)
+    const data = addSharedModuleSchema.safeParse(req.body)
+
+    if (!query.success) {
+      res.status(400).json({ errors: query.message })
+      return
+    }
+    if (!data.success) {
+      res.status(400).json({ errors: data.message })
+      return
+    }
+
+    const linked = ensureProjectSharedModule(
+      configReader,
+      configWriter,
+      query.data.project,
+      data.data.moduleProject,
+    )
+    configReader.clearImportedCache()
+    templateService.reload()
+
+    res.json({ success: true, linked })
+  })
+
+  app.delete('/api/shared-modules/:project', (req, res) => {
+    const query = projectParamsSchema.safeParse(req.params)
+    const data = addSharedModuleSchema.safeParse(req.body)
+
+    if (!query.success) {
+      res.status(400).json({ errors: query.message })
+      return
+    }
+    if (!data.success) {
+      res.status(400).json({ errors: data.message })
+      return
+    }
+
+    const unlinked = removeProjectSharedModule(
+      configReader,
+      configWriter,
+      query.data.project,
+      data.data.moduleProject,
+    )
+    configReader.clearImportedCache()
+    templateService.reload()
+
+    res.json({ success: true, unlinked })
   })
 
   app.put('/api/config-files/:project', (req, res) => {

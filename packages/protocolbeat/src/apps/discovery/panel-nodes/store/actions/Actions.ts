@@ -23,6 +23,10 @@ export interface Actions {
     entrypointGroups: State['entrypointGroups'],
   ) => void
   toggleEntrypointGroup: (groupId: string) => void
+  setEntrypointGroupsCollapsed: (
+    groupIds: readonly string[],
+    collapsed: boolean,
+  ) => void
   setNodes: (nodes: Node[]) => void
   colorSelected: (color: number) => void
   layout: (locations: NodeLocations) => void

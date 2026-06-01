@@ -39,5 +39,49 @@ export function collectMergedEntrypoints(
     configReader.readConfig(openProject).structure.entrypoints ?? {}
   Object.assign(merged, structureEntrypoints)
 
+  // Entrypoint colors are global: any address present in this project that is
+  // declared as an entrypoint by *any* other project should be colored with
+  // that project's entrypoint color, even when the declaring project is not a
+  // shared module here and its discovery was never pulled in as a reference.
+  // We only adopt declarations that don't already have a local one, so local
+  // (or already-loaded) entrypoints keep precedence.
+  mergeGlobalEntrypointsForPresentAddresses(
+    configReader,
+    discoveries,
+    projectsToLoad,
+    merged,
+  )
+
   return merged
+}
+
+function mergeGlobalEntrypointsForPresentAddresses(
+  configReader: ConfigReader,
+  discoveries: DiscoveryOutput[],
+  alreadyLoadedProjects: ReadonlySet<string>,
+  merged: Record<ChainSpecificAddress, Entrypoint>,
+): void {
+  const presentAddresses = new Set<ChainSpecificAddress>()
+  for (const discovery of discoveries) {
+    for (const entry of discovery.entries) {
+      presentAddresses.add(entry.address)
+    }
+  }
+  if (presentAddresses.size === 0) {
+    return
+  }
+
+  for (const project of configReader.readAllDiscoveredProjects()) {
+    if (alreadyLoadedProjects.has(project)) {
+      continue
+    }
+    const projectEntrypoints = readModuleEntrypoints(configReader, project)
+    for (const [address, entrypoint] of Object.entries(projectEntrypoints)) {
+      const chainAddress = address as ChainSpecificAddress
+      if (!presentAddresses.has(chainAddress) || merged[chainAddress]) {
+        continue
+      }
+      merged[chainAddress] = entrypoint
+    }
+  }
 }
