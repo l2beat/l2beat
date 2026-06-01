@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "timestamp": 1777883283,
-  "configHash": "0x6c761518d4b64f6d282ec7ccf5cd6106e82c31469e3bfad3ae68dd90e726b7c6",
+  "configHash": "0xe3366ebd88403dbbba2b7749a60f5e9e97666cca45498cba5ffc1e8c682647f5",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

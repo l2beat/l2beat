@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "PrivacyPoolSimple",
   "category": "core",
-  "description": "Native-asset Privacy Pool that escrows ETH commitments for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+  "description": "Native-asset Privacy Pool that escrows ETH commitments for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
   "ignoreInWatchMode": [
     "currentRoot",
     "currentRootIndex",

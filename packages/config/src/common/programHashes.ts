@@ -2359,6 +2359,30 @@ Verify:
 5. Regenerate and print the vkey from the elf binary by calling \`cargo run --release --bin vkey\` from \`prover\` dir.
   `,
   },
+  '0x00c4ea13863f7b423f53140f432d7147e48b8e31660420636931c0a72459c25c': {
+    title: 'Morph Guest program (v0.5.6 release)',
+    description:
+      'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM.',
+    programUrl:
+      'https://github.com/morph-l2/morph/tree/v0.5.6/prover/bin/client',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+The steps below should be done on a Linux machine to reproduce the program hash. To prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain version \`v6.2.0\`: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up --version v6.2.0\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [morph repo](https://github.com/morph-l2/morph): \`git checkout v0.5.6\`. Commit hash should be \`cafa07d19de8a5a36c8510890a72533c8e0e52e5\`
+2. Make sure docker is running by running \`docker ps\`
+3. Build the program binary from \`prover/bin/client\` dir using a docker container build for reproducibility: \`cargo prove build --docker --tag v6.2.0\`
+4. The generated elf binary \`verifier-client\` will be placed in \`prover/target/elf-compilation/docker/riscv64im-succinct-zkvm-elf/release\`. Move it to \`prover/bin/client/elf\`.
+5. Regenerate and print the vkey from the elf binary by calling \`cargo run --release --bin vkey\` from \`prover\` dir.
+  `,
+  },
   '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
     title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
     description:
@@ -2428,6 +2452,21 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
 
 1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
 2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v51\` . Commit hash should be  \`03949e76071f048c850d721c7a378a2e4b3fbd09\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
+5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+    `,
+  },
+  '0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c': {
+    ...WASM_MODULE_ROOT('v51.1'),
+    verificationStatus: 'notVerified',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v51.1/arbos',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v51.1\` . Commit hash should be  \`e5dab3512419c50893813f4226c0621c3bfe2bdc\`.
 3. Update git submodules \`git submodule update --init --recursive --force\`.
 4. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
 5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.

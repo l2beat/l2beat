@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract maintaining message nonces,  which are updated by the OnRamp and OffRamps.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update the list of authorized callers that can update the nonces."
+        }
+      ]
+    }
+  }
+}

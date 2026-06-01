@@ -74,7 +74,7 @@ async function getInteropTokensData({
 
   const { records } = await getLatestAggregatedInteropTransferWithTokens(
     { from, to },
-    type,
+    type ? [type] : undefined,
     id ? [id] : protocolIds,
   )
 

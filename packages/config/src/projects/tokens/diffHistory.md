@@ -1,4 +1,35 @@
-Generated with discovered.json: 0xa995daf1301f7f2049b9d72d1e8e0d4cda166bfc
+Generated with discovered.json: 0xd1baa7a5b2a9300bcb204a8f92a641c704dbdb61
+
+# Diff at Thu, 28 May 2026 10:32:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1778679898
+- current timestamp: 1779964138
+
+## Description
+
+ms changes.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x35921FB43cB92F5Bfef7cBA1e97Eb5A21Fc2d353) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x0595E2732Fb64297BA65917DD82F4722aC90A69c"
++        "eth:0x1Eec66C76Ed56f73dA0Aaa9965B3751bf3D075DD"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a) [tokens/Lido/HashConsensus] {
+    +++ description: None
+      values.accessControl.MANAGE_FRAME_CONFIG_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
+    }
+```
+
+Generated with discovered.json: 0xf1075f2b86a529f61dc02b8e6a34c63644607867
 
 # Diff at Fri, 15 May 2026 12:37:03 GMT:
 

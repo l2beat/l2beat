@@ -153,6 +153,7 @@ export function createInteropModule({
     getPluginSyncStatuses: () => syncersManager.getPluginSyncStatuses(),
     getProcessorStatuses: () => getProcessorsStatus(processors),
     chains: config.interop.capture.chains,
+    oneSidedChains: config.interop.oneSidedChains,
     tokenDbClient,
   })
 
@@ -180,7 +181,12 @@ export function createInteropModule({
     db,
     tokenDbClient,
     logger,
-    { analyzer: transferAnalyzer },
+    {
+      analyzer: transferAnalyzer,
+      notifier: notificationClient,
+      maxTokenPriceUsd: config.interop.financials.maxTokenPriceUsd,
+      maxTransferValueUsd: config.interop.financials.maxTransferValueUsd,
+    },
   )
 
   const relayApiClient = new RelayApiClient(new HttpClient())

@@ -1,7 +1,7 @@
 {
   "name": "aztecnetwork",
   "timestamp": 1778677605,
-  "configHash": "0xb11802a34cef560d6a748091b60637afa7ca5e3a16ed8666fe305162971823d4",
+  "configHash": "0x07c7b2f2b74b5df0c73bdcf1494022d87860f043eae6fd8f0a2e74b12c2eb191",
   "entries": [
     {
       "name": "CoinIssuer",

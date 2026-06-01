@@ -8,12 +8,20 @@ import type {
   InteropTopItemsSorting,
 } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
+import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { getTopTokensColumns, type TokenRow } from './columns'
 import {
   InfiniteScrollTrigger,
   LoadingMoreText,
   useInfiniteScrollTrigger,
 } from './infiniteScroll'
+
+const DEFAULT_SORTING: InteropTopItemsSorting = [
+  {
+    id: 'volume',
+    desc: true,
+  },
+]
 
 export type TokensQueryInput = {
   id: ProjectId | undefined
@@ -34,12 +42,9 @@ export function TokensTable({
   showTopProtocolColumn?: boolean
   showFlowsColumn?: boolean
 }) {
-  const [sorting, setSorting] = useState<InteropTopItemsSorting>([
-    {
-      id: 'volume',
-      desc: true,
-    },
-  ])
+  const { selectedChains } = useInteropSelectedChains()
+  const [sorting, setSorting] =
+    useState<InteropTopItemsSorting>(DEFAULT_SORTING)
   const queryInputWithSort = useMemo(
     () => ({
       ...queryInput,
@@ -67,8 +72,14 @@ export function TokensTable({
         showNetMintedValueColumn,
         showTopProtocolColumn,
         showFlowsColumn,
+        selectedChains,
       }),
-    [showNetMintedValueColumn, showTopProtocolColumn, showFlowsColumn],
+    [
+      showNetMintedValueColumn,
+      showTopProtocolColumn,
+      showFlowsColumn,
+      selectedChains,
+    ],
   )
 
   const table = useTable<TokenRow>({
@@ -82,11 +93,12 @@ export function TokensTable({
     },
     onSortingChange: (updater) => {
       const nextSorting = functionalUpdate(updater, sorting)
+      const nextSingleSorting = nextSorting.slice(0, 1).map((nextSort) => ({
+        id: nextSort.id as InteropTopItemsSort['id'],
+        desc: nextSort.desc,
+      }))
       setSorting(
-        nextSorting.slice(0, 1).map((nextSort) => ({
-          id: nextSort.id as InteropTopItemsSort['id'],
-          desc: nextSort.desc,
-        })),
+        nextSingleSorting.length > 0 ? nextSingleSorting : DEFAULT_SORTING,
       )
     },
     initialState: {

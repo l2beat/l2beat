@@ -392,6 +392,52 @@ describeDatabase(TokenValueRepository.name, (db) => {
   })
 
   describe(
+    TokenValueRepository.prototype.getLastNonZeroValueByProjects.name,
+    () => {
+      beforeEach(async () => {
+        await repository.upsertMany([
+          // ethereum: token a has values at 100, 150, 200
+          tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
+          tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+          tokenValue('a', 'ethereum', UnixTime(200), 10, 10000, 8000, 5000, 10),
+
+          // ethereum: token b has zero value at 130
+          tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 20),
+          tokenValue('b', 'ethereum', UnixTime(130), 0, 0, 0, 0, 20),
+
+          // arbitrum: token c has a single non-zero value
+          tokenValue('c', 'arbitrum', UnixTime(100), 3, 3000, 2400, 1500, 30),
+
+          // optimism: token d should not be included
+          tokenValue('d', 'optimism', UnixTime(100), 4, 4000, 3200, 2000, 40),
+        ])
+      })
+
+      it('returns latest non-zero record per (project, token) for given projects', async () => {
+        const result = await repository.getLastNonZeroValueByProjects(
+          UnixTime(150),
+          ['ethereum', 'arbitrum'],
+        )
+
+        expect(result).toEqualUnsorted([
+          tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+          tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 20),
+          tokenValue('c', 'arbitrum', UnixTime(100), 3, 3000, 2400, 1500, 30),
+        ])
+      })
+
+      it('returns empty array when no projects are provided', async () => {
+        const result = await repository.getLastNonZeroValueByProjects(
+          UnixTime(150),
+          [],
+        )
+
+        expect(result).toEqual([])
+      })
+    },
+  )
+
+  describe(
     TokenValueRepository.prototype.deleteByConfigInTimeRange.name,
     () => {
       it('deletes data in range for matching config', async () => {

@@ -6,6 +6,7 @@ import {
   TemplateService,
   UserHandlers,
 } from '@l2beat/discovery'
+import { DiffHistoryParser } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
 import express from 'express'
@@ -13,7 +14,6 @@ import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
 import { attachConfigRouter } from './configs/router'
-import { DiffHistoryParser } from './DiffHistoryParser'
 import { DiffoveryController } from './diffovery/DiffoveryController'
 import { FlatSourceClient } from './diffovery/FlatSourceClient'
 import { attachDiffoveryRouter } from './diffovery/router'
@@ -219,31 +219,6 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
     res.json({
       reasons: templateService.discoveryNeedsRefresh(discovery, config),
-    })
-  })
-
-  app.get('/api/config/sync-status', (_, res) => {
-    templateService.reload()
-    const allProjects = configReader.readAllDiscoveredProjects()
-
-    const reasons = allProjects.flatMap((project) => {
-      const discovery = configReader.readDiscovery(project)
-      const config = configReader.readConfig(project)
-
-      const reasons = templateService.discoveryNeedsRefresh(discovery, config)
-
-      if (reasons.length === 0) {
-        return []
-      }
-
-      return {
-        project,
-        reasons,
-      }
-    })
-
-    res.json({
-      reasons,
     })
   })
 

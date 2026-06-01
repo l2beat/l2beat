@@ -11,11 +11,11 @@ export function ZKStackIcon(props: SvgIconProps) {
       {...props}
     >
       <path
-        d="M24 11.7867L17.1921 5.00256V9.9709L10.4325 14.9454L17.1921 14.95V18.5707L24 11.7867Z"
+        d="m24 11.787-6.808-6.784V9.97l-6.76 4.974 6.76.005v3.62z"
         className="fill-[#010100] dark:fill-current"
       />
       <path
-        d="M0 11.7841L6.8079 18.5681V13.6398L13.5676 8.62531L6.8079 8.62066V5L0 11.7841Z"
+        d="m0 11.784 6.808 6.784V13.64l6.76-5.015-6.76-.004V5z"
         className="fill-[#010100] dark:fill-current"
       />
     </SvgIcon>

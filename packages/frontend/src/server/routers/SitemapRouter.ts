@@ -1,5 +1,6 @@
 import express from 'express'
 import { getCollection } from '~/content/getCollection'
+import { env } from '~/env'
 import { shouldHaveNoBridgePage } from '~/server/features/data-availability/utils/shouldHaveNoBridgePage'
 import { ps } from '~/server/projects'
 
@@ -20,6 +21,7 @@ const STATIC_PATHS = [
   '/interop/non-minting',
   '/interop/lock-and-mint',
   '/interop/burn-and-mint',
+  '/interop/token-frameworks',
   '/data-availability/summary',
   '/data-availability/risk',
   '/data-availability/throughput',
@@ -39,6 +41,7 @@ const STATIC_PATHS = [
   '/terms-of-service',
   '/stages',
   '/publications',
+  ...(env.CLIENT_SIDE_PRIVACY_ENABLED ? ['/privacy/summary'] : []),
 ]
 
 export function createSitemapRouter() {
@@ -76,6 +79,7 @@ async function getDynamicPaths(): Promise<string[]> {
     ecosystemProjects,
     daLayers,
     daBridges,
+    privacyProjects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
@@ -86,6 +90,9 @@ async function getDynamicPaths(): Promise<string[]> {
     ps.getProjects({ where: ['ecosystemConfig'] }),
     ps.getProjects({ select: ['daLayer'], whereNot: ['archivedAt'] }),
     ps.getProjects({ select: ['daBridge'] }),
+    env.CLIENT_SIDE_PRIVACY_ENABLED
+      ? ps.getProjects({ where: ['privacyInfo'] })
+      : [],
   ])
 
   const paths: string[] = []
@@ -103,6 +110,10 @@ async function getDynamicPaths(): Promise<string[]> {
 
   for (const project of ecosystemProjects) {
     paths.push(`/ecosystems/${project.slug}`)
+  }
+
+  for (const project of privacyProjects) {
+    paths.push(`/privacy/projects/${project.slug}`)
   }
 
   for (const layer of daLayers) {

@@ -59,6 +59,10 @@ const mainPages: MainPage[] = [
     title: 'Burn & Mint',
   },
   {
+    type: 'interop',
+    title: 'Token Frameworks',
+  },
+  {
     type: 'data-availability',
     title: 'Summary',
   },
@@ -73,6 +77,10 @@ const mainPages: MainPage[] = [
   {
     type: 'data-availability',
     title: 'Liveness',
+  },
+  {
+    type: 'privacy',
+    title: 'Summary',
   },
   {
     title: 'ZK Catalog',

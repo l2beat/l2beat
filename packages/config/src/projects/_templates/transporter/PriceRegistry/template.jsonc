@@ -1,13 +1,46 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreMethods": ["getPriceUpdaters"],
+  "displayName": "PriceRegistry",
+  "description": "USD price oracle used by CCIP OnRamps and CommitStores to value gas and tokens for fee calculation. Maintains a set of fee tokens, a set of authorized price updaters, and per-token / per-destination-chain prices written by the updaters and consumed by OnRamps for fee quoting and CommitStores for piggybacked price updates.",
+  "category": "core",
   "ignoreRelatives": ["getFeeTokens", "owner"],
   "fields": {
-    "owner": {
+    "getStalenessThreshold": {
+      "description": "Maximum age, in seconds, of a token or gas price before it is rejected as stale by getValidatedTokenPrice / getValidatedTokenAndGasPrices."
+    },
+    "getFeeTokens": {
+      "description": "Tokens accepted as CCIP fee payment. The OnRamp validates the user-supplied feeToken against this list before quoting."
+    },
+    "getPriceUpdaters": {
+      "description": "Accounts authorized to write token and gas prices through updatePrices(). Typically Chainlink DON OCR transmitters and the CommitStore which piggybacks price updates on commit reports.",
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getPriceUpdaters",
+        "ignoreRelative": true
+      },
       "permissions": [
         {
           "type": "interact",
-          "description": "add or remove fee tokens and price updaters used by CCIP pricing."
+          "description": "publish or revise token and destination-chain gas prices stored in this registry."
+        }
+      ]
+    },
+    "owner": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove fee tokens accepted by CCIP pricing."
+        },
+        {
+          "type": "interact",
+          "description": "add or remove price updater accounts."
+        },
+        {
+          "type": "interact",
+          "description": "change the staleness threshold for token and gas prices."
         }
       ]
     }

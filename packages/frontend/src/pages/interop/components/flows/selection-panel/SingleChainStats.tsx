@@ -4,19 +4,23 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
 import { api } from '~/trpc/React'
+import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { TopItemsList } from './TopItemsList'
 
 export function SingleChainStats({
   chainId,
   selectedChains,
+  tokenId,
   linkTopProtocols,
   hideTopProtocols,
 }: {
   chainId: string
   selectedChains: string[]
+  tokenId?: string
   linkTopProtocols?: boolean
   hideTopProtocols?: boolean
 }) {
@@ -24,6 +28,7 @@ export function SingleChainStats({
   const { data, isLoading } = api.interop.flows.useQuery({
     chains: selectedChains,
     protocolIds: selectedProtocols,
+    tokenId,
   })
 
   if (!data || isLoading) {
@@ -42,6 +47,10 @@ export function SingleChainStats({
           items={chainData.topTokens.map((t) => ({
             ...t,
             title: t.symbol,
+            href: getInteropTokenUrl(t, {
+              from: selectedChains,
+              to: selectedChains,
+            }),
           }))}
         />
       )}
@@ -149,7 +158,7 @@ function TopRoutes({
   isLoading: boolean
   chainId: string
 }) {
-  const { allChains } = useInteropFlows()
+  const { allChains, setHighlightedChainPair } = useInteropFlows()
 
   const flows = data?.flows
     .filter((cv) => cv.srcChain === chainId || cv.dstChain === chainId)
@@ -172,6 +181,9 @@ function TopRoutes({
           return (
             <StatRow
               key={`${flow.srcChain}-${flow.dstChain}`}
+              onClick={() =>
+                setHighlightedChainPair(flow.srcChain, flow.dstChain)
+              }
               label={
                 <span className="flex items-center gap-1">
                   {srcChain && (
@@ -205,19 +217,40 @@ function StatRow({
   label,
   value,
   isLoading,
+  onClick,
 }: {
   label: ReactNode
   value: string
   isLoading: boolean
+  onClick?: () => void
 }) {
-  return (
-    <div className="flex items-center justify-between gap-2 text-[13px]">
+  const baseClassName =
+    'flex w-full items-center justify-between gap-2 text-[13px]'
+  const content = (
+    <>
       <span className="font-medium text-secondary leading-none">{label}</span>
       {isLoading ? (
         <Skeleton className="h-4 w-16" />
       ) : (
         <span className="font-semibold leading-[1.15]">{value}</span>
       )}
-    </div>
+    </>
   )
+
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={cn(
+          baseClassName,
+          'rounded transition-opacity hover:opacity-80',
+        )}
+      >
+        {content}
+      </button>
+    )
+  }
+
+  return <div className={baseClassName}>{content}</div>
 }

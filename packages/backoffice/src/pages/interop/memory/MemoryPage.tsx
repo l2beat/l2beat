@@ -8,9 +8,10 @@ import {
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendApi } from '~/react-query/trpc'
 
 export function MemoryPage() {
+  const api = useBackendApi()
   const { data, error, isPending } = api.interop.status.memory.useQuery(
     undefined,
     {

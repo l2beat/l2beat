@@ -23,6 +23,7 @@ export interface InteropTrpcRouterDeps {
   getPluginSyncStatuses: () => Promise<PluginSyncStatus[]>
   getProcessorStatuses: () => ProcessorStatus[]
   chains: readonly { id: string; type: 'evm' }[]
+  oneSidedChains: readonly string[]
   tokenDbClient: TokenDbClient
 }
 

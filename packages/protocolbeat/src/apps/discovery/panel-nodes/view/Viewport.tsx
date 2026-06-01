@@ -7,9 +7,24 @@ import { useDesktopControls } from './hooks/useDesktopControls'
 import { useTouchControls } from './hooks/useTouchControls'
 import { MouseSelection } from './MouseSelection'
 import { NodesAndConnections } from './NodesAndConnections'
+import { NodesAndConnectionsWebGL } from './NodesAndConnectionsWebGL'
 import { ScalableView } from './ScalableView'
 
-export function Viewport() {
+export type ViewportRenderer = 'dom' | 'webgl'
+
+export interface ViewportProps {
+  // When omitted (the normal case) the renderer is chosen from
+  // userPreferences.useExperimentalRenderer. Passed explicitly only by the
+  // bench page so it can A/B test independently of the user setting.
+  renderer?: ViewportRenderer
+}
+
+export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
+  const useExperimentalRenderer = useStore(
+    (state) => state.userPreferences.useExperimentalRenderer === true,
+  )
+  const renderer: ViewportRenderer =
+    rendererOverride ?? (useExperimentalRenderer ? 'webgl' : 'dom')
   const containerRef = useRef<HTMLDivElement>(null)
   const viewRef = useRef<HTMLDivElement>(null)
   const registerViewportContainer = useStore(
@@ -92,9 +107,16 @@ export function Viewport() {
         desktopControls.isResizing && 'cursor-col-resize',
       )}
     >
-      <ScalableView ref={viewRef}>
-        <NodesAndConnections />
-      </ScalableView>
+      {renderer === 'dom' ? (
+        <ScalableView ref={viewRef}>
+          <NodesAndConnections />
+        </ScalableView>
+      ) : (
+        <>
+          <ScalableView ref={viewRef} />
+          <NodesAndConnectionsWebGL />
+        </>
+      )}
       <MouseSelection />
     </div>
   )

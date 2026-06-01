@@ -1,7 +1,7 @@
 {
   "name": "syndicate",
   "timestamp": 1775599220,
-  "configHash": "0x0e3923dbaf7703860e05a0efcee6e419ea7c9ad303b96a94b125bd351d88ed88",
+  "configHash": "0x578958c25a2082e0e0b2e01bdfaa66adc61f21093bdcb8e40002a0a41633efcf",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {

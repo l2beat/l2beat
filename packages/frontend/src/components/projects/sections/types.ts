@@ -7,7 +7,10 @@ import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
 import type { InteropFlowsSectionProps } from './interop/InteropFlowsSection'
+import type { InteropTokenProtocolsSectionProps } from './interop/InteropTokenProtocolsSection'
 import type { InteropTokensSectionProps } from './interop/InteropTokensSection'
+import type { InteropTokenTransfersSectionProps } from './interop/InteropTokenTransfersSection'
+import type { InteropTokenVolumeSectionProps } from './interop/InteropTokenVolumeSection'
 import type { InteropTransfersSectionProps } from './interop/InteropTransfersSection'
 import type { InteropVolumeSectionProps } from './interop/InteropVolumeSection'
 import type { L3RiskAnalysisSectionProps } from './L3RiskAnalysisSection'
@@ -16,6 +19,9 @@ import type { MarkdownSectionProps } from './MarkdownSection'
 import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncidentsSection'
 import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
+import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
+import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
+import type { PrivacyTvlSectionProps } from './privacy/PrivacyTvlSection'
 import type { ProgramHashesSectionProps } from './program-hashes/ProgramHashesSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import type { RiskSummarySectionProps } from './RiskSummarySection'
@@ -28,6 +34,7 @@ import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
 import type { ScalingTvsSectionProps } from './tvs/ScalingTvsSection'
 import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
+import type { UpdatesSectionProps } from './UpdatesSection'
 import type { UpgradesAndGovernanceSectionProps } from './UpgradesAndGovernanceSection'
 import type { VerifiersSectionProps } from './verifiers/VerifiersSection'
 
@@ -49,6 +56,7 @@ type SectionId =
   | 'state-derivation'
   | 'state-validation'
   | 'upgrades-and-governance'
+  | 'updates'
   | 'permissions'
   | 'contracts'
   | 'sequencing'
@@ -62,6 +70,10 @@ type SectionId =
   | 'interop-flows'
   | 'interop-transfers'
   | 'interop-tokens'
+  | 'interop-protocols'
+  | 'privacy-tvl'
+  | 'privacy-flows'
+  | 'privacy-assets-breakdown'
 type GroupId = 'da-layer' | 'da-bridge'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
@@ -208,6 +220,21 @@ interface ProjectDetailsInteropTokensSection {
   props: ProjectDetailsProps<InteropTokensSectionProps>
 }
 
+interface ProjectDetailsInteropTokenVolumeSection {
+  type: 'InteropTokenVolumeSection'
+  props: ProjectDetailsProps<InteropTokenVolumeSectionProps>
+}
+
+interface ProjectDetailsInteropTokenProtocolsSection {
+  type: 'InteropTokenProtocolsSection'
+  props: ProjectDetailsProps<InteropTokenProtocolsSectionProps>
+}
+
+interface ProjectDetailsInteropTokenTransfersSection {
+  type: 'InteropTokenTransfersSection'
+  props: ProjectDetailsProps<InteropTokenTransfersSectionProps>
+}
+
 interface ProjectDetailsGroup {
   type: 'Group'
   props: ProjectDetailsProps<GroupSectionProps>
@@ -226,6 +253,26 @@ interface ProjectDetailsZkCatalogTvsSection {
 interface ProjectDetailsUpgradesAndGovernanceSection {
   type: 'UpgradesAndGovernanceSection'
   props: ProjectDetailsProps<UpgradesAndGovernanceSectionProps>
+}
+
+interface ProjectDetailsUpdatesSection {
+  type: 'UpdatesSection'
+  props: ProjectDetailsProps<UpdatesSectionProps>
+}
+
+interface ProjectDetailsPrivacyTvlSection {
+  type: 'PrivacyTvlSection'
+  props: ProjectDetailsProps<PrivacyTvlSectionProps>
+}
+
+interface ProjectDetailsPrivacyFlowsSection {
+  type: 'PrivacyFlowsSection'
+  props: ProjectDetailsProps<PrivacyFlowsSectionProps>
+}
+
+interface ProjectDetailsPrivacyAssetsBreakdownSection {
+  type: 'PrivacyAssetsBreakdownSection'
+  props: ProjectDetailsProps<PrivacyAssetsBreakdownSectionProps>
 }
 
 export type ProjectDetailsSection = {
@@ -262,5 +309,12 @@ export type ProjectDetailsSection = {
   | ProjectDetailsInteropFlowsSection
   | ProjectDetailsInteropTransfersSection
   | ProjectDetailsInteropTokensSection
+  | ProjectDetailsInteropTokenVolumeSection
+  | ProjectDetailsInteropTokenProtocolsSection
+  | ProjectDetailsInteropTokenTransfersSection
   | ProjectDetailsUpgradesAndGovernanceSection
+  | ProjectDetailsUpdatesSection
+  | ProjectDetailsPrivacyTvlSection
+  | ProjectDetailsPrivacyFlowsSection
+  | ProjectDetailsPrivacyAssetsBreakdownSection
 )

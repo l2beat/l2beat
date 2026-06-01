@@ -19,6 +19,7 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
+import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -53,14 +54,14 @@ import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
+import {
+  getProjectInteropData,
+  type ProjectInteropData,
+} from '../interop/getProjectInteropData'
 import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
-import {
-  getProjectScalingInteropData,
-  type ProjectScalingInteropData,
-} from './getProjectScalingInteropData'
 import { getScalingDaSolutions } from './getScalingDaSolutions'
 import type { ScalingRosette } from './getScalingRosetteValues'
 import { getScalingRosette } from './getScalingRosetteValues'
@@ -124,7 +125,7 @@ export interface ProjectScalingEntry {
       uopsWeeklyChange: number
     }
     gasTokens?: string[]
-    interop?: ProjectScalingInteropData['summary']
+    interop?: ProjectInteropData['summary']
   }
   rosette: ScalingRosette
   sections: ProjectDetailsSection[]
@@ -207,13 +208,16 @@ export async function getScalingProjectEntry(
   ])
 
   const projectLiveness = liveness[project.id]
+  const discoveryUpdates = project.discoveryInfo?.hasDiscoUi
+    ? getDiscoveryUpdates(project.id)
+    : []
 
   const ongoingAnomalies = projectLiveness?.anomalies.filter(
     (a) => a.end === undefined,
   )
 
   const tvsProjectStats = tvsStats.projects[project.id]
-  const interopData = await getProjectScalingInteropData(
+  const interopData = await getProjectInteropData(
     project.id,
     interopProjects,
     helpers,
@@ -614,9 +618,11 @@ export async function getScalingProjectEntry(
   }
 
   const allPastUpgrades = getProjectPastUpgrades(project.contracts)
+  const upgradesAndGovernance = project.scalingTechnology.upgradesAndGovernance
 
   if (
-    project.scalingTechnology.upgradesAndGovernance ||
+    upgradesAndGovernance?.content ||
+    upgradesAndGovernance?.governanceInfo ||
     allPastUpgrades.length > 0
   ) {
     sections.push({
@@ -624,20 +630,31 @@ export async function getScalingProjectEntry(
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: project.scalingTechnology.upgradesAndGovernance
+        content: upgradesAndGovernance?.content
           ? linkAddresses(
-              project.scalingTechnology.upgradesAndGovernance,
+              upgradesAndGovernance.content,
               project.contracts,
               project.permissions,
             )
           : undefined,
         diagram: getDiagramParams(
           'upgrades-and-governance',
-          project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
+          upgradesAndGovernance?.image ?? project.slug,
         ),
-
+        governanceInfo: upgradesAndGovernance?.governanceInfo,
         pastUpgrades: getPastUpgradesData(allPastUpgrades),
         isUnderReview: !!project.statuses.reviewStatus,
+      },
+    })
+  }
+
+  if (discoveryUpdates.length > 0) {
+    sections.push({
+      type: 'UpdatesSection',
+      props: {
+        id: 'updates',
+        title: 'Updates',
+        updates: discoveryUpdates,
       },
     })
   }

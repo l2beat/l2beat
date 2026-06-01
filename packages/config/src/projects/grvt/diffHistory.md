@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xfaa7f54d444bc1f412d30add572e0f27a60d33b4
+
+# Diff at Wed, 20 May 2026 11:56:59 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f59f0d404af9ed9bb5c23cd4f8a0378debc582c7 block: 1779097887
+- current timestamp: 1779278156
+
+## Description
+
+One gov-approved transaction to grvt L2: https://tools.l2beat.com/decoder-new/?hash=0x52609446fe9a7597280df6778648d25af4bf6f389765ef506f1f759d6e6d9b41&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        44
++        45
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        44
++        45
+    }
+```
+
 Generated with discovered.json: 0xce54eb014b95aab36918916f8f619ff6048d75f8
 
 # Diff at Mon, 18 May 2026 10:00:55 GMT:

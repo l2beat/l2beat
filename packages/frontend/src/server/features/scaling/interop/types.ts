@@ -87,6 +87,12 @@ export const InteropProtocolParams = v.object({
   ...InteropSelectionInputShape,
 })
 
+export type InteropTokenParams = v.infer<typeof InteropTokenParams>
+export const InteropTokenParams = v.object({
+  tokenId: v.string(),
+  ...InteropSelectionInputShape,
+})
+
 export type InteropTopItemsParams = v.infer<typeof InteropTopItemsParams>
 export const InteropTopItemsSort = v.object({
   id: v.enum([
@@ -141,6 +147,18 @@ export const InteropProtocolTransfersParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
+  tokenId: v.string().optional(),
+  snapshotTimestamp: v.number(),
+  limit: v.number().optional(),
+  cursor: InteropProtocolTransfersCursor.optional(),
+})
+
+export type InteropTokenTransfersParams = v.infer<
+  typeof InteropTokenTransfersParams
+>
+export const InteropTokenTransfersParams = v.object({
+  tokenId: v.string(),
+  ...InteropSelectionInputShape,
   snapshotTimestamp: v.number(),
   limit: v.number().optional(),
   cursor: InteropProtocolTransfersCursor.optional(),
@@ -150,6 +168,7 @@ export type InteropFlowsParams = v.infer<typeof InteropFlowsParams>
 export const InteropFlowsParams = v.object({
   chains: v.array(v.string()),
   protocolIds: v.array(v.string()),
+  tokenId: v.string().optional(),
 })
 
 export type InteropProtocolTransferDetailsItem = {
@@ -157,9 +176,13 @@ export type InteropProtocolTransferDetailsItem = {
   timestamp: number
   srcAmount: number | undefined
   srcSymbol: string
+  srcAbstractTokenId: string | undefined
+  srcTokenIssuer: string | null
   srcTokenIconUrl: string
   dstAmount: number | undefined
   dstSymbol: string
+  dstAbstractTokenId: string | undefined
+  dstTokenIssuer: string | null
   dstTokenIconUrl: string
   valueUsd: number | undefined
   duration: number | undefined
@@ -185,6 +208,21 @@ export type AggregatedInteropTransferWithTokens =
       'id' | 'timestamp' | 'srcChain' | 'dstChain' | 'bridgeType'
     >[]
   }
+
+export type ScopedInteropTransfer = Pick<
+  AggregatedInteropTransferWithTokens,
+  'id' | 'timestamp' | 'bridgeType' | 'srcChain' | 'dstChain'
+> &
+  CommonInteropData & {
+    tokens: [AggregatedInteropTransferWithTokens['tokens'][number]]
+    volume: number
+    identifiedCount: number
+    avgValueInFlight: undefined
+  }
+
+export type InteropTransferWithTokens =
+  | AggregatedInteropTransferWithTokens
+  | ScopedInteropTransfer
 
 export type CommonInteropData = {
   volume: number
@@ -233,8 +271,8 @@ export type InteropTokensResponse = {
 
 export type TokensPairData = {
   id: string
-  tokenA: { symbol: string; iconUrl: string }
-  tokenB: { symbol: string; iconUrl: string }
+  tokenA: { id: string; symbol: string; issuer: string | null; iconUrl: string }
+  tokenB: { id: string; symbol: string; issuer: string | null; iconUrl: string }
   topProtocol: ProtocolDisplayable | undefined
   volume: number | null
   transferCount: number

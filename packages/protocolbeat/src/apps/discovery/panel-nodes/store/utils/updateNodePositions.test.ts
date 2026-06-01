@@ -220,6 +220,7 @@ function buildState(nodes: Node[]): State {
       enableDimming: true,
       hideLargeArrays: false,
       highlightOverlapping: true,
+      useExperimentalRenderer: false,
     },
     transform: {
       offsetX: 0,

@@ -1,3 +1,101 @@
+Generated with discovered.json: 0xb159dde75b7ffe4ec7d2094a425c1e56bc3d732a
+
+# Diff at Thu, 28 May 2026 10:14:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1779355207
+- current timestamp: 1779963216
+
+## Description
+
+EOA removed from the Risc0 timelock accessControl (Multisig remains). One SC signer changed their local ms signer.
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.Canceller.0:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.Executor.0:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+      values.Proposer.0:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
+    }
+```
+
+```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
++        "eth:0xF28C8D6b44361255FA7C116d09ccD5F914398C10"
+    }
+```
+
+```diff
+    contract Gustavo Gonzalez Taiko (eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2"
++        "eth:0xF28C8D6b44361255FA7C116d09ccD5F914398C10"
+    }
+```
+
+```diff
+    contract ProverWhitelist (eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae) [taiko/ProverWhitelist] {
+    +++ description: Defines the whitelist of addresses allowed to prove proposals. Non-whitelisted provers must wait for the permissionless proving delay before they can submit proofs.
+      values.proverCount:
+-        1
++        2
+    }
+```
+
+Generated with discovered.json: 0xb493601ef8e8c3c2bead3d08658a813048ef1189
+
+# Diff at Thu, 21 May 2026 09:21:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aa147da36dc2b8d307d8e09b17d18109b2286235 block: 1779173531
+- current timestamp: 1779355207
+
+## Description
+
+Risc0 emergency stop moved from EOA to multisig.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696","description":"pause the verifier.","role":".owner"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      values.owner:
+-        "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412"
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+    }
+```
+
+```diff
+    EOA  (eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412) {
+    +++ description: None
+      receivedPermissions.5:
+-        {"permission":"interact","from":"eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696","description":"pause the verifier.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0x6820b0db5269aa283f26180f31e7bde480b4b98a
 
 # Diff at Tue, 19 May 2026 12:03:01 GMT:

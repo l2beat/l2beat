@@ -7,7 +7,14 @@ export type SearchBarProjectEntry = SearchBarEntry & {
   type: 'project'
   id: string
   iconUrl: string
-  kind: 'layer2' | 'layer3' | 'da' | 'interop' | 'zkCatalog' | 'ecosystem'
+  kind:
+    | 'layer2'
+    | 'layer3'
+    | 'da'
+    | 'interop'
+    | 'zkCatalog'
+    | 'ecosystem'
+    | 'privacy'
   scalingCategory?: ProjectScalingCategory
   filePrepared?: Fuzzysort.Prepared
   projectAddresses?: EthereumAddress[]
