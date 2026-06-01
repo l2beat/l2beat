@@ -16,6 +16,7 @@ import type {
   ApiProjectResponse,
   ApiProjectsResponse,
   ApiTemplateFileResponse,
+  ApiValueLockedResponse,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -387,6 +388,37 @@ export async function getFlatSource(
   }
   const data = await res.json()
   return data as { name: string; sources: Record<string, string> }
+}
+
+export async function getValueLocked(
+  project: string,
+): Promise<ApiValueLockedResponse> {
+  const res = await fetch(`/api/projects/${project}/value-locked`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiValueLockedResponse
+}
+
+export async function fetchValueLocked(
+  project: string,
+  addresses: string[],
+  merge?: boolean,
+): Promise<ApiValueLockedResponse> {
+  const res = await fetch(`/api/projects/${project}/value-locked`, {
+    method: 'POST',
+    body: JSON.stringify({ addresses, merge }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  if (!res.ok) {
+    const data = await res.json().catch(() => undefined)
+    throw new Error(data?.error ?? res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiValueLockedResponse
 }
 
 export function executeFindMinters(address: string): EventSource {

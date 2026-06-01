@@ -79,6 +79,29 @@ export class TvsPriceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  /**
+   * Latest price (one row) for each of the given priceIds, considering only
+   * records at/after `since`. Uses DISTINCT ON to fetch all in a single query.
+   */
+  async getLatestPricesByPriceIds(
+    priceIds: string[],
+    since: UnixTime,
+  ): Promise<TvsPriceRecord[]> {
+    if (priceIds.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('TvsPrice')
+      .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
+      .where('priceId', 'in', priceIds)
+      .where('timestamp', '>=', UnixTime.toDate(since))
+      .distinctOn('priceId')
+      .orderBy('priceId')
+      .orderBy('timestamp', 'desc')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async getPricesInRangeByPriceId(
     priceId: string,
     fromInclusive: UnixTime | null,

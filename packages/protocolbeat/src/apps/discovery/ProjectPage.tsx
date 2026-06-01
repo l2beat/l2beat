@@ -15,6 +15,7 @@ import { NodesPanel } from './panel-nodes/NodesPanel'
 import { PreviewPanel } from './panel-preview/PreviewPanel'
 import { TemplatePanel } from './panel-template/TemplatePanel'
 import { TerminalPanel } from './panel-terminal/TerminalPanel'
+import { ValueLockedPanel } from './panel-value-locked/ValueLockedPanel'
 import { ValuesPanel } from './panel-values/ValuesPanel'
 import { usePanelStore } from './store/panel-store'
 
@@ -59,6 +60,7 @@ const PANELS: Record<PanelId, () => JSX.Element> = {
   template: TemplatePanel,
   config: ConfigPanel,
   diffHistory: DiffHistoryPanel,
+  valueLocked: ValueLockedPanel,
 }
 
 const READONLY_PANELS: Record<
@@ -73,6 +75,7 @@ const READONLY_PANELS: Record<
   template: TemplatePanel,
   config: ConfigPanel,
   diffHistory: DiffHistoryPanel,
+  valueLocked: ValueLockedPanel,
 }
 
 function Panel(props: { kind: PanelId }) {

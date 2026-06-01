@@ -69,6 +69,30 @@ export interface ApiProjectChain {
   blockNumbers: Record<string, number>
 }
 
+export interface ApiValueLockedResponse {
+  fetchedAt: number
+  tokens: ApiAbstractTokenValue[]
+}
+
+export interface ApiAbstractTokenValue {
+  abstractTokenId: string
+  symbol: string
+  iconUrl: string | null
+  totalAmount: number
+  totalUsd: number
+  deployments: ApiDeploymentBalance[]
+}
+
+export interface ApiDeploymentBalance {
+  tokenChain: string
+  tokenAddress: string
+  tokenSymbol: string
+  decimals: number
+  holderAddress: string
+  amount: number
+  usd?: number
+}
+
 export type ApiListTemplatesResponse = string[]
 
 export interface ApiTemplateFileResponse {

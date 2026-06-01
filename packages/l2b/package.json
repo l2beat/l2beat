@@ -27,6 +27,7 @@
     "@ethereum-sourcify/compilers-types": "^1.2.0",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
+    "@l2beat/database": "workspace:*",
     "@l2beat/discovery": "workspace:*",
     "@l2beat/protocolbeat": "workspace:*",
     "@l2beat/shared": "workspace:*",

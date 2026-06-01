@@ -28,6 +28,8 @@ import {
   attachTemplateRouter,
   listTemplateFilesSchema,
 } from './templates/router'
+import { attachValueLockedRouter } from './valueLocked/router'
+import { ValueLockedService } from './valueLocked/ValueLockedService'
 
 const safeStringSchema = z
   .string()
@@ -106,6 +108,17 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const diffHistoryParser = new DiffHistoryParser()
   const flatSourceClient = new FlatSourceClient()
   const diffoveryController = new DiffoveryController(flatSourceClient)
+
+  // Tokens (abstractToken/deployedToken) and prices (currentPrice) may live in
+  // the same Postgres or in separate ones; fall back to a shared connection.
+  const valueLockedService = new ValueLockedService(
+    process.env.TOKENS_DATABASE_URL ??
+      process.env.DATABASE_URL ??
+      process.env.LOCAL_DB_URL,
+    process.env.PRICES_DATABASE_URL ??
+      process.env.DATABASE_URL ??
+      process.env.LOCAL_DB_URL,
+  )
 
   app.use(express.json())
 
@@ -293,6 +306,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   app.use(express.static(STATIC_ROOT))
 
   attachDiffoveryRouter(app, diffoveryController)
+  attachValueLockedRouter(app, configReader, valueLockedService)
 
   if (!readonly) {
     attachTemplateRouter(app, templateService)

@@ -34,3 +34,5 @@ packages/config/cache/
 packages/backend/scripts/tvs/breakdown.json
 packages/backend/scripts/tvs/local-data.json
 packages/uops-dashboard/src/chains.json
+# DiscoUI "Value Locked" panel writes per-project balance snapshots at runtime
+packages/config/src/projects/*/valueLocked.json
