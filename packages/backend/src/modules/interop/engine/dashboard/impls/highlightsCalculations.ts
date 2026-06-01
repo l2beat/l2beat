@@ -4,7 +4,11 @@ import type {
   AggregatedInteropTransferRecord,
   TokenValueRecord,
 } from '@l2beat/database'
-import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  getInteropTransferValue,
+  type ProjectId,
+  type UnixTime,
+} from '@l2beat/shared-pure'
 
 export interface AggregatedInteropTopPathByVolume {
   timestamp: UnixTime
@@ -93,7 +97,7 @@ export function getTopPathByVolumeAtTimestamp(
       protocolIds: new Set<string>(),
     }
 
-    path.volumeUsd += getTransferVolumeUsd(record)
+    path.volumeUsd += getInteropTransferValue(record) ?? 0
     path.transferCount += record.transferCount
     path.protocolIds.add(record.id)
     paths.set(key, path)
@@ -195,7 +199,8 @@ export function getLargestSourceChainVolumeIncrease(
     }
     currentVolumes.set(
       record.srcChain,
-      (currentVolumes.get(record.srcChain) ?? 0) + getTransferVolumeUsd(record),
+      (currentVolumes.get(record.srcChain) ?? 0) +
+        (getInteropTransferValue(record) ?? 0),
     )
   }
 
@@ -206,7 +211,7 @@ export function getLargestSourceChainVolumeIncrease(
     previousVolumes.set(
       record.srcChain,
       (previousVolumes.get(record.srcChain) ?? 0) +
-        getTransferVolumeUsd(record),
+        (getInteropTransferValue(record) ?? 0),
     )
   }
 
@@ -248,7 +253,8 @@ export function getLargestProtocolVolumeIncrease(
     }
     currentVolumes.set(
       record.id,
-      (currentVolumes.get(record.id) ?? 0) + getTransferVolumeUsd(record),
+      (currentVolumes.get(record.id) ?? 0) +
+        (getInteropTransferValue(record) ?? 0),
     )
   }
 
@@ -258,7 +264,8 @@ export function getLargestProtocolVolumeIncrease(
     }
     previousVolumes.set(
       record.id,
-      (previousVolumes.get(record.id) ?? 0) + getTransferVolumeUsd(record),
+      (previousVolumes.get(record.id) ?? 0) +
+        (getInteropTransferValue(record) ?? 0),
     )
   }
 
@@ -520,16 +527,6 @@ export function getLargestTvsIncrease(
     previousTvsUsd: top.previousTvsUsd,
     increaseUsd: top.increaseUsd,
   }
-}
-
-function getTransferVolumeUsd(record: AggregatedInteropTransferRecord) {
-  const { srcValueUsd, dstValueUsd } = record
-
-  if (srcValueUsd !== undefined && dstValueUsd !== undefined) {
-    return Math.max(srcValueUsd, dstValueUsd)
-  }
-
-  return srcValueUsd ?? dstValueUsd ?? 0
 }
 
 function maxBy<T>(items: T[], compare: (a: T, b: T) => number) {
