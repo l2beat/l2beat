@@ -82,6 +82,10 @@ import {
   parseCctpV2ReceivedTransfer,
 } from './cctp.utils'
 
+// HyperCore-origin CCTP burns on HypereVM are not discoverable via eth_getLogs, only eth_getTransactionReceipt and eth_getBlockReceipts
+// so we treat it as onesided in this plugin (source only)
+const CCTP_V2_ONE_SIDED_SOURCE_CHAINS = new Set(['hyperevm'])
+
 export const CCTPv2MessageSent = createInteropEventType<{
   fast: boolean
   app?: string
@@ -227,7 +231,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       })
       if (messageSentMatches.length === 0) {
         const srcChain = event.args.$srcChain
-        if (!this.oneSidedChains.includes(srcChain)) return
+        if (!this.isOneSidedSourceChain(srcChain)) return
 
         return [
           Result.Transfer('cctp-v2.Transfer', {
@@ -319,5 +323,12 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
         }),
       ]
     }
+  }
+
+  private isOneSidedSourceChain(chain: string) {
+    return (
+      this.oneSidedChains.includes(chain) ||
+      CCTP_V2_ONE_SIDED_SOURCE_CHAINS.has(chain)
+    )
   }
 }
