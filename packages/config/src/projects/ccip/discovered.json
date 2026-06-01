@@ -1,8 +1,1250 @@
 {
   "name": "ccip",
   "timestamp": 1778572081,
-  "configHash": "0xae09fc74acb9ef1111e8fa55545b542f89997c5f97e6362e3d36acb4ee54145d",
+  "configHash": "0x2d79c1bef9e916e65161ddc260328173be5adbd6aa0ab1f1dfb78d8cf9af8509",
   "entries": [
+    {
+      "name": "ArbitrumOffRamp_v1_6",
+      "address": "arb1:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae",
+      "type": "Contract",
+      "template": "transporter/OfframpV3",
+      "sourceHashes": [
+        "0x0cd580f4aedce3a2a8da2a7e6013b1b7de5c18db2e1a41549e880bccece5ed06"
+      ],
+      "proxyType": "immutable",
+      "description": "v1.6 OffRamp on Arbitrum One. Added only to inspect its OCR signing set; relatives are ignored so no other Arbitrum CCIP contracts are pulled into discovery.",
+      "deployerAddress": "arb1:0x062f05CD6c835677B05a8658A351969476861316",
+      "sinceTimestamp": 1744752931,
+      "sinceBlock": 326753465,
+      "values": {
+        "$immutable": true,
+        "getDynamicConfig": {
+          "feeQuoter": "arb1:0x509074C7B16cA21Aa581c20b4567c99eA350D84A",
+          "permissionLessExecutionThresholdSeconds": 3600,
+          "messageInterceptor": "arb1:0x0000000000000000000000000000000000000000"
+        },
+        "getStaticConfig": {
+          "chainSelector": "4949039107694359620",
+          "gasForCallExactCheck": 5000,
+          "rmnRemote": "arb1:0xC311a21e6fEf769344EB1515588B9d535662a145",
+          "tokenAdminRegistry": "arb1:0x39AE1032cF4B334a1Ed41cdD0833bdD7c7E7751E",
+          "nonceManager": "arb1:0x70003d849A20e33997fea69bBc8a366D6ab0E131"
+        },
+        "ocrCommit": {
+          "configInfo": {
+            "configDigest": "0x000ab5f9d80cfdc1a41d3a4a26acb63eab45f16120a6362e01ef145ff4507283",
+            "F": 5,
+            "n": 16,
+            "isSignatureVerificationEnabled": true
+          },
+          "signers": [
+            "arb1:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+            "arb1:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+            "arb1:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+            "arb1:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4",
+            "arb1:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+            "arb1:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+            "arb1:0x2D2251fAC6871Df405450337E327683822baFc52",
+            "arb1:0x7502128aF7a58E9906696EA6B60434f75d0026E0",
+            "arb1:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+            "arb1:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+            "arb1:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+            "arb1:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+            "arb1:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+            "arb1:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+            "arb1:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+            "arb1:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83"
+          ],
+          "transmitters": [
+            "arb1:0xB3542aDD2E4219EB5605849d95e5A8BD50957156",
+            "arb1:0xd661587D73f8741569E492Aa6207766AE325857F",
+            "arb1:0xf850Ad511c95A47bd480Fb491d070ebad38C895f",
+            "arb1:0xb8aD4982Ea4A768c9C1328D60385977a51ebad50",
+            "arb1:0x078AA43cFcb1dc3Fc57d3E6A2f1f3dd926D2e5C6",
+            "arb1:0x53e8B9C17FEb1fBA3123d9A27774530EDE2f430B",
+            "arb1:0x9eBE37c72eb7b3BAF0AF607b483a24fD7BDFd506",
+            "arb1:0xc7903a813d3241826f201c85C6b6E854044dAEaa",
+            "arb1:0x3Bb39dC0813991e4429097EA7901855b77e2d62f",
+            "arb1:0x20cf69D93689c06972FD3EA167a500A6de58d3c8",
+            "arb1:0xf23D7f288Fa5f8fc0D75004a37c8f5D6820Ef77a",
+            "arb1:0xBb065befE6f5DaD4d03FC9A4E3656C8De4C931A3",
+            "arb1:0xb257e72028982407f2FE3bBccbB215fDb0c459aE",
+            "arb1:0xB1E1Dc3fF2bc027a9Ce88F8Aa0B3c2Cb35C8D9D3",
+            "arb1:0x3653b85549ca9267315aA8728B9b4E82Bac28970",
+            "arb1:0xbA0D694C02D346ac4f9bC289201DE27676913Afd"
+          ]
+        },
+        "ocrCommitF": 5,
+        "ocrCommitN": 16,
+        "ocrCommitSigners": [
+          "arb1:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+          "arb1:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+          "arb1:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+          "arb1:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4",
+          "arb1:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+          "arb1:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+          "arb1:0x2D2251fAC6871Df405450337E327683822baFc52",
+          "arb1:0x7502128aF7a58E9906696EA6B60434f75d0026E0",
+          "arb1:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+          "arb1:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+          "arb1:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+          "arb1:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+          "arb1:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+          "arb1:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+          "arb1:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+          "arb1:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83"
+        ],
+        "ocrCommitTransmitters": [
+          "arb1:0xB3542aDD2E4219EB5605849d95e5A8BD50957156",
+          "arb1:0xd661587D73f8741569E492Aa6207766AE325857F",
+          "arb1:0xf850Ad511c95A47bd480Fb491d070ebad38C895f",
+          "arb1:0xb8aD4982Ea4A768c9C1328D60385977a51ebad50",
+          "arb1:0x078AA43cFcb1dc3Fc57d3E6A2f1f3dd926D2e5C6",
+          "arb1:0x53e8B9C17FEb1fBA3123d9A27774530EDE2f430B",
+          "arb1:0x9eBE37c72eb7b3BAF0AF607b483a24fD7BDFd506",
+          "arb1:0xc7903a813d3241826f201c85C6b6E854044dAEaa",
+          "arb1:0x3Bb39dC0813991e4429097EA7901855b77e2d62f",
+          "arb1:0x20cf69D93689c06972FD3EA167a500A6de58d3c8",
+          "arb1:0xf23D7f288Fa5f8fc0D75004a37c8f5D6820Ef77a",
+          "arb1:0xBb065befE6f5DaD4d03FC9A4E3656C8De4C931A3",
+          "arb1:0xb257e72028982407f2FE3bBccbB215fDb0c459aE",
+          "arb1:0xB1E1Dc3fF2bc027a9Ce88F8Aa0B3c2Cb35C8D9D3",
+          "arb1:0x3653b85549ca9267315aA8728B9b4E82Bac28970",
+          "arb1:0xbA0D694C02D346ac4f9bC289201DE27676913Afd"
+        ],
+        "ocrExecution": {
+          "configInfo": {
+            "configDigest": "0x000a399f07b071110f78bad66f3e866ca7b002fa13de2feffb257655d150aded",
+            "F": 5,
+            "n": 0,
+            "isSignatureVerificationEnabled": false
+          },
+          "signers": [],
+          "transmitters": [
+            "arb1:0xf23D7f288Fa5f8fc0D75004a37c8f5D6820Ef77a",
+            "arb1:0xB3542aDD2E4219EB5605849d95e5A8BD50957156",
+            "arb1:0xb8aD4982Ea4A768c9C1328D60385977a51ebad50",
+            "arb1:0x3653b85549ca9267315aA8728B9b4E82Bac28970",
+            "arb1:0xBb065befE6f5DaD4d03FC9A4E3656C8De4C931A3",
+            "arb1:0xbA0D694C02D346ac4f9bC289201DE27676913Afd",
+            "arb1:0x20cf69D93689c06972FD3EA167a500A6de58d3c8",
+            "arb1:0x53e8B9C17FEb1fBA3123d9A27774530EDE2f430B",
+            "arb1:0xd661587D73f8741569E492Aa6207766AE325857F",
+            "arb1:0xf850Ad511c95A47bd480Fb491d070ebad38C895f",
+            "arb1:0x078AA43cFcb1dc3Fc57d3E6A2f1f3dd926D2e5C6",
+            "arb1:0x3Bb39dC0813991e4429097EA7901855b77e2d62f",
+            "arb1:0xb257e72028982407f2FE3bBccbB215fDb0c459aE",
+            "arb1:0xc7903a813d3241826f201c85C6b6E854044dAEaa",
+            "arb1:0xB1E1Dc3fF2bc027a9Ce88F8Aa0B3c2Cb35C8D9D3",
+            "arb1:0x9eBE37c72eb7b3BAF0AF607b483a24fD7BDFd506"
+          ]
+        },
+        "ocrExecutionTransmitters": [
+          "arb1:0xf23D7f288Fa5f8fc0D75004a37c8f5D6820Ef77a",
+          "arb1:0xB3542aDD2E4219EB5605849d95e5A8BD50957156",
+          "arb1:0xb8aD4982Ea4A768c9C1328D60385977a51ebad50",
+          "arb1:0x3653b85549ca9267315aA8728B9b4E82Bac28970",
+          "arb1:0xBb065befE6f5DaD4d03FC9A4E3656C8De4C931A3",
+          "arb1:0xbA0D694C02D346ac4f9bC289201DE27676913Afd",
+          "arb1:0x20cf69D93689c06972FD3EA167a500A6de58d3c8",
+          "arb1:0x53e8B9C17FEb1fBA3123d9A27774530EDE2f430B",
+          "arb1:0xd661587D73f8741569E492Aa6207766AE325857F",
+          "arb1:0xf850Ad511c95A47bd480Fb491d070ebad38C895f",
+          "arb1:0x078AA43cFcb1dc3Fc57d3E6A2f1f3dd926D2e5C6",
+          "arb1:0x3Bb39dC0813991e4429097EA7901855b77e2d62f",
+          "arb1:0xb257e72028982407f2FE3bBccbB215fDb0c459aE",
+          "arb1:0xc7903a813d3241826f201c85C6b6E854044dAEaa",
+          "arb1:0xB1E1Dc3fF2bc027a9Ce88F8Aa0B3c2Cb35C8D9D3",
+          "arb1:0x9eBE37c72eb7b3BAF0AF607b483a24fD7BDFd506"
+        ],
+        "owner": "arb1:0x8a89770722c84B60cE02989Aedb22Ac4791F8C7f",
+        "permissionLessExecutionThresholdFmt": "1h",
+        "sourceChainConfigs": {
+          "ethereum": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000913814782144864e523c3fdb78e3ca25d2c2aeca"
+          },
+          "solana": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0xac972977e1bab5fff6c686291f994ff52f34abed1bc7df88f76f43f926592c8f"
+          },
+          "aptos": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x20f808de3375db34d17cc946ec6b43fc26962f6afa125182dc903359756caf6b"
+          },
+          "0g": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000a132f089492cce5f1d79483a9e4552f37266ed01"
+          },
+          "plasma": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000008fe3b17e6b0863aeea3d38df063aea39d4ab1602"
+          },
+          "xlayer": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000530ae314ec3fa038bd9a215095e37295ec76162a"
+          },
+          "linea": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000001badbe95bee68d3a74ec08621256dddbe6ead3f9"
+          },
+          "monad": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000cdca5d374e46a6dddab50bd2d9acb8c796ec35c3"
+          },
+          "everclear": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000dd8af6046349edfd40123e0b616286cec08010ed"
+          },
+          "stable": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000d21d5a4e3fa0ebacc3dabb5258d9c1f4d24dc894"
+          },
+          "sui": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x03e843cbba25c863bae63783fe99213c5269916ed4a8bba32489094baa580fbf"
+          },
+          "mantle": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000004e2c866885b65f67e7a2b8382ecf0164bb19aa00"
+          },
+          "hyperliquid": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000072f6000d70b291c67bed898214156d01383274b1"
+          },
+          "tempo": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000021d66d23fe27bb4175c866d4d3ee9bc12c4824e3"
+          },
+          "pharos": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000193beb1e11731b8b740b9fbbb62655553c3b4a25"
+          },
+          "bsc": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000f09afe78d3c7d359b334d7cb88995751f7ec5e13"
+          },
+          "ink": {
+            "router": "arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000530ae314ec3fa038bd9a215095e37295ec76162a"
+          }
+        },
+        "typeAndVersion": "OffRamp 1.6.0"
+      },
+      "fieldMeta": {
+        "ocrCommit": {
+          "description": "OCR config for the Commit plugin (pluginType=0). signers/transmitters are the DON oracles for committing merkle roots and price updates. isSignatureVerificationEnabled=true means F+1 of these signers must sign every commit report; the caller of commit() must additionally be one of the transmitters."
+        },
+        "ocrExecution": {
+          "description": "OCR config for the Execution plugin (pluginType=1). isSignatureVerificationEnabled=false means execute() takes no signatures, but msg.sender must still be in the transmitters list (UnauthorizedTransmitter otherwise). Signers may be configured but are unused."
+        },
+        "ocrCommitSigners": {
+          "description": "Message OCR signers. F+1 of these must sign every crosschain and price report."
+        },
+        "ocrCommitTransmitters": {
+          "description": "Commit-plugin OCR transmitters. They relay a signature quorum from OCR commit signers."
+        },
+        "ocrCommitN": {
+          "description": "Number of configured Commit-plugin OCR signers. Convenience flat field so {{ocrCommitN}} can be interpolated into descriptions."
+        },
+        "permissionLessExecutionThresholdFmt": {
+          "description": "How long after a commit any external caller may manually execute its messages (in addition to the whitelisted execution transmitters). Formatted version of getDynamicConfig.permissionLessExecutionThresholdSeconds."
+        },
+        "ocrCommitF": {
+          "description": "F threshold for the Commit-plugin OCR config. F+1 signatures are required on every commit report; the system tolerates up to F faulty signers."
+        },
+        "ocrExecutionTransmitters": {
+          "description": "Execution-plugin OCR transmitters. msg.sender of execute() must be one of these. Since isSignatureVerificationEnabled is false on the execution plugin, any one of these can singly authorize executing any already-committed message."
+        },
+        "sourceChainConfigs": {
+          "description": "Per-source-chain config for inbound CCIP messages: local Router used to deliver to receivers, whether the lane is enabled, whether RMN signature blessing is required on commits (false = blessing REQUIRED, true = blessing skipped — only OCR signatures gate the commit), and the bytes-encoded source-chain OnRamp address (left-padded EVM address for EVM sources; native encoding for non-EVM families). Keys are source-chain names. Replayed from SourceChainConfigSet events. minSeqNr is omitted because the event captures the value at config-change time, not the current commit counter (which advances on every _commitRoot)."
+        }
+      },
+      "implementationNames": {
+        "arb1:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae": "OffRamp"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "4426351306075016396": "0g",
+            "4829375610284793157": "ab",
+            "3577778157919314504": "abstract",
+            "4059281736450291836": "adi",
+            "14894068710063348487": "apechain",
+            "4741433654826277614": "aptos",
+            "6433500567565415381": "avalanche",
+            "1294465214383781161": "berachain",
+            "465944652040885897": "opbnb",
+            "7937294810946806131": "bitlayer",
+            "3849287863852499584": "bob",
+            "4560701533377838164": "botanix",
+            "5406759801798337480": "bsquared",
+            "241851231317828981": "bitcoin-merlin",
+            "2135107236357186872": "bittensor",
+            "11344663589394136015": "bsc",
+            "1346049177634351622": "celo",
+            "1224752112135636129": "core",
+            "9043146809313071210": "corn",
+            "18240105181246962294": "creditcoin",
+            "1456215246176062136": "cronos",
+            "8788096068760390840": "cronos-zkevm",
+            "6325494908023253251": "edge",
+            "8805746078405598895": "andromeda",
+            "4949039107694359620": "arbitrum",
+            "15971525489660198786": "base",
+            "7613811247471741961": "hashkey",
+            "3461204551265785888": "ink",
+            "4627098889531055414": "linea",
+            "1556008542357238666": "mantle",
+            "7264351850409363825": "mode",
+            "3734403246176062136": "optimism",
+            "13204309965629103672": "scroll",
+            "16468599424800719238": "taiko",
+            "1923510103922296319": "unichain",
+            "2049429975587534727": "worldchain",
+            "3016212468291539606": "xlayer",
+            "17198166215261833993": "zircuit",
+            "1562403441176082196": "zksync",
+            "13624601974233774587": "etherlink",
+            "1462016016387883143": "fraxtal",
+            "3229138320728879060": "hedera",
+            "1804312132722180201": "hemi",
+            "2442541497099098535": "hyperliquid",
+            "1523760397290643893": "jovay",
+            "9813823125703490621": "kaia",
+            "5608378062013572713": "lens",
+            "15293031020466096408": "lisk",
+            "5009297550715157269": "ethereum",
+            "4051577828743386545": "matic",
+            "6093540873831549674": "megaeth",
+            "13447077090413146373": "metal",
+            "11690709103138290329": "mind",
+            "17164792800244661392": "mint",
+            "8481857512324358265": "monad",
+            "18164309074156128038": "morph",
+            "12657445206920369324": "henesys",
+            "7801139999541420232": "pharos",
+            "9335212494177455608": "plasma",
+            "17912061998839310979": "plume",
+            "6422105447186081193": "astar",
+            "2459028469735686113": "katana",
+            "6916147374840168594": "ronin",
+            "11964252391146578476": "rootstock",
+            "9027416829622342829": "sei",
+            "3993510008929295315": "shibarium",
+            "124615329519749607": "solana",
+            "12505351618335765396": "soneium",
+            "1673871237479749969": "sonic",
+            "16978377838628290997": "stable",
+            "470401360549526817": "superseed",
+            "5936861837188149645": "tac",
+            "7281642695469137430": "tempo",
+            "16448340667252469081": "ton",
+            "5142893604156789321": "wemix",
+            "465200170687744372": "xdai",
+            "17673274061779414707": "xdc",
+            "3555797439612589184": "zora",
+            "17529533435026248318": "sui",
+            "9762610643973837292": "sui-testnet",
+            "6473245816409426016": "memento",
+            "9723842205701363942": "everclear",
+            "1546563616611573946": "tron",
+            "4348158687435793198": "polygonzkevm",
+            "4411394078118774322": "blast",
+            "5214452172935136222": "treasure",
+            "7222032299962346917": "neox"
+          }
+        }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "BaseOffRamp_v1_6",
+      "address": "base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13",
+      "type": "Contract",
+      "template": "transporter/OfframpV3",
+      "sourceHashes": [
+        "0x0cd580f4aedce3a2a8da2a7e6013b1b7de5c18db2e1a41549e880bccece5ed06"
+      ],
+      "proxyType": "immutable",
+      "description": "v1.6 OffRamp on Base. Added only to inspect its OCR signing set; relatives are ignored so no other Base CCIP contracts are pulled into discovery.",
+      "deployerAddress": "base:0x062f05CD6c835677B05a8658A351969476861316",
+      "sinceTimestamp": 1744752947,
+      "sinceBlock": 28981800,
+      "values": {
+        "$immutable": true,
+        "getDynamicConfig": {
+          "feeQuoter": "base:0x71052BAe71C25C78E37fD12E5ff1101A71d9018F",
+          "permissionLessExecutionThresholdSeconds": 3600,
+          "messageInterceptor": "base:0x0000000000000000000000000000000000000000"
+        },
+        "getStaticConfig": {
+          "chainSelector": "15971525489660198786",
+          "gasForCallExactCheck": 5000,
+          "rmnRemote": "base:0xC842c69d54F83170C42C4d556B4F6B2ca53Dd3E8",
+          "tokenAdminRegistry": "base:0x6f6C373d09C07425BaAE72317863d7F6bb731e37",
+          "nonceManager": "base:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83"
+        },
+        "ocrCommit": {
+          "configInfo": {
+            "configDigest": "0x000abb05d4b82c9d0594c5c5fd89a65be4d16886647e7669c927a3b0179fcd99",
+            "F": 5,
+            "n": 16,
+            "isSignatureVerificationEnabled": true
+          },
+          "signers": [
+            "base:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+            "base:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+            "base:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+            "base:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4",
+            "base:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+            "base:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+            "base:0x2D2251fAC6871Df405450337E327683822baFc52",
+            "base:0x7502128aF7a58E9906696EA6B60434f75d0026E0",
+            "base:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+            "base:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+            "base:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+            "base:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+            "base:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+            "base:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+            "base:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+            "base:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83"
+          ],
+          "transmitters": [
+            "base:0xCb79ac2A957efC768e696875b5E55b8C371E83De",
+            "base:0xE2D99Ace6d3631F8bAb903f59621c969931700B3",
+            "base:0xE573027639D92f879D7c320e139FD27698Fb35eE",
+            "base:0xE138291cB6EF450942c85aDDbC4467aC79243fb6",
+            "base:0xe40793474b7a247B862aa829eBDA59A3c8Fbd938",
+            "base:0xC31bcdc6CEBE3Eae360083489A5D38E0e51fB1d3",
+            "base:0xD22744cD403c199071214349bBC2b817e56b0b21",
+            "base:0xC3d96f39D86657b70CA6DF7840300ff2b56FD7fe",
+            "base:0xF37511D23Ff8De07D7De2bBA34f1cf1534950f68",
+            "base:0x6B59963071C58bd541a3e70cC6955E659844F957",
+            "base:0xf86Ad57A9ad7a0d7F31c71d894AE6a223C285c5B",
+            "base:0x3C373fBF6C41329d0aAA51ef1941E5289f41870b",
+            "base:0x4dBAcd2E37e88ac8f4de8d219E82902e470Ef7e3",
+            "base:0x776211C8e1b1CD378ab527FB4B83d74048A74b82",
+            "base:0x73B78Ba23cD53e3A3b5eDc9860Fd84f741368213",
+            "base:0x6e5c434256BCe133645418e24069ed6df182CafF"
+          ]
+        },
+        "ocrCommitF": 5,
+        "ocrCommitN": 16,
+        "ocrCommitSigners": [
+          "base:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+          "base:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+          "base:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+          "base:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4",
+          "base:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+          "base:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+          "base:0x2D2251fAC6871Df405450337E327683822baFc52",
+          "base:0x7502128aF7a58E9906696EA6B60434f75d0026E0",
+          "base:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+          "base:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+          "base:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+          "base:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+          "base:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+          "base:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+          "base:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+          "base:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83"
+        ],
+        "ocrCommitTransmitters": [
+          "base:0xCb79ac2A957efC768e696875b5E55b8C371E83De",
+          "base:0xE2D99Ace6d3631F8bAb903f59621c969931700B3",
+          "base:0xE573027639D92f879D7c320e139FD27698Fb35eE",
+          "base:0xE138291cB6EF450942c85aDDbC4467aC79243fb6",
+          "base:0xe40793474b7a247B862aa829eBDA59A3c8Fbd938",
+          "base:0xC31bcdc6CEBE3Eae360083489A5D38E0e51fB1d3",
+          "base:0xD22744cD403c199071214349bBC2b817e56b0b21",
+          "base:0xC3d96f39D86657b70CA6DF7840300ff2b56FD7fe",
+          "base:0xF37511D23Ff8De07D7De2bBA34f1cf1534950f68",
+          "base:0x6B59963071C58bd541a3e70cC6955E659844F957",
+          "base:0xf86Ad57A9ad7a0d7F31c71d894AE6a223C285c5B",
+          "base:0x3C373fBF6C41329d0aAA51ef1941E5289f41870b",
+          "base:0x4dBAcd2E37e88ac8f4de8d219E82902e470Ef7e3",
+          "base:0x776211C8e1b1CD378ab527FB4B83d74048A74b82",
+          "base:0x73B78Ba23cD53e3A3b5eDc9860Fd84f741368213",
+          "base:0x6e5c434256BCe133645418e24069ed6df182CafF"
+        ],
+        "ocrExecution": {
+          "configInfo": {
+            "configDigest": "0x000af50b4572e76525baebcaa28913af8ed143de2ea8deac1886304f84353c89",
+            "F": 5,
+            "n": 0,
+            "isSignatureVerificationEnabled": false
+          },
+          "signers": [],
+          "transmitters": [
+            "base:0xCb79ac2A957efC768e696875b5E55b8C371E83De",
+            "base:0xE138291cB6EF450942c85aDDbC4467aC79243fb6",
+            "base:0xC3d96f39D86657b70CA6DF7840300ff2b56FD7fe",
+            "base:0x4dBAcd2E37e88ac8f4de8d219E82902e470Ef7e3",
+            "base:0xE573027639D92f879D7c320e139FD27698Fb35eE",
+            "base:0x6e5c434256BCe133645418e24069ed6df182CafF",
+            "base:0xe40793474b7a247B862aa829eBDA59A3c8Fbd938",
+            "base:0xF37511D23Ff8De07D7De2bBA34f1cf1534950f68",
+            "base:0x6B59963071C58bd541a3e70cC6955E659844F957",
+            "base:0xD22744cD403c199071214349bBC2b817e56b0b21",
+            "base:0x3C373fBF6C41329d0aAA51ef1941E5289f41870b",
+            "base:0x776211C8e1b1CD378ab527FB4B83d74048A74b82",
+            "base:0xC31bcdc6CEBE3Eae360083489A5D38E0e51fB1d3",
+            "base:0xE2D99Ace6d3631F8bAb903f59621c969931700B3",
+            "base:0x73B78Ba23cD53e3A3b5eDc9860Fd84f741368213",
+            "base:0xf86Ad57A9ad7a0d7F31c71d894AE6a223C285c5B"
+          ]
+        },
+        "ocrExecutionTransmitters": [
+          "base:0xCb79ac2A957efC768e696875b5E55b8C371E83De",
+          "base:0xE138291cB6EF450942c85aDDbC4467aC79243fb6",
+          "base:0xC3d96f39D86657b70CA6DF7840300ff2b56FD7fe",
+          "base:0x4dBAcd2E37e88ac8f4de8d219E82902e470Ef7e3",
+          "base:0xE573027639D92f879D7c320e139FD27698Fb35eE",
+          "base:0x6e5c434256BCe133645418e24069ed6df182CafF",
+          "base:0xe40793474b7a247B862aa829eBDA59A3c8Fbd938",
+          "base:0xF37511D23Ff8De07D7De2bBA34f1cf1534950f68",
+          "base:0x6B59963071C58bd541a3e70cC6955E659844F957",
+          "base:0xD22744cD403c199071214349bBC2b817e56b0b21",
+          "base:0x3C373fBF6C41329d0aAA51ef1941E5289f41870b",
+          "base:0x776211C8e1b1CD378ab527FB4B83d74048A74b82",
+          "base:0xC31bcdc6CEBE3Eae360083489A5D38E0e51fB1d3",
+          "base:0xE2D99Ace6d3631F8bAb903f59621c969931700B3",
+          "base:0x73B78Ba23cD53e3A3b5eDc9860Fd84f741368213",
+          "base:0xf86Ad57A9ad7a0d7F31c71d894AE6a223C285c5B"
+        ],
+        "owner": "base:0x7B0328745A01634c32eFAf041d91432a075B308D",
+        "permissionLessExecutionThresholdFmt": "1h",
+        "sourceChainConfigs": {
+          "ethereum": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000913814782144864e523c3fdb78e3ca25d2c2aeca"
+          },
+          "bsc": {
+            "router": "base:0x70003d849A20e33997fea69bBc8a366D6ab0E131",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000f09afe78d3c7d359b334d7cb88995751f7ec5e13"
+          },
+          "solana": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0xac972977e1bab5fff6c686291f994ff52f34abed1bc7df88f76f43f926592c8f"
+          },
+          "aptos": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x20f808de3375db34d17cc946ec6b43fc26962f6afa125182dc903359756caf6b"
+          },
+          "0g": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000a132f089492cce5f1d79483a9e4552f37266ed01"
+          },
+          "plasma": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000008fe3b17e6b0863aeea3d38df063aea39d4ab1602"
+          },
+          "memento": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000913814782144864e523c3fdb78e3ca25d2c2aeca"
+          },
+          "xlayer": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000530ae314ec3fa038bd9a215095e37295ec76162a"
+          },
+          "linea": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000001badbe95bee68d3a74ec08621256dddbe6ead3f9"
+          },
+          "monad": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000cdca5d374e46a6dddab50bd2d9acb8c796ec35c3"
+          },
+          "bittensor": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000345cc465bcb9a902b420320b8793c9a5d6064404"
+          },
+          "everclear": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000dd8af6046349edfd40123e0b616286cec08010ed"
+          },
+          "hyperliquid": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000072f6000d70b291c67bed898214156d01383274b1"
+          },
+          "xdc": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000040530f5305d6fd6912925c5ec2c36453b85d8f5f"
+          },
+          "stable": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000d21d5a4e3fa0ebacc3dabb5258d9c1f4d24dc894"
+          },
+          "sui": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x03e843cbba25c863bae63783fe99213c5269916ed4a8bba32489094baa580fbf"
+          },
+          "etherlink": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000d4d2841ac332075833ae86eb49ce7af9f353cd21"
+          },
+          "tac": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000051e2a24742db77604b881d6781ee16b5b8fcbe29"
+          },
+          "mantle": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000004e2c866885b65f67e7a2b8382ecf0164bb19aa00"
+          },
+          "megaeth": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000059d32e5fa8eed1fd1510f7e583a2b6e6142dd49f"
+          },
+          "corn": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000006525923279256b8a86c1c01cf5955eb00c39b048"
+          },
+          "pharos": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000193beb1e11731b8b740b9fbbb62655553c3b4a25"
+          },
+          "tempo": {
+            "router": "base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000021d66d23fe27bb4175c866d4d3ee9bc12c4824e3"
+          }
+        },
+        "typeAndVersion": "OffRamp 1.6.0"
+      },
+      "fieldMeta": {
+        "ocrCommit": {
+          "description": "OCR config for the Commit plugin (pluginType=0). signers/transmitters are the DON oracles for committing merkle roots and price updates. isSignatureVerificationEnabled=true means F+1 of these signers must sign every commit report; the caller of commit() must additionally be one of the transmitters."
+        },
+        "ocrExecution": {
+          "description": "OCR config for the Execution plugin (pluginType=1). isSignatureVerificationEnabled=false means execute() takes no signatures, but msg.sender must still be in the transmitters list (UnauthorizedTransmitter otherwise). Signers may be configured but are unused."
+        },
+        "ocrCommitSigners": {
+          "description": "Message OCR signers. F+1 of these must sign every crosschain and price report."
+        },
+        "ocrCommitTransmitters": {
+          "description": "Commit-plugin OCR transmitters. They relay a signature quorum from OCR commit signers."
+        },
+        "ocrCommitN": {
+          "description": "Number of configured Commit-plugin OCR signers. Convenience flat field so {{ocrCommitN}} can be interpolated into descriptions."
+        },
+        "permissionLessExecutionThresholdFmt": {
+          "description": "How long after a commit any external caller may manually execute its messages (in addition to the whitelisted execution transmitters). Formatted version of getDynamicConfig.permissionLessExecutionThresholdSeconds."
+        },
+        "ocrCommitF": {
+          "description": "F threshold for the Commit-plugin OCR config. F+1 signatures are required on every commit report; the system tolerates up to F faulty signers."
+        },
+        "ocrExecutionTransmitters": {
+          "description": "Execution-plugin OCR transmitters. msg.sender of execute() must be one of these. Since isSignatureVerificationEnabled is false on the execution plugin, any one of these can singly authorize executing any already-committed message."
+        },
+        "sourceChainConfigs": {
+          "description": "Per-source-chain config for inbound CCIP messages: local Router used to deliver to receivers, whether the lane is enabled, whether RMN signature blessing is required on commits (false = blessing REQUIRED, true = blessing skipped — only OCR signatures gate the commit), and the bytes-encoded source-chain OnRamp address (left-padded EVM address for EVM sources; native encoding for non-EVM families). Keys are source-chain names. Replayed from SourceChainConfigSet events. minSeqNr is omitted because the event captures the value at config-change time, not the current commit counter (which advances on every _commitRoot)."
+        }
+      },
+      "implementationNames": {
+        "base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13": "OffRamp"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "4426351306075016396": "0g",
+            "4829375610284793157": "ab",
+            "3577778157919314504": "abstract",
+            "4059281736450291836": "adi",
+            "14894068710063348487": "apechain",
+            "4741433654826277614": "aptos",
+            "6433500567565415381": "avalanche",
+            "1294465214383781161": "berachain",
+            "465944652040885897": "opbnb",
+            "7937294810946806131": "bitlayer",
+            "3849287863852499584": "bob",
+            "4560701533377838164": "botanix",
+            "5406759801798337480": "bsquared",
+            "241851231317828981": "bitcoin-merlin",
+            "2135107236357186872": "bittensor",
+            "11344663589394136015": "bsc",
+            "1346049177634351622": "celo",
+            "1224752112135636129": "core",
+            "9043146809313071210": "corn",
+            "18240105181246962294": "creditcoin",
+            "1456215246176062136": "cronos",
+            "8788096068760390840": "cronos-zkevm",
+            "6325494908023253251": "edge",
+            "8805746078405598895": "andromeda",
+            "4949039107694359620": "arbitrum",
+            "15971525489660198786": "base",
+            "7613811247471741961": "hashkey",
+            "3461204551265785888": "ink",
+            "4627098889531055414": "linea",
+            "1556008542357238666": "mantle",
+            "7264351850409363825": "mode",
+            "3734403246176062136": "optimism",
+            "13204309965629103672": "scroll",
+            "16468599424800719238": "taiko",
+            "1923510103922296319": "unichain",
+            "2049429975587534727": "worldchain",
+            "3016212468291539606": "xlayer",
+            "17198166215261833993": "zircuit",
+            "1562403441176082196": "zksync",
+            "13624601974233774587": "etherlink",
+            "1462016016387883143": "fraxtal",
+            "3229138320728879060": "hedera",
+            "1804312132722180201": "hemi",
+            "2442541497099098535": "hyperliquid",
+            "1523760397290643893": "jovay",
+            "9813823125703490621": "kaia",
+            "5608378062013572713": "lens",
+            "15293031020466096408": "lisk",
+            "5009297550715157269": "ethereum",
+            "4051577828743386545": "matic",
+            "6093540873831549674": "megaeth",
+            "13447077090413146373": "metal",
+            "11690709103138290329": "mind",
+            "17164792800244661392": "mint",
+            "8481857512324358265": "monad",
+            "18164309074156128038": "morph",
+            "12657445206920369324": "henesys",
+            "7801139999541420232": "pharos",
+            "9335212494177455608": "plasma",
+            "17912061998839310979": "plume",
+            "6422105447186081193": "astar",
+            "2459028469735686113": "katana",
+            "6916147374840168594": "ronin",
+            "11964252391146578476": "rootstock",
+            "9027416829622342829": "sei",
+            "3993510008929295315": "shibarium",
+            "124615329519749607": "solana",
+            "12505351618335765396": "soneium",
+            "1673871237479749969": "sonic",
+            "16978377838628290997": "stable",
+            "470401360549526817": "superseed",
+            "5936861837188149645": "tac",
+            "7281642695469137430": "tempo",
+            "16448340667252469081": "ton",
+            "5142893604156789321": "wemix",
+            "465200170687744372": "xdai",
+            "17673274061779414707": "xdc",
+            "3555797439612589184": "zora",
+            "17529533435026248318": "sui",
+            "9762610643973837292": "sui-testnet",
+            "6473245816409426016": "memento",
+            "9723842205701363942": "everclear",
+            "1546563616611573946": "tron",
+            "4348158687435793198": "polygonzkevm",
+            "4411394078118774322": "blast",
+            "5214452172935136222": "treasure",
+            "7222032299962346917": "neox"
+          }
+        }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "BscOffRamp_v1_6",
+      "address": "bnb:0xA27056438FfA1f286AB197488808692F0db93F8B",
+      "type": "Contract",
+      "template": "transporter/OfframpV3",
+      "sourceHashes": [
+        "0x0cd580f4aedce3a2a8da2a7e6013b1b7de5c18db2e1a41549e880bccece5ed06"
+      ],
+      "proxyType": "immutable",
+      "description": "v1.6 OffRamp on BNB Chain. Added only to inspect its OCR signing set; relatives are ignored so no other BSC CCIP contracts are pulled into discovery.",
+      "deployerAddress": "bnb:0x062f05CD6c835677B05a8658A351969476861316",
+      "sinceTimestamp": 1744752951,
+      "sinceBlock": 48390369,
+      "values": {
+        "$immutable": true,
+        "getDynamicConfig": {
+          "feeQuoter": "bnb:0x6CC42281f209C3E24D5316B3b9Ee981B943e708A",
+          "permissionLessExecutionThresholdSeconds": 3600,
+          "messageInterceptor": "bnb:0x0000000000000000000000000000000000000000"
+        },
+        "getStaticConfig": {
+          "chainSelector": "11344663589394136015",
+          "gasForCallExactCheck": 5000,
+          "rmnRemote": "bnb:0x9e09697842194f77d315E0907F1Bda77922e8f84",
+          "tokenAdminRegistry": "bnb:0x736Fd8660c443547a85e4Eaf70A49C1b7Bb008fc",
+          "nonceManager": "bnb:0x76a443768A5e3B8d1AED0105FC250877841Deb40"
+        },
+        "ocrCommit": {
+          "configInfo": {
+            "configDigest": "0x000a2478aba84adc986d90424d5d177d07e8cc026b3864803a001e82c471e55b",
+            "F": 5,
+            "n": 16,
+            "isSignatureVerificationEnabled": true
+          },
+          "signers": [
+            "bnb:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+            "bnb:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+            "bnb:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+            "bnb:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+            "bnb:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+            "bnb:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+            "bnb:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+            "bnb:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+            "bnb:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+            "bnb:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4",
+            "bnb:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+            "bnb:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83",
+            "bnb:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+            "bnb:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+            "bnb:0x2D2251fAC6871Df405450337E327683822baFc52",
+            "bnb:0x7502128aF7a58E9906696EA6B60434f75d0026E0"
+          ],
+          "transmitters": [
+            "bnb:0xe0e053673830c22c7c91B6ABed8bA5DEAaD0Acf7",
+            "bnb:0xd129bC15B305EebB23062270649C4F729145F8BA",
+            "bnb:0x7AB1A655422Bda9d97DE5ea3CB10efcDB429Bd7e",
+            "bnb:0xC68aff3Ea311d59A8FEaB835BF6E94Dc6aE1E2C0",
+            "bnb:0xA7EB0ab43Cb1Fa22f8729d41732948950A765b4B",
+            "bnb:0xdFe0CF98ab97936c7AA8576D1f0BF874d8D1EAA4",
+            "bnb:0x69C21AF833dd466De2E7497EA90fC1DCf4C49a1B",
+            "bnb:0x29Dd46060cE6AFd42B3379AA79d6d25F95a3d6a5",
+            "bnb:0x00C83dbC483AA90753030Aec8E7b25d3CE774A4b",
+            "bnb:0xd7383AAb7DfcEF271d433a28b78ec5044698B041",
+            "bnb:0xaf5388Eee0F3B6E97ac275A741c6BE652a7982Ea",
+            "bnb:0x1f23a38D4dfA7BEe33b641a47760aFd85754896A",
+            "bnb:0x97af998eDAA70dC8A0CB7E3E60Ec59E7072e5d44",
+            "bnb:0xd4a2dB1EB18c28804b195fe6A2F3D822EAc1D92a",
+            "bnb:0xD5F213E238BFFbe9F3cDb4B34C93Ae20327b60f5",
+            "bnb:0xD41cd956C5f42c25fC72B96d69f1B653218EA5C4"
+          ]
+        },
+        "ocrCommitF": 5,
+        "ocrCommitN": 16,
+        "ocrCommitSigners": [
+          "bnb:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+          "bnb:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+          "bnb:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+          "bnb:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+          "bnb:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+          "bnb:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+          "bnb:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+          "bnb:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+          "bnb:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+          "bnb:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4",
+          "bnb:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+          "bnb:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83",
+          "bnb:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+          "bnb:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+          "bnb:0x2D2251fAC6871Df405450337E327683822baFc52",
+          "bnb:0x7502128aF7a58E9906696EA6B60434f75d0026E0"
+        ],
+        "ocrCommitTransmitters": [
+          "bnb:0xe0e053673830c22c7c91B6ABed8bA5DEAaD0Acf7",
+          "bnb:0xd129bC15B305EebB23062270649C4F729145F8BA",
+          "bnb:0x7AB1A655422Bda9d97DE5ea3CB10efcDB429Bd7e",
+          "bnb:0xC68aff3Ea311d59A8FEaB835BF6E94Dc6aE1E2C0",
+          "bnb:0xA7EB0ab43Cb1Fa22f8729d41732948950A765b4B",
+          "bnb:0xdFe0CF98ab97936c7AA8576D1f0BF874d8D1EAA4",
+          "bnb:0x69C21AF833dd466De2E7497EA90fC1DCf4C49a1B",
+          "bnb:0x29Dd46060cE6AFd42B3379AA79d6d25F95a3d6a5",
+          "bnb:0x00C83dbC483AA90753030Aec8E7b25d3CE774A4b",
+          "bnb:0xd7383AAb7DfcEF271d433a28b78ec5044698B041",
+          "bnb:0xaf5388Eee0F3B6E97ac275A741c6BE652a7982Ea",
+          "bnb:0x1f23a38D4dfA7BEe33b641a47760aFd85754896A",
+          "bnb:0x97af998eDAA70dC8A0CB7E3E60Ec59E7072e5d44",
+          "bnb:0xd4a2dB1EB18c28804b195fe6A2F3D822EAc1D92a",
+          "bnb:0xD5F213E238BFFbe9F3cDb4B34C93Ae20327b60f5",
+          "bnb:0xD41cd956C5f42c25fC72B96d69f1B653218EA5C4"
+        ],
+        "ocrExecution": {
+          "configInfo": {
+            "configDigest": "0x000a6c3a5088675654597053a915f6df1b3a96ea8420521441b67212468ad066",
+            "F": 5,
+            "n": 0,
+            "isSignatureVerificationEnabled": false
+          },
+          "signers": [],
+          "transmitters": [
+            "bnb:0x69C21AF833dd466De2E7497EA90fC1DCf4C49a1B",
+            "bnb:0xd7383AAb7DfcEF271d433a28b78ec5044698B041",
+            "bnb:0xD41cd956C5f42c25fC72B96d69f1B653218EA5C4",
+            "bnb:0xaf5388Eee0F3B6E97ac275A741c6BE652a7982Ea",
+            "bnb:0xe0e053673830c22c7c91B6ABed8bA5DEAaD0Acf7",
+            "bnb:0x1f23a38D4dfA7BEe33b641a47760aFd85754896A",
+            "bnb:0x7AB1A655422Bda9d97DE5ea3CB10efcDB429Bd7e",
+            "bnb:0xd129bC15B305EebB23062270649C4F729145F8BA",
+            "bnb:0x97af998eDAA70dC8A0CB7E3E60Ec59E7072e5d44",
+            "bnb:0xD5F213E238BFFbe9F3cDb4B34C93Ae20327b60f5",
+            "bnb:0x00C83dbC483AA90753030Aec8E7b25d3CE774A4b",
+            "bnb:0xd4a2dB1EB18c28804b195fe6A2F3D822EAc1D92a",
+            "bnb:0xA7EB0ab43Cb1Fa22f8729d41732948950A765b4B",
+            "bnb:0xC68aff3Ea311d59A8FEaB835BF6E94Dc6aE1E2C0",
+            "bnb:0xdFe0CF98ab97936c7AA8576D1f0BF874d8D1EAA4",
+            "bnb:0x29Dd46060cE6AFd42B3379AA79d6d25F95a3d6a5"
+          ]
+        },
+        "ocrExecutionTransmitters": [
+          "bnb:0x69C21AF833dd466De2E7497EA90fC1DCf4C49a1B",
+          "bnb:0xd7383AAb7DfcEF271d433a28b78ec5044698B041",
+          "bnb:0xD41cd956C5f42c25fC72B96d69f1B653218EA5C4",
+          "bnb:0xaf5388Eee0F3B6E97ac275A741c6BE652a7982Ea",
+          "bnb:0xe0e053673830c22c7c91B6ABed8bA5DEAaD0Acf7",
+          "bnb:0x1f23a38D4dfA7BEe33b641a47760aFd85754896A",
+          "bnb:0x7AB1A655422Bda9d97DE5ea3CB10efcDB429Bd7e",
+          "bnb:0xd129bC15B305EebB23062270649C4F729145F8BA",
+          "bnb:0x97af998eDAA70dC8A0CB7E3E60Ec59E7072e5d44",
+          "bnb:0xD5F213E238BFFbe9F3cDb4B34C93Ae20327b60f5",
+          "bnb:0x00C83dbC483AA90753030Aec8E7b25d3CE774A4b",
+          "bnb:0xd4a2dB1EB18c28804b195fe6A2F3D822EAc1D92a",
+          "bnb:0xA7EB0ab43Cb1Fa22f8729d41732948950A765b4B",
+          "bnb:0xC68aff3Ea311d59A8FEaB835BF6E94Dc6aE1E2C0",
+          "bnb:0xdFe0CF98ab97936c7AA8576D1f0BF874d8D1EAA4",
+          "bnb:0x29Dd46060cE6AFd42B3379AA79d6d25F95a3d6a5"
+        ],
+        "owner": "bnb:0x950350b073956bD1d22BB1C18c4d45263b5Aa3a5",
+        "permissionLessExecutionThresholdFmt": "1h",
+        "sourceChainConfigs": {
+          "ethereum": {
+            "router": "bnb:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000913814782144864e523c3fdb78e3ca25d2c2aeca"
+          },
+          "base": {
+            "router": "bnb:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000ee85aefb15b9489563a6a29891ebe0750aa1a7ae"
+          },
+          "solana": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0xac972977e1bab5fff6c686291f994ff52f34abed1bc7df88f76f43f926592c8f"
+          },
+          "aptos": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x20f808de3375db34d17cc946ec6b43fc26962f6afa125182dc903359756caf6b"
+          },
+          "monad": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000cdca5d374e46a6dddab50bd2d9acb8c796ec35c3"
+          },
+          "bittensor": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000345cc465bcb9a902b420320b8793c9a5d6064404"
+          },
+          "0g": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000a132f089492cce5f1d79483a9e4552f37266ed01"
+          },
+          "tac": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000051e2a24742db77604b881d6781ee16b5b8fcbe29"
+          },
+          "xlayer": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000530ae314ec3fa038bd9a215095e37295ec76162a"
+          },
+          "stable": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000d21d5a4e3fa0ebacc3dabb5258d9c1f4d24dc894"
+          },
+          "sui": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x03e843cbba25c863bae63783fe99213c5269916ed4a8bba32489094baa580fbf"
+          },
+          "etherlink": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000d4d2841ac332075833ae86eb49ce7af9f353cd21"
+          },
+          "megaeth": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000059d32e5fa8eed1fd1510f7e583a2b6e6142dd49f"
+          },
+          "corn": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000006525923279256b8a86c1c01cf5955eb00c39b048"
+          },
+          "mantle": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000004e2c866885b65f67e7a2b8382ecf0164bb19aa00"
+          },
+          "plasma": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000008fe3b17e6b0863aeea3d38df063aea39d4ab1602"
+          },
+          "plume": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000c23071a8ae83671f37bda1dadbc745a9780f632a"
+          },
+          "tempo": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000021d66d23fe27bb4175c866d4d3ee9bc12c4824e3"
+          },
+          "pharos": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000193beb1e11731b8b740b9fbbb62655553c3b4a25"
+          },
+          "creditcoin": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000770318d51052871def5eb5c452f4fd28b7960c4e"
+          },
+          "unichain": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000c23071a8ae83671f37bda1dadbc745a9780f632a"
+          },
+          "arbitrum": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000076a443768a5e3b8d1aed0105fc250877841deb40"
+          },
+          "avalanche": {
+            "router": "bnb:0x34B03Cb9086d7D758AC55af71584F81A598759FE",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x00000000000000000000000002a4d69cffec00fbf7f3b60c93e3529dfc58894d"
+          }
+        },
+        "typeAndVersion": "OffRamp 1.6.0"
+      },
+      "fieldMeta": {
+        "ocrCommit": {
+          "description": "OCR config for the Commit plugin (pluginType=0). signers/transmitters are the DON oracles for committing merkle roots and price updates. isSignatureVerificationEnabled=true means F+1 of these signers must sign every commit report; the caller of commit() must additionally be one of the transmitters."
+        },
+        "ocrExecution": {
+          "description": "OCR config for the Execution plugin (pluginType=1). isSignatureVerificationEnabled=false means execute() takes no signatures, but msg.sender must still be in the transmitters list (UnauthorizedTransmitter otherwise). Signers may be configured but are unused."
+        },
+        "ocrCommitSigners": {
+          "description": "Message OCR signers. F+1 of these must sign every crosschain and price report."
+        },
+        "ocrCommitTransmitters": {
+          "description": "Commit-plugin OCR transmitters. They relay a signature quorum from OCR commit signers."
+        },
+        "ocrCommitN": {
+          "description": "Number of configured Commit-plugin OCR signers. Convenience flat field so {{ocrCommitN}} can be interpolated into descriptions."
+        },
+        "permissionLessExecutionThresholdFmt": {
+          "description": "How long after a commit any external caller may manually execute its messages (in addition to the whitelisted execution transmitters). Formatted version of getDynamicConfig.permissionLessExecutionThresholdSeconds."
+        },
+        "ocrCommitF": {
+          "description": "F threshold for the Commit-plugin OCR config. F+1 signatures are required on every commit report; the system tolerates up to F faulty signers."
+        },
+        "ocrExecutionTransmitters": {
+          "description": "Execution-plugin OCR transmitters. msg.sender of execute() must be one of these. Since isSignatureVerificationEnabled is false on the execution plugin, any one of these can singly authorize executing any already-committed message."
+        },
+        "sourceChainConfigs": {
+          "description": "Per-source-chain config for inbound CCIP messages: local Router used to deliver to receivers, whether the lane is enabled, whether RMN signature blessing is required on commits (false = blessing REQUIRED, true = blessing skipped — only OCR signatures gate the commit), and the bytes-encoded source-chain OnRamp address (left-padded EVM address for EVM sources; native encoding for non-EVM families). Keys are source-chain names. Replayed from SourceChainConfigSet events. minSeqNr is omitted because the event captures the value at config-change time, not the current commit counter (which advances on every _commitRoot)."
+        }
+      },
+      "implementationNames": {
+        "bnb:0xA27056438FfA1f286AB197488808692F0db93F8B": "OffRamp"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "4426351306075016396": "0g",
+            "4829375610284793157": "ab",
+            "3577778157919314504": "abstract",
+            "4059281736450291836": "adi",
+            "14894068710063348487": "apechain",
+            "4741433654826277614": "aptos",
+            "6433500567565415381": "avalanche",
+            "1294465214383781161": "berachain",
+            "465944652040885897": "opbnb",
+            "7937294810946806131": "bitlayer",
+            "3849287863852499584": "bob",
+            "4560701533377838164": "botanix",
+            "5406759801798337480": "bsquared",
+            "241851231317828981": "bitcoin-merlin",
+            "2135107236357186872": "bittensor",
+            "11344663589394136015": "bsc",
+            "1346049177634351622": "celo",
+            "1224752112135636129": "core",
+            "9043146809313071210": "corn",
+            "18240105181246962294": "creditcoin",
+            "1456215246176062136": "cronos",
+            "8788096068760390840": "cronos-zkevm",
+            "6325494908023253251": "edge",
+            "8805746078405598895": "andromeda",
+            "4949039107694359620": "arbitrum",
+            "15971525489660198786": "base",
+            "7613811247471741961": "hashkey",
+            "3461204551265785888": "ink",
+            "4627098889531055414": "linea",
+            "1556008542357238666": "mantle",
+            "7264351850409363825": "mode",
+            "3734403246176062136": "optimism",
+            "13204309965629103672": "scroll",
+            "16468599424800719238": "taiko",
+            "1923510103922296319": "unichain",
+            "2049429975587534727": "worldchain",
+            "3016212468291539606": "xlayer",
+            "17198166215261833993": "zircuit",
+            "1562403441176082196": "zksync",
+            "13624601974233774587": "etherlink",
+            "1462016016387883143": "fraxtal",
+            "3229138320728879060": "hedera",
+            "1804312132722180201": "hemi",
+            "2442541497099098535": "hyperliquid",
+            "1523760397290643893": "jovay",
+            "9813823125703490621": "kaia",
+            "5608378062013572713": "lens",
+            "15293031020466096408": "lisk",
+            "5009297550715157269": "ethereum",
+            "4051577828743386545": "matic",
+            "6093540873831549674": "megaeth",
+            "13447077090413146373": "metal",
+            "11690709103138290329": "mind",
+            "17164792800244661392": "mint",
+            "8481857512324358265": "monad",
+            "18164309074156128038": "morph",
+            "12657445206920369324": "henesys",
+            "7801139999541420232": "pharos",
+            "9335212494177455608": "plasma",
+            "17912061998839310979": "plume",
+            "6422105447186081193": "astar",
+            "2459028469735686113": "katana",
+            "6916147374840168594": "ronin",
+            "11964252391146578476": "rootstock",
+            "9027416829622342829": "sei",
+            "3993510008929295315": "shibarium",
+            "124615329519749607": "solana",
+            "12505351618335765396": "soneium",
+            "1673871237479749969": "sonic",
+            "16978377838628290997": "stable",
+            "470401360549526817": "superseed",
+            "5936861837188149645": "tac",
+            "7281642695469137430": "tempo",
+            "16448340667252469081": "ton",
+            "5142893604156789321": "wemix",
+            "465200170687744372": "xdai",
+            "17673274061779414707": "xdc",
+            "3555797439612589184": "zora",
+            "17529533435026248318": "sui",
+            "9762610643973837292": "sui-testnet",
+            "6473245816409426016": "memento",
+            "9723842205701363942": "everclear",
+            "1546563616611573946": "tron",
+            "4348158687435793198": "polygonzkevm",
+            "4411394078118774322": "blast",
+            "5214452172935136222": "treasure",
+            "7222032299962346917": "neox"
+          }
+        }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
     {
       "address": "eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34",
       "type": "EOA",
@@ -11459,9 +12701,918 @@
       "address": "eth:0xFccD1128fc823dD78e76240dc206a7A26494F271",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PolygonPosOffRamp_v1_6",
+      "address": "matic:0x77FDbd20ED582794b1d9F1a8a94e4a60494D677e",
+      "type": "Contract",
+      "template": "transporter/OfframpV3",
+      "sourceHashes": [
+        "0x0cd580f4aedce3a2a8da2a7e6013b1b7de5c18db2e1a41549e880bccece5ed06"
+      ],
+      "proxyType": "immutable",
+      "description": "v1.6 OffRamp on Polygon PoS. Added only to inspect its OCR signing set; relatives are ignored so no other Polygon CCIP contracts are pulled into discovery.",
+      "deployerAddress": "matic:0x062f05CD6c835677B05a8658A351969476861316",
+      "sinceTimestamp": 1751314698,
+      "sinceBlock": 73419108,
+      "values": {
+        "$immutable": true,
+        "getDynamicConfig": {
+          "feeQuoter": "matic:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF",
+          "permissionLessExecutionThresholdSeconds": 3600,
+          "messageInterceptor": "matic:0x0000000000000000000000000000000000000000"
+        },
+        "getStaticConfig": {
+          "chainSelector": "4051577828743386545",
+          "gasForCallExactCheck": 5000,
+          "rmnRemote": "matic:0xf1ceAa46D8d13Cac9fC38aaEF3d3d14754C5A9c2",
+          "tokenAdminRegistry": "matic:0x00F027eA6D0fb03256A15E9182B2B9227A4931d8",
+          "nonceManager": "matic:0xfe067d16abE491A427E422921cfd314e4A09EcD1"
+        },
+        "ocrCommit": {
+          "configInfo": {
+            "configDigest": "0x000a129541e8c987f7dc58c5f181ad1bd042c4edf8bf6bca43bc46d20ba92bb3",
+            "F": 5,
+            "n": 16,
+            "isSignatureVerificationEnabled": true
+          },
+          "signers": [
+            "matic:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+            "matic:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+            "matic:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+            "matic:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+            "matic:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+            "matic:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+            "matic:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+            "matic:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+            "matic:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+            "matic:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4",
+            "matic:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+            "matic:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83",
+            "matic:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+            "matic:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+            "matic:0x2D2251fAC6871Df405450337E327683822baFc52",
+            "matic:0x7502128aF7a58E9906696EA6B60434f75d0026E0"
+          ],
+          "transmitters": [
+            "matic:0xf60Ec62F4021989c27F6676E05b2994B9776705D",
+            "matic:0x1a9Aef726A4B5544eAf21721eA3E4CE346EADF3d",
+            "matic:0x1a4828C187a83725d6458e59b314655DA202dA05",
+            "matic:0xb9241fFA3F54Cb425913032a1cA5644fa1d70c21",
+            "matic:0xcCb47ee998D0666F5aBdb52a43Db01fc0AF1a3F2",
+            "matic:0x21313Fd5E6d28383D26b7a39CcCC8DC50a04a02D",
+            "matic:0x35cFeB6bAc5471528255EC0E955A145ACC565627",
+            "matic:0xD1eE50462CB1d19DAfB30AB299e5897c2bCdc0D8",
+            "matic:0x63AA01Bb2cA1d01301055f570e15dCC9c1f9C2A3",
+            "matic:0x6255D303AE19E1bda2FA3a6889205563F4Eed955",
+            "matic:0x0177408C35404CF0D1EaD0FE1f7c1130fe219B85",
+            "matic:0xA9a8d2429b35cB5c860602eF48AF3978311Cf676",
+            "matic:0xD5BccD46e4fD647BC7fD38dC880D34A7c8C1481F",
+            "matic:0xAD6FaF2F0D209b408e587499FDCa7faB40f011D7",
+            "matic:0x16Fb0FD5b0fEdD2c8c70b2eb62f7730fAEdeDDc9",
+            "matic:0xdb907449e734A67C0BEb7Ea6cBD1E759afd4f07B"
+          ]
+        },
+        "ocrCommitF": 5,
+        "ocrCommitN": 16,
+        "ocrCommitSigners": [
+          "matic:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+          "matic:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+          "matic:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+          "matic:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+          "matic:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+          "matic:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+          "matic:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+          "matic:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+          "matic:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+          "matic:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4",
+          "matic:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+          "matic:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83",
+          "matic:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+          "matic:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+          "matic:0x2D2251fAC6871Df405450337E327683822baFc52",
+          "matic:0x7502128aF7a58E9906696EA6B60434f75d0026E0"
+        ],
+        "ocrCommitTransmitters": [
+          "matic:0xf60Ec62F4021989c27F6676E05b2994B9776705D",
+          "matic:0x1a9Aef726A4B5544eAf21721eA3E4CE346EADF3d",
+          "matic:0x1a4828C187a83725d6458e59b314655DA202dA05",
+          "matic:0xb9241fFA3F54Cb425913032a1cA5644fa1d70c21",
+          "matic:0xcCb47ee998D0666F5aBdb52a43Db01fc0AF1a3F2",
+          "matic:0x21313Fd5E6d28383D26b7a39CcCC8DC50a04a02D",
+          "matic:0x35cFeB6bAc5471528255EC0E955A145ACC565627",
+          "matic:0xD1eE50462CB1d19DAfB30AB299e5897c2bCdc0D8",
+          "matic:0x63AA01Bb2cA1d01301055f570e15dCC9c1f9C2A3",
+          "matic:0x6255D303AE19E1bda2FA3a6889205563F4Eed955",
+          "matic:0x0177408C35404CF0D1EaD0FE1f7c1130fe219B85",
+          "matic:0xA9a8d2429b35cB5c860602eF48AF3978311Cf676",
+          "matic:0xD5BccD46e4fD647BC7fD38dC880D34A7c8C1481F",
+          "matic:0xAD6FaF2F0D209b408e587499FDCa7faB40f011D7",
+          "matic:0x16Fb0FD5b0fEdD2c8c70b2eb62f7730fAEdeDDc9",
+          "matic:0xdb907449e734A67C0BEb7Ea6cBD1E759afd4f07B"
+        ],
+        "ocrExecution": {
+          "configInfo": {
+            "configDigest": "0x000a39eb301b28ccf0c92a2e6174247ffd5dd150ce999251de3fef2f01926188",
+            "F": 5,
+            "n": 0,
+            "isSignatureVerificationEnabled": false
+          },
+          "signers": [],
+          "transmitters": [
+            "matic:0xf60Ec62F4021989c27F6676E05b2994B9776705D",
+            "matic:0x1a9Aef726A4B5544eAf21721eA3E4CE346EADF3d",
+            "matic:0x1a4828C187a83725d6458e59b314655DA202dA05",
+            "matic:0xb9241fFA3F54Cb425913032a1cA5644fa1d70c21",
+            "matic:0xcCb47ee998D0666F5aBdb52a43Db01fc0AF1a3F2",
+            "matic:0x21313Fd5E6d28383D26b7a39CcCC8DC50a04a02D",
+            "matic:0x35cFeB6bAc5471528255EC0E955A145ACC565627",
+            "matic:0xD1eE50462CB1d19DAfB30AB299e5897c2bCdc0D8",
+            "matic:0x63AA01Bb2cA1d01301055f570e15dCC9c1f9C2A3",
+            "matic:0x6255D303AE19E1bda2FA3a6889205563F4Eed955",
+            "matic:0x0177408C35404CF0D1EaD0FE1f7c1130fe219B85",
+            "matic:0xA9a8d2429b35cB5c860602eF48AF3978311Cf676",
+            "matic:0xD5BccD46e4fD647BC7fD38dC880D34A7c8C1481F",
+            "matic:0xAD6FaF2F0D209b408e587499FDCa7faB40f011D7",
+            "matic:0x16Fb0FD5b0fEdD2c8c70b2eb62f7730fAEdeDDc9",
+            "matic:0xdb907449e734A67C0BEb7Ea6cBD1E759afd4f07B"
+          ]
+        },
+        "ocrExecutionTransmitters": [
+          "matic:0xf60Ec62F4021989c27F6676E05b2994B9776705D",
+          "matic:0x1a9Aef726A4B5544eAf21721eA3E4CE346EADF3d",
+          "matic:0x1a4828C187a83725d6458e59b314655DA202dA05",
+          "matic:0xb9241fFA3F54Cb425913032a1cA5644fa1d70c21",
+          "matic:0xcCb47ee998D0666F5aBdb52a43Db01fc0AF1a3F2",
+          "matic:0x21313Fd5E6d28383D26b7a39CcCC8DC50a04a02D",
+          "matic:0x35cFeB6bAc5471528255EC0E955A145ACC565627",
+          "matic:0xD1eE50462CB1d19DAfB30AB299e5897c2bCdc0D8",
+          "matic:0x63AA01Bb2cA1d01301055f570e15dCC9c1f9C2A3",
+          "matic:0x6255D303AE19E1bda2FA3a6889205563F4Eed955",
+          "matic:0x0177408C35404CF0D1EaD0FE1f7c1130fe219B85",
+          "matic:0xA9a8d2429b35cB5c860602eF48AF3978311Cf676",
+          "matic:0xD5BccD46e4fD647BC7fD38dC880D34A7c8C1481F",
+          "matic:0xAD6FaF2F0D209b408e587499FDCa7faB40f011D7",
+          "matic:0x16Fb0FD5b0fEdD2c8c70b2eb62f7730fAEdeDDc9",
+          "matic:0xdb907449e734A67C0BEb7Ea6cBD1E759afd4f07B"
+        ],
+        "owner": "matic:0x7E571497E733F00a4F3f5062cB7b8077047dD47e",
+        "permissionLessExecutionThresholdFmt": "1h",
+        "sourceChainConfigs": {
+          "solana": {
+            "router": "matic:0x849c5ED5a80F5B408Dd4969b78c2C8fdf0565Bfe",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0xac972977e1bab5fff6c686291f994ff52f34abed1bc7df88f76f43f926592c8f"
+          },
+          "memento": {
+            "router": "matic:0x849c5ED5a80F5B408Dd4969b78c2C8fdf0565Bfe",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000913814782144864e523c3fdb78e3ca25d2c2aeca"
+          },
+          "jovay": {
+            "router": "matic:0x849c5ED5a80F5B408Dd4969b78c2C8fdf0565Bfe",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000009b04018b5285ff16f3967af108bdc72423d547cc"
+          },
+          "sui": {
+            "router": "matic:0x849c5ED5a80F5B408Dd4969b78c2C8fdf0565Bfe",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x03e843cbba25c863bae63783fe99213c5269916ed4a8bba32489094baa580fbf"
+          },
+          "pharos": {
+            "router": "matic:0x849c5ED5a80F5B408Dd4969b78c2C8fdf0565Bfe",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000193beb1e11731b8b740b9fbbb62655553c3b4a25"
+          },
+          "plume": {
+            "router": "matic:0x849c5ED5a80F5B408Dd4969b78c2C8fdf0565Bfe",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000c23071a8ae83671f37bda1dadbc745a9780f632a"
+          }
+        },
+        "typeAndVersion": "OffRamp 1.6.0"
+      },
+      "fieldMeta": {
+        "ocrCommit": {
+          "description": "OCR config for the Commit plugin (pluginType=0). signers/transmitters are the DON oracles for committing merkle roots and price updates. isSignatureVerificationEnabled=true means F+1 of these signers must sign every commit report; the caller of commit() must additionally be one of the transmitters."
+        },
+        "ocrExecution": {
+          "description": "OCR config for the Execution plugin (pluginType=1). isSignatureVerificationEnabled=false means execute() takes no signatures, but msg.sender must still be in the transmitters list (UnauthorizedTransmitter otherwise). Signers may be configured but are unused."
+        },
+        "ocrCommitSigners": {
+          "description": "Message OCR signers. F+1 of these must sign every crosschain and price report."
+        },
+        "ocrCommitTransmitters": {
+          "description": "Commit-plugin OCR transmitters. They relay a signature quorum from OCR commit signers."
+        },
+        "ocrCommitN": {
+          "description": "Number of configured Commit-plugin OCR signers. Convenience flat field so {{ocrCommitN}} can be interpolated into descriptions."
+        },
+        "permissionLessExecutionThresholdFmt": {
+          "description": "How long after a commit any external caller may manually execute its messages (in addition to the whitelisted execution transmitters). Formatted version of getDynamicConfig.permissionLessExecutionThresholdSeconds."
+        },
+        "ocrCommitF": {
+          "description": "F threshold for the Commit-plugin OCR config. F+1 signatures are required on every commit report; the system tolerates up to F faulty signers."
+        },
+        "ocrExecutionTransmitters": {
+          "description": "Execution-plugin OCR transmitters. msg.sender of execute() must be one of these. Since isSignatureVerificationEnabled is false on the execution plugin, any one of these can singly authorize executing any already-committed message."
+        },
+        "sourceChainConfigs": {
+          "description": "Per-source-chain config for inbound CCIP messages: local Router used to deliver to receivers, whether the lane is enabled, whether RMN signature blessing is required on commits (false = blessing REQUIRED, true = blessing skipped — only OCR signatures gate the commit), and the bytes-encoded source-chain OnRamp address (left-padded EVM address for EVM sources; native encoding for non-EVM families). Keys are source-chain names. Replayed from SourceChainConfigSet events. minSeqNr is omitted because the event captures the value at config-change time, not the current commit counter (which advances on every _commitRoot)."
+        }
+      },
+      "implementationNames": {
+        "matic:0x77FDbd20ED582794b1d9F1a8a94e4a60494D677e": "OffRamp"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "4426351306075016396": "0g",
+            "4829375610284793157": "ab",
+            "3577778157919314504": "abstract",
+            "4059281736450291836": "adi",
+            "14894068710063348487": "apechain",
+            "4741433654826277614": "aptos",
+            "6433500567565415381": "avalanche",
+            "1294465214383781161": "berachain",
+            "465944652040885897": "opbnb",
+            "7937294810946806131": "bitlayer",
+            "3849287863852499584": "bob",
+            "4560701533377838164": "botanix",
+            "5406759801798337480": "bsquared",
+            "241851231317828981": "bitcoin-merlin",
+            "2135107236357186872": "bittensor",
+            "11344663589394136015": "bsc",
+            "1346049177634351622": "celo",
+            "1224752112135636129": "core",
+            "9043146809313071210": "corn",
+            "18240105181246962294": "creditcoin",
+            "1456215246176062136": "cronos",
+            "8788096068760390840": "cronos-zkevm",
+            "6325494908023253251": "edge",
+            "8805746078405598895": "andromeda",
+            "4949039107694359620": "arbitrum",
+            "15971525489660198786": "base",
+            "7613811247471741961": "hashkey",
+            "3461204551265785888": "ink",
+            "4627098889531055414": "linea",
+            "1556008542357238666": "mantle",
+            "7264351850409363825": "mode",
+            "3734403246176062136": "optimism",
+            "13204309965629103672": "scroll",
+            "16468599424800719238": "taiko",
+            "1923510103922296319": "unichain",
+            "2049429975587534727": "worldchain",
+            "3016212468291539606": "xlayer",
+            "17198166215261833993": "zircuit",
+            "1562403441176082196": "zksync",
+            "13624601974233774587": "etherlink",
+            "1462016016387883143": "fraxtal",
+            "3229138320728879060": "hedera",
+            "1804312132722180201": "hemi",
+            "2442541497099098535": "hyperliquid",
+            "1523760397290643893": "jovay",
+            "9813823125703490621": "kaia",
+            "5608378062013572713": "lens",
+            "15293031020466096408": "lisk",
+            "5009297550715157269": "ethereum",
+            "4051577828743386545": "matic",
+            "6093540873831549674": "megaeth",
+            "13447077090413146373": "metal",
+            "11690709103138290329": "mind",
+            "17164792800244661392": "mint",
+            "8481857512324358265": "monad",
+            "18164309074156128038": "morph",
+            "12657445206920369324": "henesys",
+            "7801139999541420232": "pharos",
+            "9335212494177455608": "plasma",
+            "17912061998839310979": "plume",
+            "6422105447186081193": "astar",
+            "2459028469735686113": "katana",
+            "6916147374840168594": "ronin",
+            "11964252391146578476": "rootstock",
+            "9027416829622342829": "sei",
+            "3993510008929295315": "shibarium",
+            "124615329519749607": "solana",
+            "12505351618335765396": "soneium",
+            "1673871237479749969": "sonic",
+            "16978377838628290997": "stable",
+            "470401360549526817": "superseed",
+            "5936861837188149645": "tac",
+            "7281642695469137430": "tempo",
+            "16448340667252469081": "ton",
+            "5142893604156789321": "wemix",
+            "465200170687744372": "xdai",
+            "17673274061779414707": "xdc",
+            "3555797439612589184": "zora",
+            "17529533435026248318": "sui",
+            "9762610643973837292": "sui-testnet",
+            "6473245816409426016": "memento",
+            "9723842205701363942": "everclear",
+            "1546563616611573946": "tron",
+            "4348158687435793198": "polygonzkevm",
+            "4411394078118774322": "blast",
+            "5214452172935136222": "treasure",
+            "7222032299962346917": "neox"
+          }
+        }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "OptimismOffRamp_v1_6",
+      "address": "oeth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae",
+      "type": "Contract",
+      "template": "transporter/OfframpV3",
+      "sourceHashes": [
+        "0x0cd580f4aedce3a2a8da2a7e6013b1b7de5c18db2e1a41549e880bccece5ed06"
+      ],
+      "proxyType": "immutable",
+      "description": "v1.6 OffRamp on OP Mainnet. Added only to inspect its OCR signing set; relatives are ignored so no other Optimism CCIP contracts are pulled into discovery.",
+      "deployerAddress": "oeth:0x062f05CD6c835677B05a8658A351969476861316",
+      "sinceTimestamp": 1744753005,
+      "sinceBlock": 134577114,
+      "values": {
+        "$immutable": true,
+        "getDynamicConfig": {
+          "feeQuoter": "oeth:0x71052BAe71C25C78E37fD12E5ff1101A71d9018F",
+          "permissionLessExecutionThresholdSeconds": 3600,
+          "messageInterceptor": "oeth:0x0000000000000000000000000000000000000000"
+        },
+        "getStaticConfig": {
+          "chainSelector": "3734403246176062136",
+          "gasForCallExactCheck": 5000,
+          "rmnRemote": "oeth:0x55b3FCa23EdDd28b1f5B4a3C7975f63EFd2d06CE",
+          "tokenAdminRegistry": "oeth:0x657c42abE4CD8aa731Aec322f871B5b90cf6274F",
+          "nonceManager": "oeth:0x70003d849A20e33997fea69bBc8a366D6ab0E131"
+        },
+        "ocrCommit": {
+          "configInfo": {
+            "configDigest": "0x000ad0676d3e7ce6fa1ca8a073d12bfa4f48a032f20e6f04cde07c937ae1a2d0",
+            "F": 5,
+            "n": 16,
+            "isSignatureVerificationEnabled": true
+          },
+          "signers": [
+            "oeth:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+            "oeth:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+            "oeth:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+            "oeth:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+            "oeth:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+            "oeth:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+            "oeth:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+            "oeth:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+            "oeth:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+            "oeth:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4",
+            "oeth:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+            "oeth:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83",
+            "oeth:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+            "oeth:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+            "oeth:0x2D2251fAC6871Df405450337E327683822baFc52",
+            "oeth:0x7502128aF7a58E9906696EA6B60434f75d0026E0"
+          ],
+          "transmitters": [
+            "oeth:0xb4A6271F2AB3b7379d39b9fE5a9CDD82d45EFBAd",
+            "oeth:0x0e135A2a6E57DF48B414347b10ed87C5c3A70f64",
+            "oeth:0x2E9675910dddC44F1E4F3ac86E458358183284c8",
+            "oeth:0x73AB6Bd0128816104CF66B611aDFbC4A7fcCF990",
+            "oeth:0x7289dCf0201E7B163552C366d4Ac15F79ca5D484",
+            "oeth:0xF220fe409257c7566c038ad1B58326Cf480B7134",
+            "oeth:0x9EDffB34B65740B7880F963eA40C0e965dB2Aa2A",
+            "oeth:0xAc3EB7997C8eCC3D4B1dd29421a47f7B9798c33A",
+            "oeth:0xC4dE04E0aF557dDBA8540d6C189Af562033c0780",
+            "oeth:0xBD5C40350eE8a487119c5499589A570F9d9C8Dd6",
+            "oeth:0xDE49d65D5a87B00284B453fc2d04Fe00301B89D2",
+            "oeth:0x497560296b77E2eccaB3e7917745aBC434AA0b9d",
+            "oeth:0xe1d25635dC4C150436f13Ff472626FFF22f2ED07",
+            "oeth:0x009Fe6dFe25E98b52cf85B0FBcc8842f11F2C980",
+            "oeth:0x8137EAA19197be2BfC8388A455832A2cE6BCc68B",
+            "oeth:0x887C6c968A042aC5B885C8A59571603d2e683fb7"
+          ]
+        },
+        "ocrCommitF": 5,
+        "ocrCommitN": 16,
+        "ocrCommitSigners": [
+          "oeth:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+          "oeth:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+          "oeth:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+          "oeth:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+          "oeth:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+          "oeth:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+          "oeth:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+          "oeth:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+          "oeth:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+          "oeth:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4",
+          "oeth:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+          "oeth:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83",
+          "oeth:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+          "oeth:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+          "oeth:0x2D2251fAC6871Df405450337E327683822baFc52",
+          "oeth:0x7502128aF7a58E9906696EA6B60434f75d0026E0"
+        ],
+        "ocrCommitTransmitters": [
+          "oeth:0xb4A6271F2AB3b7379d39b9fE5a9CDD82d45EFBAd",
+          "oeth:0x0e135A2a6E57DF48B414347b10ed87C5c3A70f64",
+          "oeth:0x2E9675910dddC44F1E4F3ac86E458358183284c8",
+          "oeth:0x73AB6Bd0128816104CF66B611aDFbC4A7fcCF990",
+          "oeth:0x7289dCf0201E7B163552C366d4Ac15F79ca5D484",
+          "oeth:0xF220fe409257c7566c038ad1B58326Cf480B7134",
+          "oeth:0x9EDffB34B65740B7880F963eA40C0e965dB2Aa2A",
+          "oeth:0xAc3EB7997C8eCC3D4B1dd29421a47f7B9798c33A",
+          "oeth:0xC4dE04E0aF557dDBA8540d6C189Af562033c0780",
+          "oeth:0xBD5C40350eE8a487119c5499589A570F9d9C8Dd6",
+          "oeth:0xDE49d65D5a87B00284B453fc2d04Fe00301B89D2",
+          "oeth:0x497560296b77E2eccaB3e7917745aBC434AA0b9d",
+          "oeth:0xe1d25635dC4C150436f13Ff472626FFF22f2ED07",
+          "oeth:0x009Fe6dFe25E98b52cf85B0FBcc8842f11F2C980",
+          "oeth:0x8137EAA19197be2BfC8388A455832A2cE6BCc68B",
+          "oeth:0x887C6c968A042aC5B885C8A59571603d2e683fb7"
+        ],
+        "ocrExecution": {
+          "configInfo": {
+            "configDigest": "0x000ab3fd301e8757c2c9b52121709839bf84310a86c2bd2e39f7e552bad13c1e",
+            "F": 5,
+            "n": 0,
+            "isSignatureVerificationEnabled": false
+          },
+          "signers": [],
+          "transmitters": [
+            "oeth:0x009Fe6dFe25E98b52cf85B0FBcc8842f11F2C980",
+            "oeth:0xb4A6271F2AB3b7379d39b9fE5a9CDD82d45EFBAd",
+            "oeth:0xC4dE04E0aF557dDBA8540d6C189Af562033c0780",
+            "oeth:0x7289dCf0201E7B163552C366d4Ac15F79ca5D484",
+            "oeth:0x9EDffB34B65740B7880F963eA40C0e965dB2Aa2A",
+            "oeth:0xBD5C40350eE8a487119c5499589A570F9d9C8Dd6",
+            "oeth:0xF220fe409257c7566c038ad1B58326Cf480B7134",
+            "oeth:0x887C6c968A042aC5B885C8A59571603d2e683fb7",
+            "oeth:0xAc3EB7997C8eCC3D4B1dd29421a47f7B9798c33A",
+            "oeth:0xDE49d65D5a87B00284B453fc2d04Fe00301B89D2",
+            "oeth:0x8137EAA19197be2BfC8388A455832A2cE6BCc68B",
+            "oeth:0x73AB6Bd0128816104CF66B611aDFbC4A7fcCF990",
+            "oeth:0x497560296b77E2eccaB3e7917745aBC434AA0b9d",
+            "oeth:0x2E9675910dddC44F1E4F3ac86E458358183284c8",
+            "oeth:0x0e135A2a6E57DF48B414347b10ed87C5c3A70f64",
+            "oeth:0xe1d25635dC4C150436f13Ff472626FFF22f2ED07"
+          ]
+        },
+        "ocrExecutionTransmitters": [
+          "oeth:0x009Fe6dFe25E98b52cf85B0FBcc8842f11F2C980",
+          "oeth:0xb4A6271F2AB3b7379d39b9fE5a9CDD82d45EFBAd",
+          "oeth:0xC4dE04E0aF557dDBA8540d6C189Af562033c0780",
+          "oeth:0x7289dCf0201E7B163552C366d4Ac15F79ca5D484",
+          "oeth:0x9EDffB34B65740B7880F963eA40C0e965dB2Aa2A",
+          "oeth:0xBD5C40350eE8a487119c5499589A570F9d9C8Dd6",
+          "oeth:0xF220fe409257c7566c038ad1B58326Cf480B7134",
+          "oeth:0x887C6c968A042aC5B885C8A59571603d2e683fb7",
+          "oeth:0xAc3EB7997C8eCC3D4B1dd29421a47f7B9798c33A",
+          "oeth:0xDE49d65D5a87B00284B453fc2d04Fe00301B89D2",
+          "oeth:0x8137EAA19197be2BfC8388A455832A2cE6BCc68B",
+          "oeth:0x73AB6Bd0128816104CF66B611aDFbC4A7fcCF990",
+          "oeth:0x497560296b77E2eccaB3e7917745aBC434AA0b9d",
+          "oeth:0x2E9675910dddC44F1E4F3ac86E458358183284c8",
+          "oeth:0x0e135A2a6E57DF48B414347b10ed87C5c3A70f64",
+          "oeth:0xe1d25635dC4C150436f13Ff472626FFF22f2ED07"
+        ],
+        "owner": "oeth:0x1E2FAeD390be7945ACbf22FC25173C4BDDa3EA45",
+        "permissionLessExecutionThresholdFmt": "1h",
+        "sourceChainConfigs": {
+          "solana": {
+            "router": "oeth:0x3206695CaE29952f4b0c22a169725a865bc8Ce0f",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0xac972977e1bab5fff6c686291f994ff52f34abed1bc7df88f76f43f926592c8f"
+          },
+          "aptos": {
+            "router": "oeth:0x3206695CaE29952f4b0c22a169725a865bc8Ce0f",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x20f808de3375db34d17cc946ec6b43fc26962f6afa125182dc903359756caf6b"
+          },
+          "monad": {
+            "router": "oeth:0x3206695CaE29952f4b0c22a169725a865bc8Ce0f",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000cdca5d374e46a6dddab50bd2d9acb8c796ec35c3"
+          },
+          "sui": {
+            "router": "oeth:0x3206695CaE29952f4b0c22a169725a865bc8Ce0f",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x03e843cbba25c863bae63783fe99213c5269916ed4a8bba32489094baa580fbf"
+          },
+          "pharos": {
+            "router": "oeth:0x3206695CaE29952f4b0c22a169725a865bc8Ce0f",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x000000000000000000000000193beb1e11731b8b740b9fbbb62655553c3b4a25"
+          }
+        },
+        "typeAndVersion": "OffRamp 1.6.0"
+      },
+      "fieldMeta": {
+        "ocrCommit": {
+          "description": "OCR config for the Commit plugin (pluginType=0). signers/transmitters are the DON oracles for committing merkle roots and price updates. isSignatureVerificationEnabled=true means F+1 of these signers must sign every commit report; the caller of commit() must additionally be one of the transmitters."
+        },
+        "ocrExecution": {
+          "description": "OCR config for the Execution plugin (pluginType=1). isSignatureVerificationEnabled=false means execute() takes no signatures, but msg.sender must still be in the transmitters list (UnauthorizedTransmitter otherwise). Signers may be configured but are unused."
+        },
+        "ocrCommitSigners": {
+          "description": "Message OCR signers. F+1 of these must sign every crosschain and price report."
+        },
+        "ocrCommitTransmitters": {
+          "description": "Commit-plugin OCR transmitters. They relay a signature quorum from OCR commit signers."
+        },
+        "ocrCommitN": {
+          "description": "Number of configured Commit-plugin OCR signers. Convenience flat field so {{ocrCommitN}} can be interpolated into descriptions."
+        },
+        "permissionLessExecutionThresholdFmt": {
+          "description": "How long after a commit any external caller may manually execute its messages (in addition to the whitelisted execution transmitters). Formatted version of getDynamicConfig.permissionLessExecutionThresholdSeconds."
+        },
+        "ocrCommitF": {
+          "description": "F threshold for the Commit-plugin OCR config. F+1 signatures are required on every commit report; the system tolerates up to F faulty signers."
+        },
+        "ocrExecutionTransmitters": {
+          "description": "Execution-plugin OCR transmitters. msg.sender of execute() must be one of these. Since isSignatureVerificationEnabled is false on the execution plugin, any one of these can singly authorize executing any already-committed message."
+        },
+        "sourceChainConfigs": {
+          "description": "Per-source-chain config for inbound CCIP messages: local Router used to deliver to receivers, whether the lane is enabled, whether RMN signature blessing is required on commits (false = blessing REQUIRED, true = blessing skipped — only OCR signatures gate the commit), and the bytes-encoded source-chain OnRamp address (left-padded EVM address for EVM sources; native encoding for non-EVM families). Keys are source-chain names. Replayed from SourceChainConfigSet events. minSeqNr is omitted because the event captures the value at config-change time, not the current commit counter (which advances on every _commitRoot)."
+        }
+      },
+      "implementationNames": {
+        "oeth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae": "OffRamp"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "4426351306075016396": "0g",
+            "4829375610284793157": "ab",
+            "3577778157919314504": "abstract",
+            "4059281736450291836": "adi",
+            "14894068710063348487": "apechain",
+            "4741433654826277614": "aptos",
+            "6433500567565415381": "avalanche",
+            "1294465214383781161": "berachain",
+            "465944652040885897": "opbnb",
+            "7937294810946806131": "bitlayer",
+            "3849287863852499584": "bob",
+            "4560701533377838164": "botanix",
+            "5406759801798337480": "bsquared",
+            "241851231317828981": "bitcoin-merlin",
+            "2135107236357186872": "bittensor",
+            "11344663589394136015": "bsc",
+            "1346049177634351622": "celo",
+            "1224752112135636129": "core",
+            "9043146809313071210": "corn",
+            "18240105181246962294": "creditcoin",
+            "1456215246176062136": "cronos",
+            "8788096068760390840": "cronos-zkevm",
+            "6325494908023253251": "edge",
+            "8805746078405598895": "andromeda",
+            "4949039107694359620": "arbitrum",
+            "15971525489660198786": "base",
+            "7613811247471741961": "hashkey",
+            "3461204551265785888": "ink",
+            "4627098889531055414": "linea",
+            "1556008542357238666": "mantle",
+            "7264351850409363825": "mode",
+            "3734403246176062136": "optimism",
+            "13204309965629103672": "scroll",
+            "16468599424800719238": "taiko",
+            "1923510103922296319": "unichain",
+            "2049429975587534727": "worldchain",
+            "3016212468291539606": "xlayer",
+            "17198166215261833993": "zircuit",
+            "1562403441176082196": "zksync",
+            "13624601974233774587": "etherlink",
+            "1462016016387883143": "fraxtal",
+            "3229138320728879060": "hedera",
+            "1804312132722180201": "hemi",
+            "2442541497099098535": "hyperliquid",
+            "1523760397290643893": "jovay",
+            "9813823125703490621": "kaia",
+            "5608378062013572713": "lens",
+            "15293031020466096408": "lisk",
+            "5009297550715157269": "ethereum",
+            "4051577828743386545": "matic",
+            "6093540873831549674": "megaeth",
+            "13447077090413146373": "metal",
+            "11690709103138290329": "mind",
+            "17164792800244661392": "mint",
+            "8481857512324358265": "monad",
+            "18164309074156128038": "morph",
+            "12657445206920369324": "henesys",
+            "7801139999541420232": "pharos",
+            "9335212494177455608": "plasma",
+            "17912061998839310979": "plume",
+            "6422105447186081193": "astar",
+            "2459028469735686113": "katana",
+            "6916147374840168594": "ronin",
+            "11964252391146578476": "rootstock",
+            "9027416829622342829": "sei",
+            "3993510008929295315": "shibarium",
+            "124615329519749607": "solana",
+            "12505351618335765396": "soneium",
+            "1673871237479749969": "sonic",
+            "16978377838628290997": "stable",
+            "470401360549526817": "superseed",
+            "5936861837188149645": "tac",
+            "7281642695469137430": "tempo",
+            "16448340667252469081": "ton",
+            "5142893604156789321": "wemix",
+            "465200170687744372": "xdai",
+            "17673274061779414707": "xdc",
+            "3555797439612589184": "zora",
+            "17529533435026248318": "sui",
+            "9762610643973837292": "sui-testnet",
+            "6473245816409426016": "memento",
+            "9723842205701363942": "everclear",
+            "1546563616611573946": "tron",
+            "4348158687435793198": "polygonzkevm",
+            "4411394078118774322": "blast",
+            "5214452172935136222": "treasure",
+            "7222032299962346917": "neox"
+          }
+        }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],
   "abis": {
+    "arb1:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae": [
+      "constructor(tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager) staticConfig, tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig, tuple(address router, uint64 sourceChainSelector, bool isEnabled, bool isRMNVerificationDisabled, bytes onRamp)[] sourceChainConfigs)",
+      "error CanOnlySelfCall()",
+      "error CannotTransferToSelf()",
+      "error CommitOnRampMismatch(bytes reportOnRamp, bytes configOnRamp)",
+      "error ConfigDigestMismatch(bytes32 expected, bytes32 actual)",
+      "error CursedByRMN(uint64 sourceChainSelector)",
+      "error EmptyBatch()",
+      "error EmptyReport(uint64 sourceChainSelector)",
+      "error ExecutionError(bytes32 messageId, bytes err)",
+      "error ForkedChain(uint256 expected, uint256 actual)",
+      "error InsufficientGasToCompleteTx(bytes4 err)",
+      "error InvalidConfig(uint8 errorType)",
+      "error InvalidDataLength(uint256 expected, uint256 got)",
+      "error InvalidInterval(uint64 sourceChainSelector, uint64 min, uint64 max)",
+      "error InvalidManualExecutionGasLimit(uint64 sourceChainSelector, bytes32 messageId, uint256 newLimit)",
+      "error InvalidManualExecutionTokenGasOverride(bytes32 messageId, uint256 tokenIndex, uint256 oldLimit, uint256 tokenGasOverride)",
+      "error InvalidMessageDestChainSelector(uint64 messageDestChainSelector)",
+      "error InvalidNewState(uint64 sourceChainSelector, uint64 sequenceNumber, uint8 newState)",
+      "error InvalidOnRampUpdate(uint64 sourceChainSelector)",
+      "error InvalidProof()",
+      "error InvalidRoot()",
+      "error LeavesCannotBeEmpty()",
+      "error ManualExecutionGasAmountCountMismatch(bytes32 messageId, uint64 sequenceNumber)",
+      "error ManualExecutionGasLimitMismatch()",
+      "error ManualExecutionNotYetEnabled(uint64 sourceChainSelector)",
+      "error MessageValidationError(bytes errorReason)",
+      "error MustBeProposedOwner()",
+      "error NonUniqueSignatures()",
+      "error NotACompatiblePool(address notPool)",
+      "error OnlyCallableByOwner()",
+      "error OracleCannotBeZeroAddress()",
+      "error OwnerCannotBeZero()",
+      "error ReceiverError(bytes err)",
+      "error ReleaseOrMintBalanceMismatch(uint256 amountReleased, uint256 balancePre, uint256 balancePost)",
+      "error RootAlreadyCommitted(uint64 sourceChainSelector, bytes32 merkleRoot)",
+      "error RootBlessingMismatch(uint64 sourceChainSelector, bytes32 merkleRoot, bool isBlessed)",
+      "error RootNotCommitted(uint64 sourceChainSelector)",
+      "error SignatureVerificationNotAllowedInExecutionPlugin()",
+      "error SignatureVerificationRequiredInCommitPlugin()",
+      "error SignaturesOutOfRegistration()",
+      "error SourceChainNotEnabled(uint64 sourceChainSelector)",
+      "error SourceChainSelectorMismatch(uint64 reportSourceChainSelector, uint64 messageSourceChainSelector)",
+      "error StaleCommitReport()",
+      "error StaticConfigCannotBeChanged(uint8 ocrPluginType)",
+      "error TokenDataMismatch(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "error TokenHandlingError(address target, bytes err)",
+      "error UnauthorizedSigner()",
+      "error UnauthorizedTransmitter()",
+      "error UnexpectedTokenData()",
+      "error WrongMessageLength(uint256 expected, uint256 actual)",
+      "error WrongNumberOfSignatures()",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroChainSelectorNotAllowed()",
+      "event AlreadyAttempted(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "event CommitReportAccepted(tuple(uint64 sourceChainSelector, bytes onRampAddress, uint64 minSeqNr, uint64 maxSeqNr, bytes32 merkleRoot)[] blessedMerkleRoots, tuple(uint64 sourceChainSelector, bytes onRampAddress, uint64 minSeqNr, uint64 maxSeqNr, bytes32 merkleRoot)[] unblessedMerkleRoots, tuple(tuple(address sourceToken, uint224 usdPerToken)[] tokenPriceUpdates, tuple(uint64 destChainSelector, uint224 usdPerUnitGas)[] gasPriceUpdates) priceUpdates)",
+      "event ConfigSet(uint8 ocrPluginType, bytes32 configDigest, address[] signers, address[] transmitters, uint8 F)",
+      "event DynamicConfigSet(tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig)",
+      "event ExecutionStateChanged(uint64 indexed sourceChainSelector, uint64 indexed sequenceNumber, bytes32 indexed messageId, bytes32 messageHash, uint8 state, bytes returnData, uint256 gasUsed)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event RootRemoved(bytes32 root)",
+      "event SkippedAlreadyExecutedMessage(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "event SkippedReportExecution(uint64 sourceChainSelector)",
+      "event SourceChainConfigSet(uint64 indexed sourceChainSelector, tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp) sourceConfig)",
+      "event SourceChainSelectorAdded(uint64 sourceChainSelector)",
+      "event StaticConfigSet(tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager) staticConfig)",
+      "event Transmitted(uint8 indexed ocrPluginType, bytes32 configDigest, uint64 sequenceNumber)",
+      "function acceptOwnership()",
+      "function applySourceChainConfigUpdates(tuple(address router, uint64 sourceChainSelector, bool isEnabled, bool isRMNVerificationDisabled, bytes onRamp)[] sourceChainConfigUpdates)",
+      "function ccipReceive(tuple(bytes32 messageId, uint64 sourceChainSelector, bytes sender, bytes data, tuple(address token, uint256 amount)[] destTokenAmounts)) pure",
+      "function commit(bytes32[2] reportContext, bytes report, bytes32[] rs, bytes32[] ss, bytes32 rawVs)",
+      "function execute(bytes32[2] reportContext, bytes report)",
+      "function executeSingleMessage(tuple(tuple(bytes32 messageId, uint64 sourceChainSelector, uint64 destChainSelector, uint64 sequenceNumber, uint64 nonce) header, bytes sender, bytes data, address receiver, uint256 gasLimit, tuple(bytes sourcePoolAddress, address destTokenAddress, uint32 destGasAmount, bytes extraData, uint256 amount)[] tokenAmounts) message, bytes[] offchainTokenData, uint32[] tokenGasOverrides)",
+      "function getAllSourceChainConfigs() view returns (uint64[], tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp)[])",
+      "function getDynamicConfig() view returns (tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor))",
+      "function getExecutionState(uint64 sourceChainSelector, uint64 sequenceNumber) view returns (uint8)",
+      "function getLatestPriceSequenceNumber() view returns (uint64)",
+      "function getMerkleRoot(uint64 sourceChainSelector, bytes32 root) view returns (uint256)",
+      "function getSourceChainConfig(uint64 sourceChainSelector) view returns (tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp))",
+      "function getStaticConfig() view returns (tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager))",
+      "function latestConfigDetails(uint8 ocrPluginType) view returns (tuple(tuple(bytes32 configDigest, uint8 F, uint8 n, bool isSignatureVerificationEnabled) configInfo, address[] signers, address[] transmitters) ocrConfig)",
+      "function manuallyExecute(tuple(uint64 sourceChainSelector, tuple(tuple(bytes32 messageId, uint64 sourceChainSelector, uint64 destChainSelector, uint64 sequenceNumber, uint64 nonce) header, bytes sender, bytes data, address receiver, uint256 gasLimit, tuple(bytes sourcePoolAddress, address destTokenAddress, uint32 destGasAmount, bytes extraData, uint256 amount)[] tokenAmounts)[] messages, bytes[][] offchainTokenData, bytes32[] proofs, uint256 proofFlagBits)[] reports, tuple(uint256 receiverExecutionGasLimit, uint32[] tokenGasOverrides)[][] gasLimitOverrides)",
+      "function owner() view returns (address)",
+      "function setDynamicConfig(tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig)",
+      "function setOCR3Configs(tuple(bytes32 configDigest, uint8 ocrPluginType, uint8 F, bool isSignatureVerificationEnabled, address[] signers, address[] transmitters)[] ocrConfigArgs)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)"
+    ],
+    "base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13": [
+      "constructor(tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager) staticConfig, tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig, tuple(address router, uint64 sourceChainSelector, bool isEnabled, bool isRMNVerificationDisabled, bytes onRamp)[] sourceChainConfigs)",
+      "error CanOnlySelfCall()",
+      "error CannotTransferToSelf()",
+      "error CommitOnRampMismatch(bytes reportOnRamp, bytes configOnRamp)",
+      "error ConfigDigestMismatch(bytes32 expected, bytes32 actual)",
+      "error CursedByRMN(uint64 sourceChainSelector)",
+      "error EmptyBatch()",
+      "error EmptyReport(uint64 sourceChainSelector)",
+      "error ExecutionError(bytes32 messageId, bytes err)",
+      "error ForkedChain(uint256 expected, uint256 actual)",
+      "error InsufficientGasToCompleteTx(bytes4 err)",
+      "error InvalidConfig(uint8 errorType)",
+      "error InvalidDataLength(uint256 expected, uint256 got)",
+      "error InvalidInterval(uint64 sourceChainSelector, uint64 min, uint64 max)",
+      "error InvalidManualExecutionGasLimit(uint64 sourceChainSelector, bytes32 messageId, uint256 newLimit)",
+      "error InvalidManualExecutionTokenGasOverride(bytes32 messageId, uint256 tokenIndex, uint256 oldLimit, uint256 tokenGasOverride)",
+      "error InvalidMessageDestChainSelector(uint64 messageDestChainSelector)",
+      "error InvalidNewState(uint64 sourceChainSelector, uint64 sequenceNumber, uint8 newState)",
+      "error InvalidOnRampUpdate(uint64 sourceChainSelector)",
+      "error InvalidProof()",
+      "error InvalidRoot()",
+      "error LeavesCannotBeEmpty()",
+      "error ManualExecutionGasAmountCountMismatch(bytes32 messageId, uint64 sequenceNumber)",
+      "error ManualExecutionGasLimitMismatch()",
+      "error ManualExecutionNotYetEnabled(uint64 sourceChainSelector)",
+      "error MessageValidationError(bytes errorReason)",
+      "error MustBeProposedOwner()",
+      "error NonUniqueSignatures()",
+      "error NotACompatiblePool(address notPool)",
+      "error OnlyCallableByOwner()",
+      "error OracleCannotBeZeroAddress()",
+      "error OwnerCannotBeZero()",
+      "error ReceiverError(bytes err)",
+      "error ReleaseOrMintBalanceMismatch(uint256 amountReleased, uint256 balancePre, uint256 balancePost)",
+      "error RootAlreadyCommitted(uint64 sourceChainSelector, bytes32 merkleRoot)",
+      "error RootBlessingMismatch(uint64 sourceChainSelector, bytes32 merkleRoot, bool isBlessed)",
+      "error RootNotCommitted(uint64 sourceChainSelector)",
+      "error SignatureVerificationNotAllowedInExecutionPlugin()",
+      "error SignatureVerificationRequiredInCommitPlugin()",
+      "error SignaturesOutOfRegistration()",
+      "error SourceChainNotEnabled(uint64 sourceChainSelector)",
+      "error SourceChainSelectorMismatch(uint64 reportSourceChainSelector, uint64 messageSourceChainSelector)",
+      "error StaleCommitReport()",
+      "error StaticConfigCannotBeChanged(uint8 ocrPluginType)",
+      "error TokenDataMismatch(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "error TokenHandlingError(address target, bytes err)",
+      "error UnauthorizedSigner()",
+      "error UnauthorizedTransmitter()",
+      "error UnexpectedTokenData()",
+      "error WrongMessageLength(uint256 expected, uint256 actual)",
+      "error WrongNumberOfSignatures()",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroChainSelectorNotAllowed()",
+      "event AlreadyAttempted(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "event CommitReportAccepted(tuple(uint64 sourceChainSelector, bytes onRampAddress, uint64 minSeqNr, uint64 maxSeqNr, bytes32 merkleRoot)[] blessedMerkleRoots, tuple(uint64 sourceChainSelector, bytes onRampAddress, uint64 minSeqNr, uint64 maxSeqNr, bytes32 merkleRoot)[] unblessedMerkleRoots, tuple(tuple(address sourceToken, uint224 usdPerToken)[] tokenPriceUpdates, tuple(uint64 destChainSelector, uint224 usdPerUnitGas)[] gasPriceUpdates) priceUpdates)",
+      "event ConfigSet(uint8 ocrPluginType, bytes32 configDigest, address[] signers, address[] transmitters, uint8 F)",
+      "event DynamicConfigSet(tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig)",
+      "event ExecutionStateChanged(uint64 indexed sourceChainSelector, uint64 indexed sequenceNumber, bytes32 indexed messageId, bytes32 messageHash, uint8 state, bytes returnData, uint256 gasUsed)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event RootRemoved(bytes32 root)",
+      "event SkippedAlreadyExecutedMessage(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "event SkippedReportExecution(uint64 sourceChainSelector)",
+      "event SourceChainConfigSet(uint64 indexed sourceChainSelector, tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp) sourceConfig)",
+      "event SourceChainSelectorAdded(uint64 sourceChainSelector)",
+      "event StaticConfigSet(tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager) staticConfig)",
+      "event Transmitted(uint8 indexed ocrPluginType, bytes32 configDigest, uint64 sequenceNumber)",
+      "function acceptOwnership()",
+      "function applySourceChainConfigUpdates(tuple(address router, uint64 sourceChainSelector, bool isEnabled, bool isRMNVerificationDisabled, bytes onRamp)[] sourceChainConfigUpdates)",
+      "function ccipReceive(tuple(bytes32 messageId, uint64 sourceChainSelector, bytes sender, bytes data, tuple(address token, uint256 amount)[] destTokenAmounts)) pure",
+      "function commit(bytes32[2] reportContext, bytes report, bytes32[] rs, bytes32[] ss, bytes32 rawVs)",
+      "function execute(bytes32[2] reportContext, bytes report)",
+      "function executeSingleMessage(tuple(tuple(bytes32 messageId, uint64 sourceChainSelector, uint64 destChainSelector, uint64 sequenceNumber, uint64 nonce) header, bytes sender, bytes data, address receiver, uint256 gasLimit, tuple(bytes sourcePoolAddress, address destTokenAddress, uint32 destGasAmount, bytes extraData, uint256 amount)[] tokenAmounts) message, bytes[] offchainTokenData, uint32[] tokenGasOverrides)",
+      "function getAllSourceChainConfigs() view returns (uint64[], tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp)[])",
+      "function getDynamicConfig() view returns (tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor))",
+      "function getExecutionState(uint64 sourceChainSelector, uint64 sequenceNumber) view returns (uint8)",
+      "function getLatestPriceSequenceNumber() view returns (uint64)",
+      "function getMerkleRoot(uint64 sourceChainSelector, bytes32 root) view returns (uint256)",
+      "function getSourceChainConfig(uint64 sourceChainSelector) view returns (tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp))",
+      "function getStaticConfig() view returns (tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager))",
+      "function latestConfigDetails(uint8 ocrPluginType) view returns (tuple(tuple(bytes32 configDigest, uint8 F, uint8 n, bool isSignatureVerificationEnabled) configInfo, address[] signers, address[] transmitters) ocrConfig)",
+      "function manuallyExecute(tuple(uint64 sourceChainSelector, tuple(tuple(bytes32 messageId, uint64 sourceChainSelector, uint64 destChainSelector, uint64 sequenceNumber, uint64 nonce) header, bytes sender, bytes data, address receiver, uint256 gasLimit, tuple(bytes sourcePoolAddress, address destTokenAddress, uint32 destGasAmount, bytes extraData, uint256 amount)[] tokenAmounts)[] messages, bytes[][] offchainTokenData, bytes32[] proofs, uint256 proofFlagBits)[] reports, tuple(uint256 receiverExecutionGasLimit, uint32[] tokenGasOverrides)[][] gasLimitOverrides)",
+      "function owner() view returns (address)",
+      "function setDynamicConfig(tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig)",
+      "function setOCR3Configs(tuple(bytes32 configDigest, uint8 ocrPluginType, uint8 F, bool isSignatureVerificationEnabled, address[] signers, address[] transmitters)[] ocrConfigArgs)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)"
+    ],
+    "bnb:0xA27056438FfA1f286AB197488808692F0db93F8B": [
+      "constructor(tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager) staticConfig, tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig, tuple(address router, uint64 sourceChainSelector, bool isEnabled, bool isRMNVerificationDisabled, bytes onRamp)[] sourceChainConfigs)",
+      "error CanOnlySelfCall()",
+      "error CannotTransferToSelf()",
+      "error CommitOnRampMismatch(bytes reportOnRamp, bytes configOnRamp)",
+      "error ConfigDigestMismatch(bytes32 expected, bytes32 actual)",
+      "error CursedByRMN(uint64 sourceChainSelector)",
+      "error EmptyBatch()",
+      "error EmptyReport(uint64 sourceChainSelector)",
+      "error ExecutionError(bytes32 messageId, bytes err)",
+      "error ForkedChain(uint256 expected, uint256 actual)",
+      "error InsufficientGasToCompleteTx(bytes4 err)",
+      "error InvalidConfig(uint8 errorType)",
+      "error InvalidDataLength(uint256 expected, uint256 got)",
+      "error InvalidInterval(uint64 sourceChainSelector, uint64 min, uint64 max)",
+      "error InvalidManualExecutionGasLimit(uint64 sourceChainSelector, bytes32 messageId, uint256 newLimit)",
+      "error InvalidManualExecutionTokenGasOverride(bytes32 messageId, uint256 tokenIndex, uint256 oldLimit, uint256 tokenGasOverride)",
+      "error InvalidMessageDestChainSelector(uint64 messageDestChainSelector)",
+      "error InvalidNewState(uint64 sourceChainSelector, uint64 sequenceNumber, uint8 newState)",
+      "error InvalidOnRampUpdate(uint64 sourceChainSelector)",
+      "error InvalidProof()",
+      "error InvalidRoot()",
+      "error LeavesCannotBeEmpty()",
+      "error ManualExecutionGasAmountCountMismatch(bytes32 messageId, uint64 sequenceNumber)",
+      "error ManualExecutionGasLimitMismatch()",
+      "error ManualExecutionNotYetEnabled(uint64 sourceChainSelector)",
+      "error MessageValidationError(bytes errorReason)",
+      "error MustBeProposedOwner()",
+      "error NonUniqueSignatures()",
+      "error NotACompatiblePool(address notPool)",
+      "error OnlyCallableByOwner()",
+      "error OracleCannotBeZeroAddress()",
+      "error OwnerCannotBeZero()",
+      "error ReceiverError(bytes err)",
+      "error ReleaseOrMintBalanceMismatch(uint256 amountReleased, uint256 balancePre, uint256 balancePost)",
+      "error RootAlreadyCommitted(uint64 sourceChainSelector, bytes32 merkleRoot)",
+      "error RootBlessingMismatch(uint64 sourceChainSelector, bytes32 merkleRoot, bool isBlessed)",
+      "error RootNotCommitted(uint64 sourceChainSelector)",
+      "error SignatureVerificationNotAllowedInExecutionPlugin()",
+      "error SignatureVerificationRequiredInCommitPlugin()",
+      "error SignaturesOutOfRegistration()",
+      "error SourceChainNotEnabled(uint64 sourceChainSelector)",
+      "error SourceChainSelectorMismatch(uint64 reportSourceChainSelector, uint64 messageSourceChainSelector)",
+      "error StaleCommitReport()",
+      "error StaticConfigCannotBeChanged(uint8 ocrPluginType)",
+      "error TokenDataMismatch(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "error TokenHandlingError(address target, bytes err)",
+      "error UnauthorizedSigner()",
+      "error UnauthorizedTransmitter()",
+      "error UnexpectedTokenData()",
+      "error WrongMessageLength(uint256 expected, uint256 actual)",
+      "error WrongNumberOfSignatures()",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroChainSelectorNotAllowed()",
+      "event AlreadyAttempted(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "event CommitReportAccepted(tuple(uint64 sourceChainSelector, bytes onRampAddress, uint64 minSeqNr, uint64 maxSeqNr, bytes32 merkleRoot)[] blessedMerkleRoots, tuple(uint64 sourceChainSelector, bytes onRampAddress, uint64 minSeqNr, uint64 maxSeqNr, bytes32 merkleRoot)[] unblessedMerkleRoots, tuple(tuple(address sourceToken, uint224 usdPerToken)[] tokenPriceUpdates, tuple(uint64 destChainSelector, uint224 usdPerUnitGas)[] gasPriceUpdates) priceUpdates)",
+      "event ConfigSet(uint8 ocrPluginType, bytes32 configDigest, address[] signers, address[] transmitters, uint8 F)",
+      "event DynamicConfigSet(tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig)",
+      "event ExecutionStateChanged(uint64 indexed sourceChainSelector, uint64 indexed sequenceNumber, bytes32 indexed messageId, bytes32 messageHash, uint8 state, bytes returnData, uint256 gasUsed)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event RootRemoved(bytes32 root)",
+      "event SkippedAlreadyExecutedMessage(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "event SkippedReportExecution(uint64 sourceChainSelector)",
+      "event SourceChainConfigSet(uint64 indexed sourceChainSelector, tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp) sourceConfig)",
+      "event SourceChainSelectorAdded(uint64 sourceChainSelector)",
+      "event StaticConfigSet(tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager) staticConfig)",
+      "event Transmitted(uint8 indexed ocrPluginType, bytes32 configDigest, uint64 sequenceNumber)",
+      "function acceptOwnership()",
+      "function applySourceChainConfigUpdates(tuple(address router, uint64 sourceChainSelector, bool isEnabled, bool isRMNVerificationDisabled, bytes onRamp)[] sourceChainConfigUpdates)",
+      "function ccipReceive(tuple(bytes32 messageId, uint64 sourceChainSelector, bytes sender, bytes data, tuple(address token, uint256 amount)[] destTokenAmounts)) pure",
+      "function commit(bytes32[2] reportContext, bytes report, bytes32[] rs, bytes32[] ss, bytes32 rawVs)",
+      "function execute(bytes32[2] reportContext, bytes report)",
+      "function executeSingleMessage(tuple(tuple(bytes32 messageId, uint64 sourceChainSelector, uint64 destChainSelector, uint64 sequenceNumber, uint64 nonce) header, bytes sender, bytes data, address receiver, uint256 gasLimit, tuple(bytes sourcePoolAddress, address destTokenAddress, uint32 destGasAmount, bytes extraData, uint256 amount)[] tokenAmounts) message, bytes[] offchainTokenData, uint32[] tokenGasOverrides)",
+      "function getAllSourceChainConfigs() view returns (uint64[], tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp)[])",
+      "function getDynamicConfig() view returns (tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor))",
+      "function getExecutionState(uint64 sourceChainSelector, uint64 sequenceNumber) view returns (uint8)",
+      "function getLatestPriceSequenceNumber() view returns (uint64)",
+      "function getMerkleRoot(uint64 sourceChainSelector, bytes32 root) view returns (uint256)",
+      "function getSourceChainConfig(uint64 sourceChainSelector) view returns (tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp))",
+      "function getStaticConfig() view returns (tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager))",
+      "function latestConfigDetails(uint8 ocrPluginType) view returns (tuple(tuple(bytes32 configDigest, uint8 F, uint8 n, bool isSignatureVerificationEnabled) configInfo, address[] signers, address[] transmitters) ocrConfig)",
+      "function manuallyExecute(tuple(uint64 sourceChainSelector, tuple(tuple(bytes32 messageId, uint64 sourceChainSelector, uint64 destChainSelector, uint64 sequenceNumber, uint64 nonce) header, bytes sender, bytes data, address receiver, uint256 gasLimit, tuple(bytes sourcePoolAddress, address destTokenAddress, uint32 destGasAmount, bytes extraData, uint256 amount)[] tokenAmounts)[] messages, bytes[][] offchainTokenData, bytes32[] proofs, uint256 proofFlagBits)[] reports, tuple(uint256 receiverExecutionGasLimit, uint32[] tokenGasOverrides)[][] gasLimitOverrides)",
+      "function owner() view returns (address)",
+      "function setDynamicConfig(tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig)",
+      "function setOCR3Configs(tuple(bytes32 configDigest, uint8 ocrPluginType, uint8 F, bool isSignatureVerificationEnabled, address[] signers, address[] transmitters)[] ocrConfigArgs)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)"
+    ],
     "eth:0x06179f7C1be40863405f374E7f5F8806c728660A": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -12485,6 +14636,184 @@
       "function uncurse(bytes16 subject)",
       "function uncurse(bytes16[] subjects)",
       "function verify(address offRampAddress, tuple(uint64 sourceChainSelector, bytes onRampAddress, uint64 minSeqNr, uint64 maxSeqNr, bytes32 merkleRoot)[] merkleRoots, tuple(bytes32 r, bytes32 s)[] signatures) view"
+    ],
+    "matic:0x77FDbd20ED582794b1d9F1a8a94e4a60494D677e": [
+      "constructor(tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager) staticConfig, tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig, tuple(address router, uint64 sourceChainSelector, bool isEnabled, bool isRMNVerificationDisabled, bytes onRamp)[] sourceChainConfigs)",
+      "error CanOnlySelfCall()",
+      "error CannotTransferToSelf()",
+      "error CommitOnRampMismatch(bytes reportOnRamp, bytes configOnRamp)",
+      "error ConfigDigestMismatch(bytes32 expected, bytes32 actual)",
+      "error CursedByRMN(uint64 sourceChainSelector)",
+      "error EmptyBatch()",
+      "error EmptyReport(uint64 sourceChainSelector)",
+      "error ExecutionError(bytes32 messageId, bytes err)",
+      "error ForkedChain(uint256 expected, uint256 actual)",
+      "error InsufficientGasToCompleteTx(bytes4 err)",
+      "error InvalidConfig(uint8 errorType)",
+      "error InvalidDataLength(uint256 expected, uint256 got)",
+      "error InvalidInterval(uint64 sourceChainSelector, uint64 min, uint64 max)",
+      "error InvalidManualExecutionGasLimit(uint64 sourceChainSelector, bytes32 messageId, uint256 newLimit)",
+      "error InvalidManualExecutionTokenGasOverride(bytes32 messageId, uint256 tokenIndex, uint256 oldLimit, uint256 tokenGasOverride)",
+      "error InvalidMessageDestChainSelector(uint64 messageDestChainSelector)",
+      "error InvalidNewState(uint64 sourceChainSelector, uint64 sequenceNumber, uint8 newState)",
+      "error InvalidOnRampUpdate(uint64 sourceChainSelector)",
+      "error InvalidProof()",
+      "error InvalidRoot()",
+      "error LeavesCannotBeEmpty()",
+      "error ManualExecutionGasAmountCountMismatch(bytes32 messageId, uint64 sequenceNumber)",
+      "error ManualExecutionGasLimitMismatch()",
+      "error ManualExecutionNotYetEnabled(uint64 sourceChainSelector)",
+      "error MessageValidationError(bytes errorReason)",
+      "error MustBeProposedOwner()",
+      "error NonUniqueSignatures()",
+      "error NotACompatiblePool(address notPool)",
+      "error OnlyCallableByOwner()",
+      "error OracleCannotBeZeroAddress()",
+      "error OwnerCannotBeZero()",
+      "error ReceiverError(bytes err)",
+      "error ReleaseOrMintBalanceMismatch(uint256 amountReleased, uint256 balancePre, uint256 balancePost)",
+      "error RootAlreadyCommitted(uint64 sourceChainSelector, bytes32 merkleRoot)",
+      "error RootBlessingMismatch(uint64 sourceChainSelector, bytes32 merkleRoot, bool isBlessed)",
+      "error RootNotCommitted(uint64 sourceChainSelector)",
+      "error SignatureVerificationNotAllowedInExecutionPlugin()",
+      "error SignatureVerificationRequiredInCommitPlugin()",
+      "error SignaturesOutOfRegistration()",
+      "error SourceChainNotEnabled(uint64 sourceChainSelector)",
+      "error SourceChainSelectorMismatch(uint64 reportSourceChainSelector, uint64 messageSourceChainSelector)",
+      "error StaleCommitReport()",
+      "error StaticConfigCannotBeChanged(uint8 ocrPluginType)",
+      "error TokenDataMismatch(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "error TokenHandlingError(address target, bytes err)",
+      "error UnauthorizedSigner()",
+      "error UnauthorizedTransmitter()",
+      "error UnexpectedTokenData()",
+      "error WrongMessageLength(uint256 expected, uint256 actual)",
+      "error WrongNumberOfSignatures()",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroChainSelectorNotAllowed()",
+      "event AlreadyAttempted(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "event CommitReportAccepted(tuple(uint64 sourceChainSelector, bytes onRampAddress, uint64 minSeqNr, uint64 maxSeqNr, bytes32 merkleRoot)[] blessedMerkleRoots, tuple(uint64 sourceChainSelector, bytes onRampAddress, uint64 minSeqNr, uint64 maxSeqNr, bytes32 merkleRoot)[] unblessedMerkleRoots, tuple(tuple(address sourceToken, uint224 usdPerToken)[] tokenPriceUpdates, tuple(uint64 destChainSelector, uint224 usdPerUnitGas)[] gasPriceUpdates) priceUpdates)",
+      "event ConfigSet(uint8 ocrPluginType, bytes32 configDigest, address[] signers, address[] transmitters, uint8 F)",
+      "event DynamicConfigSet(tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig)",
+      "event ExecutionStateChanged(uint64 indexed sourceChainSelector, uint64 indexed sequenceNumber, bytes32 indexed messageId, bytes32 messageHash, uint8 state, bytes returnData, uint256 gasUsed)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event RootRemoved(bytes32 root)",
+      "event SkippedAlreadyExecutedMessage(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "event SkippedReportExecution(uint64 sourceChainSelector)",
+      "event SourceChainConfigSet(uint64 indexed sourceChainSelector, tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp) sourceConfig)",
+      "event SourceChainSelectorAdded(uint64 sourceChainSelector)",
+      "event StaticConfigSet(tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager) staticConfig)",
+      "event Transmitted(uint8 indexed ocrPluginType, bytes32 configDigest, uint64 sequenceNumber)",
+      "function acceptOwnership()",
+      "function applySourceChainConfigUpdates(tuple(address router, uint64 sourceChainSelector, bool isEnabled, bool isRMNVerificationDisabled, bytes onRamp)[] sourceChainConfigUpdates)",
+      "function ccipReceive(tuple(bytes32 messageId, uint64 sourceChainSelector, bytes sender, bytes data, tuple(address token, uint256 amount)[] destTokenAmounts)) pure",
+      "function commit(bytes32[2] reportContext, bytes report, bytes32[] rs, bytes32[] ss, bytes32 rawVs)",
+      "function execute(bytes32[2] reportContext, bytes report)",
+      "function executeSingleMessage(tuple(tuple(bytes32 messageId, uint64 sourceChainSelector, uint64 destChainSelector, uint64 sequenceNumber, uint64 nonce) header, bytes sender, bytes data, address receiver, uint256 gasLimit, tuple(bytes sourcePoolAddress, address destTokenAddress, uint32 destGasAmount, bytes extraData, uint256 amount)[] tokenAmounts) message, bytes[] offchainTokenData, uint32[] tokenGasOverrides)",
+      "function getAllSourceChainConfigs() view returns (uint64[], tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp)[])",
+      "function getDynamicConfig() view returns (tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor))",
+      "function getExecutionState(uint64 sourceChainSelector, uint64 sequenceNumber) view returns (uint8)",
+      "function getLatestPriceSequenceNumber() view returns (uint64)",
+      "function getMerkleRoot(uint64 sourceChainSelector, bytes32 root) view returns (uint256)",
+      "function getSourceChainConfig(uint64 sourceChainSelector) view returns (tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp))",
+      "function getStaticConfig() view returns (tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager))",
+      "function latestConfigDetails(uint8 ocrPluginType) view returns (tuple(tuple(bytes32 configDigest, uint8 F, uint8 n, bool isSignatureVerificationEnabled) configInfo, address[] signers, address[] transmitters) ocrConfig)",
+      "function manuallyExecute(tuple(uint64 sourceChainSelector, tuple(tuple(bytes32 messageId, uint64 sourceChainSelector, uint64 destChainSelector, uint64 sequenceNumber, uint64 nonce) header, bytes sender, bytes data, address receiver, uint256 gasLimit, tuple(bytes sourcePoolAddress, address destTokenAddress, uint32 destGasAmount, bytes extraData, uint256 amount)[] tokenAmounts)[] messages, bytes[][] offchainTokenData, bytes32[] proofs, uint256 proofFlagBits)[] reports, tuple(uint256 receiverExecutionGasLimit, uint32[] tokenGasOverrides)[][] gasLimitOverrides)",
+      "function owner() view returns (address)",
+      "function setDynamicConfig(tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig)",
+      "function setOCR3Configs(tuple(bytes32 configDigest, uint8 ocrPluginType, uint8 F, bool isSignatureVerificationEnabled, address[] signers, address[] transmitters)[] ocrConfigArgs)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)"
+    ],
+    "oeth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae": [
+      "constructor(tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager) staticConfig, tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig, tuple(address router, uint64 sourceChainSelector, bool isEnabled, bool isRMNVerificationDisabled, bytes onRamp)[] sourceChainConfigs)",
+      "error CanOnlySelfCall()",
+      "error CannotTransferToSelf()",
+      "error CommitOnRampMismatch(bytes reportOnRamp, bytes configOnRamp)",
+      "error ConfigDigestMismatch(bytes32 expected, bytes32 actual)",
+      "error CursedByRMN(uint64 sourceChainSelector)",
+      "error EmptyBatch()",
+      "error EmptyReport(uint64 sourceChainSelector)",
+      "error ExecutionError(bytes32 messageId, bytes err)",
+      "error ForkedChain(uint256 expected, uint256 actual)",
+      "error InsufficientGasToCompleteTx(bytes4 err)",
+      "error InvalidConfig(uint8 errorType)",
+      "error InvalidDataLength(uint256 expected, uint256 got)",
+      "error InvalidInterval(uint64 sourceChainSelector, uint64 min, uint64 max)",
+      "error InvalidManualExecutionGasLimit(uint64 sourceChainSelector, bytes32 messageId, uint256 newLimit)",
+      "error InvalidManualExecutionTokenGasOverride(bytes32 messageId, uint256 tokenIndex, uint256 oldLimit, uint256 tokenGasOverride)",
+      "error InvalidMessageDestChainSelector(uint64 messageDestChainSelector)",
+      "error InvalidNewState(uint64 sourceChainSelector, uint64 sequenceNumber, uint8 newState)",
+      "error InvalidOnRampUpdate(uint64 sourceChainSelector)",
+      "error InvalidProof()",
+      "error InvalidRoot()",
+      "error LeavesCannotBeEmpty()",
+      "error ManualExecutionGasAmountCountMismatch(bytes32 messageId, uint64 sequenceNumber)",
+      "error ManualExecutionGasLimitMismatch()",
+      "error ManualExecutionNotYetEnabled(uint64 sourceChainSelector)",
+      "error MessageValidationError(bytes errorReason)",
+      "error MustBeProposedOwner()",
+      "error NonUniqueSignatures()",
+      "error NotACompatiblePool(address notPool)",
+      "error OnlyCallableByOwner()",
+      "error OracleCannotBeZeroAddress()",
+      "error OwnerCannotBeZero()",
+      "error ReceiverError(bytes err)",
+      "error ReleaseOrMintBalanceMismatch(uint256 amountReleased, uint256 balancePre, uint256 balancePost)",
+      "error RootAlreadyCommitted(uint64 sourceChainSelector, bytes32 merkleRoot)",
+      "error RootBlessingMismatch(uint64 sourceChainSelector, bytes32 merkleRoot, bool isBlessed)",
+      "error RootNotCommitted(uint64 sourceChainSelector)",
+      "error SignatureVerificationNotAllowedInExecutionPlugin()",
+      "error SignatureVerificationRequiredInCommitPlugin()",
+      "error SignaturesOutOfRegistration()",
+      "error SourceChainNotEnabled(uint64 sourceChainSelector)",
+      "error SourceChainSelectorMismatch(uint64 reportSourceChainSelector, uint64 messageSourceChainSelector)",
+      "error StaleCommitReport()",
+      "error StaticConfigCannotBeChanged(uint8 ocrPluginType)",
+      "error TokenDataMismatch(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "error TokenHandlingError(address target, bytes err)",
+      "error UnauthorizedSigner()",
+      "error UnauthorizedTransmitter()",
+      "error UnexpectedTokenData()",
+      "error WrongMessageLength(uint256 expected, uint256 actual)",
+      "error WrongNumberOfSignatures()",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroChainSelectorNotAllowed()",
+      "event AlreadyAttempted(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "event CommitReportAccepted(tuple(uint64 sourceChainSelector, bytes onRampAddress, uint64 minSeqNr, uint64 maxSeqNr, bytes32 merkleRoot)[] blessedMerkleRoots, tuple(uint64 sourceChainSelector, bytes onRampAddress, uint64 minSeqNr, uint64 maxSeqNr, bytes32 merkleRoot)[] unblessedMerkleRoots, tuple(tuple(address sourceToken, uint224 usdPerToken)[] tokenPriceUpdates, tuple(uint64 destChainSelector, uint224 usdPerUnitGas)[] gasPriceUpdates) priceUpdates)",
+      "event ConfigSet(uint8 ocrPluginType, bytes32 configDigest, address[] signers, address[] transmitters, uint8 F)",
+      "event DynamicConfigSet(tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig)",
+      "event ExecutionStateChanged(uint64 indexed sourceChainSelector, uint64 indexed sequenceNumber, bytes32 indexed messageId, bytes32 messageHash, uint8 state, bytes returnData, uint256 gasUsed)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event RootRemoved(bytes32 root)",
+      "event SkippedAlreadyExecutedMessage(uint64 sourceChainSelector, uint64 sequenceNumber)",
+      "event SkippedReportExecution(uint64 sourceChainSelector)",
+      "event SourceChainConfigSet(uint64 indexed sourceChainSelector, tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp) sourceConfig)",
+      "event SourceChainSelectorAdded(uint64 sourceChainSelector)",
+      "event StaticConfigSet(tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager) staticConfig)",
+      "event Transmitted(uint8 indexed ocrPluginType, bytes32 configDigest, uint64 sequenceNumber)",
+      "function acceptOwnership()",
+      "function applySourceChainConfigUpdates(tuple(address router, uint64 sourceChainSelector, bool isEnabled, bool isRMNVerificationDisabled, bytes onRamp)[] sourceChainConfigUpdates)",
+      "function ccipReceive(tuple(bytes32 messageId, uint64 sourceChainSelector, bytes sender, bytes data, tuple(address token, uint256 amount)[] destTokenAmounts)) pure",
+      "function commit(bytes32[2] reportContext, bytes report, bytes32[] rs, bytes32[] ss, bytes32 rawVs)",
+      "function execute(bytes32[2] reportContext, bytes report)",
+      "function executeSingleMessage(tuple(tuple(bytes32 messageId, uint64 sourceChainSelector, uint64 destChainSelector, uint64 sequenceNumber, uint64 nonce) header, bytes sender, bytes data, address receiver, uint256 gasLimit, tuple(bytes sourcePoolAddress, address destTokenAddress, uint32 destGasAmount, bytes extraData, uint256 amount)[] tokenAmounts) message, bytes[] offchainTokenData, uint32[] tokenGasOverrides)",
+      "function getAllSourceChainConfigs() view returns (uint64[], tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp)[])",
+      "function getDynamicConfig() view returns (tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor))",
+      "function getExecutionState(uint64 sourceChainSelector, uint64 sequenceNumber) view returns (uint8)",
+      "function getLatestPriceSequenceNumber() view returns (uint64)",
+      "function getMerkleRoot(uint64 sourceChainSelector, bytes32 root) view returns (uint256)",
+      "function getSourceChainConfig(uint64 sourceChainSelector) view returns (tuple(address router, bool isEnabled, uint64 minSeqNr, bool isRMNVerificationDisabled, bytes onRamp))",
+      "function getStaticConfig() view returns (tuple(uint64 chainSelector, uint16 gasForCallExactCheck, address rmnRemote, address tokenAdminRegistry, address nonceManager))",
+      "function latestConfigDetails(uint8 ocrPluginType) view returns (tuple(tuple(bytes32 configDigest, uint8 F, uint8 n, bool isSignatureVerificationEnabled) configInfo, address[] signers, address[] transmitters) ocrConfig)",
+      "function manuallyExecute(tuple(uint64 sourceChainSelector, tuple(tuple(bytes32 messageId, uint64 sourceChainSelector, uint64 destChainSelector, uint64 sequenceNumber, uint64 nonce) header, bytes sender, bytes data, address receiver, uint256 gasLimit, tuple(bytes sourcePoolAddress, address destTokenAddress, uint32 destGasAmount, bytes extraData, uint256 amount)[] tokenAmounts)[] messages, bytes[][] offchainTokenData, bytes32[] proofs, uint256 proofFlagBits)[] reports, tuple(uint256 receiverExecutionGasLimit, uint32[] tokenGasOverrides)[][] gasLimitOverrides)",
+      "function owner() view returns (address)",
+      "function setDynamicConfig(tuple(address feeQuoter, uint32 permissionLessExecutionThresholdSeconds, address messageInterceptor) dynamicConfig)",
+      "function setOCR3Configs(tuple(bytes32 configDigest, uint8 ocrPluginType, uint8 F, bool isSignatureVerificationEnabled, address[] signers, address[] transmitters)[] ocrConfigArgs)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)"
     ]
   },
   "usedTemplates": {
@@ -12504,6 +14833,13 @@
     "transporter/TokenAdminRegistry": "0x30a93231c3c7ddad9e5b1e6cae1a24dc4868b220564302bf4022c349b3990e0d",
     "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d"
   },
-  "usedBlockNumbers": { "ethereum": 25077639 },
-  "permissionsConfigHash": "0x96bee4156df6d89ea021788d6c40248c0846a985229fc09afc8186d662541643"
+  "usedBlockNumbers": {
+    "arbitrum": 461981970,
+    "base": 45891367,
+    "bsc": 97817882,
+    "ethereum": 25077639,
+    "optimism": 151486652,
+    "polygonpos": 86761356
+  },
+  "permissionsConfigHash": "0x9fa35e662481135c6fdd747792ef18ee482d2a376825a8ddea8e881f1c1626b8"
 }
