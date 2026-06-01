@@ -14,7 +14,7 @@ import { useBackendApi } from '~/react-query/trpc'
 import { dateInputToTimestamp } from '~/utils/dateInputToTimestamp'
 import { timestampToDateInput } from '~/utils/timestampToDateInput'
 
-const INTEROP_PINNING_KEY = 'interop-aggregate-timestamp-override' as const
+const INTEROP_PINNING_KEY = 'interopAggregatesTimestampOverride' as const
 
 export function InteropAggregatesTimestampOverrideCard() {
   const api = useBackendApi()
