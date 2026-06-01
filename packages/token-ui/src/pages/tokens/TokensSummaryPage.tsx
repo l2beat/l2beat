@@ -21,7 +21,7 @@ import { useTRPC } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 
 export function TokensSummaryPage() {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const [selectedAbstractToken, setSelectedAbstractToken] = useState<
     AbstractToken | undefined
   >(undefined)
@@ -30,9 +30,9 @@ export function TokensSummaryPage() {
   >(undefined)
 
   const { data, isLoading: isAbstractTokensLoading } = useQuery(
-    api.abstractTokens.getAllWithDeployedTokens.queryOptions(),
+    trpc.abstractTokens.getAllWithDeployedTokens.queryOptions(),
   )
-  const { data: chains } = useQuery(api.chains.getAll.queryOptions())
+  const { data: chains } = useQuery(trpc.chains.getAll.queryOptions())
 
   const chainRecord = chains?.find(
     (chain) => chain.name === selectedDeployedToken?.chain,

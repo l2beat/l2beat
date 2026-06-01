@@ -30,9 +30,9 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { useTRPC } from '~/react-query/trpc'
 
 export function ChainsSummaryPage() {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const { data, isLoading: isChainsLoading } = useQuery(
-    api.chains.getAll.queryOptions(),
+    trpc.chains.getAll.queryOptions(),
   )
   return (
     <AppLayout>

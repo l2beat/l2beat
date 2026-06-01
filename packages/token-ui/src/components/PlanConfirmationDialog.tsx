@@ -27,49 +27,49 @@ export function PlanConfirmationDialog({
   setPlan: (plan: Plan | undefined) => void
   onSuccess?: () => void
 }) {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
 
   function invalidateAbstractTokenQueries() {
-    queryClient.invalidateQueries(api.abstractTokens.getAll.queryFilter())
+    queryClient.invalidateQueries(trpc.abstractTokens.getAll.queryFilter())
     queryClient.invalidateQueries(
-      api.abstractTokens.getAllWithDeployedTokens.queryFilter(),
+      trpc.abstractTokens.getAllWithDeployedTokens.queryFilter(),
     )
-    queryClient.invalidateQueries(api.abstractTokens.getById.queryFilter())
-    queryClient.invalidateQueries(api.abstractTokens.checks.queryFilter())
-    queryClient.invalidateQueries(api.search.all.queryFilter())
+    queryClient.invalidateQueries(trpc.abstractTokens.getById.queryFilter())
+    queryClient.invalidateQueries(trpc.abstractTokens.checks.queryFilter())
+    queryClient.invalidateQueries(trpc.search.all.queryFilter())
   }
 
   function invalidateDeployedTokenQueries() {
     invalidateAbstractTokenQueries()
     queryClient.invalidateQueries(
-      api.deployedTokens.findByChainAndAddress.queryFilter(),
+      trpc.deployedTokens.findByChainAndAddress.queryFilter(),
     )
     queryClient.invalidateQueries(
-      api.deployedTokens.checkIfExists.queryFilter(),
+      trpc.deployedTokens.checkIfExists.queryFilter(),
     )
     queryClient.invalidateQueries(
-      api.deployedTokens.getByChainAndAddress.queryFilter(),
+      trpc.deployedTokens.getByChainAndAddress.queryFilter(),
     )
-    queryClient.invalidateQueries(api.deployedTokens.checks.queryFilter())
+    queryClient.invalidateQueries(trpc.deployedTokens.checks.queryFilter())
     queryClient.invalidateQueries(
-      api.deployedTokens.getSuggestionsByCoingeckoId.queryFilter(),
-    )
-    queryClient.invalidateQueries(
-      api.deployedTokens.getCoingeckoSuggestions.queryFilter(),
+      trpc.deployedTokens.getSuggestionsByCoingeckoId.queryFilter(),
     )
     queryClient.invalidateQueries(
-      api.deployedTokens.getSuggestionsByPartialTransfers.queryFilter(),
+      trpc.deployedTokens.getCoingeckoSuggestions.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getSuggestionsByPartialTransfers.queryFilter(),
     )
   }
 
   const { mutate: executePlan, isPending } = useMutation(
-    api.plan.execute.mutationOptions({
+    trpc.plan.execute.mutationOptions({
       onSuccess: () => {
         if (!plan) return
         onSuccess?.()
-        queryClient.invalidateQueries(api.tokenDbHistory.getPage.queryFilter())
+        queryClient.invalidateQueries(trpc.tokenDbHistory.getPage.queryFilter())
         switch (plan.intent.type) {
           case 'AddAbstractTokenIntent':
             toast.success(

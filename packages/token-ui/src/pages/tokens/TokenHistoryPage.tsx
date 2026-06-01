@@ -66,11 +66,11 @@ interface AbstractTokenInfo {
 }
 
 export function TokenHistoryPage() {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const [page, setPage] = useState(1)
   const [selectedEntry, setSelectedEntry] = useState<HistoryEntry>()
   const { data: historyPage, isLoading } = useQuery(
-    api.tokenDbHistory.getPage.queryOptions(
+    trpc.tokenDbHistory.getPage.queryOptions(
       { page, pageSize: PAGE_SIZE },
       {
         refetchInterval: 10_000,
@@ -80,7 +80,7 @@ export function TokenHistoryPage() {
     ),
   )
   const { data: abstractTokens } = useQuery(
-    api.abstractTokens.getAll.queryOptions(undefined, {
+    trpc.abstractTokens.getAll.queryOptions(undefined, {
       refetchInterval: 10_000,
       refetchOnMount: 'always',
       staleTime: 0,

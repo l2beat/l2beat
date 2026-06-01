@@ -28,7 +28,7 @@ export function AddAbstractToken({
 }: {
   defaultValues?: AbstractTokenSchema
 }) {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const [coingeckoIdQueryState] = useQueryState('coingeckoId', '')
   const [redirectTo] = useQueryState('redirectTo', '')
   const navigate = useNavigate()
@@ -46,14 +46,14 @@ export function AddAbstractToken({
   const coingeckoId = form.watch('coingeckoId')
   const debouncedCoingeckoId = useDebouncedValue(form.watch('coingeckoId'), 500)
   const { data: checks, isLoading: areChecksLoading } = useQuery(
-    api.abstractTokens.checks.queryOptions(debouncedCoingeckoId ?? '', {
+    trpc.abstractTokens.checks.queryOptions(debouncedCoingeckoId ?? '', {
       enabled: !!debouncedCoingeckoId,
       retry: false,
     }),
   )
 
   const { mutate: planMutate, isPending } = useMutation(
-    api.plan.generate.mutationOptions({
+    trpc.plan.generate.mutationOptions({
       onSuccess: (data) => {
         if (data.outcome === 'success') {
           setPlan(data.plan)

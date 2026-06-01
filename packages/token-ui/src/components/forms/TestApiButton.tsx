@@ -19,10 +19,10 @@ export function TestApiButton({
   chainId: number | undefined
   className?: string
 }) {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const [result, setResult] = useState<boolean | undefined>()
   const { mutate: testApi, isPending: isTesting } = useMutation(
-    api.chains.testApi.mutationOptions({
+    trpc.chains.testApi.mutationOptions({
       onSuccess: (response) => {
         setResult(response.success)
         if (response.error) {

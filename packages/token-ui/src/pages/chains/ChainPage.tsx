@@ -18,10 +18,10 @@ import { useTRPC } from '~/react-query/trpc'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function ChainPage() {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const { name } = useParams()
   const { data } = useQuery(
-    api.chains.getByName.queryOptions(name ?? '', {
+    trpc.chains.getByName.queryOptions(name ?? '', {
       enabled: name !== '',
     }),
   )
@@ -38,7 +38,7 @@ export function ChainPage() {
 }
 
 function ChainView({ chain }: { chain: ChainRecord }) {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const form = useForm<ChainSchema>({
@@ -53,16 +53,16 @@ function ChainView({ chain }: { chain: ChainRecord }) {
   })
 
   const { mutate: updateChain, isPending: isUpdating } = useMutation(
-    api.chains.update.mutationOptions({
+    trpc.chains.update.mutationOptions({
       onSuccess: (_, vars) => {
         toast.success('Chain updated successfully')
-        queryClient.invalidateQueries(api.chains.getAll.queryFilter())
+        queryClient.invalidateQueries(trpc.chains.getAll.queryFilter())
         // If name changed, navigate to new URL
         if (vars.update.name && vars.update.name !== chain.name) {
           navigate(`/chains/${vars.update.name}`)
         } else {
           queryClient.invalidateQueries(
-            api.chains.getByName.queryFilter(chain.name),
+            trpc.chains.getByName.queryFilter(chain.name),
           )
         }
         const values = form.getValues()
@@ -75,10 +75,10 @@ function ChainView({ chain }: { chain: ChainRecord }) {
   )
 
   const { mutate: deleteChain, isPending: isDeleting } = useMutation(
-    api.chains.delete.mutationOptions({
+    trpc.chains.delete.mutationOptions({
       onSuccess: () => {
         toast.success('Chain deleted successfully')
-        queryClient.invalidateQueries(api.chains.getAll.queryFilter())
+        queryClient.invalidateQueries(trpc.chains.getAll.queryFilter())
         navigate('/chains')
       },
       onError: (error: { message?: string }) => {

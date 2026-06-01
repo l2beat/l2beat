@@ -49,19 +49,19 @@ import { useTRPC } from '~/react-query/trpc'
 const PAGE_SIZE = 100
 
 export function TokenIngestionQueuePage() {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const queryClient = useQueryClient()
   const [approvingKey, setApprovingKey] = useState<string | undefined>()
   const [retryingKey, setRetryingKey] = useState<string | undefined>()
   const [preview, setPreview] = useState<IngestionPreviewState | undefined>()
   const [page, setPage] = useState(1)
   const { data: queuePage, isLoading } = useQuery(
-    api.tokenIngestionQueue.getPage.queryOptions(
+    trpc.tokenIngestionQueue.getPage.queryOptions(
       { page, pageSize: PAGE_SIZE },
       { refetchInterval: 10_000 },
     ),
   )
-  const { data: chains } = useQuery(api.chains.getAll.queryOptions())
+  const { data: chains } = useQuery(trpc.chains.getAll.queryOptions())
   const queue = queuePage?.entries ?? []
   const predictedOutcomes = queuePage?.predictedOutcomes ?? []
   const totalCount = queuePage?.totalCount ?? 0
@@ -81,10 +81,10 @@ export function TokenIngestionQueuePage() {
   }, [page, pageCount])
 
   const approve = useMutation(
-    api.tokenIngestionQueue.approve.mutationOptions({
+    trpc.tokenIngestionQueue.approve.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
-          api.tokenIngestionQueue.getPage.queryFilter(),
+          trpc.tokenIngestionQueue.getPage.queryFilter(),
         )
         toast.success('Queue entry approved')
       },
@@ -93,10 +93,10 @@ export function TokenIngestionQueuePage() {
     }),
   )
   const approveMany = useMutation(
-    api.tokenIngestionQueue.approveMany.mutationOptions({
+    trpc.tokenIngestionQueue.approveMany.mutationOptions({
       onSuccess: async ({ approved }) => {
         await queryClient.invalidateQueries(
-          api.tokenIngestionQueue.getPage.queryFilter(),
+          trpc.tokenIngestionQueue.getPage.queryFilter(),
         )
         toast.success(`Approved ${approved} queue entries`)
       },
@@ -104,10 +104,10 @@ export function TokenIngestionQueuePage() {
     }),
   )
   const retry = useMutation(
-    api.tokenIngestionQueue.retry.mutationOptions({
+    trpc.tokenIngestionQueue.retry.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
-          api.tokenIngestionQueue.getPage.queryFilter(),
+          trpc.tokenIngestionQueue.getPage.queryFilter(),
         )
         toast.success('Queue entry queued for retry')
       },
@@ -116,7 +116,7 @@ export function TokenIngestionQueuePage() {
     }),
   )
   const previewMutation = useMutation(
-    api.tokenIngestionQueue.preview.mutationOptions({
+    trpc.tokenIngestionQueue.preview.mutationOptions({
       onSuccess: (trace) => {
         setPreview((prev) =>
           prev ? { ...prev, trace, isLoading: false } : prev,

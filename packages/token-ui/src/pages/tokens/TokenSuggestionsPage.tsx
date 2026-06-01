@@ -49,10 +49,10 @@ export function TokenSuggestionsPage() {
 }
 
 function ByMatchingAbstractTokensCard() {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const navigate = useNavigate()
   const { data: suggestions, isLoading } = useQuery(
-    api.deployedTokens.getSuggestionsByPartialTransfers.queryOptions(
+    trpc.deployedTokens.getSuggestionsByPartialTransfers.queryOptions(
       undefined,
       LIVE_SUGGESTIONS_QUERY_OPTIONS,
     ),
@@ -176,11 +176,11 @@ function ByMatchingAbstractTokensCard() {
 }
 
 function FromCoingeckoCard() {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const navigate = useNavigate()
   const [interopOnly, setInteropOnly] = useState(false)
   const { data: suggestions, isLoading } = useQuery(
-    api.deployedTokens.getCoingeckoSuggestions.queryOptions(
+    trpc.deployedTokens.getCoingeckoSuggestions.queryOptions(
       undefined,
       LIVE_SUGGESTIONS_QUERY_OPTIONS,
     ),

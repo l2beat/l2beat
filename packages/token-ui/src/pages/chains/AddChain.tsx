@@ -13,7 +13,7 @@ import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AddChain({ defaultValues }: { defaultValues?: ChainSchema }) {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const [queryName] = useQueryState('name', '')
@@ -28,7 +28,7 @@ export function AddChain({ defaultValues }: { defaultValues?: ChainSchema }) {
   })
 
   const { mutate: insertChain, isPending } = useMutation(
-    api.chains.insert.mutationOptions({
+    trpc.chains.insert.mutationOptions({
       onSuccess: (_, vars) => {
         toast.success(
           <span>
@@ -38,10 +38,12 @@ export function AddChain({ defaultValues }: { defaultValues?: ChainSchema }) {
             </Link>
           </span>,
         )
-        queryClient.invalidateQueries(api.chains.getAll.queryFilter())
-        queryClient.invalidateQueries(api.search.all.queryFilter())
+        queryClient.invalidateQueries(trpc.chains.getAll.queryFilter())
+        queryClient.invalidateQueries(trpc.search.all.queryFilter())
         if (redirectTo === 'deployed') {
-          queryClient.invalidateQueries(api.deployedTokens.checks.queryFilter())
+          queryClient.invalidateQueries(
+            trpc.deployedTokens.checks.queryFilter(),
+          )
           navigate(
             buildUrlWithParams('/tokens/new', {
               tab: redirectTo,

@@ -35,10 +35,10 @@ import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AbstractTokenPage() {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const { id } = useParams()
   const { data } = useQuery(
-    api.abstractTokens.getById.queryOptions(id ?? '', {
+    trpc.abstractTokens.getById.queryOptions(id ?? '', {
       enabled: id !== '',
     }),
   )
@@ -63,7 +63,7 @@ function AbstractTokenView({
 }: {
   token: AbstractTokenWithDeployedTokens
 }) {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
   const form = useForm<AbstractTokenSchema>({
@@ -82,7 +82,7 @@ function AbstractTokenView({
   })
 
   const { mutate: planMutate, isPending } = useMutation(
-    api.plan.generate.mutationOptions({
+    trpc.plan.generate.mutationOptions({
       onSuccess: (data) => {
         if (data.outcome === 'success') {
           setPlan(data.plan)
@@ -94,7 +94,7 @@ function AbstractTokenView({
   )
 
   const { data: suggestions, isLoading: isLoadingSuggestions } = useQuery(
-    api.deployedTokens.getSuggestionsByCoingeckoId.queryOptions(
+    trpc.deployedTokens.getSuggestionsByCoingeckoId.queryOptions(
       token.coingeckoId ?? '',
       {
         enabled: !!token.coingeckoId,

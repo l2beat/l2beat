@@ -33,10 +33,10 @@ import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { useTRPC } from '~/react-query/trpc'
 
 export function SearchPage() {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const { search } = useParams()
   const { data } = useQuery(
-    api.search.all.queryOptions(search ?? '', {
+    trpc.search.all.queryOptions(search ?? '', {
       enabled: search !== '',
     }),
   )

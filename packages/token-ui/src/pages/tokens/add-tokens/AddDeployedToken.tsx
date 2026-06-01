@@ -63,7 +63,7 @@ import { validateResolver } from '~/utils/validateResolver'
 type QueueItem = { chain: string; address: string; abstractTokenId?: string }
 
 export function AddDeployedToken() {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const location = useLocation()
   const navigateQueue = location.state?.queue as QueueItem[] | undefined
   const [, setSearchParams] = useSearchParams()
@@ -88,9 +88,9 @@ export function AddDeployedToken() {
   const [isQueueSheetOpen, setIsQueueSheetOpen] = useState(false)
 
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
-    useQuery(api.abstractTokens.getAll.queryOptions())
+    useQuery(trpc.abstractTokens.getAll.queryOptions())
   const { mutate: planMutate, isPending } = useMutation(
-    api.plan.generate.mutationOptions({
+    trpc.plan.generate.mutationOptions({
       onSuccess: (data) => {
         if (data.outcome === 'success') {
           setPlan(data.plan)
@@ -102,13 +102,13 @@ export function AddDeployedToken() {
   )
 
   const { data: chains, isLoading: isLoadingChains } = useQuery(
-    api.chains.getAll.queryOptions(),
+    trpc.chains.getAll.queryOptions(),
   )
 
   const chain = form.watch('chain')
   const address = form.watch('address')
   const { data: checks, isLoading: checksLoading } = useQuery(
-    api.deployedTokens.checks.queryOptions(
+    trpc.deployedTokens.checks.queryOptions(
       {
         chain,
         address,

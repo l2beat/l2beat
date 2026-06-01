@@ -28,10 +28,10 @@ import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimesta
 import { validateResolver } from '~/utils/validateResolver'
 
 export function DeployedTokenPage() {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const { chain, address } = useParams()
   const { data } = useQuery(
-    api.deployedTokens.findByChainAndAddress.queryOptions(
+    trpc.deployedTokens.findByChainAndAddress.queryOptions(
       {
         chain: chain ?? '',
         address: address ?? '',
@@ -58,7 +58,7 @@ export function DeployedTokenPage() {
 }
 
 function DeployedTokenView({ token }: { token: DeployedToken }) {
-  const api = useTRPC()
+  const trpc = useTRPC()
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
   const [abstractTokenId] = useQueryState('abstractTokenId', '')
@@ -76,7 +76,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
   })
 
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
-    useQuery(api.abstractTokens.getAll.queryOptions())
+    useQuery(trpc.abstractTokens.getAll.queryOptions())
 
   useEffect(() => {
     if (abstractTokenId) {
@@ -85,7 +85,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
   }, [abstractTokenId, form.setValue])
 
   const { mutate: planMutate, isPending: isPending } = useMutation(
-    api.plan.generate.mutationOptions({
+    trpc.plan.generate.mutationOptions({
       onSuccess: (data) => {
         if (data.outcome === 'success') {
           setPlan(data.plan)
@@ -97,7 +97,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
   )
 
   const { data: chains, isLoading: isLoadingChains } = useQuery(
-    api.chains.getAll.queryOptions(),
+    trpc.chains.getAll.queryOptions(),
   )
 
   function onSubmit(values: DeployedTokenSchema) {
@@ -129,7 +129,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
   const address = form.watch('address')
   const { data: deployedTokenExists, isLoading: deployedTokenExistsLoading } =
     useQuery(
-      api.deployedTokens.checkIfExists.queryOptions(
+      trpc.deployedTokens.checkIfExists.queryOptions(
         {
           chain,
           address,
