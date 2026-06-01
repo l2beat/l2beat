@@ -5,8 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@l2beat/frontend>@trpc/server': 11.0.0-rc.599
-  '@l2beat/token-backend>@trpc/server': 11.0.0-rc.599
   form-data@^2: 2.5.4
   form-data@^4: 4.0.4
 
@@ -595,13 +593,13 @@ importers:
         version: 8.20.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@trpc/client':
         specifier: ^11.0.0-rc.446
-        version: 11.0.0-rc.599(@trpc/server@11.0.0-rc.599)
+        version: 11.0.0-rc.599(@trpc/server@11.17.0(typescript@5.7.2))
       '@trpc/react-query':
         specifier: ^11.0.0-rc.446
-        version: 11.0.0-rc.599(@tanstack/react-query@5.59.16(react@19.0.0))(@trpc/client@11.0.0-rc.599(@trpc/server@11.0.0-rc.599))(@trpc/server@11.0.0-rc.599)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 11.0.0-rc.599(@tanstack/react-query@5.59.16(react@19.0.0))(@trpc/client@11.0.0-rc.599(@trpc/server@11.17.0(typescript@5.7.2)))(@trpc/server@11.17.0(typescript@5.7.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@trpc/server':
-        specifier: 11.0.0-rc.599
-        version: 11.0.0-rc.599
+        specifier: ^11.0.0-rc.446
+        version: 11.17.0(typescript@5.7.2)
       '@types/compression':
         specifier: ^1.7.5
         version: 1.7.5
@@ -1095,8 +1093,8 @@ importers:
         specifier: workspace:*
         version: link:../validate
       '@trpc/server':
-        specifier: 11.0.0-rc.599
-        version: 11.0.0-rc.599
+        specifier: ^11.0.0-rc.446
+        version: 11.17.0(typescript@5.7.2)
       fuzzysort:
         specifier: 3.1.0
         version: 3.1.0
@@ -1109,7 +1107,7 @@ importers:
     devDependencies:
       '@trpc/client':
         specifier: ^11.0.0-rc.446
-        version: 11.0.0-rc.599(@trpc/server@11.0.0-rc.599)
+        version: 11.0.0-rc.599(@trpc/server@11.17.0(typescript@5.7.2))
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
@@ -1178,10 +1176,13 @@ importers:
         version: 5.59.16(@tanstack/react-query@5.59.16(react@19.0.0))(react@19.0.0)
       '@trpc/client':
         specifier: 11.0.0-rc.599
-        version: 11.0.0-rc.599(@trpc/server@11.17.0(typescript@5.7.2))
+        version: 11.0.0-rc.599(@trpc/server@11.0.0-rc.599)
       '@trpc/react-query':
         specifier: 11.0.0-rc.599
-        version: 11.0.0-rc.599(@tanstack/react-query@5.59.16(react@19.0.0))(@trpc/client@11.0.0-rc.599(@trpc/server@11.17.0(typescript@5.7.2)))(@trpc/server@11.17.0(typescript@5.7.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 11.0.0-rc.599(@tanstack/react-query@5.59.16(react@19.0.0))(@trpc/client@11.0.0-rc.599(@trpc/server@11.0.0-rc.599))(@trpc/server@11.0.0-rc.599)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@trpc/server':
+        specifier: 11.0.0-rc.599
+        version: 11.0.0-rc.599
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
