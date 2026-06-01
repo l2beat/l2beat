@@ -30,7 +30,6 @@ import { hyperevm } from '../projects/hyperevm/hyperevm'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
 import { layerzero } from '../projects/layerzero/layerzero'
-import { lifiIntents } from '../projects/lifi-intents/lifi-intents'
 import { lighterprover } from '../projects/lighterprover/lighterprover'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
 import { loopringprover } from '../projects/loopringprover/loopringprover'
@@ -111,7 +110,6 @@ export const refactored: BaseProject[] = [
   axelarits,
   squid,
   fusionplus,
-  lifiIntents,
   circlegateway,
   wormholeWtt,
   wormholeNtt,
