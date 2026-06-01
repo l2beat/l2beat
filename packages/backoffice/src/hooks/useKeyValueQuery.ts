@@ -1,4 +1,4 @@
-import type { KeyValueRecord } from '@l2beat/backend/trpc'
+import type { KeyValueRecord } from '@l2beat/database'
 import { useBackendApi } from '~/react-query/trpc'
 
 export function useKeyValueQuery<K extends KeyValueRecord['key']>(key: K) {
@@ -6,7 +6,7 @@ export function useKeyValueQuery<K extends KeyValueRecord['key']>(key: K) {
   const { data, ...rest } = api.keyValue.get.useQuery(key)
 
   return {
-    data: data as unknown as KeyValueRecord<K>,
+    data: data as KeyValueRecord<K> | null | undefined,
     ...rest,
   }
 }
