@@ -11,6 +11,7 @@ import {
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { getActivityForProjectAndRange } from '../../scaling/activity/getActivityForProjectAndRange'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
@@ -53,9 +54,10 @@ export async function getScalingProjectDaThroughputChart({
   const db = getDb()
   const resolution = rangeToResolution(range)
 
-  const [throughput, activityRecords] = await Promise.all([
+  const [throughput, activityRecords, firstTimestamp] = await Promise.all([
     db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range),
     getActivityForProjectAndRange(projectId, range),
+    db.dataAvailability.getFirstTimestampByProjectIds([projectId]),
   ])
 
   if (throughput.length === 0) {
@@ -92,6 +94,13 @@ export async function getScalingProjectDaThroughputChart({
     }
   }
 
+  const resolutionPeriod =
+    resolution === 'daily'
+      ? 'day'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'hour'
+
   const expectedTo = getThroughputExpectedTimestamp({
     to: range[1],
     resolution,
@@ -104,7 +113,22 @@ export async function getScalingProjectDaThroughputChart({
     ? maxTimestamp
     : expectedTo
 
-  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
+  // Anchor the chart to the selected window start (clamped to the project's
+  // first ever record) so it spans the full range. Per-layer values outside
+  // each layer's data span stay null.
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp:
+      firstTimestamp !== undefined
+        ? UnixTime.toStartOf(firstTimestamp, resolutionPeriod)
+        : undefined,
+    dataStart: minTimestamp,
+  })
+
+  const timestamps = generateTimestamps(
+    [startTimestamp, adjustedTo],
+    resolution,
+  )
 
   let total = 0
   const chart: ScalingProjectDaThroughputChartPoint[] = timestamps.map(

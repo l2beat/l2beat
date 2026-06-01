@@ -4,6 +4,7 @@ import { v as z } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
+import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { isTvsSynced } from '../utils/isTvsSynced'
 
@@ -41,11 +42,10 @@ export async function getTokenTvsChart({
   const db = getDb()
   const resolution = rangeToResolution(range)
 
-  const tokenValues = await db.tvsTokenValue.getByTokenIdInTimeRange(
-    token.tokenId,
-    range[0],
-    range[1],
-  )
+  const [tokenValues, firstTimestamp] = await Promise.all([
+    db.tvsTokenValue.getByTokenIdInTimeRange(token.tokenId, range[0], range[1]),
+    db.tvsTokenValue.getFirstTimestampByTokenId(token.tokenId),
+  ])
 
   if (tokenValues.length === 0) {
     return {
@@ -69,8 +69,26 @@ export async function getTokenTvsChart({
 
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
 
+  const resolutionPeriod =
+    resolution === 'daily'
+      ? 'day'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'hour'
+
+  // Anchor the chart to the selected window start (clamped to the token's first
+  // ever record) so it spans the full range. Missing in-range days stay null.
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp:
+      firstTimestamp !== undefined
+        ? UnixTime.toStartOf(firstTimestamp, resolutionPeriod)
+        : undefined,
+    dataStart: minTimestamp,
+  })
+
   const timestamps = generateTimestamps(
-    [minTimestamp, adjustedTo],
+    [UnixTime(startTimestamp), adjustedTo],
     resolution,
     {
       addTarget: true,

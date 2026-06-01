@@ -5,6 +5,7 @@ import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { countPerSecond } from './utils/countPerSecond'
 import { getActivityProjects } from './utils/getActivityProjects'
@@ -114,21 +115,17 @@ export async function getActivityChart({
 
   const dataStart = Math.min(...Object.keys(aggregatedEntries).map(Number))
 
-  // Anchor the chart to the selected window start so it spans the full range
-  // for a fixed range, falling back to the first day with data only for the
-  // 'max' range (null start). For a single project we additionally clamp to its
-  // first ever activity record (so we don't render days when it didn't exist)
-  // and fill in-range zero-activity days with 0s — see the data mapping below.
-  let startTimestamp = adjustedRange[0] ?? dataStart
-  if (projectId) {
-    const firstProjectTimestamp = totalCounts?.[projectId]?.sinceTimestamp
-    startTimestamp =
-      adjustedRange[0] !== null
-        ? firstProjectTimestamp !== undefined
-          ? Math.max(adjustedRange[0], firstProjectTimestamp)
-          : adjustedRange[0]
-        : (firstProjectTimestamp ?? dataStart)
-  }
+  // For a single project, anchor the chart to the selected window start (clamped
+  // to its first ever activity record) so it spans the full range, filling
+  // in-range days that have no activity yet with 0s — see the data mapping
+  // below. Aggregate charts keep starting at the first day with data.
+  const startTimestamp = projectId
+    ? getChartStartTimestamp({
+        rangeStart: adjustedRange[0],
+        firstProjectTimestamp: totalCounts?.[projectId]?.sinceTimestamp,
+        dataStart,
+      })
+    : dataStart
 
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedRange[1]],

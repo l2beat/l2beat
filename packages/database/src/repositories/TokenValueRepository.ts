@@ -152,6 +152,18 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getFirstTimestampByTokenId(
+    tokenId: string,
+  ): Promise<UnixTime | undefined> {
+    const row = await this.db
+      .selectFrom('TokenValue')
+      .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+      .where('tokenId', '=', tokenId)
+      .executeTakeFirst()
+
+    return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
+  }
+
   async getByProjectAtOrBefore(
     project: string,
     timestamp: UnixTime,
@@ -264,6 +276,19 @@ export class TokenValueRepository extends BaseRepository {
   async getAll(): Promise<TokenValueRecord[]> {
     const rows = await this.db.selectFrom('TokenValue').selectAll().execute()
     return rows.map(toRecord)
+  }
+
+  async getFirstTimestampByProjects(
+    projectIds: string[],
+  ): Promise<UnixTime | undefined> {
+    if (projectIds.length === 0) return undefined
+    const row = await this.db
+      .selectFrom('TokenValue')
+      .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+      .where('projectId', 'in', projectIds)
+      .executeTakeFirst()
+
+    return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
   }
 
   async deleteAll(): Promise<number> {

@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
+import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { ChartRange } from '~/utils/range/range'
 
 export const PrivacyFlowsChartParams = v.object({
@@ -32,14 +33,25 @@ export async function getPrivacyFlowsChart(
   }
 
   const db = getDb()
+  const isSingleProject = params.projectIds.length === 1
 
-  const [dailyRows, syncedUntil] = await Promise.all([
+  const [dailyRows, syncedUntil, firstTimestamp] = await Promise.all([
     db.privacyFlowEvent.getDailyByProjectIds(
       params.projectIds,
       ...params.range,
     ),
     db.privacyFlowEvent.getLatestTimestampByProjectIds(params.projectIds),
+    isSingleProject
+      ? db.privacyFlowEvent.getFirstTimestampByProjectIds(params.projectIds)
+      : undefined,
   ])
+
+  // For a single project, clamp the window start to its first ever event so we
+  // don't render days before it existed (multi-project keeps the raw window).
+  const firstProjectTimestamp =
+    isSingleProject && firstTimestamp !== undefined
+      ? UnixTime.toStartOf(firstTimestamp, 'day')
+      : undefined
 
   const projectIds = new Set(params.projectIds)
   const historyRows = dailyRows.filter(
@@ -56,7 +68,11 @@ export async function getPrivacyFlowsChart(
 
     return {
       chart: generateTimestamps(
-        normalizePrivacyFlowsChartRange(params.range),
+        normalizePrivacyFlowsChartRange(
+          params.range,
+          undefined,
+          firstProjectTimestamp,
+        ),
         'daily',
       ).map((timestamp) => [timestamp, 0, 0, 0, 0]),
       syncedUntil: syncedUntil ? Number(syncedUntil) : undefined,
@@ -69,6 +85,7 @@ export async function getPrivacyFlowsChart(
   const normalizedRange = normalizePrivacyFlowsChartRange(
     params.range,
     minTimestamp,
+    firstProjectTimestamp,
   )
   const grouped = new Map<
     number,
@@ -121,11 +138,14 @@ export async function getPrivacyFlowsChart(
 function normalizePrivacyFlowsChartRange(
   range: ChartRange,
   minTimestamp?: number,
+  firstProjectTimestamp?: number,
 ): [UnixTime, UnixTime] {
-  const from =
-    range[0] === null
-      ? UnixTime.toStartOf(minTimestamp ?? range[1], 'day')
-      : UnixTime.toStartOf(range[0], 'day')
+  const start = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp,
+    dataStart: minTimestamp ?? range[1],
+  })
+  const from = UnixTime.toStartOf(start, 'day')
   const to = UnixTime.toStartOf(range[1], 'day')
 
   return [UnixTime(from), UnixTime(to)]

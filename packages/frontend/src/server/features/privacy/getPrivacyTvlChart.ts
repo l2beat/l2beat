@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
+import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { ChartRange, rangeToResolution } from '~/utils/range/range'
 
 export const PrivacyTvlChartParams = v.object({
@@ -25,16 +26,22 @@ export async function getPrivacyTvlChart(
 
   const db = getDb()
   const forSummary = params.projectIds.length !== 1
+  const isSingleProject = !forSummary
 
-  const records = await db.tvsTokenValue.getSummedByProjectForRanges(
-    params.projectIds,
-    [params.range],
-    {
-      forSummary,
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: false,
-    },
-  )
+  const [records, firstTimestamp] = await Promise.all([
+    db.tvsTokenValue.getSummedByProjectForRanges(
+      params.projectIds,
+      [params.range],
+      {
+        forSummary,
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens: false,
+      },
+    ),
+    isSingleProject
+      ? db.tvsTokenValue.getFirstTimestampByProjects(params.projectIds)
+      : undefined,
+  ])
 
   if (records.length === 0) {
     return { chart: [], syncedUntil: undefined }
@@ -57,8 +64,29 @@ export async function getPrivacyTvlChart(
   }
 
   const resolution = rangeToResolution(params.range)
+  const resolutionPeriod =
+    resolution === 'daily'
+      ? 'day'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'hour'
+
+  // For a single project, anchor the chart to the selected window start
+  // (clamped to its first ever record) so it spans the full range. Missing
+  // in-range days stay null.
+  const startTimestamp = isSingleProject
+    ? getChartStartTimestamp({
+        rangeStart: params.range[0],
+        firstProjectTimestamp:
+          firstTimestamp !== undefined
+            ? UnixTime.toStartOf(firstTimestamp, resolutionPeriod)
+            : undefined,
+        dataStart: minTimestamp,
+      })
+    : minTimestamp
+
   const timestamps = generateTimestamps(
-    [UnixTime(minTimestamp), UnixTime(maxTimestamp)],
+    [UnixTime(startTimestamp), UnixTime(maxTimestamp)],
     resolution,
     { addTarget: true },
   )

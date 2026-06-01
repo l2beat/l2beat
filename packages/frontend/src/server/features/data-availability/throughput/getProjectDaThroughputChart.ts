@@ -11,6 +11,7 @@ import {
 } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { isThroughputSynced } from './isThroughputSynced'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 
@@ -75,13 +76,21 @@ export async function getProjectDaThroughputChartData({
   const sovereignProjectsIds =
     daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((c) => c.projectId)
 
-  const throughput = await (includeScalingOnly
-    ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
-        [projectId],
-        range,
-        sovereignProjectsIds,
-      )
-    : db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range))
+  const [throughput, firstTimestamp] = await Promise.all([
+    includeScalingOnly
+      ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
+          [projectId],
+          range,
+          sovereignProjectsIds,
+        )
+      : db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range),
+    includeScalingOnly
+      ? db.dataAvailability.getFirstTimestampOfSummedProjectsByDaLayers(
+          [projectId],
+          sovereignProjectsIds,
+        )
+      : db.dataAvailability.getFirstTimestampByProjectIds([projectId]),
+  ])
 
   if (throughput.length === 0) {
     return undefined
@@ -94,6 +103,13 @@ export async function getProjectDaThroughputChartData({
     throughput,
     resolution,
   )
+
+  const resolutionPeriod =
+    resolution === 'daily'
+      ? 'day'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'hour'
 
   const expectedTo = getThroughputExpectedTimestamp({
     to: range[1],
@@ -108,9 +124,21 @@ export async function getProjectDaThroughputChartData({
     ? maxTimestamp
     : expectedTo
 
+  // Anchor the chart to the selected window start (clamped to the project's
+  // first ever record) so it spans the full range. Missing in-range days are
+  // filled with 0 (no data posted) by the caller.
+  const from = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp:
+      firstTimestamp !== undefined
+        ? UnixTime.toStartOf(firstTimestamp, resolutionPeriod)
+        : undefined,
+    dataStart: minTimestamp,
+  })
+
   return {
     grouped,
-    from: minTimestamp,
+    from: UnixTime(from),
     to: adjustedTo,
     maxTimestamp,
     syncedUntil,

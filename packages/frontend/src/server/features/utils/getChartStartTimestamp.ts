@@ -1,0 +1,26 @@
+/**
+ * Computes the first timestamp of a single-project chart's x-axis.
+ *
+ * Charts should span the full selected range rather than collapsing to the
+ * first day that happens to have data. For a fixed range we anchor to the
+ * requested window start, but never before the project's first ever record (so
+ * we don't render days when the project didn't exist). For the 'max' range
+ * (null start) we begin at that first record, falling back to the first day
+ * with data when the first record is unknown.
+ */
+export function getChartStartTimestamp({
+  rangeStart,
+  firstProjectTimestamp,
+  dataStart,
+}: {
+  rangeStart: number | null
+  firstProjectTimestamp: number | undefined
+  dataStart: number
+}): number {
+  if (rangeStart === null) {
+    return firstProjectTimestamp ?? dataStart
+  }
+  return firstProjectTimestamp !== undefined
+    ? Math.max(rangeStart, firstProjectTimestamp)
+    : rangeStart
+}

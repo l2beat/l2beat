@@ -5,6 +5,7 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
+import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import { isTvsSynced } from './utils/isTvsSynced'
@@ -91,7 +92,20 @@ export async function getDetailedTvsChartWithProjectsRanges({
     ),
   ])
 
-  return getChartData(values, ethPrices, projectIds, range)
+  // The earliest project range start anchors the chart (clamped against the
+  // selected window start below) so it spans the full range without rendering
+  // days before any project existed.
+  const firstProjectTimestamp = Math.min(
+    ...projects.map((p) => p.sinceTimestamp),
+  )
+
+  return getChartData(
+    values,
+    ethPrices,
+    projectIds,
+    range,
+    firstProjectTimestamp,
+  )
 }
 
 function getChartData(
@@ -99,6 +113,7 @@ function getChartData(
   ethPrices: Record<number, number>,
   projectIds: ProjectId[],
   range: ChartRange,
+  firstProjectTimestamp: number,
 ): DetailedTvsChartWithProjectsRangesData {
   if (values.length === 0) {
     return {
@@ -140,8 +155,22 @@ function getChartData(
   const syncedUntil = maxTimestamp
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
   const resolution = rangeToResolution(range)
+  const resolutionPeriod =
+    resolution === 'daily'
+      ? 'day'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'hour'
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp: UnixTime.toStartOf(
+      UnixTime(firstProjectTimestamp),
+      resolutionPeriod,
+    ),
+    dataStart: minTimestamp,
+  })
   const timestamps = generateTimestamps(
-    [minTimestamp, adjustedTo],
+    [UnixTime(startTimestamp), adjustedTo],
     resolution,
     {
       addTarget: true,

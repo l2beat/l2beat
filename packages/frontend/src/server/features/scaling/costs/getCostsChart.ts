@@ -9,6 +9,7 @@ import {
   rangeToResolution,
 } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { addIfDefined } from './utils/addIfDefined'
 import { getCostsExpectedTimestamp } from './utils/getCostsExpectedTimestamp'
 import { CostsProjectsFilter, getCostsProjects } from './utils/getCostsProjects'
@@ -64,10 +65,11 @@ export async function getCostsChart({
   }
   const resolution = rangeToResolution(range)
 
-  const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
-    projects.map((p) => p.id),
-    range,
-  )
+  const projectIds = projects.map((p) => p.id)
+  const [data, firstTimestamp] = await Promise.all([
+    db.aggregatedL2Cost.getByProjectsAndTimeRange(projectIds, range),
+    db.aggregatedL2Cost.getFirstTimestampByProjects(projectIds),
+  ])
 
   if (data.length === 0) {
     return { chart: [], hasBlobs: false, syncedUntil: Number.POSITIVE_INFINITY }
@@ -77,18 +79,40 @@ export async function getCostsChart({
   assert(syncedUntil, 'syncedUntil is undefined')
 
   const summedByTimestamp = sumByTimestamp(data, resolution)
-  const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
+  const dataStart = UnixTime(Math.min(...summedByTimestamp.keys()))
   const maxTimestamp = UnixTime(Math.max(...summedByTimestamp.keys()))
   const blobsTimestamp = Array.from(summedByTimestamp.entries()).find(
     ([_, value]) => value.blobsGas !== null,
   )?.[0]
+
+  const resolutionPeriod =
+    resolution === 'daily'
+      ? 'day'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'hour'
 
   const expectedTo = getCostsExpectedTimestamp(range[1], resolution)
   const adjustedTo = isCostsSynced({ to: range[1], syncedUntil })
     ? maxTimestamp
     : expectedTo
 
-  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
+  // Anchor the chart to the selected window start (clamped to the first record
+  // of the selected project(s)) so it spans the full range. Missing in-range
+  // days are filled with 0 (no batches posted ⇒ no cost) below.
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp:
+      firstTimestamp !== undefined
+        ? UnixTime.toStartOf(firstTimestamp, resolutionPeriod)
+        : undefined,
+    dataStart,
+  })
+
+  const timestamps = generateTimestamps(
+    [startTimestamp, adjustedTo],
+    resolution,
+  )
 
   const chart: CostsChartDataPoint[] = timestamps.map((timestamp) => {
     const entry = summedByTimestamp.get(timestamp)
