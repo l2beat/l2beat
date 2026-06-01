@@ -36,6 +36,7 @@
     "@tanstack/react-virtual": "^3.13.23",
     "@trpc/client": "11.0.0-rc.599",
     "@trpc/react-query": "11.0.0-rc.599",
+    "@trpc/server": "11.0.0-rc.599",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "fuzzysort": "^3.1.0",
