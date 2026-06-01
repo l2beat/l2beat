@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xc0cab229de3be5080f0197599b53cf1f31b2baa8
+Generated with discovered.json: 0xb260fb3d5758d6d9f2685f573f54db3356fb897b
 
-# Diff at Thu, 28 May 2026 16:38:58 GMT:
+# Diff at Mon, 01 Jun 2026 16:56:51 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: main@66dc249f7108a6fbf8b6581aed0b7625deeebb2a block: 1777038237
+- comparing to: main@3e3be99b0261b4e1f4ee2490b56f4ab3abe25272 block: 1777038237
 - current timestamp: 1777038237
 
 ## Description
@@ -17,24 +17,13 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1777038237 (main branch discovery), not current.
 
 ```diff
-    reference  (eth:0x000000000000000000000000000000000000dEaD) {
-    +++ description: None
-      type:
--        "EOA"
-+        "Reference"
-      proxyType:
--        "EOA"
-      targetType:
-+        "EOA"
-      targetProject:
-+        "optimism"
-    }
-```
-
-```diff
--   Status: DELETED
-    contract LivenessModule (eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748)
+    contract LivenessModule (eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
     +++ description: used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","role":".GnosisSafe_modules"}]
+      deployerAddress:
+-        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
 ```
 
 ```diff
@@ -52,9 +41,22 @@ discovery. Values are for block 1777038237 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
     +++ description: None
+      template:
+-        "GnosisSafe"
+      sourceHashes.1:
+-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
++        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      directlyReceivedPermissions:
+-        [{"permission":"guard","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","role":".guardian"}]
+      deployerAddress:
+-        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+      values.getOwners:
++        ["eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"]
+      values.getThreshold:
++        1
+    }
 ```
 
 ```diff
@@ -83,9 +85,18 @@ discovery. Values are for block 1777038237 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25)
-    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+    contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      template:
+-        "gnosisSafeModules/LivenessGuard"
+      sourceHashes.0:
+-        "0xe2e33569583c3b0a8186c653cba56130fb30cb26c95500065a6394824546cc2e"
++        "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
+      description:
+-        "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners."
+      deployerAddress:
+-        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
 ```
 
 ```diff
@@ -106,33 +117,33 @@ discovery. Values are for block 1777038237 (main branch discovery), not current.
 ```
 
 ```diff
-    reference SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    EOA  (eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
     +++ description: None
-      type:
--        "Contract"
-+        "Reference"
+      receivedPermissions:
+-        [{"permission":"guard","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754","condition":"though restricted to the SuperchainConfig's `pause()` function"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754","role":".deputy","condition":"though restricted to the SuperchainConfig's `pause()` function"}]
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
       template:
 -        "succinct/SP1VerifierGateway"
-      sourceHashes:
--        ["0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"]
-      proxyType:
--        "immutable"
+      sourceHashes.0:
+-        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
++        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
       description:
 -        "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract."
       deployerAddress:
 -        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
-      sinceTimestamp:
--        1720099223
-      sinceBlock:
--        20233410
-      values:
--        {"$immutable":true,"activeVerifiers":[{"selector":"0xd4e8ecd2","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"},{"selector":"0xbb1a6f29","verifier":"eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"},{"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}],"allVerifiers":[{"selector":"0x801c66ac","verifier":"eth:0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2"},{"selector":"0x8c5bc5e4","verifier":"eth:0x331b350dDA287d0A65ce43103984CD44cb4Da9f0"},{"selector":"0xfedc1fcc","verifier":"eth:0x36B353776AF6EF3A2bD707049e783F52c4209017"},{"selector":"0xc430ff7f","verifier":"eth:0xc350F063C13a3Ca21331610fe159E697a5c9c2FB"},{"selector":"0xc865c1b6","verifier":"eth:0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"},{"selector":"0x4aca240a","verifier":"eth:0x1764C29FBd94865198588f10FC75D4f6636d158d"},{"selector":"0x09069090","verifier":"eth:0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3"},{"selector":"0x54bdcae3","verifier":"eth:0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"},{"selector":"0x1b34fe11","verifier":"eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"},{"selector":"0xd4e8ecd2","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"},{"selector":"0xbb1a6f29","verifier":"eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"},{"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}],"owner":"eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"}
+      values.activeVerifiers:
+-        [{"selector":"0xd4e8ecd2","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"},{"selector":"0xbb1a6f29","verifier":"eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"},{"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}]
+      values.allVerifiers:
+-        [{"selector":"0x801c66ac","verifier":"eth:0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2"},{"selector":"0x8c5bc5e4","verifier":"eth:0x331b350dDA287d0A65ce43103984CD44cb4Da9f0"},{"selector":"0xfedc1fcc","verifier":"eth:0x36B353776AF6EF3A2bD707049e783F52c4209017"},{"selector":"0xc430ff7f","verifier":"eth:0xc350F063C13a3Ca21331610fe159E697a5c9c2FB"},{"selector":"0xc865c1b6","verifier":"eth:0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"},{"selector":"0x4aca240a","verifier":"eth:0x1764C29FBd94865198588f10FC75D4f6636d158d"},{"selector":"0x09069090","verifier":"eth:0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3"},{"selector":"0x54bdcae3","verifier":"eth:0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"},{"selector":"0x1b34fe11","verifier":"eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"},{"selector":"0xd4e8ecd2","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"},{"selector":"0xbb1a6f29","verifier":"eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"},{"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}]
       fieldMeta:
 -        {"activeVerifiers":{"description":"Verifiers that are routed to by their selector and not frozen."},"allVerifiers":{"description":"All verifiers that were ever routed to by this gateway."}}
-      targetType:
-+        "Contract"
-      targetProject:
-+        "shared-sp1"
     }
 ```
 
@@ -188,9 +199,11 @@ discovery. Values are for block 1777038237 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
     +++ description: None
+      deployerAddress:
+-        "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960"
+    }
 ```
 
 ```diff
@@ -202,9 +215,20 @@ discovery. Values are for block 1777038237 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A)
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
     +++ description: None
+      template:
+-        "GnosisSafe"
+      sourceHashes.1:
+-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
++        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      deployerAddress:
+-        "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c"
+      values.getOwners:
++        ["eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92","eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"]
+      values.getThreshold:
++        2
+    }
 ```
 
 ```diff
@@ -229,9 +253,20 @@ discovery. Values are for block 1777038237 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754)
-    +++ description: Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) {
+    +++ description: None
+      template:
+-        "opstack/DeputyPauseModule"
+      sourceHashes.0:
+-        "0xd3119ff100b38f6dbd66a573658509c10d6ddd7ab9dd522bd3401928062b128f"
++        "0x6d8659eec5f14dbbacd2c5fb2ebcfab040b98237fc8ea869b3317a9e425da7bf"
+      description:
+-        "Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module."
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","role":".GnosisSafe_modules"}]
+      deployerAddress:
+-        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
 ```
 
 ```diff
@@ -268,9 +303,22 @@ discovery. Values are for block 1777038237 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
     +++ description: None
+      template:
+-        "GnosisSafe"
+      sourceHashes.1:
+-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      receivedPermissions:
+-        [{"permission":"guard","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748","condition":"if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."}]}]
+      deployerAddress:
+-        "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c"
+      values.getOwners:
++        ["eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7","eth:0x3041BA32f451F5850c147805F5521AC206421623","eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5","eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8","eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15","eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02","eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"]
+      values.getThreshold:
++        5
+    }
 ```
 
 ```diff
@@ -333,35 +381,23 @@ discovery. Values are for block 1777038237 (main branch discovery), not current.
 ```
 
 ```diff
-    reference SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
     +++ description: None
-      type:
--        "Contract"
-+        "Reference"
       template:
 -        "opstack/SuperchainConfig_expiry"
-      sourceHashes:
--        ["0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617","0x5fb525d1572fb90d060d122143b915059cbff39e0298b345857fd4267d7f6b28"]
-      proxyType:
--        "EIP1967 proxy"
+      sourceHashes.1:
+-        "0x5fb525d1572fb90d060d122143b915059cbff39e0298b345857fd4267d7f6b28"
++        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
       description:
 -        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched."
       deployerAddress:
 -        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
-      sinceTimestamp:
--        1705954799
-      sinceBlock:
--        19064589
-      values:
--        {"$admin":"eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04","$implementation":"eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957","$pastUpgrades":[["2024-01-22T20:19:59.000Z","0x8ba0e42b89cde22310b644ed30fd44e4a348619a165a54c908e7dc341e9bbd0c",["eth:0x53c165169401764778F780a69701385eb0FF19B7"]],["2024-06-10T18:29:23.000Z","0xe361c0d4ae3aebc94b3f281ee372fbb1cbdb0c33ca8b1b35e7f3b009b2fcbdb0",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]],["2024-06-10T18:29:23.000Z","0xe361c0d4ae3aebc94b3f281ee372fbb1cbdb0c33ca8b1b35e7f3b009b2fcbdb0",["eth:0x53c165169401764778F780a69701385eb0FF19B7"]],["2025-04-02T16:50:23.000Z","0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",["eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]],["2025-07-24T17:47:23.000Z","0x46acdce174c8d83ebe2f208d8c76c867e75617483d64c3e407f69ae2f9868716",["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]],["2025-11-25T17:46:35.000Z","0xf556934cb4de1ab40a4cfba17856cd601cbc8b875b96a9ccd8ee32bcd363abf5",["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]]],"$upgradeCount":6,"guardian":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2","initVersion":2,"paused":false,"pauseExpiry":7884000,"pauseExpiryFmt":"3mo 1d","proxyAdmin":"eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04","proxyAdminOwner":"eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","version":"2.4.0"}
+      values.pauseExpiryFmt:
+-        "3mo 1d"
       fieldMeta:
 -        {"paused":{"severity":"HIGH"}}
       category:
 -        {"name":"Shared Infrastructure","priority":4}
-      targetType:
-+        "Contract"
-      targetProject:
-+        "optimism"
     }
 ```
 
@@ -408,9 +444,22 @@ discovery. Values are for block 1777038237 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
-    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) {
+    +++ description: None
+      template:
+-        "gnosisSafeModules/SaferSafes"
+      sourceHashes.0:
+-        "0xf3c2f517bc8bfc612fa686bea9f5a85b983b23a9d407b3a4fd3c0f18fc824469"
++        "0x037b17d0072b90906969c37097eb5ed525df21e4a27ba101d5b0b5de87e66dd7"
+      description:
+-        "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling."
+      receivedPermissions:
+-        [{"permission":"guard","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748","condition":"if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."},{"address":"eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92","role":".GnosisSafe_modules"}]
+      deployerAddress:
+-        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
 ```
 
 ```diff
@@ -431,9 +480,22 @@ discovery. Values are for block 1777038237 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
     +++ description: None
+      template:
+-        "GnosisSafe"
+      sourceHashes.1:
+-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
++        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      receivedPermissions:
+-        [{"permission":"guard","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"}]}]
+      deployerAddress:
+-        "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c"
+      values.getOwners:
++        ["eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE","eth:0x652BC529E171847E2fFddCeA13567643C84ccB5f","eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81","eth:0x4A7322258c9E690e4CB8Cea6e5251443E956e61E","eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94","eth:0xEF9A98511939eEe6Ec69af62082E3F2ff606877c","eth:0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865","eth:0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90","eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39","eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7","eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6","eth:0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9","eth:0x92827223f6b397CE9F208eE352bacA710765cACb"]
+      values.getThreshold:
++        10
+    }
 ```
 
 ```diff
@@ -472,9 +534,22 @@ discovery. Values are for block 1777038237 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
     +++ description: None
+      template:
+-        "GnosisSafe"
+      sourceHashes.1:
+-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
++        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"}]
+      deployerAddress:
+-        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      values.getOwners:
++        ["eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126","eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54","eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885"]
+      values.getThreshold:
++        2
+    }
 ```
 
 ```diff
@@ -495,9 +570,11 @@ discovery. Values are for block 1777038237 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F)
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
+-        "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5"
+    }
 ```
 
 ```diff

@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "ink",
-  "import": ["../globalConfig.jsonc", "./entrypoints.json"],
+  "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "ink:0x4200000000000000000000000000000000000010",
     "ink:0x4200000000000000000000000000000000000016",

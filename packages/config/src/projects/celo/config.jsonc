@@ -26,6 +26,5 @@
         "challenger": { "permissions": [{ "type": "challenge" }] }
       }
     }
-  },
-  "sharedModules": ["taiko", "shared-sp1", "mode", "arenaz", "ink", "optimism"]
+  }
 }

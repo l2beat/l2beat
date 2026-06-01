@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "taiko",
-  "import": ["../globalConfig.jsonc", "./entrypoints.json"],
+  "import": ["../globalConfig.jsonc"],
   "maxAddresses": 200,
   "initialAddresses": [
     "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
