@@ -1,8 +1,9 @@
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import {
   type ChartRange,
   optionToRange,
@@ -16,14 +17,17 @@ import { DaPercentageThroughputChart } from './DaPercentageThroughputChart'
 import { DaThroughputTimeRangeValues } from './timeRangeValues'
 
 export function DaThroughputChart() {
+  const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
   const [metric, setMetric] = useState<'percentage' | 'absolute'>('percentage')
   const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
 
-  const { data: chartData, isLoading } = api.da.chart.useQuery({
-    range,
-    includeScalingOnly,
-  })
+  const { data: chartData, isLoading } = useQuery(
+    trpc.da.chart.queryOptions({
+      range,
+      includeScalingOnly,
+    }),
+  )
 
   const timeRange = useMemo(
     () =>

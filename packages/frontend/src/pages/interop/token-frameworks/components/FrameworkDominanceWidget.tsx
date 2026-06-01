@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import {
   Tabs,
   TabsContent,
@@ -5,7 +6,7 @@ import {
   TabsTrigger,
 } from '~/components/core/Tabs'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
 import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
 import { FrameworkCompareContent } from './comparison/FrameworkCompareContent'
@@ -16,12 +17,15 @@ export function FrameworkDominanceWidget({
 }: {
   tokenFrameworks: InteropTokenFramework[]
 }) {
+  const trpc = useTRPC()
   const { selectedChains } = useTokenFrameworksSelectedChains()
 
-  const { data, isLoading } = api.interop.tokenFrameworks.useQuery({
-    from: selectedChains,
-    to: selectedChains,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.interop.tokenFrameworks.queryOptions({
+      from: selectedChains,
+      to: selectedChains,
+    }),
+  )
 
   return (
     <PrimaryCard className="border-divider max-md:border-b md:col-span-2 lg:row-span-10">

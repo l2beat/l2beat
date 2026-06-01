@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
@@ -10,7 +11,7 @@ import {
   useActivityMetricContext,
 } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { StatCard } from '../stats/StatCard'
 import { StatsGrid } from '../stats/StatsGrid'
@@ -20,11 +21,17 @@ interface Props {
 }
 
 export function ScalingRecategorizedActivityStats({ entries }: Props) {
+  const trpc = useTRPC()
   const { metric } = useActivityMetricContext()
 
-  const { data: stats, isLoading } = api.activity.chartStats.useQuery({
-    filter: { type: 'projects', projectIds: entries.map((entry) => entry.id) },
-  })
+  const { data: stats, isLoading } = useQuery(
+    trpc.activity.chartStats.queryOptions({
+      filter: {
+        type: 'projects',
+        projectIds: entries.map((entry) => entry.id),
+      },
+    }),
+  )
 
   return (
     <StatsGrid className="my-2">

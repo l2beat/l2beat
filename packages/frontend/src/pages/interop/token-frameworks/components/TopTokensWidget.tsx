@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -15,7 +16,7 @@ import {
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { TopTokenItem } from '~/server/features/scaling/interop/getTokenFrameworksData'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
@@ -29,13 +30,16 @@ export function TopTokensWidget({
 }: {
   tokenFrameworks: InteropTokenFramework[]
 }) {
+  const trpc = useTRPC()
   const { selectedChains } = useTokenFrameworksSelectedChains()
   const [activeTab, setActiveTab] = useState<string>('all')
 
-  const { data, isLoading } = api.interop.tokenFrameworks.useQuery({
-    from: selectedChains,
-    to: selectedChains,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.interop.tokenFrameworks.queryOptions({
+      from: selectedChains,
+      to: selectedChains,
+    }),
+  )
 
   const apiSelection = { from: selectedChains, to: selectedChains }
 

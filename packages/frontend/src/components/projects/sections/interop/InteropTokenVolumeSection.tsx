@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import partition from 'lodash/partition'
 import { useMemo } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -21,7 +22,7 @@ import {
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import { useInteropTokenDashboard } from '~/pages/interop/token/InteropTokenDashboardContext'
 import type { InteropTokenDashboardData } from '~/server/features/scaling/interop/getInteropTokenData'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
@@ -67,17 +68,20 @@ function Content({
   tokenId: string
   interopChains: InteropChainWithIcon[]
 }) {
+  const trpc = useTRPC()
   const { selectedChains, selectedProtocols, highlightedChains } =
     useInteropFlows()
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
   const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
-  const { data, isLoading } = api.interop.flows.useQuery(
-    {
-      chains: selectedChains,
-      protocolIds: selectedProtocols,
-      tokenId,
-    },
-    { enabled: hasEnoughChains && hasEnoughProtocols },
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions(
+      {
+        chains: selectedChains,
+        protocolIds: selectedProtocols,
+        tokenId,
+      },
+      { enabled: hasEnoughChains && hasEnoughProtocols },
+    ),
   )
 
   const activeIds = new Set<string>(

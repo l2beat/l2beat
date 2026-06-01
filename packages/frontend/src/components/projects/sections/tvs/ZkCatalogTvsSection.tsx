@@ -1,5 +1,6 @@
 import type { Milestone, ProjectTvsInfo } from '@l2beat/config'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import { ZkCatalogProjectsTvsChart } from '~/components/chart/tvs/stacked/zk-catalog/ZkCatalogProjectsTvsChart'
@@ -21,7 +22,7 @@ import type {
   DetailedTvsChartWithProjectRangesDataPoint,
   DetailedTvsChartWithProjectsRangesData,
 } from '~/server/features/scaling/tvs/getDetailedTvsChartWithProjectsRanges'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import type { ChartRange } from '~/utils/range/range'
@@ -87,15 +88,18 @@ function ChartControls({
     untilTimestamp?: UnixTime
   }[]
 }) {
+  const trpc = useTRPC()
   const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
   const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
 
-  const { data } = api.tvs.detailedChartWithProjectsRanges.useQuery({
-    projects: projectsForTvs,
-    range,
-    excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens,
-  })
+  const { data } = useQuery(
+    trpc.tvs.detailedChartWithProjectsRanges.queryOptions({
+      projects: projectsForTvs,
+      range,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens,
+    }),
+  )
 
   const timeRange = useMemo(
     () =>
@@ -227,13 +231,16 @@ function TvsProjectStats({
     untilTimestamp?: UnixTime
   }[]
 }) {
+  const trpc = useTRPC()
   const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
-  const { data, isLoading } = api.tvs.detailedChartWithProjectsRanges.useQuery({
-    projects: projectsForTvs,
-    range: optionToRange('7d'),
-    excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.tvs.detailedChartWithProjectsRanges.queryOptions({
+      projects: projectsForTvs,
+      range: optionToRange('7d'),
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens,
+    }),
+  )
 
   const stats = getStats(data)
 

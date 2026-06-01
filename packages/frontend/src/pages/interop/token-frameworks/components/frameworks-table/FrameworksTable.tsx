@@ -1,6 +1,7 @@
+import { useQuery } from '@tanstack/react-query'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { FrameworkTableEntry } from '~/server/features/scaling/interop/getTokenFrameworksData'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import { useTokenFrameworksSelectedChains } from '../../utils/TokenFrameworksSelectedChainsContext'
 import { FrameworkColumn } from './FrameworkColumn'
@@ -10,9 +11,12 @@ export function FrameworksTable({
 }: {
   tokenFrameworks: InteropTokenFramework[]
 }) {
+  const trpc = useTRPC()
   const { selectedChains } = useTokenFrameworksSelectedChains()
   const apiSelection = { from: selectedChains, to: selectedChains }
-  const { data, isLoading } = api.interop.tokenFrameworks.useQuery(apiSelection)
+  const { data, isLoading } = useQuery(
+    trpc.interop.tokenFrameworks.queryOptions(apiSelection),
+  )
 
   const tableById = new Map<string, FrameworkTableEntry>(
     data?.frameworkTable.map((entry) => [entry.id, entry]) ?? [],

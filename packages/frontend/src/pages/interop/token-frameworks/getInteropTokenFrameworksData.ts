@@ -80,10 +80,12 @@ export async function getInteropTokenFrameworksData(
 async function getCachedData(initialChainIds: string[]) {
   const helpers = getSsrHelpers()
   if (initialChainIds.length > 0) {
-    await helpers.interop.tokenFrameworks.prefetch({
-      from: initialChainIds,
-      to: initialChainIds,
-    })
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.interop.tokenFrameworks.queryOptions({
+        from: initialChainIds,
+        to: initialChainIds,
+      }),
+    )
   }
   return { queryState: helpers.dehydrate() }
 }

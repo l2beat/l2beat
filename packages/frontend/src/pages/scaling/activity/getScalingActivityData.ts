@@ -56,19 +56,23 @@ async function getCachedData() {
   const entries = await getScalingActivityEntries()
 
   await Promise.all([
-    helpers.activity.recategorisedChart.prefetch({
-      range: optionToRange('1y', { offset: -UnixTime.DAY }),
-      filter: {
-        type: 'projects',
-        projectIds: entries.map((entry) => entry.id),
-      },
-    }),
-    helpers.activity.chartStats.prefetch({
-      filter: {
-        type: 'projects',
-        projectIds: entries.map((entry) => entry.id),
-      },
-    }),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.activity.recategorisedChart.queryOptions({
+        range: optionToRange('1y', { offset: -UnixTime.DAY }),
+        filter: {
+          type: 'projects',
+          projectIds: entries.map((entry) => entry.id),
+        },
+      }),
+    ),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.activity.chartStats.queryOptions({
+        filter: {
+          type: 'projects',
+          projectIds: entries.map((entry) => entry.id),
+        },
+      }),
+    ),
   ])
 
   return {
