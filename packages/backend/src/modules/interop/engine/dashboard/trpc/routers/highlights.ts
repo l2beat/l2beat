@@ -1,4 +1,3 @@
-import { INTEROP_CHAINS } from '@l2beat/config'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { router } from '../../../../../../trpc/init'
 import { protectedProcedure } from '../../../../../../trpc/procedures'
@@ -6,11 +5,12 @@ import { getInteropHighlights } from '../../impls/highlights'
 
 interface HighlightsRouterDeps {
   tokenDbClient: TokenDbClient
+  chains: readonly { id: string }[]
 }
 
-const interopProjectIds = INTEROP_CHAINS.map((chain) => chain.id)
-
 export function createHighlightsRouter(deps: HighlightsRouterDeps) {
+  const interopProjectIds = deps.chains.map((chain) => chain.id)
+
   return router({
     latest: protectedProcedure.query(({ ctx }) => {
       return getInteropHighlights(ctx.db, deps.tokenDbClient, interopProjectIds)

@@ -1,4 +1,3 @@
-import { INTEROP_CHAINS } from '@l2beat/config'
 import type {
   ActivityRecord,
   AggregatedInteropTokenRecord,
@@ -20,6 +19,11 @@ import {
   getTopPathByVolumeAtTimestamp,
 } from '../../impls/highlightsCalculations'
 import { createHighlightsRouter } from './highlights'
+
+const DEFAULT_CHAINS = [
+  { id: 'ethereum', type: 'evm' },
+  { id: 'optimism', type: 'evm' },
+] as const
 
 describe(createHighlightsRouter.name, () => {
   it('returns highlights for the latest aggregate snapshot', async () => {
@@ -204,7 +208,7 @@ describe(createHighlightsRouter.name, () => {
       previousTransfers,
       latestTimestamp,
     )
-    const interopProjectIds = new Set(INTEROP_CHAINS.map((chain) => chain.id))
+    const interopProjectIds = new Set(DEFAULT_CHAINS.map((chain) => chain.id))
     const uopsIncrease = getLargestUopsCountIncrease(
       currentActivity,
       previousActivity,
@@ -308,29 +312,29 @@ describe(createHighlightsRouter.name, () => {
     })
   })
 
-  it('ignores non-interop projects for UOPS and TVS highlights', async () => {
+  it('uses configured interop chains for UOPS and TVS highlights', async () => {
     const latestTimestamp = UnixTime(1_700_000_000)
     const previousTimestamp = latestTimestamp - UnixTime.DAY
     const olderTimestamp = previousTimestamp - UnixTime.DAY
 
     const getActivityByTimestamp = mockFn()
       .resolvesToOnce([
-        activityRecord('hashkey', latestTimestamp, 2000),
+        activityRecord('optimism', latestTimestamp, 2000),
         activityRecord('ethereum', latestTimestamp, 50),
       ])
       .resolvesToOnce([
-        activityRecord('hashkey', previousTimestamp, 1000),
+        activityRecord('optimism', previousTimestamp, 1000),
         activityRecord('ethereum', previousTimestamp, 20),
       ])
       .resolvesToOnce([
-        activityRecord('hashkey', olderTimestamp, 900),
+        activityRecord('optimism', olderTimestamp, 900),
         activityRecord('ethereum', olderTimestamp, 18),
       ])
       .resolvesTo([])
     const getTvsByTimestamp = mockFn()
-      .resolvesToOnce([tvsRecord('uniswap', latestTimestamp, 9_000_000_000)])
-      .resolvesToOnce([tvsRecord('uniswap', previousTimestamp, 1_000_000_000)])
-      .resolvesToOnce([tvsRecord('uniswap', olderTimestamp, 900_000_000)])
+      .resolvesToOnce([tvsRecord('optimism', latestTimestamp, 9_000_000_000)])
+      .resolvesToOnce([tvsRecord('optimism', previousTimestamp, 1_000_000_000)])
+      .resolvesToOnce([tvsRecord('optimism', olderTimestamp, 900_000_000)])
       .resolvesTo([])
 
     const caller = createCaller({
@@ -344,6 +348,7 @@ describe(createHighlightsRouter.name, () => {
         .resolvesToOnce(previousTimestamp)
         .resolvesToOnce(olderTimestamp),
       getTvsByTimestamp,
+      chains: [{ id: 'ethereum', type: 'evm' }],
     })
 
     const result = await caller.latest()
@@ -584,9 +589,11 @@ function createCaller(options: {
   getTvsMaxTimestampAtOrBefore?: ReturnType<typeof mockFn>
   getTvsByTimestamp?: ReturnType<typeof mockFn>
   getAbstractTokenById?: ReturnType<typeof mockFn>
+  chains?: readonly { id: string; type: 'evm' }[]
 }) {
   const callerFactory = createCallerFactory(
     createHighlightsRouter({
+      chains: options.chains ?? DEFAULT_CHAINS,
       tokenDbClient: mockObject<TokenDbClient>({
         abstractTokens: mockObject<TokenDbClient['abstractTokens']>({
           getById: mockObject<TokenDbClient['abstractTokens']['getById']>({
