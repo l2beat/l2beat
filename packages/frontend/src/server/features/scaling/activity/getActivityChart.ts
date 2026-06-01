@@ -112,7 +112,23 @@ export async function getActivityChart({
     return { data: [], syncWarning, syncedUntil: syncedUntil, stats: undefined }
   }
 
-  const startTimestamp = Math.min(...Object.keys(aggregatedEntries).map(Number))
+  const dataStart = Math.min(...Object.keys(aggregatedEntries).map(Number))
+
+  // For a single project, anchor the chart to the selected window start so it
+  // spans the full range — filling in-range days that have no activity yet with
+  // 0s — but never start before the project's first ever activity record (so we
+  // don't render days when it didn't exist). For the 'max' range (null start)
+  // we begin at that first record.
+  let startTimestamp = dataStart
+  if (projectId) {
+    const firstProjectTimestamp = totalCounts?.[projectId]?.sinceTimestamp
+    startTimestamp =
+      adjustedRange[0] !== null
+        ? firstProjectTimestamp !== undefined
+          ? Math.max(adjustedRange[0], firstProjectTimestamp)
+          : adjustedRange[0]
+        : (firstProjectTimestamp ?? dataStart)
+  }
 
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedRange[1]],
@@ -122,14 +138,18 @@ export async function getActivityChart({
   const data: ActivityChartDataPoint[] = timestamps.map((timestamp) => {
     const isSynced = syncedUntil >= timestamp
     const fallbackValue = isSynced ? 0 : null
+    // For a single project the start is clamped to its first activity record, so
+    // an in-range day with no entry is a genuine zero-activity day — render it
+    // as 0 rather than a gap.
+    const projectFallback = projectId ? fallbackValue : null
 
     const entry = aggregatedEntries[timestamp]
     if (!entry || !isSynced) {
       return [
         timestamp,
-        null,
+        projectFallback,
         entry?.ethereumCount ?? fallbackValue,
-        null,
+        projectFallback,
         entry?.ethereumUopsCount ?? fallbackValue,
       ]
     }
