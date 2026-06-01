@@ -11,10 +11,8 @@ export function FrameworksTable({
   tokenFrameworks: InteropTokenFramework[]
 }) {
   const { selectedChains } = useTokenFrameworksSelectedChains()
-  const { data, isLoading } = api.interop.tokenFrameworks.useQuery({
-    from: selectedChains,
-    to: selectedChains,
-  })
+  const apiSelection = { from: selectedChains, to: selectedChains }
+  const { data, isLoading } = api.interop.tokenFrameworks.useQuery(apiSelection)
 
   const tableById = new Map<string, FrameworkTableEntry>(
     data?.frameworkTable.map((entry) => [entry.id, entry]) ?? [],
@@ -42,6 +40,7 @@ export function FrameworksTable({
               entry={tableById.get(framework.id)}
               isFirst={i === 0}
               isLoading={isLoading}
+              apiSelection={apiSelection}
             />
           ))}
         </div>
