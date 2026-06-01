@@ -54,13 +54,13 @@ function describeMetricSignals(signals: MetricSignal[]): string[] {
   const shouldMerge = src && dst && src.kind === dst.kind
   if (!shouldMerge) return signals.map(describeSignal)
 
-  const larger = src.current >= dst.current ? src : dst
+  const representative = pickMergedVolumeSignal(src, dst)
   const out: string[] = []
   let mergedEmitted = false
   for (const signal of signals) {
     if (signal.metric === 'srcVolume' || signal.metric === 'dstVolume') {
       if (!mergedEmitted) {
-        out.push(describeVolumeMerged(larger))
+        out.push(describeVolumeMerged(representative))
         mergedEmitted = true
       }
       continue
@@ -68,6 +68,22 @@ function describeMetricSignals(signals: MetricSignal[]): string[] {
     out.push(describeSignal(signal))
   }
   return out
+}
+
+function pickMergedVolumeSignal(
+  src: MetricSignal,
+  dst: MetricSignal,
+): MetricSignal {
+  if (isDropSignal(src) && isDropSignal(dst)) {
+    const srcLoss = src.baseline - src.current
+    const dstLoss = dst.baseline - dst.current
+    if (srcLoss !== dstLoss) {
+      return srcLoss >= dstLoss ? src : dst
+    }
+    return src.baseline >= dst.baseline ? src : dst
+  }
+
+  return src.current >= dst.current ? src : dst
 }
 
 function describeVolumeMerged(signal: MetricSignal): string {
@@ -87,6 +103,13 @@ function metricLabel(metric: AnomalyMetric): string {
     case 'dstVolume':
       return 'Destination volume'
   }
+}
+
+function isDropSignal(signal: MetricSignal): boolean {
+  if (signal.changePercent !== null) {
+    return signal.changePercent < 0
+  }
+  return signal.kind === 'ratioDrop' || signal.kind === 'zScoreDrop'
 }
 
 // Action word follows the sign of the actual change, not the signal kind.

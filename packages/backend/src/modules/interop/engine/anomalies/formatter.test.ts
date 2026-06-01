@@ -137,6 +137,32 @@ describe(formatAnomalyReasons.name, () => {
     expect(reasons).toEqual(['Volume spiked (+4900%, $100K → $5M)'])
   })
 
+  it('uses the larger collapsed side when merging paired drops', () => {
+    const reasons = formatAnomalyReasons({
+      signals: [
+        {
+          metric: 'srcVolume',
+          kind: 'ratioDrop',
+          severity: 'severe',
+          baseline: 10_000_000,
+          current: 0,
+          changePercent: -100,
+        },
+        {
+          metric: 'dstVolume',
+          kind: 'ratioDrop',
+          severity: 'severe',
+          baseline: 100_000,
+          current: 1,
+          changePercent: -99.999,
+        },
+      ],
+      sideMismatch: null,
+    })
+
+    expect(reasons).toEqual(['Volume dropped (-100%, $10M → $0)'])
+  })
+
   it('keeps separate rows when src and dst have different signal kinds', () => {
     const reasons = formatAnomalyReasons({
       signals: [
