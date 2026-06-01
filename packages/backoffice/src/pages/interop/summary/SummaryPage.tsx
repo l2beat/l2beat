@@ -221,7 +221,7 @@ export function SummaryPage() {
 
             <SummarySectionCard
               title="Aggregation"
-              description="Keep this high-level here. Use copied raw config when the details matter."
+              description="Use copied raw config when the details matter."
               action={
                 <CopyConfigButton
                   label="aggregation config"
