@@ -71,7 +71,19 @@ export async function getEthereumActivityChart({
     return { data: [], syncWarning, syncedUntil, stats: undefined }
   }
 
-  const startTimestamp = Math.min(...Object.keys(aggregatedEntries).map(Number))
+  const dataStart = Math.min(...Object.keys(aggregatedEntries).map(Number))
+
+  // Anchor the chart to the selected window start so it spans the full range,
+  // clamped to Ethereum's first ever activity record, and fill in-range
+  // zero-activity days with 0s. For the 'max' range (null start) we begin at
+  // that first record.
+  const firstTimestamp = totalCounts[ProjectId.ETHEREUM]?.sinceTimestamp
+  const startTimestamp =
+    adjustedRange[0] !== null
+      ? firstTimestamp !== undefined
+        ? Math.max(adjustedRange[0], firstTimestamp)
+        : adjustedRange[0]
+      : (firstTimestamp ?? dataStart)
 
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedRange[1]],
@@ -84,7 +96,7 @@ export async function getEthereumActivityChart({
 
     const entry = aggregatedEntries[timestamp]
     if (!entry || !isSynced) {
-      return [timestamp, null, null]
+      return [timestamp, fallbackValue, fallbackValue]
     }
 
     return [

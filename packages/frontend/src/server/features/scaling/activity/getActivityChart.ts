@@ -114,12 +114,12 @@ export async function getActivityChart({
 
   const dataStart = Math.min(...Object.keys(aggregatedEntries).map(Number))
 
-  // For a single project, anchor the chart to the selected window start so it
-  // spans the full range — filling in-range days that have no activity yet with
-  // 0s — but never start before the project's first ever activity record (so we
-  // don't render days when it didn't exist). For the 'max' range (null start)
-  // we begin at that first record.
-  let startTimestamp = dataStart
+  // Anchor the chart to the selected window start so it spans the full range
+  // for a fixed range, falling back to the first day with data only for the
+  // 'max' range (null start). For a single project we additionally clamp to its
+  // first ever activity record (so we don't render days when it didn't exist)
+  // and fill in-range zero-activity days with 0s — see the data mapping below.
+  let startTimestamp = adjustedRange[0] ?? dataStart
   if (projectId) {
     const firstProjectTimestamp = totalCounts?.[projectId]?.sinceTimestamp
     startTimestamp =

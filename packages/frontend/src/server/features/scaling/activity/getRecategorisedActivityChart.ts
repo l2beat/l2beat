@@ -96,12 +96,17 @@ export async function getRecategorisedActivityChart(
     return { data: [], syncWarning: undefined, syncedUntil: adjustedRange[1] }
   }
 
-  const startTimestamp = Math.min(
+  const dataStart = Math.min(
     ...Object.keys(aggregatedRollupsEntries).map(Number),
     ...Object.keys(aggregatedValidiumsAndOptimiumsEntries).map(Number),
     ...Object.keys(aggregatedOthersEntries).map(Number),
     ...Object.keys(aggregatedEthereumEntries).map(Number),
   )
+  // Anchor the chart to the selected window start so it spans the full range,
+  // falling back to the first day with data only for the 'max' range (null
+  // start). This is an aggregate of many projects so we keep null (gap) fills
+  // for in-range days a category has no data, rather than implying 0 activity.
+  const startTimestamp = adjustedRange[0] ?? dataStart
   const timestamps = generateTimestamps(
     [UnixTime(startTimestamp), adjustedRange[1]],
     'daily',
