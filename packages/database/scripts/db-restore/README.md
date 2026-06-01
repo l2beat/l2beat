@@ -7,8 +7,8 @@ Restore data from a remote database into your local DB, either by feature (`db-r
 ## Prerequisites
 
 1. Install the PostgreSQL client tools (`psql`, `pg_dump`, `pg_restore`) via the `postgres` or `libpq` package, and make sure they are on your `PATH`.
-2. Run the scripts from root (`packages/database`)
-3. Add variables to `.env` file:
+2. Run the scripts from the package root (`packages/database`) — Prisma needs it.
+3. Add variables to a `.env` file in `packages/database`:
 
    ```
    DEV_LOCAL_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
@@ -20,7 +20,7 @@ Restore data from a remote database into your local DB, either by feature (`db-r
 ## Restore by feature
 
 ```bash
-./db-restore.sh <FEATURE>
+./scripts/db-restore/db-restore.sh <FEATURE>
 ```
 
 Run without arguments to list the available features. Currently:
@@ -31,8 +31,8 @@ Run without arguments to list the available features. Currently:
 Restore one or more specific tables:
 
 ```bash
-./table-restore.sh IndexerState
-./table-restore.sh IndexerState IndexerConfiguration
+./scripts/db-restore/table-restore.sh IndexerState
+./scripts/db-restore/table-restore.sh IndexerState IndexerConfiguration
 ```
 
 ## What the scripts do
