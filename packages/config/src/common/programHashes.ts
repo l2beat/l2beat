@@ -2786,4 +2786,32 @@ Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/f
     verificationSteps:
       'L2BEAT has not yet reproduced the vkey from source. To verify, pin an op-succinct release that includes Base support, configure with Base rollup parameters (chain ID 8453, genesis), build the aggregation program via cargo prove, and compare the resulting vkey to this hash.',
   },
+  '0x44f625fa2a41367670d74a7b0d9899412dc1ca406f90df7a5bd9f8ae581ee47f': {
+    title: 'Range program of Base AggregateVerifier',
+    description:
+      'Proves correct state transition function of the Base rollup over a sub-range of L2 blocks. Compiled from the op-succinct range crate against the Base rollup config; the resulting vkey is baked into the deployed AggregateVerifier game implementation as ZK_RANGE_HASH.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/main/programs/range',
+    verificationStatus: 'notVerified',
+    verificationSteps:
+      'L2BEAT has not yet reproduced the vkey from source. To verify, pin an op-succinct release that includes Base support, configure with Base rollup parameters (chain ID 8453, genesis), build the range program via cargo prove, and compare the resulting vkey to this hash.',
+  },
+  '0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c': {
+    title: 'TEE enclave image of Base AggregateVerifier',
+    description:
+      'AWS Nitro Enclave PCR0 measurement of the TEE prover image. The TEE arm of the AggregateVerifier accepts attestations only from enclaves whose measured PCR0 matches this value, baked into the deployed game implementation as TEE_IMAGE_HASH.',
+    verificationStatus: 'notVerified',
+    verificationSteps:
+      'L2BEAT has not yet reproduced the PCR0 from source. To verify, build the TEE prover enclave image (EIF) from the published source at a pinned release and compare its PCR0 measurement to this hash.',
+  },
+  '0x20141665fe40bce01fbcfa0a95c8a1bd750eadbe3f24e06a75571e6fd7a9dc11': {
+    title: 'AWS Nitro attestation verifier of Base AggregateVerifier',
+    description:
+      'RISC Zero guest program that verifies an AWS Nitro Enclave attestation document (certificate chain and PCR measurements). TEEProverRegistry.registerSigner admits an enclave signer only on a valid Risc0 proof of this program, so a malicious or unsound program here would let an attacker register a rogue signer and forge TEE proofs. Configured as zkConfig[RiscZero].verifierId on the NitroEnclaveVerifier.',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'notVerified',
+    verificationSteps:
+      'L2BEAT has not yet reproduced the image ID from source. To verify, build the AWS Nitro attestation verification guest from the published source at a pinned release and compare its RISC Zero image ID to this hash.',
+  },
 }

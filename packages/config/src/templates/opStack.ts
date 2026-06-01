@@ -749,9 +749,24 @@ function getProgramHashes(
           'AggregateVerifier',
           'ZK_AGGREGATE_HASH',
         )
+      const teeImageHash =
+        templateVars.discovery.getContractValueOrUndefined<string>(
+          'AggregateVerifier',
+          'TEE_IMAGE_HASH',
+        )
+      // RISC Zero guest that verifies AWS Nitro attestations for TEE signer registration.
+      const teeAttestationProgram = templateVars.discovery.hasContract(
+        'NitroEnclaveVerifier',
+      )
+        ? templateVars.discovery.getContractValueOrUndefined<{
+            verifierId: string
+          }>('NitroEnclaveVerifier', 'zkConfigRiscZero')?.verifierId
+        : undefined
       const hashes: string[] = []
       if (rangeHash) hashes.push(rangeHash)
       if (aggregateHash) hashes.push(aggregateHash)
+      if (teeImageHash) hashes.push(teeImageHash)
+      if (teeAttestationProgram) hashes.push(teeAttestationProgram)
       return hashes.map((h) => PROGRAM_HASHES(h))
     }
   }

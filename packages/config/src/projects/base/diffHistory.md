@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x0614c000dc91a8e66ebfa7ed3f0f908875e42063
+Generated with discovered.json: 0x420a3a260b5cf30cec833441b640aac0d58ffa49
 
-# Diff at Mon, 01 Jun 2026 07:08:48 GMT:
+# Diff at Mon, 01 Jun 2026 09:08:41 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@06302879db359284808c0757621d4cf59b7e1a57 block: 1779198836
@@ -255,8 +255,26 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
     contract TEEVerifier (eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228) [base/TEEVerifier]
     +++ description: Stateless verifier that validates AggregateVerifier TEE proofs by recovering an ECDSA signature over the journal and checking the recovered signer against TEEProverRegistry. Enforces PCR0 match by comparing the signer's registered image hash to the AggregateVerifier's TEE_IMAGE_HASH. Can be permanently nullified by a successful AggregateVerifier.nullify call.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
 ```
 
 ```diff
@@ -279,6 +297,12 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
     contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier]
     +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
 ```
@@ -291,8 +315,26 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
     contract NitroEnclaveVerifier (eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb) [base/NitroEnclaveVerifier]
     +++ description: ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
 ```
 
 ```diff
@@ -315,6 +357,18 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+```
+
+```diff
++   Status: CREATED
     contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier]
     +++ description: Verifier contract for SP1 proofs (v6.1.0).
 ```
@@ -331,6 +385,18 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
 ```
 
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C) [N/A]
+    +++ description: None
+```
+
 ## Source code changes
 
 ```diff
@@ -344,7 +410,18 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
  .../projects/base/.flat/NitroEnclaveVerifier.sol   | 1393 +++++++
  .../OptimismPortal2/OptimismPortal2.sol            |  461 +-
  .../PreimageOracle.sol => /dev/null                | 1463 -------
+ ...:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97.sol | 1767 ++++++++
+ ...:0x2a098988600d87650Fb061FfAff08B97149Fa84D.sol | 1780 ++++++++
+ ...:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF.sol | 1779 ++++++++
+ ...:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9.sol | 1780 ++++++++
+ ...:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C.sol | 1760 ++++++++
  .../projects/base/.flat/RiscZeroSetVerifier.sol    |  900 ++++
+ ...:0x1efDd13f831ceeEa14940806705A53D3211CD698.sol |  366 ++
+ ...:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7.sol |  366 ++
+ ...:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3.sol |  366 ++
+ ...:0x844D5f01161E3559d36f23d0Aa9E9620949aF782.sol |  366 ++
+ ...:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696.sol |  366 ++
+ ...:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1.sol |  366 ++
  .../projects/base/.flat/RiscZeroVerifierRouter.sol |  282 ++
  ...:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5.sol |  614 +++
  ...:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508.sol |  661 +++
@@ -359,7 +436,7 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
  .../src/projects/base/.flat/TEEVerifier.sol        | 4402 ++++++++++++++++++++
  .../src/projects/base/.flat/TimelockController.sol | 1111 +++++
  .../src/projects/base/.flat/ZkVerifier.sol         | 1862 +++++++++
- 25 files changed, 19230 insertions(+), 9104 deletions(-)
+ 36 files changed, 30292 insertions(+), 9104 deletions(-)
 ```
 
 ## Config/verification related changes
