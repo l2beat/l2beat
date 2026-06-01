@@ -288,6 +288,33 @@ describe('calculateInclusionDelay', () => {
       ])
     })
 
+    it('snaps threshold markers up to the first sample that reaches the threshold', () => {
+      const chart = {
+        type: 'spanlike',
+        validatorCount: 100,
+        spanBlocks: 16,
+        blockSeconds: 2,
+        target: 0.99,
+        maxCensorFraction: 0.5,
+      } satisfies ProjectSpanLikeInclusionDelayChart
+
+      // The delay steps from 2s at 0.010 to 34s at 0.011, so a 10s threshold
+      // crosses at ~0.01025. Rounding to the nearest step would snap that back
+      // to 0.010, where the delay is still only 2s; the marker must instead land
+      // on 0.011, the first sample that actually reaches the threshold.
+      expect(
+        getInclusionDelayData(chart, [{ label: '10s', days: 10 / 86_400 }])
+          .thresholdMarkers,
+      ).toEqual([
+        {
+          id: 'delay-threshold-10s',
+          label: '10s delay',
+          censoringFraction: 0.011,
+          delayDays: 10 / 86_400,
+        },
+      ])
+    })
+
     it('snaps threshold markers that cross between samples to the step', () => {
       const chart = {
         type: 'ethereumlike',

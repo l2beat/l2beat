@@ -158,7 +158,7 @@ function buildThresholdMarkers(
       {
         id: `delay-threshold-${threshold.label}`,
         label: `${threshold.label} delay`,
-        censoringFraction: roundToCensoringStep(censoringFraction),
+        censoringFraction: snapUpToCensoringStep(censoringFraction),
         delayDays: threshold.days,
       },
     ]
@@ -224,6 +224,17 @@ function roundToCensoringStep(fraction: number): number {
   return (
     Math.round(fraction / CENSORING_FRACTION_STEP) * CENSORING_FRACTION_STEP
   )
+}
+
+// Snaps a threshold crossing up to the first sampled fraction that reaches the
+// threshold. Rounding to the nearest step (as roundToCensoringStep does) could
+// move the marker back to the previous sample, where the delay is still below
+// the threshold, drawing it above the curve and understating the censorship
+// fraction needed. The epsilon absorbs floating-point error so a crossing that
+// already sits on the grid is not nudged to the next step.
+function snapUpToCensoringStep(fraction: number): number {
+  const steps = fraction / CENSORING_FRACTION_STEP
+  return Math.ceil(steps) * CENSORING_FRACTION_STEP
 }
 
 // Samples the censoring-fraction axis from 0 to maxCensorFraction in fixed 0.1%
