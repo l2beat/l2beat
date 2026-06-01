@@ -17,8 +17,6 @@ const ocrCommitF = discovery.getContractValue(
   'EthereumOffRamp_v1_6',
   'ocrCommitF',
 )
-// OCR requires F+1 signatures to commit a report, so the equivalent multisig
-// threshold is F+1, not F.
 const ocrCommitQuorum = Number(ocrCommitF) + 1
 
 const permissionLessExecutionThresholdFmt = discovery.getContractValue(
