@@ -1,8 +1,9 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Command, Plan } from '@l2beat/token-backend'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { diff } from '~/utils/getDiff'
 import { ButtonWithSpinner } from './ButtonWithSpinner'
 import { Button } from './core/Button'
@@ -26,79 +27,104 @@ export function PlanConfirmationDialog({
   setPlan: (plan: Plan | undefined) => void
   onSuccess?: () => void
 }) {
-  const utils = api.useUtils()
+  const api = useTRPC()
+  const queryClient = useQueryClient()
   const navigate = useNavigate()
 
   function invalidateAbstractTokenQueries() {
-    utils.abstractTokens.invalidate()
-    utils.search.invalidate()
+    queryClient.invalidateQueries(api.abstractTokens.getAll.queryFilter())
+    queryClient.invalidateQueries(
+      api.abstractTokens.getAllWithDeployedTokens.queryFilter(),
+    )
+    queryClient.invalidateQueries(api.abstractTokens.getById.queryFilter())
+    queryClient.invalidateQueries(api.abstractTokens.checks.queryFilter())
+    queryClient.invalidateQueries(api.search.all.queryFilter())
   }
 
   function invalidateDeployedTokenQueries() {
-    utils.abstractTokens.invalidate()
-    utils.deployedTokens.invalidate()
-    utils.search.invalidate()
+    invalidateAbstractTokenQueries()
+    queryClient.invalidateQueries(
+      api.deployedTokens.findByChainAndAddress.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      api.deployedTokens.checkIfExists.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      api.deployedTokens.getByChainAndAddress.queryFilter(),
+    )
+    queryClient.invalidateQueries(api.deployedTokens.checks.queryFilter())
+    queryClient.invalidateQueries(
+      api.deployedTokens.getSuggestionsByCoingeckoId.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      api.deployedTokens.getCoingeckoSuggestions.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      api.deployedTokens.getSuggestionsByPartialTransfers.queryFilter(),
+    )
   }
 
-  const { mutate: executePlan, isPending } = api.plan.execute.useMutation({
-    onSuccess: () => {
-      if (!plan) return
-      onSuccess?.()
-      utils.tokenDbHistory.getPage.invalidate()
-      switch (plan.intent.type) {
-        case 'AddAbstractTokenIntent':
-          toast.success(
-            <span>
-              Token added successfully.{' '}
-              <Link
-                to={`/tokens/${plan.intent.record.id}`}
-                className="underline"
-              >
-                View token
-              </Link>
-            </span>,
-          )
-          invalidateAbstractTokenQueries()
-          break
-        case 'AddDeployedTokenIntent':
-          toast.success(
-            <span>
-              Token added successfully.{' '}
-              <Link
-                to={`/tokens/${plan.intent.record.chain}/${plan.intent.record.address}`}
-                className="underline"
-              >
-                View token
-              </Link>
-            </span>,
-          )
-          invalidateDeployedTokenQueries()
-          break
-        case 'DeleteAbstractTokenIntent':
-          toast.success('Abstract token deleted successfully')
-          invalidateAbstractTokenQueries()
-          navigate('/')
-          break
-        case 'DeleteDeployedTokenIntent':
-          toast.success('Deployed token deleted successfully')
-          invalidateDeployedTokenQueries()
-          navigate('/')
-          break
-        case 'UpdateAbstractTokenIntent':
-          toast.success('Abstract token updated successfully')
-          invalidateAbstractTokenQueries()
-          break
-        case 'UpdateDeployedTokenIntent':
-          toast.success('Deployed token updated successfully')
-          invalidateDeployedTokenQueries()
-          break
-        default:
-          assertUnreachable(plan.intent)
-      }
+  const { mutate: executePlan, isPending } = useMutation(
+    api.plan.execute.mutationOptions({
+      onSuccess: () => {
+        if (!plan) return
+        onSuccess?.()
+        queryClient.invalidateQueries(api.tokenDbHistory.getPage.queryFilter())
+        switch (plan.intent.type) {
+          case 'AddAbstractTokenIntent':
+            toast.success(
+              <span>
+                Token added successfully.{' '}
+                <Link
+                  to={`/tokens/${plan.intent.record.id}`}
+                  className="underline"
+                >
+                  View token
+                </Link>
+              </span>,
+            )
+            invalidateAbstractTokenQueries()
+            break
+          case 'AddDeployedTokenIntent':
+            toast.success(
+              <span>
+                Token added successfully.{' '}
+                <Link
+                  to={`/tokens/${plan.intent.record.chain}/${plan.intent.record.address}`}
+                  className="underline"
+                >
+                  View token
+                </Link>
+              </span>,
+            )
+            invalidateDeployedTokenQueries()
+            break
+          case 'DeleteAbstractTokenIntent':
+            toast.success('Abstract token deleted successfully')
+            invalidateAbstractTokenQueries()
+            navigate('/')
+            break
+          case 'DeleteDeployedTokenIntent':
+            toast.success('Deployed token deleted successfully')
+            invalidateDeployedTokenQueries()
+            navigate('/')
+            break
+          case 'UpdateAbstractTokenIntent':
+            toast.success('Abstract token updated successfully')
+            invalidateAbstractTokenQueries()
+            break
+          case 'UpdateDeployedTokenIntent':
+            toast.success('Deployed token updated successfully')
+            invalidateDeployedTokenQueries()
+            break
+          default:
+            assertUnreachable(plan.intent)
+        }
 
-      setPlan(undefined)
-    },
-  })
+        setPlan(undefined)
+      },
+    }),
+  )
 
   if (!plan) {
     return null

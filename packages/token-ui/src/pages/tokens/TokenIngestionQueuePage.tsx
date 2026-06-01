@@ -1,4 +1,5 @@
 import type { IngestionOutcome } from '@l2beat/token-backend'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   CheckIcon,
   ChevronLeftIcon,
@@ -43,22 +44,24 @@ import {
 } from '~/components/IngestionPreviewDialog'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 
 const PAGE_SIZE = 100
 
 export function TokenIngestionQueuePage() {
-  const utils = api.useUtils()
+  const api = useTRPC()
+  const queryClient = useQueryClient()
   const [approvingKey, setApprovingKey] = useState<string | undefined>()
   const [retryingKey, setRetryingKey] = useState<string | undefined>()
   const [preview, setPreview] = useState<IngestionPreviewState | undefined>()
   const [page, setPage] = useState(1)
-  const { data: queuePage, isLoading } =
-    api.tokenIngestionQueue.getPage.useQuery(
+  const { data: queuePage, isLoading } = useQuery(
+    api.tokenIngestionQueue.getPage.queryOptions(
       { page, pageSize: PAGE_SIZE },
       { refetchInterval: 10_000 },
-    )
-  const { data: chains } = api.chains.getAll.useQuery()
+    ),
+  )
+  const { data: chains } = useQuery(api.chains.getAll.queryOptions())
   const queue = queuePage?.entries ?? []
   const predictedOutcomes = queuePage?.predictedOutcomes ?? []
   const totalCount = queuePage?.totalCount ?? 0
@@ -77,39 +80,55 @@ export function TokenIngestionQueuePage() {
     }
   }, [page, pageCount])
 
-  const approve = api.tokenIngestionQueue.approve.useMutation({
-    onSuccess: async () => {
-      await utils.tokenIngestionQueue.getPage.invalidate()
-      toast.success('Queue entry approved')
-    },
-    onError: (error) => toast.error(error.message),
-    onSettled: () => setApprovingKey(undefined),
-  })
-  const approveMany = api.tokenIngestionQueue.approveMany.useMutation({
-    onSuccess: async ({ approved }) => {
-      await utils.tokenIngestionQueue.getPage.invalidate()
-      toast.success(`Approved ${approved} queue entries`)
-    },
-    onError: (error) => toast.error(error.message),
-  })
-  const retry = api.tokenIngestionQueue.retry.useMutation({
-    onSuccess: async () => {
-      await utils.tokenIngestionQueue.getPage.invalidate()
-      toast.success('Queue entry queued for retry')
-    },
-    onError: (error) => toast.error(error.message),
-    onSettled: () => setRetryingKey(undefined),
-  })
-  const previewMutation = api.tokenIngestionQueue.preview.useMutation({
-    onSuccess: (trace) => {
-      setPreview((prev) => (prev ? { ...prev, trace, isLoading: false } : prev))
-    },
-    onError: (error) => {
-      setPreview((prev) =>
-        prev ? { ...prev, error: error.message, isLoading: false } : prev,
-      )
-    },
-  })
+  const approve = useMutation(
+    api.tokenIngestionQueue.approve.mutationOptions({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(
+          api.tokenIngestionQueue.getPage.queryFilter(),
+        )
+        toast.success('Queue entry approved')
+      },
+      onError: (error) => toast.error(error.message),
+      onSettled: () => setApprovingKey(undefined),
+    }),
+  )
+  const approveMany = useMutation(
+    api.tokenIngestionQueue.approveMany.mutationOptions({
+      onSuccess: async ({ approved }) => {
+        await queryClient.invalidateQueries(
+          api.tokenIngestionQueue.getPage.queryFilter(),
+        )
+        toast.success(`Approved ${approved} queue entries`)
+      },
+      onError: (error) => toast.error(error.message),
+    }),
+  )
+  const retry = useMutation(
+    api.tokenIngestionQueue.retry.mutationOptions({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(
+          api.tokenIngestionQueue.getPage.queryFilter(),
+        )
+        toast.success('Queue entry queued for retry')
+      },
+      onError: (error) => toast.error(error.message),
+      onSettled: () => setRetryingKey(undefined),
+    }),
+  )
+  const previewMutation = useMutation(
+    api.tokenIngestionQueue.preview.mutationOptions({
+      onSuccess: (trace) => {
+        setPreview((prev) =>
+          prev ? { ...prev, trace, isLoading: false } : prev,
+        )
+      },
+      onError: (error) => {
+        setPreview((prev) =>
+          prev ? { ...prev, error: error.message, isLoading: false } : prev,
+        )
+      },
+    }),
+  )
 
   function startPreview(entry: { chain: string; address: string }) {
     setPreview({

@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { ArrowRightIcon, CoinsIcon, PlusIcon, TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -29,15 +30,18 @@ import { LoadingState } from '~/components/LoadingState'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AbstractTokenPage() {
+  const api = useTRPC()
   const { id } = useParams()
-  const { data } = api.abstractTokens.getById.useQuery(id ?? '', {
-    enabled: id !== '',
-  })
+  const { data } = useQuery(
+    api.abstractTokens.getById.queryOptions(id ?? '', {
+      enabled: id !== '',
+    }),
+  )
 
   if (!id || data === null) {
     return <Navigate to="/not-found" replace />
@@ -59,6 +63,7 @@ function AbstractTokenView({
 }: {
   token: AbstractTokenWithDeployedTokens
 }) {
+  const api = useTRPC()
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
   const form = useForm<AbstractTokenSchema>({
@@ -76,23 +81,26 @@ function AbstractTokenView({
     },
   })
 
-  const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
-    onSuccess: (data) => {
-      if (data.outcome === 'success') {
-        setPlan(data.plan)
-      } else {
-        toast.error(data.error)
-      }
-    },
-  })
+  const { mutate: planMutate, isPending } = useMutation(
+    api.plan.generate.mutationOptions({
+      onSuccess: (data) => {
+        if (data.outcome === 'success') {
+          setPlan(data.plan)
+        } else {
+          toast.error(data.error)
+        }
+      },
+    }),
+  )
 
-  const { data: suggestions, isLoading: isLoadingSuggestions } =
-    api.deployedTokens.getSuggestionsByCoingeckoId.useQuery(
+  const { data: suggestions, isLoading: isLoadingSuggestions } = useQuery(
+    api.deployedTokens.getSuggestionsByCoingeckoId.queryOptions(
       token.coingeckoId ?? '',
       {
         enabled: !!token.coingeckoId,
       },
-    )
+    ),
+  )
 
   const sortedSuggestions = [...(suggestions ?? [])].sort(
     (a, b) => Number(b.isInterop) - Number(a.isInterop),

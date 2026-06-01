@@ -1,4 +1,5 @@
 import type { ChainApi } from '@l2beat/token-backend'
+import { useQuery } from '@tanstack/react-query'
 import { LinkIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
@@ -26,10 +27,13 @@ import {
 import { ExternalLink } from '~/components/ExternalLink'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 
 export function ChainsSummaryPage() {
-  const { data, isLoading: isChainsLoading } = api.chains.getAll.useQuery()
+  const api = useTRPC()
+  const { data, isLoading: isChainsLoading } = useQuery(
+    api.chains.getAll.queryOptions(),
+  )
   return (
     <AppLayout>
       <Card className="h-[calc(100vh-16px)] overflow-y-auto">

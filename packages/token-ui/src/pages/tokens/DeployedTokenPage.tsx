@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -22,20 +23,23 @@ import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useQueryState } from '~/hooks/useQueryState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { DeployedToken } from '~/mock/types'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimestamp'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function DeployedTokenPage() {
+  const api = useTRPC()
   const { chain, address } = useParams()
-  const { data } = api.deployedTokens.findByChainAndAddress.useQuery(
-    {
-      chain: chain ?? '',
-      address: address ?? '',
-    },
-    {
-      enabled: chain !== '' && address !== '',
-    },
+  const { data } = useQuery(
+    api.deployedTokens.findByChainAndAddress.queryOptions(
+      {
+        chain: chain ?? '',
+        address: address ?? '',
+      },
+      {
+        enabled: chain !== '' && address !== '',
+      },
+    ),
   )
 
   if (!chain || !address || data === null) {
@@ -54,6 +58,7 @@ export function DeployedTokenPage() {
 }
 
 function DeployedTokenView({ token }: { token: DeployedToken }) {
+  const api = useTRPC()
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
   const [abstractTokenId] = useQueryState('abstractTokenId', '')
@@ -71,7 +76,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
   })
 
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
-    api.abstractTokens.getAll.useQuery()
+    useQuery(api.abstractTokens.getAll.queryOptions())
 
   useEffect(() => {
     if (abstractTokenId) {
@@ -79,8 +84,8 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
     }
   }, [abstractTokenId, form.setValue])
 
-  const { mutate: planMutate, isPending: isPending } =
-    api.plan.generate.useMutation({
+  const { mutate: planMutate, isPending: isPending } = useMutation(
+    api.plan.generate.mutationOptions({
       onSuccess: (data) => {
         if (data.outcome === 'success') {
           setPlan(data.plan)
@@ -88,10 +93,12 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
           toast.error(data.error)
         }
       },
-    })
+    }),
+  )
 
-  const { data: chains, isLoading: isLoadingChains } =
-    api.chains.getAll.useQuery()
+  const { data: chains, isLoading: isLoadingChains } = useQuery(
+    api.chains.getAll.queryOptions(),
+  )
 
   function onSubmit(values: DeployedTokenSchema) {
     if (deployedTokenExistsLoading) return
@@ -121,18 +128,20 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
   const chain = form.watch('chain')
   const address = form.watch('address')
   const { data: deployedTokenExists, isLoading: deployedTokenExistsLoading } =
-    api.deployedTokens.checkIfExists.useQuery(
-      {
-        chain,
-        address,
-      },
-      {
-        enabled:
-          !!chain &&
-          !!address &&
-          (address !== form.formState.defaultValues?.address ||
-            chain !== form.formState.defaultValues?.chain),
-      },
+    useQuery(
+      api.deployedTokens.checkIfExists.queryOptions(
+        {
+          chain,
+          address,
+        },
+        {
+          enabled:
+            !!chain &&
+            !!address &&
+            (address !== form.formState.defaultValues?.address ||
+              chain !== form.formState.defaultValues?.chain),
+        },
+      ),
     )
 
   useEffect(() => {
