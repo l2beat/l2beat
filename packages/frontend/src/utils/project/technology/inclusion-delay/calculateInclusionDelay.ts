@@ -83,21 +83,19 @@ export function getInclusionDelayData(
 function buildChartData(
   model: InclusionDelayModel,
 ): InclusionDelayChartPoint[] {
-  const censorCounts = getSampledCensorCounts(model)
+  const censoringFractions = getSampledCensoringFractions(
+    model.maxCensorFraction,
+  )
 
-  return censorCounts.map((censorCount) => {
-    const censoringFraction = censorCount / model.validatorCount
-
-    return {
+  return censoringFractions.map((censoringFraction) => ({
+    censoringFraction,
+    projectDelayDays: model.calculateDelayDays(censoringFraction),
+    ethereumDelayDays: calculateEthereumComparisonDelayDaysForFraction({
       censoringFraction,
-      projectDelayDays: model.calculateDelayDays(censorCount),
-      ethereumDelayDays: calculateEthereumComparisonDelayDaysForFraction({
-        censoringFraction,
-        slotSeconds: ETHEREUM_COMPARISON_SLOT_SECONDS,
-        target: model.target,
-      }),
-    }
-  })
+      slotSeconds: ETHEREUM_COMPARISON_SLOT_SECONDS,
+      target: model.target,
+    }),
+  }))
 }
 
 function buildEntityLegendEntries(
@@ -122,16 +120,14 @@ function buildEntityLegendEntries(
     cumulativeStake += entity.stake
     entityNames.push(entity.name)
 
-    const stakeFraction = cumulativeStake / distribution.totalStake
+    const stakeFraction = roundToCensoringStep(
+      cumulativeStake / distribution.totalStake,
+    )
     if (stakeFraction > 1) break
 
-    const censorCount = Math.min(
-      Math.round(model.validatorCount * stakeFraction),
-      model.validatorCount,
-    )
     const delayDays =
       stakeFraction <= model.maxCensorFraction
-        ? model.calculateDelayDays(censorCount)
+        ? model.calculateDelayDays(stakeFraction)
         : null
 
     const entityCount = i + 1
@@ -162,7 +158,7 @@ function buildThresholdMarkers(
       {
         id: `delay-threshold-${threshold.label}`,
         label: `${threshold.label} delay`,
-        censoringFraction,
+        censoringFraction: snapUpToCensoringStep(censoringFraction),
         delayDays: threshold.days,
       },
     ]
@@ -219,31 +215,43 @@ function calculateEthereumComparisonDelayDaysForFraction({
   })
 }
 
-const MAX_CURVE_SAMPLE_POINTS = 501
+const CENSORING_FRACTION_STEP = 0.001
 
-function getSampledCensorCounts(model: InclusionDelayModel) {
-  const maxCensorCount = Math.floor(
-    model.validatorCount * model.maxCensorFraction,
+// Snaps a censoring fraction to the sampling grid so markers line up with an
+// actual curve point rather than landing between samples (which would show as a
+// marker slightly off the line, most visibly in log scale).
+function roundToCensoringStep(fraction: number): number {
+  return (
+    Math.round(fraction / CENSORING_FRACTION_STEP) * CENSORING_FRACTION_STEP
   )
+}
 
-  if (maxCensorCount + 1 <= MAX_CURVE_SAMPLE_POINTS) {
-    return Array.from({ length: maxCensorCount + 1 }, (_, i) => i)
+// Snaps a threshold crossing up to the first sampled fraction that reaches the
+// threshold. Rounding to the nearest step (as roundToCensoringStep does) could
+// move the marker back to the previous sample, where the delay is still below
+// the threshold, drawing it above the curve and understating the censorship
+// fraction needed. The epsilon absorbs floating-point error so a crossing that
+// already sits on the grid is not nudged to the next step.
+function snapUpToCensoringStep(fraction: number): number {
+  const steps = fraction / CENSORING_FRACTION_STEP
+  return Math.ceil(steps) * CENSORING_FRACTION_STEP
+}
+
+// Samples the censoring-fraction axis from 0 to maxCensorFraction in fixed 0.1%
+// steps, always ending exactly on maxCensorFraction. The resolution is therefore
+// independent of the validator count, so small and large sets render the same
+// granularity.
+function getSampledCensoringFractions(maxCensorFraction: number): number[] {
+  if (maxCensorFraction <= 0) return [0]
+
+  const stepCount = Math.ceil(maxCensorFraction / CENSORING_FRACTION_STEP)
+  const fractions = new Set<number>()
+
+  for (let i = 0; i <= stepCount; i++) {
+    fractions.add(Math.min(i * CENSORING_FRACTION_STEP, maxCensorFraction))
   }
 
-  const step = maxCensorCount / (MAX_CURVE_SAMPLE_POINTS - 1)
-  const counts = new Set([0, maxCensorCount])
-
-  for (let i = 0; i < MAX_CURVE_SAMPLE_POINTS; i++) {
-    counts.add(Math.round(i * step))
-  }
-
-  for (const count of model.criticalCensorCounts) {
-    if (count >= 0 && count <= maxCensorCount) {
-      counts.add(count)
-    }
-  }
-
-  return [...counts].sort((a, b) => a - b)
+  return [...fractions].sort((a, b) => a - b)
 }
 
 function getSortedPositiveEntities(
