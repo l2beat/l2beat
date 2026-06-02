@@ -68,6 +68,8 @@ export function InteropAggregatesTimestampOverrideCard() {
   const handleRemove = () => {
     unsetPinning.mutate(INTEROP_PINNING_KEY)
   }
+
+  const today = timestampToDateInput(Math.floor(Date.now() / 1000))
   return (
     <Card className="gap-4">
       <CardHeader>
@@ -84,6 +86,7 @@ export function InteropAggregatesTimestampOverrideCard() {
               id="pinned-date"
               type="date"
               value={pinnedDate}
+              max={today}
               onChange={(e) => setPinnedDate(e.target.value)}
               disabled={isLoading}
             />
