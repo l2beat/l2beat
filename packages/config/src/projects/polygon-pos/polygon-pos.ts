@@ -242,10 +242,9 @@ export const polygonpos: ScalingProject = {
     dataAvailability: RISK_VIEW.DATA_POS,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
-      description:
-        RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1').description +
-        ` In Polygon PoS, the sequencers network corresponds to the PoS validators network, which is composed of ${currentValidatorSetSize} members.`,
+      value: 'Decentralized Sequencer Set',
+      sentiment: 'warning',
+      description: `Although there is a sequencer set of ${currentValidatorSetSize} (called validators), if the cap of ${currentValidatorSetCap} is reached, no new stakers can join. A minimum of ${minDeposit} POL stake is required to obtain block production rights. There is no specific censorship resistance mechanism against selective censorship by parts of the active validator set nor a way to force transactions from Ethereum L1. The canonical bridge between Polygon PoS and Ethereum allows for queuing transactions from the Ethereum and Polygon PoS sides, which cannot be skipped, except for halting the queue entirely.`,
     },
     proposerFailure: RISK_VIEW.PROPOSER_POS(
       currentValidatorSetSize,
