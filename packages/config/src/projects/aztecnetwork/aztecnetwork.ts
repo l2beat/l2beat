@@ -493,7 +493,7 @@ export const aztecnetwork: ScalingProject = {
 ### Selective censorship
 On a live Aztec L2 with a given fraction of censoring sequencers, users can either send private transactions or wait for a non-censoring committee and proposing sequencer to include their public transaction.
 ### Blanket censorship
-If the Aztec L2 stops producing blocks or users are censored by the entire sequencer set, they can join it permissionlessly at the churn rate or circumvent it completely by bonding and using the escape hatch. In both cases, expensive hardware is required to provide the required validity proof. Motivated censorers can try to saturate the entry queue and the escape hatch with their own new sequencers and thus lower the inclusion chances of the censored.
+If users are censored by the entire sequencer set, even if it stops block production just to censor, anyone can join the sequencer set permissionlessly at the churn rate or circumvent it completely by bonding and using the escape hatch. In both cases, expensive hardware is required to provide the required validity proof. Motivated censorers can try to saturate the entry queue and the escape hatch with their own new sequencers and thus lower the inclusion chances of the censored.
 ### Walkaway
 In the scenario of all sequencers stopping their service, the escape hatch provides an inclusion guarantee of ${escapeHatchFrequencyString} in the worst case and the sequencer set can heal long-term by permissionless entry and churn.`,
       references: [
