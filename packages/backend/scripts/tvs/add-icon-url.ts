@@ -45,7 +45,8 @@ const cmd = command({
         assert(iconUrl, `Missing icon for ${t.priceId}`)
         return { ...t, iconUrl }
       })
-      const filePath = `./../config/src/tvs/json/${project.id.replace('=', '').replace(';', '')}.json`
+      const projectPath = project.id.replace('=', '').replace(';', '')
+      const filePath = `./../config/src/projects/${projectPath}/tvs.json`
 
       logger.info(`Writing results to file: ${filePath}`)
       writeToFile(filePath, project.id, newConfig)
@@ -65,7 +66,7 @@ function initLogger(env: Env) {
 
 function writeToFile(filePath: string, project: string, tokens: TvsToken[]) {
   const wrapper = {
-    $schema: 'schema/tvs-config-schema.json',
+    $schema: '../tvs-config-schema.json',
     projectId: ProjectId(project),
     tokens: tokens,
   }

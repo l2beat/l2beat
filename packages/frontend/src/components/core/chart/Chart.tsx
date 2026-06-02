@@ -395,6 +395,7 @@ export {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
+  ChartLegendItemLabel,
   ChartTooltip,
   type CustomChartTooltipProps,
   ChartTooltipWrapper,

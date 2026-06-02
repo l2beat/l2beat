@@ -10,6 +10,8 @@ import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { command, positional, string } from 'cmd-ts'
 import {
   effectiveIgnoreRelatives,
+  type IgnoreSet,
+  isFieldIgnored,
   proxyFilteredAddresses,
 } from './discoveryRelatives'
 
@@ -179,13 +181,13 @@ function formatValue(
 function leakTag(
   field: string,
   value: ContractValue | undefined,
-  ignored: { template: Set<string>; override: Set<string> },
+  ignored: { template: IgnoreSet; override: IgnoreSet },
   proxyFiltered: Set<string>,
 ): string {
   const addrs = toAddressArray(value)
   if (addrs.length === 0) return ''
-  if (ignored.template.has(field)) return '  [IGNORED via template]'
-  if (ignored.override.has(field)) return '  [IGNORED via override]'
+  if (isFieldIgnored(ignored.template, field)) return '  [IGNORED via template]'
+  if (isFieldIgnored(ignored.override, field)) return '  [IGNORED via override]'
   const liveTargets = addrs.filter((a) => !proxyFiltered.has(a))
   if (liveTargets.length === 0) return '  [IGNORED via proxy]'
   if (liveTargets.length < addrs.length) return '  [LEAKING (partial)]'

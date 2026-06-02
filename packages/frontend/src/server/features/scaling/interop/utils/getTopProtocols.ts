@@ -1,14 +1,13 @@
 import type { Project } from '@l2beat/config'
-import {
-  assert,
-  getInteropTransferValue,
-  type ProjectId,
-} from '@l2beat/shared-pure'
-import type { AggregatedInteropTransferWithTokens } from '../types'
+import { assert, type ProjectId } from '@l2beat/shared-pure'
+import { manifest } from '~/utils/Manifest'
+import type { InteropTransferWithTokens } from '../types'
+import { getInteropTransferRecordValue } from './getInteropTransferRecordValue'
 
 export type InteropProtocolData = {
   name: string
   slug: string
+  iconUrl: string
   volume: {
     value: number
     share: number
@@ -20,7 +19,7 @@ export type InteropProtocolData = {
 }
 
 export function getTopProtocols(
-  records: AggregatedInteropTransferWithTokens[],
+  records: InteropTransferWithTokens[],
   interopProjects: Project<'interopConfig'>[],
   subgroupProjects: Set<ProjectId>,
 ): InteropProtocolData[] {
@@ -32,7 +31,8 @@ export function getTopProtocols(
 
     const currentVolume = map.get(record.id) ?? { volume: 0, transfers: 0 }
     map.set(record.id, {
-      volume: currentVolume.volume + (getInteropTransferValue(record) ?? 0),
+      volume:
+        currentVolume.volume + (getInteropTransferRecordValue(record) ?? 0),
       transfers: currentVolume.transfers + (record.transferCount ?? 0),
     })
   }
@@ -50,6 +50,7 @@ export function getTopProtocols(
     return {
       name: project.interopConfig.name ?? project.name,
       slug: project.slug,
+      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       volume: {
         value: data.volume,
         share: totalVolume > 0 ? (data.volume / totalVolume) * 100 : 0,

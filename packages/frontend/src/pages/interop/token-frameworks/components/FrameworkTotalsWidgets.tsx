@@ -1,6 +1,7 @@
+import { useQuery } from '@tanstack/react-query'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
@@ -14,11 +15,14 @@ export function TotalVolumeWidget({
   mobile?: boolean
   className?: string
 }) {
+  const trpc = useTRPC()
   const { selectedChains } = useTokenFrameworksSelectedChains()
-  const { data, isLoading } = api.interop.tokenFrameworks.useQuery({
-    from: selectedChains,
-    to: selectedChains,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.interop.tokenFrameworks.queryOptions({
+      from: selectedChains,
+      to: selectedChains,
+    }),
+  )
 
   return (
     <FrameworkTotalCard
@@ -40,11 +44,14 @@ export function TotalTransfersWidget({
   mobile?: boolean
   className?: string
 }) {
+  const trpc = useTRPC()
   const { selectedChains } = useTokenFrameworksSelectedChains()
-  const { data, isLoading } = api.interop.tokenFrameworks.useQuery({
-    from: selectedChains,
-    to: selectedChains,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.interop.tokenFrameworks.queryOptions({
+      from: selectedChains,
+      to: selectedChains,
+    }),
+  )
 
   return (
     <FrameworkTotalCard

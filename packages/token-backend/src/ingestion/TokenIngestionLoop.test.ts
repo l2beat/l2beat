@@ -561,6 +561,63 @@ describe(TokenIngestionLoop.name, () => {
       expect(remove).toHaveBeenOnlyCalledWith(queueEntry(secondAddress))
     })
 
+    it('marks an unexpected entry failure as an error and continues draining', async () => {
+      const firstAddress = token('ethereum', '0xaaa')
+      const secondAddress = token('ethereum', '0xbbb')
+      const transferIndex = { findInvolving: mockFn().returns([]) }
+      const refreshInteropTransferIndex = mockFn().resolvesTo(transferIndex)
+      const process = mockFn()
+        .rejectsWithOnce(new Error('boom'))
+        .resolvesToOnce({
+          id: 'ing_test',
+          address: secondAddress,
+          steps: [],
+          outcome: { kind: 'skip', reason: 'test' },
+        } satisfies IngestionTrace)
+      const markError = mockFn().resolvesTo(1)
+
+      const loop = new TokenIngestionLoop(
+        mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+              latestSerialId: undefined,
+              transferCount: 0,
+              tokenAddresses: [],
+            }),
+            getAll: mockFn().resolvesTo([]),
+          }),
+        }),
+        mockObject<TokenDatabase>({
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
+            get: mockFn().resolvesTo(undefined),
+          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findNextPending: mockFn()
+                .resolvesToOnce(queueEntry(firstAddress))
+                .resolvesToOnce(queueEntry(secondAddress))
+                .resolvesToOnce(undefined),
+              markError,
+            },
+          ),
+        }),
+        mockObject({
+          process,
+          refreshInteropTransferIndex,
+        }) as unknown as TokenIngestionProcessor,
+        Logger.SILENT,
+        { intervalMs: 60_000 },
+      )
+
+      await loop.runOnce()
+
+      expect(process).toHaveBeenCalledTimes(2)
+      expect(markError).toHaveBeenOnlyCalledWith(
+        queueEntry(firstAddress),
+        'Unexpected token ingestion error: boom.',
+      )
+    })
+
     it('creates an abstract token from CoinGecko before inserting a deployed token', async () => {
       const address = token('ethereum', '0xaaa')
       const abstractInsert = mockFn().resolvesTo('ABC123')
@@ -659,6 +716,114 @@ describe(TokenIngestionLoop.name, () => {
         abstractTokenId: 'ABC123',
         symbol: 'USDC',
         decimals: 6,
+      })
+    })
+
+    it('adopts the deployed-token casing when CoinGecko symbol differs only in case', async () => {
+      const address = token('ethereum', '0xaaa')
+      const abstractInsert = mockFn().resolvesTo('ABC123')
+      const deployedInsert = mockFn().resolvesTo(undefined)
+
+      const loop = createLoop({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+              latestSerialId: undefined,
+              transferCount: 0,
+              tokenAddresses: [],
+            }),
+            getAll: mockFn().resolvesTo([]),
+          }),
+        }),
+        tokenDb: mockObject<TokenDatabase>({
+          transaction: async (callback) => await callback(),
+          tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
+            get: mockFn().resolvesTo(undefined),
+          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findNextPending: mockFn()
+                .resolvesToOnce(queueEntry(address))
+                .resolvesToOnce(undefined),
+              remove: mockFn().resolvesTo(1),
+            },
+          ),
+          tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
+            insert: mockFn().resolvesTo(undefined),
+          }),
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            findByChainAndAddress: mockFn().resolvesTo(undefined),
+            getByPrimaryKeys: mockFn().resolvesTo([]),
+            insert: deployedInsert,
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            findByCoingeckoId: mockFn().resolvesTo(undefined),
+            findById: mockFn().resolvesTo(undefined),
+            insert: abstractInsert,
+          }),
+          chain: mockObject<TokenDatabase['chain']>({
+            getAll: mockFn().resolvesTo([
+              {
+                name: 'ethereum',
+                chainId: 1,
+                explorerUrl: null,
+                aliases: ['eth'],
+                apis: null,
+              },
+            ]),
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          getCoinList: mockFn().resolvesTo([
+            {
+              id: 'ethena-staked-usde',
+              name: 'Ethena Staked USDe',
+              symbol: 'susde',
+              platforms: { eth: address.address },
+            },
+          ]),
+          getCoinDataById: mockFn().resolvesTo({
+            id: 'ethena-staked-usde',
+            symbol: 'susde',
+            image: { large: 'https://example.com/susde.png' },
+            platforms: {},
+          }),
+          getCoinMarketChartRange: mockFn().resolvesTo({
+            prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
+            marketCaps: [],
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'sUSDe',
+          symbolSource: 'rpc',
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        } satisfies DeployedTokenFacts),
+        generateAbstractTokenId: () => 'ABC123',
+      })
+
+      await loop.runOnce()
+
+      expect(abstractInsert.calls[0]?.args[0]).toHaveSubset({
+        id: 'ABC123',
+        symbol: 'sUSDe',
+        coingeckoId: 'ethena-staked-usde',
+        reviewed: false,
+      })
+      expect(deployedInsert.calls[0]?.args[0]).toHaveSubset({
+        ...address,
+        abstractTokenId: 'ABC123',
+        symbol: 'sUSDe',
+        decimals: 18,
       })
     })
 

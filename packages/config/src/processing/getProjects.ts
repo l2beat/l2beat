@@ -331,8 +331,8 @@ export function adjustDiscoveryInfo(
 }
 
 function getTvsConfig(project: { id: ProjectId }): TvsToken[] | undefined {
-  const fileName = `${project.id.replace('=', '').replace(';', '')}.json`
-  const filePath = join(__dirname, `../../src/tvs/json/${fileName}`)
+  const projectPath = project.id.replace('=', '').replace(';', '')
+  const filePath = join(__dirname, `../../src/projects/${projectPath}/tvs.json`)
 
   if (!existsSync(filePath)) {
     return undefined

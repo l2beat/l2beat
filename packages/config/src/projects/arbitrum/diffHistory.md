@@ -1,3 +1,99 @@
+Generated with discovered.json: 0xa52955bbbc5218c8d7f05000991a65e180371445
+
+# Diff at Tue, 02 Jun 2026 10:46:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779399672
+- current timestamp: 1779800021
+
+## Description
+
+2 SC members tagged (rotated in on 2026-05-15):
+- 0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D: DZack23
+- 0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce: PabloSabbatella-Opsek
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779399672 (main branch discovery), not current.
+
+```diff
+    EOA DZack23 (arb1:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D) {
+    +++ description: None
+      name:
++        "DZack23"
+    }
+```
+
+```diff
+    EOA PabloSabbatella-Opsek (arb1:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce) {
+    +++ description: None
+      name:
++        "PabloSabbatella-Opsek"
+    }
+```
+
+```diff
+    EOA DZack23 (eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D) {
+    +++ description: None
+      name:
++        "DZack23"
+    }
+```
+
+```diff
+    EOA PabloSabbatella-Opsek (eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce) {
+    +++ description: None
+      name:
++        "PabloSabbatella-Opsek"
+    }
+```
+
+Generated with discovered.json: 0x34421b0d11ee172899141e0c0f95db449270e71c
+
+# Diff at Tue, 26 May 2026 12:54:51 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@e7094edf4e66361e569a605db15b357404737bba block: 1779399672
+- current timestamp: 1779800021
+
+## Description
+
+Arbitrum Bridge implementation swapped on 2026-05-24 by the Arbitrum Security Council (L1 emergency 9/12, bypassing the DAO timelock — no governance proposal): `0x93e8…b898` → `0xfE4749…2418` ([diff](https://disco.l2beat.com/diff/eth:0x93e8f92327bFa8096F5F6ee5f2a49183D3B3b898/eth:0xfE4749061Fb052c354aaC65b9Fb0cCD7e20D2418), [forum announcement](https://forum.arbitrum.foundation/t/security-council-emergency-action-24-05-2026/30910)). Sole code change is a **hardcoded killswitch in `executeCall`**: any outbox-initiated call whose `keccak256(abi.encodePacked(to, data[:36]))` equals `0x3467…2258` reverts with `CallNotAllowed()`.
+
+Per the forum disclosure, the underlying bug is in the L1 ArbitrumTimelock (`eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49`): its `onlyCounterpartTimelock` modifier (which checks both `msg.sender == Bridge` *and* `Bridge.activeOutbox().l2ToL1Sender() == L2_CORE_TIMELOCK`) was applied to the bespoke schedule functions but **not to OZ `AccessControlUpgradeable.renounceRole(bytes32,address)` inherited from the base contract**. Since OZ `renounceRole` is self-renounce only, any L2 EOA could submit a standard L2→L1 message that, after the 7-day fraud-proof window, would make the Bridge call `timelock.renounceRole(PROPOSER_ROLE, Bridge)` — the Bridge stripping its own PROPOSER_ROLE, DoS'ing all DAO AIPs until the Security Council re-granted it. Recoverable (no fund risk per the forum), but a hard governance-DoS. Reversing the killswitch hash confirms the shape: `keccak256(timelock ‖ 0x36568abe ‖ keccak256("PROPOSER_ROLE"))` = `0x3467…2258`. A permanent fix is promised in a future ArbOS upgrade.
+
+## Watched changes
+
+```diff
+    contract Bridge (eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0x29acc2652c0eb213e1a10f1c211600303d26e856116587d65e6fb4d40f0e6bae"
++        "0x20db9bc1997e58a28c805fdcbec1bfee96d521046f574ca70f44466764166628"
+      values.$implementation:
+-        "eth:0x93e8f92327bFa8096F5F6ee5f2a49183D3B3b898"
++        "eth:0xfE4749061Fb052c354aaC65b9Fb0cCD7e20D2418"
+      values.$pastUpgrades.3:
++        ["2026-05-24T17:50:11.000Z","0x200e16ae14638444cf8eda34024c2a956e76a61df81dc35ffb9611edccadb3ea",["eth:0xfE4749061Fb052c354aaC65b9Fb0cCD7e20D2418"]]
+      values.$upgradeCount:
+-        3
++        4
+      implementationNames.eth:0x93e8f92327bFa8096F5F6ee5f2a49183D3B3b898:
+-        "Bridge"
+      implementationNames.eth:0xfE4749061Fb052c354aaC65b9Fb0cCD7e20D2418:
++        "Bridge"
+    }
+```
+
+## Source code changes
+
+```diff
+.../arbitrum/{.flat@1779399672 => .flat}/Bridge/Bridge.sol    | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+```
+
 Generated with discovered.json: 0xfd5a407c4ea991bfd0a90f6be7cfae46e8e1c956
 
 # Diff at Fri, 22 May 2026 15:38:12 GMT:

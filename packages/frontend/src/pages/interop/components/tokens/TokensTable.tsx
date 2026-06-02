@@ -1,4 +1,5 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { functionalUpdate, getCoreRowModel } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
@@ -7,13 +8,21 @@ import type {
   InteropTopItemsSort,
   InteropTopItemsSorting,
 } from '~/server/features/scaling/interop/types'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
+import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { getTopTokensColumns, type TokenRow } from './columns'
 import {
   InfiniteScrollTrigger,
   LoadingMoreText,
   useInfiniteScrollTrigger,
 } from './infiniteScroll'
+
+const DEFAULT_SORTING: InteropTopItemsSorting = [
+  {
+    id: 'volume',
+    desc: true,
+  },
+]
 
 export type TokensQueryInput = {
   id: ProjectId | undefined
@@ -34,12 +43,10 @@ export function TokensTable({
   showTopProtocolColumn?: boolean
   showFlowsColumn?: boolean
 }) {
-  const [sorting, setSorting] = useState<InteropTopItemsSorting>([
-    {
-      id: 'volume',
-      desc: true,
-    },
-  ])
+  const trpc = useTRPC()
+  const { selectedChains } = useInteropSelectedChains()
+  const [sorting, setSorting] =
+    useState<InteropTopItemsSorting>(DEFAULT_SORTING)
   const queryInputWithSort = useMemo(
     () => ({
       ...queryInput,
@@ -48,9 +55,11 @@ export function TokensTable({
     [queryInput, sorting],
   )
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    api.interop.tokens.useInfiniteQuery(queryInputWithSort, {
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-    })
+    useInfiniteQuery(
+      trpc.interop.tokens.infiniteQueryOptions(queryInputWithSort, {
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      }),
+    )
   const rows = useMemo(
     () => data?.pages.flatMap((page) => page.items) ?? [],
     [data],
@@ -67,8 +76,14 @@ export function TokensTable({
         showNetMintedValueColumn,
         showTopProtocolColumn,
         showFlowsColumn,
+        selectedChains,
       }),
-    [showNetMintedValueColumn, showTopProtocolColumn, showFlowsColumn],
+    [
+      showNetMintedValueColumn,
+      showTopProtocolColumn,
+      showFlowsColumn,
+      selectedChains,
+    ],
   )
 
   const table = useTable<TokenRow>({
@@ -82,11 +97,12 @@ export function TokensTable({
     },
     onSortingChange: (updater) => {
       const nextSorting = functionalUpdate(updater, sorting)
+      const nextSingleSorting = nextSorting.slice(0, 1).map((nextSort) => ({
+        id: nextSort.id as InteropTopItemsSort['id'],
+        desc: nextSort.desc,
+      }))
       setSorting(
-        nextSorting.slice(0, 1).map((nextSort) => ({
-          id: nextSort.id as InteropTopItemsSort['id'],
-          desc: nextSort.desc,
-        })),
+        nextSingleSorting.length > 0 ? nextSingleSorting : DEFAULT_SORTING,
       )
     },
     initialState: {

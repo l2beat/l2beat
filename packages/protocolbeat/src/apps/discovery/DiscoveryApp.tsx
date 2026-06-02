@@ -7,6 +7,7 @@ import { HomePage } from './HomePage'
 import { ConfigModelsProvider } from './hooks/useConfigModels'
 import { NewProjectPage } from './NewProjectPage'
 import { ProjectPage } from './ProjectPage'
+import { RendererBenchPage } from './RendererBenchPage'
 
 const queryClient = new QueryClient()
 
@@ -45,6 +46,10 @@ export const DiscoveryAppModule: AppModule = {
         {
           path: 'reports/config-health',
           element: <ConfigHealthReportPage />,
+        },
+        {
+          path: 'node-view-bench',
+          element: <RendererBenchPage />,
         },
       ],
     },

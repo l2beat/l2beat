@@ -58,6 +58,7 @@ export const myria: ScalingProject = {
   id: ProjectId('myria'),
   capability: 'appchain',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt: UnixTime(1780272000), // 2026-06-01T00:00:00Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,

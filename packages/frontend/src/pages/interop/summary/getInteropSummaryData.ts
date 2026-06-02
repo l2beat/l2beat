@@ -6,26 +6,20 @@ import { getInteropChains } from '~/server/features/scaling/interop/utils/getInt
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
+import type { RouterOutputs } from '~/trpc/React'
 import { getSsrHelpers } from '~/trpc/server'
 import { type Manifest, manifest } from '~/utils/Manifest'
-import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '../components/flows/consts'
 import type { InteropQuery } from '../InteropRouter'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
-import { toInteropApiSelection } from '../utils/toInteropApiSelection'
-import type { InteropMode, InteropSelection } from '../utils/types'
-
-interface GetInteropSummaryDataOptions {
-  mode?: InteropMode
-}
+import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
+import type { InteropSelection } from '../utils/types'
 
 export async function getInteropSummaryData(
   req: Request<unknown, unknown, unknown, InteropQuery>,
   manifest: Manifest,
   cache: InMemoryCache,
-  options?: GetInteropSummaryDataOptions,
 ): Promise<RenderData> {
-  const mode = options?.mode ?? 'public'
   const appLayoutProps = await getAppLayoutProps()
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
@@ -37,13 +31,13 @@ export async function getInteropSummaryData(
     scalingProjects.map((p) => [p.id, p.slug]),
   )
 
-  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains.map(
-    (chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-      href: getInteropChainHref(chain.id, scalingProjectSlugById),
-    }),
-  )
+  const interopChainsWithIcons = mapInteropChainsToWithIcons(
+    manifest,
+    interopChains,
+  ).map((chain) => ({
+    ...chain,
+    href: getInteropChainHref(chain.id, scalingProjectSlugById),
+  }))
 
   const activeInteropChains = interopChainsWithIcons.filter(
     (chain) => !chain.isUpcoming,
@@ -52,7 +46,6 @@ export async function getInteropSummaryData(
   const initialSelection = getInitialInteropSelection({
     query: req.query,
     interopChainsIds,
-    mode,
   })
 
   const queryState = await cache.get(
@@ -60,7 +53,6 @@ export async function getInteropSummaryData(
       key: [
         'interop',
         'summary',
-        mode,
         'prefetch',
         initialSelection.from.join(','),
         initialSelection.to.join(','),
@@ -71,7 +63,6 @@ export async function getInteropSummaryData(
     async () =>
       getCachedData(
         initialSelection,
-        mode,
         activeInteropChains.map((chain) => chain.id),
       ),
   )
@@ -97,14 +88,12 @@ export async function getInteropSummaryData(
         openGraph: {
           image: '/meta-images/interop/summary/opengraph-image.png',
         },
-        excludeFromSearchEngines: mode === 'internal',
       }),
     },
     ssr: {
       page: 'InteropSummaryPage',
       props: {
         ...appLayoutProps,
-        mode,
         ...queryState,
         interopChains: activeInteropChainsSortedByVolume,
         defaultSelectedFlowChains,
@@ -127,32 +116,33 @@ function getInteropChainHref(
 
 async function getCachedData(
   initialSelection: InteropSelection,
-  mode: InteropMode,
   initialFlowsChains: string[],
 ) {
   const helpers = getSsrHelpers()
-  const apiSelection = toInteropApiSelection(initialSelection, mode)
   const [protocols] = await Promise.all([
     ps.getProjects({
       select: ['interopConfig'],
     }),
-    apiSelection.from.length > 0 && apiSelection.to.length > 0
-      ? helpers.interop.dashboard.prefetch({ ...apiSelection })
+    initialSelection.from.length > 0 && initialSelection.to.length > 0
+      ? helpers.queryClient.prefetchQuery(
+          helpers.trpc.interop.dashboard.queryOptions({ ...initialSelection }),
+        )
       : undefined,
   ])
 
   const shouldPrefetchFlows =
-    mode === 'public' &&
-    apiSelection.from.length === 0 &&
-    apiSelection.to.length === 0
+    initialSelection.from.length === 0 && initialSelection.to.length === 0
 
   let defaultFlowChainOrder = initialFlowsChains
 
   if (shouldPrefetchFlows) {
-    const flowsData = await helpers.interop.flows.fetch({
-      chains: initialFlowsChains,
-      protocolIds: protocols.map((protocol) => protocol.id),
-    })
+    const flowsData: RouterOutputs['interop']['flows'] =
+      await helpers.queryClient.fetchQuery(
+        helpers.trpc.interop.flows.queryOptions({
+          chains: initialFlowsChains,
+          protocolIds: protocols.map((protocol) => protocol.id),
+        }),
+      )
     const chainsByVolume = flowsData.chainData
       .toSorted((a, b) => b.totalVolume - a.totalVolume)
       .map((chain) => chain.chainId)

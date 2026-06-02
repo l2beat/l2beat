@@ -112,14 +112,18 @@ export async function getPrivacyProjectData(
   }
 
   await Promise.all([
-    helpers.privacy.flowsChart.prefetch({
-      projectIds: [details.id],
-      range: defaultChartRange,
-    }),
-    helpers.privacy.tvlChart.prefetch({
-      projectIds: [details.id],
-      range: defaultChartRange,
-    }),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.privacy.flowsChart.queryOptions({
+        projectIds: [details.id],
+        range: defaultChartRange,
+      }),
+    ),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.privacy.tvlChart.queryOptions({
+        projectIds: [details.id],
+        range: defaultChartRange,
+      }),
+    ),
   ])
 
   const permissionsSection = getPermissionsSection(

@@ -9,6 +9,11 @@
     "address": "eth:0x93e8f92327bFa8096F5F6ee5f2a49183D3B3b898",
     "blockNumber": 22188285
   },
+  "Bridge_BoLD_2026_05": {
+    "hash": "0x20db9bc1997e58a28c805fdcbec1bfee96d521046f574ca70f44466764166628",
+    "address": "eth:0xfE4749061Fb052c354aaC65b9Fb0cCD7e20D2418",
+    "blockNumber": 25166754
+  },
   "Bridge_arbitrum": {
     "hash": "0xd8700dfbfd90b162cad4f052bca2448c42d62c61b676665531bf9e712e094613",
     "address": "eth:0x1066CEcC8880948FE55e427E94F1FF221d626591",

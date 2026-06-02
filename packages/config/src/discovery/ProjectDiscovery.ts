@@ -249,6 +249,17 @@ export class ProjectDiscovery {
         ? ''
         : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
 
+    // Tree-quorum multisigs (e.g. ManyChainMultiSig) wire $threshold/$members
+    // through as a lower bound only — the real access-control rule is encoded
+    // in the per-group tree. The flat "M/N threshold" prefix is misleading
+    // here, so skip it and let the entry's own description carry the semantics.
+    if (
+      contract.values?.minSigs !== undefined &&
+      contract.values?.memberCount !== undefined
+    ) {
+      return fullModulesDescription === '' ? [] : [fullModulesDescription]
+    }
+
     return [
       `A Multisig with ${this.getMultisigStats(identifier)} threshold. ` +
         fullModulesDescription,

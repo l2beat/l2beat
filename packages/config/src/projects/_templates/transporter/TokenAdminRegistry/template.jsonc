@@ -1,7 +1,16 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can register arbitrary tokens with an arbitrary administrator."
+        }
+      ]
+    },
     "poolsMap": {
+      "description": "Every CCIP-registered token on this chain mapped to its TokenPool address. Keys are token addresses, values are the pools through which the OnRamp lock-or-burns the token. Replayed from PoolSet events, latest pool per token wins.",
       "handler": {
         "type": "event",
         "select": "newPool",
@@ -10,14 +19,34 @@
         "ignoreRelative": true
       }
     },
-    "pools": {
+    "registryModules": {
+      "description": "Accounts authorized to call proposeAdministrator(token, admin) on this registry. A registry module can claim administrator rights over any token that is not already registered. The owner can add or remove modules. Replayed from RegistryModuleAdded / RegistryModuleRemoved events.",
       "handler": {
         "type": "event",
-        "select": "newPool",
-        "set": { "event": "PoolSet" },
-        "groupBy": "token"
+        "select": "module",
+        "add": { "event": "event RegistryModuleAdded(address module)" },
+        "remove": {
+          "event": "event RegistryModuleRemoved(address indexed module)"
+        }
       },
-      "edit": ["pipe", ["to_entries"], ["map", ["get", 1]]]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "claim administrator rights over any not-yet-registered token by calling proposeAdministrator()."
+        }
+      ]
+    },
+    "administrators": {
+      "description": "Per-token administrator address: the only account that can call setPool() for that token and thereby re-route it to a different TokenPool. Replayed from AdministratorTransferred events; tokens that have been proposed but never had acceptAdminRole called are absent. Latest administrator per token wins.",
+      "handler": {
+        "type": "event",
+        "select": "newAdmin",
+        "set": { "event": "AdministratorTransferred" },
+        "groupBy": "token",
+        "ignoreRelative": true
+      }
     }
-  }
+  },
+  "ignoreRelatives": ["administrators", "poolsMap"],
+  "description": "Central token registry that defines token pools and administrative rights to change such token pools. Tokens can either be centrally administered by Chainlink, or by the actual token admin / issuer."
 }

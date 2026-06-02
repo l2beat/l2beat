@@ -1,19 +1,5 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreRelatives": [
-    "getToken",
-    "getAllowList",
-    "i_messageTransmitter",
-    "i_tokenMessenger",
-    "getXERC20",
-    "getMinter",
-    "minter",
-    "getLockbox",
-    "getOnRamps",
-    "getOffRamps",
-    "adapter",
-    "bridge"
-  ],
   "ignoreInWatchMode": [
     "getOnRamps",
     "getCurrentBridgedAmount",

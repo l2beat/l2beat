@@ -4,5 +4,9 @@ export {
   type MigrateResult,
   migrateLayout,
 } from './migrate'
-export type { LayoutV2 as Layout, NodeLocationsV2 as NodeLocations } from './v2'
-export { LayoutV2 as LayoutSchema } from './v2'
+export type {
+  LayoutMetadataV3 as LayoutMetadata,
+  LayoutV3 as Layout,
+  NodeLocationsV3 as NodeLocations,
+} from './v3'
+export { LayoutV3 as LayoutSchema } from './v3'

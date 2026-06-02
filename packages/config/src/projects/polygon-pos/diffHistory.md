@@ -1,3 +1,96 @@
+Generated with discovered.json: 0x6b3f32d89b813c35a759eebbb99e960990aa7790
+
+# Diff at Tue, 02 Jun 2026 07:46:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b3a022e9c02d6a59e5bcdfd46e210ca78757cd63 block: 1779963546
+- current timestamp: 1779963546
+
+## Description
+
+Config: add comments about the replacement auction.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779963546 (main branch discovery), not current.
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the Polygon PoS validator set.
+      fieldMeta.replacementCoolDown:
++        {"severity":"HIGH","description":"startAuction() can only be called after this epoch (compare with current epoch). this effectively closes the validator set if the cap is hit because no validators can be replaced."}
+      description:
++        "Manages the Polygon PoS validator set."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+Generated with discovered.json: 0x9a772ae3d06ca307ac85a0cf4c5804ff022f494f
+
+# Diff at Thu, 28 May 2026 13:08:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@66dc249f7108a6fbf8b6581aed0b7625deeebb2a block: 1779963546
+- current timestamp: 1779963546
+
+## Description
+
+config: format values
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779963546 (main branch discovery), not current.
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: None
++++ description: min POL stake for new validators
+      values.minDeposit:
+-        "100000000000000000000000"
++        "100,000"
+      template:
++        "polygon-pos/StakeManager"
+      fieldMeta:
++        {"minDeposit":{"description":"min POL stake for new validators"}}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861) [N/A]
+    +++ description: None
+```
+
+Generated with discovered.json: 0x0e655ef7ed0ce877dea09c221b3174ec14c4a03e
+
+# Diff at Thu, 28 May 2026 10:20:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1778679802
+- current timestamp: 1779963546
+
+## Description
+
+vali added (permissioned).
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [N/A] {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        103
++        104
+    }
+```
+
 Generated with discovered.json: 0x8eb45392a9502b63371f95e673071e4c86d8ac7e
 
 # Diff at Tue, 19 May 2026 11:44:16 GMT:

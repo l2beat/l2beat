@@ -1,15 +1,19 @@
+import { useQuery } from '@tanstack/react-query'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { TransferSizeChart } from '../../summary/components/charts/TransferSizeChart'
 import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
 import { Last24HoursBadge } from './Last24HoursBadge'
 
 export function FrameworkTransferSizeWidget() {
+  const trpc = useTRPC()
   const { selectedChains } = useTokenFrameworksSelectedChains()
-  const { data, isLoading } = api.interop.tokenFrameworks.useQuery({
-    from: selectedChains,
-    to: selectedChains,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.interop.tokenFrameworks.queryOptions({
+      from: selectedChains,
+      to: selectedChains,
+    }),
+  )
 
   return (
     <PrimaryCard className="flex h-[230px] flex-col" data-hide-overflow-x>

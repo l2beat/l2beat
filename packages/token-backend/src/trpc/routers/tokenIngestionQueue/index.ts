@@ -60,6 +60,29 @@ export const tokenIngestionQueueRouter = router({
 
       return { success: true }
     }),
+  approveMany: readWriteProcedure
+    .input(v.array(QueueEntryAddress))
+    .mutation(async ({ ctx, input }) => {
+      let approved = 0
+      for (const entry of input) {
+        approved += await ctx.tokenDb.tokenIngestionQueue.approve(entry)
+      }
+
+      return { success: true, approved }
+    }),
+  retry: readWriteProcedure
+    .input(QueueEntryAddress)
+    .mutation(async ({ ctx, input }) => {
+      const retried = await ctx.tokenDb.tokenIngestionQueue.retry(input)
+      if (retried !== 1) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Queue entry is not in conflict or error state',
+        })
+      }
+
+      return { success: true }
+    }),
   preview: readOnlyProcedure
     .input(QueueEntryAddress)
     .mutation(async ({ ctx, input }) => {

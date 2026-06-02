@@ -73,7 +73,7 @@ Privacy Pools are controlled by a ${discovery.getMultisigStats('Privacy Pools Mu
 
 Privacy Pools protocol supports [relayed withdrawals](https://etherscan.io/address/0x15e355024de1cdc74addea7ebdf98418ba5b1a2c#code#F1#L133), in which relayer processes withdrawals on user's behalf for a fee, which enables sending funds to fresh addresses.
 
-Practical privacy also depends on the timing and amounts of deposits and withdrawals, underlying network and browser used to interact with Privacy Pools frontend (if used), RPC providers used to send transactions and query public blockchain state. Users are advised to research [OPSEC best practices](/publications/privacy-best-practices).
+Practical privacy also depends on the timing and amounts of deposits and withdrawals, underlying network and browser used to interact with Privacy Pools frontend (if used), RPC providers used to send transactions and query public blockchain state. Users are advised to research [OPSEC best practice](/publications/privacy-best-practices).
 
 ### Fees
 

@@ -41,6 +41,7 @@ export type IngestionStep =
       symbol: string
     }
   | { kind: 'fetched-coingecko-abstract'; record: AbstractTokenRecord }
+  | { kind: 'corrected-coingecko-symbol-casing'; from: string; to: string }
   | { kind: 'fetched-facts'; facts: DeployedTokenFacts }
 
 export type IngestionOutcome =

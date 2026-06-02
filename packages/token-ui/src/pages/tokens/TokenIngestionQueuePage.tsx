@@ -1,10 +1,12 @@
 import type { IngestionOutcome } from '@l2beat/token-backend'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   CheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   EyeIcon,
   ListChecksIcon,
+  RotateCwIcon,
 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
@@ -42,24 +44,28 @@ import {
 } from '~/components/IngestionPreviewDialog'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 
 const PAGE_SIZE = 100
 
 export function TokenIngestionQueuePage() {
-  const utils = api.useUtils()
+  const trpc = useTRPC()
+  const queryClient = useQueryClient()
   const [approvingKey, setApprovingKey] = useState<string | undefined>()
+  const [retryingKey, setRetryingKey] = useState<string | undefined>()
   const [preview, setPreview] = useState<IngestionPreviewState | undefined>()
   const [page, setPage] = useState(1)
-  const { data: queuePage, isLoading } =
-    api.tokenIngestionQueue.getPage.useQuery(
+  const { data: queuePage, isLoading } = useQuery(
+    trpc.tokenIngestionQueue.getPage.queryOptions(
       { page, pageSize: PAGE_SIZE },
       { refetchInterval: 10_000 },
-    )
-  const { data: chains } = api.chains.getAll.useQuery()
+    ),
+  )
+  const { data: chains } = useQuery(trpc.chains.getAll.queryOptions())
   const queue = queuePage?.entries ?? []
   const predictedOutcomes = queuePage?.predictedOutcomes ?? []
   const totalCount = queuePage?.totalCount ?? 0
+  const stagedEntries = queue.filter((entry) => entry.state === 'staged')
   const pageCount = queuePage
     ? Math.max(1, Math.ceil(queuePage.totalCount / PAGE_SIZE))
     : page
@@ -74,24 +80,55 @@ export function TokenIngestionQueuePage() {
     }
   }, [page, pageCount])
 
-  const approve = api.tokenIngestionQueue.approve.useMutation({
-    onSuccess: async () => {
-      await utils.tokenIngestionQueue.getPage.invalidate()
-      toast.success('Queue entry approved')
-    },
-    onError: (error) => toast.error(error.message),
-    onSettled: () => setApprovingKey(undefined),
-  })
-  const previewMutation = api.tokenIngestionQueue.preview.useMutation({
-    onSuccess: (trace) => {
-      setPreview((prev) => (prev ? { ...prev, trace, isLoading: false } : prev))
-    },
-    onError: (error) => {
-      setPreview((prev) =>
-        prev ? { ...prev, error: error.message, isLoading: false } : prev,
-      )
-    },
-  })
+  const approve = useMutation(
+    trpc.tokenIngestionQueue.approve.mutationOptions({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(
+          trpc.tokenIngestionQueue.getPage.queryFilter(),
+        )
+        toast.success('Queue entry approved')
+      },
+      onError: (error) => toast.error(error.message),
+      onSettled: () => setApprovingKey(undefined),
+    }),
+  )
+  const approveMany = useMutation(
+    trpc.tokenIngestionQueue.approveMany.mutationOptions({
+      onSuccess: async ({ approved }) => {
+        await queryClient.invalidateQueries(
+          trpc.tokenIngestionQueue.getPage.queryFilter(),
+        )
+        toast.success(`Approved ${approved} queue entries`)
+      },
+      onError: (error) => toast.error(error.message),
+    }),
+  )
+  const retry = useMutation(
+    trpc.tokenIngestionQueue.retry.mutationOptions({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(
+          trpc.tokenIngestionQueue.getPage.queryFilter(),
+        )
+        toast.success('Queue entry queued for retry')
+      },
+      onError: (error) => toast.error(error.message),
+      onSettled: () => setRetryingKey(undefined),
+    }),
+  )
+  const previewMutation = useMutation(
+    trpc.tokenIngestionQueue.preview.mutationOptions({
+      onSuccess: (trace) => {
+        setPreview((prev) =>
+          prev ? { ...prev, trace, isLoading: false } : prev,
+        )
+      },
+      onError: (error) => {
+        setPreview((prev) =>
+          prev ? { ...prev, error: error.message, isLoading: false } : prev,
+        )
+      },
+    }),
+  )
 
   function startPreview(entry: { chain: string; address: string }) {
     setPreview({
@@ -104,6 +141,23 @@ export function TokenIngestionQueuePage() {
     previewMutation.mutate({ chain: entry.chain, address: entry.address })
   }
 
+  function approveAllOnPage() {
+    if (stagedEntries.length === 0) {
+      return
+    }
+
+    const confirmed = window.confirm(
+      `Approve ${stagedEntries.length} staged queue entries on this page?`,
+    )
+    if (!confirmed) {
+      return
+    }
+
+    approveMany.mutate(
+      stagedEntries.map(({ chain, address }) => ({ chain, address })),
+    )
+  }
+
   return (
     <AppLayout>
       <Card className="flex h-[calc(100vh-16px)] flex-col">
@@ -114,32 +168,45 @@ export function TokenIngestionQueuePage() {
               {formatQueueRange(page, totalCount)}
             </CardDescription>
           )}
-          {queuePage && totalCount > PAGE_SIZE && (
+          {queuePage && (
             <CardAction>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
+              <div className="flex flex-wrap items-center justify-end gap-2">
+                <ButtonWithSpinner
                   size="sm"
-                  disabled={page <= 1}
-                  onClick={() => setPage((page) => Math.max(1, page - 1))}
+                  isLoading={approveMany.isPending}
+                  disabled={stagedEntries.length === 0}
+                  onClick={approveAllOnPage}
                 >
-                  <ChevronLeftIcon />
-                  Previous
-                </Button>
-                <div className="whitespace-nowrap text-muted-foreground text-sm tabular-nums">
-                  Page {page} of {pageCount}
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={page >= pageCount}
-                  onClick={() =>
-                    setPage((page) => Math.min(pageCount, page + 1))
-                  }
-                >
-                  Next
-                  <ChevronRightIcon />
-                </Button>
+                  <CheckIcon />
+                  Approve all on this page
+                </ButtonWithSpinner>
+                {totalCount > PAGE_SIZE && (
+                  <>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={page <= 1}
+                      onClick={() => setPage((page) => Math.max(1, page - 1))}
+                    >
+                      <ChevronLeftIcon />
+                      Previous
+                    </Button>
+                    <div className="whitespace-nowrap text-muted-foreground text-sm tabular-nums">
+                      Page {page} of {pageCount}
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={page >= pageCount}
+                      onClick={() =>
+                        setPage((page) => Math.min(pageCount, page + 1))
+                      }
+                    >
+                      Next
+                      <ChevronRightIcon />
+                    </Button>
+                  </>
+                )}
               </div>
             </CardAction>
           )}
@@ -235,6 +302,24 @@ export function TokenIngestionQueuePage() {
                             >
                               <CheckIcon />
                               Approve
+                            </ButtonWithSpinner>
+                          )}
+                          {(entry.state === 'conflict' ||
+                            entry.state === 'error') && (
+                            <ButtonWithSpinner
+                              variant="outline"
+                              size="sm"
+                              isLoading={retry.isPending && retryingKey === key}
+                              onClick={() => {
+                                setRetryingKey(key)
+                                retry.mutate({
+                                  chain: entry.chain,
+                                  address: entry.address,
+                                })
+                              }}
+                            >
+                              <RotateCwIcon />
+                              Retry
                             </ButtonWithSpinner>
                           )}
                         </div>

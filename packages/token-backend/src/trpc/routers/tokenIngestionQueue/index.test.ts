@@ -160,6 +160,67 @@ describe('tokenIngestionQueueRouter', () => {
       ).toBeRejectedWith(TRPCError)
     })
   })
+
+  describe('approveMany', () => {
+    it('approves supplied staged entries and returns the count', async () => {
+      const approve = mockFn().resolvesToOnce(1).resolvesToOnce(0)
+      const caller = createRouter(
+        mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              approve,
+            },
+          ),
+        }),
+      )
+
+      const first = { chain: 'ethereum', address: '0x111' }
+      const second = { chain: 'base', address: '0x222' }
+      const result = await caller.approveMany([first, second])
+
+      expect(result).toEqual({ success: true, approved: 1 })
+      expect(approve).toHaveBeenCalledTimes(2)
+      expect(approve.calls[0]?.args[0]).toEqual(first)
+      expect(approve.calls[1]?.args[0]).toEqual(second)
+    })
+  })
+
+  describe('retry', () => {
+    it('retries a conflict or error entry', async () => {
+      const retry = mockFn().resolvesTo(1)
+      const caller = createRouter(
+        mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              retry,
+            },
+          ),
+        }),
+      )
+
+      const input = { chain: 'ethereum', address: '0x111' }
+      const result = await caller.retry(input)
+
+      expect(result).toEqual({ success: true })
+      expect(retry).toHaveBeenCalledWith(input)
+    })
+
+    it('fails when the entry is not in conflict or error', async () => {
+      const caller = createRouter(
+        mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              retry: mockFn().resolvesTo(0),
+            },
+          ),
+        }),
+      )
+
+      await expect(
+        caller.retry({ chain: 'ethereum', address: '0x111' }),
+      ).toBeRejectedWith(TRPCError)
+    })
+  })
 })
 
 function createRouter(
