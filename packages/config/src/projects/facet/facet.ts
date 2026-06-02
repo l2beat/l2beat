@@ -62,7 +62,7 @@ export const facet: ScalingProject = {
   scopeOfAssessment: {
     inScope: [
       'Sequencing mechanism via L1 through the Inbox and state validation mechanism via the Rollup proof system',
-      'Upgradability of the Rollup contract and its proof system',
+      'The Rollup contract and its upgradability',
     ],
     notInScope: [
       'Bridges built on top of the Rollup, including the legacy L1Bridge (eth:0x4e2eba30…, immutably bound to the deprecated Rollup) and the operator-controlled FacetEtherBridgeV6 fast bridge — each bridge carries its own trust assumptions and must be assessed separately',
