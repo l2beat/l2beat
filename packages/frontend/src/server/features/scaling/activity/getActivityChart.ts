@@ -119,7 +119,7 @@ export async function getActivityChart({
     rangeStart: adjustedRange[0],
     firstProjectTimestamp: projectId
       ? totalCounts?.[projectId]?.sinceTimestamp
-      : Number.POSITIVE_INFINITY,
+      : undefined,
     dataStart,
     resolution: 'daily',
   })
