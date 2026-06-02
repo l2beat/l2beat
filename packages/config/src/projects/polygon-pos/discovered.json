@@ -642,6 +642,7 @@
         "0xc1bf1e1ffffdb1c23aebc663048d79f349bed55ade9d09b835d75d291c6d4f61"
       ],
       "proxyType": "Polygon proxy",
+      "description": "Manages the Polygon PoS validator set.",
       "ignoreInWatchMode": [
         "currentEpoch",
         "currentValidatorSetTotalStake",
@@ -765,13 +766,18 @@
         "withdrawalDelay": 80
       },
       "fieldMeta": {
-        "minDeposit": { "description": "min POL stake for new validators" }
+        "minDeposit": { "description": "min POL stake for new validators" },
+        "replacementCoolDown": {
+          "severity": "HIGH",
+          "description": "startAuction() can only be called after this epoch (compare with current epoch). this effectively closes the validator set if the cap is hit because no validators can be replaced."
+        }
       },
       "implementationNames": {
         "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": "StakeManagerProxy",
         "eth:0x3AD88467E40399dc6Ae10427f8B0842348d9076c": "StakeManager"
       },
-      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x62a8029CDAf8576e337b86187B82474EFcE712d8",
@@ -5720,7 +5726,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "polygon-pos/StakeManager": "0x731db3ce857a5889fe514706270338cfc7bea9b427ebf6317c7dcae626ca0932",
+    "polygon-pos/StakeManager": "0xa41291bb8bd9d0bb9c0fc1aa545c7865c09a929a3bea2eacfe5915a879da3277",
     "polygonposbridge/DepositManager": "0x2a3771ea95277fc830da4bc0578c3e86f9d869b0935a283538ec041ac28b3274",
     "polygonposbridge/ExitNFT": "0x60ea045776cab9e4486806a9ce5a117ed68399ec7dc959eadd4b46a91b5531a1",
     "polygonposbridge/Governance": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
