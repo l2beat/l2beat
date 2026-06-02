@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x8c62865edf1740b2ac9cb229da68b886a7851054
+
+# Diff at Tue, 02 Jun 2026 10:46:54 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779719590
+- current timestamp: 1779719590
+
+## Description
+
+2 SC members tagged (rotated in on 2026-05-15):
+- 0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D: DZack23
+- 0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce: PabloSabbatella-Opsek
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779719590 (main branch discovery), not current.
+
+```diff
+    EOA DZack23 (arb-nova:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D) {
+    +++ description: None
+      name:
++        "DZack23"
+    }
+```
+
+```diff
+    EOA PabloSabbatella-Opsek (arb-nova:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce) {
+    +++ description: None
+      name:
++        "PabloSabbatella-Opsek"
+    }
+```
+
+```diff
+    EOA DZack23 (eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D) {
+    +++ description: None
+      name:
++        "DZack23"
+    }
+```
+
+```diff
+    EOA PabloSabbatella-Opsek (eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce) {
+    +++ description: None
+      name:
++        "PabloSabbatella-Opsek"
+    }
+```
+
 Generated with discovered.json: 0x0df91c3df1b4518f1b93f59d035ebf6e48e5ab67
 
 # Diff at Mon, 25 May 2026 14:35:01 GMT:
