@@ -91,7 +91,7 @@ export const facet: ScalingProject = {
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
-        noRedTrustedSetups: false,
+        noRedTrustedSetups: true,
         programHashesReproducible: true,
         proverSourcePublished: true,
         verifierContractsReproducible: true,
