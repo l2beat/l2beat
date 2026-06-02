@@ -3,7 +3,7 @@ import { useBackendApi } from '~/react-query/trpc'
 
 export function useAppStateQuery<K extends AppStateRecord['key']>(key: K) {
   const api = useBackendApi()
-  const { data, ...rest } = api.appState.get.useQuery(key)
+  const { data, ...rest } = api.appState.findByKey.useQuery(key)
 
   return {
     data: data as AppStateRecord<K> | null | undefined,

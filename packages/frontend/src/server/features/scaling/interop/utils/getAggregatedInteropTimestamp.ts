@@ -6,7 +6,7 @@ export async function getAggregatedInteropSnapshotTimestamp(): Promise<
 > {
   const db = getDb()
 
-  const timestampOverride = await db.appState.get(
+  const timestampOverride = await db.appState.findByKey(
     'interopAggregatesTimestampOverride',
   )
 

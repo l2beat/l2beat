@@ -9,23 +9,27 @@ describeDatabase(AppStateRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  describe(AppStateRepository.prototype.get.name, () => {
+  describe(AppStateRepository.prototype.findByKey.name, () => {
     it('returns undefined when value is missing', async () => {
-      const result = await repository.get('interopAggregatesTimestampOverride')
+      const result = await repository.findByKey(
+        'interopAggregatesTimestampOverride',
+      )
 
       expect(result).toEqual(undefined)
     })
   })
 
-  describe(AppStateRepository.prototype.set.name, () => {
+  describe(AppStateRepository.prototype.insert.name, () => {
     it('inserts a value', async () => {
-      await repository.set({
+      await repository.insert({
         key: 'interopAggregatesTimestampOverride',
         value: 1234,
         updatedBy: 'test',
       })
 
-      const result = await repository.get('interopAggregatesTimestampOverride')
+      const result = await repository.findByKey(
+        'interopAggregatesTimestampOverride',
+      )
 
       expect(result).toEqual({
         key: 'interopAggregatesTimestampOverride',
@@ -36,18 +40,20 @@ describeDatabase(AppStateRepository.name, (db) => {
     })
 
     it('updates an existing value', async () => {
-      await repository.set({
+      await repository.insert({
         key: 'interopAggregatesTimestampOverride',
         value: 1234,
         updatedBy: 'test',
       })
-      await repository.set({
+      await repository.insert({
         key: 'interopAggregatesTimestampOverride',
         value: 5678,
         updatedBy: 'test-2',
       })
 
-      const result = await repository.get('interopAggregatesTimestampOverride')
+      const result = await repository.findByKey(
+        'interopAggregatesTimestampOverride',
+      )
 
       expect(result).toEqual({
         key: 'interopAggregatesTimestampOverride',
@@ -58,9 +64,27 @@ describeDatabase(AppStateRepository.name, (db) => {
     })
   })
 
+  describe(AppStateRepository.prototype.deleteByKey.name, () => {
+    it('deletes a previously set value', async () => {
+      await repository.insert({
+        key: 'interopAggregatesTimestampOverride',
+        value: 1234,
+        updatedBy: 'test',
+      })
+
+      await repository.deleteByKey('interopAggregatesTimestampOverride')
+
+      const result = await repository.findByKey(
+        'interopAggregatesTimestampOverride',
+      )
+
+      expect(result).toEqual(undefined)
+    })
+  })
+
   describe(AppStateRepository.prototype.deleteAll.name, () => {
-    it('unsets a previously set value', async () => {
-      await repository.set({
+    it('deletes a previously set value', async () => {
+      await repository.insert({
         key: 'interopAggregatesTimestampOverride',
         value: 1234,
         updatedBy: 'test',
@@ -68,7 +92,9 @@ describeDatabase(AppStateRepository.name, (db) => {
 
       await repository.deleteAll()
 
-      const result = await repository.get('interopAggregatesTimestampOverride')
+      const result = await repository.findByKey(
+        'interopAggregatesTimestampOverride',
+      )
 
       expect(result).toEqual(undefined)
     })

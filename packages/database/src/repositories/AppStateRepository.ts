@@ -39,7 +39,7 @@ export interface AppStateRecord<
 }
 
 export class AppStateRepository extends BaseRepository {
-  async set<T extends AppStatePair['key']>(
+  async insert<T extends AppStatePair['key']>(
     record: Omit<AppStateRecord<T>, 'updatedAt'>,
   ): Promise<void> {
     const row = toRow({ ...record, updatedAt: UnixTime.now() })
@@ -50,7 +50,7 @@ export class AppStateRepository extends BaseRepository {
       .execute()
   }
 
-  async get<T extends AppStatePair['key']>(
+  async findByKey<T extends AppStatePair['key']>(
     key: T,
   ): Promise<AppStateRecord<T> | undefined> {
     const row = await this.db
@@ -60,6 +60,14 @@ export class AppStateRepository extends BaseRepository {
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined
+  }
+
+  async deleteByKey(key: AppStatePair['key']): Promise<number> {
+    const result = await this.db
+      .deleteFrom('AppState')
+      .where('key', '=', key)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async deleteAll(): Promise<number> {

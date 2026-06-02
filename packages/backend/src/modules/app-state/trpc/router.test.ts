@@ -12,29 +12,42 @@ describe(createAppStateTrpcRouter.name, () => {
       updatedAt: UnixTime(1_779_920_000),
       updatedBy: 'dev@l2beat.com',
     }
-    const get = mockFn().resolvesTo(record)
-    const caller = createCaller({ get })
+    const findByKey = mockFn().resolvesTo(record)
+    const caller = createCaller({ findByKey })
 
-    const result = await caller.get('interopAggregatesTimestampOverride')
+    const result = await caller.findByKey('interopAggregatesTimestampOverride')
 
-    expect(get).toHaveBeenOnlyCalledWith('interopAggregatesTimestampOverride')
+    expect(findByKey).toHaveBeenOnlyCalledWith(
+      'interopAggregatesTimestampOverride',
+    )
     expect(result).toEqual(record)
   })
 
   it('sets a value with the current user email', async () => {
-    const set = mockFn().resolvesTo(undefined)
-    const caller = createCaller({ set }, { email: 'user@l2beat.com' })
+    const insert = mockFn().resolvesTo(undefined)
+    const caller = createCaller({ insert }, { email: 'user@l2beat.com' })
 
-    await caller.set({
+    await caller.insert({
       key: 'interopAggregatesTimestampOverride',
       value: 1779920000,
     })
 
-    expect(set).toHaveBeenOnlyCalledWith({
+    expect(insert).toHaveBeenOnlyCalledWith({
       key: 'interopAggregatesTimestampOverride',
       value: 1_779_920_000,
       updatedBy: 'user@l2beat.com',
     })
+  })
+
+  it('unsets a value by key', async () => {
+    const deleteByKey = mockFn().resolvesTo(1)
+    const caller = createCaller({ deleteByKey })
+
+    await caller.deleteByKey('interopAggregatesTimestampOverride')
+
+    expect(deleteByKey).toHaveBeenOnlyCalledWith(
+      'interopAggregatesTimestampOverride',
+    )
   })
 })
 

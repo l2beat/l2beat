@@ -33,7 +33,7 @@ export function InteropAggregatesTimestampOverrideCard() {
     }
   }, [data])
 
-  const setPinning = api.appState.set.useMutation({
+  const setPinning = api.appState.insert.useMutation({
     onSuccess: () => {
       toast.success('Interop pinning saved')
       refetch()
@@ -45,12 +45,28 @@ export function InteropAggregatesTimestampOverrideCard() {
     },
   })
 
+  const unsetPinning = api.appState.deleteByKey.useMutation({
+    onSuccess: () => {
+      toast.success('Interop pinning removed')
+      refetch()
+    },
+    onError: (error) => {
+      toast.error('Failed to remove interop pinning', {
+        description: error.message,
+      })
+    },
+  })
+
   const handleSave = () => {
     if (!pinnedDate) return
     setPinning.mutate({
       key: INTEROP_PINNING_KEY,
       value: dateInputToTimestamp(pinnedDate),
     })
+  }
+
+  const handleRemove = () => {
+    unsetPinning.mutate(INTEROP_PINNING_KEY)
   }
   return (
     <Card className="gap-4">
@@ -72,13 +88,21 @@ export function InteropAggregatesTimestampOverrideCard() {
               disabled={isLoading}
             />
           </div>
-          <Button
-            className="self-start"
-            onClick={handleSave}
-            disabled={setPinning.isPending || isLoading}
-          >
-            {setPinning.isPending ? 'Saving...' : 'Save'}
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              onClick={handleSave}
+              disabled={setPinning.isPending || isLoading}
+            >
+              {setPinning.isPending ? 'Saving...' : 'Save'}
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleRemove}
+              disabled={unsetPinning.isPending || isLoading || !data}
+            >
+              {unsetPinning.isPending ? 'Removing...' : 'Remove'}
+            </Button>
+          </div>
         </div>
       </CardContent>
     </Card>

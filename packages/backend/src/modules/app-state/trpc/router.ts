@@ -5,18 +5,27 @@ import { protectedProcedure } from '../../../trpc/procedures'
 
 export function createAppStateTrpcRouter() {
   return router({
-    get: protectedProcedure.input(AppStateKey).query(async ({ ctx, input }) => {
-      const value = await ctx.db.appState.get(input)
-      return value ?? null
-    }),
-    set: protectedProcedure
+    findByKey: protectedProcedure
+      .input(AppStateKey)
+      .query(async ({ ctx, input }) => {
+        const value = await ctx.db.appState.findByKey(input)
+        return value ?? null
+      }),
+    insert: protectedProcedure
       .input(AppStatePair)
       .mutation(async ({ ctx, input }) => {
-        await ctx.db.appState.set({
+        await ctx.db.appState.insert({
           key: input.key,
           value: input.value,
           updatedBy: ctx.session.email,
         })
+
+        return { success: true }
+      }),
+    deleteByKey: protectedProcedure
+      .input(AppStateKey)
+      .mutation(async ({ ctx, input }) => {
+        await ctx.db.appState.deleteByKey(input)
 
         return { success: true }
       }),
