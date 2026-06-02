@@ -1,7 +1,7 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1780401520,
-  "configHash": "0xd88cfdd0a17578feb5a040de29b13c55be76c5a500ac4408672eb02588fcb40e",
+  "timestamp": 1780410887,
+  "configHash": "0x278beac2ff73dfb60f683566fc188fee9efa9229543f40d1ac936b0a2f223af4",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -611,11 +611,6 @@
     },
     {
       "address": "eth:0x47cfcb64f8EA44d6Ea7FAB32f13EFa2f8E65Eec1",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1497,7 +1492,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2349935342051327383026978"
+        "totalSupply": "2350865448318616073242583"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1656,7 +1651,6 @@
         },
         "gameIndex": 0,
         "gameType": 1337,
-        "getChallengerDuration": [0, 0, 0, 0, 0],
         "isProposing": false,
         "KAILUA_TREASURY": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
         "KAILUA_VERIFIER": "eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C",
@@ -1687,7 +1681,6 @@
         "version": "1.2.0",
         "wasRespectedGameTypeWhenCreated": false
       },
-      "errors": { "getChallengerDuration": "Processing error occurred." },
       "implementationNames": {
         "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336": "KailuaTreasury"
       }
@@ -1711,22 +1704,14 @@
       "values": {
         "$immutable": true,
         "getBasefee": 0,
-        "getBlockHash": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
-        "getBlockNumber": 25229548,
+        "getBlockNumber": 25230326,
         "getChainId": 1,
-        "getCurrentBlockCoinbase": "eth:0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97",
-        "getCurrentBlockDifficulty": "111243505731843273525946173550890073172543467033523821181529686034060580429717",
+        "getCurrentBlockCoinbase": "eth:0xdadB0d80178819F2319190D340ce9A924f783711",
+        "getCurrentBlockDifficulty": "103017412835344920320093747481580352900233691656973250374998131431943684087938",
         "getCurrentBlockGasLimit": 60000000,
-        "getCurrentBlockTimestamp": 1780401515,
-        "getLastBlockHash": "0xcc011b7612af44b9a51f45ad4b1a626dc1832d95b40f39230f5e58077572db3d"
+        "getCurrentBlockTimestamp": 1780410887,
+        "getLastBlockHash": "0x76f84a1f13f40274ea8600ed0add59550d5479dc9dbbace09568c4c8c897e5ff"
       },
-      "errors": { "getBlockHash": "Processing error occurred." },
       "implementationNames": {
         "eth:0xcA11bde05977b3631167028862bE2a173976CA11": "Multicall3"
       }
@@ -1765,6 +1750,11 @@
     },
     {
       "address": "eth:0xDA8e7102681f9652FB8a10b70949CF7F260e0A01",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xdadB0d80178819F2319190D340ce9A924f783711",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3480,6 +3470,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 25229548 },
-  "permissionsConfigHash": "0x825564bcb2878b8a2677d59c2e37cfd713d0ea88d3f7741ebd4e02e6b46bced1"
+  "usedBlockNumbers": { "ethereum": 25230326 },
+  "permissionsConfigHash": "0xfe7b5380b7b1be2e93f8b8255d21ecd3b12623566189cff47e5c03a5fe16a7a8"
 }
