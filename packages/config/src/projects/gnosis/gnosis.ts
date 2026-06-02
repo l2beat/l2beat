@@ -264,7 +264,9 @@ export const gnosis: ScalingProject = {
 ### Selective censorship
 Even with high percentages of stake censoring, users have very fast inclusion times. There are also initial tests of an out-of-protocol solution for encrypting transactions in the mempool (Shutterized Gnosis Chain).
 ### Blanket censorship
-Since the validator set is open, new validators could theoretically join it in case all validators passively stop block production (walkaway). There is no way to circumvent the validator set from Ethereum in a case of active censorship by all (or a majority of) validators.`,
+There is no way to circumvent the validator set from Ethereum in a case of active censorship by all (or a majority of) validators.
+### Walkaway
+Since the validator set is open, new validators can join it in case validators passively stop block production. If all validators stop at the same time, a social recovery and hard fork would be necessary.`,
       references: [
         {
           title: 'Gnosis Chain specifications',
