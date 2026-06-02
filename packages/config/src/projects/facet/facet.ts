@@ -94,7 +94,7 @@ export const facet: ScalingProject = {
         noRedTrustedSetups: false,
         programHashesReproducible: true,
         proverSourcePublished: true,
-        verifierContractsReproducible: false,
+        verifierContractsReproducible: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
