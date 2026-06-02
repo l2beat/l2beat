@@ -24,5 +24,6 @@
         }
       ]
     }
-  }
+  },
+  "ignoreInWatchMode": ["insertedGERHashChain", "lastRollupExitRoot"]
 }
