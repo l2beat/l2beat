@@ -5,7 +5,12 @@
   "maxAddresses": 200,
   "initialAddresses": [
     "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-    "eth:0x06179f7C1be40863405f374E7f5F8806c728660A"
+    "eth:0x06179f7C1be40863405f374E7f5F8806c728660A",
+    "arb1:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae",
+    "base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13",
+    "oeth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae",
+    "bnb:0xA27056438FfA1f286AB197488808692F0db93F8B",
+    "matic:0x77FDbd20ED582794b1d9F1a8a94e4a60494D677e"
   ],
   "types": {
     "CCIPChainName": {
@@ -106,6 +111,11 @@
     "eth:0x06179f7C1be40863405f374E7f5F8806c728660A": "GHOEthereumTokenPool",
     "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa": "EthereumOnRamp_v1_6",
     "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5": "EthereumOffRamp_v1_6",
+    "arb1:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae": "ArbitrumOffRamp_v1_6",
+    "base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13": "BaseOffRamp_v1_6",
+    "oeth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae": "OptimismOffRamp_v1_6",
+    "bnb:0xA27056438FfA1f286AB197488808692F0db93F8B": "BscOffRamp_v1_6",
+    "matic:0x77FDbd20ED582794b1d9F1a8a94e4a60494D677e": "PolygonPosOffRamp_v1_6",
     "eth:0xdf615eF8D4C64d0ED8Fd7824BBEd2f6a10245aC9": "ArbitrumToEthereumOffRamp_v1_5",
     "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d": "OLD_ArbitrumToEthereumOffRamp",
     "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749": "ArbitrumToEthereumCommitStore",
@@ -129,6 +139,26 @@
     "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": "AaveRiskCouncil"
   },
   "overrides": {
+    "arb1:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae": {
+      "description": "v1.6 OffRamp on Arbitrum One.",
+      "ignoreRelatives": true
+    },
+    "base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13": {
+      "description": "v1.6 OffRamp on Base.",
+      "ignoreRelatives": true
+    },
+    "oeth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae": {
+      "description": "v1.6 OffRamp on OP Mainnet.",
+      "ignoreRelatives": true
+    },
+    "bnb:0xA27056438FfA1f286AB197488808692F0db93F8B": {
+      "description": "v1.6 OffRamp on BNB Chain.",
+      "ignoreRelatives": true
+    },
+    "matic:0x77FDbd20ED582794b1d9F1a8a94e4a60494D677e": {
+      "description": "v1.6 OffRamp on Polygon PoS.",
+      "ignoreRelatives": true
+    },
     "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A": {
       "ignoreDiscovery": true
     },

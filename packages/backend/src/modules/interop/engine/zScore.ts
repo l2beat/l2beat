@@ -2,9 +2,8 @@ import { assert } from '@l2beat/shared-pure'
 
 export const Z_CLASSIC_THRESHOLD = 15
 export const Z_ROBUST_THRESHOLD = {
-  warn: 4,
-  drop: -6,
-  spike: 6,
+  drop: -10,
+  spike: 10,
 }
 export const MIN_NON_ZERO_HISTORY_POINTS = 3
 export const Z_WINDOW_DAYS = 14

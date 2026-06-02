@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
@@ -5,7 +6,7 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { ActivityMetricContextProvider } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import type { RecategorisedActivityChartData } from '~/server/features/scaling/activity/getRecategorisedActivityChart'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import type { ChartRange } from '~/utils/range/range'
 import {
@@ -20,15 +21,18 @@ interface Props {
 const hiddenDataKeys = ['others'] as const
 
 export function ScalingSummaryActivityChart({ range }: Props) {
+  const trpc = useTRPC()
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     RECATEGORISED_ACTIVITY_CHART_META,
     hiddenDataKeys,
   )
 
-  const { data, isLoading } = api.activity.recategorisedChart.useQuery({
-    range,
-    filter: { type: 'all' },
-  })
+  const { data, isLoading } = useQuery(
+    trpc.activity.recategorisedChart.queryOptions({
+      range,
+      filter: { type: 'all' },
+    }),
+  )
 
   const stats = getStats(data?.data, dataKeys)
 

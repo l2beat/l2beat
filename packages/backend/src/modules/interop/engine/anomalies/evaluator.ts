@@ -8,6 +8,9 @@ import {
   RATIO_COUNT_SPIKE_THRESHOLD,
   RATIO_DROP_THRESHOLD,
   RATIO_VOLUME_SPIKE_THRESHOLD,
+  RELEVANCE_MIN_BRIDGE_SHARE,
+  RELEVANCE_MIN_COUNT,
+  RELEVANCE_MIN_VOLUME_USD,
   SIDE_MISMATCH_DIFF_PERCENT,
   SIDE_MISMATCH_MIN_VOLUME_USD,
   Z_CLASSIC_THRESHOLD,
@@ -23,6 +26,11 @@ export interface SeriesPoint {
   dstVolumeUsd: number
 }
 
+export interface BridgeTotal {
+  transferCount: number
+  volumeUsd: number
+}
+
 export type AnomalyMetric = 'count' | 'srcVolume' | 'dstVolume'
 export type AnomalyKind =
   | 'flatLine'
@@ -30,7 +38,7 @@ export type AnomalyKind =
   | 'ratioSpike'
   | 'zScoreDrop'
   | 'zScoreSpike'
-export type AnomalySeverity = 'moderate' | 'severe'
+export type AnomalySeverity = 'severe'
 
 export interface MetricSignal {
   metric: AnomalyMetric
@@ -53,7 +61,10 @@ export interface AnomalyEvaluation {
   sideMismatch: SideMismatchSignal | null
 }
 
-export function evaluateAnomalies(series: SeriesPoint[]): AnomalyEvaluation {
+export function evaluateAnomalies(
+  series: SeriesPoint[],
+  bridgeTotal?: BridgeTotal,
+): AnomalyEvaluation {
   if (series.length === 0) {
     return { signals: [], sideMismatch: null }
   }
@@ -66,15 +77,26 @@ export function evaluateAnomalies(series: SeriesPoint[]): AnomalyEvaluation {
   }
 
   const signals: MetricSignal[] = []
-  const countSignal = evaluateMetric('count', window, (p) => p.transferCount)
+  const countSignal = evaluateMetric(
+    'count',
+    window,
+    (p) => p.transferCount,
+    bridgeTotal,
+  )
   if (countSignal) signals.push(countSignal)
 
   if (isVolumeReliable(candidate)) {
-    const srcSignal = evaluateMetric('srcVolume', window, (p) =>
-      isVolumeReliable(p) ? p.srcVolumeUsd : 0,
+    const srcSignal = evaluateMetric(
+      'srcVolume',
+      window,
+      (p) => (isVolumeReliable(p) ? p.srcVolumeUsd : 0),
+      bridgeTotal,
     )
-    const dstSignal = evaluateMetric('dstVolume', window, (p) =>
-      isVolumeReliable(p) ? p.dstVolumeUsd : 0,
+    const dstSignal = evaluateMetric(
+      'dstVolume',
+      window,
+      (p) => (isVolumeReliable(p) ? p.dstVolumeUsd : 0),
+      bridgeTotal,
     )
     if (srcSignal) signals.push(srcSignal)
     if (dstSignal) signals.push(dstSignal)
@@ -90,6 +112,7 @@ function evaluateMetric(
   metric: AnomalyMetric,
   window: SeriesPoint[],
   pick: (p: SeriesPoint) => number,
+  bridgeTotal: BridgeTotal | undefined,
 ): MetricSignal | null {
   if (window.length < 2) return null
 
@@ -106,8 +129,14 @@ function evaluateMetric(
 
   if (!hasEnoughNonZeroHistory(values)) return null
 
-  if (metric === 'count' && detectFlatLine(values)) {
-    return buildSignal('flatLine', metric, 'severe', baselineMean, current)
+  const baselineMedian = median(baseline)
+
+  if (
+    metric === 'count' &&
+    detectFlatLine(values) &&
+    baselineMedian >= RELEVANCE_MIN_COUNT
+  ) {
+    return buildSignal('flatLine', metric, baselineMean, current)
   }
 
   const spikeRatioThreshold =
@@ -122,10 +151,10 @@ function evaluateMetric(
   const robustSpike = z.robust !== null && z.robust > Z_ROBUST_THRESHOLD.spike
 
   if (isRatioSpike || classicSpike || robustSpike) {
+    if (!isRelevant(metric, current, bridgeTotal)) return null
     return buildSignal(
       isRatioSpike ? 'ratioSpike' : 'zScoreSpike',
       metric,
-      'severe',
       baselineMean,
       current,
     )
@@ -135,23 +164,35 @@ function evaluateMetric(
   const robustDrop = z.robust !== null && z.robust < Z_ROBUST_THRESHOLD.drop
 
   if (isRatioDrop || classicDrop || robustDrop) {
+    if (!isRelevant(metric, baselineMedian, bridgeTotal)) return null
     return buildSignal(
       isRatioDrop ? 'ratioDrop' : 'zScoreDrop',
       metric,
-      'severe',
       baselineMean,
       current,
     )
   }
 
-  if (z.robust !== null && z.robust > Z_ROBUST_THRESHOLD.warn) {
-    return buildSignal('zScoreSpike', metric, 'moderate', baselineMean, current)
-  }
-  if (z.robust !== null && z.robust < -Z_ROBUST_THRESHOLD.warn) {
-    return buildSignal('zScoreDrop', metric, 'moderate', baselineMean, current)
-  }
-
   return null
+}
+
+function isRelevant(
+  metric: AnomalyMetric,
+  value: number,
+  bridgeTotal: BridgeTotal | undefined,
+): boolean {
+  if (metric === 'count') {
+    if (value >= RELEVANCE_MIN_COUNT) return true
+    if (bridgeTotal && bridgeTotal.transferCount > 0) {
+      return value / bridgeTotal.transferCount >= RELEVANCE_MIN_BRIDGE_SHARE
+    }
+    return false
+  }
+  if (value >= RELEVANCE_MIN_VOLUME_USD) return true
+  if (bridgeTotal && bridgeTotal.volumeUsd > 0) {
+    return value / bridgeTotal.volumeUsd >= RELEVANCE_MIN_BRIDGE_SHARE
+  }
+  return false
 }
 
 function evaluateSideMismatch(
@@ -178,14 +219,13 @@ function evaluateSideMismatch(
 function buildSignal(
   kind: AnomalyKind,
   metric: AnomalyMetric,
-  severity: AnomalySeverity,
   baseline: number,
   current: number,
 ): MetricSignal {
   return {
     metric,
     kind,
-    severity,
+    severity: 'severe',
     baseline,
     current,
     changePercent: getChangePercent(baseline, current),
