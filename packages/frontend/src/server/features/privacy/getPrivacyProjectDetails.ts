@@ -8,9 +8,11 @@ import type {
 import type {
   PrivacyFlowBucketTotalRecord,
   PrivacyFlowDailyRecord,
+  TokenValueRecord,
 } from '@l2beat/database'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
@@ -65,7 +67,6 @@ export async function getPrivacyProjectDetails(
     return undefined
   }
 
-  const db = getDb()
   const projectId = project.id
 
   const now = UnixTime.now()
@@ -73,15 +74,33 @@ export async function getPrivacyProjectDetails(
   const last7dCutoff = currentDay - 6 * UnixTime.DAY
   const last30dCutoff = currentDay - 29 * UnixTime.DAY
 
-  const [totals, daily30d, tokenValues] = await Promise.all([
-    db.privacyFlowEvent.getBucketTotalsByProjectIds([projectId]),
-    db.privacyFlowEvent.getDailyByProjectIds(
-      [projectId],
+  let totals: PrivacyFlowBucketTotalRecord[]
+  let daily30d: PrivacyFlowDailyRecord[]
+  let tokenValues: TokenValueRecord[]
+  if (env.MOCK) {
+    const bucketIds = project.privacyInfo.tokens.flatMap((token) =>
+      token.buckets.map((bucket) => bucket.id),
+    )
+    const tokenIds = (project.tvsConfig ?? []).map((token) => token.id)
+    ;({ totals, daily30d, tokenValues } = getMockPrivacyProjectFlowData(
+      projectId,
+      bucketIds,
+      tokenIds,
       last30dCutoff,
       currentDay,
-    ),
-    db.tvsTokenValue.getLastNonZeroValue(now, projectId),
-  ])
+    ))
+  } else {
+    const db = getDb()
+    ;[totals, daily30d, tokenValues] = await Promise.all([
+      db.privacyFlowEvent.getBucketTotalsByProjectIds([projectId]),
+      db.privacyFlowEvent.getDailyByProjectIds(
+        [projectId],
+        last30dCutoff,
+        currentDay,
+      ),
+      db.tvsTokenValue.getLastNonZeroValue(now, projectId),
+    ])
+  }
 
   const tvlBySymbol = new Map<string, number>()
   for (const tv of tokenValues) {
@@ -268,4 +287,62 @@ export async function getPrivacyProjectDetails(
       },
     },
   }
+}
+
+function getMockPrivacyProjectFlowData(
+  projectId: ProjectId,
+  bucketIds: string[],
+  tokenIds: string[],
+  from: UnixTime,
+  to: UnixTime,
+): {
+  totals: PrivacyFlowBucketTotalRecord[]
+  daily30d: PrivacyFlowDailyRecord[]
+  tokenValues: TokenValueRecord[]
+} {
+  const totals = bucketIds.map(
+    (bucketId): PrivacyFlowBucketTotalRecord => ({
+      projectId,
+      bucketId,
+      depositCount: Math.round(Math.random() * 5000),
+      withdrawalCount: Math.round(Math.random() * 5000),
+      depositAmount: 0n,
+      withdrawalAmount: 0n,
+      depositValueUsd: Math.random() * 10_000_000,
+      withdrawalValueUsd: Math.random() * 10_000_000,
+    }),
+  )
+
+  const daily30d: PrivacyFlowDailyRecord[] = []
+  for (let timestamp = from; timestamp <= to; timestamp += UnixTime.DAY) {
+    for (const bucketId of bucketIds) {
+      daily30d.push({
+        projectId,
+        bucketId,
+        timestamp: UnixTime(timestamp),
+        depositCount: Math.round(Math.random() * 100),
+        withdrawalCount: Math.round(Math.random() * 100),
+        depositAmount: 0n,
+        withdrawalAmount: 0n,
+        depositValueUsd: Math.random() * 100_000,
+        withdrawalValueUsd: Math.random() * 100_000,
+      })
+    }
+  }
+
+  const tokenValues = tokenIds.map(
+    (tokenId): TokenValueRecord => ({
+      timestamp: to,
+      configurationId: tokenId,
+      projectId,
+      tokenId,
+      amount: 0,
+      value: 0,
+      valueForProject: Math.random() * 5_000_000,
+      valueForSummary: 0,
+      priceUsd: 0,
+    }),
+  )
+
+  return { totals, daily30d, tokenValues }
 }
