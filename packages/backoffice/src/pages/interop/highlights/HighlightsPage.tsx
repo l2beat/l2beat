@@ -25,8 +25,9 @@ import { useBackendTrpc } from '~/react-query/trpc'
 
 export function HighlightsPage() {
   const trpc = useBackendTrpc()
-  const { data, error, isError, isLoading, isFetching, refetch } =
-    useQuery(trpc.interop.highlights.latest.queryOptions())
+  const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
+    trpc.interop.highlights.latest.queryOptions(),
+  )
 
   const topPath = data?.topPathByVolume ?? null
   const topChainByInflow = data?.topChainByInflow ?? null
