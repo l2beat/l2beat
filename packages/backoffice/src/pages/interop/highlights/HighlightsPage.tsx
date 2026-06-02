@@ -20,10 +20,10 @@ import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { formatPercent } from '~/pages/interop/anomalies/utils'
 import { formatDollars } from '~/pages/interop/transfers/utils'
-import { useBackendApi } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 
 export function HighlightsPage() {
-  const api = useBackendApi()
+  const api = useBackendTrpc()
   const { data, error, isError, isLoading, isFetching, refetch } =
     api.interop.highlights.latest.useQuery()
 
