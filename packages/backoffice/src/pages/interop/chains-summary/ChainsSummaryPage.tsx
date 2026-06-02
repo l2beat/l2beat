@@ -7,24 +7,27 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { useBackendApi } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { ChainsSummaryTable } from './table/ChainsSummaryTable'
 import { getChainsSummaryRows, getSummaryStats } from './utils'
 
 export function ChainsSummaryPage() {
-  const api = useBackendApi()
-  const productionApi = useBackendApi('production')
-  const stagingApi = useBackendApi('staging')
+  const trpc = useBackendTrpc()
+  const productionApi = useBackendTrpc('production')
+  const stagingApi = useBackendTrpc('staging')
   const productionFrontend = useFrontendApi('production')
   const stagingFrontend = useFrontendApi('staging')
 
-  const productionBackend = productionApi.interop.chains.summary.useQuery(
-    undefined,
-    { staleTime: 60_000 },
+  const productionBackend = useQuery(
+    productionApi.interop.chains.summary.queryOptions(undefined, {
+      staleTime: 60_000,
+    }),
   )
-  const stagingBackend = stagingApi.interop.chains.summary.useQuery(undefined, {
-    staleTime: 60_000,
-  })
+  const stagingBackend = useQuery(
+    stagingApi.interop.chains.summary.queryOptions(undefined, {
+      staleTime: 60_000,
+    }),
+  )
   const productionFrontendQuery = useQuery({
     queryKey: ['frontend', 'chains', 'production'],
     queryFn: () => productionFrontend.chains.getAll(),
@@ -36,10 +39,15 @@ export function ChainsSummaryPage() {
     staleTime: 60_000,
   })
 
-  const missingTokensQuery = api.interop.missingTokens.list.useQuery()
-  const suspiciousTransfersQuery =
-    api.interop.anomalies.suspiciousTransfers.useQuery()
-  const aggregatesQuery = api.interop.aggregates.latest.useQuery()
+  const missingTokensQuery = useQuery(
+    trpc.interop.missingTokens.list.queryOptions(),
+  )
+  const suspiciousTransfersQuery = useQuery(
+    trpc.interop.anomalies.suspiciousTransfers.queryOptions(),
+  )
+  const aggregatesQuery = useQuery(
+    trpc.interop.aggregates.latest.queryOptions(),
+  )
 
   const sources = [
     { label: 'Production backend', query: productionBackend },

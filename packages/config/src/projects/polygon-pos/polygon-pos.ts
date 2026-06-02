@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -46,6 +47,15 @@ const currentValidatorSetCap = discovery.getContractValue<number>(
 const minDeposit = discovery.getContractValue<string>(
   'StakeManager',
   'minDeposit',
+)
+
+const replacementCoolDown = discovery.getContractValue<number>(
+  'StakeManager',
+  'replacementCoolDown',
+)
+assert(
+  replacementCoolDown === 2018083,
+  'The far-future replacement cooldown which effectively closed the vali set whenever it was at the cap has changed and the sequencer section and risk rosette should be adjusted if the set is now open+capped with a working replacement auction.',
 )
 
 const polygonSpanBlocks = 6400
@@ -304,11 +314,13 @@ export const polygonpos: ScalingProject = {
       },
       inclusionDelayChartDescription:
         'The chart models live-chain selective censorship only. Since proposing is stake-weighted, the x-axis represents the censoring POL stake, and does not cover validator-set changes, or blanket-censorship resistance gadgets.',
-      censorshipResistance: `The validator set is closed and capped, but includes a diverse set of known entities who share block production rights. There are no specific censorship resistance gadgets built into the Polygon PoS protocol.
+      censorshipResistance: `The validator set (on Polygon PoS, validators are both proposers and sequencers) is closed and capped, but includes a diverse set of known entities who share block production rights. There are no specific censorship resistance gadgets built into the protocol.
 ### Selective censorship
-As long as the Polygon PoS blockchain is producing blocks, users can expect to include their transactions due to the rotating, diverse block producers, even if they are censored by some of them. Unfortunately, the rotation is very slow (see *span* time) and even a few entities censoring can cause long inclusion delays.
+As long as the Polygon PoS blockchain is producing blocks, users can expect to include their transactions due to the rotating, diverse block producers, even if they are censored by some of them. Unfortunately, the rotation is very slow (see *span* time) and even just a few entities censoring can cause long inclusion delays.
 ### Blanket censorship
-If validators holding more than 1/3 of the stake on Polygon PoS stop block production, the chain stops and there is no way for users to include any transactions (walkaway). The same 1/3 can censor users if they actively refuse to attest to blocks with their transactions.`,
+Validators holding more than 1/3 of Polygon PoS stake among them can censor users if they actively refuse to attest to blocks with their transactions. Polygon Multisig controls the core smart contracts on Ethereum and can administer the validator set (including malicious changes) as a consequence.
+### Walkaway
+If validators holding more than 1/3 of the stake on Polygon PoS stop block production, the chain stops and there is no way for users to include any transactions. As the validator set is currently closed by a permissioned smart contract setting on ethereum, walkaway of the permissioned actor would require social coordination and a hard fork to progress the chain.`,
       references: [
         {
           title: 'Polygon PoS architecture documentation',

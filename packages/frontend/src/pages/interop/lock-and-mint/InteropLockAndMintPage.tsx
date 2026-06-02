@@ -1,10 +1,14 @@
 import type { Project } from '@l2beat/config'
-import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
+import {
+  type DehydratedState,
+  HydrationBoundary,
+  useQuery,
+} from '@tanstack/react-query'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import type { WithProjectIcon } from '~/utils/withProjectIcon'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { MultiChainSelector } from '../components/chain-selector/MultiChainSelector'
@@ -99,11 +103,14 @@ function Content({
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
+  const trpc = useTRPC()
   const { selectedChains } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({
-    ...selectedChains,
-    type: 'lockAndMint',
-  })
+  const { data, isLoading } = useQuery(
+    trpc.interop.dashboard.queryOptions({
+      ...selectedChains,
+      type: 'lockAndMint',
+    }),
+  )
 
   if (data === null) {
     return <InteropEmptyState />

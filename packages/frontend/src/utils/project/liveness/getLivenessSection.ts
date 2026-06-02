@@ -57,11 +57,13 @@ export async function getLivenessSection(
   const range = optionToRange('max')
   const subtype = getDefaultSubtype(configuredSubtypes)
 
-  const data = await helpers.liveness.projectChart.fetch({
-    projectId: project.id,
-    range,
-    subtype,
-  })
+  const data = await helpers.queryClient.fetchQuery(
+    helpers.trpc.liveness.projectChart.queryOptions({
+      projectId: project.id,
+      range,
+      subtype,
+    }),
+  )
 
   if (data.data.length === 0) return undefined
 

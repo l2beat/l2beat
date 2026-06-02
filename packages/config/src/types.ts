@@ -1385,6 +1385,7 @@ export type InteropPluginName =
   | 'lighter-bridge'
   | 'layerzero-v2-ofts'
   | 'lido-wsteth'
+  | 'lifi-intents'
   | 'maker-bridge'
   | 'mayan-forwarder'
   | 'mayan-mctp'
