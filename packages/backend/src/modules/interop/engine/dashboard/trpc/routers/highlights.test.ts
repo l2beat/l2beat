@@ -367,6 +367,104 @@ describe(createHighlightsRouter.name, () => {
     expect(result.largestTvsIncreaseByChain).toEqual(null)
   })
 
+  it('maps configured chain ids to project ids for UOPS and TVS highlights', async () => {
+    const latestTimestamp = UnixTime(1_700_000_000)
+    const previousTimestamp = latestTimestamp - UnixTime.DAY
+    const olderTimestamp = previousTimestamp - UnixTime.DAY
+
+    const getActivityByTimestamp = mockFn()
+      .resolvesToOnce([activityRecord('polygon-pos', latestTimestamp, 90)])
+      .resolvesToOnce([activityRecord('polygon-pos', previousTimestamp, 30)])
+      .resolvesToOnce([activityRecord('polygon-pos', olderTimestamp, 20)])
+      .resolvesTo([])
+    const getTvsByTimestamp = mockFn()
+      .resolvesToOnce([
+        tvsRecord('polygon-pos', latestTimestamp, 5_000_000_000),
+      ])
+      .resolvesToOnce([
+        tvsRecord('polygon-pos', previousTimestamp, 4_000_000_000),
+      ])
+      .resolvesToOnce([tvsRecord('polygon-pos', olderTimestamp, 3_000_000_000)])
+      .resolvesTo([])
+
+    const caller = createCaller({
+      latestTimestamp,
+      getTransferByTimestamp: mockFn().resolvesTo([]),
+      getTokenByTimestamp: mockFn().resolvesTo([]),
+      getActivityMaxTimestampAtOrBefore: mockFn().resolvesTo(latestTimestamp),
+      getActivityByTimestamp,
+      getTvsMaxTimestampAtOrBefore: mockFn()
+        .resolvesToOnce(latestTimestamp)
+        .resolvesToOnce(previousTimestamp)
+        .resolvesToOnce(olderTimestamp),
+      getTvsByTimestamp,
+      chains: [{ id: 'polygonpos', type: 'evm' }],
+    })
+
+    const result = await caller.latest()
+
+    expect(result.largestUopsIncreaseByChain).toEqual({
+      windowStart: latestTimestamp - UnixTime.DAY,
+      windowEnd: latestTimestamp,
+      previousWindowStart: latestTimestamp - 2 * UnixTime.DAY,
+      previousWindowEnd: latestTimestamp - UnixTime.DAY,
+      chain: 'polygonpos',
+      currentCount: 90,
+      previousCount: 30,
+      increase: 60,
+      increasePercent: 200,
+    })
+    expect(result.largestTvsIncreaseByChain).toEqual({
+      windowStart: latestTimestamp - UnixTime.DAY,
+      windowEnd: latestTimestamp,
+      previousWindowStart: latestTimestamp - 2 * UnixTime.DAY,
+      previousWindowEnd: latestTimestamp - UnixTime.DAY,
+      chain: 'polygonpos',
+      currentVolumeUsd: 5_000_000_000,
+      previousVolumeUsd: 4_000_000_000,
+      increaseUsd: 1_000_000_000,
+    })
+  })
+
+  it('uses the latest available previous TVS snapshot in comparison windows', async () => {
+    const latestTimestamp = UnixTime(1_700_000_000)
+    const fallbackPreviousTimestamp =
+      latestTimestamp - UnixTime.DAY - UnixTime.HOUR
+    const olderTimestamp = fallbackPreviousTimestamp - UnixTime.DAY
+
+    const getTvsByTimestamp = mockFn()
+      .resolvesToOnce([tvsRecord('optimism', latestTimestamp, 5_000_000_000)])
+      .resolvesToOnce([
+        tvsRecord('optimism', fallbackPreviousTimestamp, 4_000_000_000),
+      ])
+      .resolvesToOnce([tvsRecord('optimism', olderTimestamp, 3_000_000_000)])
+      .resolvesTo([])
+
+    const caller = createCaller({
+      latestTimestamp,
+      getTransferByTimestamp: mockFn().resolvesTo([]),
+      getTokenByTimestamp: mockFn().resolvesTo([]),
+      getTvsMaxTimestampAtOrBefore: mockFn()
+        .resolvesToOnce(latestTimestamp)
+        .resolvesToOnce(fallbackPreviousTimestamp)
+        .resolvesToOnce(olderTimestamp),
+      getTvsByTimestamp,
+    })
+
+    const result = await caller.latest()
+
+    expect(result.largestTvsIncreaseByChain).toEqual({
+      windowStart: latestTimestamp - UnixTime.DAY,
+      windowEnd: latestTimestamp,
+      previousWindowStart: fallbackPreviousTimestamp - UnixTime.DAY,
+      previousWindowEnd: fallbackPreviousTimestamp,
+      chain: 'optimism',
+      currentVolumeUsd: 5_000_000_000,
+      previousVolumeUsd: 4_000_000_000,
+      increaseUsd: 1_000_000_000,
+    })
+  })
+
   it('returns empty metrics when no snapshots exist', async () => {
     const getTransferByTimestamp = mockFn()
     const getTokenByTimestamp = mockFn()

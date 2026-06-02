@@ -1,6 +1,7 @@
 import type { Database } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
+import { projectIdToChain } from '../../../../../config/chainMap'
 import {
   getLargestProtocolVolumeIncrease,
   getLargestSourceChainVolumeIncrease,
@@ -248,7 +249,9 @@ export async function getInteropHighlights(
       ? getComparisonWindow(activityTimestamp)
       : undefined
   const tvsWindow =
-    tvsTimestamp !== undefined ? getComparisonWindow(tvsTimestamp) : undefined
+    tvsTimestamp !== undefined
+      ? getComparisonWindow(tvsTimestamp, tvsPreviousTimestamp)
+      : undefined
 
   return {
     topPathByVolume: topPath
@@ -308,7 +311,7 @@ export async function getInteropHighlights(
       uopsIncrease && activityWindow
         ? {
             ...activityWindow,
-            chain: uopsIncrease.projectId.toString(),
+            chain: projectIdToChain(uopsIncrease.projectId),
             currentCount: uopsIncrease.currentUopsCount,
             previousCount: uopsIncrease.previousUopsCount,
             increase: uopsIncrease.increase,
@@ -319,7 +322,7 @@ export async function getInteropHighlights(
       tvsIncrease && tvsWindow
         ? {
             ...tvsWindow,
-            chain: tvsIncrease.projectId,
+            chain: projectIdToChain(ProjectId(tvsIncrease.projectId)),
             currentVolumeUsd: tvsIncrease.currentTvsUsd,
             previousVolumeUsd: tvsIncrease.previousTvsUsd,
             increaseUsd: tvsIncrease.increaseUsd,
