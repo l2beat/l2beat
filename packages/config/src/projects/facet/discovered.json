@@ -1,6 +1,6 @@
 {
   "name": "facet",
-  "timestamp": 1780397670,
+  "timestamp": 1780403133,
   "configHash": "0x449cd9ae84c0b707baeb58fedb2c3d007be4c417044058bdd99392bcd165f49c",
   "entries": [
     {
@@ -71,15 +71,15 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2",
-        "anchorL2BlockNumber": 3827260,
-        "anchorProposalId": 58,
-        "anchorRoot": "0x8834b1b11a37cf194c2432c33063fed2c52b9e009d58481d6e352e8df34cae30",
+        "anchorL2BlockNumber": 3829060,
+        "anchorProposalId": 59,
+        "anchorRoot": "0x24652ac280fdf6eab6f0ba68a8da7163bae727773da815a3864e724de5d21c7e",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "10000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 87,
+        "getProposalsLength": 88,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1778518859,
@@ -279,7 +279,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "SP1VerifierGateway",
+      "name": "SP1VerifierGatewayDeprecated",
       "address": "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66",
       "type": "Contract",
       "template": "succinct/SP1VerifierGateway",
@@ -1047,6 +1047,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 25229229, "facet": 3879427 },
-  "permissionsConfigHash": "0xd0874da3c9fa4d1c78214a8621473085a95961010a6671833cdef28ef39890b3"
+  "usedBlockNumbers": { "ethereum": 25229682, "facet": 3879882 },
+  "permissionsConfigHash": "0x23d2c961206fe2309d7f97632b1a55614870f018e8c796ac69327bf4a29c35e2"
 }

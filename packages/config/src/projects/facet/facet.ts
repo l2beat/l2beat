@@ -288,7 +288,7 @@ export const facet: ScalingProject = {
       {
         name: 'No canonical bridge - anyone can build one',
         description:
-          "Facet's Rollup contract publishes L2 state roots but is not paired with a canonical bridge escrow. Anyone can deploy a bridge that reads the Rollup's anchor state root and operates lock-and-mint / burn-and-release flows for arbitrary tokens; each bridge has its own L2 counterpart, so the same L1 token bridged through different bridges results in different L2 representations. Trust assumptions (operator role, upgradeability, withdrawal logic) are bridge-specific and do not propagate from the Rollup. The risk analysis on this page covers the Rollup and its proof system only; any bridge built on top must be assessed separately. Known bridges today include the FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C) fast ETH bridge, whose withdrawals are processed by a permissioned EOA operator and do not depend on the Rollup state, and a legacy L1Bridge (0x4E2eBa30…) immutably bound to the previous Rollup contract (0x686E7d01…) which no longer receives state-root proposals.",
+          "Facet's `Rollup` contract publishes L2 state roots but is not paired with a canonical bridge escrow. Anyone can deploy a bridge that reads the `Rollup`'s anchor state root and operates lock-and-mint / burn-and-release flows for arbitrary tokens; each bridge has its own L2 counterpart, so the same L1 token bridged through different bridges results in different L2 representations. Trust assumptions (operator role, upgradeability, withdrawal logic) are bridge-specific and do not propagate from the `Rollup`. The risk analysis on this page covers the `Rollup` and its proof system only; any bridge built on top must be assessed separately. Known bridges today include the `FacetEtherBridgeV6` fast ETH bridge, whose withdrawals are processed by a permissioned EOA operator and do not depend on the `Rollup` state, and a legacy `L1Bridge` immutably bound to `RollupDeprecated`, which no longer receives state-root proposals.",
         risks: [],
         references: [
           {
@@ -387,7 +387,7 @@ export const facet: ScalingProject = {
       date: '2026-05-18T00:00:00Z',
       type: 'general',
       description:
-        'A new Rollup contract (0x026902ef…) is deployed and takes over state-root proposals; its VERIFIER points to a different SP1VerifierGateway (0xa236E6E3…, deployed 2026-01-06) that routes to the same underlying SP1Verifier. The previous Rollup (0x686E7d01…) stops receiving proposals on 2026-05-19, and the pre-existing L1Bridge remains immutably bound to it.',
+        'New Rollup contract takes over state-root proposals; previous Rollup stops on 2026-05-19.',
     },
     {
       title: 'SP1 proof system deployed',

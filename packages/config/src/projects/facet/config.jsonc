@@ -13,6 +13,7 @@
   "names": {
     "eth:0x026902ef5a0931f25cbb78b5dd7a72ee998569ae": "Rollup",
     "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4": "RollupDeprecated",
+    "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": "SP1VerifierGatewayDeprecated",
     "eth:0x4e2eba30a786c0643699b92234d74a71e958c08e": "L1Bridge", // bound to RollupDeprecated (immutable)
     "eth:0x00000000000000000000000000000000000face7": "Inbox",
     "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": "L1ETHLockbox", // deprecated

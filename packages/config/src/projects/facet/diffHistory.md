@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x0f0738cb7b1a61a321b8dbed8f3749fa2ca74714
+Generated with discovered.json: 0xe5eb0059ef1bbe70490eeb343484bd4838852bb2
 
-# Diff at Tue, 02 Jun 2026 10:55:59 GMT:
+# Diff at Tue, 02 Jun 2026 12:26:36 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1769601687
-- current timestamp: 1780397670
+- current timestamp: 1780403133
 
 ## Description
 
@@ -34,7 +34,7 @@ Add the new Rollup contract (eth:0x026902ef…, deployed 2026-05-18) that took o
       sinceBlock:
 +        25124426
       values:
-+        {"$immutable":true,"AGG_VKEY":"0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2","anchorL2BlockNumber":3827260,"anchorProposalId":58,"anchorRoot":"0x8834b1b11a37cf194c2432c33063fed2c52b9e009d58481d6e352e8df34cae30","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"10000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getProposalsLength":87,"isInFallbackWindow":[],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1778518859,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":604800,"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":5000000000000000,"RANGE_VKEY_COMMITMENT":"0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829","renouncedOwner":"eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","sequencerInbox":"eth:0x00000000000000000000000000000000000face7","VERIFIER":"eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1","version":"1.0.0","whitelistedProposers":["eth:0x615452db5467849689E98a8C5C242A96cF768a94"]}
++        {"$immutable":true,"AGG_VKEY":"0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2","anchorL2BlockNumber":3829060,"anchorProposalId":59,"anchorRoot":"0x24652ac280fdf6eab6f0ba68a8da7163bae727773da815a3864e724de5d21c7e","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"10000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getProposalsLength":88,"isInFallbackWindow":[],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1778518859,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":604800,"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":5000000000000000,"RANGE_VKEY_COMMITMENT":"0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829","renouncedOwner":"eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","sequencerInbox":"eth:0x00000000000000000000000000000000000face7","VERIFIER":"eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1","version":"1.0.0","whitelistedProposers":["eth:0x615452db5467849689E98a8C5C242A96cF768a94"]}
       implementationNames:
 +        {"eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE":"Rollup"}
       category:
@@ -68,9 +68,8 @@ Add the new Rollup contract (eth:0x026902ef…, deployed 2026-05-18) that took o
 
 ```diff
 /dev/null => ./src/projects/facet/.flat/Rollup.sol | 1260 ++++++++++++++++++++
- ...0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66.sol} |    0
- ...:0xa236E6E31d94b613923d18313f534CE5b6b98eE1.sol |  271 +++++
- 3 files changed, 1531 insertions(+)
+ .../projects/facet/.flat/SP1VerifierGateway.sol    |  271 +++++
+ 2 files changed, 1531 insertions(+)
 ```
 
 ## Config/verification related changes
@@ -85,6 +84,15 @@ discovery. Values are for block 1769601687 (main branch discovery), not current.
       name:
 -        "Rollup"
 +        "RollupDeprecated"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayDeprecated (eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      name:
+-        "SP1VerifierGateway"
++        "SP1VerifierGatewayDeprecated"
     }
 ```
 
