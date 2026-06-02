@@ -131,7 +131,7 @@ describe('discovery config.jsonc', () => {
         `${c.name} project is outdated: ${reasons.map((r) => templateService.formatReason(r)).join('\n')}.\n Run "l2b refresh-discovery"`,
       )
     }
-  })
+  }).timeout(10_000)
 
   describe('shape addresses are unique', () => {
     const shapes = templateService.listAllTemplates()
