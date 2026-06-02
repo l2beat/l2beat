@@ -8,6 +8,10 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import {
+  TRANSFER_SPEED_DEFAULT_FROM,
+  TRANSFER_SPEED_DEFAULT_TO,
+} from './components/transfer-speed/consts'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 
 export type InteropTokenFramework = {
@@ -80,12 +84,21 @@ export async function getInteropTokenFrameworksData(
 async function getCachedData(initialChainIds: string[]) {
   const helpers = getSsrHelpers()
   if (initialChainIds.length > 0) {
-    await helpers.queryClient.prefetchQuery(
-      helpers.trpc.interop.tokenFrameworks.queryOptions({
-        from: initialChainIds,
-        to: initialChainIds,
-      }),
-    )
+    await Promise.all([
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.interop.tokenFrameworks.queryOptions({
+          from: initialChainIds,
+          to: initialChainIds,
+        }),
+      ),
+      // FrameworkTransferSpeedWidget fetches this exact pair on initial render.
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.interop.tokenFrameworks.queryOptions({
+          from: [TRANSFER_SPEED_DEFAULT_FROM],
+          to: [TRANSFER_SPEED_DEFAULT_TO],
+        }),
+      ),
+    ])
   }
   return { queryState: helpers.dehydrate() }
 }
