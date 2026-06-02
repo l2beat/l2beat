@@ -111,7 +111,7 @@ export const facet: ScalingProject = {
     name: 'Facet v1',
     slug: 'facet',
     description:
-      'Facet v1 is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by burning ETH on L1. Facet does not designate a single canonical bridge: the Rollup contract publishes state roots that anyone can use to deploy a bridge with its own L1 escrow and L2 minter.',
+      'Facet v1 is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by burning ETH on L1.',
     purposes: ['Universal'],
     links: {
       websites: ['https://facet.org/'],
