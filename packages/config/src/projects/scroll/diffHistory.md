@@ -1,3 +1,356 @@
+Generated with discovered.json: 0x27bf223721dfada49306f7bb16cb7ab39a2a7906
+
+# Diff at Tue, 02 Jun 2026 11:56:04 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779399741
+- current timestamp: 1780401289
+
+## Description
+
+**Security Council removal.** On 2026-06-01, Scroll executed the previously-signed L1 and L2 multiSend transactions, replacing its independent 9-of-12 Security Council (`eth:0x1a37bF…` / `scr:0x1a37bF…`) with the 3-of-4 `ScrollAdminMultisig` (`0xcca54B0916Cee2186b47E9709BEdcb7041A8F761`).
+
+- L1 execution tx: [0xbc6079d5…b373765](https://etherscan.io/tx/0xbc6079d54f7a5fc548402db349168732c3f02430c156f4723865934bdb373765) (2026-06-01T12:36:23Z)
+- L2 execution tx: [0x7278f818…14b62bd](https://scrollscan.com/tx/0x7278f818e917a553318083cf44d99a4b92d72b876c1e19a1834fa3b2114b62bd) (2026-06-01T12:42:30Z)
+- Forum announcement (2026-04-13): [Governance Update: Security Council Transition](https://forum.scroll.io/t/governance-update-security-council-transition-contributor-roles-operational-adjustments/1470)
+
+Roles transferred on both chains:
+- `TimelockSCEmergency` / `TimelockSCEmergencyScroll` (0-delay): `TIMELOCK_ADMIN_ROLE`, `PROPOSER_ROLE`, `EXECUTOR_ROLE`, `CANCELLER_ROLE`. Old SC removed from each; `ScrollAdminMultisig` added. On L1, `Scroll Multisig 1` stays as a second `EXECUTOR`. On L2, the existing Scroll-side `EXECUTOR` (`scr:0x1FF1fc1B…`) is unchanged.
+- `TimelockSCSlow` (3-day) L1: same four roles transferred. `Scroll Multisig 1` remains as a second `EXECUTOR`.
+- `TimelockSCSlow` (3-day) L2: same four roles transferred. `AgoraGovernor` (`scr:0x2f3F2054…`) remains as proposer/executor/canceller alongside `ScrollAdminMultisig` — this is the L2 governance pathway and was never held by the SC.
+- `AgoraGovernor.admin` (L2 only): `scr:0x1a37bF…` → `scr:0xcca54B…`.
+
+The `ScrollAdminMultisig` is a 3-of-4 Safe whose four EOAs are the same four members as Scroll Multisig 3 (a 2-of-4 ops multisig). Two of those EOAs (`0x716f84f7…` and `0x6aE9233a…`) also sit on Scroll Multisigs 1 and 4. There is zero overlap with the previous 12 independent SC members.
+
+**Stage impact.** Scroll falls from Stage 1 to Stage 0. The new multisig fails `securityCouncilProperlySetUp` (only 4 members, not organisationally independent from the team) and `usersHave7DaysToExit` (the 0-delay upgrade path is now held by team operators rather than an SC). Updated in `scroll.ts`.
+
+**Still pending (queued in TimelockSCSlow, 3-day).** A batch was scheduled to transfer `SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE` on `ScrollOwner` away from the independent 3/12 `Scroll Security Council Minority` to `ScrollAdminMultisig`. Not yet executed in this discovery snapshot.
+
+**Cosmetic.** A spam-tagged Safe (`eth:0x11cd09a…`) shed 6 members; ignore.
+
+**EIP-7702 EOA.** `eth:0x498C0c17e26EEEC63375A4A20Ba8A91Aa357CbcD` upgraded to `EIP7702StatelessDeleGator`. Unrelated to the SC removal; this is one of the Scroll Multisig 3 / ScrollAdminMultisig signers picking up a 7702 delegator.
+
+## Watched changes
+
+```diff
+    contract TimelockSCEmergency (eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.Canceller.0:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor.1:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.Proposer.0:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.timelockAdminAC.1:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (eth:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d"
+      values.$members.2:
+-        "eth:0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3"
+      values.$members.6:
+-        "eth:0x9106372987a14400F283bc1AfC122A57130c18a3"
+      values.$members.7:
+-        "eth:0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC"
+      values.$members.9:
+-        "eth:0xa28b7D23e9F8D8d5346A7901ecC9eC8ea48bAEcD"
+      values.$members.11:
+-        "eth:0x32E8B0B9783d65170fd37f79079d5707107cCc62"
+      values.multisigThreshold:
+-        "2 of 12 (17%)"
++        "2 of 6 (33%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract TimelockSCSlow (eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.Canceller.0:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor.0:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor.1:
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.Proposer.0:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.timelockAdminAC.1:
+-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+    }
+```
+
+```diff
+    EOA  (eth:0x498C0c17e26EEEC63375A4A20Ba8A91Aa357CbcD) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x498C0c17e26EEEC63375A4A20Ba8A91Aa357CbcD","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0xe8c593be46a5ed8888fb0c3e5e73bf758d388267b7f243139256b041295bf293","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract TimelockSCEmergencyScroll (scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.Canceller.0:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor.1:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.Proposer.0:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.timelockAdminAC.1:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+    }
+```
+
+```diff
+    contract AgoraGovernor (scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) [N/A] {
+    +++ description: Used to propose and manage onchain governance proposals.
+      values.admin:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+    }
+```
+
+```diff
+    contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [N/A] {
+    +++ description: L2 counterpart of TimelockSCSlow. A timelock with access control; current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.accessControl.PROPOSER_ROLE.members.1:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+      values.accessControl.EXECUTOR_ROLE.members.2:
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.accessControl.CANCELLER_ROLE.members.1:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.Canceller.1:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor.1:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor.2:
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.Proposer.1:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+      values.timelockAdminAC.1:
+-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
++        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ScrollAdminMultisig (eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761) [GnosisSafe]
+    +++ description: 3-of-4 multisig of Scroll team operators that controls the TimelockSCSlow and TimelockSCEmergency on both L1 and L2, the sole controller of the rollup's upgrade and proof-system parameter paths. Its four EOAs are the same set as Scroll Multisig 3 (a 2-of-4 ops multisig).
+```
+
+```diff
++   Status: CREATED
+    contract ScrollAdminMultisig (scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761) [GnosisSafe]
+    +++ description: L2 counterpart of ScrollAdminMultisig (same 4 EOAs, 3/4 threshold). Holds the proposer/canceller/admin roles on TimelockSCSlow and TimelockSCEmergencyScroll on L2, and is the admin of AgoraGovernor since 2026-06-01.
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                                            | 0
+ .../SafeProxy.p.sol                                                     | 0
+ .../SafeL2.sol                                                          | 0
+ .../SafeProxy.p.sol                                                     | 2 +-
+ 4 files changed, 1 insertion(+), 1 deletion(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779399741 (main branch discovery), not current.
+
+```diff
+    contract Safe (eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Scroll Security Council"
++        "Safe"
+      references:
+-        [{"text":"Security Council members - Scroll Docs","href":"https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council"}]
+    }
+```
+
+```diff
+    EOA  (scr:0x0c5cc5155b346453154059aD9d2Ff695dB92f774) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "Scroll Security Council"
++        "SafeL2"
+      receivedPermissions.9:
++        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"cancel queued transactions.","role":".Canceller"}
+      receivedPermissions.10:
++        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"execute transactions that are ready.","role":".Executor"}
+      receivedPermissions.11:
++        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"propose transactions.","role":".Proposer"}
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200,"role":".Proposer"}
+    }
+```
+
+```diff
+    contract Scroll Multisig 1 (scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"execute transactions that are ready.","role":".Executor"}
+    }
+```
+
+```diff
+    contract AgoraGovernor (scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) [N/A] {
+    +++ description: Used to propose and manage onchain governance proposals.
+      receivedPermissions:
++        [{"permission":"interact","from":"scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","description":"can configure contract settings such as voting delay, quorum, contract manager.","role":".timelock","via":[{"address":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200}]},{"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"propose transactions.","role":".Proposer"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200,"role":".Proposer"}]
+    }
+```
+
+```diff
+    EOA  (scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}
+    }
+```
+
+```diff
+    EOA  (scr:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}
+    }
+```
+
+```diff
+    contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [N/A] {
+    +++ description: L2 counterpart of TimelockSCSlow. A timelock with access control; current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_ADMIN_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]},"PROPOSER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]},"EXECUTOR_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]},"CANCELLER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]}}
+      values.Canceller:
++        ["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor:
++        ["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]
+      values.Proposer:
++        ["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+      description:
++        "L2 counterpart of TimelockSCSlow. A timelock with access control; current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone."
+      fieldMeta:
++        {"Executor":{"severity":"HIGH","description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    EOA  (scr:0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"execute transactions that are ready.","role":".Executor","via":[{"address":"scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"}]}
+    }
+```
+
 Generated with discovered.json: 0x1897894645aa4d6f35fa07cdf620dd5631140465
 
 # Diff at Thu, 21 May 2026 21:43:35 GMT:

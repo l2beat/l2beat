@@ -1,7 +1,7 @@
 {
   "name": "scroll",
-  "timestamp": 1779399741,
-  "configHash": "0xaa331cf269fe87870f268930c1804aec2ba2f97bbc54aae8e1e5208ab2f7c7f9",
+  "timestamp": 1780401289,
+  "configHash": "0x3f3a5b831d07c24094381d68ec00044452aebbd9a630411e7f6e13b9a23d46d6",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -163,41 +163,41 @@
             "adminRole": "TIMELOCK_ADMIN_ROLE",
             "members": [
               "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
-              "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+              "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
             ]
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+            "members": ["eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
             "members": [
               "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
-              "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+              "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
             ]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+            "members": ["eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"]
           }
         },
-        "Canceller": ["eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"],
+        "Canceller": ["eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "Executor": [
           "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
-          "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+          "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
         ],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 0,
         "getMinDelayFormatted": "0s",
-        "Proposer": ["eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"],
+        "Proposer": ["eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": [
           "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
-          "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+          "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
         ]
       },
       "fieldMeta": {
@@ -344,24 +344,18 @@
         "$implementation": "eth:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
           "eth:0xA0895eF86B766aFd455Fdb129A830A1C6CE054A1",
-          "eth:0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d",
-          "eth:0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3",
           "eth:0x6626593C237f530D15aE9980A95ef938Ac15c35c",
           "eth:0xb3dd2CA3F575FCDd79F5Cd45c5a6c9db860F3E4d",
           "eth:0xb01474b50382fAe1A847E3A916ECDf07Ba57BcC7",
-          "eth:0x9106372987a14400F283bc1AfC122A57130c18a3",
-          "eth:0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC",
           "eth:0x218C720079833e0e40a3cc68CD5fA2f89D65d0bf",
-          "eth:0xa28b7D23e9F8D8d5346A7901ecC9eC8ea48bAEcD",
-          "eth:0x93738D2aD25678BAE4F467FFad2c5a4C4c79658a",
-          "eth:0x32E8B0B9783d65170fd37f79079d5707107cCc62"
+          "eth:0x93738D2aD25678BAE4F467FFad2c5a4C4c79658a"
         ],
         "$threshold": 2,
         "domainSeparator": "0x6a0d5b5d136978428f96e7a25eff9c658a73697587fc6e42f0e308d79828c1b0",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 12 (17%)",
-        "nonce": 11,
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -374,194 +368,6 @@
       "address": "eth:0x174d1A887e971f7d0fe5C68b328c30e0ED743160",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Scroll Security Council",
-      "address": "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
-          "description": "cancel queued transactions.",
-          "role": ".Canceller"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
-          "description": "propose transactions.",
-          "role": ".Proposer"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "role": ".timelockAdminAC",
-          "via": [
-            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "role": ".timelockAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
-          "description": "cancel queued transactions.",
-          "role": ".Canceller"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
-          "description": "propose transactions.",
-          "role": ".Proposer"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "role": ".timelockAdminAC",
-          "via": [
-            {
-              "address": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
-              "delay": 259200
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "role": ".timelockAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "disable enforced batch mode.",
-          "role": ".scNoDelay",
-          "via": [
-            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "update and reset the PauseController cooldown period.",
-          "role": ".scNoDelay",
-          "via": [
-            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "update ScrollChain zk proof verifier.",
-          "role": ".scNoDelay",
-          "via": [
-            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "update the L1ScrollMessenger fee vault address.",
-          "role": ".scNoDelay",
-          "via": [
-            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "update the minimum delay message queue parameters and enforced mode parameters.",
-          "role": ".scNoDelay",
-          "via": [
-            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "upgrade all core contracts of the system.",
-          "role": ".scNoDelay",
-          "via": [
-            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
-          "role": ".Proposer"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
-          "delay": 259200,
-          "role": ".Proposer"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
-      "sinceTimestamp": 1732607939,
-      "sinceBlock": 21270585,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0x0f50874f227621Dea72482004639a9fFe440A4dA",
-          "eth:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
-          "eth:0xE47D966E2c7e94fC20ffAf5119d1926381C40f2a",
-          "eth:0x9B2C2Bc80C209c9C5D7f26F57b1Bb3B1699281D4",
-          "eth:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC",
-          "eth:0x30315233090F675520eef5CBd7A6cf7d185af443",
-          "eth:0x9479ABfebefEea3c846163012a472b44F305b3d7",
-          "eth:0x383C148ba96956F985F6141B2D119add1C34e3B7",
-          "eth:0xC3eA7C657884BB380B66D79C36aDCb5658b01896",
-          "eth:0x69C2eD64171bF5737c2B78bdF722e68a032B2825",
-          "eth:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F",
-          "eth:0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf"
-        ],
-        "$threshold": 9,
-        "domainSeparator": "0x74e6026695cbb5e8a904a4284b747bdc78c19fa8955f45352ac71bf10feb66e9",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 13,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": "SafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      },
-      "references": [
-        {
-          "text": "Security Council members - Scroll Docs",
-          "href": "https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council"
-        }
-      ]
     },
     {
       "name": "Scroll Multisig 1",
@@ -680,11 +486,6 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "address": "eth:0x32E8B0B9783d65170fd37f79079d5707107cCc62",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x383C148ba96956F985F6141B2D119add1C34e3B7",
       "type": "EOA",
       "proxyType": "EOA",
@@ -744,41 +545,41 @@
             "adminRole": "TIMELOCK_ADMIN_ROLE",
             "members": [
               "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
-              "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+              "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
             ]
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+            "members": ["eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
             "members": [
-              "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-              "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+              "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
+              "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
             ]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+            "members": ["eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"]
           }
         },
-        "Canceller": ["eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"],
+        "Canceller": ["eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "Executor": [
-          "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-          "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+          "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
+          "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
         ],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 259200,
         "getMinDelayFormatted": "3d",
-        "Proposer": ["eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"],
+        "Proposer": ["eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": [
           "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
-          "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+          "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
         ]
       },
       "fieldMeta": {
@@ -847,7 +648,31 @@
     {
       "address": "eth:0x498C0c17e26EEEC63375A4A20Ba8A91Aa357CbcD",
       "type": "EOA",
-      "proxyType": "EOA"
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x498C0c17e26EEEC63375A4A20Ba8A91Aa357CbcD",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0xe8c593be46a5ed8888fb0c3e5e73bf758d388267b7f243139256b041295bf293",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
     },
     {
       "name": "ZkEvmVerifierPostFeynman",
@@ -1029,11 +854,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1779399731,
+        "getFirstUnfinalizedMessageEnqueueTime": 1780401287,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 998231,
-        "nextUnfinalizedQueueIndex": 998231,
+        "nextCrossDomainMessageIndex": 998324,
+        "nextUnfinalizedQueueIndex": 998324,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1517,11 +1342,6 @@
     },
     {
       "address": "eth:0x74b286304576625557629C47E9E8702383D9eF92",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2018,7 +1838,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2063,11 +1883,6 @@
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       },
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "eth:0x9106372987a14400F283bc1AfC122A57130c18a3",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0",
@@ -2237,14 +2052,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 517661,
+        "lastFinalizedBatchIndex": 517891,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 517661,
-          "lastFinalizedBatchIndex": 517661,
-          "lastFinalizeTimestamp": 1779398459,
+          "lastCommittedBatchIndex": 517891,
+          "lastFinalizedBatchIndex": 517891,
+          "lastFinalizeTimestamp": 1780397591,
           "flags": 1,
           "reserved": 0
         },
@@ -2276,11 +2091,6 @@
         "eth:0x0a20703878E68E587c59204cc0EA86098B8c3bA7": "ScrollChain"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0xa28b7D23e9F8D8d5346A7901ecC9eC8ea48bAEcD",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "ZkEvmVerifierPostFeynman",
@@ -2450,11 +2260,6 @@
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "eth:0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "L1USDCGateway",
@@ -2685,6 +2490,191 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "name": "ScrollAdminMultisig",
+      "address": "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "description": "3-of-4 multisig of Scroll team operators that controls the TimelockSCSlow and TimelockSCEmergency on both L1 and L2, the sole controller of the rollup's upgrade and proof-system parameter paths. Its four EOAs are the same set as Scroll Multisig 3 (a 2-of-4 ops multisig).",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC",
+          "via": [
+            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC",
+          "via": [
+            {
+              "address": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+          "description": "disable enforced batch mode.",
+          "role": ".scNoDelay",
+          "via": [
+            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+          "description": "update and reset the PauseController cooldown period.",
+          "role": ".scNoDelay",
+          "via": [
+            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+          "description": "update ScrollChain zk proof verifier.",
+          "role": ".scNoDelay",
+          "via": [
+            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+          "description": "update the L1ScrollMessenger fee vault address.",
+          "role": ".scNoDelay",
+          "via": [
+            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+          "description": "update the minimum delay message queue parameters and enforced mode parameters.",
+          "role": ".scNoDelay",
+          "via": [
+            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+          "description": "upgrade all core contracts of the system.",
+          "role": ".scNoDelay",
+          "via": [
+            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "delay": 259200,
+          "role": ".Proposer"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x4721cf824b6750B58d781fD1336D92a082704C7A",
+      "sinceTimestamp": 1774419707,
+      "sinceBlock": 24732744,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x8460aCc9A42D2CF07015a3e838df2E3aB37d30ae",
+          "eth:0xEbbeeAA424AE904508465a41c927Be594C43Dc68",
+          "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b",
+          "eth:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x9d809ba5e16ee286435b4fa5bc038f3341877a9889b061a2387a6052b0ea0b8d",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
+      "references": [
+        {
+          "text": "Governance Update: Security Council Transition, Contributor Roles & Operational Adjustments (Scroll forum, 2026-04-13)",
+          "href": "https://forum.scroll.io/t/governance-update-security-council-transition-contributor-roles-operational-adjustments/1470"
+        },
+        {
+          "text": "L1 execution tx",
+          "href": "https://etherscan.io/tx/0xbc6079d54f7a5fc548402db349168732c3f02430c156f4723865934bdb373765"
+        }
+      ]
+    },
+    {
       "name": "PlonkVerifierPostEuclid",
       "address": "eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582",
       "type": "Contract",
@@ -2754,11 +2744,6 @@
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "eth:0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xDF1aa0495C815A1b9156796a741885a4834EC012",
@@ -3031,7 +3016,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 9284454391788,
+        "totalBridgedUSDC": 8042099690862,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -3207,6 +3192,15 @@
         {
           "permission": "interact",
           "from": "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
           "description": "execute transactions that are ready.",
           "role": ".Executor",
           "via": [
@@ -3439,137 +3433,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "Scroll Security Council",
-      "address": "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "description": "disable enforced batch mode.",
-          "role": ".scNoDelay",
-          "via": [
-            { "address": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "description": "update ScrollChain zk proof verifier.",
-          "role": ".scNoDelay",
-          "via": [
-            { "address": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "description": "upgrade all core contracts of the system.",
-          "role": ".scNoDelay",
-          "via": [
-            { "address": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "description": "cancel queued transactions.",
-          "role": ".Canceller"
-        },
-        {
-          "permission": "interact",
-          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor"
-        },
-        {
-          "permission": "interact",
-          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "description": "propose transactions.",
-          "role": ".Proposer"
-        },
-        {
-          "permission": "interact",
-          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "role": ".timelockAdminAC",
-          "via": [
-            { "address": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "role": ".timelockAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
-          "description": "can configure contract settings such as voting delay, quorum, contract manager.",
-          "role": ".timelock",
-          "via": [
-            {
-              "address": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
-              "delay": 259200
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "role": ".Proposer"
-        },
-        {
-          "permission": "act",
-          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
-          "delay": 259200,
-          "role": ".timelockAdminAC"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "scr:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
-      "sinceTimestamp": 1732607988,
-      "sinceBlock": 11413777,
-      "values": {
-        "$immutable": false,
-        "$implementation": "scr:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
-        "$members": [
-          "scr:0x0f50874f227621Dea72482004639a9fFe440A4dA",
-          "scr:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
-          "scr:0xE47D966E2c7e94fC20ffAf5119d1926381C40f2a",
-          "scr:0x9B2C2Bc80C209c9C5D7f26F57b1Bb3B1699281D4",
-          "scr:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC",
-          "scr:0x30315233090F675520eef5CBd7A6cf7d185af443",
-          "scr:0x9479ABfebefEea3c846163012a472b44F305b3d7",
-          "scr:0x383C148ba96956F985F6141B2D119add1C34e3B7",
-          "scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896",
-          "scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825",
-          "scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F",
-          "scr:0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf"
-        ],
-        "$threshold": 9,
-        "domainSeparator": "0xff9c0e40823449dd647402236fd157ea2e6e015b20a4e26a830b02c489df7b3e",
-        "getChainId": 534352,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 7,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": "SafeProxy",
-        "scr:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
-      }
-    },
-    {
       "address": "scr:0x1Da431d2D5ECA4Df735F69fB5ea10c8E630b8f50",
       "type": "EOA",
       "proxyType": "EOA"
@@ -3624,41 +3487,41 @@
             "adminRole": "TIMELOCK_ADMIN_ROLE",
             "members": [
               "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-              "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+              "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
             ]
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+            "members": ["scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
             "members": [
               "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
-              "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+              "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
             ]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+            "members": ["scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"]
           }
         },
-        "Canceller": ["scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"],
+        "Canceller": ["scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "Executor": [
           "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
-          "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+          "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
         ],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 0,
         "getMinDelayFormatted": "0s",
-        "Proposer": ["scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"],
+        "Proposer": ["scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": [
           "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+          "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
         ]
       },
       "fieldMeta": {
@@ -3692,6 +3555,12 @@
         {
           "permission": "interact",
           "from": "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
           "description": "execute transactions that are ready.",
           "role": ".Executor"
         },
@@ -3859,6 +3728,46 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to propose and manage onchain governance proposals.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+          "description": "can configure contract settings such as voting delay, quorum, contract manager.",
+          "role": ".timelock",
+          "via": [
+            {
+              "address": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "delay": 259200,
+          "role": ".Proposer"
+        }
+      ],
       "deployerAddress": "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB",
       "sinceTimestamp": 1725377334,
       "sinceBlock": 8963441,
@@ -3878,7 +3787,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "admin": "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
+        "admin": "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761",
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "COUNTING_MODE": "support=bravo&quorum=against,for,abstain&params=modules",
         "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
@@ -4058,9 +3967,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x4f77f95433ec92d16ab55126f6563b2fb1a969e24d22801b6dbddb05450168f8",
+        "messageRoot": "0xb480a3dbd597eb41a1d3bcb5dbda0004c536e5b02b20b6252c2ef67d5293952d",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 322728,
+        "nextMessageIndex": 322840,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -4255,6 +4164,15 @@
         },
         {
           "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
           "description": "execute transactions that are ready.",
           "role": ".Executor",
@@ -4381,6 +4299,15 @@
         },
         {
           "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
           "description": "execute transactions that are ready.",
           "role": ".Executor",
@@ -4445,6 +4372,7 @@
         "0xb473930cd81ee45e44828aef3a7301db4dd1ddb5aa55cb97b0310cb2d07293b0"
       ],
       "proxyType": "immutable",
+      "description": "L2 counterpart of TimelockSCSlow. A timelock with access control; current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -4464,20 +4392,75 @@
       "sinceBlock": 8963444,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+              "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+              "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+              "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
+              "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+            ]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+              "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+            ]
+          }
+        },
+        "Canceller": [
+          "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+          "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+        ],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "Executor": [
+          "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+          "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
+          "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+        ],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 259200,
+        "Proposer": [
+          "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+          "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
+        ],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": [
           "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
-          "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
+          "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
         ]
+      },
+      "fieldMeta": {
+        "Executor": {
+          "severity": "HIGH",
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
       },
       "implementationNames": {
         "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14": "TimelockController"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "L2ERC721Gateway",
@@ -4656,7 +4639,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -5108,6 +5091,160 @@
       "proxyType": "EOA"
     },
     {
+      "name": "ScrollAdminMultisig",
+      "address": "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "description": "L2 counterpart of ScrollAdminMultisig (same 4 EOAs, 3/4 threshold). Holds the proposer/canceller/admin roles on TimelockSCSlow and TimelockSCEmergencyScroll on L2, and is the admin of AgoraGovernor since 2026-06-01.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
+          "description": "disable enforced batch mode.",
+          "role": ".scNoDelay",
+          "via": [
+            { "address": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
+          "description": "update ScrollChain zk proof verifier.",
+          "role": ".scNoDelay",
+          "via": [
+            { "address": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
+          "description": "upgrade all core contracts of the system.",
+          "role": ".scNoDelay",
+          "via": [
+            { "address": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC",
+          "via": [
+            { "address": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+          "description": "can configure contract settings such as voting delay, quorum, contract manager.",
+          "role": ".timelock",
+          "via": [
+            {
+              "address": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "act",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "delay": 259200,
+          "role": ".Proposer"
+        },
+        {
+          "permission": "act",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "delay": 259200,
+          "role": ".timelockAdminAC"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0x4721cf824b6750B58d781fD1336D92a082704C7A",
+      "sinceTimestamp": 1774419711,
+      "sinceBlock": 32518227,
+      "values": {
+        "$immutable": false,
+        "$implementation": "scr:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "scr:0x8460aCc9A42D2CF07015a3e838df2E3aB37d30ae",
+          "scr:0xEbbeeAA424AE904508465a41c927Be594C43Dc68",
+          "scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b",
+          "scr:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x029831d720f25a6684c61fb304c8d1072fe98bcdeef7456bd144ef83b06e3325",
+        "getChainId": 534352,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": "SafeProxy",
+        "scr:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      },
+      "references": [
+        {
+          "text": "L2 execution tx",
+          "href": "https://scrollscan.com/tx/0x7278f818e917a553318083cf44d99a4b92d72b876c1e19a1834fa3b2114b62bd"
+        }
+      ]
+    },
+    {
       "name": "SCRToken",
       "address": "scr:0xd29687c813D741E2F938F4aC377128810E217b1b",
       "type": "Contract",
@@ -5369,6 +5506,15 @@
         },
         {
           "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
           "description": "execute transactions that are ready.",
           "role": ".Executor",
@@ -5597,9 +5743,6 @@
       "function updateDelay(uint256 newDelay)"
     ],
     "eth:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": [
       "constructor(address _singleton)"
     ],
     "eth:0x1fee6a6dC49095FB9C84D61aa4b8A07284b2A1d0": [
@@ -5984,6 +6127,58 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    ],
     "eth:0x63FB51C55d9605a75F8872C80De260a00fACfaA2": [
       "constructor(address _verifier)",
       "error VerificationFailed()",
@@ -6352,6 +6547,9 @@
       "function verifierDigest() view returns (bytes32)",
       "function verify(bytes bundleProof, bytes publicInput) view"
     ],
+    "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": [
+      "constructor(address _singleton)"
+    ],
     "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -6676,9 +6874,6 @@
       "function withdrawETH(address _to, uint256 _amount, uint256 _gasLimit) payable",
       "function withdrawETH(uint256 _amount, uint256 _gasLimit) payable",
       "function withdrawETHAndCall(address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable"
-    ],
-    "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": [
-      "constructor(address _singleton)"
     ],
     "scr:0x1D40306EEfCF6EBd496d6048F6edf8892346e558": [
       "constructor(address _counterpart, address _router, address _messenger)",
@@ -7556,6 +7751,9 @@
       "function transferAndCall(address receiver, uint256 amount, bytes data) returns (bool success)",
       "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ],
+    "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": [
+      "constructor(address _singleton)"
+    ],
     "scr:0xd29687c813D741E2F938F4aC377128810E217b1b": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -7755,6 +7953,6 @@
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25146384, "scroll": 33789856 },
-  "permissionsConfigHash": "0x9a6b20dcd8faf475c77fc3c1c3329db3a8ec887e1d29cc801147f88e15b109a6"
+  "usedBlockNumbers": { "ethereum": 25229529, "scroll": 33926110 },
+  "permissionsConfigHash": "0x25964f57c2a14d59169ef7a686f6656c21b9ebbe493c21e35d6f0ee7a2531215"
 }

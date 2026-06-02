@@ -47,8 +47,8 @@ const cooldownPeriod = discovery.getContractValue<number>(
   'pauseCooldownPeriod',
 )
 
-const upgradesSC = {
-  upgradableBy: [{ name: 'Scroll Security Council', delay: 'no' }],
+const upgradesAdmin = {
+  upgradableBy: [{ name: 'ScrollAdminMultisig', delay: 'no' }],
 }
 
 const upgradeDelay = discovery.getContractValue<number>(
@@ -130,10 +130,15 @@ export const scroll: ScalingProject = {
         fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
-        principle: true,
-        usersHave7DaysToExit: true,
+        principle: false,
+        usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: true,
+        securityCouncilProperlySetUp: {
+          satisfied: false,
+          message:
+            'On 2026-06-01, Scroll replaced its independent 9-of-12 Security Council with a 3-of-4 multisig of Scroll team members (ScrollAdminMultisig, 0xcca54B...). The new entity does not meet the size or organisational-diversity requirements of a Security Council.',
+          mode: 'replace',
+        },
         noRedTrustedSetups: true,
         programHashesReproducible: true,
         proverSourcePublished: true,
@@ -147,8 +152,6 @@ export const scroll: ScalingProject = {
     },
     {
       rollupNodeLink: 'https://github.com/scroll-tech/go-ethereum',
-      securityCouncilReference:
-        'https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council',
     },
   ),
   chainConfig: {
@@ -181,35 +184,35 @@ export const scroll: ScalingProject = {
         ),
         tokens: '*',
         excludedTokens: ['rsETH'],
-        ...upgradesSC,
+        ...upgradesAdmin,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367',
         ),
         tokens: ['ETH'],
-        ...upgradesSC,
+        ...upgradesAdmin,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff',
         ), // custom gateway
         tokens: '*',
-        ...upgradesSC,
+        ...upgradesAdmin,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B',
         ),
         tokens: ['USDC'],
-        ...upgradesSC,
+        ...upgradesAdmin,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515',
         ),
         tokens: ['DAI'],
-        ...upgradesSC,
+        ...upgradesAdmin,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
@@ -506,9 +509,25 @@ export const scroll: ScalingProject = {
     ...discovery.getDiscoveredPermissions(),
   },
   upgradesAndGovernance: {
-    content: `All core contracts in the Scroll protocol are upgradable by the \`ProxyAdmin\`, which is controlled by the Security Council through the \`ScrollOwner\` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the \`TimelockSCSlow\`) and upgrading the affected contracts. The Security Council can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the \`updateMessageQueueParameters\` and \`updateEnforcedBatchParameters\` functions or by pausing the \`EnforcedTXGateway\`. Emergency pause of core contracts is managed through the \`PauseController\`, which allows the team to pause batch commitment and finalization in permissioned mode, as well as L1->L2 messaging. Each pause is subject to a cooldown period of ${formatExecutionDelay(cooldownPeriod)}, during which the Security Council minority can unpause, while the Security Council majority is authorized to update and reset the cooldown period. SCR token holders perform onchain voting on governance proposals through the \`AgoraGovernor\` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check. The Security Council is in charge of executing upgrades.`,
+    content: `All core contracts in the Scroll protocol are upgradable by the \`ProxyAdmin\`, which is controlled by the \`ScrollAdminMultisig\` (a 3-of-4 Safe of Scroll team operators) through the \`ScrollOwner\` contract. On 2026-06-01, Scroll executed a governance action that removed its independent 9-of-12 Security Council and transferred its \`TIMELOCK_ADMIN\`, \`PROPOSER\`, \`EXECUTOR\`, and \`CANCELLER\` roles on both timelocks on L1 and on the L2 \`TimelockSCEmergency\` to \`ScrollAdminMultisig\`, along with admin of the L2 \`AgoraGovernor\`. On the L2 \`TimelockSCSlow\`, the same four roles were transferred to \`ScrollAdminMultisig\`, but the L2 onchain governance contract (\`AgoraGovernor\`) remains a co-holder of \`PROPOSER\`, \`EXECUTOR\`, and \`CANCELLER\` (the SC removal did not touch that pathway). Because the new multisig is not organisationally independent from the team and has only four members, Scroll has been demoted from Stage 1 to Stage 0. The same multisig can now upgrade any core contract with zero delay, swap the ZK verifier, change the message-queue and enforced-batch parameters, pause/unpause the rollup, and replace the team-controlled timelocks (\`TimelockFast\`, \`TimelockEmergency\`) that govern the \`ops-fast\` and \`emergency-nodelay\` roles. Emergency pause of core contracts is managed through the \`PauseController\`, which allows the team to pause batch commitment and finalization in permissioned mode, as well as L1->L2 messaging. Each pause is subject to a cooldown period of ${formatExecutionDelay(cooldownPeriod)}. The \`Scroll Security Council Minority\` (a 3-of-12 independent safe holding \`SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE\`, which permits unpausing core contracts) is still in place; a 3-day timelock batch is queued to transfer that role to \`ScrollAdminMultisig\` as well, after which there is no externally-controlled actor in the trust graph. SCR token holders continue to vote on \`AgoraGovernor\` proposals on L2, but proposals carry no transaction payload, so onchain governance remains an off-chain temperature check.`,
   },
   milestones: [
+    {
+      title: 'Security Council removal',
+      url: 'https://etherscan.io/tx/0xbc6079d54f7a5fc548402db349168732c3f02430c156f4723865934bdb373765',
+      date: '2026-06-01T00:00:00Z',
+      description:
+        'Independent 9-of-12 Security Council replaced by a 3-of-4 team admin multisig; Stage drops 1 to 0.',
+      type: 'general',
+    },
+    {
+      title: 'L1 fee scalar inflation incident',
+      url: 'https://forum.scroll.io/t/governance-update-security-council-transition-contributor-roles-operational-adjustments/1470',
+      date: '2026-04-09T00:00:00Z',
+      description:
+        'L1GasPriceOracle scalars peaked at 1,280x baseline; users overpaid ~$51K in L1 fees over 3.9 days.',
+      type: 'incident',
+    },
     {
       title: 'Emergency verifier upgrade',
       url: 'https://etherscan.io/tx/0x74e5de74ff014b78b3bfcde9e3bf3c83f60ce10345ec10148ea918abeb2a9799',
