@@ -1,4 +1,5 @@
 import type { BackendRouterOutputs } from '@l2beat/backend/trpc'
+import { useQuery } from '@tanstack/react-query'
 import { CopyIcon, RefreshCwIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { toast } from 'sonner'
@@ -15,7 +16,7 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageSummaryCard } from '~/components/table/TablePageSummaryCard'
 import { AppLayout } from '~/layouts/AppLayout'
-import { useBackendApi } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 
 type SummaryConfig = BackendRouterOutputs['interop']['summary']['config']
@@ -37,11 +38,12 @@ const FEATURE_TOGGLE_LABELS: ReadonlyArray<{
 ] as const
 
 export function SummaryPage() {
-  const api = useBackendApi()
-  const { data, error, isError, isLoading, isFetching, refetch } =
-    api.interop.summary.config.useQuery(undefined, {
+  const trpc = useBackendTrpc()
+  const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
+    trpc.interop.summary.config.queryOptions(undefined, {
       staleTime: 60_000,
-    })
+    }),
+  )
 
   const fullCopyPayload = data
     ? {
