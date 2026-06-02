@@ -10,7 +10,6 @@ import {
   DA_LAYERS,
   DA_MODES,
   DATA_ON_CHAIN,
-  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -136,7 +135,6 @@ export const facet: ScalingProject = {
           'eth:0x0000000000000b07ED001607f5263D85bf28Ce4C',
         ),
         tokens: ['ETH'],
-        ...ESCROW.CANONICAL_ADD_TA,
         bridgedUsing: {
           bridges: [
             {
@@ -144,14 +142,14 @@ export const facet: ScalingProject = {
             },
           ],
         },
-        description: 'Fast external bridge contract.',
+        description:
+          'Operator-controlled fast external ETH bridge; withdrawals are processed by a permissioned EOA and do not depend on the Rollup state.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909',
         ),
         tokens: ['ETH', 'WETH'],
-        ...ESCROW.CANONICAL_ADD_TA,
         bridgedUsing: {
           bridges: [
             {
@@ -159,7 +157,7 @@ export const facet: ScalingProject = {
             },
           ],
         },
-        description: 'L1ETHLockbox (deprecated).',
+        description: 'L1ETHLockbox (deprecated, paused).',
       }),
     ],
     trackedTxs: [
@@ -174,6 +172,62 @@ export const facet: ScalingProject = {
           sinceTimestamp: UnixTime(1715312711),
         },
       },
+      // Deprecated Rollup (0x686E7d01…) — kept for historical liveness/cost continuity; stopped receiving proposals on 2026-05-19.
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x686E7d01C7BFCB563721333A007699F154C04eb4',
+          ),
+          selector: '0x45925013',
+          functionSignature:
+            'function submitProposal(bytes32 root, uint256 l2BlockNumber, uint256 parentId) payable returns (uint256 proposalId)',
+          sinceTimestamp: UnixTime(1753156223),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'stateUpdates' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x686E7d01C7BFCB563721333A007699F154C04eb4',
+          ),
+          selector: '0x9eeeb214',
+          functionSignature:
+            'function proveBlock(uint256 l2BlockNumber, bytes32 root, uint256 l1BlockNumber, bytes proof)',
+          sinceTimestamp: UnixTime(1753156223),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'stateUpdates' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x686E7d01C7BFCB563721333A007699F154C04eb4',
+          ),
+          selector: '0x0075552a',
+          functionSignature:
+            'function proveProposal(uint256 id, uint256 l1BlockNumber, bytes proof)',
+          sinceTimestamp: UnixTime(1753156223),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'stateUpdates' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x686E7d01C7BFCB563721333A007699F154C04eb4',
+          ),
+          selector: '0x0062804e',
+          functionSignature: 'function resolveProposal(uint256 id)',
+          sinceTimestamp: UnixTime(1753156223),
+        },
+      },
+      // Active Rollup (0x026902ef…) — deployed 2026-05-18, took over proposals 2026-05-19.
       {
         uses: [
           { type: 'liveness', subtype: 'stateUpdates' },

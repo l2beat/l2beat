@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe5eb0059ef1bbe70490eeb343484bd4838852bb2
+Generated with discovered.json: 0x2937c5adb4735f376f431904a3a8d8cbe08eef5a
 
-# Diff at Tue, 02 Jun 2026 12:26:36 GMT:
+# Diff at Tue, 02 Jun 2026 13:31:08 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1769601687
-- current timestamp: 1780403133
+- current timestamp: 1780407005
 
 ## Description
 
@@ -79,6 +79,15 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1769601687 (main branch discovery), not current.
 
 ```diff
+    contract L1Bridge (eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E) [facet/L1ETHBridge] {
+    +++ description: An immutable ETH bridge built on top of a Rollup contract. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.
+      description:
+-        "L1Bridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1."
++        "An immutable ETH bridge built on top of a Rollup contract. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1."
+    }
+```
+
+```diff
     contract RollupDeprecated (eth:0x686E7d01C7BFCB563721333A007699F154C04eb4) [facet/Rollup] {
     +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
       name:
@@ -93,6 +102,24 @@ discovery. Values are for block 1769601687 (main branch discovery), not current.
       name:
 -        "SP1VerifierGateway"
 +        "SP1VerifierGatewayDeprecated"
+    }
+```
+
+```diff
+    contract L2Bridge (facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4) [facet/L2ERC20Bridge] {
+    +++ description: ERC20 minter counterpart to an L1 bridge. Mints new ERC20 tokens on L2 once a token deposit is made on L1. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.
+      description:
+-        "L2Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1."
++        "ERC20 minter counterpart to an L1 bridge. Mints new ERC20 tokens on L2 once a token deposit is made on L1. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1."
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (facet:0x4200000000000000000000000000000000000016) [facet/L2ToL1MessagePasser] {
+    +++ description: L2 -> L1 message passer at the OP Stack predeploy address, used by L1Bridge-style canonical bridges to relay withdrawal requests from L2 to L1.
+      description:
+-        "L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1."
++        "L2 -> L1 message passer at the OP Stack predeploy address, used by L1Bridge-style canonical bridges to relay withdrawal requests from L2 to L1."
     }
 ```
 
