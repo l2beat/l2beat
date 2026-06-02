@@ -38,34 +38,26 @@ const LIFI_INTENTS_NETWORKS = defineNetworks('lifi-intents', [
   {
     chain: 'ethereum',
     chainId: 1,
-    inputCompact: INPUT_COMPACT,
-    inputEscrow: INPUT_ESCROW,
-    outputSettler: OUTPUT_SETTLER,
-    polymerOracle: POLYMER_ORACLE,
-  },
-  {
-    chain: 'base',
-    chainId: 8453,
-    inputCompact: INPUT_COMPACT,
-    inputEscrow: INPUT_ESCROW,
-    outputSettler: OUTPUT_SETTLER,
-    polymerOracle: POLYMER_ORACLE,
-  },
-  {
-    chain: 'arbitrum',
-    chainId: 42161,
-    inputCompact: INPUT_COMPACT,
-    inputEscrow: INPUT_ESCROW,
-    outputSettler: OUTPUT_SETTLER,
-    polymerOracle: POLYMER_ORACLE,
   },
   {
     chain: 'optimism',
     chainId: 10,
-    inputCompact: INPUT_COMPACT,
-    inputEscrow: INPUT_ESCROW,
-    outputSettler: OUTPUT_SETTLER,
-    polymerOracle: POLYMER_ORACLE,
+  },
+  {
+    chain: 'bsc',
+    chainId: 56,
+  },
+  {
+    chain: 'polygonpos',
+    chainId: 137,
+  },
+  {
+    chain: 'base',
+    chainId: 8453,
+  },
+  {
+    chain: 'arbitrum',
+    chainId: 42161,
   },
 ])
 
@@ -164,22 +156,22 @@ export class LifiIntentsPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: intentRegisteredLog,
-        addresses: toChainSpecificAddresses((n) => n.inputCompact),
+        addresses: toChainSpecificAddresses(INPUT_COMPACT),
       },
       {
         type: 'event',
         signature: openLog,
-        addresses: toChainSpecificAddresses((n) => n.inputEscrow),
+        addresses: toChainSpecificAddresses(INPUT_ESCROW),
       },
       {
         type: 'event',
         signature: outputFilledLog,
-        addresses: toChainSpecificAddresses((n) => n.outputSettler),
+        addresses: toChainSpecificAddresses(OUTPUT_SETTLER),
       },
       {
         type: 'event',
         signature: outputProvenLog,
-        addresses: toChainSpecificAddresses((n) => n.polymerOracle),
+        addresses: toChainSpecificAddresses(POLYMER_ORACLE),
       },
     ]
   }
@@ -188,9 +180,7 @@ export class LifiIntentsPlugin implements InteropPluginResyncable {
     const network = LIFI_INTENTS_NETWORKS.find((n) => n.chain === input.chain)
     if (!network) return
 
-    const intentRegistered = parseIntentRegistered(input.log, [
-      network.inputCompact,
-    ])
+    const intentRegistered = parseIntentRegistered(input.log, [INPUT_COMPACT])
     if (intentRegistered) {
       return this.captureOrder(
         input,
@@ -199,12 +189,12 @@ export class LifiIntentsPlugin implements InteropPluginResyncable {
       )
     }
 
-    const open = parseOpen(input.log, [network.inputEscrow])
+    const open = parseOpen(input.log, [INPUT_ESCROW])
     if (open) {
       return this.captureOrder(input, open.orderId, open.order)
     }
 
-    const outputFilled = parseOutputFilled(input.log, [network.outputSettler])
+    const outputFilled = parseOutputFilled(input.log, [OUTPUT_SETTLER])
     if (outputFilled) {
       const output = normalizeOutput(outputFilled.output)
       const outputHash = hashMandateOutput(output)
@@ -240,7 +230,7 @@ export class LifiIntentsPlugin implements InteropPluginResyncable {
       ]
     }
 
-    const outputProven = parseOutputProven(input.log, [network.polymerOracle])
+    const outputProven = parseOutputProven(input.log, [POLYMER_ORACLE])
     if (outputProven) {
       return [
         LifiIntentsOutputProven.create(input, {
@@ -441,13 +431,9 @@ function createTransferMatch(
   ]
 }
 
-function toChainSpecificAddresses(
-  getAddress: (
-    network: (typeof LIFI_INTENTS_NETWORKS)[number],
-  ) => EthereumAddress,
-) {
+function toChainSpecificAddresses(address: EthereumAddress) {
   return LIFI_INTENTS_NETWORKS.map((network) =>
-    ChainSpecificAddress.fromLong(network.chain, getAddress(network)),
+    ChainSpecificAddress.fromLong(network.chain, address),
   )
 }
 
