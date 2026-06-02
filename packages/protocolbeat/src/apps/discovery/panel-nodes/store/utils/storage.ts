@@ -28,13 +28,27 @@ function getLayoutStorageKey(projectId: string): string {
   return `layout/${projectId}`
 }
 
+/** A node whose color is derived from an entrypoint (live, from the API) rather than chosen by the user. */
+function isEntrypointColored(node: State['nodes'][number]): boolean {
+  return (
+    (node.entrypointColors?.length ?? 0) > 0 ||
+    node.entrypointMemberOf !== undefined
+  )
+}
+
 export function buildStoredNodeLayout(state: State): StoredNodeLayout {
   return {
     version: CURRENT_LAYOUT_VERSION,
     projectId: state.projectId,
     locations: Object.fromEntries(state.nodes.map((n) => [n.id, n.box])),
+    // Persist only manual colors. A node's color can also be driven by an
+    // entrypoint (set on load from the API); persisting that would leave the
+    // node stuck in the entrypoint color after the entrypoint is removed, since
+    // the saved color would be reapplied on reload.
     colors: Object.fromEntries(
-      state.nodes.filter((n) => n.color !== 0).map((n) => [n.id, n.color]),
+      state.nodes
+        .filter((n) => n.color !== 0 && !isEntrypointColored(n))
+        .map((n) => [n.id, n.color]),
     ),
     hiddenFields: Object.fromEntries(
       state.nodes
