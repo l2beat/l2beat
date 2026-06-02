@@ -8,7 +8,9 @@ Generated with discovered.json: 0xa52955bbbc5218c8d7f05000991a65e180371445
 
 ## Description
 
-New security council members tagged.
+2 SC members tagged (rotated in on 2026-05-15):
+- 0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D: DZack23
+- 0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce: PabloSabbatella-Opsek
 
 ## Config/verification related changes
 
