@@ -240,36 +240,39 @@ export const base: ScalingProject = opStackL2({
     ],
   },
   stateDerivation: DERIVATION.OPSTACK('BASE'),
-  stage: getRollupStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
-      },
-      stage1: {
-        principle: true,
-        usersHave7DaysToExit: true,
-        usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: true,
-        noRedTrustedSetups: null,
-        programHashesReproducible: null,
-        proverSourcePublished: null,
-        verifierContractsReproducible: null,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: true,
-        delayWith30DExitWindow: false,
-      },
-    },
-    {
-      rollupNodeLink: 'https://github.com/base-org/node',
-    },
-  ),
+  stage: {
+    stage: 'UnderReview',
+  },
+  // stage: getRollupStage(
+  //   {
+  //     stage0: {
+  //       callsItselfRollup: true,
+  //       stateRootsPostedToL1: true,
+  //       dataAvailabilityOnL1: true,
+  //       rollupNodeSourceAvailable: true,
+  //       stateVerificationOnL1: true,
+  //       fraudProofSystemAtLeast5Outsiders: true,
+  //     },
+  //     stage1: {
+  //       principle: true,
+  //       usersHave7DaysToExit: true,
+  //       usersCanExitWithoutCooperation: true,
+  //       securityCouncilProperlySetUp: true,
+  //       noRedTrustedSetups: null,
+  //       programHashesReproducible: null,
+  //       proverSourcePublished: null,
+  //       verifierContractsReproducible: null,
+  //     },
+  //     stage2: {
+  //       proofSystemOverriddenOnlyInCaseOfABug: false,
+  //       fraudProofSystemIsPermissionless: true,
+  //       delayWith30DExitWindow: false,
+  //     },
+  //   },
+  //   {
+  //     rollupNodeLink: 'https://github.com/base-org/node',
+  //   },
+  // ),
   milestones: [
     {
       title: 'Base leaves the Superchain',
