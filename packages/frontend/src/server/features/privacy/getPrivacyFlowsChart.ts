@@ -1,8 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { ChartRange } from '~/utils/range/range'
+import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export const PrivacyFlowsChartParams = v.object({
   projectIds: v.array(v.string()),
@@ -29,6 +31,10 @@ export async function getPrivacyFlowsChart(
 ): Promise<PrivacyFlowsChartResponse> {
   if (params.projectIds.length === 0) {
     return { chart: [], syncedUntil: undefined }
+  }
+
+  if (env.MOCK) {
+    return getMockPrivacyFlowsChart(params)
   }
 
   const db = getDb()
@@ -116,6 +122,30 @@ export async function getPrivacyFlowsChart(
     }),
     syncedUntil: syncedUntil ? Number(syncedUntil) : Number(normalizedRange[1]),
   }
+}
+
+function getMockPrivacyFlowsChart(
+  params: PrivacyFlowsChartParams,
+): PrivacyFlowsChartResponse {
+  const days = rangeToDays(params.range) ?? 365
+  const to = UnixTime.toStartOf(UnixTime.now(), 'day')
+  const from = params.range[0] ?? to - days * UnixTime.DAY
+
+  const chart = generateTimestamps([UnixTime(from), UnixTime(to)], 'daily').map(
+    (timestamp): PrivacyFlowsChartPoint => {
+      const depositsCount = Math.round(Math.random() * 100)
+      const withdrawalsCount = Math.round(Math.random() * 100)
+      return [
+        timestamp,
+        depositsCount,
+        withdrawalsCount,
+        depositsCount * (Math.random() * 9000 + 1000),
+        withdrawalsCount * (Math.random() * 9000 + 1000),
+      ]
+    },
+  )
+
+  return { chart, syncedUntil: to }
 }
 
 function normalizePrivacyFlowsChartRange(

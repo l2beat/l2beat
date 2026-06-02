@@ -23,6 +23,7 @@ import { getConfigHealth } from './getConfigHealth'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
+import { attachLayoutRouter } from './layouts/router'
 import { searchCode } from './searchCode'
 import {
   attachTemplateRouter,
@@ -268,6 +269,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   app.use(express.static(STATIC_ROOT))
 
   attachDiffoveryRouter(app, diffoveryController)
+  attachLayoutRouter(app, configReader, readonly)
 
   if (!readonly) {
     attachTemplateRouter(app, templateService)

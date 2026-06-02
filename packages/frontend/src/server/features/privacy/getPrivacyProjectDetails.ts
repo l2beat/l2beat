@@ -8,13 +8,21 @@ import type {
 import type {
   PrivacyFlowBucketTotalRecord,
   PrivacyFlowDailyRecord,
+  TokenValueRecord,
 } from '@l2beat/database'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import type { PrivacyAsset, PrivacyBucket } from './types'
+import type { PrivacyAsset, PrivacyBucket, PrivacyProject } from './types'
+
+interface PrivacyProjectFlowData {
+  totals: PrivacyFlowBucketTotalRecord[]
+  daily30d: PrivacyFlowDailyRecord[]
+  tokenValues: TokenValueRecord[]
+}
 
 export interface PrivacyProjectDetails {
   id: ProjectId
@@ -65,7 +73,6 @@ export async function getPrivacyProjectDetails(
     return undefined
   }
 
-  const db = getDb()
   const projectId = project.id
 
   const now = UnixTime.now()
@@ -73,15 +80,12 @@ export async function getPrivacyProjectDetails(
   const last7dCutoff = currentDay - 6 * UnixTime.DAY
   const last30dCutoff = currentDay - 29 * UnixTime.DAY
 
-  const [totals, daily30d, tokenValues] = await Promise.all([
-    db.privacyFlowEvent.getBucketTotalsByProjectIds([projectId]),
-    db.privacyFlowEvent.getDailyByProjectIds(
-      [projectId],
-      last30dCutoff,
-      currentDay,
-    ),
-    db.tvsTokenValue.getLastNonZeroValue(now, projectId),
-  ])
+  const { totals, daily30d, tokenValues } = await getPrivacyProjectFlowData(
+    project,
+    last30dCutoff,
+    currentDay,
+    now,
+  )
 
   const tvlBySymbol = new Map<string, number>()
   for (const tv of tokenValues) {
@@ -268,4 +272,83 @@ export async function getPrivacyProjectDetails(
       },
     },
   }
+}
+
+async function getPrivacyProjectFlowData(
+  project: PrivacyProject,
+  from: UnixTime,
+  to: UnixTime,
+  now: UnixTime,
+): Promise<PrivacyProjectFlowData> {
+  const projectId = project.id
+
+  if (env.MOCK) {
+    return getMockPrivacyProjectFlowData(project, from, to)
+  }
+
+  const db = getDb()
+  const [totals, daily30d, tokenValues] = await Promise.all([
+    db.privacyFlowEvent.getBucketTotalsByProjectIds([projectId]),
+    db.privacyFlowEvent.getDailyByProjectIds([projectId], from, to),
+    db.tvsTokenValue.getLastNonZeroValue(now, projectId),
+  ])
+  return { totals, daily30d, tokenValues }
+}
+
+function getMockPrivacyProjectFlowData(
+  project: PrivacyProject,
+  from: UnixTime,
+  to: UnixTime,
+): PrivacyProjectFlowData {
+  const projectId = project.id
+  const bucketIds = project.privacyInfo.tokens.flatMap((token) =>
+    token.buckets.map((bucket) => bucket.id),
+  )
+  const tokenIds = (project.tvsConfig ?? []).map((token) => token.id)
+
+  const totals = bucketIds.map(
+    (bucketId): PrivacyFlowBucketTotalRecord => ({
+      projectId,
+      bucketId,
+      depositCount: Math.round(Math.random() * 5000),
+      withdrawalCount: Math.round(Math.random() * 5000),
+      depositAmount: 0n,
+      withdrawalAmount: 0n,
+      depositValueUsd: Math.random() * 10_000_000,
+      withdrawalValueUsd: Math.random() * 10_000_000,
+    }),
+  )
+
+  const daily30d: PrivacyFlowDailyRecord[] = []
+  for (let timestamp = from; timestamp <= to; timestamp += UnixTime.DAY) {
+    for (const bucketId of bucketIds) {
+      daily30d.push({
+        projectId,
+        bucketId,
+        timestamp: UnixTime(timestamp),
+        depositCount: Math.round(Math.random() * 100),
+        withdrawalCount: Math.round(Math.random() * 100),
+        depositAmount: 0n,
+        withdrawalAmount: 0n,
+        depositValueUsd: Math.random() * 100_000,
+        withdrawalValueUsd: Math.random() * 100_000,
+      })
+    }
+  }
+
+  const tokenValues = tokenIds.map(
+    (tokenId): TokenValueRecord => ({
+      timestamp: to,
+      configurationId: tokenId,
+      projectId,
+      tokenId,
+      amount: 0,
+      value: 0,
+      valueForProject: Math.random() * 5_000_000,
+      valueForSummary: 0,
+      priceUsd: 0,
+    }),
+  )
+
+  return { totals, daily30d, tokenValues }
 }

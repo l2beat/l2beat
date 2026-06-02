@@ -3,7 +3,7 @@ import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
 import { HideButton } from './HideButton'
 import { HideNodesButton } from './HideNodesButton'
-import { LayoutFileButtons } from './LayoutFileButtons'
+import { LayoutLibrary } from './LayoutLibrary'
 import { RedoButton } from './RedoButton'
 import { Settings } from './Settings'
 import { ShowButton } from './ShowButton'
@@ -30,7 +30,7 @@ export function Controls() {
           <ColorButton />
           <ValuesButton />
           <Settings className="px-2.5" />
-          <LayoutFileButtons orientation="row" buttonClassName="px-2.5" />
+          <LayoutLibrary className="px-2.5" />
         </ControlGroup>
       </div>
     </div>
