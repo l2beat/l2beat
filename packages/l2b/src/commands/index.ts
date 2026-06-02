@@ -33,6 +33,7 @@ import { Leaks } from './Leaks'
 import { MatchFlat } from './MatchFlat'
 import { Minters } from './Minters'
 import { ModelPermissions } from './ModelPermissions'
+import { MorphoFetch } from './MorphoFetch'
 import { OPConfigs } from './OPConfigs'
 import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
@@ -86,6 +87,7 @@ export function getSubcommands() {
     MatchFlat,
     Minters,
     ModelPermissions,
+    MorphoFetch,
     OPConfigs,
     RefreshDiscovery,
     RegenerateShapeHashes,

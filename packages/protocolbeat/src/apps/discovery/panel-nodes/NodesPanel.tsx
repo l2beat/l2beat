@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type {
   Field as ApiField,
+  ApiProjectContract,
   ApiProjectResponse,
   FieldValue,
 } from '../../../api/types'
@@ -11,15 +12,15 @@ import { LoadingState } from '../../../components/LoadingState'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
-import type { Field, Node } from './store/State'
-import { useStore as useNodeStore, useStore } from './store/store'
-import { NODE_WIDTH } from './store/utils/constants'
 import {
-  buildEntrypointColorAssignments,
   buildDisplayEntrypointColorMap,
+  buildEntrypointColorAssignments,
   enrichEntrypointGroupsForCollapse,
   getPrimaryEntrypointColor,
 } from './entrypointColors'
+import type { Field, Node } from './store/State'
+import { useStore as useNodeStore, useStore } from './store/store'
+import { NODE_WIDTH } from './store/utils/constants'
 import {
   buildEntrypointMemberMap,
   findDeclaredEntrypointGroupId,
@@ -81,7 +82,9 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
       enrichedEntrypointGroups,
       data.entries,
     )
-    const entrypointMemberMap = buildEntrypointMemberMap(enrichedEntrypointGroups)
+    const entrypointMemberMap = buildEntrypointMemberMap(
+      enrichedEntrypointGroups,
+    )
 
     function resolveEntrypointMemberOf(address: string): string | undefined {
       const declaredGroup = findDeclaredEntrypointGroupId(
@@ -115,7 +118,11 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         const entrypointColor =
           palette[0] ?? getPrimaryEntrypointColor(assignments)
         const hueShift =
-          memberGroupId && palette.length > 0 ? 0 : memberGroupId ? 55 : chainHueShift
+          memberGroupId && palette.length > 0
+            ? 0
+            : memberGroupId
+              ? 55
+              : chainHueShift
         const [prefix, address] = contract.address.split(':') as [
           string,
           string,
@@ -138,6 +145,8 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           entrypointColors: palette.length > 0 ? palette : undefined,
           hueShift,
           data: null,
+          sourceKey: getSourceKey(contract.sourceHashes),
+          valuesShapeKey: getValuesShapeKey(contract),
           fields: toNodeFields(contract.fields),
           hiddenFields: keysToHideOnLoad,
           appearsInProjectsCount: contract.appearsInProjectsCount,
@@ -155,7 +164,11 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         const entrypointColor =
           palette[0] ?? getPrimaryEntrypointColor(assignments)
         const hueShift =
-          memberGroupId && palette.length > 0 ? 0 : memberGroupId ? 55 : chainHueShift
+          memberGroupId && palette.length > 0
+            ? 0
+            : memberGroupId
+              ? 55
+              : chainHueShift
         const node: Node = {
           id: eoa.address,
           isInitial: false,
@@ -255,6 +268,33 @@ function useSynchronizeSelection() {
     selectNodes,
     loaded,
   ])
+}
+
+/** Stable identity of a contract's flattened source (proxy + implementations). */
+function getSourceKey(sourceHashes: string[] | undefined): string | undefined {
+  if (!sourceHashes || sourceHashes.length === 0) {
+    return undefined
+  }
+  return sourceHashes.slice().sort().join(',')
+}
+
+/**
+ * Stable identity of a contract's value shape: the sorted set of value keys,
+ * scoped by template id. Two contracts share a shape when they expose the same
+ * fields (even if the values differ, e.g. Morpho markets). The template id is a
+ * prefix so two different templates with the same keys stay separate; synthetic
+ * nodes without a template (e.g. merged markets) still group by their keys.
+ */
+function getValuesShapeKey(contract: ApiProjectContract): string | undefined {
+  if (contract.fields.length === 0) {
+    return undefined
+  }
+  const templateId = contract.template?.id ?? ''
+  const keys = contract.fields
+    .map((field) => field.name)
+    .sort()
+    .join(',')
+  return `${templateId}::${keys}`
 }
 
 function toNodeFields(input: ApiField[]): Field[] {

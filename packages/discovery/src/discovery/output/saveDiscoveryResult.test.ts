@@ -1,10 +1,22 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { Logger } from '@l2beat/backend-tools'
+import {
+  ChainSpecificAddress,
+  type Hash256,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { mkdtempSync, rmSync, writeFileSync } from 'fs'
 import map from 'lodash/map'
+import { tmpdir } from 'os'
+import { join } from 'path'
 
 import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
-import { getSourceOutputPath } from './saveDiscoveryResult'
+import {
+  getSourceOutputPath,
+  mergeAdditionalEntries,
+} from './saveDiscoveryResult'
+import type { DiscoveryOutput, EntryParameters } from './types'
 
 describe(getSourceOutputPath.name, () => {
   const genAnalyzedContract = (name: string): AnalyzedContract => ({
@@ -166,5 +178,70 @@ describe(getSourceOutputPath.name, () => {
     expect(pathB1_impl2).toEqual(
       `${root}/B-${ChainSpecificAddress.address(contractB1.address).toString()}/implementation-2/b13.sol`,
     )
+  })
+})
+
+describe(mergeAdditionalEntries.name, () => {
+  const entry = (address: string, name: string): EntryParameters =>
+    ({ address, name, type: 'Contract' }) as unknown as EntryParameters
+
+  const output = (entries: EntryParameters[]): DiscoveryOutput => ({
+    name: 'test',
+    timestamp: 0,
+    entries,
+    abis: {},
+    configHash: '0x' as Hash256,
+    usedTemplates: {},
+    usedBlockNumbers: {},
+  })
+
+  const addrA = ChainSpecificAddress.random()
+  const addrB = ChainSpecificAddress.random()
+
+  let tmpDir: string
+  before(() => {
+    tmpDir = mkdtempSync(join(tmpdir(), 'morpho-merge-test-'))
+  })
+  after(() => {
+    rmSync(tmpDir, { recursive: true, force: true })
+  })
+
+  function writeFixture(name: string, entries: EntryParameters[]): string {
+    writeFileSync(join(tmpDir, name), JSON.stringify({ entries }))
+    return name
+  }
+
+  it('does nothing when additionalEntries is undefined', () => {
+    const out = output([entry(addrA.toString(), 'A')])
+    mergeAdditionalEntries(out, undefined, tmpDir, Logger.SILENT)
+    expect(out.entries.length).toEqual(1)
+  })
+
+  it('skips (with a warning) a missing file', () => {
+    const out = output([entry(addrA.toString(), 'A')])
+    mergeAdditionalEntries(out, 'missing.json', tmpDir, Logger.SILENT)
+    expect(out.entries.length).toEqual(1)
+  })
+
+  it('appends entries that are not already discovered', () => {
+    const out = output([entry(addrA.toString(), 'A')])
+    const file = writeFixture('extra.json', [entry(addrB.toString(), 'B')])
+    mergeAdditionalEntries(out, file, tmpDir, Logger.SILENT)
+    expect(out.entries.map((e) => e.address.toString())).toEqual([
+      addrA.toString(),
+      addrB.toString(),
+    ])
+  })
+
+  it('lets a real discovered entry win on address conflict', () => {
+    const out = output([entry(addrA.toString(), 'Real A')])
+    const file = writeFixture('conflict.json', [
+      entry(addrA.toString(), 'Synthetic A'),
+      entry(addrB.toString(), 'B'),
+    ])
+    mergeAdditionalEntries(out, file, tmpDir, Logger.SILENT)
+    expect(out.entries.length).toEqual(2)
+    const a = out.entries.find((e) => e.address === addrA.toString())
+    expect(a?.name).toEqual('Real A')
   })
 })

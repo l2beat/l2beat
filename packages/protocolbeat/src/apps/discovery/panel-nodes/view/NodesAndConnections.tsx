@@ -22,6 +22,8 @@ interface NodeFlags {
   isDimmed: boolean
   isGrayedOut: boolean
   isOverlapping: boolean
+  isSimilar: boolean
+  colorOverride?: number
   fieldHighlightedMask: string
   fieldTargetHiddenMask: string
 }
@@ -42,6 +44,9 @@ export function NodesAndConnections() {
   )
   const highlightOverlapping = useStore(
     ({ userPreferences }) => userPreferences.highlightOverlapping !== false,
+  )
+  const highlightSimilar = useStore(
+    ({ userPreferences }) => userPreferences.highlightSimilarImplementation,
   )
   const markUnreachableEntries = useGlobalSettingsStore(
     (s) => s.markUnreachableEntries,
@@ -71,6 +76,7 @@ export function NodesAndConnections() {
       highlightSelection,
       enableDimming,
       highlightOverlapping,
+      highlightSimilar,
       markUnreachableEntries,
       collapsed.targetResolver,
     )
@@ -80,6 +86,7 @@ export function NodesAndConnections() {
     selected,
     enableDimming,
     highlightOverlapping,
+    highlightSimilar,
     markUnreachableEntries,
     entrypointGroups,
     collapsedEntrypointGroups,
@@ -117,6 +124,8 @@ export function NodesAndConnections() {
             isDimmed={flags.isDimmed}
             isGrayedOut={flags.isGrayedOut}
             isOverlapping={flags.isOverlapping}
+            isSimilar={flags.isSimilar}
+            colorOverride={flags.colorOverride}
             fieldHighlightedMask={flags.fieldHighlightedMask}
             fieldTargetHiddenMask={flags.fieldTargetHiddenMask}
           />
@@ -165,6 +174,49 @@ function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
   return overlapping
 }
 
+// Given the current selection, find every visible node that shares an
+// implementation with any selected node: the same flattened source (sourceKey)
+// OR the same template + value-key shape (valuesShapeKey). The matching nodes
+// adopt the (first) selected node's color so the group reads as one cluster.
+function computeSimilarSet(
+  visible: readonly Node[],
+  selectedSet: ReadonlySet<string>,
+): { ids: Set<string>; colorOverride: number | undefined } {
+  const ids = new Set<string>()
+  if (selectedSet.size === 0) {
+    return { ids, colorOverride: undefined }
+  }
+
+  const selectedNodes = visible.filter((node) => selectedSet.has(node.id))
+  const sourceKeys = new Set<string>()
+  const valuesShapeKeys = new Set<string>()
+  for (const node of selectedNodes) {
+    if (node.sourceKey) sourceKeys.add(node.sourceKey)
+    if (node.valuesShapeKey) valuesShapeKeys.add(node.valuesShapeKey)
+  }
+
+  if (sourceKeys.size === 0 && valuesShapeKeys.size === 0) {
+    return { ids, colorOverride: undefined }
+  }
+
+  for (const node of visible) {
+    const matches =
+      (node.sourceKey !== undefined && sourceKeys.has(node.sourceKey)) ||
+      (node.valuesShapeKey !== undefined &&
+        valuesShapeKeys.has(node.valuesShapeKey))
+    if (matches) {
+      ids.add(node.id)
+    }
+  }
+
+  const anchor = selectedNodes[0]
+  const colorOverride = anchor
+    ? (anchor.entrypointColors?.[0] ?? anchor.color)
+    : undefined
+
+  return { ids, colorOverride }
+}
+
 function buildView(
   nodes: readonly Node[],
   hidden: readonly string[],
@@ -172,6 +224,7 @@ function buildView(
   highlightSelection: ReadonlySet<string>,
   enableDimming: boolean,
   highlightOverlapping: boolean,
+  highlightSimilar: boolean,
   markUnreachableEntries: boolean,
   targetResolver: Map<string, string> = new Map(),
 ): DerivedView {
@@ -191,6 +244,14 @@ function buildView(
   const overlappingIds = highlightOverlapping
     ? computeOverlappingIds(visible)
     : new Set<string>()
+
+  const similar = highlightSimilar
+    ? computeSimilarSet(visible, displaySelectedSet)
+    : { ids: new Set<string>(), colorOverride: undefined }
+  // When similar mode finds matches, emphasis is driven by the similar set:
+  // matching nodes stay at full opacity, everything else is dimmed.
+  const similarActive =
+    highlightSimilar && displaySelected.length > 0 && similar.ids.size > 0
 
   const highlightedSet = new Set<string>(displaySelectedSet)
   if (effectiveDimming && displaySelected.length > 0) {
@@ -234,10 +295,16 @@ function buildView(
 
   for (const node of visible) {
     const isSelected = displaySelectedSet.has(node.id)
-    const isDimmed =
-      effectiveDimming && displaySelected.length > 0 && !highlightedSet.has(node.id)
+    const isDimmed = similarActive
+      ? !similar.ids.has(node.id)
+      : effectiveDimming &&
+        displaySelected.length > 0 &&
+        !highlightedSet.has(node.id)
     const isGrayedOut = markUnreachableEntries && !node.isReachable
     const isOverlapping = overlappingIds.has(node.id)
+    const isSimilar = similar.ids.has(node.id)
+    const colorOverride =
+      isSimilar && !isSelected ? similar.colorOverride : undefined
 
     const hiddenFieldsSet =
       node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
@@ -313,6 +380,8 @@ function buildView(
       isDimmed,
       isGrayedOut,
       isOverlapping,
+      isSimilar,
+      colorOverride,
       fieldHighlightedMask,
       fieldTargetHiddenMask,
     })

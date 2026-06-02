@@ -109,6 +109,13 @@ export const _StructureConfig = {
     .check((x) => x >= 0)
     .default(100),
   maxDepth: v.number().default(Number.POSITIVE_INFINITY),
+  /**
+   * Path (relative to the discovery root) to a JSON file `{ entries: [...] }`
+   * whose entries are merged into discovered.json after discovery. Lets a
+   * separate fetch step pre-compute synthetic entries (e.g. Morpho markets)
+   * that discovery then reuses instead of querying them live.
+   */
+  additionalEntries: v.string().optional(),
   overrides: v
     .record(
       v.string().transform((v) => ChainSpecificAddress(v).toString()),

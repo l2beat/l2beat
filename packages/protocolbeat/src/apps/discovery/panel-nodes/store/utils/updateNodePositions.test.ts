@@ -223,6 +223,7 @@ function buildState(nodes: Node[]): State {
       hideLargeArrays: false,
       highlightOverlapping: true,
       useExperimentalRenderer: false,
+      highlightSimilarImplementation: false,
     },
     transform: {
       offsetX: 0,

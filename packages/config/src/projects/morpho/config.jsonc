@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "morpho",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb"],
+  "maxDepth": 5,
+  "maxAddresses": 300,
+  // Pre-fetched vaults/markets (run `l2b morpho-fetch`). Discovery merges the
+  // market node entries from this file into discovered.json.
+  "additionalEntries": "morpho/morphoData.json",
+  "overrides": {
+    "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": {
+      "fields": {
+        // Markets created in the window, with their 5 params. The token/oracle/
+        // irm addresses here are discovered as real nodes (so market->token
+        // edges resolve); the markets themselves are added as separate entries
+        // via `additionalEntries`.
+        "markets": {
+          "handler": {
+            "type": "morphoData",
+            "file": "morpho/morphoData.json",
+            "select": "markets"
+          }
+        },
+        // Vaults created in the window; routed to the MetaMorpho template so
+        // they are discovered as vault contracts.
+        "vaults": {
+          "handler": {
+            "type": "morphoData",
+            "file": "morpho/morphoData.json",
+            "select": "vaults"
+          },
+          "template": "morpho/MetaMorpho"
+        }
+      }
+    }
+  }
+}

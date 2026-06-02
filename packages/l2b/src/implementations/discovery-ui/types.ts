@@ -200,6 +200,8 @@ export interface ApiProjectContract extends ApiAddressEntry {
   fields: Field[]
   abis: ApiAbi[]
   implementationNames?: Record<string, string>
+  /** Flattened-source hashes (proxy + implementations), used to detect contracts that share the same code. */
+  sourceHashes?: string[]
 }
 
 export interface ApiAbi {

@@ -289,7 +289,9 @@ function Display({
   )
 }
 
-function getAddressesToCopy(selected: ApiProjectContract | ApiAddressEntry) {
+export function getAddressesToCopy(
+  selected: ApiProjectContract | ApiAddressEntry,
+) {
   const addresses = findAddressToCopy(selected)
 
   if (!addresses) {
@@ -330,7 +332,7 @@ function findAddressToCopy(
   return [selected.address]
 }
 
-function canAddShape(selected: ApiProjectContract | ApiAddressEntry) {
+export function canAddShape(selected: ApiProjectContract | ApiAddressEntry) {
   if (
     selected.type === 'Unverified' &&
     'proxyType' in selected &&

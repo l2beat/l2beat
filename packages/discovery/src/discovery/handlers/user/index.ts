@@ -66,6 +66,10 @@ import {
   LineaRolesModuleHandlerDefinition,
 } from './LineaRolesModuleHandler'
 import {
+  MorphoDataHandler,
+  MorphoDataHandlerDefinition,
+} from './MorphoDataHandler'
+import {
   OpStackDAHandler,
   OpStackDAHandlerDefinition,
 } from './OpDaHandler/OpDAHandler'
@@ -143,6 +147,7 @@ const DEFINITIONS = [
   YieldFiMintersDefinition,
   EventTraceHandlerDefinition,
   CrossChainAccessControlHandlerDefinition,
+  MorphoDataHandlerDefinition,
 ] as const
 
 type AvailableHandlers = (typeof DEFINITIONS)[number]
@@ -185,6 +190,7 @@ export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
   YieldFiMinters: YieldFiMintersDefinition,
   eventTrace: EventTraceHandlerDefinition,
   crossChainAccessControl: CrossChainAccessControlHandlerDefinition,
+  morphoData: MorphoDataHandlerDefinition,
 }
 
 export function getUserHandler(
@@ -255,5 +261,7 @@ export function getUserHandler(
       return new EventTraceHandler(field, definition, abi)
     case 'crossChainAccessControl':
       return new CrossChainAccessControlHandler(field, definition, abi)
+    case 'morphoData':
+      return new MorphoDataHandler(field, definition)
   }
 }

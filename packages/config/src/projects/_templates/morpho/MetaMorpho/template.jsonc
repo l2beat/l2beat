@@ -1,5 +1,18 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    // The markets this vault uses (its withdraw queue), as synthetic market
+    // node addresses. ignoreRelative: the fake addresses must not be queued for
+    // discovery, but the values still render vault->market edges in the UI.
+    "markets": {
+      "handler": {
+        "type": "morphoData",
+        "file": "morpho/morphoData.json",
+        "select": "vaultMarkets",
+        "ignoreRelative": true
+      }
+    }
+  },
   "ignoreRelatives": ["asset"],
   "ignoreMethods": [
     "convertToAssets",

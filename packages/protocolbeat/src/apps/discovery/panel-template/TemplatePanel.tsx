@@ -6,11 +6,14 @@ import type { EditorFile } from '../../../components/editor/store'
 import { EditorView } from '../../../components/editor/views/EditorView'
 import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
+import { IconShape } from '../../../icons/IconShape'
 import { useConfigModels } from '../hooks/useConfigModels'
 import { useProjectData } from '../hooks/useProjectData'
+import { TemplateDialog } from '../panel-values/template-dialog/TemplateDialog'
+import { canAddShape, getAddressesToCopy } from '../panel-values/ValuesPanel'
 
 export function TemplatePanel() {
-  const { selectedAddress } = useProjectData()
+  const { selectedAddress, selected, project } = useProjectData()
   const configModels = useConfigModels()
   const templateId = configModels.templateModel.templateId
   const templateContent = configModels.templateModel.files.template
@@ -47,7 +50,7 @@ export function TemplatePanel() {
   }
 
   if (!templateId) {
-    return <ActionNeededState message="No template files" />
+    return <NoTemplate project={project} selected={selected} />
   }
 
   return (
@@ -56,6 +59,61 @@ export function TemplatePanel() {
       files={files}
       callbacks={{ onSave: onSaveCallback }}
     />
+  )
+}
+
+function NoTemplate({
+  project,
+  selected,
+}: {
+  project: string
+  selected: ReturnType<typeof useProjectData>['selected']
+}) {
+  const canCreate =
+    !IS_READONLY &&
+    selected !== undefined &&
+    'address' in selected &&
+    'chain' in selected &&
+    'blockNumber' in selected &&
+    canAddShape(selected)
+
+  if (!canCreate) {
+    return <ActionNeededState message="No template files" />
+  }
+
+  const addresses = getAddressesToCopy(selected)
+  if (!addresses) {
+    return <ActionNeededState message="No template files" />
+  }
+
+  return (
+    <div className="flex min-h-full w-full flex-col items-center justify-center gap-3 p-4 text-center">
+      <div className="font-mono text-coffee-400 text-sm italic">
+        This contract has no template yet.
+      </div>
+      <TemplateDialog.Root
+        key={`${project}-${selected.address}`}
+        project={project}
+        selectedName={selected.name}
+      >
+        <TemplateDialog.Trigger className="gap-2 px-3 py-2">
+          <span className="flex items-center gap-2">
+            <IconShape />
+            Create template
+          </span>
+        </TemplateDialog.Trigger>
+        <TemplateDialog.Body
+          addresses={addresses}
+          project={project}
+          chain={selected.chain}
+          blockNumber={selected.blockNumber}
+        />
+      </TemplateDialog.Root>
+      <div className="max-w-sm text-coffee-500 text-xs">
+        Creates a new template from this contract's source. Re-run discovery
+        afterwards for it to be applied.
+      </div>
+    </div>
   )
 }
 

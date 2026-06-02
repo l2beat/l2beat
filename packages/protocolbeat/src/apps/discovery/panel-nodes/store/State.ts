@@ -13,6 +13,12 @@ export interface State {
     readonly hideLargeArrays: boolean
     readonly highlightOverlapping: boolean
     readonly useExperimentalRenderer: boolean
+    /**
+     * When on, selecting a node recolors and outlines every other node that
+     * shares its implementation: the same flattened source, or the same
+     * template with the same set of value keys.
+     */
+    readonly highlightSimilarImplementation: boolean
   }
   readonly transform: {
     readonly offsetX: number
@@ -73,9 +79,16 @@ export interface Node {
   readonly entrypointColors?: readonly number[]
   readonly hueShift: number
   readonly data: unknown
+  /** Identity of the flattened source code, used to group contracts sharing the same code. */
+  readonly sourceKey?: string
+  /** Identity of the value shape (template id + sorted value keys), used to group like contracts. */
+  readonly valuesShapeKey?: string
   readonly isReachable: boolean
   readonly appearsInProjectsCount?: number
-  readonly appearsInProjects?: readonly { project: string; hasEntrypoint: boolean }[]
+  readonly appearsInProjects?: readonly {
+    project: string
+    hasEntrypoint: boolean
+  }[]
   readonly entrypointGroup?: EntrypointGroupInfo
   /** Set when this node belongs to a collapsible external entrypoint module. */
   readonly entrypointMemberOf?: string

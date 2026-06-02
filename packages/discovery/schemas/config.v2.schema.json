@@ -10,6 +10,7 @@
     "initialAddresses": { "type": "array", "items": { "type": "string" } },
     "maxAddresses": { "type": "number" },
     "maxDepth": { "type": "number" },
+    "additionalEntries": { "type": "string" },
     "overrides": {
       "type": "object",
       "propertyNames": { "type": "string" },

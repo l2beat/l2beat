@@ -70,6 +70,7 @@ const INITIAL_STATE: State = {
     hideLargeArrays: true,
     highlightOverlapping: true,
     useExperimentalRenderer: false,
+    highlightSimilarImplementation: false,
   },
   loaded: false,
 }
@@ -81,7 +82,10 @@ export const useStore = create<StoreState>()(
       loadNodes: wrapHistoryResetAction(set, loadNodes),
       setEntrypointGroups: wrapAction(set, setEntrypointGroups),
       toggleEntrypointGroup: wrapAction(set, toggleEntrypointGroup),
-      setEntrypointGroupsCollapsed: wrapAction(set, setEntrypointGroupsCollapsed),
+      setEntrypointGroupsCollapsed: wrapAction(
+        set,
+        setEntrypointGroupsCollapsed,
+      ),
       setNodes: wrapUndoableAction(set, setNodes),
       colorSelected: wrapUndoableAction(set, colorSelected),
       undo: wrapAction(set, undo),

@@ -6,6 +6,7 @@ import {
   formatJson,
   type UnixTime,
 } from '@l2beat/shared-pure'
+import { existsSync, readFileSync } from 'fs'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { dirname, posix } from 'path'
@@ -16,8 +17,8 @@ import type { ConfigRegistry } from '../config/ConfigRegistry'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import { removeSharedNesting } from '../source/removeSharedNesting'
 import { flattenDiscoveredSources } from './flattenDiscoveredSource'
-import { toDiscoveryOutput } from './toDiscoveryOutput'
-import type { DiscoveryOutput } from './types'
+import { sortEntry, toDiscoveryOutput } from './toDiscoveryOutput'
+import type { DiscoveryOutput, EntryParameters } from './types'
 
 export interface SaveDiscoveryResultOptions {
   paths: DiscoveryPaths
@@ -57,6 +58,13 @@ export async function saveDiscoveryResult(
     results,
   )
 
+  mergeAdditionalEntries(
+    discoveryOutput,
+    config.structure.additionalEntries,
+    options.paths.discovery,
+    logger,
+  )
+
   // TODO: Should not be here - drop it and use implementation name once it's ready
   // if somebody changes the name and decides to re-colorize
   // then .flat folder will be incorrect
@@ -75,6 +83,43 @@ export async function saveDiscoveryResult(
   )
   if (options.saveSources) {
     await saveSources(projectDiscoveryFolder, remappedResults, options)
+  }
+}
+
+/**
+ * Merges entries from a pre-fetched JSON file (config `additionalEntries`) into
+ * the discovery output. Real discovered entries always win on address conflict.
+ * The file is expected to be `{ entries: EntryParameters[] }`; a missing file is
+ * skipped with a warning so discovery still succeeds before the first fetch.
+ */
+export function mergeAdditionalEntries(
+  output: DiscoveryOutput,
+  additionalEntries: string | undefined,
+  discoveryRoot: string,
+  logger: Logger,
+): void {
+  if (additionalEntries === undefined) {
+    return
+  }
+  const filePath = posix.join(discoveryRoot, additionalEntries)
+  if (!existsSync(filePath)) {
+    logger.warn(`additionalEntries file not found, skipping: ${filePath}`)
+    return
+  }
+
+  const parsed = JSON.parse(readFileSync(filePath, 'utf-8')) as {
+    entries?: EntryParameters[]
+  }
+  const extra = parsed.entries ?? []
+  const existing = new Set(output.entries.map((e) => e.address.toString()))
+
+  for (const entry of extra) {
+    const address = ChainSpecificAddress(entry.address).toString()
+    if (existing.has(address)) {
+      continue
+    }
+    output.entries.push(sortEntry(entry))
+    existing.add(address)
   }
 }
 

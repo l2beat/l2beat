@@ -13,19 +13,19 @@ import {
 import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { getContractName } from './getContractName'
-import { getContractType } from './getContractType'
 import { collectMergedEntrypoints } from './collectMergedEntrypoints'
 import {
   hasEntrypointsFile,
   readEntrypointsModuleColor,
 } from './configs/entrypointsFile'
+import { getContractName } from './getContractName'
+import { getContractType } from './getContractType'
 import { getEntrypointGroups } from './getEntrypointGroups'
 import { getMeta } from './getMeta'
 import { parseFieldValue } from './parseFieldValue'
 import type {
-  ApiAddressAppearance,
   ApiAbiEntry,
+  ApiAddressAppearance,
   ApiAddressEntry,
   ApiAddressReference,
   ApiAddressType,
@@ -270,6 +270,9 @@ function contractFromDiscovery(
       entries: (abis[address] ?? []).map((e) => abiEntry(e)),
     })),
     implementationNames: contract.implementationNames,
+    sourceHashes: contract.sourceHashes?.filter(
+      (hash): hash is string => hash !== undefined,
+    ),
     isReachable: reachableEntries.includes(contract.address),
     ...getAppearanceInfo(contract.address, ownProject, appearancesByAddress),
   }
@@ -304,12 +307,15 @@ function getAddressAppearances(
     }
 
     for (const address of addresses) {
-      const projects = result.get(address) ?? new Map<string, ApiAddressAppearance>()
+      const projects =
+        result.get(address) ?? new Map<string, ApiAddressAppearance>()
       const existing = projects.get(project)
       const hasEntrypoint = entrypoints.has(address)
       projects.set(project, {
         project,
-        hasEntrypoint: existing ? existing.hasEntrypoint || hasEntrypoint : hasEntrypoint,
+        hasEntrypoint: existing
+          ? existing.hasEntrypoint || hasEntrypoint
+          : hasEntrypoint,
       })
       result.set(address, projects)
     }

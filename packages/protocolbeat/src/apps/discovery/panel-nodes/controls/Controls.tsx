@@ -2,12 +2,14 @@ import type { ReactNode } from 'react'
 import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
 import { EntrypointButton } from './EntrypointButton'
+import { GroupSimilarButton } from './GroupSimilarButton'
 import { HideButton } from './HideButton'
 import { HideNodesButton } from './HideNodesButton'
 import { LayoutFileButtons } from './LayoutFileButtons'
 import { RedoButton } from './RedoButton'
 import { Settings } from './Settings'
 import { ShowButton } from './ShowButton'
+import { SimilarImplementationButton } from './SimilarImplementationButton'
 import { StackLayoutButton } from './StackLayoutButton'
 import { UndoButton } from './UndoButton'
 import { ValuesButton } from './ValuesButton'
@@ -21,6 +23,7 @@ export function Controls() {
           <RedoButton />
           <ClusterLayoutButton />
           <StackLayoutButton />
+          <GroupSimilarButton />
         </ControlGroup>
         <ControlGroup>
           <ShowButton />
@@ -30,6 +33,7 @@ export function Controls() {
         <ControlGroup>
           <HideButton />
           <ColorButton />
+          <SimilarImplementationButton />
           <ValuesButton />
           <Settings className="px-2.5" />
           <LayoutFileButtons orientation="row" buttonClassName="px-2.5" />

@@ -1,0 +1,1435 @@
+{
+  "entries": [
+    {
+      "address": "eth:0xf8690D93bD5E6d26239b06F17c09feBF24f360FD",
+      "type": "Contract",
+      "name": "Morpho Market 0x46de1572…",
+      "values": {
+        "id": "0x46de157284f68a4664c5ec77c4e4a077110b0acbdc77edb72ed4b69741161333",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xDd5eff0756dB08BAD0Ff16b66f88F506e7318894",
+        "oracle": "eth:0x299a9b81bA29a0D0272F04EB3dC67bA9de9BA000",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xbe53252c2E55e820E6A1DB40f6b84B889aC49f76",
+      "type": "Contract",
+      "name": "Morpho Market 0x09dc9e7e…",
+      "values": {
+        "id": "0x09dc9e7eb5d8fc54b2bc41d1135fd4e99057a580f680321faeb90c7a21e631c1",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "oracle": "eth:0xf1561bC4b3D1bA49053986Fb9ee88D4fE22d0Cf4",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x71F449731C36A7320D712E2a48eF1c1919fA101B",
+      "type": "Contract",
+      "name": "Morpho Market 0x85252bb8…",
+      "values": {
+        "id": "0x85252bb8485c99bba46fe149c7dd2aad83672640f53c630890673cf1848ba16e",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "oracle": "eth:0xa3A7A3ceFee206f9d7Fe00eC3C83324ED4228411",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xD1910d26bB1631B66ac758367dd9E878dEF48c68",
+      "type": "Contract",
+      "name": "Morpho Market 0xf7cff44c…",
+      "values": {
+        "id": "0xf7cff44cf5333952f0c04a16d3db6f9fabba22c4e947654e3f79c6d6cda763fe",
+        "loanToken": "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
+        "collateralToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "oracle": "eth:0x0361A2be7a250077263272A0Eb8067c480749645",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x08a09fa7027Acc5EC68bf09662C17065f7efEcd5",
+      "type": "Contract",
+      "name": "Morpho Market 0x65e77bec…",
+      "values": {
+        "id": "0x65e77bec5bf9528c9ac8490eb5edc715ef434ecaf05e860a6734b9a07f0a757a",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x498D9329555471bF6073A5f2D047F746d522A373",
+        "oracle": "eth:0x814b1DF0b72afe95Ec37eD4E5704D376840718DB",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x0FFc18d7bBC6621eeF218531Dcd85ca85bCb74e9",
+      "type": "Contract",
+      "name": "Morpho Market 0x2f1f7f43…",
+      "values": {
+        "id": "0x2f1f7f439143b7985b68394c87a98b9ed7b8cfd2a15fb14c99b3bf76a38cbe7d",
+        "loanToken": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+        "collateralToken": "eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b",
+        "oracle": "eth:0xc910368a162a145dc292B2eaD6Af7839140d2c06",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xf6C4F5548DcaFEc1e2627A16C745054013286FdF",
+      "type": "Contract",
+      "name": "Morpho Market 0x09597e3e…",
+      "values": {
+        "id": "0x09597e3ede0ff531ac42b8c64e2a261984dc10954ae032f5e1fc07419db52f80",
+        "loanToken": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+        "collateralToken": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "oracle": "eth:0xE3A25233EecddDDb273d9c88caab94adb113884c",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "945000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xb39C90D6ab9dB8F6568bF5101bB984b3f85Ffa9D",
+      "type": "Contract",
+      "name": "Morpho Market 0x25cc86b7…",
+      "values": {
+        "id": "0x25cc86b7d19547ada6cdef99039c5772d2a8c440308d736b5780900a84aef25c",
+        "loanToken": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+        "collateralToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "oracle": "eth:0xB7671538574f0daAA99462cecfA4b57D07bFC46a",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xd813Bf673aE913418f0EA80cBfaF1e257Debc67F",
+      "type": "Contract",
+      "name": "Morpho Market 0x7f494ab3…",
+      "values": {
+        "id": "0x7f494ab3b467f1a5fc5e2edb22a7c727e809cd37f68d33a06450e1fb486ff3da",
+        "loanToken": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+        "collateralToken": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+        "oracle": "eth:0x16988dA49BaC55847a4f8E2634329BfFF9D53816",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xC17d13d5F196Cb58beBF61eBe70cbDB1eeb8BFD1",
+      "type": "Contract",
+      "name": "Morpho Market 0x016c61eb…",
+      "values": {
+        "id": "0x016c61eba37bd0bca915bebc742af53677ad5d1174ba1b88cb2cab5c03217c22",
+        "loanToken": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+        "collateralToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "oracle": "eth:0x957f6A2DC22094E77785057109069165c1Cf2c2f",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x6e4c9158CD5F73DdA692fFB42Eaa08B88D2C6A4B",
+      "type": "Contract",
+      "name": "Morpho Market 0x9e30a762…",
+      "values": {
+        "id": "0x9e30a7622d6b2d68d4d4a8ef3781094c173dea388cc7298eafeb89bd905b6602",
+        "loanToken": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+        "collateralToken": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "oracle": "eth:0xFF36cada4949A3722a2a7ab0aF23984758058C99",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x39B4822510828bD6FF7c4586DAa0bd082804c771",
+      "type": "Contract",
+      "name": "Morpho Market 0x30d99308…",
+      "values": {
+        "id": "0x30d99308a5f2f4673b2cc5ad1718c731e6c790e20e26d23611f6e8d3422bda41",
+        "loanToken": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+        "collateralToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "oracle": "eth:0x2DE7967f06a7Be992b62c35030EcC5eD14F842dB",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xfCbd619625d8F7984585B16200f69465d621D85D",
+      "type": "Contract",
+      "name": "Morpho Market 0xa7b72c69…",
+      "values": {
+        "id": "0xa7b72c690ee59492ac826bd77b80c09ff0c5aab6346e6bda5ac828c9a4f6de0b",
+        "loanToken": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+        "collateralToken": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "oracle": "eth:0xda9884dDbe3A13044Db7e1cDA75A2689ec59d009",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x7887AFB6c1E1C15Ff2EF5f1fA7f3a208b3194727",
+      "type": "Contract",
+      "name": "Morpho Market 0xa3724490…",
+      "values": {
+        "id": "0xa3724490242354d512a92b79d779fa2037845233f0096c9acac36a1033097aee",
+        "loanToken": "eth:0x98A878b1Cd98131B271883B390f68D2c90674665",
+        "collateralToken": "eth:0xb45ad160634c528Cc3D2926d9807104FA3157305",
+        "oracle": "eth:0xB78d26ba977898Defe668886d56b0FA1ca04cD4e",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x868A8f606d00b1Dc49F4d9B7f93E54Ea736dec43",
+      "type": "Contract",
+      "name": "Morpho Market 0xbea2e02b…",
+      "values": {
+        "id": "0xbea2e02b7a53869ea2fe41f604f6b530bcd9e3bda791a45d92d765b47d2f77f0",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xd76B994b6E6350bc298c836cBb58b117496e49E3",
+        "oracle": "eth:0x3D12252A45fCF76DacF8b8b0Ed8ce8Bb901f2292",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x5146b8c4158BEf92aD7752924E8dC0Df4D8FB4c5",
+      "type": "Contract",
+      "name": "Morpho Market 0x00c29d13…",
+      "values": {
+        "id": "0x00c29d13b1be92d2b209634211457161ba9d5594fd6ad0987ec75fc3a1adc254",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xd76B994b6E6350bc298c836cBb58b117496e49E3",
+        "oracle": "eth:0xC54291Ae4e0293943831D91eCa037d7C30792e7E",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x1dF16B11E5bF0C5eF5f1F7C54C9f929b94DA3bEF",
+      "type": "Contract",
+      "name": "Morpho Market 0xa1efba52…",
+      "values": {
+        "id": "0xa1efba5243dcfe7ccc5b25c70e68717cbb36980c2a1628d58637a32785e6ad75",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xd76B994b6E6350bc298c836cBb58b117496e49E3",
+        "oracle": "eth:0xEFe92E017162Fe142E5e2a25a39b41A3A615EC58",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xF75aAB75EF69e169ec72522721BAA00b6E700403",
+      "type": "Contract",
+      "name": "Morpho Market 0xa5c0eb58…",
+      "values": {
+        "id": "0xa5c0eb58bc78ed86ba709a16f47f45d7e96c52c8975e2828d2d485c8fbde4434",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xF65460B84c13eeb911303336Ab0f9D63CC79839f",
+        "oracle": "eth:0x9792558Bc33DFF171115CdbFC198f44278719B62",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xB70D229623Cd86B60C89CBb3ef02dcf7D5806a88",
+      "type": "Contract",
+      "name": "Morpho Market 0x1d09bf97…",
+      "values": {
+        "id": "0x1d09bf979a167075f5608686642fd3cdb458de742a234175892fa03f23693f6b",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xF65460B84c13eeb911303336Ab0f9D63CC79839f",
+        "oracle": "eth:0x6969A0296d9fEC77e794651469e362105d2307e8",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x47496A8e8cfab7044c48544693d249C936F83c99",
+      "type": "Contract",
+      "name": "Morpho Market 0x79cad5af…",
+      "values": {
+        "id": "0x79cad5afdeffd68a722b33477f013a8541af0d974568f161b69481fb01b2b93e",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "oracle": "eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "965000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x7863DFE64AAdfE12Ac5097982cb79d1EBD17F7cA",
+      "type": "Contract",
+      "name": "Morpho Market 0x7f8aa8ea…",
+      "values": {
+        "id": "0x7f8aa8ea57fd7d7fc2b7d807c81478eacf2f52919e5e0e0c72a2c375b8a5b42c",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "oracle": "eth:0x727c2B72d9723a3cd053962d5bB2bffcA2F9a54d",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "945000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x35c6d69011629aB10BeA3AB922E9A610a209DcF1",
+      "type": "Contract",
+      "name": "Morpho Market 0xbec3a938…",
+      "values": {
+        "id": "0xbec3a93801b559a8652552886481922e5676246b4e328788b2b53e13c21fd1c4",
+        "loanToken": "eth:0x98A878b1Cd98131B271883B390f68D2c90674665",
+        "collateralToken": "eth:0xBd373c9D3D8976a4FECC504a93c768BBE8C3227C",
+        "oracle": "eth:0x6c0824B17eF83459fd3959eb76a16aBD0F59DF35",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x03AD09842179e6c0C591de721b3A9c09489198fa",
+      "type": "Contract",
+      "name": "Morpho Market 0x41b12bac…",
+      "values": {
+        "id": "0x41b12bac98fdc74ffeb513771b0bd341a14733f57072f7236cf3730af06d7fa2",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xBd373c9D3D8976a4FECC504a93c768BBE8C3227C",
+        "oracle": "eth:0xfcC6676c57E70daA29478cc6633122D135cD5A6F",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x09728227d1E5271d4ED0b356E0822134Ba71aE6F",
+      "type": "Contract",
+      "name": "Morpho Market 0xab0489f9…",
+      "values": {
+        "id": "0xab0489f992caf7af2c27be87fc3f22ff90e7c8fe68bceabdff611b8c7f3e542d",
+        "loanToken": "eth:0x64351fC9810aDAd17A690E4e1717Df5e7e085160",
+        "collateralToken": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "oracle": "eth:0xbD60A6770b27E084E8617335ddE769241B0e71D8",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x2f14db33eBdA715b97403b3492205Bc71557AF8E",
+      "type": "Contract",
+      "name": "Morpho Market 0x58b332ca…",
+      "values": {
+        "id": "0x58b332ca359ff83620416be363c874947c2d1ae7b5913d367ed761d1ad422b19",
+        "loanToken": "eth:0x64351fC9810aDAd17A690E4e1717Df5e7e085160",
+        "collateralToken": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "oracle": "eth:0xbDd2F2D473E8D63d1BFb0185B5bDB8046ca48a72",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x44896D7D633DF829fAf18E3b316C729c9FC8Fe43",
+      "type": "Contract",
+      "name": "Morpho Market 0x39d6cc92…",
+      "values": {
+        "id": "0x39d6cc9211d023cc16708a2378d821d394d8cfaa3640e3a4d4638d292e10035d",
+        "loanToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "collateralToken": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "oracle": "eth:0x3eF1F71723d633deE9834c5a7577c39B13C17aeb",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "945000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xaFE37817F628F10F8f087639F105A5122A3AaDC1",
+      "type": "Contract",
+      "name": "Morpho Market 0xa128dddc…",
+      "values": {
+        "id": "0xa128dddc761075df9a9a60689f3a41a989b245aad506352c509c0c3a76a9ec6b",
+        "loanToken": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+        "collateralToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "oracle": "eth:0xF58725eb213161E9054C97F970DC80b2d0327E8d",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xbEd75a5e68b095B741A0A503C5eCcCC797a5dce0",
+      "type": "Contract",
+      "name": "Morpho Market 0x9464b3d4…",
+      "values": {
+        "id": "0x9464b3d42133c10c8b216d3d9429b43e98c2f3856a87940ef18b8bdd3e7bd831",
+        "loanToken": "eth:0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+        "collateralToken": "eth:0x1D69402390657308C91179aa184bF992908c1e08",
+        "oracle": "eth:0xDAd04877702ca7F4a02ECCDfa1D0BFD2bB2Be6b8",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x567E9a70D9aC19a8f5535077A476b6Ac146d5B69",
+      "type": "Contract",
+      "name": "Morpho Market 0x84c5a39c…",
+      "values": {
+        "id": "0x84c5a39c655a7adb0fadee7a78dd8891906f8e1d639b3557e1c551e843777fd0",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x498D9329555471bF6073A5f2D047F746d522A373",
+        "oracle": "eth:0xc48144A2d40B764cf9D63947E64403990631840c",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "625000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x3eb7C5f8cb39d4290C061813bAed5E7bB724509e",
+      "type": "Contract",
+      "name": "Morpho Market 0xfe9529b4…",
+      "values": {
+        "id": "0xfe9529b421abbc798f4a72b2dcf8c16ec2cc4f0114e472c8da81a26e601dc67e",
+        "loanToken": "eth:0xacA92E438df0B2401fF60dA7E4337B687a2435DA",
+        "collateralToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "oracle": "eth:0xf1561bC4b3D1bA49053986Fb9ee88D4fE22d0Cf4",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x28Edd686F47d8B9c8223F8D450B42173B59CA9c4",
+      "type": "Contract",
+      "name": "Morpho Market 0xe9b83f6c…",
+      "values": {
+        "id": "0xe9b83f6c683934ef7b059f531b07207ce8047ca6e24501718cbd386d34e1da8b",
+        "loanToken": "eth:0xacA92E438df0B2401fF60dA7E4337B687a2435DA",
+        "collateralToken": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "oracle": "eth:0x9F983115741D0F7F2EAE07831415057AD3de34d2",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x82c268D4af4c9d15FD0346253C90A88C7e954E3C",
+      "type": "Contract",
+      "name": "Morpho Market 0xc6ba0a0b…",
+      "values": {
+        "id": "0xc6ba0a0bf96fbde89da661f4dfce15de5961d3163345c21d801be8a99190a584",
+        "loanToken": "eth:0xacA92E438df0B2401fF60dA7E4337B687a2435DA",
+        "collateralToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "oracle": "eth:0xe087AD7FE989cF63F8383579D160a20Ee7e69F9F",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x2E4414f3A6be7f3BD026E1FD4f97f7E1cEd18065",
+      "type": "Contract",
+      "name": "Morpho Market 0xb0ca701d…",
+      "values": {
+        "id": "0xb0ca701def0e39cd932db109b69daa9aa4b0f19605c3289c063c1162841a5f08",
+        "loanToken": "eth:0xacA92E438df0B2401fF60dA7E4337B687a2435DA",
+        "collateralToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "oracle": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x035099AB1C8c33De551df17ee2B410CbB79c2896",
+      "type": "Contract",
+      "name": "Morpho Market 0x34377fc4…",
+      "values": {
+        "id": "0x34377fc4f617c51818e92c79df31ff270c6a91bc94ad32e367fdf59b9f4ac5dd",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "oracle": "eth:0xa3A7A3ceFee206f9d7Fe00eC3C83324ED4228411",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "770000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x3bFcfd17730E99BB6eC9c47874ef16ab7C2D9830",
+      "type": "Contract",
+      "name": "Morpho Market 0xeb9a6eba…",
+      "values": {
+        "id": "0xeb9a6eba208057e4cefd06867b9f859dd435f6bca13bd3863a22169d7e4eaa95",
+        "loanToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "collateralToken": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "oracle": "eth:0x8112582343CFBA0C92ABf54ba90341e44c2Cc6B5",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "770000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xED30162B4638962eA05B55f19bD262826567E0e4",
+      "type": "Contract",
+      "name": "Morpho Market 0x1f9de540…",
+      "values": {
+        "id": "0x1f9de540488a4ed6b5cb8a10ac626a1c0f52f7a70486869aeda26ca89b0cb6f3",
+        "loanToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "collateralToken": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "oracle": "eth:0x2C305ddAb8F995270fC512aD7356A60cb3bc3fD4",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "770000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x10217BD1642478CD24a14880476f9689AbB3fA3C",
+      "type": "Contract",
+      "name": "Morpho Market 0x05af3d86…",
+      "values": {
+        "id": "0x05af3d869d7356cffb477d64d6122004d6da40de6f18a1d987fbdf9d6b1cf568",
+        "loanToken": "eth:0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+        "collateralToken": "eth:0x93E62845C1DD5822EbC807ab71A5Fb750DecD15A",
+        "oracle": "eth:0xCB88FA5f48dc5751D82F20a3a4BA14803f827A73",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x900cd4b0321B306C8C87FD08A4e24Cac3Ce03F00",
+      "type": "Contract",
+      "name": "Morpho Market 0x19cc9b90…",
+      "values": {
+        "id": "0x19cc9b90c4ecde78f4644f4d5ebc938fbadf30f6e4cae95485192f038b23e1f3",
+        "loanToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "collateralToken": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "oracle": "eth:0xa3A7A3ceFee206f9d7Fe00eC3C83324ED4228411",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "770000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x237150d1894688a676cd4d0eCbB5Ce9F9E3fd604",
+      "type": "Contract",
+      "name": "Morpho Market 0x1fab8977…",
+      "values": {
+        "id": "0x1fab8977755133e036ef547713b9be3da9d2805118e62eb28ff59a7cd9ff75a7",
+        "loanToken": "eth:0xacA92E438df0B2401fF60dA7E4337B687a2435DA",
+        "collateralToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "oracle": "eth:0x95A18975379B6e114730C020bC6b1B133F4c7826",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x5dbD2520F0131488269f9ae8c3a93EB3ba8E5840",
+      "type": "Contract",
+      "name": "Morpho Market 0x746235db…",
+      "values": {
+        "id": "0x746235dba016c0e25b9d91051f4883719d4a863eb3ebfb546912e09611214535",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xF8F226dA66244F89e70C5B5D1a5C5b0d505Eb1d8",
+        "oracle": "eth:0x1D8Cbc63Ee5eF7B33cB1eE7b32ad90d619e4D3cF",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xDc5033040f0Af4645CD7626f1A9A698f5617616e",
+      "type": "Contract",
+      "name": "Morpho Market 0x3014f330…",
+      "values": {
+        "id": "0x3014f330e8237f0588bc63137735ae85b07026e10642b1bfbfe2887ba9c46dc0",
+        "loanToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "collateralToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "oracle": "eth:0x10d9eafEF4fBfa993A12EA41E707BCc2df5C1E42",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "945000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xD1402D199f6B3B5098dd4585fE5E791BdDb2eB08",
+      "type": "Contract",
+      "name": "Morpho Market 0x41c41d0c…",
+      "values": {
+        "id": "0x41c41d0c9aadbf4751f5ee215ed5a16954a4b34e1b70fca5393d4b08858fa3fa",
+        "loanToken": "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8",
+        "collateralToken": "eth:0x19ebb35279A16207Ec4ba82799CC64715065F7F6",
+        "oracle": "eth:0x335e5718bC20028d5e357473a3736C187Ca6b07e",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x55CDB5aFe9ad84fC359C594AF06Ab229a42c5404",
+      "type": "Contract",
+      "name": "Morpho Market 0xaa805b43…",
+      "values": {
+        "id": "0xaa805b43e61bba8a44e225057b4f1749e2fdd8c3c77abb4ef868c8c19d668281",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x498D9329555471bF6073A5f2D047F746d522A373",
+        "oracle": "eth:0x9fD1d2fFD1a156C01dC2D98dD80E96E75ADff351",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x58D3db65856d2405617c27F8AA5c5B73226586d2",
+      "type": "Contract",
+      "name": "Morpho Market 0x705b715d…",
+      "values": {
+        "id": "0x705b715d01315f83a979e5f4554a03e05bf9f7fec7c4b5072522e7188316de34",
+        "loanToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "collateralToken": "eth:0xd3fD63209FA2D55B07A0f6db36C2f43900be3094",
+        "oracle": "eth:0x938D2eDb20425cF80F008E7ec314Eb456940Da15",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x28b3614F8624712C3C292148E3ce12E5867624df",
+      "type": "Contract",
+      "name": "Morpho Market 0xab04bdfb…",
+      "values": {
+        "id": "0xab04bdfbeef6de62e3020d44710d6461eccfb901b9659f866844805fca115f2f",
+        "loanToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "collateralToken": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "oracle": "eth:0xD776c7be7a06212c0F93eD478d3ba4Ce4fA55D31",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "945000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x22Ea855b3397F735613a2cb473983B804a262D8c",
+      "type": "Contract",
+      "name": "Morpho Market 0xa3652538…",
+      "values": {
+        "id": "0xa36525383bce448cbe1b1a645d2ad80ae56900c1e221a5e3dab2483e2613efd8",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x387D46494F6dc5c6b26aBC20Ae40623AC041dD92",
+        "oracle": "eth:0x08A9d6B4f11BeCA41F78C8097baB2AbD2fC5710c",
+        "irm": "eth:0x0000000000000000000000000000000000000000",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x30d4afdf8EF021dDA610F9A5101ccE0e278F34C4",
+      "type": "Contract",
+      "name": "Morpho Market 0xa0c0c51c…",
+      "values": {
+        "id": "0xa0c0c51c5e37f37adaff95736288953b1e75ae0e7539caccc5dd40401c1aecda",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xE89feD9a81cB8B19338f70367181A1A4Db5d06ae",
+        "oracle": "eth:0xc308970A7b72818e1b3FdbaB61dC345E1f3247e0",
+        "irm": "eth:0x0000000000000000000000000000000000000000",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x96D72d880b1E94794cd70512083aC058bD67514d",
+      "type": "Contract",
+      "name": "Morpho Market 0x39f560a9…",
+      "values": {
+        "id": "0x39f560a9db037e1786398a1bf5cb79b8bb52250f96549293fb63933e5d8af91d",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xd00E55a0E5A3fabB220c6175D8947313Fc7F2f33",
+        "oracle": "eth:0x2D2D50726D8F791FDf029994f662A6eC374d0119",
+        "irm": "eth:0x0000000000000000000000000000000000000000",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x7d87904d6864Bf7cfC14E76026D9C53836fAc171",
+      "type": "Contract",
+      "name": "Morpho Market 0x9e32ab86…",
+      "values": {
+        "id": "0x9e32ab8636950d7c00bc4666d8f3a0d005feeab26fbf7097528b75bb30a7a9b8",
+        "loanToken": "eth:0x9a1bFb2B9E3d1959Ed11636bc56DB0aB7b4473A9",
+        "collateralToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "oracle": "eth:0xab4EBFd6B79d11a7c187988EcEBE9fF8aB9aF32D",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "385000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x78B008654AB723734732fa389499b3A87814643a",
+      "type": "Contract",
+      "name": "Morpho Market 0x251b7cbc…",
+      "values": {
+        "id": "0x251b7cbc2c33ba4eabe3b7163ad0fdd3cfb97de80d8377f0f48b8d31aee7606f",
+        "loanToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "collateralToken": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
+        "oracle": "eth:0x837e3ceD92Aa5d045208A2Fd292a1e2DF9cFfA14",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "945000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x5A3b6098Af5995DA415A55286907501497CF610A",
+      "type": "Contract",
+      "name": "Morpho Market 0x4212ddea…",
+      "values": {
+        "id": "0x4212ddead99e2a680fc2e7fe0ea4c00dba16c37cb1f46d36b3d9fde14874ac37",
+        "loanToken": "eth:0xe30f0B62E8Ae5ce2934151146dAe5651c2288C84",
+        "collateralToken": "eth:0xC4D461889F3ae06e97118342862251241AC24dDC",
+        "oracle": "eth:0xF3689Aa19e70dcDe1A1c534751C5a05796775A5c",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "625000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x6b9Dfe448d4EB1082F9AF0FA3f9C9787E7E88C3a",
+      "type": "Contract",
+      "name": "Morpho Market 0x97670b09…",
+      "values": {
+        "id": "0x97670b09989b5a2cc1547800b3265f177d06a3fcaf646a10af23476bf59d3b59",
+        "loanToken": "eth:0xC4D461889F3ae06e97118342862251241AC24dDC",
+        "collateralToken": "eth:0xe30f0B62E8Ae5ce2934151146dAe5651c2288C84",
+        "oracle": "eth:0xfd73C872EB04eebeACeA478F8Ca6Cb628144d2f6",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "625000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xc9cb8757C4B6b52c51bc19EAB9Ef252611c3a25c",
+      "type": "Contract",
+      "name": "Morpho Market 0x360485fb…",
+      "values": {
+        "id": "0x360485fb3351e987a32ef357d5c99b8eb2346154947f4a961e825d0815729b3a",
+        "loanToken": "eth:0x9a1bFb2B9E3d1959Ed11636bc56DB0aB7b4473A9",
+        "collateralToken": "eth:0x0000000000000000000000000000000000000000",
+        "oracle": "eth:0x0000000000000000000000000000000000000000",
+        "irm": "eth:0x0000000000000000000000000000000000000000",
+        "lltv": "0"
+      }
+    },
+    {
+      "address": "eth:0xf7b2994A86220bC5632984cda05EC869446b81EE",
+      "type": "Contract",
+      "name": "Morpho Market 0x87e37861…",
+      "values": {
+        "id": "0x87e3786114cbe9d3fcace0eb4099fa70a4b916039db4a29626cae89147180ca3",
+        "loanToken": "eth:0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+        "collateralToken": "eth:0xdA36Ab65d5Af53763CAcD63AE7D441932032326f",
+        "oracle": "eth:0xF694F0EE087d849DB66d14793f6508a794a02746",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "945000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x7755A73351BB63a748A0A763Cf09D12f53011F51",
+      "type": "Contract",
+      "name": "Morpho Market 0xf9c0ed06…",
+      "values": {
+        "id": "0xf9c0ed06e4826397f51270fefe7a6ada5aa698a952183722bd217f4536ac941c",
+        "loanToken": "eth:0x845f64673a2407320C2cC12e23b669DC16F7A473",
+        "collateralToken": "eth:0xCe38af70542e57eA2a438d12e662D9851de06D86",
+        "oracle": "eth:0xd6F5D33aC887Ee5EeB000268688aa30DcfB3b84a",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "625000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xECc1aC94627F35edFe868E956f04C76594843bCE",
+      "type": "Contract",
+      "name": "Morpho Market 0x736c8418…",
+      "values": {
+        "id": "0x736c8418c442f5a82255a6c8fc3acf781a45edab36c87a298936c557819b8677",
+        "loanToken": "eth:0x845f64673a2407320C2cC12e23b669DC16F7A473",
+        "collateralToken": "eth:0xCe38af70542e57eA2a438d12e662D9851de06D86",
+        "oracle": "eth:0x50c0bC249Bc38AB346eE5c81AbB9efef2312643f",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "625000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x205F66AbaF5b73D398b606EC2c749D54f9251c37",
+      "type": "Contract",
+      "name": "Morpho Market 0xb0a087ed…",
+      "values": {
+        "id": "0xb0a087ed8ca669c1e7e1b06f6dc11347e85b5e452618ed4309064baed411dd27",
+        "loanToken": "eth:0x845f64673a2407320C2cC12e23b669DC16F7A473",
+        "collateralToken": "eth:0x11e089AA00FBcF9fd8EEf6F91e5385cFf6eDf054",
+        "oracle": "eth:0x1A32b9bE7a979dbD1Cc259Fa370D997cdAAB54bA",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "625000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x6A46f1F0cfa25f2FfC8e5E261F4B6e473eC7161F",
+      "type": "Contract",
+      "name": "Morpho Market 0x46efe96e…",
+      "values": {
+        "id": "0x46efe96ef478b1fd73e01e972b680310a86dfa55615db20342a46f8df44bc88e",
+        "loanToken": "eth:0x845f64673a2407320C2cC12e23b669DC16F7A473",
+        "collateralToken": "eth:0x3D678E83acf8EFd9A80509674EF811228D79D0eE",
+        "oracle": "eth:0x5b720968a714028879A174Ccd6599f21C0a5409b",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "625000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xF34Da65b836130a2C21A1356F5DAc1f26A01e1B1",
+      "type": "Contract",
+      "name": "Morpho Market 0xb8c79760…",
+      "values": {
+        "id": "0xb8c79760db7ddfd2e612d0e7066d6ac1ac411d8f6f1cf0db987849a2e19cf13b",
+        "loanToken": "eth:0x845f64673a2407320C2cC12e23b669DC16F7A473",
+        "collateralToken": "eth:0x519e8e5D13D5a109bDde53EB6b5d03E50ce70a0c",
+        "oracle": "eth:0x3b099260529497D876D88EBD50B23cb3fA241BBc",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "625000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xCb0eA8406b0633c1d08B2F8C4CfDD37197a72Bf9",
+      "type": "Contract",
+      "name": "Morpho Market 0x5c706a82…",
+      "values": {
+        "id": "0x5c706a82e9ec6e40dd5e81b00b09099cef09bd501a56085ad9c17f7965fc5897",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xd00E55a0E5A3fabB220c6175D8947313Fc7F2f33",
+        "oracle": "eth:0x2D2D50726D8F791FDf029994f662A6eC374d0119",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xfe80DA33710d303C77aeD48c42a0b4993fc61a4C",
+      "type": "Contract",
+      "name": "Morpho Market 0x96905763…",
+      "values": {
+        "id": "0x96905763efe6da2cee9553fa567ef4daa8c4d057ce8d2973c26d424d5a59eb8a",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xF458Ad24B1dE7c653e8471efB0b87710b316b7D9",
+        "oracle": "eth:0x68066D2891254F1F3285Cac0bB16B65B28EE3cAb",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "980000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xfb7Fb03184C09E03A69FEeb87BD2A23Ab73F0ec1",
+      "type": "Contract",
+      "name": "Morpho Market 0x69ef7fd1…",
+      "values": {
+        "id": "0x69ef7fd17b42cd7df6d885aee1b11380837afbc1664b25587041cf193b31617b",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x1D69402390657308C91179aa184bF992908c1e08",
+        "oracle": "eth:0xDA25BFf53bF9E12c728Cd83Ff9Fc22c581f564CD",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x27bD138386435F98758b1633eD770A77885C0FA0",
+      "type": "Contract",
+      "name": "Morpho Market 0x42c2b592…",
+      "values": {
+        "id": "0x42c2b592fc759fad461fb5c80d5ea214a496f70d8594398d69af68c2f3798de6",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x2D433b943FB8c015AE409444B7F960ED288082b4",
+        "oracle": "eth:0x32966C34D92BA0d7E34206E4674b12460CeD32D7",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x353eB3432B740021b06d2995BB19D1667b93E675",
+      "type": "Contract",
+      "name": "Morpho Market 0x755f9545…",
+      "values": {
+        "id": "0x755f954513d31d5f24aaf3d0cdc5e913a28383f8ea8ff85be9ffffa7371fb64d",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x19ebb35279A16207Ec4ba82799CC64715065F7F6",
+        "oracle": "eth:0x999eFF9cA63D23A60A0Cd19B9F65A0918674119a",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xC28F42b8D03bE6D67c615840DabB24B1Eb40B51B",
+      "type": "Contract",
+      "name": "Morpho Market 0x742efab6…",
+      "values": {
+        "id": "0x742efab696c509335be872513b85a73e4afa79d1bdf04af933879dbae79be928",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x3EC43F4158D51df0928979c09Eaf33CAd287065c",
+        "oracle": "eth:0xd9CFA6f7C2ca375eFdcc29Ec5Ad629aBF90aAb4b",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x771E005284BA2fa06D2E4E35b603f066ca2130e1",
+      "type": "Contract",
+      "name": "Morpho Market 0xce6fc003…",
+      "values": {
+        "id": "0xce6fc003b276f84f9c27864020b74481c526f89944ba838c9cc0d7bec78dd5c6",
+        "loanToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "collateralToken": "eth:0x41AB1b6fcbB2fA9DCEd81aCbdeC13Ea6315F2Bf2",
+        "oracle": "eth:0x2EDc1F136295DE11670A0FF519E3dfcBE48ae8F9",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "945000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x2C0da2F4fde4BDa9E2785E0123DB5b5ba8Be58B1",
+      "type": "Contract",
+      "name": "Morpho Market 0xfc5578b6…",
+      "values": {
+        "id": "0xfc5578b6f3b424dd5c5d34471699b302b320913010f8870fe0276cfaa5d925f2",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x3BC801419479865B24b4d32faB0Bf64638Abbd5f",
+        "oracle": "eth:0x2ED5777431184D2fe33dd993A776960a2FD408B7",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "770000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xAEe9e5b4D69261e37959519e812ec468C6D580F6",
+      "type": "Contract",
+      "name": "Morpho Market 0x7f37bf3c…",
+      "values": {
+        "id": "0x7f37bf3c7b9c08416f87f8a29a4c3142c0c08903316dd39ae473cc7b1dd4f9e3",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x387D46494F6dc5c6b26aBC20Ae40623AC041dD92",
+        "oracle": "eth:0x08A9d6B4f11BeCA41F78C8097baB2AbD2fC5710c",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xf42483DE3e76C2bA6D48501F87b987b4C94B554D",
+      "type": "Contract",
+      "name": "Morpho Market 0xdbcb3abc…",
+      "values": {
+        "id": "0xdbcb3abc60f6e1a2c6a4acfc7225950c80c1bc192ae366e3dd55c86581fbf039",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xE89feD9a81cB8B19338f70367181A1A4Db5d06ae",
+        "oracle": "eth:0xc308970A7b72818e1b3FdbaB61dC345E1f3247e0",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x334ca1a6db08EDd07e740D96dBaFf87CAf0Fc228",
+      "type": "Contract",
+      "name": "Morpho Market 0x92e9bbdb…",
+      "values": {
+        "id": "0x92e9bbdb019ee88d0b1a42e8670e55a5c6506da35923d8e64de69522b317c3e8",
+        "loanToken": "eth:0x98A878b1Cd98131B271883B390f68D2c90674665",
+        "collateralToken": "eth:0xb5Be35D8fF83D431899b95851CB17a2B4bcEF150",
+        "oracle": "eth:0x0F175EB06Fae59B9A3Dd789e2F210e2A9eced412",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x5e33deC6a3705305C1Ca25f236B5593ABb0FD964",
+      "type": "Contract",
+      "name": "Morpho Market 0xfd4079d9…",
+      "values": {
+        "id": "0xfd4079d94bfbd35545e3dadfe4101619db0946174357cbe8810fd8e8537a50cd",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x7433806912Eae67919e66aea853d46Fa0aef98A8",
+        "oracle": "eth:0x87633B7453604A46383c0EC726B784b8A1194E05",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x0B0Df2829c1a3F7b61aD12439fC268D424f8Ba3c",
+      "type": "Contract",
+      "name": "Morpho Market 0x58ff51cd…",
+      "values": {
+        "id": "0x58ff51cdd73bed3559c03affc95c59ed170130f9096a3cf8dbcd51f445dc71a8",
+        "loanToken": "eth:0x98A878b1Cd98131B271883B390f68D2c90674665",
+        "collateralToken": "eth:0xAF687B5EcB525Ccea96115088999B4eD80C388b6",
+        "oracle": "eth:0xAdEB005F51bd448277E45bD9e39908266E19B088",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x627Cefc864596062D8085e64bf50d2a40Fa113B2",
+      "type": "Contract",
+      "name": "Morpho Market 0x8f309d4b…",
+      "values": {
+        "id": "0x8f309d4b3066f80574810ed249472ba0ea1272e10834ae10dafa9f4f41aa63f4",
+        "loanToken": "eth:0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+        "collateralToken": "eth:0x098697bA3Fee4eA76294C5d6A466a4e3b3E95FE6",
+        "oracle": "eth:0x98Dd32A7Bc0a5e3c3C0179FAC9DCD523AF55b433",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xb6B527BFbf222C329751dbEE9E439c0B33378ad8",
+      "type": "Contract",
+      "name": "Morpho Market 0xeab4d184…",
+      "values": {
+        "id": "0xeab4d18495fdb5ce6ff92b55006af078848f556e4c3d98721ab24d1367e7e500",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xb5Be35D8fF83D431899b95851CB17a2B4bcEF150",
+        "oracle": "eth:0xB25d1f065384352eb42245eBceDFE84bDf7E3f38",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x7f94F61bd714Bf1A5EDE7a6A51E41F7552a97A4f",
+      "type": "Contract",
+      "name": "Morpho Market 0x2a0b8934…",
+      "values": {
+        "id": "0x2a0b893471c785a1f0fda00df7fca578b703eef7ae7186d2429c2824b5212467",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x4614F7A56A3Eb83b2Ff9fA4B4b9575B28Fb68644",
+        "oracle": "eth:0x52eA2C12734B5bB61e1edf52Bb0f01D9206493Fc",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xf3A003CE1C5FE0BAE03716d6Ada0eF8D9F6eDadC",
+      "type": "Contract",
+      "name": "Morpho Market 0x515f1e5c…",
+      "values": {
+        "id": "0x515f1e5c612e4be9e6919d396c439db0d65f43a1fe3716bd66b7c6f2d19a5eb6",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xAF687B5EcB525Ccea96115088999B4eD80C388b6",
+        "oracle": "eth:0x75d40808FEd3E64949283CA12B38AE9e82FB73cc",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xF087320925C0fd2b85F86b81584bf7163B6FD0d1",
+      "type": "Contract",
+      "name": "Morpho Market 0x610fa7c5…",
+      "values": {
+        "id": "0x610fa7c5b97fd5f428ad620321aaef9c5111e5fe9072114ecf1f22a117d3dc06",
+        "loanToken": "eth:0x98A878b1Cd98131B271883B390f68D2c90674665",
+        "collateralToken": "eth:0xb5Be35D8fF83D431899b95851CB17a2B4bcEF150",
+        "oracle": "eth:0x33E298FCFf24A5b171E70Aa54a12eD4504A60f3F",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "945000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x802d341d8d797757fd071C0F0B9C6f301ecA4b4C",
+      "type": "Contract",
+      "name": "Morpho Market 0xe681e1da…",
+      "values": {
+        "id": "0xe681e1da2bff41ff376f6480312bec66f2b808a90173e681f8a1cfd1605533b6",
+        "loanToken": "eth:0x98A878b1Cd98131B271883B390f68D2c90674665",
+        "collateralToken": "eth:0xAF687B5EcB525Ccea96115088999B4eD80C388b6",
+        "oracle": "eth:0xCD0172EcEc187dACf3bdD6A6450Ed1f13BD74174",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "945000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xc0Db600b82cEbdD38D03702b809959BD814aa2E7",
+      "type": "Contract",
+      "name": "Morpho Market 0x08e15c7f…",
+      "values": {
+        "id": "0x08e15c7f520c931cd414fa00d2b8611ce94fdee93272126dac46baf0f4082a67",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x1D69402390657308C91179aa184bF992908c1e08",
+        "oracle": "eth:0x710fA87a63aaBD4505Ca06e29E9FdF5160E984d1",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xDAf76d66c59692B29cbbE24E1951349c42F8940E",
+      "type": "Contract",
+      "name": "Morpho Market 0xc9633699…",
+      "values": {
+        "id": "0xc9633699b614a492cf4f36de2ae7a2d26673d86c0573749fd3fde927b15294bf",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x1D69402390657308C91179aa184bF992908c1e08",
+        "oracle": "eth:0x710fA87a63aaBD4505Ca06e29E9FdF5160E984d1",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xEf321F3423Ddcb974bF3693eC46a9F302E07C923",
+      "type": "Contract",
+      "name": "Morpho Market 0x51c09411…",
+      "values": {
+        "id": "0x51c094110992e3ce06db11ca7fa576788258300cca77d2f26131b476f81e0cb2",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x1D69402390657308C91179aa184bF992908c1e08",
+        "oracle": "eth:0xDAd04877702ca7F4a02ECCDfa1D0BFD2bB2Be6b8",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x0163B466d2E2133d4C73515F8BA3c81156Ad10f1",
+      "type": "Contract",
+      "name": "Morpho Market 0x6ef28d46…",
+      "values": {
+        "id": "0x6ef28d46304865e837deff752bbf28defcdbe51b28f0a557640fbea3dd1778f5",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x1D69402390657308C91179aa184bF992908c1e08",
+        "oracle": "eth:0x7BBc859dfAee3121a6b809Bb5e245A9Ec87cb185",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xBb723a8FeABE59187fc2356301Af01eE55333C7e",
+      "type": "Contract",
+      "name": "Morpho Market 0x16a5dc0b…",
+      "values": {
+        "id": "0x16a5dc0b52439b0035d64adca97a5f1fedb2572e772589d4d7c0238904d0e4ff",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x44Db865Cc6D5768703fb5Bf73dfB7A5a0f95c1fc",
+        "oracle": "eth:0xE4fb5e69e1D38776Af1e8fE6aC361720205393Ff",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x0F6796C0a3306C28C49830656F8609450654105B",
+      "type": "Contract",
+      "name": "Morpho Market 0x68c028b0…",
+      "values": {
+        "id": "0x68c028b0e6c8a62c1c1c35a5f26e77e2dfda3a3942788612bf1cfe1ce7196420",
+        "loanToken": "eth:0x98A878b1Cd98131B271883B390f68D2c90674665",
+        "collateralToken": "eth:0x44Db865Cc6D5768703fb5Bf73dfB7A5a0f95c1fc",
+        "oracle": "eth:0xE31460BBdA06A184535003Dc3a61d3d36D280f99",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "945000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xbd5Fb7493dB9ED494F9c1dA4368453684d92901d",
+      "type": "Contract",
+      "name": "Morpho Market 0x64970e63…",
+      "values": {
+        "id": "0x64970e63ae53b591ad89c8233df76ee828466b9c69d85e0e5dc3c1bad40101cb",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xb5Be35D8fF83D431899b95851CB17a2B4bcEF150",
+        "oracle": "eth:0xB25d1f065384352eb42245eBceDFE84bDf7E3f38",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xf709cf81853f2aea44A9e3E35Fb5bdF617C2506E",
+      "type": "Contract",
+      "name": "Morpho Market 0x95ec96cf…",
+      "values": {
+        "id": "0x95ec96cfdff5bd687751498df994f8dc172f5d27a3fabce143a6eb514c84fecf",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xAF687B5EcB525Ccea96115088999B4eD80C388b6",
+        "oracle": "eth:0x75d40808FEd3E64949283CA12B38AE9e82FB73cc",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x96c5Bb6EffC83dcEac46cc8bC0d0228A4E99ff41",
+      "type": "Contract",
+      "name": "Morpho Market 0xb317d11c…",
+      "values": {
+        "id": "0xb317d11c2bc2c0c8e6ea3c6517731cf667c86f2c716624be50319a6d32a97e8d",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x890A5122Aa1dA30fEC4286DE7904Ff808F0bd74A",
+        "oracle": "eth:0xB0b6Fc449CcF81Ff4129A86ddc814412E3Cd9Aa4",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xb89e7d4bdA74bDd3bddCE05131d21C8f9F05b0C6",
+      "type": "Contract",
+      "name": "Morpho Market 0x90ed810f…",
+      "values": {
+        "id": "0x90ed810f27e4c8f1f9331e0b576e653a563e68c6fb191f85e412d36a3517d525",
+        "loanToken": "eth:0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+        "collateralToken": "eth:0x4ad88F62310D377c60F6B0c25Bde8011f315EeA7",
+        "oracle": "eth:0x5A3673A3224D4c22EAB938590C1B8F58bbA64522",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x3108740b439F26A0BCC21343a44D50F85240c956",
+      "type": "Contract",
+      "name": "Morpho Market 0x3eb72424…",
+      "values": {
+        "id": "0x3eb72424727f9e0b23717be5fc69be672495b24b3cd101805b175729e2295308",
+        "loanToken": "eth:0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+        "collateralToken": "eth:0x4ad88F62310D377c60F6B0c25Bde8011f315EeA7",
+        "oracle": "eth:0xCEfc4A1b3af7c68613f198fe3e3ab10015172288",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xfD570D7882f9e317Ad00DDa1ea9981aaFF1Ee92D",
+      "type": "Contract",
+      "name": "Morpho Market 0xde2bb822…",
+      "values": {
+        "id": "0xde2bb82278de27e7851625e2d7c25280adc6d499c000cc6904eb0ab29124a481",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+        "oracle": "eth:0xAe53190c12cb206A497EB45d2be1dd0A87046501",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "625000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x9e19e832644cB5b612771791471bEF7828F5Acf1",
+      "type": "Contract",
+      "name": "Morpho Market 0x31a277fd…",
+      "values": {
+        "id": "0x31a277fde40c1bd37dd00cb2167fe1d5831b450efecc63323679228a101e9979",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C",
+        "oracle": "eth:0x5D4ad982F7F67003c7F0c2F1807f7c3d08B80c8b",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "625000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x1a83e6CF2592d7d272b35A78E8f578e3fa30B670",
+      "type": "Contract",
+      "name": "Morpho Market 0xbd21598f…",
+      "values": {
+        "id": "0xbd21598fa11eb462887f6e13a99f9b6c6396866d863cc748373bc4bf7dbdffbe",
+        "loanToken": "eth:0x47d13Fb0803409c7fE169A210d4e906165F1A432",
+        "collateralToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "oracle": "eth:0xC346ee27a56a9E95481D460cdc0aD49E752E3881",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "385000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x9E2366C700A81ccce5E396aC7afB3623A0C9f09d",
+      "type": "Contract",
+      "name": "Morpho Market 0x908b0370…",
+      "values": {
+        "id": "0x908b037029b5c0671ba3b362eaf289c3199560d1d4632e6cb527cc7240fa006e",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xAF687B5EcB525Ccea96115088999B4eD80C388b6",
+        "oracle": "eth:0xFb8B9A1b92B0F6CC3bb940F6CA670ca7dA455f9d",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x3E974306C581EA3D8D543ce1D1724D76e92e6C3d",
+      "type": "Contract",
+      "name": "Morpho Market 0xb37c30f3…",
+      "values": {
+        "id": "0xb37c30f34bff11c81ee8400133965f450a5f7c5d81ba2cf5740076f49eabc95c",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xb5Be35D8fF83D431899b95851CB17a2B4bcEF150",
+        "oracle": "eth:0x100187B3074116255c5C644eAd561E920f654E65",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x03063676Bd0eeE4C284724CCa7E380A10899A595",
+      "type": "Contract",
+      "name": "Morpho Market 0xd86df29b…",
+      "values": {
+        "id": "0xd86df29b48f2d88a0453027212247a29e68ff52c6589c46054f57285da2fa7e3",
+        "loanToken": "eth:0x98A878b1Cd98131B271883B390f68D2c90674665",
+        "collateralToken": "eth:0xAF687B5EcB525Ccea96115088999B4eD80C388b6",
+        "oracle": "eth:0xeCA7Ce58Af9c9f57fC7ac4e9bca17731F74C8E0B",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "945000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xdFB983F518B00Ad79838DD0c9BF4DacEAa7f1cf9",
+      "type": "Contract",
+      "name": "Morpho Market 0xebd23a87…",
+      "values": {
+        "id": "0xebd23a871b52e0a8c92bd719f4413600101b69e946cb72923b3a33fb5bc6ec85",
+        "loanToken": "eth:0x98A878b1Cd98131B271883B390f68D2c90674665",
+        "collateralToken": "eth:0xb5Be35D8fF83D431899b95851CB17a2B4bcEF150",
+        "oracle": "eth:0xD3acB26E38465613B9a974caD2bA56FbCC7B87E9",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x2a1CdE1B12DE6D177bCFe7A310B7B498b60310bb",
+      "type": "Contract",
+      "name": "Morpho Market 0xa82577b1…",
+      "values": {
+        "id": "0xa82577b1d641042e79aa649b4954ff80959c647cefa12806e648fee6b516a0c7",
+        "loanToken": "eth:0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+        "collateralToken": "eth:0x19ebb35279A16207Ec4ba82799CC64715065F7F6",
+        "oracle": "eth:0xE30E3247eF5E6c4a004dEe0a2d65C9383aC81303",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xF4ede22330bE50c592EaB35c83D27A2680885c95",
+      "type": "Contract",
+      "name": "Morpho Market 0x78e99fb9…",
+      "values": {
+        "id": "0x78e99fb97b709b77bf76ac955212bbaab9e19ee44799c8fe4826bb129cabae09",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x64688b6E895a64C3584FF1420d4119342558A504",
+        "oracle": "eth:0xD4F41C6DF780bb143Ec5b4B02ffc5fAC73d764b1",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x0bdd9F553a8EF6D933a226d603556E8c1d60913A",
+      "type": "Contract",
+      "name": "Morpho Market 0x83dfc8c6…",
+      "values": {
+        "id": "0x83dfc8c6f626e74cdbf7d718648030601467b4e0fe9016f90068449afd7cbc44",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xe687787e9A7D17cbc6125772E55EFA7471cC44eE",
+        "oracle": "eth:0xbB4C55D68E8D39666BC1FC388c98341acB77a588",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x4f6c84a486f346e15Be8498Dc636d6576707F8b9",
+      "type": "Contract",
+      "name": "Morpho Market 0x80fea132…",
+      "values": {
+        "id": "0x80fea13225f27a1f4798c35d89e791711f963ed74eb3a86bcaffe28143095e94",
+        "loanToken": "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8",
+        "collateralToken": "eth:0x5A19fa369F2895dCD8d2cEE62E4Ceae58eF92BBb",
+        "oracle": "eth:0x7560CaC78c21F882d33355C45a44835653f69ec2",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xF522D62Fa83dd283e9c243Af613a4f0AB5792bed",
+      "type": "Contract",
+      "name": "Morpho Market 0x002278ea…",
+      "values": {
+        "id": "0x002278ea242ec722813b4fe3c8eeaa07dbc331c731cc0b4248a1bf0771f933ea",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x22aE3D9a738471f405169Af055d31c687087d4c7",
+        "oracle": "eth:0xa5657B406Fc4282039861C6fcA64452aeFEC8ac0",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x0e768043A43b9b22511b651BCAD4122c27CE04A5",
+      "type": "Contract",
+      "name": "Morpho Market 0xe90a6419…",
+      "values": {
+        "id": "0xe90a6419afa96192cb088f63b779ddcb629a89f9126600d767d9442868087541",
+        "loanToken": "eth:0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+        "collateralToken": "eth:0x22aE3D9a738471f405169Af055d31c687087d4c7",
+        "oracle": "eth:0xa5657B406Fc4282039861C6fcA64452aeFEC8ac0",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xfcd736f00c057a42E08497fD71992D1b57Ac3700",
+      "type": "Contract",
+      "name": "Morpho Market 0x1749e020…",
+      "values": {
+        "id": "0x1749e02006bc6bd6a86af52d231511f6911d5e42318e028e51a28dfabc68dd47",
+        "loanToken": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+        "collateralToken": "eth:0x5A19fa369F2895dCD8d2cEE62E4Ceae58eF92BBb",
+        "oracle": "eth:0x968eb911Db90BB8eA9E4792b05C94500bC1A62D7",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xabc470898f38251ca9Cb049780a12Cf2CF336b8a",
+      "type": "Contract",
+      "name": "Morpho Market 0xa4b6d76d…",
+      "values": {
+        "id": "0xa4b6d76dfeb77aeedbd521689177e6d4f50f9ec71a8c5762b4bd885631e7880c",
+        "loanToken": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e",
+        "collateralToken": "eth:0x0000000000000000000000000000000000000000",
+        "oracle": "eth:0x0000000000000000000000000000000000000000",
+        "irm": "eth:0x0000000000000000000000000000000000000000",
+        "lltv": "0"
+      }
+    },
+    {
+      "address": "eth:0xC504C73fb9286B1E5c7107eBF73BD34556fF6634",
+      "type": "Contract",
+      "name": "Morpho Market 0xf02d2e8f…",
+      "values": {
+        "id": "0xf02d2e8f427a2b91785b3d09690ef9d3811bf674ba97b00bafc7665004a6dd97",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xD341A146A4fD20eA89898E4d86Ae1829bF3A1c23",
+        "oracle": "eth:0x208C784A15347bF51919C0850ae869ca764B595D",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x59b9916D32f66EF77E33862D0C91261b6fA95D49",
+      "type": "Contract",
+      "name": "Morpho Market 0xdf6ca97d…",
+      "values": {
+        "id": "0xdf6ca97d41975a6996e9db491cb38152b65d7c00807dfe15d95d8d76e5d122e0",
+        "loanToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "collateralToken": "eth:0xD341A146A4fD20eA89898E4d86Ae1829bF3A1c23",
+        "oracle": "eth:0x1F96824a00DD81bF4694471d1F0741E6A4de0cc2",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "915000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x147B2F4B094f7221ab16BCf7Fdf34E528a00E7c7",
+      "type": "Contract",
+      "name": "Morpho Market 0xfb8d9208…",
+      "values": {
+        "id": "0xfb8d92086861bae6fb778917afd1de5dbbc4ec70edfb636fed48238e225e7e3d",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x54C1Ff361b402f66c13107421E6A431C3375EF24",
+        "oracle": "eth:0xD703c55B871D999eA5435aC3721B19296Ac249D1",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0x49e3C53f3205D8644E65D3D50b5aAcBeAC3ec6ef",
+      "type": "Contract",
+      "name": "Morpho Market 0x04f82076…",
+      "values": {
+        "id": "0x04f82076dd379cf1dc479cb166324b640f6c25b0793391d79ccfcb6efb61ee7b",
+        "loanToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "collateralToken": "eth:0x54C1Ff361b402f66c13107421E6A431C3375EF24",
+        "oracle": "eth:0xD703c55B871D999eA5435aC3721B19296Ac249D1",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "address": "eth:0xDa33893bB5ac6F6e0BE80a02Ed7D12caE58D7B8c",
+      "type": "Contract",
+      "name": "Morpho Market 0xcff5f8a9…",
+      "values": {
+        "id": "0xcff5f8a928ae33020750ba807455c5e473f6f97f9fecd7316b20e4ed2a3abb82",
+        "loanToken": "eth:0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+        "collateralToken": "eth:0x54C1Ff361b402f66c13107421E6A431C3375EF24",
+        "oracle": "eth:0xD703c55B871D999eA5435aC3721B19296Ac249D1",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    }
+  ],
+  "vaults": [
+    "eth:0x10Becd2559671b36E9D43C8cE6c0B86E16C59420",
+    "eth:0xB7fC92B6ddc6612623812106e5B7532D3a48420B",
+    "eth:0x2bB005127069A0F0325Fb7370967E8A2b64FB77E",
+    "eth:0x0963232eB842BAF53E8e517691f81745C1F228a0",
+    "eth:0xB632d9b2Cf8d022339C21d4486Aba3184fBfC287",
+    "eth:0xf2e50b4b4254Db03683d2773bC784c546F0a25d9",
+    "eth:0xF1CfaA17d21B399F122B8615FAc12F95766eBed3"
+  ],
+  "vaultMarkets": {
+    "eth:0x2bB005127069A0F0325Fb7370967E8A2b64FB77E": [
+      "eth:0x44896D7D633DF829fAf18E3b316C729c9FC8Fe43"
+    ]
+  }
+}

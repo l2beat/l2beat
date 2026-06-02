@@ -18,6 +18,11 @@ export interface NodeViewProps {
   isDimmed: boolean
   isGrayedOut: boolean
   isOverlapping: boolean
+  // Set when the "similar implementation" highlight applies to this node.
+  isSimilar?: boolean
+  // Palette index forced onto this node by the similar-implementation highlight,
+  // so a matching group renders in the selected node's color.
+  colorOverride?: number
   // Per-field flags packed into a string ("01101..."). Stable enough for `===`
   // comparison in the memo comparator; cheaper than allocating an array per
   // render.
@@ -26,7 +31,17 @@ export interface NodeViewProps {
 }
 
 function NodeViewImpl(props: NodeViewProps) {
-  const { color, isDark } = getColor(props.node)
+  const colorNode =
+    props.colorOverride !== undefined
+      ? {
+          id: props.node.id,
+          color: props.colorOverride,
+          hueShift: 0,
+          entrypointColors: undefined,
+          isInitial: props.node.isInitial,
+        }
+      : props.node
+  const { color, isDark } = getColor(colorNode)
   const hiddenFields =
     props.node.hiddenFields.length > 0
       ? new Set(props.node.hiddenFields)
@@ -55,6 +70,9 @@ function NodeViewImpl(props: NodeViewProps) {
           'absolute bg-black',
           fullHeight ? 'rounded-2xl' : 'rounded',
           props.isSelected && 'outline outline-4 outline-autumn-300',
+          props.isSimilar &&
+            !props.isSelected &&
+            'outline outline-2 outline-autumn-300',
         )}
       >
         <div
@@ -65,7 +83,7 @@ function NodeViewImpl(props: NodeViewProps) {
           )}
           style={{
             height: fullHeight ? HEADER_HEIGHT : HEADER_HEIGHT - 4,
-            background: getTitleBackgroundCss(props.node),
+            background: getTitleBackgroundCss(colorNode),
           }}
         >
           <AddressIcon type={props.node.addressType} />
@@ -144,6 +162,8 @@ export const NodeView = memo(NodeViewImpl, (prev, next) => {
     prev.isDimmed === next.isDimmed &&
     prev.isGrayedOut === next.isGrayedOut &&
     prev.isOverlapping === next.isOverlapping &&
+    prev.isSimilar === next.isSimilar &&
+    prev.colorOverride === next.colorOverride &&
     prev.fieldHighlightedMask === next.fieldHighlightedMask &&
     prev.fieldTargetHiddenMask === next.fieldTargetHiddenMask
   )
