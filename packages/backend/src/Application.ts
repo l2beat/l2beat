@@ -4,6 +4,7 @@ import { ApiServer } from './api/ApiServer'
 import type { Config } from './config'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
+import { createAppStateModule } from './modules/app-state/AppStateModule'
 import { createBackofficeModule } from './modules/backoffice/BackofficeModule'
 import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
@@ -12,7 +13,6 @@ import { initDataAvailabilityModule } from './modules/data-availability/DataAvai
 import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createInteropModule } from './modules/interop/engine/InteropModule'
-import { createKeyValueModule } from './modules/key-value/KeyValueModule'
 import { createPrivacyModule } from './modules/privacy/PrivacyModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
@@ -54,10 +54,10 @@ export class Application {
     const interopModule = createInteropModule(deps)
     const trackedTxsModule = createTrackedTxsModule(deps)
     const dataAvailabilityModule = initDataAvailabilityModule(deps)
-    const keyValueModule = createKeyValueModule()
+    const appStateModule = createAppStateModule()
 
     const modulesWithTrpc = [
-      keyValueModule,
+      appStateModule,
       interopModule,
       trackedTxsModule,
       dataAvailabilityModule,
@@ -87,7 +87,7 @@ export class Application {
       createDailyChecksModule(deps),
 
       interopModule,
-      keyValueModule,
+      appStateModule,
       backofficeModule,
     ]
 

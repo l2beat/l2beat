@@ -20,6 +20,11 @@ export type { AggregatedL2CostRecord } from './repositories/AggregatedL2CostRepo
 export type { AggregatedLivenessRecord } from './repositories/AggregatedLivenessRepository'
 export type { AnomalyRecord } from './repositories/AnomaliesRepository'
 export type { AnomalyStatsRecord } from './repositories/AnomalyStatsRepository'
+export {
+  AppStateKey,
+  AppStatePair,
+  type AppStateRecord,
+} from './repositories/AppStateRepository'
 export type { BlobPairCount, BlobRecord } from './repositories/BlobsRepository'
 export type {
   ChainApi,
@@ -71,11 +76,6 @@ export type {
   InteropTransferTypeStats,
   InteropTransferTypeStatsMap,
 } from './repositories/InteropTransferTypeStats'
-export {
-  KeyValueKey,
-  KeyValuePair,
-  type KeyValueRecord,
-} from './repositories/KeyValueRepository'
 export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'

@@ -10,7 +10,7 @@ import {
 } from '~/components/core/Card'
 import { Input } from '~/components/core/Input'
 import { Label } from '~/components/core/Label'
-import { useKeyValueQuery } from '~/hooks/useKeyValueQuery'
+import { useAppStateQuery } from '~/hooks/useAppStateQuery'
 import { useBackendApi } from '~/react-query/trpc'
 import { dateInputToTimestamp } from '~/utils/dateInputToTimestamp'
 import { timestampToDateInput } from '~/utils/timestampToDateInput'
@@ -21,7 +21,7 @@ export function InteropAggregatesTimestampOverrideCard() {
   const api = useBackendApi()
   const [pinnedDate, setPinnedDate] = useState<string>('')
 
-  const { data, refetch, isLoading } = useKeyValueQuery(
+  const { data, refetch, isLoading } = useAppStateQuery(
     'interopAggregatesTimestampOverride',
   )
 
@@ -33,7 +33,7 @@ export function InteropAggregatesTimestampOverrideCard() {
     }
   }, [data])
 
-  const setPinning = api.keyValue.set.useMutation({
+  const setPinning = api.appState.set.useMutation({
     onSuccess: () => {
       toast.success('Interop pinning saved')
       refetch()

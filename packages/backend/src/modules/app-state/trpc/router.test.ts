@@ -2,9 +2,9 @@ import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { createCallerFactory } from '../../../trpc/init'
-import { createKeyValueTrpcRouter } from './router'
+import { createAppStateTrpcRouter } from './router'
 
-describe(createKeyValueTrpcRouter.name, () => {
+describe(createAppStateTrpcRouter.name, () => {
   it('gets a value by key', async () => {
     const record = {
       key: 'interopAggregatesTimestampOverride' as const,
@@ -39,14 +39,14 @@ describe(createKeyValueTrpcRouter.name, () => {
 })
 
 function createCaller(
-  keyValue: Partial<Database['keyValue']>,
+  appState: Partial<Database['appState']>,
   session = { email: 'dev@l2beat.com' },
 ) {
-  const callerFactory = createCallerFactory(createKeyValueTrpcRouter())
+  const callerFactory = createCallerFactory(createAppStateTrpcRouter())
   return callerFactory({
     headers: new Headers(),
     db: mockObject<Database>({
-      keyValue: mockObject<Database['keyValue']>(keyValue),
+      appState: mockObject<Database['appState']>(appState),
     }),
     session,
   })

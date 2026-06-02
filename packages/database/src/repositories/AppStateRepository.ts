@@ -2,15 +2,15 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { type Parser, v } from '@l2beat/validate'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { KeyValue } from '../kysely/generated/types'
+import type { AppState } from '../kysely/generated/types'
 
 const KEYS = ['interopAggregatesTimestampOverride', 'example'] as const
 
-export type KeyValueKey = v.infer<typeof KeyValueKey>
-export const KeyValueKey = v.enum(KEYS)
+export type AppStateKey = v.infer<typeof AppStateKey>
+export const AppStateKey = v.enum(KEYS)
 
-export type KeyValuePair = v.infer<typeof KeyValuePair>
-export const KeyValuePair = v.union([
+export type AppStatePair = v.infer<typeof AppStatePair>
+export const AppStatePair = v.union([
   v.object({
     key: v.literal('interopAggregatesTimestampOverride'),
     value: v.union([v.string().transform((v) => Number(v)), v.number()]),
@@ -20,17 +20,17 @@ export const KeyValuePair = v.union([
     value: v.string(),
   }),
 ]) satisfies Parser<{
-  key: KeyValueKey
+  key: AppStateKey
   value: unknown
 }>
 
-type ValueForKey<K extends KeyValuePair['key']> = Extract<
-  KeyValuePair,
+type ValueForKey<K extends AppStatePair['key']> = Extract<
+  AppStatePair,
   { key?: K }
 >['value']
 
-export interface KeyValueRecord<
-  T extends KeyValuePair['key'] = KeyValuePair['key'],
+export interface AppStateRecord<
+  T extends AppStatePair['key'] = AppStatePair['key'],
 > {
   key: T
   value: ValueForKey<T>
@@ -38,23 +38,23 @@ export interface KeyValueRecord<
   updatedBy: string
 }
 
-export class KeyValueRepository extends BaseRepository {
-  async set<T extends KeyValuePair['key']>(
-    record: Omit<KeyValueRecord<T>, 'updatedAt'>,
+export class AppStateRepository extends BaseRepository {
+  async set<T extends AppStatePair['key']>(
+    record: Omit<AppStateRecord<T>, 'updatedAt'>,
   ): Promise<void> {
     const row = toRow({ ...record, updatedAt: UnixTime.now() })
     await this.db
-      .insertInto('KeyValue')
+      .insertInto('AppState')
       .values(row)
       .onConflict((oc) => oc.column('key').doUpdateSet(row))
       .execute()
   }
 
-  async get<T extends KeyValuePair['key']>(
+  async get<T extends AppStatePair['key']>(
     key: T,
-  ): Promise<KeyValueRecord<T> | undefined> {
+  ): Promise<AppStateRecord<T> | undefined> {
     const row = await this.db
-      .selectFrom('KeyValue')
+      .selectFrom('AppState')
       .selectAll()
       .where('key', '=', key)
       .executeTakeFirst()
@@ -63,15 +63,15 @@ export class KeyValueRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('KeyValue').executeTakeFirst()
+    const result = await this.db.deleteFrom('AppState').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }
 
-function toRecord<T extends KeyValuePair['key']>(
-  row: Selectable<KeyValue>,
-): KeyValueRecord<T> {
-  const parsed = KeyValuePair.parse({ key: row.key, value: row.value })
+function toRecord<T extends AppStatePair['key']>(
+  row: Selectable<AppState>,
+): AppStateRecord<T> {
+  const parsed = AppStatePair.parse({ key: row.key, value: row.value })
   return {
     key: parsed.key as T,
     value: parsed.value as ValueForKey<T>,
@@ -80,9 +80,9 @@ function toRecord<T extends KeyValuePair['key']>(
   }
 }
 
-function toRow<T extends KeyValuePair['key']>(
-  record: Omit<KeyValueRecord<T>, 'id'>,
-): Insertable<KeyValue> {
+function toRow<T extends AppStatePair['key']>(
+  record: Omit<AppStateRecord<T>, 'id'>,
+): Insertable<AppState> {
   return {
     key: record.key,
     value: record.value.toString(),
