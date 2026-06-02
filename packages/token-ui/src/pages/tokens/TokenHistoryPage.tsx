@@ -1,5 +1,6 @@
 import { formatAddress, UnixTime } from '@l2beat/shared-pure'
 import type { RouterOutputs } from '@l2beat/token-backend'
+import { useQuery } from '@tanstack/react-query'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -44,7 +45,7 @@ import { Diff, ObjectDiff } from '~/components/Diff'
 import { IngestionLog } from '~/components/IngestionLog'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { diff } from '~/utils/getDiff'
 
 const PAGE_SIZE = 100
@@ -65,23 +66,25 @@ interface AbstractTokenInfo {
 }
 
 export function TokenHistoryPage() {
+  const trpc = useTRPC()
   const [page, setPage] = useState(1)
   const [selectedEntry, setSelectedEntry] = useState<HistoryEntry>()
-  const { data: historyPage, isLoading } = api.tokenDbHistory.getPage.useQuery(
-    { page, pageSize: PAGE_SIZE },
-    {
-      refetchInterval: 10_000,
-      refetchOnMount: 'always',
-      staleTime: 0,
-    },
+  const { data: historyPage, isLoading } = useQuery(
+    trpc.tokenDbHistory.getPage.queryOptions(
+      { page, pageSize: PAGE_SIZE },
+      {
+        refetchInterval: 10_000,
+        refetchOnMount: 'always',
+        staleTime: 0,
+      },
+    ),
   )
-  const { data: abstractTokens } = api.abstractTokens.getAll.useQuery(
-    undefined,
-    {
+  const { data: abstractTokens } = useQuery(
+    trpc.abstractTokens.getAll.queryOptions(undefined, {
       refetchInterval: 10_000,
       refetchOnMount: 'always',
       staleTime: 0,
-    },
+    }),
   )
   const abstractTokensById = useMemo(
     () =>
