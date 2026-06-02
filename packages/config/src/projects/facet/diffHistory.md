@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x0f0738cb7b1a61a321b8dbed8f3749fa2ca74714
+
+# Diff at Tue, 02 Jun 2026 10:55:59 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1769601687
+- current timestamp: 1780397670
+
+## Description
+
+Add the new Rollup contract (eth:0x026902ef…, deployed 2026-05-18) that took over state-root proposals on 2026-05-19, and rename the previous Rollup (eth:0x686E7d01…) to `RollupDeprecated`. Pulls in the new SP1VerifierGateway (eth:0xa236E6E3…) referenced by the new Rollup. The pre-existing `L1Bridge` is immutable and remains bound to `RollupDeprecated`; it is dropped from `escrows` since it can no longer track live L2 state and no canonical bridge has been redeployed against the new Rollup.
+
+## Watched changes
+
+```diff
+    contract Rollup (eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE) [facet/Rollup] {
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      template:
++        "facet/Rollup"
+      sourceHashes:
++        ["0x18a889e730255386b3ecf5a44ea1cdcc2a4ecbd02908aa838976646eb02a9681"]
+      description:
++        "Core rollup contract that manages the state of the rollup and its ZK fault proof system."
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+      sinceTimestamp:
++        1779135407
+      sinceBlock:
++        25124426
+      values:
++        {"$immutable":true,"AGG_VKEY":"0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2","anchorL2BlockNumber":3827260,"anchorProposalId":58,"anchorRoot":"0x8834b1b11a37cf194c2432c33063fed2c52b9e009d58481d6e352e8df34cae30","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"10000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getProposalsLength":87,"isInFallbackWindow":[],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1778518859,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":604800,"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":5000000000000000,"RANGE_VKEY_COMMITMENT":"0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829","renouncedOwner":"eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","sequencerInbox":"eth:0x00000000000000000000000000000000000face7","VERIFIER":"eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1","version":"1.0.0","whitelistedProposers":["eth:0x615452db5467849689E98a8C5C242A96cF768a94"]}
+      implementationNames:
++        {"eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE":"Rollup"}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    EOA  (eth:0x615452db5467849689E98a8C5C242A96cF768a94) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"propose","from":"eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE","description":"Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.","role":".whitelistedProposers"}
+    }
+```
+
+```diff
+    contract Facet Multisig (eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE","description":"can set the whitelisted proposers.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1) [succinct/SP1VerifierGateway]
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+## Source code changes
+
+```diff
+/dev/null => ./src/projects/facet/.flat/Rollup.sol | 1260 ++++++++++++++++++++
+ ...0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66.sol} |    0
+ ...:0xa236E6E31d94b613923d18313f534CE5b6b98eE1.sol |  271 +++++
+ 3 files changed, 1531 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769601687 (main branch discovery), not current.
+
+```diff
+    contract RollupDeprecated (eth:0x686E7d01C7BFCB563721333A007699F154C04eb4) [facet/Rollup] {
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
+      name:
+-        "Rollup"
++        "RollupDeprecated"
+    }
+```
+
 Generated with discovered.json: 0x8fa700c2ab0f3eb491cffa4821c27b49e7e1f456
 
 # Diff at Fri, 08 May 2026 07:51:19 GMT:
