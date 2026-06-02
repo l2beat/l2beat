@@ -9,7 +9,7 @@ export const lifi: BaseProject = {
   addedAt: UnixTime(1780394699),
   interopConfig: {
     description:
-      'Intent protocol implemented by LI.FI, based on the Open Intent Framework (OIF).',
+      'Intent protocol implemented by LI.FI, based on the Open Intents Framework (OIF).',
     plugins: [
       {
         plugin: 'lifi-intents',
