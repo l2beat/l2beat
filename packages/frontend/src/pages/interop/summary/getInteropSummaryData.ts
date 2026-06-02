@@ -6,6 +6,7 @@ import { getInteropChains } from '~/server/features/scaling/interop/utils/getInt
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
+import type { RouterOutputs } from '~/trpc/React'
 import { getSsrHelpers } from '~/trpc/server'
 import { type Manifest, manifest } from '~/utils/Manifest'
 import { MAX_SELECTED_CHAINS } from '../components/flows/consts'
@@ -123,7 +124,9 @@ async function getCachedData(
       select: ['interopConfig'],
     }),
     initialSelection.from.length > 0 && initialSelection.to.length > 0
-      ? helpers.interop.dashboard.prefetch({ ...initialSelection })
+      ? helpers.queryClient.prefetchQuery(
+          helpers.trpc.interop.dashboard.queryOptions({ ...initialSelection }),
+        )
       : undefined,
   ])
 
@@ -133,10 +136,13 @@ async function getCachedData(
   let defaultFlowChainOrder = initialFlowsChains
 
   if (shouldPrefetchFlows) {
-    const flowsData = await helpers.interop.flows.fetch({
-      chains: initialFlowsChains,
-      protocolIds: protocols.map((protocol) => protocol.id),
-    })
+    const flowsData: RouterOutputs['interop']['flows'] =
+      await helpers.queryClient.fetchQuery(
+        helpers.trpc.interop.flows.queryOptions({
+          chains: initialFlowsChains,
+          protocolIds: protocols.map((protocol) => protocol.id),
+        }),
+      )
     const chainsByVolume = flowsData.chainData
       .toSorted((a, b) => b.totalVolume - a.totalVolume)
       .map((chain) => chain.chainId)

@@ -24,7 +24,9 @@ export async function getScalingCostsEntries(helpers: SsrHelpers) {
       where: ['scalingInfo'],
       whereNot: ['archivedAt'],
     }),
-    helpers.costs.table.fetch({ range: optionToRange('30d') }),
+    helpers.queryClient.fetchQuery(
+      helpers.trpc.costs.table.queryOptions({ range: optionToRange('30d') }),
+    ),
   ])
 
   const entries = projects

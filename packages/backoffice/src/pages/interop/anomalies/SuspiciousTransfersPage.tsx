@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
@@ -5,7 +6,7 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
 import { formatDollars } from '~/pages/interop/transfers/utils'
-import { useBackendApi } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { SuspiciousTransfersTable } from './table/SuspiciousTransfersTable'
 import type {
   SuspiciousTransferRow,
@@ -13,7 +14,7 @@ import type {
 } from './types'
 
 export function SuspiciousTransfersPage() {
-  const api = useBackendApi()
+  const trpc = useBackendTrpc()
   const {
     data: suspiciousTransfersData,
     error: suspiciousTransfersError,
@@ -21,7 +22,7 @@ export function SuspiciousTransfersPage() {
     isLoading: isSuspiciousTransfersLoading,
     isFetching: isSuspiciousTransfersFetching,
     refetch: refetchSuspiciousTransfers,
-  } = api.interop.anomalies.suspiciousTransfers.useQuery()
+  } = useQuery(trpc.interop.anomalies.suspiciousTransfers.queryOptions())
 
   const {
     data: chainsData,
@@ -29,7 +30,7 @@ export function SuspiciousTransfersPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.interop.chains.metadata.useQuery()
+  } = useQuery(trpc.interop.chains.metadata.queryOptions())
 
   const response: SuspiciousTransfersResponse | undefined =
     suspiciousTransfersData

@@ -4,6 +4,12 @@
     "minDeposit": {
       "description": "min POL stake for new validators",
       "edit": ["format", "Undecimal18"]
+    },
+    "replacementCoolDown": {
+      "severity": "HIGH",
+      "description": "startAuction() can only be called after this epoch (compare with current epoch). this effectively closes the validator set if the cap is hit because no validators can be replaced."
     }
-  }
+  },
+  "category": "core",
+  "description": "Manages the Polygon PoS validator set."
 }

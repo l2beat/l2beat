@@ -1,6 +1,7 @@
 import type { PrivacyAttribute, TrustedSetup } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import type { PrivacyProject } from './types'
@@ -25,6 +26,10 @@ export interface PrivacySummaryEntry {
 export async function getPrivacySummaryEntries(
   projects: PrivacyProject[],
 ): Promise<PrivacySummaryEntry[]> {
+  if (env.MOCK) {
+    return getMockPrivacySummaryEntries(projects)
+  }
+
   const db = getDb()
   const projectIds = projects.map((p) => p.id)
 
@@ -88,4 +93,32 @@ export async function getPrivacySummaryEntries(
   })
 
   return entries.sort((a, b) => b.totalValueLockedUsd - a.totalValueLockedUsd)
+}
+
+function getMockPrivacySummaryEntries(
+  projects: PrivacyProject[],
+): PrivacySummaryEntry[] {
+  return projects
+    .map((project): PrivacySummaryEntry => {
+      return {
+        id: project.id,
+        slug: project.slug,
+        name: project.name,
+        shortName: project.shortName,
+        icon: manifest.getUrl(`/icons/${project.slug}.png`),
+        href: `/privacy/projects/${project.slug}`,
+        description: project.display.description,
+        totalValueLockedUsd: Math.random() * 1_000_000_000,
+        poolsTracked: project.privacyInfo.tokens.reduce(
+          (sum, t) => sum + t.buckets.length,
+          0,
+        ),
+        totalDeposits: Math.round(Math.random() * 10_000),
+        totalValueDeposited30dUsd: Math.random() * 100_000_000,
+        attributes: project.privacyInfo.attributes ?? [],
+        isUnderReview: !!project.statuses.reviewStatus,
+        trustedSetup: project.privacyInfo.trustedSetup,
+      }
+    })
+    .sort((a, b) => b.totalValueLockedUsd - a.totalValueLockedUsd)
 }

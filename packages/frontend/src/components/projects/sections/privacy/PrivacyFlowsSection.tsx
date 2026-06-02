@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartScale } from '~/components/chart/types'
 import type { ChartProject } from '~/components/core/chart/Chart'
@@ -8,7 +9,7 @@ import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrivacyFlowChart } from '~/pages/privacy/project/components/PrivacyFlowChart'
 import { PrivacyFlowsChartRangeControls } from '~/pages/privacy/project/components/PrivacyFlowsChartRangeControls'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -25,13 +26,16 @@ export function PrivacyFlowsSection({
   project,
   ...projectSectionProps
 }: PrivacyFlowsSectionProps) {
+  const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<FlowsMetric>('count')
   const [scale, setScale] = useState<ChartScale>('linear')
-  const { data, isLoading } = api.privacy.flowsChart.useQuery({
-    projectIds: [project.id],
-    range,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.privacy.flowsChart.queryOptions({
+      projectIds: [project.id],
+      range,
+    }),
+  )
 
   const timeRange = useMemo(
     () =>

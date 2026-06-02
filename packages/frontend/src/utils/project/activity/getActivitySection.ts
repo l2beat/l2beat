@@ -15,10 +15,12 @@ export async function getActivitySection(
 
   const rangeOption = project.archivedAt ? 'max' : '1y'
   const range = optionToRange(rangeOption, { offset: -UnixTime.DAY })
-  const data = await helpers.activity.chart.fetch({
-    range,
-    filter: { type: 'projects', projectIds: [project.id] },
-  })
+  const data = await helpers.queryClient.fetchQuery(
+    helpers.trpc.activity.chart.queryOptions({
+      range,
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+  )
 
   if (isActivityChartDataEmpty(data)) {
     return undefined
