@@ -90,9 +90,6 @@ export async function getCostsChart({
     ? maxTimestamp
     : expectedTo
 
-  // Anchor the chart to the selected window start (clamped to the first record
-  // of the selected project(s)) so it spans the full range. Missing in-range
-  // days are filled with 0 (no batches posted ⇒ no cost) below.
   const startTimestamp = getChartStartTimestamp({
     rangeStart: range[0],
     firstProjectTimestamp: firstTimestamp,

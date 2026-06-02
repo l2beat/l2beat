@@ -92,9 +92,6 @@ export async function getDetailedTvsChartWithProjectsRanges({
     ),
   ])
 
-  // The earliest project range start anchors the chart (clamped against the
-  // selected window start below) so it spans the full range without rendering
-  // days before any project existed.
   const firstProjectTimestamp = Math.min(
     ...projects.map((p) => p.sinceTimestamp),
   )
@@ -162,7 +159,7 @@ function getChartData(
     resolution,
   })
   const timestamps = generateTimestamps(
-    [UnixTime(startTimestamp), adjustedTo],
+    [startTimestamp, adjustedTo],
     resolution,
     {
       addTarget: true,

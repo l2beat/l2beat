@@ -106,9 +106,6 @@ export async function getScalingProjectDaThroughputChart({
     ? maxTimestamp
     : expectedTo
 
-  // Anchor the chart to the selected window start (clamped to the project's
-  // first ever record) so it spans the full range. Per-layer values outside
-  // each layer's data span stay null.
   const startTimestamp = getChartStartTimestamp({
     rangeStart: range[0],
     firstProjectTimestamp: firstTimestamp,

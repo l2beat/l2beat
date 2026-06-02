@@ -530,6 +530,72 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
   })
 
+  describe(
+    TokenValueRepository.prototype.getFirstTimestampByTokenId.name,
+    () => {
+      beforeEach(async () => {
+        await repository.upsertMany([
+          tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
+          tokenValue('a', 'ethereum', UnixTime(50), 1, 1000, 800, 500, 10),
+          tokenValue('b', 'arbitrum', UnixTime(30), 1, 1000, 800, 500, 10),
+        ])
+      })
+
+      it('returns the earliest timestamp for a token', async () => {
+        const result = await repository.getFirstTimestampByTokenId('a')
+        expect(result).toEqual(UnixTime(50))
+      })
+
+      it('is scoped to the given token', async () => {
+        const result = await repository.getFirstTimestampByTokenId('b')
+        expect(result).toEqual(UnixTime(30))
+      })
+
+      it('returns undefined when the token has no records', async () => {
+        const result = await repository.getFirstTimestampByTokenId('missing')
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
+    TokenValueRepository.prototype.getFirstTimestampByProjects.name,
+    () => {
+      beforeEach(async () => {
+        await repository.upsertMany([
+          tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
+          tokenValue('b', 'ethereum', UnixTime(60), 1, 1000, 800, 500, 10),
+          tokenValue('c', 'arbitrum', UnixTime(30), 1, 1000, 800, 500, 10),
+        ])
+      })
+
+      it('returns the earliest timestamp across the given projects', async () => {
+        const result = await repository.getFirstTimestampByProjects([
+          'ethereum',
+          'arbitrum',
+        ])
+        expect(result).toEqual(UnixTime(30))
+      })
+
+      it('is scoped to the given projects', async () => {
+        const result = await repository.getFirstTimestampByProjects([
+          'ethereum',
+        ])
+        expect(result).toEqual(UnixTime(60))
+      })
+
+      it('returns undefined when there are no matching records', async () => {
+        const result = await repository.getFirstTimestampByProjects(['missing'])
+        expect(result).toEqual(undefined)
+      })
+
+      it('returns undefined for an empty project list', async () => {
+        const result = await repository.getFirstTimestampByProjects([])
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
   describe('dal tvs', () => {
     const metadataRepository = db.tvsTokenMetadata
 

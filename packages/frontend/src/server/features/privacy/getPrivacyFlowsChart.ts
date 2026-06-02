@@ -33,7 +33,6 @@ export async function getPrivacyFlowsChart(
   }
 
   const db = getDb()
-  const isSingleProject = params.projectIds.length === 1
 
   const [dailyRows, syncedUntil, firstTimestamp] = await Promise.all([
     db.privacyFlowEvent.getDailyByProjectIds(
@@ -41,14 +40,8 @@ export async function getPrivacyFlowsChart(
       ...params.range,
     ),
     db.privacyFlowEvent.getLatestTimestampByProjectIds(params.projectIds),
-    isSingleProject
-      ? db.privacyFlowEvent.getFirstTimestampByProjectIds(params.projectIds)
-      : undefined,
+    db.privacyFlowEvent.getFirstTimestampByProjectIds(params.projectIds),
   ])
-
-  // For a single project, clamp the window start to its first ever event so we
-  // don't render days before it existed (multi-project keeps the raw window).
-  const firstProjectTimestamp = isSingleProject ? firstTimestamp : undefined
 
   const projectIds = new Set(params.projectIds)
   const historyRows = dailyRows.filter(
@@ -68,7 +61,7 @@ export async function getPrivacyFlowsChart(
         normalizePrivacyFlowsChartRange(
           params.range,
           undefined,
-          firstProjectTimestamp,
+          firstTimestamp,
         ),
         'daily',
       ).map((timestamp) => [timestamp, 0, 0, 0, 0]),
@@ -82,7 +75,7 @@ export async function getPrivacyFlowsChart(
   const normalizedRange = normalizePrivacyFlowsChartRange(
     params.range,
     minTimestamp,
-    firstProjectTimestamp,
+    firstTimestamp,
   )
   const grouped = new Map<
     number,

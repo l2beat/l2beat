@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -26,7 +25,6 @@ export async function getPrivacyTvlChart(
 
   const db = getDb()
   const forSummary = params.projectIds.length !== 1
-  const isSingleProject = !forSummary
 
   const [records, firstTimestamp] = await Promise.all([
     db.tvsTokenValue.getSummedByProjectForRanges(
@@ -38,9 +36,7 @@ export async function getPrivacyTvlChart(
         excludeRwaRestrictedTokens: false,
       },
     ),
-    isSingleProject
-      ? db.tvsTokenValue.getFirstTimestampByProjects(params.projectIds)
-      : undefined,
+    db.tvsTokenValue.getFirstTimestampByProjects(params.projectIds),
   ])
 
   if (records.length === 0) {
@@ -65,20 +61,15 @@ export async function getPrivacyTvlChart(
 
   const resolution = rangeToResolution(params.range)
 
-  // For a single project, anchor the chart to the selected window start
-  // (clamped to its first ever record) so it spans the full range. Missing
-  // in-range days stay null.
-  const startTimestamp = isSingleProject
-    ? getChartStartTimestamp({
-        rangeStart: params.range[0],
-        firstProjectTimestamp: firstTimestamp,
-        dataStart: minTimestamp,
-        resolution,
-      })
-    : minTimestamp
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: params.range[0],
+    firstProjectTimestamp: firstTimestamp,
+    dataStart: minTimestamp,
+    resolution,
+  })
 
   const timestamps = generateTimestamps(
-    [UnixTime(startTimestamp), UnixTime(maxTimestamp)],
+    [startTimestamp, maxTimestamp],
     resolution,
     { addTarget: true },
   )

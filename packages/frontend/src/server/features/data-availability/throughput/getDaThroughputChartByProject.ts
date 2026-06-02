@@ -123,9 +123,6 @@ export async function getDaThroughputChartByProjectData({
     ? maxTimestamp
     : expectedTo
 
-  // Anchor the chart to the selected window start (clamped to the DA layer's
-  // first ever record) so it spans the full range. Missing in-range days stay
-  // null.
   const from = getChartStartTimestamp({
     rangeStart: range[0],
     firstProjectTimestamp: firstTimestamp,
@@ -136,7 +133,7 @@ export async function getDaThroughputChartByProjectData({
   return {
     daLayer,
     grouped,
-    from: UnixTime(from),
+    from,
     to: adjustedTo,
     syncedUntil,
   }

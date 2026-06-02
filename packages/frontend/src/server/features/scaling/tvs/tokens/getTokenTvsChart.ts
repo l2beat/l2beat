@@ -69,8 +69,6 @@ export async function getTokenTvsChart({
 
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
 
-  // Anchor the chart to the selected window start (clamped to the token's first
-  // ever record) so it spans the full range. Missing in-range days stay null.
   const startTimestamp = getChartStartTimestamp({
     rangeStart: range[0],
     firstProjectTimestamp: firstTimestamp,
@@ -79,7 +77,7 @@ export async function getTokenTvsChart({
   })
 
   const timestamps = generateTimestamps(
-    [UnixTime(startTimestamp), adjustedTo],
+    [startTimestamp, adjustedTo],
     resolution,
     {
       addTarget: true,

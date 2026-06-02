@@ -36,10 +36,6 @@ export async function getSummedTvsValues(
   const db = getDb()
   const resolution = rangeToResolution(range)
 
-  // A single project anchors its chart to the selected window start (clamped to
-  // its first ever record). Summaries keep starting at the first day with data.
-  const isSingleProject = !forSummary && projects.length === 1
-
   const [records, firstTimestamp] = await Promise.all([
     db.tvsTokenValue.getSummedByTimestampByProjects(
       projects,
@@ -51,9 +47,7 @@ export async function getSummedTvsValues(
         excludeRwaRestrictedTokens,
       },
     ),
-    isSingleProject
-      ? db.tvsTokenValue.getFirstTimestampByProjects(projects)
-      : undefined,
+    db.tvsTokenValue.getFirstTimestampByProjects(projects),
   ])
 
   if (records.length === 0) {
@@ -67,14 +61,12 @@ export async function getSummedTvsValues(
 
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
 
-  const startTimestamp = isSingleProject
-    ? getChartStartTimestamp({
-        rangeStart: range[0],
-        firstProjectTimestamp: firstTimestamp,
-        dataStart: fromTimestamp,
-        resolution,
-      })
-    : fromTimestamp
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp: firstTimestamp,
+    dataStart: fromTimestamp,
+    resolution,
+  })
 
   return generateTimestamps([startTimestamp, adjustedTo], resolution, {
     addTarget: true,

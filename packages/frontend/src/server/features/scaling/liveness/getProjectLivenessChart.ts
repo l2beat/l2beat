@@ -107,9 +107,6 @@ export async function getProjectLivenessChart({
 
   const adjustedTo = isLivenessSynced(syncedUntil) ? lastTimestamp : range[1]
 
-  // Anchor the chart to the selected window start (clamped to the project's
-  // first ever record) so it spans the full range. Missing in-range days stay
-  // null — a gap, not a 0-length interval.
   const startTimestamp = getChartStartTimestamp({
     rangeStart: range[0],
     firstProjectTimestamp: firstTimestamp,

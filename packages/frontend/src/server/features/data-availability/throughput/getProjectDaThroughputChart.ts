@@ -117,9 +117,6 @@ export async function getProjectDaThroughputChartData({
     ? maxTimestamp
     : expectedTo
 
-  // Anchor the chart to the selected window start (clamped to the project's
-  // first ever record) so it spans the full range. Missing in-range days are
-  // filled with 0 (no data posted) by the caller.
   const from = getChartStartTimestamp({
     rangeStart: range[0],
     firstProjectTimestamp: firstTimestamp,
@@ -129,7 +126,7 @@ export async function getProjectDaThroughputChartData({
 
   return {
     grouped,
-    from: UnixTime(from),
+    from,
     to: adjustedTo,
     maxTimestamp,
     syncedUntil,

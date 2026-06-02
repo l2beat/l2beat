@@ -110,23 +110,19 @@ export async function getActivityChart({
 
   const aggregatedEntries = aggregateActivityRecords(entries)
   if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
-    return { data: [], syncWarning, syncedUntil: syncedUntil, stats: undefined }
+    return { data: [], syncWarning, syncedUntil, stats: undefined }
   }
 
   const dataStart = Math.min(...Object.keys(aggregatedEntries).map(Number))
 
-  // For a single project, anchor the chart to the selected window start (clamped
-  // to its first ever activity record) so it spans the full range, filling
-  // in-range days that have no activity yet with 0s — see the data mapping
-  // below. Aggregate charts keep starting at the first day with data.
-  const startTimestamp = projectId
-    ? getChartStartTimestamp({
-        rangeStart: adjustedRange[0],
-        firstProjectTimestamp: totalCounts?.[projectId]?.sinceTimestamp,
-        dataStart,
-        resolution: 'daily',
-      })
-    : dataStart
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: adjustedRange[0],
+    firstProjectTimestamp: projectId
+      ? totalCounts?.[projectId]?.sinceTimestamp
+      : Number.POSITIVE_INFINITY,
+    dataStart,
+    resolution: 'daily',
+  })
 
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedRange[1]],
@@ -136,9 +132,6 @@ export async function getActivityChart({
   const data: ActivityChartDataPoint[] = timestamps.map((timestamp) => {
     const isSynced = syncedUntil >= timestamp
     const fallbackValue = isSynced ? 0 : null
-    // For a single project the start is clamped to its first activity record, so
-    // an in-range day with no entry is a genuine zero-activity day — render it
-    // as 0 rather than a gap.
     const projectFallback = projectId ? fallbackValue : null
 
     const entry = aggregatedEntries[timestamp]
