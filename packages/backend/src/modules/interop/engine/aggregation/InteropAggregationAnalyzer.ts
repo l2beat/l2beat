@@ -5,6 +5,7 @@ import type {
 import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import {
   type AnomalyEvaluation,
+  type BridgeTotal,
   evaluateAnomalies,
   formatAnomalyReasons,
   type SeriesPoint,
@@ -57,6 +58,7 @@ export class DefaultInteropAggregationAnalyzer
     candidateTransfers: AggregatedInteropTransferRecord[],
   ): Promise<InteropAggregationAnalysis> {
     const groupedTransfers = groupTransfers(candidateTransfers)
+    const bridgeTotals = computeBridgeTotals(groupedTransfers)
     const candidateDay = UnixTime.toStartOf(candidateTimestamp, 'day')
     const historyFrom = candidateDay - (Z_WINDOW_DAYS - 1) * UnixTime.DAY
     const historicalGroups =
@@ -82,7 +84,7 @@ export class DefaultInteropAggregationAnalyzer
         )
 
       const series = buildSeries(candidateDay, group.metrics, historicalStats)
-      const evaluation = evaluateAnomalies(series)
+      const evaluation = evaluateAnomalies(series, bridgeTotals.get(group.id))
       if (evaluation.signals.length === 0 && !evaluation.sideMismatch) {
         continue
       }
@@ -151,6 +153,23 @@ function buildSeries(
   })
 
   return series
+}
+
+function computeBridgeTotals(
+  groupedTransfers: Map<string, GroupedTransferCandidate>,
+): Map<string, BridgeTotal> {
+  const totals = new Map<string, BridgeTotal>()
+  for (const group of groupedTransfers.values()) {
+    const existing = totals.get(group.id) ?? {
+      transferCount: 0,
+      volumeUsd: 0,
+    }
+    existing.transferCount += group.metrics.transferCount
+    existing.volumeUsd +=
+      group.metrics.srcVolumeUsd + group.metrics.dstVolumeUsd
+    totals.set(group.id, existing)
+  }
+  return totals
 }
 
 function groupTransfers(transfers: AggregatedInteropTransferRecord[]) {

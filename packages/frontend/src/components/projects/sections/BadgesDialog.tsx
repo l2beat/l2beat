@@ -1,4 +1,4 @@
-import { keepPreviousData } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
@@ -22,7 +22,7 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
 import { useDevice } from '~/hooks/useDevice'
 import type { RouterOutputs } from '~/trpc/React'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 
 type BadgeDialogData = NonNullable<RouterOutputs['projects']['badgesDialog']>
@@ -36,16 +36,18 @@ export function BadgesDialog({
   initialBadgeId,
   onOpenChange,
 }: BadgesDialogProps) {
+  const trpc = useTRPC()
   const { isMobile } = useDevice()
   const [selectedBadgeId, setSelectedBadgeId] = useState(initialBadgeId)
 
-  const { data, isLoading, isFetching, isPlaceholderData } =
-    api.projects.badgesDialog.useQuery(
+  const { data, isLoading, isFetching, isPlaceholderData } = useQuery(
+    trpc.projects.badgesDialog.queryOptions(
       { badgeId: selectedBadgeId },
       {
         placeholderData: keepPreviousData,
       },
-    )
+    ),
+  )
 
   const isSwitchingBadges = isFetching && isPlaceholderData
 

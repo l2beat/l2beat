@@ -1,9 +1,10 @@
 import type { Milestone } from '@l2beat/config'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { DataPostedRangeControls } from '~/pages/scaling/data-posted/DataPostedRangeControls'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
@@ -22,12 +23,15 @@ export function ProjectDataPostedChart({
   defaultRange,
   milestones,
 }: Props) {
+  const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
 
-  const { data, isLoading } = api.da.scalingProjectChart.useQuery({
-    range,
-    projectId: project.id,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.da.scalingProjectChart.queryOptions({
+      range,
+      projectId: project.id,
+    }),
+  )
 
   const chartData = useMemo(
     () =>

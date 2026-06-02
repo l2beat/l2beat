@@ -3,6 +3,7 @@ export {
   type AnomalyKind,
   type AnomalyMetric,
   type AnomalySeverity,
+  type BridgeTotal,
   evaluateAnomalies,
   type MetricSignal,
   type SeriesPoint,

@@ -1,5 +1,6 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
@@ -7,7 +8,7 @@ import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import {
   type ChartRange,
   type ChartResolution,
@@ -36,14 +37,17 @@ export function ThroughputSectionChart({
   customColors,
   milestones,
 }: Props) {
+  const trpc = useTRPC()
   const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
-  const { data, isLoading } = api.da.projectCharts.useQuery({
-    range,
-    projectId: project.id,
-    includeScalingOnly,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.da.projectCharts.queryOptions({
+      range,
+      projectId: project.id,
+      includeScalingOnly,
+    }),
+  )
 
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
     data?.totalChart.data,
