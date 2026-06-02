@@ -155,19 +155,11 @@ function getChartData(
   const syncedUntil = maxTimestamp
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
   const resolution = rangeToResolution(range)
-  const resolutionPeriod =
-    resolution === 'daily'
-      ? 'day'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'hour'
   const startTimestamp = getChartStartTimestamp({
     rangeStart: range[0],
-    firstProjectTimestamp: UnixTime.toStartOf(
-      UnixTime(firstProjectTimestamp),
-      resolutionPeriod,
-    ),
+    firstProjectTimestamp,
     dataStart: minTimestamp,
+    resolution,
   })
   const timestamps = generateTimestamps(
     [UnixTime(startTimestamp), adjustedTo],

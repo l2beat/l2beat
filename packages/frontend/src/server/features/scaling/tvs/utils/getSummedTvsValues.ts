@@ -1,4 +1,4 @@
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -67,21 +67,12 @@ export async function getSummedTvsValues(
 
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
 
-  const resolutionPeriod =
-    resolution === 'daily'
-      ? 'day'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'hour'
-
   const startTimestamp = isSingleProject
     ? getChartStartTimestamp({
         rangeStart: range[0],
-        firstProjectTimestamp:
-          firstTimestamp !== undefined
-            ? UnixTime.toStartOf(firstTimestamp, resolutionPeriod)
-            : undefined,
+        firstProjectTimestamp: firstTimestamp,
         dataStart: fromTimestamp,
+        resolution,
       })
     : fromTimestamp
 

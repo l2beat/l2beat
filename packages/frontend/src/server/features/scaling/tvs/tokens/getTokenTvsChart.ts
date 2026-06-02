@@ -69,22 +69,13 @@ export async function getTokenTvsChart({
 
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
 
-  const resolutionPeriod =
-    resolution === 'daily'
-      ? 'day'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'hour'
-
   // Anchor the chart to the selected window start (clamped to the token's first
   // ever record) so it spans the full range. Missing in-range days stay null.
   const startTimestamp = getChartStartTimestamp({
     rangeStart: range[0],
-    firstProjectTimestamp:
-      firstTimestamp !== undefined
-        ? UnixTime.toStartOf(firstTimestamp, resolutionPeriod)
-        : undefined,
+    firstProjectTimestamp: firstTimestamp,
     dataStart: minTimestamp,
+    resolution,
   })
 
   const timestamps = generateTimestamps(

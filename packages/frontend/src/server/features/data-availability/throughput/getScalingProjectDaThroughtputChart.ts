@@ -94,13 +94,6 @@ export async function getScalingProjectDaThroughputChart({
     }
   }
 
-  const resolutionPeriod =
-    resolution === 'daily'
-      ? 'day'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'hour'
-
   const expectedTo = getThroughputExpectedTimestamp({
     to: range[1],
     resolution,
@@ -118,11 +111,9 @@ export async function getScalingProjectDaThroughputChart({
   // each layer's data span stay null.
   const startTimestamp = getChartStartTimestamp({
     rangeStart: range[0],
-    firstProjectTimestamp:
-      firstTimestamp !== undefined
-        ? UnixTime.toStartOf(firstTimestamp, resolutionPeriod)
-        : undefined,
+    firstProjectTimestamp: firstTimestamp,
     dataStart: minTimestamp,
+    resolution,
   })
 
   const timestamps = generateTimestamps(

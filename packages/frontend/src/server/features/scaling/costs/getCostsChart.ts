@@ -85,13 +85,6 @@ export async function getCostsChart({
     ([_, value]) => value.blobsGas !== null,
   )?.[0]
 
-  const resolutionPeriod =
-    resolution === 'daily'
-      ? 'day'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'hour'
-
   const expectedTo = getCostsExpectedTimestamp(range[1], resolution)
   const adjustedTo = isCostsSynced({ to: range[1], syncedUntil })
     ? maxTimestamp
@@ -102,11 +95,9 @@ export async function getCostsChart({
   // days are filled with 0 (no batches posted ⇒ no cost) below.
   const startTimestamp = getChartStartTimestamp({
     rangeStart: range[0],
-    firstProjectTimestamp:
-      firstTimestamp !== undefined
-        ? UnixTime.toStartOf(firstTimestamp, resolutionPeriod)
-        : undefined,
+    firstProjectTimestamp: firstTimestamp,
     dataStart,
+    resolution,
   })
 
   const timestamps = generateTimestamps(

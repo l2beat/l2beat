@@ -48,10 +48,7 @@ export async function getPrivacyFlowsChart(
 
   // For a single project, clamp the window start to its first ever event so we
   // don't render days before it existed (multi-project keeps the raw window).
-  const firstProjectTimestamp =
-    isSingleProject && firstTimestamp !== undefined
-      ? UnixTime.toStartOf(firstTimestamp, 'day')
-      : undefined
+  const firstProjectTimestamp = isSingleProject ? firstTimestamp : undefined
 
   const projectIds = new Set(params.projectIds)
   const historyRows = dailyRows.filter(
@@ -144,6 +141,7 @@ function normalizePrivacyFlowsChartRange(
     rangeStart: range[0],
     firstProjectTimestamp,
     dataStart: minTimestamp ?? range[1],
+    resolution: 'daily',
   })
   const from = UnixTime.toStartOf(start, 'day')
   const to = UnixTime.toStartOf(range[1], 'day')

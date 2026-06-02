@@ -64,12 +64,6 @@ export async function getPrivacyTvlChart(
   }
 
   const resolution = rangeToResolution(params.range)
-  const resolutionPeriod =
-    resolution === 'daily'
-      ? 'day'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'hour'
 
   // For a single project, anchor the chart to the selected window start
   // (clamped to its first ever record) so it spans the full range. Missing
@@ -77,11 +71,9 @@ export async function getPrivacyTvlChart(
   const startTimestamp = isSingleProject
     ? getChartStartTimestamp({
         rangeStart: params.range[0],
-        firstProjectTimestamp:
-          firstTimestamp !== undefined
-            ? UnixTime.toStartOf(firstTimestamp, resolutionPeriod)
-            : undefined,
+        firstProjectTimestamp: firstTimestamp,
         dataStart: minTimestamp,
+        resolution,
       })
     : minTimestamp
 
