@@ -8,7 +8,7 @@ Generated with discovered.json: 0x8c62865edf1740b2ac9cb229da68b886a7851054
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+New security council members tagged.
 
 ## Config/verification related changes
 

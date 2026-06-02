@@ -12,6 +12,8 @@ Arbitrum Bridge implementation swapped on 2026-05-24 by the Arbitrum Security Co
 
 Per the forum disclosure, the underlying bug is in the L1 ArbitrumTimelock (`eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49`): its `onlyCounterpartTimelock` modifier (which checks both `msg.sender == Bridge` *and* `Bridge.activeOutbox().l2ToL1Sender() == L2_CORE_TIMELOCK`) was applied to the bespoke schedule functions but **not to OZ `AccessControlUpgradeable.renounceRole(bytes32,address)` inherited from the base contract**. Since OZ `renounceRole` is self-renounce only, any L2 EOA could submit a standard L2→L1 message that, after the 7-day fraud-proof window, would make the Bridge call `timelock.renounceRole(PROPOSER_ROLE, Bridge)` — the Bridge stripping its own PROPOSER_ROLE, DoS'ing all DAO AIPs until the Security Council re-granted it. Recoverable (no fund risk per the forum), but a hard governance-DoS. Reversing the killswitch hash confirms the shape: `keccak256(timelock ‖ 0x36568abe ‖ keccak256("PROPOSER_ROLE"))` = `0x3467…2258`. A permanent fix is promised in a future ArbOS upgrade.
 
+New security council members tagged.
+
 ## Watched changes
 
 ```diff
