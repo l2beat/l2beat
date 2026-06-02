@@ -387,7 +387,7 @@ export const facet: ScalingProject = {
       date: '2026-05-18T00:00:00Z',
       type: 'general',
       description:
-        'New Rollup contract takes over state-root proposals; previous Rollup stops on 2026-05-19.',
+        'New Rollup contract takes over state-root proposals with a new SP1VerifierGateway.',
     },
     {
       title: 'SP1 proof system deployed',
