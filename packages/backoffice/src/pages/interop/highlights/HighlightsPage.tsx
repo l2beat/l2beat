@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { Button } from '~/components/core/Button'
@@ -23,9 +24,9 @@ import { formatDollars } from '~/pages/interop/transfers/utils'
 import { useBackendTrpc } from '~/react-query/trpc'
 
 export function HighlightsPage() {
-  const api = useBackendTrpc()
+  const trpc = useBackendTrpc()
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.interop.highlights.latest.useQuery()
+    useQuery(trpc.interop.highlights.latest.queryOptions())
 
   const topPath = data?.topPathByVolume ?? null
   const topChainByInflow = data?.topChainByInflow ?? null
