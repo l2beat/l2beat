@@ -146,7 +146,9 @@ async function queryTokenBalance(
     console.log(e)
     return BigNumber.from(0)
   }
-  return decodedResult.length === 1 ? decodedResult[0] : decodedResult
+  return decodedResult.length === 1
+    ? decodedResult[0]
+    : (decodedResult as unknown as BigNumber)
 }
 
 const PRICE_PRECISION = 18
