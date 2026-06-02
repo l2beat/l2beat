@@ -8,7 +8,7 @@ Generated with discovered.json: 0x2937c5adb4735f376f431904a3a8d8cbe08eef5a
 
 ## Description
 
-Add the new Rollup contract (eth:0x026902ef…, deployed 2026-05-18) that took over state-root proposals on 2026-05-19, and rename the previous Rollup (eth:0x686E7d01…) to `RollupDeprecated`. Pulls in the new SP1VerifierGateway (eth:0xa236E6E3…) referenced by the new Rollup. The pre-existing `L1Bridge` is immutable and remains bound to `RollupDeprecated`; it is dropped from `escrows` since it can no longer track live L2 state and no canonical bridge has been redeployed against the new Rollup.
+This Rollup redeploy resolves the red trusted-setup risk: the new SP1VerifierGateway routes only to the Aztec-Ignition Plonk verifier (green), with ownership renounced so no other route can be added. Add the new Rollup contract (eth:0x026902ef…, deployed 2026-05-18) that took over state-root proposals on 2026-05-19, and rename the previous Rollup (eth:0x686E7d01…) to `RollupDeprecated`. Pulls in the new SP1VerifierGateway (eth:0xa236E6E3…) referenced by the new Rollup. The pre-existing `L1Bridge` is immutable and remains bound to `RollupDeprecated`; it is dropped from `escrows` since it can no longer track live L2 state and no canonical bridge has been redeployed against the new Rollup.
 
 ## Watched changes
 
