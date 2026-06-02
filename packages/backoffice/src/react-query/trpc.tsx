@@ -1,7 +1,10 @@
 import type { BackendRouter } from '@l2beat/backend/trpc'
-import { QueryClientProvider } from '@tanstack/react-query'
-import { httpBatchLink, loggerLink } from '@trpc/client'
-import { createTRPCReact } from '@trpc/react-query'
+import { type QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { createTRPCClient, httpBatchLink, loggerLink } from '@trpc/client'
+import {
+  createTRPCContext,
+  type TRPCOptionsProxy,
+} from '@trpc/tanstack-react-query'
 import type React from 'react'
 import { useState } from 'react'
 import {
@@ -10,21 +13,27 @@ import {
 } from '~/components/environment/EnvironmentContext'
 import { createQueryClient } from './queryClient'
 
-type Api = ReturnType<typeof createTRPCReact<BackendRouter>>
+type Api = TRPCOptionsProxy<BackendRouter, { keyPrefix: true }>
 
-const productionBackendApi: Api = createTRPCReact<BackendRouter>()
-const stagingBackendApi: Api = createTRPCReact<BackendRouter>()
-const localBackendApi: Api = createTRPCReact<BackendRouter>()
+const productionBackendTrpc = createTRPCContext<
+  BackendRouter,
+  { keyPrefix: true }
+>()
+const stagingBackendTrpc = createTRPCContext<
+  BackendRouter,
+  { keyPrefix: true }
+>()
+const localBackendTrpc = createTRPCContext<BackendRouter, { keyPrefix: true }>()
 
-const CLIENTS: Record<Environment, Api> = {
-  production: productionBackendApi,
-  staging: stagingBackendApi,
-  local: localBackendApi,
+const CLIENTS: Record<Environment, typeof productionBackendTrpc> = {
+  production: productionBackendTrpc,
+  staging: stagingBackendTrpc,
+  local: localBackendTrpc,
 }
 
-export function useBackendApi(env?: Environment): Api {
+export function useBackendTrpc(env?: Environment): Api {
   const { environment } = useEnvironment()
-  return CLIENTS[env ?? environment]
+  return CLIENTS[env ?? environment].useTRPC()
 }
 
 export function TRPCReactProvider({ children }: { children: React.ReactNode }) {
@@ -38,15 +47,24 @@ export function TRPCReactProvider({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={defaultQueryClient}>
       <PinnedProvider
-        api={productionBackendApi}
+        trpc={productionBackendTrpc}
+        keyPrefix="production"
+        queryClient={defaultQueryClient}
         url={urls.production ?? '/trpc/production'}
       >
         <PinnedProvider
-          api={stagingBackendApi}
+          trpc={stagingBackendTrpc}
+          keyPrefix="staging"
+          queryClient={defaultQueryClient}
           url={urls.staging ?? '/trpc/staging'}
         >
           {urls.local ? (
-            <PinnedProvider api={localBackendApi} url={urls.local}>
+            <PinnedProvider
+              trpc={localBackendTrpc}
+              keyPrefix="local"
+              queryClient={defaultQueryClient}
+              url={urls.local}
+            >
               {children}
             </PinnedProvider>
           ) : (
@@ -59,25 +77,32 @@ export function TRPCReactProvider({ children }: { children: React.ReactNode }) {
 }
 
 function PinnedProvider({
-  api,
+  trpc,
+  keyPrefix,
+  queryClient,
   url,
   children,
 }: {
-  api: Api
+  trpc: typeof productionBackendTrpc
+  keyPrefix: Environment
+  queryClient: QueryClient
   url: string
   children: React.ReactNode
 }) {
-  const [queryClient] = useState(() => createQueryClient())
-  const [trpcClient] = useState(() => buildClient(api, url))
+  const [trpcClient] = useState(() => buildClient(url))
   return (
-    <api.Provider client={trpcClient} queryClient={queryClient}>
+    <trpc.TRPCProvider
+      keyPrefix={keyPrefix}
+      queryClient={queryClient}
+      trpcClient={trpcClient}
+    >
       {children}
-    </api.Provider>
+    </trpc.TRPCProvider>
   )
 }
 
-function buildClient(api: Api, url: string) {
-  return api.createClient({
+function buildClient(url: string) {
+  return createTRPCClient<BackendRouter>({
     links: [
       loggerLink({
         enabled: (op) =>
