@@ -157,7 +157,8 @@ export const facet: ScalingProject = {
             },
           ],
         },
-        description: 'L1ETHLockbox (deprecated, paused).',
+        description:
+          'L1ETHLockbox (deprecated). The proxy still holds ETH but its implementation has been replaced with a dead-logic stub (PausedL1StandardBridge); the standard bridge entry points no longer work.',
       }),
     ],
     trackedTxs: [
