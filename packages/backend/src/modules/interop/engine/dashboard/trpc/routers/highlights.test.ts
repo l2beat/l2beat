@@ -185,6 +185,12 @@ describe(createHighlightsRouter.name, () => {
       previousWindowEnd: latestTimestamp - UnixTime.DAY,
     }
     const comparisonWindow = interopWindow
+    const activityWindow = {
+      windowStart: latestTimestamp,
+      windowEnd: latestTimestamp + UnixTime.DAY,
+      previousWindowStart: latestTimestamp - UnixTime.DAY,
+      previousWindowEnd: latestTimestamp,
+    }
     const topPath = getTopPathByVolumeAtTimestamp(
       currentTransfers,
       latestTimestamp,
@@ -292,7 +298,7 @@ describe(createHighlightsRouter.name, () => {
         : null,
       largestUopsIncreaseByChain: uopsIncrease
         ? {
-            ...comparisonWindow,
+            ...activityWindow,
             chain: uopsIncrease.projectId.toString(),
             currentCount: uopsIncrease.currentUopsCount,
             previousCount: uopsIncrease.previousUopsCount,
@@ -354,10 +360,10 @@ describe(createHighlightsRouter.name, () => {
     const result = await caller.latest()
 
     expect(result.largestUopsIncreaseByChain).toEqual({
-      windowStart: latestTimestamp - UnixTime.DAY,
-      windowEnd: latestTimestamp,
-      previousWindowStart: latestTimestamp - 2 * UnixTime.DAY,
-      previousWindowEnd: latestTimestamp - UnixTime.DAY,
+      windowStart: latestTimestamp,
+      windowEnd: latestTimestamp + UnixTime.DAY,
+      previousWindowStart: latestTimestamp - UnixTime.DAY,
+      previousWindowEnd: latestTimestamp,
       chain: 'ethereum',
       currentCount: 50,
       previousCount: 20,
@@ -365,6 +371,53 @@ describe(createHighlightsRouter.name, () => {
       increasePercent: 150,
     })
     expect(result.largestTvsIncreaseByChain).toEqual(null)
+  })
+
+  it('rewinds UOPS to the previous full day when interop snapshot is at midnight', async () => {
+    const latestTimestamp = UnixTime.fromDate(new Date('2026-06-02T00:00:00Z'))
+    const currentActivityTimestamp = latestTimestamp - UnixTime.DAY
+    const previousActivityTimestamp = latestTimestamp - 2 * UnixTime.DAY
+    const olderActivityTimestamp = latestTimestamp - 3 * UnixTime.DAY
+
+    const getActivityByTimestamp = mockFn()
+      .resolvesToOnce([
+        activityRecord('ethereum', currentActivityTimestamp, 50),
+      ])
+      .resolvesToOnce([
+        activityRecord('ethereum', previousActivityTimestamp, 20),
+      ])
+      .resolvesToOnce([activityRecord('ethereum', olderActivityTimestamp, 18)])
+      .resolvesTo([])
+
+    const caller = createCaller({
+      latestTimestamp,
+      getTransferByTimestamp: mockFn().resolvesTo([]),
+      getTokenByTimestamp: mockFn().resolvesTo([]),
+      getActivityMaxTimestampAtOrBefore: mockFn().resolvesTo(latestTimestamp),
+      getActivityByTimestamp,
+    })
+
+    const result = await caller.latest()
+
+    expect(getActivityByTimestamp).toHaveBeenCalledWith(
+      currentActivityTimestamp,
+    )
+    expect(getActivityByTimestamp).toHaveBeenCalledWith(
+      previousActivityTimestamp,
+    )
+    expect(getActivityByTimestamp).toHaveBeenCalledWith(olderActivityTimestamp)
+    expect(getActivityByTimestamp).not.toHaveBeenCalledWith(latestTimestamp)
+    expect(result.largestUopsIncreaseByChain).toEqual({
+      windowStart: currentActivityTimestamp,
+      windowEnd: latestTimestamp,
+      previousWindowStart: previousActivityTimestamp,
+      previousWindowEnd: currentActivityTimestamp,
+      chain: 'ethereum',
+      currentCount: 50,
+      previousCount: 20,
+      increase: 30,
+      increasePercent: 150,
+    })
   })
 
   it('maps configured chain ids to project ids for UOPS and TVS highlights', async () => {
@@ -404,10 +457,10 @@ describe(createHighlightsRouter.name, () => {
     const result = await caller.latest()
 
     expect(result.largestUopsIncreaseByChain).toEqual({
-      windowStart: latestTimestamp - UnixTime.DAY,
-      windowEnd: latestTimestamp,
-      previousWindowStart: latestTimestamp - 2 * UnixTime.DAY,
-      previousWindowEnd: latestTimestamp - UnixTime.DAY,
+      windowStart: latestTimestamp,
+      windowEnd: latestTimestamp + UnixTime.DAY,
+      previousWindowStart: latestTimestamp - UnixTime.DAY,
+      previousWindowEnd: latestTimestamp,
       chain: 'polygonpos',
       currentCount: 90,
       previousCount: 30,

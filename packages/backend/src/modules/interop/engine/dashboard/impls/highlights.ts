@@ -107,8 +107,7 @@ export async function getInteropHighlights(
 
   if (
     activityTimestamp !== undefined &&
-    activityTimestamp === UnixTime.toStartOf(latestTimestamp, 'day') &&
-    latestTimestamp > activityTimestamp
+    activityTimestamp === UnixTime.toStartOf(latestTimestamp, 'day')
   ) {
     activityTimestamp = activityTimestamp - UnixTime.DAY
   }
@@ -246,7 +245,7 @@ export async function getInteropHighlights(
   )
   const activityWindow =
     activityTimestamp !== undefined
-      ? getComparisonWindow(activityTimestamp)
+      ? getActivityComparisonWindow(activityTimestamp)
       : undefined
   const tvsWindow =
     tvsTimestamp !== undefined
@@ -352,5 +351,14 @@ function getComparisonWindow(
     windowEnd,
     previousWindowStart: previousWindowEnd - UnixTime.DAY,
     previousWindowEnd,
+  }
+}
+
+function getActivityComparisonWindow(windowStart: UnixTime) {
+  return {
+    windowStart,
+    windowEnd: windowStart + UnixTime.DAY,
+    previousWindowStart: windowStart - UnixTime.DAY,
+    previousWindowEnd: windowStart,
   }
 }
