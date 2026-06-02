@@ -16,7 +16,13 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import type { PrivacyAsset, PrivacyBucket } from './types'
+import type { PrivacyAsset, PrivacyBucket, PrivacyProject } from './types'
+
+interface PrivacyProjectFlowData {
+  totals: PrivacyFlowBucketTotalRecord[]
+  daily30d: PrivacyFlowDailyRecord[]
+  tokenValues: TokenValueRecord[]
+}
 
 export interface PrivacyProjectDetails {
   id: ProjectId
@@ -74,33 +80,12 @@ export async function getPrivacyProjectDetails(
   const last7dCutoff = currentDay - 6 * UnixTime.DAY
   const last30dCutoff = currentDay - 29 * UnixTime.DAY
 
-  let totals: PrivacyFlowBucketTotalRecord[]
-  let daily30d: PrivacyFlowDailyRecord[]
-  let tokenValues: TokenValueRecord[]
-  if (env.MOCK) {
-    const bucketIds = project.privacyInfo.tokens.flatMap((token) =>
-      token.buckets.map((bucket) => bucket.id),
-    )
-    const tokenIds = (project.tvsConfig ?? []).map((token) => token.id)
-    ;({ totals, daily30d, tokenValues } = getMockPrivacyProjectFlowData(
-      projectId,
-      bucketIds,
-      tokenIds,
-      last30dCutoff,
-      currentDay,
-    ))
-  } else {
-    const db = getDb()
-    ;[totals, daily30d, tokenValues] = await Promise.all([
-      db.privacyFlowEvent.getBucketTotalsByProjectIds([projectId]),
-      db.privacyFlowEvent.getDailyByProjectIds(
-        [projectId],
-        last30dCutoff,
-        currentDay,
-      ),
-      db.tvsTokenValue.getLastNonZeroValue(now, projectId),
-    ])
-  }
+  const { totals, daily30d, tokenValues } = await getPrivacyProjectFlowData(
+    project,
+    last30dCutoff,
+    currentDay,
+    now,
+  )
 
   const tvlBySymbol = new Map<string, number>()
   for (const tv of tokenValues) {
@@ -289,17 +274,38 @@ export async function getPrivacyProjectDetails(
   }
 }
 
-function getMockPrivacyProjectFlowData(
-  projectId: ProjectId,
-  bucketIds: string[],
-  tokenIds: string[],
+async function getPrivacyProjectFlowData(
+  project: PrivacyProject,
   from: UnixTime,
   to: UnixTime,
-): {
-  totals: PrivacyFlowBucketTotalRecord[]
-  daily30d: PrivacyFlowDailyRecord[]
-  tokenValues: TokenValueRecord[]
-} {
+  now: UnixTime,
+): Promise<PrivacyProjectFlowData> {
+  const projectId = project.id
+
+  if (env.MOCK) {
+    return getMockPrivacyProjectFlowData(project, from, to)
+  }
+
+  const db = getDb()
+  const [totals, daily30d, tokenValues] = await Promise.all([
+    db.privacyFlowEvent.getBucketTotalsByProjectIds([projectId]),
+    db.privacyFlowEvent.getDailyByProjectIds([projectId], from, to),
+    db.tvsTokenValue.getLastNonZeroValue(now, projectId),
+  ])
+  return { totals, daily30d, tokenValues }
+}
+
+function getMockPrivacyProjectFlowData(
+  project: PrivacyProject,
+  from: UnixTime,
+  to: UnixTime,
+): PrivacyProjectFlowData {
+  const projectId = project.id
+  const bucketIds = project.privacyInfo.tokens.flatMap((token) =>
+    token.buckets.map((bucket) => bucket.id),
+  )
+  const tokenIds = (project.tvsConfig ?? []).map((token) => token.id)
+
   const totals = bucketIds.map(
     (bucketId): PrivacyFlowBucketTotalRecord => ({
       projectId,
