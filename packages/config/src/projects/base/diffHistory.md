@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x2461d455ad3eab9ae01502d009a7012fdf3902e8
+Generated with discovered.json: 0x141596e12dbc480795216cc111e282681e97090d
 
 # Diff at Wed, 03 Jun 2026 08:05:04 GMT:
 
@@ -8,15 +8,15 @@ Generated with discovered.json: 0x2461d455ad3eab9ae01502d009a7012fdf3902e8
 
 ## Description
 
-op-contracts upgrade tx `0x75b1c9b2090ba2b311d6be08c319340b87dc1aabfae2505d126e7a0f1fc6b11c`, 2026-05-26T19:59:59Z.
+Azul multiproof activated: state validation now combines a TEE attestation arm and an SP1 ZK proof arm, either un-nullified proof resolves a game.
 
 `OptimismPortal2` impl `0x97cEbbf8` → `0x66d94eE8`. `proofMaturityDelaySeconds` 604800 (7d) → 86400 (1d); `disputeGameFinalityDelaySeconds` 302400 (3.5d) → 0; `respectedGameType` 0 → 621 (now read from AnchorStateRegistry). https://disco.l2beat.com/diff/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B/eth:0x66d94eE8F529b683ED6013729784e8bb44697A64
 
-`DisputeGameFactory` impl `0xc040F392` → `0x468C2345`. `gameCount` 13536 → 13757. https://disco.l2beat.com/diff/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c/eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c
+`DisputeGameFactory` impl `0xc040F392` → `0x468C2345`. https://disco.l2beat.com/diff/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c/eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c
 
-`AnchorStateRegistry` (0x909f6cf4) impl `0x36398155` → `0x4483F964`. Now stores `respectedGameType` (621) and `retirementTimestamp` (1779825599); legacy `vmFromGame`, `wethFromGame`, `oracleFromVm`, `challengePeriodFromOracle`, `absolutePrestateFromGame` removed. Anchor root → `0xc34c9f98…` @ L2 block 46302960. https://disco.l2beat.com/diff/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5/eth:0x4483F964F6711Cb55f633820ED174E780369b99D
+`AnchorStateRegistry` (0x909f6cf4) impl `0x36398155` → `0x4483F964`. Now stores `respectedGameType` (621) and `retirementTimestamp` (1779825599); legacy `vmFromGame`, `wethFromGame`, `oracleFromVm`, `challengePeriodFromOracle`, `absolutePrestateFromGame` removed. https://disco.l2beat.com/diff/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5/eth:0x4483F964F6711Cb55f633820ED174E780369b99D
 
-Game type 621 = AggregateVerifier (TEE+ZK) at `0x4c0DAF5d9ABe92e8A26a60698a657B03538a3028`, v0.1.0, bond 0.05 ETH. `TEE_VERIFIER=0x1FbA0C57…2228` (v0.2.0), `ZK_VERIFIER=0x9e51DeFb…3c3b` (v0.1.0), `DELAYED_WETH=0xd0D07924…EF71` (1d delay), `SLOW_FINALIZATION_DELAY=7d`, `FAST_FINALIZATION_DELAY=1d`, `PROOF_THRESHOLD=1`, `BLOCK_INTERVAL=600`, `INTERMEDIATE_BLOCK_INTERVAL=30`. Source: github.com/base/contracts/src/L1/proofs/AggregateVerifier.sol. Confirmed via cast against the deployed bytecode; not yet persisted in discovery.
+Game type 621 = AggregateVerifier `0xeEcb8A5944…D259` v0.1.0, bond 0.05 ETH. `TEE_VERIFIER=0x1FbA0C57…2228` v0.2.0, `ZK_VERIFIER=0xB88D95bDf…9B75` v0.1.0 → `SP1VerifierGateway=0xdc32E22863…C106` → SP1 v6.1.0 `0xb69f2584…f4e2`. `DELAYED_WETH=0xd0D07924…EF71`, `SLOW_FINALIZATION_DELAY=7d`, `FAST_FINALIZATION_DELAY=1d`, `PROOF_THRESHOLD=1`.
 
 Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeGame v2.2.0, fallback), 621 = AggregateVerifier (respected). All other types empty.
 

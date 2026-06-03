@@ -1543,8 +1543,9 @@
   "static/meta-images/publications/privacy-best-practices.png": "6c38650bc1c85336801f4b7bb405ab8c",
   "static/images/privacy/best-practices-root.png": "8f31ef7ec59dd099834546515018138d",
   "static/meta-images/publications/governance-review-96.png": "b2d264b8bf681cc0490731c8d3a6f8b3",
-  "static/images/architecture/opstack-rollup-superchain-opfp-aggverifier.png": "e07158d2cca7b1a0aebc00621096615e",
+  "static/images/architecture/opstack-rollup-superchain-opfp-aggverifier.png": "316a1bf06c30b030d15e86c9be1e7ff7",
   "static/icons/lifi.png": "4c745d6e0e43e32b1b308b7658f747e4",
   "static/meta-images/interop/projects/lifi/opengraph-image.png": "25cd2851216e4952dcb559be0a58e523",
-  "static/meta-images/publications/monthly-update-2026-05.png": "5c9112aeb83cde02d01f7866977dd5b3"
+  "static/meta-images/publications/monthly-update-2026-05.png": "5c9112aeb83cde02d01f7866977dd5b3",
+  "static/images/state-validation/aggverifier.png": "f60cef34ba25ba4626ef1b62f73cc9be"
 }
