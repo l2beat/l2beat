@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xdaccaaa8528d91fdff496b3923db81d19ecb85a1
+
+# Diff at Tue, 02 Jun 2026 10:56:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778850530
+- current timestamp: 1780397664
+
+## Description
+
+Unichain Multisig 1 and Multisig 2 each rotated one signer.
+
+## Watched changes
+
+```diff
+    contract Unichain Multisig 2 (eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x5b5B0669De777AF0Eb7A73eD46AaEe9711ab01E4"
+      values.$members.2:
+-        "eth:0xFA361ece9724d75B7EdF08B9A238706EAe270d3f"
+    }
+```
+
+```diff
+    contract Unichain Multisig 1 (eth:0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xc8C31213545f32230E0327Db76df5538c2836081"
+      values.$members.2:
+-        "eth:0xf89C1b6e5D65e97c69fbc792f1BcdcB56DcCde91"
+    }
+```
+
 Generated with discovered.json: 0x24a469ac6bdd08a236ef4233c5651f9fff0391d7
 
 # Diff at Fri, 15 May 2026 13:11:11 GMT:

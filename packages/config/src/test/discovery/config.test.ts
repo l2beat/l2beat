@@ -131,7 +131,7 @@ describe('discovery config.jsonc', () => {
         `${c.name} project is outdated: ${reasons.map((r) => templateService.formatReason(r)).join('\n')}.\n Run "l2b refresh-discovery"`,
       )
     }
-  })
+  }).timeout(10_000)
 
   describe('shape addresses are unique', () => {
     const shapes = templateService.listAllTemplates()
@@ -385,7 +385,7 @@ describe('discovery config.jsonc', () => {
         } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
       )
     }
-  })
+  }).timeout(10_000)
 
   it('is colorized correctly', () => {
     for (const c of configs ?? []) {

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x9f32bfe92123317754e52ad3a4c4460394568990
+
+# Diff at Tue, 02 Jun 2026 13:23:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@63ce779d811ac540efbb445178f952fd5f075eb6 block: 1779964138
+- current timestamp: 1780406494
+
+## Description
+
+Staking vault unpaused.
+
+## Watched changes
+
+```diff
+    contract StakingVault (eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711) [tokens/Lido/StakingVault] {
+    +++ description: None
+      values.beaconChainDepositsPaused:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0xd1baa7a5b2a9300bcb204a8f92a641c704dbdb61
 
 # Diff at Thu, 28 May 2026 10:32:07 GMT:

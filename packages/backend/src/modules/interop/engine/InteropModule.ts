@@ -147,12 +147,21 @@ export function createInteropModule({
     aggregationConfigs: config.interop.aggregation
       ? config.interop.aggregation.configs
       : [],
+    aggregationEnabled: config.interop.aggregation !== false,
+    captureEnabled: config.interop.capture.enabled,
     getExplorerUrl: config.interop.dashboard.getExplorerUrl,
     getChainsForPlugin: (pluginName) =>
       syncersManager.getChainsForPlugin(pluginName),
     getPluginSyncStatuses: () => syncersManager.getPluginSyncStatuses(),
     getProcessorStatuses: () => getProcessorsStatus(processors),
     chains: config.interop.capture.chains,
+    cleanerEnabled: config.interop.cleaner,
+    compareEnabled: config.interop.compare.enabled,
+    configSync: config.interop.config,
+    dangerousOperationsEnabled: config.interop.dangerousOperationsEnabled,
+    dashboardEnabled: config.interop.dashboard.enabled,
+    financialsEnabled: config.interop.financials.enabled,
+    matchingEnabled: config.interop.matching,
     oneSidedChains: config.interop.oneSidedChains,
     tokenDbClient,
   })
@@ -181,7 +190,12 @@ export function createInteropModule({
     db,
     tokenDbClient,
     logger,
-    { analyzer: transferAnalyzer },
+    {
+      analyzer: transferAnalyzer,
+      notifier: notificationClient,
+      maxTokenPriceUsd: config.interop.financials.maxTokenPriceUsd,
+      maxTransferValueUsd: config.interop.financials.maxTransferValueUsd,
+    },
   )
 
   const relayApiClient = new RelayApiClient(new HttpClient())

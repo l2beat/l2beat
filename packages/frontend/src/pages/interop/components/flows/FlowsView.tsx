@@ -1,9 +1,10 @@
+import { useQuery } from '@tanstack/react-query'
 import partition from 'lodash/partition'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import type { InteropChainWithIcon } from '../chain-selector/types'
 import { MIN_SELECTED_CHAINS, MIN_SELECTED_PROTOCOLS } from './consts'
@@ -46,16 +47,19 @@ function FlowsViewContent({
   interopChains,
   protocols,
 }: Omit<FlowsViewProps, 'defaultSelectedChains'>) {
+  const trpc = useTRPC()
   const { highlightedChains, selectedChains, selectedProtocols } =
     useInteropFlows()
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
   const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
-  const { data, isLoading } = api.interop.flows.useQuery(
-    {
-      chains: selectedChains,
-      protocolIds: selectedProtocols,
-    },
-    { enabled: hasEnoughChains && hasEnoughProtocols },
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions(
+      {
+        chains: selectedChains,
+        protocolIds: selectedProtocols,
+      },
+      { enabled: hasEnoughChains && hasEnoughProtocols },
+    ),
   )
   const activeIds = new Set<string>([
     ...(data?.chainData ?? [])

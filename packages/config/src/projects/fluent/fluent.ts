@@ -73,12 +73,7 @@ export const fluent: ScalingProject = {
       ],
     },
   },
-  proofSystem: {
-    type: 'Optimistic',
-    name: 'SP1',
-    zkCatalogId: ProjectId('sp1turbo'),
-    challengeProtocol: 'Single-step',
-  },
+  proofSystem: undefined,
   stage: {
     stage: 'NotApplicable',
   },

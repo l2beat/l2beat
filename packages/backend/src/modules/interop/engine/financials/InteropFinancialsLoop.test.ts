@@ -4,6 +4,7 @@ import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropTransferAnalyzer } from '../InteropTransferAnalyzer'
+import type { InteropNotifier } from '../notifications/InteropNotifier'
 import { DeployedTokenId } from './DeployedTokenId'
 import { InteropFinancialsLoop } from './InteropFinancialsLoop'
 
@@ -118,7 +119,7 @@ describe(InteropFinancialsLoop.name, () => {
         getUnprocessed: mockFn().resolvesTo(mockTransfers),
         updateFinancials: mockFn().resolvesTo(undefined),
       })
-      const transaction = mockFn(async (fn: any) => await fn())
+      const transaction = mockFn(async (fn) => await fn())
       const db = mockObject<Database>({
         interopRecentPrices,
         interopTransfer,
@@ -207,7 +208,10 @@ describe(InteropFinancialsLoop.name, () => {
         db,
         tokenDb,
         Logger.SILENT,
-        { intervalMs: 1000 },
+        {
+          intervalMs: 1000,
+          maxTransferValueUsd: 1_000_000_000,
+        },
       )
 
       await service.run()
@@ -276,7 +280,7 @@ describe(InteropFinancialsLoop.name, () => {
         dstAbstractTokenId: '222222:ethereum:TOKEN',
         dstAmount: 200000000000,
         dstPrice: 50,
-        dstValueUsd: 10000000000000,
+        dstValueUsd: null,
       }
       expect(interopTransfer.updateFinancials).toHaveBeenCalledWith(
         'msg3',
@@ -317,7 +321,7 @@ describe(InteropFinancialsLoop.name, () => {
         getUnprocessed: mockFn().resolvesTo(mockTransfers),
         updateFinancials: mockFn().resolvesTo(undefined),
       })
-      const transaction = mockFn(async (fn: any) => await fn())
+      const transaction = mockFn(async (fn) => await fn())
       const db = mockObject<Database>({
         interopRecentPrices,
         interopTransfer,
@@ -467,6 +471,228 @@ describe(InteropFinancialsLoop.name, () => {
         dstAmount: 2,
         dstValueUsd: 4,
       })
+    })
+
+    it('skips valuation and notifies when price exceeds the configured threshold', async () => {
+      const srcToken = DeployedTokenId.from(
+        'ethereum',
+        EthereumAddress.random(),
+      )
+
+      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+        hasAnyPrices: mockFn().resolvesTo(true),
+        getClosestPrices: mockFn().resolvesTo(
+          new Map([['mega-token', 1_500_000]]),
+        ),
+      })
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getUnprocessed: mockFn().resolvesTo([
+          {
+            plugin: 'stargate',
+            transferId: 'msg1',
+            type: 'deposit',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
+            srcRawAmount: BigInt('1000000000000000000'),
+            dstChain: 'arbitrum',
+          },
+        ]),
+        updateFinancials: mockFn().resolvesTo(undefined),
+      })
+      const transaction = mockFn(async (fn) => await fn())
+      const db = mockObject<Database>({
+        interopRecentPrices,
+        interopTransfer,
+        transaction,
+      })
+
+      const tokenDb = mockObject<TokenDbClient>({
+        deployedTokens: {
+          getByChainAndAddress: {
+            query: mockFn().resolvesTo([
+              {
+                deployedToken: {
+                  chain: 'ethereum',
+                  address: DeployedTokenId.address(srcToken),
+                  symbol: 'MEGA',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: 'src-abstract-id',
+                  coingeckoId: 'mega-token',
+                  isPriceUnreliable: false,
+                },
+              },
+            ]),
+          },
+        },
+      } as any)
+      const notifier = mockObject<InteropNotifier>({
+        notifySkippedTransferValuations: mockFn().returns(undefined),
+      })
+
+      const service = new InteropFinancialsLoop(
+        [
+          { id: 'ethereum', type: 'evm' as const },
+          { id: 'arbitrum', type: 'evm' as const },
+        ],
+        db,
+        tokenDb,
+        Logger.SILENT,
+        {
+          notifier,
+          intervalMs: 1000,
+          maxTokenPriceUsd: 1_000_000,
+        },
+      )
+
+      await service.run()
+
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {
+        srcAbstractTokenId: 'src-abstract-id',
+        srcSymbol: 'MEGA',
+        srcPrice: 1_500_000,
+        srcAmount: 1,
+        srcValueUsd: null,
+        dstAbstractTokenId: null,
+        dstSymbol: null,
+        dstPrice: null,
+        dstAmount: null,
+        dstValueUsd: null,
+      })
+      expect(notifier.notifySkippedTransferValuations).toHaveBeenCalledTimes(1)
+      expect(notifier.notifySkippedTransferValuations).toHaveBeenCalledWith(
+        expect.anything(),
+        [
+          {
+            plugin: 'stargate',
+            type: 'deposit',
+            transferId: 'msg1',
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            side: 'src',
+            symbol: 'MEGA',
+            coingeckoId: 'mega-token',
+            priceUsd: 1_500_000,
+            amount: 1,
+            valueUsd: undefined,
+            reason: 'priceAboveThreshold',
+            thresholdUsd: 1_000_000,
+          },
+        ],
+      )
+    })
+
+    it('skips valuation and notifies when transfer value exceeds the configured threshold', async () => {
+      const dstToken = DeployedTokenId.from(
+        'arbitrum',
+        EthereumAddress.random(),
+      )
+
+      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+        hasAnyPrices: mockFn().resolvesTo(true),
+        getClosestPrices: mockFn().resolvesTo(
+          new Map([['whale-token', 20_000]]),
+        ),
+      })
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getUnprocessed: mockFn().resolvesTo([
+          {
+            plugin: 'stargate',
+            transferId: 'msg2',
+            type: 'deposit',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken)),
+            dstRawAmount: BigInt('100000000000000000000000'),
+          },
+        ]),
+        updateFinancials: mockFn().resolvesTo(undefined),
+      })
+      const transaction = mockFn(async (fn) => await fn())
+      const db = mockObject<Database>({
+        interopRecentPrices,
+        interopTransfer,
+        transaction,
+      })
+
+      const tokenDb = mockObject<TokenDbClient>({
+        deployedTokens: {
+          getByChainAndAddress: {
+            query: mockFn().resolvesTo([
+              {
+                deployedToken: {
+                  chain: 'arbitrum',
+                  address: DeployedTokenId.address(dstToken),
+                  symbol: 'WHALE',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: 'dst-abstract-id',
+                  coingeckoId: 'whale-token',
+                  isPriceUnreliable: false,
+                },
+              },
+            ]),
+          },
+        },
+      } as any)
+      const notifier = mockObject<InteropNotifier>({
+        notifySkippedTransferValuations: mockFn().returns(undefined),
+      })
+
+      const service = new InteropFinancialsLoop(
+        [
+          { id: 'ethereum', type: 'evm' as const },
+          { id: 'arbitrum', type: 'evm' as const },
+        ],
+        db,
+        tokenDb,
+        Logger.SILENT,
+        {
+          notifier,
+          intervalMs: 1000,
+          maxTransferValueUsd: 1_000_000_000,
+        },
+      )
+
+      await service.run()
+
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg2', {
+        srcAbstractTokenId: null,
+        srcSymbol: null,
+        srcPrice: null,
+        srcAmount: null,
+        srcValueUsd: null,
+        dstAbstractTokenId: 'dst-abstract-id',
+        dstSymbol: 'WHALE',
+        dstPrice: 20_000,
+        dstAmount: 100_000,
+        dstValueUsd: null,
+      })
+      expect(notifier.notifySkippedTransferValuations).toHaveBeenCalledTimes(1)
+      expect(notifier.notifySkippedTransferValuations).toHaveBeenCalledWith(
+        expect.anything(),
+        [
+          {
+            plugin: 'stargate',
+            type: 'deposit',
+            transferId: 'msg2',
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            side: 'dst',
+            symbol: 'WHALE',
+            coingeckoId: 'whale-token',
+            priceUsd: 20_000,
+            amount: 100_000,
+            valueUsd: 2_000_000_000,
+            reason: 'valueAboveThreshold',
+            thresholdUsd: 1_000_000_000,
+          },
+        ],
+      )
     })
 
     it('passes processed transfers to the analyzer after assigning financials', async () => {

@@ -1,10 +1,11 @@
+import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { useBackendApi } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { KnownAppsTable } from './table/KnownAppsTable'
 import type { KnownAppsRow } from './types'
 
@@ -22,9 +23,10 @@ function sortKnownAppsRows(rows: KnownAppsRow[]) {
 }
 
 export function KnownAppsPage() {
-  const api = useBackendApi()
-  const { data, error, isError, isLoading, isFetching, refetch } =
-    api.interop.knownApps.list.useQuery()
+  const trpc = useBackendTrpc()
+  const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
+    trpc.interop.knownApps.list.queryOptions(),
+  )
 
   const rows = sortKnownAppsRows(data ?? [])
   const totalApps = rows.reduce((sum, row) => sum + row.apps.length, 0)

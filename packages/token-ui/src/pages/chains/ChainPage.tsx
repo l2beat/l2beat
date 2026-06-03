@@ -1,4 +1,5 @@
 import type { ChainRecord } from '@l2beat/token-backend'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
@@ -13,14 +14,17 @@ import {
 import { ChainForm, ChainSchema } from '~/components/forms/ChainForm'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function ChainPage() {
+  const trpc = useTRPC()
   const { name } = useParams()
-  const { data } = api.chains.getByName.useQuery(name ?? '', {
-    enabled: name !== '',
-  })
+  const { data } = useQuery(
+    trpc.chains.getByName.queryOptions(name ?? '', {
+      enabled: name !== '',
+    }),
+  )
 
   if (!name || data === null) {
     return <Navigate to="/not-found" replace />
@@ -34,8 +38,9 @@ export function ChainPage() {
 }
 
 function ChainView({ chain }: { chain: ChainRecord }) {
+  const trpc = useTRPC()
+  const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const utils = api.useUtils()
   const form = useForm<ChainSchema>({
     resolver: validateResolver(ChainSchema),
     defaultValues: {
@@ -47,16 +52,18 @@ function ChainView({ chain }: { chain: ChainRecord }) {
     },
   })
 
-  const { mutate: updateChain, isPending: isUpdating } =
-    api.chains.update.useMutation({
-      onSuccess: (_: unknown, vars: { update: { name?: string } }) => {
+  const { mutate: updateChain, isPending: isUpdating } = useMutation(
+    trpc.chains.update.mutationOptions({
+      onSuccess: (_, vars) => {
         toast.success('Chain updated successfully')
-        utils.chains.getAll.invalidate()
+        queryClient.invalidateQueries(trpc.chains.getAll.queryFilter())
         // If name changed, navigate to new URL
         if (vars.update.name && vars.update.name !== chain.name) {
           navigate(`/chains/${vars.update.name}`)
         } else {
-          utils.chains.getByName.invalidate(chain.name)
+          queryClient.invalidateQueries(
+            trpc.chains.getByName.queryFilter(chain.name),
+          )
         }
         const values = form.getValues()
         form.reset(values)
@@ -64,19 +71,21 @@ function ChainView({ chain }: { chain: ChainRecord }) {
       onError: (error: { message?: string }) => {
         toast.error(error.message || 'Failed to update chain')
       },
-    })
+    }),
+  )
 
-  const { mutate: deleteChain, isPending: isDeleting } =
-    api.chains.delete.useMutation({
+  const { mutate: deleteChain, isPending: isDeleting } = useMutation(
+    trpc.chains.delete.mutationOptions({
       onSuccess: () => {
         toast.success('Chain deleted successfully')
-        utils.chains.getAll.invalidate()
+        queryClient.invalidateQueries(trpc.chains.getAll.queryFilter())
         navigate('/chains')
       },
       onError: (error: { message?: string }) => {
         toast.error(error.message || 'Failed to delete chain')
       },
-    })
+    }),
+  )
 
   return (
     <div className="mx-auto flex w-full max-w-3xl gap-2">
