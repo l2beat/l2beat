@@ -24,6 +24,7 @@ const UNKNOWN_TOKEN_SYMBOL = 'Unknown'
 
 export async function getInteropProtocolTransfers({
   id,
+  protocolIds,
   from,
   to,
   type,
@@ -43,22 +44,28 @@ export async function getInteropProtocolTransfers({
     return getMockInteropTransfers({ from, to })
   }
 
-  const interopProject = await ps.getProject({
-    id,
-    select: ['interopConfig'],
-  })
-  if (!interopProject?.interopConfig) {
+  // Either a single protocol (`id`) or a set of protocols (`protocolIds`).
+  const ids = id ? [id] : (protocolIds ?? [])
+  if (ids.length === 0) {
+    return { items: [], nextCursor: undefined }
+  }
+  const idSet = new Set(ids.map((value) => value.toString()))
+  const interopProjects = (
+    await ps.getProjects({ select: ['interopConfig'] })
+  ).filter((project) => idSet.has(project.id.toString()))
+  if (interopProjects.length === 0) {
     return {
       items: [],
       nextCursor: undefined,
     }
   }
 
+  const allPlugins = interopProjects.flatMap(
+    (project) => project.interopConfig.plugins,
+  )
   const plugins = type
-    ? interopProject.interopConfig.plugins.filter(
-        (plugin) => plugin.bridgeType === type,
-      )
-    : interopProject.interopConfig.plugins
+    ? allPlugins.filter((plugin) => plugin.bridgeType === type)
+    : allPlugins
   if (plugins.length === 0) {
     return {
       items: [],

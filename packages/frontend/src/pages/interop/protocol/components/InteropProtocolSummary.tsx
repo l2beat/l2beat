@@ -99,7 +99,7 @@ export function InteropProtocolSummary({
         />
       </div>
       <HorizontalSeparator className="my-4" />
-      <InteropTransferSizeBreakdown protocolData={protocolData} />
+      <InteropTransferSizeBreakdown transferSize={protocolData.transferSize} />
       <HorizontalSeparator className="my-4" />
       <InteropTransferTypeBreakdown protocolData={protocolData} />
       {protocol.header.description && (

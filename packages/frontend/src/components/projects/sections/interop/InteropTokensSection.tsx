@@ -21,7 +21,6 @@ import {
   type TokenRow,
 } from '~/pages/interop/components/tokens/columns'
 import type { InteropSelection } from '~/pages/interop/utils/types'
-import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { useTRPC } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -30,15 +29,16 @@ const TOKENS_PER_PAGE = 6
 const ALL_TOKENS_LIMIT = 10_000
 
 export interface InteropTokensSectionProps extends ProjectSectionProps {
-  projectId: ProjectId
+  /** A single protocol, or `protocolIds` for a selection. */
+  projectId?: ProjectId
+  protocolIds?: string[]
   apiSelection: InteropSelection
-  data: InteropProtocolDashboardData
 }
 
 export function InteropTokensSection({
   projectId,
+  protocolIds,
   apiSelection,
-  data,
   ...sectionProps
 }: InteropTokensSectionProps) {
   const trpc = useTRPC()
@@ -47,10 +47,14 @@ export function InteropTokensSection({
       {
         ...apiSelection,
         id: projectId,
+        protocolIds,
         limit: ALL_TOKENS_LIMIT,
       },
       {
-        enabled: !!data.entry,
+        enabled:
+          apiSelection.from.length > 0 &&
+          apiSelection.to.length > 0 &&
+          (!!projectId || (protocolIds?.length ?? 0) > 0),
       },
     ),
   )

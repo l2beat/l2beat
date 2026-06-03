@@ -23,6 +23,7 @@ import type { ProtocolDisplayable } from '~/server/features/scaling/interop/type
 import { useTRPC } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
+import { BridgeFlowStats } from './BridgeFlowStats'
 import { ExploreInteropButton } from './ExploreInteropButton'
 import { InteropBridgeSubsections } from './InteropBridgeSubsections'
 
@@ -124,22 +125,12 @@ function Content({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col justify-between gap-3 md:flex-row md:items-start">
-        <div className="flex flex-col gap-3 md:flex-row md:items-start">
-          <FlowsChainsSelector allChains={interopChains} />
-          <FlowsProtocolsSelector
-            allProtocols={protocols}
-            canonicalProtocolId={canonicalProtocolId}
-          />
-        </div>
-        {!isLoading && data && (
-          <FlowsParticleLegend
-            layout="inline"
-            className="justify-end text-right text-label-value-13"
-            totalVolume={data.stats.totalVolume}
-            dollarsPerParticle={dollarsPerParticle}
-          />
-        )}
+      <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:items-start">
+        <FlowsChainsSelector allChains={interopChains} />
+        <FlowsProtocolsSelector
+          allProtocols={protocols}
+          canonicalProtocolId={canonicalProtocolId}
+        />
       </div>
       <div className="flex h-full min-w-0 flex-col">
         <div className="group/flows flex h-full w-full min-w-0 flex-col items-center gap-10 pb-4">
@@ -152,6 +143,14 @@ function Content({
             topChainId={defaultStatsChainId}
           />
         </div>
+        {!isLoading && data && (
+          <FlowsParticleLegend
+            layout="inline"
+            className="mt-2 justify-center text-center text-label-value-13"
+            totalVolume={data.stats.totalVolume}
+            dollarsPerParticle={dollarsPerParticle}
+          />
+        )}
         {shouldRenderInactiveChainsInfo && (
           <div className="mt-3 flex min-h-6 w-full items-center justify-center gap-1 pt-1 max-lg:order-2">
             {shouldShowInactiveChainsInfo ? (
@@ -167,36 +166,44 @@ function Content({
           </div>
         )}
       </div>
-      <div className="rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
-        <div className="mb-3 font-bold text-label-value-12 text-secondary uppercase">
-          {hasRouteSelection ? 'Route stats' : 'Chain stats'}
+      {singleProtocolId ? (
+        data && (
+          <BridgeFlowStats
+            data={data}
+            chainId={statsChainA}
+            protocolName={
+              protocols.find((p) => p.id === singleProtocolId)?.name ?? 'Bridge'
+            }
+          />
+        )
+      ) : (
+        <div className="rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
+          <div className="mb-3 font-bold text-label-value-12 text-secondary uppercase">
+            {hasRouteSelection ? 'Route stats' : 'Chain stats'}
+          </div>
+          <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 lg:[&>*:first-child]:row-span-3 lg:[&>*]:col-span-2">
+            {hasRouteSelection ? (
+              <MultipleChainsStats
+                chainIdA={statsChainA}
+                chainIdB={statsChainB}
+                selectedChains={selectedChains}
+                linkTopProtocols
+              />
+            ) : (
+              <SingleChainStats
+                chainId={statsChainA}
+                selectedChains={selectedChains}
+                linkTopProtocols
+              />
+            )}
+          </div>
         </div>
-        <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 lg:[&>*:first-child]:row-span-3 lg:[&>*]:col-span-2">
-          {hasRouteSelection ? (
-            <MultipleChainsStats
-              chainIdA={statsChainA}
-              chainIdB={statsChainB}
-              selectedChains={selectedChains}
-              linkTopProtocols
-              hideTopProtocols={!!singleProtocolId}
-            />
-          ) : (
-            <SingleChainStats
-              chainId={statsChainA}
-              selectedChains={selectedChains}
-              linkTopProtocols
-              hideTopProtocols={!!singleProtocolId}
-            />
-          )}
-        </div>
-      </div>
-      {singleProtocolId && (
-        <InteropBridgeSubsections
-          protocolId={singleProtocolId}
-          selectedChains={selectedChains}
-          interopChains={interopChains}
-        />
       )}
+      <InteropBridgeSubsections
+        protocolIds={selectedProtocols}
+        selectedChains={selectedChains}
+        interopChains={interopChains}
+      />
     </div>
   )
 }

@@ -55,6 +55,9 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
         !props.nested &&
           'border-t-branding-primary md:group-data-[has-colors=true]/section-wrapper:border-t-4',
         props.nested && 'mt-10 p-0 md:p-0',
+        // Collapsible (sub)sections read as bordered cards inside their parent.
+        props.collapsible &&
+          'mt-0 rounded-lg border border-divider p-4 md:mt-0 md:p-4',
         props.className,
       )}
       asChild

@@ -1,96 +1,43 @@
-import { ProjectId } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import { EM_DASH } from '~/consts/characters'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
-import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
-import { InteropTopPathValue } from '~/pages/interop/components/InteropTopPathValue'
-import { AvgDurationCell } from '~/pages/interop/components/table/AvgDurationCell'
-import {
-  InteropSummaryStat,
-  InteropTransferSizeBreakdown,
-  InteropTransferTypeBreakdown,
-} from '~/pages/interop/protocol/components/InteropSummaryParts'
+import { InteropTransferSizeBreakdown } from '~/pages/interop/protocol/components/InteropSummaryParts'
 import { useTRPC } from '~/trpc/React'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { ProjectSection } from '../ProjectSection'
 import { InteropTokensSection } from './InteropTokensSection'
 import { InteropTransfersSection } from './InteropTransfersSection'
 
 /**
- * Bridge-specific detail for the single selected protocol, shown as collapsible
- * subsections (collapsed by default) inside the "Volume and flows" section.
+ * Detail for the current protocol + chain selection, shown within the "Volume
+ * and flows" section: the aggregate transfer-size breakdown inline, plus the
+ * Top tokens and Transfers tables as collapsible (card) subsections. Always
+ * rendered — the data reflects the selected protocols and chains.
  */
 export function InteropBridgeSubsections({
-  protocolId,
+  protocolIds,
   selectedChains,
   interopChains,
 }: {
-  protocolId: string
+  protocolIds: string[]
   selectedChains: string[]
   interopChains: InteropChainWithIcon[]
 }) {
   const trpc = useTRPC()
   const apiSelection = { from: selectedChains, to: selectedChains }
   const { data } = useQuery(
-    trpc.interop.protocol.queryOptions({
-      id: protocolId,
-      ...apiSelection,
-    }),
+    trpc.interop.selectionDetails.queryOptions(
+      { ...apiSelection, protocolIds },
+      {
+        enabled: protocolIds.length > 0 && selectedChains.length > 0,
+      },
+    ),
   )
 
-  if (!data?.entry) return null
-
-  const projectId = ProjectId(protocolId)
+  if (protocolIds.length === 0) return null
 
   return (
-    <div className="flex flex-col">
-      <ProjectSection
-        as="div"
-        id="interop-volume"
-        title="Bridge summary"
-        sectionOrder={undefined}
-        nested
-        collapsible
-      >
-        <div className="flex flex-col gap-4">
-          <div className="grid gap-x-8 gap-y-4 max-md:grid-cols-1 md:grid-cols-3">
-            <InteropSummaryStat
-              title="Last 24h top path"
-              value={
-                data.topPath ? (
-                  <InteropTopPathValue path={data.topPath} />
-                ) : (
-                  EM_DASH
-                )
-              }
-            />
-            <InteropSummaryStat
-              title="Last 24h avg. transfer time"
-              value={
-                data.entry.averageDuration ? (
-                  <AvgDurationCell
-                    className="font-bold text-label-value-16"
-                    splitClassName="flex-row text-label-value-16 font-bold"
-                    averageDuration={data.entry.averageDuration}
-                  />
-                ) : (
-                  <InteropNoDataBadge size="extraSmall" />
-                )
-              }
-            />
-            <InteropSummaryStat
-              title="Last 24h avg. transfer value"
-              value={
-                data.entry.averageValue
-                  ? formatCurrency(data.entry.averageValue, 'usd')
-                  : EM_DASH
-              }
-            />
-          </div>
-          <InteropTransferSizeBreakdown protocolData={data} />
-          <InteropTransferTypeBreakdown protocolData={data} />
-        </div>
-      </ProjectSection>
+    <div className="flex flex-col gap-4">
+      <div className="rounded-lg border border-divider bg-surface-primary px-4 pt-2.5 pb-4">
+        <InteropTransferSizeBreakdown transferSize={data?.transferSize} />
+      </div>
 
       <InteropTokensSection
         as="div"
@@ -99,9 +46,8 @@ export function InteropBridgeSubsections({
         sectionOrder={undefined}
         nested
         collapsible
-        projectId={projectId}
+        protocolIds={protocolIds}
         apiSelection={apiSelection}
-        data={data}
       />
 
       <InteropTransfersSection
@@ -111,9 +57,9 @@ export function InteropBridgeSubsections({
         sectionOrder={undefined}
         nested
         collapsible
-        projectId={projectId}
+        protocolIds={protocolIds}
         apiSelection={apiSelection}
-        data={data}
+        snapshotTimestamp={data?.snapshotTimestamp}
         interopChains={interopChains}
       />
     </div>

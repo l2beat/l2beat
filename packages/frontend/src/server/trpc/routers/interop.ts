@@ -2,6 +2,7 @@ import { getInteropDashboardData } from '~/server/features/scaling/interop/getIn
 import { getInteropFlows } from '~/server/features/scaling/interop/getInteropFlows'
 import { getInteropProtocolData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { getInteropProtocolTransfers } from '~/server/features/scaling/interop/getInteropProtocolTransfers'
+import { getInteropSelectionDetails } from '~/server/features/scaling/interop/getInteropSelectionDetails'
 import { getInteropTokenData } from '~/server/features/scaling/interop/getInteropTokenData'
 import { getInteropTokensInfinite } from '~/server/features/scaling/interop/getInteropTokens'
 import { getInteropTokensPairsInfinite } from '~/server/features/scaling/interop/getInteropTokensPairs'
@@ -12,6 +13,7 @@ import {
   InteropFlowsParams,
   InteropProtocolParams,
   InteropProtocolTransfersParams,
+  InteropSelectionDetailsParams,
   InteropSelectionInput,
   InteropTokenParams,
   InteropTokenTransfersParams,
@@ -26,6 +28,9 @@ export const interopRouter = router({
   protocol: procedure
     .input(InteropProtocolParams)
     .query(({ input }) => getInteropProtocolData(input)),
+  selectionDetails: procedure
+    .input(InteropSelectionDetailsParams)
+    .query(({ input }) => getInteropSelectionDetails(input)),
   tokenDashboard: procedure
     .input(InteropTokenParams)
     .query(({ input }) => getInteropTokenData(input)),

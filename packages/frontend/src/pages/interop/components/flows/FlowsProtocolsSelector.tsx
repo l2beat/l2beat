@@ -49,15 +49,24 @@ export function FlowsProtocolsSelector({
     selectedProtocols.length === 1 &&
     selectedProtocols[0] === canonicalProtocolId
 
-  const protocolsWithDetails = allProtocols.map(
-    ({ id, name, iconUrl, slug }) => ({
+  const canonicalProtocol = hasCanonical
+    ? allProtocols.find((p) => p.id === canonicalProtocolId)
+    : undefined
+
+  const protocolsWithDetails = allProtocols
+    .map(({ id, name, iconUrl, slug }) => ({
       id,
       name,
       iconUrl,
       slug,
       isSelected: selectedProtocols.includes(id),
-    }),
-  )
+    }))
+    // Surface the chain's own canonical bridge at the top of the list.
+    .sort(
+      (a, b) =>
+        Number(b.id === canonicalProtocolId) -
+        Number(a.id === canonicalProtocolId),
+    )
 
   const selectedProtocolsWithDetails = protocolsWithDetails.filter(
     (protocol) => protocol.isSelected,
@@ -78,7 +87,7 @@ export function FlowsProtocolsSelector({
   ) : null
 
   const trigger = (
-    <div className="flex h-9.5 items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-primary! p-2">
+    <div className="flex h-9.5 shrink-0 items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-primary! p-2">
       <span className="rounded-full bg-pink-900 px-2 py-[3px] font-semibold text-white text-xs leading-none">{`${selectedProtocols.length}/${allProtocols.length}`}</span>
       <span className="font-bold text-lg leading-none">Protocols</span>
       <div className="flex items-center gap-1 max-md:hidden lg:max-xl:hidden">
@@ -120,21 +129,45 @@ export function FlowsProtocolsSelector({
       >
         Deselect all
       </button>
-      {hasCanonical && canonicalProtocolId && (
-        <button
-          type="button"
-          onClick={() => setSelectedProtocols([canonicalProtocolId])}
-          disabled={onlyCanonicalSelected}
-          className="ml-auto w-fit cursor-pointer font-medium text-brand text-label-value-15 underline disabled:cursor-not-allowed disabled:text-secondary"
-        >
-          Canonical bridge only
-        </button>
-      )}
     </div>
   )
 
   return (
-    <div className="flex items-start gap-1 max-md:w-full max-md:flex-col md:items-center md:gap-3">
+    <div className="flex items-start gap-1 max-md:w-full max-md:flex-col md:items-center md:gap-2">
+      {/* Direct "Canonical bridge" shortcut, sitting next to the selector. */}
+      {hasCanonical && canonicalProtocolId && (
+        <button
+          type="button"
+          onClick={() => {
+            if (onlyCanonicalSelected) {
+              selectAllProtocols()
+              return
+            }
+            setSelectedProtocols([canonicalProtocolId])
+            // Anchor the URL to the Volume & flows section (sets the hash and
+            // scrolls there) so the selected-bridge link is shareable.
+            if (typeof window !== 'undefined') {
+              window.location.hash = 'interop-flows'
+            }
+          }}
+          aria-pressed={onlyCanonicalSelected}
+          className={cn(
+            'flex h-9.5 shrink-0 items-center gap-2 rounded-lg border py-2 pr-4 pl-2 font-bold text-sm leading-none transition-colors max-md:w-full md:order-2',
+            onlyCanonicalSelected
+              ? 'border-brand text-brand'
+              : 'border-divider bg-surface-primary! hover:bg-surface-secondary',
+          )}
+        >
+          {canonicalProtocol?.iconUrl && (
+            <img
+              src={canonicalProtocol.iconUrl}
+              alt=""
+              className="size-5 rounded-full bg-white"
+            />
+          )}
+          Canonical bridge
+        </button>
+      )}
       {/* Mobile */}
       <Drawer>
         <DrawerTrigger className="w-full md:hidden">{trigger}</DrawerTrigger>
@@ -222,6 +255,7 @@ function ProtocolRow({
       name={protocol.name}
       className={cn(
         'flex h-10 w-full flex-row-reverse items-center justify-between py-2.5 hover:bg-surface-secondary',
+        isCanonical && 'rounded-md bg-surface-secondary',
         rowClassName,
       )}
       checked={protocol.isSelected}
@@ -229,13 +263,18 @@ function ProtocolRow({
     >
       <div className="flex items-center gap-2">
         <img src={protocol.iconUrl} alt={protocol.name} className="size-4" />
-        <a
-          href={`/interop/protocols/${protocol.slug}`}
-          className="group inline-flex items-center gap-1"
-        >
+        {isCanonical ? (
+          // Canonical bridge detail is part of this very section — no link out.
           <span className={nameClassName}>{protocol.name}</span>
-          <ArrowRightIcon className="size-3 shrink-0 fill-brand opacity-0 transition-opacity group-hover:opacity-100" />
-        </a>
+        ) : (
+          <a
+            href={`/interop/protocols/${protocol.slug}`}
+            className="group inline-flex items-center gap-1"
+          >
+            <span className={nameClassName}>{protocol.name}</span>
+            <ArrowRightIcon className="size-3 shrink-0 fill-brand opacity-0 transition-opacity group-hover:opacity-100" />
+          </a>
+        )}
         {isCanonical && (
           <span className="rounded bg-surface-secondary px-1.5 py-0.5 font-medium text-2xs text-secondary uppercase leading-none">
             Canonical

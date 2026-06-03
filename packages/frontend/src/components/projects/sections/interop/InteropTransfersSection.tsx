@@ -18,7 +18,6 @@ import {
   type TransferRow,
 } from '~/pages/interop/components/table/transfer-count-cell/columns'
 import type { InteropSelection } from '~/pages/interop/utils/types'
-import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from '../ProjectSection'
@@ -28,21 +27,23 @@ import { ChainMultiSelect } from './ChainMultiSelect'
 const TRANSFERS_PER_PAGE = 8
 
 export interface InteropTransfersSectionProps extends ProjectSectionProps {
-  projectId: ProjectId
+  /** A single protocol, or `protocolIds` for a selection. */
+  projectId?: ProjectId
+  protocolIds?: string[]
   apiSelection: InteropSelection
-  data: InteropProtocolDashboardData
+  snapshotTimestamp: number | undefined
   interopChains: InteropChainWithIcon[]
 }
 
 export function InteropTransfersSection({
   projectId,
+  protocolIds,
   apiSelection,
-  data,
+  snapshotTimestamp,
   interopChains,
   ...sectionProps
 }: InteropTransfersSectionProps) {
   const trpc = useTRPC()
-  const entry = data.entry
 
   const [selectedFrom, setSelectedFrom] = useState<string[]>(apiSelection.from)
   const [selectedTo, setSelectedTo] = useState<string[]>(apiSelection.to)
@@ -59,13 +60,14 @@ export function InteropTransfersSection({
         from: selectedFrom,
         to: selectedTo,
         id: projectId,
-        snapshotTimestamp: entry?.snapshotTimestamp ?? 0,
+        protocolIds,
+        snapshotTimestamp: snapshotTimestamp ?? 0,
         limit: TRANSFERS_PER_PAGE,
       },
       {
         enabled:
-          !!entry?.snapshotTimestamp &&
-          (entry?.transferCount ?? 0) > 0 &&
+          !!snapshotTimestamp &&
+          (!!projectId || (protocolIds?.length ?? 0) > 0) &&
           selectedFrom.length > 0 &&
           selectedTo.length > 0,
         getNextPageParam: (lastPage) => lastPage.nextCursor,

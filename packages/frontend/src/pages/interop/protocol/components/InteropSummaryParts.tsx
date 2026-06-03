@@ -37,33 +37,33 @@ export function InteropSummaryStat({
 }
 
 export function InteropTransferSizeBreakdown({
-  protocolData,
+  transferSize,
 }: {
-  protocolData: InteropProtocolDashboardData
+  transferSize: TransferSizeDataPoint | undefined
 }) {
   const breakdownValues = [
     {
-      value: protocolData?.transferSize?.countUnder100 ?? 0,
+      value: transferSize?.countUnder100 ?? 0,
       label: transferSizeBuckets.under100.label,
       style: { backgroundColor: transferSizeBuckets.under100.color },
     },
     {
-      value: protocolData?.transferSize?.count100To1K ?? 0,
+      value: transferSize?.count100To1K ?? 0,
       label: transferSizeBuckets.from100To1K.label,
       style: { backgroundColor: transferSizeBuckets.from100To1K.color },
     },
     {
-      value: protocolData?.transferSize?.count1KTo10K ?? 0,
+      value: transferSize?.count1KTo10K ?? 0,
       label: transferSizeBuckets.from1KTo10K.label,
       style: { backgroundColor: transferSizeBuckets.from1KTo10K.color },
     },
     {
-      value: protocolData?.transferSize?.count10KTo100K ?? 0,
+      value: transferSize?.count10KTo100K ?? 0,
       label: transferSizeBuckets.from10KTo100K.label,
       style: { backgroundColor: transferSizeBuckets.from10KTo100K.color },
     },
     {
-      value: protocolData?.transferSize?.countOver100K ?? 0,
+      value: transferSize?.countOver100K ?? 0,
       label: transferSizeBuckets.over100K.label,
       style: { backgroundColor: transferSizeBuckets.over100K.color },
     },
@@ -72,7 +72,7 @@ export function InteropTransferSizeBreakdown({
   return (
     <div>
       <span className="font-medium text-paragraph-12 text-secondary">
-        Protocol transfer size
+        Transfer size
       </span>
       <Tooltip>
         <TooltipTrigger asChild>
@@ -96,7 +96,7 @@ export function InteropTransferSizeBreakdown({
         <TooltipContent fitContent>
           <TransferSizeTooltipContent
             breakdownValues={breakdownValues}
-            transferSize={protocolData?.transferSize}
+            transferSize={transferSize}
           />
         </TooltipContent>
       </Tooltip>

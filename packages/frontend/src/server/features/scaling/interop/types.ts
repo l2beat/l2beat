@@ -87,6 +87,14 @@ export const InteropProtocolParams = v.object({
   ...InteropSelectionInputShape,
 })
 
+export type InteropSelectionDetailsParams = v.infer<
+  typeof InteropSelectionDetailsParams
+>
+export const InteropSelectionDetailsParams = v.object({
+  ...InteropSelectionInputShape,
+  protocolIds: v.array(v.string()),
+})
+
 export type InteropTokenParams = v.infer<typeof InteropTokenParams>
 export const InteropTokenParams = v.object({
   tokenId: v.string(),
@@ -144,7 +152,11 @@ export const InteropProtocolTransfersCursor = v.object({
   transferId: v.string(),
 })
 export const InteropProtocolTransfersParams = v.object({
-  id: v.string().transform((value) => ProjectId(value)),
+  id: v
+    .string()
+    .transform((value) => ProjectId(value))
+    .optional(),
+  protocolIds: v.array(v.string()).optional(),
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
   tokenId: v.string().optional(),

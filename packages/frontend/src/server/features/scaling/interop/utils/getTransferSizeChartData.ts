@@ -27,6 +27,69 @@ type TransferSizeDataPointAccumulated = TransferSizeDataPoint & {
   identifiedCount: number
 }
 
+/** Single transfer-size distribution aggregated across all given records
+ * (regardless of protocol), for a chain/protocol selection. */
+export function aggregateTransferSize(
+  records: AggregatedInteropTransferRecord[],
+): TransferSizeDataPoint | undefined {
+  if (records.length === 0) return undefined
+
+  let countUnder100 = 0
+  let count100To1K = 0
+  let count1KTo10K = 0
+  let count10KTo100K = 0
+  let countOver100K = 0
+  let minTransferValueUsd: number | undefined
+  let maxTransferValueUsd: number | undefined
+  let totalValueUsd = 0
+  let identifiedCount = 0
+
+  for (const record of records) {
+    countUnder100 += record.countUnder100
+    count100To1K += record.count100To1K
+    count1KTo10K += record.count1KTo10K
+    count10KTo100K += record.count10KTo100K
+    countOver100K += record.countOver100K
+    if (record.minTransferValueUsd !== undefined) {
+      minTransferValueUsd =
+        minTransferValueUsd !== undefined
+          ? Math.min(minTransferValueUsd, record.minTransferValueUsd)
+          : record.minTransferValueUsd
+    }
+    if (record.maxTransferValueUsd !== undefined) {
+      maxTransferValueUsd =
+        maxTransferValueUsd !== undefined
+          ? Math.max(maxTransferValueUsd, record.maxTransferValueUsd)
+          : record.maxTransferValueUsd
+    }
+    totalValueUsd += getInteropTransferValue(record) ?? 0
+    identifiedCount += record.identifiedCount
+  }
+
+  const total =
+    countUnder100 + count100To1K + count1KTo10K + count10KTo100K + countOver100K
+  if (total === 0) return undefined
+
+  return {
+    name: '',
+    iconUrl: '',
+    countUnder100,
+    percentageUnder100: round((countUnder100 / total) * 100, 2),
+    count100To1K,
+    percentage100To1K: round((count100To1K / total) * 100, 2),
+    count1KTo10K,
+    percentage1KTo10K: round((count1KTo10K / total) * 100, 2),
+    count10KTo100K,
+    percentage10KTo100K: round((count10KTo100K / total) * 100, 2),
+    countOver100K,
+    percentageOver100K: round((countOver100K / total) * 100, 2),
+    minTransferValueUsd,
+    maxTransferValueUsd,
+    averageTransferSizeUsd:
+      identifiedCount > 0 ? totalValueUsd / identifiedCount : undefined,
+  }
+}
+
 export function getTransferSizeChartData(
   records: AggregatedInteropTransferRecord[],
   interopProjects: Project<'interopConfig'>[],

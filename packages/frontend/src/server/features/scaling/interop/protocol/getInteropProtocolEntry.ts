@@ -103,7 +103,6 @@ export async function getInteropProtocolEntry(
         projectId: project.id,
         title: 'Top tokens by volume',
         apiSelection,
-        data,
       },
     })
 
@@ -114,7 +113,7 @@ export async function getInteropProtocolEntry(
         projectId: project.id,
         title: 'Transfers',
         apiSelection,
-        data,
+        snapshotTimestamp: data.entry?.snapshotTimestamp,
         interopChains: sortedChains,
       },
     })
