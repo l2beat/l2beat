@@ -690,3 +690,10 @@ model AggregatedInteropTokensPair {
   @@id([timestamp, srcChain, dstChain, bridgeType, id, tokenA, tokenB])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
 }
+
+model AppState {
+  key       String   @id @db.VarChar(255)
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+  updatedBy String   @db.VarChar(255)
+}

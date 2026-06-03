@@ -1,5 +1,6 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/ThroughputSectionChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
@@ -10,7 +11,7 @@ import {
   IncludeScalingOnlyProvider,
   useIncludeScalingOnly,
 } from '~/pages/data-availability/throughput/components/DaThroughputContext'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
 import { optionToRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
@@ -75,12 +76,15 @@ function ThroughputChartStats({
     isSynced: boolean
   }
 }) {
+  const trpc = useTRPC()
   const { includeScalingOnly } = useIncludeScalingOnly()
-  const { data, isLoading } = api.da.projectCharts.useQuery({
-    range: optionToRange('1y'),
-    projectId,
-    includeScalingOnly,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.da.projectCharts.queryOptions({
+      range: optionToRange('1y'),
+      projectId,
+      includeScalingOnly,
+    }),
+  )
 
   return (
     <ChartStats>

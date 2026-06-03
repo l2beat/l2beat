@@ -40,7 +40,7 @@ export type ProjectDaThroughputChartDataParams = v.infer<
 
 export async function getProjectDaThroughputChartData(
   params: ProjectDaThroughputChartDataParams,
-): Promise<ProjectDaThroughputChartData | undefined> {
+): Promise<ProjectDaThroughputChartData | null> {
   if (env.MOCK) {
     return getMockProjectDaThroughputChartData(params)
   }
@@ -54,7 +54,7 @@ export async function getProjectDaThroughputChartData(
     : throughputTable.data[params.projectId]
 
   if (!chartData || chartData.chart.length === 0 || !projectData) {
-    return undefined
+    return null
   }
 
   return {

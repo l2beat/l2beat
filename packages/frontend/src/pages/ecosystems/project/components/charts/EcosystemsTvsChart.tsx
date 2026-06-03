@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
@@ -28,7 +29,7 @@ import type {
   EcosystemEntry,
   EcosystemMilestone,
 } from '~/server/features/ecosystems/getEcosystemEntry'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartRange } from '~/utils/range/range'
@@ -52,21 +53,24 @@ export function EcosystemsTvsChart({
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
 }) {
+  const trpc = useTRPC()
   const [unit, setUnit] = useState<ChartUnit>('usd')
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
   const {
     display: { excludeRwaRestrictedTokens },
   } = useEcosystemDisplayControlsContext()
 
-  const { data, isLoading } = api.tvs.chart.useQuery({
-    range,
-    excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens,
-    filter: {
-      type: 'projects',
-      projectIds: entries.map((project) => project.id).toSorted(),
-    },
-  })
+  const { data, isLoading } = useQuery(
+    trpc.tvs.chart.queryOptions({
+      range,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens,
+      filter: {
+        type: 'projects',
+        projectIds: entries.map((project) => project.id).toSorted(),
+      },
+    }),
+  )
 
   const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(
     ([timestamp, native, canonical, external, ethPrice]) => {

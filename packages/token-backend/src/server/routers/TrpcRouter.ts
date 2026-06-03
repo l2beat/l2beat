@@ -76,6 +76,7 @@ function getLogFn(error: TRPCError) {
     case 'BAD_GATEWAY':
     case 'SERVICE_UNAVAILABLE':
     case 'GATEWAY_TIMEOUT':
+    case 'PAYMENT_REQUIRED':
     case 'FORBIDDEN':
     case 'NOT_FOUND':
     case 'METHOD_NOT_SUPPORTED':
@@ -85,6 +86,7 @@ function getLogFn(error: TRPCError) {
     case 'PAYLOAD_TOO_LARGE':
     case 'UNSUPPORTED_MEDIA_TYPE':
     case 'UNPROCESSABLE_CONTENT':
+    case 'PRECONDITION_REQUIRED':
     case 'TOO_MANY_REQUESTS':
     case 'CLIENT_CLOSED_REQUEST':
       return logger.error

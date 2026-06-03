@@ -1,19 +1,21 @@
+import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { useBackendApi } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { TrackedTxsStatusTable } from './table/TrackedTxsStatusTable'
 import type { TrackedTxsStatusRow } from './types'
 
 export function TrackedTxsStatusPage() {
-  const api = useBackendApi()
-  const { data, error, isError, isLoading, isFetching, refetch } =
-    api.trackedTxs.status.configs.useQuery(undefined, {
+  const trpc = useBackendTrpc()
+  const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
+    trpc.trackedTxs.status.configs.queryOptions(undefined, {
       refetchInterval: 3600_000,
-    })
+    }),
+  )
 
   const rows: TrackedTxsStatusRow[] = data ?? []
   const missingCount = rows.filter((row) => row.status === 'missing').length

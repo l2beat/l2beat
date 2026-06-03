@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x21cb3e7cc2e5f5d3a0cf6b096eb85b78f65e2e0a
+
+# Diff at Tue, 02 Jun 2026 13:03:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@63ce779d811ac540efbb445178f952fd5f075eb6 block: 1777451710
+- current timestamp: 1780405336
+
+## Description
+
+Conduit ms changes.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853"
+      values.$members.8:
+-        "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
 Generated with discovered.json: 0xb8fd7c296f689407dc873a8f885933b56ba1f447
 
 # Diff at Fri, 08 May 2026 07:51:20 GMT:

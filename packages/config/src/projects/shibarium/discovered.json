@@ -282,23 +282,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "Merkle",
-      "address": "eth:0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2",
-      "type": "Contract",
-      "template": "polygonposbridge/Merkle",
-      "sourceHashes": [
-        "0xf1be6e7e57f3ffb6af67424c57b1907e1fd54a410e2020ae110857774ea0a4b7"
-      ],
-      "proxyType": "immutable",
-      "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-      "sinceTimestamp": 1691242415,
-      "sinceBlock": 17849092,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2": "Merkle"
-      }
-    },
-    {
       "name": "StateSender",
       "address": "eth:0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C",
       "type": "Contract",
@@ -2034,12 +2017,11 @@
     ]
   },
   "usedTemplates": {
-    "polygonposbridge/DepositManager": "0x6f4da1313c9430a0d74b2b699e6c30210705857922f30262c4533dc9c0e2690e",
+    "polygonposbridge/DepositManager": "0x2a3771ea95277fc830da4bc0578c3e86f9d869b0935a283538ec041ac28b3274",
     "polygonposbridge/ExitNFT": "0x60ea045776cab9e4486806a9ce5a117ed68399ec7dc959eadd4b46a91b5531a1",
     "polygonposbridge/Governance": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "polygonposbridge/Merkle": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/predicate": "0x15319e6e8947d37c32a6ecf4e3356cfe7300b2e28d7a48036dabb989f6d98ca7",
-    "polygonposbridge/Registry": "0x5c5fe510503231c55babf2ac08b7e9cec266f6131495611ee1af5bd4a215c7a1",
+    "polygonposbridge/Registry": "0x153babaec9d06d0263f00b77d5d0270b5b20922d4895e1889e72f6100fea5a28",
     "polygonposbridge/RLPReader": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/RootChain": "0x951f1afb2394ca6912e53ebaac34bb72e9a1c3b6e65eca9bdba31dfe0f8ff656",
     "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
@@ -2053,5 +2035,5 @@
     "shibarium/WithdrawManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "usedBlockNumbers": { "ethereum": 24583152 },
-  "permissionsConfigHash": "0xb9418c456962c038809bed5d65324ce350af667a66cb600e40fbb5e9ba9eb525"
+  "permissionsConfigHash": "0x32a4cab100c0f4e26adb5a456a4c0e11a2906cfdda31d98f142e5734a85b3b4e"
 }

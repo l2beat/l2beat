@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xbff27ec5f49a74e29c33a58cd16868206b55a6fb
+
+# Diff at Tue, 02 Jun 2026 13:18:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@63ce779d811ac540efbb445178f952fd5f075eb6 block: 1778677605
+- current timestamp: 1780405492
+
+## Description
+
+Revoker of the vesting contracts registry switched from EOA to a revocation payload. This does not affect the ProtocolTreasury but rather the external vesting contracts, which are not in disco.
+
+## Watched changes
+
+```diff
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) [aztecnetwork/AztecTokenPositionRegistry] {
+    +++ description: Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked. Is also used as source of truth for other vesting contracts in the Aztec ecosystem.
+      values.getRevoker:
+-        "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350"
++        "eth:0x79E5BD3BD5cfc52C718Fe0f83fEaab31691683cA"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778677605 (main branch discovery), not current.
+
+```diff
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) [aztecnetwork/AztecTokenPositionRegistry] {
+    +++ description: Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked. Is also used as source of truth for other vesting contracts in the Aztec ecosystem.
+      description:
+-        "Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked."
++        "Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked. Is also used as source of truth for other vesting contracts in the Aztec ecosystem."
+    }
+```
+
 Generated with discovered.json: 0x8d78d8a857ffa3d722259c1c029db1f0aa1eef21
 
 # Diff at Fri, 15 May 2026 12:35:42 GMT:

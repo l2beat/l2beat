@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x8478102b2d4545f0e125846711dbd69e3cf95997
+
+# Diff at Tue, 02 Jun 2026 11:17:40 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778832561
+- current timestamp: 1780398934
+
+## Description
+
+Zircuit Multisig 1 rotated two signers (`$members[0]` and `$members[5]`).
+
+## Watched changes
+
+```diff
+    contract Zircuit Multisig 1 (eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xaAf347c2381369cA0bE97320413E3C04f8561f7e"
++        "eth:0xf1829C83C227d3cc30a4204B091A7865AbCD0419"
+      values.$members.5:
+-        "eth:0x38809210f69ed6204E276d2Be6b15cd530698679"
++        "eth:0xf5B2C0bfA18561d5374EAcc5FFfA3E39B049c1ae"
+    }
+```
+
+```diff
+    contract GnosisSafe (zircuit:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "zircuit:0xaAf347c2381369cA0bE97320413E3C04f8561f7e"
++        "zircuit:0xf1829C83C227d3cc30a4204B091A7865AbCD0419"
+      values.$members.5:
+-        "zircuit:0x38809210f69ed6204E276d2Be6b15cd530698679"
++        "zircuit:0xf5B2C0bfA18561d5374EAcc5FFfA3E39B049c1ae"
+    }
+```
+
 Generated with discovered.json: 0xfa7162f8776a16ee0e8d98b4e93602de9d628078
 
 # Diff at Fri, 08 May 2026 07:52:51 GMT:

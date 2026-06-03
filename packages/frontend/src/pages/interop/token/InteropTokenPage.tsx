@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
@@ -7,7 +8,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { InteropTokenDashboardData } from '~/server/features/scaling/interop/getInteropTokenData'
 import type { InteropTokenEntry } from '~/server/features/scaling/interop/token/getInteropTokenEntry'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InteropEntityPageLayout } from '../components/InteropEntityPageLayout'
 import { InteropEmptyState } from '../summary/components/InteropEmptyState'
@@ -76,17 +77,20 @@ function Content({
   tokenData: InteropTokenDashboardData | null
   apiSelection: InteropSelection
 }) {
+  const trpc = useTRPC()
   const { selectedChains } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.tokenDashboard.useQuery(
-    {
-      tokenId: token.id,
-      ...selectedChains,
-    },
-    {
-      initialData: isSameSelection(selectedChains, apiSelection)
-        ? tokenData
-        : undefined,
-    },
+  const { data, isLoading } = useQuery(
+    trpc.interop.tokenDashboard.queryOptions(
+      {
+        tokenId: token.id,
+        ...selectedChains,
+      },
+      {
+        initialData: isSameSelection(selectedChains, apiSelection)
+          ? tokenData
+          : undefined,
+      },
+    ),
   )
 
   const navigationSections =

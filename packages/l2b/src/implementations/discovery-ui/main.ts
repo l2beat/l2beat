@@ -23,6 +23,7 @@ import { getConfigHealth } from './getConfigHealth'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
+import { attachLayoutRouter } from './layouts/router'
 import { searchCode } from './searchCode'
 import {
   attachTemplateRouter,
@@ -221,31 +222,6 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
   })
 
-  app.get('/api/config/sync-status', (_, res) => {
-    templateService.reload()
-    const allProjects = configReader.readAllDiscoveredProjects()
-
-    const reasons = allProjects.flatMap((project) => {
-      const discovery = configReader.readDiscovery(project)
-      const config = configReader.readConfig(project)
-
-      const reasons = templateService.discoveryNeedsRefresh(discovery, config)
-
-      if (reasons.length === 0) {
-        return []
-      }
-
-      return {
-        project,
-        reasons,
-      }
-    })
-
-    res.json({
-      reasons,
-    })
-  })
-
   app.get('/api/config-files/:project', (req, res) => {
     const query = projectParamsSchema.safeParse(req.params)
 
@@ -293,6 +269,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   app.use(express.static(STATIC_ROOT))
 
   attachDiffoveryRouter(app, diffoveryController)
+  attachLayoutRouter(app, configReader, readonly)
 
   if (!readonly) {
     attachTemplateRouter(app, templateService)

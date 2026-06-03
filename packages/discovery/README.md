@@ -602,6 +602,8 @@ The event handler allows you to query and process blockchain events to track sta
 - `select` - event parameter(s) to extract. Accepts a single string or array of strings (e.g., `"user"` or `["batchIndex", "chainId"]`)
 - `groupBy` - (optional) groups results by the specified event parameter. Returns an object with grouped keys when used.
 - `ignoreRelative` - (optional, default: `false`) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+- `flatten` - (optional, add/remove only) expands array-valued selected fields into one row per element.
+- `dedupBy` - (optional, add/remove only) field(s) that define row identity; later add/remove match on these while other selected fields stay in the output. Defaults to `select`.
 - `add` - (optional) configuration for events that add entries:
   - `event` - event name(s) to listen to (string or array).
   - `where` - (optional) conditional filter using a LISP like format `[OPERATOR, ...args]`.

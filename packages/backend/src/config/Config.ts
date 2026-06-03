@@ -262,6 +262,8 @@ export interface InteropFeatureConfig {
     enabled: boolean
     tokenDbApiUrl: string
     tokenDbAuthToken?: string
+    maxTokenPriceUsd: number
+    maxTransferValueUsd: number
   }
   config: {
     enabled: boolean

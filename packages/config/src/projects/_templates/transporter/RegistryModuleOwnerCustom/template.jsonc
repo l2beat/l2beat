@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "canActIndependently": false,
+  "displayName": "RegistryModuleOwnerCustom",
+  "description": "Permissionless registry-module wrapper. Anyone can call it, but each entry-point succeeds only when msg.sender is the token's own admin/owner, assuming they implement the proper interfaces (e.g. `IOwner`).",
+  "category": "shared",
+  "fields": {
+    "constructorArgs": {
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "tokenAdminRegistry": {
+      "description": "Immutable target TokenAdminRegistry. Every successful self-registration on this module forwards proposeAdministrator() to this address.",
+      "copy": "constructorArgs",
+      "edit": ["get", "tokenAdminRegistry"]
+    }
+  }
+}

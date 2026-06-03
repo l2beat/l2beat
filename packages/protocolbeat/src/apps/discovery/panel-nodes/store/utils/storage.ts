@@ -2,6 +2,7 @@ import type { State } from '../State'
 import {
   CURRENT_LAYOUT_VERSION,
   type Layout,
+  type LayoutMetadata,
   LayoutSchema,
   migrateLayout,
 } from './layout'
@@ -28,10 +29,14 @@ function getLayoutStorageKey(projectId: string): string {
   return `layout/${projectId}`
 }
 
-export function buildStoredNodeLayout(state: State): StoredNodeLayout {
+export function buildStoredNodeLayout(
+  state: State,
+  metadata?: LayoutMetadata,
+): StoredNodeLayout {
   return {
     version: CURRENT_LAYOUT_VERSION,
     projectId: state.projectId,
+    metadata,
     locations: Object.fromEntries(state.nodes.map((n) => [n.id, n.box])),
     colors: Object.fromEntries(state.nodes.map((n) => [n.id, n.color])),
     hiddenFields: Object.fromEntries(

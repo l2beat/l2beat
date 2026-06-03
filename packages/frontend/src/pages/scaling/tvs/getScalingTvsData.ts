@@ -83,31 +83,37 @@ async function getQueryState(
   const helpers = getSsrHelpers()
 
   await Promise.all([
-    helpers.tvs.detailedChart.prefetch({
-      filter: {
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.tvs.detailedChart.queryOptions({
+        filter: {
+          type: tab,
+        },
+        range: optionToRange('1y'),
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens: true,
+      }),
+    ),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.tvs.table.queryOptions({
         type: tab,
-      },
-      range: optionToRange('1y'),
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
-    }),
-    helpers.tvs.table.prefetch({
-      type: tab,
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
-    }),
-    helpers.tvs.chartStats.prefetch({
-      filter: {
-        type: 'projects',
-        projectIds: [
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
-        ].map((entry) => entry.id),
-      },
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
-    }),
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens: true,
+      }),
+    ),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.tvs.chartStats.queryOptions({
+        filter: {
+          type: 'projects',
+          projectIds: [
+            ...entries.rollups,
+            ...entries.validiumsAndOptimiums,
+            ...entries.others,
+          ].map((entry) => entry.id),
+        },
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens: true,
+      }),
+    ),
   ])
   return helpers.dehydrate()
 }
