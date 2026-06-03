@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Project } from '@l2beat/config'
 import type { KnownInteropBridgeType, UnixTime } from '@l2beat/shared-pure'
+import capitalize from 'lodash/capitalize'
 import { mapInteropChainsToWithIcons } from '~/pages/interop/utils/mapInteropChainsToWithIcons'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
@@ -26,7 +27,6 @@ import {
 import { getRelevantBridgeTypes } from './getRelevantBridgeTypes'
 import { getTokensData } from './getTokensData'
 import { getTopItems } from './getTopItems'
-import capitalize from 'lodash/capitalize'
 
 const TOP_ITEMS_LIMIT = 3
 const logger = getLogger().for('getAllProtocolEntries')
