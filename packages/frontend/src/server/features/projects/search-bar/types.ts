@@ -32,3 +32,8 @@ export type SearchBarProject = Pick<
   SearchBarProjectEntry,
   (typeof SEARCH_BAR_PROJECT_KEYS)[number]
 >
+
+export type SearchBarToken = Pick<
+  SearchBarTokenEntry,
+  'category' | 'name' | 'href' | 'type' | 'id' | 'iconUrl' | 'issuer'
+>

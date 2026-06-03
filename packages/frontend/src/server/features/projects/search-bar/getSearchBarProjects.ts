@@ -1,7 +1,6 @@
-import { EthereumAddress, InMemoryCache, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { searchEntries } from '~/components/search-bar/searchBarResults'
-import { getInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
-import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { getActiveInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
 import { ps } from '~/server/projects'
 import { getLogger } from '../../../utils/logger'
 import type { SearchBarProjectEntry, SearchBarTokenEntry } from './types'
@@ -83,12 +82,12 @@ export async function getSearchBarProjects(search: string) {
     return matched.map(formatSearchResult)
   }
 
-  const tokenEntries = await getCachedTokenEntries()
+  const tokens = await getActiveInteropAbstractTokens()
+  const tokenEntries = getSearchBarTokenEntries(tokens)
 
   const result = searchEntries(search, [...searchBarEntries, ...tokenEntries], {
     limit: 15,
-    scoreMultiplier: (entry) =>
-      entry.category === 'zkCatalog' || entry.category === 'tokens' ? 0.9 : 1,
+    scoreMultiplier: (entry) => (entry.category === 'zkCatalog' ? 0.9 : 1),
   }).map(formatSearchResult)
 
   logger.info('Search bar projects result', {
@@ -97,23 +96,4 @@ export async function getSearchBarProjects(search: string) {
     type: 'name',
   })
   return result
-}
-
-const inMemoryCache = new InMemoryCache()
-function getCachedTokenEntries() {
-  return inMemoryCache.get(
-    {
-      key: ['searchBar', 'tokenEntries'],
-      ttl: 5 * UnixTime.MINUTE,
-      staleWhileRevalidate: 25 * UnixTime.MINUTE,
-    },
-    async () => {
-      const activeInteropChainIds = getInteropChains()
-        .filter((chain) => !chain.isUpcoming)
-        .map((chain) => chain.id)
-      const tokens = await getInteropAbstractTokens(activeInteropChainIds)
-      const tokenEntries = getSearchBarTokenEntries(tokens)
-      return tokenEntries
-    },
-  )
 }

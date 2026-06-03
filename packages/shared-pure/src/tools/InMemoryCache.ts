@@ -36,8 +36,8 @@ export class InMemoryCache {
     { promise: Promise<unknown>; timestamp: number }
   >()
 
-  constructor(config?: Config) {
-    this.logger = config?.logger
+  constructor(config: Config) {
+    this.logger = config.logger
     this.enabled = config?.enabled ?? true
     this.cache = config?.initialCache ?? new Map<string, CacheEntry>()
     this.promiseTimeout = config?.promiseTimeout ?? PROMISE_TIMEOUT
