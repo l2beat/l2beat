@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7ebacbd106095c01b664e0af8a6f12afa5c71ef7
+Generated with discovered.json: 0x6b932ad51e387d4035378ad506b83e351d782d50
 
-# Diff at Tue, 02 Jun 2026 14:35:53 GMT:
+# Diff at Wed, 03 Jun 2026 21:38:58 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779399734
-- current timestamp: 1780410887
+- current timestamp: 1780522671
 
 ## Description
 
@@ -12,7 +12,9 @@ Kailua (RISC Zero ZK fault-proof) deployed but not yet active.
 DisputeGameFactory registered game type 1337 → KailuaTreasury (`eth:0xc7EaCDd1…`).
 OptimismPortal2 and AnchorStateRegistry still have respectedGameType = 1 (PermissionedDisputeGame); cutover requires a separate change.
 
-RoninConduitOwner (`eth:0xE9Ad9723…`, 5-of-6 Safe reported by the Ronin team as a joint Ronin/Conduit signer set — affiliation not verifiable on-chain — and the existing root upgrade authority over the OP Stack contract set) got admin over the KailuaVerifier proxy (`eth:0x6b49976a…`), so the verifier proxy is upgradable along the same path as the other OP Stack contracts.
+Ronin KailuaTreasury (v1.2.0, `eth:0xc7EaCDd1…`) is architecturally distinct from BOB v0.1.0 (`eth:0x9B3E1661…`): verifier extracted to a separate `KAILUA_VERIFIER` proxy, bond accounting reworked. Shape added to `risc0/KailuaTreasury/shapes.json` as `KailuaTreasury_v5withVerifier`. Diff: https://disco.l2beat.com/diff/eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336/eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C.
+
+RoninConduitOwner (`eth:0xE9Ad9723…`, 5-of-6 joint Ronin/Conduit Safe, the existing root upgrade authority over the OP Stack contract set) got admin over the KailuaVerifier proxy (`eth:0x6b49976a…`), so the verifier proxy is upgradable along the same path as the other OP Stack contracts.
 
 RiscZeroVerifierRouter (`eth:0x8EaB2D97…`) is the shared RISC Zero verifier-selector router. Owner is a TimelockController (`eth:0x0b144E07…`, 3d delay) governed by Safe `eth:0x2E5bcc…`. Both are shared RISC Zero infrastructure, not Ronin-specific.
 
@@ -74,14 +76,8 @@ Conduit Multisig 1 signer rotation: added `eth:0xcdC93193…` at index 0, remove
 
 ```diff
 +   Status: CREATED
-    contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [N/A]
-    +++ description: Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Would replace the bisection dispute game with a single-shot ZK proof verified through KailuaVerifier and the RiscZeroVerifierRouter. Deployed but NOT yet active: OptimismPortal2 and AnchorStateRegistry still have respectedGameType = 1 (PermissionedDisputeGame). Switching the respected type is a separate change.
-```
-
-```diff
-+   Status: CREATED
-    contract Multicall3 (eth:0xcA11bde05977b3631167028862bE2a173976CA11) [N/A]
-    +++ description: None
+    contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [risc0/KailuaTreasury]
+    +++ description: Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Would replace the bisection dispute game with a single-shot ZK proof verified through KailuaVerifier and the RiscZeroVerifierRouter. Deployed but NOT yet active: OptimismPortal2 and AnchorStateRegistry still have respectedGameType = 1 (PermissionedDisputeGame). Switching the respected type is a separate change. Slashed participation bonds are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
 ```
 
 ## Source code changes
@@ -90,12 +86,11 @@ Conduit Multisig 1 signer rotation: added `eth:0xcdC93193…` at index 0, remove
 .../projects/roninnetwork/.flat/KailuaTreasury.sol | 3617 ++++++++++++++++++++
  .../.flat/KailuaVerifier/KailuaVerifier.sol        |  509 +++
  .../roninnetwork/.flat/KailuaVerifier/Proxy.p.sol  |  120 +
- .../src/projects/roninnetwork/.flat/Multicall3.sol |  216 ++
  .../roninnetwork/.flat/RiscZeroVerifierRouter.sol  |  282 ++
  .../src/projects/roninnetwork/.flat/Safe/Safe.sol  | 1216 +++++++
  .../roninnetwork/.flat/Safe/SafeProxy.p.sol        |   42 +
  .../roninnetwork/.flat/TimelockController.sol      | 1111 ++++++
- 8 files changed, 7113 insertions(+)
+ 7 files changed, 6897 insertions(+)
 ```
 
 ## Config/verification related changes

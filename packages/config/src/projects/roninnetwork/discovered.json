@@ -1,7 +1,7 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1780410887,
-  "configHash": "0x278beac2ff73dfb60f683566fc188fee9efa9229543f40d1ac936b0a2f223af4",
+  "timestamp": 1780522671,
+  "configHash": "0xd88cfdd0a17578feb5a040de29b13c55be76c5a500ac4408672eb02588fcb40e",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -125,13 +125,13 @@
         ],
         "$upgradeCount": 1,
         "absolutePrestateFromGame": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
-        "anchorGame": "eth:0x2B31b3e0f0018C730fd99Ba4488FD3D51b4D0c4F",
+        "anchorGame": "eth:0xc36F3b667D0c528C8dFAA4d44f16ed52421e1a49",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x82bad80f4b64840bd604a64e820a5bc6811e8e2333b6bc7f5b2f5eb301ad657f",
-          56160787
+          "0x605766f931669908ac109c7e029a92822a6cfe106af4680142bcf0ba87b21b8b",
+          56203941
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -1492,7 +1492,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2350865448318616073242583"
+        "totalSupply": "2339093483614466503814583"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1620,11 +1620,13 @@
       "name": "KailuaTreasury",
       "address": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
       "type": "Contract",
+      "template": "risc0/KailuaTreasury",
       "sourceHashes": [
         "0xf5a7c7ac441165b26526d65aee55070adb438e0b29658447e1d24955d1a26648"
       ],
       "proxyType": "immutable",
-      "description": "Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Would replace the bisection dispute game with a single-shot ZK proof verified through KailuaVerifier and the RiscZeroVerifierRouter. Deployed but NOT yet active: OptimismPortal2 and AnchorStateRegistry still have respectedGameType = 1 (PermissionedDisputeGame). Switching the respected type is a separate change.",
+      "description": "Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Would replace the bisection dispute game with a single-shot ZK proof verified through KailuaVerifier and the RiscZeroVerifierRouter. Deployed but NOT yet active: OptimismPortal2 and AnchorStateRegistry still have respectedGameType = 1 (PermissionedDisputeGame). Switching the respected type is a separate change. Slashed participation bonds are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.",
+      "ignoreInWatchMode": ["lastResolved"],
       "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1780027583,
       "sinceBlock": 25198521,
@@ -1665,6 +1667,7 @@
         "OUTPUT_BLOCK_SPAN": 6,
         "parentGame": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
         "participationBond": 0,
+        "participationBondFmt": "0",
         "PROPOSAL_BLOBS": 1,
         "PROPOSAL_OUTPUT_COUNT": 3600,
         "proposalBlobHashes": [],
@@ -1678,43 +1681,19 @@
         "validChildSignature": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "vanguard": "eth:0x0000000000000000000000000000000000000000",
         "vanguardAdvantage": 0,
+        "vanguardAdvantageFmt": "0s",
         "version": "1.2.0",
         "wasRespectedGameTypeWhenCreated": false
       },
       "implementationNames": {
         "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336": "KailuaTreasury"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
       "address": "eth:0xC93f43dbbf0a1346D9E0d623B68d78891b131Bf9",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Multicall3",
-      "address": "eth:0xcA11bde05977b3631167028862bE2a173976CA11",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xed3a2926347c281fe3d98ae30b87242b875d95c59fb8090942cf5fe843139381"
-      ],
-      "proxyType": "immutable",
-      "deployerAddress": "eth:0x05f32B3cC3888453ff71B01135B34FF8e41263F2",
-      "sinceTimestamp": 1646842676,
-      "sinceBlock": 14353601,
-      "values": {
-        "$immutable": true,
-        "getBasefee": 0,
-        "getBlockNumber": 25230326,
-        "getChainId": 1,
-        "getCurrentBlockCoinbase": "eth:0xdadB0d80178819F2319190D340ce9A924f783711",
-        "getCurrentBlockDifficulty": "103017412835344920320093747481580352900233691656973250374998131431943684087938",
-        "getCurrentBlockGasLimit": 60000000,
-        "getCurrentBlockTimestamp": 1780410887,
-        "getLastBlockHash": "0x76f84a1f13f40274ea8600ed0add59550d5479dc9dbbace09568c4c8c897e5ff"
-      },
-      "implementationNames": {
-        "eth:0xcA11bde05977b3631167028862bE2a173976CA11": "Multicall3"
-      }
     },
     {
       "address": "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
@@ -1750,11 +1729,6 @@
     },
     {
       "address": "eth:0xDA8e7102681f9652FB8a10b70949CF7F260e0A01",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xdadB0d80178819F2319190D340ce9A924f783711",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3260,24 +3234,6 @@
       "function version() view returns (string)",
       "function wasRespectedGameTypeWhenCreated() view returns (bool)"
     ],
-    "eth:0xcA11bde05977b3631167028862bE2a173976CA11": [
-      "function aggregate(tuple(address target, bytes callData)[] calls) payable returns (uint256 blockNumber, bytes[] returnData)",
-      "function aggregate3(tuple(address target, bool allowFailure, bytes callData)[] calls) payable returns (tuple(bool success, bytes returnData)[] returnData)",
-      "function aggregate3Value(tuple(address target, bool allowFailure, uint256 value, bytes callData)[] calls) payable returns (tuple(bool success, bytes returnData)[] returnData)",
-      "function blockAndAggregate(tuple(address target, bytes callData)[] calls) payable returns (uint256 blockNumber, bytes32 blockHash, tuple(bool success, bytes returnData)[] returnData)",
-      "function getBasefee() view returns (uint256 basefee)",
-      "function getBlockHash(uint256 blockNumber) view returns (bytes32 blockHash)",
-      "function getBlockNumber() view returns (uint256 blockNumber)",
-      "function getChainId() view returns (uint256 chainid)",
-      "function getCurrentBlockCoinbase() view returns (address coinbase)",
-      "function getCurrentBlockDifficulty() view returns (uint256 difficulty)",
-      "function getCurrentBlockGasLimit() view returns (uint256 gaslimit)",
-      "function getCurrentBlockTimestamp() view returns (uint256 timestamp)",
-      "function getEthBalance(address addr) view returns (uint256 balance)",
-      "function getLastBlockHash() view returns (bytes32 blockHash)",
-      "function tryAggregate(bool requireSuccess, tuple(address target, bytes callData)[] calls) payable returns (tuple(bool success, bytes returnData)[] returnData)",
-      "function tryBlockAndAggregate(bool requireSuccess, tuple(address target, bytes callData)[] calls) payable returns (uint256 blockNumber, bytes32 blockHash, tuple(bool success, bytes returnData)[] returnData)"
-    ],
     "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2": [
       "constructor()",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
@@ -3468,8 +3424,9 @@
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
+    "risc0/KailuaTreasury": "0x74dc00c46f9739750e0f8e356c2dc96fc06800a44865544c70b5106073ef635c",
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 25230326 },
-  "permissionsConfigHash": "0xfe7b5380b7b1be2e93f8b8255d21ecd3b12623566189cff47e5c03a5fe16a7a8"
+  "usedBlockNumbers": { "ethereum": 25239595 },
+  "permissionsConfigHash": "0xde3f10ccf79f3f3e488741f1da288041fa9dfd51424d5b5478a06a3d404161f8"
 }
