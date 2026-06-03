@@ -5,7 +5,6 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
-import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { NoResultsInfo } from '~/pages/interop/summary/components/NoResultsInfo'
 import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
 import { useTRPC } from '~/trpc/React'
@@ -50,8 +49,7 @@ export function ProtocolsByVolumeCard({ isEnabled }: { isEnabled: boolean }) {
             size="sm"
             className="flex items-center gap-1.5 px-4 py-[9px] leading-none"
           >
-            Explore all
-            <ArrowRightIcon className="size-4 fill-current" />
+            View details
           </Button>
         </a>
       </div>
