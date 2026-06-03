@@ -29,6 +29,7 @@ export function getL2Risks(riskView: ProjectRiskView): RosetteValue[] {
       value: riskView.exitWindow.value,
       sentiment: riskView.exitWindow.sentiment,
       warning: riskView.exitWindow.warning,
+      regular: riskView.exitWindow.regular,
       description: riskView.exitWindow.description,
     },
     {

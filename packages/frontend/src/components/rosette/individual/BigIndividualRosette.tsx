@@ -1,4 +1,3 @@
-import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
 import { UpcomingBadge } from '../../badge/UpcomingBadge'
 import {
@@ -6,10 +5,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/Tooltip'
-import { SentimentText } from '../../SentimentText'
-import { sentimentToWarningBarColor, WarningBar } from '../../WarningBar'
 import { rosetteParameters } from '../parameters'
 import { PizzaRosetteLabels } from '../pizza/PizzaRosetteLabels'
+import { RosetteTooltipRisk } from '../RosetteTooltipRisk'
 import type { RosetteValueTuple } from './IndividualRosetteIcon'
 import { IndividualPizzaRosetteIcon } from './IndividualRosetteIcon'
 import {
@@ -117,42 +115,13 @@ function RosetteTooltipContent() {
         <span className="text-[#787E8D] text-[13px] uppercase">
           {context.content?.outerProjectName}
         </span>
-        <SentimentText
-          sentiment={content.outer.sentiment ?? 'neutral'}
-          vibrant={true}
-          className="flex items-center gap-1 font-medium"
-        >
-          {content.outer.value}
-        </SentimentText>
-        {content.outer.warning && (
-          <WarningBar
-            icon={RoundedWarningIcon}
-            text={content.outer.warning.value}
-            color={sentimentToWarningBarColor(content.outer.warning.sentiment)}
-          />
-        )}
-        <span className="text-xs">{content.outer.description}</span>
+        <RosetteTooltipRisk risk={content.outer} />
       </div>
       <div className="flex flex-col gap-1">
         <span className="text-[#787E8D] text-[13px] uppercase">
           {context.content?.innerProjectName}
         </span>
-        <SentimentText
-          sentiment={content.inner.sentiment ?? 'neutral'}
-          vibrant={true}
-          className="flex items-center gap-1 font-medium"
-        >
-          {content.inner.value}
-        </SentimentText>
-        {content.inner.warning && (
-          <WarningBar
-            icon={RoundedWarningIcon}
-            text={content.inner.warning.value}
-            color={sentimentToWarningBarColor(content.inner.warning.sentiment)}
-          />
-        )}
-
-        <span className="text-xs">{content.inner.description}</span>
+        <RosetteTooltipRisk risk={content.inner} />
       </div>
     </TooltipContent>
   )
