@@ -86,7 +86,8 @@ async function getQueryState(
     helpers.queryClient.prefetchQuery(
       helpers.trpc.tvs.detailedChart.queryOptions({
         filter: {
-          type: tab,
+          type: 'projects',
+          projectIds: entries[tab].map((entry) => entry.id),
         },
         range: optionToRange('1y'),
         excludeAssociatedTokens: false,

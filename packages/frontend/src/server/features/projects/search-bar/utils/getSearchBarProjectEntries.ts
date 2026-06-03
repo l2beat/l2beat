@@ -4,7 +4,6 @@ import type {
   ProjectPermissions,
 } from '@l2beat/config'
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
-import { env } from '~/env'
 import { manifest } from '~/utils/Manifest'
 import type { SearchBarProjectEntry } from '../types'
 
@@ -149,7 +148,7 @@ export function getSearchBarProjectEntries<
     })
   }
 
-  if (project.privacyInfo && env.CLIENT_SIDE_PRIVACY_ENABLED) {
+  if (project.privacyInfo) {
     results.push({
       ...common,
       href: `/privacy/projects/${project.slug}`,

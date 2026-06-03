@@ -160,6 +160,12 @@ const navGroups: NavigationGroup[] = [
         url: '/website/daily-checks',
       },
       {
+        type: 'single',
+        title: 'Interop aggregates',
+        icon: ClipboardCheckIcon,
+        url: '/website/interop-aggregates',
+      },
+      {
         type: 'collapsible',
         title: 'Status',
         icon: LayersIcon,

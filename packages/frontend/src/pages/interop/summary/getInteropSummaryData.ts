@@ -136,11 +136,15 @@ async function getCachedData(
   let defaultFlowChainOrder = initialFlowsChains
 
   if (shouldPrefetchFlows) {
+    const protocolIds = protocols.map((protocol) => protocol.id)
+    // Determine the volume order across all chains on a throwaway client so the
+    // all-chains query is not dehydrated (the client never requests it).
+    const ordering = getSsrHelpers()
     const flowsData: RouterOutputs['interop']['flows'] =
-      await helpers.queryClient.fetchQuery(
-        helpers.trpc.interop.flows.queryOptions({
+      await ordering.queryClient.fetchQuery(
+        ordering.trpc.interop.flows.queryOptions({
           chains: initialFlowsChains,
-          protocolIds: protocols.map((protocol) => protocol.id),
+          protocolIds,
         }),
       )
     const chainsByVolume = flowsData.chainData
@@ -150,6 +154,15 @@ async function getCachedData(
     if (chainsByVolume.length > 0) {
       defaultFlowChainOrder = chainsByVolume
     }
+
+    // The client's flows chart defaults to the top chains by volume, so
+    // prefetch that exact query to hydrate it from cache.
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.interop.flows.queryOptions({
+        chains: defaultFlowChainOrder.slice(0, MAX_SELECTED_CHAINS),
+        protocolIds,
+      }),
+    )
   }
 
   return {

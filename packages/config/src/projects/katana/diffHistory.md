@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x0251a2794590405eaf15a11c0b27a318d30fa327
+
+# Diff at Tue, 02 Jun 2026 13:01:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1539447d4bb0403294997ea5e5110946d04275ef block: 1780060245
+- current timestamp: 1780404229
+
+## Description
+
+Config ignores and conduit ms changes.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853"
+      values.$members.8:
+-        "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2"
+      values.$members.1:
++        "eth:0xe0e8e6bBDef7bbcf8dF1F5Ac0ab9906BFe991d8B"
+      values.$members.2:
++        "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 8 (25%)"
+    }
+```
+
 Generated with discovered.json: 0xe824b1443430c192ebe87217a567053c8b28e80e
 
 # Diff at Fri, 29 May 2026 13:34:21 GMT:

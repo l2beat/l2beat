@@ -1,6 +1,6 @@
 {
   "name": "orderly",
-  "timestamp": 1777994288,
+  "timestamp": 1780397612,
   "configHash": "0xd17b0ec47b69a1282ef0c616a3f97c13442dc9939be38152696cb81e69af3a28",
   "entries": [
     {
@@ -200,11 +200,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Conduit Multisig 1",
       "address": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
@@ -337,6 +332,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
@@ -345,7 +341,6 @@
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-          "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
@@ -355,7 +350,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 265,
+        "nonce": 275,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -717,7 +712,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516470,
-          "prevBlockNum": 24998726
+          "prevBlockNum": 25120617
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -996,13 +991,13 @@
         ],
         "$upgradeCount": 1,
         "absolutePrestateFromGame": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6",
-        "anchorGame": "eth:0xA18F57DAE9C2b118DBA46FCBFC5cFe981C4A6E44",
+        "anchorGame": "eth:0x63F943445F81E190F75E0e53815Df35786e10a59",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0xC8BF04A73704051E5E274F1B43B1F2F153Db2136",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x404507164bf151d334be39a5e077c556793f4858acaa15d8fe8bb4f09b32c5e9",
-          40372232
+          "0xe78246d3e7c52846ff5696c4a4b24b29f4b7f8e7ddb48be6ceaace8f79e6ef00",
+          41581149
         ],
         "initVersion": 1,
         "oracleFromVm": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
@@ -1110,7 +1105,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620052",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620053",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1187,7 +1182,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 570,
+        "gameCount": 626,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x1C7274c3eD6E898aDEA828Ba2F52CF19ac2CCBd9",
@@ -1202,7 +1197,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 570,
+        "permissionedGamesTotal": 626,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -1225,6 +1220,11 @@
         { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xceED24B1Fd4A4393f6A9D2B137D9597dd5482569",
@@ -2143,6 +2143,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25029648 },
-  "permissionsConfigHash": "0x8bb123014f87043ba770c94c6eba2310c71eac159eeb57d49952e3efc9c1acda"
+  "usedBlockNumbers": { "ethereum": 25229224 },
+  "permissionsConfigHash": "0x464b572c0e67ad09c4498b5d6f66f26d9770ffe485c30da8b5bfbf2a377a4f98"
 }

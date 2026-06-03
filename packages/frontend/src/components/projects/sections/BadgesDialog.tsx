@@ -104,7 +104,7 @@ function BadgesDialogBody({
   onBadgeSelect,
   mobile,
 }: {
-  data: BadgeDialogData | undefined
+  data: BadgeDialogData | null | undefined
   isLoading: boolean
   isSwitchingBadges: boolean
   onBadgeSelect: (badgeId: string) => void

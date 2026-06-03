@@ -440,7 +440,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "15d 3h",
+        "timeSinceLastL2beatInteraction": "28d 6h",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -2966,6 +2966,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.",
+      "ignoreInWatchMode": ["totalProcessed"],
       "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
@@ -5320,7 +5321,7 @@
     "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
-    "opstack/Layer2/OperatorFeeVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/OperatorFeeVault": "0x044085f5049dce846d88feaa0007d7805521906a1025bb3acc0ee57c09befe47",
     "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",

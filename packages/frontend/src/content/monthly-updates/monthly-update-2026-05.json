@@ -1,0 +1,249 @@
+{
+  "title": "Monthly Updates - May 2026",
+  "startDate": "2026-05-01",
+  "endDate": "2026-05-31",
+  "publishedOn": "2026-06-02",
+  "description": "Explore the most important May developments across major ecosystems — from enterprise L2 deployments and governance actions to tokenized deposits, stablecoin payments, data availability, and protocol infrastructure upgrades.",
+  "updates": [
+    {
+      "type": "ecosystem",
+      "ecosystemId": "arbitrum-orbit",
+      "news": [
+        {
+          "title": "Arbitrum Governance Approves Transfer of Frozen ETH Following Court Order",
+          "content": "Arbitrum Governance approved an amended Constitutional AIP authorizing the transfer of more than 30,765 ETH previously frozen by the Arbitrum Security Council following the rsETH incident.\n\nThe proposal updates an earlier recovery plan after a U.S. court order authorized the assets to be transferred to a wallet controlled by Aave LLC, while keeping the restraining order attached to the funds. According to the proposal, the transfer is intended to support the broader rsETH recovery effort without granting immediate access or distribution rights over the assets.\n\nThe incident highlights the increasingly complex intersection between onchain governance, protocol security, and traditional legal systems, as decentralized communities coordinate recovery actions under active court supervision.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Arbitrum Integrates Coinbase’s x402 Protocol for Agent Payments",
+          "content": "Arbitrum announced that Coinbase’s x402 protocol is now live on the Arbitrum Platform, enabling AI agents and applications to pay for APIs, software, and digital services directly with stablecoins.\n\nAccording to Arbitrum, x402 provides built-in authentication, automatic settlement, and compatibility with existing web infrastructure, allowing developers to integrate programmable payments with minimal overhead. The protocol is designed to support machine-to-machine commerce and automated financial interactions between agents and online services.\n\nArbitrum positioned the integration as part of the growing programmable economy, where low transaction costs, predictable execution, and scalable infrastructure are increasingly important for agent-driven applications and on-chain commerce."
+        },
+        {
+          "title": "Arbitrum Expands Support for Move Developers Through New WASM Compiler",
+          "content": "Arbitrum announced a new Move-to-WASM compiler developed by Rather Labs, enabling Move developers to build applications on the Arbitrum Platform without fully rewriting their existing codebases.\n\nThe compiler allows developers to preserve Move-based asset logic and security models while accessing Arbitrum’s liquidity, DeFi infrastructure, and financial primitives. According to Arbitrum, the integration lowers migration overhead and creates a more practical path for teams and institutions looking to bring programmable financial products on-chain.\n\nThe initiative reflects a broader effort to make the Arbitrum ecosystem more accessible to developers using different programming environments and execution models."
+        },
+        {
+          "title": "Arbitrum Launches Open House Buildathon for Early-Stage Teams",
+          "content": "Arbitrum announced the launch of the Open House Buildathon, a remote three-week program running from May 25 through June 14, 2026, designed to support early-stage teams building products on the Arbitrum Platform.\n\nThe initiative is focused on projects across payments, RWAs, DeFi, AI, privacy, and consumer applications, while also encouraging experimentation with Arbitrum-native technologies such as Stylus, Timeboost, WASM-based tooling, and Arbitrum Chains.\n\nAccording to Arbitrum, the program aims to help founders turn early ideas into onchain business products, reinforcing the network’s broader push toward programmable finance and application-specific infrastructure."
+        },
+        {
+          "title": "Arbitrum Launches Earn Feature on the Arbitrum Portal",
+          "content": "Arbitrum announced the launch of Earn, a new feature integrated into the Arbitrum Portal that allows users to access yield opportunities and manage DeFi positions directly from a unified interface.\n\nPowered by LI.FI’s cross-chain routing infrastructure, the system enables users to swap assets across networks, interact with vaults, and access yield strategies from protocols including Aave, Morpho, and Pendle. Arbitrum also highlighted its collaboration with vaults.fyi, which provides portfolio tracking, transaction infrastructure, and yield data for the platform.\n\nThe launch reflects Arbitrum’s continued focus on improving user access to on-chain financial products through integrated and cross-chain-native tooling."
+        },
+        {
+          "title": "EdgeX Launches V2 Trading Infrastructure on EDGE Chain",
+          "content": "Arbitrum highlighted the launch of EdgeX V2, a major upgrade to the perpetuals trading platform built on EDGE Chain using Arbitrum infrastructure.\n\nAccording to EdgeX, the new version introduces a fully rebuilt trading engine focused on improving performance, safety, and transparency for 24/7 global asset trading. The platform now supports sub-100 millisecond order latency and throughput of up to 300,000 orders per second, aiming to deliver a high-performance on-chain trading experience.\n\nArbitrum positioned the launch as an example of how application-specific chains can leverage its infrastructure to optimize execution environments for advanced financial applications such as perpetuals trading."
+        },
+        {
+          "title": "Oobit Brings Arbitrum-Powered Payments to Visa Merchants Worldwide",
+          "content": "Arbitrum announced that users can now spend directly from their on-chain balances at more than 150 million Visa merchants worldwide through its integration with Oobit.\n\nThe integration connects Arbitrum-based assets with real-world retail payments, allowing users to transact globally while leveraging the network’s low-cost infrastructure. According to Arbitrum, the launch represents another step toward bringing programmable finance into everyday commerce and expanding the practical utility of on-chain assets.\n\nArbitrum positioned the integration as part of the broader evolution of the programmable economy, where blockchain infrastructure increasingly powers consumer-facing financial applications and payment experiences."
+        },
+        {
+          "title": "Arbitrum Security Council Executes Emergency Governance Patch",
+          "content": "The Arbitrum Security Council executed an emergency action to mitigate a vulnerability affecting the governance system’s L1 Timelock Contract.\n\nAccording to Arbitrum, the issue could have allowed unauthorized cross-chain messages to trigger the renouncement of the bridge’s proposer role within the governance timelock, potentially preventing future constitutional governance proposals from executing. The protocol clarified that no user funds were ever at risk and that the vulnerability could only impact governance operations.\n\nTo address the issue, the Security Council approved and executed a targeted mitigation that blocks the specific malicious payload from passing through the bridge infrastructure. Arbitrum stated that a permanent smart contract fix will be included in a future ArbOS upgrade, while the emergency patch neutralizes the vulnerability in the near term.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Arbitrum Governance Discusses Proposal to Minimize Arbitrum Nova",
+          "content": "Arbitrum Governance has begun the offchain voting process for a proposal that would transition Arbitrum Nova into a minimized, maintenance-oriented state.\n\nThe proposal outlines a three-phase plan aimed at reducing operational costs and encouraging developers, applications, liquidity, and users to migrate toward Arbitrum One. According to the proposal, Arbitrum Nova has largely fulfilled its role as an experimental AnyTrust chain, while newer Arbitrum chains and improvements in rollup economics have reduced the network’s strategic importance.\n\nIf approved, the proposal would introduce a 90-day migration period before Nova transitions to a lightweight infrastructure model with reduced support, passive DAC functionality, and lower operational overhead. The proposal estimates potential annual savings of approximately $1.43 million.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Arbitrum Foundation Requests Additional DAO Funding for 2027 Operations",
+          "content": "The Arbitrum Foundation’s proposal requesting additional funding for 2027 operations has officially entered the offchain voting stage within Arbitrum Governance. The proposal seeks $16 million in RWAs and stablecoins, 1,740 ETH, and 230 million ARB to support ecosystem growth, infrastructure maintenance, governance operations, and strategic partnerships.\n\nAccording to the proposal, the Foundation operates as a central coordination and growth entity for the ecosystem, supporting initiatives across technical development, institutional partnerships, grants, developer programs, and DAO operations. The document also highlights the Foundation’s role in expanding DAO revenue through initiatives such as Timeboost, the Arbitrum Expansion Program, and ecosystem growth programs.\n\nThe offchain vote is currently underway as delegates discuss the scale of the funding request, long-term treasury sustainability, and the Foundation’s role in supporting Arbitrum’s continued ecosystem expansion.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "WasabiCard Integrates Arbitrum for Faster and Lower-Cost Funding",
+          "content": "WasabiCard announced its integration with Arbitrum, enabling users to fund their accounts through the network with lower transaction fees and reduced settlement friction.\n\nThe integration is designed to improve the experience of moving assets onchain for payment-related use cases, while expanding support for faster and more cost-efficient crypto funding rails. According to WasabiCard, the move also strengthens its broader multichain payments ecosystem and supports wider accessibility for real-world crypto payments.\n\nArbitrum continues to position itself as infrastructure for scalable financial applications, particularly in areas such as payments, trading, and programmable commerce."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "the-elastic-network",
+      "news": [
+        {
+          "title": "ZKsync Publishes Results of the ZK Staking Pilot Program",
+          "content": "ZKsync released the Season 1 report for its ZK Staking Pilot Program, stating that the initiative successfully achieved its primary governance and infrastructure objectives.\n\nAccording to the report, the pilot helped increase active voting participation, strengthen the governance system, and test staking-related infrastructure across the ecosystem. The program served as an early experiment in aligning token participation with governance engagement ahead of broader ZKsync tokenomics developments.\n\nZKsync also indicated that the Season 1 review includes recommendations and next steps for future staking initiatives within the network’s governance framework.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "ZKsync Joins OpenZeppelin’s Continuous Security Program",
+          "content": "ZKsync announced that it has joined OpenZeppelin’s Continuous Security Program, becoming one of the first projects participating in the initiative alongside Uniswap and Across.\n\nThe program promotes an ongoing security operations model rather than relying exclusively on periodic audits, reflecting a shift toward continuous monitoring and proactive risk management for blockchain infrastructure. According to ZKsync, this approach aligns with the standards expected by financial institutions and enterprise-focused applications.\n\nThe announcement highlights the growing emphasis on operational security and resilience as blockchain networks increasingly target institutional adoption and large-scale financial use cases."
+        },
+        {
+          "title": "ZKsync Lite Officially Ends Block Production",
+          "content": "ZKsync announced that block production on ZKsync Lite officially stopped on May 4, marking the end of the network’s role as one of Ethereum’s earliest production ZK rollups.\n\nOriginally launched as a payments-focused rollup, ZKsync Lite helped pioneer large-scale ZK-based scaling by onboarding millions of users and demonstrating rollup technology in production during the early stages of Ethereum Layer 2 adoption. The shutdown is part of a planned and orderly sunset and does not affect ZKsync Era or other ZKsync Chains.\n\nZKsync stated that remaining user balances continue to be claimable on Ethereum through a dedicated withdrawal portal, while the project shifts its focus toward institutional finance infrastructure and its privacy-oriented Prividium technology stack."
+        },
+        {
+          "title": "ZKsync Launches New Interfaces for Token Program Monitoring and Deployment",
+          "content": "ZKsync Governance announced new mainnet and testnet interfaces designed to improve transparency and accessibility around Token Program capped minters and deployment tooling.\n\nDeveloped by ScopeLift, the new dashboards allow users to monitor approved Token Program minters, visualize relationships between contracts, and deploy capped minters through human-readable interfaces instead of raw technical inputs such as uint256 values and Unix timestamps.\n\nThe initiative aims to simplify participation in ZKsync token governance and make token program infrastructure easier to audit, monitor, and deploy for both delegates and developers.",
+          "tags": ["governance"]
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "superchain",
+      "news": [
+        {
+          "title": "Upbit Selects OP Stack for New Enterprise Layer 2",
+          "content": "Optimism published an overview of Dunamu’s planned partnership with the Optimism Foundation to launch GIWA Chain, a new Ethereum Layer 2 built on the OP Stack for Upbit, South Korea’s largest crypto exchange.\n\nThe article positions GIWA Chain as the first deployment under OP Enterprise’s Self Managed tier, a model designed for operators that require full sequencer control while still relying on the Optimism Foundation for infrastructure support and resilience. The approach reflects growing demand from major exchanges seeking to control blockspace, capture fees, and meet institutional performance and compliance requirements.\n\nOptimism framed the announcement as part of a broader trend among large exchanges increasingly choosing the OP Stack as the foundation for production-grade infrastructure, reinforcing its position as a leading framework for enterprise Ethereum scaling."
+        },
+        {
+          "title": "Ronin Migrates to the OP Stack as an Ethereum Layer 2",
+          "content": "Optimism published an overview of Ronin’s migration to the OP Stack, marking the gaming network’s transition from a sovereign sidechain to an Ethereum Layer 2.\n\nOriginally launched by Sky Mavis to support Axie Infinity’s low-cost gaming economy, Ronin has grown into one of the largest blockchain gaming ecosystems, reaching 31 million wallet downloads and over $4.3 billion in NFT trading volume. By migrating to the OP Stack, the network gains Ethereum security while maintaining low fees and compatibility with standard Ethereum developer tooling.\n\nThe migration also introduces significant changes to Ronin’s economic model. According to Optimism, moving away from a delegated proof-of-stake architecture reduces token inflation from over 20% annually to around 1%, while redirecting sequencer revenue and marketplace fees toward the Ronin Treasury and ecosystem builders. The move reflects a broader trend of large-scale application ecosystems adopting Ethereum Layer 2 infrastructure for long-term scalability and sustainability."
+        },
+        {
+          "title": "Optimism Highlights ExchangeOS Upgrade on X Layer",
+          "content": "Optimism highlighted the launch of ExchangeOS, a major upgrade to OKX’s X Layer network built on the OP Stack.\n\nThe system is designed to help developers deploy institutional-grade and Web3-native trading venues on open infrastructure without rebuilding core exchange architecture from scratch. According to OKX, ExchangeOS includes customizable compliance controls and infrastructure aimed at supporting applications such as perpetuals, prediction markets, and other onchain trading products.\n\nOptimism positioned the announcement as another example of the OP Stack being used as foundational infrastructure for programmable financial applications and exchange-focused Layer 2 ecosystems."
+        },
+        {
+          "title": "OP Mainnet Activates Stake-Based Transaction Ordering Experiment",
+          "content": "Optimism announced that the stake-based priority ordering experiment is now live on OP Mainnet, marking the first change to the network’s transaction ordering model.\n\nThe four-week opt-in experiment allows participants staking at least 100,000 OP to receive priority block positioning through a new ordering mechanism that evolves from FIFO ordering into a stake- and time-weighted model. According to Optimism, the initiative is part of a broader effort to explore programmable sequencing and customizable block building policies for future OP Stack deployments."
+        },
+        {
+          "title": "Alchemix v3 Launches on OP Mainnet",
+          "content": "Optimism highlighted the launch of Alchemix v3 on OP Mainnet, introducing a new set of lending and yield management features to the protocol.\n\nThe release includes Mix Yield Tokens, a Fixed Duration Transmuter, and vaults supporting up to 90% loan-to-value ratios. According to Alchemix, the upgrade reflects several years of iteration on the protocol’s previous versions and aims to expand capital efficiency and flexibility for users interacting with on-chain yield strategies.\n\nOptimism noted that Alchemix is an independent third-party application and that participation in digital asset protocols carries risk."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "agglayer",
+      "news": [
+        {
+          "title": "AggLayer Connects Its First Non-EVM Chain Through Miden",
+          "content": "Polygon announced that AggLayer has become chain-agnostic with the successful integration of Miden on testnet, marking the first non-EVM chain connected to the interoperability protocol.\n\nThis allows Miden, Polygon’s privacy-focused blockchain, to access unified liquidity across the AggLayer ecosystem while maintaining its privacy-preserving architecture. According to Polygon, the integration demonstrates that chains no longer need to sacrifice privacy or adopt EVM compatibility to participate in a shared liquidity network.\n\nThe announcement was accompanied by the completion of an end-to-end verified bridge between Miden Testnet and Ethereum Sepolia in collaboration with Gateway.fm. The achievement represents an important step toward Polygon’s vision of connecting diverse blockchain architectures through a unified interoperability layer."
+        },
+        {
+          "title": "Polygon Contributes to Enterprise Ethereum Alliance Privacy Report",
+          "content": "Polygon announced its participation in the Enterprise Ethereum Alliance’s first report on enterprise privacy solutions for Ethereum, joining six other organizations in evaluating the current privacy landscape for institutional use cases.\n\nThe report maps privacy technologies across the Ethereum ecosystem and assesses them against a common framework of enterprise requirements, including compliance, confidentiality, interoperability, and operational readiness. According to Polygon, the initiative aims to provide organizations with a clearer understanding of the available privacy solutions as blockchain adoption expands within traditional industries.\n\nPolygon highlighted that privacy remains a core component of its infrastructure strategy, particularly through the Polygon CDK, which combines privacy-preserving technologies with access to liquidity and interoperability across blockchain networks."
+        },
+        {
+          "title": "Polygon Promotes CDK as Infrastructure for Enterprise Privacy",
+          "content": "Polygon highlighted Polygon CDK as a framework for organizations seeking private blockchain infrastructure while maintaining connectivity to broader liquidity networks.\n\nAccording to Polygon, enterprises evaluating use cases such as tokenized deposits, stablecoin rails, and institutional settlement systems increasingly require privacy-preserving environments that remain interoperable with public blockchain ecosystems. Polygon positioned CDK as a solution that allows organizations to operate private chains without sacrificing access to liquidity and cross-chain connectivity."
+        },
+        {
+          "title": "Assetera and Deploi Launch Private Credit Issuance Infrastructure on Polygon",
+          "content": "Polygon highlighted the launch of direct issuance infrastructure for private credit by Assetera and Deploi, bringing regulated debt issuance on-chain through the network.\n\nAccording to the announcement, the platform enables the issuance of digital debt instruments backed by consumer credit assets and supports securities identified through Nasdaq CSD ISINs. The first issuance series is expected to support notes of up to €5 million, targeting regulated capital market participants."
+        },
+        {
+          "title": "DPT Pay Launches Stablecoin Card Payments on Polygon",
+          "content": "Polygon announced a strategic partnership with DPT Pay, bringing stablecoin-powered card payment infrastructure to the network.\n\nThrough the integration, DPT Pay leverages Polygon’s low-cost and high-throughput infrastructure to offer lower onramp fees and instant onchain transfers, helping streamline global stablecoin payments and cross-border money movement. The partnership aims to improve accessibility for users seeking to spend and transfer digital assets through traditional payment rails."
+        },
+        {
+          "title": "Polygon Expands Open Money Stack With Stablecoin Card Infrastructure",
+          "content": "Polygon announced new functionality within its Open Money Stack that allows organizations to operate card authorization and settlement workflows on stablecoin rails without taking custody of customer funds.\n\nAccording to Polygon, the infrastructure supports key card program functions including transaction authorization, spend locking, settlement confirmation, and ledger reconciliation. The system is designed to be programmable at the wallet layer and can be integrated across different blockchain networks."
+        },
+        {
+          "title": "BRL1 Expands Cross-Border Payments Through Polygon and Capa",
+          "content": "Polygon announced that BRL1, one of Brazil’s most actively traded real-pegged stablecoins, is now integrated with Capa’s payment infrastructure built on Polygon.\n\nThe integration enables BRL1 to settle cross-border payments within seconds through Capa’s on-chain foreign exchange infrastructure, combining stablecoin-based settlement with local currency payment rails. According to the announcement, the initiative aims to improve the efficiency of international payments involving the Brazilian real while expanding access to digital currency-based financial services.\n\nPolygon stated that the partnership with BRL1 and Capa supports its broader strategy of bringing tokenized fiat currencies and stablecoins into global payment networks, reinforcing the network’s growing role in cross-border settlement and financial infrastructure."
+        },
+        {
+          "title": "Katana Launches Perpetuals Trading Competition on Polygon CDK",
+          "content": "Polygon highlighted the launch of Katana’s perpetuals trading competition, an initiative built on infrastructure powered by Polygon CDK.\n\nThe competition features a prize pool starting at $25,000 in vbUSDC, with the potential to scale to $100,000 based on weekly trading volume. Participants can compete across both volume and profit-and-loss leaderboards, with rewards distributed across multiple trading markets."
+        },
+        {
+          "title": "Polygon Introduces Private Stablecoin Payments Through Wallets",
+          "content": "Polygon announced the launch of private stablecoin payments within Wallets, enabling users to send USDC and USDT through privacy-preserving transactions on the Polygon network.\n\nThe feature is powered by Hinkal Protocol and routes transfers through a shielded pool rather than a standard on-chain transaction. Zero-knowledge proofs are used to validate transactions while concealing sensitive payment details from public view.\n\nPolygon emphasized that the system is designed to provide privacy without sacrificing compliance. Transactions remain subject to Know Your Transaction screening, and funds move directly between user wallets without custodial intermediaries."
+        },
+        {
+          "title": "Polygon Expands One-Click Payments With Trails v1.5",
+          "content": "Polygon announced the release of Trails v1.5, introducing new one-click payment capabilities designed to simplify on-chain payment experiences.\n\nThe update compresses multiple blockchain actions, including bridging, swapping, depositing, and settlement, into a single user interaction. According to Polygon, users can now complete transactions involving USDC, USDT, DAI, and other major assets through a single signed transaction, reducing the complexity traditionally associated with on-chain payments.\n\nThe release also expands payment accessibility through support for debit and credit cards, Apple Pay, Google Pay, exchange-funded payments, and multi-step transaction flows. Polygon described the update as part of its broader effort to remove friction between payment initiation and settlement, making blockchain-based payments more accessible for mainstream users and merchants."
+        },
+        {
+          "title": "Cash App Launches USDC Payments on Polygon",
+          "content": "Cash App has integrated Polygon to enable users to send and receive USDC directly from their Cash Balance, bringing stablecoin payments to the platform’s 58 million monthly active users.\n\nThe integration allows users to transact using USDC on Polygon without managing a separate crypto wallet or stablecoin balance. Incoming USDC is automatically converted into dollars, while outgoing payments are converted from dollars to USDC at a 1:1 ratio. According to Cash App, the service is available with no transaction fees and is designed to provide a seamless payment experience using blockchain infrastructure behind the scenes.\n\nThe launch represents a significant milestone for Polygon’s Open Money Stack strategy, further expanding the network’s role as settlement infrastructure for consumer fintech applications and global stablecoin payments."
+        },
+        {
+          "title": "Polygon Opens Design Partner Program for Stablecoin Card Infrastructure",
+          "content": "Polygon announced a new design partner program for card issuers, exchanges, fintechs, and payment platforms interested in helping shape a wallet-based authorization and settlement system for stablecoin payments.\n\nThe initiative introduces a prototype auth/capture mechanism that replicates the two-step payment flow used by traditional card networks. Instead of immediately transferring funds, users can authorize a hold on stablecoin balances, which can later be settled, partially captured, or automatically released if unused. Polygon emphasized that the system is designed to remain non-custodial, with funds locked in smart contracts rather than controlled by issuers.\n\nAccording to Polygon, the solution is intended to work across EVM chains and support major ERC-20 stablecoins without requiring new token standards. The company is currently seeking industry partners to help refine the technology before its broader release as part of the Open Money Stack."
+        }
+      ]
+    },
+    {
+      "type": "data-availability",
+      "id": "eigenlayer",
+      "daLayerId": "eigenda",
+      "name": "EigenLayer",
+      "news": [
+        {
+          "title": "EigenDA Powers Data Availability for Ronin’s Migration to Ethereum",
+          "content": "EigenDA announced that it is providing the data availability layer for Ronin following the gaming network’s migration from a sidechain architecture to an Ethereum Layer 2 built on the OP Stack.\n\nThe migration marks a significant milestone for Ronin, one of the largest blockchain gaming ecosystems, which has processed billions of dollars in NFT trading volume and onboarded millions of users through games such as Axie Infinity and Pixels. By leveraging EigenDA, Ronin aims to reduce data availability costs while maintaining the scalability required to support large-scale gaming activity."
+        },
+        {
+          "title": "EigenCloud Advances Darkbloom Distributed AI Network to Public Alpha",
+          "content": "EigenCloud announced that Darkbloom, its distributed AI inference network, has progressed from a research preview to a public alpha release. According to the team, the network has already served more than 600 million tokens using unused computing capacity from thousands of consumer devices, including idle Mac computers.\n\nThe latest upgrade reportedly delivers significant performance improvements across inference metrics such as time to first token, throughput, and overall token serving capacity, while reducing costs compared to traditional data-center-based infrastructure. EigenCloud positions Darkbloom as part of a broader effort to create decentralized, verifiable infrastructure for open-weight AI models, leveraging EigenLayer’s security and coordination mechanisms to support distributed compute networks."
+        },
+        {
+          "title": "EIGEN Token Becomes Available on Bitstamp by Robinhood",
+          "content": "The Eigen Foundation announced that the EIGEN token is now available for trading on Bitstamp by Robinhood, expanding access to the asset through one of the longest-operating cryptocurrency exchanges.\n\nThe listing adds EIGEN alongside several other newly supported digital assets and increases the token’s availability to a broader base of retail and institutional market participants. The announcement comes as EigenLayer continues to expand its ecosystem around verifiable cloud infrastructure, decentralized services, and AI-focused applications.\n\nExchange listings typically improve market accessibility and liquidity for ecosystem tokens, supporting broader participation from users interested in the EigenLayer and EigenCloud ecosystems."
+        },
+        {
+          "title": "EigenCloud Introduces Verifiable Telemetry for AI Agents",
+          "content": "EigenCloud introduced Eigen Trace Mirror, a new system designed to provide verifiable telemetry for AI agents and autonomous software systems.\n\nThe project aims to address a growing challenge in agent-based applications: verifying that an AI system actually executed the actions it claims to have performed. According to EigenCloud, Eigen Trace Mirror combines trusted execution environments and cryptographic signatures to create auditable execution records, allowing users to independently verify agent activity rather than relying solely on logs, traces, or application dashboards.\n\nThe solution is built on EigenCompute infrastructure and represents another step in EigenCloud’s broader effort to develop verifiable cloud services for AI workloads, where computation, execution, and agent behavior can be independently validated."
+        }
+      ]
+    },
+    {
+      "name": "Nethermind",
+      "type": "upcoming-project",
+      "projectId": "nethermind",
+      "news": [
+        {
+          "title": "Nethermind Advances Its zkEVM Execution and Proof Generation Roadmap",
+          "content": "Nethermind announced several milestones in its ongoing effort to support zero-knowledge proving systems within its execution client architecture. According to the team, foundational components including execution witnesses, a stateless executor, a minimal EVM binary, and RISC-V64 compilation have now been completed.\n\nThe project has also completed its integration with Zisk and is currently processing Ethereum mainnet blocks through the proving pipeline. Execution and validation are operational, with proof generation identified as the next major milestone. Looking ahead, Nethermind plans to add support for additional zkVMs, including RISC Zero and SP1, as part of its broader strategy to build a flexible proving architecture capable of supporting multiple zero-knowledge execution environments."
+        },
+        {
+          "title": "Nethermind Demonstrates Native Cross-Layer Liquidity Access on Ethereum Economic Zone",
+          "content": "Nethermind showcased a new demonstration of synchronous composability within the Ethereum Economic Zone, allowing Layer 2 applications to access and interact with liquidity on Ethereum Layer 1 without relying on third-party bridges or custodial intermediaries.\n\nIn the demonstration, a user on a rollup swaps xDAI for USDC using liquidity from a SushiSwap pool on Gnosis Chain, with the transaction settling back to the Layer 2 environment in a single flow. According to Nethermind, the framework enables rollups to natively leverage existing Layer 1 liquidity while maintaining a seamless user experience and reducing the complexity associated with traditional bridging solutions.\n\nThe system was built by Nethermind on Gnosis Chain infrastructure and uses Zisk for proof generation, highlighting ongoing efforts to improve interoperability and composability across Ethereum-based ecosystems."
+        },
+        {
+          "title": "Nethermind Applies Formal Verification to Aptos Keyless Authentication",
+          "content": "Nethermind announced ongoing work to formally verify the zero-knowledge circuits underpinning Aptos Keyless, a system that allows users to create blockchain accounts using familiar authentication providers such as Google and Apple.\n\nThe verification effort is being conducted using CLAP, a framework that enables developers to write and prove zero-knowledge circuits directly within the Lean theorem proving environment. According to Nethermind, this approach allows security properties to be verified at the source code level and preserved throughout the compilation process into constraint systems used for proof generation.\n\nFunded by Aptos Labs, the project focuses on validating a circuit containing roughly 1.4 million constraints that links traditional web authentication to onchain account creation. Nethermind stated that early results also indicate opportunities to reduce circuit complexity while maintaining formal correctness guarantees."
+        },
+        {
+          "title": "Nethermind Releases Alpha Version of an Independent Arbitrum Execution Client",
+          "content": "Nethermind announced the release of version 0.2.0 alpha of its Arbitrum execution client, marking a significant step toward client diversity within the Arbitrum ecosystem.\n\nA key milestone of the release is the ability to generate witness data that is byte-equivalent to Nitro’s output, a requirement for compatibility with Arbitrum’s existing fraud-proof system. According to Nethermind, this enables disputes to be resolved consistently across multiple client implementations using Arbitrum’s interactive bisection mechanism and one-step proofs on Ethereum.\n\nThe alpha release includes validator functionality, fraud-proof witness generation, block tracking, and stable synchronization with both Arbitrum One and Arbitrum Sepolia. Nethermind emphasized that introducing an independent execution client improves network resilience by reducing reliance on a single software implementation and supports the long-term goal of more decentralized and permissionless validation."
+        },
+        {
+          "title": "Nethermind Security Publishes Guidance on Audit Preparation",
+          "content": "Nethermind Security published new guidance on how development teams can better prepare for security audits, arguing that audit engagements are most effective when auditors can focus on complex vulnerabilities rather than issues that should be identified during testing and internal reviews.\n\nAccording to the team, common problems such as integration bugs, dead code, and well-known vulnerability patterns can consume valuable audit time that would otherwise be spent investigating deeper protocol-specific risks. To address this, Nethermind highlighted the use of automated pre-audit tooling, including its AuditAgent platform, which is designed to identify common security issues before a formal audit begins."
+        },
+        {
+          "title": "Nethermind Expands Tooling and Infrastructure for the Aztec Ecosystem",
+          "content": "Nethermind highlighted a series of contributions to the Aztec ecosystem following the launch of Aztec Alpha, the privacy-focused zk rollup that enables private smart contract execution on Ethereum mainnet.\n\nAmong the updates, Nethermind released a multi-asset Fee Payment Contract to Aztec testnet, allowing users to pay transaction fees directly with assets such as USDC rather than acquiring a separate fee token. The team also launched an Aztec Governance Dashboard, added mainnet support to its AztecNodes explorer, and released several developer-focused tools including a faucet, linter, and AI agent integrations.\n\nAlongside product development, Nethermind reported ongoing security and protocol support efforts, including the resolution of dozens of audit findings and participation in incident response activities following Aztec’s mainnet launch."
+        },
+        {
+          "title": "Nethermind Security Expands Audit Availability for Smart Contracts and ZK Systems",
+          "content": "Nethermind Security announced the availability of additional audit slots between July 1 and August 15, offering security reviews for both smart contracts and zero-knowledge systems.\n\nAs part of the program, audit engagements include access to AuditAgent Pro, Nethermind’s automated security analysis tool designed to identify common vulnerability patterns and code quality issues before the formal review process begins. According to the team, the approach aims to improve audit efficiency by allowing security researchers to focus on protocol-specific risks and more complex attack surfaces.\n\nThe announcement highlights Nethermind Security’s continued focus on combining automated tooling with manual security reviews as demand for audits grows across smart contract, infrastructure, and zero-knowledge ecosystems."
+        }
+      ]
+    },
+    {
+      "name": "Cartesi",
+      "type": "upcoming-project",
+      "projectId": "cartesi",
+      "news": [
+        {
+          "title": "Emergency Withdrawals Progress Across Rollups Contracts",
+          "content": "A series of new Rollups Contracts 3.0.0-alpha releases continued expanding support for emergency withdrawals across the Cartesi stack. The updates improve safeguards around claims, validator coordination, and foreclosure flows, while also refining how applications expose withdrawal and account-verification functionality.\n\nThe releases additionally simplify deployment workflows by moving toward Forge-based tooling, standardizing deployment addresses across supported networks, and distributing deployment metadata directly through GitHub release artifacts. Recent updates also introduced new events that help the Rollups Node more efficiently track and verify account state proofs onchain."
+        },
+        {
+          "title": "Fraud-Proof System Aligns With New Contracts and Machine Upgrades",
+          "content": "Cartesi’s Fraud-Proof System 3.0.0-alpha releases continued integrating the latest Rollups Contracts and Cartesi Machine updates into the dispute-resolution stack. The updates improve compatibility across the ecosystem while preparing the fraud-proof pipeline for newer emergency withdrawal and verification flows.\n\nThe releases also modernize build infrastructure, expand support for AMD64 and ARM64 node binaries, and streamline deployment tooling through pre-computed deployment artifacts and Forge-based workflows. Recent versions additionally integrate the latest Machine Emulator and onchain machine updates, keeping the fraud-proof stack aligned with the evolving Cartesi Machine architecture."
+        },
+        {
+          "title": "DeFi-on-Linux Educational Resources and Demos",
+          "content": "Two new pieces this month show what building real DeFi primitives on Cartesi actually looks like in practice. The first takes on liquidity directly: a Uniswap integration demo built on Base Sepolia shows how a vault contract can turn idle deposits into active liquidity inside a Cartesi app. Users deposit USDC, approve the vault, and the backend emits vouchers that deploy funds directly into a Uniswap liquidity pool. When users request a withdrawal, the vault pulls the liquidity back.\n\nThe second is a vibe-coding session around token price mechanics from developer advocate Shaheen Ahmed: one prompt into Cursor and a bonding curve running inside Cartesi Machine with a Python backend. Together, these examples provide additional proof points for cartesi-skills and Cartesi’s broader developer workflow for AI-assisted application development."
+        },
+        {
+          "title": "AI Skills and MCP Tooling for Cartesi Builders",
+          "content": "Contributors shipped an MCP server for Cartesi development, giving AI tools like Claude and Cursor direct access to Cartesi-specific workflows, CLI commands, docs, repos, and guides. With it connected, an AI agent can assist with local development, frontend/backend setup, asset deposits, L1 interactions, and onchain deployment inline in the editor rather than guessing commands or pulling stale docs.\n\nThe release pairs with cartesi-skills, a repository of specialized capabilities for AI agents. The repo ships 10 skills plus a workflow skill covering scaffolding, backend development in JS/TS and Python, local development, debugging, frontend, contracts, Rollups Node API, and self-hosted deployment. This early release is compatible with Cartesi Rollups v2.0 and is open for testing and feedback from the broader community."
+        }
+      ]
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import { AggregatedL2CostRepository } from './repositories/AggregatedL2CostRepos
 import { AggregatedLivenessRepository } from './repositories/AggregatedLivenessRepository'
 import { AnomaliesRepository } from './repositories/AnomaliesRepository'
 import { AnomalyStatsRepository } from './repositories/AnomalyStatsRepository'
+import { AppStateRepository } from './repositories/AppStateRepository'
 import { BlobsRepository } from './repositories/BlobsRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
@@ -112,6 +113,7 @@ export function createDatabase(
     realTimeLiveness: new RealTimeLivenessRepository(db),
     syncMetadata: new SyncMetadataRepository(db),
     notifications: new NotificationsRepository(db),
+    appState: new AppStateRepository(db),
     // #endregion
 
     // #region Privacy

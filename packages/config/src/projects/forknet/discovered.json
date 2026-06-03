@@ -1,6 +1,6 @@
 {
   "name": "forknet",
-  "timestamp": 1777451710,
+  "timestamp": 1780405336,
   "configHash": "0xa0d879612e1ca50943afc8bed7f21bce09a7b99e4d0f6a8bf48b6b9f4a712db3",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -283,11 +283,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Conduit Multisig 1",
       "address": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
@@ -420,6 +415,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
@@ -428,7 +424,6 @@
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-          "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
@@ -438,7 +433,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 259,
+        "nonce": 275,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1031,6 +1026,11 @@
     },
     {
       "address": "eth:0xbF57d9fBFF423Ef2bB11fc0927CeAd6909353C52",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2326,6 +2326,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
-  "usedBlockNumbers": { "ethereum": 24984580 },
-  "permissionsConfigHash": "0x36e9ed8a883af8df6d3829f761cce5fb8fb7cfb135fb612ef7c6e58ebcc51df8"
+  "usedBlockNumbers": { "ethereum": 25229866 },
+  "permissionsConfigHash": "0xfb82eddd533ab48aae9f6c164cebc3b63e40d1ce3832328ba4a6e554db725ce9"
 }

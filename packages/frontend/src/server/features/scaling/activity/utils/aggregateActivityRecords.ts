@@ -6,13 +6,16 @@ export function aggregateActivityRecords(
   entries: ActivityRecord[],
   options?: {
     forEthereum?: boolean
+    startTimestamp?: UnixTime
   },
 ) {
-  const startTimestamp = entries.find(
-    (e) =>
-      (options?.forEthereum ? true : e.projectId !== ProjectId.ETHEREUM) &&
-      e.count > 0,
-  )?.timestamp
+  const startTimestamp =
+    options?.startTimestamp ??
+    entries.find(
+      (e) =>
+        (options?.forEthereum ? true : e.projectId !== ProjectId.ETHEREUM) &&
+        e.count > 0,
+    )?.timestamp
 
   if (!startTimestamp) {
     return undefined

@@ -20,6 +20,11 @@ export type { AggregatedL2CostRecord } from './repositories/AggregatedL2CostRepo
 export type { AggregatedLivenessRecord } from './repositories/AggregatedLivenessRepository'
 export type { AnomalyRecord } from './repositories/AnomaliesRepository'
 export type { AnomalyStatsRecord } from './repositories/AnomalyStatsRepository'
+export {
+  AppStateKey,
+  AppStatePair,
+  type AppStateRecord,
+} from './repositories/AppStateRepository'
 export type { BlobPairCount, BlobRecord } from './repositories/BlobsRepository'
 export type {
   ChainApi,
