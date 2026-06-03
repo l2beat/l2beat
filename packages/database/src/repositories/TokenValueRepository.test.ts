@@ -71,49 +71,6 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
   })
 
-  describe(TokenValueRepository.prototype.getLatestTimestamp.name, () => {
-    it('returns latest timestamp', async () => {
-      await repository.upsertMany([
-        tokenValue('a', 'ethereum', UnixTime(100), 10, 10000, 8000, 5000, 10),
-        tokenValue('b', 'arbitrum', UnixTime(300), 10, 10000, 8000, 5000, 10),
-        tokenValue('c', 'base', UnixTime(200), 10, 10000, 8000, 5000, 10),
-      ])
-
-      const result = await repository.getLatestTimestamp()
-
-      expect(result).toEqual(UnixTime(300))
-    })
-
-    it('returns undefined when no records exist', async () => {
-      const result = await repository.getLatestTimestamp()
-
-      expect(result).toEqual(undefined)
-    })
-  })
-
-  describe(
-    TokenValueRepository.prototype.getMaxTimestampAtOrBefore.name,
-    () => {
-      it('returns latest timestamp at or before the given timestamp', async () => {
-        await repository.upsertMany([
-          tokenValue('a', 'ethereum', UnixTime(100), 10, 10000, 8000, 5000, 10),
-          tokenValue('b', 'arbitrum', UnixTime(300), 10, 10000, 8000, 5000, 10),
-          tokenValue('c', 'base', UnixTime(200), 10, 10000, 8000, 5000, 10),
-        ])
-
-        const result = await repository.getMaxTimestampAtOrBefore(UnixTime(250))
-
-        expect(result).toEqual(UnixTime(200))
-      })
-
-      it('returns undefined when no records exist', async () => {
-        const result = await repository.getMaxTimestampAtOrBefore(UnixTime(100))
-
-        expect(result).toEqual(undefined)
-      })
-    },
-  )
-
   describe(
     TokenValueRepository.prototype.getMaxTimestampAtOrBeforeForProjects.name,
     () => {

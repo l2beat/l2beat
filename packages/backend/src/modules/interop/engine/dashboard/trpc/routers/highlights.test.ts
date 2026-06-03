@@ -148,14 +148,14 @@ describe(createHighlightsRouter.name, () => {
       .resolvesToOnce(currentTokens)
       .resolvesToOnce(previousTokens)
       .resolvesTo([])
-    const getActivityMaxTimestampAtOrBefore =
+    const getActivityMaxTimestampAtOrBeforeForProjects =
       mockFn().resolvesTo(latestTimestamp)
     const getActivityByTimestamp = mockFn()
       .resolvesToOnce(currentActivity)
       .resolvesToOnce(previousActivity)
       .resolvesToOnce(olderActivity)
       .resolvesTo([])
-    const getTvsMaxTimestampAtOrBefore = mockFn()
+    const getTvsMaxTimestampAtOrBeforeForProjects = mockFn()
       .resolvesToOnce(latestTimestamp)
       .resolvesToOnce(previousTimestamp)
       .resolvesToOnce(olderTimestamp)
@@ -170,9 +170,9 @@ describe(createHighlightsRouter.name, () => {
       getTransferByTimestamp,
       getTransferMaxTimestampAtOrBefore,
       getTokenByTimestamp,
-      getActivityMaxTimestampAtOrBefore,
+      getActivityMaxTimestampAtOrBeforeForProjects,
       getActivityByTimestamp,
-      getTvsMaxTimestampAtOrBefore,
+      getTvsMaxTimestampAtOrBeforeForProjects,
       getTvsByTimestamp,
       getAbstractTokenById,
     })
@@ -347,9 +347,10 @@ describe(createHighlightsRouter.name, () => {
       latestTimestamp,
       getTransferByTimestamp: mockFn().resolvesTo([]),
       getTokenByTimestamp: mockFn().resolvesTo([]),
-      getActivityMaxTimestampAtOrBefore: mockFn().resolvesTo(latestTimestamp),
+      getActivityMaxTimestampAtOrBeforeForProjects:
+        mockFn().resolvesTo(latestTimestamp),
       getActivityByTimestamp,
-      getTvsMaxTimestampAtOrBefore: mockFn()
+      getTvsMaxTimestampAtOrBeforeForProjects: mockFn()
         .resolvesToOnce(latestTimestamp)
         .resolvesToOnce(previousTimestamp)
         .resolvesToOnce(olderTimestamp),
@@ -533,7 +534,8 @@ describe(createHighlightsRouter.name, () => {
       latestTimestamp,
       getTransferByTimestamp: mockFn().resolvesTo([]),
       getTokenByTimestamp: mockFn().resolvesTo([]),
-      getActivityMaxTimestampAtOrBefore: mockFn().resolvesTo(latestTimestamp),
+      getActivityMaxTimestampAtOrBeforeForProjects:
+        mockFn().resolvesTo(latestTimestamp),
       getActivityByTimestamp,
     })
 
@@ -584,9 +586,10 @@ describe(createHighlightsRouter.name, () => {
       latestTimestamp,
       getTransferByTimestamp: mockFn().resolvesTo([]),
       getTokenByTimestamp: mockFn().resolvesTo([]),
-      getActivityMaxTimestampAtOrBefore: mockFn().resolvesTo(latestTimestamp),
+      getActivityMaxTimestampAtOrBeforeForProjects:
+        mockFn().resolvesTo(latestTimestamp),
       getActivityByTimestamp,
-      getTvsMaxTimestampAtOrBefore: mockFn()
+      getTvsMaxTimestampAtOrBeforeForProjects: mockFn()
         .resolvesToOnce(latestTimestamp)
         .resolvesToOnce(previousTimestamp)
         .resolvesToOnce(olderTimestamp),
@@ -637,7 +640,7 @@ describe(createHighlightsRouter.name, () => {
       latestTimestamp,
       getTransferByTimestamp: mockFn().resolvesTo([]),
       getTokenByTimestamp: mockFn().resolvesTo([]),
-      getTvsMaxTimestampAtOrBefore: mockFn()
+      getTvsMaxTimestampAtOrBeforeForProjects: mockFn()
         .resolvesToOnce(latestTimestamp)
         .resolvesToOnce(fallbackPreviousTimestamp)
         .resolvesToOnce(olderTimestamp),
@@ -875,10 +878,8 @@ function createCaller(options: {
   getTransferMaxTimestampAtOrBefore?: ReturnType<typeof mockFn>
   getTransferByTimestamp?: ReturnType<typeof mockFn>
   getTokenByTimestamp?: ReturnType<typeof mockFn>
-  getActivityMaxTimestampAtOrBefore?: ReturnType<typeof mockFn>
   getActivityMaxTimestampAtOrBeforeForProjects?: ReturnType<typeof mockFn>
   getActivityByTimestamp?: ReturnType<typeof mockFn>
-  getTvsMaxTimestampAtOrBefore?: ReturnType<typeof mockFn>
   getTvsMaxTimestampAtOrBeforeForProjects?: ReturnType<typeof mockFn>
   getTvsByTimestamp?: ReturnType<typeof mockFn>
   getAbstractTokenById?: ReturnType<typeof mockFn>
@@ -914,23 +915,15 @@ function createCaller(options: {
         getByTimestamp: options.getTokenByTimestamp ?? mockFn().resolvesTo([]),
       }),
       activity: mockObject<Database['activity']>({
-        getMaxTimestampAtOrBefore:
-          options.getActivityMaxTimestampAtOrBefore ??
-          mockFn().resolvesTo(undefined),
         getMaxTimestampAtOrBeforeForProjects:
           options.getActivityMaxTimestampAtOrBeforeForProjects ??
-          options.getActivityMaxTimestampAtOrBefore ??
           mockFn().resolvesTo(undefined),
         getByTimestamp:
           options.getActivityByTimestamp ?? mockFn().resolvesTo([]),
       }),
       tvsTokenValue: mockObject<Database['tvsTokenValue']>({
-        getMaxTimestampAtOrBefore:
-          options.getTvsMaxTimestampAtOrBefore ??
-          mockFn().resolvesTo(undefined),
         getMaxTimestampAtOrBeforeForProjects:
           options.getTvsMaxTimestampAtOrBeforeForProjects ??
-          options.getTvsMaxTimestampAtOrBefore ??
           mockFn().resolvesTo(undefined),
         getByTimestamp: options.getTvsByTimestamp ?? mockFn().resolvesTo([]),
       }),
