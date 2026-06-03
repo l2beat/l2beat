@@ -16,11 +16,11 @@ const STATIC_PATHS = [
   '/scaling/liveness',
   '/scaling/costs',
   '/scaling/archived',
-  '/scaling/upcoming',
   '/interop/summary',
   '/interop/non-minting',
   '/interop/lock-and-mint',
   '/interop/burn-and-mint',
+  '/interop/token-frameworks',
   '/data-availability/summary',
   '/data-availability/risk',
   '/data-availability/throughput',
@@ -40,6 +40,7 @@ const STATIC_PATHS = [
   '/terms-of-service',
   '/stages',
   '/publications',
+  '/privacy/summary',
 ]
 
 export function createSitemapRouter() {
@@ -77,6 +78,7 @@ async function getDynamicPaths(): Promise<string[]> {
     ecosystemProjects,
     daLayers,
     daBridges,
+    privacyProjects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
@@ -87,6 +89,7 @@ async function getDynamicPaths(): Promise<string[]> {
     ps.getProjects({ where: ['ecosystemConfig'] }),
     ps.getProjects({ select: ['daLayer'], whereNot: ['archivedAt'] }),
     ps.getProjects({ select: ['daBridge'] }),
+    ps.getProjects({ where: ['privacyInfo'] }),
   ])
 
   const paths: string[] = []
@@ -104,6 +107,10 @@ async function getDynamicPaths(): Promise<string[]> {
 
   for (const project of ecosystemProjects) {
     paths.push(`/ecosystems/${project.slug}`)
+  }
+
+  for (const project of privacyProjects) {
+    paths.push(`/privacy/projects/${project.slug}`)
   }
 
   for (const layer of daLayers) {

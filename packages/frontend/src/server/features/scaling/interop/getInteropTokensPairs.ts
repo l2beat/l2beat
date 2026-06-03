@@ -180,8 +180,18 @@ async function getInteropTokensPairsData({
       if (pairId === 'unknown') {
         return {
           id: pairId,
-          tokenA: { symbol: 'Unknown', iconUrl: TOKEN_PLACEHOLDER_ICON_URL },
-          tokenB: { symbol: 'Unknown', iconUrl: TOKEN_PLACEHOLDER_ICON_URL },
+          tokenA: {
+            id: 'unknown',
+            symbol: 'Unknown',
+            issuer: null,
+            iconUrl: TOKEN_PLACEHOLDER_ICON_URL,
+          },
+          tokenB: {
+            id: 'unknown',
+            symbol: 'Unknown',
+            issuer: null,
+            iconUrl: TOKEN_PLACEHOLDER_ICON_URL,
+          },
           topProtocol: undefined,
           volume: null,
           transferCount: data.transferCount,
@@ -195,17 +205,21 @@ async function getInteropTokensPairsData({
       }
 
       const parts = pairId.split(INTEROP_PAIR_SEPARATOR)
-      const tokenA = parts[0] ? tokensDetailsMap.get(parts[0]) : undefined
-      const tokenB = parts[1] ? tokensDetailsMap.get(parts[1]) : undefined
+      const [tokenAId, tokenBId] = parts
+      const tokenA = tokenAId ? tokensDetailsMap.get(tokenAId) : undefined
+      const tokenB = tokenBId ? tokensDetailsMap.get(tokenBId) : undefined
 
-      assert(tokenA && tokenB, `Tokens not found: ${pairId}`)
+      assert(
+        tokenAId && tokenBId && tokenA && tokenB,
+        `Tokens not found: ${pairId}`,
+      )
 
       const avgDuration = getAverageDuration(data, durationSplit)
 
       return {
         id: pairId,
-        tokenA,
-        tokenB,
+        tokenA: { id: tokenAId, ...tokenA },
+        tokenB: { id: tokenBId, ...tokenB },
         topProtocol: getTopProtocolDisplay(data.protocols, projectsById),
         volume: data.volume,
         transferCount: data.transferCount,

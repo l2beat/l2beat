@@ -1,8 +1,7 @@
 {
   "NativeGateway.sol": {
     "hash": "0xd1c8a73dbbbde1972f9876ae74115745137e4bb9cb35d484e38d5910b443425f",
-    "address": "eth:0x8976Ca4E0c8467097Da675399fB7DB454a1b56dd",
-    "chain": "ethereum",
+    "address": "eth:0x025f11FedA181E2Ba63bb86536DD987E0769f586",
     "blockNumber": 24842312
   }
 }

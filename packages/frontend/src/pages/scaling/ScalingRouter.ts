@@ -16,8 +16,6 @@ import { getScalingRiskStateValidationData } from './risk/state-validation/getSc
 import { getScalingSummaryData } from './summary/getScalingSummaryData'
 import { getScalingTvsBreakdownData } from './tvs/breakdown/getScalingTvsBreakdownData'
 import { getScalingTvsData } from './tvs/getScalingTvsData'
-import { getScalingUpcomingData } from './upcoming/getScalingUpcomingData'
-
 export function createScalingRouter(
   manifest: Manifest,
   render: RenderFunction,
@@ -58,7 +56,7 @@ export function createScalingRouter(
     validateRoute({
       query: v.object({
         tab: v
-          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'notReviewed'])
+          .enum(['rollups', 'validiumsAndOptimiums', 'others'])
           .default('rollups'),
       }),
     }),
@@ -103,12 +101,6 @@ export function createScalingRouter(
 
   router.get('/scaling/archived', async (req, res) => {
     const data = await getScalingArchivedData(req, manifest, cache)
-    const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get('/scaling/upcoming', async (req, res) => {
-    const data = await getScalingUpcomingData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })

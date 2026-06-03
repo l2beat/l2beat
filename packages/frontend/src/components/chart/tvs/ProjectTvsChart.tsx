@@ -1,8 +1,9 @@
 import type { Milestone } from '@l2beat/config'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
@@ -19,15 +20,18 @@ interface Props {
 }
 
 export function ProjectTvsChart({ project, milestones, defaultRange }: Props) {
+  const trpc = useTRPC()
   const [unit, setUnit] = useState<ChartUnit>('usd')
   const [range, setRange] = useState<ChartRange>(defaultRange)
 
-  const { data, isLoading } = api.tvs.chart.useQuery({
-    range,
-    filter: { type: 'projects', projectIds: [project.id] },
-    excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens: true,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.tvs.chart.queryOptions({
+      range,
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
+    }),
+  )
 
   const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(
     ([timestamp, native, canonical, external, ethPrice]) => {

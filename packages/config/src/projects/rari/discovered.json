@@ -1,7 +1,7 @@
 {
   "name": "rari",
-  "timestamp": 1778233014,
-  "configHash": "0x7d430f430fa1e37e3252c5b1a9c30e1806e953be7eb34207fbadd590de5e8be5",
+  "timestamp": 1779719714,
+  "configHash": "0x4ac75d8663177bd607a047518b5424e8e18771bf0c23fdfaab646f14a51ac838",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
     {
@@ -221,7 +221,7 @@
         "allowedOutboxList": [
           "arb1:0x91591BB66075BCfF94AA128B003134165C3Ab83a"
         ],
-        "delayedMessageCount": 640052,
+        "delayedMessageCount": 640614,
         "inboxHistory": [
           "arb1:0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
           "arb1:0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
@@ -229,8 +229,8 @@
         "outboxHistory": ["arb1:0x91591BB66075BCfF94AA128B003134165C3Ab83a"],
         "rollup": "arb1:0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerInbox": "arb1:0xA436f1867adD490BF1530c636f2FB090758bB6B3",
-        "sequencerMessageCount": 33917,
-        "sequencerReportedSubMessageCount": 3977671
+        "sequencerMessageCount": 34475,
+        "sequencerReportedSubMessageCount": 4003809
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -305,7 +305,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
-        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
+        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -323,7 +323,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
-        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
+        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -348,7 +348,7 @@
       "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
         "0xb739f8156f36efd1dca81c7048413241da1e5bf4a5f98001523a474136b8defd",
-        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
+        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
@@ -404,13 +404,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 19654,
+        "firstUnresolvedNode": 20061,
         "inbox": "arb1:0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19045354,
-        "latestConfirmed": 19653,
-        "latestNodeCreated": 19804,
+        "latestConfirmed": 20060,
+        "latestNodeCreated": 20212,
         "loserStakeEscrow": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x91591BB66075BCfF94AA128B003134165C3Ab83a",
@@ -485,6 +485,7 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
+            "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -553,7 +554,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo_Celestia",
       "sourceHashes": [
-        "0xb40c87a8d4d828d61a2e354d168abd445e7a89816a50eeca7cea6bf1ac59dc5c"
+        "0xb07c14d6cbfdaa497cb60d9918ef22146507bf6d56ebd65cdf7bde639ce4549d"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.",
@@ -1000,7 +1001,6 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "arb1:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232",
           "arb1:0xe5219fe14E2FD520Ff80be036790913053d1575d",
           "arb1:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
           "arb1:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
@@ -1013,8 +1013,8 @@
         "domainSeparator": "0xeb75286128f8b958bb9a8db0f4f446758af4c721059060ccbd44ff0cb027027e",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 118,
+        "multisigThreshold": "3 of 7 (43%)",
+        "nonce": 122,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1193,7 +1193,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "batchCount": 33917,
+        "batchCount": 34475,
         "batchPosterManager": "arb1:0xffE86271e68A0365d71B86b101Fc8CA5546E7E77",
         "batchPosters": ["arb1:0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"],
         "BLOBSTREAM": "arb1:0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -1226,7 +1226,7 @@
         "rollup": "arb1:0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 5,
-        "totalDelayedMessagesRead": 640051,
+        "totalDelayedMessagesRead": 640613,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1253,7 +1253,7 @@
       "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
+        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
@@ -1319,7 +1319,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
-        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
+        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -1338,11 +1338,6 @@
     },
     {
       "address": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "arb1:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2277,6 +2272,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 460629234 },
-  "permissionsConfigHash": "0x4c018f346808f23c26ee389d63a2b304855fb5a436dff98b495844656624196b"
+  "usedBlockNumbers": { "arbitrum": 466550408 },
+  "permissionsConfigHash": "0xa1224a2faafe56de0b099d98bbe27c2e230612a3be097ce959d1d28576c34ce7"
 }

@@ -7,7 +7,6 @@ on:
   pull_request:
   push:
     branches:
-      - master
       - main
   merge_group:
 
@@ -219,7 +218,7 @@ jobs:
       CONFIG_ALCHEMY_API_KEY: ${{ secrets.CONFIG_ALCHEMY_API_KEY }}
     services:
       postgres:
-        image: mirror.gcr.io/postgres:15
+        image: mirror.gcr.io/postgres:17
         env:
           POSTGRES_PASSWORD: postgres
         options: >-

@@ -7,9 +7,10 @@ export interface State {
   readonly hidden: readonly string[]
   readonly history: HistoryState
   readonly userPreferences: {
-    readonly hideUnknownOnLoad: boolean
     readonly enableDimming: boolean
     readonly hideLargeArrays: boolean
+    readonly highlightOverlapping: boolean
+    readonly useExperimentalRenderer: boolean
   }
   readonly transform: {
     readonly offsetX: number

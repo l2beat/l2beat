@@ -1,5 +1,5 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TornadoVault",
-  "description": "Vault that escrows locked TORN on behalf of governance users and serves withdrawals initiated by the governance contract."
+  "description": "Vault that escrows locked TORN of governance participants who wish to receive voting rights."
 }

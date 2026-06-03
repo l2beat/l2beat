@@ -183,7 +183,6 @@ async function getBlockDaTrackingProjects(
 ): Promise<BlockDaIndexedConfig[]> {
   const projects = await ps.getProjects({
     select: ['daTrackingConfig'],
-    whereNot: ['isUpcoming'],
   })
 
   return projects
@@ -269,7 +268,6 @@ async function getTimestampDaTrackingProjects(
 ): Promise<TimestampDaIndexedConfig[]> {
   const projects = await ps.getProjects({
     select: ['daTrackingConfig'],
-    whereNot: ['isUpcoming'],
   })
 
   return projects

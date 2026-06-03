@@ -1,7 +1,7 @@
 {
   "name": "silentdata",
   "timestamp": 1765551112,
-  "configHash": "0x703a30f443fd54bcaf63fef3f6b009d6f95e99ea397fa75000ede468048936d6",
+  "configHash": "0x5f4e5e277aa9792ec52f295a425e156129a4b2e4c1856cc26675f0e3541cf7fe",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -63,7 +63,11 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+      "ignoreInWatchMode": [
+        "permissionedGamesTotal",
+        "gameCount",
+        "permissionedGamesTotal"
+      ],
       "deployerAddress": "eth:0xF29a1335F914bf355D4f5cB5366a2BB1EA575e86",
       "sinceTimestamp": 1753442903,
       "sinceBlock": 22995864,
@@ -1779,7 +1783,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
+    "opstack/DisputeGameFactory": "0x46746381be2da0435ab1c70360c00f35d9759a505c3f99905e07476b72e8b79c",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",

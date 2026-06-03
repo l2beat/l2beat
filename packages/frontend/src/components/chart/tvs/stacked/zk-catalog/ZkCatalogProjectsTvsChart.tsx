@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
@@ -21,7 +22,7 @@ import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleA
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
@@ -43,15 +44,18 @@ export function ZkCatalogProjectsTvsChart({
   milestones,
   projectsForTvs,
 }: ZkCatalogProjectsTvsChartProps) {
+  const trpc = useTRPC()
   const { range, unit } = useTvsChartControlsContext()
   const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
 
-  const { data, isLoading } = api.tvs.detailedChartWithProjectsRanges.useQuery({
-    projects: projectsForTvs,
-    range,
-    excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.tvs.detailedChartWithProjectsRanges.queryOptions({
+      projects: projectsForTvs,
+      range,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens,
+    }),
+  )
 
   const projectLabels = useMemo(() => {
     return projectsForTvs.reduce(

@@ -6,6 +6,7 @@ import {
   TemplateService,
   UserHandlers,
 } from '@l2beat/discovery'
+import { DiffHistoryParser } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
 import express from 'express'
@@ -13,7 +14,6 @@ import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
 import { attachConfigRouter } from './configs/router'
-import { DiffHistoryParser } from './DiffHistoryParser'
 import { DiffoveryController } from './diffovery/DiffoveryController'
 import { FlatSourceClient } from './diffovery/FlatSourceClient'
 import { attachDiffoveryRouter } from './diffovery/router'
@@ -23,6 +23,7 @@ import { getConfigHealth } from './getConfigHealth'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
+import { attachLayoutRouter } from './layouts/router'
 import { searchCode } from './searchCode'
 import {
   attachTemplateRouter,
@@ -114,7 +115,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   })
 
   app.get('/api/projects', (_req, res) => {
-    const response = getProjects(configReader, readonly)
+    const response = getProjects(configReader)
     res.json(response)
   })
 
@@ -221,31 +222,6 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
   })
 
-  app.get('/api/config/sync-status', (_, res) => {
-    templateService.reload()
-    const allProjects = configReader.readAllDiscoveredProjects()
-
-    const reasons = allProjects.flatMap((project) => {
-      const discovery = configReader.readDiscovery(project)
-      const config = configReader.readConfig(project)
-
-      const reasons = templateService.discoveryNeedsRefresh(discovery, config)
-
-      if (reasons.length === 0) {
-        return []
-      }
-
-      return {
-        project,
-        reasons,
-      }
-    })
-
-    res.json({
-      reasons,
-    })
-  })
-
   app.get('/api/config-files/:project', (req, res) => {
     const query = projectParamsSchema.safeParse(req.params)
 
@@ -293,6 +269,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   app.use(express.static(STATIC_ROOT))
 
   attachDiffoveryRouter(app, diffoveryController)
+  attachLayoutRouter(app, configReader, readonly)
 
   if (!readonly) {
     attachTemplateRouter(app, templateService)

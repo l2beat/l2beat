@@ -1,7 +1,7 @@
 {
   "name": "katana",
-  "timestamp": 1777451715,
-  "configHash": "0x806d8fc8262f28a519f8a7e4b860ccc2f7c1c9095d0f2d67132045670c079946",
+  "timestamp": 1780404229,
+  "configHash": "0xcf83080571577962615ba9227980239343145d2a0c0115e3e5e980a20171d254",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -119,12 +119,12 @@
         "lastAccInputHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
-        "latestBlockNumber": 30702125,
-        "latestOutputIndex": 7028,
+        "latestBlockNumber": 33656198,
+        "latestOutputIndex": 7835,
         "MAX_AGGCHAIN_SIGNERS": 255,
         "networkName": "katana",
-        "nextBlockNumber": 30702126,
-        "nextOutputIndex": 7029,
+        "nextBlockNumber": 33656199,
+        "nextOutputIndex": 7836,
         "optimisticMode": false,
         "optimisticModeManager": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
         "pendingAdmin": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
@@ -294,13 +294,13 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x5E5D6f849Fa86c058f148E9D3f643C8F4c43f20b",
+          "eth:0x5250077c42627cBd112988f32D482acC9ff40bDB",
+          "eth:0xC357eE8a8DdE88Dd5a3Ea54847Adef6846A28c51",
+          "eth:0xFcc3796370e1538F8cC60bec19A8be5457f2C74F",
+          "eth:0xFafFb75e14faFf9f11315E44a2E54A22872c7a34",
           "eth:0x80a3887BA60F76acAb48EE4aEAd0a71A0774A8B2",
           "eth:0xB13C8f58a233607569D2F8411B912148aeC4aEe2",
-          "eth:0xBD5f1429Ab467E69BEeba51E547C00A21F2a2092",
-          "eth:0x787aba336583f4A1D4f8cBBFDFFD49f3a38De665",
-          "eth:0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C",
-          "eth:0xd0002c648CCa8DeE2f2b8D70D542Ccde8ad6EC03",
-          "eth:0x1b5f15DCb82d25f91c65b53CEe151E8b9fBdD271",
           "eth:0x0Dca0FDC170baA4CA9c1dCd37Ffe01f97bCfD504"
         ],
         "$threshold": 3,
@@ -308,7 +308,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 3217,
+        "nonce": 3260,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -391,11 +391,6 @@
       "implementationNames": {
         "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832": "ProxyAdmin"
       }
-    },
-    {
-      "address": "eth:0x1b5f15DCb82d25f91c65b53CEe151E8b9fBdD271",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "PreimageOracle",
@@ -531,7 +526,7 @@
       "address": "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c",
       "type": "EOA",
       "sourceHashes": [
-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
       ],
       "proxyType": "EIP7702 EOA",
       "values": {
@@ -562,23 +557,23 @@
       "proxyType": "EOA"
     },
     {
-      "name": "OptimismPortal2_neutered",
+      "name": "OptimismPortal2",
       "address": "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
       "type": "Contract",
-      "template": "opstack/OptimismPortal2_noForce",
+      "template": "katana/OptimismPortal2",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x4cc0e4525ed77b81565c05c0e673e043a93d9878924197f772581f72c11c91c5"
+        "0xfcecb325a86c39482f8e9d29272f25089eec0b5fbefe21444fd1ea690c911f0c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.",
+      "description": "Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions.",
       "ignoreInWatchMode": ["params", "balance"],
       "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
       "values": {
         "$admin": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832",
-        "$implementation": "eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4",
+        "$implementation": "eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a",
         "$pastUpgrades": [
           [
             "2025-05-08T22:20:11.000Z",
@@ -619,9 +614,14 @@
             "2026-03-03T15:49:23.000Z",
             "0xa814ff1c6a02fa4a717875ed09e96cbd61874d85c896f3ddd8df290c73f34961",
             ["eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4"]
+          ],
+          [
+            "2026-05-22T16:31:35.000Z",
+            "0x46d8e0a3a5383c133292ef51e4d7eef96fddc443b892d38e62c39b1186055691",
+            ["eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a"]
           ]
         ],
-        "$upgradeCount": 8,
+        "$upgradeCount": 9,
         "anchorStateRegistry": "eth:0xaA8a62563CFe4E36118ED479B5486F503b438376",
         "disputeGameFactory": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
         "disputeGameFinalityDelaySeconds": 302400,
@@ -631,8 +631,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 0,
-          "prevBlockNum": 22441727
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 25169124
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -643,9 +643,10 @@
         "respectedGameTypeUpdatedAt": 1772552963,
         "superchainConfig": "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
         "systemConfig": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
-        "version": "5.1.1"
+        "version": "agg3.15.0"
       },
       "fieldMeta": {
+        "respectedGameType": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
@@ -653,12 +654,16 @@
       },
       "implementationNames": {
         "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E": "Proxy",
-        "eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4": "OptimismPortal2"
+        "eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a": "OptimismPortal2"
       },
       "usedTypes": [
         {
           "typeCaster": "Mapping",
-          "arg": { "0": "FaultDisputeGame", "1": "PermissionedDisputeGame" }
+          "arg": {
+            "0": "FaultDisputeGame",
+            "1": "PermissionedDisputeGame",
+            "1337": "KailuaGame"
+          }
         }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -691,7 +696,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 330,
+        "nonce": 342,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -788,7 +793,7 @@
           }
         },
         "asset": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "backingDifference": { "positive": true, "difference": 53351 },
+        "backingDifference": { "positive": true, "difference": 106 },
         "decimals": 8,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0x7317613d3079fd0c32c0dda038dce0e4bd277cdaa8af2d5aece3fd671e98171d",
@@ -813,13 +818,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 68398984547,
+        "stakedAssets": 75156174209,
         "symbol": "vbWBTC",
-        "totalAssets": 68398984547,
-        "totalSupply": 68398931196,
+        "totalAssets": 75156174209,
+        "totalSupply": 75156174103,
         "underlyingToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "version": "0.5.0",
-        "yield": 53351,
+        "yield": 106,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x812B2C6Ab3f4471c0E43D4BB61098a9211017427",
@@ -830,11 +835,6 @@
         "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
       },
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "address": "eth:0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "vbETH",
@@ -892,7 +892,7 @@
         "asset": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "backingDifference": {
           "positive": true,
-          "difference": "2120197203418994276"
+          "difference": "437749688470929444"
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -918,13 +918,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": "8763044488257685337233",
+        "stakedAssets": "12914106150078853237217",
         "symbol": "vbETH",
-        "totalAssets": "8763044488257685337233",
-        "totalSupply": "8760924291054266342957",
+        "totalAssets": "12914106150078853237217",
+        "totalSupply": "12913668400390382307773",
         "underlyingToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "version": "0.5.0",
-        "yield": "2120197203418994276",
+        "yield": "437749688470929444",
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x31A5684983EeE865d943A696AAC155363bA024f9",
@@ -1118,11 +1118,6 @@
       }
     },
     {
-      "address": "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1252,7 +1247,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 333,
+        "nonce": 346,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1363,6 +1358,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
@@ -1371,7 +1367,6 @@
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-          "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
@@ -1381,7 +1376,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 259,
+        "nonce": 275,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1433,7 +1428,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 20,
+        "nonce": 21,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1453,6 +1448,11 @@
       "type": "Reference",
       "targetType": "EOA",
       "targetProject": "shared-polygon-cdk"
+    },
+    {
+      "address": "eth:0x5250077c42627cBd112988f32D482acC9ff40bDB",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "vbUSDC",
@@ -1508,7 +1508,7 @@
           }
         },
         "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "backingDifference": { "positive": true, "difference": 25119980823 },
+        "backingDifference": { "positive": true, "difference": 1663244300 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xf208e01223892bb2dfb35c2d306f682552de4492b4e45dff4876243fc048a8c2",
@@ -1533,13 +1533,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 45034762799027,
+        "stakedAssets": 19322490557640,
         "symbol": "vbUSDC",
-        "totalAssets": 45034762799027,
-        "totalSupply": 45009642818204,
+        "totalAssets": 19322490557640,
+        "totalSupply": 19320827313340,
         "underlyingToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "version": "0.5.0",
-        "yield": 25119980823,
+        "yield": 1663244300,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
@@ -1565,6 +1565,11 @@
     },
     {
       "address": "eth:0x59cE4e1709c7E462F3b72Ca3e1256dFa7358FC29",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x5E5D6f849Fa86c058f148E9D3f643C8F4c43f20b",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1637,7 +1642,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 7 (29%)",
-        "nonce": 103,
+        "nonce": 109,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1646,17 +1651,17 @@
       }
     },
     {
+      "address": "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x6B2Ba82994A1606605af1F11E50DA0b2B0cee6e6",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1743,7 +1748,7 @@
           }
         },
         "asset": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "backingDifference": { "positive": true, "difference": 4956824135 },
+        "backingDifference": { "positive": true, "difference": 646047899 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xb80a4f7d2a2cc76fdaf2e936f017dddaca3e63f59cc318bc7506fafc54b81d3c",
@@ -1768,13 +1773,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 21893236808569,
+        "stakedAssets": 11196702119690,
         "symbol": "vbUSDT",
-        "totalAssets": 21893236808569,
-        "totalSupply": 21888279984434,
+        "totalAssets": 11196702119690,
+        "totalSupply": 11196056071791,
         "underlyingToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "version": "0.5.0",
-        "yield": 4956824135,
+        "yield": 646047899,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xc54b4E08C1Dcc199fdd35c6b5Ab589ffD3428a8d",
@@ -1793,11 +1798,6 @@
     },
     {
       "address": "eth:0x73D8846324B30477EA3Ac055589e40F39DE497F8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x787aba336583f4A1D4f8cBBFDFFD49f3a38De665",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1841,7 +1841,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 216,
+        "nonce": 247,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1961,6 +1961,9 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2",
+          "eth:0xe0e8e6bBDef7bbcf8dF1F5Ac0ab9906BFe991d8B",
+          "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890",
           "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
           "eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
           "eth:0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da",
@@ -1971,8 +1974,8 @@
         "domainSeparator": "0x1e10c8adfe5d143b638cfd7dc768d352d2c056220c2d69fef33e91a1c2b79531",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 40,
+        "multisigThreshold": "2 of 8 (25%)",
+        "nonce": 43,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2469,11 +2472,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0xBD5f1429Ab467E69BEeba51E547C00A21F2a2092",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439",
       "type": "EOA",
       "proxyType": "EOA",
@@ -2488,6 +2486,11 @@
       ]
     },
     {
+      "address": "eth:0xC357eE8a8DdE88Dd5a3Ea54847Adef6846A28c51",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xcB1e45481461aeF38E6B0a34F1444E9C5D647645",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2498,7 +2501,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xd0002c648CCa8DeE2f2b8D70D542Ccde8ad6EC03",
+      "address": "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2653,7 +2656,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 45,
+        "nonce": 46,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2717,7 +2720,11 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount", "permissionedGameArgs"],
+      "ignoreInWatchMode": [
+        "gameCount",
+        "permissionedGameArgs",
+        "permissionedGamesTotal"
+      ],
       "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
@@ -2791,6 +2798,11 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "address": "eth:0xe0e8e6bBDef7bbcf8dF1F5Ac0ab9906BFe991d8B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2847,6 +2859,11 @@
     },
     {
       "address": "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2944,7 +2961,7 @@
           "eth:0x6B2Ba82994A1606605af1F11E50DA0b2B0cee6e6",
           "eth:0x6624307a4f672ec5C289fBA196952902BB518dc0",
           "eth:0x54DFA4B635E7eB98515fEBA81d360A3871739277",
-          "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1",
+          "eth:0xFAc88BB6229F47A31A78F0Ba91E5a541Cb1866a3",
           "eth:0x59cE4e1709c7E462F3b72Ca3e1256dFa7358FC29",
           "eth:0xdEb97974dfCC73178672205A1eadDc2BDeAc1Bd4"
         ],
@@ -2953,7 +2970,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 7 (29%)",
-        "nonce": 116,
+        "nonce": 125,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2962,10 +2979,1556 @@
       }
     },
     {
+      "address": "eth:0xFAc88BB6229F47A31A78F0Ba91E5a541Cb1866a3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xFafFb75e14faFf9f11315E44a2E54A22872c7a34",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xFcc3796370e1538F8cC60bec19A8be5457f2C74F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
       "type": "Reference",
       "targetType": "EOA",
       "targetProject": "shared-polygon-cdk"
+    },
+    {
+      "address": "katana:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0x02023f74ED12Df7752144aE8A23411776D4698b4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$immutable": true,
+        "owner": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13"
+      },
+      "implementationNames": {
+        "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "katana:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "AgglayerBridgeL2",
+      "address": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "type": "Contract",
+      "template": "katana/AgglayerBridgeL2",
+      "sourceHashes": [
+        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
+        "0x58919872e6c1e5657db0567384b63912ecdcc1ace8029bb576131fd436a79d78"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.",
+      "ignoreInWatchMode": [
+        "depositCount",
+        "lastUpdatedDepositCount",
+        "getRoot",
+        "claimedGlobalIndexHashChain"
+      ],
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+        "$implementation": "katana:0x094B1B2322F1A8927B61dfAf686CA78d71C6cbf6",
+        "$pastUpgrades": [
+          [
+            "2025-05-21T15:44:26.000Z",
+            "0xb3c92e7a065f876cfe017a4bed5a966e28075d693b5ef221fa49b2ff0d727c7c",
+            ["katana:0xd4AC5935c9AeA32FC120D52B22Ee41C9C5f82DEe"]
+          ],
+          [
+            "2025-06-26T09:04:29.000Z",
+            "0x2095014c39cf800cb6f965f51435d55108c75ef70ff4e83f148ba99fd115684a",
+            ["katana:0xc8EC6E02AF5D7E2EBf590601979401A696Bf820e"]
+          ],
+          [
+            "2025-06-27T22:04:28.000Z",
+            "0xe21aaf644474404b9c5441f48e95467afaaec140d8435b9d3f31474e59a05dd2",
+            ["katana:0xe3E6F722b047Ce3B1F733D9c5B0609DA4e9D1FAb"]
+          ],
+          [
+            "2026-03-03T17:53:49.000Z",
+            "0xff4926542308f9cea5b8b77f9c6d20a840b61878991d25981ca96b55c3a830ec",
+            ["katana:0x094B1B2322F1A8927B61dfAf686CA78d71C6cbf6"]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "bridgeLib": "katana:0xb30C032b183525de7427f04e79F45Cd19866E124",
+        "bridgeManager": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+        "claimedGlobalIndexHashChain": "0x366e5353f170a7884614cb8a631b6a9e52af9d3e1245b1a94796dc84c799c9c0",
+        "depositCount": 20636,
+        "emergencyBridgePauser": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+        "emergencyBridgeUnpauser": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+        "gasTokenAddress": "katana:0x0000000000000000000000000000000000000000",
+        "gasTokenMetadata": "0x",
+        "gasTokenNetwork": 0,
+        "getProxiedTokensManager": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+        "getRoot": "0x133644db93bd06718fa435c04f52b337b17a4eef3e016433b15ef2efbf3e0241",
+        "getWrappedTokenBridgeImplementation": "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c",
+        "globalExitRootManager": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+        "isEmergencyState": false,
+        "lastUpdatedDepositCount": 20636,
+        "networkID": 20,
+        "pendingEmergencyBridgePauser": "katana:0x0000000000000000000000000000000000000000",
+        "pendingEmergencyBridgeUnpauser": "katana:0x0000000000000000000000000000000000000000",
+        "pendingProxiedTokensManager": "katana:0x0000000000000000000000000000000000000000",
+        "polygonRollupManager": "katana:0x0000000000000000000000000000000000000000",
+        "unsetGlobalIndexHashChain": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "version": "v1.2.0",
+        "WETHToken": "katana:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "TransparentUpgradeableProxy",
+        "katana:0x094B1B2322F1A8927B61dfAf686CA78d71C6cbf6": "AgglayerBridgeL2"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "katana:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0x3138BBdAeAd339d34F084445192B2be9dd4B9f27",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "description": "update the global exit root (GER) that is used for L2 deposits.",
+          "role": ".globalExitRootUpdater"
+        }
+      ]
+    },
+    {
+      "name": "DeployerWhitelist",
+      "address": "katana:0x4200000000000000000000000000000000000002",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x0fd28d62e5a8f9fd1412bc515a5e629d1d43df8bc41d81ea00ae50082dbb7a7d"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "owner": "katana:0x0000000000000000000000000000000000000000",
+        "version": "1.1.1-beta.1"
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000002": "Proxy",
+        "katana:0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002": "DeployerWhitelist"
+      }
+    },
+    {
+      "name": "L2CrossDomainMessenger",
+      "address": "katana:0x4200000000000000000000000000000000000007",
+      "type": "Contract",
+      "template": "opstack/Layer2/L2CrossDomainMessenger",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x1ef37a50dbdd57f7019208b81019e52087cb92379f963e1ec092bd3eb81ec978"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
+      "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "l1CrossDomainMessenger": "katana:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
+        "MESSAGE_VERSION": 1,
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619776",
+        "MIN_GAS_CALLDATA_OVERHEAD": 16,
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
+        "OTHER_MESSENGER": "katana:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
+        "otherMessenger": "katana:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
+        "paused": false,
+        "RELAY_CALL_OVERHEAD": 40000,
+        "RELAY_CONSTANT_OVERHEAD": 200000,
+        "RELAY_GAS_CHECK_BUFFER": 5000,
+        "RELAY_RESERVED_GAS": 40000,
+        "version": "2.1.1-beta.1"
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000007": "Proxy",
+        "katana:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": "L2CrossDomainMessenger"
+      }
+    },
+    {
+      "name": "GasPriceOracle",
+      "address": "katana:0x420000000000000000000000000000000000000F",
+      "type": "Contract",
+      "template": "opstack/Layer2/GasPriceOracle",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x2a3c7909036a30543d4aaa8e9501caab6f998a671d40cc3822f89c6239e6b8ab"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Provides the current gas price for L2 transactions.",
+      "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1",
+        "$pastUpgrades": [
+          [
+            "2025-05-09T16:00:01.000Z",
+            "0xb6560306ccb0e772b132a8a6dd78244c0d7ac270c80baba40f95006184926c30",
+            ["katana:0x93e57A196454CB919193fa9946f14943cf733845"]
+          ],
+          [
+            "2026-03-09T14:30:01.000Z",
+            "0xc7c01d75d0b6950fcd30b448cba848e9841ab9ebb6b46eed9ecde4ba05ad0fd9",
+            ["katana:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "baseFee": 0,
+        "baseFeeScalar": 1368,
+        "blobBaseFee": 23007999,
+        "blobBaseFeeScalar": 810949,
+        "decimals": 6,
+        "DECIMALS": 6,
+        "gasPrice": 0,
+        "isEcotone": true,
+        "isFjord": true,
+        "isIsthmus": true,
+        "isJovian": true,
+        "l1BaseFee": 376050820,
+        "version": "1.6.0"
+      },
+      "implementationNames": {
+        "katana:0x420000000000000000000000000000000000000F": "Proxy",
+        "katana:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1": "GasPriceOracle"
+      }
+    },
+    {
+      "name": "L2StandardBridge",
+      "address": "katana:0x4200000000000000000000000000000000000010",
+      "type": "Contract",
+      "template": "opstack/Layer2/L2StandardBridge",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0xe528a1a655ef22d36419f53488f5b31752c4ecc2efea627fc6be5b0d63fa5069"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "l1TokenBridge": "katana:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+        "messenger": "katana:0x4200000000000000000000000000000000000007",
+        "MESSENGER": "katana:0x4200000000000000000000000000000000000007",
+        "OTHER_BRIDGE": "katana:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+        "otherBridge": "katana:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+        "paused": false,
+        "version": "1.11.1-beta.1"
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000010": "Proxy",
+        "katana:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": "L2StandardBridge"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "SequencerFeeVault",
+      "address": "katana:0x4200000000000000000000000000000000000011",
+      "type": "Contract",
+      "template": "opstack/Layer2/SequencerFeeVault",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x93752bf6627e91f3f4f031a686b0a57c754db8b6b8b88401d16e26724cb44f08"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Collects the sequencer fees.",
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0x8A52Ca0E8459460C6861C117285E6973Ecf7EE3f",
+        "$pastUpgrades": [
+          [
+            "2025-06-27T18:17:02.000Z",
+            "0xbfd0fa2d55165b0f6a787f0cd5ec9fe057e088f52556ca7b3d89bdf206961ae6",
+            ["katana:0x8A52Ca0E8459460C6861C117285E6973Ecf7EE3f"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "l1FeeWallet": "katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd",
+        "MIN_WITHDRAWAL_AMOUNT": "1000000000000000000",
+        "minWithdrawalAmount": "1000000000000000000",
+        "recipient": "katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd",
+        "RECIPIENT": "katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd",
+        "version": "1.5.0-beta.5",
+        "WITHDRAWAL_NETWORK": 1,
+        "withdrawalNetwork": 1
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000011": "Proxy",
+        "katana:0x8A52Ca0E8459460C6861C117285E6973Ecf7EE3f": "SequencerFeeVault"
+      }
+    },
+    {
+      "name": "OptimismMintableERC20Factory",
+      "address": "katana:0x4200000000000000000000000000000000000012",
+      "type": "Contract",
+      "template": "opstack/Layer2/OptimismMintableERC20Factory",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x106f86d507a55d0f26e3683c910a71a9804d75ced3a4bb374e6a78978462274b"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.",
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "bridge": "katana:0x4200000000000000000000000000000000000010",
+        "BRIDGE": "katana:0x4200000000000000000000000000000000000010",
+        "version": "1.10.1-beta.2"
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000012": "Proxy",
+        "katana:0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012": "OptimismMintableERC20Factory"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "L1BlockNumber",
+      "address": "katana:0x4200000000000000000000000000000000000013",
+      "type": "Contract",
+      "template": "opstack/Layer2/L1BlockNumber",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x9cd3f331d86734c79347ae5fdf12b65671c460ca6858e3fd8ab93b2810fbf977"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Simple contract that returns the latest L1 block number.",
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "version": "1.1.1-beta.1"
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000013": "Proxy",
+        "katana:0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013": "L1BlockNumber"
+      }
+    },
+    {
+      "name": "L2ERC721Bridge",
+      "address": "katana:0x4200000000000000000000000000000000000014",
+      "type": "Contract",
+      "template": "opstack/Layer2/L2ERC721Bridge",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x271f936ec1986057d9043b9961aa266e87908766814bdde8071f19a9de7484be"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.",
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "messenger": "katana:0x4200000000000000000000000000000000000007",
+        "MESSENGER": "katana:0x4200000000000000000000000000000000000007",
+        "OTHER_BRIDGE": "katana:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
+        "otherBridge": "katana:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
+        "paused": false,
+        "version": "1.7.1-beta.2"
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000014": "Proxy",
+        "katana:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014": "L2ERC721Bridge"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "L1Block",
+      "address": "katana:0x4200000000000000000000000000000000000015",
+      "type": "Contract",
+      "template": "opstack/Layer2/L1Block",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x399e57fff478211b47d61c5acb60592a4df8ffa5716959a1a6ee2ccabc44915e"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
+      "ignoreInWatchMode": [
+        "basefee",
+        "hash",
+        "number",
+        "timestamp",
+        "sequenceNumber",
+        "blobBaseFee",
+        "operatorFeeConstant",
+        "operatorFeeScalar"
+      ],
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C",
+        "$pastUpgrades": [
+          [
+            "2025-05-09T16:00:01.000Z",
+            "0xe992e00998b34075506d2726a274db07a62af6cdd9d527bfda9128114603cfbd",
+            ["katana:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"]
+          ],
+          [
+            "2026-03-09T14:30:01.000Z",
+            "0xcd60191626fa3124e7031235c52f0adf6be545ebbd7cf55641bd9dabcbedaf6a",
+            ["katana:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "basefee": 376050820,
+        "baseFeeScalar": 1368,
+        "batcherHash": "0x0000000000000000000000001ffda89c755f6d4af069897d77ccabb580fd412a",
+        "blobBaseFee": 23007999,
+        "blobBaseFeeScalar": 810949,
+        "daFootprintGasScalar": 400,
+        "DEPOSITOR_ACCOUNT": "katana:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+        "gasPayingToken": {
+          "addr_": "katana:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+          "decimals_": 18
+        },
+        "gasPayingTokenName": "Ether",
+        "gasPayingTokenSymbol": "ETH",
+        "hash": "0x7888bafc6c222bd31f0a912ccca7a5d78f2c479eff871c2718d10aa2c7755371",
+        "isCustomGasToken": false,
+        "l1FeeOverhead": 0,
+        "l1FeeScalar": 0,
+        "number": 25229768,
+        "operatorFeeConstant": 0,
+        "operatorFeeScalar": 100000,
+        "sequenceNumber": 8,
+        "timestamp": 1780404155,
+        "version": "1.7.0"
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000015": "Proxy",
+        "katana:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": "L1Block"
+      }
+    },
+    {
+      "name": "L2ToL1MessagePasser",
+      "address": "katana:0x4200000000000000000000000000000000000016",
+      "type": "Contract",
+      "template": "katana/L2ToL1MessagePasser",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0xa53da4d87c97c2504bf8feb43888b64bb6834cfc6f9cf0fb4e59b9e507466756"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1. It can also be used directly as a low-level interface.",
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0xFBF44D0341C03098A1D9C0336e3d5C34E8BFdf1A",
+        "$pastUpgrades": [
+          [
+            "2025-05-08T23:42:08.000Z",
+            "0x8ff7fb4b9e07e0ba8436cd4a724fd4029bac1c49ed773e4b750c9d5b529f8a4b",
+            ["katana:0xFBF44D0341C03098A1D9C0336e3d5C34E8BFdf1A"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "MESSAGE_VERSION": 1,
+        "version": "1.1.1-beta.1"
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000016": "Proxy",
+        "katana:0xFBF44D0341C03098A1D9C0336e3d5C34E8BFdf1A": "L2ToL1MessagePasser"
+      }
+    },
+    {
+      "name": "OptimismMintableERC721Factory",
+      "address": "katana:0x4200000000000000000000000000000000000017",
+      "type": "Contract",
+      "template": "opstack/Layer2/OptimismMintableERC721Factory",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0xec1bfae18ba5717949a6969cb01d743511c076e7bc6c78ed2c2b63232b97cc57"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.",
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "BRIDGE": "katana:0x4200000000000000000000000000000000000014",
+        "REMOTE_CHAIN_ID": 1,
+        "version": "1.4.1-beta.1"
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000017": "Proxy",
+        "katana:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017": "OptimismMintableERC721Factory"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "katana:0x4200000000000000000000000000000000000018",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000002",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000007",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x420000000000000000000000000000000000000F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000010",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000011",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000012",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000013",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000014",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000015",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000016",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000017",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000018",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000019",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x420000000000000000000000000000000000001A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x420000000000000000000000000000000000001b",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000020",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000021",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "addressManager": "katana:0x0000000000000000000000000000000000000000",
+        "isUpgrading": false,
+        "owner": "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000018": "Proxy",
+        "katana:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "BaseFeeVault",
+      "address": "katana:0x4200000000000000000000000000000000000019",
+      "type": "Contract",
+      "template": "opstack/Layer2/BaseFeeVault",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0xe1e57baf3de85a14ad342b23be3bc829de637a5ac1336b089f49fcab12d6226a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Collects EIP-1559 base fees",
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0x7e27d992B349B96ea8D32378B7c53b3D58139a2E",
+        "$pastUpgrades": [
+          [
+            "2025-06-27T18:13:07.000Z",
+            "0x102958f21f34f8d3e075ce9d124919c15f7c466105ab31957e94d698cceed77b",
+            ["katana:0x7e27d992B349B96ea8D32378B7c53b3D58139a2E"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "MIN_WITHDRAWAL_AMOUNT": "1000000000000000000",
+        "minWithdrawalAmount": "1000000000000000000",
+        "recipient": "katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd",
+        "RECIPIENT": "katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd",
+        "version": "1.5.0-beta.6",
+        "WITHDRAWAL_NETWORK": 1,
+        "withdrawalNetwork": 1
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000019": "Proxy",
+        "katana:0x7e27d992B349B96ea8D32378B7c53b3D58139a2E": "BaseFeeVault"
+      }
+    },
+    {
+      "name": "L1FeeVault",
+      "address": "katana:0x420000000000000000000000000000000000001A",
+      "type": "Contract",
+      "template": "opstack/Layer2/L1FeeVault",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0xe6ecd83f7dc6c3a0896d3311ac56023fae6df18d6b4059195c2dfc1d65717687"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Collects the L1 portion of the L2 transaction fees.",
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0x0ebC896698De72A444d00Dc3d046B432c555EB09",
+        "$pastUpgrades": [
+          [
+            "2025-06-27T18:15:35.000Z",
+            "0x7f2d7c48dff15cb514d68ddf9c91d98165e1edaca9317fc22a3f16828311f8b2",
+            ["katana:0x0ebC896698De72A444d00Dc3d046B432c555EB09"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "MIN_WITHDRAWAL_AMOUNT": "1000000000000000000",
+        "minWithdrawalAmount": "1000000000000000000",
+        "recipient": "katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd",
+        "RECIPIENT": "katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd",
+        "version": "1.5.0-beta.5",
+        "WITHDRAWAL_NETWORK": 1,
+        "withdrawalNetwork": 1
+      },
+      "implementationNames": {
+        "katana:0x420000000000000000000000000000000000001A": "Proxy",
+        "katana:0x0ebC896698De72A444d00Dc3d046B432c555EB09": "L1FeeVault"
+      }
+    },
+    {
+      "name": "OperatorFeeVault",
+      "address": "katana:0x420000000000000000000000000000000000001b",
+      "type": "Contract",
+      "template": "opstack/Layer2/OperatorFeeVault",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0xee5dca77d41cb3095dbb6dbb7f542e32ec79f4ebfb289ca0622873a493080ffb"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.",
+      "ignoreInWatchMode": ["totalProcessed"],
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537",
+        "$pastUpgrades": [
+          [
+            "2025-05-09T16:00:01.000Z",
+            "0xf162acc8ebbaf9237755736b62331a4817fe27bbbe3712f473ecfa8fee499f7c",
+            ["katana:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "MIN_WITHDRAWAL_AMOUNT": 0,
+        "minWithdrawalAmount": 0,
+        "recipient": "katana:0x4200000000000000000000000000000000000019",
+        "RECIPIENT": "katana:0x4200000000000000000000000000000000000019",
+        "totalProcessed": "25682488778941706780",
+        "version": "1.0.0",
+        "WITHDRAWAL_NETWORK": 1,
+        "withdrawalNetwork": 1
+      },
+      "implementationNames": {
+        "katana:0x420000000000000000000000000000000000001b": "Proxy",
+        "katana:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537": "OperatorFeeVault"
+      }
+    },
+    {
+      "name": "SchemaRegistry",
+      "address": "katana:0x4200000000000000000000000000000000000020",
+      "type": "Contract",
+      "template": "opstack/Layer2/SchemaRegistry",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x184ad3273d7e257c9f1b138ecff33286528599eae858abc182fdc3068060af90"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contracts to register schemas for the Ethereum Attestation Service (EAS).",
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "version": "1.3.1-beta.1"
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000020": "Proxy",
+        "katana:0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020": "SchemaRegistry"
+      }
+    },
+    {
+      "name": "EAS",
+      "address": "katana:0x4200000000000000000000000000000000000021",
+      "type": "Contract",
+      "template": "opstack/Layer2/EAS",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x565fcc3b9d0821e7893d6c738d9eafe13dc0e30795042c019bb419f2d6e32c78"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contract containing the main logic for the Ethereum Attestation Service (EAS).",
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x4200000000000000000000000000000000000018",
+        "$implementation": "katana:0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "getAttestTypeHash": "0xfeb2925a02bae3dae48d424a0437a2b6ac939aa9230ddc55a1a76f065d988076",
+        "getDomainSeparator": "0xc2c169ea46699b1d42103c47f75c1059f7c0a4eea0ae482c1434773de231da70",
+        "getName": "EAS",
+        "getRevokeTypeHash": "0xb5d556f07587ec0f08cf386545cc4362c702a001650c2058002615ee5c9d1e75",
+        "getSchemaRegistry": "katana:0x4200000000000000000000000000000000000020",
+        "version": "1.4.1-beta.1"
+      },
+      "implementationNames": {
+        "katana:0x4200000000000000000000000000000000000021": "Proxy",
+        "katana:0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021": "EAS"
+      }
+    },
+    {
+      "address": "katana:0x4200000000000000000000000000000000000042",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0x4A658D678804DD0a4Ad0A2c26AD4F4EB2517154b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "manage token mappings and deployments.",
+          "role": ".bridgeManager"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "own and upgrade default L2 token contracts deployed by the bridge.",
+          "role": ".getProxiedTokensManager"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "pause the bridge.",
+          "role": ".emergencyBridgePauser"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "unpause the bridge.",
+          "role": ".emergencyBridgeUnpauser"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "description": "manage 'claimed' status of global deposit indexes (can freeze bridge transactions), remove global exit roots (used for L2 deposits).",
+          "role": ".globalExitRootRemover"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "description": "roll back or insert leaves into the local exit tree (LET) that enables withdrawals from the L2. (can steal)",
+          "role": ".globalExitRootRemover",
+          "condition": "if the bridge is paused"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+          "delay": 43200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+              "delay": 43200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+              "delay": 43200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+          "delay": 43200,
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "katana:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
+      "sinceTimestamp": 1747208518,
+      "sinceBlock": 465707,
+      "values": {
+        "$immutable": false,
+        "$implementation": "katana:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "katana:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
+          "katana:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72",
+          "katana:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B",
+          "katana:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
+          "katana:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x2a4651d105ba08c29b9f73aeca09709e92e9fcd2ea301e1c84af2920cb529e06",
+        "getChainId": 747474,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 21,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a": "GnosisSafeProxy",
+        "katana:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
+    },
+    {
+      "address": "katana:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0x6f8CC67A7F6c61E4047aC4870583899CC1fBD08a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0x73D8846324B30477EA3Ac055589e40F39DE497F8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SafeL2",
+      "address": "katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0x4200000000000000000000000000000000000011",
+          "description": "receive fees.",
+          "role": ".recipient"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x4200000000000000000000000000000000000019",
+          "description": "receive fees.",
+          "role": ".recipient"
+        },
+        {
+          "permission": "interact",
+          "from": "katana:0x420000000000000000000000000000000000001A",
+          "description": "receive fees.",
+          "role": ".recipient"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "katana:0xbd8F5d8eB7Bc4aA01b98438F7103200Df4433f8C",
+      "sinceTimestamp": 1750868616,
+      "sinceBlock": 4125805,
+      "values": {
+        "$immutable": false,
+        "$implementation": "katana:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "katana:0x73D8846324B30477EA3Ac055589e40F39DE497F8",
+          "katana:0xf2dc90d4645579f261cA36E81181986dB576BbEe",
+          "katana:0x4A658D678804DD0a4Ad0A2c26AD4F4EB2517154b",
+          "katana:0x02023f74ED12Df7752144aE8A23411776D4698b4",
+          "katana:0xa43901c63f7702C407378E55E0d0EB4064a2AE31"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xfb4fbe7fdc9d26a6c12f3713cf213954748f0df3f13ea4a807c5e6bf5cc3352e",
+        "getChainId": 747474,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 5,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd": "SafeProxy",
+        "katana:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "address": "katana:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GlobalExitRootManagerL2SovereignChain",
+      "address": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+      "type": "Contract",
+      "template": "katana/GlobalExitRootManagerL2SovereignChain",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x7ecabfbcffc6f7cabd7d4bb90bd1ef08ccac6f5c03de16fda3d2398b3c5fdf4a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.",
+      "ignoreInWatchMode": ["insertedGERHashChain", "lastRollupExitRoot"],
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+        "$implementation": "katana:0x0200143Fa295EE4dffEF22eE2616c2E008D81688",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "bridgeAddress": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "GER_SOVEREIGN_VERSION": "al-v0.3.0",
+        "globalExitRootRemover": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+        "globalExitRootUpdater": "katana:0x3138BBdAeAd339d34F084445192B2be9dd4B9f27",
+        "insertedGERHashChain": "0x50c319d2460dbc6230d942eb2c38f49bdcf9c8b72167ad76f510bfd0030af814",
+        "lastRollupExitRoot": "0x133644db93bd06718fa435c04f52b337b17a4eef3e016433b15ef2efbf3e0241",
+        "pendingGlobalExitRootRemover": "katana:0x0000000000000000000000000000000000000000",
+        "pendingGlobalExitRootUpdater": "katana:0x0000000000000000000000000000000000000000",
+        "removedGERHashChain": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA": "TransparentUpgradeableProxy",
+        "katana:0x0200143Fa295EE4dffEF22eE2616c2E008D81688": "GlobalExitRootManagerL2SovereignChain"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "katana:0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0xA697656ac37ee1f59A8a5318F61601B4C208960D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "BridgeLib",
+      "address": "katana:0xb30C032b183525de7427f04e79F45Cd19866E124",
+      "type": "Contract",
+      "template": "katana/BridgeLib",
+      "sourceHashes": [
+        "0x54f1ceed33ba094c9a75b50862e78440641ee509a8420d8ba3162ed92147aeed"
+      ],
+      "proxyType": "immutable",
+      "description": "Utility library contract for the AgglayerBridgeL2.",
+      "deployerAddress": "katana:0x14567c0dCF79c20fE1A21E36EC975d1775a1905C",
+      "sinceTimestamp": 1772018458,
+      "sinceBlock": 25275647,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "katana:0xb30C032b183525de7427f04e79F45Cd19866E124": "BridgeLib"
+      }
+    },
+    {
+      "name": "L2Timelock",
+      "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+      "type": "Contract",
+      "template": "polygon-cdk/L2Timelock",
+      "sourceHashes": [
+        "0x67f85a797c33748d0cf0e92068621982669b7239a53ca2136d5bcd3ff78973f5"
+      ],
+      "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 12h.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+          "role": ".owner"
+        }
+      ],
+      "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1746742812,
+      "sinceBlock": 0,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+              "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+              "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+              "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+            ]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+              "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+            ]
+          }
+        },
+        "getMinDelay": 43200,
+        "getMinDelayFormatted": "12h",
+        "polygonZkEVM": "katana:0x0000000000000000000000000000000000000000",
+        "scheduledTransactionsDecoded": [
+          {
+            "target": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgradeAndCall",
+            "inputs": {
+              "proxy": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+              "implementation": "katana:0xd4AC5935c9AeA32FC120D52B22Ee41C9C5f82DEe",
+              "data": {
+                "tokenInfoHash": [],
+                "amount": [],
+                "_emergencyBridgeUnpauser": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+                "_proxiedTokensManager": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+              }
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "60"
+          },
+          {
+            "target": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgrade",
+            "inputs": {
+              "proxy": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+              "implementation": "katana:0xc8EC6E02AF5D7E2EBf590601979401A696Bf820e"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "60"
+          },
+          {
+            "target": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgrade",
+            "inputs": {
+              "proxy": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+              "implementation": "katana:0xe3E6F722b047Ce3B1F733D9c5B0609DA4e9D1FAb"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "60"
+          },
+          {
+            "target": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgrade",
+            "inputs": {
+              "proxy": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+              "implementation": "katana:0x094B1B2322F1A8927B61dfAf686CA78d71C6cbf6"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "60"
+          },
+          {
+            "target": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+            "value": "0",
+            "function": "updateDelay",
+            "inputs": { "newDelay": 43200 },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "60"
+          }
+        ],
+        "timelockAdminAC": [
+          "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
+          "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+        ]
+      },
+      "fieldMeta": {
+        "polygonZkEVM": {
+          "severity": "HIGH",
+          "description": "This is immutably the 0 address in this particular contract, which means emergency mode is never active"
+        }
+      },
+      "implementationNames": {
+        "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13": "PolygonZkEVMTimelock"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "SafeL2",
+      "address": "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+          "delay": 43200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+              "delay": 43200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000002",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000007",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x420000000000000000000000000000000000000F",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000010",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000011",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000012",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000013",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000014",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000015",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000016",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000017",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000018",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000019",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x420000000000000000000000000000000000001A",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x420000000000000000000000000000000000001b",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000020",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0x4200000000000000000000000000000000000021",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+          "role": "admin",
+          "via": [
+            { "address": "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+              "delay": 43200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "katana:0x4200000000000000000000000000000000000018",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13",
+          "delay": 43200,
+          "role": ".timelockAdminAC",
+          "condition": "(no delay if in emergency state)"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "katana:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
+      "sinceTimestamp": 1747896637,
+      "sinceBlock": 1153826,
+      "values": {
+        "$immutable": false,
+        "$implementation": "katana:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "katana:0x6f8CC67A7F6c61E4047aC4870583899CC1fBD08a",
+          "katana:0x4A658D678804DD0a4Ad0A2c26AD4F4EB2517154b",
+          "katana:0xA697656ac37ee1f59A8a5318F61601B4C208960D",
+          "katana:0x73D8846324B30477EA3Ac055589e40F39DE497F8",
+          "katana:0xa43901c63f7702C407378E55E0d0EB4064a2AE31"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x2e47e755eb2d5e5818411b9cb88994e18af8181e6b240bcf785793206e2ffb10",
+        "getChainId": 747474,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 51,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC": "SafeProxy",
+        "katana:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "address": "katana:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "katana:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "TokenWrappedBridgeUpgradeable",
+      "address": "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c",
+      "type": "Contract",
+      "template": "katana/TokenWrappedBridgeUpgradeable",
+      "sourceHashes": [
+        "0xc3921c6996f73a34c3166ea826cfe68cbf4a872214f258db6874cf2d125cad6e"
+      ],
+      "proxyType": "immutable",
+      "description": "An ERC-20 implementation designed for cross-chain assets on the L2. It restricts token minting or burning strictly to the primary bridge contract.",
+      "deployerAddress": "katana:0x14567c0dCF79c20fE1A21E36EC975d1775a1905C",
+      "sinceTimestamp": 1772018458,
+      "sinceBlock": 25275647,
+      "values": {
+        "$immutable": true,
+        "bridgeAddress": "katana:0x0000000000000000000000000000000000000000",
+        "decimals": 0,
+        "DOMAIN_SEPARATOR": "0x9486815ea730877b17013e40fc7543ef74943b8f97fcd63032ae3af196d78c15",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "",
+          "version": "",
+          "chainId": 747474,
+          "verifyingContract": "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "name": "",
+        "symbol": "",
+        "totalSupply": 0
+      },
+      "implementationNames": {
+        "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c": "TokenWrappedBridgeUpgradeable"
+      }
+    },
+    {
+      "address": "katana:0xf2dc90d4645579f261cA36E81181986dB576BbEe",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -3320,74 +4883,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4": [
-      "constructor(uint256 _proofMaturityDelaySeconds)",
-      "error ContentLengthMismatch()",
-      "error EmptyItem()",
-      "error InvalidDataRemainder()",
-      "error InvalidHeader()",
-      "error OptimismPortal_AlreadyFinalized()",
-      "error OptimismPortal_BadTarget()",
-      "error OptimismPortal_CallPaused()",
-      "error OptimismPortal_CalldataTooLarge()",
-      "error OptimismPortal_GasEstimation()",
-      "error OptimismPortal_GasLimitTooLow()",
-      "error OptimismPortal_ImproperDisputeGame()",
-      "error OptimismPortal_InvalidDisputeGame()",
-      "error OptimismPortal_InvalidLockboxState()",
-      "error OptimismPortal_InvalidMerkleProof()",
-      "error OptimismPortal_InvalidOutputRootProof()",
-      "error OptimismPortal_InvalidProofTimestamp()",
-      "error OptimismPortal_InvalidRootClaim()",
-      "error OptimismPortal_NoReentrancy()",
-      "error OptimismPortal_ProofNotOldEnough()",
-      "error OptimismPortal_Unproven()",
-      "error OutOfGas()",
-      "error ProxyAdminOwnedBase_NotProxyAdmin()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
-      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
-      "error ReinitializableBase_ZeroInitVersion()",
-      "error UnexpectedList()",
-      "error UnexpectedString()",
-      "event Initialized(uint8 version)",
-      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
-      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
-      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
-      "event WithdrawalProvenExtension1(bytes32 indexed withdrawalHash, address indexed proofSubmitter)",
-      "function anchorStateRegistry() view returns (address)",
-      "function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) view",
-      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
-      "function disputeGameBlacklist(address _disputeGame) view returns (bool)",
-      "function disputeGameFactory() view returns (address)",
-      "function disputeGameFinalityDelaySeconds() view returns (uint256)",
-      "function donateETH() payable",
-      "function ethLockbox() view returns (address)",
-      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
-      "function finalizeWithdrawalTransactionExternalProof(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, address _proofSubmitter)",
-      "function finalizedWithdrawals(bytes32) view returns (bool)",
-      "function guardian() view returns (address)",
-      "function initVersion() view returns (uint8)",
-      "function initialize(address _systemConfig, address _anchorStateRegistry)",
-      "function l2Sender() view returns (address)",
-      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
-      "function numProofSubmitters(bytes32 _withdrawalHash) view returns (uint256)",
-      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
-      "function paused() view returns (bool)",
-      "function proofMaturityDelaySeconds() view returns (uint256)",
-      "function proofSubmitters(bytes32, uint256) view returns (address)",
-      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _disputeGameIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
-      "function provenWithdrawals(bytes32, address) view returns (address disputeGameProxy, uint64 timestamp)",
-      "function proxyAdmin() view returns (address)",
-      "function proxyAdminOwner() view returns (address)",
-      "function respectedGameType() view returns (uint32)",
-      "function respectedGameTypeUpdatedAt() view returns (uint64)",
-      "function superchainConfig() view returns (address)",
-      "function systemConfig() view returns (address)",
-      "function version() pure returns (string)"
-    ],
     "eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21": [
       "constructor(address _singleton)"
     ],
@@ -3477,6 +4972,74 @@
       "error ProxyDeniedAdminAccess()",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a": [
+      "constructor(uint256 _proofMaturityDelaySeconds)",
+      "error ContentLengthMismatch()",
+      "error EmptyItem()",
+      "error InvalidDataRemainder()",
+      "error InvalidHeader()",
+      "error OptimismPortal_AlreadyFinalized()",
+      "error OptimismPortal_BadTarget()",
+      "error OptimismPortal_CallPaused()",
+      "error OptimismPortal_CalldataTooLarge()",
+      "error OptimismPortal_GasEstimation()",
+      "error OptimismPortal_GasLimitTooLow()",
+      "error OptimismPortal_ImproperDisputeGame()",
+      "error OptimismPortal_InvalidDisputeGame()",
+      "error OptimismPortal_InvalidLockboxState()",
+      "error OptimismPortal_InvalidMerkleProof()",
+      "error OptimismPortal_InvalidOutputRootProof()",
+      "error OptimismPortal_InvalidProofTimestamp()",
+      "error OptimismPortal_InvalidRootClaim()",
+      "error OptimismPortal_NoReentrancy()",
+      "error OptimismPortal_ProofNotOldEnough()",
+      "error OptimismPortal_Unproven()",
+      "error OutOfGas()",
+      "error ProxyAdminOwnedBase_NotProxyAdmin()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
+      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
+      "error ReinitializableBase_ZeroInitVersion()",
+      "error UnexpectedList()",
+      "error UnexpectedString()",
+      "event Initialized(uint8 version)",
+      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
+      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
+      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
+      "event WithdrawalProvenExtension1(bytes32 indexed withdrawalHash, address indexed proofSubmitter)",
+      "function anchorStateRegistry() view returns (address)",
+      "function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) view",
+      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
+      "function disputeGameBlacklist(address _disputeGame) view returns (bool)",
+      "function disputeGameFactory() view returns (address)",
+      "function disputeGameFinalityDelaySeconds() view returns (uint256)",
+      "function donateETH() payable",
+      "function ethLockbox() view returns (address)",
+      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
+      "function finalizeWithdrawalTransactionExternalProof(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, address _proofSubmitter)",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
+      "function guardian() view returns (address)",
+      "function initVersion() view returns (uint8)",
+      "function initialize(address _systemConfig, address _anchorStateRegistry)",
+      "function l2Sender() view returns (address)",
+      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
+      "function numProofSubmitters(bytes32 _withdrawalHash) view returns (uint256)",
+      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
+      "function paused() view returns (bool)",
+      "function proofMaturityDelaySeconds() view returns (uint256)",
+      "function proofSubmitters(bytes32, uint256) view returns (address)",
+      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _disputeGameIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
+      "function provenWithdrawals(bytes32, address) view returns (address disputeGameProxy, uint64 timestamp)",
+      "function proxyAdmin() view returns (address)",
+      "function proxyAdminOwner() view returns (address)",
+      "function respectedGameType() view returns (uint32)",
+      "function respectedGameTypeUpdatedAt() view returns (uint64)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function version() pure returns (string)"
     ],
     "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A": [
       "constructor()",
@@ -4657,29 +6220,937 @@
     ],
     "eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb": [
       "constructor(address _singleton)"
+    ],
+    "katana:0x0200143Fa295EE4dffEF22eE2616c2E008D81688": [
+      "constructor(address _bridgeAddress)",
+      "error GlobalExitRootAlreadySet()",
+      "error GlobalExitRootNotFound()",
+      "error InvalidZeroAddress()",
+      "error OnlyAllowedContracts()",
+      "error OnlyGlobalExitRootRemover()",
+      "error OnlyGlobalExitRootUpdater()",
+      "error OnlyPendingGlobalExitRootRemover()",
+      "error OnlyPendingGlobalExitRootUpdater()",
+      "event AcceptGlobalExitRootRemover(address oldGlobalExitRootRemover, address newGlobalExitRootRemover)",
+      "event AcceptGlobalExitRootUpdater(address oldGlobalExitRootUpdater, address newGlobalExitRootUpdater)",
+      "event Initialized(uint8 version)",
+      "event TransferGlobalExitRootRemover(address currentGlobalExitRootRemover, address pendingGlobalExitRootRemover)",
+      "event TransferGlobalExitRootUpdater(address currentGlobalExitRootUpdater, address pendingGlobalExitRootUpdater)",
+      "event UpdateHashChainValue(bytes32 indexed newGlobalExitRoot, bytes32 indexed newHashChainValue)",
+      "event UpdateRemovalHashChainValue(bytes32 indexed removedGlobalExitRoot, bytes32 indexed newRemovalHashChainValue)",
+      "function GER_SOVEREIGN_VERSION() view returns (string)",
+      "function acceptGlobalExitRootRemover()",
+      "function acceptGlobalExitRootUpdater()",
+      "function bridgeAddress() view returns (address)",
+      "function globalExitRootMap(bytes32) view returns (uint256)",
+      "function globalExitRootRemover() view returns (address)",
+      "function globalExitRootUpdater() view returns (address)",
+      "function initialize(address _globalExitRootUpdater, address _globalExitRootRemover)",
+      "function insertGlobalExitRoot(bytes32 _newRoot)",
+      "function insertedGERHashChain() view returns (bytes32)",
+      "function lastRollupExitRoot() view returns (bytes32)",
+      "function pendingGlobalExitRootRemover() view returns (address)",
+      "function pendingGlobalExitRootUpdater() view returns (address)",
+      "function removeGlobalExitRoots(bytes32[] gersToRemove)",
+      "function removedGERHashChain() view returns (bytes32)",
+      "function transferGlobalExitRootRemover(address _newGlobalExitRootRemover)",
+      "function transferGlobalExitRootUpdater(address _newGlobalExitRootUpdater)",
+      "function updateExitRoot(bytes32 newRoot)"
+    ],
+    "katana:0x094B1B2322F1A8927B61dfAf686CA78d71C6cbf6": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error AlreadyClaimed()",
+      "error AmountDoesNotMatchMsgValue()",
+      "error BridgeAddressNotAllowed()",
+      "error ClaimNotSet()",
+      "error DestinationNetworkInvalid()",
+      "error EmergencyStateNotAllowed()",
+      "error EtherTransferFailed()",
+      "error FailedInnerCall()",
+      "error FailedProxyDeployment()",
+      "error GasTokenNetworkMustBeZeroOnEther()",
+      "error GlobalExitRootInvalid()",
+      "error InputArraysLengthMismatch()",
+      "error InvalidDepositCount()",
+      "error InvalidExpectedLER()",
+      "error InvalidGlobalIndex()",
+      "error InvalidInitializeFunction()",
+      "error InvalidLBTLeaf()",
+      "error InvalidLeafType()",
+      "error InvalidLeavesLength()",
+      "error InvalidProxyAdmin(address proxyAdmin)",
+      "error InvalidSmtProof()",
+      "error InvalidSovereignWETHAddressParams()",
+      "error InvalidSubtreeFrontier()",
+      "error InvalidZeroAddress()",
+      "error InvalidZeroNetworkID()",
+      "error InvalidZeroProxyAdminOwner(address proxyAdmin)",
+      "error LocalBalanceTreeOverflow(uint32 originNetwork, address originTokenAddress, uint256 amount, uint256 localBalanceTreeAmount)",
+      "error LocalBalanceTreeUnderflow(uint32 originNetwork, address originTokenAddress, uint256 amount, uint256 localBalanceTreeAmount)",
+      "error MerkleTreeFull()",
+      "error MessageFailed()",
+      "error MsgValueNotZero()",
+      "error NativeTokenIsEther()",
+      "error NewDepositCountExceedsMax()",
+      "error NoValueInMessagesOnGasTokenNetworks()",
+      "error NonZeroValueForUnusedFrontier()",
+      "error NotValidAmount()",
+      "error OnlyBridgeManager()",
+      "error OnlyDeployer()",
+      "error OnlyEmergencyBridgePauser()",
+      "error OnlyEmergencyBridgeUnpauser()",
+      "error OnlyEmergencyState()",
+      "error OnlyGlobalExitRootRemover()",
+      "error OnlyNotEmergencyState()",
+      "error OnlyPendingEmergencyBridgePauser()",
+      "error OnlyPendingEmergencyBridgeUnpauser()",
+      "error OnlyPendingProxiedTokensManager()",
+      "error OnlyProxiedTokensManager()",
+      "error OnlyRollupManager()",
+      "error OriginNetworkInvalid()",
+      "error SafeERC20FailedOperation(address token)",
+      "error SubtreeFrontierMismatch()",
+      "error TokenAlreadyMapped()",
+      "error TokenAlreadyUpdated()",
+      "error TokenNotMapped()",
+      "error TokenNotRemapped()",
+      "error WETHRemappingNotSupportedOnGasTokenNetworks()",
+      "event AcceptEmergencyBridgePauserRole(address oldEmergencyBridgePauser, address newEmergencyBridgePauser)",
+      "event AcceptEmergencyBridgeUnpauserRole(address oldEmergencyBridgeUnpauser, address newEmergencyBridgeUnpauser)",
+      "event AcceptProxiedTokensManagerRole(address oldProxiedTokensManager, address newProxiedTokensManager)",
+      "event BackwardLET(uint256 previousDepositCount, bytes32 previousRoot, uint256 newDepositCount, bytes32 newRoot)",
+      "event BridgeEvent(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata, uint32 depositCount)",
+      "event ClaimEvent(uint256 globalIndex, uint32 originNetwork, address originAddress, address destinationAddress, uint256 amount)",
+      "event DetailedClaimEvent(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 indexed globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint8 leafType, uint32 originNetwork, address originTokenAddress, uint32 destinationNetwork, address indexed destinationAddress, uint256 amount, bytes metadata)",
+      "event EmergencyStateActivated()",
+      "event EmergencyStateDeactivated()",
+      "event ForwardLET(uint256 previousDepositCount, bytes32 previousRoot, uint256 newDepositCount, bytes32 newRoot, bytes newLeaves)",
+      "event Initialized(uint8 version)",
+      "event MigrateLegacyToken(address sender, address legacyTokenAddress, address updatedTokenAddress, uint256 amount)",
+      "event NewWrappedToken(uint32 originNetwork, address originTokenAddress, address wrappedTokenAddress, bytes metadata)",
+      "event RemoveLegacySovereignTokenAddress(address sovereignTokenAddress)",
+      "event SetBridgeManager(address bridgeManager)",
+      "event SetClaim(bytes32 globalIndex)",
+      "event SetLocalBalanceTree(uint32 indexed originNetwork, address indexed originTokenAddress, uint256 newAmount)",
+      "event SetSovereignTokenAddress(uint32 originNetwork, address originTokenAddress, address sovereignTokenAddress, bool isNotMintable)",
+      "event SetSovereignWETHAddress(address sovereignWETHTokenAddress, bool isNotMintable)",
+      "event TransferEmergencyBridgePauserRole(address currentEmergencyBridgePauser, address newEmergencyBridgePauser)",
+      "event TransferEmergencyBridgeUnpauserRole(address currentEmergencyBridgeUnpauser, address newEmergencyBridgeUnpauser)",
+      "event TransferProxiedTokensManagerRole(address currentProxiedTokensManager, address newProxiedTokensManager)",
+      "event UpdatedClaimedGlobalIndexHashChain(bytes32 claimedGlobalIndex, bytes32 newClaimedGlobalIndexHashChain)",
+      "event UpdatedUnsetGlobalIndexHashChain(bytes32 unsetGlobalIndex, bytes32 newUnsetGlobalIndexHashChain)",
+      "function INIT_BYTECODE_TRANSPARENT_PROXY() view returns (bytes)",
+      "function WETHToken() view returns (address)",
+      "function acceptEmergencyBridgePauserRole()",
+      "function acceptEmergencyBridgeUnpauserRole()",
+      "function acceptProxiedTokensManagerRole()",
+      "function activateEmergencyState()",
+      "function backwardLET(uint256 newDepositCount, bytes32[32] newFrontier, bytes32 nextLeaf, bytes32[32] proof)",
+      "function bridgeAsset(uint32 destinationNetwork, address destinationAddress, uint256 amount, address token, bool forceUpdateGlobalExitRoot, bytes permitData) payable",
+      "function bridgeLib() view returns (address)",
+      "function bridgeManager() view returns (address)",
+      "function bridgeMessage(uint32 destinationNetwork, address destinationAddress, bool forceUpdateGlobalExitRoot, bytes metadata) payable",
+      "function bridgeMessageWETH(uint32 destinationNetwork, address destinationAddress, uint256 amountWETH, bool forceUpdateGlobalExitRoot, bytes metadata)",
+      "function claimAsset(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint32 originNetwork, address originTokenAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)",
+      "function claimMessage(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)",
+      "function claimedBitMap(uint256) view returns (uint256)",
+      "function claimedGlobalIndexHashChain() view returns (bytes32)",
+      "function computeTokenProxyAddress(uint32 originNetwork, address originTokenAddress) view returns (address)",
+      "function deactivateEmergencyState()",
+      "function deployWrappedTokenAndRemap(uint32 originNetwork, address originTokenAddress, bool isNotMintable)",
+      "function depositCount() view returns (uint256)",
+      "function emergencyBridgePauser() view returns (address)",
+      "function emergencyBridgeUnpauser() view returns (address)",
+      "function forceEmitDetailedClaimEvent(tuple(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)[] claims)",
+      "function forwardLET(tuple(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)[] newLeaves, bytes32 expectedLER)",
+      "function gasTokenAddress() view returns (address)",
+      "function gasTokenMetadata() view returns (bytes)",
+      "function gasTokenNetwork() view returns (uint32)",
+      "function getProxiedTokensManager() view returns (address)",
+      "function getRoot() view returns (bytes32)",
+      "function getTokenMetadata(address token) view returns (bytes)",
+      "function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)",
+      "function getWrappedTokenBridgeImplementation() view returns (address)",
+      "function globalExitRootManager() view returns (address)",
+      "function initialize(uint32 _networkID, address _gasTokenAddress, uint32 _gasTokenNetwork, address _globalExitRootManager, address _polygonRollupManager, bytes _gasTokenMetadata, address _bridgeManager, address _sovereignWETHAddress, bool _sovereignWETHAddressIsNotMintable, address _emergencyBridgePauser, address _emergencyBridgeUnpauser, address _proxiedTokensManager)",
+      "function initialize(uint32, address, uint32, address, address, bytes)",
+      "function isClaimed(uint32 leafIndex, uint32 sourceBridgeNetwork) view returns (bool)",
+      "function isEmergencyState() view returns (bool)",
+      "function lastUpdatedDepositCount() view returns (uint32)",
+      "function localBalanceTree(bytes32 tokenInfoHash) view returns (uint256 amount)",
+      "function migrateLegacyToken(address legacyTokenAddress, uint256 amount, bytes permitData)",
+      "function networkID() view returns (uint32)",
+      "function pendingEmergencyBridgePauser() view returns (address)",
+      "function pendingEmergencyBridgeUnpauser() view returns (address)",
+      "function pendingProxiedTokensManager() view returns (address)",
+      "function polygonRollupManager() view returns (address)",
+      "function removeLegacySovereignTokenAddress(address legacySovereignTokenAddress)",
+      "function setBridgeManager(address _bridgeManager)",
+      "function setLocalBalanceTree(uint32[] originNetworkArray, address[] originTokenAddressArray, uint256[] amountArray)",
+      "function setMultipleClaims(uint256[] globalIndexes)",
+      "function setMultipleSovereignTokenAddress(uint32[] originNetworks, address[] originTokenAddresses, address[] sovereignTokenAddresses, bool[] isNotMintable)",
+      "function setSovereignWETHAddress(address sovereignWETHTokenAddress, bool isNotMintable)",
+      "function tokenInfoToWrappedToken(bytes32) view returns (address)",
+      "function transferEmergencyBridgePauserRole(address newEmergencyBridgePauser)",
+      "function transferEmergencyBridgeUnpauserRole(address newEmergencyBridgeUnpauser)",
+      "function transferProxiedTokensManagerRole(address newProxiedTokensManager)",
+      "function unsetGlobalIndexHashChain() view returns (bytes32)",
+      "function unsetMultipleClaims(uint256[] globalIndexes)",
+      "function updateGlobalExitRoot()",
+      "function version() pure returns (string)",
+      "function wrappedAddressIsNotMintable(address wrappedAddress) view returns (bool isNotMintable)",
+      "function wrappedTokenToTokenInfo(address) view returns (uint32 originNetwork, address originTokenAddress)"
+    ],
+    "katana:0x0ebC896698De72A444d00Dc3d046B432c555EB09": [
+      "constructor(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function WITHDRAWAL_NETWORK() view returns (uint8)",
+      "function minWithdrawalAmount() view returns (uint256 amount_)",
+      "function recipient() view returns (address recipient_)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()",
+      "function withdrawalNetwork() view returns (uint8 network_)"
+    ],
+    "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "katana:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "katana:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": [
+      "function DEPOSITOR_ACCOUNT() pure returns (address addr_)",
+      "function baseFeeScalar() view returns (uint32)",
+      "function basefee() view returns (uint256)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobBaseFee() view returns (uint256)",
+      "function blobBaseFeeScalar() view returns (uint32)",
+      "function daFootprintGasScalar() view returns (uint16)",
+      "function gasPayingToken() pure returns (address addr_, uint8 decimals_)",
+      "function gasPayingTokenName() pure returns (string name_)",
+      "function gasPayingTokenSymbol() pure returns (string symbol_)",
+      "function hash() view returns (bytes32)",
+      "function isCustomGasToken() pure returns (bool is_)",
+      "function l1FeeOverhead() view returns (uint256)",
+      "function l1FeeScalar() view returns (uint256)",
+      "function number() view returns (uint64)",
+      "function operatorFeeConstant() view returns (uint64)",
+      "function operatorFeeScalar() view returns (uint32)",
+      "function sequenceNumber() view returns (uint64)",
+      "function setL1BlockValues(uint64 _number, uint64 _timestamp, uint256 _basefee, bytes32 _hash, uint64 _sequenceNumber, bytes32 _batcherHash, uint256 _l1FeeOverhead, uint256 _l1FeeScalar)",
+      "function setL1BlockValuesEcotone()",
+      "function setL1BlockValuesIsthmus()",
+      "function setL1BlockValuesJovian()",
+      "function timestamp() view returns (uint64)",
+      "function version() pure returns (string)"
+    ],
+    "katana:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "katana:0x4200000000000000000000000000000000000002": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4200000000000000000000000000000000000007": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x420000000000000000000000000000000000000F": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4200000000000000000000000000000000000010": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4200000000000000000000000000000000000011": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4200000000000000000000000000000000000012": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4200000000000000000000000000000000000013": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4200000000000000000000000000000000000014": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4200000000000000000000000000000000000015": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4200000000000000000000000000000000000016": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4200000000000000000000000000000000000017": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4200000000000000000000000000000000000018": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4200000000000000000000000000000000000019": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x420000000000000000000000000000000000001A": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x420000000000000000000000000000000000001b": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4200000000000000000000000000000000000020": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4200000000000000000000000000000000000021": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a": [
+      "constructor(address _singleton)"
+    ],
+    "katana:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1": [
+      "function DECIMALS() view returns (uint256)",
+      "function baseFee() view returns (uint256)",
+      "function baseFeeScalar() view returns (uint32)",
+      "function blobBaseFee() view returns (uint256)",
+      "function blobBaseFeeScalar() view returns (uint32)",
+      "function decimals() pure returns (uint256)",
+      "function gasPrice() view returns (uint256)",
+      "function getL1Fee(bytes _data) view returns (uint256)",
+      "function getL1FeeUpperBound(uint256 _unsignedTxSize) view returns (uint256)",
+      "function getL1GasUsed(bytes _data) view returns (uint256)",
+      "function getOperatorFee(uint256 _gasUsed) view returns (uint256)",
+      "function isEcotone() view returns (bool)",
+      "function isFjord() view returns (bool)",
+      "function isIsthmus() view returns (bool)",
+      "function isJovian() view returns (bool)",
+      "function l1BaseFee() view returns (uint256)",
+      "function overhead() view returns (uint256)",
+      "function scalar() view returns (uint256)",
+      "function setEcotone()",
+      "function setFjord()",
+      "function setIsthmus()",
+      "function setJovian()",
+      "function version() view returns (string)"
+    ],
+    "katana:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537": [
+      "constructor()",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function WITHDRAWAL_NETWORK() view returns (uint8)",
+      "function minWithdrawalAmount() view returns (uint256 amount_)",
+      "function recipient() view returns (address recipient_)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()",
+      "function withdrawalNetwork() view returns (uint8 network_)"
+    ],
+    "katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd": [
+      "constructor(address _singleton)"
+    ],
+    "katana:0x7e27d992B349B96ea8D32378B7c53b3D58139a2E": [
+      "constructor(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function WITHDRAWAL_NETWORK() view returns (uint8)",
+      "function minWithdrawalAmount() view returns (uint256 amount_)",
+      "function recipient() view returns (address recipient_)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()",
+      "function withdrawalNetwork() view returns (uint8 network_)"
+    ],
+    "katana:0x8A52Ca0E8459460C6861C117285E6973Ecf7EE3f": [
+      "constructor(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function WITHDRAWAL_NETWORK() view returns (uint8)",
+      "function l1FeeWallet() view returns (address)",
+      "function minWithdrawalAmount() view returns (uint256 amount_)",
+      "function recipient() view returns (address recipient_)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()",
+      "function withdrawalNetwork() view returns (uint8 network_)"
+    ],
+    "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "katana:0xb30C032b183525de7427f04e79F45Cd19866E124": [
+      "error NotValidOwner()",
+      "error NotValidSignature()",
+      "error NotValidSpender()",
+      "function INIT_BYTECODE_TRANSPARENT_PROXY() view returns (bytes)",
+      "function getTokenMetadata(address token) view returns (bytes)",
+      "function safeDecimals(address token) view returns (uint8)",
+      "function safeName(address token) view returns (string)",
+      "function safeSymbol(address token) view returns (string)",
+      "function validateAndProcessPermit(address token, bytes permitData, address expectedOwner, address expectedSpender) returns (bool success)"
+    ],
+    "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin, address _polygonZkEVM)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function TIMELOCK_ADMIN_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256 duration)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256 timestamp)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
+      "function isOperation(bytes32 id) view returns (bool registered)",
+      "function isOperationDone(bytes32 id) view returns (bool done)",
+      "function isOperationPending(bytes32 id) view returns (bool pending)",
+      "function isOperationReady(bytes32 id) view returns (bool ready)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function polygonZkEVM() view returns (address)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
+    "katana:0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002": [
+      "event OwnerChanged(address oldOwner, address newOwner)",
+      "event WhitelistDisabled(address oldOwner)",
+      "event WhitelistStatusChanged(address deployer, bool whitelisted)",
+      "function enableArbitraryContractDeployment()",
+      "function isDeployerAllowed(address _deployer) view returns (bool)",
+      "function owner() view returns (address)",
+      "function setOwner(address _owner)",
+      "function setWhitelistedDeployer(address _deployer, bool _isWhitelisted)",
+      "function version() view returns (string)",
+      "function whitelist(address) view returns (bool)"
+    ],
+    "katana:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": [
+      "constructor()",
+      "event FailedRelayedMessage(bytes32 indexed msgHash)",
+      "event Initialized(uint8 version)",
+      "event RelayedMessage(bytes32 indexed msgHash)",
+      "event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)",
+      "event SentMessageExtension1(address indexed sender, uint256 value)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function MIN_GAS_CALLDATA_OVERHEAD() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR() view returns (uint64)",
+      "function OTHER_MESSENGER() view returns (address)",
+      "function RELAY_CALL_OVERHEAD() view returns (uint64)",
+      "function RELAY_CONSTANT_OVERHEAD() view returns (uint64)",
+      "function RELAY_GAS_CHECK_BUFFER() view returns (uint64)",
+      "function RELAY_RESERVED_GAS() view returns (uint64)",
+      "function baseGas(bytes _message, uint32 _minGasLimit) pure returns (uint64)",
+      "function failedMessages(bytes32) view returns (bool)",
+      "function initialize(address _l1CrossDomainMessenger)",
+      "function l1CrossDomainMessenger() view returns (address)",
+      "function messageNonce() view returns (uint256)",
+      "function otherMessenger() view returns (address)",
+      "function paused() view returns (bool)",
+      "function relayMessage(uint256 _nonce, address _sender, address _target, uint256 _value, uint256 _minGasLimit, bytes _message) payable",
+      "function sendMessage(address _target, bytes _message, uint32 _minGasLimit) payable",
+      "function successfulMessages(bytes32) view returns (bool)",
+      "function version() view returns (string)",
+      "function xDomainMessageSender() view returns (address)"
+    ],
+    "katana:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": [
+      "constructor()",
+      "event DepositFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event Initialized(uint8 version)",
+      "event WithdrawalInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function initialize(address _otherBridge)",
+      "function l1TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function paused() view returns (bool)",
+      "function version() pure returns (string)",
+      "function withdraw(address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
+      "function withdrawTo(address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable"
+    ],
+    "katana:0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012": [
+      "constructor()",
+      "event Initialized(uint8 version)",
+      "event OptimismMintableERC20Created(address indexed localToken, address indexed remoteToken, address deployer)",
+      "event StandardL2TokenCreated(address indexed remoteToken, address indexed localToken)",
+      "function BRIDGE() view returns (address)",
+      "function bridge() view returns (address)",
+      "function createOptimismMintableERC20(address _remoteToken, string _name, string _symbol) returns (address)",
+      "function createOptimismMintableERC20WithDecimals(address _remoteToken, string _name, string _symbol, uint8 _decimals) returns (address)",
+      "function createStandardL2Token(address _remoteToken, string _name, string _symbol) returns (address)",
+      "function deployments(address) view returns (address)",
+      "function initialize(address _bridge)",
+      "function version() view returns (string)"
+    ],
+    "katana:0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013": [
+      "function getL1BlockNumber() view returns (uint256)",
+      "function version() view returns (string)"
+    ],
+    "katana:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014": [
+      "constructor()",
+      "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
+      "event ERC721BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
+      "event Initialized(uint8 version)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC721(address _localToken, address _remoteToken, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC721To(address _localToken, address _remoteToken, address _to, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
+      "function finalizeBridgeERC721(address _localToken, address _remoteToken, address _from, address _to, uint256 _tokenId, bytes _extraData)",
+      "function initialize(address _l1ERC721Bridge)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function paused() view returns (bool)",
+      "function version() view returns (string)"
+    ],
+    "katana:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017": [
+      "constructor(address _bridge, uint256 _remoteChainId)",
+      "event OptimismMintableERC721Created(address indexed localToken, address indexed remoteToken, address deployer)",
+      "function BRIDGE() view returns (address)",
+      "function REMOTE_CHAIN_ID() view returns (uint256)",
+      "function createOptimismMintableERC721(address _remoteToken, string _name, string _symbol) returns (address)",
+      "function isOptimismMintableERC721(address) view returns (bool)",
+      "function version() view returns (string)"
+    ],
+    "katana:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": [
+      "constructor(address _owner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addressManager() view returns (address)",
+      "function changeProxyAdmin(address _proxy, address _newAdmin)",
+      "function getProxyAdmin(address _proxy) view returns (address)",
+      "function getProxyImplementation(address _proxy) view returns (address)",
+      "function implementationName(address) view returns (string)",
+      "function isUpgrading() view returns (bool)",
+      "function owner() view returns (address)",
+      "function proxyType(address) view returns (uint8)",
+      "function renounceOwnership()",
+      "function setAddress(string _name, address _address)",
+      "function setAddressManager(address _address)",
+      "function setImplementationName(address _address, string _name)",
+      "function setProxyType(address _address, uint8 _type)",
+      "function setUpgrading(bool _upgrading)",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address _proxy, address _implementation)",
+      "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ],
+    "katana:0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020": [
+      "error AlreadyExists()",
+      "event Registered(bytes32 indexed uid, address indexed registerer, tuple(bytes32 uid, address resolver, bool revocable, string schema) schema)",
+      "function getSchema(bytes32 uid) view returns (tuple(bytes32 uid, address resolver, bool revocable, string schema))",
+      "function register(string schema, address resolver, bool revocable) returns (bytes32)",
+      "function version() view returns (string)"
+    ],
+    "katana:0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021": [
+      "constructor()",
+      "error AccessDenied()",
+      "error AlreadyRevoked()",
+      "error AlreadyRevokedOffchain()",
+      "error AlreadyTimestamped()",
+      "error DeadlineExpired()",
+      "error InsufficientValue()",
+      "error InvalidAttestation()",
+      "error InvalidAttestations()",
+      "error InvalidExpirationTime()",
+      "error InvalidLength()",
+      "error InvalidNonce()",
+      "error InvalidOffset()",
+      "error InvalidRegistry()",
+      "error InvalidRevocation()",
+      "error InvalidRevocations()",
+      "error InvalidSchema()",
+      "error InvalidSignature()",
+      "error InvalidVerifier()",
+      "error Irrevocable()",
+      "error NotFound()",
+      "error NotPayable()",
+      "error WrongSchema()",
+      "event Attested(address indexed recipient, address indexed attester, bytes32 uid, bytes32 indexed schemaUID)",
+      "event NonceIncreased(uint256 oldNonce, uint256 newNonce)",
+      "event Revoked(address indexed recipient, address indexed attester, bytes32 uid, bytes32 indexed schemaUID)",
+      "event RevokedOffchain(address indexed revoker, bytes32 indexed data, uint64 indexed timestamp)",
+      "event Timestamped(bytes32 indexed data, uint64 indexed timestamp)",
+      "function attest(tuple(bytes32 schema, tuple(address recipient, uint64 expirationTime, bool revocable, bytes32 refUID, bytes data, uint256 value) data) request) payable returns (bytes32)",
+      "function attestByDelegation(tuple(bytes32 schema, tuple(address recipient, uint64 expirationTime, bool revocable, bytes32 refUID, bytes data, uint256 value) data, tuple(uint8 v, bytes32 r, bytes32 s) signature, address attester, uint64 deadline) delegatedRequest) payable returns (bytes32)",
+      "function getAttestTypeHash() pure returns (bytes32)",
+      "function getAttestation(bytes32 uid) view returns (tuple(bytes32 uid, bytes32 schema, uint64 time, uint64 expirationTime, uint64 revocationTime, bytes32 refUID, address recipient, address attester, bool revocable, bytes data))",
+      "function getDomainSeparator() view returns (bytes32)",
+      "function getName() view returns (string)",
+      "function getNonce(address account) view returns (uint256)",
+      "function getRevokeOffchain(address revoker, bytes32 data) view returns (uint64)",
+      "function getRevokeTypeHash() pure returns (bytes32)",
+      "function getSchemaRegistry() pure returns (address)",
+      "function getTimestamp(bytes32 data) view returns (uint64)",
+      "function increaseNonce(uint256 newNonce)",
+      "function isAttestationValid(bytes32 uid) view returns (bool)",
+      "function multiAttest(tuple(bytes32 schema, tuple(address recipient, uint64 expirationTime, bool revocable, bytes32 refUID, bytes data, uint256 value)[] data)[] multiRequests) payable returns (bytes32[])",
+      "function multiAttestByDelegation(tuple(bytes32 schema, tuple(address recipient, uint64 expirationTime, bool revocable, bytes32 refUID, bytes data, uint256 value)[] data, tuple(uint8 v, bytes32 r, bytes32 s)[] signatures, address attester, uint64 deadline)[] multiDelegatedRequests) payable returns (bytes32[])",
+      "function multiRevoke(tuple(bytes32 schema, tuple(bytes32 uid, uint256 value)[] data)[] multiRequests) payable",
+      "function multiRevokeByDelegation(tuple(bytes32 schema, tuple(bytes32 uid, uint256 value)[] data, tuple(uint8 v, bytes32 r, bytes32 s)[] signatures, address revoker, uint64 deadline)[] multiDelegatedRequests) payable",
+      "function multiRevokeOffchain(bytes32[] data) returns (uint64)",
+      "function multiTimestamp(bytes32[] data) returns (uint64)",
+      "function revoke(tuple(bytes32 schema, tuple(bytes32 uid, uint256 value) data) request) payable",
+      "function revokeByDelegation(tuple(bytes32 schema, tuple(bytes32 uid, uint256 value) data, tuple(uint8 v, bytes32 r, bytes32 s) signature, address revoker, uint64 deadline) delegatedRequest) payable",
+      "function revokeOffchain(bytes32 data) returns (uint64)",
+      "function timestamp(bytes32 data) returns (uint64)",
+      "function version() view returns (string)"
+    ],
+    "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC": [
+      "constructor(address _singleton)"
+    ],
+    "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c": [
+      "constructor()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC2612ExpiredSignature(uint256 deadline)",
+      "error ERC2612InvalidSigner(address signer, address owner)",
+      "error InvalidAccountNonce(address account, uint256 currentNonce)",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OnlyBridge()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function bridgeAddress() view returns (address)",
+      "function burn(address account, uint256 value)",
+      "function decimals() view returns (uint8)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function initialize(string name, string symbol, uint8 __decimals)",
+      "function mint(address to, uint256 value)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)"
+    ],
+    "katana:0xFBF44D0341C03098A1D9C0336e3d5C34E8BFdf1A": [
+      "event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)",
+      "event WithdrawerBalanceBurnt(uint256 indexed amount)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function burn()",
+      "function initiateWithdrawal(address _target, uint256 _gasLimit, bytes _data) payable",
+      "function messageNonce() view returns (uint256)",
+      "function sentMessages(bytes32) view returns (bool)",
+      "function version() view returns (string)"
     ]
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "katana/AggchainFEP_post035": "0x428b3edaf13fa3a14d448eeef5e3718dd7f95d5a299666a436ce66a0def4d9d9",
+    "katana/AgglayerBridgeL2": "0x26a12f6eb0f2fae1955dc3e6afe2db0b4234277a896f1f2509fde8ad8477cd1b",
+    "katana/BridgeLib": "0xb8ad695e33fde1c15595da1cbf166d648c6be57a47ec43405d330e10b3d6e6ec",
+    "katana/GlobalExitRootManagerL2SovereignChain": "0xb74e315d5528261b0f3aea62fc49dc10450d9eb9ee94555647fb733bb3230732",
+    "katana/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
+    "katana/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
+    "katana/TokenWrappedBridgeUpgradeable": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
+    "opstack/DisputeGameFactory": "0x46746381be2da0435ab1c70360c00f35d9759a505c3f99905e07476b72e8b79c",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
+    "opstack/Layer2/BaseFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/GasPriceOracle": "0x8f497de83556de92a063c31d97188024782f910b9b1f254812e9e6b58ece0ccf",
+    "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
+    "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
+    "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/L2CrossDomainMessenger": "0xe22f4bc25e3233f9cbc95891feb31bb13e525003e5dac36ec019619b44a06b89",
+    "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060",
+    "opstack/Layer2/OperatorFeeVault": "0x044085f5049dce846d88feaa0007d7805521906a1025bb3acc0ee57c09befe47",
+    "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2_noForce": "0x7ac072ef679e441e8543bbc677bcba6f25016b1232f4ee456519a28e3c3e2dee",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
+    "polygon-cdk/L2Timelock": "0xa68acff21822229ec6117f6af99e810af110069ec1e2217cc3ac6c1e832f528e",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
-  "usedBlockNumbers": { "ethereum": 24984581 },
-  "permissionsConfigHash": "0x4d234984d5db70092743f2663b9f7a97e54c8d43f8d998186799062de16eb02f"
+  "usedBlockNumbers": { "ethereum": 25229774, "katana": 33661418 },
+  "permissionsConfigHash": "0xa30446cf0798ae420c88e9141d14896552eab31019f9193d77c3ae55dfc3a0f9"
 }

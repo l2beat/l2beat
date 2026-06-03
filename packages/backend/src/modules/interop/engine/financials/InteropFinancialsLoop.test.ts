@@ -4,9 +4,9 @@ import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropTransferAnalyzer } from '../InteropTransferAnalyzer'
+import type { InteropNotifier } from '../notifications/InteropNotifier'
 import { DeployedTokenId } from './DeployedTokenId'
 import { InteropFinancialsLoop } from './InteropFinancialsLoop'
-import type { PriceRemappingRule } from './priceRemappingRules'
 
 describe(InteropFinancialsLoop.name, () => {
   describe(InteropFinancialsLoop.prototype.run.name, () => {
@@ -24,7 +24,7 @@ describe(InteropFinancialsLoop.name, () => {
         db,
         tokenDb,
         Logger.SILENT,
-        { priceRemappingRules: [], intervalMs: 1000 },
+        { intervalMs: 1000 },
       )
 
       await service.run()
@@ -52,7 +52,7 @@ describe(InteropFinancialsLoop.name, () => {
         db,
         tokenDb,
         Logger.SILENT,
-        { priceRemappingRules: [], intervalMs: 1000 },
+        { intervalMs: 1000 },
       )
 
       await service.run()
@@ -119,7 +119,7 @@ describe(InteropFinancialsLoop.name, () => {
         getUnprocessed: mockFn().resolvesTo(mockTransfers),
         updateFinancials: mockFn().resolvesTo(undefined),
       })
-      const transaction = mockFn(async (fn: any) => await fn())
+      const transaction = mockFn(async (fn) => await fn())
       const db = mockObject<Database>({
         interopRecentPrices,
         interopTransfer,
@@ -134,7 +134,11 @@ describe(InteropFinancialsLoop.name, () => {
             symbol: 'ETH',
             decimals: 18,
           },
-          abstractToken: { id: '123456:ethereum:ETH', coingeckoId: 'ethereum' },
+          abstractToken: {
+            id: '123456:ethereum:ETH',
+            coingeckoId: 'ethereum',
+            isPriceUnreliable: false,
+          },
         },
         {
           deployedToken: {
@@ -143,7 +147,11 @@ describe(InteropFinancialsLoop.name, () => {
             symbol: 'ARB',
             decimals: 18,
           },
-          abstractToken: { id: 'abcdef:arbitrum:ARB', coingeckoId: 'arbitrum' },
+          abstractToken: {
+            id: 'abcdef:arbitrum:ARB',
+            coingeckoId: 'arbitrum',
+            isPriceUnreliable: false,
+          },
         },
         {
           deployedToken: {
@@ -152,7 +160,11 @@ describe(InteropFinancialsLoop.name, () => {
             symbol: 'ETH',
             decimals: 18,
           },
-          abstractToken: { id: 'ethereum+native', coingeckoId: 'ethereum' },
+          abstractToken: {
+            id: 'ethereum+native',
+            coingeckoId: 'ethereum',
+            isPriceUnreliable: false,
+          },
         },
         {
           deployedToken: {
@@ -161,7 +173,11 @@ describe(InteropFinancialsLoop.name, () => {
             symbol: 'BASE',
             decimals: 18,
           },
-          abstractToken: { id: 'fedcba:base:BASE', coingeckoId: 'base' },
+          abstractToken: {
+            id: 'fedcba:base:BASE',
+            coingeckoId: 'base',
+            isPriceUnreliable: false,
+          },
         },
         {
           deployedToken: {
@@ -170,7 +186,11 @@ describe(InteropFinancialsLoop.name, () => {
             symbol: 'TOKEN',
             decimals: 6,
           },
-          abstractToken: { id: '222222:ethereum:TOKEN', coingeckoId: 'token' },
+          abstractToken: {
+            id: '222222:ethereum:TOKEN',
+            coingeckoId: 'token',
+            isPriceUnreliable: false,
+          },
         },
       ]
 
@@ -188,7 +208,10 @@ describe(InteropFinancialsLoop.name, () => {
         db,
         tokenDb,
         Logger.SILENT,
-        { priceRemappingRules: [], intervalMs: 1000 },
+        {
+          intervalMs: 1000,
+          maxTransferValueUsd: 1_000_000_000,
+        },
       )
 
       await service.run()
@@ -257,7 +280,7 @@ describe(InteropFinancialsLoop.name, () => {
         dstAbstractTokenId: '222222:ethereum:TOKEN',
         dstAmount: 200000000000,
         dstPrice: 50,
-        dstValueUsd: 10000000000000,
+        dstValueUsd: null,
       }
       expect(interopTransfer.updateFinancials).toHaveBeenCalledWith(
         'msg3',
@@ -298,7 +321,7 @@ describe(InteropFinancialsLoop.name, () => {
         getUnprocessed: mockFn().resolvesTo(mockTransfers),
         updateFinancials: mockFn().resolvesTo(undefined),
       })
-      const transaction = mockFn(async (fn: any) => await fn())
+      const transaction = mockFn(async (fn) => await fn())
       const db = mockObject<Database>({
         interopRecentPrices,
         interopTransfer,
@@ -327,7 +350,7 @@ describe(InteropFinancialsLoop.name, () => {
         db,
         tokenDb,
         logger,
-        { priceRemappingRules: [], intervalMs: 1000 },
+        { intervalMs: 1000 },
       )
 
       await service.run()
@@ -347,7 +370,7 @@ describe(InteropFinancialsLoop.name, () => {
       })
     })
 
-    it('applies price remapping rules using side timestamps', async () => {
+    it('keeps token identity and amount while skipping valuation for unreliable prices', async () => {
       const srcToken = DeployedTokenId.from(
         'ethereum',
         EthereumAddress.random(),
@@ -357,43 +380,28 @@ describe(InteropFinancialsLoop.name, () => {
         EthereumAddress.random(),
       )
 
-      const mockTransfers = [
-        {
-          transferId: 'msg1',
-          timestamp: UnixTime(250),
-
-          srcTime: UnixTime(200),
-          srcChain: 'ethereum',
-          srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
-          srcRawAmount: BigInt('1000000000000000000'),
-
-          dstTime: UnixTime(250),
-          dstChain: 'arbitrum',
-          dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken)),
-          dstRawAmount: BigInt('2000000000000000000'),
-        },
-        {
-          transferId: 'msg2',
-          timestamp: UnixTime(250),
-
-          srcTime: UnixTime(250),
-          srcChain: 'ethereum',
-          srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
-          srcRawAmount: BigInt('3000000000000000000'),
-        },
-      ]
-
-      const pricesMap = new Map([
-        ['src-cg-id', 10],
-        ['dst-cg-id', 20],
-      ])
-
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
         hasAnyPrices: mockFn().resolvesTo(true),
-        getClosestPrices: mockFn().resolvesTo(pricesMap),
+        getClosestPrices: mockFn().resolvesTo(
+          new Map([
+            ['unreliable-token', 3000],
+            ['reliable-token', 2],
+          ]),
+        ),
       })
       const interopTransfer = mockObject<Database['interopTransfer']>({
-        getUnprocessed: mockFn().resolvesTo(mockTransfers),
+        getUnprocessed: mockFn().resolvesTo([
+          {
+            transferId: 'msg1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
+            srcRawAmount: BigInt('1000000000000000000'),
+            dstChain: 'arbitrum',
+            dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken)),
+            dstRawAmount: BigInt('2000000000000000000'),
+          },
+        ]),
         updateFinancials: mockFn().resolvesTo(undefined),
       })
       const transaction = mockFn(async (fn) => await fn())
@@ -411,43 +419,32 @@ describe(InteropFinancialsLoop.name, () => {
                 deployedToken: {
                   chain: 'ethereum',
                   address: DeployedTokenId.address(srcToken),
-                  symbol: 'TKNA',
+                  symbol: 'BAD',
                   decimals: 18,
                 },
                 abstractToken: {
                   id: 'src-abstract-id',
-                  coingeckoId: 'src-cg-id',
+                  coingeckoId: 'unreliable-token',
+                  isPriceUnreliable: true,
                 },
               },
               {
                 deployedToken: {
                   chain: 'arbitrum',
                   address: DeployedTokenId.address(dstToken),
-                  symbol: 'TKNB',
+                  symbol: 'GOOD',
                   decimals: 18,
                 },
                 abstractToken: {
                   id: 'dst-abstract-id',
-                  coingeckoId: 'dst-cg-id',
+                  coingeckoId: 'reliable-token',
+                  isPriceUnreliable: false,
                 },
               },
             ]),
           },
         },
       } as any)
-
-      const priceRemappingRules: PriceRemappingRule[] = [
-        {
-          abstractId: 'src-abstract-id',
-          fromTimestamp: UnixTime(200),
-          priceUsd: 1,
-        },
-        {
-          abstractId: 'dst-abstract-id',
-          fromTimestamp: UnixTime(200),
-          priceUsd: 2,
-        },
-      ]
 
       const service = new InteropFinancialsLoop(
         [
@@ -457,38 +454,245 @@ describe(InteropFinancialsLoop.name, () => {
         db,
         tokenDb,
         Logger.SILENT,
-        { priceRemappingRules, intervalMs: 1000 },
+        { intervalMs: 1000 },
       )
 
       await service.run()
 
       expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {
         srcAbstractTokenId: 'src-abstract-id',
-        srcSymbol: 'TKNA',
-        srcPrice: 1,
+        srcSymbol: 'BAD',
+        srcPrice: null,
         srcAmount: 1,
-        srcValueUsd: 1,
-
+        srcValueUsd: null,
         dstAbstractTokenId: 'dst-abstract-id',
-        dstSymbol: 'TKNB',
+        dstSymbol: 'GOOD',
         dstPrice: 2,
         dstAmount: 2,
         dstValueUsd: 4,
       })
+    })
 
-      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg2', {
+    it('skips valuation and notifies when price exceeds the configured threshold', async () => {
+      const srcToken = DeployedTokenId.from(
+        'ethereum',
+        EthereumAddress.random(),
+      )
+
+      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+        hasAnyPrices: mockFn().resolvesTo(true),
+        getClosestPrices: mockFn().resolvesTo(
+          new Map([['mega-token', 1_500_000]]),
+        ),
+      })
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getUnprocessed: mockFn().resolvesTo([
+          {
+            plugin: 'stargate',
+            transferId: 'msg1',
+            type: 'deposit',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
+            srcRawAmount: BigInt('1000000000000000000'),
+            dstChain: 'arbitrum',
+          },
+        ]),
+        updateFinancials: mockFn().resolvesTo(undefined),
+      })
+      const transaction = mockFn(async (fn) => await fn())
+      const db = mockObject<Database>({
+        interopRecentPrices,
+        interopTransfer,
+        transaction,
+      })
+
+      const tokenDb = mockObject<TokenDbClient>({
+        deployedTokens: {
+          getByChainAndAddress: {
+            query: mockFn().resolvesTo([
+              {
+                deployedToken: {
+                  chain: 'ethereum',
+                  address: DeployedTokenId.address(srcToken),
+                  symbol: 'MEGA',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: 'src-abstract-id',
+                  coingeckoId: 'mega-token',
+                  isPriceUnreliable: false,
+                },
+              },
+            ]),
+          },
+        },
+      } as any)
+      const notifier = mockObject<InteropNotifier>({
+        notifySkippedTransferValuations: mockFn().returns(undefined),
+      })
+
+      const service = new InteropFinancialsLoop(
+        [
+          { id: 'ethereum', type: 'evm' as const },
+          { id: 'arbitrum', type: 'evm' as const },
+        ],
+        db,
+        tokenDb,
+        Logger.SILENT,
+        {
+          notifier,
+          intervalMs: 1000,
+          maxTokenPriceUsd: 1_000_000,
+        },
+      )
+
+      await service.run()
+
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {
         srcAbstractTokenId: 'src-abstract-id',
-        srcSymbol: 'TKNA',
-        srcPrice: 1,
-        srcAmount: 3,
-        srcValueUsd: 3,
-
+        srcSymbol: 'MEGA',
+        srcPrice: 1_500_000,
+        srcAmount: 1,
+        srcValueUsd: null,
         dstAbstractTokenId: null,
         dstSymbol: null,
         dstPrice: null,
         dstAmount: null,
         dstValueUsd: null,
       })
+      expect(notifier.notifySkippedTransferValuations).toHaveBeenCalledTimes(1)
+      expect(notifier.notifySkippedTransferValuations).toHaveBeenCalledWith(
+        expect.anything(),
+        [
+          {
+            plugin: 'stargate',
+            type: 'deposit',
+            transferId: 'msg1',
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            side: 'src',
+            symbol: 'MEGA',
+            coingeckoId: 'mega-token',
+            priceUsd: 1_500_000,
+            amount: 1,
+            valueUsd: undefined,
+            reason: 'priceAboveThreshold',
+            thresholdUsd: 1_000_000,
+          },
+        ],
+      )
+    })
+
+    it('skips valuation and notifies when transfer value exceeds the configured threshold', async () => {
+      const dstToken = DeployedTokenId.from(
+        'arbitrum',
+        EthereumAddress.random(),
+      )
+
+      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+        hasAnyPrices: mockFn().resolvesTo(true),
+        getClosestPrices: mockFn().resolvesTo(
+          new Map([['whale-token', 20_000]]),
+        ),
+      })
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getUnprocessed: mockFn().resolvesTo([
+          {
+            plugin: 'stargate',
+            transferId: 'msg2',
+            type: 'deposit',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken)),
+            dstRawAmount: BigInt('100000000000000000000000'),
+          },
+        ]),
+        updateFinancials: mockFn().resolvesTo(undefined),
+      })
+      const transaction = mockFn(async (fn) => await fn())
+      const db = mockObject<Database>({
+        interopRecentPrices,
+        interopTransfer,
+        transaction,
+      })
+
+      const tokenDb = mockObject<TokenDbClient>({
+        deployedTokens: {
+          getByChainAndAddress: {
+            query: mockFn().resolvesTo([
+              {
+                deployedToken: {
+                  chain: 'arbitrum',
+                  address: DeployedTokenId.address(dstToken),
+                  symbol: 'WHALE',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: 'dst-abstract-id',
+                  coingeckoId: 'whale-token',
+                  isPriceUnreliable: false,
+                },
+              },
+            ]),
+          },
+        },
+      } as any)
+      const notifier = mockObject<InteropNotifier>({
+        notifySkippedTransferValuations: mockFn().returns(undefined),
+      })
+
+      const service = new InteropFinancialsLoop(
+        [
+          { id: 'ethereum', type: 'evm' as const },
+          { id: 'arbitrum', type: 'evm' as const },
+        ],
+        db,
+        tokenDb,
+        Logger.SILENT,
+        {
+          notifier,
+          intervalMs: 1000,
+          maxTransferValueUsd: 1_000_000_000,
+        },
+      )
+
+      await service.run()
+
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg2', {
+        srcAbstractTokenId: null,
+        srcSymbol: null,
+        srcPrice: null,
+        srcAmount: null,
+        srcValueUsd: null,
+        dstAbstractTokenId: 'dst-abstract-id',
+        dstSymbol: 'WHALE',
+        dstPrice: 20_000,
+        dstAmount: 100_000,
+        dstValueUsd: null,
+      })
+      expect(notifier.notifySkippedTransferValuations).toHaveBeenCalledTimes(1)
+      expect(notifier.notifySkippedTransferValuations).toHaveBeenCalledWith(
+        expect.anything(),
+        [
+          {
+            plugin: 'stargate',
+            type: 'deposit',
+            transferId: 'msg2',
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            side: 'dst',
+            symbol: 'WHALE',
+            coingeckoId: 'whale-token',
+            priceUsd: 20_000,
+            amount: 100_000,
+            valueUsd: 2_000_000_000,
+            reason: 'valueAboveThreshold',
+            thresholdUsd: 1_000_000_000,
+          },
+        ],
+      )
     })
 
     it('passes processed transfers to the analyzer after assigning financials', async () => {
@@ -565,6 +769,7 @@ describe(InteropFinancialsLoop.name, () => {
                 abstractToken: {
                   id: 'src-abstract-id',
                   coingeckoId: 'token',
+                  isPriceUnreliable: false,
                 },
               },
               {
@@ -577,6 +782,7 @@ describe(InteropFinancialsLoop.name, () => {
                 abstractToken: {
                   id: 'dst-abstract-id',
                   coingeckoId: 'token',
+                  isPriceUnreliable: false,
                 },
               },
             ]),
@@ -598,7 +804,6 @@ describe(InteropFinancialsLoop.name, () => {
         {
           analyzer,
           intervalMs: 1000,
-          priceRemappingRules: [],
         },
       )
 
@@ -667,6 +872,7 @@ describe(InteropFinancialsLoop.name, () => {
                 abstractToken: {
                   id: 'src-abstract-id',
                   coingeckoId: 'token',
+                  isPriceUnreliable: false,
                 },
               },
               {
@@ -679,6 +885,7 @@ describe(InteropFinancialsLoop.name, () => {
                 abstractToken: {
                   id: 'dst-abstract-id',
                   coingeckoId: 'token',
+                  isPriceUnreliable: false,
                 },
               },
             ]),
@@ -702,7 +909,6 @@ describe(InteropFinancialsLoop.name, () => {
         {
           analyzer,
           intervalMs: 1000,
-          priceRemappingRules: [],
         },
       )
 

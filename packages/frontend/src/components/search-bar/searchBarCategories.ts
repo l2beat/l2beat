@@ -14,6 +14,9 @@ export const searchBarCategories = {
   ecosystems: {
     name: 'Ecosystems',
   },
+  privacy: {
+    name: 'Privacy',
+  },
   other: {
     name: 'Other',
   },

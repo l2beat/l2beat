@@ -1,4 +1,5 @@
 import type { ProjectId } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -21,7 +22,7 @@ import {
 } from '~/pages/interop/components/tokens/columns'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
@@ -40,8 +41,9 @@ export function InteropTokensSection({
   data,
   ...sectionProps
 }: InteropTokensSectionProps) {
-  const { data: tokensData, isLoading: isTokensLoading } =
-    api.interop.tokens.useQuery(
+  const trpc = useTRPC()
+  const { data: tokensData, isLoading: isTokensLoading } = useQuery(
+    trpc.interop.tokens.queryOptions(
       {
         ...apiSelection,
         id: projectId,
@@ -50,11 +52,16 @@ export function InteropTokensSection({
       {
         enabled: !!data.entry,
       },
-    )
+    ),
+  )
 
   const columns = useMemo(
-    () => getTopTokensColumns({ showFlowsColumn: false }),
-    [],
+    () =>
+      getTopTokensColumns({
+        showFlowsColumn: false,
+        selectedChains: apiSelection,
+      }),
+    [apiSelection],
   )
 
   const tableData = useMemo(() => tokensData?.items ?? [], [tokensData])

@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
 import { useState } from 'react'
 import {
@@ -22,7 +23,7 @@ import { Label as FieldLabel } from '~/components/core/Label'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import type { CoveragePieChart, CoveragePieSlice } from './types'
 
 const DEFAULT_COLLAPSE_THRESHOLD_PCT = 2
@@ -182,6 +183,7 @@ function CoveragePieCard(props: { chart: CoveragePieChart }) {
 }
 
 export function CoveragePiesPage() {
+  const trpc = useBackendTrpc()
   const [thresholdInput, setThresholdInput] = useState<string>(
     String(DEFAULT_COLLAPSE_THRESHOLD_PCT),
   )
@@ -193,8 +195,9 @@ export function CoveragePiesPage() {
       ? DEFAULT_COLLAPSE_THRESHOLD_PCT
       : parsedThreshold
 
-  const { data, error, isError, isLoading, isFetching, refetch } =
-    api.interop.coveragePies.data.useQuery({ collapseThresholdPct })
+  const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
+    trpc.interop.coveragePies.data.queryOptions({ collapseThresholdPct }),
+  )
 
   const charts = data?.charts ?? []
 

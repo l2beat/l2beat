@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xb08d1b31311152a8a63f8c3d6a22f62eb2873d6a
+
+# Diff at Fri, 15 May 2026 12:35:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1747043363
+- current timestamp: 1747043363
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1747043363 (main branch discovery), not current.
+
+```diff
+    contract AztecFeeDistributor (eth:0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734) [aztecv1/AztecFeeDistributor] {
+    +++ description: Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.
+      sourceHashes.0:
+-        "0x56ca2c5458055de0d08eedc65f6be38927e931bd328c77eb4db1ef43b752bbed"
++        "0xe40f63f80dfb4ee0a5cdacbc4527030d3aa33252e5dd11fcae487ffba3ee38ef"
+    }
+```
+
 Generated with discovered.json: 0xe88d0ba2499bafead0b4b48aee5d532c54956b1b
 
 # Diff at Fri, 08 May 2026 07:51:06 GMT:

@@ -1,6 +1,7 @@
 import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
+import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { validateRoute } from '~/utils/validateRoute'
 import { getDiscolupeProjects } from './getDiscolupeProjects'
 import { getInternalTokenBreakdown } from './getInternalTokenBreakdown'
@@ -53,6 +54,12 @@ export function createInternalApiRouter() {
     req.clearTimeout()
     const tokenBreakdown = await getInternalTokenBreakdown()
     res.json(tokenBreakdown)
+  })
+
+  router.get('/api/interop/chains', (_, res) => {
+    res.json(
+      getInteropChains().map((c) => ({ id: c.id, isUpcoming: c.isUpcoming })),
+    )
   })
 
   return router

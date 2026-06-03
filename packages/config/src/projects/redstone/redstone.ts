@@ -34,6 +34,7 @@ export const redstone: ScalingProject = opStackL2({
     isPartOfSuperchain: false,
   },
   addedAt: UnixTime(1714996778), // 2024-05-06T11:59:38Z
+  archivedAt: UnixTime(1779388559), // 2026-05-21T18:35:59Z, last batch submission
   discovery,
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [

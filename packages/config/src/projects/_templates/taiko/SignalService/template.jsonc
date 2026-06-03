@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.",
+  "description": "Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications like the bridge escrows to prove that a specific L1<->L2 signal or state transition occurred via Merkle proofs.",
   "fields": {
     "owner": {
       "permissions": [

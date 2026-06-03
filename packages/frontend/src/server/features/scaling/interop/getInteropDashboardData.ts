@@ -1,4 +1,4 @@
-import { unique } from '@l2beat/shared-pure'
+import { assert, unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
@@ -9,7 +9,8 @@ import type {
   TokenData,
 } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
-import { getFlows, type InteropFlowData } from './utils/getFlows'
+import { getFlows } from './utils/getFlows'
+import { getInteropChains } from './utils/getInteropChains'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getProtocolEntries } from './utils/getProtocolEntries'
 import { getSummaryTokensData } from './utils/getSummaryTokensData'
@@ -24,8 +25,21 @@ import {
   type TransferSizeDataPoint,
 } from './utils/getTransferSizeChartData'
 
+export type InteropDashboardFlowChain = {
+  id: string
+  name: string
+  iconUrl: string
+}
+
+export type InteropDashboardFlow = {
+  srcChain: InteropDashboardFlowChain
+  dstChain: InteropDashboardFlowChain
+  volume: number
+  transferCount: number | undefined
+}
+
 export type InteropDashboardData = {
-  flows: InteropFlowData[]
+  flows: InteropDashboardFlow[]
   topProtocols: InteropProtocolData[]
   topToken: InteropTopTokenData | undefined
   tokenCount: number
@@ -47,7 +61,10 @@ export async function getInteropDashboardData(
   })
 
   const { records, snapshotTimestamp } =
-    await getLatestAggregatedInteropTransferWithTokens(params, params.type)
+    await getLatestAggregatedInteropTransferWithTokens(
+      params,
+      params.type ? [params.type] : undefined,
+    )
 
   if (records.length === 0) {
     return null
@@ -76,8 +93,17 @@ export async function getInteropDashboardData(
     interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
   )
 
+  const rawFlows = getFlows(records, params, subgroupProjects).slice(0, 3)
+  const interopChains = getInteropChains()
+  const flows: InteropDashboardFlow[] = rawFlows.map((flow) => ({
+    srcChain: withIconUrl(flow.srcChain, interopChains),
+    dstChain: withIconUrl(flow.dstChain, interopChains),
+    volume: flow.volume,
+    transferCount: flow.transferCount,
+  }))
+
   return {
-    flows: getFlows(records, params, subgroupProjects).slice(0, 2),
+    flows,
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     topToken: getTopToken({
       records,
@@ -104,9 +130,26 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     select: ['interopConfig'],
   })
 
-  const flows: InteropFlowData[] = [
-    { srcChain: 'ethereum', dstChain: 'optimism', volume: 35_000_000 },
-    { srcChain: 'optimism', dstChain: 'ethereum', volume: 30_000_000 },
+  const interopChains = getInteropChains()
+  const flows: InteropDashboardFlow[] = [
+    {
+      srcChain: withIconUrl('ethereum', interopChains),
+      dstChain: withIconUrl('optimism', interopChains),
+      volume: 35_000_000,
+      transferCount: 5400,
+    },
+    {
+      srcChain: withIconUrl('optimism', interopChains),
+      dstChain: withIconUrl('ethereum', interopChains),
+      volume: 30_000_000,
+      transferCount: 4800,
+    },
+    {
+      srcChain: withIconUrl('arbitrum', interopChains),
+      dstChain: withIconUrl('base', interopChains),
+      volume: 18_000_000,
+      transferCount: 2100,
+    },
   ]
 
   const topProtocols: InteropProtocolData[] = interopProjects
@@ -114,6 +157,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     .map((project, i) => ({
       name: project.interopConfig.name ?? project.name,
       slug: project.slug,
+      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       volume: { value: 20_000_000 - i * 3_000_000, share: 20 - i * 3 },
       transfers: { value: 5000 - i * 800, share: 20 - i * 3 },
     }))
@@ -186,6 +230,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     name: project.interopConfig.name ?? project.name,
     shortName: project.interopConfig.shortName,
     description: project.interopConfig.description,
+    type: project.interopConfig.type,
     isAggregate: project.interopConfig.isAggregate,
     subgroup: undefined,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
@@ -201,13 +246,17 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     byBridgeType: undefined,
     averageValueInFlight: undefined,
     netMintedValue: undefined,
+    topRoute: undefined,
     snapshotTimestamp: undefined,
+    filterable: [],
   }))
 
   const firstMockToken = mockTokens[0]
   const topToken: InteropTopTokenData | undefined = firstMockToken
     ? {
+        id: firstMockToken.id,
         symbol: firstMockToken.symbol,
+        issuer: firstMockToken.issuer,
         iconUrl: firstMockToken.iconUrl,
         volume: firstMockToken.volume ?? 0,
         transferCount: firstMockToken.transferCount,
@@ -293,5 +342,18 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
         iconUrl: manifest.getUrl('/icons/base.png'),
       },
     ],
+  }
+}
+
+function withIconUrl(
+  chainId: string,
+  interopChains: ReturnType<typeof getInteropChains>,
+): InteropDashboardFlowChain {
+  const chain = interopChains.find((c) => c.id === chainId)
+  assert(chain, `Chain not found: ${chainId}`)
+  return {
+    id: chain.id,
+    name: chain.name,
+    iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
   }
 }

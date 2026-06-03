@@ -127,6 +127,7 @@ export const megaeth: ScalingProject = opStackL2({
       value: 'Fraud proofs (1R, ZK)',
       description: `Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof eliminates a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used. Since the node source is not available, challengers cannot watch the chain independently. \`vanguardAdvantage\` applies to every proposal and is set to ${formatSeconds(vanguardAdvantage)}, so only the Vanguard can submit state proposals; faulty proposals can be flagged but not replaced, halting the chain until the Vanguard proposes a correct state root.`,
       sentiment: 'bad',
+      permissioned: true,
       executionDelay: discovery.getContractValue<number>(
         'OptimismPortal2',
         'disputeGameFinalityDelaySeconds',
@@ -135,12 +136,14 @@ export const megaeth: ScalingProject = opStackL2({
         activeKailuaGame,
         'MAX_CLOCK_DURATION',
       ),
-      initialBond: formatEther(
-        discovery.getContractValue<number>(
-          activeKailuaTreasury,
-          'participationBond',
+      initialBond: {
+        value: formatEther(
+          discovery.getContractValue<number>(
+            activeKailuaTreasury,
+            'participationBond',
+          ),
         ),
-      ),
+      },
       orderHint: Number.NEGATIVE_INFINITY,
     },
   },

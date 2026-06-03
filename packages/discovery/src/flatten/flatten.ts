@@ -1,6 +1,7 @@
 import { assert, unique } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
+import { getASTIdentifiers } from './getASTIdentifiers'
 import {
   type DeclarationFilePair,
   type DeclarationType,
@@ -28,12 +29,43 @@ export function flattenStartingFrom(
     rootFile,
   )
   assert(rootContract !== undefined, 'Failed to find the root contract')
-  const order = topologicalSort(parsedFileManager, rootContract)
-  const shouldBeInterface = computeShouldBeInterface(
+  // Interface-ness, used members, and reachability are interdependent: pruning
+  // a contract can remove an implementation reference (e.g. a `new X` in a
+  // now-stripped body) that was keeping its target out of the purely-dynamic
+  // set, unblocking further pruning. Iterate until the surviving set is stable.
+  let current = topologicalSort(parsedFileManager, rootContract)
+  let shouldBeInterface = computeShouldBeInterface(
     parsedFileManager,
     rootContract,
-    order,
+    current,
   )
+  let usedMembers = computeUsedMembers(
+    parsedFileManager,
+    current,
+    shouldBeInterface,
+  )
+  while (true) {
+    const next = pruneUnreachable(
+      parsedFileManager,
+      current,
+      rootContract,
+      shouldBeInterface,
+      usedMembers,
+    )
+    if (next.length === current.length) break
+    current = next
+    shouldBeInterface = computeShouldBeInterface(
+      parsedFileManager,
+      rootContract,
+      current,
+    )
+    usedMembers = computeUsedMembers(
+      parsedFileManager,
+      current,
+      shouldBeInterface,
+    )
+  }
+  const order = [...collectPragmas(current), ...current]
 
   const typeMap = buildTypeMap(order)
   const renameMap = buildRenameMap(order)
@@ -41,7 +73,11 @@ export function flattenStartingFrom(
   let flatSource = ''
   for (const { declaration, file } of order) {
     const content = shouldBeInterface[declaration.id]
-      ? generateInterfaceSourceFromContract(declaration, typeMap)
+      ? generateInterfaceSourceFromContract(
+          declaration,
+          typeMap,
+          usedMembers.get(declaration.id),
+        )
       : declaration.content
 
     const remapNames = getVisibleNames(file).flatMap((from) => {
@@ -100,29 +136,190 @@ function computeShouldBeInterface(
   return result
 }
 
+// For each contract that will be regenerated as an interface, decide which
+// public members are still referenced by the rest of the flat file. Unused
+// members are dropped.
+//
+// Receiver-aware (Approach B): `Iface(x).foo` and `Iface.foo` resolve to a
+// specific interface; other member accesses (`varOfIfaceType.foo`, `msg.sender`,
+// chained `a.b.c`, ...) are broadcast to every interface as a safety net. A
+// final transitive pass keeps types referenced by kept members' signatures.
+function computeUsedMembers(
+  parsedFileManager: ParsedFilesManager,
+  order: DeclarationFilePair[],
+  shouldBeInterface: Record<string, boolean>,
+): Map<string, Set<string>> {
+  const used = new Map<string, Set<string>>()
+  const ambiguous = new Set<string>()
+  for (const { declaration } of order) {
+    if (shouldBeInterface[declaration.id]) used.set(declaration.id, new Set())
+  }
+
+  const recordUse = (
+    receiver: string | undefined,
+    memberName: string,
+    file: ParsedFile,
+  ): void => {
+    const decl =
+      receiver && parsedFileManager.tryFindDeclaration(receiver, file)
+    const target = decl && used.get(decl.declaration.id)
+    if (target) target.add(memberName)
+    else ambiguous.add(memberName)
+  }
+
+  for (const entry of order) {
+    getASTIdentifiers(entry.declaration.ast, (node) => {
+      if (node.type === 'MemberAccess') {
+        const { expression, memberName } = node as AST.MemberAccess
+        const receiver =
+          expression.type === 'Identifier'
+            ? expression.name
+            : expression.type === 'FunctionCall' &&
+                expression.expression.type === 'Identifier'
+              ? expression.expression.name
+              : undefined
+        recordUse(receiver, memberName, entry.file)
+      } else if (node.type === 'UserDefinedTypeName') {
+        const parts = (node as AST.UserDefinedTypeName).namePath.split('.')
+        if (parts.length >= 2) {
+          recordUse(parts[0], parts[1] as string, entry.file)
+        }
+      }
+    })
+  }
+
+  for (const { declaration } of order) {
+    const keep = used.get(declaration.id)
+    if (!keep) continue
+    for (const name of ambiguous) keep.add(name)
+    const refs = signatureRefMap(declaration.ast as AST.ContractDefinition)
+    const queue = [...keep]
+    while (queue.length > 0) {
+      const name = queue.pop() as string
+      for (const id of refs.get(name) ?? []) {
+        const head = id.split('.')[0] as string
+        if (refs.has(head) && !keep.has(head)) {
+          keep.add(head)
+          queue.push(head)
+        }
+      }
+    }
+  }
+
+  return used
+}
+
+function signatureRefMap(ast: AST.ContractDefinition): Map<string, string[]> {
+  const map = new Map<string, string[]>()
+  for (const sub of ast.subNodes) {
+    const node = sub as AST.ASTNode
+    if (node.type === 'FunctionDefinition') {
+      if (
+        node.isConstructor ||
+        node.visibility === 'private' ||
+        node.visibility === 'internal' ||
+        node.name === null
+      ) {
+        continue
+      }
+      map.set(node.name, [
+        ...node.parameters.flatMap((p) => getASTIdentifiers(p)),
+        ...(node.returnParameters ?? []).flatMap((p) => getASTIdentifiers(p)),
+      ])
+    } else if (
+      node.type === 'StructDefinition' ||
+      node.type === 'EnumDefinition' ||
+      node.type === 'TypeDefinition' ||
+      node.type === 'EventDefinition' ||
+      node.type === 'CustomErrorDefinition'
+    ) {
+      map.set(node.name, getASTIdentifiers(node))
+    } else if (node.type === 'StateVariableDeclaration') {
+      for (const variable of node.variables) {
+        if (variable.visibility === 'public' && variable.name !== null) {
+          map.set(variable.name, getASTIdentifiers(variable))
+        }
+      }
+    }
+  }
+  return map
+}
+
+function pruneUnreachable(
+  parsedFileManager: ParsedFilesManager,
+  order: DeclarationFilePair[],
+  rootContract: DeclarationFilePair,
+  shouldBeInterface: Record<string, boolean>,
+  usedMembers: Map<string, Set<string>>,
+): DeclarationFilePair[] {
+  const effective = new Map<string, string[]>()
+  for (const entry of order) {
+    const id = entry.declaration.id
+    if (!shouldBeInterface[id]) {
+      effective.set(id, allReferences(entry))
+      continue
+    }
+    const keep = usedMembers.get(id) ?? new Set<string>()
+    const refs: string[] = [...entry.declaration.implementationReferences]
+    const sigs = signatureRefMap(
+      entry.declaration.ast as AST.ContractDefinition,
+    )
+    for (const [name, ids] of sigs) {
+      if (keep.has(name)) refs.push(...ids)
+    }
+    effective.set(id, refs)
+  }
+
+  const reachable = new Set<string>([rootContract.declaration.id])
+  const stack: DeclarationFilePair[] = [rootContract]
+  while (stack.length > 0) {
+    const cur = stack.pop() as DeclarationFilePair
+    for (const ref of effective.get(cur.declaration.id) ?? []) {
+      const head = ref.split('.')[0] as string
+      const dep = parsedFileManager.tryFindDeclaration(head, cur.file)
+      if (dep && !reachable.has(dep.declaration.id)) {
+        reachable.add(dep.declaration.id)
+        stack.push(dep)
+      }
+    }
+  }
+  return order.filter((e) => reachable.has(e.declaration.id))
+}
+
 function topologicalSort(
   parsedFileManager: ParsedFilesManager,
   rootContract: DeclarationFilePair,
 ): DeclarationFilePair[] {
+  // Post-order DFS that defers a node until its inheritance bases are emitted,
+  // so reference cycles get broken at a signature edge, never an inheritance one.
   const order: DeclarationFilePair[] = []
+  const inOrder = new Set<string>()
   const visited = new Set<string>()
+  const pending: DeclarationFilePair[] = []
+
+  const basesReady = (p: DeclarationFilePair) =>
+    p.declaration.implementationReferences.every((name) => {
+      const base = parsedFileManager.tryFindDeclaration(name, p.file)
+      return !base || inOrder.has(base.declaration.id)
+    })
 
   function visit(pair: DeclarationFilePair): void {
-    const id = pair.declaration.id
-    if (visited.has(id)) return
-    visited.add(id)
-
+    if (visited.has(pair.declaration.id)) return
+    visited.add(pair.declaration.id)
     for (const name of allReferences(pair)) {
       const dep = parsedFileManager.tryFindDeclaration(name, pair.file)
-      if (dep === undefined) continue
-      visit(dep)
+      if (dep) visit(dep)
     }
-
-    order.push(pair)
+    pending.push(pair)
+    for (let p = pending.find(basesReady); p; p = pending.find(basesReady)) {
+      pending.splice(pending.indexOf(p), 1)
+      order.push(p)
+      inOrder.add(p.declaration.id)
+    }
   }
 
   visit(rootContract)
-
+  assert(pending.length === 0, 'inheritance cycle detected')
   return order
 }
 
@@ -174,6 +371,31 @@ function buildTypeMap(
     }
   }
   return map
+}
+
+// NOTE(radomski): We want to have all pragrams without the ones that configure
+// the Solidity version. Also the pragrams should be deduplicated.
+function collectPragmas(order: DeclarationFilePair[]): DeclarationFilePair[] {
+  const byContent = new Map<string, DeclarationFilePair>()
+  for (const { file } of order) {
+    for (const n of file.rootASTNode.children) {
+      if (n.type !== 'PragmaDirective' || n.name === 'solidity') continue
+      const content = `pragma ${n.name} ${n.value};`
+      byContent.set(content, {
+        file,
+        declaration: {
+          ast: n,
+          name: content,
+          type: 'pragma',
+          content,
+          id: content,
+          implementationReferences: [],
+          signatureReferences: [],
+        },
+      })
+    }
+  }
+  return [...byContent.values()]
 }
 
 function buildRenameMap(order: DeclarationFilePair[]): Map<string, string> {

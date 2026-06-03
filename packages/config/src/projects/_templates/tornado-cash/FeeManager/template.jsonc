@@ -61,5 +61,6 @@
       "description": "Maximum age of cached instance fees before they are recomputed on use.",
       "severity": "LOW"
     }
-  }
+  },
+  "ignoreInWatchMode": ["feeDeviations"]
 }

@@ -152,6 +152,18 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getFirstTimestampByTokenId(
+    tokenId: string,
+  ): Promise<UnixTime | undefined> {
+    const row = await this.db
+      .selectFrom('TokenValue')
+      .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+      .where('tokenId', '=', tokenId)
+      .executeTakeFirst()
+
+    return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
+  }
+
   async getByProjectAtOrBefore(
     project: string,
     timestamp: UnixTime,
@@ -209,6 +221,36 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getLastNonZeroValueByProjects(
+    timestamp: UnixTime,
+    projects: string[],
+  ): Promise<TokenValueRecord[]> {
+    if (projects.length === 0) return []
+
+    const latest = this.db
+      .selectFrom('TokenValue')
+      .select(['projectId', 'tokenId'])
+      .select(this.db.fn.max('timestamp').as('maxTimestamp'))
+      .where('value', '>', 0)
+      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .where('projectId', 'in', projects)
+      .groupBy(['projectId', 'tokenId'])
+      .as('latest')
+
+    const rows = await this.db
+      .selectFrom('TokenValue')
+      .innerJoin(latest, (join) =>
+        join
+          .onRef('TokenValue.projectId', '=', 'latest.projectId')
+          .onRef('TokenValue.tokenId', '=', 'latest.tokenId')
+          .onRef('TokenValue.timestamp', '=', 'latest.maxTimestamp'),
+      )
+      .selectAll('TokenValue')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async deleteByConfigInTimeRange(
     configurationId: string,
     fromInclusive: UnixTime,
@@ -234,6 +276,19 @@ export class TokenValueRepository extends BaseRepository {
   async getAll(): Promise<TokenValueRecord[]> {
     const rows = await this.db.selectFrom('TokenValue').selectAll().execute()
     return rows.map(toRecord)
+  }
+
+  async getFirstTimestampByProjects(
+    projectIds: string[],
+  ): Promise<UnixTime | undefined> {
+    if (projectIds.length === 0) return undefined
+    const row = await this.db
+      .selectFrom('TokenValue')
+      .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+      .where('projectId', 'in', projectIds)
+      .executeTakeFirst()
+
+    return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
   }
 
   async deleteAll(): Promise<number> {
@@ -514,6 +569,7 @@ export class TokenValueRepository extends BaseRepository {
     projectIds: string[],
     ranges: [UnixTime | null, UnixTime][],
     opts: {
+      forSummary?: boolean
       excludeAssociatedTokens: boolean
       excludeRwaRestrictedTokens: boolean
       cutOffTimestamp?: number
@@ -540,7 +596,7 @@ export class TokenValueRepository extends BaseRepository {
       return []
     }
 
-    const valueField = 'valueForProject'
+    const valueField = opts.forSummary ? 'valueForSummary' : 'valueForProject'
 
     const rangeQueries = ranges.map(([from, to]) => {
       let query = this.db

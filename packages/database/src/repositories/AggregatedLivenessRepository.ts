@@ -98,6 +98,20 @@ export class AggregatedLivenessRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getFirstTimestampByProjectAndSubtype(
+    projectId: ProjectId,
+    subtype: TrackedTxsConfigSubtype,
+  ): Promise<UnixTime | undefined> {
+    const row = await this.db
+      .selectFrom('AggregatedLiveness')
+      .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+      .where('projectId', '=', projectId)
+      .where('subtype', '=', subtype)
+      .executeTakeFirst()
+
+    return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
+  }
+
   async getAvgByProjectAndTimeRange(
     projectId: ProjectId,
     range: [UnixTime | null, UnixTime],

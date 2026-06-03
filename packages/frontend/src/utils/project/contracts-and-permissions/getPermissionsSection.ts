@@ -123,9 +123,18 @@ function getGroupedTechnologyContracts(
           permission,
           contractUtils,
           projectChangeReport,
+          { grouped: true },
         ),
       ) ?? [],
   }
+}
+
+function getPermissionedAccountDisplayName(
+  account: ProjectPermission['accounts'][number],
+): string | undefined {
+  return (
+    account as ProjectPermission['accounts'][number] & { displayName?: string }
+  ).displayName
 }
 
 function toTechnologyContract(
@@ -133,10 +142,15 @@ function toTechnologyContract(
   permission: ProjectPermission,
   contractUtils: ContractUtils,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
+  options?: { grouped: true },
 ): TechnologyContract[] {
+  const isGrouped = options?.grouped === true && permission.accounts.length > 1
+
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => ({
-      name: account.name,
+      name: isGrouped
+        ? (getPermissionedAccountDisplayName(account) ?? account.name)
+        : account.name,
       href: account.url,
       address: ChainSpecificAddress.address(account.address).toString(),
       verificationStatus: toVerificationStatus(
@@ -165,10 +179,10 @@ function toTechnologyContract(
     }
   }
 
-  const name =
-    permission.accounts.length > 1
-      ? `${permission.name} (${permission.accounts.length})`
-      : permission.name
+  const allEoas = permission.accounts.every((account) => account.type === 'EOA')
+  const name = isGrouped
+    ? `${permission.accounts.length} ${allEoas ? 'EOAs' : 'actors'}`
+    : permission.name
 
   const participants = permission.participants?.map((account) => ({
     name: account.name,

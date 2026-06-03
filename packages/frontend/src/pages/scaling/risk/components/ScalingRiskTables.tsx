@@ -41,7 +41,6 @@ export function ScalingRiskTables(props: Props) {
           ...props.rollups,
           ...props.validiumsAndOptimiums,
           ...props.others,
-          ...props.notReviewed,
         ]}
       />
 

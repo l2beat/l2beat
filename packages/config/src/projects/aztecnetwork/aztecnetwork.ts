@@ -25,6 +25,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { Sentiment } from '../../types'
+import stakeDistribution from './stake-distribution.json'
 
 const discovery = new ProjectDiscovery('aztecnetwork')
 
@@ -68,9 +69,15 @@ const slotDuration = discovery.getContractValue<number>(
   'Rollup',
   'getSlotDuration',
 )
-const epochDuration =
-  discovery.getContractValue<number>('Rollup', 'getEpochDuration') *
-  slotDuration
+const epochSlots = discovery.getContractValue<number>(
+  'Rollup',
+  'getEpochDuration',
+)
+const entryQueueFlushSize = discovery.getContractValue<number>(
+  'Rollup',
+  'getEntryQueueFlushSize',
+)
+const epochDuration = epochSlots * slotDuration
 const proofWindow =
   epochDuration *
   (discovery.getContractValue<number>('Rollup', 'getProofSubmissionEpochs') + 1)
@@ -371,6 +378,7 @@ export const aztecnetwork: ScalingProject = {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN, // UltraHonk and CHONK (Client-side Highly Optimized ploNK)
       executionDelay: 0, // a proposed checkpoint can be immediately proven
+      permissioned: false,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: exitWindowObject,
@@ -450,9 +458,49 @@ export const aztecnetwork: ScalingProject = {
       risks: [],
     },
     sequencing: {
-      name: 'Transactions are ordered by a staked committee',
-      description: `Joining the sequencer set is permissionless and requires staking ${activationThresholdString}. For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer per slot. The committee and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
+      name: 'Transactions are ordered by a staked validator committee',
+      description: `Joining the sequencer set is permissionless and requires staking ${activationThresholdString}. For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer from the current committee per slot. More than 2/3 of the sequencers in the committee need to attest to each proposed block in an epoch for it to be valid.`,
+      sequencerSetSpec: {
+        slotTime: { value: formatSeconds(slotDuration) },
+        epochTime: { value: formatSeconds(epochDuration) },
+        sequencerCount: { value: `${activeSequencerCount} sequencers` },
+        blockProductionAccess: { value: 'Open', sentiment: 'good' },
+        stakePerValidator: { value: activationThresholdString + ', constant' },
+        rateLimit: {
+          value: `Up to ${entryQueueFlushSize} sequencers per epoch (current)`,
+          description: 'Can be changed (or set to 0) by onchain Governance',
+        },
+        deterministicCrGadget: { value: 'No', sentiment: 'warning' },
+        additionalCrGadgets: {
+          value: 'Bonded escape hatch, private transactions',
+          sentiment: 'good',
+        },
+      },
+      inclusionDelayChart: {
+        type: 'committeelike',
+        validatorCount: activeSequencerCount,
+        committeeSize: targetCommitteeSize,
+        epochSlots,
+        slotSeconds: slotDuration,
+        blockingThreshold: Math.floor((targetCommitteeSize - 1) / 3),
+        target: 0.99,
+        maxCensorFraction: 0.5,
+        stakeDistribution,
+      },
+      inclusionDelayChartDescription:
+        'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
+      censorshipResistance: `The committee and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations. The bond is ${escapeHatchBondString}, a high amount that is supposed to protect the single-proof system in case of bugs while still providing a last resort opportunity to circumvent the sequencer set. Aztec has developed a full private execution environment on the L2. This can benefit users because they cannot be censored based on their transaction content.
+### Selective censorship
+On a live Aztec L2 with a given fraction of censoring sequencers, users can either send private transactions or wait for a non-censoring committee and proposing sequencer to include their public transaction.
+### Blanket censorship
+If users are censored by the entire sequencer set, even if it stops block production just to censor, anyone can join the sequencer set permissionlessly at the churn rate or circumvent it completely by bonding and using the escape hatch. In both cases, expensive hardware is required to provide the required validity proof. Motivated censorers can try to saturate the entry queue and the escape hatch with their own new sequencers and thus lower the inclusion chances of the censored.
+### Walkaway
+In the scenario of all sequencers stopping their service, the escape hatch provides an inclusion guarantee of ${escapeHatchFrequencyString} in the worst case and the sequencer set can heal long-term by permissionless entry and churn.`,
       references: [
+        {
+          title: 'Aztec docs - Privacy considerations',
+          url: 'https://github.com/AztecProtocol/aztec-packages/blob/next/docs/docs-developers/docs/resources/considerations/privacy_considerations.md#function-fingerprints-and-tx-fingerprints',
+        },
         {
           title: 'Rollup.sol - getProposerAt() on Etherscan',
           url: `https://etherscan.io/address/${rollupAddress.toString()}#code`,
@@ -598,7 +646,8 @@ The SlashVeto Council is a ${slashVetoStats} Multisig that can veto specific pro
     risks: [], // 30d delay for the canonical rollup pointer and config but main contracts are immutable
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
-  upgradesAndGovernance: `
+  upgradesAndGovernance: {
+    content: `
 # Standard Path (Signaling)
 Because sequencers stake AZTEC tokens to secure the L2 network, they are also the primary governors of the system. Any governance proposal must be encoded and deployed as a smart contract payload on Ethereum. While core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a ${governanceExecutionDelayString} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system. These permissions can only be accessed through the process described below.
 
@@ -633,6 +682,7 @@ There is a protective **Vetoer** role held by the SlashVeto Council. The Council
 ### Economics & Treasury
 *   **Coin Issuer:** The \`CoinIssuer\` contract is owned by Governance and is authorized to mint new AZTEC tokens up to a cap of ${coinIssuerNominalAnnualPercentageCapString}.
 *   **Protocol Treasury:** Funds owned by the DAO sit in the \`ProtocolTreasury\`. The Treasury has a hardcoded timestamp (approx. ${protocolTreasuryGatedUntilString}). Before this date, the DAO cannot spend Treasury funds. After this date, Treasury funds and token ownership can be moved with a Governance Proposal.`,
+  },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
     {

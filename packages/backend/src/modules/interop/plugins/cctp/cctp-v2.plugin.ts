@@ -51,17 +51,13 @@ import {
   Address32,
   assert,
   ChainSpecificAddress,
-  EthereumAddress,
+  type EthereumAddress,
 } from '@l2beat/shared-pure'
-import { solidityKeccak256 } from 'ethers/lib/utils'
-import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
-import { findBestTransferLog } from '../hyperlane-hwr'
 import { isMayanCctpForwarded, MayanForwarded } from '../mayan-forwarder'
 import { OrderFulfilled } from '../mayan-mctp-fast'
 import { findWrappedMayanWormholeLog } from '../mayan-wormhole'
 import {
-  createEventParser,
   createInteropEventType,
   type DataRequest,
   findChain,
@@ -74,16 +70,21 @@ import {
 } from '../types'
 import { LogMessagePublished } from '../wormhole/wormhole.plugin'
 import { CCTPV2Config } from './cctp.config'
+import {
+  cctpMessageSentLog,
+  cctpTransferLog,
+  cctpV2MessageReceivedLog,
+  decodeMessageVersion,
+  decodeV2Message,
+  decodeV2MessageBody,
+  hashV2MessageBody,
+  parseCctpMessageSent,
+  parseCctpV2ReceivedTransfer,
+} from './cctp.utils'
 
-const messageSentLog = 'event MessageSent(bytes message)'
-const parseMessageSent = createEventParser(messageSentLog)
-
-const v2MessageReceivedLog =
-  'event MessageReceived(address indexed caller, uint32 sourceDomain, bytes32 indexed nonce, bytes32 sender, uint32 indexed finalityThresholdExecuted, bytes messageBody)'
-const parseV2MessageReceived = createEventParser(v2MessageReceivedLog)
-
-const transferLog =
-  'event Transfer(address indexed from, address indexed to, uint256 value)'
+// HyperCore-origin CCTP burns on HypereVM are not discoverable via eth_getLogs, only eth_getTransactionReceipt and eth_getBlockReceipts
+// so we treat it as onesided in this plugin (source only)
+const CCTP_V2_ONE_SIDED_SOURCE_CHAINS = new Set(['hyperevm'])
 
 export const CCTPv2MessageSent = createInteropEventType<{
   fast: boolean
@@ -143,13 +144,13 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
     return [
       {
         type: 'event',
-        signature: messageSentLog,
+        signature: cctpMessageSentLog,
         addresses,
       },
       {
         type: 'event',
-        signature: v2MessageReceivedLog,
-        includeTxEvents: [transferLog],
+        signature: cctpV2MessageReceivedLog,
+        includeTxEvents: [cctpTransferLog],
         addresses,
       },
     ]
@@ -166,7 +167,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       'We capture only chain with message transmitters',
     )
 
-    const messageSent = parseMessageSent(input.log, [
+    const messageSent = parseCctpMessageSent(input.log, [
       network.messageTransmitter,
     ])
     if (messageSent) {
@@ -201,41 +202,21 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       }
     }
 
-    const v2MessageReceived = parseV2MessageReceived(input.log, [
-      network.messageTransmitter,
-    ])
+    const v2MessageReceived = parseCctpV2ReceivedTransfer(input, networks)
     if (v2MessageReceived) {
-      const messageBody = decodeV2MessageBody(v2MessageReceived.messageBody)
-      const messageHash = hashV2MessageBody(v2MessageReceived.messageBody)
-      if (!messageHash) return
-
-      const transferMatch = findBestTransferLog(
-        input.txLogs,
-        messageBody ? messageBody.amount - messageBody.feeExecuted : 0n,
-        input.log.logIndex ?? -1,
-      )
-
       return [
         CCTPv2MessageReceived.create(input, {
-          app: messageBody ? 'TokenMessengerV2' : undefined,
-          hookData: messageBody?.hookData,
-          caller: EthereumAddress(v2MessageReceived.caller),
-          $srcChain: findChain(
-            networks,
-            (x) => x.domain,
-            Number(v2MessageReceived.sourceDomain),
-          ),
-          nonce: Number(v2MessageReceived.nonce),
-          sender: EthereumAddress(`0x${v2MessageReceived.sender.slice(-40)}`),
-          finalityThresholdExecuted: Number(
+          app: v2MessageReceived.app,
+          hookData: v2MessageReceived.hookData,
+          caller: v2MessageReceived.caller,
+          $srcChain: v2MessageReceived.srcChain,
+          nonce: v2MessageReceived.nonce,
+          sender: v2MessageReceived.sender,
+          finalityThresholdExecuted:
             v2MessageReceived.finalityThresholdExecuted,
-          ),
-          messageHash,
-
-          dstTokenAddress: transferMatch.transfer
-            ? Address32.from(transferMatch.transfer?.logAddress)
-            : undefined,
-          dstAmount: transferMatch.transfer?.value,
+          messageHash: v2MessageReceived.messageHash,
+          dstTokenAddress: v2MessageReceived.dstTokenAddress,
+          dstAmount: v2MessageReceived.dstAmount,
         }),
       ]
     }
@@ -250,7 +231,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       })
       if (messageSentMatches.length === 0) {
         const srcChain = event.args.$srcChain
-        if (!this.oneSidedChains.includes(srcChain)) return
+        if (!this.isOneSidedSourceChain(srcChain)) return
 
         return [
           Result.Transfer('cctp-v2.Transfer', {
@@ -343,88 +324,11 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       ]
     }
   }
-}
 
-export function decodeMessageVersion(encodedHex: string) {
-  try {
-    return new BinaryReader(encodedHex).readUint32()
-  } catch {
-    return undefined
-  }
-}
-
-// https://basescan.org/address/0x7db629f6acc20be49a0a7565c21cc178e9ac21e3#code#F4#L78
-export function decodeV2Message(encodedHex: string) {
-  try {
-    const reader = new BinaryReader(encodedHex)
-    const version = reader.readUint32()
-    const sourceDomain = reader.readUint32()
-    const destinationDomain = reader.readUint32()
-    const nonce = reader.readUint256()
-    const sender = reader.readBytes(32)
-    const recipient = reader.readBytes(32)
-    const destinationCaller = reader.readBytes(32)
-    const minFinalityThreshold = reader.readUint32() // only in V2
-    const finalityThresholdExecuted = reader.readUint32() // only in V2
-    const messageBody = reader.readRemainingBytes()
-    return {
-      version,
-      sourceDomain,
-      destinationDomain,
-      nonce,
-      sender,
-      recipient,
-      destinationCaller,
-      minFinalityThreshold,
-      finalityThresholdExecuted,
-      messageBody,
-    }
-  } catch {
-    return undefined
-  }
-}
-
-export function hashV2MessageBody(encodedHex: string): string | undefined {
-  const messageBody = decodeV2MessageBody(encodedHex)
-  if (!messageBody) return undefined
-  return solidityKeccak256(
-    ['uint32', 'bytes32', 'bytes32', 'uint256', 'bytes32', 'uint256', 'bytes'],
-    [
-      messageBody.version,
-      messageBody.burnToken,
-      messageBody.mintRecipient,
-      messageBody.amount,
-      messageBody.messageSender,
-      messageBody.maxFee,
-      messageBody.hookData,
-    ],
-  )
-}
-
-export function decodeV2MessageBody(encodedHex: string) {
-  try {
-    const reader = new BinaryReader(encodedHex)
-    const version = reader.readUint32()
-    const burnToken = reader.readBytes(32)
-    const mintRecipient = reader.readBytes(32)
-    const amount = reader.readUint256()
-    const messageSender = reader.readBytes(32)
-    const maxFee = reader.readUint256()
-    const feeExecuted = reader.readUint256()
-    const expirationBlock = reader.readUint256()
-    const hookData = reader.readRemainingBytes()
-    return {
-      version,
-      burnToken,
-      mintRecipient,
-      amount,
-      messageSender,
-      maxFee,
-      feeExecuted,
-      expirationBlock,
-      hookData,
-    }
-  } catch {
-    return undefined
+  private isOneSidedSourceChain(chain: string) {
+    return (
+      this.oneSidedChains.includes(chain) ||
+      CCTP_V2_ONE_SIDED_SOURCE_CHAINS.has(chain)
+    )
   }
 }

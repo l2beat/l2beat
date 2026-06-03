@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { ChevronLeftIcon, RefreshCwIcon } from 'lucide-react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
@@ -5,7 +6,7 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { TransferDetailsTable } from './table/details/TransferDetailsTable'
 import type {
   ChainMetadata,
@@ -15,6 +16,7 @@ import type {
 import { decodeRouteParam, parseOptionalSearchParam } from './utils'
 
 export function TransferDetailsPage() {
+  const trpc = useBackendTrpc()
   const params = useParams<{ type: string }>()
   const [searchParams] = useSearchParams()
   const type = decodeRouteParam(params.type)
@@ -39,9 +41,11 @@ export function TransferDetailsPage() {
     isLoading: isTransfersLoading,
     isFetching: isTransfersFetching,
     refetch: refetchTransfers,
-  } = api.interop.transfers.details.useQuery(detailsInput, {
-    enabled: hasValidParams,
-  })
+  } = useQuery(
+    trpc.interop.transfers.details.queryOptions(detailsInput, {
+      enabled: hasValidParams,
+    }),
+  )
 
   const {
     data: chainsData,
@@ -49,7 +53,7 @@ export function TransferDetailsPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.interop.chains.metadata.useQuery()
+  } = useQuery(trpc.interop.chains.metadata.queryOptions())
 
   const rows: TransferDetailsRow[] = transfersData ?? []
   const chains: ChainMetadata[] = chainsData ?? []

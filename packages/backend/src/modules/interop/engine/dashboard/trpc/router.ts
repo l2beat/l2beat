@@ -14,15 +14,30 @@ import { createKnownAppsRouter } from './routers/knownApps'
 import { createMessagesRouter } from './routers/messages'
 import { createMissingTokensRouter } from './routers/missingTokens'
 import { createStatusRouter } from './routers/status'
+import { createSummaryRouter } from './routers/summary'
 import { createTransfersRouter } from './routers/transfers'
 
 export interface InteropTrpcRouterDeps {
   aggregationConfigs: InteropAggregationConfig[]
+  aggregationEnabled: boolean
+  captureEnabled: boolean
   getExplorerUrl: (chain: string) => string | undefined
   getChainsForPlugin: (pluginName: string) => string[]
   getPluginSyncStatuses: () => Promise<PluginSyncStatus[]>
   getProcessorStatuses: () => ProcessorStatus[]
   chains: readonly { id: string; type: 'evm' }[]
+  cleanerEnabled: boolean
+  compareEnabled: boolean
+  configSync: {
+    enabled: boolean
+    chains: readonly { id: number; name: string }[]
+    configIntervalMs: number
+  }
+  dangerousOperationsEnabled: boolean
+  dashboardEnabled: boolean
+  financialsEnabled: boolean
+  matchingEnabled: boolean
+  oneSidedChains: readonly string[]
   tokenDbClient: TokenDbClient
 }
 
@@ -37,6 +52,7 @@ export function createInteropTrpcRouter(deps: InteropTrpcRouterDeps) {
     messages: createMessagesRouter(),
     knownApps: createKnownAppsRouter(),
     missingTokens: createMissingTokensRouter(deps),
+    summary: createSummaryRouter(deps),
     status: createStatusRouter(deps),
     transfers: createTransfersRouter(),
   })

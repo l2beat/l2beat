@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { ChevronLeftIcon, RefreshCwIcon } from 'lucide-react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
@@ -5,7 +6,7 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { api } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { MessageDetailsTable } from './table/details/MessageDetailsTable'
 import type {
   ChainMetadata,
@@ -15,6 +16,7 @@ import type {
 import { decodeRouteParam, parseOptionalSearchParam } from './utils'
 
 export function MessageDetailsPage() {
+  const trpc = useBackendTrpc()
   const params = useParams<{ type: string }>()
   const [searchParams] = useSearchParams()
   const type = decodeRouteParam(params.type)
@@ -39,9 +41,11 @@ export function MessageDetailsPage() {
     isLoading: isMessagesLoading,
     isFetching: isMessagesFetching,
     refetch: refetchMessages,
-  } = api.interop.messages.details.useQuery(detailsInput, {
-    enabled: hasValidParams,
-  })
+  } = useQuery(
+    trpc.interop.messages.details.queryOptions(detailsInput, {
+      enabled: hasValidParams,
+    }),
+  )
 
   const {
     data: chainsData,
@@ -49,7 +53,7 @@ export function MessageDetailsPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.interop.chains.metadata.useQuery()
+  } = useQuery(trpc.interop.chains.metadata.queryOptions())
 
   const rows: MessageDetailsRow[] = messagesData ?? []
   const chains: ChainMetadata[] = chainsData ?? []

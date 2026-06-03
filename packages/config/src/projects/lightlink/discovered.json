@@ -1,7 +1,7 @@
 {
   "name": "lightlink",
   "timestamp": 1743926099,
-  "configHash": "0xa628d0d5c31eb91738a93bab27c1ec08dbcdfff24b196ffcf56637343aca3325",
+  "configHash": "0x4db3fe3445de794725c3f71f6c58127dfc8ef7555ed3e672c62828924df75ccb",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -20,7 +20,7 @@
       "template": "lightlink/Challenge",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
-        "0xe563047b74b5666137a2ab48df689f3f5edc03f85a4604080bfd9c311b2eb637"
+        "0xf376de5dc61e8c2cdbf725e0994e0b208ed444b3fae6ba2d34d9cc57020bcbec"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: false. Header challenges are enabled: true. L2 Header challenges are enabled: false.",
@@ -76,7 +76,7 @@
       "template": "lightlink/ChainOracle",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
-        "0x49a381812e10b2dc362ad30ece7f61e050e06e13d3056a64a03607f51f993361"
+        "0x7d73ad5b833f2974bd9713f13a56432a7676676aee93a8ab85c6fa5f3b1ad7ac"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used.",

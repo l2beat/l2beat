@@ -46,7 +46,7 @@
     "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478": "LayerZero Multisig", // multichain multisig
     // eoa names (mostly for SCs)
     "eth:0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": "FirstAnvilAddress", // aztec operator (private key is public)
-    "eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC": "Optimism EOA 1", // deputypauser
+    "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c": "Optimism EOA 1", // deputypauser
     // arbitrum SC
     "eth:0x78bb97d2f3811256d7f0041e81aaf4b426ef3b67": "JohnMorrow-Gauntlet",
     "eth:0x59c8535419bbcb8adffdb3c835435e907e3b183b": "DennisonBertram-Tally",
@@ -66,6 +66,8 @@
     "eth:0x875573B973F7E9Ca54eb34a59180C70eE1128208": "zachxbt",
     "eth:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988": "Gauntlet",
     "eth:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157": "Immunefi",
+    "eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D": "DZack23",
+    "eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce": "PabloSabbatella-Opsek",
     "arb1:0x78bb97d2f3811256d7f0041e81aaf4b426ef3b67": "JohnMorrow-Gauntlet",
     "arb1:0x59c8535419bbcb8adffdb3c835435e907e3b183b": "DennisonBertram-Tally",
     "arb1:0x33ddb82e68940f0e4c1050885bce8faf5ddd1b93": "EmilianoBonassi-Conduit",
@@ -85,6 +87,8 @@
     "arb1:0x875573B973F7E9Ca54eb34a59180C70eE1128208": "zachxbt",
     "arb1:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988": "Gauntlet",
     "arb1:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157": "Immunefi",
+    "arb1:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D": "DZack23",
+    "arb1:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce": "PabloSabbatella-Opsek",
     "arb-nova:0x78bb97d2f3811256d7f0041e81aaf4b426ef3b67": "JohnMorrow-Gauntlet",
     "arb-nova:0x59c8535419bbcb8adffdb3c835435e907e3b183b": "DennisonBertram-Tally",
     "arb-nova:0x33ddb82e68940f0e4c1050885bce8faf5ddd1b93": "EmilianoBonassi-Conduit",
@@ -104,6 +108,8 @@
     "arb-nova:0x875573B973F7E9Ca54eb34a59180C70eE1128208": "zachxbt",
     "arb-nova:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988": "Gauntlet",
     "arb-nova:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157": "Immunefi",
+    "arb-nova:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D": "DZack23",
+    "arb-nova:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce": "PabloSabbatella-Opsek",
     // kinto SC
     "eth:0x08E674c4538caE03B6c05405881dDCd95DcaF5a8": "KintoFoundation",
     "eth:0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B": "MamoriLabs",
@@ -476,6 +482,7 @@
         "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
         "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
         "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
+        "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
         "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
         "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
         "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"

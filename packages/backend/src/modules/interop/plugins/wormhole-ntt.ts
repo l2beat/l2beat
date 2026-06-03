@@ -27,11 +27,11 @@ Note that (TODO: )
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { getBestEffortTokenFrameworkBridgeType } from './tokenFrameworkBridgeTyping'
 import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
@@ -39,7 +39,7 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { WormholeConfig } from './wormhole/wormhole.config'
+import { findWormholeChain, WormholeConfig } from './wormhole/wormhole.config'
 import { LogMessagePublished } from './wormhole/wormhole.plugin'
 import { Delivery } from './wormhole-relayer'
 
@@ -185,9 +185,8 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
           sourceNttManagerAddress: send.message.sourceNttManagerAddress,
           recipientNttManagerAddress: send.message.recipientNttManagerAddress,
           nttManagerPayload: send.message.nttManagerPayload,
-          $dstChain: findChain(
+          $dstChain: findWormholeChain(
             wormholeNetworks,
-            (x) => x.wormholeChainId,
             Number(send.recipientChain),
           ),
           transferAmount: closest?.parsed?.value,
@@ -217,9 +216,8 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
         ReceivedRelayedMessage.create(input, {
           digest: received.digest,
           emitterAddress: received.emitterAddress,
-          $srcChain: findChain(
+          $srcChain: findWormholeChain(
             wormholeNetworks,
-            (x) => x.wormholeChainId,
             Number(received.emitterChainId),
           ),
           transferAmount: dstClosest?.parsed?.value,
@@ -251,9 +249,8 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
           sourceChainId: Number(receivedCore.sourceChainId),
           sourceNttManagerAddress: receivedCore.sourceNttManagerAddress,
           sequence: receivedCore.sequence,
-          $srcChain: findChain(
+          $srcChain: findWormholeChain(
             wormholeNetworks,
-            (x) => x.wormholeChainId,
             Number(receivedCore.sourceChainId),
           ),
           transferAmount: dstClosest?.parsed?.value,
@@ -486,7 +483,10 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
         srcTokenAddress,
         srcAmount,
         srcWasBurned: sentTransceiverMessage.args.srcWasBurned,
-        bridgeType: 'burnAndMint',
+        bridgeType: getBestEffortTokenFrameworkBridgeType({
+          srcWasBurned: sentTransceiverMessage.args.srcWasBurned,
+          dstWasMinted: undefined,
+        }),
         extraEvents: [logMessagePublished],
       }),
     ]
@@ -513,7 +513,10 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
         dstTokenAddress: received.args.transferTokenAddress,
         dstAmount: received.args.transferAmount,
         dstWasMinted: received.args.dstWasMinted,
-        bridgeType: 'burnAndMint',
+        bridgeType: getBestEffortTokenFrameworkBridgeType({
+          srcWasBurned: undefined,
+          dstWasMinted: received.args.dstWasMinted,
+        }),
         extraEvents,
       }),
     ]

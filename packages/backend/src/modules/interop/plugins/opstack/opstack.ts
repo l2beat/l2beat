@@ -159,6 +159,27 @@ export const OPSTACK_NETWORKS = defineNetworks<OpStackNetwork>('opstack', [
     ),
   },
   {
+    chain: 'worldchain',
+    l2ToL1MessagePasser: ChainSpecificAddress(
+      'wc:0x4200000000000000000000000000000000000016',
+    ),
+    l2CrossDomainMessenger: ChainSpecificAddress(
+      'wc:0x4200000000000000000000000000000000000007',
+    ),
+    l2StandardBridge: ChainSpecificAddress(
+      'wc:0x4200000000000000000000000000000000000010',
+    ),
+    optimismPortal: ChainSpecificAddress(
+      'eth:0xd5ec14a83B7d95BE1E2Ac12523e2dEE12Cbeea6C',
+    ),
+    l1CrossDomainMessenger: ChainSpecificAddress(
+      'eth:0xf931a81D18B1766d15695ffc7c1920a62b7e710a',
+    ),
+    l1StandardBridge: ChainSpecificAddress(
+      'eth:0x470458C91978D2d929704489Ad730DC3E3001113',
+    ),
+  },
+  {
     chain: 'unichain',
     l2ToL1MessagePasser: ChainSpecificAddress(
       'unichain:0x4200000000000000000000000000000000000016',

@@ -1,7 +1,6 @@
 import { isDeepStrictEqual } from 'node:util'
 import type { TokenDatabase } from '@l2beat/database'
-import { assertUnreachable } from '@l2beat/shared-pure'
-import type { Command } from './commands'
+import { commitTokenChanges } from './commitTokenChanges'
 import type { Intent } from './intents'
 import { getLogger } from './logger'
 import { generatePlan, type Plan } from './planning'
@@ -17,24 +16,29 @@ interface PlanExecutionSuccess {
   outcome: 'success'
 }
 
+export interface ExecuteOptions {
+  /** Email of the user executing the plan; used to re-stamp manual proofs
+   * during re-planning and recorded in the audit log. */
+  user: string
+}
+
 export function executePlan(
   db: TokenDatabase,
   plan: Plan,
-  meta?: {
-    email: string
-  },
+  opts: ExecuteOptions,
 ): Promise<PlanExecutionResult> {
   const logger = getLogger().for('executePlan')
-  logger.info('Executing plan', { plan, meta })
+  logger.info('Executing plan', { plan, user: opts.user })
   return db.transaction(
     async (): Promise<PlanExecutionResult> => {
       const planRegeneration = await generatePlan(db, plan.intent, {
+        user: opts.user,
         skipLogs: true,
       })
       if (planRegeneration.outcome === 'error') {
         logger.error('Plan is no longer valid', {
           error: planRegeneration.error,
-          meta,
+          user: opts.user,
         })
         return {
           outcome: 'error',
@@ -44,7 +48,7 @@ export function executePlan(
       if (!isDeepStrictEqual(planRegeneration.plan, plan)) {
         logger.error(
           'Plan is no longer valid due to recent changes to the database',
-          { meta },
+          { user: opts.user },
         )
         return {
           outcome: 'error',
@@ -53,11 +57,11 @@ export function executePlan(
         }
       }
 
-      for (const command of plan.commands) {
-        await executeCommand(db, command)
-        logger.info('Command executed', { command, meta })
-      }
-      logger.info('Plan executed', { plan, meta })
+      await commitTokenChanges(db, plan.commands, {
+        kind: 'manual',
+        user: opts.user,
+      })
+      logger.info('Plan executed', { plan, user: opts.user })
       return {
         outcome: 'success',
       }
@@ -77,45 +81,16 @@ export function executePlan(
 export async function planAndExecute(
   db: TokenDatabase,
   intent: Intent,
+  opts: ExecuteOptions,
 ): Promise<void> {
   await db.transaction(async () => {
-    const planningResult = await generatePlan(db, intent)
+    const planningResult = await generatePlan(db, intent, { user: opts.user })
     if (planningResult.outcome === 'error') {
       throw new Error(`Error during planning: ${planningResult.error}`)
     }
-    for (const command of planningResult.plan.commands) {
-      await executeCommand(db, command)
-    }
+    await commitTokenChanges(db, planningResult.plan.commands, {
+      kind: 'manual',
+      user: opts.user,
+    })
   }, 'serializable')
-}
-
-async function executeCommand(db: TokenDatabase, command: Command) {
-  switch (command.type) {
-    case 'AddAbstractTokenCommand':
-      await db.abstractToken.insert(command.record)
-      break
-    case 'UpdateAbstractTokenCommand':
-      await db.abstractToken.updateById(command.id, command.update)
-      break
-    case 'DeleteAbstractTokenCommand':
-      await db.abstractToken.deleteById(command.id)
-      break
-    case 'DeleteAllAbstractTokensCommand':
-      await db.abstractToken.deleteAll()
-      break
-    case 'AddDeployedTokenCommand':
-      await db.deployedToken.insert(command.record)
-      break
-    case 'UpdateDeployedTokenCommand':
-      await db.deployedToken.updateByChainAndAddress(command.pk, command.update)
-      break
-    case 'DeleteDeployedTokenCommand':
-      await db.deployedToken.deleteByPrimaryKey(command.pk)
-      break
-    case 'DeleteAllDeployedTokensCommand':
-      await db.deployedToken.deleteAll()
-      break
-    default:
-      assertUnreachable(command)
-  }
 }

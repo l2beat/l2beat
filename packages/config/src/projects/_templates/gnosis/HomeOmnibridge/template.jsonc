@@ -49,5 +49,6 @@
       "description": "Module that chooses request gas limits for Omnibridge cross-chain messages.",
       "severity": "HIGH"
     }
-  }
+  },
+  "ignoreInWatchMode": ["getCurrentDay"]
 }

@@ -537,8 +537,24 @@ Verify:
     title: 'Avail VectorX DA bridge program',
     description:
       'ZK-friendly implementation of Avail Vector DA bridge that proves that a given data root was finalized on Avail.',
+    programUrl:
+      'https://github.com/availproject/sp1-vector/tree/1378db51be7634593f2bbb6301e5adf7590d03ab/program',
     proverSystemProject: ProjectId('sp1hypercube'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain v5.0.0: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up -v v5.0.0\` (the toolchain version must match the program's \`sp1-zkvm = "5.0.0"\` dependency and the docker tag used below).
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [availproject/sp1-vector](https://github.com/availproject/sp1-vector/tree/main) repo: \`git checkout 1378db51be7634593f2bbb6301e5adf7590d03ab\`.
+2. Make sure docker is running by running \`docker ps\`.
+3. From the \`sp1-vector/program\` dir run: \`cargo prove build --docker --tag v5.0.0 --elf-name vector-elf --output-directory ../elf\` to build the vector program elf within a docker container and place it in \`sp1-vector/elf\`.
+4. From \`sp1-vector\` run: \`cargo run --bin vkey --release\` to print the vkey of the \`vector-elf\` program.
+    `,
   },
   '0x00bca7947ba758bd6f539f480c6d983cca4bd4387a411a41a71fb953d5df3de7': {
     ...OP_SUCCINCT_AGG_EIGENDA,
@@ -657,13 +673,43 @@ Verify:
   },
   '0x0006e0a9f37edc912bb269856518599d61689c78300c23615b2f90868d0181cf': {
     ...OP_SUCCINCT_AGG_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.2.1/programs/aggregation',
     proverSystemProject: ProjectId('sp1hypercube'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct tag in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/v2.2.1) repo:  \`git checkout v2.2.1\` . Commit hash should be  \`664a1bd4172a976ec58a1a1fb7b9a1f589574c57\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes. The Arsia build removes the EigenDA code path entirely, so no feature flag is required.
+  `,
   },
   '0x1d1e0ac74bb66ded0388062e779adae47925fd572a49a3424e2684f83d776004': {
     ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.2.1/programs/range/ethereum',
     proverSystemProject: ProjectId('sp1hypercube'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct tag in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/v2.2.1) repo:  \`git checkout v2.2.1\` . Commit hash should be  \`664a1bd4172a976ec58a1a1fb7b9a1f589574c57\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes. The Arsia build removes the EigenDA code path entirely, so no feature flag is required.
+  `,
   },
   '0x08666bcf03c2240b14b399040abdc4aa2fe934535315fd3c158f010926d1e4a5': {
     ...OP_SUCCINCT_RANGE_BLOBS,
@@ -2313,6 +2359,30 @@ Verify:
 5. Regenerate and print the vkey from the elf binary by calling \`cargo run --release --bin vkey\` from \`prover\` dir.
   `,
   },
+  '0x00c4ea13863f7b423f53140f432d7147e48b8e31660420636931c0a72459c25c': {
+    title: 'Morph Guest program (v0.5.6 release)',
+    description:
+      'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM.',
+    programUrl:
+      'https://github.com/morph-l2/morph/tree/v0.5.6/prover/bin/client',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+The steps below should be done on a Linux machine to reproduce the program hash. To prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain version \`v6.2.0\`: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up --version v6.2.0\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [morph repo](https://github.com/morph-l2/morph): \`git checkout v0.5.6\`. Commit hash should be \`cafa07d19de8a5a36c8510890a72533c8e0e52e5\`
+2. Make sure docker is running by running \`docker ps\`
+3. Build the program binary from \`prover/bin/client\` dir using a docker container build for reproducibility: \`cargo prove build --docker --tag v6.2.0\`
+4. The generated elf binary \`verifier-client\` will be placed in \`prover/target/elf-compilation/docker/riscv64im-succinct-zkvm-elf/release\`. Move it to \`prover/bin/client/elf\`.
+5. Regenerate and print the vkey from the elf binary by calling \`cargo run --release --bin vkey\` from \`prover\` dir.
+  `,
+  },
   '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
     title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
     description:
@@ -2382,6 +2452,21 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
 
 1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
 2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v51\` . Commit hash should be  \`03949e76071f048c850d721c7a378a2e4b3fbd09\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
+5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+    `,
+  },
+  '0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c': {
+    ...WASM_MODULE_ROOT('v51.1'),
+    verificationStatus: 'notVerified',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v51.1/arbos',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v51.1\` . Commit hash should be  \`e5dab3512419c50893813f4226c0621c3bfe2bdc\`.
 3. Update git submodules \`git submodule update --init --recursive --force\`.
 4. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
 5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.

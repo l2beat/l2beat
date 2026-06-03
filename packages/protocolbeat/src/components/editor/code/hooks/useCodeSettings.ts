@@ -18,10 +18,10 @@ export function useCodeSettings() {
 
   useEffect(() => {
     if (shareableUrl) {
-      window.history.pushState(null, '', shareableUrl)
+      window.history.replaceState(null, '', shareableUrl)
     } else {
       const url = getCleanUrl()
-      window.history.pushState(null, '', url)
+      window.history.replaceState(null, '', url)
     }
   }, [shareableUrl])
 

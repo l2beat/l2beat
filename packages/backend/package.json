@@ -65,7 +65,7 @@
     "@l2beat/token-backend": "workspace:*",
     "@l2beat/uif": "workspace:*",
     "@l2beat/validate": "workspace:*",
-    "@trpc/server": "^11.0.0-rc.446",
+    "@trpc/server": "11.17.0",
     "@types/ws": "^8.18.1",
     "basic-auth": "^2.0.1",
     "chalk": "^4.1.2",

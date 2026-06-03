@@ -1,7 +1,7 @@
 {
   "name": "aevo",
-  "timestamp": 1777994167,
-  "configHash": "0x797e108b6ee5c166c34cf8bf43ea6b9f285012565cbaab2d1ea89092c2ff34e2",
+  "timestamp": 1780397475,
+  "configHash": "0x3d19c5b429106fdd620b7f5d8f8dfe0894a4bdc47c9bea912fcc8f170682d335",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -70,7 +70,11 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+      "ignoreInWatchMode": [
+        "permissionedGamesTotal",
+        "gameCount",
+        "permissionedGamesTotal"
+      ],
       "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1753345835,
       "sinceBlock": 22987839,
@@ -104,7 +108,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 6803,
+        "gameCount": 7468,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x7DfcCbEaB04c446eC151aEa12EBD35111643800A",
@@ -119,7 +123,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 6802,
+        "permissionedGamesTotal": 7467,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -239,7 +243,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292645025",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292645082",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -447,11 +451,6 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "L1StandardBridge",
       "address": "eth:0x4082C9647c098a6493fb499EaE63b5ce3259c574",
       "type": "Contract",
@@ -622,6 +621,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
@@ -630,7 +630,6 @@
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-          "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
@@ -640,7 +639,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 265,
+        "nonce": 275,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -866,7 +865,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 821744,
-          "prevBlockNum": 25022690
+          "prevBlockNum": 25228940
         },
         "paused": false,
         "proofMaturityDelaySeconds": 3600,
@@ -1092,6 +1091,11 @@
       }
     },
     {
+      "address": "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MIPS",
       "address": "eth:0xDF716ec0Faa7d3B40AE695E2505c7f2c6608B230",
       "type": "Contract",
@@ -1193,13 +1197,13 @@
         ],
         "$upgradeCount": 1,
         "absolutePrestateFromGame": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6",
-        "anchorGame": "eth:0x09e712DA43DF5830bd59375baA67AF79386Dc2FD",
+        "anchorGame": "eth:0xDCC8E987FBBA146388B9EC8f781A9F3da4000D28",
         "challengePeriodFromOracle": 2,
         "disputeGameFactory": "eth:0x0c0105334a50Db16B51B2911C9956539753A2CF8",
         "disputeGameFinalityDelaySeconds": 1800,
         "getAnchorRoot": [
-          "0xadb46cb5a86f94c48df48d28ebe62273724e0adaafc470e5f3715d026a4427c6",
-          9879144
+          "0x8b30f4f26b69be38a8390937b15e174da0c64840e04efde4ff092f44a23738e6",
+          10119679
         ],
         "initVersion": 1,
         "oracleFromVm": "eth:0xeE74fd716Edbfe6575ecc18B39F181b4De79fA7A",
@@ -2187,7 +2191,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
+    "opstack/DisputeGameFactory": "0x46746381be2da0435ab1c70360c00f35d9759a505c3f99905e07476b72e8b79c",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
@@ -2199,6 +2203,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25029638 },
-  "permissionsConfigHash": "0x23bd6e0082b42b878017d124f7aa55a27d8d1212b9b1c5b3136b09b53b7e18af"
+  "usedBlockNumbers": { "ethereum": 25229214 },
+  "permissionsConfigHash": "0x18b8c7fee92ebd4f96132328a471c896a2f9db36c3c6446168d3832057daef4f"
 }

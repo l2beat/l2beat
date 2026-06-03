@@ -8,7 +8,7 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 
 export async function getInteropProtocolPageData(
   req: Request<{ slug: string }, unknown, unknown, unknown>,
@@ -63,16 +63,14 @@ async function getCachedData(slug: string, manifest: Manifest) {
   const project = await ps.getProject({
     slug,
     select: ['interopConfig'],
-    optional: ['statuses', 'display'],
+    optional: ['statuses', 'display', 'discoveryInfo'],
   })
   if (!project) return undefined
 
-  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains
-    .filter((chain) => !chain.isUpcoming)
-    .map((chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-    }))
+  const interopChainsWithIcons = mapInteropChainsToWithIcons(
+    manifest,
+    interopChains.filter((chain) => !chain.isUpcoming),
+  )
 
   const protocolData = await getInteropProtocolData({
     id: project.id,

@@ -109,8 +109,8 @@ function getEntries(
           project.contracts?.addresses,
         ),
         iconUrl: token.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
-        priceUsd: tokenValue.priceUsd,
-        valueForProject: tokenValue.valueForProject,
+        priceUsd: { value: tokenValue.priceUsd },
+        valueForProject: { value: tokenValue.valueForProject },
         value: tokenValue.value,
         amount: tokenValue.amount,
         isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
@@ -143,7 +143,9 @@ function getEntries(
     }
   }
 
-  return entries.sort((a, b) => +b.valueForProject - +a.valueForProject)
+  return entries.sort(
+    (a, b) => b.valueForProject.value - a.valueForProject.value,
+  )
 }
 
 // Ik its ugly but it works and is type safe

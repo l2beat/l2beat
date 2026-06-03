@@ -1,6 +1,6 @@
 import type {
-  AggregatedInteropTransferWithTokens,
   CommonInteropData,
+  InteropTransferWithTokens,
   TokenFlowData,
 } from '../types'
 import { accumulateTokens, INITIAL_COMMON_INTEROP_DATA } from './accumulate'
@@ -11,7 +11,7 @@ export type TokenInteropData = CommonInteropData & {
 }
 
 export function buildTokensDataMap(
-  records: AggregatedInteropTransferWithTokens[],
+  records: InteropTransferWithTokens[],
 ): Map<string, TokenInteropData> {
   const tokenDataMap: Map<string, TokenInteropData> = new Map()
   for (const record of records) {
