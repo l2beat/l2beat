@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x420a3a260b5cf30cec833441b640aac0d58ffa49
+Generated with discovered.json: 0x2461d455ad3eab9ae01502d009a7012fdf3902e8
 
-# Diff at Mon, 01 Jun 2026 09:08:41 GMT:
+# Diff at Wed, 03 Jun 2026 08:05:04 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@06302879db359284808c0757621d4cf59b7e1a57 block: 1779198836
-- current timestamp: 1780297656
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779198836
+- current timestamp: 1780473821
 
 ## Description
 
@@ -81,7 +81,7 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 +        "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A"
 +++ severity: HIGH
       values.game621:
-+        "eth:0x327DdE84C9173DD799A4f74b04a69d9d385D31a4"
++        "eth:0xeEcb8A5944B217585817E802702b1262a049D259"
       values.initBondGame0:
 +        "80000000000000000"
       values.initBondGame1:
@@ -160,10 +160,12 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 ```diff
     contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
     +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xdc32E228636273285Befa5F001dBB5142517C106","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"}
       receivedPermissions.3.from:
 -        "eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec"
 +        "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA"
-      receivedPermissions.13:
+      receivedPermissions.14:
 +        {"permission":"upgrade","from":"eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71","role":"admin","via":[{"address":"eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
     }
 ```
@@ -285,18 +287,6 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
-    contract AggregateVerifier (eth:0x327DdE84C9173DD799A4f74b04a69d9d385D31a4) [opstack/AggregateVerifier]
-    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (7d) to FAST_FINALIZATION_DELAY (1d).
-```
-
-```diff
-+   Status: CREATED
-    contract SP1VerifierGateway (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) [succinct/SP1VerifierGateway]
-    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
-```
-
-```diff
-+   Status: CREATED
     contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop]
     +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
 ```
@@ -305,12 +295,6 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 +   Status: CREATED
     contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier]
     +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
-```
-
-```diff
-+   Status: CREATED
-    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) [succinct/SP1Verifier]
-    +++ description: Verifier contract for SP1 proofs (v5.0.0).
 ```
 
 ```diff
@@ -345,18 +329,6 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
-    contract SP1Verifier (eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508) [succinct/SP1Verifier]
-    +++ description: Verifier contract for SP1 proofs (v6.0.0).
-```
-
-```diff
-+   Status: CREATED
-    contract ZkVerifier (eth:0x9e51DeFb019D1942d1210767f4A21bE5E24E3c3b) [base/ZkVerifier]
-    +++ description: Thin router that forwards SP1 ZK proof verification from the AggregateVerifier game to the SP1 verifier gateway. Can be permanently nullified by a successful AggregateVerifier.nullify call.
-```
-
-```diff
-+   Status: CREATED
     contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop]
     +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
 ```
@@ -375,8 +347,8 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
 +   Status: CREATED
-    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe]
-    +++ description: None
+    contract ZkVerifier (eth:0xB88D95bDf6972508942d184866890c1834219B75) [base/ZkVerifier]
+    +++ description: Thin router that forwards SP1 ZK proof verification from the AggregateVerifier game to the SP1 verifier gateway. Can be permanently nullified by a successful AggregateVerifier.nullify call.
 ```
 
 ```diff
@@ -389,6 +361,18 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 +   Status: CREATED
     contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop]
     +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (eth:0xdc32E228636273285Befa5F001dBB5142517C106) [succinct/SP1VerifierGateway]
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract AggregateVerifier (eth:0xeEcb8A5944B217585817E802702b1262a049D259) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (7d) to FAST_FINALIZATION_DELAY (1d).
 ```
 
 ```diff
@@ -423,12 +407,8 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
  ...:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696.sol |  366 ++
  ...:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1.sol |  366 ++
  .../projects/base/.flat/RiscZeroVerifierRouter.sol |  282 ++
- ...:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5.sol |  614 +++
- ...:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508.sol |  661 +++
- ...:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2.sol |  664 +++
+ .../src/projects/base/.flat/SP1Verifier.sol        |  664 +++
  .../src/projects/base/.flat/SP1VerifierGateway.sol |  271 ++
- .../SP1VerifierGatewayMultisig/GnosisSafe.sol      | 1026 +++++
- .../GnosisSafeProxy.p.sol                          |   38 +
  .../src/projects/base/.flat/Safe/Safe.sol          | 1216 ++++++
  .../src/projects/base/.flat/Safe/SafeProxy.p.sol   |   42 +
  .../base/.flat/TEEProverRegistry/Proxy.p.sol       |  244 ++
@@ -436,7 +416,7 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
  .../src/projects/base/.flat/TEEVerifier.sol        | 4402 ++++++++++++++++++++
  .../src/projects/base/.flat/TimelockController.sol | 1111 +++++
  .../src/projects/base/.flat/ZkVerifier.sol         | 1862 +++++++++
- 36 files changed, 30292 insertions(+), 9104 deletions(-)
+ 32 files changed, 27953 insertions(+), 9104 deletions(-)
 ```
 
 ## Config/verification related changes
