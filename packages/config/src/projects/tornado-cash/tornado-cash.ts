@@ -150,7 +150,7 @@ The frontend can then be accessed by running a local IPFS node that automaticall
     tokens: getPrivacyTokens(),
     attributes: [
       PRIVACY_ATTRIBUTES.immutable,
-      PRIVACY_ATTRIBUTES.uncensorable,
+      PRIVACY_ATTRIBUTES.unconditionalPrivacy,
       PRIVACY_ATTRIBUTES.fixedAmounts,
       PRIVACY_ATTRIBUTES.sourceAvailable,
     ],
