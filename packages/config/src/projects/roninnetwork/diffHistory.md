@@ -12,7 +12,7 @@ Kailua (RISC Zero ZK fault-proof) deployed but not yet active.
 DisputeGameFactory registered game type 1337 → KailuaTreasury (`eth:0xc7EaCDd1…`).
 OptimismPortal2 and AnchorStateRegistry still have respectedGameType = 1 (PermissionedDisputeGame); cutover requires a separate change.
 
-Ronin KailuaTreasury (v1.2.0, `eth:0xc7EaCDd1…`) is architecturally distinct from BOB v0.1.0 (`eth:0x9B3E1661…`): verifier extracted to a separate `KAILUA_VERIFIER` proxy, bond accounting reworked. Shape added to `risc0/KailuaTreasury/shapes.json` as `KailuaTreasury_v5withVerifier`. Diff: https://disco.l2beat.com/diff/eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336/eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C.
+Ronin KailuaTreasury (v1.2.0, `eth:0xc7EaCDd1…`): verifier extracted to a separate `KAILUA_VERIFIER` proxy, bond accounting reworked. Shape added to `risc0/KailuaTreasury/shapes.json` as `KailuaTreasury_v5withVerifier`. Diff vs BOB v0.1.0 baseline: https://disco.l2beat.com/diff/eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336/eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C.
 
 RoninConduitOwner (`eth:0xE9Ad9723…`, 5-of-6 joint Ronin/Conduit Safe, the existing root upgrade authority over the OP Stack contract set) got admin over the KailuaVerifier proxy (`eth:0x6b49976a…`), so the verifier proxy is upgradable along the same path as the other OP Stack contracts.
 
