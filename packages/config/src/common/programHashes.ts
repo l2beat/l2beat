@@ -2730,6 +2730,52 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
     verificationSteps:
       'According to Automata Network, the linked program was compiled in a non-reporducible way (without docker). The compiled binary could not be reproduced.',
   },
+  '0x00294928e44f0cdc9c74848c4cafcdb29f733a3bc07408c240be3d5afe750b3e': {
+    title: 'Nitro TEE Aggregated Verifer',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/automata-network/aws-nitro-enclave-attestation/tree/8607619cc620a93d029a9569bccf752f341aad99/crates/sp1-methods/sp1-aggregator',
+    description:
+      'Verifies correctness of several aggregated TEE attestations for correctly running Arbitrum Nitro within a trusted enclave.',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`
+2. Make sure SP1 v6.1.0 is active: \`sp1up -v 6.1.0\` (must match the workspace \`sp1-sdk = "^6.1.0"\` dependency)
+3. Install docker [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [automata-network/aws-nitro-enclave-attestation](https://github.com/automata-network/aws-nitro-enclave-attestation/tree/feat/reproducible_build) repo: \`git checkout feat/reproducible_build\`. Commit hash should be \`8607619cc620a93d029a9569bccf752f341aad99\`.
+2. Make sure docker is running by running \`docker ps\`.
+3. From the repo root: \`cargo clean -p sp1-methods\` to clear any stale build artifacts.
+4. From the repo root run: \`REPRODUCIBLE_BUILD=docker cargo run --release -p nitro-attest-cli --no-default-features --features sp1 -- program-id --sp1\`. The \`REPRODUCIBLE_BUILD=docker\` env var triggers the SP1 docker reproducible rebuild of \`sp1-verifier\` and \`sp1-aggregator\` ELFs (replacing \`USE_DOCKER=1\` used on older branches). The CLI then prints \`Verifier ID\`, \`Verifier Proof ID\`, and \`Aggregator ID\`.
+    `,
+  },
+  '0x00643c7149cf335e7ec9d3f3301e69658a7f0ef2bc7546509c257ed8809f28e1': {
+    title: 'Nitro TEE Verifer',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/automata-network/aws-nitro-enclave-attestation/tree/8607619cc620a93d029a9569bccf752f341aad99/crates/sp1-methods/sp1-verifier',
+    description:
+      'Verifies correctness of a single TEE attestation for correctly running Arbitrum Nitro within a trusted enclave.',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`
+2. Make sure SP1 v6.1.0 is active: \`sp1up -v 6.1.0\` (must match the workspace \`sp1-sdk = "^6.1.0"\` dependency)
+3. Install docker [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [automata-network/aws-nitro-enclave-attestation](https://github.com/automata-network/aws-nitro-enclave-attestation/tree/feat/reproducible_build) repo: \`git checkout feat/reproducible_build\`. Commit hash should be \`8607619cc620a93d029a9569bccf752f341aad99\`.
+2. Make sure docker is running by running \`docker ps\`.
+3. From the repo root: \`cargo clean -p sp1-methods\` to clear any stale build artifacts.
+4. From the repo root run: \`REPRODUCIBLE_BUILD=docker cargo run --release -p nitro-attest-cli --no-default-features --features sp1 -- program-id --sp1\`. The \`REPRODUCIBLE_BUILD=docker\` env var triggers the SP1 docker reproducible rebuild of \`sp1-verifier\` and \`sp1-aggregator\` ELFs (replacing \`USE_DOCKER=1\` used on older branches). The CLI then prints \`Verifier ID\`, \`Verifier Proof ID\`, and \`Aggregator ID\`.
+    `,
+  },
   '0x0085924e73e2b0d0e2626c592825fe092d3cfb63b108757965b2a6c06c8c311b': {
     title: 'Fluent Nitro TEE verifier',
     proverSystemProject: ProjectId('sp1hypercube'),

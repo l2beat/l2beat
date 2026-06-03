@@ -234,6 +234,7 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('appchain'),
         sinceTimestamp: UnixTime(1776165024),
+        untilTimestamp: UnixTime(1780326419),
       },
     ],
     verifierHashes: [
