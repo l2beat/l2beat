@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import partition from 'lodash/partition'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { useTRPC } from '~/trpc/React'
@@ -13,6 +14,7 @@ import { FlowsGeneralStats } from './FlowsGeneralStats'
 import { FlowsProtocolsSelector } from './FlowsProtocolsSelector'
 import { FlowsGraphPanel } from './graph/FlowsGraphPanel'
 import { InactiveChainsDialog } from './graph/InactiveChainsDialog'
+import { ProtocolsByVolumeCard } from './protocols-by-volume/ProtocolsByVolumeCard'
 import { FlowsSelectedPathPanel } from './selection-panel/FlowsSelectedPathPanel'
 import {
   InteropFlowsProvider,
@@ -80,64 +82,71 @@ function FlowsViewContent({
     !!data && inactiveChains.length > 0 && !isLoading
 
   return (
-    <PrimaryCard
-      className={cn(
-        'grid grid-cols-1 gap-4 transition-[grid-template-columns] duration-300 ease-in-out motion-reduce:transition-none',
-        hasGraphSelection
-          ? 'lg:grid-cols-[240px_1fr_280px]'
-          : 'lg:grid-cols-[240px_1fr_0px]',
-      )}
-    >
-      <div className="h-full max-lg:order-3">
-        <FlowsGeneralStats />
-      </div>
-      <div className="flex h-full min-w-0 flex-col">
-        <div className="group/flows flex h-full w-full min-w-0 flex-col items-center gap-10 pb-4 xl:h-[calc(100svh-12rem)]">
-          <div className="flex flex-col items-center gap-3 max-lg:order-1">
-            <div className="flex gap-2">
-              <FlowsChainsSelector allChains={interopChains} />
-              <FlowsProtocolsSelector allProtocols={protocols} />
-            </div>
-            <SelectInfo
-              highlightedChainsNumber={visibleHighlightedChains.length}
-            />
-          </div>
-          <FlowsGraphPanel
-            activeChains={activeChains}
-            data={data}
-            hasEnoughChains={hasEnoughChains}
-            hasEnoughProtocols={hasEnoughProtocols}
-            isLoading={isLoading}
-          />
-        </div>
-        {shouldRenderInactiveChainsInfo && (
-          <div className="mt-3 flex min-h-6 w-full items-center justify-center gap-1 pt-1 max-lg:order-2">
-            {shouldShowInactiveChainsInfo ? (
-              <>
-                <span className="font-normal text-secondary text-xs leading-none md:text-base">
-                  No transfers detected for
-                </span>
-                <InactiveChainsDialog chains={inactiveChains} />
-              </>
-            ) : isLoading ? (
-              <Skeleton className="h-4 w-40 md:h-5" />
-            ) : null}
-          </div>
-        )}
-      </div>
-      <div
+    <>
+      <PrimaryCard
         className={cn(
-          'min-w-0 overflow-hidden motion-reduce:transition-none max-lg:order-2 lg:translate-x-3 lg:opacity-0 lg:transition-[transform,opacity] lg:duration-300 lg:ease-out',
-          hasGraphSelection && 'lg:translate-x-0 lg:opacity-100',
+          'grid grid-cols-1 gap-4 transition-[grid-template-columns] duration-300 ease-in-out motion-reduce:transition-none',
+          hasGraphSelection
+            ? 'lg:grid-cols-[240px_1fr_280px]'
+            : 'lg:grid-cols-[240px_1fr_0px]',
         )}
       >
-        <div className="h-full lg:w-[280px]">
-          <FlowsSelectedPathPanel
-            visibleHighlightedChains={visibleHighlightedChains}
-          />
+        <div className="h-full max-lg:order-3">
+          <FlowsGeneralStats />
         </div>
-      </div>
-    </PrimaryCard>
+        <div className="flex h-full min-w-0 flex-col">
+          <div className="group/flows flex h-full w-full min-w-0 flex-col items-center gap-10 pb-4 xl:h-[calc(100svh-12rem)]">
+            <div className="flex flex-col items-center gap-3 max-lg:order-1">
+              <div className="flex gap-2">
+                <FlowsChainsSelector allChains={interopChains} />
+                <FlowsProtocolsSelector allProtocols={protocols} />
+              </div>
+              <SelectInfo
+                highlightedChainsNumber={visibleHighlightedChains.length}
+              />
+            </div>
+            <FlowsGraphPanel
+              activeChains={activeChains}
+              data={data}
+              hasEnoughChains={hasEnoughChains}
+              hasEnoughProtocols={hasEnoughProtocols}
+              isLoading={isLoading}
+            />
+          </div>
+          {shouldRenderInactiveChainsInfo && (
+            <div className="mt-3 flex min-h-6 w-full items-center justify-center gap-1 pt-1 max-lg:order-2">
+              {shouldShowInactiveChainsInfo ? (
+                <>
+                  <span className="font-normal text-secondary text-xs leading-none md:text-base">
+                    No transfers detected for
+                  </span>
+                  <InactiveChainsDialog chains={inactiveChains} />
+                </>
+              ) : isLoading ? (
+                <Skeleton className="h-4 w-40 md:h-5" />
+              ) : null}
+            </div>
+          )}
+        </div>
+        <div
+          className={cn(
+            'min-w-0 overflow-hidden motion-reduce:transition-none max-lg:order-2 lg:translate-x-3 lg:opacity-0 lg:transition-[transform,opacity] lg:duration-300 lg:ease-out',
+            hasGraphSelection && 'lg:translate-x-0 lg:opacity-100',
+          )}
+        >
+          <div className="h-full lg:w-[280px]">
+            <FlowsSelectedPathPanel
+              visibleHighlightedChains={visibleHighlightedChains}
+            />
+          </div>
+        </div>
+      </PrimaryCard>
+      <TableFilterContextProvider>
+        <ProtocolsByVolumeCard
+          isEnabled={hasEnoughChains && hasEnoughProtocols}
+        />
+      </TableFilterContextProvider>
+    </>
   )
 }
 
