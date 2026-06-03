@@ -132,9 +132,26 @@ export const facet: ScalingProject = {
     escrows: [
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
+          'eth:0x4e2eba30a786c0643699b92234d74a71e958c08e',
+        ),
+        tokens: ['ETH'],
+        source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Facet legacy L1Bridge',
+            },
+          ],
+        },
+        description:
+          'Legacy ETH bridge built on top of the deprecated Rollup contract (eth:0x686E7d01…).',
+      }),
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(
           'eth:0x0000000000000b07ED001607f5263D85bf28Ce4C',
         ),
         tokens: ['ETH'],
+        source: 'external',
         bridgedUsing: {
           bridges: [
             {
@@ -150,6 +167,7 @@ export const facet: ScalingProject = {
           'eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909',
         ),
         tokens: ['ETH', 'WETH'],
+        source: 'external',
         bridgedUsing: {
           bridges: [
             {
