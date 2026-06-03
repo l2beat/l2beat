@@ -373,6 +373,146 @@ describe(createHighlightsRouter.name, () => {
     expect(result.largestTvsIncreaseByChain).toEqual(null)
   })
 
+  it('uses configured interop projects when selecting UOPS timestamp', async () => {
+    const latestTimestamp = UnixTime(1_700_000_000)
+    const currentActivityTimestamp = latestTimestamp - UnixTime.DAY
+    const previousActivityTimestamp = latestTimestamp - 2 * UnixTime.DAY
+    const olderActivityTimestamp = latestTimestamp - 3 * UnixTime.DAY
+
+    const activityByTimestamp = new Map<number, ActivityRecord[]>([
+      [latestTimestamp, [activityRecord('unrelated', latestTimestamp, 10_000)]],
+      [
+        currentActivityTimestamp,
+        [activityRecord('ethereum', currentActivityTimestamp, 50)],
+      ],
+      [
+        previousActivityTimestamp,
+        [activityRecord('ethereum', previousActivityTimestamp, 20)],
+      ],
+      [
+        olderActivityTimestamp,
+        [activityRecord('ethereum', olderActivityTimestamp, 18)],
+      ],
+    ])
+    const getActivityMaxTimestampAtOrBeforeForProjects = mockFn(
+      (_timestamp: UnixTime, projectIds: readonly string[]) => {
+        return Promise.resolve(
+          projectIds.includes('ethereum')
+            ? currentActivityTimestamp
+            : latestTimestamp,
+        )
+      },
+    )
+    const getActivityByTimestamp = mockFn((timestamp: UnixTime) =>
+      Promise.resolve(activityByTimestamp.get(timestamp) ?? []),
+    )
+
+    const caller = createCaller({
+      latestTimestamp,
+      getTransferByTimestamp: mockFn().resolvesTo([]),
+      getTokenByTimestamp: mockFn().resolvesTo([]),
+      getActivityMaxTimestampAtOrBeforeForProjects,
+      getActivityByTimestamp,
+      chains: [{ id: 'ethereum', type: 'evm' }],
+    })
+
+    const result = await caller.latest()
+
+    expect(getActivityMaxTimestampAtOrBeforeForProjects).toHaveBeenCalledWith(
+      latestTimestamp,
+      ['ethereum'],
+    )
+    expect(result.largestUopsIncreaseByChain).toEqual({
+      windowStart: currentActivityTimestamp,
+      windowEnd: currentActivityTimestamp + UnixTime.DAY,
+      previousWindowStart: previousActivityTimestamp,
+      previousWindowEnd: currentActivityTimestamp,
+      chain: 'ethereum',
+      currentCount: 50,
+      previousCount: 20,
+      increase: 30,
+      increasePercent: 150,
+    })
+  })
+
+  it('uses configured interop projects when selecting TVS timestamps', async () => {
+    const latestTimestamp = UnixTime(1_700_000_000)
+    const currentTvsTimestamp = latestTimestamp - UnixTime.DAY
+    const previousTvsTimestamp = latestTimestamp - 2 * UnixTime.DAY
+    const olderTvsTimestamp = latestTimestamp - 3 * UnixTime.DAY
+
+    const tvsByTimestamp = new Map<number, TokenValueRecord[]>([
+      [latestTimestamp, [tvsRecord('unrelated', latestTimestamp, 100)]],
+      [
+        currentTvsTimestamp,
+        [tvsRecord('ethereum', currentTvsTimestamp, 5_000_000_000)],
+      ],
+      [
+        previousTvsTimestamp,
+        [tvsRecord('ethereum', previousTvsTimestamp, 4_000_000_000)],
+      ],
+      [
+        olderTvsTimestamp,
+        [tvsRecord('ethereum', olderTvsTimestamp, 3_000_000_000)],
+      ],
+    ])
+    const getTvsMaxTimestampAtOrBeforeForProjects = mockFn(
+      (timestamp: UnixTime, projectIds: readonly string[]) => {
+        if (projectIds.includes('ethereum')) {
+          if (timestamp >= currentTvsTimestamp) {
+            return Promise.resolve(currentTvsTimestamp)
+          }
+          if (timestamp >= previousTvsTimestamp) {
+            return Promise.resolve(previousTvsTimestamp)
+          }
+          if (timestamp >= olderTvsTimestamp) {
+            return Promise.resolve(olderTvsTimestamp)
+          }
+          return Promise.resolve(undefined)
+        }
+
+        return Promise.resolve(undefined)
+      },
+    )
+    const getTvsByTimestamp = mockFn((timestamp: UnixTime) =>
+      Promise.resolve(tvsByTimestamp.get(timestamp) ?? []),
+    )
+
+    const caller = createCaller({
+      latestTimestamp,
+      getTransferByTimestamp: mockFn().resolvesTo([]),
+      getTokenByTimestamp: mockFn().resolvesTo([]),
+      getTvsMaxTimestampAtOrBeforeForProjects,
+      getTvsByTimestamp,
+      chains: [{ id: 'ethereum', type: 'evm' }],
+    })
+
+    const result = await caller.latest()
+
+    expect(getTvsMaxTimestampAtOrBeforeForProjects).toHaveBeenCalledWith(
+      latestTimestamp,
+      ['ethereum'],
+    )
+    expect(getTvsMaxTimestampAtOrBeforeForProjects).toHaveBeenCalledWith(
+      currentTvsTimestamp - UnixTime.DAY,
+      ['ethereum'],
+    )
+    expect(getTvsMaxTimestampAtOrBeforeForProjects).toHaveBeenCalledWith(
+      previousTvsTimestamp - UnixTime.DAY,
+      ['ethereum'],
+    )
+    expect(result.largestTvsIncreaseByChain).toEqual({
+      windowStart: currentTvsTimestamp - UnixTime.DAY,
+      windowEnd: currentTvsTimestamp,
+      previousWindowStart: previousTvsTimestamp - UnixTime.DAY,
+      previousWindowEnd: previousTvsTimestamp,
+      chain: 'ethereum',
+      currentVolumeUsd: 5_000_000_000,
+      previousVolumeUsd: 4_000_000_000,
+      increaseUsd: 1_000_000_000,
+    })
+  })
+
   it('rewinds UOPS to the previous full day when interop snapshot is at midnight', async () => {
     const latestTimestamp = UnixTime.fromDate(new Date('2026-06-02T00:00:00Z'))
     const currentActivityTimestamp = latestTimestamp - UnixTime.DAY
@@ -736,8 +876,10 @@ function createCaller(options: {
   getTransferByTimestamp?: ReturnType<typeof mockFn>
   getTokenByTimestamp?: ReturnType<typeof mockFn>
   getActivityMaxTimestampAtOrBefore?: ReturnType<typeof mockFn>
+  getActivityMaxTimestampAtOrBeforeForProjects?: ReturnType<typeof mockFn>
   getActivityByTimestamp?: ReturnType<typeof mockFn>
   getTvsMaxTimestampAtOrBefore?: ReturnType<typeof mockFn>
+  getTvsMaxTimestampAtOrBeforeForProjects?: ReturnType<typeof mockFn>
   getTvsByTimestamp?: ReturnType<typeof mockFn>
   getAbstractTokenById?: ReturnType<typeof mockFn>
   chains?: readonly { id: string; type: 'evm' }[]
@@ -775,11 +917,19 @@ function createCaller(options: {
         getMaxTimestampAtOrBefore:
           options.getActivityMaxTimestampAtOrBefore ??
           mockFn().resolvesTo(undefined),
+        getMaxTimestampAtOrBeforeForProjects:
+          options.getActivityMaxTimestampAtOrBeforeForProjects ??
+          options.getActivityMaxTimestampAtOrBefore ??
+          mockFn().resolvesTo(undefined),
         getByTimestamp:
           options.getActivityByTimestamp ?? mockFn().resolvesTo([]),
       }),
       tvsTokenValue: mockObject<Database['tvsTokenValue']>({
         getMaxTimestampAtOrBefore:
+          options.getTvsMaxTimestampAtOrBefore ??
+          mockFn().resolvesTo(undefined),
+        getMaxTimestampAtOrBeforeForProjects:
+          options.getTvsMaxTimestampAtOrBeforeForProjects ??
           options.getTvsMaxTimestampAtOrBefore ??
           mockFn().resolvesTo(undefined),
         getByTimestamp: options.getTvsByTimestamp ?? mockFn().resolvesTo([]),

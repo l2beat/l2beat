@@ -103,7 +103,10 @@ export async function getInteropHighlights(
     )
 
   let activityTimestamp =
-    await db.activity.getMaxTimestampAtOrBefore(latestTimestamp)
+    await db.activity.getMaxTimestampAtOrBeforeForProjects(
+      latestTimestamp,
+      interopProjectIds,
+    )
 
   if (
     activityTimestamp !== undefined &&
@@ -122,17 +125,22 @@ export async function getInteropHighlights(
       : undefined
 
   const tvsTimestamp =
-    await db.tvsTokenValue.getMaxTimestampAtOrBefore(latestTimestamp)
+    await db.tvsTokenValue.getMaxTimestampAtOrBeforeForProjects(
+      latestTimestamp,
+      interopProjectIds,
+    )
   const tvsPreviousTimestamp =
     tvsTimestamp !== undefined
-      ? await db.tvsTokenValue.getMaxTimestampAtOrBefore(
+      ? await db.tvsTokenValue.getMaxTimestampAtOrBeforeForProjects(
           tvsTimestamp - UnixTime.DAY,
+          interopProjectIds,
         )
       : undefined
   const tvsOlderTimestamp =
     tvsPreviousTimestamp !== undefined
-      ? await db.tvsTokenValue.getMaxTimestampAtOrBefore(
+      ? await db.tvsTokenValue.getMaxTimestampAtOrBeforeForProjects(
           tvsPreviousTimestamp - UnixTime.DAY,
+          interopProjectIds,
         )
       : undefined
 

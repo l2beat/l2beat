@@ -294,6 +294,25 @@ export class TokenValueRepository extends BaseRepository {
       : undefined
   }
 
+  async getMaxTimestampAtOrBeforeForProjects(
+    timestamp: UnixTime,
+    projectIds: readonly string[],
+  ): Promise<UnixTime | undefined> {
+    if (projectIds.length === 0) {
+      return undefined
+    }
+
+    const result = await this.db
+      .selectFrom('TokenValue')
+      .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
+      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .where('projectId', 'in', projectIds)
+      .executeTakeFirst()
+    return result?.max_timestamp
+      ? UnixTime.fromDate(result.max_timestamp)
+      : undefined
+  }
+
   async getByTimestamp(timestamp: UnixTime): Promise<TokenValueRecord[]> {
     const rows = await this.db
       .selectFrom('TokenValue')
