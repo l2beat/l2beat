@@ -14,12 +14,20 @@
       "severity": "HIGH"
     },
     "verifierProofIdRiscZero": {
-      "handler": { "type": "call", "method": "getVerifierProofId", "args": [1] },
+      "handler": {
+        "type": "call",
+        "method": "getVerifierProofId",
+        "args": [1]
+      },
       "description": "verifier VK identifier matched against the batch journal during RiscZero (=1) aggregated verification.",
       "severity": "HIGH"
     },
     "verifierProofIdSuccinct": {
-      "handler": { "type": "call", "method": "getVerifierProofId", "args": [2] },
+      "handler": {
+        "type": "call",
+        "method": "getVerifierProofId",
+        "args": [2]
+      },
       "description": "verifier VK identifier matched against the batch journal during Succinct SP1 (=2) aggregated verification.",
       "severity": "HIGH"
     },
