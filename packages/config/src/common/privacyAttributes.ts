@@ -46,11 +46,11 @@ export const PRIVACY_ATTRIBUTES = {
     label: 'Immutable',
     description: 'Core smart contract code cannot be changed.',
   },
-  uncensorable: {
-    id: 'uncensorable',
-    label: 'Uncensorable',
+  unconditionalPrivacy: {
+    id: 'unconditionalPrivacy',
+    label: 'Unconditional privacy',
     description:
-      'Deposits and withdrawals cannot be censored or de-anonymised by the protocol.',
+      'Deposits and withdrawals cannot be censored or linked by the protocol.',
   },
   enforcedCompliance: {
     id: 'enforcedCompliance',
