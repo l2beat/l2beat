@@ -11,7 +11,7 @@ const ATTRIBUTE_CLASS_NAMES: Record<string, string> = {
   fixedAmounts: 'text-[#452576] bg-[#D8CEFF] border-[#9B86E6]',
   sourceAvailable: 'bg-[#CCD0DA] border-[#808CAA] text-[#272A2F]',
   immutable: 'text-[#6B4A00] bg-[#FFE08A] border-[#D6A900]',
-  uncensorable: 'text-[#00445A] bg-[#A9ECF4] border-[#46C7D9]',
+  unconditionalPrivacy: 'text-[#00445A] bg-[#A9ECF4] border-[#46C7D9]',
   enforcedCompliance: 'text-[#235000] bg-[#C9F59B] border-[#7AC943]',
 }
 
