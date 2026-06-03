@@ -72,38 +72,20 @@ export function getTopPathByVolumeAtTimestamp(
   records: AggregatedInteropTransferRecord[],
   timestamp: UnixTime,
 ): AggregatedInteropTopPathByVolume | undefined {
-  const paths = new Map<
-    string,
-    {
-      srcChain: string
-      dstChain: string
-      volumeUsd: number
-      transferCount: number
-      protocolIds: Set<string>
-    }
-  >()
+  const paths = groupAggregate(
+    records,
+    (record) =>
+      record.srcChain === record.dstChain
+        ? undefined
+        : {
+            key: `${record.srcChain}:${record.dstChain}`,
+            srcChain: record.srcChain,
+            dstChain: record.dstChain,
+          },
+    (record) => getInteropTransferValue(record) ?? 0,
+  )
 
-  for (const record of records) {
-    if (record.srcChain === record.dstChain) {
-      continue
-    }
-
-    const key = `${record.srcChain}:${record.dstChain}`
-    const path = paths.get(key) ?? {
-      srcChain: record.srcChain,
-      dstChain: record.dstChain,
-      volumeUsd: 0,
-      transferCount: 0,
-      protocolIds: new Set<string>(),
-    }
-
-    path.volumeUsd += getInteropTransferValue(record) ?? 0
-    path.transferCount += record.transferCount
-    path.protocolIds.add(record.id)
-    paths.set(key, path)
-  }
-
-  const top = maxBy([...paths.values()], (a, b) => {
+  const top = maxBy(paths, (a, b) => {
     if (a.volumeUsd !== b.volumeUsd) {
       return b.volumeUsd - a.volumeUsd
     }
@@ -134,35 +116,16 @@ export function getTopDestinationChainByInflowAtTimestamp(
   records: AggregatedInteropTransferRecord[],
   timestamp: UnixTime,
 ): AggregatedInteropChainInflow | undefined {
-  const chains = new Map<
-    string,
-    {
-      chain: string
-      volumeUsd: number
-      transferCount: number
-      protocolIds: Set<string>
-    }
-  >()
+  const chains = groupAggregate(
+    records,
+    (record) =>
+      record.srcChain === record.dstChain
+        ? undefined
+        : { key: record.dstChain, chain: record.dstChain },
+    (record) => record.dstValueUsd ?? record.srcValueUsd ?? 0,
+  )
 
-  for (const record of records) {
-    if (record.srcChain === record.dstChain) {
-      continue
-    }
-
-    const chain = chains.get(record.dstChain) ?? {
-      chain: record.dstChain,
-      volumeUsd: 0,
-      transferCount: 0,
-      protocolIds: new Set<string>(),
-    }
-
-    chain.volumeUsd += record.dstValueUsd ?? record.srcValueUsd ?? 0
-    chain.transferCount += record.transferCount
-    chain.protocolIds.add(record.id)
-    chains.set(record.dstChain, chain)
-  }
-
-  const top = maxBy([...chains.values()], (a, b) => {
+  const top = maxBy(chains, (a, b) => {
     if (a.volumeUsd !== b.volumeUsd) {
       return b.volumeUsd - a.volumeUsd
     }
@@ -183,6 +146,46 @@ export function getTopDestinationChainByInflowAtTimestamp(
     transferCount: top.transferCount,
     protocolCount: top.protocolIds.size,
   }
+}
+
+function groupAggregate<TGroup extends { key: string }>(
+  records: AggregatedInteropTransferRecord[],
+  keyOf: (record: AggregatedInteropTransferRecord) => TGroup | undefined,
+  volumeOf: (record: AggregatedInteropTransferRecord) => number,
+): (TGroup & {
+  volumeUsd: number
+  transferCount: number
+  protocolIds: Set<string>
+})[] {
+  const groups = new Map<
+    string,
+    TGroup & {
+      volumeUsd: number
+      transferCount: number
+      protocolIds: Set<string>
+    }
+  >()
+
+  for (const record of records) {
+    const groupKey = keyOf(record)
+    if (groupKey === undefined) {
+      continue
+    }
+
+    const group = groups.get(groupKey.key) ?? {
+      ...groupKey,
+      volumeUsd: 0,
+      transferCount: 0,
+      protocolIds: new Set<string>(),
+    }
+
+    group.volumeUsd += volumeOf(record)
+    group.transferCount += record.transferCount
+    group.protocolIds.add(record.id)
+    groups.set(groupKey.key, group)
+  }
+
+  return [...groups.values()]
 }
 
 export function getLargestSourceChainVolumeIncrease(
@@ -333,65 +336,39 @@ export function getLargestUopsCountIncrease(
   const isIncluded = (projectId: string) =>
     projectIds === undefined || projectIds.has(projectId)
 
-  const projectsWithOlderSnapshot = new Set(
-    olderRecords
-      .filter((record) => isIncluded(record.projectId.toString()))
-      .map((record) => record.projectId.toString()),
-  )
-  const previousCounts = new Map(
-    previousRecords
-      .filter((record) => isIncluded(record.projectId.toString()))
-      .map((record) => [
-        record.projectId.toString(),
-        record.uopsCount ?? record.count,
-      ]),
-  )
-
-  const increases = currentRecords
-    .filter(
-      (record) =>
-        isIncluded(record.projectId.toString()) &&
-        projectsWithOlderSnapshot.has(record.projectId.toString()),
-    )
-    .map((record) => {
-      const projectId = record.projectId.toString()
-      const previousUopsCount = previousCounts.get(projectId)
-      if (previousUopsCount === undefined || previousUopsCount <= 0) {
+  const top = largestSnapshotIncrease(
+    currentRecords,
+    previousRecords,
+    olderRecords,
+    (record) => record.projectId,
+    (record) => record.uopsCount ?? record.count,
+    (projectId) => isIncluded(projectId.toString()),
+    (_, value) => value,
+    (projectId, currentUopsCount, previousUopsCount) => {
+      if (previousUopsCount <= 0) {
         return undefined
       }
 
-      const currentUopsCount = record.uopsCount ?? record.count
       const increase = currentUopsCount - previousUopsCount
       if (increase <= 0) {
         return undefined
       }
 
       return {
-        projectId: record.projectId,
+        projectId,
         currentUopsCount,
         previousUopsCount,
         increase,
         increasePercent: (increase / previousUopsCount) * 100,
       }
-    })
-    .filter(
-      (
-        entry,
-      ): entry is {
-        projectId: ProjectId
-        currentUopsCount: number
-        previousUopsCount: number
-        increase: number
-        increasePercent: number
-      } => entry !== undefined,
-    )
-
-  const top = maxBy(increases, (a, b) => {
-    if (a.increasePercent !== b.increasePercent) {
-      return b.increasePercent - a.increasePercent
-    }
-    return a.projectId.toString().localeCompare(b.projectId.toString())
-  })
+    },
+    (a, b) => {
+      if (a.increasePercent !== b.increasePercent) {
+        return b.increasePercent - a.increasePercent
+      }
+      return a.projectId.toString().localeCompare(b.projectId.toString())
+    },
+  )
 
   if (!top) {
     return undefined
@@ -417,44 +394,15 @@ export function getLargestTvsIncrease(
   const isIncluded = (projectId: string) =>
     projectIds === undefined || projectIds.has(projectId)
 
-  const projectsWithOlderSnapshot = new Set(
-    olderRecords
-      .filter((record) => isIncluded(record.projectId))
-      .map((record) => record.projectId),
-  )
-  const previousTvs = new Map<string, number>()
-
-  for (const record of previousRecords) {
-    if (!isIncluded(record.projectId)) {
-      continue
-    }
-
-    previousTvs.set(
-      record.projectId,
-      (previousTvs.get(record.projectId) ?? 0) + record.valueForProject,
-    )
-  }
-
-  const currentTvs = new Map<string, number>()
-  for (const record of currentRecords) {
-    if (!isIncluded(record.projectId)) {
-      continue
-    }
-
-    currentTvs.set(
-      record.projectId,
-      (currentTvs.get(record.projectId) ?? 0) + record.valueForProject,
-    )
-  }
-
-  const increases = [...currentTvs.entries()]
-    .filter(([projectId]) => projectsWithOlderSnapshot.has(projectId))
-    .map(([projectId, currentTvsUsd]) => {
-      const previousTvsUsd = previousTvs.get(projectId)
-      if (previousTvsUsd === undefined) {
-        return undefined
-      }
-
+  const top = largestSnapshotIncrease(
+    currentRecords,
+    previousRecords,
+    olderRecords,
+    (record) => record.projectId,
+    (record) => record.valueForProject,
+    isIncluded,
+    (previousValue, value) => (previousValue ?? 0) + value,
+    (projectId, currentTvsUsd, previousTvsUsd) => {
       const increaseUsd = currentTvsUsd - previousTvsUsd
       if (increaseUsd <= 0) {
         return undefined
@@ -466,24 +414,14 @@ export function getLargestTvsIncrease(
         previousTvsUsd,
         increaseUsd,
       }
-    })
-    .filter(
-      (
-        entry,
-      ): entry is {
-        projectId: string
-        currentTvsUsd: number
-        previousTvsUsd: number
-        increaseUsd: number
-      } => entry !== undefined,
-    )
-
-  const top = maxBy(increases, (a, b) => {
-    if (a.increaseUsd !== b.increaseUsd) {
-      return b.increaseUsd - a.increaseUsd
-    }
-    return a.projectId.localeCompare(b.projectId)
-  })
+    },
+    (a, b) => {
+      if (a.increaseUsd !== b.increaseUsd) {
+        return b.increaseUsd - a.increaseUsd
+      }
+      return a.projectId.localeCompare(b.projectId)
+    },
+  )
 
   if (!top) {
     return undefined
@@ -496,6 +434,75 @@ export function getLargestTvsIncrease(
     previousTvsUsd: top.previousTvsUsd,
     increaseUsd: top.increaseUsd,
   }
+}
+
+function largestSnapshotIncrease<TRecord, TKey extends string, TEntry>(
+  currentRecords: TRecord[],
+  previousRecords: TRecord[],
+  olderRecords: TRecord[],
+  keyOf: (record: TRecord) => TKey,
+  metricOf: (record: TRecord) => number,
+  isIncluded: (key: TKey) => boolean,
+  combine: (previousValue: number | undefined, value: number) => number,
+  toIncrease: (
+    key: TKey,
+    currentValue: number,
+    previousValue: number,
+  ) => TEntry | undefined,
+  compare: (a: TEntry, b: TEntry) => number,
+): TEntry | undefined {
+  const keysWithOlderSnapshot = new Set(
+    olderRecords.map(keyOf).filter((key) => isIncluded(key)),
+  )
+  const previousValues = aggregateSnapshotValues(
+    previousRecords,
+    keyOf,
+    metricOf,
+    isIncluded,
+    combine,
+  )
+  const currentValues = aggregateSnapshotValues(
+    currentRecords,
+    keyOf,
+    metricOf,
+    isIncluded,
+    combine,
+  )
+
+  const increases = [...currentValues.entries()]
+    .filter(([key]) => keysWithOlderSnapshot.has(key))
+    .map(([key, currentValue]) => {
+      const previousValue = previousValues.get(key)
+      if (previousValue === undefined) {
+        return undefined
+      }
+
+      return toIncrease(key, currentValue, previousValue)
+    })
+    .filter((entry): entry is TEntry => entry !== undefined)
+
+  return maxBy(increases, compare) ?? undefined
+}
+
+function aggregateSnapshotValues<TRecord, TKey extends string>(
+  records: TRecord[],
+  keyOf: (record: TRecord) => TKey,
+  metricOf: (record: TRecord) => number,
+  isIncluded: (key: TKey) => boolean,
+  combine: (previousValue: number | undefined, value: number) => number,
+) {
+  const values = new Map<TKey, number>()
+
+  for (const record of records) {
+    const key = keyOf(record)
+    if (!isIncluded(key)) {
+      continue
+    }
+
+    values.set(key, combine(values.get(key), metricOf(record)))
+  }
+
+  return values
 }
 
 function maxBy<T>(items: T[], compare: (a: T, b: T) => number) {
