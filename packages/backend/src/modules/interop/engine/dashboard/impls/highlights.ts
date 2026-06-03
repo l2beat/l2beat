@@ -112,6 +112,8 @@ export async function getInteropHighlights(
     activityTimestamp !== undefined &&
     activityTimestamp === UnixTime.toStartOf(latestTimestamp, 'day')
   ) {
+    // Block/slot activity rows are bucketed by UTC day start and updated during
+    // the current day, so compare against the latest complete day instead.
     activityTimestamp = activityTimestamp - UnixTime.DAY
   }
 

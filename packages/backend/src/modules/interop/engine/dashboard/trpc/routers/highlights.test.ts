@@ -514,7 +514,7 @@ describe(createHighlightsRouter.name, () => {
     })
   })
 
-  it('rewinds UOPS to the previous full day when interop snapshot is at midnight', async () => {
+  it('rewinds UOPS when the latest activity snapshot is the current day bucket', async () => {
     const latestTimestamp = UnixTime.fromDate(new Date('2026-06-02T00:00:00Z'))
     const currentActivityTimestamp = latestTimestamp - UnixTime.DAY
     const previousActivityTimestamp = latestTimestamp - 2 * UnixTime.DAY
