@@ -1,4 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
+import type { ReactElement, ReactNode } from 'react'
 import {
   CartesianGrid,
   ComposedChart,
@@ -22,7 +23,6 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import type {
-  InclusionDelayChartPoint,
   InclusionDelayEntityMarker,
   InclusionDelayThresholdMarker,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
@@ -30,8 +30,10 @@ import { SECONDS_PER_DAY } from '~/utils/project/technology/inclusion-delay/shar
 
 export type InclusionDelayYAxisScale = 'linear' | 'log'
 
-export type InclusionDelayChartDataPoint = InclusionDelayChartPoint & {
+export type InclusionDelayChartDataPoint = {
   timestamp: number
+  censoringFraction: number
+  [key: string]: number | null
 }
 
 const INCLUSION_DELAY_ENTITY_MARKER_COLOR = 'var(--chart-cyan)'
@@ -42,8 +44,15 @@ interface Props {
   chartMeta: ChartMeta
   maxCensorFraction: number
   yAxisScale: InclusionDelayYAxisScale
-  thresholdMarkers: InclusionDelayThresholdMarker[]
-  entityMarkers: InclusionDelayEntityMarker[]
+  thresholdMarkers?: InclusionDelayThresholdMarker[]
+  entityMarkers?: InclusionDelayEntityMarker[]
+  interactiveLegend?: {
+    dataKeys: string[]
+    onItemClick: (dataKey: string) => void
+    disableOnboarding?: boolean
+  }
+  legend?: ReactNode
+  tooltipContent?: ReactElement
 }
 
 export function InclusionDelayChart({
@@ -51,35 +60,52 @@ export function InclusionDelayChart({
   chartMeta,
   maxCensorFraction,
   yAxisScale,
-  thresholdMarkers,
-  entityMarkers,
+  thresholdMarkers = [],
+  entityMarkers = [],
+  interactiveLegend,
+  legend,
+  tooltipContent,
 }: Props) {
-  const yDomain = getYDomain(data, yAxisScale, thresholdMarkers)
+  const dataKeys = Object.keys(chartMeta)
+  const visibleDataKeys = interactiveLegend?.dataKeys ?? dataKeys
+  const yDomain = getInclusionDelayYDomain(
+    data,
+    visibleDataKeys,
+    yAxisScale,
+    thresholdMarkers,
+  )
 
   return (
-    <ChartContainer data={data} meta={chartMeta} isLoading={false}>
+    <ChartContainer
+      data={data}
+      meta={chartMeta}
+      isLoading={false}
+      interactiveLegend={interactiveLegend}
+    >
       <ComposedChart
         responsive
         data={data}
         margin={{ top: 20, right: 8, left: 0, bottom: 4 }}
       >
-        <ChartLegend
-          content={
-            <ChartLegendContent>
-              {entityMarkers.length > 0 && (
-                <div className="order-last flex shrink-0 items-center gap-[3px] pl-2">
-                  <ChartDataIndicator
-                    type={{ shape: 'square' }}
-                    backgroundColor={INCLUSION_DELAY_ENTITY_MARKER_COLOR}
-                  />
-                  <ChartLegendItemLabel>
-                    Largest staking entities
-                  </ChartLegendItemLabel>
-                </div>
-              )}
-            </ChartLegendContent>
-          }
-        />
+        {legend ?? (
+          <ChartLegend
+            content={
+              <ChartLegendContent>
+                {entityMarkers.length > 0 && (
+                  <div className="order-last flex shrink-0 items-center gap-[3px] pl-2">
+                    <ChartDataIndicator
+                      type={{ shape: 'square' }}
+                      backgroundColor={INCLUSION_DELAY_ENTITY_MARKER_COLOR}
+                    />
+                    <ChartLegendItemLabel>
+                      Largest staking entities
+                    </ChartLegendItemLabel>
+                  </div>
+                )}
+              </ChartLegendContent>
+            }
+          />
+        )}
         <CartesianGrid
           vertical={false}
           syncWithTicks
@@ -112,25 +138,32 @@ export function InclusionDelayChart({
           tick={{ width: 350 }}
           allowDataOverflow={yAxisScale === 'log'}
         />
-        <Line
-          dataKey="projectDelayDays"
-          type="monotone"
-          stroke={chartMeta.projectDelayDays?.color}
-          strokeWidth={2}
-          dot={false}
-          connectNulls
-          isAnimationActive={false}
-        />
-        <Line
-          dataKey="ethereumDelayDays"
-          type="monotone"
-          stroke={chartMeta.ethereumDelayDays?.color}
-          strokeWidth={2}
-          strokeDasharray="5 5"
-          dot={false}
-          connectNulls
-          isAnimationActive={false}
-        />
+        {dataKeys.map((dataKey) => {
+          const meta = chartMeta[dataKey]
+          if (!meta || meta.indicatorType.shape !== 'line') {
+            return null
+          }
+
+          return (
+            <Line
+              key={dataKey}
+              dataKey={dataKey}
+              type="monotone"
+              stroke={meta.color}
+              strokeWidth={2}
+              strokeDasharray={
+                meta.indicatorType.strokeDasharray ? '5 5' : undefined
+              }
+              dot={false}
+              connectNulls
+              isAnimationActive={false}
+              hide={
+                interactiveLegend &&
+                !interactiveLegend.dataKeys.includes(dataKey)
+              }
+            />
+          )
+        })}
         {entityMarkers.map((marker) => (
           <ReferenceDot
             key={marker.id}
@@ -171,7 +204,10 @@ export function InclusionDelayChart({
             ifOverflow="discard"
           />
         ))}
-        <ChartTooltip filterNull={false} content={<InclusionDelayTooltip />} />
+        <ChartTooltip
+          filterNull={false}
+          content={tooltipContent ?? <InclusionDelayTooltip />}
+        />
       </ComposedChart>
     </ChartContainer>
   )
@@ -208,18 +244,16 @@ function InclusionDelayTooltip({
   )
 }
 
-function getYDomain(
-  data: { projectDelayDays: number | null; ethereumDelayDays: number | null }[],
+function getInclusionDelayYDomain(
+  data: InclusionDelayChartDataPoint[],
+  dataKeys: string[],
   scale: InclusionDelayYAxisScale,
   thresholdMarkers: InclusionDelayThresholdMarker[],
 ): [number, number] {
   const values = [
-    ...data.flatMap((point) => [
-      point.projectDelayDays,
-      point.ethereumDelayDays,
-    ]),
+    ...data.flatMap((point) => dataKeys.map((key) => point[key])),
     ...thresholdMarkers.map((marker) => marker.delayDays),
-  ].filter((value): value is number => value !== null && value > 0)
+  ].filter((value): value is number => typeof value === 'number' && value > 0)
 
   if (values.length === 0) {
     return scale === 'log' ? [1 / SECONDS_PER_DAY, 1] : [0, 1]
@@ -270,13 +304,13 @@ function getFractionTicks(maxCensorFraction: number) {
   )
 }
 
-function formatCensoringFraction(value: number) {
+export function formatCensoringFraction(value: number) {
   return `${(value * 100).toLocaleString('en-US', {
     maximumFractionDigits: 1,
   })}%`
 }
 
-function formatDelayDays(days: number) {
+export function formatDelayDays(days: number) {
   if (days <= 0) return '0s'
   const seconds = Math.round(days * SECONDS_PER_DAY)
   if (seconds === 0) return '<1s'

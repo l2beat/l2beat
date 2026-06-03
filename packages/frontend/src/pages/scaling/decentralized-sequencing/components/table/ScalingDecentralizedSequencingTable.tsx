@@ -1,4 +1,5 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
@@ -29,16 +30,9 @@ export function ScalingDecentralizedSequencingTable({ entries }: Props) {
   })
 
   return (
-    <section className="px-4 md:px-0">
-      <div className="rounded-lg bg-surface-primary p-3 md:p-4">
-        <ColumnsControls columns={table.getAllColumns()} />
-        <BasicTable
-          table={table}
-          tableOuterWrapperClassName="max-md:mr-0"
-          tableWrapperClassName="rounded-lg bg-surface-primary"
-          withScrollHint
-        />
-      </div>
-    </section>
+    <PrimaryCard className="mt-4">
+      <ColumnsControls columns={table.getAllColumns()} />
+      <BasicTable table={table} withScrollHint />
+    </PrimaryCard>
   )
 }
