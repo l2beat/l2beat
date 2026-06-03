@@ -190,53 +190,26 @@ export function getLargestSourceChainVolumeIncrease(
   previousRecords: AggregatedInteropTransferRecord[],
   timestamp: UnixTime,
 ): AggregatedInteropChainVolumeIncrease | undefined {
-  const currentVolumes = new Map<string, number>()
-  const previousVolumes = new Map<string, number>()
+  const top = largestVolumeIncrease(
+    currentRecords,
+    previousRecords,
+    (record) =>
+      record.srcChain === record.dstChain ? undefined : record.srcChain,
+    (record) => getInteropTransferValue(record) ?? 0,
+    timestamp,
+  )
 
-  for (const record of currentRecords) {
-    if (record.srcChain === record.dstChain) {
-      continue
-    }
-    currentVolumes.set(
-      record.srcChain,
-      (currentVolumes.get(record.srcChain) ?? 0) +
-        (getInteropTransferValue(record) ?? 0),
-    )
+  if (!top) {
+    return undefined
   }
 
-  for (const record of previousRecords) {
-    if (record.srcChain === record.dstChain) {
-      continue
-    }
-    previousVolumes.set(
-      record.srcChain,
-      (previousVolumes.get(record.srcChain) ?? 0) +
-        (getInteropTransferValue(record) ?? 0),
-    )
+  return {
+    timestamp: top.timestamp,
+    chain: top.key,
+    currentVolumeUsd: top.currentVolumeUsd,
+    previousVolumeUsd: top.previousVolumeUsd,
+    increaseUsd: top.increaseUsd,
   }
-
-  const increases = [...currentVolumes.entries()]
-    .map(([chain, currentVolumeUsd]) => {
-      const previousVolumeUsd = previousVolumes.get(chain) ?? 0
-      const increaseUsd = currentVolumeUsd - previousVolumeUsd
-      return {
-        timestamp,
-        chain,
-        currentVolumeUsd,
-        previousVolumeUsd,
-        increaseUsd,
-      }
-    })
-    .filter((entry) => entry.increaseUsd > 0)
-
-  const top = maxBy(increases, (a, b) => {
-    if (a.increaseUsd !== b.increaseUsd) {
-      return b.increaseUsd - a.increaseUsd
-    }
-    return a.chain.localeCompare(b.chain)
-  })
-
-  return top ?? undefined
 }
 
 export function getLargestProtocolVolumeIncrease(
@@ -244,53 +217,25 @@ export function getLargestProtocolVolumeIncrease(
   previousRecords: AggregatedInteropTransferRecord[],
   timestamp: UnixTime,
 ): AggregatedInteropProtocolVolumeIncrease | undefined {
-  const currentVolumes = new Map<string, number>()
-  const previousVolumes = new Map<string, number>()
+  const top = largestVolumeIncrease(
+    currentRecords,
+    previousRecords,
+    (record) => (record.srcChain === record.dstChain ? undefined : record.id),
+    (record) => getInteropTransferValue(record) ?? 0,
+    timestamp,
+  )
 
-  for (const record of currentRecords) {
-    if (record.srcChain === record.dstChain) {
-      continue
-    }
-    currentVolumes.set(
-      record.id,
-      (currentVolumes.get(record.id) ?? 0) +
-        (getInteropTransferValue(record) ?? 0),
-    )
+  if (!top) {
+    return undefined
   }
 
-  for (const record of previousRecords) {
-    if (record.srcChain === record.dstChain) {
-      continue
-    }
-    previousVolumes.set(
-      record.id,
-      (previousVolumes.get(record.id) ?? 0) +
-        (getInteropTransferValue(record) ?? 0),
-    )
+  return {
+    timestamp: top.timestamp,
+    id: top.key,
+    currentVolumeUsd: top.currentVolumeUsd,
+    previousVolumeUsd: top.previousVolumeUsd,
+    increaseUsd: top.increaseUsd,
   }
-
-  const increases = [...currentVolumes.entries()]
-    .map(([id, currentVolumeUsd]) => {
-      const previousVolumeUsd = previousVolumes.get(id) ?? 0
-      const increaseUsd = currentVolumeUsd - previousVolumeUsd
-      return {
-        timestamp,
-        id,
-        currentVolumeUsd,
-        previousVolumeUsd,
-        increaseUsd,
-      }
-    })
-    .filter((entry) => entry.increaseUsd > 0)
-
-  const top = maxBy(increases, (a, b) => {
-    if (a.increaseUsd !== b.increaseUsd) {
-      return b.increaseUsd - a.increaseUsd
-    }
-    return a.id.localeCompare(b.id)
-  })
-
-  return top ?? undefined
 }
 
 export function getLargestTokenVolumeIncrease(
@@ -298,35 +243,69 @@ export function getLargestTokenVolumeIncrease(
   previousRecords: AggregatedInteropTokenRecord[],
   timestamp: UnixTime,
 ): AggregatedInteropTokenVolumeIncrease | undefined {
+  const top = largestVolumeIncrease(
+    currentRecords,
+    previousRecords,
+    (record) =>
+      record.srcChain === record.dstChain ? undefined : record.abstractTokenId,
+    (record) => record.volume,
+    timestamp,
+  )
+
+  if (!top) {
+    return undefined
+  }
+
+  return {
+    timestamp: top.timestamp,
+    abstractTokenId: top.key,
+    currentVolumeUsd: top.currentVolumeUsd,
+    previousVolumeUsd: top.previousVolumeUsd,
+    increaseUsd: top.increaseUsd,
+  }
+}
+
+function largestVolumeIncrease<T>(
+  currentRecords: T[],
+  previousRecords: T[],
+  keyOf: (record: T) => string | undefined,
+  volumeOf: (record: T) => number,
+  timestamp: UnixTime,
+):
+  | {
+      timestamp: UnixTime
+      key: string
+      currentVolumeUsd: number
+      previousVolumeUsd: number
+      increaseUsd: number
+    }
+  | undefined {
   const currentVolumes = new Map<string, number>()
   const previousVolumes = new Map<string, number>()
 
   for (const record of currentRecords) {
-    if (record.srcChain === record.dstChain) {
+    const key = keyOf(record)
+    if (key === undefined) {
       continue
     }
-    currentVolumes.set(
-      record.abstractTokenId,
-      (currentVolumes.get(record.abstractTokenId) ?? 0) + record.volume,
-    )
+    currentVolumes.set(key, (currentVolumes.get(key) ?? 0) + volumeOf(record))
   }
 
   for (const record of previousRecords) {
-    if (record.srcChain === record.dstChain) {
+    const key = keyOf(record)
+    if (key === undefined) {
       continue
     }
-    previousVolumes.set(
-      record.abstractTokenId,
-      (previousVolumes.get(record.abstractTokenId) ?? 0) + record.volume,
-    )
+    previousVolumes.set(key, (previousVolumes.get(key) ?? 0) + volumeOf(record))
   }
 
   const increases = [...currentVolumes.entries()]
-    .map(([abstractTokenId, currentVolumeUsd]) => {
-      const previousVolumeUsd = previousVolumes.get(abstractTokenId) ?? 0
+    .map(([key, currentVolumeUsd]) => {
+      const previousVolumeUsd = previousVolumes.get(key) ?? 0
       const increaseUsd = currentVolumeUsd - previousVolumeUsd
       return {
-        abstractTokenId,
+        timestamp,
+        key,
         currentVolumeUsd,
         previousVolumeUsd,
         increaseUsd,
@@ -338,20 +317,10 @@ export function getLargestTokenVolumeIncrease(
     if (a.increaseUsd !== b.increaseUsd) {
       return b.increaseUsd - a.increaseUsd
     }
-    return a.abstractTokenId.localeCompare(b.abstractTokenId)
+    return a.key.localeCompare(b.key)
   })
 
-  if (!top) {
-    return undefined
-  }
-
-  return {
-    timestamp,
-    abstractTokenId: top.abstractTokenId,
-    currentVolumeUsd: top.currentVolumeUsd,
-    previousVolumeUsd: top.previousVolumeUsd,
-    increaseUsd: top.increaseUsd,
-  }
+  return top ?? undefined
 }
 
 export function getLargestUopsCountIncrease(
