@@ -9,6 +9,7 @@ import {
 } from '~/pages/interop/components/flows/consts'
 import { FlowsChainsSelector } from '~/pages/interop/components/flows/FlowsChainsSelector'
 import { FlowsParticleLegend } from '~/pages/interop/components/flows/FlowsParticleLegend'
+import { FlowsProtocolsSelector } from '~/pages/interop/components/flows/FlowsProtocolsSelector'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
 import { InactiveChainsDialog } from '~/pages/interop/components/flows/graph/InactiveChainsDialog'
 import { useScaledParticleCounts } from '~/pages/interop/components/flows/graph/utils/useScaledParticleCounts'
@@ -23,6 +24,7 @@ import { useTRPC } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { ExploreInteropButton } from './ExploreInteropButton'
+import { InteropBridgeSubsections } from './InteropBridgeSubsections'
 
 export interface InteropFlowsSectionProps extends ProjectSectionProps {
   interopChains: InteropChainWithIcon[]
@@ -31,6 +33,8 @@ export interface InteropFlowsSectionProps extends ProjectSectionProps {
   })[]
   defaultSelectedChains: string[]
   defaultStatsChainId: string
+  /** This chain's own canonical bridge protocol id, if it has one. */
+  canonicalProtocolId?: string
 }
 
 export function InteropFlowsSection({
@@ -38,6 +42,7 @@ export function InteropFlowsSection({
   protocols,
   defaultSelectedChains,
   defaultStatsChainId,
+  canonicalProtocolId,
   ...sectionProps
 }: InteropFlowsSectionProps) {
   return (
@@ -53,7 +58,9 @@ export function InteropFlowsSection({
       >
         <Content
           interopChains={interopChains}
+          protocols={protocols}
           defaultStatsChainId={defaultStatsChainId}
+          canonicalProtocolId={canonicalProtocolId}
         />
       </InteropFlowsProvider>
       <div className="mt-4 md:hidden">
@@ -65,11 +72,18 @@ export function InteropFlowsSection({
 
 function Content({
   interopChains,
+  protocols,
   defaultStatsChainId,
-}: Pick<InteropFlowsSectionProps, 'interopChains' | 'defaultStatsChainId'>) {
+  canonicalProtocolId,
+}: Pick<
+  InteropFlowsSectionProps,
+  'interopChains' | 'protocols' | 'defaultStatsChainId' | 'canonicalProtocolId'
+>) {
   const trpc = useTRPC()
   const { highlightedChains, selectedChains, selectedProtocols } =
     useInteropFlows()
+  const singleProtocolId =
+    selectedProtocols.length === 1 ? selectedProtocols[0] : undefined
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
   const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
   const { data, isLoading } = useQuery(
@@ -111,7 +125,13 @@ function Content({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col justify-between gap-3 md:flex-row md:items-start">
-        <FlowsChainsSelector allChains={interopChains} />
+        <div className="flex flex-col gap-3 md:flex-row md:items-start">
+          <FlowsChainsSelector allChains={interopChains} />
+          <FlowsProtocolsSelector
+            allProtocols={protocols}
+            canonicalProtocolId={canonicalProtocolId}
+          />
+        </div>
         {!isLoading && data && (
           <FlowsParticleLegend
             layout="inline"
@@ -158,16 +178,25 @@ function Content({
               chainIdB={statsChainB}
               selectedChains={selectedChains}
               linkTopProtocols
+              hideTopProtocols={!!singleProtocolId}
             />
           ) : (
             <SingleChainStats
               chainId={statsChainA}
               selectedChains={selectedChains}
               linkTopProtocols
+              hideTopProtocols={!!singleProtocolId}
             />
           )}
         </div>
       </div>
+      {singleProtocolId && (
+        <InteropBridgeSubsections
+          protocolId={singleProtocolId}
+          selectedChains={selectedChains}
+          interopChains={interopChains}
+        />
+      )}
     </div>
   )
 }

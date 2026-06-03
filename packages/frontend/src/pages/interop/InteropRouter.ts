@@ -1,6 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
+import { ps } from '~/server/projects'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -97,6 +98,22 @@ export function createInteropRouter(
       params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
+      // Projects that also have a chain (scaling) page are served as a unified
+      // page; redirect the standalone bridge page to the chain page, landing on
+      // the "Volume and flows" section with this canonical bridge pre-selected
+      // (so its bridge subsections are shown).
+      const project = await ps.getProject({
+        slug: req.params.slug,
+        optional: ['scalingInfo', 'interopConfig'],
+      })
+      if (project?.scalingInfo && project.interopConfig) {
+        res.redirect(
+          302,
+          `/scaling/projects/${project.slug}?protocols=${project.id}#interop-flows`,
+        )
+        return
+      }
+
       const data = await getInteropProtocolPageData(req, manifest, cache)
       if (!data) {
         res.status(404).send('Not found')

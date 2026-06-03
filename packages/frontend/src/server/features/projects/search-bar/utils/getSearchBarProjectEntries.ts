@@ -123,7 +123,11 @@ export function getSearchBarProjectEntries<
     })
   }
 
-  if (project.interopConfig) {
+  // Projects that also have a chain (scaling) page are served as a single
+  // unified page, so we only emit a standalone interop entry for pure interop
+  // projects (e.g. LayerZero). Chain+bridge projects (e.g. Arbitrum) appear
+  // once via their scaling entry and expose the bridge via an on-page toggle.
+  if (project.interopConfig && !project.scalingInfo) {
     results.push({
       ...common,
       name: project.interopConfig.name ?? project.name,

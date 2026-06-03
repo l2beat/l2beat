@@ -25,17 +25,29 @@ import { useInteropFlows } from './utils/InteropFlowsContext'
 
 export function FlowsProtocolsSelector({
   allProtocols,
+  canonicalProtocolId,
 }: {
   allProtocols: (ProtocolDisplayable & {
     id: string
   })[]
+  /** The chain's own canonical bridge protocol id (from its interopConfig), if any. */
+  canonicalProtocolId?: string
 }) {
   const {
     selectedProtocols,
     toggleProtocolSelection,
     selectAllProtocols,
     deselectAllProtocols,
+    setSelectedProtocols,
   } = useInteropFlows()
+
+  const hasCanonical =
+    !!canonicalProtocolId &&
+    allProtocols.some((p) => p.id === canonicalProtocolId)
+  const onlyCanonicalSelected =
+    hasCanonical &&
+    selectedProtocols.length === 1 &&
+    selectedProtocols[0] === canonicalProtocolId
 
   const protocolsWithDetails = allProtocols.map(
     ({ id, name, iconUrl, slug }) => ({
@@ -108,6 +120,16 @@ export function FlowsProtocolsSelector({
       >
         Deselect all
       </button>
+      {hasCanonical && canonicalProtocolId && (
+        <button
+          type="button"
+          onClick={() => setSelectedProtocols([canonicalProtocolId])}
+          disabled={onlyCanonicalSelected}
+          className="ml-auto w-fit cursor-pointer font-medium text-brand text-label-value-15 underline disabled:cursor-not-allowed disabled:text-secondary"
+        >
+          Canonical bridge only
+        </button>
+      )}
     </div>
   )
 
@@ -135,6 +157,7 @@ export function FlowsProtocolsSelector({
                 key={protocol.id}
                 protocol={protocol}
                 onToggle={toggleProtocolSelection}
+                isCanonical={protocol.id === canonicalProtocolId}
                 nameClassName="font-semibold text-xs leading-none"
                 rowClassName="px-4"
               />
@@ -162,6 +185,7 @@ export function FlowsProtocolsSelector({
                 key={protocol.id}
                 protocol={protocol}
                 onToggle={toggleProtocolSelection}
+                isCanonical={protocol.id === canonicalProtocolId}
                 nameClassName="font-bold text-label-value-16"
                 rowClassName="px-3"
               />
@@ -177,6 +201,7 @@ export function FlowsProtocolsSelector({
 function ProtocolRow({
   protocol,
   onToggle,
+  isCanonical,
   nameClassName,
   rowClassName,
 }: {
@@ -188,6 +213,7 @@ function ProtocolRow({
     isSelected: boolean
   }
   onToggle: (id: string) => void
+  isCanonical?: boolean
   nameClassName: string
   rowClassName?: string
 }) {
@@ -210,6 +236,11 @@ function ProtocolRow({
           <span className={nameClassName}>{protocol.name}</span>
           <ArrowRightIcon className="size-3 shrink-0 fill-brand opacity-0 transition-opacity group-hover:opacity-100" />
         </a>
+        {isCanonical && (
+          <span className="rounded bg-surface-secondary px-1.5 py-0.5 font-medium text-2xs text-secondary uppercase leading-none">
+            Canonical
+          </span>
+        )}
       </div>
     </Checkbox>
   )

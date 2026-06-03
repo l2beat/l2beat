@@ -27,6 +27,8 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { InteropTopItems } from '~/pages/interop/components/top-items/TopItems'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
+import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { ProjectScalingRosette } from './ScalingProjectRosette'
 import { ProjectScalingStats } from './ScalingProjectStats'
 
@@ -258,31 +260,51 @@ function InteropMetrics({
   interop: NonNullable<ProjectScalingEntry['header']['interop']>
 }) {
   return (
-    <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
-      <InteropMetric
-        title="Interop protocols used"
-        items={{
-          items: interop.protocols.items.map((protocol) => ({
-            id: protocol.id,
-            displayName: protocol.name,
-            iconUrl: protocol.iconUrl,
-            volume: protocol.volume,
-          })),
-          remainingCount: interop.protocols.remainingCount,
-        }}
-      />
-      <InteropMetric
-        title="Tokens transferred"
-        items={{
-          items: interop.tokens.items.map((token) => ({
-            id: token.id,
-            displayName: token.symbol,
-            iconUrl: token.iconUrl,
-            volume: token.volume,
-          })),
-          remainingCount: interop.tokens.remainingCount,
-        }}
-      />
+    <div className="flex flex-col gap-4">
+      <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
+        <div className="flex max-md:items-center max-md:justify-between md:flex-col md:gap-1.5">
+          <span className="font-medium text-label-value-12 text-secondary">
+            Last 24h volume
+          </span>
+          <span className="font-bold text-label-value-16">
+            {formatCurrency(interop.volume, 'usd')}
+          </span>
+        </div>
+        <div className="flex max-md:items-center max-md:justify-between md:flex-col md:gap-1.5">
+          <span className="font-medium text-label-value-12 text-secondary">
+            Last 24h transfer count
+          </span>
+          <span className="font-bold text-label-value-16">
+            {formatActivityCount(interop.transferCount)}
+          </span>
+        </div>
+      </div>
+      <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
+        <InteropMetric
+          title="Interop protocols used"
+          items={{
+            items: interop.protocols.items.map((protocol) => ({
+              id: protocol.id,
+              displayName: protocol.name,
+              iconUrl: protocol.iconUrl,
+              volume: protocol.volume,
+            })),
+            remainingCount: interop.protocols.remainingCount,
+          }}
+        />
+        <InteropMetric
+          title="Tokens by volume"
+          items={{
+            items: interop.tokens.items.map((token) => ({
+              id: token.id,
+              displayName: token.symbol,
+              iconUrl: token.iconUrl,
+              volume: token.volume,
+            })),
+            remainingCount: interop.tokens.remainingCount,
+          }}
+        />
+      </div>
     </div>
   )
 }

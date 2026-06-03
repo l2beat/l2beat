@@ -23,7 +23,7 @@ export async function getInteropProtocolPageData(
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
-      () => getCachedData(req.params.slug, manifest),
+      () => getInteropProtocolViewData(req.params.slug, manifest),
     ),
   ])
 
@@ -53,7 +53,10 @@ export async function getInteropProtocolPageData(
   }
 }
 
-async function getCachedData(slug: string, manifest: Manifest) {
+export async function getInteropProtocolViewData(
+  slug: string,
+  manifest: Manifest,
+) {
   const interopChains = getInteropChains()
   const liveChainIds = interopChains
     .filter((chain) => !chain.isUpcoming)

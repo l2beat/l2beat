@@ -10,6 +10,8 @@ import { getInteropChains } from './utils/getInteropChains'
 
 export interface ProjectInteropData {
   chainId: string
+  /** This chain's own canonical bridge protocol id (its interopConfig), if it has one. */
+  canonicalProtocolId: string | undefined
   interopChains: InteropChainWithIcon[]
   protocols: {
     id: string
@@ -19,6 +21,8 @@ export interface ProjectInteropData {
   }[]
   defaultSelectedChains: string[]
   summary: {
+    volume: number
+    transferCount: number
     protocols: {
       items: {
         id: string
@@ -79,13 +83,21 @@ export async function getProjectInteropData(
   const currentChainData = interopFlows.chainData.find(
     (chain) => chain.chainId === currentInteropChain.id,
   )
+  const canonicalProtocolId = interopProjects.find(
+    (protocol) => protocol.id === projectId,
+  )?.id
 
   return {
     chainId: currentInteropChain.id,
+    canonicalProtocolId,
     interopChains: orderedInteropChains,
     protocols,
     defaultSelectedChains,
     summary: {
+      volume: currentChainData?.totalVolume ?? 0,
+      transferCount:
+        (currentChainData?.transfersIn ?? 0) +
+        (currentChainData?.transfersOut ?? 0),
       protocols: {
         items: (currentChainData?.topProtocols ?? []).map((protocol) => ({
           id: protocol.id,

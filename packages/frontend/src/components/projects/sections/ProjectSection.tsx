@@ -1,6 +1,12 @@
 import type { ReactNode } from 'react'
 
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '~/components/core/Collapsible'
 import { HighlightablePrimaryCard } from '~/components/primary-card/HighlightablePrimaryCard'
+import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../UnderReviewCallout'
 import type { ProjectSectionId } from './types'
@@ -16,10 +22,28 @@ export interface ExtendedProjectSectionProps {
   isUnderReview?: boolean
   hideChildrenIfUnderReview?: boolean
   as?: 'section' | 'div'
+  /** Render the section as an expand/collapse block (header is the toggle). */
+  collapsible?: boolean
+  /** Initial open state when `collapsible` (defaults to closed). */
+  defaultOpen?: boolean
 }
 
 export function ProjectSection(props: ExtendedProjectSectionProps) {
   const Component = props.as ?? 'section'
+
+  const body = props.isUnderReview ? (
+    !props.hideChildrenIfUnderReview ? (
+      <>
+        <UnderReviewCallout className="mb-4" />
+        {props.children}
+      </>
+    ) : (
+      <UnderReviewCallout />
+    )
+  ) : (
+    props.children
+  )
+
   return (
     <HighlightablePrimaryCard
       id={props.id}
@@ -36,25 +60,30 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
       asChild
     >
       <Component>
-        <ProjectDetailsSectionHeader
-          title={props.title}
-          id={props.id}
-          sectionOrder={props.sectionOrder}
-          nested={props.nested}
-          headerAccessory={props.headerAccessory}
-          className="mb-4"
-        />
-        {props.isUnderReview ? (
-          !props.hideChildrenIfUnderReview ? (
-            <>
-              <UnderReviewCallout className="mb-4" />
-              {props.children}
-            </>
-          ) : (
-            <UnderReviewCallout />
-          )
+        {props.collapsible ? (
+          <Collapsible defaultOpen={props.defaultOpen ?? false}>
+            <ProjectDetailsSectionHeader
+              title={props.title}
+              id={props.id}
+              sectionOrder={props.sectionOrder}
+              nested={props.nested}
+              headerAccessory={props.headerAccessory}
+              collapsible
+            />
+            <CollapsibleContent className="mt-4">{body}</CollapsibleContent>
+          </Collapsible>
         ) : (
-          props.children
+          <>
+            <ProjectDetailsSectionHeader
+              title={props.title}
+              id={props.id}
+              sectionOrder={props.sectionOrder}
+              nested={props.nested}
+              headerAccessory={props.headerAccessory}
+              className="mb-4"
+            />
+            {body}
+          </>
         )}
       </Component>
     </HighlightablePrimaryCard>
@@ -68,9 +97,36 @@ interface ProjectDetailsSectionHeaderProps {
   nested: boolean | undefined
   className?: string
   headerAccessory?: ReactNode
+  collapsible?: boolean
 }
 
 function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
+  const titleContent = (
+    <>
+      {props.sectionOrder && (
+        <div
+          className={cn(
+            'hidden size-10 items-center justify-center rounded bg-surface-secondary font-bold text-label-value-24 text-secondary tabular-nums md:flex',
+            props.nested && 'h-8 w-12 text-label-value-18',
+          )}
+        >
+          {props.sectionOrder}
+        </div>
+      )}
+      <span
+        className={cn(
+          'text-heading-28',
+          props.nested && 'text-heading-24 leading-none!',
+        )}
+      >
+        {props.title}
+      </span>
+      {props.collapsible && (
+        <ChevronIcon className="size-3 shrink-0 transition-transform group-data-[state=open]/Collapsible:rotate-180" />
+      )}
+    </>
+  )
+
   return (
     <div
       className={cn(
@@ -78,29 +134,23 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
         props.className,
       )}
     >
-      <a
-        href={`#${props.id}`}
-        className={cn('flex items-center gap-4', props.nested && 'gap-3')}
-      >
-        {props.sectionOrder && (
-          <div
-            className={cn(
-              'hidden size-10 items-center justify-center rounded bg-surface-secondary font-bold text-label-value-24 text-secondary tabular-nums md:flex',
-              props.nested && 'h-8 w-12 text-label-value-18',
-            )}
-          >
-            {props.sectionOrder}
-          </div>
-        )}
-        <span
+      {props.collapsible ? (
+        <CollapsibleTrigger
           className={cn(
-            'text-heading-28',
-            props.nested && 'text-heading-24 leading-none!',
+            'flex cursor-pointer items-center gap-4',
+            props.nested && 'gap-3',
           )}
         >
-          {props.title}
-        </span>
-      </a>
+          {titleContent}
+        </CollapsibleTrigger>
+      ) : (
+        <a
+          href={`#${props.id}`}
+          className={cn('flex items-center gap-4', props.nested && 'gap-3')}
+        >
+          {titleContent}
+        </a>
+      )}
       {props.headerAccessory}
     </div>
   )
