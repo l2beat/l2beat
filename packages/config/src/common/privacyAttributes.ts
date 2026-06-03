@@ -49,7 +49,8 @@ export const PRIVACY_ATTRIBUTES = {
   uncensorable: {
     id: 'uncensorable',
     label: 'Uncensorable',
-    description: 'Deposits and withdrawals cannot be censored or de-anonymised by the protocol.',
+    description:
+      'Deposits and withdrawals cannot be censored or de-anonymised by the protocol.',
   },
   enforcedCompliance: {
     id: 'enforcedCompliance',
