@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -7,19 +8,23 @@ import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { NoResultsInfo } from '~/pages/interop/summary/components/NoResultsInfo'
 import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
+import { useTRPC } from '~/trpc/React'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
-import { TopProtocolsTable } from './TopProtocolsTable'
+import { ProtocolsByVolumeTable } from './ProtocolsByVolumeTable'
 
-export function TopProtocolsCard({
-  topProtocols,
-  isLoading,
-}: {
-  topProtocols: ProtocolEntry[] | undefined
-  isLoading: boolean
-}) {
+export function ProtocolsByVolumeCard({ isEnabled }: { isEnabled: boolean }) {
+  const trpc = useTRPC()
   const filterEntries = useFilterEntries()
-  const { allChains } = useInteropFlows()
+  const { allChains, selectedChains, selectedProtocols } = useInteropFlows()
+  const { data: protocolsByVolume, isLoading } = useQuery(
+    trpc.interop.protocolsByVolume.queryOptions(
+      {
+        chains: selectedChains,
+        protocolIds: selectedProtocols,
+      },
+      { enabled: isEnabled },
+    ),
+  )
   const exploreAllUrl = useMemo(() => {
     const allChainIds = allChains.map((chain) => chain.id)
     return buildInteropUrl('/interop/summary', {
@@ -56,10 +61,13 @@ export function TopProtocolsCard({
           <Skeleton className="mt-4 h-8 w-[110px] rounded-sm" />
           <Skeleton className="mt-4 h-80 w-full rounded-sm" />
         </>
-      ) : topProtocols && topProtocols.length > 0 ? (
+      ) : protocolsByVolume && protocolsByVolume.length > 0 ? (
         <>
-          <TableFilters entries={topProtocols} className="mt-4" />
-          <TopProtocolsTable protocols={topProtocols.filter(filterEntries)} />
+          <TableFilters entries={protocolsByVolume} className="mt-4" />
+          <ProtocolsByVolumeTable
+            protocols={protocolsByVolume.filter(filterEntries)}
+            selectedChains={selectedChains}
+          />
         </>
       ) : (
         <NoResultsInfo />

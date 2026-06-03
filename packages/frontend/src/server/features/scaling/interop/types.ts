@@ -181,6 +181,14 @@ export const InteropFlowsParams = v.object({
   tokenId: v.string().optional(),
 })
 
+export type InteropProtocolsByVolumeParams = v.infer<
+  typeof InteropProtocolsByVolumeParams
+>
+export const InteropProtocolsByVolumeParams = v.object({
+  chains: v.array(v.string()),
+  protocolIds: v.array(v.string()),
+})
+
 export type InteropProtocolTransferDetailsItem = {
   transferId: string
   timestamp: number

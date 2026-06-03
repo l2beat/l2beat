@@ -14,8 +14,8 @@ import { FlowsGeneralStats } from './FlowsGeneralStats'
 import { FlowsProtocolsSelector } from './FlowsProtocolsSelector'
 import { FlowsGraphPanel } from './graph/FlowsGraphPanel'
 import { InactiveChainsDialog } from './graph/InactiveChainsDialog'
+import { ProtocolsByVolumeCard } from './protocols-by-volume/ProtocolsByVolumeCard'
 import { FlowsSelectedPathPanel } from './selection-panel/FlowsSelectedPathPanel'
-import { TopProtocolsCard } from './top-protocols/TopProtocolsCard'
 import {
   InteropFlowsProvider,
   useInteropFlows,
@@ -142,9 +142,8 @@ function FlowsViewContent({
         </div>
       </PrimaryCard>
       <TableFilterContextProvider>
-        <TopProtocolsCard
-          topProtocols={data?.topProtocols}
-          isLoading={isLoading}
+        <ProtocolsByVolumeCard
+          isEnabled={hasEnoughChains && hasEnoughProtocols}
         />
       </TableFilterContextProvider>
     </>
