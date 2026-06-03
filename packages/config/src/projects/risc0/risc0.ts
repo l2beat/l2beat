@@ -122,6 +122,10 @@ export const risc0: BaseProject = {
         projectId: ProjectId('soon'),
         sinceTimestamp: UnixTime(1765180787),
       },
+      {
+        projectId: ProjectId('base'),
+        sinceTimestamp: UnixTime(1779825599), // 2026-05-26 AggregateVerifier upgrade (Nitro attestation via Risc0)
+      },
     ],
     verifierHashes: [
       {

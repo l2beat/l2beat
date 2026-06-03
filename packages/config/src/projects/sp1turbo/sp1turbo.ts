@@ -235,10 +235,6 @@ export const sp1turbo: BaseProject = {
         projectId: ProjectId('appchain'),
         sinceTimestamp: UnixTime(1776165024),
       },
-      {
-        projectId: ProjectId('base'),
-        sinceTimestamp: UnixTime(1779825599), // 2026-05-26 AggregateVerifier upgrade
-      },
     ],
     verifierHashes: [
       {
