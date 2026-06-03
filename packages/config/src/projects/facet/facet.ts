@@ -108,7 +108,7 @@ export const facet: ScalingProject = {
   ),
   discoveryInfo: getDiscoveryInfo([discovery]),
   display: {
-    name: 'Facet v1',
+    name: 'Facet',
     slug: 'facet',
     description:
       'Facet v1 is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by burning ETH on L1.',
@@ -139,7 +139,7 @@ export const facet: ScalingProject = {
         bridgedUsing: {
           bridges: [
             {
-              name: 'Facet legacy L1Bridge',
+              name: 'Facet legacy L1Bridge.',
             },
           ],
         },
