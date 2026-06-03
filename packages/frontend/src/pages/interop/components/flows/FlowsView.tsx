@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import partition from 'lodash/partition'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { useTRPC } from '~/trpc/React'
@@ -140,10 +141,12 @@ function FlowsViewContent({
           </div>
         </div>
       </PrimaryCard>
-      <TopProtocolsCard
-        topProtocols={data?.topProtocols}
-        isLoading={isLoading}
-      />
+      <TableFilterContextProvider>
+        <TopProtocolsCard
+          topProtocols={data?.topProtocols}
+          isLoading={isLoading}
+        />
+      </TableFilterContextProvider>
     </>
   )
 }

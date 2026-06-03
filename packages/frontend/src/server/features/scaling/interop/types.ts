@@ -6,6 +6,7 @@ import type {
 } from '@l2beat/database'
 import { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import type { InteropFlowData } from './utils/getFlows'
 import type { TopItems } from './utils/getTopItems'
 
@@ -44,7 +45,7 @@ export type ProtocolEntry = {
       }
     | undefined
   snapshotTimestamp: number | undefined
-}
+} & FilterableEntry
 
 export type ProtocolDisplayable = {
   name: string

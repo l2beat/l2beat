@@ -273,7 +273,7 @@ export async function getInteropFlows(
       undefined,
       undefined,
       { from: params.chains, to: params.chains },
-    ).entries.slice(0, 10),
+    ).entries,
   }
 }
 
@@ -444,6 +444,7 @@ function getMockInteropFlows(): InteropFlowsData {
     averageValueInFlight: undefined,
     netMintedValue: undefined,
     snapshotTimestamp: undefined,
+    filterable: [],
     ...overrides,
   })
 

@@ -248,6 +248,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     netMintedValue: undefined,
     topRoute: undefined,
     snapshotTimestamp: undefined,
+    filterable: [],
   }))
 
   const firstMockToken = mockTokens[0]

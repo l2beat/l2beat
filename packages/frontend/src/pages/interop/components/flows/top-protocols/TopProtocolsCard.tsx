@@ -2,9 +2,10 @@ import { useMemo } from 'react'
 import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { TableFilters } from '~/components/table/filters/TableFilters'
+import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { NoResultsInfo } from '~/pages/interop/summary/components/NoResultsInfo'
-import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
 import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
@@ -17,6 +18,7 @@ export function TopProtocolsCard({
   topProtocols: ProtocolEntry[] | undefined
   isLoading: boolean
 }) {
+  const filterEntries = useFilterEntries()
   const { allChains } = useInteropFlows()
   const exploreAllUrl = useMemo(() => {
     const allChainIds = allChains.map((chain) => chain.id)
@@ -30,12 +32,9 @@ export function TopProtocolsCard({
     <PrimaryCard className="flex flex-col border-divider max-md:border-t md:mt-5">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <div className="flex items-center gap-2">
-            <h2 className="font-bold text-heading-20 md:text-heading-24">
-              Protocols by volume
-            </h2>
-            <TopNBadge n={10} />
-          </div>
+          <h2 className="font-bold text-heading-20 md:text-heading-24">
+            Protocols by volume
+          </h2>
           <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
             Last 24 hours
           </div>
@@ -51,10 +50,17 @@ export function TopProtocolsCard({
           </Button>
         </a>
       </div>
+
       {isLoading ? (
-        <Skeleton className="mt-4 h-80 w-full rounded-sm" />
+        <>
+          <Skeleton className="mt-4 h-8 w-[110px] rounded-sm" />
+          <Skeleton className="mt-4 h-80 w-full rounded-sm" />
+        </>
       ) : topProtocols && topProtocols.length > 0 ? (
-        <TopProtocolsTable protocols={topProtocols} />
+        <>
+          <TableFilters entries={topProtocols} className="mt-4" />
+          <TopProtocolsTable protocols={topProtocols.filter(filterEntries)} />
+        </>
       ) : (
         <NoResultsInfo />
       )}

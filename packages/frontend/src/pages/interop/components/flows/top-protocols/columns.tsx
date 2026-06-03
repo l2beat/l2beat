@@ -63,7 +63,7 @@ export const topProtocolsColumns = [
     },
   }),
   columnHelper.accessor('type', {
-    header: 'Type',
+    header: 'Category',
     cell: (ctx) => (
       <div className="whitespace-nowrap font-medium text-xs capitalize leading-[15px] md:text-sm md:leading-[1.2]">
         {ctx.row.original.type}

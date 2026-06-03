@@ -22,7 +22,7 @@ export function TopRouteCell({ route }: { route: ProtocolEntry['topRoute'] }) {
       type="button"
       onClick={handleClick}
       aria-label={`Show ${srcChain.name} to ${dstChain.name} route in the flows chart`}
-      className="md:-mx-2 flex items-center gap-1.5 rounded transition-colors md:px-2 md:py-1 md:hover:bg-pure-black/5 md:dark:hover:bg-pure-white/10"
+      className="md:-mx-2 flex items-center gap-1.5 rounded transition-colors md:px-2 md:py-2 md:hover:bg-pure-black/5 md:dark:hover:bg-pure-white/10"
     >
       <img src={srcChain.iconUrl} alt={srcChain.name} className="size-5" />
       <span className="truncate font-medium text-label-value-15 max-md:hidden">

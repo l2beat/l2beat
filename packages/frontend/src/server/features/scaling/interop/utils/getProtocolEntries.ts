@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Project } from '@l2beat/config'
 import type { KnownInteropBridgeType, UnixTime } from '@l2beat/shared-pure'
+import capitalize from 'lodash/capitalize'
 import { mapInteropChainsToWithIcons } from '~/pages/interop/utils/mapInteropChainsToWithIcons'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
@@ -147,6 +148,9 @@ export function getProtocolEntries(
       netMintedValue: getNetMintedValueUsd(data),
       topRoute,
       snapshotTimestamp,
+      filterable: [
+        { id: 'category', value: capitalize(project.interopConfig.type) },
+      ],
     })
   }
 
