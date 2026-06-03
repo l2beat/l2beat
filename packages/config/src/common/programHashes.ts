@@ -2764,51 +2764,62 @@ Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/f
     // 3. Build client program for the mainnet within docker: \`make build-client-docker NETWORK=mainnet\`. This command will create \`rsp-client-mainnet.vkey\` file with the program hash string.
     //     `
   },
-  '0x5d6ea48b16e1c18602eb2c1d7d7c0f2e73bba152580c930f4324cd972b1358b6': {
-    title: 'Range program of Base AggregateVerifier',
-    description:
-      'Proves correct state transition function of the Base rollup over a sub-range of L2 blocks. Compiled from the op-succinct range crate against the Base rollup config; the resulting vkey is baked into the deployed AggregateVerifier game implementation as ZK_RANGE_HASH.',
-    proverSystemProject: ProjectId('sp1hypercube'),
-    programUrl:
-      'https://github.com/succinctlabs/op-succinct/tree/main/programs/range',
-    verificationStatus: 'notVerified',
-    verificationSteps:
-      'L2BEAT has not yet reproduced the vkey from source. To verify, pin an op-succinct release that includes Base support, configure with Base rollup parameters (chain ID 8453, genesis), build the range program via cargo prove, and compare the resulting vkey to this hash.',
-  },
   '0x003147cde8e7d519d3dbae6b76f1198a70d4ff477a3aaea73bee4153f250288a': {
     title: 'Aggregation program of Base AggregateVerifier',
     description:
-      'Aggregates range proofs of correct execution for several consecutive sub-ranges of Base L2 blocks. Compiled from the op-succinct aggregation crate; the resulting vkey is baked into the deployed AggregateVerifier game implementation as ZK_AGGREGATE_HASH.',
+      'Aggregates range proofs of correct execution for several consecutive sub-ranges of Base L2 blocks.',
     proverSystemProject: ProjectId('sp1hypercube'),
-    programUrl:
-      'https://github.com/succinctlabs/op-succinct/tree/main/programs/aggregation',
-    verificationStatus: 'notVerified',
-    verificationSteps:
-      'L2BEAT has not yet reproduced the vkey from source. To verify, pin an op-succinct release that includes Base support, configure with Base rollup parameters (chain ID 8453, genesis), build the aggregation program via cargo prove, and compare the resulting vkey to this hash.',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain v6.1.0: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up v6.1.0\`
+3. Install docker https://docs.docker.com/get-started/get-docker/
+4. Install \`lld\` (required by the repo's \`.cargo/config.toml\`)
+
+Verify:
+
+1. Checkout the correct tag in [base/base](https://github.com/base/base) repo: \`git checkout v0.9.1\`. Commit hash should be \`00e656223f5d2af1b2100351462272b26499f12f\`.
+2. Make sure docker is running: \`docker ps\`.
+3. From the repo root: \`just succinct build-elfs\` to build the range and aggregation SP1 ELFs. Built elfs are placed in \`crates/proof/succinct/elf/\`.
+4. From the repo root: \`just succinct vkeys\` to print the range and aggregation verification key hashes.    
+    `,
   },
   '0x44f625fa2a41367670d74a7b0d9899412dc1ca406f90df7a5bd9f8ae581ee47f': {
     title: 'Range program of Base AggregateVerifier',
     description:
-      'Proves correct state transition function of the Base rollup over a sub-range of L2 blocks. Compiled from the op-succinct range crate against the Base rollup config; the resulting vkey is baked into the deployed AggregateVerifier game implementation as ZK_RANGE_HASH.',
+      'Proves correct state transition function of the Base rollup over a sub-range of L2 blocks.',
     proverSystemProject: ProjectId('sp1hypercube'),
-    programUrl:
-      'https://github.com/succinctlabs/op-succinct/tree/main/programs/range',
-    verificationStatus: 'notVerified',
-    verificationSteps:
-      'L2BEAT has not yet reproduced the vkey from source. To verify, pin an op-succinct release that includes Base support, configure with Base rollup parameters (chain ID 8453, genesis), build the range program via cargo prove, and compare the resulting vkey to this hash.',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain v6.1.0: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up v6.1.0\`
+3. Install docker https://docs.docker.com/get-started/get-docker/
+4. Install \`lld\` (required by the repo's \`.cargo/config.toml\`)
+
+Verify:
+
+1. Checkout the correct tag in [base/base](https://github.com/base/base) repo: \`git checkout v0.9.1\`. Commit hash should be \`00e656223f5d2af1b2100351462272b26499f12f\`.
+2. Make sure docker is running: \`docker ps\`.
+3. From the repo root: \`just succinct build-elfs\` to build the range and aggregation SP1 ELFs. Built elfs are placed in \`crates/proof/succinct/elf/\`.
+4. From the repo root: \`just succinct vkeys\` to print the range and aggregation verification key hashes.    
+    `,
   },
   '0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c': {
-    title: 'TEE enclave image of Base AggregateVerifier',
+    title: 'TEE enclave image of Base client',
     description:
-      'AWS Nitro Enclave PCR0 measurement of the TEE prover image. The TEE arm of the AggregateVerifier accepts attestations only from enclaves whose measured PCR0 matches this value, baked into the deployed game implementation as TEE_IMAGE_HASH.',
+      'TEE image hash of Base L2 node program. AWS Nitro Enclave attestations guarantee that exactly this program was run within a TEE.',
     verificationStatus: 'notVerified',
     verificationSteps:
       'L2BEAT has not yet reproduced the PCR0 from source. To verify, build the TEE prover enclave image (EIF) from the published source at a pinned release and compare its PCR0 measurement to this hash.',
   },
   '0x20141665fe40bce01fbcfa0a95c8a1bd750eadbe3f24e06a75571e6fd7a9dc11': {
-    title: 'AWS Nitro attestation verifier of Base AggregateVerifier',
+    title: 'AWS Nitro TEE attestation verifier for Base',
     description:
-      'RISC Zero guest program that verifies an AWS Nitro Enclave attestation document (certificate chain and PCR measurements). TEEProverRegistry.registerSigner admits an enclave signer only on a valid Risc0 proof of this program, so a malicious or unsound program here would let an attacker register a rogue signer and forge TEE proofs. Configured as zkConfig[RiscZero].verifierId on the NitroEnclaveVerifier.',
+      'RISC Zero guest program that verifies an AWS Nitro TEE Enclave attestation document.',
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
     verificationSteps:

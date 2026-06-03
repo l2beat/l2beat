@@ -126,7 +126,7 @@ export const risc0: BaseProject = {
     verifierHashes: [
       {
         hash: '0x1dcf73cbd51c9eba43c437c5a5ebc5328ca2d7a590c701a9a9bc1136eceeeea7',
-        name: 'RiscZero v2.0.0',
+        name: 'RiscZero v2.2.0',
         sourceLink: 'https://github.com/risc0/risc0/tree/v2.0.0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
@@ -192,7 +192,7 @@ snarkjs zkey verify stark_verify.r1cs powersOfTau28_hez_final_23.ptau stark_veri
       },
       {
         hash: '0xc6fcb1951eb5b45a669431346a01577df99f30d72baa9d5c7eea40ec6cccfab9',
-        name: 'RiscZero v2.0.0-rc.3',
+        name: 'RiscZero v3.0.0',
         sourceLink: 'https://github.com/risc0/risc0/tree/v2.0.0-rc.3',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
@@ -289,6 +289,48 @@ snarkjs zkey verify stark_verify.r1cs powersOfTau28_hez_final_23.ptau stark_veri
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
         description:
           'Verifier smart contract sources are not available on Etherscan, hash value is set to 0x0 to indicate that it is not known.',
+      },
+      {
+        hash: '0x3bc0c20d80a7d994f6705e18ca9d8d24ce4c3966fe554066a2d24d6d29ec14ba',
+        name: 'RiscZero Unknown version',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
+        hash: '0xd2aa333bf8aee9bddc978c517a98bf62d1d38258b50e0245cfc59b9af0d74585',
+        name: 'RiscZero v2.0.0-rc.3',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
+        hash: '0xdf85f30bf5add0eeec109974539f47c78d7a077f9d291318cab752855c983ceb',
+        name: 'RiscZero v2.0.3',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
       },
     ],
   },

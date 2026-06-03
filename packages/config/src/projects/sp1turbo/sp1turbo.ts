@@ -235,10 +235,6 @@ export const sp1turbo: BaseProject = {
         projectId: ProjectId('appchain'),
         sinceTimestamp: UnixTime(1776165024),
       },
-      {
-        projectId: ProjectId('base'),
-        sinceTimestamp: UnixTime(1779825599), // 2026-05-26 AggregateVerifier upgrade
-      },
     ],
     verifierHashes: [
       {
@@ -318,7 +314,7 @@ The script will generate Plonk verifier smart contract with verification keys an
       },
       {
         hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',
-        name: 'SP1 Turbo Plonk verifier',
+        name: 'SP1 Turbo Groth16 v5.0.0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
@@ -377,7 +373,7 @@ make build-circuits
       },
       {
         hash: '0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67',
-        name: 'SP1 Turbo Groth16 v5.0.0',
+        name: 'SP1 Turbo Plonk Morph',
         sourceLink:
           'https://github.com/succinctlabs/sp1/tree/v5.0.0/crates/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
@@ -388,12 +384,12 @@ make build-circuits
               '0x045d4BC73Bd1918192f34e98532A5272Ef620423',
             ),
           },
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x5ff102a4A4Ce2040288a797CE4CCCa85eE1E2d70',
-            ),
-          },
+          // {
+          //   address: ChainSpecificAddress.fromLong(
+          //     'ethereum',
+          //     '0x5ff102a4A4Ce2040288a797CE4CCCa85eE1E2d70',
+          //   ),
+          // },
         ],
         verificationStatus: 'notVerified',
       },

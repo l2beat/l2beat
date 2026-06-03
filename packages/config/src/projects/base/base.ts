@@ -5,10 +5,11 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getSP1Verifiers, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('base')
 const genesisTimestamp = UnixTime(1686074603)
@@ -34,7 +35,7 @@ export const base: ScalingProject = opStackL2({
         'https://basedscan.io/',
         'https://base.blockscout.com/',
       ],
-      repositories: ['https://github.com/base-org'],
+      repositories: ['https://github.com/base'],
       socialMedia: [
         'https://twitter.com/BuildOnBase',
         'https://discord.com/invite/buildonbase',
@@ -348,4 +349,73 @@ export const base: ScalingProject = opStackL2({
       orderHint: 0, // 0-7 days
     },
   },
+  nonTemplateZkVerifiers: getBaseVerifiers(),
+  nonTemplateProgramHashes: getBaseProgramHashes().map((el) =>
+    PROGRAM_HASHES(el),
+  ),
 })
+
+function getBaseProgramHashes(): string[] {
+  const result = []
+  result.push(
+    discovery.getContractValue<string>(
+      'AggregateVerifier',
+      'ZK_AGGREGATE_HASH',
+    ),
+  )
+  result.push(
+    discovery.getContractValue<string>('AggregateVerifier', 'ZK_RANGE_HASH'),
+  )
+  // risc0 set verifier program
+  result.push(
+    discovery.getContractValue<string[]>('RiscZeroSetVerifier', 'imageInfo')[0],
+  )
+  // TEE image hash
+  result.push(
+    discovery.getContractValue<string>(
+      'TEEProverRegistry',
+      'getExpectedImageHash',
+    ),
+  )
+  // TEE verification programs
+  const zkConfigRiscZero = discovery.getContractValue<{
+    verifierId: string
+    aggregatorId: string
+    zkVerifier: string
+  }>('NitroEnclaveVerifier', 'zkConfigRiscZero')
+  const zkConfigSuccinct = discovery.getContractValue<{
+    verifierId: string
+    aggregatorId: string
+    zkVerifier: string
+  }>('NitroEnclaveVerifier', 'zkConfigSuccinct')
+  result.push(zkConfigRiscZero.aggregatorId)
+  result.push(zkConfigRiscZero.verifierId)
+  result.push(zkConfigSuccinct.aggregatorId)
+  result.push(zkConfigSuccinct.verifierId)
+  return result.filter(
+    (h) =>
+      h !==
+      '0x0000000000000000000000000000000000000000000000000000000000000000',
+  )
+}
+
+function getBaseVerifiers(): ChainSpecificAddress[] {
+  const sp1Verifiers = getSP1Verifiers(discovery)
+  const router = discovery.getContract('RiscZeroVerifierRouter')
+  const wrappers = Object.entries(router.values ?? {})
+    .filter(([key]) => key.startsWith('verifier_'))
+    .map(([, value]) => value as ChainSpecificAddress)
+
+  // get all risc zero verifiers via verifier_... on the router
+  const riscZeroVerifiers = wrappers
+    .map((wrapper) =>
+      discovery.getContractValue<ChainSpecificAddress>(wrapper, 'verifier'),
+    )
+    .filter(
+      // RiscZeroSetVerifier is not actually a verifier, it redirects zk verification to other contracts
+      (verifier) =>
+        discovery.getContract(verifier).name === 'RiscZeroGroth16Verifier',
+    )
+
+  return [...sp1Verifiers, ...riscZeroVerifiers]
+}
