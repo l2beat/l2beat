@@ -521,7 +521,7 @@ model TokenIngestionQueue {
   state     String   @default("pending") @db.VarChar(32)
   message   String?  @db.Text
   createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @updatedAt @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
 
   @@id([chain, address])
   @@index([state, updatedAt])
@@ -530,7 +530,7 @@ model TokenIngestionQueue {
 model TokenDbSettings {
   key       String   @db.VarChar(255)
   value     String   @db.Text
-  updatedAt DateTime @updatedAt @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
 
   @@id([key])
 }
@@ -694,6 +694,6 @@ model AggregatedInteropTokensPair {
 model AppState {
   key       String   @id @db.VarChar(255)
   value     String   @db.Text
-  updatedAt DateTime @updatedAt @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
   updatedBy String   @db.VarChar(255)
 }
