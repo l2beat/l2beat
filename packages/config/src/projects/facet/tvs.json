@@ -18,8 +18,15 @@
         "sinceTimestamp": 1754512679
       },
       "category": "ether",
-      "source": "canonical",
-      "isAssociated": false
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Facet legacy L1Bridge"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -37,7 +44,7 @@
         "sinceTimestamp": 1734701579
       },
       "category": "ether",
-      "source": "custom-canonical",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -63,7 +70,7 @@
         "sinceTimestamp": 1733855519
       },
       "category": "ether",
-      "source": "custom-canonical",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
