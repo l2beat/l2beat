@@ -11,7 +11,7 @@ export const PRIVACY_ATTRIBUTES = {
     id: 'optCompliance',
     label: 'Opt compliance',
     description:
-      "Optional 'proofs of innocence' (POIs), can disassociate the deposit from a list of flagged addresses.",
+      "Optional 'proofs of innocence' (POIs), can disassociate a deposit from a list of flagged addresses. They are not enforced by the protocol but can be enforced by relayers.",
   },
   transfers: {
     id: 'transfers',
@@ -39,7 +39,7 @@ export const PRIVACY_ATTRIBUTES = {
     id: 'sourceAvailable',
     label: 'Source available',
     description:
-      'There is at least one practical way to use exclusively auditable, source-available software to interact with this protocol.',
+      'There is at least one practical way to exclusively use auditable, source-available software to interact with this protocol.',
   },
   immutable: {
     id: 'immutable',
@@ -49,12 +49,12 @@ export const PRIVACY_ATTRIBUTES = {
   uncensorable: {
     id: 'uncensorable',
     label: 'Uncensorable',
-    description: 'Deposits and withdrawals cannot be censored or linked by the protocol.',
+    description: 'Deposits and withdrawals cannot be censored or de-anonymised by the protocol.',
   },
   enforcedCompliance: {
     id: 'enforcedCompliance',
     label: 'Enforced compliance',
     description:
-      'ASPs (association set providers) can censor any deposits, excluding them from the anonymity set.',
+      'Centralised ASPs (association set providers) can de-anonymise deposits before they are withdrawn.',
   },
 } as const satisfies Record<string, PrivacyAttribute>
