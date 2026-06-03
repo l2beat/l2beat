@@ -8,6 +8,10 @@ describe(getSearchBarProjects.name, () => {
   const originalGetProjects = ps.getProjects.bind(ps)
   const originalMock = env.MOCK
 
+  beforeEach(() => {
+    env.MOCK = true
+  })
+
   afterEach(() => {
     ps.getProjects = originalGetProjects
     env.MOCK = originalMock
@@ -45,7 +49,6 @@ describe(getSearchBarProjects.name, () => {
   })
 
   it('allows searching interop tokens by symbol', async () => {
-    env.MOCK = true
     ps.getProjects = async () => [] as never
 
     const result = await getSearchBarProjects('usdc')
