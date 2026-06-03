@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6b932ad51e387d4035378ad506b83e351d782d50
+Generated with discovered.json: 0xf137ebb4e767e510b627a7033b9521c84fc99974
 
-# Diff at Wed, 03 Jun 2026 21:38:58 GMT:
+# Diff at Wed, 03 Jun 2026 21:41:12 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779399734
-- current timestamp: 1780522671
+- current timestamp: 1780522806
 
 ## Description
 
@@ -77,7 +77,7 @@ Conduit Multisig 1 signer rotation: added `eth:0xcdC93193…` at index 0, remove
 ```diff
 +   Status: CREATED
     contract KailuaTreasury (eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336) [risc0/KailuaTreasury]
-    +++ description: Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Would replace the bisection dispute game with a single-shot ZK proof verified through KailuaVerifier and the RiscZeroVerifierRouter. Deployed but NOT yet active: OptimismPortal2 and AnchorStateRegistry still have respectedGameType = 1 (PermissionedDisputeGame). Switching the respected type is a separate change. Slashed participation bonds are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
+    +++ description: Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Would replace the bisection dispute game with a single-shot ZK proof verified through KailuaVerifier and the RiscZeroVerifierRouter. Deployed but NOT yet active. Slashed participation bonds are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
 ```
 
 ## Source code changes
