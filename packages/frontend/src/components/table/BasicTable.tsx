@@ -61,7 +61,9 @@ export interface BasicTableProps<T extends BasicTableRow> {
    */
   renderSubComponent?: (props: { row: Row<T> }) => React.ReactElement
   getHighlightId?: (ctx: T) => string
+  tableOuterWrapperClassName?: string
   tableWrapperClassName?: string
+  withScrollHint?: boolean
 }
 
 type BasicTableCellData = {
@@ -94,7 +96,11 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
   )
 
   return (
-    <Table tableWrapperClassName={props.tableWrapperClassName}>
+    <Table
+      tableOuterWrapperClassName={props.tableOuterWrapperClassName}
+      tableWrapperClassName={props.tableWrapperClassName}
+      withScrollHint={props.withScrollHint}
+    >
       {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
       <TableHeader>
         {groupedHeader && (

@@ -75,6 +75,11 @@ export function SideNavLayout({
               href: '/scaling/data-availability',
             },
             {
+              title: 'Decentralized Sequencing',
+              shortTitle: 'Sequencing',
+              href: '/scaling/decentralized-sequencing',
+            },
+            {
               title: 'Liveness',
               href: '/scaling/liveness',
             },
