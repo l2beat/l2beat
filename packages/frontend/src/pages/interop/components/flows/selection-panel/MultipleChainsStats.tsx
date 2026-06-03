@@ -1,8 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
@@ -24,12 +25,15 @@ export function MultipleChainsStats({
   linkTopProtocols?: boolean
   hideTopProtocols?: boolean
 }) {
+  const trpc = useTRPC()
   const { selectedProtocols } = useInteropFlows()
-  const { data, isLoading } = api.interop.flows.useQuery({
-    chains: selectedChains,
-    protocolIds: selectedProtocols,
-    tokenId,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions({
+      chains: selectedChains,
+      protocolIds: selectedProtocols,
+      tokenId,
+    }),
+  )
 
   if (!data || isLoading) {
     return null

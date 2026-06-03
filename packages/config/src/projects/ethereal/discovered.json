@@ -1,6 +1,6 @@
 {
   "name": "ethereal",
-  "timestamp": 1778232940,
+  "timestamp": 1780398295,
   "configHash": "0xba8f8978f4790b0eeb2eec7328f631dddceaae928dea8639d615ba5fb1df33a2",
   "entries": [
     {
@@ -39,7 +39,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 5319,
+        "batchCount": 5918,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3"],
         "bridge": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
@@ -79,7 +79,7 @@
         "rollup": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 148,
+        "totalDelayedMessagesRead": 152,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -200,11 +200,6 @@
       "implementationNames": {
         "arb1:0x3515ad5D3D904Cb2731A7d6E5DB9f35D6CAFEB14": "ERC20MigrationOutbox"
       }
-    },
-    {
-      "address": "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "arb1:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
@@ -408,7 +403,7 @@
         "getValidators": ["arb1:0x80e046764185e776100A4f59079C2B00327f279A"],
         "inbox": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
         "isPostBoLD": true,
-        "latestConfirmed": "0x275b655b30827b0af85a09992126ea0000910f65a58c3d8f4fce301493c5652c",
+        "latestConfirmed": "0x7d0639350aa21533fc44e1013a180afbdf51dd1a1c243270a3d3aeb8079436d0",
         "loserStakeEscrow": "arb1:0x80e046764185e776100A4f59079C2B00327f279A",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
@@ -608,6 +603,7 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb1:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "arb1:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "arb1:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "arb1:0x2103c69696CB2D3779f5445393808239034E911c",
@@ -616,7 +612,6 @@
           "arb1:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "arb1:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "arb1:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
-          "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "arb1:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "arb1:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
         ],
@@ -625,7 +620,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 133,
+        "nonce": 138,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -846,6 +841,11 @@
       }
     },
     {
+      "address": "arb1:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Bridge",
       "address": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
       "type": "Contract",
@@ -889,7 +889,7 @@
           "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
           "arb1:0x3515ad5D3D904Cb2731A7d6E5DB9f35D6CAFEB14"
         ],
-        "delayedMessageCount": 148,
+        "delayedMessageCount": 152,
         "inboxHistory": [
           "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
           "arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F"
@@ -902,8 +902,8 @@
         ],
         "rollup": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
         "sequencerInbox": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-        "sequencerMessageCount": 5319,
-        "sequencerReportedSubMessageCount": 4521628
+        "sequencerMessageCount": 5918,
+        "sequencerReportedSubMessageCount": 4839032
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1182,7 +1182,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 97,
+        "nonce": 114,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2846,6 +2846,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 460628939, "ethereal": 4521955 },
-  "permissionsConfigHash": "0xb87ef75c0e5b313a9b7987f1d6a3ad0909b9c27d7722b21470c032563cdd7b77"
+  "usedBlockNumbers": { "arbitrum": 469252137, "ethereal": 4839307 },
+  "permissionsConfigHash": "0x0c05875a94f4cf803940eb89ac4555d20d373d6033a1797326e6893449ab2332"
 }

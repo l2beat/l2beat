@@ -1,8 +1,9 @@
+import { useQuery } from '@tanstack/react-query'
 import { type ReactNode, useState } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -23,6 +24,7 @@ export function FlowsGeneralStats({
   description?: string
   className?: string
 }) {
+  const trpc = useTRPC()
   const [isTokensDialogOpen, setIsTokensDialogOpen] = useState(false)
   const {
     selectedChains,
@@ -42,7 +44,9 @@ export function FlowsGeneralStats({
     id: undefined,
   }
 
-  const { data, isLoading } = api.interop.flows.useQuery(queryInput)
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions(queryInput),
+  )
 
   const { dollarsPerParticle } = useScaledParticleCounts(
     selectedChains,

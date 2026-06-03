@@ -44,9 +44,7 @@ export type ScalingProjectDaThroughputChartParams = v.infer<
 export async function getScalingProjectDaThroughputChart({
   projectId,
   range,
-}: ScalingProjectDaThroughputChartParams): Promise<
-  ScalingProjectDaThroughputChart | undefined
-> {
+}: ScalingProjectDaThroughputChartParams): Promise<ScalingProjectDaThroughputChart | null> {
   if (env.MOCK) {
     return getMockScalingProjectDaThroughputChart({ range, projectId })
   }
@@ -61,7 +59,7 @@ export async function getScalingProjectDaThroughputChart({
   ])
 
   if (throughput.length === 0) {
-    return undefined
+    return null
   }
 
   const syncedUntil = throughput.at(-1)?.timestamp

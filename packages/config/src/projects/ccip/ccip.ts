@@ -17,6 +17,7 @@ const ocrCommitF = discovery.getContractValue(
   'EthereumOffRamp_v1_6',
   'ocrCommitF',
 )
+const ocrCommitQuorum = Number(ocrCommitF) + 1
 
 const permissionLessExecutionThresholdFmt = discovery.getContractValue(
   'EthereumOffRamp_v1_6',
@@ -34,14 +35,14 @@ export const ccip: BaseProject = {
       "Multichain token framework using the CCIP messaging protocol, validated by Chainlink's offchain reporting (OCR) and 'decentralised oracle network' (DON).",
     detailedDescription: `
     # v1.6 Architecture
-    All crosschain messages in Chainlink CCIP are (supposed to be) validated and signed by a fixed signer set (OCR), currently equivalent to a ${ocrCommitF}/${ocrCommitN} multisig on Ethereum. The router is the main entrypoint of the system, used to send messages to other chains or receive them. While in this page we only analyze the contracts and permissions on Ethereum, it's important to understand that a full risk assessment requires reviewing all contracts on all supported chains, as a single misconfiguration or compromise on a single chain can cause loss of funds on other chains too. At the time of writing, CCIP supports [more than 70 chains](https://docs.chain.link/ccip/directory/mainnet).
+    All crosschain messages in Chainlink CCIP are (supposed to be) validated and signed by a fixed signer set (OCR), currently equivalent to a ${ocrCommitQuorum}/${ocrCommitN} multisig on Ethereum. The router is the main entrypoint of the system, used to send messages to other chains or receive them. While in this page we only analyze the contracts and permissions on Ethereum, it's important to understand that a full risk assessment requires reviewing all contracts on all supported chains, as a single misconfiguration or compromise on a single chain can cause loss of funds on other chains too. At the time of writing, CCIP supports [more than 70 chains](https://docs.chain.link/ccip/directory/mainnet).
 \n\n
     Outgoing messages go through an "OnRamp" contract, which is tasked to perform fee estimation through a "FeeQuoter" contract, and fetch the proper token pool to ultimately redirect funds through a "TokenAdminRegistry" contract. The pool either locks or burns the funds, depending on the specific pool contract logic. Pools can be managed either by Chainlink or the actual token owner, and can therefore have custom governance which needs to be additionally assessed per token. Some pools, but not all, implement crosschain rate limiters. The OnRamp may also enable "filterers" to exclude the relaying of messages based on sender or content.
 \n\n
     Incoming messages go through an "OffRamp" contract, which checks whether they have been validated by the OCR set. Tokens are then either released or minted from the proper pool, depending on the specific pool contract logic. Standard non-token messages go through the main Router first before the external call is actually performed. Messages can only be executed by a set of permissioned "transmitters" within ${permissionLessExecutionThresholdFmt}, otherwise anyone can do it.
 
     # OCR set updates
-    The OCR set corresponds to a ${ocrCommitF}/${ocrCommitN} multisig on Ethereum. The owner of the OffRamp can arbitrarily update the threshold and signer set used to validate messages, so trust in this permissioned actor is required. The actual permission structure behind this role is complex, see the Permissions section for more details.
+    The OCR set corresponds to a ${ocrCommitQuorum}/${ocrCommitN} multisig on Ethereum. The owner of the OffRamp can arbitrarily update the threshold and signer set used to validate messages, so trust in this permissioned actor is required. The actual permission structure behind this role is complex, see the Permissions section for more details.
 
     # Fee estimation
     The FeeQuoter contract holds configuration for each destination chain such as whether the route is enabled, maximum message size, gas overheads, DA cost multipliers, default fee, min fee, network fee, gas multipliers etc. It also stores token prices and other chain gas prices to properly estimate fees. A whitelist of addresses is permissioned to update such prices.

@@ -187,13 +187,15 @@ export async function getEcosystemEntry(
     getApprovedOngoingAnomalies(),
     getBlobsData(liveProjects),
     getEcosystemToken(ecosystem, liveProjects),
-    helpers.activity.chart.prefetch({
-      range: optionToRange('1y', { offset: -UnixTime.DAY }),
-      filter: {
-        type: 'projects',
-        projectIds: liveProjects.map((project) => project.id),
-      },
-    }),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.activity.chart.queryOptions({
+        range: optionToRange('1y', { offset: -UnixTime.DAY }),
+        filter: {
+          type: 'projects',
+          projectIds: liveProjects.map((project) => project.id),
+        },
+      }),
+    ),
   ])
 
   const hasRwaRestrictedTvs = liveProjects.some(

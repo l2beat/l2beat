@@ -1,7 +1,8 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import { useQueryClient } from '@tanstack/react-query'
 import partition from 'lodash/partition'
 import { useState } from 'react'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { useInteropSelectedChains } from '../utils/InteropSelectedChainsContext'
 import type { InteropChainWithIcon } from './chain-selector/types'
@@ -12,7 +13,8 @@ interface Props {
 }
 
 export function InitialChainSelector({ interopChains, type }: Props) {
-  const utils = api.useUtils()
+  const trpc = useTRPC()
+  const queryClient = useQueryClient()
   const { toggleFrom, toggleTo, allChainIds } = useInteropSelectedChains()
   const [firstChainId, setFirstChainId] = useState<string | null>(null)
 
@@ -63,11 +65,13 @@ export function InitialChainSelector({ interopChains, type }: Props) {
               }
 
               const pair = getOrderedPair(chain.id)
-              utils.interop.dashboard.prefetch({
-                from: pair,
-                to: pair,
-                type,
-              })
+              queryClient.prefetchQuery(
+                trpc.interop.dashboard.queryOptions({
+                  from: pair,
+                  to: pair,
+                  type,
+                }),
+              )
             }}
           />
         ))}

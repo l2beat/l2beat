@@ -1,4 +1,5 @@
 import type { ProjectId } from '@l2beat/shared-pure'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 import {
@@ -18,7 +19,7 @@ import {
 } from '~/pages/interop/components/table/transfer-count-cell/columns'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -40,6 +41,7 @@ export function InteropTransfersSection({
   interopChains,
   ...sectionProps
 }: InteropTransfersSectionProps) {
+  const trpc = useTRPC()
   const entry = data.entry
 
   const [selectedFrom, setSelectedFrom] = useState<string[]>(apiSelection.from)
@@ -51,22 +53,24 @@ export function InteropTransfersSection({
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = api.interop.transfers.useInfiniteQuery(
-    {
-      from: selectedFrom,
-      to: selectedTo,
-      id: projectId,
-      snapshotTimestamp: entry?.snapshotTimestamp ?? 0,
-      limit: TRANSFERS_PER_PAGE,
-    },
-    {
-      enabled:
-        !!entry?.snapshotTimestamp &&
-        (entry?.transferCount ?? 0) > 0 &&
-        selectedFrom.length > 0 &&
-        selectedTo.length > 0,
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-    },
+  } = useInfiniteQuery(
+    trpc.interop.transfers.infiniteQueryOptions(
+      {
+        from: selectedFrom,
+        to: selectedTo,
+        id: projectId,
+        snapshotTimestamp: entry?.snapshotTimestamp ?? 0,
+        limit: TRANSFERS_PER_PAGE,
+      },
+      {
+        enabled:
+          !!entry?.snapshotTimestamp &&
+          (entry?.transferCount ?? 0) > 0 &&
+          selectedFrom.length > 0 &&
+          selectedTo.length > 0,
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      },
+    ),
   )
 
   const fetchedItems = useMemo(

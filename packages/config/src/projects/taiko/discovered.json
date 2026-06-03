@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1779963216,
+  "timestamp": 1780405412,
   "configHash": "0x61350285d6b9fc41ca964e6c350f32b5b6dc999f2adea0d9c8884ff6aad4d15c",
   "entries": [
     {
@@ -954,7 +954,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1779963215,
+        "clock": 1780405403,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -1270,7 +1270,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 175,
+        "nonce": 176,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1651,12 +1651,12 @@
           "permissionlessInclusionMultiplier": 160
         },
         "getCoreState": {
-          "nextProposalId": 12575,
-          "lastProposalBlockId": 25193154,
-          "lastFinalizedProposalId": 12572,
-          "lastFinalizedTimestamp": 1779962735,
-          "lastCheckpointTimestamp": 1779962735,
-          "lastFinalizedBlockHash": "0x740c359e4d1840b97cef9a00798da0e4aa2afc281cd06a8294619a469552e55a"
+          "nextProposalId": 13727,
+          "lastProposalBlockId": 25229870,
+          "lastFinalizedProposalId": 13722,
+          "lastFinalizedTimestamp": 1780404263,
+          "lastCheckpointTimestamp": 1780404263,
+          "lastFinalizedBlockHash": "0x6ce7c14a56046dc6509f060a6197aec494f4d336b450ebd5ce248891b0a1c822"
         },
         "getCurrentForcedInclusionFee": 1000000,
         "getForcedInclusionState": { "head_": 0, "tail_": 0 },
@@ -3233,7 +3233,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 39266,
+        "nextMessageId": 39282,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -3573,7 +3573,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 12,
+        "nonce": 17,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3675,17 +3675,17 @@
           "eth:0x45D4403351Bc34283CE6450D91c099f40D06dA4e",
           "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
         ],
-        "getOperatorForCurrentEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+        "getOperatorForCurrentEpoch": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
         "getOperatorForNextEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
         "impl": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
         "inNonReentrant": false,
-        "latestActivationEpoch": 1778138711,
+        "latestActivationEpoch": 1780312151,
         "OPERATOR_CHANGE_DELAY": 2,
         "operatorCount": 3,
         "operatorMapping": [
           "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
-          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
         ],
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
@@ -4042,8 +4042,8 @@
         "ANCHOR_GAS_LIMIT": 1000000,
         "checkpointStore": "taiko:0x1670000000000000000000000000000000000005",
         "getBlockState": {
-          "anchorBlockNumber": 25193149,
-          "ancestorsHash": "0xa38bb76f06537c85736efa62fe5593dbf3da88aca680b74d41dd34e0e5d207d0"
+          "anchorBlockNumber": 25229864,
+          "ancestorsHash": "0x67f194808af2739520e213c02f6849830330e043142bed61bf89435f229067b9"
         },
         "GOLDEN_TOUCH_ADDRESS": "taiko:0x0000777735367b36bC9B61C50022d9D0700dB4Ec",
         "impl": "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA",
@@ -6065,6 +6065,6 @@
     "taiko/TaikoDAOController": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804"
   },
-  "usedBlockNumbers": { "ethereum": 25193172, "taiko": 7251641 },
-  "permissionsConfigHash": "0xf0adc7ae3f46378734ba4c2c8c9da1469994be4f7cf0215f7396e2933710e1a4"
+  "usedBlockNumbers": { "ethereum": 25229872, "taiko": 7441374 },
+  "permissionsConfigHash": "0xdb31992fee4f420870f55b3eb9028c1d81541d2e1f87ea08bcebec3d592d3791"
 }

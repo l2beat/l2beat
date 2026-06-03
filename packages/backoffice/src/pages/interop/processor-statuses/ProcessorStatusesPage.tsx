@@ -1,20 +1,22 @@
+import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { useBackendApi } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { ProcessorStatusesTable } from './table/ProcessorStatusesTable'
 import type { ProcessorStatusRow } from './types'
 import { formatProcessorTimestamp } from './utils'
 
 export function ProcessorStatusesPage() {
-  const api = useBackendApi()
-  const { data, error, isError, isLoading, isFetching, refetch } =
-    api.interop.status.processors.useQuery(undefined, {
+  const trpc = useBackendTrpc()
+  const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
+    trpc.interop.status.processors.queryOptions(undefined, {
       refetchInterval: 2_500,
-    })
+    }),
+  )
 
   const rows: ProcessorStatusRow[] = data ?? []
   const latestTimestamp = rows.reduce<number | undefined>(

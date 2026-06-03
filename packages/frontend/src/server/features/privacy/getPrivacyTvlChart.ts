@@ -1,8 +1,10 @@
 import { v } from '@l2beat/validate'
+import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { ChartRange, rangeToResolution } from '~/utils/range/range'
+import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export const PrivacyTvlChartParams = v.object({
   projectIds: v.array(v.string()),
@@ -21,6 +23,10 @@ export async function getPrivacyTvlChart(
 ): Promise<PrivacyTvlChartResponse> {
   if (params.projectIds.length === 0) {
     return { chart: [], syncedUntil: undefined }
+  }
+
+  if (env.MOCK) {
+    return getMockPrivacyTvlChart(params)
   }
 
   const db = getDb()
@@ -89,4 +95,34 @@ export async function getPrivacyTvlChart(
     chart,
     syncedUntil: maxTimestamp,
   }
+}
+
+function getMockPrivacyTvlChart(
+  params: PrivacyTvlChartParams,
+): PrivacyTvlChartResponse {
+  const days = rangeToDays(params.range) ?? 365
+  const to = UnixTime.toStartOf(UnixTime.now(), 'day')
+  const from = params.range[0] ?? to - days * UnixTime.DAY
+  const resolution = rangeToResolution(params.range)
+
+  const baseValueByProject = new Map(
+    params.projectIds.map((projectId) => [
+      projectId,
+      Math.random() * 100_000_000 + 1_000_000,
+    ]),
+  )
+
+  const chart = generateTimestamps(
+    [UnixTime(from), UnixTime(to)],
+    resolution,
+  ).map((timestamp): PrivacyTvlChartResponse['chart'][number] => {
+    const valuesByProject: Record<string, number | null> = {}
+    for (const projectId of params.projectIds) {
+      const base = baseValueByProject.get(projectId) ?? 0
+      valuesByProject[projectId] = base * (0.8 + Math.random() * 0.4)
+    }
+    return [timestamp, valuesByProject]
+  })
+
+  return { chart, syncedUntil: to }
 }

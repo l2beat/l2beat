@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
@@ -13,7 +14,7 @@ import {
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useQueryState } from '~/hooks/useQueryState'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { generateRandomString } from '~/utils/generateRandomString'
 import { validateResolver } from '~/utils/validateResolver'
@@ -27,6 +28,7 @@ export function AddAbstractToken({
 }: {
   defaultValues?: AbstractTokenSchema
 }) {
+  const trpc = useTRPC()
   const [coingeckoIdQueryState] = useQueryState('coingeckoId', '')
   const [redirectTo] = useQueryState('redirectTo', '')
   const navigate = useNavigate()
@@ -43,21 +45,24 @@ export function AddAbstractToken({
 
   const coingeckoId = form.watch('coingeckoId')
   const debouncedCoingeckoId = useDebouncedValue(form.watch('coingeckoId'), 500)
-  const { data: checks, isLoading: areChecksLoading } =
-    api.abstractTokens.checks.useQuery(debouncedCoingeckoId ?? '', {
+  const { data: checks, isLoading: areChecksLoading } = useQuery(
+    trpc.abstractTokens.checks.queryOptions(debouncedCoingeckoId ?? '', {
       enabled: !!debouncedCoingeckoId,
       retry: false,
-    })
+    }),
+  )
 
-  const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
-    onSuccess: (data) => {
-      if (data.outcome === 'success') {
-        setPlan(data.plan)
-      } else {
-        toast.error(data.error)
-      }
-    },
-  })
+  const { mutate: planMutate, isPending } = useMutation(
+    trpc.plan.generate.mutationOptions({
+      onSuccess: (data) => {
+        if (data.outcome === 'success') {
+          setPlan(data.plan)
+        } else {
+          toast.error(data.error)
+        }
+      },
+    }),
+  )
 
   useEffect(() => {
     if (coingeckoIdQueryState) {

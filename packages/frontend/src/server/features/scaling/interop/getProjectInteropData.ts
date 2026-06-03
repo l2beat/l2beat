@@ -3,6 +3,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import { mapInteropChainsToWithIcons } from '~/pages/interop/utils/mapInteropChainsToWithIcons'
+import type { RouterOutputs } from '~/trpc/React'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getInteropChains } from './utils/getInteropChains'
@@ -68,10 +69,13 @@ export async function getProjectInteropData(
     name: protocol.interopConfig.name ?? protocol.name,
     iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
   }))
-  const interopFlows = await helpers.interop.flows.fetch({
-    chains: allInteropChainIds,
-    protocolIds: protocols.map((protocol) => protocol.id),
-  })
+  const interopFlows: RouterOutputs['interop']['flows'] =
+    await helpers.queryClient.fetchQuery(
+      helpers.trpc.interop.flows.queryOptions({
+        chains: allInteropChainIds,
+        protocolIds: protocols.map((protocol) => protocol.id),
+      }),
+    )
   const currentChainData = interopFlows.chainData.find(
     (chain) => chain.chainId === currentInteropChain.id,
   )

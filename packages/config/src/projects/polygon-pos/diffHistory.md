@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x600418befcb185972254ee51e97f55e82666588b
+
+# Diff at Tue, 02 Jun 2026 13:22:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@63ce779d811ac540efbb445178f952fd5f075eb6 block: 1779963546
+- current timestamp: 1780406469
+
+## Description
+
+Vali added, cap hit (validator set closed).
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the Polygon PoS validator set.
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2"
+      values.$members.1:
++        "eth:0xe0e8e6bBDef7bbcf8dF1F5Ac0ab9906BFe991d8B"
+      values.$members.2:
++        "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 8 (25%)"
+    }
+```
+
+Generated with discovered.json: 0x6b3f32d89b813c35a759eebbb99e960990aa7790
+
+# Diff at Tue, 02 Jun 2026 07:46:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b3a022e9c02d6a59e5bcdfd46e210ca78757cd63 block: 1779963546
+- current timestamp: 1779963546
+
+## Description
+
+Config: add comments about the replacement auction.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779963546 (main branch discovery), not current.
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the Polygon PoS validator set.
+      fieldMeta.replacementCoolDown:
++        {"severity":"HIGH","description":"startAuction() can only be called after this epoch (compare with current epoch). this effectively closes the validator set if the cap is hit because no validators can be replaced."}
+      description:
++        "Manages the Polygon PoS validator set."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
 Generated with discovered.json: 0x9a772ae3d06ca307ac85a0cf4c5804ff022f494f
 
 # Diff at Thu, 28 May 2026 13:08:28 GMT:
