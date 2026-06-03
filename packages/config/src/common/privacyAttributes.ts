@@ -56,6 +56,6 @@ export const PRIVACY_ATTRIBUTES = {
     id: 'enforcedCompliance',
     label: 'Enforced compliance',
     description:
-      'Centralised ASPs (association set providers) can de-anonymise deposits before they are withdrawn.',
+      'Centralised ASPs (association set providers) can refuse deposits before they are withdrawn and forcibly remove them from the anonymity set.',
   },
 } as const satisfies Record<string, PrivacyAttribute>
