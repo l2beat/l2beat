@@ -57,6 +57,29 @@ describe(explore.name, () => {
     expect(result?.dstVolume.valueUsd.last).toEqual(1_000_000)
   })
 
+  it('passes bridge totals to the evaluator for share-material route spikes', () => {
+    const baselineVolumes = [
+      48_000, 52_000, 50_000, 49_000, 51_000, 50_000, 48_000, 52_000, 49_000,
+      51_000, 50_000, 49_000, 51_000,
+    ]
+    const rows = [
+      ...baselineVolumes.map((value, i) =>
+        row(i, 'across', 100, value, value, 'ethereum', 'arbitrum'),
+      ),
+      row(13, 'across', 100, 200_000, 200_000, 'ethereum', 'arbitrum'),
+      ...Array.from({ length: 14 }, (_, i) =>
+        row(i, 'across', 100, 2_300_000, 2_300_000, 'ethereum', 'base'),
+      ),
+    ]
+
+    const target = explore(rows).find((r) => r.dstChain === 'arbitrum')
+    const srcSignal = target?.evaluation.signals.find(
+      (signal) => signal.metric === 'srcVolume',
+    )
+
+    expect(srcSignal?.kind).toEqual('zScoreSpike')
+  })
+
   function row(
     offsetDays: number,
     id: string,

@@ -62,9 +62,9 @@ describe(evaluateAnomalies.name, () => {
   })
 
   describe('ratio drops and spikes', () => {
-    it('flags a sudden 90% ratio drop in count', () => {
+    it('flags a near-total ratio drop in count', () => {
       const series = countSeries([
-        100, 110, 90, 105, 95, 100, 98, 102, 101, 99, 100, 97, 103, 5,
+        100, 110, 90, 105, 95, 100, 98, 102, 101, 99, 100, 97, 103, 1,
       ])
       const result = evaluateAnomalies(series)
       const count = result.signals.find((s) => s.metric === 'count')
@@ -72,9 +72,9 @@ describe(evaluateAnomalies.name, () => {
       expect(count?.severity).toEqual('severe')
     })
 
-    it('flags a 90%+ ratio spike in count', () => {
+    it('flags a 10x+ ratio spike in count', () => {
       const series = countSeries([
-        100, 110, 90, 105, 95, 100, 98, 102, 101, 99, 100, 97, 103, 250,
+        100, 110, 90, 105, 95, 100, 98, 102, 101, 99, 100, 97, 103, 5_000,
       ])
       const result = evaluateAnomalies(series)
       const count = result.signals.find((s) => s.metric === 'count')
@@ -82,7 +82,7 @@ describe(evaluateAnomalies.name, () => {
       expect(count?.severity).toEqual('severe')
     })
 
-    it('flags a 10x ratio spike in src volume', () => {
+    it('flags a 30x+ ratio spike in src volume', () => {
       const series = volumeSeries(
         Array.from({ length: 14 }, () => 100),
         [
@@ -97,7 +97,7 @@ describe(evaluateAnomalies.name, () => {
       expect(src?.severity).toEqual('severe')
     })
 
-    it('does not flag a 5x volume spike (under 10x threshold) as ratio spike', () => {
+    it('does not flag a 5x volume spike (under 30x threshold) as ratio spike', () => {
       const series = volumeSeries(
         Array.from({ length: 14 }, () => 100),
         [
@@ -123,16 +123,15 @@ describe(evaluateAnomalies.name, () => {
       expect(count?.severity).toEqual('severe')
     })
 
-    it('flags moderate when robust z-score is in the warn band only', () => {
-      // Tight baseline + a jump that lands robust-Z in (4, 6), below the
-      // 1.9x ratio threshold and well under the classic-Z cap.
+    it('does not emit anything for a moderate robust-Z anomaly', () => {
+      // Tight baseline + a small jump — moderate tier is gone, so nothing
+      // should fire here.
       const series = countSeries([
         95, 100, 105, 95, 100, 105, 95, 100, 105, 95, 100, 105, 95, 145,
       ])
       const result = evaluateAnomalies(series)
       const count = result.signals.find((s) => s.metric === 'count')
-      expect(count).not.toBeNullish()
-      expect(count?.severity).toEqual('moderate')
+      expect(count).toBeNullish()
     })
   })
 
@@ -230,6 +229,146 @@ describe(evaluateAnomalies.name, () => {
           (s) => s.metric === 'srcVolume' || s.metric === 'dstVolume',
         ),
       ).toEqual([])
+    })
+  })
+
+  describe('relevance gate', () => {
+    it('suppresses a volume spike on a lane below the absolute USD floor', () => {
+      // Baseline clears the $10K mean floor (15K), but the spike lands the
+      // current value at $200K — below the $250K materiality floor — and
+      // we pass no bridge total, so share-of-bridge cannot rescue it.
+      const series = volumeSeries(
+        Array.from({ length: 14 }, () => 100),
+        [
+          15_000, 15_000, 15_000, 15_000, 15_000, 15_000, 15_000, 15_000,
+          15_000, 15_000, 15_000, 15_000, 15_000, 200_000,
+        ],
+        15_000,
+      )
+      const result = evaluateAnomalies(series)
+      const src = result.signals.find((s) => s.metric === 'srcVolume')
+      expect(src).toBeNullish()
+    })
+
+    it('suppresses a volume drop when the baseline lane is immaterial within the bridge', () => {
+      // Lane baseline is $50K — above the per-day floor but only 0.5% of
+      // a $10M bridge. A 100% drop should not page.
+      const series = volumeSeries(
+        Array.from({ length: 14 }, () => 100),
+        Array.from({ length: 13 }, () => 50_000).concat([0]),
+        Array.from({ length: 13 }, () => 50_000).concat([0]),
+      )
+      const result = evaluateAnomalies(series, {
+        transferCount: 100_000,
+        volumeUsd: 10_000_000,
+      })
+      const src = result.signals.find((s) => s.metric === 'srcVolume')
+      expect(src).toBeNullish()
+    })
+
+    it('keeps a volume signal that clears the bridge-share gate', () => {
+      // Lane lands at $200K — below the $250K absolute floor — but
+      // represents 4% of a $5M bridge, above the 2% share gate. Tight
+      // baseline + log jump makes classic-Z trip.
+      const baselineVolumes = [
+        48_000, 52_000, 50_000, 49_000, 51_000, 50_000, 48_000, 52_000, 49_000,
+        51_000, 50_000, 49_000, 51_000,
+      ]
+      const series = volumeSeries(
+        Array.from({ length: 14 }, () => 100),
+        baselineVolumes.concat([200_000]),
+        baselineVolumes.concat([200_000]),
+      )
+      const result = evaluateAnomalies(series, {
+        transferCount: 1_000,
+        volumeUsd: 5_000_000,
+      })
+      const src = result.signals.find((s) => s.metric === 'srcVolume')
+      expect(src?.kind).toEqual('zScoreSpike')
+    })
+
+    it('suppresses a flat line on a low-count lane', () => {
+      // Three identical days at 50 transfers — clears the baseline floor
+      // (50 > 10/day) but the median is below the flat-line relevance
+      // floor of 100, so it should not alert.
+      const series = countSeries([
+        50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+      ])
+      const result = evaluateAnomalies(series)
+      const count = result.signals.find((s) => s.metric === 'count')
+      expect(count).toBeNullish()
+    })
+  })
+
+  describe('real-world scenarios', () => {
+    it('fires on the legitimate volume spike for layerzero polygonpos→ethereum', () => {
+      // Baseline two-sided lane volumes range from $230K to $2.4M; the
+      // candidate day jumps to ~$19M, ~35x the baseline median.
+      const counts = [18, 28, 10, 22, 23, 36, 35, 26, 35, 19, 30, 24, 29, 32]
+      const srcVolumes = [
+        453_628, 721_302, 231_492, 416_757, 539_322, 1_931_100, 2_358_880,
+        246_215, 1_798_860, 398_666, 301_266, 635_919, 1_560_370, 19_084_500,
+      ]
+      const dstVolumes = [
+        453_652, 721_376, 231_492, 416_829, 539_300, 1_931_120, 2_358_940,
+        246_208, 1_798_650, 398_739, 301_336, 635_887, 1_560_280, 19_089_200,
+      ]
+      const series = volumeSeries(counts, srcVolumes, dstVolumes)
+      const result = evaluateAnomalies(series, {
+        transferCount: 4_971,
+        volumeUsd: 493_321_000,
+      })
+      const src = result.signals.find((s) => s.metric === 'srcVolume')
+      const dst = result.signals.find((s) => s.metric === 'dstVolume')
+      expect(src?.kind).toEqual('ratioSpike')
+      expect(dst?.kind).toEqual('ratioSpike')
+      expect(result.sideMismatch).toEqual(null)
+    })
+
+    it('fires on the legitimate volume drop for circlegateway ethereum→polygonpos', () => {
+      // Baseline two-sided lane volumes $1M-$7M; candidate collapses to
+      // ~$22K — a 98.5% drop, well past the 98% drop threshold.
+      const counts = [
+        95, 104, 85, 118, 78, 46, 90, 139, 269, 275, 236, 198, 75, 15,
+      ]
+      const volumes = [
+        3_472_660, 7_234_100, 3_638_220, 7_071_300, 4_455_340, 2_499_480,
+        1_475_200, 1_303_910, 1_117_900, 1_230_350, 1_159_630, 1_373_830,
+        243_377, 21_808,
+      ]
+      const series = volumeSeries(counts, volumes, volumes)
+      const result = evaluateAnomalies(series, {
+        transferCount: 1_040,
+        volumeUsd: 59_513_600,
+      })
+      const src = result.signals.find((s) => s.metric === 'srcVolume')
+      const dst = result.signals.find((s) => s.metric === 'dstVolume')
+      expect(src?.kind).toEqual('ratioDrop')
+      expect(dst?.kind).toEqual('ratioDrop')
+    })
+
+    it('stays silent on across base→bsc — a "moderate" noisy case from the old policy', () => {
+      // Old policy flagged this lane as a "moderate" count spike at +33%
+      // (313 → 416). Volumes drift around $130K-$270K. Nothing here is
+      // an extremum, so the new policy should keep quiet.
+      const counts = [
+        310, 228, 211, 324, 307, 383, 326, 320, 311, 314, 327, 362, 349, 416,
+      ]
+      const srcVolumes = [
+        126_459, 67_887, 214_260, 126_571, 158_633, 247_725, 267_804, 213_252,
+        203_659, 144_967, 231_425, 217_051, 171_430, 275_284,
+      ]
+      const dstVolumes = [
+        126_369, 67_835, 214_183, 126_477, 158_574, 247_614, 267_695, 213_133,
+        203_561, 144_841, 231_289, 216_954, 171_337, 275_169,
+      ]
+      const series = volumeSeries(counts, srcVolumes, dstVolumes)
+      const result = evaluateAnomalies(series, {
+        transferCount: 15_076,
+        volumeUsd: 57_833_300,
+      })
+      expect(result.signals).toEqual([])
+      expect(result.sideMismatch).toEqual(null)
     })
   })
 

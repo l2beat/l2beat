@@ -7,10 +7,10 @@ import { buildInteropUrl } from './buildInteropUrl'
 import type { InteropSelection } from './types'
 
 export function getInteropTokenUrl(
-  token: AbstractTokenSlugData & { id: string },
+  token: AbstractTokenSlugData & { id: string; isUnknown?: boolean },
   selection: InteropSelection,
 ): string | undefined {
-  if (token.id === UNKNOWN_ABSTRACT_TOKEN_ID) {
+  if (token.isUnknown || token.id === UNKNOWN_ABSTRACT_TOKEN_ID) {
     return undefined
   }
 

@@ -1,6 +1,6 @@
 {
   "name": "plumenetwork",
-  "timestamp": 1779719696,
+  "timestamp": 1780398809,
   "configHash": "0xde571a5f6fa760321dd1a66b12c92d3e296002087484aa3ba1c660586cf23292",
   "entries": [
     {
@@ -186,7 +186,7 @@
           "eth:0xf576102530749344D2f4C04D15C2B8609c7897ea"
         ],
         "allowedOutboxList": ["eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71"],
-        "delayedMessageCount": 2361,
+        "delayedMessageCount": 2368,
         "inboxHistory": [
           "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
           "eth:0xf576102530749344D2f4C04D15C2B8609c7897ea"
@@ -196,8 +196,8 @@
         "outboxHistory": ["eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71"],
         "rollup": "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8",
         "sequencerInbox": "eth:0x85eC1b9138a8b9659A51e2b51bb0861901040b59",
-        "sequencerMessageCount": 52236,
-        "sequencerReportedSubMessageCount": 70442591
+        "sequencerMessageCount": 53361,
+        "sequencerReportedSubMessageCount": 72105720
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -222,11 +222,6 @@
         "eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6": "ERC20Bridge"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3955A911411cfae01c8B6Fd0D57c08DfE4428e38",
@@ -358,6 +353,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
@@ -366,7 +362,6 @@
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-          "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
@@ -376,7 +371,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 273,
+        "nonce": 275,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -451,7 +446,7 @@
         "getValidators": ["eth:0x11f563dDbF266484Dd910A401A7e44299d80b1d5"],
         "inbox": "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
         "isPostBoLD": true,
-        "latestConfirmed": "0x8ac0b42b5800059ac1ee2a15f9297c5798fcd0ff6385a5b1775a6b9c30d43182",
+        "latestConfirmed": "0x660b13813bb6c132620a272bb2d6d723184948709899d48ea7d4140fe43eb5ff",
         "loserStakeEscrow": "eth:0x11f563dDbF266484Dd910A401A7e44299d80b1d5",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71",
@@ -678,7 +673,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "batchCount": 52236,
+        "batchCount": 53361,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -728,7 +723,7 @@
         "rollup": "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 2361,
+        "totalDelayedMessagesRead": 2368,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -950,6 +945,11 @@
           "role": ".batchPosters"
         }
       ]
+    },
+    {
+      "address": "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xCEEAEC6b7e010fE1Ac253Ebd6f93eEBF9249Cd7e",
@@ -1939,6 +1939,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 25172947 },
-  "permissionsConfigHash": "0x7b6576185f247de430ef2ca4c7da62249d1eeaf08e6721333491a94276a6b4b3"
+  "usedBlockNumbers": { "ethereum": 25229324 },
+  "permissionsConfigHash": "0x090aba6755f9e20d0f53001323d55c0cd8548b73244501c025494797782db4cd"
 }

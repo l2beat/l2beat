@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x73adc77684ac8d9463802e7c71280051959f16b5
+
+# Diff at Tue, 02 Jun 2026 11:15:24 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779719746
+- current timestamp: 1780398840
+
+## Description
+
+Conduit Multisig 2 rotated one signer (operator key `0x3840…fd5f` → `0xcdC9…4853`); same rotation propagated across Conduit Multisigs 1/2/3 on eth/arb1/base.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xcdC931935768c0562AfE989A366a3Dc4d52F4853"
+      values.$members.8:
+-        "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
 Generated with discovered.json: 0x92a740f3d38092c2f56b51bcf66e3192276399f7
 
 # Diff at Mon, 25 May 2026 14:36:58 GMT:

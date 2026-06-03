@@ -3,6 +3,7 @@ import { assert, type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import {
   type AnomalyEvaluation,
+  type BridgeTotal,
   evaluateAnomalies,
   formatAnomalyReasons,
   type SeriesPoint,
@@ -89,6 +90,7 @@ export function prepare(rows: DataRow[]): DataRow[] {
 
 export function explore(rows: DataRow[]): DataRowResult[] {
   const byRoute = groupBy(rows, groupKey)
+  const bridgeTotals = computeBridgeTotals(rows)
   const results: DataRowResult[] = []
 
   for (const key in byRoute) {
@@ -100,7 +102,10 @@ export function explore(rows: DataRow[]): DataRowResult[] {
     const prevDay = dataPoints.at(-2) ?? null
     const prev7d = dataPoints.at(-8) ?? null
 
-    const evaluation = evaluateAnomalies(dataPoints.map(toSeriesPoint))
+    const evaluation = evaluateAnomalies(
+      dataPoints.map(toSeriesPoint),
+      bridgeTotals.get(bridgeTotalKey(last)),
+    )
     const reasons = formatAnomalyReasons(evaluation)
 
     results.push({
@@ -133,6 +138,23 @@ export function explore(rows: DataRow[]): DataRowResult[] {
 
 export function interpret(result: DataRowResult): string {
   return result.interpretation
+}
+
+function computeBridgeTotals(rows: DataRow[]): Map<string, BridgeTotal> {
+  const totals = new Map<string, BridgeTotal>()
+
+  for (const row of rows) {
+    const key = bridgeTotalKey(row)
+    const existing = totals.get(key) ?? {
+      transferCount: 0,
+      volumeUsd: 0,
+    }
+    existing.transferCount += row.transferCount
+    existing.volumeUsd += row.totalSrcValueUsd + row.totalDstValueUsd
+    totals.set(key, existing)
+  }
+
+  return totals
 }
 
 function buildVolume(
@@ -180,6 +202,10 @@ function percentDiff(left: number, right: number): number | null {
   const base = Math.max(Math.abs(left), Math.abs(right))
   if (base === 0) return null
   return (Math.abs(left - right) / base) * 100
+}
+
+function bridgeTotalKey(row: Pick<DataRow, 'id' | 'day'>): string {
+  return `${row.id}::${row.day}`
 }
 
 function toSeriesPoint(row: DataRow): SeriesPoint {

@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -16,10 +17,11 @@ import { ExplorerLink } from '~/components/ExplorerLink'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 
 export function TokensSummaryPage() {
+  const trpc = useTRPC()
   const [selectedAbstractToken, setSelectedAbstractToken] = useState<
     AbstractToken | undefined
   >(undefined)
@@ -27,9 +29,10 @@ export function TokensSummaryPage() {
     DeployedToken | undefined
   >(undefined)
 
-  const { data, isLoading: isAbstractTokensLoading } =
-    api.abstractTokens.getAllWithDeployedTokens.useQuery()
-  const { data: chains } = api.chains.getAll.useQuery()
+  const { data, isLoading: isAbstractTokensLoading } = useQuery(
+    trpc.abstractTokens.getAllWithDeployedTokens.queryOptions(),
+  )
+  const { data: chains } = useQuery(trpc.chains.getAll.queryOptions())
 
   const chainRecord = chains?.find(
     (chain) => chain.name === selectedDeployedToken?.chain,

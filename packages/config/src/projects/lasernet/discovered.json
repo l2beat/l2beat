@@ -1,6 +1,6 @@
 {
   "name": "lasernet",
-  "timestamp": 1779719431,
+  "timestamp": 1780398489,
   "configHash": "0x1ea47bfd8b0a9bf688c85674205b2a1f69122a3e58d9665ff613f6615417ee50",
   "entries": [
     {
@@ -125,7 +125,7 @@
           "eth:0xb343522e5663E0cE1060dd50EF04b12820F84890"
         ],
         "allowedOutboxList": ["eth:0xDb5abc57397530DddC1e33BC023F2ef73Db6A86A"],
-        "delayedMessageCount": 425,
+        "delayedMessageCount": 430,
         "inboxHistory": [
           "eth:0xa2809b5f031bf91d2408B3e2464774A28B0F4949",
           "eth:0xb343522e5663E0cE1060dd50EF04b12820F84890"
@@ -135,8 +135,8 @@
         "outboxHistory": ["eth:0xDb5abc57397530DddC1e33BC023F2ef73Db6A86A"],
         "rollup": "eth:0x769b70b6b1fA281ab5c99e9C5A284BE4117e4783",
         "sequencerInbox": "eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1",
-        "sequencerMessageCount": 10413,
-        "sequencerReportedSubMessageCount": 26158122
+        "sequencerMessageCount": 10658,
+        "sequencerReportedSubMessageCount": 27150092
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -197,11 +197,6 @@
           "role": ".batchPosters"
         }
       ]
-    },
-    {
-      "address": "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Conduit Multisig 1",
@@ -310,6 +305,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
@@ -318,7 +314,6 @@
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-          "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
@@ -328,7 +323,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 273,
+        "nonce": 275,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -400,7 +395,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 10413,
+        "batchCount": 10658,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -450,7 +445,7 @@
         "rollup": "eth:0x769b70b6b1fA281ab5c99e9C5A284BE4117e4783",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 425,
+        "totalDelayedMessagesRead": 430,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -550,7 +545,7 @@
         "getValidators": ["eth:0x8fbEf9f7554aec9CCf62b88D86aE1C91F1599F7C"],
         "inbox": "eth:0xa2809b5f031bf91d2408B3e2464774A28B0F4949",
         "isPostBoLD": true,
-        "latestConfirmed": "0xb53a45d7a526e97d8390ce3edbbb865fe7f9d220bdb6722f0145e2fd766ebf72",
+        "latestConfirmed": "0xa69f0d1756c2b0861bf351bfdfda6e13622f28b1ea481729d89266aefe124d38",
         "loserStakeEscrow": "eth:0x8fbEf9f7554aec9CCf62b88D86aE1C91F1599F7C",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xDb5abc57397530DddC1e33BC023F2ef73Db6A86A",
@@ -866,6 +861,11 @@
           "role": ".batchPosters"
         }
       ]
+    },
+    {
+      "address": "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xCEEAEC6b7e010fE1Ac253Ebd6f93eEBF9249Cd7e",
@@ -1739,6 +1739,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 25172925 },
-  "permissionsConfigHash": "0x46608a52125272dfa355d486cc6da7c79a5a6918dc48d197dce7bc13fdc434b1"
+  "usedBlockNumbers": { "ethereum": 25229297 },
+  "permissionsConfigHash": "0x9ee48fc0c234ad6cb12e2068001b1db3c6ae17f6b69111cc342bbc98240f7487"
 }

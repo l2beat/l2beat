@@ -10,6 +10,7 @@
       "proxyType": "EOA"
     },
     {
+      "name": "DZack23",
       "address": "arb-nova:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -285,6 +286,7 @@
       "proxyType": "EOA"
     },
     {
+      "name": "PabloSabbatella-Opsek",
       "address": "arb-nova:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
       "type": "EOA",
       "proxyType": "EOA"
@@ -820,6 +822,7 @@
       "proxyType": "EOA"
     },
     {
+      "name": "DZack23",
       "address": "eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1611,6 +1614,7 @@
       }
     },
     {
+      "name": "PabloSabbatella-Opsek",
       "address": "eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
       "type": "EOA",
       "proxyType": "EOA"
@@ -7155,5 +7159,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
   "usedBlockNumbers": { "ethereum": 25172938, "nova": 84974442 },
-  "permissionsConfigHash": "0x15dd7485bdda672b4d8d5a1502baa36bd588055eba145c093df5daa91fbabd48"
+  "permissionsConfigHash": "0xe321e95a03b190db71601490f75adb828b2db113cc07194899cc99709c8a8d91"
 }
