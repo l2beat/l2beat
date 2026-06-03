@@ -108,21 +108,25 @@ export async function getActivityChart({
     syncWarning = syncInfo.syncWarning
   }
 
-  const aggregatedEntries = aggregateActivityRecords(entries)
-  if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
-    return { data: [], syncWarning, syncedUntil, stats: undefined }
-  }
-
-  const dataStart = Math.min(...Object.keys(aggregatedEntries).map(Number))
+  const projectDataStart =
+    entries.find((e) => e.projectId === projectId && e.count > 0)?.timestamp ??
+    0
 
   const startTimestamp = getChartStartTimestamp({
     rangeStart: adjustedRange[0],
     firstProjectTimestamp: projectId
       ? totalCounts?.[projectId]?.sinceTimestamp
       : undefined,
-    dataStart,
+    dataStart: projectDataStart,
     resolution: 'daily',
   })
+
+  const aggregatedEntries = aggregateActivityRecords(entries, {
+    startTimestamp,
+  })
+  if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
+    return { data: [], syncWarning, syncedUntil, stats: undefined }
+  }
 
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedRange[1]],
