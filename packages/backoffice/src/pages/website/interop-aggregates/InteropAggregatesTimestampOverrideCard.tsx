@@ -1,3 +1,4 @@
+import { useMutation } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '~/components/core/Button'
@@ -11,14 +12,14 @@ import {
 import { Input } from '~/components/core/Input'
 import { Label } from '~/components/core/Label'
 import { useAppStateQuery } from '~/hooks/useAppStateQuery'
-import { useBackendApi } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { dateInputToTimestamp } from '~/utils/dateInputToTimestamp'
 import { timestampToDateInput } from '~/utils/timestampToDateInput'
 
 const INTEROP_PINNING_KEY = 'interopAggregatesTimestampOverride' as const
 
 export function InteropAggregatesTimestampOverrideCard() {
-  const api = useBackendApi()
+  const trpc = useBackendTrpc()
   const [pinnedDate, setPinnedDate] = useState<string>('')
 
   const { data, refetch, isLoading } = useAppStateQuery(
@@ -33,29 +34,33 @@ export function InteropAggregatesTimestampOverrideCard() {
     }
   }, [data])
 
-  const setPinning = api.appState.insert.useMutation({
-    onSuccess: () => {
-      toast.success('Interop pinning saved')
-      refetch()
-    },
-    onError: (error) => {
-      toast.error('Failed to save interop pinning', {
-        description: error.message,
-      })
-    },
-  })
+  const setPinning = useMutation(
+    trpc.appState.insert.mutationOptions({
+      onSuccess: () => {
+        toast.success('Interop pinning saved')
+        refetch()
+      },
+      onError: (error) => {
+        toast.error('Failed to save interop pinning', {
+          description: error.message,
+        })
+      },
+    }),
+  )
 
-  const unsetPinning = api.appState.deleteByKey.useMutation({
-    onSuccess: () => {
-      toast.success('Interop pinning removed')
-      refetch()
-    },
-    onError: (error) => {
-      toast.error('Failed to remove interop pinning', {
-        description: error.message,
-      })
-    },
-  })
+  const unsetPinning = useMutation(
+    trpc.appState.deleteByKey.mutationOptions({
+      onSuccess: () => {
+        toast.success('Interop pinning removed')
+        refetch()
+      },
+      onError: (error) => {
+        toast.error('Failed to remove interop pinning', {
+          description: error.message,
+        })
+      },
+    }),
+  )
 
   const handleSave = () => {
     if (!pinnedDate) return
