@@ -2045,6 +2045,14 @@
       },
       "implementationNames": {
         "eth:0x910b159F79288DD706789ec7768E979d4D88C057": "RiscZeroVerifierRouter"
+      },
+      "fieldMeta": {
+        "verifier_310fe598": { "severity": "HIGH" },
+        "verifier_9f39696c": { "severity": "HIGH" },
+        "verifier_f536085a": { "severity": "HIGH" },
+        "verifier_bb001d44": { "severity": "HIGH" },
+        "verifier_73c457ba": { "severity": "HIGH" },
+        "verifier_242f9d5b": { "severity": "HIGH" }
       }
     },
     {
@@ -4557,7 +4565,7 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "risc0/KailuaGame": "0x249c17fd26bbb0f5400d386b4cfbe2edc478f66aeca6ba5fe90e477d646ae9dd",
-    "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "risc0/RiscZeroVerifierRouter": "0xb74ea20385c8afa507c773dd57793a9fbf10ce64ed9c17b58dff13665aff9f7a",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
   "usedBlockNumbers": { "ethereum": 25074600 },
