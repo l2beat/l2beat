@@ -54,10 +54,6 @@
     "eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A": {
       "description": "Custom bridge for USDS and sUSDS managed by Sky governance.",
       "ignoreMethods": ["proxiableUUID"]
-    },
-    "eth:0x4c0DAF5d9ABe92e8A26a60698a657B03538a3028": {
-      "description": "Implementation of the AggregateVerifier dispute game (type 621) combining a TEE arm and a ZK arm. PROOF_THRESHOLD = 1 means a single un-nullified proof of either type can resolve a game.",
-      "ignoreMethods": ["intermediateOutputRoot", "intermediateOutputRoots"]
     }
   }
 }
