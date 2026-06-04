@@ -1,6 +1,8 @@
+import { Callout } from '~/components/Callout'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
+import { InfoIcon } from '~/icons/Info'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -35,11 +37,12 @@ export function ScalingSequencingPage({ entries, ...props }: Props) {
             fallback paths that are enforced by the proof system on the host
             chain and delay their transactions significantly.
           </p>
-          <p className="mt-3 text-paragraph-15 text-secondary md:text-paragraph-16">
-            Combining decentralized sequencing with deterministic censorship
-            resistance gadgets that tap into Ethereum's decentralization results
-            in an optimal mix of real-time and eventual censorship resistance.
-          </p>
+          <Callout
+            color="blue"
+            body="Combining decentralized sequencing and deterministic censorship resistance gadgets results in an optimal mix of real-time and eventual censorship resistance for users. Decentralized sequencing provides real-time CR at the speed of the Rollup while Ethereum is a fallback guarantee for eventual CR in worst-case scenarios."
+            icon={<InfoIcon className="size-5" variant="blue" />}
+            className="mt-4 p-4 font-medium text-paragraph-15 md:text-paragraph-16"
+          />
         </PrimaryCard>
       </SideNavLayout>
     </AppLayout>
