@@ -37,6 +37,7 @@ export const ethereum: BaseProject = {
       ],
       explorers: [
         'https://etherscan.io/',
+        'https://ethplorer.io/',
         'https://eth.blockscout.com/',
         'https://beaconcha.in/',
       ],
