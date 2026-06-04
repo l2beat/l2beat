@@ -1,6 +1,6 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1780523069,
+  "timestamp": 1780557897,
   "configHash": "0xd88cfdd0a17578feb5a040de29b13c55be76c5a500ac4408672eb02588fcb40e",
   "entries": [
     {
@@ -125,13 +125,13 @@
         ],
         "$upgradeCount": 1,
         "absolutePrestateFromGame": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
-        "anchorGame": "eth:0xc36F3b667D0c528C8dFAA4d44f16ed52421e1a49",
+        "anchorGame": "eth:0x545aeDbaCD0B7dC1297DD158D2f6103e9ED74674",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x605766f931669908ac109c7e029a92822a6cfe106af4680142bcf0ba87b21b8b",
-          56203941
+          "0x4599ac09b68ab4487168604e1d8c489e44c7ebb7d6cbdf2f960c9f4029870ba1",
+          56225829
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -1492,7 +1492,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2343935087180073647209342"
+        "totalSupply": "2343716857977151345543215"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1762,7 +1762,7 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "description": "5-of-6 joint Ronin/Conduit Safe (per Ronin team: 4 Ronin signers + 2 Conduit signers retained from Conduit Multisig 1; signer affiliation not verifiable on-chain). Root upgrade authority over the OP Stack contract set on this page: proxyAdminOwner of OptimismPortal2, SystemConfig, DisputeGameFactory, AnchorStateRegistry, L1StandardBridge, L1ERC721Bridge, L1CrossDomainMessenger, DelayedWETH, SuperchainConfig, and direct admin of the KailuaVerifier proxy. Does not control the legacy MainchainGateway stack (that path is owned by LegacyBridgeOwner).",
+      "description": "5-of-6 joint Ronin/Conduit Safe.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3427,6 +3427,6 @@
     "risc0/KailuaTreasury": "0x74dc00c46f9739750e0f8e356c2dc96fc06800a44865544c70b5106073ef635c",
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 25239628 },
+  "usedBlockNumbers": { "ethereum": 25242515 },
   "permissionsConfigHash": "0xde3f10ccf79f3f3e488741f1da288041fa9dfd51424d5b5478a06a3d404161f8"
 }

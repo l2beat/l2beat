@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x31dc7372009b46148121e6e4befafeb64b0e5c4b
+Generated with discovered.json: 0x8536405c89c7a944a6444c488864e71c677e8f0d
 
-# Diff at Wed, 03 Jun 2026 21:45:36 GMT:
+# Diff at Thu, 04 Jun 2026 07:26:02 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779399734
-- current timestamp: 1780523069
+- current timestamp: 1780557897
 
 ## Description
 
@@ -42,7 +42,7 @@ RiscZeroVerifierRouter (`eth:0x8EaB2D97…`) is the shared RISC Zero verifier-se
 
 ```diff
     contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {
-    +++ description: 5-of-6 joint Ronin/Conduit Safe (per Ronin team: 4 Ronin signers + 2 Conduit signers retained from Conduit Multisig 1; signer affiliation not verifiable on-chain). Root upgrade authority over the OP Stack contract set on this page: proxyAdminOwner of OptimismPortal2, SystemConfig, DisputeGameFactory, AnchorStateRegistry, L1StandardBridge, L1ERC721Bridge, L1CrossDomainMessenger, DelayedWETH, SuperchainConfig, and direct admin of the KailuaVerifier proxy. Does not control the legacy MainchainGateway stack (that path is owned by LegacyBridgeOwner).
+    +++ description: 5-of-6 joint Ronin/Conduit Safe.
       receivedPermissions.8:
 +        {"permission":"upgrade","from":"eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C","role":"admin"}
     }
@@ -99,12 +99,12 @@ discovery. Values are for block 1779399734 (main branch discovery), not current.
 
 ```diff
     contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {
-    +++ description: 5-of-6 joint Ronin/Conduit Safe (per Ronin team: 4 Ronin signers + 2 Conduit signers retained from Conduit Multisig 1; signer affiliation not verifiable on-chain). Root upgrade authority over the OP Stack contract set on this page: proxyAdminOwner of OptimismPortal2, SystemConfig, DisputeGameFactory, AnchorStateRegistry, L1StandardBridge, L1ERC721Bridge, L1CrossDomainMessenger, DelayedWETH, SuperchainConfig, and direct admin of the KailuaVerifier proxy. Does not control the legacy MainchainGateway stack (that path is owned by LegacyBridgeOwner).
+    +++ description: 5-of-6 joint Ronin/Conduit Safe.
       name:
 -        "Safe"
 +        "RoninConduitOwner"
       description:
-+        "5-of-6 joint Ronin/Conduit Safe (per Ronin team: 4 Ronin signers + 2 Conduit signers retained from Conduit Multisig 1; signer affiliation not verifiable on-chain). Root upgrade authority over the OP Stack contract set on this page: proxyAdminOwner of OptimismPortal2, SystemConfig, DisputeGameFactory, AnchorStateRegistry, L1StandardBridge, L1ERC721Bridge, L1CrossDomainMessenger, DelayedWETH, SuperchainConfig, and direct admin of the KailuaVerifier proxy. Does not control the legacy MainchainGateway stack (that path is owned by LegacyBridgeOwner)."
++        "5-of-6 joint Ronin/Conduit Safe."
     }
 ```
 
