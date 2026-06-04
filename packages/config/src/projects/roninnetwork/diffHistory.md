@@ -14,7 +14,7 @@ OptimismPortal2 and AnchorStateRegistry still have respectedGameType = 1 (Permis
 
 Ronin KailuaTreasury (v1.2.0, `eth:0xc7EaCDd1…`): verifier extracted to a separate `KAILUA_VERIFIER` proxy, bond accounting reworked. Diff vs BOB v0.1.0 baseline: https://disco.l2beat.com/diff/eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336/eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C.
 
-RoninConduitOwner (`eth:0xE9Ad9723…`, 5-of-6 joint Ronin/Conduit Safe, the existing root upgrade authority over the OP Stack contract set) got admin over the KailuaVerifier proxy (`eth:0x6b49976a…`), so the verifier proxy is upgradable along the same path as the other OP Stack contracts.
+RoninConduitOwner got admin over the KailuaVerifier proxy (`eth:0x6b49976a…`), so the verifier proxy is upgradable along the same path as the other OP Stack contracts.
 
 RiscZeroVerifierRouter (`eth:0x8EaB2D97…`) is the shared RISC Zero verifier-selector router. Owner is a TimelockController (`eth:0x0b144E07…`, 3d delay) governed by Safe `eth:0x2E5bcc…`. Both are shared RISC Zero infrastructure, not Ronin-specific.
 
