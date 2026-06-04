@@ -1,16 +1,9 @@
 import { useMemo, useState } from 'react'
-import type {
-  ChartMeta,
-  CustomChartTooltipProps,
-} from '~/components/core/chart/Chart'
-import { ChartTooltipWrapper } from '~/components/core/chart/Chart'
+import type { ChartMeta } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import {
-  formatCensoringFraction,
-  formatDelayDays,
   InclusionDelayChart,
   type InclusionDelayChartDataPoint,
   type InclusionDelayYAxisScale,
@@ -31,8 +24,7 @@ type ChartEntry = ScalingDecentralizedSequencingEntry & {
 const ETHEREUM_DATA_KEY = 'ethereumDelayDays'
 
 export function InclusionDelayComparisonChart({ entries }: Props) {
-  const [yAxisScale, setYAxisScale] =
-    useState<InclusionDelayYAxisScale>('linear')
+  const [yAxisScale, setYAxisScale] = useState<InclusionDelayYAxisScale>('log')
 
   const chartEntries = useMemo(
     () =>
@@ -46,8 +38,6 @@ export function InclusionDelayComparisonChart({ entries }: Props) {
     () => getComparisonChartMeta(chartEntries),
     [chartEntries],
   )
-
-  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
 
   const chartData = useMemo(
     () => getComparisonChartData(chartEntries),
@@ -92,11 +82,6 @@ export function InclusionDelayComparisonChart({ entries }: Props) {
           chartMeta={chartMeta}
           maxCensorFraction={maxCensorFraction}
           yAxisScale={yAxisScale}
-          interactiveLegend={{
-            dataKeys,
-            onItemClick: toggleDataKey,
-          }}
-          tooltipContent={<InclusionDelayComparisonTooltip meta={chartMeta} />}
         />
       </div>
     </PrimaryCard>
@@ -151,61 +136,4 @@ function getComparisonChartData(
       point[ETHEREUM_DATA_KEY] ??= null
       return point
     })
-}
-
-function InclusionDelayComparisonTooltip({
-  payload,
-  label: censoringFraction,
-  meta,
-}: CustomChartTooltipProps & { meta: ChartMeta }) {
-  if (!payload || typeof censoringFraction !== 'number') return null
-
-  const rows = payload.filter(
-    (entry) => typeof entry.dataKey === 'string' && meta[entry.dataKey],
-  )
-
-  return (
-    <ChartTooltipWrapper>
-      <div className="flex w-64 flex-col gap-2 font-medium text-label-value-14">
-        <div>
-          {formatCensoringFraction(censoringFraction)} censoring incurs an
-          inclusion delay of
-        </div>
-        <div className="flex flex-col gap-1">
-          {rows.map((entry) => {
-            const dataKey = `${entry.dataKey}`
-            const item = meta[dataKey]
-            if (!item) return null
-
-            return (
-              <div
-                key={dataKey}
-                className="flex items-center justify-between gap-3"
-              >
-                <div className="flex min-w-0 items-center gap-1.5">
-                  <span
-                    className="size-2 shrink-0 rounded-full"
-                    style={{ backgroundColor: item.color }}
-                  />
-                  <span className="truncate text-secondary">{item.label}</span>
-                </div>
-                <span className="shrink-0 text-primary">
-                  {formatTooltipDelay(entry.value)}
-                </span>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    </ChartTooltipWrapper>
-  )
-}
-
-function formatTooltipDelay(value: unknown) {
-  if (value === null || value === undefined) return 'no inclusion'
-
-  const days = Number(value)
-  if (!Number.isFinite(days)) return 'no inclusion'
-
-  return formatDelayDays(days)
 }

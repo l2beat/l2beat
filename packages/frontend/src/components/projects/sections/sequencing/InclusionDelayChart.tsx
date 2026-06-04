@@ -1,5 +1,4 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import type { ReactElement } from 'react'
 import {
   CartesianGrid,
   ComposedChart,
@@ -20,6 +19,7 @@ import {
   ChartLegendItemLabel,
   ChartTooltip,
   ChartTooltipWrapper,
+  useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import type {
@@ -46,12 +46,6 @@ interface Props {
   yAxisScale: InclusionDelayYAxisScale
   thresholdMarkers?: InclusionDelayThresholdMarker[]
   entityMarkers?: InclusionDelayEntityMarker[]
-  interactiveLegend?: {
-    dataKeys: string[]
-    onItemClick: (dataKey: string) => void
-    disableOnboarding?: boolean
-  }
-  tooltipContent?: ReactElement
 }
 
 export function InclusionDelayChart({
@@ -61,25 +55,17 @@ export function InclusionDelayChart({
   yAxisScale,
   thresholdMarkers = [],
   entityMarkers = [],
-  interactiveLegend,
-  tooltipContent,
 }: Props) {
   const dataKeys = Object.keys(chartMeta)
-  const visibleDataKeys = interactiveLegend?.dataKeys ?? dataKeys
   const yDomain = getInclusionDelayYDomain(
     data,
-    visibleDataKeys,
+    dataKeys,
     yAxisScale,
     thresholdMarkers,
   )
 
   return (
-    <ChartContainer
-      data={data}
-      meta={chartMeta}
-      isLoading={false}
-      interactiveLegend={interactiveLegend}
-    >
+    <ChartContainer data={data} meta={chartMeta} isLoading={false}>
       <ComposedChart
         responsive
         data={data}
@@ -153,10 +139,6 @@ export function InclusionDelayChart({
               dot={false}
               connectNulls
               isAnimationActive={false}
-              hide={
-                interactiveLegend &&
-                !interactiveLegend.dataKeys.includes(dataKey)
-              }
             />
           )
         })}
@@ -200,10 +182,7 @@ export function InclusionDelayChart({
             ifOverflow="discard"
           />
         ))}
-        <ChartTooltip
-          filterNull={false}
-          content={tooltipContent ?? <InclusionDelayTooltip />}
-        />
+        <ChartTooltip filterNull={false} content={<InclusionDelayTooltip />} />
       </ComposedChart>
     </ChartContainer>
   )
@@ -213,28 +192,45 @@ function InclusionDelayTooltip({
   payload,
   label: censoringFraction,
 }: CustomChartTooltipProps) {
+  const { meta } = useChart()
   if (!payload || typeof censoringFraction !== 'number') return null
-  const projectDelay = payload.find(
-    (entry) => entry.dataKey === 'projectDelayDays',
-  )?.value
-  const ethereumDelay = payload.find(
-    (entry) => entry.dataKey === 'ethereumDelayDays',
-  )?.value
+
+  const rows = payload.filter(
+    (entry) => typeof entry.dataKey === 'string' && meta[entry.dataKey],
+  )
 
   return (
     <ChartTooltipWrapper>
-      <div className="w-64 font-medium text-label-value-14">
-        {formatCensoringFraction(censoringFraction)} censoring lead to{' '}
-        {formatTooltipDelay(projectDelay, {
-          suffix: 'inclusion delay',
-          fallback: 'no finite inclusion delay',
-        })}{' '}
-        (
-        {formatTooltipDelay(ethereumDelay, {
-          suffix: 'on Ethereum for comparison',
-          fallback: 'no finite delay on Ethereum for comparison',
-        })}
-        )
+      <div className="flex w-64 flex-col gap-2 font-medium text-label-value-14">
+        <div>
+          {formatCensoringFraction(censoringFraction)} censoring would incur a
+          transaction inclusion delay of
+        </div>
+        <div className="flex flex-col gap-1">
+          {rows.map((entry) => {
+            const dataKey = `${entry.dataKey}`
+            const item = meta[dataKey]
+            if (!item) return null
+
+            return (
+              <div
+                key={dataKey}
+                className="flex items-center justify-between gap-3"
+              >
+                <div className="flex min-w-0 items-center gap-1.5">
+                  <ChartDataIndicator
+                    type={item.indicatorType}
+                    backgroundColor={item.color}
+                  />
+                  <span className="truncate text-secondary">{item.label}</span>
+                </div>
+                <span className="shrink-0 text-primary">
+                  {formatTooltipDelay(entry.value)}
+                </span>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </ChartTooltipWrapper>
   )
@@ -300,13 +296,13 @@ function getFractionTicks(maxCensorFraction: number) {
   )
 }
 
-export function formatCensoringFraction(value: number) {
+function formatCensoringFraction(value: number) {
   return `${(value * 100).toLocaleString('en-US', {
     maximumFractionDigits: 1,
   })}%`
 }
 
-export function formatDelayDays(days: number) {
+function formatDelayDays(days: number) {
   if (days <= 0) return '0s'
   const seconds = Math.round(days * SECONDS_PER_DAY)
   if (seconds === 0) return '<1s'
@@ -314,14 +310,11 @@ export function formatDelayDays(days: number) {
   return formatSeconds(seconds)
 }
 
-function formatTooltipDelay(
-  value: unknown,
-  labels: { suffix: string; fallback: string },
-) {
-  if (value === null || value === undefined) return labels.fallback
+function formatTooltipDelay(value: unknown) {
+  if (value === null || value === undefined) return 'no inclusion'
 
   const days = Number(value)
-  if (!Number.isFinite(days)) return labels.fallback
+  if (!Number.isFinite(days)) return 'no inclusion'
 
-  return `${formatDelayDays(days)} ${labels.suffix}`
+  return formatDelayDays(days)
 }
