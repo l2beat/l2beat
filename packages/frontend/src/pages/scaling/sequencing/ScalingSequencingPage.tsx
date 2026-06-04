@@ -28,12 +28,17 @@ export function ScalingSequencingPage({ entries, ...props }: Props) {
             Centralized sequencing
           </h2>
           <p className="mt-3 text-paragraph-15 text-secondary md:text-paragraph-16">
-            With centralized sequencing, a single operator controls transaction
-            ordering and block production. This usually gives users fast
-            confirmations, but creates short-term censorship risk: if the
-            operator refuses to include a transaction, users must rely on a
-            fallback path such as forced inclusion or an escape hatch to
-            Ethereum.
+            A single operator controls transaction ordering and block
+            production. This gives users fast confirmations and high transaction
+            throughput in the best case, but adds risk of censorship: if the
+            operator refuses to include a transaction, users must rely on
+            fallback paths that are enforced by the proof system on the host
+            chain and delay their transactions significantly.
+          </p>
+          <p className="mt-3 text-paragraph-15 text-secondary md:text-paragraph-16">
+            Combining decentralized sequencing with deterministic censorship
+            resistance gadgets that tap into Ethereum's decentralization results
+            in an optimal mix of real-time and eventual censorship resistance.
           </p>
         </PrimaryCard>
       </SideNavLayout>
