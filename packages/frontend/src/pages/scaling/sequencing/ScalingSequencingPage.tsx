@@ -1,4 +1,5 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -22,6 +23,19 @@ export function ScalingSequencingPage({ entries, ...props }: Props) {
           <ScalingSequencingTable entries={entries} />
         </TableSortingProvider>
         <InclusionDelayComparisonChart entries={entries} />
+        <PrimaryCard className="mt-4 md:mt-6">
+          <h2 className="font-bold text-heading-16 md:text-heading-20">
+            Centralized sequencing
+          </h2>
+          <p className="mt-3 text-paragraph-15 text-secondary md:text-paragraph-16">
+            With centralized sequencing, a single operator controls transaction
+            ordering and block production. This usually gives users fast
+            confirmations, but creates short-term censorship risk: if the
+            operator refuses to include a transaction, users must rely on a
+            fallback path such as forced inclusion or an escape hatch to
+            Ethereum.
+          </p>
+        </PrimaryCard>
       </SideNavLayout>
     </AppLayout>
   )
