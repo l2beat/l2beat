@@ -14,19 +14,9 @@ Generated with discovered.json: 0xbc6b320b1389c49697f038665cb9c5ad9464d49a
 - L2 execution tx: [0x7278f818…14b62bd](https://scrollscan.com/tx/0x7278f818e917a553318083cf44d99a4b92d72b876c1e19a1834fa3b2114b62bd) (2026-06-01T12:42:30Z)
 - Forum announcement (2026-04-13): [Governance Update: Security Council Transition](https://forum.scroll.io/t/governance-update-security-council-transition-contributor-roles-operational-adjustments/1470)
 
-Roles transferred on both chains:
-- `TimelockSCEmergency` / `TimelockSCEmergencyScroll` (0-delay): `TIMELOCK_ADMIN_ROLE`, `PROPOSER_ROLE`, `EXECUTOR_ROLE`, `CANCELLER_ROLE`. Old SC removed from each; `ScrollAdminMultisig` added. On L1, `Scroll Multisig 1` stays as a second `EXECUTOR`. On L2, the existing Scroll-side `EXECUTOR` (`scr:0x1FF1fc1B…`) is unchanged.
-- `TimelockSCSlow` (3-day) L1: same four roles transferred. `Scroll Multisig 1` remains as a second `EXECUTOR`.
-- `TimelockSCSlow` (3-day) L2: same four roles transferred. `AgoraGovernor` (`scr:0x2f3F2054…`) remains as proposer/executor/canceller alongside `ScrollAdminMultisig` — this is the L2 governance pathway and was never held by the SC.
-- `AgoraGovernor.admin` (L2 only): `scr:0x1a37bF…` → `scr:0xcca54B…`.
-
-The `ScrollAdminMultisig` is a 3-of-4 Safe whose four EOAs are the same four members as Scroll Multisig 3 (a 2-of-4 ops multisig). Two of those EOAs (`0x716f84f7…` and `0x6aE9233a…`) also sit on Scroll Multisigs 1 and 4. There is zero overlap with the previous 12 independent SC members.
-
-**Stage impact.** Scroll falls from Stage 1 to Stage 0. The new multisig fails `securityCouncilProperlySetUp` (only 4 members, not organisationally independent from the team) and `usersHave7DaysToExit` (the 0-delay upgrade path is now held by team operators rather than an SC). Updated in `scroll.ts`.
+All Security Council permissions (`TIMELOCK_ADMIN_ROLE`, `PROPOSER_ROLE`, `EXECUTOR_ROLE`, `CANCELLER_ROLE` on `TimelockSCSlow` and `TimelockSCEmergency` on both chains, plus L2 `AgoraGovernor.admin`) transferred to `ScrollAdminMultisig`. Pre-existing co-holders (`Scroll Multisig 1`, `AgoraGovernor` on L2 slow) are unchanged.
 
 **Still pending (queued in TimelockSCSlow, 3-day).** A batch was scheduled to transfer `SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE` on `ScrollOwner` away from the independent 3/12 `Scroll Security Council Minority` to `ScrollAdminMultisig`. Not yet executed in this discovery snapshot.
-
-**EIP-7702 EOA.** `eth:0x498C0c17e26EEEC63375A4A20Ba8A91Aa357CbcD` upgraded to `EIP7702StatelessDeleGator`. Unrelated to the SC removal; this is one of the Scroll Multisig 3 / ScrollAdminMultisig signers picking up a 7702 delegator.
 
 ## Watched changes
 
