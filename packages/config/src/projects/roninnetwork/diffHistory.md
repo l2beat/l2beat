@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8536405c89c7a944a6444c488864e71c677e8f0d
+Generated with discovered.json: 0xbedd0c93ec24ecb4f7b4fc25c16c481c43e29747
 
-# Diff at Thu, 04 Jun 2026 07:26:02 GMT:
+# Diff at Thu, 04 Jun 2026 07:26:34 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779399734
-- current timestamp: 1780557897
+- current timestamp: 1780557929
 
 ## Description
 
@@ -63,7 +63,7 @@ RiscZeroVerifierRouter (`eth:0x8EaB2D97…`) is the shared RISC Zero verifier-se
 ```diff
 +   Status: CREATED
     contract KailuaVerifier (eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C) [N/A]
-    +++ description: Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID. Proxy admin (upgrade authority over the verifier) is RoninConduitOwner.
+    +++ description: Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID.
 ```
 
 ```diff

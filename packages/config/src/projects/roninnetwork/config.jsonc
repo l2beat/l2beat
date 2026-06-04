@@ -60,7 +60,7 @@
       "description": "Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Deployed but NOT yet active. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned."
     },
     "eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C": {
-      "description": "Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID. Proxy admin (upgrade authority over the verifier) is RoninConduitOwner."
+      "description": "Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID."
     }
   }
 }

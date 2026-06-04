@@ -1,6 +1,6 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1780557897,
+  "timestamp": 1780557929,
   "configHash": "0xd88cfdd0a17578feb5a040de29b13c55be76c5a500ac4408672eb02588fcb40e",
   "entries": [
     {
@@ -1168,7 +1168,7 @@
         "0x54570a7d1718f6f7f7e7ff61ba3cb3e2b01c98f39686b8207c2479d77dfcf26c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID. Proxy admin (upgrade authority over the verifier) is RoninConduitOwner.",
+      "description": "Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID.",
       "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1780027559,
       "sinceBlock": 25198519,
@@ -1492,7 +1492,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2343716857977151345543215"
+        "totalSupply": "2343722625099491440980333"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -3427,6 +3427,6 @@
     "risc0/KailuaTreasury": "0x74dc00c46f9739750e0f8e356c2dc96fc06800a44865544c70b5106073ef635c",
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 25242515 },
+  "usedBlockNumbers": { "ethereum": 25242518 },
   "permissionsConfigHash": "0xde3f10ccf79f3f3e488741f1da288041fa9dfd51424d5b5478a06a3d404161f8"
 }
