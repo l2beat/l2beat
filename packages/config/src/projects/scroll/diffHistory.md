@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x27bf223721dfada49306f7bb16cb7ab39a2a7906
+Generated with discovered.json: 0xbc6b320b1389c49697f038665cb9c5ad9464d49a
 
-# Diff at Tue, 02 Jun 2026 11:56:04 GMT:
+# Diff at Thu, 04 Jun 2026 07:52:01 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779399741
-- current timestamp: 1780401289
+- current timestamp: 1780559446
 
 ## Description
 
-**Security Council removal.** On 2026-06-01, Scroll executed the previously-signed L1 and L2 multiSend transactions, replacing its independent 9-of-12 Security Council (`eth:0x1a37bF…` / `scr:0x1a37bF…`) with the 3-of-4 `ScrollAdminMultisig` (`0xcca54B0916Cee2186b47E9709BEdcb7041A8F761`).
+**Security Council removal.** On 2026-06-01, Scroll executed a multiSend transaction replacing its independent 9-of-12 Security Council (`eth:0x1a37bF…` / `scr:0x1a37bF…`) with the 3-of-4 `ScrollAdminMultisig` (`0xcca54B0916Cee2186b47E9709BEdcb7041A8F761`). This upgrade moves the chain to Stage 0.
 
 - L1 execution tx: [0xbc6079d5…b373765](https://etherscan.io/tx/0xbc6079d54f7a5fc548402db349168732c3f02430c156f4723865934bdb373765) (2026-06-01T12:36:23Z)
 - L2 execution tx: [0x7278f818…14b62bd](https://scrollscan.com/tx/0x7278f818e917a553318083cf44d99a4b92d72b876c1e19a1834fa3b2114b62bd) (2026-06-01T12:42:30Z)
@@ -25,8 +25,6 @@ The `ScrollAdminMultisig` is a 3-of-4 Safe whose four EOAs are the same four mem
 **Stage impact.** Scroll falls from Stage 1 to Stage 0. The new multisig fails `securityCouncilProperlySetUp` (only 4 members, not organisationally independent from the team) and `usersHave7DaysToExit` (the 0-delay upgrade path is now held by team operators rather than an SC). Updated in `scroll.ts`.
 
 **Still pending (queued in TimelockSCSlow, 3-day).** A batch was scheduled to transfer `SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE` on `ScrollOwner` away from the independent 3/12 `Scroll Security Council Minority` to `ScrollAdminMultisig`. Not yet executed in this discovery snapshot.
-
-**Cosmetic.** A spam-tagged Safe (`eth:0x11cd09a…`) shed 6 members; ignore.
 
 **EIP-7702 EOA.** `eth:0x498C0c17e26EEEC63375A4A20Ba8A91Aa357CbcD` upgraded to `EIP7702StatelessDeleGator`. Unrelated to the SC removal; this is one of the Scroll Multisig 3 / ScrollAdminMultisig signers picking up a 7702 delegator.
 
@@ -189,7 +187,7 @@ The `ScrollAdminMultisig` is a 3-of-4 Safe whose four EOAs are the same four mem
 
 ```diff
     contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [N/A] {
-    +++ description: L2 counterpart of TimelockSCSlow. A timelock with access control; current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
+    +++ description: L2 counterpart of TimelockSCSlow.
       values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
 -        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
 +        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
@@ -226,13 +224,13 @@ The `ScrollAdminMultisig` is a 3-of-4 Safe whose four EOAs are the same four mem
 ```diff
 +   Status: CREATED
     contract ScrollAdminMultisig (eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761) [GnosisSafe]
-    +++ description: 3-of-4 multisig of Scroll team operators that controls the TimelockSCSlow and TimelockSCEmergency on both L1 and L2, the sole controller of the rollup's upgrade and proof-system parameter paths. Its four EOAs are the same set as Scroll Multisig 3 (a 2-of-4 ops multisig).
+    +++ description: multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.
 ```
 
 ```diff
 +   Status: CREATED
     contract ScrollAdminMultisig (scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761) [GnosisSafe]
-    +++ description: L2 counterpart of ScrollAdminMultisig (same 4 EOAs, 3/4 threshold). Holds the proposer/canceller/admin roles on TimelockSCSlow and TimelockSCEmergencyScroll on L2, and is the admin of AgoraGovernor since 2026-06-01.
+    +++ description: L2 counterpart of ScrollAdminMultisig.
 ```
 
 ## Source code changes
@@ -323,7 +321,7 @@ discovery. Values are for block 1779399741 (main branch discovery), not current.
 
 ```diff
     contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [N/A] {
-    +++ description: L2 counterpart of TimelockSCSlow. A timelock with access control; current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
+    +++ description: L2 counterpart of TimelockSCSlow.
       values.accessControl:
 +        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_ADMIN_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]},"PROPOSER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]},"EXECUTOR_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]},"CANCELLER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]}}
       values.Canceller:
@@ -335,7 +333,7 @@ discovery. Values are for block 1779399741 (main branch discovery), not current.
       values.Proposer:
 +        ["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
       description:
-+        "L2 counterpart of TimelockSCSlow. A timelock with access control; current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone."
++        "L2 counterpart of TimelockSCSlow."
       fieldMeta:
 +        {"Executor":{"severity":"HIGH","description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}}
       category:

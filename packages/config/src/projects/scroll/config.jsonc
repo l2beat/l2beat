@@ -88,7 +88,7 @@
       "ignoreDiscovery": true
     },
     "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": {
-      "description": "3-of-4 multisig of Scroll team operators that controls the TimelockSCSlow and TimelockSCEmergency on both L1 and L2, the sole controller of the rollup's upgrade and proof-system parameter paths. Its four EOAs are the same set as Scroll Multisig 3 (a 2-of-4 ops multisig).",
+      "description": "multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.",
       "references": [
         {
           "text": "Governance Update: Security Council Transition, Contributor Roles & Operational Adjustments (Scroll forum, 2026-04-13)",
@@ -101,7 +101,7 @@
       ]
     },
     "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": {
-      "description": "L2 counterpart of ScrollAdminMultisig (same 4 EOAs, 3/4 threshold). Holds the proposer/canceller/admin roles on TimelockSCSlow and TimelockSCEmergencyScroll on L2, and is the admin of AgoraGovernor since 2026-06-01.",
+      "description": "L2 counterpart of ScrollAdminMultisig.",
       "references": [
         {
           "text": "L2 execution tx",
@@ -201,7 +201,7 @@
       "ignoreDiscovery": true
     },
     "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14": {
-      "description": "L2 counterpart of TimelockSCSlow. A timelock with access control; current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.",
+      "description": "L2 counterpart of TimelockSCSlow.",
       "category": "gov",
       "fields": {
         "timelockAdminAC": {

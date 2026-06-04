@@ -1,6 +1,6 @@
 {
   "name": "scroll",
-  "timestamp": 1780401289,
+  "timestamp": 1780559446,
   "configHash": "0x3f3a5b831d07c24094381d68ec00044452aebbd9a630411e7f6e13b9a23d46d6",
   "entries": [
     {
@@ -854,11 +854,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1780401287,
+        "getFirstUnfinalizedMessageEnqueueTime": 1780554467,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 998324,
-        "nextUnfinalizedQueueIndex": 998324,
+        "nextCrossDomainMessageIndex": 998333,
+        "nextUnfinalizedQueueIndex": 998331,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -2052,14 +2052,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 517891,
+        "lastFinalizedBatchIndex": 517936,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 517891,
-          "lastFinalizedBatchIndex": 517891,
-          "lastFinalizeTimestamp": 1780397591,
+          "lastCommittedBatchIndex": 517936,
+          "lastFinalizedBatchIndex": 517936,
+          "lastFinalizeTimestamp": 1780558007,
           "flags": 1,
           "reserved": 0
         },
@@ -2499,7 +2499,7 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "description": "3-of-4 multisig of Scroll team operators that controls the TimelockSCSlow and TimelockSCEmergency on both L1 and L2, the sole controller of the rollup's upgrade and proof-system parameter paths. Its four EOAs are the same set as Scroll Multisig 3 (a 2-of-4 ops multisig).",
+      "description": "multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3016,7 +3016,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 8042099690862,
+        "totalBridgedUSDC": 7973879577020,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -3967,9 +3967,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xb480a3dbd597eb41a1d3bcb5dbda0004c536e5b02b20b6252c2ef67d5293952d",
+        "messageRoot": "0xe3865203d3524ed92348ac329300a2b5f271c7ac7b2a9e3ac94c81505fd0fff2",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 322840,
+        "nextMessageIndex": 322871,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -4372,7 +4372,7 @@
         "0xb473930cd81ee45e44828aef3a7301db4dd1ddb5aa55cb97b0310cb2d07293b0"
       ],
       "proxyType": "immutable",
-      "description": "L2 counterpart of TimelockSCSlow. A timelock with access control; current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.",
+      "description": "L2 counterpart of TimelockSCSlow.",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -5100,7 +5100,7 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "description": "L2 counterpart of ScrollAdminMultisig (same 4 EOAs, 3/4 threshold). Holds the proposer/canceller/admin roles on TimelockSCSlow and TimelockSCEmergencyScroll on L2, and is the admin of AgoraGovernor since 2026-06-01.",
+      "description": "L2 counterpart of ScrollAdminMultisig.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -7953,6 +7953,6 @@
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25229529, "scroll": 33926110 },
+  "usedBlockNumbers": { "ethereum": 25242644, "scroll": 33950948 },
   "permissionsConfigHash": "0x25964f57c2a14d59169ef7a686f6656c21b9ebbe493c21e35d6f0ee7a2531215"
 }
