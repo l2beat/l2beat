@@ -1,6 +1,6 @@
 {
   "name": "apechain",
-  "timestamp": 1778232906,
+  "timestamp": 1780582582,
   "configHash": "0x07f15b6510439ff4bf5530bd424aa67783d346aefdd80c11282e14dc5c865d91",
   "entries": [
     {
@@ -81,7 +81,8 @@
           "arb1:0x84c0262941e77Ed3A2231b2C17465F01EE43C878",
           "arb1:0x03b0B696aab6985db9a15CFD8f566b7Def5c7446",
           "arb1:0xa33F7fE4F9c2462F84675a0958960906D62655B2",
-          "arb1:0x14D6aA8F8E0D0b3fe7427a04122A61ebc441ECA4"
+          "arb1:0x14D6aA8F8E0D0b3fe7427a04122A61ebc441ECA4",
+          "arb1:0xe1378cc0f96ea30496645237b3F26ABC1B2c5E48"
         ],
         "validEnclaveHashes": [
           "0x38ac1d01767230812dbfb944356ebc69bc5642f938f9f86392cd761549e58dc0",
@@ -112,6 +113,35 @@
       "address": "arb1:0x14D6aA8F8E0D0b3fe7427a04122A61ebc441ECA4",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "NitroEnclaveVerifier",
+      "address": "arb1:0x1b467761E7a125381c4f654e11B397023Fc53DD8",
+      "type": "Contract",
+      "template": "espresso/Sequencing/NitroEnclaveVerifier",
+      "sourceHashes": [
+        "0xf656ce2d63c52a1771ea6f9603f0b5af9463f80b497d23d4a26cd8ed015fb107"
+      ],
+      "proxyType": "immutable",
+      "description": "ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.",
+      "deployerAddress": "arb1:0xba1E3EFfD2DD8CEb7054FEfb0cee8C4300D82C1a",
+      "sinceTimestamp": 1779889982,
+      "sinceBlock": 467226973,
+      "values": {
+        "$immutable": true,
+        "maxTimeDiff": 10800,
+        "owner": "arb1:0xba1E3EFfD2DD8CEb7054FEfb0cee8C4300D82C1a",
+        "rootCert": "0x641a0321a3e244efe456463195d606317ed7cdcc3c1756e09893f3c68f79bb5b",
+        "succintZkConfig": {
+          "verifierId": "0x00643c7149cf335e7ec9d3f3301e69658a7f0ef2bc7546509c257ed8809f28e1",
+          "aggregatorId": "0x00294928e44f0cdc9c74848c4cafcdb29f733a3bc07408c240be3d5afe750b3e",
+          "zkVerifier": "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D"
+        }
+      },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "implementationNames": {
+        "arb1:0x1b467761E7a125381c4f654e11B397023Fc53DD8": "NitroEnclaveVerifier"
+      }
     },
     {
       "name": "Inbox",
@@ -217,37 +247,6 @@
       "address": "arb1:0x271081b59e43e45AFAfa373B05c90b48f3642c1A",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "CertManager",
-      "address": "arb1:0x27CA506AC6567Ef79d364b56cf4dE9C4141d803A",
-      "type": "Contract",
-      "template": "espresso/Sequencing",
-      "sourceHashes": [
-        "0x3a983e75da37a70f97d545b6bd52264966b7517ca0a0fe43e3c296f514433a53"
-      ],
-      "proxyType": "immutable",
-      "description": "The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).",
-      "ignoreInWatchMode": [""],
-      "deployerAddress": "arb1:0xf37831515e1ddf6bB30eE612545bf87047946602",
-      "sinceTimestamp": 1757537025,
-      "sinceBlock": 377796004,
-      "values": {
-        "$immutable": true,
-        "BASIC_CONSTRAINTS_OID": "0x6351d72a43cb42fb9a2531a28608c278c89629f8f025b5f5dc705f3fe45e950a",
-        "CERT_ALGO_OID": "0x53ce037f0dfaa43ef13b095f04e68a6b5e3f1519a01a3203a1e6440ba915b87e",
-        "EC_PUB_KEY_OID": "0xb60fee1fd85f867dd7c8d16884a49a20287ebe4c0fb49294e9825988aa8e42b4",
-        "KEY_USAGE_OID": "0x45529d8772b07ebd6d507a1680da791f4a2192882bf89d518801579f7a5167d2",
-        "ROOT_CA_CERT_HASH": "0x311d96fcd5c5e0ccf72ef548e2ea7d4c0cd53ad7c4cc49e67471aed41d61f185",
-        "ROOT_CA_CERT_MAX_PATH_LEN": -1,
-        "ROOT_CA_CERT_NOT_AFTER": 2519044085,
-        "ROOT_CA_CERT_PUB_KEY": "0xfc0254eba608c1f36870e29ada90be46383292736e894bfff672d989444b5051e534a4b1f6dbe3c0bc581a32b7b176070ede12d69a3fea211b66e752cf7dd1dd095f6f1370f4170843d9dc100121e4cf63012809664487c9796284304dc53ff4",
-        "ROOT_CA_CERT_SUBJECT_HASH": "0x3c3e2e5f1dd14dee5db88341ba71521e939afdb7881aa24c9f1e1c007a2fa8b6",
-        "SECP_384_R1_OID": "0xbd74344bb507daeb9ed315bc535f24a236ccab72c5cd6945fb0efe5c037e2097"
-      },
-      "implementationNames": {
-        "arb1:0x27CA506AC6567Ef79d364b56cf4dE9C4141d803A": "CertManager"
-      }
     },
     {
       "name": "ApeChainMultisig",
@@ -427,13 +426,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 14368,
+        "firstUnresolvedNode": 15012,
         "inbox": "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20628667,
-        "latestConfirmed": 14367,
-        "latestNodeCreated": 14518,
+        "latestConfirmed": 15011,
+        "latestNodeCreated": 15163,
         "loserStakeEscrow": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF",
@@ -518,11 +517,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "arb1:0x37aa7921D4a65d4D224d9C733E3E26c750A79D81",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B",
       "type": "EOA",
       "proxyType": "EOA",
@@ -540,11 +534,6 @@
           "role": ".batchPosters"
         }
       ]
-    },
-    {
-      "address": "arb1:0x3aF3F87FbC378b1556b986F5BBBdC49c653f9Ed6",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "arb1:0x48780339C4dcFF3578321e7CB228B10F80DEb1Ab",
@@ -626,7 +615,7 @@
       "sinceBlock": 379787932,
       "values": {
         "$immutable": true,
-        "espressoNitroTEEVerifier": "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C",
+        "espressoNitroTEEVerifier": "arb1:0x9bE8dA826D2C6E6708372f0d056f57B97e6dB029",
         "espressoSGXTEEVerifier": "arb1:0x05A16513BF74629b834878731f07b075Cca33f55",
         "owner": "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5",
         "pendingOwner": "arb1:0x0000000000000000000000000000000000000000"
@@ -639,11 +628,6 @@
       "implementationNames": {
         "arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5": "EspressoTEEVerifier"
       }
-    },
-    {
-      "address": "arb1:0x5254e65b4835abf4669f0f838EFfDCb07Ede5F7E",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "OneStepProverMemory",
@@ -675,11 +659,6 @@
     },
     {
       "address": "arb1:0x5E768dd03BD821703ef825e057434De85913EEAC",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "arb1:0x6480ec7c5bA30bAa4c7F32fbB6eD5299117c5397",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -770,8 +749,8 @@
         "outboxHistory": ["arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"],
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerInbox": "arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
-        "sequencerMessageCount": 76047,
-        "sequencerReportedSubMessageCount": 37674335
+        "sequencerMessageCount": 76754,
+        "sequencerReportedSubMessageCount": 39197407
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -819,12 +798,6 @@
           "from": "arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5",
           "description": "change the modular TEE verifier contracts.",
           "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C",
-          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
-          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -844,7 +817,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 23,
+        "nonce": 26,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -864,6 +837,11 @@
     },
     {
       "address": "arb1:0x7989407ef8057B0D7431f6776Bf5A08e74517367",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x7B80CDFba66768e9486eD9187367643846D72ed4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -916,11 +894,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0x9173d4E736A1625400a8711E08A5d9C20A7c9131",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "arb1:0x92BB2444773f5c286259B57821a577eF8DF79aC6",
       "type": "EOA",
       "proxyType": "EOA"
@@ -929,6 +902,37 @@
       "address": "arb1:0x99bB093821cbD1Ae99DA0AF1ef6787e116a22e41",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "EspressoNitroTEEVerifier",
+      "address": "arb1:0x9bE8dA826D2C6E6708372f0d056f57B97e6dB029",
+      "type": "Contract",
+      "template": "apechain/EspressoNitroTEEVerifier_modifiableVerifier",
+      "sourceHashes": [
+        "0x9089409f55fa69539cc4b72b5cd99a6804f2a5f259ead29d63295117d18bb2ab"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifies attestations of an AWS Nitro TEE. \nNote: currently only Succinct proofs are used.",
+      "deployerAddress": "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E",
+      "sinceTimestamp": 1780346337,
+      "sinceBlock": 469044965,
+      "values": {
+        "_nitroEnclaveVerifier": "arb1:0x1b467761E7a125381c4f654e11B397023Fc53DD8",
+        "$immutable": true,
+        "owner": "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E",
+        "pendingOwner": "arb1:0x0000000000000000000000000000000000000000",
+        "registeredSigners": [
+          "arb1:0x7B80CDFba66768e9486eD9187367643846D72ed4"
+        ],
+        "validEnclaveHashes": []
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "validEnclaveHashes": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "arb1:0x9bE8dA826D2C6E6708372f0d056f57B97e6dB029": "EspressoNitroTEEVerifier"
+      }
     },
     {
       "name": "OneStepProver0",
@@ -1071,65 +1075,20 @@
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0xBc1c855815EA37e236bFC751aE1D717D9C4DD632",
+      "address": "arb1:0xba1E3EFfD2DD8CEb7054FEfb0cee8C4300D82C1a",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x1b467761E7a125381c4f654e11B397023Fc53DD8",
+          "description": "set the root certificate, add/remove ZK verifier routes, update verifier and aggregator program IDs, and change the ZK coprocessor configuration.",
+          "role": ".owner"
+        }
+      ]
     },
     {
-      "name": "EspressoNitroTEEVerifier",
-      "address": "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C",
-      "type": "Contract",
-      "template": "espresso/Sequencing/EspressoNitroTEEVerifier",
-      "sourceHashes": [
-        "0x54ecb15af1fc51c1b9502089b11ef5ff5a3691ee76062cb44b2a8e3f536bca6b"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies attestations of an AWS Nitro TEE. \nNote: currently only Succinct proofs are used.",
-      "deployerAddress": "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E",
-      "sinceTimestamp": 1758034887,
-      "sinceBlock": 379787052,
-      "values": {
-        "$immutable": true,
-        "ATTESTATION_DIGEST": "0x501a3a7a4e0cf54b03f2488098bdd59bc1c2e8d741a300d6b25926d531733fef",
-        "ATTESTATION_TBS_PREFIX": "0x63ce814bd924c1ef12c43686e4cbf48ed1639a78387b0570c23ca921e8ce071c",
-        "CABUNDLE_KEY": "0x8a8cb7aa1da17ada103546ae6b4e13ccc2fafa17adf5f93925e0a0a4e5681a6a",
-        "CERTIFICATE_KEY": "0x925cec779426f44d8d555e01d2683a3a765ce2fa7562ca7352aeb09dfc57ea6a",
-        "certManager": "arb1:0x27CA506AC6567Ef79d364b56cf4dE9C4141d803A",
-        "DIGEST_KEY": "0x682a7e258d80bd2421d3103cbe71e3e3b82138116756b97b8256f061dc2f11fb",
-        "MODULE_ID_KEY": "0x8ce577cf664c36ba5130242bf5790c2675e9f4e6986a842b607821bee25372ee",
-        "NONCE_KEY": "0x7ab1577440dd7bedf920cb6de2f9fc6bf7ba98c78c85a3fa1f8311aac95e1759",
-        "owner": "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5",
-        "PCRS_KEY": "0x61585f8bc67a4b6d5891a4639a074964ac66fc2241dc0b36c157dc101325367a",
-        "pendingOwner": "arb1:0x0000000000000000000000000000000000000000",
-        "PUBLIC_KEY_KEY": "0xc7b28019ccfdbd30ffc65951d94bb85c9e2b8434111a000b5afd533ce65f57a4",
-        "registeredSigners": [
-          "arb1:0xC4872A3587C7937b11e6D4c0B0b0174F4b29c8D7",
-          "arb1:0xf7BE303e415DD245F685eA0CF6d1dE4B002703B0",
-          "arb1:0x9173d4E736A1625400a8711E08A5d9C20A7c9131",
-          "arb1:0x5254e65b4835abf4669f0f838EFfDCb07Ede5F7E",
-          "arb1:0x6480ec7c5bA30bAa4c7F32fbB6eD5299117c5397",
-          "arb1:0x37aa7921D4a65d4D224d9C733E3E26c750A79D81",
-          "arb1:0xfbf3197115695CaB806CDAe742470374a5c18d24",
-          "arb1:0x3aF3F87FbC378b1556b986F5BBBdC49c653f9Ed6"
-        ],
-        "TIMESTAMP_KEY": "0x4ebf727c48eac2c66272456b06a885c5cc03e54d140f63b63b6fd10c1227958e",
-        "USER_DATA_KEY": "0x5e4ea5393e4327b3014bc32f2264336b0d1ee84a4cfd197c8ad7e1e16829a16a",
-        "validEnclaveHashes": [
-          "0xb05fac9f4dab1db43d08becd89a83212a544d8f46fd7dcdf56b852a7c4f45f3c",
-          "0x58d41c1fc086f109e8ca8259e2150dc778993dce59d16674c44714d440beccd6",
-          "0x8f412806f4d2672c5f6145288cc889182ff77b6fe771664cf6a3ae4e88cf6315"
-        ]
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "validEnclaveHashes": { "severity": "HIGH" }
-      },
-      "implementationNames": {
-        "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C": "EspressoNitroTEEVerifier"
-      }
-    },
-    {
-      "address": "arb1:0xC4872A3587C7937b11e6D4c0B0b0174F4b29c8D7",
+      "address": "arb1:0xBc1c855815EA37e236bFC751aE1D717D9C4DD632",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1157,6 +1116,27 @@
       "address": "arb1:0xD8bCc052fD0C70b31D5b8Cd112000328C85019a6",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "arb1:0xba1E3EFfD2DD8CEb7054FEfb0cee8C4300D82C1a",
+      "sinceTimestamp": 1779890004,
+      "sinceBlock": 467227062,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x4388a21c687fdd5f218d7e3d13190cac4c5355818d3605fd5fb811df468ee696",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D": "SP1Verifier"
+      }
     },
     {
       "address": "arb1:0xDf5ce16E5679dB7217920dB6104C855D372Bb572",
@@ -1232,6 +1212,11 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "address": "arb1:0xe1378cc0f96ea30496645237b3F26ABC1B2c5E48",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SequencerInbox",
       "address": "arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
       "type": "Contract",
@@ -1271,7 +1256,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 76047,
+        "batchCount": 76754,
         "batchPosterManager": "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B",
         "batchPosters": ["arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B"],
         "bridge": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
@@ -1367,14 +1352,23 @@
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0xf7BE303e415DD245F685eA0CF6d1dE4B002703B0",
+      "address": "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E",
       "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "arb1:0xfbf3197115695CaB806CDAe742470374a5c18d24",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x9bE8dA826D2C6E6708372f0d056f57B97e6dB029",
+          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x9bE8dA826D2C6E6708372f0d056f57B97e6dB029",
+          "description": "set the nitro enclave verifier that checks the TEE attestations.",
+          "role": ".owner"
+        }
+      ]
     }
   ],
   "abis": {
@@ -1408,6 +1402,60 @@
       "function setEnclaveHash(bytes32 enclaveHash, bool valid)",
       "function transferOwnership(address newOwner)",
       "function verify(bytes rawQuote, bytes32 reportDataHash) view returns (tuple(bytes16 cpuSvn, bytes4 miscSelect, bytes28 reserved1, bytes16 attributes, bytes32 mrEnclave, bytes32 reserved2, bytes32 mrSigner, bytes reserved3, uint16 isvProdId, uint16 isvSvn, bytes reserved4, bytes reportData))"
+    ],
+    "arb1:0x1b467761E7a125381c4f654e11B397023Fc53DD8": [
+      "constructor(address _owner, uint64 _maxTimeDiff, bytes32[] _initializeTrustedCerts)",
+      "error AlreadyInitialized()",
+      "error CannotRemoveLatestProgramId(uint8 zkCoProcessor, bytes32 identifier)",
+      "error InvalidProgramIdentifier(uint8 zkCoProcessor, bytes32 identifier)",
+      "error NewOwnerIsZeroAddress()",
+      "error NoHandoverRequest()",
+      "error Unauthorized()",
+      "error Unknown_Zk_Coprocessor()",
+      "error ZkRouteFrozen(uint8 zkCoProcessor, bytes4 selector)",
+      "error ZkVerifierNotConfigured(uint8 zkCoProcessor)",
+      "event AggregatorIdUpdated(uint8 indexed zkCoProcessor, bytes32 indexed newId)",
+      "event AttestationSubmitted(uint8 result, uint8 zkCoProcessor, bytes output)",
+      "event BatchAttestationSubmitted(bytes32 verifierId, uint8 zkCoProcessor, bytes encodedBatch)",
+      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
+      "event OwnershipHandoverRequested(address indexed pendingOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event ProgramIdRemoved(uint8 indexed zkCoProcessor, bytes32 indexed programId, bool isAggregator)",
+      "event VerifierIdUpdated(uint8 indexed zkCoProcessor, bytes32 indexed newId, bytes32 newProofId)",
+      "event ZkRouteAdded(uint8 indexed zkCoProcessor, bytes4 indexed selector, address verifier)",
+      "event ZkRouteWasFrozen(uint8 indexed zkCoProcessor, bytes4 indexed selector)",
+      "function addVerifyRoute(uint8 _zkCoProcessor, bytes4 _selector, address _verifier)",
+      "function batchVerify(bytes output, uint8 zkCoprocessor, bytes proofBytes) returns (tuple(uint8 result, uint8 trustedCertsPrefixLen, uint64 timestamp, bytes32[] certs, bytes userData, bytes nonce, bytes publicKey, tuple(uint64 index, tuple(bytes32 first, bytes16 second) value)[] pcrs, string moduleId)[] results)",
+      "function batchVerifyWithProgramId(bytes output, uint8 zkCoprocessor, bytes32 aggregatorId, bytes32 verifierId, bytes proofBytes) returns (tuple(uint8 result, uint8 trustedCertsPrefixLen, uint64 timestamp, bytes32[] certs, bytes userData, bytes nonce, bytes publicKey, tuple(uint64 index, tuple(bytes32 first, bytes16 second) value)[] pcrs, string moduleId)[] results)",
+      "function cancelOwnershipHandover() payable",
+      "function checkTrustedIntermediateCerts(bytes32[][] _report_certs) view returns (uint8[])",
+      "function completeOwnershipHandover(address pendingOwner) payable",
+      "function freezeVerifyRoute(uint8 _zkCoProcessor, bytes4 _selector)",
+      "function getAggregatorIds(uint8 _zkCoProcessor) view returns (bytes32[])",
+      "function getVerifierIds(uint8 _zkCoProcessor) view returns (bytes32[])",
+      "function getVerifierProofId(uint8 _zkCoProcessor, bytes32 _verifierId) view returns (bytes32)",
+      "function getZkConfig(uint8 _zkCoProcessor) view returns (tuple(bytes32 verifierId, bytes32 aggregatorId, address zkVerifier))",
+      "function getZkVerifier(uint8 _zkCoProcessor, bytes4 _selector) view returns (address)",
+      "function isAggregatorIdSupported(uint8 _zkCoProcessor, bytes32 _aggregatorId) view returns (bool)",
+      "function isVerifierIdSupported(uint8 _zkCoProcessor, bytes32 _verifierId) view returns (bool)",
+      "function maxTimeDiff() view returns (uint64)",
+      "function owner() view returns (address result)",
+      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
+      "function removeAggregatorId(uint8 _zkCoProcessor, bytes32 _aggregatorId)",
+      "function removeVerifierId(uint8 _zkCoProcessor, bytes32 _verifierId)",
+      "function renounceOwnership() payable",
+      "function requestOwnershipHandover() payable",
+      "function revokeCert(bytes32 _certHash)",
+      "function rootCert() view returns (bytes32)",
+      "function setRootCert(bytes32 _rootCert)",
+      "function setZkConfiguration(uint8 _zkCoProcessor, tuple(bytes32 verifierId, bytes32 aggregatorId, address zkVerifier) _config, bytes32 _verifierProofId)",
+      "function transferOwnership(address newOwner) payable",
+      "function trustedIntermediateCerts(bytes32 trustedCertHash) view returns (bool)",
+      "function updateAggregatorId(uint8 _zkCoProcessor, bytes32 _newAggregatorId)",
+      "function updateVerifierId(uint8 _zkCoProcessor, bytes32 _newVerifierId, bytes32 _newVerifierProofId)",
+      "function verify(bytes output, uint8 zkCoprocessor, bytes proofBytes) returns (tuple(uint8 result, uint8 trustedCertsPrefixLen, uint64 timestamp, bytes32[] certs, bytes userData, bytes nonce, bytes publicKey, tuple(uint64 index, tuple(bytes32 first, bytes16 second) value)[] pcrs, string moduleId) journal)",
+      "function verifyWithProgramId(bytes output, uint8 zkCoprocessor, bytes32 programId, bytes proofBytes) returns (tuple(uint8 result, uint8 trustedCertsPrefixLen, uint64 timestamp, bytes32[] certs, bytes userData, bytes nonce, bytes publicKey, tuple(uint64 index, tuple(bytes32 first, bytes16 second) value)[] pcrs, string moduleId) journal)",
+      "function zkConfig(uint8) view returns (bytes32 verifierId, bytes32 aggregatorId, address zkVerifier)"
     ],
     "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1651,23 +1699,6 @@
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
     ],
-    "arb1:0x27CA506AC6567Ef79d364b56cf4dE9C4141d803A": [
-      "constructor()",
-      "event CertVerified(bytes32 indexed certHash)",
-      "function BASIC_CONSTRAINTS_OID() view returns (bytes32)",
-      "function CERT_ALGO_OID() view returns (bytes32)",
-      "function EC_PUB_KEY_OID() view returns (bytes32)",
-      "function KEY_USAGE_OID() view returns (bytes32)",
-      "function ROOT_CA_CERT_HASH() view returns (bytes32)",
-      "function ROOT_CA_CERT_MAX_PATH_LEN() view returns (int64)",
-      "function ROOT_CA_CERT_NOT_AFTER() view returns (uint64)",
-      "function ROOT_CA_CERT_PUB_KEY() view returns (bytes)",
-      "function ROOT_CA_CERT_SUBJECT_HASH() view returns (bytes32)",
-      "function SECP_384_R1_OID() view returns (bytes32)",
-      "function verified(bytes32) view returns (bytes)",
-      "function verifyCACert(bytes cert, bytes32 parentCertHash) returns (bytes32)",
-      "function verifyClientCert(bytes cert, bytes32 parentCertHash) returns (tuple(bool ca, uint64 notAfter, int64 maxPathLen, bytes32 subjectHash, bytes pubKey))"
-    ],
     "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1854,6 +1885,30 @@
     "arb1:0x8A4ed18B4d31bCeA908B0f96B4347a9F99e816b3": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
+    "arb1:0x9bE8dA826D2C6E6708372f0d056f57B97e6dB029": [
+      "constructor(bytes32 enclaveHash, address nitroEnclaveVerifier)",
+      "error InvalidAWSEnclaveHash()",
+      "error InvalidNitroEnclaveVerifierAddress()",
+      "error VerificationFailed(uint8 result)",
+      "event AWSEnclaveHashSet(bytes32 enclaveHash, bool valid)",
+      "event AWSSignerRegistered(address signer, bytes32 enclaveHash)",
+      "event DeletedAWSRegisteredSigner(address signer)",
+      "event NitroEnclaveVerifierSet(address nitroEnclaveVerifierAddress)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function _nitroEnclaveVerifier() view returns (address)",
+      "function acceptOwnership()",
+      "function deleteRegisteredSigners(address[] signers)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerSigner(bytes output, bytes proofBytes)",
+      "function registeredEnclaveHash(bytes32) view returns (bool)",
+      "function registeredSigners(address) view returns (bool)",
+      "function renounceOwnership()",
+      "function setEnclaveHash(bytes32 enclaveHash, bool valid)",
+      "function setNitroEnclaveVerifier(address nitroEnclaveVerifier)",
+      "function transferOwnership(address newOwner)"
+    ],
     "arb1:0xa301f8EdD4Cdf10553b6aB39d9724c56d7ab582F": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
@@ -1890,42 +1945,6 @@
       "function requireRejectable(address rollup) view",
       "function stakedNodes(address rollup, address staker) view returns (uint64[])",
       "function timedOutChallenges(address rollup, uint64 startIndex, uint64 max) view returns (uint64[], bool hasMore)"
-    ],
-    "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C": [
-      "constructor(bytes32 enclaveHash, address certManager)",
-      "error InvalidAWSEnclaveHash()",
-      "event AWSEnclaveHashSet(bytes32 enclaveHash, bool valid)",
-      "event AWSSignerRegistered(address signer, bytes32 enclaveHash)",
-      "event DeletedAWSRegisteredSigner(address signer)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function ATTESTATION_DIGEST() view returns (bytes32)",
-      "function ATTESTATION_TBS_PREFIX() view returns (bytes32)",
-      "function CABUNDLE_KEY() view returns (bytes32)",
-      "function CERTIFICATE_KEY() view returns (bytes32)",
-      "function DIGEST_KEY() view returns (bytes32)",
-      "function MODULE_ID_KEY() view returns (bytes32)",
-      "function NONCE_KEY() view returns (bytes32)",
-      "function PCRS_KEY() view returns (bytes32)",
-      "function PUBLIC_KEY_KEY() view returns (bytes32)",
-      "function TIMESTAMP_KEY() view returns (bytes32)",
-      "function USER_DATA_KEY() view returns (bytes32)",
-      "function acceptOwnership()",
-      "function certManager() view returns (address)",
-      "function certVerified(bytes32 certHash) view returns (bool)",
-      "function decodeAttestationTbs(bytes attestation) pure returns (bytes attestationTbs, bytes signature)",
-      "function deleteRegisteredSigners(address[] signers)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function registerSigner(bytes attestation, bytes signature)",
-      "function registeredEnclaveHash(bytes32) view returns (bool)",
-      "function registeredSigners(address) view returns (bool)",
-      "function renounceOwnership()",
-      "function setEnclaveHash(bytes32 enclaveHash, bool valid)",
-      "function transferOwnership(address newOwner)",
-      "function validateAttestation(bytes attestationTbs, bytes signature) returns (tuple(uint256 moduleID, uint64 timestamp, uint256 digest, uint256[] pcrs, uint256 cert, uint256[] cabundle, uint256 publicKey, uint256 userData, uint256 nonce))",
-      "function verifyCACert(bytes certificate, bytes32 parentCertHash)",
-      "function verifyClientCert(bytes certificate, bytes32 parentCertHash)"
     ],
     "arb1:0xCfAfB803EF1FEc576138Cebc79Ad41Aa6760C575": [
       "constructor(uint256 _maxDataSize, address reader4844_, bool _isUsingFeeToken)",
@@ -2005,6 +2024,22 @@
       "function setValidKeyset(bytes keysetBytes)",
       "function totalDelayedMessagesRead() view returns (uint256)",
       "function updateRollupAddress()"
+    ],
+    "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[5] input) view",
+      "function verifyProof(uint256[8] proof, uint256[5] input) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "arb1:0xdbE68E9e47c4AC96Ab1300902b4B87A7E6470786": [
       "constructor()",
@@ -2115,10 +2150,10 @@
     ]
   },
   "usedTemplates": {
-    "espresso/Sequencing": "0x1b79cd76afba6e347d811f429fd36c08ddc9eb88b43d39abeeb230e6bd576105",
-    "espresso/Sequencing/EspressoNitroTEEVerifier": "0xcfbcf143ae6576f201097bd2db629a4fbdc20ae286e1555faf44db61111d2eab",
+    "apechain/EspressoNitroTEEVerifier_modifiableVerifier": "0xcfbcf143ae6576f201097bd2db629a4fbdc20ae286e1555faf44db61111d2eab",
     "espresso/Sequencing/EspressoSGXTEEVerifier": "0x62bb42822457b8146a3651a1d679d850d8a71b735dea0dd125493dd81cf1c23e",
     "espresso/Sequencing/EspressoTEEVerifier_gateway": "0x7d9c15aef19b3644fef05d35c978c01dce14e16ba55e9fd3c6326394607401e3",
+    "espresso/Sequencing/NitroEnclaveVerifier": "0xeec57567f567c5ffa38c4f80ac540496aa560068877ce088f6f5d9e48c216bca",
     "espresso/Sequencing/QuoteVerifier": "0xb7f636cfce72573f7409bc600a4b5d138f2dd0b21892e2f0b670471967df4837",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
@@ -2137,6 +2172,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 460628803 },
-  "permissionsConfigHash": "0xcb04e7d8e977ad8799452ba4b0234f40ab6c447b88bc486dab6c64f117bdab8a"
+  "usedBlockNumbers": { "arbitrum": 469990072 },
+  "permissionsConfigHash": "0x7df0cb3ecc5971ad852f08315286c016f44a0095fc0de99ae807890e4d07826f"
 }

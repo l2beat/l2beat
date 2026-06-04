@@ -1,14 +1,50 @@
-Generated with discovered.json: 0xc4133f2ab037b45c02e16f7dad7dda9d35b8b01e
+Generated with discovered.json: 0xebede6c424d0cd648013013540cc2ff4abbfa8c8
 
-# Diff at Mon, 25 May 2026 14:33:27 GMT:
+# Diff at Thu, 04 Jun 2026 15:13:50 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@6898129972dbc5b1b4f1389afaf9cb3fb7fd3380 block: 1779198858
-- current timestamp: 1779719447
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1779198858
+- current timestamp: 1780585824
 
 ## Description
 
-Picked up the new `ArbOS v51.1 wasmModuleRoot` label from the globalConfig type map. Config-only — chain's own wasmModuleRoot is unchanged.
+Molten changed to reproducible TEE verification SP1 programs, also upgraded to SP1 v6.1.0.
+
+## Watched changes
+
+```diff
+    contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22) [espresso/Sequencing/NitroEnclaveVerifier] {
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+      values.succintZkConfig.verifierId:
+-        "0x00e874289e8c7f42381b6220f438801d2d1478dc8230f866a31e5ceec6e93322"
++        "0x00643c7149cf335e7ec9d3f3301e69658a7f0ef2bc7546509c257ed8809f28e1"
+      values.succintZkConfig.aggregatorId:
+-        "0x002bb66c60302a81a621d7899e3f6ee1d0db9fb1eae5d1e80e94a33cb1e24922"
++        "0x00294928e44f0cdc9c74848c4cafcdb29f733a3bc07408c240be3d5afe750b3e"
+      values.succintZkConfig.zkVerifier:
+-        "arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D"
++        "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1779198858 => .flat}/SP1Verifier.sol    | 114 +++++++++++++++------
+ 1 file changed, 82 insertions(+), 32 deletions(-)
+```
 
 ## Config/verification related changes
 
@@ -24,7 +60,7 @@ discovery. Values are for block 1779198858 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x83bbc4faf9f265527dcb0f36b54b14b253076ed2
+Generated with discovered.json: 0x1b0a8a0049b0c0962951bc82a8301a7ec60bffc1
 
 # Diff at Tue, 19 May 2026 13:56:37 GMT:
 

@@ -2708,6 +2708,10 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
       'The hash of the initial Cartesi machine state that is used in Dave dispute games of Cartesi Honeypot v1.',
     verificationStatus: 'notVerified',
   },
+  '0x5731b637d9e3b693fc0d74e570bac76ca6c0defe3e4c119b1cea981a9bd307d6': {
+    title: 'Appchain TEE Enclave hash',
+    verificationStatus: 'unsuccessful',
+  },
   '0x002bb66c60302a81a621d7899e3f6ee1d0db9fb1eae5d1e80e94a33cb1e24922': {
     title: 'Nitro TEE Aggregated Verifer',
     proverSystemProject: ProjectId('sp1turbo'),

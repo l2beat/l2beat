@@ -156,6 +156,10 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
         projectId: ProjectId('appchain'),
         sinceTimestamp: UnixTime(1780326419),
       },
+      {
+        projectId: ProjectId('apechain'),
+        sinceTimestamp: UnixTime(1780346337),
+      },
     ],
     verifierHashes: [
       {
@@ -174,6 +178,12 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
+              '0xD9d5C8456a168Dd25561064F47bF116111131B1D',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'arbitrum',
               '0xD9d5C8456a168Dd25561064F47bF116111131B1D',
             ),
           },
