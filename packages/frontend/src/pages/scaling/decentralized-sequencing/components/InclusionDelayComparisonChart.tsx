@@ -127,13 +127,7 @@ function getComparisonChartData(
     }
   }
 
-  return [...points.values()]
-    .sort((a, b) => a.censoringFraction - b.censoringFraction)
-    .map((point) => {
-      for (const entry of entries) {
-        point[entry.slug] ??= null
-      }
-      point[ETHEREUM_DATA_KEY] ??= null
-      return point
-    })
+  return [...points.values()].sort(
+    (a, b) => a.censoringFraction - b.censoringFraction,
+  )
 }

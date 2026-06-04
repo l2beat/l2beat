@@ -33,7 +33,7 @@ export type InclusionDelayYAxisScale = 'linear' | 'log'
 export type InclusionDelayChartDataPoint = {
   timestamp: number
   censoringFraction: number
-  [key: string]: number | null
+  [key: string]: number | null | undefined
 }
 
 const INCLUSION_DELAY_ENTITY_MARKER_COLOR = 'var(--chart-cyan)'

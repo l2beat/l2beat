@@ -48,15 +48,30 @@ export interface InclusionDelayData {
   thresholdMarkers: InclusionDelayThresholdMarker[]
 }
 
-export interface InclusionDelayChartProps extends InclusionDelayData {
+export interface InclusionDelayCurve {
+  chartData: InclusionDelayChartPoint[]
   maxCensorFraction: number
 }
+
+export interface InclusionDelayChartProps
+  extends InclusionDelayData,
+    InclusionDelayCurve {}
 
 export function prepareInclusionDelay(
   chart: ProjectInclusionDelayChart,
 ): InclusionDelayChartProps {
   return {
     ...getInclusionDelayData(chart),
+    maxCensorFraction: chart.maxCensorFraction,
+  }
+}
+
+export function prepareInclusionDelayCurve(
+  chart: ProjectInclusionDelayChart,
+): InclusionDelayCurve {
+  const model = createInclusionDelayModel(chart)
+  return {
+    chartData: buildChartData(model),
     maxCensorFraction: chart.maxCensorFraction,
   }
 }

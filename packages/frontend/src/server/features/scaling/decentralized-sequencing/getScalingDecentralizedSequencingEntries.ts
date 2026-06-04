@@ -1,7 +1,6 @@
 import type {
   Project,
   ProjectInclusionDelayChart,
-  ProjectSequencerSetSpec,
   TableReadyValue,
 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
@@ -11,30 +10,19 @@ import type { CommonScalingEntry } from '~/server/features/scaling/getCommonScal
 import { getCommonScalingEntry } from '~/server/features/scaling/getCommonScalingEntry'
 import { ps } from '~/server/projects'
 import {
-  type InclusionDelayChartProps,
-  prepareInclusionDelay,
+  type InclusionDelayCurve,
+  prepareInclusionDelayCurve,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 
-export const DECENTRALIZED_SEQUENCER_SET_VALUE = 'Decentralized Sequencer Set'
+const DECENTRALIZED_SEQUENCER_SET_VALUE = 'Decentralized Sequencer Set'
 
-type DecentralizedSequencingProjectLike = {
-  scalingRisks: {
-    self: {
-      sequencerFailure: {
-        value: string
-      }
-    }
-  }
-  scalingTechnology: {
-    sequencing?: {
-      sequencerSetSpec?: ProjectSequencerSetSpec
-    }
-  }
-}
+type ScalingDecentralizedSequencingProject = Project<
+  'statuses' | 'scalingInfo' | 'scalingRisks' | 'display' | 'scalingTechnology',
+  'contracts'
+>
 
 export interface ScalingDecentralizedSequencingEntry
   extends CommonScalingEntry {
-  sequencingHref: string
   sequencerCount: TableReadyValue | undefined
   blockProductionAccess: TableReadyValue | undefined
   entryPolicy: TableReadyValue | undefined
@@ -42,7 +30,7 @@ export interface ScalingDecentralizedSequencingEntry
   blockProduction: TableReadyValue | undefined
   deterministicCrGadget: TableReadyValue | undefined
   additionalCrGadgets: TableReadyValue | undefined
-  inclusionDelay: InclusionDelayChartProps | undefined
+  inclusionDelay: InclusionDelayCurve | undefined
 }
 
 export async function getScalingDecentralizedSequencingEntries() {
@@ -74,8 +62,8 @@ export async function getScalingDecentralizedSequencingEntries() {
     .sort((a, b) => a.name.localeCompare(b.name))
 }
 
-export function isDecentralizedSequencingProject(
-  project: DecentralizedSequencingProjectLike,
+function isDecentralizedSequencingProject(
+  project: ScalingDecentralizedSequencingProject,
 ) {
   return (
     project.scalingRisks.self.sequencerFailure.value ===
@@ -85,14 +73,7 @@ export function isDecentralizedSequencingProject(
 }
 
 function getScalingDecentralizedSequencingEntry(
-  project: Project<
-    | 'statuses'
-    | 'scalingInfo'
-    | 'scalingRisks'
-    | 'display'
-    | 'scalingTechnology',
-    'contracts'
-  >,
+  project: ScalingDecentralizedSequencingProject,
   changes: ProjectChanges,
 ): ScalingDecentralizedSequencingEntry | undefined {
   const sequencing = project.scalingTechnology.sequencing
@@ -103,21 +84,20 @@ function getScalingDecentralizedSequencingEntry(
 
   return {
     ...getCommonScalingEntry({ project, changes }),
-    sequencingHref: `/scaling/projects/${project.slug}#sequencing`,
     sequencerCount: spec.sequencerCount,
     blockProductionAccess: spec.blockProductionAccess,
-    entryPolicy: getEntryPolicy(spec),
-    timing: getTiming(spec),
+    entryPolicy: withSecondLine(spec.stakePerValidator, spec.rateLimit),
+    timing: withSecondLine(spec.slotTime, spec.epochTime),
     blockProduction: getBlockProduction(sequencing.inclusionDelayChart),
     deterministicCrGadget: spec.deterministicCrGadget,
     additionalCrGadgets: spec.additionalCrGadgets,
     inclusionDelay: sequencing.inclusionDelayChart
-      ? prepareInclusionDelay(sequencing.inclusionDelayChart)
+      ? prepareInclusionDelayCurve(sequencing.inclusionDelayChart)
       : undefined,
   }
 }
 
-export function getBlockProduction(
+function getBlockProduction(
   chart: ProjectInclusionDelayChart | undefined,
 ): TableReadyValue | undefined {
   if (!chart) {
@@ -153,39 +133,19 @@ export function getBlockProduction(
   }
 }
 
-export function getEntryPolicy(
-  spec: ProjectSequencerSetSpec,
+function withSecondLine(
+  value: TableReadyValue | undefined,
+  secondLine: TableReadyValue | undefined,
 ): TableReadyValue | undefined {
-  const stake = spec.stakePerValidator
-  const rateLimit = spec.rateLimit
-
-  if (!stake) {
-    return rateLimit
+  if (!value) {
+    return secondLine
   }
 
   return {
-    ...stake,
-    secondLine: rateLimit?.value,
-    description: joinDescriptions(stake.description, rateLimit?.description),
-    sentiment: stake.sentiment ?? rateLimit?.sentiment,
-  }
-}
-
-export function getTiming(
-  spec: ProjectSequencerSetSpec,
-): TableReadyValue | undefined {
-  const slotTime = spec.slotTime
-  const epochTime = spec.epochTime
-
-  if (!slotTime) {
-    return epochTime
-  }
-
-  return {
-    ...slotTime,
-    secondLine: epochTime?.value,
-    description: joinDescriptions(slotTime.description, epochTime?.description),
-    sentiment: slotTime.sentiment ?? epochTime?.sentiment,
+    ...value,
+    secondLine: secondLine?.value,
+    description: joinDescriptions(value.description, secondLine?.description),
+    sentiment: value.sentiment ?? secondLine?.sentiment,
   }
 }
 

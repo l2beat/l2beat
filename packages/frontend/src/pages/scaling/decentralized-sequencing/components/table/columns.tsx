@@ -9,6 +9,10 @@ import type { ScalingDecentralizedSequencingEntry } from '~/server/features/scal
 
 const columnHelper = createColumnHelper<ScalingDecentralizedSequencingEntry>()
 
+function getSequencingHref(entry: ScalingDecentralizedSequencingEntry) {
+  return `/scaling/projects/${entry.slug}#sequencing`
+}
+
 type SequencingTableValueKey =
   | 'sequencerCount'
   | 'blockProductionAccess'
@@ -63,7 +67,7 @@ const tableValueColumns = [
 }[]
 
 export const scalingDecentralizedSequencingColumns = [
-  ...getScalingCommonProjectColumns(columnHelper, (row) => row.sequencingHref),
+  ...getScalingCommonProjectColumns(columnHelper, getSequencingHref),
   ...tableValueColumns.map(({ key, header, tooltip }) =>
     columnHelper.accessor((entry) => adjustTableValue(entry[key]), {
       id: key,
@@ -71,7 +75,7 @@ export const scalingDecentralizedSequencingColumns = [
       cell: (ctx) => (
         <TableValueCell
           value={ctx.row.original[key]}
-          href={ctx.row.original.sequencingHref}
+          href={getSequencingHref(ctx.row.original)}
         />
       ),
       meta: tooltip ? { tooltip } : undefined,
