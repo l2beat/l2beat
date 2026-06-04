@@ -3,26 +3,23 @@ import { TableSortingProvider } from '~/components/table/sorting/TableSortingCon
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { ScalingDecentralizedSequencingEntry } from '~/server/features/scaling/decentralized-sequencing/getScalingDecentralizedSequencingEntries'
+import type { ScalingSequencingEntry } from '~/server/features/scaling/sequencing/getScalingSequencingEntries'
 import { InclusionDelayComparisonChart } from './components/InclusionDelayComparisonChart'
-import { ScalingDecentralizedSequencingTable } from './components/table/ScalingDecentralizedSequencingTable'
+import { ScalingSequencingTable } from './components/table/ScalingSequencingTable'
 
 interface Props extends AppLayoutProps {
-  entries: ScalingDecentralizedSequencingEntry[]
+  entries: ScalingSequencingEntry[]
 }
 
-export function ScalingDecentralizedSequencingPage({
-  entries,
-  ...props
-}: Props) {
+export function ScalingSequencingPage({ entries, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
         <MainPageHeader description="Decentralized sequencing or validating improves short-term censorship restistance compared to centralized sequencing. Actual inclusion delays under censorship depend on sequencer rotation, sampling method, stake distribution, and live non-censoring operators. Long-term censorship resistance is strongest when paired with a deterministic host-chain path, such as forced inclusion from- or an escape hatch to Ethereum.">
-          Decentralized Sequencing
+          Sequencing
         </MainPageHeader>
         <TableSortingProvider initialSort={{ id: '#', desc: false }}>
-          <ScalingDecentralizedSequencingTable entries={entries} />
+          <ScalingSequencingTable entries={entries} />
         </TableSortingProvider>
         <InclusionDelayComparisonChart entries={entries} />
       </SideNavLayout>

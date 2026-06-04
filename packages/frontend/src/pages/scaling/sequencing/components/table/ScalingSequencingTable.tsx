@@ -4,18 +4,18 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
-import type { ScalingDecentralizedSequencingEntry } from '~/server/features/scaling/decentralized-sequencing/getScalingDecentralizedSequencingEntries'
-import { scalingDecentralizedSequencingColumns } from './columns'
+import type { ScalingSequencingEntry } from '~/server/features/scaling/sequencing/getScalingSequencingEntries'
+import { scalingSequencingColumns } from './columns'
 
 interface Props {
-  entries: ScalingDecentralizedSequencingEntry[]
+  entries: ScalingSequencingEntry[]
 }
 
-export function ScalingDecentralizedSequencingTable({ entries }: Props) {
+export function ScalingSequencingTable({ entries }: Props) {
   const { sorting, setSorting } = useTableSorting()
   const table = useTable({
     data: entries,
-    columns: scalingDecentralizedSequencingColumns,
+    columns: scalingSequencingColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     state: {

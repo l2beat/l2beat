@@ -16,13 +16,12 @@ import {
 
 const DECENTRALIZED_SEQUENCER_SET_VALUE = 'Decentralized Sequencer Set'
 
-type ScalingDecentralizedSequencingProject = Project<
+type ScalingSequencingProject = Project<
   'statuses' | 'scalingInfo' | 'scalingRisks' | 'display' | 'scalingTechnology',
   'contracts'
 >
 
-export interface ScalingDecentralizedSequencingEntry
-  extends CommonScalingEntry {
+export interface ScalingSequencingEntry extends CommonScalingEntry {
   sequencerCount: TableReadyValue | undefined
   blockProductionAccess: TableReadyValue | undefined
   entryPolicy: TableReadyValue | undefined
@@ -33,7 +32,7 @@ export interface ScalingDecentralizedSequencingEntry
   inclusionDelay: InclusionDelayCurve | undefined
 }
 
-export async function getScalingDecentralizedSequencingEntries() {
+export async function getScalingSequencingEntries() {
   const [projectsChangeReport, projects] = await Promise.all([
     getProjectsChangeReport(),
     ps.getProjects({
@@ -51,9 +50,9 @@ export async function getScalingDecentralizedSequencingEntries() {
   ])
 
   return projects
-    .filter(isDecentralizedSequencingProject)
+    .filter(isSequencingProject)
     .map((project) =>
-      getScalingDecentralizedSequencingEntry(
+      getScalingSequencingEntry(
         project,
         projectsChangeReport.getChanges(project.id),
       ),
@@ -62,9 +61,7 @@ export async function getScalingDecentralizedSequencingEntries() {
     .sort((a, b) => a.name.localeCompare(b.name))
 }
 
-function isDecentralizedSequencingProject(
-  project: ScalingDecentralizedSequencingProject,
-) {
+function isSequencingProject(project: ScalingSequencingProject) {
   return (
     project.scalingRisks.self.sequencerFailure.value ===
       DECENTRALIZED_SEQUENCER_SET_VALUE &&
@@ -72,10 +69,10 @@ function isDecentralizedSequencingProject(
   )
 }
 
-function getScalingDecentralizedSequencingEntry(
-  project: ScalingDecentralizedSequencingProject,
+function getScalingSequencingEntry(
+  project: ScalingSequencingProject,
   changes: ProjectChanges,
-): ScalingDecentralizedSequencingEntry | undefined {
+): ScalingSequencingEntry | undefined {
   const sequencing = project.scalingTechnology.sequencing
   const spec = sequencing?.sequencerSetSpec
   if (!sequencing || !spec) {

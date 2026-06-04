@@ -28,7 +28,7 @@ const mainPages: MainPage[] = [
   },
   {
     type: 'scaling',
-    title: 'Decentralized Sequencing',
+    title: 'Sequencing',
   },
   {
     type: 'scaling',

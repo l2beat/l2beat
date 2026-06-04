@@ -5,11 +5,11 @@ import {
   adjustTableValue,
   sortTableValues,
 } from '~/components/table/sorting/sortTableValues'
-import type { ScalingDecentralizedSequencingEntry } from '~/server/features/scaling/decentralized-sequencing/getScalingDecentralizedSequencingEntries'
+import type { ScalingSequencingEntry } from '~/server/features/scaling/sequencing/getScalingSequencingEntries'
 
-const columnHelper = createColumnHelper<ScalingDecentralizedSequencingEntry>()
+const columnHelper = createColumnHelper<ScalingSequencingEntry>()
 
-function getSequencingHref(entry: ScalingDecentralizedSequencingEntry) {
+function getSequencingHref(entry: ScalingSequencingEntry) {
   return `/scaling/projects/${entry.slug}#sequencing`
 }
 
@@ -66,7 +66,7 @@ const tableValueColumns = [
   tooltip?: string
 }[]
 
-export const scalingDecentralizedSequencingColumns = [
+export const scalingSequencingColumns = [
   ...getScalingCommonProjectColumns(columnHelper, getSequencingHref),
   ...tableValueColumns.map(({ key, header, tooltip }) =>
     columnHelper.accessor((entry) => adjustTableValue(entry[key]), {

@@ -8,17 +8,15 @@ import {
   type InclusionDelayChartDataPoint,
   type InclusionDelayYAxisScale,
 } from '~/components/projects/sections/sequencing/InclusionDelayChart'
-import type { ScalingDecentralizedSequencingEntry } from '~/server/features/scaling/decentralized-sequencing/getScalingDecentralizedSequencingEntries'
+import type { ScalingSequencingEntry } from '~/server/features/scaling/sequencing/getScalingSequencingEntries'
 import { generateAccessibleColors } from '~/utils/generateColors'
 
 interface Props {
-  entries: ScalingDecentralizedSequencingEntry[]
+  entries: ScalingSequencingEntry[]
 }
 
-type ChartEntry = ScalingDecentralizedSequencingEntry & {
-  inclusionDelay: NonNullable<
-    ScalingDecentralizedSequencingEntry['inclusionDelay']
-  >
+type ChartEntry = ScalingSequencingEntry & {
+  inclusionDelay: NonNullable<ScalingSequencingEntry['inclusionDelay']>
 }
 
 const ETHEREUM_DATA_KEY = 'ethereumDelayDays'
@@ -66,7 +64,7 @@ export function InclusionDelayComparisonChart({ entries }: Props) {
           </p>
         </div>
         <RadioGroup
-          name="decentralized-sequencing-inclusion-delay-y-axis"
+          name="scaling-sequencing-inclusion-delay-y-axis"
           value={yAxisScale}
           onValueChange={(value) =>
             setYAxisScale(value as InclusionDelayYAxisScale)

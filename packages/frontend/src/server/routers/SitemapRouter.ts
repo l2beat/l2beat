@@ -13,7 +13,7 @@ const STATIC_PATHS = [
   '/scaling/tvs',
   '/scaling/tvs/breakdown',
   '/scaling/data-availability',
-  '/scaling/decentralized-sequencing',
+  '/scaling/sequencing',
   '/scaling/liveness',
   '/scaling/costs',
   '/scaling/archived',

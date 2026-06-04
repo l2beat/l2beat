@@ -8,12 +8,12 @@ import { getScalingActivityData } from './activity/getScalingActivityData'
 import { getScalingArchivedData } from './archived/getScalingArchivedData'
 import { getScalingCostsData } from './costs/getScalingCostsData'
 import { getScalingDataAvailabilityData } from './data-availability/getScalingDataAvailabilityData'
-import { getScalingDecentralizedSequencingData } from './decentralized-sequencing/getScalingDecentralizedSequencingData'
 import { getScalingLivenessData } from './liveness/getScalingLivenessData'
 import { getScalingProjectData } from './project/getScalingProjectData'
 import { getScalingProjectTvsBreakdownData } from './project/tvs-breakdown/getScalingProjectTvsBreakdownData'
 import { getScalingRiskData } from './risk/getScalingRiskData'
 import { getScalingRiskStateValidationData } from './risk/state-validation/getScalingRiskStateValidationData'
+import { getScalingSequencingData } from './sequencing/getScalingSequencingData'
 import { getScalingSummaryData } from './summary/getScalingSummaryData'
 import { getScalingTvsBreakdownData } from './tvs/breakdown/getScalingTvsBreakdownData'
 import { getScalingTvsData } from './tvs/getScalingTvsData'
@@ -80,12 +80,8 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
-  router.get('/scaling/decentralized-sequencing', async (req, res) => {
-    const data = await getScalingDecentralizedSequencingData(
-      req,
-      manifest,
-      cache,
-    )
+  router.get('/scaling/sequencing', async (req, res) => {
+    const data = await getScalingSequencingData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
