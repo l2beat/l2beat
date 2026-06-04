@@ -18,7 +18,12 @@
       "permissions": [{ "type": "guard" }]
     },
     "INCIDENT_RESPONDER": {
-      "permissions": [{ "type": "guard" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pause for up to {{pauseExpiryFmt}}, but cannot unpause or extend pauses."
+        }
+      ]
     }
   },
   "category": "core"

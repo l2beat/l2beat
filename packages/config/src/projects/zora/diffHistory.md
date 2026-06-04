@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x5dc8ead0ca196dd308b2d984140a05d36743f644
+
+# Diff at Thu, 04 Jun 2026 17:46:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778850530
+- current timestamp: 1778850530
+
+## Description
+
+OptimismPortal2 DisputeGameMap + Base INCIDENT_RESPONDER permission semantics
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778850530 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x1a0ad011913A150f69f6A19DF447A0CfD9551054) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
 Generated with discovered.json: 0x565ceb592bab9996077219bf6756523a392fa255
 
 # Diff at Fri, 15 May 2026 13:11:04 GMT:

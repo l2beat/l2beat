@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6a2e45f0be2690895b75be24769a9025b80f9288
+Generated with discovered.json: 0xd090fd5357e719e56ccf75648c0e6ed17032b98c
 
-# Diff at Tue, 02 Jun 2026 10:53:13 GMT:
+# Diff at Thu, 04 Jun 2026 17:38:05 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1777994255
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x6a2e45f0be2690895b75be24769a9025b80f9288
 
 ## Description
 
-Conduit Multisig 1 rotated one signer (operator key `0x3840…fd5f` → `0xcdC9…4853`); same rotation propagated across Conduit Multisigs 1/2/3 on eth/arb1/base.
+OptimismPortal2 DisputeGameMap + Base INCIDENT_RESPONDER permission semantics
 
 ## Watched changes
 
@@ -19,6 +19,20 @@ Conduit Multisig 1 rotated one signer (operator key `0x3840…fd5f` → `0xcdC9�
 +        "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853"
       values.$members.8:
 -        "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777994255 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
     }
 ```
 

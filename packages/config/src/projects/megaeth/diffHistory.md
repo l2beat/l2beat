@@ -1,4 +1,56 @@
-Generated with discovered.json: 0xd2c79590407c41dbb2f81976c810de9319cf0e42
+Generated with discovered.json: 0xb5d6cffbd6eedf37cab2e8b8316dc2d287eca5c0
+
+# Diff at Thu, 04 Jun 2026 17:41:35 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778535511
+- current timestamp: 1778535511
+
+## Description
+
+OptimismPortal2 DisputeGameMap + Base INCIDENT_RESPONDER permission semantics
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778535511 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x910b159F79288DD706789ec7768E979d4D88C057) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97).
++++ severity: HIGH
+      values.verifier_242f9d5b:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.verifier_310fe598:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.verifier_73c457ba:
++        "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3"
++++ severity: HIGH
+      values.verifier_9f39696c:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.verifier_bb001d44:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.verifier_f536085a:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta:
++        {"verifier_310fe598":{"severity":"HIGH"},"verifier_9f39696c":{"severity":"HIGH"},"verifier_f536085a":{"severity":"HIGH"},"verifier_bb001d44":{"severity":"HIGH"},"verifier_73c457ba":{"severity":"HIGH"},"verifier_242f9d5b":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x3b07aa1050cf1fb1a8df421493705e7bb5f329a6
 
 # Diff at Fri, 15 May 2026 12:36:09 GMT:
 

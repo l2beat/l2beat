@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x21cb3e7cc2e5f5d3a0cf6b096eb85b78f65e2e0a
+Generated with discovered.json: 0x6a58592b0cae775bd8ce918dcab8a93c13d01384
 
-# Diff at Tue, 02 Jun 2026 13:03:51 GMT:
+# Diff at Thu, 04 Jun 2026 17:39:47 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@63ce779d811ac540efbb445178f952fd5f075eb6 block: 1777451710
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1777451710
 - current timestamp: 1780405336
 
 ## Description
 
-Conduit ms changes.
+OptimismPortal2 DisputeGameMap + Base INCIDENT_RESPONDER permission semantics
 
 ## Watched changes
 
@@ -19,6 +19,20 @@ Conduit ms changes.
 +        "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853"
       values.$members.8:
 -        "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777451710 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xD7cF5ce4688663e057E99D9f880599Ce88757695) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific contract is deployed in the agglayer system context which **disables the depositTransaction() function**, preventing users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
     }
 ```
 

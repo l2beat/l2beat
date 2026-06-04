@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x141596e12dbc480795216cc111e282681e97090d
+Generated with discovered.json: 0x0ed6fd4e51cf1be46474a3c0dc6acd812d6696c2
 
-# Diff at Wed, 03 Jun 2026 08:05:04 GMT:
+# Diff at Thu, 04 Jun 2026 17:51:06 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779198836
@@ -107,13 +107,13 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 
 ```diff
     contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
-    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 621.
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
       sourceHashes.1:
 -        "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
 +        "0x247eac30dea3a06b4a7142ac53d0b9ad882952c87406f165ec8721b0d97bd6da"
       description:
 -        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
-+        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 621."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier."
       values.$implementation:
 -        "eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"
 +        "eth:0x66d94eE8F529b683ED6013729784e8bb44697A64"
@@ -130,7 +130,7 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 +        86400
       values.RespectedGameString:
 -        "FaultDisputeGame"
-+        621
++        "AggregateVerifier"
 +++ severity: HIGH
       values.respectedGameType:
 -        0
@@ -424,6 +424,24 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1779198836 (main branch discovery), not current.
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","role":".INCIDENT_RESPONDER"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","description":"can pause for up to 3mo 1d, but cannot unpause or extend pauses.","role":".INCIDENT_RESPONDER"}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
 
 ```diff
     contract SkyLink Bridge (eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A) [maker/SkyLinkBridge] {

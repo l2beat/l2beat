@@ -641,6 +641,31 @@
     },
     {
       "name": "RiscZeroGroth16Verifier",
+      "address": "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97",
+      "type": "Contract",
+      "template": "taiko/RiscZeroGroth16Verifier",
+      "sourceHashes": [
+        "0x20f30107695bee36a63acac61a5ba93d47cbb8ad79df70f6dd9b16d15db66ad3"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).",
+      "deployerAddress": "eth:0x5b6aE7530EBCa60b249D07de0B88F131FC89fDc1",
+      "sinceTimestamp": 1742812703,
+      "sinceBlock": 22116217,
+      "values": {
+        "$immutable": true,
+        "BN254_CONTROL_ID": "0x04446e66d300eb7fb45c9726bb53c793dda407a62e9601618bb43c5c14657ac0",
+        "CONTROL_ROOT_0": "0x4c2d7bb17348241967b0276818329053",
+        "CONTROL_ROOT_1": "0x7645843b52b258e94f99b1cf022d2e12",
+        "SELECTOR": "0x9f39696c",
+        "VERSION": "2.0.0-rc.3"
+      },
+      "implementationNames": {
+        "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97": "RiscZeroGroth16Verifier"
+      }
+    },
+    {
+      "name": "RiscZeroGroth16Verifier",
       "address": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D",
       "type": "Contract",
       "template": "taiko/RiscZeroGroth16Verifier",
@@ -721,6 +746,36 @@
         "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A": "L1StandardBridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "RiscZeroVerifierEmergencyStop",
+      "address": "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7",
+      "type": "Contract",
+      "template": "risc0/RiscZeroVerifierEmergencyStop",
+      "sourceHashes": [
+        "0x285eacaac2ca4f68ef5e866028ae0bc88ebc6f583afc9035f289ad34efc034e3"
+      ],
+      "proxyType": "immutable",
+      "description": "A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.",
+      "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
+      "sinceTimestamp": 1718237459,
+      "sinceBlock": 20079239,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
+        "paused": true,
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "verifier": "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C"
+      },
+      "fieldMeta": {
+        "paused": {
+          "severity": "HIGH",
+          "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
+        }
+      },
+      "implementationNames": {
+        "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7": "RiscZeroVerifierEmergencyStop"
+      }
     },
     {
       "name": "KailuaGame",
@@ -812,6 +867,29 @@
       },
       "implementationNames": {
         "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": "RiscZeroSetVerifier"
+      }
+    },
+    {
+      "name": "RiscZeroGroth16Verifier",
+      "address": "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x81aaa989dd0b4061656a407b0facd27e1d2a5355486422e37dc62d5e1b077032"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
+      "sinceTimestamp": 1747973051,
+      "sinceBlock": 22543063,
+      "values": {
+        "$immutable": true,
+        "BN254_CONTROL_ID": "0x04446e66d300eb7fb45c9726bb53c793dda407a62e9601618bb43c5c14657ac0",
+        "CONTROL_ROOT_0": "0x61ee75ec4d335b47328b123e27894388",
+        "CONTROL_ROOT_1": "0x60ee46c7447efe2120331cd433cb779b",
+        "SELECTOR": "0xf536085a",
+        "VERSION": "2.0.3"
+      },
+      "implementationNames": {
+        "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF": "RiscZeroGroth16Verifier"
       }
     },
     {
@@ -980,6 +1058,36 @@
       }
     },
     {
+      "name": "RiscZeroVerifierEmergencyStop",
+      "address": "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3",
+      "type": "Contract",
+      "template": "risc0/RiscZeroVerifierEmergencyStop",
+      "sourceHashes": [
+        "0x285eacaac2ca4f68ef5e866028ae0bc88ebc6f583afc9035f289ad34efc034e3"
+      ],
+      "proxyType": "immutable",
+      "description": "A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.",
+      "deployerAddress": "eth:0x5b6aE7530EBCa60b249D07de0B88F131FC89fDc1",
+      "sinceTimestamp": 1742812715,
+      "sinceBlock": 22116218,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
+        "paused": true,
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "verifier": "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97"
+      },
+      "fieldMeta": {
+        "paused": {
+          "severity": "HIGH",
+          "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
+        }
+      },
+      "implementationNames": {
+        "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3": "RiscZeroVerifierEmergencyStop"
+      }
+    },
+    {
       "address": "eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1135,6 +1243,7 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
         }
@@ -1158,12 +1267,15 @@
         "$immutable": true,
         "owner": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "verifier_242f9d5b": "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782",
+        "verifier_310fe598": "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7",
+        "verifier_73c457ba": "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696",
+        "verifier_9f39696c": "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3",
+        "verifier_bb001d44": "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698",
+        "verifier_f536085a": "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1",
         "verifier5Manual": "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698",
         "verifier6Manual": "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696",
         "verifier7Manual": "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782"
-      },
-      "implementationNames": {
-        "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": "RiscZeroVerifierRouter"
       },
       "fieldMeta": {
         "verifier_310fe598": { "severity": "HIGH" },
@@ -1172,6 +1284,9 @@
         "verifier_bb001d44": { "severity": "HIGH" },
         "verifier_73c457ba": { "severity": "HIGH" },
         "verifier_242f9d5b": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": "RiscZeroVerifierRouter"
       }
     },
     {
@@ -1809,6 +1924,36 @@
       ]
     },
     {
+      "name": "RiscZeroVerifierEmergencyStop",
+      "address": "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1",
+      "type": "Contract",
+      "template": "risc0/RiscZeroVerifierEmergencyStop",
+      "sourceHashes": [
+        "0x285eacaac2ca4f68ef5e866028ae0bc88ebc6f583afc9035f289ad34efc034e3"
+      ],
+      "proxyType": "immutable",
+      "description": "A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.",
+      "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
+      "sinceTimestamp": 1747973063,
+      "sinceBlock": 22543064,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
+        "paused": true,
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "verifier": "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF"
+      },
+      "fieldMeta": {
+        "paused": {
+          "severity": "HIGH",
+          "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
+        }
+      },
+      "implementationNames": {
+        "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1": "RiscZeroVerifierEmergencyStop"
+      }
+    },
+    {
       "name": "L1CrossDomainMessenger",
       "address": "eth:0xE3d981643b806FB8030CDB677D6E60892E547EdA",
       "type": "Contract",
@@ -2028,6 +2173,18 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7",
+          "description": "pause the verifier.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3",
+          "description": "pause the verifier.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782",
           "description": "pause the verifier.",
           "role": ".owner"
@@ -2049,6 +2206,12 @@
           "from": "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696",
           "description": "pause the verifier.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1",
+          "description": "pause the verifier.",
+          "role": ".owner"
         }
       ],
       "directlyReceivedPermissions": [
@@ -2059,6 +2222,28 @@
           "role": ".Executor"
         }
       ]
+    },
+    {
+      "name": "RiscZeroGroth16Verifier",
+      "address": "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa9c21981fb26b1cb946478d0d238ebe97c9eaa52739e43e29ddd18dba6463357"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
+      "sinceTimestamp": 1718237447,
+      "sinceBlock": 20079238,
+      "values": {
+        "$immutable": true,
+        "BN254_CONTROL_ID": "0x0eb6febcf06c5df079111be116f79bd8c7e85dc9448776ef9a59aaf2624ab551",
+        "CONTROL_ROOT_0": "0x0e8ed4340930069162f5fbc957a016a5",
+        "CONTROL_ROOT_1": "0x2e7edecb6fd9ca4733501ee430425d77",
+        "SELECTOR": "0x310fe598"
+      },
+      "implementationNames": {
+        "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C": "RiscZeroGroth16Verifier"
+      }
     },
     {
       "address": "eth:0xFB771f2640Dfd37B18332a84817B2a6e994f5BF6",
@@ -2336,6 +2521,20 @@
       "function version() view returns (string)",
       "function zeroHashes(uint256) view returns (bytes32)"
     ],
+    "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97": [
+      "constructor(bytes32 control_root, bytes32 bn254_control_id)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SelectorMismatch(bytes4 received, bytes4 expected)",
+      "error VerificationFailed()",
+      "function BN254_CONTROL_ID() view returns (bytes32)",
+      "function CONTROL_ROOT_0() view returns (bytes16)",
+      "function CONTROL_ROOT_1() view returns (bytes16)",
+      "function SELECTOR() view returns (bytes4)",
+      "function VERSION() view returns (string)",
+      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
+      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
+    ],
     "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D": [
       "constructor(bytes32 control_root, bytes32 bn254_control_id)",
       "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
@@ -2538,6 +2737,29 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
+    "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7": [
+      "constructor(address _verifier, address guardian)",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error InvalidProofOfExploit()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function acceptOwnership()",
+      "function estop(tuple(bytes seal, bytes32 claimDigest) receipt)",
+      "function estop()",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function verifier() view returns (address)",
+      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
+      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
+    ],
     "eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF": [
       "constructor(address _kailuaTreasury, uint256 _genesisTimeStamp, uint256 _l2BlockTime, uint64 _maxClockDuration)",
       "error AlreadyInitialized()",
@@ -2633,6 +2855,20 @@
       "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
       "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
     ],
+    "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF": [
+      "constructor(bytes32 control_root, bytes32 bn254_control_id)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SelectorMismatch(bytes4 received, bytes4 expected)",
+      "error VerificationFailed()",
+      "function BN254_CONTROL_ID() view returns (bytes32)",
+      "function CONTROL_ROOT_0() view returns (bytes16)",
+      "function CONTROL_ROOT_1() view returns (bytes16)",
+      "function SELECTOR() view returns (bytes4)",
+      "function VERSION() view returns (string)",
+      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
+      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
+    ],
     "eth:0x5557408ab14013ce9Dbb300dE0D87D386BB09cb6": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2710,6 +2946,29 @@
       "function stateVersion() view returns (uint256 stateVersion_)",
       "function step(bytes _stateData, bytes _proof, bytes32 _localContext) returns (bytes32 postState_)",
       "function version() view returns (string)"
+    ],
+    "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3": [
+      "constructor(address _verifier, address guardian)",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error InvalidProofOfExploit()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function acceptOwnership()",
+      "function estop(tuple(bytes seal, bytes32 claimDigest) receipt)",
+      "function estop()",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function verifier() view returns (address)",
+      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
+      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
     ],
     "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9": [
       "constructor()",
@@ -3258,6 +3517,29 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1": [
+      "constructor(address _verifier, address guardian)",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error InvalidProofOfExploit()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function acceptOwnership()",
+      "function estop(tuple(bytes seal, bytes32 claimDigest) receipt)",
+      "function estop()",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function verifier() view returns (address)",
+      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
+      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
+    ],
     "eth:0xE3d981643b806FB8030CDB677D6E60892E547EdA": [
       "constructor(address _addressManager, string _implementationName)"
     ],
@@ -3279,6 +3561,19 @@
       "function renounceOwnership()",
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C": [
+      "constructor(bytes32 control_root, bytes32 bn254_control_id)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SelectorMismatch(bytes4 received, bytes4 expected)",
+      "error VerificationFailed()",
+      "function BN254_CONTROL_ID() view returns (bytes32)",
+      "function CONTROL_ROOT_0() view returns (bytes16)",
+      "function CONTROL_ROOT_1() view returns (bytes16)",
+      "function SELECTOR() view returns (bytes4)",
+      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
+      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
     ]
   },
   "usedTemplates": {
@@ -3295,7 +3590,7 @@
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
+    "opstack/OptimismPortal2": "0x1b805f60190e91b935eb0a191e48ecec5e834022adc693965887462bd52e05a9",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
@@ -3308,5 +3603,5 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
   "usedBlockNumbers": { "ethereum": 24641574 },
-  "permissionsConfigHash": "0xc179d159586c571a0a06eaac0e54419e2709f54d3d09a4984595837fb14dd0d0"
+  "permissionsConfigHash": "0x40ecbb08211d0daa76d93411f924ebd6cb1102b9823a007800674c9593dd8b3c"
 }
