@@ -55,6 +55,10 @@ const upgradeDelay = discovery.getContractValue<number>(
   'TimelockSCEmergency',
   'getMinDelay',
 )
+const slowUpgradeDelay = discovery.getContractValue<number>(
+  'eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd',
+  'getMinDelay',
+)
 
 const finalizationPeriod = 0 // state root immediately finalized when proven
 const chainId = 534352
@@ -509,7 +513,7 @@ export const scroll: ScalingProject = {
     ...discovery.getDiscoveredPermissions(),
   },
   upgradesAndGovernance: {
-    content: `All core contracts in the Scroll protocol are upgradable by the \`ProxyAdmin\`, which is controlled by the \`ScrollAdminMultisig\` through the \`ScrollOwner\` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the \`ScrollAdminMultisig\` and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. On 2026-06-01, Scroll removed its independent 9-of-12 Security Council and transferred its roles on the \`TimelockSCSlow\` (3d) and \`TimelockSCEmergency\` (0d) on both chains to the \`ScrollAdminMultisig\`, along with admin of the L2 \`AgoraGovernor\`. Emergency pause of core contracts is managed through the \`PauseController\`, which allows the team to pause batch commitment and finalization in permissioned mode, as well as L1->L2 messaging. Each pause is subject to a cooldown period of ${formatExecutionDelay(cooldownPeriod)}, during which the \`Scroll Security Council Minority\` can unpause. SCR token holders perform onchain voting on governance proposals through the \`AgoraGovernor\` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check.`,
+    content: `All core contracts in the Scroll protocol are upgradable by the \`ProxyAdmin\`, which is controlled by the \`ScrollAdminMultisig\` through the \`ScrollOwner\` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the \`ScrollAdminMultisig\` and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. On 2026-06-01, Scroll removed its independent 9-of-12 Security Council and transferred its roles on the \`TimelockSCSlow\` (${formatExecutionDelay(slowUpgradeDelay)}) and \`TimelockSCEmergency\` (${formatExecutionDelay(upgradeDelay)}) on both chains to the \`ScrollAdminMultisig\`, along with admin of the L2 \`AgoraGovernor\`. Emergency pause of core contracts is managed through the \`PauseController\`, which allows the team to pause batch commitment and finalization in permissioned mode, as well as L1->L2 messaging. Each pause is subject to a cooldown period of ${formatExecutionDelay(cooldownPeriod)}, during which the \`Scroll Security Council Minority\` can unpause. SCR token holders perform onchain voting on governance proposals through the \`AgoraGovernor\` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check.`,
   },
   milestones: [
     {
