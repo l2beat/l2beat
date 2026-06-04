@@ -8,7 +8,9 @@ Generated with discovered.json: 0xb04564930081defce840a7f0044f6f25a2479255
 
 ## Description
 
-OptimismPortal2 DisputeGameMap + Base INCIDENT_RESPONDER permission semantics
+Unichain Multisig 1 and Multisig 2 each rotated one signer.
+
+New game name (aggregateVerifier) added to portal.
 
 ## Watched changes
 

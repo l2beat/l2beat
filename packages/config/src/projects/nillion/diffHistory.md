@@ -8,7 +8,9 @@ Generated with discovered.json: 0xb59e0a4804373ae68639d89216c56437a1698e73
 
 ## Description
 
-OptimismPortal2 DisputeGameMap + Base INCIDENT_RESPONDER permission semantics
+Conduit Multisig 1 rotated one signer (operator key `0x3840…fd5f` → `0xcdC9…4853`); same rotation propagated across Conduit Multisigs 1/2/3 on eth/arb1/base.
+
+New game name (aggregateVerifier) added to portal.
 
 ## Watched changes
 

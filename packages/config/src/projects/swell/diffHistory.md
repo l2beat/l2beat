@@ -8,7 +8,7 @@ Generated with discovered.json: 0xc5b9e014dafff28f055d52466ac902b88f754a21
 
 ## Description
 
-OptimismPortal2 DisputeGameMap + Base INCIDENT_RESPONDER permission semantics
+New game name (aggregateVerifier) added to portal.
 
 ## Config/verification related changes
 
