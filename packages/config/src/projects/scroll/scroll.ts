@@ -136,7 +136,7 @@ export const scroll: ScalingProject = {
       stage1: {
         principle: false,
         usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: true,
+        usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: {
           satisfied: false,
           message:
