@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x73d60463058f091d56c155864c9ca93ef94b1031
+
+# Diff at Thu, 04 Jun 2026 12:14:49 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1777451880
+- current timestamp: 1780575163
+
+## Description
+
+EigenLayerOperationsMultisig2 rotated one signer.
+
+## Watched changes
+
+```diff
+    contract EigenLayerOperationsMultisig2 (eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE"
++        "eth:0x10d6CE86113D00CcF071D02C5289e420a14C963F"
+    }
+```
+
 Generated with discovered.json: 0x15134861dd4b065c8c901ac900ddf4cd9562078b
 
 # Diff at Fri, 08 May 2026 07:52:00 GMT:
