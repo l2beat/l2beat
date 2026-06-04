@@ -39,7 +39,7 @@ export function ScalingSequencingPage({ entries, ...props }: Props) {
           </p>
           <Callout
             color="blue"
-            body="Combining decentralized sequencing and deterministic censorship resistance gadgets results in an optimal mix of real-time and eventual censorship resistance for users. Decentralized sequencing provides real-time CR at the speed of the Rollup while Ethereum is a fallback guarantee for eventual CR in worst-case scenarios."
+            body="Combining decentralized sequencing and deterministic CR gadgets results in an optimal mix of real-time and eventual censorship resistance for users. Decentralized sequencing provides real-time CR at the speed of the Rollup while Ethereum is a fallback guarantee for eventual CR in worst-case scenarios."
             icon={<InfoIcon className="size-5" variant="blue" />}
             className="mt-4 p-4 font-medium text-paragraph-15 md:text-paragraph-16"
           />
