@@ -28,6 +28,10 @@ const mainPages: MainPage[] = [
   },
   {
     type: 'scaling',
+    title: 'Decentralized Sequencing',
+  },
+  {
+    type: 'scaling',
     title: 'Liveness',
   },
   {

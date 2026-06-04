@@ -32,7 +32,8 @@ export async function getScalingDecentralizedSequencingData(
           'Compare Ethereum scaling projects with decentralized sequencer sets and understand how they differ from centralized sequencers with forced-inclusion mechanisms.',
         url: req.originalUrl,
         openGraph: {
-          image: '/meta-images/scaling/summary/opengraph-image.png',
+          image:
+            '/meta-images/scaling/decentralized-sequencing/opengraph-image.png',
         },
       }),
     },
