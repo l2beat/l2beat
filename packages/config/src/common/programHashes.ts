@@ -2766,6 +2766,8 @@ Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/f
   },
   '0x003147cde8e7d519d3dbae6b76f1198a70d4ff477a3aaea73bee4153f250288a': {
     title: 'Aggregation program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/v0.9.1/crates/proof/succinct/programs/aggregation',
     description:
       'Aggregates range proofs of correct execution for several consecutive sub-ranges of Base L2 blocks.',
     proverSystemProject: ProjectId('sp1hypercube'),
@@ -2788,6 +2790,8 @@ Verify:
   },
   '0x44f625fa2a41367670d74a7b0d9899412dc1ca406f90df7a5bd9f8ae581ee47f': {
     title: 'Range program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/v0.9.1/crates/proof/succinct/programs/range',
     description:
       'Proves correct state transition function of the Base rollup over a sub-range of L2 blocks.',
     proverSystemProject: ProjectId('sp1hypercube'),
@@ -2809,14 +2813,28 @@ Verify:
     `,
   },
   '0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c': {
-    title: 'TEE enclave image of Base client',
+    title: 'TEE enclave image hash of Base client',
     programUrl:
-      'https://github.com/base/base/tree/v0.9.1/crates/proof/tee/nitro-enclave',
+      'https://github.com/base/base/tree/v0.9.0/crates/proof/tee/nitro-enclave',
     description:
       'TEE image hash of Base L2 node program. AWS Nitro Enclave attestations guarantee that exactly this program was run within a TEE.',
-    verificationStatus: 'notVerified',
-    verificationSteps:
-      'L2BEAT has not yet reproduced the PCR0 from source. To verify, build the TEE prover enclave image (EIF) from the published source at a pinned release and compare its PCR0 measurement to this hash.',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Regeneration steps below require Linux OS, they will produce a different hash on MacOS.
+
+Prepare:
+
+1. Install docker <https://docs.docker.com/get-started/get-docker/>
+2. Install \`just\` version \`>=1.31.0\`: <https://just.systems/man/en/pre-built-binaries.html>
+
+Verify:
+
+1. Checkout the correct tag in [base/base](https://github.com/base/base) repo: \`git checkout v0.9.2-rc.1\`. Commit hash should be \`f2579cd48d23163e11174049cdd10834f197e33f\`.
+2. Make sure docker is running: \`docker ps\`.
+3. From the repo root: \`just tee build-eif\` to build the TEE image in a docker container.
+4. Extract \`PCR0\` from the build EIF: \`just tee describe-eif\`
+5. Compute image hash as keccak256 of the PCR0: \`cast keccak "0x<PCR0_hex>"\`, where \`PCR0_hex\` is taken from the output of the previous step.
+`,
   },
   '0x20141665fe40bce01fbcfa0a95c8a1bd750eadbe3f24e06a75571e6fd7a9dc11': {
     title: 'AWS Nitro TEE attestation verifier for Base',
