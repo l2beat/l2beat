@@ -18,8 +18,6 @@ RoninConduitOwner got admin over the KailuaVerifier proxy (`eth:0x6b49976a…`),
 
 RiscZeroVerifierRouter (`eth:0x8EaB2D97…`) is the shared RISC Zero verifier-selector router. Owner is a TimelockController (`eth:0x0b144E07…`, 3d delay) governed by Safe `eth:0x2E5bcc…`. Both are shared RISC Zero infrastructure, not Ronin-specific.
 
-Conduit Multisig 1 signer rotation: added `eth:0xcdC93193…` at index 0, removed `eth:0x3840f487…` at index 8.
-
 ## Watched changes
 
 ```diff
