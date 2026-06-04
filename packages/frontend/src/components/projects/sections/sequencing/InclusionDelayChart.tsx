@@ -1,5 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import type { ReactElement, ReactNode } from 'react'
+import type { ReactElement } from 'react'
 import {
   CartesianGrid,
   ComposedChart,
@@ -51,7 +51,6 @@ interface Props {
     onItemClick: (dataKey: string) => void
     disableOnboarding?: boolean
   }
-  legend?: ReactNode
   tooltipContent?: ReactElement
 }
 
@@ -63,7 +62,6 @@ export function InclusionDelayChart({
   thresholdMarkers = [],
   entityMarkers = [],
   interactiveLegend,
-  legend,
   tooltipContent,
 }: Props) {
   const dataKeys = Object.keys(chartMeta)
@@ -87,25 +85,23 @@ export function InclusionDelayChart({
         data={data}
         margin={{ top: 20, right: 8, left: 0, bottom: 4 }}
       >
-        {legend ?? (
-          <ChartLegend
-            content={
-              <ChartLegendContent>
-                {entityMarkers.length > 0 && (
-                  <div className="order-last flex shrink-0 items-center gap-[3px] pl-2">
-                    <ChartDataIndicator
-                      type={{ shape: 'square' }}
-                      backgroundColor={INCLUSION_DELAY_ENTITY_MARKER_COLOR}
-                    />
-                    <ChartLegendItemLabel>
-                      Largest staking entities
-                    </ChartLegendItemLabel>
-                  </div>
-                )}
-              </ChartLegendContent>
-            }
-          />
-        )}
+        <ChartLegend
+          content={
+            <ChartLegendContent>
+              {entityMarkers.length > 0 && (
+                <div className="order-last flex shrink-0 items-center gap-[3px] pl-2">
+                  <ChartDataIndicator
+                    type={{ shape: 'square' }}
+                    backgroundColor={INCLUSION_DELAY_ENTITY_MARKER_COLOR}
+                  />
+                  <ChartLegendItemLabel>
+                    Largest staking entities
+                  </ChartLegendItemLabel>
+                </div>
+              )}
+            </ChartLegendContent>
+          }
+        />
         <CartesianGrid
           vertical={false}
           syncWithTicks

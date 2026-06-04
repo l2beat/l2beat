@@ -10,8 +10,8 @@ export type BasicTableGroupParams = {
   isLastInGroup: boolean
 }
 
-export function getTableOuterWrapperClassName(className?: string) {
-  return cn('max-md:-mr-4', className)
+export function getTableOuterWrapperClassName() {
+  return 'max-md:-mr-4'
 }
 
 export function getTableScrollWrapperClassName(tableWrapperClassName?: string) {

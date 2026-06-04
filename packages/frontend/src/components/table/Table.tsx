@@ -1,9 +1,8 @@
-import * as React from 'react'
+import type * as React from 'react'
 import {
   HighlightedTableRowProvider,
   useHighlightedTableRowContext,
 } from '~/components/table/HighlightedTableRowContext'
-import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { TableTooltip } from './TableTooltip'
 import {
@@ -14,21 +13,14 @@ import {
 
 const Table = ({
   className,
-  tableOuterWrapperClassName,
   tableWrapperClassName,
-  withScrollHint,
   ...props
 }: React.HTMLAttributes<HTMLTableElement> & {
-  tableOuterWrapperClassName?: string
   tableWrapperClassName?: string
-  withScrollHint?: boolean
 }) => {
   return (
-    <div className={getTableOuterWrapperClassName(tableOuterWrapperClassName)}>
-      <TableScrollWrapper
-        className={getTableScrollWrapperClassName(tableWrapperClassName)}
-        withScrollHint={withScrollHint}
-      >
+    <div className={getTableOuterWrapperClassName()}>
+      <div className={getTableScrollWrapperClassName(tableWrapperClassName)}>
         <HighlightedTableRowProvider>
           <table
             className={getTableElementClassName(className)}
@@ -37,110 +29,11 @@ const Table = ({
             {...props}
           />
         </HighlightedTableRowProvider>
-      </TableScrollWrapper>
+      </div>
     </div>
   )
 }
 Table.displayName = 'Table'
-
-type VisibleScrollHint = 'left' | 'right' | 'both'
-
-const SCROLL_HINT_THRESHOLD = 4
-
-function TableScrollWrapper({
-  children,
-  className,
-  withScrollHint,
-}: {
-  children: React.ReactNode
-  className?: string
-  withScrollHint?: boolean
-}) {
-  const [node, setNode] = React.useState<HTMLDivElement | null>(null)
-  const [visibleHint, setVisibleHint] = React.useState<VisibleScrollHint>()
-
-  React.useEffect(() => {
-    if (!node || !withScrollHint) return
-
-    const update = () => {
-      const isScrolledToStart = node.scrollLeft < SCROLL_HINT_THRESHOLD
-      const isScrolledToEnd =
-        node.scrollLeft >
-        node.scrollWidth - node.clientWidth - SCROLL_HINT_THRESHOLD
-
-      const nextVisibleHint =
-        isScrolledToStart && isScrolledToEnd
-          ? undefined
-          : isScrolledToStart
-            ? 'right'
-            : isScrolledToEnd
-              ? 'left'
-              : 'both'
-
-      setVisibleHint(nextVisibleHint)
-    }
-
-    update()
-    node.addEventListener('scroll', update)
-
-    const resizeObserver = new ResizeObserver(update)
-    resizeObserver.observe(node)
-    if (node.firstElementChild instanceof HTMLElement) {
-      resizeObserver.observe(node.firstElementChild)
-    }
-
-    return () => {
-      node.removeEventListener('scroll', update)
-      resizeObserver.disconnect()
-    }
-  }, [node, withScrollHint])
-
-  if (!withScrollHint) {
-    return <div className={className}>{children}</div>
-  }
-
-  const scroll = (direction: 'left' | 'right') => {
-    if (!node) return
-    node.scrollBy({
-      left: node.clientWidth * 0.8 * (direction === 'left' ? -1 : 1),
-      behavior: 'smooth',
-    })
-  }
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        aria-label="Scroll table left"
-        title="Scroll left"
-        onClick={() => scroll('left')}
-        className={cn(
-          'pointer-events-none absolute inset-y-0 left-0 z-20 flex w-8 items-center justify-center bg-linear-to-r from-surface-primary to-transparent opacity-0 transition-opacity duration-200',
-          (visibleHint === 'left' || visibleHint === 'both') &&
-            'pointer-events-auto opacity-100',
-        )}
-      >
-        <ChevronIcon className="rotate-90 scale-75 fill-primary" />
-      </button>
-      <div className={className} ref={setNode}>
-        {children}
-      </div>
-      <button
-        type="button"
-        aria-label="Scroll table right"
-        title="Scroll right"
-        onClick={() => scroll('right')}
-        className={cn(
-          'pointer-events-none absolute inset-y-0 right-0 z-20 flex w-8 items-center justify-center bg-linear-to-l from-surface-primary to-transparent opacity-0 transition-opacity duration-200',
-          (visibleHint === 'right' || visibleHint === 'both') &&
-            'pointer-events-auto opacity-100',
-        )}
-      >
-        <ChevronIcon className="-rotate-90 scale-75 fill-primary" />
-      </button>
-    </div>
-  )
-}
 
 const TableHeader = ({
   className,

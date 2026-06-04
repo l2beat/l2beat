@@ -32,7 +32,7 @@ export function ScalingDecentralizedSequencingTable({ entries }: Props) {
   return (
     <PrimaryCard className="mt-4">
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} withScrollHint />
+      <BasicTable table={table} />
     </PrimaryCard>
   )
 }

@@ -5,7 +5,6 @@ import type {
 } from '~/components/core/chart/Chart'
 import { ChartTooltipWrapper } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -17,6 +16,7 @@ import {
   type InclusionDelayYAxisScale,
 } from '~/components/projects/sections/sequencing/InclusionDelayChart'
 import type { ScalingDecentralizedSequencingEntry } from '~/server/features/scaling/decentralized-sequencing/getScalingDecentralizedSequencingEntries'
+import { generateAccessibleColors } from '~/utils/generateColors'
 
 interface Props {
   entries: ScalingDecentralizedSequencingEntry[]
@@ -28,20 +28,7 @@ type ChartEntry = ScalingDecentralizedSequencingEntry & {
   >
 }
 
-const PROJECT_COLORS: Record<string, string> = {
-  aztecnetwork: 'var(--chart-pink)',
-  'polygon-pos': 'var(--chart-cyan)',
-  gnosis: 'var(--chart-yellow)',
-}
-
 const ETHEREUM_DATA_KEY = 'ethereumDelayDays'
-
-const FALLBACK_COLORS = [
-  'var(--chart-fuchsia)',
-  'var(--chart-sky)',
-  'var(--chart-lime)',
-  'var(--chart-orange)',
-]
 
 export function InclusionDelayComparisonChart({ entries }: Props) {
   const [yAxisScale, setYAxisScale] =
@@ -60,8 +47,7 @@ export function InclusionDelayComparisonChart({ entries }: Props) {
     [chartEntries],
   )
 
-  const { showAllSelected, dataKeys, toggleDataKey, toggleAllDataKeys } =
-    useChartDataKeys(chartMeta)
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
 
   const chartData = useMemo(
     () => getComparisonChartData(chartEntries),
@@ -110,12 +96,6 @@ export function InclusionDelayComparisonChart({ entries }: Props) {
             dataKeys,
             onItemClick: toggleDataKey,
           }}
-          legend={
-            <ChartLegendToggleAll
-              showAllSelected={showAllSelected}
-              onToggleAll={toggleAllDataKeys}
-            />
-          }
           tooltipContent={<InclusionDelayComparisonTooltip meta={chartMeta} />}
         />
       </div>
@@ -124,13 +104,15 @@ export function InclusionDelayComparisonChart({ entries }: Props) {
 }
 
 function getComparisonChartMeta(entries: ChartEntry[]): ChartMeta {
+  const colors = generateAccessibleColors(entries.length)
+
   return {
     ...Object.fromEntries(
       entries.map((entry, index) => [
         entry.slug,
         {
           label: entry.name,
-          color: getProjectColor(entry.slug, index),
+          color: colors[index] ?? 'var(--chart-pink)',
           indicatorType: { shape: 'line' as const },
         },
       ]),
@@ -226,12 +208,4 @@ function formatTooltipDelay(value: unknown) {
   if (!Number.isFinite(days)) return 'no inclusion'
 
   return formatDelayDays(days)
-}
-
-function getProjectColor(slug: string, index: number) {
-  return (
-    PROJECT_COLORS[slug] ??
-    FALLBACK_COLORS[index % FALLBACK_COLORS.length] ??
-    'var(--chart-pink)'
-  )
 }
