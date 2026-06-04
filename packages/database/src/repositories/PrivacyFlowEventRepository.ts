@@ -263,6 +263,20 @@ export class PrivacyFlowEventRepository extends BaseRepository {
     return row?.maxTimestamp ? UnixTime.fromDate(row.maxTimestamp) : undefined
   }
 
+  async getFirstTimestampByProjectIds(
+    projectIds: string[],
+  ): Promise<UnixTime | undefined> {
+    if (projectIds.length === 0) return undefined
+
+    const row = await this.db
+      .selectFrom('PrivacyFlowEvent')
+      .select(this.db.fn.min('timestamp').as('minTimestamp'))
+      .where('projectId', 'in', projectIds)
+      .executeTakeFirst()
+
+    return row?.minTimestamp ? UnixTime.fromDate(row.minTimestamp) : undefined
+  }
+
   async getAll(): Promise<PrivacyFlowEventRecord[]> {
     const rows = await this.db
       .selectFrom('PrivacyFlowEvent')

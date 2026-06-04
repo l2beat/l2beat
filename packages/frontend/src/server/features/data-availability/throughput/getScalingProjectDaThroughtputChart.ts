@@ -11,6 +11,7 @@ import {
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { getActivityForProjectAndRange } from '../../scaling/activity/getActivityForProjectAndRange'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
@@ -51,9 +52,10 @@ export async function getScalingProjectDaThroughputChart({
   const db = getDb()
   const resolution = rangeToResolution(range)
 
-  const [throughput, activityRecords] = await Promise.all([
+  const [throughput, activityRecords, firstTimestamp] = await Promise.all([
     db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range),
     getActivityForProjectAndRange(projectId, range),
+    db.dataAvailability.getFirstTimestampByProjectIds([projectId]),
   ])
 
   if (throughput.length === 0) {
@@ -68,25 +70,13 @@ export async function getScalingProjectDaThroughputChart({
     resolution,
   )
 
-  const lastDataForLayers: Record<
-    string,
-    {
-      lastTimestamp: number
-      firstTimestamp: number
-    }
-  > = {}
+  const lastTimestampForLayers: Record<string, number> = {}
   for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
     const lastValue = Object.entries(grouped).findLast(
       ([_, values]) => values[layer] && values[layer] > 0,
     )
-    const firstValue = Object.entries(grouped).find(
-      ([_, values]) => values[layer] && values[layer] > 0,
-    )
-    if (lastValue && firstValue) {
-      lastDataForLayers[layer] = {
-        lastTimestamp: Number(lastValue[0]),
-        firstTimestamp: Number(firstValue[0]),
-      }
+    if (lastValue) {
+      lastTimestampForLayers[layer] = Number(lastValue[0])
     }
   }
 
@@ -102,7 +92,17 @@ export async function getScalingProjectDaThroughputChart({
     ? maxTimestamp
     : expectedTo
 
-  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp: firstTimestamp,
+    dataStart: minTimestamp,
+    resolution,
+  })
+
+  const timestamps = generateTimestamps(
+    [startTimestamp, adjustedTo],
+    resolution,
+  )
 
   let total = 0
   const chart: ScalingProjectDaThroughputChartPoint[] = timestamps.map(
@@ -112,12 +112,9 @@ export async function getScalingProjectDaThroughputChart({
         total += Object.values(posted).reduce((sum, val) => sum + val, 0)
       }
       const getDaValue = (layer: string) => {
-        const lastData = lastDataForLayers[layer]
-        const isBetween =
-          lastData &&
-          timestamp >= lastData.firstTimestamp &&
-          timestamp <= lastData.lastTimestamp
-        return isBetween ? (grouped[timestamp]?.[layer] ?? 0) : null
+        const lastTimestamp = lastTimestampForLayers[layer]
+        const isBefore = lastTimestamp && timestamp <= lastTimestamp
+        return isBefore ? (grouped[timestamp]?.[layer] ?? 0) : null
       }
       return [
         timestamp,

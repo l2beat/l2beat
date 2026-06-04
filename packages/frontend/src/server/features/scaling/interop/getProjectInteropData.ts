@@ -62,7 +62,6 @@ export async function getProjectInteropData(
   const defaultSelectedChains = orderedInteropChains
     .map((chain) => chain.id)
     .slice(0, MAX_SELECTED_CHAINS)
-  const allInteropChainIds = orderedInteropChains.map((chain) => chain.id)
   const protocols = interopProjects.map((protocol) => ({
     id: protocol.id,
     slug: protocol.slug,
@@ -72,7 +71,7 @@ export async function getProjectInteropData(
   const interopFlows: RouterOutputs['interop']['flows'] =
     await helpers.queryClient.fetchQuery(
       helpers.trpc.interop.flows.queryOptions({
-        chains: allInteropChainIds,
+        chains: defaultSelectedChains,
         protocolIds: protocols.map((protocol) => protocol.id),
       }),
     )

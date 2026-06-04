@@ -126,6 +126,10 @@ export const risc0: BaseProject = {
         projectId: ProjectId('base'),
         sinceTimestamp: UnixTime(1779825599), // 2026-05-26 AggregateVerifier upgrade
       },
+      {
+        projectId: ProjectId('roninnetwork'),
+        sinceTimestamp: UnixTime(1780557929), // Kailua KailuaTreasury deployed (not yet active)
+      },
     ],
     verifierHashes: [
       {

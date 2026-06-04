@@ -20,7 +20,7 @@ interface Props {
 export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const projectIds = useMemo(() => projects.map((p) => p.id), [projects])
+  const projectIds = useMemo(() => projects.map((p) => p.id).sort(), [projects])
   const { data: flowsData, isLoading: isFlowsLoading } = useQuery(
     trpc.privacy.flowsChart.queryOptions({ projectIds, range }),
   )

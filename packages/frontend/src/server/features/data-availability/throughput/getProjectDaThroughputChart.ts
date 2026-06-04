@@ -11,6 +11,7 @@ import {
 } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { isThroughputSynced } from './isThroughputSynced'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 
@@ -75,13 +76,21 @@ export async function getProjectDaThroughputChartData({
   const sovereignProjectsIds =
     daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((c) => c.projectId)
 
-  const throughput = await (includeScalingOnly
-    ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
-        [projectId],
-        range,
-        sovereignProjectsIds,
-      )
-    : db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range))
+  const [throughput, firstTimestamp] = await Promise.all([
+    includeScalingOnly
+      ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
+          [projectId],
+          range,
+          sovereignProjectsIds,
+        )
+      : db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range),
+    includeScalingOnly
+      ? db.dataAvailability.getFirstTimestampOfSummedProjectsByDaLayers(
+          [projectId],
+          sovereignProjectsIds,
+        )
+      : db.dataAvailability.getFirstTimestampByProjectIds([projectId]),
+  ])
 
   if (throughput.length === 0) {
     return undefined
@@ -108,9 +117,16 @@ export async function getProjectDaThroughputChartData({
     ? maxTimestamp
     : expectedTo
 
+  const from = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp: firstTimestamp,
+    dataStart: minTimestamp,
+    resolution,
+  })
+
   return {
     grouped,
-    from: minTimestamp,
+    from,
     to: adjustedTo,
     maxTimestamp,
     syncedUntil,
