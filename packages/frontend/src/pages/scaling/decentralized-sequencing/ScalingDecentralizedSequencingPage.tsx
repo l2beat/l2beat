@@ -18,7 +18,7 @@ export function ScalingDecentralizedSequencingPage({
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader description="Compare projects where transaction ordering is handled by a decentralized sequencer or validator set. Short-term inclusion guarantees depend on rotation, sampling, stake distribution, and live non-censoring operators. Long-term censorship resistance is strongest when paired with a deterministic host-chain path, such as forced inclusion or an escape hatch.">
+        <MainPageHeader description="Decentralized sequencing or validating improves short-term censorship restistance compared to centralized sequencing. Actual inclusion delays under censorship depend on sequencer rotation, sampling method, stake distribution, and live non-censoring operators. Long-term censorship resistance is strongest when paired with a deterministic host-chain path, such as forced inclusion from- or an escape hatch to Ethereum.">
           Decentralized Sequencing
         </MainPageHeader>
         <TableSortingProvider initialSort={{ id: '#', desc: false }}>
