@@ -522,14 +522,6 @@ export const scroll: ScalingProject = {
       date: '2026-06-01T00:00:00Z',
       description:
         'Independent 9-of-12 Security Council replaced by a 3-of-4 team admin multisig; drops to Stage 0.',
-      type: 'general',
-    },
-    {
-      title: 'L1 fee scalar inflation incident',
-      url: 'https://forum.scroll.io/t/governance-update-security-council-transition-contributor-roles-operational-adjustments/1470',
-      date: '2026-04-09T00:00:00Z',
-      description:
-        'L1GasPriceOracle scalars peaked at 1,280x baseline; users overpaid ~$51K in L1 fees over 3.9 days.',
       type: 'incident',
     },
     {
