@@ -8,10 +8,6 @@ Generated with discovered.json: 0x5098df73fa95f460a9545c6852798db7cd601f54
 
 ## Description
 
-Scheduled signer-key rotation on shared OP Stack governance contracts (no threshold or permission changes):
-- DeputyPauseModule (`0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754`): `deputy` rotated from `0x352f1defB49718e7Ea411687E850aA8d6299F7aC` to `0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c`. Executed via [superchain-ops eth/052](https://github.com/ethereum-optimism/superchain-ops/pull/1399); the [DeputyPauseModule spec](https://specs.optimism.io/protocol/deputy-pause-module.html) specifies that this is a regular rotation.
-- OpFoundationUpgradeSafe and OpFoundationOperationsSafe: Member rotated.
-
 New game name (aggregateVerifier) added to portal.
 
 ## Config/verification related changes
