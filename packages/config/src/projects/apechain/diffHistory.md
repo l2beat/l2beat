@@ -1,15 +1,14 @@
-Generated with discovered.json: 0x03b46a021f10a80e77fb4c1c6ff6c89a28397ee9
+Generated with discovered.json: 0x5b5316a3a71600f5c6ac888260ed07ab4fd35fa4
 
-# Diff at Thu, 04 Jun 2026 15:08:35 GMT:
+# Diff at Fri, 05 Jun 2026 10:10:30 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1778232906
-- current timestamp: 1780582582
+- comparing to: main@3501d14787f111a20580bca1fdb97e32abfb1f2c block: 1778232906
+- current timestamp: 1780654151
 
 ## Description
 
 Switched to checking TEE attestations with zk in the style of Appchain. Appchain contracts resued (a slightly older version though): https://disco.l2beat.com/diff/eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f/arb1:0x9bE8dA826D2C6E6708372f0d056f57B97e6dB029, the only difference is that owner can change the TEE verifier contact.
-
 ## Watched changes
 
 ```diff
@@ -58,8 +57,8 @@ Note: currently only Succinct proofs are used.
 
 ```diff
 +   Status: CREATED
-    contract SP1Verifier (arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [N/A]
-    +++ description: None
+    contract SP1Verifier (arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
 ```
 
 ## Source code changes
@@ -71,6 +70,18 @@ Note: currently only Succinct proofs are used.
  .../src/projects/apechain/.flat/SP1Verifier.sol    |  664 +++
  4 files changed, 5487 insertions(+), 3867 deletions(-)
 ```
+
+Generated with discovered.json: 0x17c2993c61f1ef7fa490d2571211f93e994ee764
+
+# Diff at Fri, 22 May 2026 15:38:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1b7024bc804124af9b25421eca5fac952454cb09 block: 1778232906
+- current timestamp: 1778232906
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 

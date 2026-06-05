@@ -1,6 +1,6 @@
 {
   "name": "molten",
-  "timestamp": 1780585824,
+  "timestamp": 1780654176,
   "configHash": "0xfd7dd88e42225e13a9c91943c35dd6d53c7270a80461369d28c2b22d2d0dd40f",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
@@ -1451,10 +1451,12 @@
       "name": "SP1Verifier",
       "address": "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
       "deployerAddress": "arb1:0xba1E3EFfD2DD8CEb7054FEfb0cee8C4300D82C1a",
       "sinceTimestamp": 1779890004,
       "sinceBlock": 467227062,
@@ -2663,8 +2665,9 @@
     "orbitstack/RollupProxy_fastConfirm": "0x44444b0ddf0730808af44c1a9ff9b9295a98d4ce2f5d1f6c550448dbd39a6c72",
     "orbitstack/SequencerInbox_Celestia_Espresso": "0x7652f5e8fb9924eee81c6f067f2c2447575233e52bff6752146c910af2b070e2",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
-    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 470003062 },
+  "usedBlockNumbers": { "arbitrum": 470276527 },
   "permissionsConfigHash": "0x7a4cce4c90e9d7b5ddccb2cc675db5557d4b005adfab486f5db0264184626950"
 }

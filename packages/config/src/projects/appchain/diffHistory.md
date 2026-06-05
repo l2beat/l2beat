@@ -1,14 +1,12 @@
-Generated with discovered.json: 0xe92509c3daddd15dc9dd6e02ff69ce2ce1112874
+Generated with discovered.json: 0x094080cb6b6973e34da8222d04ef150e4b839eb3
 
-# Diff at Tue, 02 Jun 2026 16:02:57 GMT:
+# Diff at Fri, 05 Jun 2026 10:10:05 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1778232916
-- current timestamp: 1780411498
+- comparing to: main@3501d14787f111a20580bca1fdb97e32abfb1f2c block: 1779719407
+- current timestamp: 1780654139
 
 ## Description
-
-Caldera Multisig 3 (shared chain-admin Safe upgrading appchain/capx/form/oevnetwork/sxt) rotated out one member and lowered threshold from 4/7 to 3/6.
 
 Changes in `EspressoTEEVerifier` (high-level gateway): https://disco.l2beat.com/diff/eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0/eth:0x51835Bbc68679Dd236cC7ed333d1F52a181975e0. Summary:
 
@@ -36,23 +34,23 @@ Changes in `EspressoNitroTEEVerifier`: https://disco.l2beat.com/diff/eth:0x9E490
 ```
 
 ```diff
-    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    contract Safe (eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) [GnosisSafe] {
     +++ description: None
-      values.$members.0:
--        "eth:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
-      values.$threshold:
--        4
-+        3
-      values.multisigThreshold:
--        "4 of 7 (57%)"
-+        "3 of 6 (50%)"
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x98206aBE6bdB21765458f27F199fd813343a3C3b","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"}
+      receivedPermissions.1.description:
+-        "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers."
++        "add, remove or disable supported enclave hashes."
+      receivedPermissions.1.from:
+-        "eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f"
++        "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67"
+      receivedPermissions.2.description:
+-        "change the modular TEE verifier contracts."
++        "change the TEE verifier contract."
+      receivedPermissions.2.from:
+-        "eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0"
++        "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67"
     }
-```
-
-```diff
--   Status: DELETED
-    contract Safe (eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) [GnosisSafe]
-    +++ description: None
 ```
 
 ```diff
@@ -92,10 +90,6 @@ Note: currently only Succinct proofs are used.
 ```diff
     EOA  (eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B) {
     +++ description: None
-      receivedPermissions.0:
-+        {"permission":"interact","from":"eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67","description":"add, remove or disable supported enclave hashes.","role":".owner"}
-      receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67","description":"change the TEE verifier contract.","role":".owner"}
       receivedPermissions.0.via:
 +        [{"address":"eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f"}]
       receivedPermissions.0.role:
@@ -141,8 +135,8 @@ Note: currently only Succinct proofs are used.
 
 ```diff
 +   Status: CREATED
-    contract SP1Verifier (eth:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [N/A]
-    +++ description: None
+    contract SP1Verifier (eth:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
 ```
 
 ## Source code changes
@@ -156,11 +150,49 @@ Note: currently only Succinct proofs are used.
  ...:0x546F30e936B1D01f8df1c356fa68833B9AFba99f.sol |  189 +
  ...0xF025D25aE360D0D33a275dF74863CCc6600E6f8E.sol} |    0
  .../QuoteVerifier.sol => /dev/null                 | 4107 ------------
- .../{.flat@1778232916 => .flat}/SP1Verifier.sol    |  112 +-
- .../.flat@1778232916/Safe/Safe.sol => /dev/null    | 1216 ----
- .../Safe/SafeProxy.p.sol => /dev/null              |   42 -
- 11 files changed, 8914 insertions(+), 10843 deletions(-)
+ .../{.flat@1779719407 => .flat}/SP1Verifier.sol    |  112 +-
+ 9 files changed, 8914 insertions(+), 9585 deletions(-)
 ```
+
+Generated with discovered.json: 0x992d4f84d241faf2134ce9039c2f15dd480db7e8
+
+# Diff at Mon, 25 May 2026 14:31:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6898129972dbc5b1b4f1389afaf9cb3fb7fd3380 block: 1778232916
+- current timestamp: 1779719407
+
+## Description
+
+Caldera Multisig 3 (shared chain-admin Safe upgrading appchain/capx/form/oevnetwork/sxt) rotated out one member and lowered threshold from 4/7 to 3/6.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x60e99331dff89be8e82323c78103f142ef764be0
+
+# Diff at Fri, 22 May 2026 15:38:11 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1b7024bc804124af9b25421eca5fac952454cb09 block: 1778232916
+- current timestamp: 1778232916
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 

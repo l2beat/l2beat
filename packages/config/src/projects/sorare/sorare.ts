@@ -70,6 +70,8 @@ export const sorare: ScalingProject = {
       detailAnchor: 'permissions',
     },
     architectureImage: 'starkex',
+    headerWarning:
+      'Sorare froze its StarkEx rollup on June 1st, 2026. The core rollup contract is currently frozen.',
     name: 'Sorare',
     slug: 'sorare',
     description:

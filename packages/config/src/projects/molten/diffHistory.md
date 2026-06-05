@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xebede6c424d0cd648013013540cc2ff4abbfa8c8
+Generated with discovered.json: 0x6870ab4bd4c113ef385349199edad6d6e4d5de41
 
-# Diff at Thu, 04 Jun 2026 15:13:50 GMT:
+# Diff at Fri, 05 Jun 2026 10:11:37 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1779198858
-- current timestamp: 1780585824
+- comparing to: main@3501d14787f111a20580bca1fdb97e32abfb1f2c block: 1779719447
+- current timestamp: 1780654176
 
 ## Description
 
@@ -35,16 +35,28 @@ Molten changed to reproducible TEE verification SP1 programs, also upgraded to S
 
 ```diff
 +   Status: CREATED
-    contract SP1Verifier (arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [N/A]
-    +++ description: None
+    contract SP1Verifier (arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
 ```
 
 ## Source code changes
 
 ```diff
-.../{.flat@1779198858 => .flat}/SP1Verifier.sol    | 114 +++++++++++++++------
+.../{.flat@1779719447 => .flat}/SP1Verifier.sol    | 114 +++++++++++++++------
  1 file changed, 82 insertions(+), 32 deletions(-)
 ```
+
+Generated with discovered.json: 0xc4133f2ab037b45c02e16f7dad7dda9d35b8b01e
+
+# Diff at Mon, 25 May 2026 14:33:27 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6898129972dbc5b1b4f1389afaf9cb3fb7fd3380 block: 1779198858
+- current timestamp: 1779719447
+
+## Description
+
+Picked up the new `ArbOS v51.1 wasmModuleRoot` label from the globalConfig type map. Config-only — chain's own wasmModuleRoot is unchanged.
 
 ## Config/verification related changes
 
@@ -60,7 +72,7 @@ discovery. Values are for block 1779198858 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x1b0a8a0049b0c0962951bc82a8301a7ec60bffc1
+Generated with discovered.json: 0x83bbc4faf9f265527dcb0f36b54b14b253076ed2
 
 # Diff at Tue, 19 May 2026 13:56:37 GMT:
 
