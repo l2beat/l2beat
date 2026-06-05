@@ -25,7 +25,7 @@ export async function getActivityData(
 
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedRange[1]],
-    'daily',
+    'day',
   )
 
   return timestamps.map((timestamp: UnixTime) => {

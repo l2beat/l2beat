@@ -92,7 +92,7 @@ function getMockProjectDaThroughputChartData({
     }
   }
 
-  const timestamps = generateTimestamps([from, to], 'daily')
+  const timestamps = generateTimestamps([from, to], 'day')
   return {
     chart: timestamps.map((timestamp) => {
       const throughputValue = Math.random() * 900_000_000 + 90_000_000
