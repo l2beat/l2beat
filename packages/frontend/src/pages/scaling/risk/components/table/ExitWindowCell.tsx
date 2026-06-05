@@ -7,6 +7,8 @@ import {
 import { SentimentText } from '~/components/SentimentText'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
+import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
+import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 
 interface Props {
   value: ExitWindowRisk
@@ -72,6 +74,7 @@ export function ExitWindowCell({ value, href }: Props) {
             <ExitWindowTooltipSection
               value={value.value}
               sentiment={value.sentiment ?? 'neutral'}
+              warning={value.warning}
               description={value.description}
             />
           )}
@@ -87,11 +90,13 @@ function ExitWindowTooltipSection({
   label,
   value,
   sentiment,
+  warning,
   description,
 }: {
   label?: string
   value: string
   sentiment: NonNullable<TableReadyValue['sentiment']>
+  warning?: NonNullable<TableReadyValue['warning']>
   description?: string
 }) {
   return (
@@ -99,6 +104,14 @@ function ExitWindowTooltipSection({
       <SentimentText sentiment={sentiment} className="font-medium">
         {label ? `${label}: ${value}` : value}
       </SentimentText>
+      {warning && (
+        <WarningBar
+          className="mt-2 px-3 py-2"
+          icon={RoundedWarningIcon}
+          text={warning.value}
+          color={sentimentToWarningBarColor(warning.sentiment)}
+        />
+      )}
       {description && <p className="mt-1 text-primary">{description}</p>}
     </div>
   )
