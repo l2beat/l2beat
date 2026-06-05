@@ -4,11 +4,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { ProjectRiskTooltipContent } from '~/components/projects/ProjectRiskTooltipContent'
 import { SentimentText } from '~/components/SentimentText'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
-import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
-import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 
 interface Props {
   value: ExitWindowRisk
@@ -21,7 +20,6 @@ type ExitWindowRisk = TableReadyValue & {
 
 export function ExitWindowCell({ value, href }: Props) {
   const regular = value.regular
-  const regularDescription = regular ? value.warning?.value : undefined
 
   const trigger = (
     <TableLink href={href}>
@@ -55,64 +53,11 @@ export function ExitWindowCell({ value, href }: Props) {
           {trigger}
         </TooltipTrigger>
         <TooltipContent>
-          {regular ? (
-            <div className="flex flex-col gap-3">
-              <ExitWindowTooltipSection
-                label="Emergency"
-                value={value.value}
-                sentiment={value.sentiment ?? 'neutral'}
-                description={value.description}
-              />
-              <ExitWindowTooltipSection
-                label="Regular"
-                value={regular.value}
-                sentiment={regular.sentiment ?? 'neutral'}
-                description={regularDescription}
-              />
-            </div>
-          ) : (
-            <ExitWindowTooltipSection
-              value={value.value}
-              sentiment={value.sentiment ?? 'neutral'}
-              warning={value.warning}
-              description={value.description}
-            />
-          )}
+          <ProjectRiskTooltipContent risk={value} variant="table" />
         </TooltipContent>
       </Tooltip>
     )
   }
 
   return trigger
-}
-
-function ExitWindowTooltipSection({
-  label,
-  value,
-  sentiment,
-  warning,
-  description,
-}: {
-  label?: string
-  value: string
-  sentiment: NonNullable<TableReadyValue['sentiment']>
-  warning?: NonNullable<TableReadyValue['warning']>
-  description?: string
-}) {
-  return (
-    <div>
-      <SentimentText sentiment={sentiment} className="font-medium text-base">
-        {label ? `${label}: ${value}` : value}
-      </SentimentText>
-      {warning && (
-        <WarningBar
-          className="mt-2 px-3 py-2"
-          icon={RoundedWarningIcon}
-          text={warning.value}
-          color={sentimentToWarningBarColor(warning.sentiment)}
-        />
-      )}
-      {description && <p className="mt-1 text-primary">{description}</p>}
-    </div>
-  )
 }

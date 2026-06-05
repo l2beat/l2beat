@@ -4,9 +4,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/Tooltip'
+import { ProjectRiskTooltipContent } from '../../projects/ProjectRiskTooltipContent'
 import { rosetteParameters } from '../parameters'
 import { PizzaRosetteLabels } from '../pizza/PizzaRosetteLabels'
-import { RosetteTooltipRisk } from '../RosetteTooltipRisk'
 import type { RosetteValueTuple } from './IndividualRosetteIcon'
 import { IndividualPizzaRosetteIcon } from './IndividualRosetteIcon'
 import {
@@ -107,13 +107,13 @@ function RosetteTooltipContent() {
         <span className="text-[#787E8D] text-[13px] uppercase">
           {context.content?.outerProjectName}
         </span>
-        <RosetteTooltipRisk risk={content.outer} />
+        <ProjectRiskTooltipContent risk={content.outer} variant="rosette" />
       </div>
       <div className="flex flex-col gap-1">
         <span className="text-[#787E8D] text-[13px] uppercase">
           {context.content?.innerProjectName}
         </span>
-        <RosetteTooltipRisk risk={content.inner} />
+        <ProjectRiskTooltipContent risk={content.inner} variant="rosette" />
       </div>
     </TooltipContent>
   )
