@@ -69,7 +69,7 @@ export async function getPrivacyFlowsChart(
           undefined,
           firstTimestamp,
         ),
-        'daily',
+        'day',
       ).map((timestamp) => [timestamp, 0, 0, 0, 0]),
       syncedUntil: syncedUntil ? Number(syncedUntil) : undefined,
     }
@@ -117,7 +117,7 @@ export async function getPrivacyFlowsChart(
   }
 
   return {
-    chart: generateTimestamps(normalizedRange, 'daily').map((timestamp) => {
+    chart: generateTimestamps(normalizedRange, 'day').map((timestamp) => {
       const entry = grouped.get(timestamp)
       return [
         timestamp,
@@ -138,7 +138,7 @@ function getMockPrivacyFlowsChart(
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = params.range[0] ?? to - days * UnixTime.DAY
 
-  const chart = generateTimestamps([UnixTime(from), UnixTime(to)], 'daily').map(
+  const chart = generateTimestamps([from, to], 'day').map(
     (timestamp): PrivacyFlowsChartPoint => {
       const depositsCount = Math.round(Math.random() * 100)
       const withdrawalsCount = Math.round(Math.random() * 100)
@@ -164,7 +164,7 @@ function normalizePrivacyFlowsChartRange(
     rangeStart: range[0],
     firstProjectTimestamp,
     dataStart: minTimestamp ?? range[1],
-    resolution: 'daily',
+    resolution: 'day',
   })
   const from = UnixTime.toStartOf(start, 'day')
   const to = UnixTime.toStartOf(range[1], 'day')

@@ -141,25 +141,11 @@ function groupByTimestampAndProjectId(
   let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, number> = {}
 
-  const offset = UnixTime.toStartOf(
-    UnixTime.now(),
-    resolution === 'daily'
-      ? 'day'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'hour',
-  )
+  const offset = UnixTime.toStartOf(UnixTime.now(), resolution)
   const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
 
   for (const record of fullySyncedRecords) {
-    const timestamp = UnixTime.toStartOf(
-      record.timestamp,
-      resolution === 'daily'
-        ? 'day'
-        : resolution === 'sixHourly'
-          ? 'six hours'
-          : 'hour',
-    )
+    const timestamp = UnixTime.toStartOf(record.timestamp, resolution)
     const value = record.totalSize
     if (!result[timestamp]) {
       result[timestamp] = Number(value)
@@ -193,7 +179,7 @@ function getMockProjectDaThroughputChart({
     }
   }
 
-  const timestamps = generateTimestamps([from, to], 'daily')
+  const timestamps = generateTimestamps([from, to], 'day')
   return {
     chart: timestamps.map((timestamp) => {
       const throughputValue = Math.random() * 900_000_000 + 90_000_000

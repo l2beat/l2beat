@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { type ChartResolution, resolutionToPeriod } from '~/utils/range/range'
+import type { ChartResolution } from '~/utils/range/range'
 
 /**
  * Computes the first timestamp of a single-project chart's x-axis.
@@ -27,10 +27,7 @@ export function getChartStartTimestamp({
 }): number {
   const firstRecord =
     firstProjectTimestamp !== undefined
-      ? UnixTime.toStartOf(
-          UnixTime(firstProjectTimestamp),
-          resolutionToPeriod(resolution),
-        )
+      ? UnixTime.toStartOf(UnixTime(firstProjectTimestamp), resolution)
       : undefined
 
   if (rangeStart === null) {

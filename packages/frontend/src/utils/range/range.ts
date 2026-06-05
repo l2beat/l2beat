@@ -1,7 +1,11 @@
-import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import {
+  assertUnreachable,
+  UnixTime,
+  type UnixTimePeriod,
+} from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
-export type ChartResolution = 'hourly' | 'sixHourly' | 'daily'
+export type ChartResolution = Exclude<UnixTimePeriod, 'minute'>
 
 export type ChartRange = v.infer<typeof ChartRange>
 export const ChartRange = v.tuple([v.union([v.number(), v.null()]), v.number()])
@@ -17,27 +21,12 @@ export type ChartRangePredefinedOption =
   | 'max'
 
 export function rangeToResolution(range: ChartRange): ChartResolution {
-  if (range[0] === null) return 'daily'
+  if (range[0] === null) return 'day'
   if (range[0] >= UnixTime.toStartOf(UnixTime.now(), 'day') - 7 * UnixTime.DAY)
-    return 'hourly'
+    return 'hour'
   if (range[0] >= UnixTime.toStartOf(UnixTime.now(), 'day') - 90 * UnixTime.DAY)
-    return 'sixHourly'
-  return 'daily'
-}
-
-export function resolutionToPeriod(
-  resolution: ChartResolution,
-): 'hour' | 'six hours' | 'day' {
-  switch (resolution) {
-    case 'hourly':
-      return 'hour'
-    case 'sixHourly':
-      return 'six hours'
-    case 'daily':
-      return 'day'
-    default:
-      return assertUnreachable(resolution)
-  }
+    return 'six hours'
+  return 'day'
 }
 
 export function optionToRange(

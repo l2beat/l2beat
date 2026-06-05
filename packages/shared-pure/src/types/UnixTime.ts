@@ -5,6 +5,7 @@ const YEAR_3000_TIMESTAMP = Math.floor(
 // Note: This could've been a branded type, but then using it would be very cumbersome
 // Because it's not branded it's less about safety and more about utilities for working with time
 export type UnixTime = number
+export type UnixTimePeriod = 'day' | 'hour' | 'minute' | 'six hours'
 
 export function UnixTime(timestamp: number): UnixTime {
   if (!Number.isInteger(timestamp)) {
@@ -21,6 +22,21 @@ UnixTime.HOUR = 3_600 as const
 UnixTime.MINUTE = 60 as const
 UnixTime.SIX_HOURS = 21_600 as const
 
+UnixTime.periodToSeconds = function periodToSeconds(
+  period: UnixTimePeriod,
+): number {
+  switch (period) {
+    case 'day':
+      return UnixTime.DAY
+    case 'hour':
+      return UnixTime.HOUR
+    case 'minute':
+      return UnixTime.MINUTE
+    case 'six hours':
+      return UnixTime.SIX_HOURS
+  }
+}
+
 UnixTime.now = function now(): UnixTime {
   return Math.floor(Date.now() / 1000)
 }
@@ -31,22 +47,15 @@ UnixTime.fromDate = function fromDate(date: Date): UnixTime {
 
 UnixTime.toStartOf = function toStartOf(
   timestamp: UnixTime,
-  period: 'day' | 'hour' | 'minute' | 'six hours',
+  period: UnixTimePeriod,
 ): UnixTime {
-  const modulus =
-    period === 'day'
-      ? UnixTime.DAY
-      : period === 'hour'
-        ? UnixTime.HOUR
-        : period === 'six hours'
-          ? UnixTime.SIX_HOURS
-          : UnixTime.MINUTE
+  const modulus = UnixTime.periodToSeconds(period)
   return timestamp - (timestamp % modulus)
 }
 
 UnixTime.toEndOf = function toEndOf(
   timestamp: UnixTime,
-  period: 'day' | 'hour' | 'minute' | 'six hours',
+  period: UnixTimePeriod,
 ): UnixTime {
   return UnixTime.isFull(timestamp, period)
     ? timestamp
@@ -55,32 +64,18 @@ UnixTime.toEndOf = function toEndOf(
 
 UnixTime.toNext = function toNext(
   timestamp: UnixTime,
-  period: 'day' | 'hour' | 'minute' | 'six hours',
+  period: UnixTimePeriod,
 ): UnixTime {
-  const modulus =
-    period === 'day'
-      ? UnixTime.DAY
-      : period === 'hour'
-        ? UnixTime.HOUR
-        : period === 'six hours'
-          ? UnixTime.SIX_HOURS
-          : UnixTime.MINUTE
+  const modulus = UnixTime.periodToSeconds(period)
   const remaining = modulus - (timestamp % modulus)
   return timestamp + remaining
 }
 
 UnixTime.isFull = function isFull(
   timestamp: UnixTime,
-  period: 'day' | 'hour' | 'minute' | 'six hours',
+  period: UnixTimePeriod,
 ): boolean {
-  const modulus =
-    period === 'day'
-      ? UnixTime.DAY
-      : period === 'hour'
-        ? UnixTime.HOUR
-        : period === 'minute'
-          ? UnixTime.MINUTE
-          : UnixTime.SIX_HOURS
+  const modulus = UnixTime.periodToSeconds(period)
   return !(timestamp % modulus)
 }
 

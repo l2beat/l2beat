@@ -104,7 +104,7 @@ export async function getRecategorisedActivityChart(
   )
   const timestamps = generateTimestamps(
     [UnixTime(startTimestamp), adjustedRange[1]],
-    'daily',
+    'day',
   )
 
   const data: RecategorisedActivityChartData['data'] = timestamps.map(
@@ -153,7 +153,7 @@ function getMockRecategorisedActivityChart(
   range: ChartRange,
 ): RecategorisedActivityChartData {
   const adjustedRange: [UnixTime, UnixTime] = [range[0] ?? 1590883200, range[1]]
-  const timestamps = generateTimestamps(adjustedRange, 'daily')
+  const timestamps = generateTimestamps(adjustedRange, 'day')
 
   return {
     data: timestamps.map((timestamp) => [
