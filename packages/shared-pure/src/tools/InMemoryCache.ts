@@ -53,13 +53,13 @@ export class InMemoryCache {
     const now = UnixTime.now()
     const maxLifetime = options.ttl + (options.staleWhileRevalidate ?? 0)
 
-    this.sweep(now)
-
     const result = this.cache.get(key)
+
+    this.sweep(now)
 
     // If we have a result and it's not expired, return it immediately
     if (result && result.timestamp + options.ttl > now) {
-      this.logger?.info('Cache hit', { key, result })
+      this.logger?.info('Cache hit', { key })
       return result.result as T
     }
 
