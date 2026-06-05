@@ -1,6 +1,6 @@
 {
   "name": "fluent",
-  "timestamp": 1780653466,
+  "timestamp": 1780653849,
   "configHash": "0x310299ff352da81e23899a0d0e3481b85c141683e73c0c31fced2f815a5692e9",
   "entries": [
     {
@@ -172,7 +172,7 @@
         "finalizationDelay": 14400,
         "incentiveFee": "10000000000000000",
         "isRollupCorrupted": false,
-        "lastFinalizedBatchIndex": 4056,
+        "lastFinalizedBatchIndex": 4057,
         "MAX_GAS_LEFT": 30000000,
         "MAX_INCENTIVE_FEE": "100000000000000000000",
         "MIN_CHALLENGE_DEPOSIT_AMOUNT": 1000000000000000,
@@ -585,10 +585,12 @@
       "name": "SP1Verifier",
       "address": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x42f46686613948c377586d511d315e6d67b9fd747a18225cce7c4cf32d14c7be"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.0.0).",
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1771375907,
       "sinceBlock": 24480252,
@@ -737,10 +739,12 @@
       "name": "SP1Verifier",
       "address": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172379,
       "sinceBlock": 24878255,
@@ -2029,6 +2033,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 25250429 },
+  "usedBlockNumbers": { "ethereum": 25250461 },
   "permissionsConfigHash": "0xb2572e249477d9fa4735a668928d2bf03da724cece7273c61795f8a8c0aa4bd3"
 }

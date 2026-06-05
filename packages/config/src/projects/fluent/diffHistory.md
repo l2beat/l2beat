@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc226246a2e24b7dc8748f58b584c72643c493208
+Generated with discovered.json: 0x1b7b5494de277dc6ffcba400e196521568ca4bb0
 
-# Diff at Fri, 05 Jun 2026 09:58:50 GMT:
+# Diff at Fri, 05 Jun 2026 10:05:14 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778589577
-- current timestamp: 1780653466
+- current timestamp: 1780653849
 
 ## Description
 
@@ -62,6 +62,16 @@ discovery. Values are for block 1778589577 (main branch discovery), not current.
 ```
 
 ```diff
+    contract SP1Verifier (eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      template:
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.0.0)."
+    }
+```
+
+```diff
     contract L1FluentBridge (eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc) [fluent/L1FluentBridge] {
     +++ description: Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets anyone process L2->L1 messages with two Merkle proofs against a preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE.
       description:
@@ -69,6 +79,16 @@ discovery. Values are for block 1778589577 (main branch discovery), not current.
 +        "Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets anyone process L2->L1 messages with two Merkle proofs against a preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE."
       values.relayerAC:
 -        ["eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48"]
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      template:
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.1.0)."
     }
 ```
 

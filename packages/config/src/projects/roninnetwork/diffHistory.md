@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xbedd0c93ec24ecb4f7b4fc25c16c481c43e29747
+Generated with discovered.json: 0x42dab6958b58d31079004d1f0f6333426235069a
 
-# Diff at Thu, 04 Jun 2026 07:26:34 GMT:
+# Diff at Thu, 04 Jun 2026 20:29:53 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779399734
@@ -56,8 +56,50 @@ RiscZeroVerifierRouter (`eth:0x8EaB2D97…`) is the shared RISC Zero verifier-se
 
 ```diff
 +   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+```
+
+```diff
++   Status: CREATED
     contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe]
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier]
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
 ```
 
 ```diff
@@ -68,8 +110,26 @@ RiscZeroVerifierRouter (`eth:0x8EaB2D97…`) is the shared RISC Zero verifier-se
 
 ```diff
 +   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
     contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter]
     +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
 ```
 
 ```diff
@@ -78,17 +138,41 @@ RiscZeroVerifierRouter (`eth:0x8EaB2D97…`) is the shared RISC Zero verifier-se
     +++ description: Kailua (RISC Zero ZK fault-proof) game implementation registered as game type 1337 in the DisputeGameFactory. Deployed but NOT yet active. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.
 ```
 
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C) [N/A]
+    +++ description: None
+```
+
 ## Source code changes
 
 ```diff
 .../projects/roninnetwork/.flat/KailuaTreasury.sol | 3617 ++++++++++++++++++++
  .../.flat/KailuaVerifier/KailuaVerifier.sol        |  509 +++
  .../roninnetwork/.flat/KailuaVerifier/Proxy.p.sol  |  120 +
+ ...:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97.sol | 1767 ++++++++++
+ ...:0x2a098988600d87650Fb061FfAff08B97149Fa84D.sol | 1780 ++++++++++
+ ...:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF.sol | 1779 ++++++++++
+ ...:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9.sol | 1780 ++++++++++
+ ...:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C.sol | 1760 ++++++++++
+ .../roninnetwork/.flat/RiscZeroSetVerifier.sol     |  900 +++++
+ ...:0x1efDd13f831ceeEa14940806705A53D3211CD698.sol |  366 ++
+ ...:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7.sol |  366 ++
+ ...:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3.sol |  366 ++
+ ...:0x844D5f01161E3559d36f23d0Aa9E9620949aF782.sol |  366 ++
+ ...:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696.sol |  366 ++
+ ...:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1.sol |  366 ++
  .../roninnetwork/.flat/RiscZeroVerifierRouter.sol  |  282 ++
  .../src/projects/roninnetwork/.flat/Safe/Safe.sol  | 1216 +++++++
  .../roninnetwork/.flat/Safe/SafeProxy.p.sol        |   42 +
  .../roninnetwork/.flat/TimelockController.sol      | 1111 ++++++
- 7 files changed, 6897 insertions(+)
+ 19 files changed, 18859 insertions(+)
 ```
 
 ## Config/verification related changes
@@ -96,6 +180,14 @@ RiscZeroVerifierRouter (`eth:0x8EaB2D97…`) is the shared RISC Zero verifier-se
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1779399734 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
 
 ```diff
     contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {

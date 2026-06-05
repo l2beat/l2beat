@@ -10,6 +10,7 @@
       "arg": {
         "0": "FaultDisputeGame",
         "1": "PermissionedDisputeGame",
+        "621": "AggregateVerifier",
         "1337": "KailuaGame"
       }
     }

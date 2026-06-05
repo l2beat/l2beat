@@ -1,3 +1,103 @@
+Generated with discovered.json: 0x6f99e8f1fd4339a4fbeaa14062cac38ba1b04786
+
+# Diff at Thu, 04 Jun 2026 17:38:21 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1773320760
+- current timestamp: 1773320760
+
+## Description
+
+New game name (aggregateVerifier) added to portal.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773320760 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: HIGH
+      values.verifier_242f9d5b:
++        "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782"
++++ severity: HIGH
+      values.verifier_310fe598:
++        "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7"
++++ severity: HIGH
+      values.verifier_73c457ba:
++        "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696"
++++ severity: HIGH
+      values.verifier_9f39696c:
++        "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3"
++++ severity: HIGH
+      values.verifier_bb001d44:
++        "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698"
++++ severity: HIGH
+      values.verifier_f536085a:
++        "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1"
+      fieldMeta:
++        {"verifier_310fe598":{"severity":"HIGH"},"verifier_9f39696c":{"severity":"HIGH"},"verifier_f536085a":{"severity":"HIGH"},"verifier_bb001d44":{"severity":"HIGH"},"verifier_73c457ba":{"severity":"HIGH"},"verifier_242f9d5b":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    EOA  (eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412) {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7","description":"pause the verifier.","role":".owner"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3","description":"pause the verifier.","role":".owner"}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1","description":"pause the verifier.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C) [N/A]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x22c2c59c3fa75cd7617ea8c5867128b5464f00a1
 
 # Diff at Fri, 15 May 2026 12:35:44 GMT:
