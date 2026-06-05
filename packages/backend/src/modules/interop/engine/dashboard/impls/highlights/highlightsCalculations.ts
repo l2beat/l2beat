@@ -331,10 +331,9 @@ export function getLargestUopsCountIncrease(
   previousRecords: ActivityRecord[],
   olderRecords: ActivityRecord[],
   timestamp: UnixTime,
-  projectIds?: ReadonlySet<string>,
+  projectIds?: string[],
 ): ActivityUopsCountIncrease | undefined {
-  const isIncluded = (projectId: string) =>
-    projectIds === undefined || projectIds.has(projectId)
+  const isIncluded = (projectId: string) => !!projectIds?.includes(projectId)
 
   const top = largestSnapshotIncrease(
     currentRecords,
@@ -389,10 +388,9 @@ export function getLargestTvsIncrease(
   previousRecords: TokenValueRecord[],
   olderRecords: TokenValueRecord[],
   timestamp: UnixTime,
-  projectIds?: ReadonlySet<string>,
+  projectIds: readonly string[],
 ): TokenValueTvsIncrease | undefined {
-  const isIncluded = (projectId: string) =>
-    projectIds === undefined || projectIds.has(projectId)
+  const isIncluded = (projectId: string) => !!projectIds.includes(projectId)
 
   const top = largestSnapshotIncrease(
     currentRecords,

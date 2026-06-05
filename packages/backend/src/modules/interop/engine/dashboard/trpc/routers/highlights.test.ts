@@ -17,7 +17,7 @@ import {
   getLargestUopsCountIncrease,
   getTopDestinationChainByInflowAtTimestamp,
   getTopPathByVolumeAtTimestamp,
-} from '../../impls/highlightsCalculations'
+} from '../../impls/highlights/highlightsCalculations'
 import { createHighlightsRouter } from './highlights'
 
 const DEFAULT_CHAINS = [
@@ -214,7 +214,7 @@ describe(createHighlightsRouter.name, () => {
       previousTransfers,
       latestTimestamp,
     )
-    const interopProjectIds = new Set(DEFAULT_CHAINS.map((chain) => chain.id))
+    const interopProjectIds = DEFAULT_CHAINS.map((chain) => chain.id)
     const uopsIncrease = getLargestUopsCountIncrease(
       currentActivity,
       previousActivity,
@@ -515,10 +515,10 @@ describe(createHighlightsRouter.name, () => {
   })
 
   it('rewinds UOPS when the latest activity snapshot is the current day bucket', async () => {
-    const latestTimestamp = UnixTime.fromDate(new Date('2026-06-02T00:00:00Z'))
-    const currentActivityTimestamp = latestTimestamp - UnixTime.DAY
-    const previousActivityTimestamp = latestTimestamp - 2 * UnixTime.DAY
-    const olderActivityTimestamp = latestTimestamp - 3 * UnixTime.DAY
+    const today = UnixTime.toStartOf(UnixTime.now(), 'day')
+    const currentActivityTimestamp = today - UnixTime.DAY
+    const previousActivityTimestamp = today - 2 * UnixTime.DAY
+    const olderActivityTimestamp = today - 3 * UnixTime.DAY
 
     const getActivityByTimestamp = mockFn()
       .resolvesToOnce([
@@ -531,11 +531,10 @@ describe(createHighlightsRouter.name, () => {
       .resolvesTo([])
 
     const caller = createCaller({
-      latestTimestamp,
+      latestTimestamp: today,
       getTransferByTimestamp: mockFn().resolvesTo([]),
       getTokenByTimestamp: mockFn().resolvesTo([]),
-      getActivityMaxTimestampAtOrBeforeForProjects:
-        mockFn().resolvesTo(latestTimestamp),
+      getActivityMaxTimestampAtOrBeforeForProjects: mockFn().resolvesTo(today),
       getActivityByTimestamp,
     })
 
@@ -548,10 +547,10 @@ describe(createHighlightsRouter.name, () => {
       previousActivityTimestamp,
     )
     expect(getActivityByTimestamp).toHaveBeenCalledWith(olderActivityTimestamp)
-    expect(getActivityByTimestamp).not.toHaveBeenCalledWith(latestTimestamp)
+    expect(getActivityByTimestamp).not.toHaveBeenCalledWith(today)
     expect(result.largestUopsIncreaseByChain).toEqual({
       windowStart: currentActivityTimestamp,
-      windowEnd: latestTimestamp,
+      windowEnd: today,
       previousWindowStart: previousActivityTimestamp,
       previousWindowEnd: currentActivityTimestamp,
       chain: 'ethereum',
@@ -865,8 +864,8 @@ describe(createHighlightsRouter.name, () => {
 
     const result = await caller.latest()
 
-    expect(getTransferByTimestamp).toHaveBeenCalledTimes(1)
-    expect(getTokenByTimestamp).toHaveBeenCalledTimes(1)
+    expect(getTransferByTimestamp).not.toHaveBeenCalled()
+    expect(getTokenByTimestamp).not.toHaveBeenCalled()
     expect(result.largestVolumeIncreaseByChain).toEqual(null)
     expect(result.largestVolumeIncreaseByToken).toEqual(null)
     expect(result.largestVolumeIncreaseByProtocol).toEqual(null)

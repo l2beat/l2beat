@@ -2,7 +2,7 @@ import type { TokenDbClient } from '@l2beat/token-backend'
 import { chainToProjectId } from '../../../../../../config/chainMap'
 import { router } from '../../../../../../trpc/init'
 import { protectedProcedure } from '../../../../../../trpc/procedures'
-import { getInteropHighlights } from '../../impls/highlights'
+import { getInteropHighlights } from '../../impls/highlights/highlights'
 
 interface HighlightsRouterDeps {
   tokenDbClient: TokenDbClient
