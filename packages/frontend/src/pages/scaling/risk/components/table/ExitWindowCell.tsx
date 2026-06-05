@@ -54,7 +54,7 @@ export function ExitWindowCell({ value, href }: Props) {
         <TooltipTrigger disabledOnMobile className="h-[inherit]">
           {trigger}
         </TooltipTrigger>
-        <TooltipContent className="font-normal">
+        <TooltipContent>
           {regular ? (
             <div className="flex flex-col gap-3">
               <ExitWindowTooltipSection
@@ -101,7 +101,7 @@ function ExitWindowTooltipSection({
 }) {
   return (
     <div>
-      <SentimentText sentiment={sentiment} className="font-medium">
+      <SentimentText sentiment={sentiment} className="font-medium text-base">
         {label ? `${label}: ${value}` : value}
       </SentimentText>
       {warning && (
