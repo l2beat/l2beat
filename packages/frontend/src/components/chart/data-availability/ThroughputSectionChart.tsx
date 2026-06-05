@@ -154,9 +154,9 @@ function adjustThoughputToRange(
   if (!throughput) return null
 
   switch (resolution) {
-    case 'hourly':
+    case 'hour':
       return throughput / 24
-    case 'sixHourly':
+    case 'six hours':
       return throughput / 4
     default:
       return throughput

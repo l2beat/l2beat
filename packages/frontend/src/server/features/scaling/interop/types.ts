@@ -1,3 +1,4 @@
+import type { InteropType } from '@l2beat/config'
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
@@ -5,6 +6,7 @@ import type {
 } from '@l2beat/database'
 import { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import type { InteropFlowData } from './utils/getFlows'
 import type { TopItems } from './utils/getTopItems'
 
@@ -15,6 +17,7 @@ export type ProtocolEntry = {
   name: string
   shortName: string | undefined
   description: string | undefined
+  type: InteropType
   bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:
@@ -34,8 +37,15 @@ export type ProtocolEntry = {
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
   netMintedValue: number | undefined
+  topRoute:
+    | {
+        srcChain: { id: string; name: string; iconUrl: string }
+        dstChain: { id: string; name: string; iconUrl: string }
+        volume: number
+      }
+    | undefined
   snapshotTimestamp: number | undefined
-}
+} & FilterableEntry
 
 export type ProtocolDisplayable = {
   name: string
@@ -169,6 +179,14 @@ export const InteropFlowsParams = v.object({
   chains: v.array(v.string()),
   protocolIds: v.array(v.string()),
   tokenId: v.string().optional(),
+})
+
+export type InteropProtocolsByVolumeParams = v.infer<
+  typeof InteropProtocolsByVolumeParams
+>
+export const InteropProtocolsByVolumeParams = v.object({
+  chains: v.array(v.string()),
+  protocolIds: v.array(v.string()),
 })
 
 export type InteropProtocolTransferDetailsItem = {

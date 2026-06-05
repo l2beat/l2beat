@@ -153,12 +153,7 @@ function DataPostedCustomTooltip({
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(
             timestamp,
-            timestamp +
-              (resolution === 'daily'
-                ? UnixTime.DAY
-                : resolution === 'sixHourly'
-                  ? UnixTime.HOUR * 6
-                  : UnixTime.HOUR),
+            timestamp + UnixTime.periodToSeconds(resolution),
           )}
         </div>
         <div className="flex flex-col gap-2">

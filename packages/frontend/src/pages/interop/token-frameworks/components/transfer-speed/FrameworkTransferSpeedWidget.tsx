@@ -8,6 +8,10 @@ import { useTRPC } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../../../components/chain-selector/types'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import { ChainSelect } from './ChainSelect'
+import {
+  TRANSFER_SPEED_DEFAULT_FROM,
+  TRANSFER_SPEED_DEFAULT_TO,
+} from './consts'
 import { FrameworkRow } from './FrameworkRow'
 
 export function FrameworkTransferSpeedWidget({
@@ -18,8 +22,8 @@ export function FrameworkTransferSpeedWidget({
   interopChains: InteropChainWithIcon[]
 }) {
   const trpc = useTRPC()
-  const [src, setSrc] = useState('arbitrum')
-  const [dst, setDst] = useState('base')
+  const [src, setSrc] = useState(TRANSFER_SPEED_DEFAULT_FROM)
+  const [dst, setDst] = useState(TRANSFER_SPEED_DEFAULT_TO)
 
   const { data, isLoading } = useQuery(
     trpc.interop.tokenFrameworks.queryOptions({

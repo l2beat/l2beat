@@ -4,6 +4,7 @@ import { v as z } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
+import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { isTvsSynced } from '../utils/isTvsSynced'
 
@@ -41,11 +42,10 @@ export async function getTokenTvsChart({
   const db = getDb()
   const resolution = rangeToResolution(range)
 
-  const tokenValues = await db.tvsTokenValue.getByTokenIdInTimeRange(
-    token.tokenId,
-    range[0],
-    range[1],
-  )
+  const [tokenValues, firstTimestamp] = await Promise.all([
+    db.tvsTokenValue.getByTokenIdInTimeRange(token.tokenId, range[0], range[1]),
+    db.tvsTokenValue.getFirstTimestampByTokenId(token.tokenId),
+  ])
 
   if (tokenValues.length === 0) {
     return {
@@ -69,8 +69,15 @@ export async function getTokenTvsChart({
 
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
 
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp: firstTimestamp,
+    dataStart: minTimestamp,
+    resolution,
+  })
+
   const timestamps = generateTimestamps(
-    [minTimestamp, adjustedTo],
+    [startTimestamp, adjustedTo],
     resolution,
     {
       addTarget: true,

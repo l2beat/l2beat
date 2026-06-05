@@ -3,6 +3,7 @@ import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
+import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { ChartRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
@@ -39,12 +40,13 @@ export async function getPrivacyFlowsChart(
 
   const db = getDb()
 
-  const [dailyRows, syncedUntil] = await Promise.all([
+  const [dailyRows, syncedUntil, firstTimestamp] = await Promise.all([
     db.privacyFlowEvent.getDailyByProjectIds(
       params.projectIds,
       ...params.range,
     ),
     db.privacyFlowEvent.getLatestTimestampByProjectIds(params.projectIds),
+    db.privacyFlowEvent.getFirstTimestampByProjectIds(params.projectIds),
   ])
 
   const projectIds = new Set(params.projectIds)
@@ -62,8 +64,12 @@ export async function getPrivacyFlowsChart(
 
     return {
       chart: generateTimestamps(
-        normalizePrivacyFlowsChartRange(params.range),
-        'daily',
+        normalizePrivacyFlowsChartRange(
+          params.range,
+          undefined,
+          firstTimestamp,
+        ),
+        'day',
       ).map((timestamp) => [timestamp, 0, 0, 0, 0]),
       syncedUntil: syncedUntil ? Number(syncedUntil) : undefined,
     }
@@ -75,6 +81,7 @@ export async function getPrivacyFlowsChart(
   const normalizedRange = normalizePrivacyFlowsChartRange(
     params.range,
     minTimestamp,
+    firstTimestamp,
   )
   const grouped = new Map<
     number,
@@ -110,7 +117,7 @@ export async function getPrivacyFlowsChart(
   }
 
   return {
-    chart: generateTimestamps(normalizedRange, 'daily').map((timestamp) => {
+    chart: generateTimestamps(normalizedRange, 'day').map((timestamp) => {
       const entry = grouped.get(timestamp)
       return [
         timestamp,
@@ -131,7 +138,7 @@ function getMockPrivacyFlowsChart(
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = params.range[0] ?? to - days * UnixTime.DAY
 
-  const chart = generateTimestamps([UnixTime(from), UnixTime(to)], 'daily').map(
+  const chart = generateTimestamps([from, to], 'day').map(
     (timestamp): PrivacyFlowsChartPoint => {
       const depositsCount = Math.round(Math.random() * 100)
       const withdrawalsCount = Math.round(Math.random() * 100)
@@ -151,11 +158,15 @@ function getMockPrivacyFlowsChart(
 function normalizePrivacyFlowsChartRange(
   range: ChartRange,
   minTimestamp?: number,
+  firstProjectTimestamp?: number,
 ): [UnixTime, UnixTime] {
-  const from =
-    range[0] === null
-      ? UnixTime.toStartOf(minTimestamp ?? range[1], 'day')
-      : UnixTime.toStartOf(range[0], 'day')
+  const start = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp,
+    dataStart: minTimestamp ?? range[1],
+    resolution: 'day',
+  })
+  const from = UnixTime.toStartOf(start, 'day')
   const to = UnixTime.toStartOf(range[1], 'day')
 
   return [UnixTime(from), UnixTime(to)]

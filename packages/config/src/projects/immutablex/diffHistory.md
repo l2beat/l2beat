@@ -2,7 +2,7 @@ Generated with discovered.json: 0xde7424726ad1e3b357045db2de1bda6d9708fe8a
 
 # Diff at Thu, 21 May 2026 16:02:29 GMT:
 
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1772785651
 - current timestamp: 1779377712
 

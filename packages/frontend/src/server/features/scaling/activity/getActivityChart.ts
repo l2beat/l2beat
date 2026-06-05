@@ -5,6 +5,7 @@ import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { countPerSecond } from './utils/countPerSecond'
 import { getActivityProjects } from './utils/getActivityProjects'
@@ -107,29 +108,43 @@ export async function getActivityChart({
     syncWarning = syncInfo.syncWarning
   }
 
-  const aggregatedEntries = aggregateActivityRecords(entries)
-  if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
-    return { data: [], syncWarning, syncedUntil: syncedUntil, stats: undefined }
-  }
+  const projectDataStart =
+    entries.find((e) => e.projectId === projectId && e.count > 0)?.timestamp ??
+    0
 
-  const startTimestamp = Math.min(...Object.keys(aggregatedEntries).map(Number))
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: adjustedRange[0],
+    firstProjectTimestamp: projectId
+      ? totalCounts?.[projectId]?.sinceTimestamp
+      : undefined,
+    dataStart: projectDataStart,
+    resolution: 'day',
+  })
+
+  const aggregatedEntries = aggregateActivityRecords(entries, {
+    startTimestamp,
+  })
+  if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
+    return { data: [], syncWarning, syncedUntil, stats: undefined }
+  }
 
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedRange[1]],
-    'daily',
+    'day',
   )
 
   const data: ActivityChartDataPoint[] = timestamps.map((timestamp) => {
     const isSynced = syncedUntil >= timestamp
     const fallbackValue = isSynced ? 0 : null
+    const projectFallback = projectId ? fallbackValue : null
 
     const entry = aggregatedEntries[timestamp]
     if (!entry || !isSynced) {
       return [
         timestamp,
-        null,
+        projectFallback,
         entry?.ethereumCount ?? fallbackValue,
-        null,
+        projectFallback,
         entry?.ethereumUopsCount ?? fallbackValue,
       ]
     }
@@ -231,7 +246,7 @@ function getMockActivityChart({
   range,
 }: ActivityChartParams): ActivityChartData {
   const adjustedRange: [UnixTime, UnixTime] = [range[0] ?? 1590883200, range[1]]
-  const timestamps = generateTimestamps(adjustedRange, 'daily')
+  const timestamps = generateTimestamps(adjustedRange, 'day')
 
   return {
     data: timestamps.map((timestamp) => [+timestamp, 15, 11, 16, 12]),

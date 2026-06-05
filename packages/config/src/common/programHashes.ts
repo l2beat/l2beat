@@ -2708,6 +2708,10 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
       'The hash of the initial Cartesi machine state that is used in Dave dispute games of Cartesi Honeypot v1.',
     verificationStatus: 'notVerified',
   },
+  '0x5731b637d9e3b693fc0d74e570bac76ca6c0defe3e4c119b1cea981a9bd307d6': {
+    title: 'Appchain TEE Enclave hash',
+    verificationStatus: 'unsuccessful',
+  },
   '0x002bb66c60302a81a621d7899e3f6ee1d0db9fb1eae5d1e80e94a33cb1e24922': {
     title: 'Nitro TEE Aggregated Verifer',
     proverSystemProject: ProjectId('sp1turbo'),
@@ -2729,6 +2733,52 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
     verificationStatus: 'unsuccessful',
     verificationSteps:
       'According to Automata Network, the linked program was compiled in a non-reporducible way (without docker). The compiled binary could not be reproduced.',
+  },
+  '0x00294928e44f0cdc9c74848c4cafcdb29f733a3bc07408c240be3d5afe750b3e': {
+    title: 'Nitro TEE Aggregated Verifer',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/automata-network/aws-nitro-enclave-attestation/tree/8607619cc620a93d029a9569bccf752f341aad99/crates/sp1-methods/sp1-aggregator',
+    description:
+      'Verifies correctness of several aggregated TEE attestations for correctly running Arbitrum Nitro within a trusted enclave.',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`
+2. Make sure SP1 v6.1.0 is active: \`sp1up -v 6.1.0\` (must match the workspace \`sp1-sdk = "^6.1.0"\` dependency)
+3. Install docker [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [automata-network/aws-nitro-enclave-attestation](https://github.com/automata-network/aws-nitro-enclave-attestation/tree/feat/reproducible_build) repo: \`git checkout feat/reproducible_build\`. Commit hash should be \`8607619cc620a93d029a9569bccf752f341aad99\`.
+2. Make sure docker is running by running \`docker ps\`.
+3. From the repo root: \`cargo clean -p sp1-methods\` to clear any stale build artifacts.
+4. From the repo root run: \`REPRODUCIBLE_BUILD=docker cargo run --release -p nitro-attest-cli --no-default-features --features sp1 -- program-id --sp1\`. The \`REPRODUCIBLE_BUILD=docker\` env var triggers the SP1 docker reproducible rebuild of \`sp1-verifier\` and \`sp1-aggregator\` ELFs (replacing \`USE_DOCKER=1\` used on older branches). The CLI then prints \`Verifier ID\`, \`Verifier Proof ID\`, and \`Aggregator ID\`.
+    `,
+  },
+  '0x00643c7149cf335e7ec9d3f3301e69658a7f0ef2bc7546509c257ed8809f28e1': {
+    title: 'Nitro TEE Verifer',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/automata-network/aws-nitro-enclave-attestation/tree/8607619cc620a93d029a9569bccf752f341aad99/crates/sp1-methods/sp1-verifier',
+    description:
+      'Verifies correctness of a single TEE attestation for correctly running Arbitrum Nitro within a trusted enclave.',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`
+2. Make sure SP1 v6.1.0 is active: \`sp1up -v 6.1.0\` (must match the workspace \`sp1-sdk = "^6.1.0"\` dependency)
+3. Install docker [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [automata-network/aws-nitro-enclave-attestation](https://github.com/automata-network/aws-nitro-enclave-attestation/tree/feat/reproducible_build) repo: \`git checkout feat/reproducible_build\`. Commit hash should be \`8607619cc620a93d029a9569bccf752f341aad99\`.
+2. Make sure docker is running by running \`docker ps\`.
+3. From the repo root: \`cargo clean -p sp1-methods\` to clear any stale build artifacts.
+4. From the repo root run: \`REPRODUCIBLE_BUILD=docker cargo run --release -p nitro-attest-cli --no-default-features --features sp1 -- program-id --sp1\`. The \`REPRODUCIBLE_BUILD=docker\` env var triggers the SP1 docker reproducible rebuild of \`sp1-verifier\` and \`sp1-aggregator\` ELFs (replacing \`USE_DOCKER=1\` used on older branches). The CLI then prints \`Verifier ID\`, \`Verifier Proof ID\`, and \`Aggregator ID\`.
+    `,
   },
   '0x0085924e73e2b0d0e2626c592825fe092d3cfb63b108757965b2a6c06c8c311b': {
     title: 'Fluent Nitro TEE verifier',
@@ -2763,5 +2813,98 @@ Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/f
     // 2. Checkout correct branch in https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.0: \`git checkout v1.0.0\`. Commit hash should be \`c8023c370a3fb859b591223bf81a9fe81df43778\`.
     // 3. Build client program for the mainnet within docker: \`make build-client-docker NETWORK=mainnet\`. This command will create \`rsp-client-mainnet.vkey\` file with the program hash string.
     //     `
+  },
+  '0x003147cde8e7d519d3dbae6b76f1198a70d4ff477a3aaea73bee4153f250288a': {
+    title: 'Aggregation program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/v0.9.1/crates/proof/succinct/programs/aggregation',
+    description:
+      'Aggregates range proofs of correct execution for several consecutive sub-ranges of Base L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain v6.1.0: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up v6.1.0\`
+3. Install docker https://docs.docker.com/get-started/get-docker/
+4. Install \`lld\` (required by the repo's \`.cargo/config.toml\`)
+
+Verify:
+
+1. Checkout the correct tag in [base/base](https://github.com/base/base) repo: \`git checkout v0.9.1\`. Commit hash should be \`00e656223f5d2af1b2100351462272b26499f12f\`.
+2. Make sure docker is running: \`docker ps\`.
+3. From the repo root: \`just succinct build-elfs\` to build the range and aggregation SP1 ELFs. Built elfs are placed in \`crates/proof/succinct/elf/\`.
+4. From the repo root: \`just succinct vkeys\` to print the range and aggregation verification key hashes.    
+    `,
+  },
+  '0x44f625fa2a41367670d74a7b0d9899412dc1ca406f90df7a5bd9f8ae581ee47f': {
+    title: 'Range program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/v0.9.1/crates/proof/succinct/programs/range',
+    description:
+      'Proves correct state transition function of the Base rollup over a sub-range of L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain v6.1.0: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up v6.1.0\`
+3. Install docker https://docs.docker.com/get-started/get-docker/
+4. Install \`lld\` (required by the repo's \`.cargo/config.toml\`)
+
+Verify:
+
+1. Checkout the correct tag in [base/base](https://github.com/base/base) repo: \`git checkout v0.9.1\`. Commit hash should be \`00e656223f5d2af1b2100351462272b26499f12f\`.
+2. Make sure docker is running: \`docker ps\`.
+3. From the repo root: \`just succinct build-elfs\` to build the range and aggregation SP1 ELFs. Built elfs are placed in \`crates/proof/succinct/elf/\`.
+4. From the repo root: \`just succinct vkeys\` to print the range and aggregation verification key hashes.    
+    `,
+  },
+  '0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c': {
+    title: 'TEE enclave image hash of Base client',
+    programUrl:
+      'https://github.com/base/base/tree/v0.9.0/crates/proof/tee/nitro-enclave',
+    description:
+      'TEE image hash of Base L2 node program. AWS Nitro Enclave attestations guarantee that exactly this program was run within a TEE.',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Regeneration steps below require Linux OS, they will produce a different hash on MacOS.
+
+Prepare:
+
+1. Install docker <https://docs.docker.com/get-started/get-docker/>
+2. Install \`just\` version \`>=1.31.0\`: <https://just.systems/man/en/pre-built-binaries.html>
+
+Verify:
+
+1. Checkout the correct tag in [base/base](https://github.com/base/base) repo: \`git checkout v0.9.2-rc.1\`. Commit hash should be \`f2579cd48d23163e11174049cdd10834f197e33f\`.
+2. Make sure docker is running: \`docker ps\`.
+3. From the repo root: \`just tee build-eif\` to build the TEE image in a docker container.
+4. Extract \`PCR0\` from the build EIF: \`just tee describe-eif\`
+5. Compute image hash as keccak256 of the PCR0: \`cast keccak "0x<PCR0_hex>"\`, where \`PCR0_hex\` is taken from the output of the previous step.
+`,
+  },
+  '0x20141665fe40bce01fbcfa0a95c8a1bd750eadbe3f24e06a75571e6fd7a9dc11': {
+    title: 'AWS Nitro TEE attestation verifier for Base',
+    programUrl:
+      'https://github.com/base/base/tree/v0.9.0/crates/proof/tee/nitro-attestation-prover',
+    description:
+      'RISC Zero guest program that verifies an AWS Nitro TEE Enclave attestation document.',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install docker https://docs.docker.com/get-started/get-docker/ and make sure it's running: \`docker ps\`.
+
+Verify:
+
+1. Checkout the correct tag in [base/base](https://github.com/base/base) repo: \`git checkout v0.9.0\`. Commit hash should be \`0276bb4eb9b3ee37703bd818c8df71e3d31594fb\`.
+2. From the repo root, build the builder image (once): \`docker build --platform=linux/amd64 -t nitro-guest-builder crates/proof/tee/nitro-attestation-prover/guest\`.
+3. From the repo root, build the guest and print the image ID: \`docker run --rm --platform=linux/amd64 -v "$(pwd)":/build/base nitro-guest-builder verify\`.
+4. Compare the printed \`Image ID\` against this hash.
+    `,
   },
 }
