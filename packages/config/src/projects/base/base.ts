@@ -210,6 +210,22 @@ export const base: ScalingProject = opStackL2({
         sinceTimestamp: UnixTime(1730303471), // after proofs
       },
     },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(
+          discovery.getContract('DisputeGameFactory').address,
+        ),
+        selector: '0x1011f377',
+        functionSignature:
+          'function createWithInitData(uint32 _gameType, bytes32 _rootClaim, bytes _extraData, bytes _initData) payable returns (address proxy_)',
+        sinceTimestamp: UnixTime(1779825599), // Azul AggregateVerifier activation
+      },
+    },
   ],
 
   isNodeAvailable: true,
