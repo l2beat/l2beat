@@ -2854,6 +2854,75 @@
       }
     ]
   },
+  "layerzero-aori": {
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x4eb187cc72aac9f22d2e144bd595d12e7d8739c9ac250908e103407f4240f26d"
+      },
+      {
+        "chain": "base",
+        "tx": "0xf720749312a7e4522642a7b1a147fd32323d87294258e91b44de2331a55be52d"
+      }
+    ],
+    "expects": {
+      "messages": [
+        {
+          "type": "layerzero-v2.Message",
+          "app": "aori-settlement",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ]
+    }
+  },
+  "layerzero-superform": {
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "polygonpos",
+        "tx": "0xbc896ba73005cf577a6188285990b6f9d4b7fdad5ff2c907a89d131d58c812f7"
+      },
+      {
+        "chain": "base",
+        "tx": "0x456eff39ca3cffcf230ac98a349d6b85c27ff275f60d947d314b1f821012d49c"
+      }
+    ],
+    "expects": {
+      "messages": [
+        {
+          "type": "layerzero-v2.Message",
+          "app": "superform",
+          "src": { "ctx": { "chain": "polygonpos" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ]
+    }
+  },
+  "layerzero-centrifuge": {
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x7d18630bbefb8bb9f742c6e861f540dbab537490704f2ecacc6bca0b365492b1"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4c9b98c5e3109cab8592f8012bb960ae7c8759a07ba35c70c6301616db73020a"
+      }
+    ],
+    "expects": {
+      "messages": [
+        {
+          "type": "layerzero-v2.Message",
+          "app": "centrifuge",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ]
+    }
+  },
   "usdt0": {
     "loadConfigs": ["layerzero-v2"],
     "txs": [

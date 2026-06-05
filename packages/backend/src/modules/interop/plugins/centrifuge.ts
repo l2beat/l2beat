@@ -21,6 +21,8 @@ import {
   Result,
 } from './types'
 
+// centrifuge uses Layerzero, Axelar, CCIP and Wormhole for messaging
+
 const spokeAddress = EthereumAddress(
   '0xEC3582fcDc34078a4B7a8c75a5a3AE46f48525aB',
 )
