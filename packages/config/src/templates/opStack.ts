@@ -350,6 +350,9 @@ function opStackCommon(
   if (fraudProofType === 'OpSuccinct' || fraudProofType === 'OpSuccinctFDP') {
     architectureImage.push('opsuccinct')
   }
+  if (fraudProofType === 'AggregateProof') {
+    architectureImage.push('aggverifier')
+  }
 
   const nativeContractRisks: ProjectRisk[] = [
     templateVars.nonTemplateContractRisks ??
@@ -418,11 +421,18 @@ function opStackCommon(
                 zkCatalogId: ProjectId('sp1hypercube'),
                 challengeProtocol: 'Single-step',
               }
-            : {
-                type: 'Optimistic',
-                name: 'OPFP',
-                challengeProtocol: 'Interactive',
-              }),
+            : fraudProofType === 'AggregateProof'
+              ? {
+                  type: 'Optimistic',
+                  name: 'SP1',
+                  zkCatalogId: ProjectId('sp1hypercube'),
+                  challengeProtocol: 'Single-step',
+                }
+              : {
+                  type: 'Optimistic',
+                  name: 'OPFP',
+                  challengeProtocol: 'Interactive',
+                }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(
@@ -727,6 +737,37 @@ function getProgramHashes(
       ]
 
       return opSuccinctProgramHashes.map((el) => PROGRAM_HASHES(el))
+    }
+    case 'AggregateProof': {
+      const rangeHash =
+        templateVars.discovery.getContractValueOrUndefined<string>(
+          'AggregateVerifier',
+          'ZK_RANGE_HASH',
+        )
+      const aggregateHash =
+        templateVars.discovery.getContractValueOrUndefined<string>(
+          'AggregateVerifier',
+          'ZK_AGGREGATE_HASH',
+        )
+      const teeImageHash =
+        templateVars.discovery.getContractValueOrUndefined<string>(
+          'AggregateVerifier',
+          'TEE_IMAGE_HASH',
+        )
+      // RISC Zero guest that verifies AWS Nitro attestations for TEE signer registration.
+      const teeAttestationProgram = templateVars.discovery.hasContract(
+        'NitroEnclaveVerifier',
+      )
+        ? templateVars.discovery.getContractValueOrUndefined<{
+            verifierId: string
+          }>('NitroEnclaveVerifier', 'zkConfigRiscZero')?.verifierId
+        : undefined
+      const hashes: string[] = []
+      if (rangeHash) hashes.push(rangeHash)
+      if (aggregateHash) hashes.push(aggregateHash)
+      if (teeImageHash) hashes.push(teeImageHash)
+      if (teeAttestationProgram) hashes.push(teeAttestationProgram)
+      return hashes.map((h) => PROGRAM_HASHES(h))
     }
   }
 }
@@ -1206,6 +1247,47 @@ The Kailua state validation system is primarily optimistically resolved, so no v
         ],
       }
     }
+    case 'AggregateProof': {
+      const slowFinalization =
+        templateVars.discovery.getContractValueOrUndefined<number>(
+          'AggregateVerifier',
+          'SLOW_FINALIZATION_DELAY',
+        )
+      const fastFinalization =
+        templateVars.discovery.getContractValueOrUndefined<number>(
+          'AggregateVerifier',
+          'FAST_FINALIZATION_DELAY',
+        )
+      const blockInterval =
+        templateVars.discovery.getContractValueOrUndefined<number>(
+          'AggregateVerifier',
+          'BLOCK_INTERVAL',
+        )
+      const intermediateBlockInterval =
+        templateVars.discovery.getContractValueOrUndefined<number>(
+          'AggregateVerifier',
+          'INTERMEDIATE_BLOCK_INTERVAL',
+        )
+      const initBond =
+        templateVars.discovery.getContractValueOrUndefined<number>(
+          'DisputeGameFactory',
+          'initBondGame621',
+        )
+      return {
+        categories: [
+          {
+            title: 'State root proposals',
+            description: `State roots are proposed by calling \`DisputeGameFactory.create\` with the AggregateVerifier game type${initBond !== undefined ? `, posting a bond of ${formatEther(initBond)} ETH` : ''}. Each proposal must include an initial proof (TEE attestation or ZK proof) over the range of ${blockInterval ?? 'N'} L2 blocks split into sub-ranges of ${intermediateBlockInterval ?? 'N'} blocks. With a single proof, the game resolves after ${slowFinalization !== undefined ? formatSeconds(slowFinalization) : 'the slow finalization delay'}; if both proof arms commit, the window collapses to ${fastFinalization !== undefined ? formatSeconds(fastFinalization) : 'the fast finalization delay'}.`,
+            references: additionalRefs,
+          },
+          {
+            title: 'Challenges',
+            description: `Any party that produces a valid ZK proof of an incorrect intermediate root can call \`AggregateVerifier.challenge\`, contradicting a TEE-only proposal. The challenger's proof is verified onchain via the SP1 verifier gateway. If the challenge stands until the resolution window closes, the original proposer's bond is awarded to the challenger and the game resolves CHALLENGER_WINS. Soundness contradictions within a single proof arm are caught by \`AggregateVerifier.nullify\`, which permanently disables that arm's verifier contract for all games.`,
+            references: [],
+          },
+        ],
+      }
+    }
   }
 }
 
@@ -1416,6 +1498,18 @@ function getRiskViewStateValidation(
         defenderAdvantage: 'not-applicable',
       }
     }
+    case 'AggregateProof': {
+      // AggregateVerifier game: optimistic finalization with ZK proof as the
+      // dispute mechanism. Classification matches Kailua. Project should layer
+      // in TEE-arm specifics via nonTemplateRiskView.stateValidation.
+      return {
+        ...RISK_VIEW.STATE_FP_HYBRID_ZK,
+        executionDelay: getExecutionDelay(templateVars),
+        challengeDelay: getChallengePeriod(templateVars),
+        permissioned: false,
+        defenderAdvantage: 'not-assessed',
+      }
+    }
   }
 }
 
@@ -1473,6 +1567,11 @@ function getRiskViewProposerFailure(
     case 'OpSuccinct':
     case 'OpSuccinctFDP':
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
+    case 'AggregateProof':
+      // AggregateVerifier ZK arm is permissionless at the contract level
+      // (anyone with a valid SP1 proof can submit). The TEE arm is allowlisted,
+      // but proposer-failure is about the open path, which exists here.
+      return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
   }
 }
 
@@ -1490,6 +1589,7 @@ function computedStage(templateVars: OpStackConfigCommon): ProjectScalingStage {
     KailuaSoon: true,
     OpSuccinct: null,
     OpSuccinctFDP: null,
+    AggregateProof: true,
   }
 
   if (postsToEthereum(templateVars)) {
@@ -2356,7 +2456,8 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
     case 'Permissionless':
     case 'Kailua':
     case 'KailuaSoon':
-    case 'OpSuccinctFDP': {
+    case 'OpSuccinctFDP':
+    case 'AggregateProof': {
       return templateVars.discovery.getContractValue<number>(
         'OptimismPortal2',
         'proofMaturityDelaySeconds',
@@ -2416,6 +2517,15 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
         'maxChallengeDuration',
       )
     }
+    case 'AggregateProof': {
+      // Worst-case challenge window: single-proof resolution. With both arms
+      // committed the resolution drops to FAST_FINALIZATION_DELAY (1d), but the
+      // risk view shows the conservative bound a challenger has to act within.
+      return templateVars.discovery.getContractValue<number>(
+        'AggregateVerifier',
+        'SLOW_FINALIZATION_DELAY',
+      )
+    }
   }
 }
 
@@ -2429,7 +2539,8 @@ function getExecutionDelay(
     case 'Permissionless':
     case 'Kailua':
     case 'KailuaSoon':
-    case 'OpSuccinctFDP': {
+    case 'OpSuccinctFDP':
+    case 'AggregateProof': {
       return templateVars.discovery.getContractValue<number>(
         portal.name ?? portal.address,
         'disputeGameFinalityDelaySeconds',
@@ -2448,6 +2559,7 @@ type FraudProofType =
   | 'KailuaSoon'
   | 'OpSuccinct'
   | 'OpSuccinctFDP'
+  | 'AggregateProof'
 
 function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   const portal = getOptimismPortal(templateVars)
@@ -2483,6 +2595,9 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   }
   if (respectedGameType === 42) {
     return 'OpSuccinctFDP'
+  }
+  if (respectedGameType === 621) {
+    return 'AggregateProof'
   }
   throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }

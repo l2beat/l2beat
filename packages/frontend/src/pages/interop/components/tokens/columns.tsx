@@ -203,16 +203,16 @@ function getCommonColumns<T extends CommonRow>(
         (row) => row.flows?.reduce((acc, flow) => acc + flow.volume, 0) ?? 0,
         {
           id: 'flows',
-          header: 'Flows',
+          header: 'Top flows',
           cell: (ctx) => {
             const flows = ctx.row.original.flows
             if (!flows || flows.length === 0) return EM_DASH
 
-            return <TokenFlowsCell flows={flows} />
+            return <TokenFlowsCell flows={flows.slice(0, 3)} />
           },
           meta: {
             tooltip:
-              'The distribution of this token volume across source and destination chains over the past 24 hours.',
+              'Top 3 flows by volume for this token over the past 24 hours, across source and destination chains.',
           },
         },
       ),

@@ -43,8 +43,8 @@ export function ProjectLivenessChart({
 
   const { data: chart, isLoading } = useQuery(
     trpc.liveness.projectChart.queryOptions({
-      range,
       projectId: project.id,
+      range,
       subtype,
     }),
   )

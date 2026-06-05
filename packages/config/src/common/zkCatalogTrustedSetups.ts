@@ -48,9 +48,23 @@ export const TRUSTED_SETUPS = {
     longDescription: `
 Ceremony was run among 12 participants affiliated with Across Protocol, OP Labs, Offchain Labs, Succinct Labs, Conduit, Ethrealize and 1 independent participant. It generated circuit-specific setup parameters for Groth16 wrapper of SP1 Hypercube zkVM.
 
-- Ceremony info on Succinct docs page: <https://docs.succinct.xyz/docs/sp1/security/security-model#options>.
+- Ceremony info on Succinct docs page: <https://docs.succinct.xyz/docs/sp1/security/security-model#options> (link is updated and points to a different ceremony now).
 - Ceremony instructions and verification instructions: [https://github.com/succinctlabs/semaphore-gnark-11/tree/main](https://github.com/succinctlabs/semaphore-gnark-11/tree/main).
 - Link to transcript and other artifacts (Note: will immediately start downloading .tar.gz file): <https://sp1-circuits.s3-us-east-2.amazonaws.com/v6.0.0-trusted-setup.tar.gz>.
+    `,
+  },
+  SP1HypercubeGroth16_v6_1_0: {
+    id: 'SP1HypercubeGroth16_v6_1_0',
+    name: 'SP1 Hypercube v6.1.0 Groth16 circuit-specific setup',
+    risk: 'red',
+    shortDescription:
+      'Trusted setup ceremony for SP1 Hypercube (release v6.0.0) Groth16 final wrap circuits. Ceremony was organized by Succinct and includes 18 participants from 8 different organizations, without public calls to participate.',
+    longDescription: `
+Ceremony was run among 18 participants affiliated with Etherealize, Polygon, OP Labs, Alpen Labs, Offchain Labs, Succinct, Coinbase, Across Protocol. It generated circuit-specific setup parameters for Groth16 wrapper of SP1 Hypercube zkVM.
+
+- Ceremony info on Succinct docs page: <https://docs.succinct.xyz/docs/sp1/security/security-model#options>.
+- Ceremony instructions and verification instructions: [https://github.com/succinctlabs/semaphore-gnark-11/tree/main](https://github.com/succinctlabs/semaphore-gnark-11/tree/main).
+- Link to transcript and other artifacts (Note: will immediately start downloading .tar.gz file): <https://sp1-circuits.s3-us-east-2.amazonaws.com/v6.1.0-trusted-setup.tar.gz>.
     `,
   },
   CeloPlumo: {

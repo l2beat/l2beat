@@ -25,6 +25,21 @@ export function rangeToResolution(range: ChartRange): ChartResolution {
   return 'daily'
 }
 
+export function resolutionToPeriod(
+  resolution: ChartResolution,
+): 'hour' | 'six hours' | 'day' {
+  switch (resolution) {
+    case 'hourly':
+      return 'hour'
+    case 'sixHourly':
+      return 'six hours'
+    case 'daily':
+      return 'day'
+    default:
+      return assertUnreachable(resolution)
+  }
+}
+
 export function optionToRange(
   option: ChartRangePredefinedOption,
   opts?: { offset?: UnixTime },

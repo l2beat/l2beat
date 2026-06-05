@@ -2,6 +2,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
+import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { isTvsSynced } from './isTvsSynced'
 
@@ -35,16 +36,19 @@ export async function getSummedTvsValues(
   const db = getDb()
   const resolution = rangeToResolution(range)
 
-  const records = await db.tvsTokenValue.getSummedByTimestampByProjects(
-    projects,
-    range[0],
-    range[1],
-    {
-      forSummary,
-      excludeAssociatedTokens,
-      excludeRwaRestrictedTokens,
-    },
-  )
+  const [records, firstTimestamp] = await Promise.all([
+    db.tvsTokenValue.getSummedByTimestampByProjects(
+      projects,
+      range[0],
+      range[1],
+      {
+        forSummary,
+        excludeAssociatedTokens,
+        excludeRwaRestrictedTokens,
+      },
+    ),
+    db.tvsTokenValue.getFirstTimestampByProjects(projects),
+  ])
 
   if (records.length === 0) {
     return []
@@ -57,7 +61,14 @@ export async function getSummedTvsValues(
 
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
 
-  return generateTimestamps([fromTimestamp, adjustedTo], resolution, {
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp: firstTimestamp,
+    dataStart: fromTimestamp,
+    resolution,
+  })
+
+  return generateTimestamps([startTimestamp, adjustedTo], resolution, {
     addTarget: true,
   }).flatMap((timestamp) => {
     const record = groupedByTimestamp[timestamp]

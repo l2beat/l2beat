@@ -5,6 +5,7 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
+import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import { isTvsSynced } from './utils/isTvsSynced'
@@ -91,7 +92,17 @@ export async function getDetailedTvsChartWithProjectsRanges({
     ),
   ])
 
-  return getChartData(values, ethPrices, projectIds, range)
+  const firstProjectTimestamp = Math.min(
+    ...projects.map((p) => p.sinceTimestamp),
+  )
+
+  return getChartData(
+    values,
+    ethPrices,
+    projectIds,
+    range,
+    firstProjectTimestamp,
+  )
 }
 
 function getChartData(
@@ -99,6 +110,7 @@ function getChartData(
   ethPrices: Record<number, number>,
   projectIds: ProjectId[],
   range: ChartRange,
+  firstProjectTimestamp: number,
 ): DetailedTvsChartWithProjectsRangesData {
   if (values.length === 0) {
     return {
@@ -140,8 +152,14 @@ function getChartData(
   const syncedUntil = maxTimestamp
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
   const resolution = rangeToResolution(range)
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp,
+    dataStart: minTimestamp,
+    resolution,
+  })
   const timestamps = generateTimestamps(
-    [minTimestamp, adjustedTo],
+    [startTimestamp, adjustedTo],
     resolution,
     {
       addTarget: true,

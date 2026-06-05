@@ -2814,4 +2814,97 @@ Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/f
     // 3. Build client program for the mainnet within docker: \`make build-client-docker NETWORK=mainnet\`. This command will create \`rsp-client-mainnet.vkey\` file with the program hash string.
     //     `
   },
+  '0x003147cde8e7d519d3dbae6b76f1198a70d4ff477a3aaea73bee4153f250288a': {
+    title: 'Aggregation program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/v0.9.1/crates/proof/succinct/programs/aggregation',
+    description:
+      'Aggregates range proofs of correct execution for several consecutive sub-ranges of Base L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain v6.1.0: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up v6.1.0\`
+3. Install docker https://docs.docker.com/get-started/get-docker/
+4. Install \`lld\` (required by the repo's \`.cargo/config.toml\`)
+
+Verify:
+
+1. Checkout the correct tag in [base/base](https://github.com/base/base) repo: \`git checkout v0.9.1\`. Commit hash should be \`00e656223f5d2af1b2100351462272b26499f12f\`.
+2. Make sure docker is running: \`docker ps\`.
+3. From the repo root: \`just succinct build-elfs\` to build the range and aggregation SP1 ELFs. Built elfs are placed in \`crates/proof/succinct/elf/\`.
+4. From the repo root: \`just succinct vkeys\` to print the range and aggregation verification key hashes.    
+    `,
+  },
+  '0x44f625fa2a41367670d74a7b0d9899412dc1ca406f90df7a5bd9f8ae581ee47f': {
+    title: 'Range program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/v0.9.1/crates/proof/succinct/programs/range',
+    description:
+      'Proves correct state transition function of the Base rollup over a sub-range of L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain v6.1.0: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up v6.1.0\`
+3. Install docker https://docs.docker.com/get-started/get-docker/
+4. Install \`lld\` (required by the repo's \`.cargo/config.toml\`)
+
+Verify:
+
+1. Checkout the correct tag in [base/base](https://github.com/base/base) repo: \`git checkout v0.9.1\`. Commit hash should be \`00e656223f5d2af1b2100351462272b26499f12f\`.
+2. Make sure docker is running: \`docker ps\`.
+3. From the repo root: \`just succinct build-elfs\` to build the range and aggregation SP1 ELFs. Built elfs are placed in \`crates/proof/succinct/elf/\`.
+4. From the repo root: \`just succinct vkeys\` to print the range and aggregation verification key hashes.    
+    `,
+  },
+  '0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c': {
+    title: 'TEE enclave image hash of Base client',
+    programUrl:
+      'https://github.com/base/base/tree/v0.9.0/crates/proof/tee/nitro-enclave',
+    description:
+      'TEE image hash of Base L2 node program. AWS Nitro Enclave attestations guarantee that exactly this program was run within a TEE.',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Regeneration steps below require Linux OS, they will produce a different hash on MacOS.
+
+Prepare:
+
+1. Install docker <https://docs.docker.com/get-started/get-docker/>
+2. Install \`just\` version \`>=1.31.0\`: <https://just.systems/man/en/pre-built-binaries.html>
+
+Verify:
+
+1. Checkout the correct tag in [base/base](https://github.com/base/base) repo: \`git checkout v0.9.2-rc.1\`. Commit hash should be \`f2579cd48d23163e11174049cdd10834f197e33f\`.
+2. Make sure docker is running: \`docker ps\`.
+3. From the repo root: \`just tee build-eif\` to build the TEE image in a docker container.
+4. Extract \`PCR0\` from the build EIF: \`just tee describe-eif\`
+5. Compute image hash as keccak256 of the PCR0: \`cast keccak "0x<PCR0_hex>"\`, where \`PCR0_hex\` is taken from the output of the previous step.
+`,
+  },
+  '0x20141665fe40bce01fbcfa0a95c8a1bd750eadbe3f24e06a75571e6fd7a9dc11': {
+    title: 'AWS Nitro TEE attestation verifier for Base',
+    programUrl:
+      'https://github.com/base/base/tree/v0.9.0/crates/proof/tee/nitro-attestation-prover',
+    description:
+      'RISC Zero guest program that verifies an AWS Nitro TEE Enclave attestation document.',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install docker https://docs.docker.com/get-started/get-docker/ and make sure it's running: \`docker ps\`.
+
+Verify:
+
+1. Checkout the correct tag in [base/base](https://github.com/base/base) repo: \`git checkout v0.9.0\`. Commit hash should be \`0276bb4eb9b3ee37703bd818c8df71e3d31594fb\`.
+2. From the repo root, build the builder image (once): \`docker build --platform=linux/amd64 -t nitro-guest-builder crates/proof/tee/nitro-attestation-prover/guest\`.
+3. From the repo root, build the guest and print the image ID: \`docker run --rm --platform=linux/amd64 -v "$(pwd)":/build/base nitro-guest-builder verify\`.
+4. Compare the printed \`Image ID\` against this hash.
+    `,
+  },
 }

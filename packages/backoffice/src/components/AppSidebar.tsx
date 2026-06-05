@@ -138,6 +138,10 @@ const navGroups: NavigationGroup[] = [
             url: '/interop/insights/coverage-pies',
           },
           {
+            title: 'Highlights',
+            url: '/interop/insights/highlights',
+          },
+          {
             title: 'Chains summary',
             url: '/interop/insights/chains-summary',
           },
@@ -158,6 +162,12 @@ const navGroups: NavigationGroup[] = [
         title: 'Daily checks',
         icon: ClipboardCheckIcon,
         url: '/website/daily-checks',
+      },
+      {
+        type: 'single',
+        title: 'Interop aggregates',
+        icon: ClipboardCheckIcon,
+        url: '/website/interop-aggregates',
       },
       {
         type: 'collapsible',
