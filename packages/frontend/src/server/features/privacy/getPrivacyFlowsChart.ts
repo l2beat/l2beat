@@ -6,6 +6,7 @@ import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { ChartRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
+import { getFullySyncedPrivacyRange } from './utils/getFullySyncedPrivacyRange'
 
 export const PrivacyFlowsChartParams = v.object({
   projectIds: v.array(v.string()),
@@ -39,11 +40,12 @@ export async function getPrivacyFlowsChart(
   }
 
   const db = getDb()
+  const adjustedRange = getFullySyncedPrivacyRange(params.range)
 
   const [dailyRows, syncedUntil, firstTimestamp] = await Promise.all([
     db.privacyFlowEvent.getDailyByProjectIds(
       params.projectIds,
-      ...params.range,
+      ...adjustedRange,
     ),
     db.privacyFlowEvent.getLatestTimestampByProjectIds(params.projectIds),
     db.privacyFlowEvent.getFirstTimestampByProjectIds(params.projectIds),
@@ -55,7 +57,7 @@ export async function getPrivacyFlowsChart(
   )
 
   if (historyRows.length === 0) {
-    if (params.range[0] === null) {
+    if (adjustedRange[0] === null) {
       return {
         chart: [],
         syncedUntil: syncedUntil ? Number(syncedUntil) : undefined,
@@ -65,7 +67,7 @@ export async function getPrivacyFlowsChart(
     return {
       chart: generateTimestamps(
         normalizePrivacyFlowsChartRange(
-          params.range,
+          adjustedRange,
           undefined,
           firstTimestamp,
         ),
@@ -79,7 +81,7 @@ export async function getPrivacyFlowsChart(
     ...historyRows.map((row) => Number(row.timestamp)),
   )
   const normalizedRange = normalizePrivacyFlowsChartRange(
-    params.range,
+    adjustedRange,
     minTimestamp,
     firstTimestamp,
   )

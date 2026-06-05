@@ -37,16 +37,11 @@ export function optionToRange(
   const offset = opts?.offset ?? -1 * (UnixTime.HOUR + 15 * UnixTime.MINUTE)
   const days = optionToDays(option)
 
+  const end = UnixTime.toStartOf(UnixTime.now() + offset, 'hour')
+
   return [
-    days === null
-      ? null
-      : UnixTime.toStartOf(
-          UnixTime.toStartOf(UnixTime.now(), 'day') -
-            days * UnixTime.DAY +
-            offset,
-          'hour',
-        ),
-    UnixTime.toStartOf(UnixTime.now() + offset, 'hour'),
+    days === null ? null : UnixTime.toStartOf(end, 'day') - days * UnixTime.DAY,
+    end,
   ]
 }
 
