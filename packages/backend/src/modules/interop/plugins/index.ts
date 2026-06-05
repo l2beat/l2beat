@@ -14,7 +14,6 @@ import { AcrossPlugin } from './across/across.plugin'
 import { AcrossSettlementOpPlugin } from './across-settlement-op'
 import { AcrossSettlementOrbitPlugin } from './across-settlement-orbit'
 import { AgglayerPlugin } from './agglayer'
-import { AllbridgePlugIn } from './allbridge'
 import { AvalanchePlugin } from './avalanche'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
@@ -216,7 +215,6 @@ export function createInteropPlugins(
           new WormholePlugin(deps.configs),
         ],
       },
-      new AllbridgePlugIn(),
       new AvalanchePlugin(),
       new LineaPlugin(),
       {
