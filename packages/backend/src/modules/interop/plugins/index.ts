@@ -187,7 +187,7 @@ export function createInteropPlugins(
       new CelerPlugIn(),
       new MesonPlugin(),
       new CCIPPlugin(deps.configs, deps.oneSidedChains),
-      new CentriFugePlugin(),
+      new CentriFugePlugin(deps.oneSidedChains),
       {
         name: 'layerzero',
         plugins: [

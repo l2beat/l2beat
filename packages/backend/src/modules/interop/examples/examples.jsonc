@@ -2046,33 +2046,55 @@
     }
   },
   "centrifuge": {
+    "description": "Centrifuge cross-chain share transfer (Ethereum -> Base)",
     "txs": [
       {
         "chain": "ethereum",
-        "tx": "0x0f064d7f4691ce67c55b57de1ec573166790e27cff94cb888344cca8bd21beb9"
+        "tx": "0xf65ca822bb5f691d64ee6d43006352de611cbe27436ec9e2a709176929ef253f"
       },
       {
         "chain": "base",
-        "tx": "0x51c5d58ae6ac7d5a94c190b862672596b7eac59d3ccaaab065001c20b86be0d8"
+        "tx": "0xa8fff7f6601c77121a145704ac305cf15480143a6ca3612b33eb132ccf04b564"
       },
       {
         "chain": "base",
-        "tx": "0xbae8a4bcaa22c803252e0b9230a8fe0a0bf84dee1878ead73eaf24fc2a07e1f5" // handlePayload
-      },
-      {
-        "chain": "base",
-        "tx": "0xbac552a3a71e83ddd594cb27d3b7a99a1959522c7b94f9b23c93d147539b2c20" // handleProof
+        "tx": "0x431af4700ea9793854de93454f75f24a95b46d48e26be13600322766ee0c2c52"
       }
     ],
-    "events": [
-      "axelar-its.InterchainTransfer",
-      "axelar-its.InterchainTransferReceived",
-      "axelar.ContractCallExecuted",
-      "axelar.ContractCall",
-      "axelar.ContractCallApproved"
-    ],
-    "messages": ["axelar.ContractCallMessage"],
-    "transfers": ["axelar-its.Transfer"]
+    "expects": {
+      "events": [
+        "centrifuge.InitiateTransferShares",
+        "centrifuge.ForwardTransferShares",
+        "axelar.ContractCall",
+        "axelar.ContractCallApproved",
+        "axelar.ContractCallExecuted",
+        "centrifuge.ExecuteTransferShares"
+      ],
+      "messages": [
+        {
+          "type": "axelar.Message",
+          "app": "centrifuge",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "centrifuge.Transfer",
+          "bridgeType": "burnAndMint",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAmount": "100000000000000000000",
+            "wasBurned": true
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "base" } },
+            "tokenAmount": "100000000000000000000",
+            "wasMinted": true
+          }
+        }
+      ]
+    }
   },
   "squid-coral": {
     "txs": [
