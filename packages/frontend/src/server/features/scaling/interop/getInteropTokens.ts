@@ -18,7 +18,11 @@ import { sortInteropTopItems } from './utils/sortInteropTopItems'
 
 const logger = getLogger().for('getInteropTokens')
 const PAGE_SIZE = 100
-const interopTokensCache = new InMemoryCache({})
+const interopTokensCache = new InMemoryCache({
+  logger: getLogger()
+    .for('InMemoryCache')
+    .tag({ source: 'getInteropTokensInfinite' }),
+})
 
 export async function getInteropTokensInfinite({
   cursor,

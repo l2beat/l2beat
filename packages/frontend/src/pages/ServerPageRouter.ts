@@ -1,6 +1,7 @@
 import { InMemoryCache } from '@l2beat/shared-pure'
 import express from 'express'
 import { env } from '~/env'
+import { getLogger } from '~/server/utils/logger'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
@@ -30,6 +31,9 @@ export function createServerPageRouter(
   const router = express.Router()
 
   const cache = new InMemoryCache({
+    logger: getLogger()
+      .for('InMemoryCache')
+      .tag({ source: 'createServerPageRouter' }),
     enabled:
       !env.DISABLE_CACHE &&
       (env.DEPLOYMENT_ENV === 'production' || env.DEPLOYMENT_ENV === 'staging'),

@@ -1,6 +1,7 @@
 import { assert, InMemoryCache, unique } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { INTEROP_PAIR_SEPARATOR } from './consts'
@@ -33,7 +34,11 @@ type TokensPairInteropData = CommonInteropData & {
 }
 
 const PAGE_SIZE = 100
-const interopTokensPairsCache = new InMemoryCache({})
+const interopTokensPairsCache = new InMemoryCache({
+  logger: getLogger()
+    .for('InMemoryCache')
+    .tag({ source: 'getInteropTokensPairsInfinite' }),
+})
 
 export async function getInteropTokensPairsInfinite({
   cursor,
