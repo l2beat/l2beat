@@ -1,7 +1,7 @@
 {
   "name": "base",
   "timestamp": 1780473821,
-  "configHash": "0xddaf421ff86b36942ca696279ee468994a0bc5686e7e3f479be9e576f34db7ec",
+  "configHash": "0x572280982039edba1de5b492e86f5ec48d9b249e4b2f0f67357b3e5dfa44dddb",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -796,15 +796,24 @@
       "name": "HistoryStorage",
       "address": "eth:0x0000F90827F1C53a10cb7A02335B175320002935",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x47fe877e83f803ca1b745526a2d9081cfd94fe072dcfb58809c2ea54087d9a14"
+      ],
       "proxyType": "immutable",
+      "description": "EIP-2935 system contract storing the last 8191 L1 blockhashes. Bytecode is canonical to the EIP, deployed at the same address across networks.",
       "deployerAddress": "eth:0x3462413Af4609098e1E27A490f554f260213D685",
       "sinceTimestamp": 1739979839,
       "sinceBlock": 21881387,
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x0000F90827F1C53a10cb7A02335B175320002935": ""
-      }
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://eips.ethereum.org/EIPS/eip-2935"
+        }
+      ]
     },
     {
       "name": "ProxyAdmin",

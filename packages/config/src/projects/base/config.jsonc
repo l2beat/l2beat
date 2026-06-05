@@ -54,6 +54,12 @@
     "eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A": {
       "description": "Custom bridge for USDS and sUSDS managed by Sky governance.",
       "ignoreMethods": ["proxiableUUID"]
+    },
+    "eth:0x0000F90827F1C53a10cb7A02335B175320002935": {
+      "description": "EIP-2935 system contract storing the last 8191 L1 blockhashes. Bytecode is canonical to the EIP, deployed at the same address across networks.",
+      "manualSourcePaths": {
+        "eth:0x0000F90827F1C53a10cb7A02335B175320002935": "https://eips.ethereum.org/EIPS/eip-2935"
+      }
     }
   }
 }

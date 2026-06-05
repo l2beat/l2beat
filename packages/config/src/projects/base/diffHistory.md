@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x0ed6fd4e51cf1be46474a3c0dc6acd812d6696c2
+Generated with discovered.json: 0xfb18f26a0205fc3ea50fd6a0ecbb7ea4b9a8d8d4
 
-# Diff at Thu, 04 Jun 2026 17:51:06 GMT:
+# Diff at Fri, 05 Jun 2026 09:21:41 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779198836
@@ -240,7 +240,7 @@ Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeG
 ```diff
 +   Status: CREATED
     contract HistoryStorage (eth:0x0000F90827F1C53a10cb7A02335B175320002935) [N/A]
-    +++ description: None
+    +++ description: EIP-2935 system contract storing the last 8191 L1 blockhashes. Bytecode is canonical to the EIP, deployed at the same address across networks.
 ```
 
 ```diff
