@@ -71,6 +71,39 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
   })
 
+  describe(
+    TokenValueRepository.prototype.getMaxTimestampAtOrBeforeForProjects.name,
+    () => {
+      it('returns latest timestamp for provided projects', async () => {
+        await repository.upsertMany([
+          tokenValue('a', 'ethereum', UnixTime(100), 10, 10000, 8000, 5000, 10),
+          tokenValue('b', 'arbitrum', UnixTime(300), 10, 10000, 8000, 5000, 10),
+          tokenValue('c', 'base', UnixTime(200), 10, 10000, 8000, 5000, 10),
+        ])
+
+        const result = await repository.getMaxTimestampAtOrBeforeForProjects(
+          UnixTime(300),
+          ['ethereum', 'base'],
+        )
+
+        expect(result).toEqual(UnixTime(200))
+      })
+
+      it('returns undefined for empty project list', async () => {
+        await repository.upsertMany([
+          tokenValue('a', 'ethereum', UnixTime(100), 10, 10000, 8000, 5000, 10),
+        ])
+
+        const result = await repository.getMaxTimestampAtOrBeforeForProjects(
+          UnixTime(100),
+          [],
+        )
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
   describe(TokenValueRepository.prototype.getByProject.name, () => {
     beforeEach(async () => {
       await repository.upsertMany([
