@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xbb6448495bf44e05a3fa38fdf9afa16f8bbdbdaf
+Generated with discovered.json: 0x1b7b5494de277dc6ffcba400e196521568ca4bb0
 
-# Diff at Thu, 28 May 2026 12:39:26 GMT:
+# Diff at Fri, 05 Jun 2026 10:05:14 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778589577
-- current timestamp: 1779971902
+- current timestamp: 1780653849
 
 ## Description
 
@@ -20,18 +20,6 @@ L1FluentBridge implementation swapped by FluentMultisig on 2026-05-20: `0x047Aâ€
 ## Watched changes
 
 ```diff
-    contract FluentRollup (eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f) [fluent/FluentRollup] {
-    +++ description: Core Fluent rollup contract. Sequencers commit batch roots and EIP-4844 blob hashes; an AWS Nitro Enclave preconfirms each batch via a signature whose key is bound to a PCR0 measurement verified by SP1; participants holding CHALLENGER_ROLE can dispute and the prover resolves disputes with SP1 ZK proofs; batches finalize after a block-count delay or immediately once all blocks are proven.
-      values.lastFinalizedBatchIndex:
--        2039
-+        3391
-      values.nextBatchIndex:
--        2210
-+        3561
-    }
-```
-
-```diff
     contract L1FluentBridge (eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc) [fluent/L1FluentBridge] {
     +++ description: Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets anyone process L2->L1 messages with two Merkle proofs against a preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE.
       sourceHashes.1:
@@ -45,18 +33,6 @@ L1FluentBridge implementation swapped by FluentMultisig on 2026-05-20: `0x047Aâ€
       values.$upgradeCount:
 -        6
 +        7
-      values.getExecuteGasLimit:
--        5000
-+        550000
-      values.getNonce:
--        1023
-+        1331
-      values.getReceivedNonce:
--        485
-+        551
-      values.getSentMessageCursor:
--        1023
-+        1331
       implementationNames.eth:0x047AaDf25df7D17bB5B6b1FF31cecD1E4973C227:
 -        "L1FluentBridge"
       implementationNames.eth:0xF67255be817061139C9DeeA757f7276916cBF849:
