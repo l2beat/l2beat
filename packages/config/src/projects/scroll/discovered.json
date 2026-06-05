@@ -1,6 +1,6 @@
 {
   "name": "scroll",
-  "timestamp": 1780653725,
+  "timestamp": 1780654305,
   "configHash": "0x33dc3918c0007cdd123752e8b3ddffc4f98e1c27164c9913cafef6e7340855bd",
   "entries": [
     {
@@ -104,7 +104,7 @@
         "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
       ],
       "proxyType": "immutable",
-      "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.",
+      "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -242,7 +242,7 @@
         "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
       ],
       "proxyType": "immutable",
-      "description": "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.",
+      "description": "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -522,7 +522,7 @@
         "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
       ],
       "proxyType": "immutable",
-      "description": "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.",
+      "description": "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1626,7 +1626,7 @@
         "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
       ],
       "proxyType": "immutable",
-      "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.",
+      "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -2499,7 +2499,7 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "description": "multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.",
+      "description": "Multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3446,7 +3446,7 @@
         "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
       ],
       "proxyType": "immutable",
-      "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.",
+      "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -3611,7 +3611,7 @@
         "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
       ],
       "proxyType": "immutable",
-      "description": "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.",
+      "description": "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -4385,7 +4385,7 @@
         "0xb473930cd81ee45e44828aef3a7301db4dd1ddb5aa55cb97b0310cb2d07293b0"
       ],
       "proxyType": "immutable",
-      "description": "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.",
+      "description": "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -4814,7 +4814,7 @@
         "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
       ],
       "proxyType": "immutable",
-      "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.",
+      "description": "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -7979,6 +7979,6 @@
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25250451, "scroll": 33965397 },
+  "usedBlockNumbers": { "ethereum": 25250499, "scroll": 33965466 },
   "permissionsConfigHash": "0x435518bbe0cde336760cf3c11f2863a563f77497b64df2485c1514a13061c599"
 }

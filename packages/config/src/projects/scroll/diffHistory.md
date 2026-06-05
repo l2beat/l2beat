@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2a1965d47acb8b35cc0f146702eef8b6c473f968
+Generated with discovered.json: 0x20ab2d9d7987aef457f1b56e77de28b32ea1f6f5
 
-# Diff at Fri, 05 Jun 2026 10:03:24 GMT:
+# Diff at Fri, 05 Jun 2026 10:13:00 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779399741
-- current timestamp: 1780653725
+- current timestamp: 1780654305
 
 ## Description
 
@@ -22,7 +22,7 @@ All Security Council permissions (`TIMELOCK_ADMIN_ROLE`, `PROPOSER_ROLE`, `EXECU
 
 ```diff
     contract TimelockSCEmergency (eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) [scroll/L1Timelock] {
-    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
       values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
 -        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
 +        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
@@ -81,7 +81,7 @@ All Security Council permissions (`TIMELOCK_ADMIN_ROLE`, `PROPOSER_ROLE`, `EXECU
 
 ```diff
     contract TimelockSCSlow (eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd) [scroll/L1Timelock] {
-    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
       values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
 -        "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
 +        "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
@@ -136,7 +136,7 @@ All Security Council permissions (`TIMELOCK_ADMIN_ROLE`, `PROPOSER_ROLE`, `EXECU
 
 ```diff
     contract TimelockSCEmergencyScroll (scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4) [scroll/L1Timelock] {
-    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
       values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
 -        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
 +        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
@@ -177,7 +177,7 @@ All Security Council permissions (`TIMELOCK_ADMIN_ROLE`, `PROPOSER_ROLE`, `EXECU
 
 ```diff
     contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [scroll/L1Timelock] {
-    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
       values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
 -        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
 +        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
@@ -214,7 +214,7 @@ All Security Council permissions (`TIMELOCK_ADMIN_ROLE`, `PROPOSER_ROLE`, `EXECU
 ```diff
 +   Status: CREATED
     contract ScrollAdminMultisig (eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761) [GnosisSafe]
-    +++ description: multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.
+    +++ description: Multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.
 ```
 
 ```diff
@@ -240,6 +240,24 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1779399741 (main branch discovery), not current.
 
 ```diff
+    contract TimelockSCEmergency (eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      description:
+-        "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone."
++        "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone."
+    }
+```
+
+```diff
+    contract TimelockFast (eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone.
+      description:
+-        "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone."
++        "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone."
+    }
+```
+
+```diff
     contract Safe (eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) [GnosisSafe] {
     +++ description: None
       name:
@@ -247,6 +265,24 @@ discovery. Values are for block 1779399741 (main branch discovery), not current.
 +        "Safe"
       references:
 -        [{"text":"Security Council members - Scroll Docs","href":"https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council"}]
+    }
+```
+
+```diff
+    contract TimelockSCSlow (eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
+      description:
+-        "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone."
++        "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone."
+    }
+```
+
+```diff
+    contract TimelockEmergency (eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      description:
+-        "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone."
++        "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone."
     }
 ```
 
@@ -281,10 +317,28 @@ discovery. Values are for block 1779399741 (main branch discovery), not current.
 ```
 
 ```diff
+    contract TimelockSCEmergencyScroll (scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      description:
+-        "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone."
++        "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone."
+    }
+```
+
+```diff
     contract Scroll Multisig 1 (scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) [GnosisSafe] {
     +++ description: None
       directlyReceivedPermissions.2:
 +        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"execute transactions that are ready.","role":".Executor"}
+    }
+```
+
+```diff
+    contract TimelockFast (scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone.
+      description:
+-        "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone."
++        "A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone."
     }
 ```
 
@@ -316,7 +370,7 @@ discovery. Values are for block 1779399741 (main branch discovery), not current.
 
 ```diff
     contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [scroll/L1Timelock] {
-    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
       directlyReceivedPermissions.0:
 -        {"permission":"act","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200,"role":".timelockAdminAC"}
       directlyReceivedPermissions.1:
@@ -336,11 +390,20 @@ discovery. Values are for block 1779399741 (main branch discovery), not current.
       template:
 +        "scroll/L1Timelock"
       description:
-+        "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone."
++        "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone."
       fieldMeta:
 +        {"Executor":{"severity":"HIGH","description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}}
       category:
 +        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract TimelockEmergency (scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      description:
+-        "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone."
++        "A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone."
     }
 ```
 
