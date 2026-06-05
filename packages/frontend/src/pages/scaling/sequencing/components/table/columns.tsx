@@ -38,7 +38,7 @@ const tableValueColumns = [
   },
   {
     key: 'timing',
-    header: 'Block time /\nsequencer rotation',
+    header: 'Block time /\nepoch time',
     tooltip:
       'Slot, epoch, or span timing used by the sequencer rotation model.',
   },

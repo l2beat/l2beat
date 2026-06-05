@@ -232,7 +232,7 @@ export const gnosis: ScalingProject = {
         epochTime: {
           value: formatSeconds(gnosisSlotSeconds * 16),
           description:
-            'Block production is not committee-based (epochs do not affect sequencer rotation)',
+            'Block production is not committee-based, sequencers rotate every block (epochs do not affect sequencer rotation)',
         },
         sequencerCount: {
           value: `${gnosisValidatorSetSize.toLocaleString('en-US')} validators`,

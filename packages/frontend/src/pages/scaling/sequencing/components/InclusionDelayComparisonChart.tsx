@@ -82,6 +82,12 @@ export function InclusionDelayComparisonChart({ entries }: Props) {
           yAxisScale={yAxisScale}
         />
       </div>
+      <p className="mt-3 text-paragraph-13 text-secondary md:text-paragraph-14">
+        A line stopping before the 50% limit indicates that any more censorship
+        will prevent inclusion completely. This is usually due to the sequencer
+        network's consensus mechanism stopping block production at that
+        threshold.
+      </p>
     </PrimaryCard>
   )
 }
