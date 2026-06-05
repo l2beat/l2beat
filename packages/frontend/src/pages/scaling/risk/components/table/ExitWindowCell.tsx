@@ -4,11 +4,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { ProjectRiskTooltipContent } from '~/components/projects/ProjectRiskTooltipContent'
 import { SentimentText } from '~/components/SentimentText'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
-import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
-import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 
 interface Props {
   value: ExitWindowRisk
@@ -54,16 +53,7 @@ export function ExitWindowCell({ value, href }: Props) {
           {trigger}
         </TooltipTrigger>
         <TooltipContent>
-          {value.warning && (
-            <WarningBar
-              className="mb-2"
-              text={value.warning.value}
-              icon={RoundedWarningIcon}
-              color={sentimentToWarningBarColor(value.warning.sentiment)}
-              ignoreMarkdown
-            />
-          )}
-          {value.description}
+          <ProjectRiskTooltipContent risk={value} variant="table" />
         </TooltipContent>
       </Tooltip>
     )
