@@ -272,10 +272,10 @@ export const base: ScalingProject = opStackL2({
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
-        noRedTrustedSetups: null,
-        programHashesReproducible: null,
+        noRedTrustedSetups: false,
+        programHashesReproducible: true,
         proverSourcePublished: true,
-        verifierContractsReproducible: null,
+        verifierContractsReproducible: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
