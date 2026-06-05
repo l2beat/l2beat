@@ -200,55 +200,6 @@
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "ignoreDiscovery": true
     },
-    "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14": {
-      "description": "L2 counterpart of TimelockSCSlow.",
-      "category": "gov",
-      "fields": {
-        "timelockAdminAC": {
-          "handler": {
-            "type": "accessControl",
-            "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
-          },
-          "permissions": [{ "type": "act", "delay": "{{getMinDelay}}" }]
-        },
-        "accessControl": {
-          "handler": { "type": "accessControl" }
-        },
-        "Proposer": {
-          "handler": {
-            "type": "accessControl",
-            "pickRoleMembers": "PROPOSER_ROLE"
-          },
-          "permissions": [
-            { "type": "interact", "description": "propose transactions." },
-            { "type": "act", "delay": "{{getMinDelay}}" }
-          ]
-        },
-        "Canceller": {
-          "handler": {
-            "type": "accessControl",
-            "pickRoleMembers": "CANCELLER_ROLE"
-          },
-          "permissions": [
-            { "type": "interact", "description": "cancel queued transactions." }
-          ]
-        },
-        "Executor": {
-          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address",
-          "handler": {
-            "type": "accessControl",
-            "pickRoleMembers": "EXECUTOR_ROLE"
-          },
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "execute transactions that are ready."
-            }
-          ],
-          "severity": "HIGH"
-        }
-      }
-    },
     "scr:0x5300000000000000000000000000000000000000": {
       "description": "Used to append messages to the L2MessageQueue from the L2ScrollMessenger.",
       "ignoreMethods": ["branches"],

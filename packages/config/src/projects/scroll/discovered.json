@@ -1,7 +1,7 @@
 {
   "name": "scroll",
-  "timestamp": 1780559446,
-  "configHash": "0x3f3a5b831d07c24094381d68ec00044452aebbd9a630411e7f6e13b9a23d46d6",
+  "timestamp": 1780653725,
+  "configHash": "0x33dc3918c0007cdd123752e8b3ddffc4f98e1c27164c9913cafef6e7340855bd",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -854,11 +854,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1780554467,
+        "getFirstUnfinalizedMessageEnqueueTime": 1780648415,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 998333,
-        "nextUnfinalizedQueueIndex": 998331,
+        "nextCrossDomainMessageIndex": 998340,
+        "nextUnfinalizedQueueIndex": 998339,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -2052,14 +2052,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 517936,
+        "lastFinalizedBatchIndex": 517965,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 517936,
-          "lastFinalizedBatchIndex": 517936,
-          "lastFinalizeTimestamp": 1780558007,
+          "lastCommittedBatchIndex": 517965,
+          "lastFinalizedBatchIndex": 517965,
+          "lastFinalizeTimestamp": 1780650491,
           "flags": 1,
           "reserved": 0
         },
@@ -3016,7 +3016,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 7973879577020,
+        "totalBridgedUSDC": 7933860790274,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -3758,6 +3758,18 @@
           "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
           "description": "propose transactions.",
           "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC",
+          "via": [
+            {
+              "address": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+              "delay": 259200
+            }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -3967,9 +3979,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xe3865203d3524ed92348ac329300a2b5f271c7ac7b2a9e3ac94c81505fd0fff2",
+        "messageRoot": "0x4fd8baa8a51979f83f8671f1f6ae1b71c878dcd3d0d40db136cddb551c5aeb5f",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 322871,
+        "nextMessageIndex": 322876,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -4368,23 +4380,24 @@
       "name": "TimelockSCSlow",
       "address": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
       "type": "Contract",
+      "template": "scroll/L1Timelock",
       "sourceHashes": [
         "0xb473930cd81ee45e44828aef3a7301db4dd1ddb5aa55cb97b0310cb2d07293b0"
       ],
       "proxyType": "immutable",
-      "description": "L2 counterpart of TimelockSCSlow.",
+      "description": "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.",
       "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
-          "delay": 259200,
-          "role": ".timelockAdminAC"
-        },
         {
           "permission": "interact",
           "from": "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
           "description": "can configure contract settings such as voting delay, quorum, contract manager.",
           "role": ".timelock"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC"
         }
       ],
       "deployerAddress": "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB",
@@ -4440,6 +4453,7 @@
         ],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 259200,
+        "getMinDelayFormatted": "3d",
         "Proposer": [
           "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
           "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
@@ -5191,6 +5205,24 @@
           "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
           "description": "propose transactions.",
           "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC",
+          "via": [
+            {
+              "address": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC"
         }
       ],
       "directlyReceivedPermissions": [
@@ -5204,12 +5236,6 @@
           "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
           "delay": 259200,
           "role": ".Proposer"
-        },
-        {
-          "permission": "act",
-          "from": "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
-          "delay": 259200,
-          "role": ".timelockAdminAC"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -7953,6 +7979,6 @@
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25242644, "scroll": 33950948 },
-  "permissionsConfigHash": "0x25964f57c2a14d59169ef7a686f6656c21b9ebbe493c21e35d6f0ee7a2531215"
+  "usedBlockNumbers": { "ethereum": 25250451, "scroll": 33965397 },
+  "permissionsConfigHash": "0x435518bbe0cde336760cf3c11f2863a563f77497b64df2485c1514a13061c599"
 }

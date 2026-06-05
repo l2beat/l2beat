@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xbc6b320b1389c49697f038665cb9c5ad9464d49a
+Generated with discovered.json: 0x2a1965d47acb8b35cc0f146702eef8b6c473f968
 
-# Diff at Thu, 04 Jun 2026 07:52:01 GMT:
+# Diff at Fri, 05 Jun 2026 10:03:24 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779399741
-- current timestamp: 1780559446
+- current timestamp: 1780653725
 
 ## Description
 
@@ -176,8 +176,8 @@ All Security Council permissions (`TIMELOCK_ADMIN_ROLE`, `PROPOSER_ROLE`, `EXECU
 ```
 
 ```diff
-    contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [N/A] {
-    +++ description: L2 counterpart of TimelockSCSlow.
+    contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
       values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
 -        "scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"
 +        "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761"
@@ -270,8 +270,13 @@ discovery. Values are for block 1779399741 (main branch discovery), not current.
 +        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"execute transactions that are ready.","role":".Executor"}
       receivedPermissions.11:
 +        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"propose transactions.","role":".Proposer"}
-      directlyReceivedPermissions.1:
-+        {"permission":"act","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200,"role":".Proposer"}
+      receivedPermissions.12:
++        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"update the minimum delay and manage all access control roles of the timelock.","role":".timelockAdminAC","via":[{"address":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200}]}
+      receivedPermissions.13:
++        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"update the minimum delay and manage all access control roles of the timelock.","role":".timelockAdminAC"}
+      directlyReceivedPermissions.1.role:
+-        ".timelockAdminAC"
++        ".Proposer"
     }
 ```
 
@@ -287,7 +292,7 @@ discovery. Values are for block 1779399741 (main branch discovery), not current.
     contract AgoraGovernor (scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) [N/A] {
     +++ description: Used to propose and manage onchain governance proposals.
       receivedPermissions:
-+        [{"permission":"interact","from":"scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","description":"can configure contract settings such as voting delay, quorum, contract manager.","role":".timelock","via":[{"address":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200}]},{"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"propose transactions.","role":".Proposer"}]
++        [{"permission":"interact","from":"scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","description":"can configure contract settings such as voting delay, quorum, contract manager.","role":".timelock","via":[{"address":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200}]},{"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"propose transactions.","role":".Proposer"},{"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"update the minimum delay and manage all access control roles of the timelock.","role":".timelockAdminAC","via":[{"address":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200}]}]
       directlyReceivedPermissions:
 +        [{"permission":"act","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200,"role":".Proposer"}]
     }
@@ -310,8 +315,12 @@ discovery. Values are for block 1779399741 (main branch discovery), not current.
 ```
 
 ```diff
-    contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [N/A] {
-    +++ description: L2 counterpart of TimelockSCSlow.
+    contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.0:
+-        {"permission":"act","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","delay":259200,"role":".timelockAdminAC"}
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","description":"update the minimum delay and manage all access control roles of the timelock.","role":".timelockAdminAC"}
       values.accessControl:
 +        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_ADMIN_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]},"PROPOSER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]},"EXECUTOR_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]},"CANCELLER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]}}
       values.Canceller:
@@ -320,10 +329,14 @@ discovery. Values are for block 1779399741 (main branch discovery), not current.
 +++ severity: HIGH
       values.Executor:
 +        ["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD","scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]
+      values.getMinDelayFormatted:
++        "3d"
       values.Proposer:
 +        ["scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0","scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD"]
+      template:
++        "scroll/L1Timelock"
       description:
-+        "L2 counterpart of TimelockSCSlow."
++        "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone."
       fieldMeta:
 +        {"Executor":{"severity":"HIGH","description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}}
       category:
