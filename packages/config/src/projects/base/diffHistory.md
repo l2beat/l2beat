@@ -1,3 +1,458 @@
+Generated with discovered.json: 0x0ed6fd4e51cf1be46474a3c0dc6acd812d6696c2
+
+# Diff at Thu, 04 Jun 2026 17:51:06 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779198836
+- current timestamp: 1780473821
+
+## Description
+
+Azul multiproof activated: state validation now combines a TEE attestation arm and an SP1 ZK proof arm, either un-nullified proof resolves a game.
+
+`OptimismPortal2` impl `0x97cEbbf8` → `0x66d94eE8`. `proofMaturityDelaySeconds` 604800 (7d) → 86400 (1d); `disputeGameFinalityDelaySeconds` 302400 (3.5d) → 0; `respectedGameType` 0 → 621 (now read from AnchorStateRegistry). https://disco.l2beat.com/diff/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B/eth:0x66d94eE8F529b683ED6013729784e8bb44697A64
+
+`DisputeGameFactory` impl `0xc040F392` → `0x468C2345`. https://disco.l2beat.com/diff/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c/eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c
+
+`AnchorStateRegistry` (0x909f6cf4) impl `0x36398155` → `0x4483F964`. Now stores `respectedGameType` (621) and `retirementTimestamp` (1779825599); legacy `vmFromGame`, `wethFromGame`, `oracleFromVm`, `challengePeriodFromOracle`, `absolutePrestateFromGame` removed. https://disco.l2beat.com/diff/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5/eth:0x4483F964F6711Cb55f633820ED174E780369b99D
+
+Game type 621 = AggregateVerifier `0xeEcb8A5944…D259` v0.1.0, bond 0.05 ETH. `TEE_VERIFIER=0x1FbA0C57…2228` v0.2.0, `ZK_VERIFIER=0xB88D95bDf…9B75` v0.1.0 → `SP1VerifierGateway=0xdc32E22863…C106` → SP1 v6.1.0 `0xb69f2584…f4e2`. `DELAYED_WETH=0xd0D07924…EF71`, `SLOW_FINALIZATION_DELAY=7d`, `FAST_FINALIZATION_DELAY=1d`, `PROOF_THRESHOLD=1`.
+
+Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeGame v2.2.0, fallback), 621 = AggregateVerifier (respected). All other types empty.
+
+`ProxyAdmin` upgrade rights moved from deleted DelayedWETHs to new `DelayedWETH_PermissionlessGames` and second ASR. `Base Governance Multisig` gained emergency-withdraw on `DelayedWETH_PermissionlessGames`.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.2.from:
+-        "eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec"
++        "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA"
+      directlyReceivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      template:
+-        "opstack/DisputeGameFactory"
++        "opstack/DisputeGameFactory_v2"
+      sourceHashes.1:
+-        "0x8f21dbc160582c568a2a925ddad1b2bb889a9f72bac2067c6e72d43b662ef538"
++        "0x780eaf9d8daa77c3325b79e5f3467c1bd8eec57b5d7e84651bdf2d24754d6838"
+      description:
+-        "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them."
++        "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation."
+      values.$implementation:
+-        "eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"
++        "eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c"
+      values.$pastUpgrades.5:
++        ["2026-05-26T19:59:59.000Z","0x75b1c9b2090ba2b311d6be08c319340b87dc1aabfae2505d126e7a0f1fc6b11c",["eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.game2000:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.gameImpls:
+-        ["eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499","eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"]
+      values.initBonds:
+-        ["80000000000000000","80000000000000000",0,0,0]
++++ severity: HIGH
+      values.game0:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game1:
++        "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A"
++++ severity: HIGH
+      values.game621:
++        "eth:0xeEcb8A5944B217585817E802702b1262a049D259"
+      values.initBondGame0:
++        "80000000000000000"
+      values.initBondGame1:
++        "80000000000000000"
+      values.initBondGame621:
++        "50000000000000000"
+      fieldMeta.gameImpls:
+-        {"severity":"HIGH"}
+      fieldMeta.game2000:
+-        {"severity":"HIGH"}
+      fieldMeta.game621:
++        {"severity":"HIGH"}
+      fieldMeta.game0:
++        {"severity":"HIGH"}
+      fieldMeta.game1:
++        {"severity":"HIGH"}
+      implementationNames.eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c:
+-        "DisputeGameFactory"
+      implementationNames.eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      sourceHashes.1:
+-        "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
++        "0x247eac30dea3a06b4a7142ac53d0b9ad882952c87406f165ec8721b0d97bd6da"
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier."
+      values.$implementation:
+-        "eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"
++        "eth:0x66d94eE8F529b683ED6013729784e8bb44697A64"
+      values.$pastUpgrades.10:
++        ["2026-05-26T19:59:59.000Z","0x75b1c9b2090ba2b311d6be08c319340b87dc1aabfae2505d126e7a0f1fc6b11c",["eth:0x66d94eE8F529b683ED6013729784e8bb44697A64"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.disputeGameFinalityDelaySeconds:
+-        302400
++        0
+      values.proofMaturityDelaySeconds:
+-        604800
++        86400
+      values.RespectedGameString:
+-        "FaultDisputeGame"
++        "AggregateVerifier"
++++ severity: HIGH
+      values.respectedGameType:
+-        0
++        621
+      values.respectedGameTypeUpdatedAt:
+-        1759862579
++        1779825599
+      implementationNames.eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B:
+-        "OptimismPortal2"
+      implementationNames.eth:0x66d94eE8F529b683ED6013729784e8bb44697A64:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xdc32E228636273285Befa5F001dBB5142517C106","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"}
+      receivedPermissions.3.from:
+-        "eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec"
++        "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA"
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71","role":"admin","via":[{"address":"eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      template:
+-        "opstack/AnchorStateRegistry_post13"
++        "opstack/AnchorStateRegistry_post20"
+      sourceHashes.1:
+-        "0xfdabc8b9b4db9b7aa78227b26e936abaf24f058502b96e8d9a293d49b1e89b47"
++        "0x9340bfba7b4bbba23fe6fc74f5da06cee233a4745de93049330a76ef3ce23972"
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation."
+      values.$implementation:
+-        "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5"
++        "eth:0x4483F964F6711Cb55f633820ED174E780369b99D"
+      values.$pastUpgrades.2:
++        ["2026-05-26T19:59:59.000Z","0x75b1c9b2090ba2b311d6be08c319340b87dc1aabfae2505d126e7a0f1fc6b11c",["eth:0x4483F964F6711Cb55f633820ED174E780369b99D"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.absolutePrestateFromGame:
+-        "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e"
+      values.challengePeriodFromOracle:
+-        86400
++++ severity: HIGH
+      values.disputeGameFinalityDelaySeconds:
+-        302400
++        0
+      values.getStartingAnchorRoot.root:
+-        "0x9a37fe32cd2b49385bec0236b7b5c2177e71176bb306d19a49a8a77651ce2cd0"
++        "0xc34c9f98b74b2fb85a516e302f86bc9bedcf5623ab078a671d40beac0e120329"
+      values.getStartingAnchorRoot.l2SequenceNumber:
+-        36233266
++        46302960
+      values.initVersion:
+-        1
++        2
+      values.oracleFromVm:
+-        "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3"
+      values.RespectedGameString:
+-        "FaultDisputeGame"
++        "AggregateVerifier"
++++ severity: HIGH
+      values.respectedGameType:
+-        0
++        621
++++ severity: HIGH
+      values.retirementTimestamp:
+-        1759862579
++        1779825599
+      values.vmFromGame:
+-        "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908"
+      values.wethFromGame:
+-        "eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec"
+      fieldMeta.retirementTimestamp:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5:
+-        "AnchorStateRegistry"
+      implementationNames.eth:0x4483F964F6711Cb55f633820ED174E780369b99D:
++        "AnchorStateRegistry"
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract HistoryStorage (eth:0x0000F90827F1C53a10cb7A02335B175320002935) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+```
+
+```diff
++   Status: CREATED
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry]
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract TEEVerifier (eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228) [base/TEEVerifier]
+    +++ description: Stateless verifier that validates AggregateVerifier TEE proofs by recovering an ECDSA signature over the journal and checking the recovered signer against TEEProverRegistry. Enforces PCR0 match by comparing the signer's registered image hash to the AggregateVerifier's TEE_IMAGE_HASH. Can be permanently nullified by a successful AggregateVerifier.nullify call.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier]
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract NitroEnclaveVerifier (eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb) [base/NitroEnclaveVerifier]
+    +++ description: ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter]
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+```diff
++   Status: CREATED
+    contract ZkVerifier (eth:0xB88D95bDf6972508942d184866890c1834219B75) [base/ZkVerifier]
+    +++ description: Thin router that forwards SP1 ZK proof verification from the AggregateVerifier game to the SP1 verifier gateway. Can be permanently nullified by a successful AggregateVerifier.nullify call.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (eth:0xdc32E228636273285Befa5F001dBB5142517C106) [succinct/SP1VerifierGateway]
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract AggregateVerifier (eth:0xeEcb8A5944B217585817E802702b1262a049D259) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (7d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AggregateVerifier.sol}                         | 3948 ++++++------------
+ .../AnchorStateRegistry/AnchorStateRegistry.sol    |  181 +-
+ .../Proxy.p.sol => /dev/null                       | 1389 ------
+ .../DelayedWETH.sol                                |  160 +-
+ .../Proxy.p.sol                                    |  244 ++
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  124 +-
+ .../base/.flat@1779198836/MIPS.sol => /dev/null    | 3274 ---------------
+ .../projects/base/.flat/NitroEnclaveVerifier.sol   | 1393 +++++++
+ .../OptimismPortal2/OptimismPortal2.sol            |  461 +-
+ .../PreimageOracle.sol => /dev/null                | 1463 -------
+ ...:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97.sol | 1767 ++++++++
+ ...:0x2a098988600d87650Fb061FfAff08B97149Fa84D.sol | 1780 ++++++++
+ ...:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF.sol | 1779 ++++++++
+ ...:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9.sol | 1780 ++++++++
+ ...:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C.sol | 1760 ++++++++
+ .../projects/base/.flat/RiscZeroSetVerifier.sol    |  900 ++++
+ ...:0x1efDd13f831ceeEa14940806705A53D3211CD698.sol |  366 ++
+ ...:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7.sol |  366 ++
+ ...:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3.sol |  366 ++
+ ...:0x844D5f01161E3559d36f23d0Aa9E9620949aF782.sol |  366 ++
+ ...:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696.sol |  366 ++
+ ...:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1.sol |  366 ++
+ .../projects/base/.flat/RiscZeroVerifierRouter.sol |  282 ++
+ .../src/projects/base/.flat/SP1Verifier.sol        |  664 +++
+ .../src/projects/base/.flat/SP1VerifierGateway.sol |  271 ++
+ .../src/projects/base/.flat/Safe/Safe.sol          | 1216 ++++++
+ .../src/projects/base/.flat/Safe/SafeProxy.p.sol   |   42 +
+ .../base/.flat/TEEProverRegistry/Proxy.p.sol       |  244 ++
+ .../.flat/TEEProverRegistry/TEEProverRegistry.sol  | 2364 +++++++++++
+ .../src/projects/base/.flat/TEEVerifier.sol        | 4402 ++++++++++++++++++++
+ .../src/projects/base/.flat/TimelockController.sol | 1111 +++++
+ .../src/projects/base/.flat/ZkVerifier.sol         | 1862 +++++++++
+ 32 files changed, 27953 insertions(+), 9104 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779198836 (main branch discovery), not current.
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","role":".INCIDENT_RESPONDER"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","description":"can pause for up to 3mo 1d, but cannot unpause or extend pauses.","role":".INCIDENT_RESPONDER"}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
+```diff
+    contract SkyLink Bridge (eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A) [maker/SkyLinkBridge] {
+    +++ description: Custom bridge for USDS and sUSDS managed by Sky governance.
+      template:
++        "maker/SkyLinkBridge"
+      fieldMeta:
++        {"escrow":{"severity":"HIGH"},"messenger":{"severity":"HIGH"},"otherBridge":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x2527024ac04992905aab58dbe5d4a3b956093038
 
 # Diff at Wed, 20 May 2026 10:24:31 GMT:

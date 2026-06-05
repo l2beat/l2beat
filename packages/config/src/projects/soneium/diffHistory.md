@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xd2fe4ef864b258aa852ab61853f93abefd372460
+
+# Diff at Thu, 04 Jun 2026 17:44:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778850530
+- current timestamp: 1778850530
+
+## Description
+
+New game name (aggregateVerifier) added to portal.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778850530 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x88e529A6ccd302c948689Cd5156C83D4614FAE92) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
 Generated with discovered.json: 0xa868259ab34ddbce6751c0a3d75ba410115b05fc
 
 # Diff at Fri, 15 May 2026 13:11:06 GMT:
