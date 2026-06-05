@@ -13,6 +13,7 @@ import express from 'express'
 import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
+import { attachAnalyzeRouter } from './analyze/router'
 import { attachConfigRouter } from './configs/router'
 import { DiffoveryController } from './diffovery/DiffoveryController'
 import { FlatSourceClient } from './diffovery/FlatSourceClient'
@@ -109,6 +110,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const diffoveryController = new DiffoveryController(flatSourceClient)
 
   app.use(express.json())
+  attachAnalyzeRouter(app, configReader)
 
   app.get('/health', (_, res) => {
     res.status(200).send('OK')

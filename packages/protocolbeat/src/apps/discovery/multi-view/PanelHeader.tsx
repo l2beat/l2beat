@@ -31,6 +31,7 @@ const ICONS: Record<PanelId, FC<{ className?: string }>> = {
   nodes: IconNodes,
   code: IconCode,
   preview: IconWebApp,
+  analyze: IconChatbot,
   terminal: IconTerminal,
   template: IconStamp,
   config: IconGear,
@@ -51,7 +52,7 @@ export function PanelHeader(props: { id: PanelId }) {
   const highlighted = usePanelStore((state) => state.highlighted)
 
   const availablePanels = IS_READONLY
-    ? PANEL_IDS.filter((id) => id !== 'terminal')
+    ? PANEL_IDS.filter((id) => id !== 'terminal' && id !== 'analyze')
     : PANEL_IDS
 
   const Icon = ICONS[props.id]

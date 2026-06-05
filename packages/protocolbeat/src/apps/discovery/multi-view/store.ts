@@ -7,6 +7,7 @@ export const PANEL_IDS = [
   'nodes',
   'code',
   'preview',
+  'analyze',
   'terminal',
   'template',
   'config',

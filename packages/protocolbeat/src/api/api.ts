@@ -1,5 +1,7 @@
 import { withoutUndefinedKeys } from '../utils/withoutUndefinedKeys'
 import type {
+  ApiAnalyzer,
+  ApiAnalyzerResult,
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
@@ -311,6 +313,37 @@ export async function getHandlers(): Promise<ApiHandlersResponse> {
   return data as ApiHandlersResponse
 }
 
+export async function getAnalyzers(): Promise<ApiAnalyzer[]> {
+  const res = await fetch('/api/analyze/analyzers')
+  if (!res.ok) {
+    throw new Error(await readErrorMessage(res))
+  }
+  const data = await res.json()
+  return data as ApiAnalyzer[]
+}
+
+export async function runAnalyzer(
+  project: string,
+  address: string,
+  analyzerId: string,
+  sourceName: string,
+): Promise<ApiAnalyzerResult> {
+  const res = await fetch(`/api/projects/${project}/analyze/${address}`, {
+    method: 'POST',
+    body: JSON.stringify({ analyzerId, sourceName }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!res.ok) {
+    throw new Error(await readErrorMessage(res))
+  }
+
+  const data = await res.json()
+  return data as ApiAnalyzerResult
+}
+
 export async function createShape(
   chain: string,
   addresses: string[],
@@ -355,9 +388,33 @@ export function executeFindMinters(address: string): EventSource {
 
 async function readErrorMessage(res: Response): Promise<string> {
   try {
-    const data = (await res.json()) as { error?: string; errors?: string }
-    return data.error ?? data.errors ?? res.statusText
+    const data = (await res.json()) as {
+      error?: unknown
+      errors?: unknown
+      message?: unknown
+    }
+    return (
+      extractErrorMessage(data.error) ??
+      extractErrorMessage(data.errors) ??
+      extractErrorMessage(data.message) ??
+      res.statusText
+    )
   } catch {
     return res.statusText
   }
+}
+
+function extractErrorMessage(value: unknown): string | undefined {
+  if (typeof value === 'string') {
+    return value
+  }
+
+  if (typeof value === 'object' && value !== null) {
+    if ('message' in value && typeof value.message === 'string') {
+      return value.message
+    }
+    return JSON.stringify(value)
+  }
+
+  return undefined
 }
