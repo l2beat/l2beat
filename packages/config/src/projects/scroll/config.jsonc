@@ -88,7 +88,7 @@
       "ignoreDiscovery": true
     },
     "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": {
-      "description": "multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.",
+      "description": "Multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.",
       "references": [
         {
           "text": "Governance Update: Security Council Transition, Contributor Roles & Operational Adjustments (Scroll forum, 2026-04-13)",
