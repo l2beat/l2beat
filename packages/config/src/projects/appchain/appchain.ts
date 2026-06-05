@@ -1,7 +1,6 @@
 import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
-import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ESPRESSO } from '../../common/sequencing'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -9,12 +8,6 @@ import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('appchain')
-
-const succinctConfig = discovery.getContractValue<{
-  verifierId: string
-  aggregatorId: string
-  zkVerifier: ChainSpecificAddress
-}>('NitroEnclaveVerifier', 'succintZkConfig')
 
 const sequencerInbox = discovery.getContract('SequencerInbox')
 const outbox = discovery.getContract('Outbox')
@@ -91,10 +84,5 @@ export const appchain: ScalingProject = orbitStackL2({
         sinceTimestamp: genesisTimestamp,
       },
     },
-  ],
-  nonTemplateZkVerifiers: [succinctConfig.zkVerifier],
-  nonTemplateProgramHashes: [
-    PROGRAM_HASHES(succinctConfig.verifierId),
-    PROGRAM_HASHES(succinctConfig.aggregatorId),
   ],
 })

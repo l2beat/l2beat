@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xf71c985921d975d802c16fab65a8974c8b5a1aad
+Generated with discovered.json: 0x975e72c1887bbd9ebd725a7a734f9c6bacb6f195
 
-# Diff at Thu, 28 May 2026 10:08:08 GMT:
+# Diff at Thu, 04 Jun 2026 15:27:16 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1778579646
-- current timestamp: 1779962809
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1778579646
+- current timestamp: 1780586770
 
 ## Description
 
-signer added, threshold increased to 3.
+signer added, threshold increased to 3. Also, rotated ms member.
 
 ## Watched changes
 
@@ -30,12 +30,21 @@ signer added, threshold increased to 3.
 ```
 
 ```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) [GnosisSafe] {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155"
++        "eth:0x6f52712Ae102e6B7970F1e24c83d22e5fF5E8950"
+    }
+```
+
+```diff
 +   Status: CREATED
     reference  (eth:0x0405107a60391Eb51821be373ff978115Ee58488)
     +++ description: None
 ```
 
-Generated with discovered.json: 0x3c7379c7c9a84fef641b6767ddf7820373539efd
+Generated with discovered.json: 0xfc9ad18ab91a68f11cdd635bdbb812d950599dd4
 
 # Diff at Tue, 12 May 2026 09:55:12 GMT:
 

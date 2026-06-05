@@ -81,16 +81,14 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
     ],
     verifierHashes: [
       {
-        hash: '0xf18fac3b8e5910deb6ad1d2369572deafed4662a16cf0886469b98ca92247931',
+        hash: '0x16992bb868b32c1f4bd94d70267468928932f15df9b6ac22e62719f26b0eb221',
         name: 'Lighter verifier',
-        sourceLink:
-          'https://github.com/elliottech/lighter-prover/tree/aec951b36ffcdb67818ff7e237209d547b4bb78f/circuit',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0xaa76aC5cC406037be638d483d8c1daF2AFDC1A68',
+              '0xAa0b5b65890162C5C96D82F088822247EC5Df5D6',
             ),
           },
         ],
@@ -125,7 +123,7 @@ source ~/.profile
 \`\`\`
 git clone https://github.com/elliottech/lighter-prover.git
 cd lighter-prover
-git checkout aec951b36ffcdb67818ff7e237209d547b4bb78f
+git checkout 90af1be311ffce17e6c58f9983fa5ec1c8d3a097
 chmod +x build_circuits.sh
 ./build_circuits.sh
 \`\`\`

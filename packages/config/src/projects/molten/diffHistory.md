@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x6870ab4bd4c113ef385349199edad6d6e4d5de41
+
+# Diff at Fri, 05 Jun 2026 10:11:37 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3501d14787f111a20580bca1fdb97e32abfb1f2c block: 1779719447
+- current timestamp: 1780654176
+
+## Description
+
+Molten changed to reproducible TEE verification SP1 programs, also upgraded to SP1 v6.1.0.
+
+## Watched changes
+
+```diff
+    contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22) [espresso/Sequencing/NitroEnclaveVerifier] {
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+      values.succintZkConfig.verifierId:
+-        "0x00e874289e8c7f42381b6220f438801d2d1478dc8230f866a31e5ceec6e93322"
++        "0x00643c7149cf335e7ec9d3f3301e69658a7f0ef2bc7546509c257ed8809f28e1"
+      values.succintZkConfig.aggregatorId:
+-        "0x002bb66c60302a81a621d7899e3f6ee1d0db9fb1eae5d1e80e94a33cb1e24922"
++        "0x00294928e44f0cdc9c74848c4cafcdb29f733a3bc07408c240be3d5afe750b3e"
+      values.succintZkConfig.zkVerifier:
+-        "arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D"
++        "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1779719447 => .flat}/SP1Verifier.sol    | 114 +++++++++++++++------
+ 1 file changed, 82 insertions(+), 32 deletions(-)
+```
+
 Generated with discovered.json: 0xc4133f2ab037b45c02e16f7dad7dda9d35b8b01e
 
 # Diff at Mon, 25 May 2026 14:33:27 GMT:
