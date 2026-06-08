@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xbd232caacd0fb5e78a8737a98659e054ae48a8bb
+
+# Diff at Mon, 08 Jun 2026 13:24:24 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2833791c759e0b601057d3baef6d5e07a60e296c block: 1780667635
+- current timestamp: 1780924988
+
+## Description
+
+Rotated TEE signer.
+
+## Watched changes
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
++++ severity: HIGH
+      values.getRegisteredSigners.0:
+-        "eth:0xA200e289262F76dD422f688e65C453F5aeF7709B"
++++ severity: HIGH
+      values.getRegisteredSigners.1:
++        "eth:0xB830004297a91c10ed7428f462FCf0cc5073e9A2"
+    }
+```
+
 Generated with discovered.json: 0xde867a7fe5e71e113c1bf7fb9dfe70cdcf0a1fd3
 
 # Diff at Fri, 05 Jun 2026 13:55:04 GMT:
