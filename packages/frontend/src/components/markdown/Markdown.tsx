@@ -23,20 +23,29 @@ const markdown = MarkdownIt({
   .use(outLinksPlugin)
   .use(glossaryPlugin)
 
+function dedent(text: string): string {
+  const lines = text.split('\n')
+  let minIndent = Infinity
+  for (const line of lines) {
+    if (line.trim() === '') continue
+    const match = line.match(/^[ \t]*/)
+    if (match) minIndent = Math.min(minIndent, match[0].length)
+    if (minIndent === 0) break
+  }
+  if (!Number.isFinite(minIndent) || minIndent === 0) return text
+  return lines.map((l) => l.slice(minIndent)).join('\n')
+}
+
 export function Markdown(props: MarkdownProps) {
   const terms = useGlossaryContext()
   const Comp = props.inline ? 'span' : 'div'
   const render = (text: string) =>
     props.inline ? markdown.renderInline(text) : markdown.render(text)
 
-  // This is a hack to remove leading spaces, to prevent the appearance of
-  // unwanted code blocks. Use backticks instead.
-  // Don't strip spaces if the line is a list item: '* ', '- ', '+ ', or '1. '.
-  // (Lines starting with '**bold**' must still be dedented.)
-  const stripped = props.children.replace(
-    /(^|\n)(?:\t|\s{4})(?!(?:[*+-] |\d+\. ))(.+)/g,
-    '$1$2',
-  )
+  // Template-literal markdown is usually written indented inside TS source.
+  // Strip the common leading indent from every line so list items and
+  // **bold** paragraphs aren't interpreted as indented code blocks.
+  const stripped = dedent(props.children)
 
   // Markdown-it does not support pre-render hooks and token rerendering so
   // we have to the do linking of glossary terms here explicitly.
