@@ -1,7 +1,6 @@
-import { InMemoryCache } from '@l2beat/shared-pure'
 import express from 'express'
 import { env } from '~/env'
-import { getLogger } from '~/server/utils/logger'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
@@ -24,14 +23,7 @@ import { createStagesRouter } from './stages/StagesRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
 import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
 
-// Module scope so the cache survives per-request router recreation in dev mode
-// (see createDevPageRouterMiddleware in server.ts)
-const cache = new InMemoryCache({
-  logger: getLogger()
-    .for('InMemoryCache')
-    .tag({ source: 'createServerPageRouter' }),
-  enabled: true,
-})
+const cache = new FrontendInMemoryCache('createServerPageRouter')
 
 export function createServerPageRouter(
   manifest: Manifest,
