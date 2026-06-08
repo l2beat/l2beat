@@ -25,7 +25,7 @@ const markdown = MarkdownIt({
 
 function dedent(text: string): string {
   const lines = text.split('\n')
-  let minIndent = Infinity
+  let minIndent = Number.POSITIVE_INFINITY
   for (const line of lines) {
     if (line.trim() === '') continue
     const match = line.match(/^[ \t]*/)
