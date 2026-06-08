@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x8f0f2d5a451801caba6e405988be9f2c4bc5b6bd
+
+# Diff at Mon, 08 Jun 2026 13:32:42 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@7b249a098f7367cb0ead3d881bbc57b408521134 block: 1779699385
+- current timestamp: 1780925494
+
+## Description
+
+SystemConfig `eip1559Denominator` 250 → 100 and `eip1559Elasticity` 2 → 16 — faster L2 base-fee response, higher per-block gas elasticity.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        250
++        100
+      values.eip1559Elasticity:
+-        2
++        16
+    }
+```
+
 Generated with discovered.json: 0x972a3548891844faf22ac20f54f2c3997a379412
 
 # Diff at Thu, 04 Jun 2026 17:46:22 GMT:

@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xc3850fbf60e040117b92758f2d1c9a92fabeac3c
+
+# Diff at Mon, 08 Jun 2026 13:32:15 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@7b249a098f7367cb0ead3d881bbc57b408521134 block: 1778850529
+- current timestamp: 1780925465
+
+## Description
+
+PermissionedDisputeGame clone redeployed with new proposer + challenger immutable args ([diff](https://disco.l2beat.com/diff/eth:0x719206d1C83D16FBcAB21f9e9DBF5A8178567E2b/eth:0xDE6284479EA9e623C00C14CFfc04091113BcB2B8)). SystemConfig `batcherHash` + `unsafeBlockSigner` rotated.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0x6AdE72DA6C1d47c856f13CD01Aac22A90D722e01"
++        "eth:0xf99F2E466D35b9B2755f7bA99E34bC7D56F96FC5"
+      values.unsafeBlockSigner:
+-        "eth:0x1F316F0F898AAb1919F9Fb9183F8D1900F721AdB"
++        "eth:0xa3AC51c395ddA7a264D54890Da04ddF61bCDA359"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0x719206d1C83D16FBcAB21f9e9DBF5A8178567E2b) [opstack/PermissionedDisputeGame]
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xaCc66304d26a01A9bd60d0584dCEdbaCeC8e10e0) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.1:
+-        "eth:0x719206d1C83D16FBcAB21f9e9DBF5A8178567E2b"
++        "eth:0xDE6284479EA9e623C00C14CFfc04091113BcB2B8"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0xDE6284479EA9e623C00C14CFfc04091113BcB2B8) [opstack/PermissionedDisputeGame]
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
 Generated with discovered.json: 0x4eb56da2dfef3759b67b153fb84b3248bd61b208
 
 # Diff at Thu, 04 Jun 2026 17:39:26 GMT:
