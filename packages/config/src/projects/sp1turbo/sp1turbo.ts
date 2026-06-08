@@ -205,6 +205,7 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('morph'),
         sinceTimestamp: UnixTime(1737359447),
+        untilTimestamp: UnixTime(1780559831),
       },
       // archived projects
       {
@@ -371,28 +372,6 @@ export SP1_ALLOW_DEPRECATED_HOOKS=true  # fixes compilation errors
 make build-circuits
 \`\`\`
       `,
-      },
-      {
-        hash: '0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67',
-        name: 'SP1 Turbo Plonk Morph',
-        sourceLink:
-          'https://github.com/succinctlabs/sp1/tree/v5.0.0/crates/prover',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x045d4BC73Bd1918192f34e98532A5272Ef620423',
-            ),
-          },
-          // {
-          //   address: ChainSpecificAddress.fromLong(
-          //     'ethereum',
-          //     '0x5ff102a4A4Ce2040288a797CE4CCCa85eE1E2d70',
-          //   ),
-          // },
-        ],
-        verificationStatus: 'notVerified',
       },
     ],
   },

@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xa2129158580720086e26319fcee41e0c9bc130e4
+
+# Diff at Mon, 08 Jun 2026 10:07:57 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@986b95b3ae833105f37e6f39ab1fd37448dc183a block: 1779962479
+- current timestamp: 1780913202
+
+## Description
+
+Published this funding proposal onchain: https://www.tally.xyz/gov/zksync/proposal/2943455218873421873697799536418607104467185343933430719456358615505163695727?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+It "allocates 12 capped minters of 67M ZK each, distributed monthly to Matter Labs over 12 months (~$1M USD per month at the $0.015/ZK reference price), to execute the 2026 Prividium roadmap".
+
+Also removed one member of MatterLabs ms.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x41814626a9256173B6E6441d8133F9286F02AA16"
+      values.multisigThreshold:
+-        "1 of 4 (25%)"
++        "1 of 3 (33%)"
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        17
++        18
+    }
+```
+
 Generated with discovered.json: 0x42fea8d8f032cb283545fe5a5f8cf192cde315c2
 
 # Diff at Thu, 28 May 2026 10:02:56 GMT:

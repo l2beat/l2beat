@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x39747d01646499d2eb3a0d8b96b4402bf322efed
+
+# Diff at Mon, 08 Jun 2026 10:28:11 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@986b95b3ae833105f37e6f39ab1fd37448dc183a block: 1772444704
+- current timestamp: 1780914426
+
+## Description
+
+Axelar gas service owner changed (the owner address of this contract is the microservice that pays for gas for cross-chain communication on Axelar).
+
+Also rotated owner of the operators contract of Axelar gas service.
+
+## Watched changes
+
+```diff
+    contract AxelarGasService (eth:0x2d5d7d31F671F86C782533cc367F14109a082712) [N/A] {
+    +++ description: None
+      values.$admin:
+-        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
++        "eth:0x72164D4448fe6cfA472946feDC71e83b4628B1aF"
+      values.owner:
+-        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
++        "eth:0x72164D4448fe6cfA472946feDC71e83b4628B1aF"
+    }
+```
+
+```diff
+    contract AxelarGasServiceOperators (eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC) [N/A] {
+    +++ description: None
+      values.owner:
+-        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
++        "eth:0x2053E8e8c7456DE57141D1357579520dEaa8Bf9C"
+    }
+```
+
 Generated with discovered.json: 0xab6a0a1e21f7e956341a339a6da88ac70abf3785
 
 # Diff at Fri, 08 May 2026 07:51:05 GMT:

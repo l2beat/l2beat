@@ -1,3 +1,72 @@
+Generated with discovered.json: 0x9dc17af6353235793e8af838442d568ac008e806
+
+# Diff at Mon, 08 Jun 2026 10:47:43 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@986b95b3ae833105f37e6f39ab1fd37448dc183a block: 1779443124
+- current timestamp: 1780914460
+
+## Description
+
+Added batch data version 2: https://disco.l2beat.com/diff/eth:0x9e2Fb684935a32CEd121972f23BD0e4634377cA2/eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB, which handles submitting several blobs.
+
+Also, upgraded the verifier program, which is reproducible from the sources, and completely switched to SP1 Hypercube.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV1 (eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423) [morph/ZkEvmVerifierV1]
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) [morph/MultipleVersionRollupVerifier] {
+    +++ description: Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.
+      values.latestVerifier.1.verifier:
+-        "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423"
++        "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692"
+      values.latestVerifier.1.startBatchIndex:
+-        45847
++        54332
+    }
+```
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) [morph/Rollup] {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.
+      sourceHashes.1:
+-        "0x744e3febdbddacbc25d9934fa259bfb08b24e38cb1325cdce9e9740b9b6f192b"
++        "0x9505004977004cf77ebe02c63bae0f3420673028462e69fe68350d91356eb33b"
+      values.$implementation:
+-        "eth:0x9e2Fb684935a32CEd121972f23BD0e4634377cA2"
++        "eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB"
+      values.$pastUpgrades.10:
++        ["2026-06-03T11:26:11.000Z","0xe9128be913e8685a928c8e8468a030a95ad44ef4ad78534c688cd721af496a54",["eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB"]]
+      values.$upgradeCount:
+-        10
++        11
+      implementationNames.eth:0x9e2Fb684935a32CEd121972f23BD0e4634377cA2:
+-        "Rollup"
+      implementationNames.eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB:
++        "Rollup"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1779443124 => .flat}/Rollup/Rollup.sol  |  71 ++++--
+ ...0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692.sol} | 255 ++++++++++++---------
+ 2 files changed, 204 insertions(+), 122 deletions(-)
+```
+
 Generated with discovered.json: 0xb478957a73eebd7463f3c4e2cb2553b22af31066
 
 # Diff at Fri, 22 May 2026 09:46:38 GMT:
