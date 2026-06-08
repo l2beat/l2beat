@@ -100,7 +100,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
   async getDailyByProjectIds(
     projectIds: string[],
     fromInclusive: UnixTime | null,
-    toInclusive: UnixTime,
+    toExclusive: UnixTime,
   ): Promise<PrivacyFlowDailyRecord[]> {
     if (projectIds.length === 0) return []
 
@@ -147,7 +147,7 @@ export class PrivacyFlowEventRepository extends BaseRepository {
     }
 
     query = query
-      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .where('timestamp', '<', UnixTime.toDate(toExclusive))
       .groupBy(['projectId', 'bucketId', day])
       .orderBy('timestamp', 'asc')
 
