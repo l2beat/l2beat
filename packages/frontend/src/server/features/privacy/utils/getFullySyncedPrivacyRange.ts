@@ -7,10 +7,10 @@ import type { ChartRange } from '~/utils/range/range'
  * Fully synced means that the day is synced to the midnight. Current day is not included.
  */
 export function getFullySyncedPrivacyRange([from, to]: ChartRange): ChartRange {
-  const target = UnixTime.toStartOf(UnixTime.now(), 'day') - 1
+  const minEnd = Math.min(UnixTime.now(), to)
 
   return [
     from ? UnixTime.toStartOf(from, 'day') : null,
-    Math.min(UnixTime.toStartOf(to, 'day'), target),
+    UnixTime.toStartOf(minEnd, 'day'),
   ]
 }
