@@ -28,6 +28,10 @@ const mainPages: MainPage[] = [
   },
   {
     type: 'scaling',
+    title: 'Sequencing',
+  },
+  {
+    type: 'scaling',
     title: 'Liveness',
   },
   {

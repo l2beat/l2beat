@@ -286,7 +286,8 @@ export const polygonpos: ScalingProject = {
       sequencerSetSpec: {
         slotTime: { value: formatSeconds(polygonBlockSeconds) },
         epochTime: {
-          value: `*Span*: ${polygonSpanBlocks} blocks (${polygonSpanTimeString})`,
+          value: `${polygonSpanTimeString}`,
+          description: `Randomly sampled validators delegate block production for the duration of a span: ${polygonSpanBlocks} blocks`,
         },
         sequencerCount: { value: `${currentValidatorSetSize} validators` },
         blockProductionAccess: {

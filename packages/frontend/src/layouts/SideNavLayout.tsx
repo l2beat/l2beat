@@ -75,6 +75,11 @@ export function SideNavLayout({
               href: '/scaling/data-availability',
             },
             {
+              title: 'Sequencing',
+              shortTitle: 'Sequencing',
+              href: '/scaling/sequencing',
+            },
+            {
               title: 'Liveness',
               href: '/scaling/liveness',
             },

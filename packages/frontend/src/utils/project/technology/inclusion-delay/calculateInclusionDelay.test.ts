@@ -9,6 +9,7 @@ import {
   calculateCommitteeLikeDelayDays,
   calculateEthereumLikeDelayDays,
   calculateSpanLikeDelayDays,
+  getEthereumComparisonDelay,
   getInclusionDelayData,
 } from './calculateInclusionDelay'
 
@@ -79,8 +80,25 @@ describe('calculateInclusionDelay', () => {
     })
   })
 
+  describe(getEthereumComparisonDelay.name, () => {
+    it('computes the ethereum reference independently of any project model', () => {
+      // The reference only depends on the censoring fraction and the confidence
+      // target (12s slots), so it can be reused as one baseline across projects.
+      const points = getEthereumComparisonDelay(0.5, 0.99)
+      const at = (fraction: number) =>
+        points.find((point) => point.censoringFraction === fraction)
+
+      expect(at(0)).toEqual({ censoringFraction: 0, delayDays: 12 / 86_400 })
+      expect(at(0.25)).toEqual({
+        censoringFraction: 0.25,
+        delayDays: 48 / 86_400,
+      })
+      expect(at(0.5)).toEqual({ censoringFraction: 0.5, delayDays: null })
+    })
+  })
+
   describe(getInclusionDelayData.name, () => {
-    it('adds an ethereum comparison series at the project censoring fractions', () => {
+    it('samples the project delay across the full fraction range', () => {
       const chart = {
         type: 'ethereumlike',
         validatorCount: 4,
@@ -89,27 +107,18 @@ describe('calculateInclusionDelay', () => {
         maxCensorFraction: 0.5,
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
-      // Continuous models are sampled at a fixed resolution, so the curve spans
-      // the full fraction range with both series computed at every point.
-      const { chartData } = getInclusionDelayData(chart)
+      // Continuous models are sampled at a fixed resolution, so the line spans
+      // the full fraction range with a delay computed at every point.
+      const { projectPoints } = getInclusionDelayData(chart)
       const at = (fraction: number) =>
-        chartData.find((point) => point.censoringFraction === fraction)
+        projectPoints.find((point) => point.censoringFraction === fraction)
 
-      expect(at(0)).toEqual({
-        censoringFraction: 0,
-        projectDelayDays: 5 / 86_400,
-        ethereumDelayDays: 12 / 86_400,
-      })
+      expect(at(0)).toEqual({ censoringFraction: 0, delayDays: 5 / 86_400 })
       expect(at(0.25)).toEqual({
         censoringFraction: 0.25,
-        projectDelayDays: 20 / 86_400,
-        ethereumDelayDays: 48 / 86_400,
+        delayDays: 20 / 86_400,
       })
-      expect(at(0.5)).toEqual({
-        censoringFraction: 0.5,
-        projectDelayDays: null,
-        ethereumDelayDays: null,
-      })
+      expect(at(0.5)).toEqual({ censoringFraction: 0.5, delayDays: null })
     })
 
     it('includes the next cumulative entity that cannot be drawn on the chart', () => {
@@ -187,12 +196,12 @@ describe('calculateInclusionDelay', () => {
         maxCensorFraction: 0.5,
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
-      const { chartData } = getInclusionDelayData(chart)
+      const { projectPoints } = getInclusionDelayData(chart)
       // 0 to 0.5 in 0.001 steps => 501 evenly-spaced samples.
-      expect(chartData.length).toEqual(501)
-      expect(chartData[0]?.censoringFraction).toEqual(0)
-      expect(chartData[1]?.censoringFraction).toEqual(0.001)
-      const last = chartData[chartData.length - 1]
+      expect(projectPoints.length).toEqual(501)
+      expect(projectPoints[0]?.censoringFraction).toEqual(0)
+      expect(projectPoints[1]?.censoringFraction).toEqual(0.001)
+      const last = projectPoints[projectPoints.length - 1]
       expect(last?.censoringFraction).toEqual(0.5)
     })
 
@@ -205,12 +214,8 @@ describe('calculateInclusionDelay', () => {
         maxCensorFraction: 0,
       } satisfies ProjectEthereumLikeInclusionDelayChart
 
-      expect(getInclusionDelayData(chart).chartData).toEqual([
-        {
-          censoringFraction: 0,
-          projectDelayDays: 10 / 86_400,
-          ethereumDelayDays: 12 / 86_400,
-        },
+      expect(getInclusionDelayData(chart).projectPoints).toEqual([
+        { censoringFraction: 0, delayDays: 10 / 86_400 },
       ])
     })
 
