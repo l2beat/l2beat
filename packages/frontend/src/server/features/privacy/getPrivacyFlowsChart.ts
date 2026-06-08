@@ -62,13 +62,9 @@ export async function getPrivacyFlowsChart(
     }
 
     return {
-      chart: generateTimestamps([from, to], 'day').map((timestamp) => [
-        timestamp,
-        0,
-        0,
-        0,
-        0,
-      ]),
+      chart: generateTimestamps([from, to - UnixTime.DAY], 'day').map(
+        (timestamp) => [timestamp, 0, 0, 0, 0],
+      ),
       syncedUntil: syncedUntil ? Number(syncedUntil) : undefined,
     }
   }
