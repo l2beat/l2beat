@@ -23,18 +23,13 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import type {
+  InclusionDelayChartDataPoint,
   InclusionDelayEntityMarker,
   InclusionDelayThresholdMarker,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 import { SECONDS_PER_DAY } from '~/utils/project/technology/inclusion-delay/shared'
 
 export type InclusionDelayYAxisScale = 'linear' | 'log'
-
-export type InclusionDelayChartDataPoint = {
-  timestamp: number
-  censoringFraction: number
-  [key: string]: number | null | undefined
-}
 
 const INCLUSION_DELAY_ENTITY_MARKER_COLOR = 'var(--chart-cyan)'
 const DELAY_THRESHOLD_COLOR = 'var(--chart-yellow)'

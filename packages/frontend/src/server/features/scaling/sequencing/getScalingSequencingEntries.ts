@@ -4,13 +4,17 @@ import type {
   TableReadyValue,
 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import type { InclusionDelayChartDataPoint } from '~/components/projects/sections/sequencing/InclusionDelayChart'
 import type { ProjectChanges } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { CommonScalingEntry } from '~/server/features/scaling/getCommonScalingEntry'
 import { getCommonScalingEntry } from '~/server/features/scaling/getCommonScalingEntry'
 import { ps } from '~/server/projects'
-import { prepareInclusionDelayCurve } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
+import type { InclusionDelayChartDataPoint } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
+import {
+  getEthereumComparisonDelay,
+  getProjectInclusionDelay,
+  mergeInclusionDelaySeries,
+} from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 
 type ScalingSequencingProject = Project<
   'statuses' | 'scalingInfo' | 'scalingRisks' | 'display' | 'scalingTechnology',
@@ -82,58 +86,55 @@ const ETHEREUM_SERIES_KEY = 'ethereum'
 function getInclusionDelayComparison(
   projects: ScalingSequencingProject[],
 ): InclusionDelayComparison | undefined {
-  const curves = projects
+  const projectDelays = projects
     .map((project) => {
       const sequencing = project.scalingTechnology.sequencing
-      if (!sequencing?.sequencerSetSpec || !sequencing.inclusionDelayChart) {
+      const chart = sequencing?.inclusionDelayChart
+      if (!sequencing?.sequencerSetSpec || !chart) {
         return undefined
       }
       return {
         slug: project.slug,
         name: project.name,
-        curve: prepareInclusionDelayCurve(sequencing.inclusionDelayChart),
+        points: getProjectInclusionDelay(chart),
+        maxCensorFraction: chart.maxCensorFraction,
+        target: chart.target,
       }
     })
     .filter(notUndefined)
     .sort((a, b) => a.name.localeCompare(b.name))
 
-  if (curves.length === 0) {
+  const [first] = projectDelays
+  if (!first) {
     return undefined
   }
 
-  const points = new Map<number, InclusionDelayChartDataPoint>()
-  for (const { slug, curve } of curves) {
-    for (const point of curve.chartData) {
-      const existing = points.get(point.censoringFraction) ?? {
-        timestamp: point.censoringFraction,
-        censoringFraction: point.censoringFraction,
-      }
-      existing[slug] = point.projectDelayDays
-      // The Ethereum baseline is a pure function of the censoring fraction
-      // (shared T99 target, 12s slots), so it is identical across projects and
-      // only needs to be filled once per fraction.
-      existing[ETHEREUM_SERIES_KEY] ??= point.ethereumDelayDays
-      points.set(point.censoringFraction, existing)
-    }
-  }
-
-  const data = [...points.values()].sort(
-    (a, b) => a.censoringFraction - b.censoringFraction,
+  const maxCensorFraction = Math.max(
+    ...projectDelays.map((delay) => delay.maxCensorFraction),
+  )
+  // All sequencing projects compare against the same confidence target, so a
+  // single Ethereum reference spanning the widest range serves every line.
+  const ethereumPoints = getEthereumComparisonDelay(
+    maxCensorFraction,
+    first.target,
   )
 
+  const data = mergeInclusionDelaySeries([
+    ...projectDelays.map((delay) => ({
+      key: delay.slug,
+      points: delay.points,
+    })),
+    { key: ETHEREUM_SERIES_KEY, points: ethereumPoints },
+  ])
+
   const series: InclusionDelayComparisonSeries[] = [
-    ...curves.map(({ slug, name }) => ({
-      key: slug,
-      label: name,
+    ...projectDelays.map((delay) => ({
+      key: delay.slug,
+      label: delay.name,
       type: 'project' as const,
     })),
     { key: ETHEREUM_SERIES_KEY, label: 'Ethereum', type: 'ethereum' as const },
   ]
-
-  const maxCensorFraction = Math.max(
-    ...curves.map(({ curve }) => curve.maxCensorFraction),
-    0,
-  )
 
   return { data, series, maxCensorFraction }
 }

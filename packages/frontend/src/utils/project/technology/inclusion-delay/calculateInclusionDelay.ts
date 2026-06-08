@@ -16,10 +16,21 @@ export const INCLUSION_DELAY_THRESHOLDS = [
   { label: '30d', days: 30 },
 ] as const
 
-export interface InclusionDelayChartPoint {
+/** A single sampled point of one inclusion-delay line (project or Ethereum). */
+export interface InclusionDelayPoint {
   censoringFraction: number
-  projectDelayDays: number | null
-  ethereumDelayDays: number | null
+  delayDays: number | null
+}
+
+/**
+ * A row of the rendered chart: one entry per censoring fraction, with one key
+ * per series (project slug or the Ethereum reference). Produced by merging any
+ * number of series with {@link mergeInclusionDelaySeries}.
+ */
+export interface InclusionDelayChartDataPoint {
+  timestamp: number
+  censoringFraction: number
+  [key: string]: number | null | undefined
 }
 
 export interface InclusionDelayEntityLegendEntry {
@@ -43,35 +54,21 @@ export interface InclusionDelayThresholdMarker {
 }
 
 export interface InclusionDelayData {
-  chartData: InclusionDelayChartPoint[]
+  projectPoints: InclusionDelayPoint[]
+  ethereumPoints: InclusionDelayPoint[]
   entityLegendEntries: InclusionDelayEntityLegendEntry[]
   thresholdMarkers: InclusionDelayThresholdMarker[]
 }
 
-export interface InclusionDelayCurve {
-  chartData: InclusionDelayChartPoint[]
+export interface InclusionDelayChartProps extends InclusionDelayData {
   maxCensorFraction: number
 }
-
-export interface InclusionDelayChartProps
-  extends InclusionDelayData,
-    InclusionDelayCurve {}
 
 export function prepareInclusionDelay(
   chart: ProjectInclusionDelayChart,
 ): InclusionDelayChartProps {
   return {
     ...getInclusionDelayData(chart),
-    maxCensorFraction: chart.maxCensorFraction,
-  }
-}
-
-export function prepareInclusionDelayCurve(
-  chart: ProjectInclusionDelayChart,
-): InclusionDelayCurve {
-  const model = createInclusionDelayModel(chart)
-  return {
-    chartData: buildChartData(model),
     maxCensorFraction: chart.maxCensorFraction,
   }
 }
@@ -84,33 +81,82 @@ export function getInclusionDelayData(
   }[] = INCLUSION_DELAY_THRESHOLDS,
 ): InclusionDelayData {
   const model = createInclusionDelayModel(chart)
-  const chartData = buildChartData(model)
+  const projectPoints = buildProjectPoints(model)
   return {
-    chartData,
+    projectPoints,
+    ethereumPoints: getEthereumComparisonDelay(
+      model.maxCensorFraction,
+      model.target,
+    ),
     entityLegendEntries: buildEntityLegendEntries(
       model,
       chart.stakeDistribution,
     ),
-    thresholdMarkers: buildThresholdMarkers(chartData, thresholds),
+    thresholdMarkers: buildThresholdMarkers(projectPoints, thresholds),
   }
 }
 
-function buildChartData(
-  model: InclusionDelayModel,
-): InclusionDelayChartPoint[] {
-  const censoringFractions = getSampledCensoringFractions(
-    model.maxCensorFraction,
-  )
+/** The project's own inclusion-delay line, sampled across the fraction range. */
+export function getProjectInclusionDelay(
+  chart: ProjectInclusionDelayChart,
+): InclusionDelayPoint[] {
+  return buildProjectPoints(createInclusionDelayModel(chart))
+}
 
-  return censoringFractions.map((censoringFraction) => ({
-    censoringFraction,
-    projectDelayDays: model.calculateDelayDays(censoringFraction),
-    ethereumDelayDays: calculateEthereumComparisonDelayDaysForFraction({
+function buildProjectPoints(model: InclusionDelayModel): InclusionDelayPoint[] {
+  return getSampledCensoringFractions(model.maxCensorFraction).map(
+    (censoringFraction) => ({
       censoringFraction,
-      slotSeconds: ETHEREUM_COMPARISON_SLOT_SECONDS,
-      target: model.target,
+      delayDays: model.calculateDelayDays(censoringFraction),
     }),
-  }))
+  )
+}
+
+/**
+ * The Ethereum inclusion-delay reference line. It only depends on the censoring
+ * fraction and the confidence target, so it is computed independently of any
+ * project model and can be reused as a single baseline across projects.
+ */
+export function getEthereumComparisonDelay(
+  maxCensorFraction: number,
+  target: number,
+): InclusionDelayPoint[] {
+  return getSampledCensoringFractions(maxCensorFraction).map(
+    (censoringFraction) => ({
+      censoringFraction,
+      delayDays: calculateEthereumComparisonDelayDaysForFraction({
+        censoringFraction,
+        slotSeconds: ETHEREUM_COMPARISON_SLOT_SECONDS,
+        target,
+      }),
+    }),
+  )
+}
+
+/**
+ * Merges named series into chart rows keyed by censoring fraction, so the chart
+ * can draw one line per series on a shared x-axis. Series may cover different
+ * fraction ranges; missing values stay undefined and are connected across.
+ */
+export function mergeInclusionDelaySeries(
+  series: { key: string; points: InclusionDelayPoint[] }[],
+): InclusionDelayChartDataPoint[] {
+  const rows = new Map<number, InclusionDelayChartDataPoint>()
+
+  for (const { key, points } of series) {
+    for (const point of points) {
+      const existing = rows.get(point.censoringFraction) ?? {
+        timestamp: point.censoringFraction,
+        censoringFraction: point.censoringFraction,
+      }
+      existing[key] = point.delayDays
+      rows.set(point.censoringFraction, existing)
+    }
+  }
+
+  return [...rows.values()].sort(
+    (a, b) => a.censoringFraction - b.censoringFraction,
+  )
 }
 
 function buildEntityLegendEntries(
@@ -162,11 +208,11 @@ function buildEntityLegendEntries(
 }
 
 function buildThresholdMarkers(
-  curve: InclusionDelayChartPoint[],
+  points: InclusionDelayPoint[],
   thresholds: readonly { label: string; days: number }[],
 ): InclusionDelayThresholdMarker[] {
   return thresholds.flatMap((threshold) => {
-    const censoringFraction = findFractionAtDelay(curve, threshold.days)
+    const censoringFraction = findFractionAtDelay(points, threshold.days)
     if (censoringFraction === undefined) return []
 
     return [
@@ -181,17 +227,17 @@ function buildThresholdMarkers(
 }
 
 function findFractionAtDelay(
-  curve: InclusionDelayChartPoint[],
+  points: InclusionDelayPoint[],
   thresholdDays: number,
 ): number | undefined {
-  for (let i = 0; i < curve.length; i++) {
-    const point = curve[i]
-    if (!point || point.projectDelayDays === null) continue
-    const delay = point.projectDelayDays
+  for (let i = 0; i < points.length; i++) {
+    const point = points[i]
+    if (!point || point.delayDays === null) continue
+    const delay = point.delayDays
     if (delay < thresholdDays) continue
 
-    const prev = i > 0 ? curve[i - 1] : undefined
-    const prevDelay = prev?.projectDelayDays ?? null
+    const prev = i > 0 ? points[i - 1] : undefined
+    const prevDelay = prev?.delayDays ?? null
 
     if (
       !prev ||
