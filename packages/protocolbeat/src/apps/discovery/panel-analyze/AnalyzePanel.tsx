@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { getAnalyzers, getCode, runAnalyzer } from '../../../api/api'
 import type { ApiAnalyzerResult } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
@@ -37,29 +37,27 @@ export function AnalyzePanel() {
     retry: 1,
   })
 
-  const [selectedAnalyzer, setSelectedAnalyzer] = useState<string>()
-  const [selectedSource, setSelectedSource] = useState<string>()
+  const [preferredAnalyzer, setPreferredAnalyzer] = useState<string>()
+  const [preferredSource, setPreferredSource] = useState<string>()
 
   const sources = codeResponse.data?.sources ?? []
   const analyzers = analyzersResponse.data ?? []
 
-  useEffect(() => {
-    if (
-      !selectedSource ||
-      !sources.some((source) => source.name === selectedSource)
-    ) {
-      setSelectedSource(getDefaultSourceName(sources))
-    }
-  }, [selectedSource, sources])
+  const selectedSource = useMemo(
+    () =>
+      sources.some((source) => source.name === preferredSource)
+        ? preferredSource
+        : getDefaultSourceName(sources),
+    [preferredSource, sources],
+  )
 
-  useEffect(() => {
-    if (
-      !selectedAnalyzer ||
-      !analyzers.some((analyzer) => analyzer.id === selectedAnalyzer)
-    ) {
-      setSelectedAnalyzer(analyzers[0]?.id)
-    }
-  }, [selectedAnalyzer, analyzers])
+  const selectedAnalyzer = useMemo(
+    () =>
+      analyzers.some((analyzer) => analyzer.id === preferredAnalyzer)
+        ? preferredAnalyzer
+        : analyzers[0]?.id,
+    [preferredAnalyzer, analyzers],
+  )
 
   const selectedAnalyzerDetails = useMemo(
     () => analyzers.find((analyzer) => analyzer.id === selectedAnalyzer),
@@ -124,7 +122,7 @@ export function AnalyzePanel() {
           <Label>Analyzer</Label>
           <Select.Root
             value={selectedAnalyzer}
-            onValueChange={setSelectedAnalyzer}
+            onValueChange={setPreferredAnalyzer}
             disabled={analyzers.length === 0}
           >
             <Select.Trigger placeholder="Select analyzer" />
@@ -147,7 +145,7 @@ export function AnalyzePanel() {
           <Label>Source</Label>
           <Select.Root
             value={selectedSource}
-            onValueChange={setSelectedSource}
+            onValueChange={setPreferredSource}
             disabled={sources.length === 0 || codeResponse.isPending}
           >
             <Select.Trigger placeholder="Select source" />
