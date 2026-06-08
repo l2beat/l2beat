@@ -8,15 +8,13 @@ import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
 import { Select } from '../../../components/Select'
 import { useProjectData } from '../hooks/useProjectData'
+import { getDefaultSourceName, hasSourceCode } from '../utils/sourceCode'
 
 export function AnalyzePanel() {
   const { project, selectedAddress, projectResponse, selected } =
     useProjectData()
 
-  const hasCode =
-    selected !== undefined &&
-    'implementationNames' in selected &&
-    selected.implementationNames !== undefined
+  const hasCode = hasSourceCode(selected)
 
   const codeResponse = useQuery({
     queryKey: ['projects', project, 'code', selectedAddress],
@@ -225,16 +223,4 @@ function ResultView(props: {
       )}
     </div>
   )
-}
-
-function getDefaultSourceName(sources: { name: string }[]) {
-  if (sources.length === 0) {
-    return undefined
-  }
-
-  if (sources.length > 1) {
-    return sources[1]?.name
-  }
-
-  return sources[0]?.name
 }

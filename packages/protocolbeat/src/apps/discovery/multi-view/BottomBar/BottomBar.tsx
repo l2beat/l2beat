@@ -5,6 +5,7 @@ import { useIsomorphicKeys } from '../../hooks/useIsomorphicKeys'
 import { useDiscoveryCommand } from '../../panel-terminal/useDiscoveryCommand'
 import { useSearchStore } from '../../search/store'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
+import { getAvailablePanelIds } from '../panels'
 import { useMultiViewStore } from '../store'
 import { Keys } from './Keys'
 import { StatusRibbon } from './StatusRibbon'
@@ -22,6 +23,7 @@ export function BottomBar() {
   const maxReachableDepth = useGlobalSettingsStore((s) => s.maxReachableDepth)
 
   const depthSpecified = maxReachableDepth !== null
+  const availablePanelIds = getAvailablePanelIds(IS_READONLY)
 
   // By default when using bottom bar
   const useDevMode = true
@@ -37,7 +39,7 @@ export function BottomBar() {
         }
       }
       if (e.code === 'Enter' && e.altKey) {
-        addPanel()
+        addPanel(availablePanelIds)
       }
       if (e.code === 'KeyQ' && e.altKey) {
         removePanel()

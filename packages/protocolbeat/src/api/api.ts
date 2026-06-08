@@ -1,7 +1,11 @@
 import { withoutUndefinedKeys } from '../utils/withoutUndefinedKeys'
+import {
+  type ApiAnalyzer,
+  type ApiAnalyzerResult,
+  ApiAnalyzerResultSchema,
+  ApiAnalyzersSchema,
+} from './analyzerTypes'
 import type {
-  ApiAnalyzer,
-  ApiAnalyzerResult,
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
@@ -319,7 +323,7 @@ export async function getAnalyzers(): Promise<ApiAnalyzer[]> {
     throw new Error(await readErrorMessage(res))
   }
   const data = await res.json()
-  return data as ApiAnalyzer[]
+  return ApiAnalyzersSchema.parse(data)
 }
 
 export async function runAnalyzer(
@@ -341,7 +345,7 @@ export async function runAnalyzer(
   }
 
   const data = await res.json()
-  return data as ApiAnalyzerResult
+  return ApiAnalyzerResultSchema.parse(data)
 }
 
 export async function createShape(
@@ -389,32 +393,12 @@ export function executeFindMinters(address: string): EventSource {
 async function readErrorMessage(res: Response): Promise<string> {
   try {
     const data = (await res.json()) as {
-      error?: unknown
-      errors?: unknown
-      message?: unknown
+      error?: string
+      errors?: string
+      message?: string
     }
-    return (
-      extractErrorMessage(data.error) ??
-      extractErrorMessage(data.errors) ??
-      extractErrorMessage(data.message) ??
-      res.statusText
-    )
+    return data.error ?? data.errors ?? data.message ?? res.statusText
   } catch {
     return res.statusText
   }
-}
-
-function extractErrorMessage(value: unknown): string | undefined {
-  if (typeof value === 'string') {
-    return value
-  }
-
-  if (typeof value === 'object' && value !== null) {
-    if ('message' in value && typeof value.message === 'string') {
-      return value.message
-    }
-    return JSON.stringify(value)
-  }
-
-  return undefined
 }

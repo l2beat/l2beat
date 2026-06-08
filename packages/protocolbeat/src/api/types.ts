@@ -165,34 +165,7 @@ export interface ApiHandlersResponse {
   }[]
 }
 
-export interface ApiAnalyzer {
-  id: string
-  title: string
-  description: string
-  version: string
-  command: string[]
-  timeoutMs: number
-  cacheable: boolean
-}
-
-export type ApiAnalyzerResult =
-  | {
-      status: 'ok'
-      output: {
-        text: string
-        data?: Record<string, unknown>
-      }
-      metadata?: Record<string, unknown>
-    }
-  | {
-      status: 'error'
-      error: {
-        type: string
-        message: string
-        details?: Record<string, unknown>
-      }
-      metadata?: Record<string, unknown>
-    }
+export type { ApiAnalyzer, ApiAnalyzerResult } from './analyzerTypes'
 
 export type ApiAddressType =
   | 'EOA'

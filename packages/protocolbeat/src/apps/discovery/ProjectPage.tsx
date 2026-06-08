@@ -6,7 +6,7 @@ import { IS_READONLY } from '../../config/readonly'
 import { findSelected } from '../../utils/findSelected'
 import { useProjectQueryOptions } from './hooks/projectQuery'
 import { MultiView } from './multi-view/MultiView'
-import type { PanelId } from './multi-view/store'
+import { isReadonlyPanel, type PanelId } from './multi-view/panels'
 import { AnalyzePanel } from './panel-analyze/AnalyzePanel'
 import { CodePanel } from './panel-code/CodePanel'
 import { ConfigPanel } from './panel-config/ConfigPanel'
@@ -65,29 +65,8 @@ const PANELS: Record<PanelId, () => JSX.Element> = {
   diffHistory: DiffHistoryPanel,
 }
 
-const READONLY_PANELS: Record<
-  Exclude<PanelId, 'terminal' | 'analyze'>,
-  () => JSX.Element
-> = {
-  list: ListPanel,
-  values: ValuesPanel,
-  nodes: NodesPanel,
-  preview: PreviewPanel,
-  code: CodePanel,
-  template: TemplatePanel,
-  config: ConfigPanel,
-  diffHistory: DiffHistoryPanel,
-}
-
 function Panel(props: { kind: PanelId }) {
-  if (IS_READONLY) {
-    const Component =
-      props.kind === 'terminal' || props.kind === 'analyze'
-        ? ListPanel
-        : READONLY_PANELS[props.kind]
-    return <Component />
-  }
-
-  const Component = PANELS[props.kind]
+  const Component =
+    IS_READONLY && !isReadonlyPanel(props.kind) ? ListPanel : PANELS[props.kind]
   return <Component />
 }

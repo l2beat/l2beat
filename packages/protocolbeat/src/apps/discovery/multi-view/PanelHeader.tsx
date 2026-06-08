@@ -1,6 +1,5 @@
 import * as RadixSelect from '@radix-ui/react-select'
 import clsx from 'clsx'
-import type { FC } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCode } from '../../../api/api'
 import type { ApiAbi, Field } from '../../../api/types'
@@ -9,34 +8,13 @@ import { IconChatbot } from '../../../icons/IconChatbot'
 import { IconChecked } from '../../../icons/IconChcked'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconClose } from '../../../icons/IconClose'
-import { IconCode } from '../../../icons/IconCode'
-import { IconFileDiff } from '../../../icons/IconFileDiff'
 import { IconFullscreen } from '../../../icons/IconFullscreen'
 import { IconFullscreenExit } from '../../../icons/IconFullscreenExit'
-import { IconGear } from '../../../icons/IconGear'
-import { IconList } from '../../../icons/IconList'
-import { IconNodes } from '../../../icons/IconNodes'
-import { IconSigma } from '../../../icons/IconSigma'
-import { IconStamp } from '../../../icons/IconStamp'
-import { IconTerminal } from '../../../icons/IconTerminal'
-import { IconWebApp } from '../../../icons/IconWebApp'
 import { findSelected } from '../../../utils/findSelected'
 import { getProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
-import { PANEL_IDS, type PanelId, useMultiViewStore } from './store'
-
-const ICONS: Record<PanelId, FC<{ className?: string }>> = {
-  list: IconList,
-  values: IconSigma,
-  nodes: IconNodes,
-  code: IconCode,
-  preview: IconWebApp,
-  analyze: IconChatbot,
-  terminal: IconTerminal,
-  template: IconStamp,
-  config: IconGear,
-  diffHistory: IconFileDiff,
-}
+import { getAvailablePanelIds, PANEL_DEFINITIONS, type PanelId } from './panels'
+import { useMultiViewStore } from './store'
 
 export function PanelHeader(props: { id: PanelId }) {
   const isFullScreen = useMultiViewStore(
@@ -51,11 +29,8 @@ export function PanelHeader(props: { id: PanelId }) {
   const selectedAddress = usePanelStore((state) => state.selected)
   const highlighted = usePanelStore((state) => state.highlighted)
 
-  const availablePanels = IS_READONLY
-    ? PANEL_IDS.filter((id) => id !== 'terminal' && id !== 'analyze')
-    : PANEL_IDS
-
-  const Icon = ICONS[props.id]
+  const availablePanels = getAvailablePanelIds(IS_READONLY)
+  const Icon = PANEL_DEFINITIONS[props.id].icon
 
   return (
     <div className="group flex h-[36px] select-none border-coffee-600 border-y bg-coffee-800 px-[7px] py-1">
@@ -84,7 +59,7 @@ export function PanelHeader(props: { id: PanelId }) {
           >
             <RadixSelect.Viewport>
               {availablePanels.map((id) => {
-                const ItemIcon = ICONS[id]
+                const ItemIcon = PANEL_DEFINITIONS[id].icon
                 return (
                   <RadixSelect.Item
                     key={id}
