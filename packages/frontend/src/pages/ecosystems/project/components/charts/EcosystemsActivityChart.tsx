@@ -105,7 +105,7 @@ export function EcosystemsActivityChart({
   )
 
   const stats = getStats(chartData, allScalingProjectsUops)
-  const timeRange = getChartTimeRangeFromData(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
 
   return (
     <EcosystemWidget className={className}>

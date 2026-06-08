@@ -24,20 +24,20 @@ import { createStagesRouter } from './stages/StagesRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
 import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
 
+// Module scope so the cache survives per-request router recreation in dev mode
+// (see createDevPageRouterMiddleware in server.ts)
+const cache = new InMemoryCache({
+  logger: getLogger()
+    .for('InMemoryCache')
+    .tag({ source: 'createServerPageRouter' }),
+  enabled: true,
+})
+
 export function createServerPageRouter(
   manifest: Manifest,
   render: RenderFunction,
 ) {
   const router = express.Router()
-
-  const cache = new InMemoryCache({
-    logger: getLogger()
-      .for('InMemoryCache')
-      .tag({ source: 'createServerPageRouter' }),
-    enabled:
-      !env.DISABLE_CACHE &&
-      (env.DEPLOYMENT_ENV === 'production' || env.DEPLOYMENT_ENV === 'staging'),
-  })
 
   router.use('/', (_, res, next) => {
     const headers = new Headers({

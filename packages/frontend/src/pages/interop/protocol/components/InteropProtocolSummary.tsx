@@ -113,7 +113,7 @@ export function InteropProtocolSummary({
             protocolData?.entry?.averageDuration ? (
               <AvgDurationCell
                 className="font-bold text-label-value-16"
-                splitClassName="flex-row text-label-value-16 font-bold"
+                splitClassName="flex-row gap-3 text-label-value-16 font-bold md:gap-3"
                 averageDuration={protocolData?.entry?.averageDuration}
               />
             ) : (
@@ -122,7 +122,7 @@ export function InteropProtocolSummary({
           }
         />
         <StatsItem
-          title="Last 24 avg. transfer value"
+          title="Last 24h avg. transfer value"
           value={
             protocolData?.entry?.averageValue
               ? formatCurrency(protocolData.entry.averageValue, 'usd')

@@ -29,15 +29,15 @@ export function DaThroughputChart() {
     }),
   )
 
+  const resolution = rangeToResolution(range)
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
         chartData?.data.map(([timestamp]) => ({ timestamp })),
+        { bucket: resolution },
       ),
-    [chartData],
+    [chartData, resolution],
   )
-
-  const resolution = rangeToResolution(range)
 
   return (
     <div>
