@@ -191,6 +191,17 @@ export const celestia: BaseProject = {
         ],
       },
       {
+        projectId: ProjectId('bullet'),
+        name: 'Bullet',
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 10143589,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAGJsdGJhdGNoLXQ=',
+          },
+        ],
+      },
+      {
         projectId: ProjectId('camp'),
         name: 'Camp',
         daTrackingConfig: [
@@ -390,6 +401,17 @@ export const celestia: BaseProject = {
             type: 'celestia',
             sinceBlock: 5645296,
             namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAF45zaUciayEPXE=',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('relay-chain'),
+        name: 'Relay Chain',
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 9272873,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAHJlbGF5LWRhdGE=',
           },
         ],
       },
