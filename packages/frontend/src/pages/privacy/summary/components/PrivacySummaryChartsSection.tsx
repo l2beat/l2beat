@@ -32,6 +32,7 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     () =>
       getChartTimeRangeFromData(
         flowsData?.chart.map(([timestamp]) => ({ timestamp })),
+        { bucket: 'day' },
       ),
     [flowsData],
   )

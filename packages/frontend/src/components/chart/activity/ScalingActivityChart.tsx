@@ -51,6 +51,7 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
     () =>
       getChartTimeRangeFromData(
         data?.data.map(([timestamp, ..._]) => ({ timestamp })),
+        { bucket: 'day' },
       ),
     [data?.data],
   )
