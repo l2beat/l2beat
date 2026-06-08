@@ -37,7 +37,7 @@ export function ScalingSequencingPage({
             comparison={inclusionDelayComparison}
           />
         )}
-        <PrimaryCard className="mt-4 md:mt-6">
+        <PrimaryCard className="border-divider max-md:border-t md:mt-6">
           <h2 className="font-bold text-heading-16 md:text-heading-20">
             Centralized sequencing
           </h2>
