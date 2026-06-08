@@ -2646,11 +2646,11 @@ function isPreU16(templateVars: OpStackConfigCommon): boolean {
     templateVars.discovery.configReader.readDiscoveryWithReferences(
       templateVars.discovery.projectName,
     )
-  for (const d of discoveries) {
-    const abi = d.abis?.[impl]
-    if (abi?.some((sig) => sig.includes('blacklistDisputeGame'))) return false
-  }
-  return true
+  return !discoveries.some((d) =>
+    d.abis?.[impl]?.some((sig) =>
+      sig.startsWith('function blacklistDisputeGame('),
+    ),
+  )
 }
 
 function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
