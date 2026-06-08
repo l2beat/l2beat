@@ -29,15 +29,12 @@ export function rangeToResolution(range: ChartRange): ChartResolution {
   return 'day'
 }
 
-export function optionToRange(
-  option: ChartRangePredefinedOption,
-  opts?: { offset?: UnixTime },
-): ChartRange {
-  // Default offset is 75 minutes, cuz this is more or less how much time we need to wait for the data to be fully synced.
-  const offset = opts?.offset ?? -1 * (UnixTime.HOUR + 15 * UnixTime.MINUTE)
+// Default offset is 75 minutes, cuz this is more or less how much time we need to wait for the data to be fully synced.
+const BACKEND_OFFSET = -1 * (UnixTime.HOUR + 15 * UnixTime.MINUTE)
+export function optionToRange(option: ChartRangePredefinedOption): ChartRange {
   const days = optionToDays(option)
 
-  const end = UnixTime.toStartOf(UnixTime.now() + offset, 'hour')
+  const end = UnixTime.toStartOf(UnixTime.now() + BACKEND_OFFSET, 'hour')
 
   return [
     days === null ? null : UnixTime.toStartOf(end, 'day') - days * UnixTime.DAY,

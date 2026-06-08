@@ -80,9 +80,7 @@ export function EcosystemsActivityChart({
     chartMeta,
     hiddenDataKeys,
   )
-  const [range, setRange] = useState<ChartRange>(
-    optionToRange('1y', { offset: -UnixTime.DAY }),
-  )
+  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = useQuery(
     trpc.activity.chart.queryOptions({
