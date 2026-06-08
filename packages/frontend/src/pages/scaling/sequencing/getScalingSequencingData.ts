@@ -11,7 +11,7 @@ export async function getScalingSequencingData(
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData> {
-  const [appLayoutProps, entries] = await Promise.all([
+  const [appLayoutProps, props] = await Promise.all([
     getAppLayoutProps(),
     cache.get(
       {
@@ -40,7 +40,7 @@ export async function getScalingSequencingData(
       page: 'ScalingSequencingPage',
       props: {
         ...appLayoutProps,
-        entries,
+        ...props,
       },
     },
   }

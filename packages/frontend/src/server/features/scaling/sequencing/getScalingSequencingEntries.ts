@@ -4,17 +4,13 @@ import type {
   TableReadyValue,
 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
+import type { InclusionDelayChartDataPoint } from '~/components/projects/sections/sequencing/InclusionDelayChart'
 import type { ProjectChanges } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { CommonScalingEntry } from '~/server/features/scaling/getCommonScalingEntry'
 import { getCommonScalingEntry } from '~/server/features/scaling/getCommonScalingEntry'
 import { ps } from '~/server/projects'
-import {
-  type InclusionDelayCurve,
-  prepareInclusionDelayCurve,
-} from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
-
-const DECENTRALIZED_SEQUENCER_SET_VALUE = 'Decentralized Sequencer Set'
+import { prepareInclusionDelayCurve } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 
 type ScalingSequencingProject = Project<
   'statuses' | 'scalingInfo' | 'scalingRisks' | 'display' | 'scalingTechnology',
@@ -29,10 +25,26 @@ export interface ScalingSequencingEntry extends CommonScalingEntry {
   blockProduction: TableReadyValue | undefined
   deterministicCrGadget: TableReadyValue | undefined
   additionalCrGadgets: TableReadyValue | undefined
-  inclusionDelay: InclusionDelayCurve | undefined
 }
 
-export async function getScalingSequencingEntries() {
+export interface InclusionDelayComparisonSeries {
+  key: string
+  label: string
+  type: 'project' | 'ethereum'
+}
+
+export interface InclusionDelayComparison {
+  data: InclusionDelayChartDataPoint[]
+  series: InclusionDelayComparisonSeries[]
+  maxCensorFraction: number
+}
+
+export interface ScalingSequencingPageData {
+  entries: ScalingSequencingEntry[]
+  inclusionDelayComparison: InclusionDelayComparison | undefined
+}
+
+export async function getScalingSequencingEntries(): Promise<ScalingSequencingPageData> {
   const [projectsChangeReport, projects] = await Promise.all([
     getProjectsChangeReport(),
     ps.getProjects({
@@ -49,8 +61,7 @@ export async function getScalingSequencingEntries() {
     }),
   ])
 
-  return projects
-    .filter(isSequencingProject)
+  const entries = projects
     .map((project) =>
       getScalingSequencingEntry(
         project,
@@ -59,14 +70,72 @@ export async function getScalingSequencingEntries() {
     )
     .filter(notUndefined)
     .sort((a, b) => a.name.localeCompare(b.name))
+
+  return {
+    entries,
+    inclusionDelayComparison: getInclusionDelayComparison(projects),
+  }
 }
 
-function isSequencingProject(project: ScalingSequencingProject) {
-  return (
-    project.scalingRisks.self.sequencerFailure.value ===
-      DECENTRALIZED_SEQUENCER_SET_VALUE &&
-    project.scalingTechnology.sequencing?.sequencerSetSpec !== undefined
+const ETHEREUM_SERIES_KEY = 'ethereum'
+
+function getInclusionDelayComparison(
+  projects: ScalingSequencingProject[],
+): InclusionDelayComparison | undefined {
+  const curves = projects
+    .map((project) => {
+      const sequencing = project.scalingTechnology.sequencing
+      if (!sequencing?.sequencerSetSpec || !sequencing.inclusionDelayChart) {
+        return undefined
+      }
+      return {
+        slug: project.slug,
+        name: project.name,
+        curve: prepareInclusionDelayCurve(sequencing.inclusionDelayChart),
+      }
+    })
+    .filter(notUndefined)
+    .sort((a, b) => a.name.localeCompare(b.name))
+
+  if (curves.length === 0) {
+    return undefined
+  }
+
+  const points = new Map<number, InclusionDelayChartDataPoint>()
+  for (const { slug, curve } of curves) {
+    for (const point of curve.chartData) {
+      const existing = points.get(point.censoringFraction) ?? {
+        timestamp: point.censoringFraction,
+        censoringFraction: point.censoringFraction,
+      }
+      existing[slug] = point.projectDelayDays
+      // The Ethereum baseline is a pure function of the censoring fraction
+      // (shared T99 target, 12s slots), so it is identical across projects and
+      // only needs to be filled once per fraction.
+      existing[ETHEREUM_SERIES_KEY] ??= point.ethereumDelayDays
+      points.set(point.censoringFraction, existing)
+    }
+  }
+
+  const data = [...points.values()].sort(
+    (a, b) => a.censoringFraction - b.censoringFraction,
   )
+
+  const series: InclusionDelayComparisonSeries[] = [
+    ...curves.map(({ slug, name }) => ({
+      key: slug,
+      label: name,
+      type: 'project' as const,
+    })),
+    { key: ETHEREUM_SERIES_KEY, label: 'Ethereum', type: 'ethereum' as const },
+  ]
+
+  const maxCensorFraction = Math.max(
+    ...curves.map(({ curve }) => curve.maxCensorFraction),
+    0,
+  )
+
+  return { data, series, maxCensorFraction }
 }
 
 function getScalingSequencingEntry(
@@ -88,9 +157,6 @@ function getScalingSequencingEntry(
     blockProduction: getBlockProduction(sequencing.inclusionDelayChart),
     deterministicCrGadget: spec.deterministicCrGadget,
     additionalCrGadgets: spec.additionalCrGadgets,
-    inclusionDelay: sequencing.inclusionDelayChart
-      ? prepareInclusionDelayCurve(sequencing.inclusionDelayChart)
-      : undefined,
   }
 }
 

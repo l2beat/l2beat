@@ -5,51 +5,25 @@ import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import {
   InclusionDelayChart,
-  type InclusionDelayChartDataPoint,
   type InclusionDelayYAxisScale,
 } from '~/components/projects/sections/sequencing/InclusionDelayChart'
-import type { ScalingSequencingEntry } from '~/server/features/scaling/sequencing/getScalingSequencingEntries'
+import type {
+  InclusionDelayComparison,
+  InclusionDelayComparisonSeries,
+} from '~/server/features/scaling/sequencing/getScalingSequencingEntries'
 import { generateAccessibleColors } from '~/utils/generateColors'
 
 interface Props {
-  entries: ScalingSequencingEntry[]
+  comparison: InclusionDelayComparison
 }
 
-type ChartEntry = ScalingSequencingEntry & {
-  inclusionDelay: NonNullable<ScalingSequencingEntry['inclusionDelay']>
-}
-
-const ETHEREUM_DATA_KEY = 'ethereumDelayDays'
-
-export function InclusionDelayComparisonChart({ entries }: Props) {
+export function InclusionDelayComparisonChart({ comparison }: Props) {
   const [yAxisScale, setYAxisScale] = useState<InclusionDelayYAxisScale>('log')
 
-  const chartEntries = useMemo(
-    () =>
-      entries.filter(
-        (entry): entry is ChartEntry => entry.inclusionDelay !== undefined,
-      ),
-    [entries],
-  )
-
   const chartMeta = useMemo<ChartMeta>(
-    () => getComparisonChartMeta(chartEntries),
-    [chartEntries],
+    () => getComparisonChartMeta(comparison.series),
+    [comparison.series],
   )
-
-  const chartData = useMemo(
-    () => getComparisonChartData(chartEntries),
-    [chartEntries],
-  )
-
-  const maxCensorFraction = Math.max(
-    ...chartEntries.map((entry) => entry.inclusionDelay.maxCensorFraction),
-    0,
-  )
-
-  if (chartEntries.length === 0) {
-    return null
-  }
 
   return (
     <PrimaryCard className="mt-4 md:mt-6">
@@ -76,9 +50,9 @@ export function InclusionDelayComparisonChart({ entries }: Props) {
       </ChartControlsWrapper>
       <div className="mt-4">
         <InclusionDelayChart
-          data={chartData}
+          data={comparison.data}
           chartMeta={chartMeta}
-          maxCensorFraction={maxCensorFraction}
+          maxCensorFraction={comparison.maxCensorFraction}
           yAxisScale={yAxisScale}
         />
       </div>
@@ -92,46 +66,36 @@ export function InclusionDelayComparisonChart({ entries }: Props) {
   )
 }
 
-function getComparisonChartMeta(entries: ChartEntry[]): ChartMeta {
-  const colors = generateAccessibleColors(entries.length)
+function getComparisonChartMeta(
+  series: InclusionDelayComparisonSeries[],
+): ChartMeta {
+  const projectColors = generateAccessibleColors(
+    series.filter((entry) => entry.type === 'project').length,
+  )
 
-  return {
-    ...Object.fromEntries(
-      entries.map((entry, index) => [
-        entry.slug,
+  let projectIndex = 0
+  return Object.fromEntries(
+    series.map((entry) => {
+      if (entry.type === 'ethereum') {
+        return [
+          entry.key,
+          {
+            label: entry.label,
+            color: 'var(--chart-ethereum)',
+            indicatorType: { shape: 'line', strokeDasharray: '3 3' },
+          },
+        ]
+      }
+
+      const color = projectColors[projectIndex++] ?? 'var(--chart-pink)'
+      return [
+        entry.key,
         {
-          label: entry.name,
-          color: colors[index] ?? 'var(--chart-pink)',
+          label: entry.label,
+          color,
           indicatorType: { shape: 'line' as const },
         },
-      ]),
-    ),
-    [ETHEREUM_DATA_KEY]: {
-      label: 'Ethereum',
-      color: 'var(--chart-ethereum)',
-      indicatorType: { shape: 'line', strokeDasharray: '3 3' },
-    },
-  }
-}
-
-function getComparisonChartData(
-  entries: ChartEntry[],
-): InclusionDelayChartDataPoint[] {
-  const points = new Map<number, InclusionDelayChartDataPoint>()
-
-  for (const entry of entries) {
-    for (const point of entry.inclusionDelay.chartData) {
-      const existing = points.get(point.censoringFraction) ?? {
-        timestamp: point.censoringFraction,
-        censoringFraction: point.censoringFraction,
-      }
-      existing[entry.slug] = point.projectDelayDays
-      existing[ETHEREUM_DATA_KEY] ??= point.ethereumDelayDays
-      points.set(point.censoringFraction, existing)
-    }
-  }
-
-  return [...points.values()].sort(
-    (a, b) => a.censoringFraction - b.censoringFraction,
+      ]
+    }),
   )
 }

@@ -6,15 +6,23 @@ import { InfoIcon } from '~/icons/Info'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { ScalingSequencingEntry } from '~/server/features/scaling/sequencing/getScalingSequencingEntries'
+import type {
+  InclusionDelayComparison,
+  ScalingSequencingEntry,
+} from '~/server/features/scaling/sequencing/getScalingSequencingEntries'
 import { InclusionDelayComparisonChart } from './components/InclusionDelayComparisonChart'
 import { ScalingSequencingTable } from './components/table/ScalingSequencingTable'
 
 interface Props extends AppLayoutProps {
   entries: ScalingSequencingEntry[]
+  inclusionDelayComparison: InclusionDelayComparison | undefined
 }
 
-export function ScalingSequencingPage({ entries, ...props }: Props) {
+export function ScalingSequencingPage({
+  entries,
+  inclusionDelayComparison,
+  ...props
+}: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
@@ -24,7 +32,11 @@ export function ScalingSequencingPage({ entries, ...props }: Props) {
         <TableSortingProvider initialSort={{ id: '#', desc: false }}>
           <ScalingSequencingTable entries={entries} />
         </TableSortingProvider>
-        <InclusionDelayComparisonChart entries={entries} />
+        {inclusionDelayComparison && (
+          <InclusionDelayComparisonChart
+            comparison={inclusionDelayComparison}
+          />
+        )}
         <PrimaryCard className="mt-4 md:mt-6">
           <h2 className="font-bold text-heading-16 md:text-heading-20">
             Centralized sequencing
