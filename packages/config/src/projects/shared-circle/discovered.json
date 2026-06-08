@@ -1,7 +1,7 @@
 {
-  "name": "circle-shared",
-  "timestamp": 1780925099,
-  "configHash": "0x5cf442a0c2aa415eddcd273346ee1cc22582d357e736b55c48c21dfb1eba4b28",
+  "name": "shared-circle",
+  "timestamp": 1780925583,
+  "configHash": "0x0d1b88e779237616ff7d90e7c6f81044af43772099f639b6d2002167a9eb8214",
   "entries": [
     {
       "address": "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5",
@@ -107,7 +107,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 0,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 471765,
+        "nextAvailableNonce": 471766,
         "owner": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
         "paused": false,
         "pauser": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
@@ -1306,7 +1306,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "51865006753575235",
+        "totalSupply": "51860888463307134",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -1783,7 +1783,7 @@
       "name": "MasterMinter",
       "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
       "type": "Contract",
-      "template": "circle-shared/MasterMinter",
+      "template": "shared-circle/MasterMinter",
       "sourceHashes": [
         "0x13f502777e65c7c2170951387bce0ffbdd370e36bc81b22c4d6eeb563d875ef6"
       ],
@@ -2625,7 +2625,7 @@
     ]
   },
   "usedTemplates": {
-    "circle-shared/MasterMinter": "0x91a64d1293b56f633c1927202c7d89fc3f8ee6d58cea3385603a61bca7da90c8",
+    "shared-circle/MasterMinter": "0x91a64d1293b56f633c1927202c7d89fc3f8ee6d58cea3385603a61bca7da90c8",
     "tokens/circle/GatewayMinter": "0x3db25d7fc84be554debfe33d427fd0526e49528932a9dadaf23a024ff11d3d5e",
     "tokens/circle/GatewayWallet": "0x7bd43fd6063b4ff70e635794d4beac55e2d3cd3423649296dc93406a067df8d7",
     "tokens/circle/MessageTransmitter": "0x278dae95ec8e197f5f623e83e220e732c2e94b78d0bcab12c8dadc839e39b368",
@@ -2633,6 +2633,6 @@
     "tokens/circle/TokenMinter": "0x8126e2d0f134d23c8f836039f7a31a69fe93eda8e4dbe6db0060fc7f96e06a3f",
     "tokens/circle/USDC": "0xc2ce8a8cab32d9d960c30279a87e8c3ed9354274306b76a5d27063e74b928ec6"
   },
-  "usedBlockNumbers": { "ethereum": 25272976 },
+  "usedBlockNumbers": { "ethereum": 25273016 },
   "permissionsConfigHash": "0x40fd13ee34a03968810931756ab7ad8df3cc6869482b1ad7150998eb1ef4f2f7"
 }

@@ -3,7 +3,7 @@ import type { BaseProject } from '../../types'
 import {
   CIRCLE_DISCOVERY_SECTIONS,
   CIRCLE_GATEWAY_DETAILED_DESCRIPTION,
-} from '../circle-shared/shared'
+} from '../shared-circle//shared'
 
 export const circlegateway: BaseProject = {
   id: ProjectId('circlegateway'),

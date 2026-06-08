@@ -6,7 +6,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 
-const discovery = new ProjectDiscovery('circle-shared')
+const discovery = new ProjectDiscovery('shared-circle')
 
 const cctpV1AttesterThreshold = discovery.getContractValue<number>(
   'MessageTransmitter',

@@ -3,7 +3,7 @@ import type { BaseProject } from '../../types'
 import {
   CCTP_DETAILED_DESCRIPTION,
   CIRCLE_DISCOVERY_SECTIONS,
-} from '../circle-shared/shared'
+} from '../shared-circle/shared'
 
 export const cctpv1: BaseProject = {
   id: ProjectId('cctpv1'),
