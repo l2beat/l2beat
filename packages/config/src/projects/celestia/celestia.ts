@@ -196,7 +196,7 @@ export const celestia: BaseProject = {
         daTrackingConfig: [
           {
             type: 'celestia',
-            sinceBlock: 10143589,
+            sinceBlock: 10183821,
             namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAGJsdGJhdGNoLXQ=',
           },
         ],
