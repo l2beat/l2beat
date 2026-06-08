@@ -31,9 +31,10 @@ export function Markdown(props: MarkdownProps) {
 
   // This is a hack to remove leading spaces, to prevent the appearance of
   // unwanted code blocks. Use backticks instead.
-  // Don't strip spaces if they're followed by a '*' (bullet point in markdown)
+  // Don't strip spaces if the line is a list item: '* ', '- ', '+ ', or '1. '.
+  // (Lines starting with '**bold**' must still be dedented.)
   const stripped = props.children.replace(
-    /(^|\n)(?:\t|\s{4})(?!\*)(.+)/g,
+    /(^|\n)(?:\t|\s{4})(?!(?:[*+-] |\d+\. ))(.+)/g,
     '$1$2',
   )
 
