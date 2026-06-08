@@ -41,8 +41,13 @@ export interface TableReadyValue<T extends string = string> {
   orderHint?: number
 }
 
+export interface RegularExitWindowRisk
+  extends Pick<TableReadyValue, 'value' | 'sentiment'> {
+  description: string
+}
+
 export interface ExitWindowRisk extends TableReadyValue {
-  regular?: Pick<TableReadyValue, 'value' | 'sentiment'>
+  regular?: RegularExitWindowRisk
 }
 
 export interface ProjectTechnologyChoice {
