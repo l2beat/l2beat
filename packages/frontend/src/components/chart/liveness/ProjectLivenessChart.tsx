@@ -73,7 +73,8 @@ export function ProjectLivenessChart({
     return lastValidTimestamp
   }, [chart?.data])
 
-  const timeRange = getChartTimeRangeFromData(chartData)
+  const resolution = rangeToResolution(range)
+  const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
 
   return (
     <div className="flex flex-col">
@@ -104,7 +105,7 @@ export function ProjectLivenessChart({
           milestones={milestones}
           lastValidTimestamp={lastValidTimestamp}
           anyAnomalyLive={anyAnomalyLive}
-          resolution={rangeToResolution(range)}
+          resolution={resolution}
           tickCount={4}
         />
       </div>

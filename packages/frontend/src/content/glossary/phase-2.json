@@ -1,0 +1,5 @@
+{
+  "term": "Phase 2",
+  "definition": "For Groth16 trusted setup, phase 2 represents circuit-dependent part of the trusted setup. It generates a part of the secret cryptographic data required for Groth16 ZK protocol to work. If the outcome of phase 2 trusted setup ceremony is known, arbitrary proofs could be forged.",
+  "isSpicy": false
+}

@@ -9,7 +9,7 @@ import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import { useTRPC } from '~/trpc/React'
-import type { ChartRange } from '~/utils/range/range'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { CostsChart } from './CostsChart'
 import { CostsChartRangeControls } from './CostsChartRangeControls'
 import { ProjectCostsChartStats } from './ProjectCostsChartStats'
@@ -93,8 +93,11 @@ export function ProjectCostsChart({
   }, [data, unit])
 
   const timeRange = useMemo(
-    () => getChartTimeRangeFromData(chartData),
-    [chartData],
+    () =>
+      getChartTimeRangeFromData(chartData, {
+        bucket: rangeToResolution(range),
+      }),
+    [chartData, range],
   )
 
   return (

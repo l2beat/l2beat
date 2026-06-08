@@ -61,7 +61,7 @@ export function InteropTokenSummary({
             token?.avgDuration ? (
               <AvgDurationCell
                 className="font-bold text-label-value-16"
-                splitClassName="flex-row text-label-value-16 font-bold"
+                splitClassName="flex-row gap-3 text-label-value-16 font-bold md:gap-3"
                 averageDuration={token.avgDuration}
               />
             ) : token ? (

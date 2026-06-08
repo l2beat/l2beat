@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
@@ -352,7 +351,7 @@ export async function getEthereumDaProjectSections({
       id: 'activity',
       title: 'Activity',
       dataSource: undefined,
-      defaultRange: optionToRange('1y', { offset: -UnixTime.DAY }),
+      defaultRange: optionToRange('1y'),
       project: withProjectIcon(layer),
       milestones: layer.milestones ?? [],
     },

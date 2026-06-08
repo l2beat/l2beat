@@ -76,7 +76,7 @@ export function MonthlyUpdateActivityChart({
   )
 
   const stats = getStats(chartData, allScalingProjectsUops)
-  const timeRange = getChartTimeRangeFromData(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
 
   return (
     <PrimaryCard className="rounded-lg! border border-divider">

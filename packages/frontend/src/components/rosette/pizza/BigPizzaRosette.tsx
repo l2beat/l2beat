@@ -4,12 +4,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/Tooltip'
+import { ProjectRiskTooltipContent } from '../../projects/ProjectRiskTooltipContent'
 import { rosetteParameters } from '../parameters'
 import {
   RosetteTooltipContextProvider,
   useRosetteTooltipContext,
 } from '../RosetteTooltipContext'
-import { RosetteTooltipRisk } from '../RosetteTooltipRisk'
 import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './PizzaRosetteIcon'
 import { PizzaRosetteLabels } from './PizzaRosetteLabels'
@@ -97,13 +97,7 @@ function RosetteTooltipContent() {
       <p className="mb-2 font-medium text-label-value-14">
         {selectedRisk.name}
       </p>
-      <RosetteTooltipRisk
-        risk={selectedRisk}
-        valueClassName="mb-2 flex items-center gap-1 font-medium text-heading-18"
-        regularClassName="mb-2 block font-medium text-heading-18"
-        warningClassName="mb-2 px-3 py-2"
-        ignoreWarningMarkdown
-      />
+      <ProjectRiskTooltipContent risk={selectedRisk} variant="rosette" />
     </TooltipContent>
   )
 }

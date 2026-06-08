@@ -77,8 +77,8 @@ export async function getPrivacyProjectDetails(
 
   const now = UnixTime.now()
   const currentDay = UnixTime.toStartOf(now, 'day')
-  const last7dCutoff = currentDay - 6 * UnixTime.DAY
-  const last30dCutoff = currentDay - 29 * UnixTime.DAY
+  const last7dCutoff = currentDay - 7 * UnixTime.DAY
+  const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
   const { totals, daily30d, tokenValues } = await getPrivacyProjectFlowData(
     project,
