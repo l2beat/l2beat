@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3622a1d808a4e0be8b6154b3dcaee8787d89a40c
+Generated with discovered.json: 0xb0dffa9f2e14fabaef5de49b2917a3194dbfc323
 
-# Diff at Mon, 08 Jun 2026 10:03:25 GMT:
+# Diff at Mon, 08 Jun 2026 13:09:27 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1780912936
+- current timestamp: 1780922832
 
 ## Description
 
@@ -61,7 +61,7 @@ initial discovery of cctp v1, v2 and gateway.
 
 ```diff
 +   Status: CREATED
-    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17) [N/A]
+    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17) [circle-shared/MasterMinter]
     +++ description: None
 ```
 

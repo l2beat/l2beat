@@ -1,7 +1,7 @@
 {
-  "name": "cctp",
-  "timestamp": 1780912936,
-  "configHash": "0x590d4a6a7ac65fc133408f2e4d342efcfa23fa6d10e4389432b7bbad7b1a28bf",
+  "name": "circle-shared",
+  "timestamp": 1780922832,
+  "configHash": "0x5cf442a0c2aa415eddcd273346ee1cc22582d357e736b55c48c21dfb1eba4b28",
   "entries": [
     {
       "address": "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5",
@@ -22,6 +22,29 @@
       "address": "eth:0x08966c2561ef3AC77Ac479dF4590886B4Bfe869a",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x08c71cA483e6C454A35D2eD56073A0297f0A2Ec3",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
     },
     {
       "address": "eth:0x0A06BE16275B95a7d2567fBdAE118b36C7DA78F9",
@@ -60,7 +83,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 0,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 471705,
+        "nextAvailableNonce": 471742,
         "owner": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
         "paused": false,
         "pauser": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
@@ -74,6 +97,29 @@
       }
     },
     {
+      "address": "eth:0x0F493479be830657ACa110199A70E826506A54d3",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
       "address": "eth:0x119cc12CB823EB6Ee1d2Da2b5E5De645AF8F3E90",
       "type": "EOA",
       "proxyType": "EOA"
@@ -84,9 +130,55 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x130AA42C371d1dDB3cc41FBBA99273fA9150246c",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
       "address": "eth:0x1375c5FF3785850314f5A612A7837CC295075eF1",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x14b1bc91cb99aad649b36341d5abEB50DF775a3e",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
     },
     {
       "address": "eth:0x1971773285A553C2100C97a3A3Ad04519F4e2186",
@@ -235,6 +327,29 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x355fa241a4848dec8dCf453a5cCb16ec9207bcad",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
       "address": "eth:0x358a85e032aA9507a1303683b2B6A1d1cac3c252",
       "type": "EOA",
       "proxyType": "EOA"
@@ -243,6 +358,52 @@
       "address": "eth:0x383048265851aA10035bb32b2055632eC4FBB6eB",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x38d51f44B586b154159932F3681a30c54A6d25a9",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x39A372b4CC3fc91Ba93238c9121CB4F98D057fB5",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
     },
     {
       "address": "eth:0x3c54FFa14d01EF3A555106007A4fED6E8964aAB6",
@@ -258,9 +419,55 @@
       ]
     },
     {
+      "address": "eth:0x4024071Fe3FAd805F922a9098630D09A2EC0F82C",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
       "address": "eth:0x425a4093405dcC888ec7931d57574e0Dfe0726c5",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x44036cE4ab4Bf87898f013A35d543F204e91b806",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
     },
     {
       "address": "eth:0x46544d6A546EF97d43a6Aaa783DB8CEFcDd6C202",
@@ -311,6 +518,29 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x63015E0Ab081680eC85E9b6E62Df5584BD48cEb7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
       "address": "eth:0x65cBcdbE95567A8F9519242f9C52F65E8067021B",
       "type": "EOA",
       "proxyType": "EOA"
@@ -349,6 +579,52 @@
       "address": "eth:0x740F494cD63f87547FEc1591646720e5cC285846",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x74F471Af556aBff915804C0f19D642497aFa13B5",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x768d96ef334BA5d0914040a5485D3777ecF07d65",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
     },
     {
       "name": "GatewayWallet",
@@ -431,6 +707,52 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x79E0946e1C186E745f1352d7C21AB04700C99F71",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x7B3d54052DF209679Fce721516Cc1b566ef1c6AB",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
       "address": "eth:0x7D1565698cddf4C8f90d6b8574729fef565cae0E",
       "type": "EOA",
       "proxyType": "EOA"
@@ -439,6 +761,29 @@
       "address": "eth:0x7e575bC81e8a4A57f841512fbE72ed4C9976ae1c",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x7Ee759ea02624E29a39b81726B72eCFF2F09c5B2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
     },
     {
       "address": "eth:0x807a96288A1A408dBC13DE2b1d087d10356395d2",
@@ -525,9 +870,101 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x8E079873EFb4f3B76a4be111E8a55418bCe6e40d",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
       "address": "eth:0x911cb2323c6fB580e39F92a6f58D1cb019E940Cd",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x919f33bdbF59e92F9c87a5ddd4A9f1aADA3C04b3",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x92c3A3136eC730295E41D5E6461Ecac5b6B40684",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x936F08395aB1Afc97C09838A1A6AD1C854C4bBfD",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
     },
     {
       "address": "eth:0x96D16c491aDA31f609eC72Ae33018b8B7e80EB41",
@@ -538,6 +975,29 @@
       "address": "eth:0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x9d5C50Ae9dC377b1fDE6786bcfE8a70854fAc5E4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
     },
     {
       "name": "USD Coin Token",
@@ -618,13 +1078,9 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "51885611452455747",
+        "totalSupply": "51885706264486055",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
-      },
-      "errors": {
-        "admin": "Processing error occurred.",
-        "implementation": "Processing error occurred."
       },
       "fieldMeta": {
         "minters": {
@@ -656,6 +1112,52 @@
           "permission": "upgrade",
           "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
           "role": "admin"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xAF60Becd8f8042C1FcDE81D0FEcFC720099d24dF",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xB0C9f95c1F0e686249AE0461e5e7657545379017",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
         }
       ]
     },
@@ -726,7 +1228,48 @@
     {
       "address": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".owner"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xC2Bbc3A94408096EDfbfC2f61A8bBb5c9ED10a06",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
     },
     {
       "name": "TokenMinter",
@@ -761,6 +1304,121 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xCE4DddbfbE2c338B679c4F186d5F60B60FAa43Bd",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xd285766FB23198087d781FbF22D8Ddbc8b0067a3",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xD3eFE568763BD4A96e4115B993b3fB89B35A0623",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xdBEbB37e94984A249f8a514bE9e3120E13C18B85",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xDe5983C50E3b06D6473d3E7C179b85b30bf32444",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
       "address": "eth:0xE206be2331d6aAa4495887755BaBE892aecE704A",
       "type": "EOA",
       "proxyType": "EOA"
@@ -771,19 +1429,66 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xe37eDF8B4f5Dc846AF472CF7aD086A14d4024378",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
       "address": "eth:0xE400d09e98a5806bF501E93ED8E7623B78b4646F",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xe9697bcf46ff6125003282d5e1DE22c52033c19d",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
       "name": "MasterMinter",
       "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
       "type": "Contract",
+      "template": "circle-shared/MasterMinter",
       "sourceHashes": [
         "0x13f502777e65c7c2170951387bce0ffbdd370e36bc81b22c4d6eeb563d875ef6"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -796,17 +1501,104 @@
       "sinceBlock": 7439432,
       "values": {
         "$immutable": true,
+        "controllers": [
+          "eth:0x79E0946e1C186E745f1352d7C21AB04700C99F71",
+          "eth:0x9d5C50Ae9dC377b1fDE6786bcfE8a70854fAc5E4",
+          "eth:0xB0C9f95c1F0e686249AE0461e5e7657545379017",
+          "eth:0x4024071Fe3FAd805F922a9098630D09A2EC0F82C",
+          "eth:0x39A372b4CC3fc91Ba93238c9121CB4F98D057fB5",
+          "eth:0x38d51f44B586b154159932F3681a30c54A6d25a9",
+          "eth:0x14b1bc91cb99aad649b36341d5abEB50DF775a3e",
+          "eth:0x08c71cA483e6C454A35D2eD56073A0297f0A2Ec3",
+          "eth:0x0F493479be830657ACa110199A70E826506A54d3",
+          "eth:0x7B3d54052DF209679Fce721516Cc1b566ef1c6AB",
+          "eth:0xeb10024C7761e78cbbE78773aC6F6E98f3ED8314",
+          "eth:0x63015E0Ab081680eC85E9b6E62Df5584BD48cEb7",
+          "eth:0xe37eDF8B4f5Dc846AF472CF7aD086A14d4024378",
+          "eth:0x768d96ef334BA5d0914040a5485D3777ecF07d65",
+          "eth:0x74F471Af556aBff915804C0f19D642497aFa13B5",
+          "eth:0xd285766FB23198087d781FbF22D8Ddbc8b0067a3",
+          "eth:0xD3eFE568763BD4A96e4115B993b3fB89B35A0623",
+          "eth:0xDe5983C50E3b06D6473d3E7C179b85b30bf32444",
+          "eth:0x919f33bdbF59e92F9c87a5ddd4A9f1aADA3C04b3",
+          "eth:0xFE8c6a384fD37BCc4E4f8c837A570e09EDd6bCEa",
+          "eth:0x130AA42C371d1dDB3cc41FBBA99273fA9150246c",
+          "eth:0x92c3A3136eC730295E41D5E6461Ecac5b6B40684",
+          "eth:0xdBEbB37e94984A249f8a514bE9e3120E13C18B85",
+          "eth:0x355fa241a4848dec8dCf453a5cCb16ec9207bcad",
+          "eth:0x8E079873EFb4f3B76a4be111E8a55418bCe6e40d",
+          "eth:0x44036cE4ab4Bf87898f013A35d543F204e91b806",
+          "eth:0xCE4DddbfbE2c338B679c4F186d5F60B60FAa43Bd",
+          "eth:0xe9697bcf46ff6125003282d5e1DE22c52033c19d",
+          "eth:0x936F08395aB1Afc97C09838A1A6AD1C854C4bBfD",
+          "eth:0xC2Bbc3A94408096EDfbfC2f61A8bBb5c9ED10a06",
+          "eth:0x7Ee759ea02624E29a39b81726B72eCFF2F09c5B2",
+          "eth:0xAF60Becd8f8042C1FcDE81D0FEcFC720099d24dF",
+          "eth:0xEff933714A1B1F8600873BB61dc8F522F6438971"
+        ],
         "getMinterManager": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "owner": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704"
+      },
+      "fieldMeta": {
+        "owner": { "description": "Can manage controllers" },
+        "controllers": {
+          "description": "Can manage minters in USDC contracts refering to this contract as masterMinter"
+        }
       },
       "implementationNames": {
         "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17": "MasterMinter"
       }
     },
     {
+      "address": "eth:0xeb10024C7761e78cbbE78773aC6F6E98f3ED8314",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
+    },
+    {
       "address": "eth:0xEc72B99254d5a407b6CaEd24C1e771377e8Eb70b",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xEff933714A1B1F8600873BB61dc8F522F6438971",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
     },
     {
       "address": "eth:0xF0f3ef1340530A3983E1c510e49319D9Bfa8A74F",
@@ -857,6 +1649,29 @@
       "implementationNames": {
         "eth:0xfd78EE919681417d192449715b2594ab58f5D002": "TokenMinterV2"
       }
+    },
+    {
+      "address": "eth:0xFE8c6a384fD37BCc4E4f8c837A570e09EDd6bCEa",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "manage minter addresses.",
+          "role": ".masterMinter",
+          "via": [
+            { "address": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+          "role": ".controllers"
+        }
+      ]
     }
   ],
   "abis": {
@@ -1510,13 +2325,14 @@
     ]
   },
   "usedTemplates": {
+    "circle-shared/MasterMinter": "0x91a64d1293b56f633c1927202c7d89fc3f8ee6d58cea3385603a61bca7da90c8",
     "tokens/circle/GatewayMinter": "0x132f1365a912b7680f913f03edba0fc5615bfd87f89912cfa7d5e1d96c2fdc9e",
     "tokens/circle/GatewayWallet": "0xf973d2d1856384390e32857a4be7369220cb341bdf173fb037559d5fe132cd16",
     "tokens/circle/MessageTransmitter": "0xa08ec2ee361f024f79836400aba320fcc928f9e5c224c65eb670f8ec23548cd6",
     "tokens/circle/TokenMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/TokenMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97"
+    "tokens/circle/USDC": "0xc2ce8a8cab32d9d960c30279a87e8c3ed9354274306b76a5d27063e74b928ec6"
   },
-  "usedBlockNumbers": { "ethereum": 25271968 },
-  "permissionsConfigHash": "0x47fede7a76a593d795249486ce13058adbe19934196c421ccce6fe031756a404"
+  "usedBlockNumbers": { "ethereum": 25272787 },
+  "permissionsConfigHash": "0x1ed98179e280e5bb659f52ffd9c2b66760d8921e56c3cb75135b45ce0f915d74"
 }
