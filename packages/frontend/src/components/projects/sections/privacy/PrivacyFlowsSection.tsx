@@ -41,6 +41,9 @@ export function PrivacyFlowsSection({
     () =>
       getChartTimeRangeFromData(
         data?.chart.map(([timestamp]) => ({ timestamp })),
+        {
+          bucket: 'day',
+        },
       ),
     [data],
   )

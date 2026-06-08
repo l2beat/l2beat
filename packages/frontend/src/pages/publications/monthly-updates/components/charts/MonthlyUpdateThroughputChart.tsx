@@ -73,7 +73,9 @@ export function MonthlyUpdateThroughputChart({
     })
   }, [data?.chart, denominator])
 
-  const timeRange = getChartTimeRangeFromData(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData, {
+    bucket: rangeToResolution([from, to]),
+  })
 
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
