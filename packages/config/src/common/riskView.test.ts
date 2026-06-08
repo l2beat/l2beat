@@ -1,11 +1,12 @@
 import { Bytes } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { Sentiment, TableReadyValue } from '../types'
+import type { ExitWindowRisk, Sentiment, TableReadyValue } from '../types'
 import {
   EXIT_WINDOW_NITRO,
   EXIT_WINDOW_PERMISSIONLESS_BOLD,
   EXIT_WINDOW_STARKNET,
   pickWorseRisk,
+  stackExitWindowRisk,
   sumRisk,
 } from './riskView'
 
@@ -99,25 +100,69 @@ describe(sumRisk.name, () => {
 describe('exit window descriptions', () => {
   it('does not use None as a prose exit window for Nitro', () => {
     const result = EXIT_WINDOW_NITRO(60, 120, 60, 60, 60, true)
-    const warning = result.warning?.value ?? ''
+    const description = result.regular?.description ?? ''
 
     expect(result.regular?.value).toEqual('None')
-    expect(warning).toInclude('users have only no time to exit')
+    expect(description).toInclude('users have only no time to exit')
+    expect(result.warning).toEqual(undefined)
   })
 
   it('does not use None as a prose exit window for Permissionless BoLD', () => {
     const result = EXIT_WINDOW_PERMISSIONLESS_BOLD(60, 120, 30)
-    const warning = result.warning?.value ?? ''
+    const description = result.regular?.description ?? ''
 
     expect(result.regular?.value).toEqual('None')
-    expect(warning).toInclude('users have no time to exit')
+    expect(description).toInclude('users have no time to exit')
+    expect(result.warning).toEqual(undefined)
   })
 
   it('does not use None as a prose exit window for Starknet', () => {
     const result = EXIT_WINDOW_STARKNET(60)
-    const warning = result.warning?.value ?? ''
+    const description = result.regular?.description ?? ''
 
     expect(result.regular?.value).toEqual('None')
-    expect(warning).toInclude('leaving users no time to exit')
+    expect(description).toInclude('leaving users no time to exit')
+    expect(result.warning).toEqual(undefined)
+  })
+})
+
+describe(stackExitWindowRisk.name, () => {
+  it('drops only regular when stacked regular exit is not available', () => {
+    const commonRisk = {
+      value: '1d',
+      description: 'description',
+      sentiment: 'bad',
+      orderHint: 1,
+      regular: {
+        value: '7d',
+        sentiment: 'warning',
+        description: 'regular description',
+      },
+      warning: {
+        value: 'actual warning',
+        sentiment: 'warning',
+      },
+    } satisfies ExitWindowRisk
+    const baseChainRisk = {
+      value: '2d',
+      description: 'description',
+      sentiment: 'bad',
+      orderHint: 2,
+      warning: {
+        value: 'base warning',
+        sentiment: 'warning',
+      },
+    } satisfies ExitWindowRisk
+
+    expect(stackExitWindowRisk(commonRisk, baseChainRisk)).toEqual({
+      value: '1d',
+      description: 'description',
+      sentiment: 'bad',
+      orderHint: 1,
+      warning: {
+        value: 'actual warning',
+        sentiment: 'warning',
+      },
+    })
   })
 })

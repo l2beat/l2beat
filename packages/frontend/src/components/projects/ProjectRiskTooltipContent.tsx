@@ -1,11 +1,11 @@
-import type { TableReadyValue } from '@l2beat/config'
+import type { RegularExitWindowRisk, TableReadyValue } from '@l2beat/config'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { SentimentText } from '../SentimentText'
 import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 
 type ProjectRisk = TableReadyValue & {
-  regular?: Pick<TableReadyValue, 'value' | 'sentiment'>
+  regular?: RegularExitWindowRisk
 }
 
 interface Props extends Pick<VariantProps<typeof valueVariants>, 'variant'> {
@@ -89,9 +89,17 @@ export function ProjectRiskTooltipContent({ risk, variant }: Props) {
           label="Regular"
           value={regular.value}
           sentiment={regular.sentiment ?? 'neutral'}
-          description={risk.warning?.value}
+          description={regular.description}
           variant={variant}
         />
+        {risk.warning && (
+          <WarningBar
+            className={warningVariants({ variant })}
+            icon={RoundedWarningIcon}
+            text={risk.warning.value}
+            color={sentimentToWarningBarColor(risk.warning.sentiment)}
+          />
+        )}
       </div>
     )
   }

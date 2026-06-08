@@ -696,19 +696,23 @@ export function EXIT_WINDOW(
 }
 
 export function EXIT_WINDOW_ZKSTACK(upgradeDelay: number): ExitWindowRisk {
-  const regular =
-    upgradeDelay > 0
-      ? ({ value: formatSeconds(upgradeDelay), sentiment: 'warning' } as const)
-      : undefined
-  const description =
-    regular !== undefined
-      ? `Non-emergency upgrades go through a ${regular.value} delay, but the central operator can still censor withdrawal transactions by implementing a TransactionFilterer with no delay.`
-      : 'The central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay.'
+  if (upgradeDelay > 0) {
+    const regularValue = formatSeconds(upgradeDelay)
+    return {
+      ...EXIT_WINDOW(0, 0),
+      regular: {
+        value: regularValue,
+        sentiment: 'warning',
+        description: `Non-emergency upgrades go through a ${regularValue} delay, but the central operator can still censor withdrawal transactions by implementing a TransactionFilterer with no delay.`,
+      },
+    }
+  }
+
   return {
     ...EXIT_WINDOW(0, 0),
-    ...(regular && { regular }),
     warning: {
-      value: description,
+      value:
+        'The central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay.',
       sentiment: 'warning',
     },
   }
@@ -742,11 +746,7 @@ export function EXIT_WINDOW_NITRO(
     challengeWindowSeconds,
   )} challenge window and the ${formatSeconds(l1TimelockDelay)} L1 timelock.`
   return {
-    ...withRegularExitWindow(emergency, regular),
-    warning: {
-      value: description,
-      sentiment: 'warning',
-    },
+    ...withRegularExitWindow(emergency, regular, description),
   }
 }
 
@@ -766,11 +766,7 @@ export function EXIT_WINDOW_PERMISSIONLESS_BOLD(
   )
   const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(l2TimelockDelay)} delay on L2 and a ${formatSeconds(l1TimelockDelay)} delay on L1. Since there is a ${formatSeconds(selfSequencingDelay)} delay to force a tx (forcing the inclusion in the following state update), users have ${regularExitWindow} to exit.`
   return {
-    ...withRegularExitWindow(emergency, regular),
-    warning: {
-      value: description,
-      sentiment: 'warning',
-    },
+    ...withRegularExitWindow(emergency, regular, description),
   }
 }
 
@@ -800,21 +796,22 @@ export function EXIT_WINDOW_STARKNET(upgradeDelay: number): ExitWindowRisk {
   )
   const description = `Non-emergency upgrades are initiated on L1 and go through a ${formatSeconds(upgradeDelay)} delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take ${formatSeconds(scReactionTime)}, leaving users ${regularExitWindow} to exit.`
   return {
-    ...withRegularExitWindow(emergency, regular),
-    warning: {
-      value: description,
-      sentiment: 'warning',
-    },
+    ...withRegularExitWindow(emergency, regular, description),
   }
 }
 
 function withRegularExitWindow(
   emergency: TableReadyValue,
   regular: TableReadyValue,
+  regularDescription: string,
 ): ExitWindowRisk {
   return {
     ...emergency,
-    regular: { value: regular.value, sentiment: regular.sentiment },
+    regular: {
+      value: regular.value,
+      sentiment: regular.sentiment,
+      description: regularDescription,
+    },
   }
 }
 
@@ -944,12 +941,11 @@ export function stackExitWindowRisk(
   const worse = pickWorseRisk(common, baseChain) as ExitWindowRisk
   // The stacked regular exit window only exists if BOTH layers have one.
   // If either layer can be upgraded instantly on its regular path, the
-  // stacked regular path collapses to no exit window: drop the regular
-  // second line and the regular-path warning that goes with it.
+  // stacked regular path collapses to no exit window.
   if (common.regular && baseChain.regular) {
     return worse
   }
-  const { regular: _regular, warning: _warning, ...rest } = worse
+  const { regular: _regular, ...rest } = worse
   return rest
 }
 
