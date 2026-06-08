@@ -58,6 +58,7 @@ export const sorare: ScalingProject = {
   id: ProjectId('sorare'),
   capability: 'appchain',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt: UnixTime(1780916919),
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
