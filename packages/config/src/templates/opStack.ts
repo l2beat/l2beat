@@ -353,6 +353,9 @@ function opStackCommon(
   if (fraudProofType === 'AggregateProof') {
     architectureImage.push('aggverifier')
   }
+  if (fraudProofType === 'Permissioned' && isPreU16(templateVars)) {
+    architectureImage.push('preu16')
+  }
 
   const nativeContractRisks: ProjectRisk[] = [
     templateVars.nonTemplateContractRisks ??
@@ -2629,6 +2632,24 @@ function hasSuperchainConfig(templateVars: OpStackConfigCommon): boolean {
 
 function migratedToLockbox(templateVars: OpStackConfigCommon): boolean {
   return templateVars.discovery.hasContract('ETHLockbox')
+}
+
+// U16 (Optimism upgrade, July 2025) moved blacklistDisputeGame() from
+// OptimismPortal2 to AnchorStateRegistry.
+function isPreU16(templateVars: OpStackConfigCommon): boolean {
+  if (!templateVars.discovery.hasContract('AnchorStateRegistry')) return true
+  const asr = templateVars.discovery.getContract('AnchorStateRegistry')
+  const impl =
+    (asr.values?.$implementation as string | undefined) ?? asr.address.toString()
+  const discoveries =
+    templateVars.discovery.configReader.readDiscoveryWithReferences(
+      templateVars.discovery.projectName,
+    )
+  for (const d of discoveries) {
+    const abi = d.abis?.[impl]
+    if (abi?.some((sig) => sig.includes('blacklistDisputeGame'))) return false
+  }
+  return true
 }
 
 function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
