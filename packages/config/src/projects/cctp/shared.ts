@@ -1,3 +1,4 @@
+import { formatSeconds } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -27,6 +28,10 @@ const gatewayWithdrawalDelayBlocks = discovery.getContractValue<number>(
   'GatewayWallet',
   'withdrawalDelay',
 )
+const gatewayWithdrawalDelayTime = `${formatSeconds(
+  gatewayWithdrawalDelayBlocks * 12,
+  { fullUnit: true },
+)} (${gatewayWithdrawalDelayBlocks} blocks at 12-second block time)`
 const gatewayWalletSignerCount = discovery.getContractValue<string[]>(
   'GatewayWallet',
   'attestationSigners',
