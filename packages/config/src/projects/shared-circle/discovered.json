@@ -6,7 +6,15 @@
     {
       "address": "eth:0x0057f169b9E1E57dD25CAb68A23ae79C7B3F6Ba5",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x01430Aa44F14007c8d5Ddc011FA63dCcE7878dC8",
@@ -37,7 +45,15 @@
     {
       "address": "eth:0x08966c2561ef3AC77Ac479dF4590886B4Bfe869a",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x08c71cA483e6C454A35D2eD56073A0297f0A2Ec3",
@@ -146,7 +162,15 @@
     {
       "address": "eth:0x119cc12CB823EB6Ee1d2Da2b5E5De645AF8F3E90",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x12De0d11519B2FCc2F9017AC100F65D236326C1B",
@@ -187,7 +211,15 @@
     {
       "address": "eth:0x1375c5FF3785850314f5A612A7837CC295075eF1",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x14b1bc91cb99aad649b36341d5abEB50DF775a3e",
@@ -215,12 +247,28 @@
     {
       "address": "eth:0x1971773285A553C2100C97a3A3Ad04519F4e2186",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x19a932fC5A8320939c3575302a8705147a7f27D8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "name": "GatewayMinter",
@@ -233,6 +281,14 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entrypoint or minter of USDC on this chain for the Gateway protocol.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ],
       "deployerAddress": "eth:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1753120475,
       "sinceBlock": 22969188,
@@ -276,7 +332,15 @@
     {
       "address": "eth:0x2322E81DB282F22849c2Eb0b749C688Ea3611946",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x2329BAF15f86023e5B0f5592e230D02a51116CD5",
@@ -294,7 +358,15 @@
     {
       "address": "eth:0x24BDd8771b08C2EA6FE0e898126e65BD49021BE3",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "name": "TokenMessengerV2",
@@ -368,17 +440,44 @@
     {
       "address": "eth:0x2b52e60C844d7946b6d910D3296940dC889CC785",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x3005A4C0EFE7E66F3f60eF8704983247A5c6ca61",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x311ac5F3a327C18E27eA544694e20AbD15CAa85d",
       "type": "EOA",
       "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters",
+          "via": [
+            { "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205" }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -528,7 +627,15 @@
     {
       "address": "eth:0x425a4093405dcC888ec7931d57574e0Dfe0726c5",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x44036cE4ab4Bf87898f013A35d543F204e91b806",
@@ -556,7 +663,15 @@
     {
       "address": "eth:0x46544d6A546EF97d43a6Aaa783DB8CEFcDd6C202",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x4914f61d25e5C567143774B76EdbF4D5109a8566",
@@ -601,6 +716,19 @@
       "address": "eth:0x52Ed4cBff8DcE6A19748043F3240ec03c834bCeF",
       "type": "EOA",
       "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters",
+          "via": [
+            { "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002" },
+            { "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d" },
+            { "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64" }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -626,12 +754,28 @@
     {
       "address": "eth:0x55FE002aefF02F77364de339a1292923A15844B8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x5B6122C109B78C6755486966148C1D70a50A47D7",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x63015E0Ab081680eC85E9b6E62Df5584BD48cEb7",
@@ -717,6 +861,19 @@
       "address": "eth:0x725b06F73ff761eF5390e39315e2BfbF60d33F96",
       "type": "EOA",
       "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters",
+          "via": [
+            { "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002" },
+            { "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d" },
+            { "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64" }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -809,6 +966,14 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Exit point or burner of USDC on this chain for the Gateway protocol.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ],
       "deployerAddress": "eth:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1753120691,
       "sinceBlock": 22969206,
@@ -876,7 +1041,15 @@
     {
       "address": "eth:0x77C923526ec8B93fb8C645cC49a623ADe521377E",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x79E0946e1C186E745f1352d7C21AB04700C99F71",
@@ -1061,12 +1234,28 @@
     {
       "address": "eth:0x895F07957B863f4AB6086035a6990d8366Bc3266",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x8967a7cE20043F876e42F8aD696b06bb632f0ca7",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x8a9A13A106cB89E15410B2AB4488135155032169",
@@ -1107,7 +1296,15 @@
     {
       "address": "eth:0x911cb2323c6fB580e39F92a6f58D1cb019E940Cd",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0x919f33bdbF59e92F9c87a5ddd4A9f1aADA3C04b3",
@@ -1323,12 +1520,28 @@
     {
       "address": "eth:0xa1EF798A09CeA66625a1b0B0ed28FB2732743609",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0xA5827F373Aa4D1a8d3cfb92d29963Ee97133d5c7",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0xa820A620F638114F3Eb45df87382383322dDBC49",
@@ -1393,6 +1606,19 @@
       "address": "eth:0xb0Ea8E1bE37F346C7EA7ec708834D0db18A17361",
       "type": "EOA",
       "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters",
+          "via": [
+            { "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907" },
+            { "address": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155" },
+            { "address": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81" }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1419,6 +1645,17 @@
       "address": "eth:0xB72F2Bb8AD7aDB4e40e3ACD8F34160B4991e7ADe",
       "type": "EOA",
       "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters",
+          "via": [
+            { "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE" }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1557,6 +1794,14 @@
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP: Used for automated access control for minting.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ],
       "deployerAddress": "eth:0x75d0A45A9834EF77d0ad76e97432008F758Bd212",
       "sinceTimestamp": 1677628319,
       "sinceBlock": 16730031,
@@ -1719,6 +1964,19 @@
       "address": "eth:0xE2fEfe09E74b921CbbFF229E7cD40009231501CA",
       "type": "EOA",
       "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters",
+          "via": [
+            { "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907" },
+            { "address": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155" },
+            { "address": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81" }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1754,7 +2012,15 @@
     {
       "address": "eth:0xE400d09e98a5806bF501E93ED8E7623B78b4646F",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0xe9697bcf46ff6125003282d5e1DE22c52033c19d",
@@ -1875,7 +2141,15 @@
     {
       "address": "eth:0xEc72B99254d5a407b6CaEd24C1e771377e8Eb70b",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0xEff933714A1B1F8600873BB61dc8F522F6438971",
@@ -1903,7 +2177,15 @@
     {
       "address": "eth:0xF0f3ef1340530A3983E1c510e49319D9Bfa8A74F",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ]
     },
     {
       "address": "eth:0xFbAF3A19B1c02b8Bef52a7E9Fa855c86c69aB95c",
@@ -1933,6 +2215,14 @@
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP: Used for automated access control for minting.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "description": "mint the token in the bounds of a preset minting allowance",
+          "role": ".minters"
+        }
+      ],
       "deployerAddress": "eth:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1739233991,
       "sinceBlock": 21819723,
@@ -2634,5 +2924,5 @@
     "tokens/circle/USDC": "0xc2ce8a8cab32d9d960c30279a87e8c3ed9354274306b76a5d27063e74b928ec6"
   },
   "usedBlockNumbers": { "ethereum": 25273016 },
-  "permissionsConfigHash": "0x40fd13ee34a03968810931756ab7ad8df3cc6869482b1ad7150998eb1ef4f2f7"
+  "permissionsConfigHash": "0xcf515d906383f9b0000e8dcb64cf3a9b9bfa78473c9e110dbf86acfdc70e2868"
 }

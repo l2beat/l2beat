@@ -1,8 +1,13 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "USDC",
-  "ignoreInWatchMode": ["totalSupply"],
-  "ignoreMethods": ["admin", "implementation"], // weird bug
+  "ignoreInWatchMode": [
+    "totalSupply"
+  ],
+  "ignoreMethods": [
+    "admin",
+    "implementation"
+  ], // weird bug
   "fields": {
     "owner": {
       "permissions": [
@@ -55,7 +60,13 @@
         "remove": {
           "event": "event MinterRemoved(address indexed minter)"
         }
-      }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint the token in the bounds of a preset minting allowance"
+        }
+      ]
     }
   }
 }
