@@ -1506,6 +1506,14 @@ function getRiskViewStateValidation(
         ...RISK_VIEW.STATE_FP_HYBRID_ZK,
         executionDelay: getExecutionDelay(templateVars),
         challengeDelay: getChallengePeriod(templateVars),
+        initialBond: {
+          value: formatEther(
+            templateVars.discovery.getContractValue<number>(
+              'DisputeGameFactory',
+              'initBondGame621',
+            ),
+          ),
+        },
         permissioned: false,
         defenderAdvantage: 'not-assessed',
       }
