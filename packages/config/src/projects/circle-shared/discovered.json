@@ -1,6 +1,6 @@
 {
   "name": "circle-shared",
-  "timestamp": 1780922832,
+  "timestamp": 1780925099,
   "configHash": "0x5cf442a0c2aa415eddcd273346ee1cc22582d357e736b55c48c21dfb1eba4b28",
   "entries": [
     {
@@ -11,12 +11,28 @@
     {
       "address": "eth:0x01430Aa44F14007c8d5Ddc011FA63dCcE7878dC8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
+          "description": "set the local TokenMessenger, token controller, pauser, rescuer, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0x070B2a0c255C148ae7b98B4BB9560Ff147C36f2A",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        }
+      ]
     },
     {
       "address": "eth:0x08966c2561ef3AC77Ac479dF4590886B4Bfe869a",
@@ -69,6 +85,14 @@
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
+          "description": "deliver accepted CCTP messages to this TokenMessenger.",
+          "role": ".localMessageTransmitter"
+        }
+      ],
       "ignoreInWatchMode": ["nextAvailableNonce"],
       "deployerAddress": "eth:0x6BF89579fF3Fc3f2B57c0231E93eE78d35fbdDAC",
       "sinceTimestamp": 1677628247,
@@ -83,7 +107,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 0,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 471742,
+        "nextAvailableNonce": 471765,
         "owner": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
         "paused": false,
         "pauser": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
@@ -127,7 +151,15 @@
     {
       "address": "eth:0x12De0d11519B2FCc2F9017AC100F65D236326C1B",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "allowlist or disallowlist contract signers for Gateway burn intents.",
+          "role": ".contractSignersAllowlister"
+        }
+      ]
     },
     {
       "address": "eth:0x130AA42C371d1dDB3cc41FBBA99273fA9150246c",
@@ -233,7 +265,7 @@
       },
       "fieldMeta": {
         "attestationSigners": {
-          "description": "Brigde validators, trusted to sign each minting payload on an incoming bridge tx."
+          "description": "Bridge validators, trusted to sign each minting payload on an incoming bridge tx."
         }
       },
       "implementationNames": {
@@ -249,7 +281,15 @@
     {
       "address": "eth:0x2329BAF15f86023e5B0f5592e230D02a51116CD5",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+          "description": "configure remote TokenMessengers, the local minter, V2 fee recipient and denylister, rescuer, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0x24BDd8771b08C2EA6FE0e898126e65BD49021BE3",
@@ -267,6 +307,14 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of CCTP",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
+          "description": "mint and burn USDC through this TokenMinter.",
+          "role": ".localTokenMessenger"
+        }
+      ],
       "deployerAddress": "eth:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1739234111,
       "sinceBlock": 21819733,
@@ -305,6 +353,12 @@
       "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
+          "permission": "interact",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "configure supported tokens, withdrawal delay, burn signers, batch signers, fee recipient, pauser, denylister, contract signer allowlister, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
           "role": "admin"
@@ -324,7 +378,15 @@
     {
       "address": "eth:0x311ac5F3a327C18E27eA544694e20AbD15CAa85d",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "description": "sign mint attestations accepted by GatewayMinter.",
+          "role": ".attestationSigners"
+        }
+      ]
     },
     {
       "address": "eth:0x355fa241a4848dec8dCf453a5cCb16ec9207bcad",
@@ -352,12 +414,28 @@
     {
       "address": "eth:0x358a85e032aA9507a1303683b2B6A1d1cac3c252",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+          "description": "enable or disable attesters and set the attestation signature threshold.",
+          "role": ".attesterManager"
+        }
+      ]
     },
     {
       "address": "eth:0x383048265851aA10035bb32b2055632eC4FBB6eB",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "description": "pause and unpause message transmission and receiving.",
+          "role": ".pauser"
+        }
+      ]
     },
     {
       "address": "eth:0x38d51f44B586b154159932F3681a30c54A6d25a9",
@@ -411,6 +489,12 @@
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "description": "configure supported tokens, mint authorities, attestation signers, pauser, denylister, and transfer ownership.",
+          "role": ".owner"
+        },
         {
           "permission": "upgrade",
           "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
@@ -490,22 +574,54 @@
     {
       "address": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+          "description": "set the attester manager, pauser, rescuer, maximum message body size, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0x4E898CEe7c5809A63de0eF745177A9BB82FeAC69",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
+          "description": "pause and unpause minting and burning through this TokenMinter.",
+          "role": ".pauser"
+        }
+      ]
     },
     {
       "address": "eth:0x52Ed4cBff8DcE6A19748043F3240ec03c834bCeF",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "description": "sign messages accepted by this MessageTransmitter.",
+          "role": ".getEnabledAttester"
+        }
+      ]
     },
     {
       "address": "eth:0x53D81DF780baed54FdCa7020618aD6e1c4AC1D84",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        }
+      ]
     },
     {
       "address": "eth:0x55FE002aefF02F77364de339a1292923A15844B8",
@@ -543,12 +659,28 @@
     {
       "address": "eth:0x65cBcdbE95567A8F9519242f9C52F65E8067021B",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        }
+      ]
     },
     {
       "address": "eth:0x6b0b72E63764101Fc4d5BD914B107987041578C4",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
+          "description": "configure remote TokenMessengers, the local minter, V2 fee recipient and denylister, rescuer, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0x6efA3205A385420cF1cfD6B725B48F96117a7Bee",
@@ -558,27 +690,67 @@
     {
       "address": "eth:0x6fa314D4Dce1d49233c329a60fDBd96a6BCbe6Fb",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "description": "pause and unpause Gateway minting.",
+          "role": ".pauser"
+        }
+      ]
     },
     {
       "address": "eth:0x6Fa60A88b42AFb0aEe6488826A58864B192442ad",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        }
+      ]
     },
     {
       "address": "eth:0x725b06F73ff761eF5390e39315e2BfbF60d33F96",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "description": "sign messages accepted by this MessageTransmitter.",
+          "role": ".getEnabledAttester"
+        }
+      ]
     },
     {
       "address": "eth:0x7359fD9aA258992eb4B6d9572c6f6c74Cf719a94",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "denylist addresses, preventing them from interacting with the GatewayWallet.",
+          "role": ".denylister"
+        }
+      ]
     },
     {
       "address": "eth:0x740F494cD63f87547FEc1591646720e5cC285846",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
+          "description": "link or unlink remote tokens and configure per-message burn limits.",
+          "role": ".tokenController"
+        }
+      ]
     },
     {
       "address": "eth:0x74F471Af556aBff915804C0f19D642497aFa13B5",
@@ -693,7 +865,7 @@
       },
       "fieldMeta": {
         "attestationSigners": {
-          "description": "Brigde validators, trusted to sign each burning payload on an outbound bridge tx."
+          "description": "Bridge validators, trusted to sign each burning payload on an outbound bridge tx."
         }
       },
       "implementationNames": {
@@ -755,12 +927,28 @@
     {
       "address": "eth:0x7D1565698cddf4C8f90d6b8574729fef565cae0E",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
+          "description": "set the local TokenMessenger, token controller, pauser, rescuer, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0x7e575bC81e8a4A57f841512fbE72ed4C9976ae1c",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "description": "denylist addresses, preventing them from interacting with the GatewayMinter.",
+          "role": ".denylister"
+        }
+      ]
     },
     {
       "address": "eth:0x7Ee759ea02624E29a39b81726B72eCFF2F09c5B2",
@@ -801,7 +989,15 @@
     {
       "address": "eth:0x817ae4109dC0f21E437b94c899962690514Ba09f",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
+          "description": "pause and unpause minting and burning through this TokenMinter.",
+          "role": ".pauser"
+        }
+      ]
     },
     {
       "name": "MessageTransmitterV2",
@@ -814,6 +1010,14 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of CCTP",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+          "description": "deliver accepted CCTP messages to this TokenMessenger.",
+          "role": ".localMessageTransmitter"
+        }
+      ],
       "ignoreInWatchMode": ["nextAvailableNonce"],
       "deployerAddress": "eth:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1739234063,
@@ -867,7 +1071,15 @@
     {
       "address": "eth:0x8a9A13A106cB89E15410B2AB4488135155032169",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
+          "description": "link or unlink remote tokens and configure per-message burn limits.",
+          "role": ".tokenController"
+        }
+      ]
     },
     {
       "address": "eth:0x8E079873EFb4f3B76a4be111E8a55418bCe6e40d",
@@ -969,12 +1181,28 @@
     {
       "address": "eth:0x96D16c491aDA31f609eC72Ae33018b8B7e80EB41",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        }
+      ]
     },
     {
       "address": "eth:0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "pause and unpause deposits, burns, and withdrawals.",
+          "role": ".pauser"
+        }
+      ]
     },
     {
       "address": "eth:0x9d5C50Ae9dC377b1fDE6786bcfE8a70854fAc5E4",
@@ -1078,7 +1306,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "51885706264486055",
+        "totalSupply": "51865006753575235",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -1164,17 +1392,41 @@
     {
       "address": "eth:0xb0Ea8E1bE37F346C7EA7ec708834D0db18A17361",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+          "description": "sign messages accepted by this MessageTransmitter.",
+          "role": ".getEnabledAttester"
+        }
+      ]
     },
     {
       "address": "eth:0xB43aA882f497c0Ecb395A5a54f8fa29d12289F65",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "description": "set the attester manager, pauser, rescuer, maximum message body size, and transfer ownership.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0xB72F2Bb8AD7aDB4e40e3ACD8F34160B4991e7ADe",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+          "description": "sign burn payloads accepted by GatewayWallet.",
+          "role": ".attestationSigners"
+        }
+      ]
     },
     {
       "address": "eth:0xB7569E9eB64eaEd5C4166E510b4F6fF54ef42258",
@@ -1199,6 +1451,14 @@
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
+          "description": "mint and burn USDC through this TokenMinter.",
+          "role": ".localTokenMessenger"
+        }
+      ],
       "deployerAddress": "eth:0xB6ab73b6A141Db9E01b9847B0d792b430999bC54",
       "sinceTimestamp": 1677628295,
       "sinceBlock": 16730029,
@@ -1218,12 +1478,28 @@
     {
       "address": "eth:0xBED4b046f7d185d730E9930b2bcddc86Eb3cfbc9",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+          "description": "denylist addresses, preventing them from interacting with this TokenMessenger.",
+          "role": ".denylister"
+        }
+      ]
     },
     {
       "address": "eth:0xc16b03F84563C1467017C9F7216F8ad6098dc95a",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "description": "enable or disable attesters and set the attestation signature threshold.",
+          "role": ".attesterManager"
+        }
+      ]
     },
     {
       "address": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704",
@@ -1301,7 +1577,15 @@
     {
       "address": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+          "description": "pause and unpause message transmission and receiving.",
+          "role": ".pauser"
+        }
+      ]
     },
     {
       "address": "eth:0xCE4DddbfbE2c338B679c4F186d5F60B60FAa43Bd",
@@ -1421,12 +1705,28 @@
     {
       "address": "eth:0xE206be2331d6aAa4495887755BaBE892aecE704A",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        }
+      ]
     },
     {
       "address": "eth:0xE2fEfe09E74b921CbbFF229E7cD40009231501CA",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+          "description": "sign messages accepted by this MessageTransmitter.",
+          "role": ".getEnabledAttester"
+        }
+      ]
     },
     {
       "address": "eth:0xe37eDF8B4f5Dc846AF472CF7aD086A14d4024378",
@@ -2326,13 +2626,13 @@
   },
   "usedTemplates": {
     "circle-shared/MasterMinter": "0x91a64d1293b56f633c1927202c7d89fc3f8ee6d58cea3385603a61bca7da90c8",
-    "tokens/circle/GatewayMinter": "0x132f1365a912b7680f913f03edba0fc5615bfd87f89912cfa7d5e1d96c2fdc9e",
-    "tokens/circle/GatewayWallet": "0xf973d2d1856384390e32857a4be7369220cb341bdf173fb037559d5fe132cd16",
-    "tokens/circle/MessageTransmitter": "0xa08ec2ee361f024f79836400aba320fcc928f9e5c224c65eb670f8ec23548cd6",
-    "tokens/circle/TokenMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "tokens/circle/TokenMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "tokens/circle/GatewayMinter": "0x3db25d7fc84be554debfe33d427fd0526e49528932a9dadaf23a024ff11d3d5e",
+    "tokens/circle/GatewayWallet": "0x7bd43fd6063b4ff70e635794d4beac55e2d3cd3423649296dc93406a067df8d7",
+    "tokens/circle/MessageTransmitter": "0x278dae95ec8e197f5f623e83e220e732c2e94b78d0bcab12c8dadc839e39b368",
+    "tokens/circle/TokenMessenger": "0xac70d77bd19089574283b0997ac5016c27f557e979c31c209ae1c64d733c4ec6",
+    "tokens/circle/TokenMinter": "0x8126e2d0f134d23c8f836039f7a31a69fe93eda8e4dbe6db0060fc7f96e06a3f",
     "tokens/circle/USDC": "0xc2ce8a8cab32d9d960c30279a87e8c3ed9354274306b76a5d27063e74b928ec6"
   },
-  "usedBlockNumbers": { "ethereum": 25272787 },
-  "permissionsConfigHash": "0x1ed98179e280e5bb659f52ffd9c2b66760d8921e56c3cb75135b45ce0f915d74"
+  "usedBlockNumbers": { "ethereum": 25272976 },
+  "permissionsConfigHash": "0x40fd13ee34a03968810931756ab7ad8df3cc6869482b1ad7150998eb1ef4f2f7"
 }

@@ -1,13 +1,8 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "USDC",
-  "ignoreInWatchMode": [
-    "totalSupply"
-  ],
-  "ignoreMethods": [
-    "admin",
-    "implementation"
-  ], // weird bug
+  "ignoreInWatchMode": ["totalSupply"],
+  "ignoreMethods": ["admin", "implementation"], // weird bug
   "fields": {
     "owner": {
       "permissions": [
