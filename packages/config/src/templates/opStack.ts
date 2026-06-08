@@ -2640,7 +2640,8 @@ function isPreU16(templateVars: OpStackConfigCommon): boolean {
   if (!templateVars.discovery.hasContract('AnchorStateRegistry')) return true
   const asr = templateVars.discovery.getContract('AnchorStateRegistry')
   const impl =
-    (asr.values?.$implementation as string | undefined) ?? asr.address.toString()
+    (asr.values?.$implementation as string | undefined) ??
+    asr.address.toString()
   const discoveries =
     templateVars.discovery.configReader.readDiscoveryWithReferences(
       templateVars.discovery.projectName,
