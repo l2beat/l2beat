@@ -8,17 +8,17 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type {
   InclusionDelayComparison,
-  ScalingSequencingEntry,
-} from '~/server/features/scaling/sequencing/getScalingSequencingEntries'
+  ScalingRiskSequencingEntry,
+} from '~/server/features/scaling/risks/sequencing/getScalingRiskSequencingEntries'
 import { InclusionDelayComparisonChart } from './components/InclusionDelayComparisonChart'
-import { ScalingSequencingTable } from './components/table/ScalingSequencingTable'
+import { ScalingRiskSequencingTable } from './components/table/ScalingRiskSequencingTable'
 
 interface Props extends AppLayoutProps {
-  entries: ScalingSequencingEntry[]
+  entries: ScalingRiskSequencingEntry[]
   inclusionDelayComparison: InclusionDelayComparison | undefined
 }
 
-export function ScalingSequencingPage({
+export function ScalingRiskSequencingPage({
   entries,
   inclusionDelayComparison,
   ...props
@@ -30,7 +30,7 @@ export function ScalingSequencingPage({
           Sequencing
         </MainPageHeader>
         <TableSortingProvider initialSort={{ id: '#', desc: false }}>
-          <ScalingSequencingTable entries={entries} />
+          <ScalingRiskSequencingTable entries={entries} />
         </TableSortingProvider>
         {inclusionDelayComparison && (
           <InclusionDelayComparisonChart

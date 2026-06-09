@@ -75,6 +75,10 @@ export function SideNavLayout({
                   title: 'State Validation',
                   href: '/scaling/risk/state-validation',
                 },
+                {
+                  title: 'Sequencing',
+                  href: '/scaling/risk/sequencing',
+                },
               ],
             },
             {
@@ -85,11 +89,6 @@ export function SideNavLayout({
             {
               title: 'Activity',
               href: '/scaling/activity',
-            },
-            {
-              title: 'Sequencing',
-              shortTitle: 'Sequencing',
-              href: '/scaling/sequencing',
             },
             {
               title: 'Liveness',

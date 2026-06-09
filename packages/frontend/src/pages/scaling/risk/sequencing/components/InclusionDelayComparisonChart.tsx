@@ -10,7 +10,7 @@ import {
 import type {
   InclusionDelayComparison,
   InclusionDelayComparisonSeries,
-} from '~/server/features/scaling/sequencing/getScalingSequencingEntries'
+} from '~/server/features/scaling/risks/sequencing/getScalingRiskSequencingEntries'
 import { generateAccessibleColors } from '~/utils/generateColors'
 
 interface Props {

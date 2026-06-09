@@ -41,7 +41,7 @@ export const searchBarPages = withIndex([
     category: 'scaling',
     name: 'Sequencing',
     tags: ['pages', 'scaling'],
-    href: '/scaling/sequencing',
+    href: '/scaling/risk/sequencing',
   },
   {
     category: 'scaling',

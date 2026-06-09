@@ -39,6 +39,10 @@ export function createLegacyPathsRouter() {
     res.redirect(301, '/scaling/risk/data-availability')
   })
 
+  router.get('/scaling/sequencing', (_, res) => {
+    res.redirect(301, '/scaling/risk/sequencing')
+  })
+
   router.get('/bridges/*splat', (_req, res) => {
     res.redirect(301, '/interop')
   })

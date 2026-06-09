@@ -16,12 +16,12 @@ import {
   mergeInclusionDelaySeries,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 
-type ScalingSequencingProject = Project<
+type ScalingRiskSequencingProject = Project<
   'statuses' | 'scalingInfo' | 'scalingRisks' | 'display' | 'scalingTechnology',
   'contracts'
 >
 
-export interface ScalingSequencingEntry extends CommonScalingEntry {
+export interface ScalingRiskSequencingEntry extends CommonScalingEntry {
   sequencerCount: TableReadyValue | undefined
   blockProductionAccess: TableReadyValue | undefined
   entryPolicy: TableReadyValue | undefined
@@ -43,12 +43,12 @@ export interface InclusionDelayComparison {
   maxCensorFraction: number
 }
 
-export interface ScalingSequencingPageData {
-  entries: ScalingSequencingEntry[]
+export interface ScalingRiskSequencingPageData {
+  entries: ScalingRiskSequencingEntry[]
   inclusionDelayComparison: InclusionDelayComparison | undefined
 }
 
-export async function getScalingSequencingEntries(): Promise<ScalingSequencingPageData> {
+export async function getScalingRiskSequencingEntries(): Promise<ScalingRiskSequencingPageData> {
   const [projectsChangeReport, projects] = await Promise.all([
     getProjectsChangeReport(),
     ps.getProjects({
@@ -67,7 +67,7 @@ export async function getScalingSequencingEntries(): Promise<ScalingSequencingPa
 
   const entries = projects
     .map((project) =>
-      getScalingSequencingEntry(
+      getScalingRiskSequencingEntry(
         project,
         projectsChangeReport.getChanges(project.id),
       ),
@@ -84,7 +84,7 @@ export async function getScalingSequencingEntries(): Promise<ScalingSequencingPa
 const ETHEREUM_SERIES_KEY = 'ethereum'
 
 function getInclusionDelayComparison(
-  projects: ScalingSequencingProject[],
+  projects: ScalingRiskSequencingProject[],
 ): InclusionDelayComparison | undefined {
   const projectDelays = projects
     .map((project) => {
@@ -139,10 +139,10 @@ function getInclusionDelayComparison(
   return { data, series, maxCensorFraction }
 }
 
-function getScalingSequencingEntry(
-  project: ScalingSequencingProject,
+function getScalingRiskSequencingEntry(
+  project: ScalingRiskSequencingProject,
   changes: ProjectChanges,
-): ScalingSequencingEntry | undefined {
+): ScalingRiskSequencingEntry | undefined {
   const sequencing = project.scalingTechnology.sequencing
   const spec = sequencing?.sequencerSetSpec
   if (!sequencing || !spec) {

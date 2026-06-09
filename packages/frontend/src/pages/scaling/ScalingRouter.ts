@@ -12,8 +12,8 @@ import { getScalingProjectData } from './project/getScalingProjectData'
 import { getScalingProjectTvsBreakdownData } from './project/tvs-breakdown/getScalingProjectTvsBreakdownData'
 import { getScalingRiskDataAvailabilityData } from './risk/data-availability/getScalingRiskDataAvailabilityData'
 import { getScalingRiskData } from './risk/getScalingRiskData'
+import { getScalingRiskSequencingData } from './risk/sequencing/getScalingRiskSequencingData'
 import { getScalingRiskStateValidationData } from './risk/state-validation/getScalingRiskStateValidationData'
-import { getScalingSequencingData } from './sequencing/getScalingSequencingData'
 import { getScalingSummaryData } from './summary/getScalingSummaryData'
 import { getScalingTvsBreakdownData } from './tvs/breakdown/getScalingTvsBreakdownData'
 import { getScalingTvsData } from './tvs/getScalingTvsData'
@@ -58,6 +58,12 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
+  router.get('/scaling/risk/sequencing', async (req, res) => {
+    const data = await getScalingRiskSequencingData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
   router.get(
     '/scaling/tvs',
     validateRoute({
@@ -76,12 +82,6 @@ export function createScalingRouter(
 
   router.get('/scaling/tvs/breakdown', async (req, res) => {
     const data = await getScalingTvsBreakdownData(req, manifest, cache)
-    const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get('/scaling/sequencing', async (req, res) => {
-    const data = await getScalingSequencingData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })

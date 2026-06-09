@@ -4,6 +4,8 @@ export const pages = [
   '/scaling/tvs',
   '/scaling/activity',
   '/scaling/risk/data-availability',
+  '/scaling/risk/state-validation',
+  '/scaling/risk/sequencing',
   '/scaling/liveness',
   '/scaling/costs',
   '/scaling/archived',
