@@ -27,7 +27,12 @@
               "where": ["=", "#chainId", 61166]
             }
           },
-          "permissions": [{ "type": "validateZkStack" }]
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+            }
+          ]
         }
       }
     },
@@ -47,7 +52,12 @@
               "where": ["=", "#chainId", 61166]
             }
           },
-          "permissions": [{ "type": "validateZkStack" }]
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+            }
+          ]
         }
       }
     }

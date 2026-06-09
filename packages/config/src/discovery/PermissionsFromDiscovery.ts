@@ -3,7 +3,6 @@ import { type ChainSpecificAddress, formatSeconds } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
 import type { ProjectUpgradeableActor } from '../types'
-import { UltimatePermissionToPrefix } from './descriptions'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
 import {
@@ -119,27 +118,6 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     })
   }
 
-  describeLegacyPermissions(contractOrEoa: EntryParameters) {
-    const excludedPermissions: ReceivedPermission['permission'][] = [
-      'act',
-      'upgrade',
-      'interact',
-      'member',
-    ] satisfies ReceivedPermission['permission'][]
-    const legacyPermissions = (contractOrEoa.receivedPermissions ?? [])
-      .filter(
-        (p) =>
-          !excludedPermissions.includes(p.permission) &&
-          this.projectDiscovery.isReachable(p.from),
-      )
-      .map((p) => {
-        const prefix = UltimatePermissionToPrefix[p.permission]
-        const via = this.formatPermissionVia(p)
-        return `* ${prefix} ${via}`
-      })
-    return [...new Set(legacyPermissions)].sort()
-  }
-
   describeRoles(contractOrEoa: EntryParameters) {
     const issued = this.getIssuedPermissions(contractOrEoa.address)
     const roles: Record<string, Record<'direct' | 'ultimate', Set<string>>> = {}
@@ -188,9 +166,8 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   ): string {
     const upgrade = this.describeUpgradePermissions(contractOrEoa)
     const interact = this.describeInteractPermissions(contractOrEoa)
-    const legacy = this.describeLegacyPermissions(contractOrEoa)
     const roles = describeRoles ? this.describeRoles(contractOrEoa) : []
-    return [...upgrade, ...interact, ...legacy, ...roles]
+    return [...upgrade, ...interact, ...roles]
       .filter((s) => s !== '')
       .join('\n')
   }

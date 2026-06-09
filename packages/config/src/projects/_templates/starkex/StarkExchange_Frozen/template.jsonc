@@ -34,7 +34,8 @@
           "delay": "{{getUpgradeActivationDelay}}"
         },
         {
-          "type": "governStarknet"
+          "type": "interact",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
         },
         {
           "type": "interact",
@@ -56,7 +57,12 @@
         "add": { "event": "LogOperatorAdded" },
         "remove": { "event": "LogOperatorRemoved" }
       },
-      "permissions": [{ "type": "operateStarkEx" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+        }
+      ]
     }
   }
 }

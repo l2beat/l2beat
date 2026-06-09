@@ -28,7 +28,12 @@
             "type": "crossChainAccessControl",
             "pickChainAddress": "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef"
           },
-          "permissions": [{ "type": "validateZkStack" }]
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+            }
+          ]
         },
         "validatorsVTL": {
           // for backwards compatibility with the zkstack template

@@ -6,7 +6,12 @@
     "challengers": {
       "description": "Addresses allowed to challenge dispute games.",
       "severity": "HIGH",
-      "permissions": [{ "type": "challenge" }],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+        }
+      ],
       "handler": {
         "type": "event",
         "select": "challenger",
@@ -23,7 +28,12 @@
     "proposers": {
       "description": "Addresses allowed to propose dispute games.",
       "severity": "HIGH",
-      "permissions": [{ "type": "propose" }],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to post new state roots of the current layer to the host chain."
+        }
+      ],
       "handler": {
         "type": "event",
         "select": "proposer",

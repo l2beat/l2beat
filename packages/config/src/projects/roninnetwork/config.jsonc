@@ -46,8 +46,22 @@
     },
     "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a": {
       "fields": {
-        "proposerFromDGF": { "permissions": [{ "type": "propose" }] },
-        "challengerFromDGF": { "permissions": [{ "type": "challenge" }] }
+        "proposerFromDGF": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to post new state roots of the current layer to the host chain."
+            }
+          ]
+        },
+        "challengerFromDGF": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+            }
+          ]
+        }
       }
     },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
