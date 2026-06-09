@@ -298,6 +298,42 @@ jobs:
           cd packages/frontend 
           pnpm test-all-pages
 
+  test-prefetches:
+    name: Test Prefetches
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build dependencies
+        run: pnpm build:dependencies:frontend
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+        working-directory: packages/frontend
+
+      - name: Start mock server and test prefetches
+        run: pnpm test-prefetches
+        working-directory: packages/frontend
+
   test-gha-timeouts:
     name: Test if all GH Action jobs have timeout defined
     runs-on: ubuntu-latest

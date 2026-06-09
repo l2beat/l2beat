@@ -21,7 +21,8 @@
     "format:fix": "biome check --write .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "test-all-pages": "scripts/test-all-pages/test.sh"
+    "test-all-pages": "scripts/test-all-pages/test.sh",
+    "test-prefetches": "scripts/test-prefetches/test.sh"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
@@ -91,6 +92,7 @@
     "@vitejs/plugin-react-swc": "^4.2.3",
     "autoprefixer": "^10.4.20",
     "mockdate": "^3.0.5",
+    "playwright": "^1.60.0",
     "postcss": "^8.4.38",
     "postcss-load-config": "^6.0.1",
     "tailwindcss": "^4.1.11",
