@@ -17,6 +17,9 @@
       // wrongly discovered VTL
       "ignoreDiscovery": true
     },
+    "eth:0x7CBba07e31Dc7b12bB69a1209C5B11A8aC50acf5": {
+      "ignoreMethods": ["getSeq", "nonceSequenceNumber"]
+    },
     "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": {
       "fields": {
         "validatorsVTLFullAC": {
