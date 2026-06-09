@@ -210,6 +210,14 @@ export const sorare: ScalingProject = {
         'Layer 2 scaling solution powered by Starkware, is live on Ethereum.',
       type: 'general',
     },
+    {
+      title: 'Sorare StarkEx deprecation',
+      date: '2026-06-01T00:00:00Z',
+      url: 'https://etherscan.io/tx/0xe289078d3ad6f8f306b2b2938036bb7de8829ba4e897ebcf69af3004240d9d63',
+      description:
+        'Sorare finalizes its migration to Solana by sunsetting its StarkEx L2 contract.',
+      type: 'general',
+    },
   ],
   customDa: StarkexDAC({ discovery }),
   discoveryInfo: getDiscoveryInfo([discovery]),
