@@ -12,7 +12,7 @@ const STATIC_PATHS = [
   '/scaling/risk/state-validation',
   '/scaling/tvs',
   '/scaling/tvs/breakdown',
-  '/scaling/data-availability',
+  '/scaling/risk/data-availability',
   '/scaling/sequencing',
   '/scaling/liveness',
   '/scaling/costs',

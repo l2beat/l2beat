@@ -33,7 +33,7 @@ async function main() {
     '/scaling/risk',
     '/scaling/tvs',
     '/scaling/activity',
-    '/scaling/data-availability',
+    '/scaling/risk/data-availability',
     '/scaling/sequencing',
     '/scaling/liveness',
     '/scaling/costs',

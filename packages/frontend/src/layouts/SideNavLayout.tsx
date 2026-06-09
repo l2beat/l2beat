@@ -59,6 +59,23 @@ export function SideNavLayout({
               title: 'Risk Analysis',
               shortTitle: 'Risks',
               href: '/scaling/risk',
+              subLinks: [
+                {
+                  title: 'Overview',
+                  shortTitle: 'Risks',
+                  href: '/scaling/risk',
+                  exactMatch: true,
+                },
+                {
+                  title: 'Data Availability',
+                  shortTitle: 'DA',
+                  href: '/scaling/risk/data-availability',
+                },
+                {
+                  title: 'State Validation',
+                  href: '/scaling/risk/state-validation',
+                },
+              ],
             },
             {
               title: 'Value Secured',
@@ -68,11 +85,6 @@ export function SideNavLayout({
             {
               title: 'Activity',
               href: '/scaling/activity',
-            },
-            {
-              title: 'Data Availability',
-              shortTitle: 'DA',
-              href: '/scaling/data-availability',
             },
             {
               title: 'Sequencing',

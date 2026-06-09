@@ -6,11 +6,13 @@ import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
-import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/getScalingDaEntries'
+import type { ScalingRiskDaEntry } from '~/server/features/scaling/risks/data-availability/getScalingRiskDaEntries'
 
-const columnHelper = createColumnHelper<ScalingDaEntry>()
+const columnHelper = createColumnHelper<ScalingRiskDaEntry>()
 
-export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
+export function getScalingRiskDataAvailabilityColumns(
+  hideProofSystem?: boolean,
+) {
   return compact([
     ...getScalingCommonProjectColumns(
       columnHelper,

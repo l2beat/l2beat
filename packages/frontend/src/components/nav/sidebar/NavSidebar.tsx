@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -19,6 +19,7 @@ import {
   SidebarGroupSmallLink,
   SidebarGroupSub,
   SidebarGroupSubButton,
+  SidebarGroupSubLink,
   SidebarHeader,
   SidebarSeparator,
 } from '../../core/Sidebar'
@@ -109,7 +110,7 @@ function NavCollapsibleItem({
   )
   const isGroupActive = pathname.startsWith('/' + group.match)
   const isAnyLinkActive = allGroupLinks.some((link) =>
-    isLinkActive({ href: link.href, pathname }),
+    isLinkActive({ href: link.href, pathname, exact: link.exactMatch }),
   )
   const breakpoint = useBreakpoint()
 
@@ -158,13 +159,35 @@ function NavCollapsibleItem({
       <CollapsibleContent>
         <SidebarGroupSub>
           {group.links.map((item) => (
-            <SidebarGroupSubButton
-              href={item.href}
-              key={item.title}
-              isActive={isLinkActive({ href: item.href, pathname })}
-            >
-              <span className="leading-tight">{item.title}</span>
-            </SidebarGroupSubButton>
+            <Fragment key={item.title}>
+              <SidebarGroupSubButton
+                href={item.href}
+                isActive={isLinkActive({
+                  href: item.href,
+                  pathname,
+                  exact: item.exactMatch,
+                })}
+              >
+                <span className="leading-tight">{item.title}</span>
+              </SidebarGroupSubButton>
+              {item.subLinks && item.subLinks.length > 0 && (
+                <SidebarGroupSub className="mt-2.5 mb-2 gap-2">
+                  {item.subLinks.map((subItem) => (
+                    <SidebarGroupSubLink
+                      key={subItem.title}
+                      href={subItem.href}
+                      isActive={isLinkActive({
+                        href: subItem.href,
+                        pathname,
+                        exact: subItem.exactMatch,
+                      })}
+                    >
+                      {subItem.title}
+                    </SidebarGroupSubLink>
+                  ))}
+                </SidebarGroupSub>
+              )}
+            </Fragment>
           ))}
           {group.secondaryLinks && group.secondaryLinks.length > 0 && (
             <>
@@ -173,7 +196,11 @@ function NavCollapsibleItem({
                 <SidebarGroupSubButton
                   href={item.href}
                   key={item.title}
-                  isActive={isLinkActive({ href: item.href, pathname })}
+                  isActive={isLinkActive({
+                    href: item.href,
+                    pathname,
+                    exact: item.exactMatch,
+                  })}
                 >
                   <span>{item.title}</span>
                 </SidebarGroupSubButton>
