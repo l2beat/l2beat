@@ -22,7 +22,7 @@ export function RiskValue(props: RosetteValue) {
           >
             {props.regular ? `Emergency: ${props.value}` : props.value}
           </SentimentText>
-          {props.warning && !props.regular && (
+          {props.warning && (
             <RoundedWarningIcon
               className={cn(
                 'size-4',

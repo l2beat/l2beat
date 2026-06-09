@@ -358,6 +358,12 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
               '0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624',
             ),
           },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692',
+            ),
+          },
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],

@@ -414,10 +414,7 @@ function buildSharedContext(config: AgglayerConfig): SharedContext {
     regular: {
       value: upgradeDelayString,
       sentiment: 'warning',
-    },
-    warning: {
-      value: `Even though there is a ${upgradeDelayString} Timelock for non-emergency upgrades, there are no forced transactions and thus no way to exit during operator censorship or downtime.`,
-      sentiment: 'warning',
+      description: `Even though there is a ${upgradeDelayString} Timelock for non-emergency upgrades, there are no forced transactions and thus no way to exit during operator censorship or downtime.`,
     },
   }
 

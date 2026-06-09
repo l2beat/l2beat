@@ -1,4 +1,4 @@
-import type { TableReadyValue } from '@l2beat/config'
+import type { ExitWindowRisk } from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,
@@ -12,10 +12,6 @@ import { TableLink } from '~/components/table/TableLink'
 interface Props {
   value: ExitWindowRisk
   href?: string
-}
-
-type ExitWindowRisk = TableReadyValue & {
-  regular?: Pick<TableReadyValue, 'value' | 'sentiment'>
 }
 
 export function ExitWindowCell({ value, href }: Props) {
@@ -46,7 +42,7 @@ export function ExitWindowCell({ value, href }: Props) {
     </TableLink>
   )
 
-  if (value.description) {
+  if (value.description || value.regular?.description || value.warning) {
     return (
       <Tooltip>
         <TooltipTrigger disabledOnMobile className="h-[inherit]">

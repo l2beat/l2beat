@@ -244,7 +244,7 @@ export const morph: ScalingProject = {
           {
             title:
               'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-            url: 'https://etherscan.io/address/0x9e2Fb684935a32CEd121972f23BD0e4634377cA2',
+            url: 'https://etherscan.io/address/0xaC3C379D772f3520B34690d32BA14510ab36C3fB',
           },
         ],
         risks: [

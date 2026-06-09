@@ -35,7 +35,7 @@ export async function getPrivacySummaryEntries(
 
   const now = UnixTime.now()
   const currentDay = UnixTime.toStartOf(now, 'day')
-  const last30dCutoff = currentDay - 29 * UnixTime.DAY
+  const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
   const [totals, daily30d, tokenValues] = await Promise.all([
     db.privacyFlowEvent.getBucketTotalsByProjectIds(projectIds),

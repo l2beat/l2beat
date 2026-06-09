@@ -462,7 +462,11 @@ export const aztecnetwork: ScalingProject = {
       description: `Joining the sequencer set is permissionless and requires staking ${activationThresholdString}. For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer from the current committee per slot. More than 2/3 of the sequencers in the committee need to attest to each proposed block in an epoch for it to be valid.`,
       sequencerSetSpec: {
         slotTime: { value: formatSeconds(slotDuration) },
-        epochTime: { value: formatSeconds(epochDuration) },
+        epochTime: {
+          value: formatSeconds(epochDuration),
+          description:
+            'A random committee is sampled from the sequencer set for each epoch, a random block producer is sampled from the committee for each slot in the epoch',
+        },
         sequencerCount: { value: `${activeSequencerCount} sequencers` },
         blockProductionAccess: { value: 'Open', sentiment: 'good' },
         stakePerValidator: { value: activationThresholdString + ', constant' },

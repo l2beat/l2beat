@@ -71,7 +71,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
         const result = await repository.getDailyByProjectIds(
           ['proj-a'],
           START,
-          START,
+          START + UnixTime.DAY,
         )
 
         expect(result).toEqualUnsorted([

@@ -78,7 +78,8 @@ export function PrivacyTvlBreakdownChart({
         onItemClick: toggleDataKey,
       }}
     >
-      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
+      {/* Without right:1 the chart last point is not hoverable for some reason */}
+      <AreaChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
         <ChartLegendToggleAll
           showAllSelected={showAllSelected}
           onToggleAll={toggleAllDataKeys}

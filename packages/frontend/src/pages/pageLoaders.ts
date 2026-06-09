@@ -16,6 +16,9 @@ export const pageLoaders = {
   ScalingDataAvailabilityPage: async () =>
     (await import('./scaling/data-availability/ScalingDataAvailabilityPage'))
       .ScalingDataAvailabilityPage,
+  ScalingSequencingPage: async () =>
+    (await import('./scaling/sequencing/ScalingSequencingPage'))
+      .ScalingSequencingPage,
   ScalingLivenessPage: async () =>
     (await import('./scaling/liveness/ScalingLivenessPage'))
       .ScalingLivenessPage,

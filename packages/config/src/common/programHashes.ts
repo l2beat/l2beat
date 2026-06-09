@@ -2383,6 +2383,30 @@ Verify:
 5. Regenerate and print the vkey from the elf binary by calling \`cargo run --release --bin vkey\` from \`prover\` dir.
   `,
   },
+  '0x00f1b104202c89fe60d973cbf456a4e2e1ec1e7d63c61453b959dda153df798c': {
+    title: 'Morph Guest program (v0.5.7 release)',
+    description:
+      'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM.',
+    programUrl:
+      'https://github.com/morph-l2/morph/tree/v0.5.7/prover/bin/client',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+The steps below should be done on a Linux machine to reproduce the program hash. To prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain version \`v6.2.0\`: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up --version v6.2.0\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [morph repo](https://github.com/morph-l2/morph): \`git checkout v0.5.7\`. Commit hash should be \`55272a512fb0f0c378e78852b0cfbd92c6a02826\`
+2. Make sure docker is running by running \`docker ps\`
+3. Build the program binary from \`prover/bin/client\` dir using a docker container build for reproducibility: \`cargo prove build --docker --tag v6.2.0\`
+4. The generated elf binary \`verifier-client\` will be placed in \`prover/target/elf-compilation/docker/riscv64im-succinct-zkvm-elf/release\`. Move it to \`prover/bin/client/elf\`.
+5. Regenerate and print the vkey from the elf binary by calling \`cargo run --release --bin vkey\` from \`prover\` dir.
+  `,
+  },
   '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
     title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
     description:

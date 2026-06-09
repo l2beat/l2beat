@@ -7,10 +7,14 @@ import type {
   InclusionDelayEntityLegendEntry,
   InclusionDelayEntityMarker,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
+import { mergeInclusionDelaySeries } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 import {
   InclusionDelayChart,
   type InclusionDelayYAxisScale,
 } from './InclusionDelayChart'
+
+const PROJECT_DATA_KEY = 'projectDelayDays'
+const ETHEREUM_DATA_KEY = 'ethereumDelayDays'
 
 interface Props extends InclusionDelayChartProps {
   projectName: string
@@ -18,7 +22,8 @@ interface Props extends InclusionDelayChartProps {
 
 export function ProjectInclusionDelayChart({
   projectName,
-  chartData,
+  projectPoints,
+  ethereumPoints,
   entityLegendEntries,
   thresholdMarkers,
   maxCensorFraction,
@@ -28,11 +33,11 @@ export function ProjectInclusionDelayChart({
 
   const data = useMemo(
     () =>
-      chartData.map((point) => ({
-        ...point,
-        timestamp: point.censoringFraction,
-      })),
-    [chartData],
+      mergeInclusionDelaySeries([
+        { key: PROJECT_DATA_KEY, points: projectPoints },
+        { key: ETHEREUM_DATA_KEY, points: ethereumPoints },
+      ]),
+    [projectPoints, ethereumPoints],
   )
   const chartMeta = getInclusionDelayChartMeta(projectName)
 
@@ -108,12 +113,12 @@ function EntityMarkersLegend({
 
 function getInclusionDelayChartMeta(projectName: string) {
   return {
-    projectDelayDays: {
+    [PROJECT_DATA_KEY]: {
       label: projectName,
       color: 'var(--chart-pink)',
       indicatorType: { shape: 'line' },
     },
-    ethereumDelayDays: {
+    [ETHEREUM_DATA_KEY]: {
       label: 'Ethereum',
       color: 'var(--chart-ethereum)',
       indicatorType: { shape: 'line', strokeDasharray: '3 3' },
