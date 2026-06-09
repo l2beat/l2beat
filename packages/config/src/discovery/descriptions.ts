@@ -29,7 +29,6 @@ export const UltimatePermissionToPrefix: {
   stateDeleterMetis: 'A state deleter',
   hotValidatorHyperliquid: 'A Hot Validator',
   coldValidatorHyperliquid: 'A Cold Validator',
-  acrossPropose: 'A Proposer',
   validateLighter: 'A Validator',
 }
 
@@ -149,11 +148,6 @@ export const RoleDescriptions: {
     name: 'Cold Validator',
     description:
       'Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers.',
-  },
-  acrossPropose: {
-    name: 'Proposer',
-    description:
-      'Can propose new root bundles (containing settlement info to refund relayers), which are validated optimistically by the UMA oracle.',
   },
   validateLighter: {
     name: 'Validator',

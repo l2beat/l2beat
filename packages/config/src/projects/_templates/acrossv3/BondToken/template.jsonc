@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
   "displayName": "AcrossBondToken (ABT)",
   "description": "A bond token wrapping ETH for usage in the Across protocol. Implements modified ERC20 logic to only allow permissioned proposers to use it as a bond for root bundle proposals.",
   "ignoreInWatchMode": ["totalSupply"],
@@ -32,7 +33,8 @@
           "description": "use ABT as a bond to the HubPool contract for root bundle proposals."
         },
         {
-          "type": "acrossPropose"
+          "type": "interact",
+          "description": "propose new root bundles (containing settlement info to refund relayers), which are validated optimistically by the UMA oracle."
         }
       ]
     }

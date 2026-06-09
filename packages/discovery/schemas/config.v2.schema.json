@@ -82,7 +82,6 @@
                           "stateDeleterMetis",
                           "hotValidatorHyperliquid",
                           "coldValidatorHyperliquid",
-                          "acrossPropose",
                           "validateLighter",
                           "member",
                           "act",
