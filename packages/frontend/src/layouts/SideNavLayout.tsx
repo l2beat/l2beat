@@ -62,7 +62,6 @@ export function SideNavLayout({
               subLinks: [
                 {
                   title: 'Overview',
-                  shortTitle: 'Risks',
                   href: '/scaling/risk',
                   exactMatch: true,
                 },
