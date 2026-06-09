@@ -171,7 +171,7 @@ function NavCollapsibleItem({
                 <span className="leading-tight">{item.title}</span>
               </SidebarGroupSubButton>
               {item.subLinks && item.subLinks.length > 0 && (
-                <SidebarGroupSub className="mt-2.5 mb-2 gap-2">
+                <SidebarGroupSub className="mt-1 mb-1.5 gap-2">
                   {item.subLinks.map((subItem) => (
                     <SidebarGroupSubLink
                       key={subItem.title}
