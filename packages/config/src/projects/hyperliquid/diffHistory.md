@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x5c5f9c5037908f241174f63738ec8ad4e84484f0
+
+# Diff at Tue, 09 Jun 2026 12:43:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1777036752
+- current timestamp: 1777036752
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777036752 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x263294039413B96D25E4173a5F7599F8b3801504) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set)."
+      receivedPermissions.0.permission:
+-        "hotValidatorHyperliquid"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x58E1b0E63C905D5982324FCd9108582623b8132e) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set)."
+      receivedPermissions.0.permission:
+-        "hotValidatorHyperliquid"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x5a92b4A6a525445c9B4FFf61C0db71dCfE305ede) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers."
+      receivedPermissions.0.permission:
+-        "coldValidatorHyperliquid"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x8003FD297a7Aa477B746825E7A506675bF590E91) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers."
+      receivedPermissions.0.permission:
+-        "coldValidatorHyperliquid"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x86d6AE3032732F27239075D77a1317989B52F628) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers."
+      receivedPermissions.0.permission:
+-        "coldValidatorHyperliquid"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xda6816df552c3f9e0FB64979fb357800d690d79B) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set)."
+      receivedPermissions.0.permission:
+-        "hotValidatorHyperliquid"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xE346B41B47296153A21E64D6bFc857C27874C6e7) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers."
+      receivedPermissions.0.permission:
+-        "coldValidatorHyperliquid"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set)."
+      receivedPermissions.0.permission:
+-        "hotValidatorHyperliquid"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x76c0e774629ec3af0652b80e91c92ee39f6e4815
 
 # Diff at Fri, 08 May 2026 07:51:24 GMT:

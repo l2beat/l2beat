@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x95eb1375056f07b751ffdd6e67a9162493a75559
+
+# Diff at Tue, 09 Jun 2026 12:43:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780586770
+- current timestamp: 1780586770
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780586770 (main branch discovery), not current.
+
+```diff
+    contract Paradex Multisig (eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
+      receivedPermissions.0.permission:
+-        "governStarknet"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "interact"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640","role":".$admin"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
 Generated with discovered.json: 0x975e72c1887bbd9ebd725a7a734f9c6bacb6f195
 
 # Diff at Thu, 04 Jun 2026 15:27:16 GMT:

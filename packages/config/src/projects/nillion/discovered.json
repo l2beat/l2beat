@@ -70,8 +70,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x8a502d8EEa2Ed3e89c4D52DE51364688590cE591",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -122,14 +123,16 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "challenge",
-          "from": "eth:0x64A42dB261E1a19a56C51E541F45b42139a4488a",
-          "role": ".challenger"
+          "permission": "interact",
+          "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
         },
         {
-          "permission": "guard",
-          "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
-          "role": ".guardian"
+          "permission": "interact",
+          "from": "eth:0x64A42dB261E1a19a56C51E541F45b42139a4488a",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
         },
         {
           "permission": "interact",
@@ -483,8 +486,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x64A42dB261E1a19a56C51E541F45b42139a4488a",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         }
       ]
@@ -2002,5 +2006,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 25229224 },
-  "permissionsConfigHash": "0x39c96c823ecc2c5ef8585ac7e4a17a57fb027e03454fdf30df17f8047903b198"
+  "permissionsConfigHash": "0x683ffe176e2255357f7852bb6d8d195378df1088779051fc578cfb193eef74ea"
 }

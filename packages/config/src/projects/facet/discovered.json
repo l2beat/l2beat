@@ -210,13 +210,13 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE",
           "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
           "role": ".whitelistedProposers"
         },
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
           "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
           "role": ".whitelistedProposers"
@@ -1048,5 +1048,5 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 25230004, "facet": 3880205 },
-  "permissionsConfigHash": "0x23d2c961206fe2309d7f97632b1a55614870f018e8c796ac69327bf4a29c35e2"
+  "permissionsConfigHash": "0xb93674a2bf445042792d9a95f86fe939e04da71422a61e33106be42845543e03"
 }

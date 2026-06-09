@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xd0f063d688a6a29661339453fc4543df60406b51
+
+# Diff at Tue, 09 Jun 2026 12:43:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1773320760
+- current timestamp: 1773320760
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773320760 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract Bob Multisig 1 (eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46","role":".guardian"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+    }
+```
+
 Generated with discovered.json: 0x6f99e8f1fd4339a4fbeaa14062cac38ba1b04786
 
 # Diff at Thu, 04 Jun 2026 17:38:21 GMT:

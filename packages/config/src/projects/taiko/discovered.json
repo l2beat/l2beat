@@ -9,8 +9,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".operatorMapping"
         }
       ]
@@ -1550,8 +1551,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".operatorMapping"
         }
       ]
@@ -3115,8 +3117,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".operatorMapping"
         }
       ]
@@ -6072,5 +6075,5 @@
     "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804"
   },
   "usedBlockNumbers": { "ethereum": 25229872, "taiko": 7441374 },
-  "permissionsConfigHash": "0xdb31992fee4f420870f55b3eb9028c1d81541d2e1f87ea08bcebec3d592d3791"
+  "permissionsConfigHash": "0xe5207dd24a5762fcc710a8de4f583dd199656a25f24b61cabc5966575f30a4ca"
 }

@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xc1748f5b310167ebbdc6d2609878e4f3d961ae96
+
+# Diff at Tue, 09 Jun 2026 12:43:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1777963087
+- current timestamp: 1777963087
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777963087 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to post new state roots and global exit roots accompanied by ZK proofs."
+      receivedPermissions.0.permission:
+-        "aggregatePolygon"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to post new state roots and global exit roots accompanied by ZK proofs."
+      receivedPermissions.0.permission:
+-        "aggregatePolygon"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x834aa026a65ff043024bc0d9c5be24cd26a0819e
 
 # Diff at Fri, 08 May 2026 07:52:14 GMT:

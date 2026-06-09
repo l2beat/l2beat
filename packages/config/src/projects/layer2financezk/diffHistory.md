@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x3957f7df4ac9b8af29f80eb8a6f611815a70b528
+
+# Diff at Tue, 09 Jun 2026 12:43:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1761551414
+- current timestamp: 1761551414
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761551414 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+      receivedPermissions.2.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.2.permission:
+-        "operateStarkEx"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.0.permission:
+-        "operateStarkEx"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x01b73ea09524be8b0d3c6184d2bd3ab0bb447ee1
 
 # Diff at Wed, 03 Sep 2025 15:51:40 GMT:

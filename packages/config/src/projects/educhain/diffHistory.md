@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xa7f32fbb430fe06e71fc227ac7eafd04d924b507
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1777390972
+- current timestamp: 1777390972
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777390972 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      receivedPermissions.1.permission:
+-        "validate"
++        "interact"
+      receivedPermissions.2.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xeA64C25e6Ea873D5cffb045b80BEc605ABE06647) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract EduFastConfirmerMultisig (arb1:0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      directlyReceivedPermissions.1.permission:
+-        "validate"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xa188b920478b0ca759a3ef96347a5e12bbe51587
 
 # Diff at Fri, 22 May 2026 15:42:19 GMT:

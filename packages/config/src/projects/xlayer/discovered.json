@@ -720,8 +720,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challenger"
         }
       ]
@@ -774,8 +775,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -1069,8 +1071,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         }
       ]
@@ -2295,5 +2298,5 @@
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
   "usedBlockNumbers": { "ethereum": 24827537 },
-  "permissionsConfigHash": "0xc3f263683f13bb34a96bed4c37a9109e77464d1d416add204678547c54a9fd59"
+  "permissionsConfigHash": "0x5557653ea24c03b7ed02291cbb3662bbf27d258d687f74db1d68541a762b0ce0"
 }

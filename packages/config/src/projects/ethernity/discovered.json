@@ -373,8 +373,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x20c3035C92bdB4C461242571EeAc59EeD03Df931",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -564,23 +565,21 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x0eB331B615030819464225Ecd373e5FFBE502DC4",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challenger"
         },
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x0eB331B615030819464225Ecd373e5FFBE502DC4",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".CHALLENGER"
         },
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x14B768F93f256Ad8D2d018930DBdAe61306c4752",
-          "role": ".guardian"
-        },
-        {
-          "permission": "guard",
-          "from": "eth:0xDA29f0B4da6c23f6c1aF273945c290C0268c4ea9",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         },
         {
@@ -598,6 +597,12 @@
             { "address": "eth:0x0bc380347A0B7aF5453492CAF20e1E38bc0Abc2f" },
             { "address": "eth:0xB68361AAac2Bc8a4b8BFe36B8C6d0B429b5930ea" }
           ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xDA29f0B4da6c23f6c1aF273945c290C0268c4ea9",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
         },
         {
           "permission": "upgrade",
@@ -756,13 +761,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x0eB331B615030819464225Ecd373e5FFBE502DC4",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         },
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x0eB331B615030819464225Ecd373e5FFBE502DC4",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".PROPOSER"
         }
       ]
@@ -1229,5 +1236,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 24979527 },
-  "permissionsConfigHash": "0x1424ea51bb0881202e00e8eb95940955bc78e223ec01ce8fe1b4fe548b00cc27"
+  "permissionsConfigHash": "0x01e9fdb92bf773cf58a624d32e7ade4ec5a18dc03c105ca385ab7f659269fac8"
 }

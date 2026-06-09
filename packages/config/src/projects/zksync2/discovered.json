@@ -989,8 +989,9 @@
       "description": "A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorVTL"
         }
       ],
@@ -1662,5 +1663,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 25020439 },
-  "permissionsConfigHash": "0xd4f5b4fc3f3d925dce692a79570ca40a5b8444cb8c18901952363a55bf71b8e2"
+  "permissionsConfigHash": "0xd956d07f5a8cf051f65dc6192f566d7ec07cacf4f5d4a9a9f4efba01286ca0c0"
 }

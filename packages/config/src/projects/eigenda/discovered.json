@@ -1443,8 +1443,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "relayDA",
+          "permission": "interact",
           "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "description": "Can store and serve both unencoded blobs as well as encoded chunks.",
           "role": ".relayers"
         }
       ]
@@ -1480,8 +1481,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "disperse",
+          "permission": "interact",
           "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "description": "Can disperse EigenDA blobs to the EigenDA node operators.",
           "role": ".dispersers"
         }
       ]
@@ -2190,5 +2192,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 24798523 },
-  "permissionsConfigHash": "0xd3edcb553375387395f3f331b27a9820c7c171b2414dee1e9607f600f3644d27"
+  "permissionsConfigHash": "0xc793638e4ccb1f14f3cd353f4433e109110cdd607ea0b64720e84e9178c3cf63"
 }
