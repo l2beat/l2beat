@@ -4,7 +4,6 @@ import {
 } from '@l2beat/shared-pure'
 import { type Validator, v } from '@l2beat/validate'
 import FormData from 'form-data'
-import { Agent as HttpsAgent } from 'https'
 import fetch, { Headers, type RequestInit } from 'node-fetch'
 
 const DEFAULT_ANALYZE_URL = 'https://analyze.internal.l2beat.com'
@@ -67,7 +66,6 @@ export class AnalyzeClient {
     const response = await fetch(url.toString(), {
       ...init,
       headers: this.getHeaders(),
-      agent: getHttpsAgent(url),
     })
     const body = await response.text()
     const data = parseJson(body, response.status, response.statusText)
@@ -115,16 +113,4 @@ function parseJson(body: string, status: number, statusText: string): unknown {
       statusText || 'Analyze service returned invalid JSON',
     )
   }
-}
-
-function getHttpsAgent(url: URL) {
-  if (url.protocol !== 'https:') {
-    return undefined
-  }
-
-  const allowBrokenCert = process.env.L2ANALYZE_ALLOW_BROKEN_CERT === 'true'
-
-  return allowBrokenCert
-    ? new HttpsAgent({ rejectUnauthorized: false })
-    : undefined
 }
