@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xaaf199cc5c4ec4ddd8baad0fb7232eb74cf64e1a
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780653849
+- current timestamp: 1780653849
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780653849 (main branch discovery), not current.
+
+```diff
+    EOA FluentAdminEOA (eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA FluentProverEOA (eth:0xB9E6f78a0F35F96b806D0359AbB251117aCe255C) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA FluentEnclaveAttesterEOA (eth:0xef9Dc1F87BAA090a35B985DAad9c8096440F2012) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+    }
+```
+
+```diff
+    EOA FluentSequencerEOA (eth:0xFd58Bc438d910088C413b889Eaa0aded5C0d1c26) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x1b7b5494de277dc6ffcba400e196521568ca4bb0
 
 # Diff at Fri, 05 Jun 2026 10:05:14 GMT:

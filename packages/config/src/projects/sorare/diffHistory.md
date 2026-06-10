@@ -1,3 +1,63 @@
+Generated with discovered.json: 0xd3f9c7f7452bc788b767e56a0f8a103b5731bab9
+
+# Diff at Tue, 09 Jun 2026 12:43:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780646255
+- current timestamp: 1780646255
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780646255 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.0.permission:
+-        "operateStarkEx"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x5918481F777dBe437De249492B90AffB4e655de4) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xF5C9F957705bea56a7e806943f98F7777B995826","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xF5C9F957705bea56a7e806943f98F7777B995826","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+```diff
+    EOA  (eth:0x63881ac44293E22F3c3183a0C4113586ABb3e653) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.0.permission:
+-        "operateStarkEx"
++        "interact"
+    }
+```
+
+```diff
+    contract SorareAdminMultisig (eth:0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xF5C9F957705bea56a7e806943f98F7777B995826","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xF5C9F957705bea56a7e806943f98F7777B995826","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
 Generated with discovered.json: 0xb11f4c7d1881a27af923edffba53ca9e22f3741b
 
 # Diff at Fri, 05 Jun 2026 09:44:19 GMT:

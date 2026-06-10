@@ -9,8 +9,22 @@
     },
     "eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5": {
       "fields": {
-        "proposer": { "permissions": [{ "type": "propose" }] },
-        "challenger": { "permissions": [{ "type": "challenge" }] }
+        "proposer": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to post new state roots of the current layer to the host chain."
+            }
+          ]
+        },
+        "challenger": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+            }
+          ]
+        }
       }
     },
     "eth:0xb321dEC8b39b54a740bbD0fbbD14D48fa9CC8f65": {

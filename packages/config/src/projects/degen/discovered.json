@@ -158,7 +158,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "fastconfirm",
+          "permission": "interact",
           "from": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer",
@@ -167,7 +167,7 @@
           ]
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
@@ -176,7 +176,7 @@
           ]
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -627,13 +627,13 @@
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
         {
-          "permission": "fastconfirm",
+          "permission": "interact",
           "from": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer"
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -666,7 +666,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "base:0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -1852,5 +1852,5 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "base": 45859774 },
-  "permissionsConfigHash": "0x0744e5a32f919b7df0d15636e26e421198ad089f60b1a2b576ccc8bb6c281122"
+  "permissionsConfigHash": "0x6ccdb0aac09ef1dc377a03b4d6a900257e3e2bd5848ef7040573ce98236d5c6b"
 }

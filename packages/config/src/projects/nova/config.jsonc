@@ -126,10 +126,13 @@
         "getValidators": {
           "permissions": [
             {
-              "type": "propose",
+              "type": "interact",
               "description": "Can propose BoLD assertions and initiate challenges. Whitelisted validator on RollupProxy."
             },
-            { "type": "challenge" }
+            {
+              "type": "interact",
+              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+            }
           ]
         }
       }

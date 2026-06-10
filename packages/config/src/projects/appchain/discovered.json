@@ -952,7 +952,7 @@
           "role": ".batchPosterManager"
         },
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -1043,7 +1043,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -2020,5 +2020,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25250486 },
-  "permissionsConfigHash": "0x24cda53adc8db04c369918287c4edbb974338224bc2cc7da19e71b9c4814e0d1"
+  "permissionsConfigHash": "0xb9dd1e2997d21db1c764503d9718aa7e86785f3e465f7add57ed475a60bf7e53"
 }

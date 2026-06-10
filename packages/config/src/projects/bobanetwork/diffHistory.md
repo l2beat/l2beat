@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xc4f16096ecd4da3884859cb40131a1afa34e5ba6
+
+# Diff at Tue, 09 Jun 2026 12:43:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779715460
+- current timestamp: 1779715460
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779715460 (main branch discovery), not current.
+
+```diff
+    contract Boba Multisig (eth:0x56121a8612474C3eB65D69a3b871f284705b9bC4) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"eth:0x996ffD627901f10C80A7d4B72A12316D2e77c076","role":".guardian"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x996ffD627901f10C80A7d4B72A12316D2e77c076","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+    }
+```
+
+```diff
+    EOA  (eth:0xA4eD58737Fc5C4861C33410c29ECb1E2AF29d960) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x08af05b7f426f22733cdab84089de6550eecee09
 
 # Diff at Thu, 04 Jun 2026 17:38:37 GMT:

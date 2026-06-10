@@ -507,14 +507,16 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "challenge",
-          "from": "eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824",
-          "role": ".challenger"
+          "permission": "interact",
+          "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
         },
         {
-          "permission": "guard",
-          "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
-          "role": ".guardian"
+          "permission": "interact",
+          "from": "eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
         },
         {
           "permission": "interact",
@@ -895,8 +897,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xeBf5859b7646ca9cf8A981613569bF28394F2571",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -1383,13 +1386,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         },
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0xb45440830bd8D288bB2B5B01Be303ae60fc855d8",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         }
       ]
@@ -2358,5 +2363,5 @@
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_phala": "0x4342677410b67fb7bc701eb3f57360f9f6a8eaac289a8b2fd9b756b172358ef1"
   },
   "usedBlockNumbers": { "ethereum": 25229226 },
-  "permissionsConfigHash": "0xd4c52f9185b11e0d97e08396fd6cb02107b9315b69778abbe182e2d9a26c9ffe"
+  "permissionsConfigHash": "0x982c68d8099f2ecf680416b23760986bacfd31e1831820c6cddac7e19202ff81"
 }

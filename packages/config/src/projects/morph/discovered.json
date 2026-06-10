@@ -14,8 +14,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -26,8 +27,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -112,8 +114,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -124,8 +127,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -176,8 +180,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -255,8 +260,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -267,7 +273,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
@@ -341,8 +347,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -395,8 +402,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -520,8 +528,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -565,8 +574,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -577,7 +587,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
@@ -590,8 +600,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -602,8 +613,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -614,8 +626,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -626,8 +639,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -828,7 +842,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
@@ -841,8 +855,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -881,8 +896,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -893,8 +909,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -905,8 +922,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -917,8 +935,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -929,8 +948,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -963,8 +983,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -975,8 +996,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -987,8 +1009,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -999,8 +1022,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1011,8 +1035,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1028,11 +1053,6 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "role": ".challengers"
-        },
         {
           "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
@@ -1062,6 +1082,12 @@
           "from": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
           "description": "manage token to escrow mapping and (un-)register escrows.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
         },
         {
           "permission": "interact",
@@ -1120,7 +1146,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
@@ -1133,8 +1159,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1145,8 +1172,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1157,8 +1185,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1169,8 +1198,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1236,8 +1266,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1248,8 +1279,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1265,8 +1297,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1350,8 +1383,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1362,8 +1396,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1379,7 +1414,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
@@ -1545,8 +1580,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1557,8 +1593,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1569,8 +1606,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -2186,5 +2224,5 @@
     "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d"
   },
   "usedBlockNumbers": { "ethereum": 25272095 },
-  "permissionsConfigHash": "0x1e804c17c515d2940b405741bc2855e00a84cb1200a4cd747411f6c2d38067ff"
+  "permissionsConfigHash": "0x4ba2813753b07407e48a2a18e4a6baeae3b7c5c9e799af528c179cf22286a336"
 }

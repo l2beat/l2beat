@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xf3d141b25ac82cff4c29d46368f4ebeac1432474
+
+# Diff at Tue, 09 Jun 2026 12:43:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1741185503
+- current timestamp: 1741185503
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1741185503 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "interact"
+    }
+```
+
+```diff
+    contract RhinofiAdminMultisig (eth:0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
 Generated with discovered.json: 0x006553d47627cd8cb7719f861a6ec9ce7a867e51
 
 # Diff at Wed, 03 Sep 2025 15:52:04 GMT:

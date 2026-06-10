@@ -31,7 +31,10 @@
       "severity": "HIGH",
       "permissions": [
         { "type": "upgrade", "delay": "{{getUpgradeActivationDelay}}" },
-        { "type": "governStarknet" },
+        {
+          "type": "interact",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
+        },
         { "type": "interact", "description": "manage the token admin role." }
       ]
     },
@@ -60,7 +63,12 @@
         "add": { "event": "LogOperatorAdded" },
         "remove": { "event": "LogOperatorRemoved" }
       },
-      "permissions": [{ "type": "operateStarknet" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+        }
+      ]
     },
     "escapeVerifier": {
       "handler": { "type": "storage", "slot": 4, "returnType": "address" }

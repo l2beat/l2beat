@@ -59,7 +59,12 @@
         "type": "accessControl",
         "pickRoleMembers": "OPERATOR_ROLE"
       },
-      "permissions": [{ "type": "operateLinea" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to prove blocks and post the corresponding transaction data."
+        }
+      ]
     },
     // enum PauseType {
     // 0  UNUSED,

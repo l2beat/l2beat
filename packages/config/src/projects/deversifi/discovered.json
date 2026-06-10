@@ -491,8 +491,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "operateStarknet",
+          "permission": "interact",
           "from": "eth:0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
+          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
           "role": ".operators"
         }
       ]
@@ -535,14 +536,15 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "governStarknet",
+          "permission": "interact",
           "from": "eth:0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
+          "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "interact",
           "from": "eth:0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
-          "description": "manage the token admin role.",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
           "role": ".$admin"
         },
         {
@@ -1009,5 +1011,5 @@
     "starkex/StarkExchangeOld": "0x1349c13ead4263acc9bf71f1282c62684eebc9e54c3c2e0c9e4ce04e120b146e"
   },
   "usedBlockNumbers": { "ethereum": 21981331 },
-  "permissionsConfigHash": "0x767392ec38db016f18059abce1fa918e970f4eed6d181ab4e4b71a414aad4444"
+  "permissionsConfigHash": "0x3ed9ab7a435598acdd353f88eea0ae38401fbf783c32a0247dcb3cf4db46f3f6"
 }

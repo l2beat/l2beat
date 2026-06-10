@@ -52,7 +52,6 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
-  ProjectPermission,
   ProjectRisk,
   ProjectScalingCapability,
   ProjectScalingContractsProgramHash,
@@ -422,23 +421,10 @@ function orbitStackCommon(
 
   const postsToExternalDA = !postsToEthereum(templateVars)
 
-  const sequencers: ProjectPermission =
-    templateVars.discovery.getPermissionDetails(
-      'Sequencers',
-      templateVars.discovery.getPermissionsByRole('sequence'),
-      'Central actors allowed to submit transaction batches to L1.',
-    )
-
   const isPostBoLD = templateVars.discovery.getContractValue<boolean>(
     'RollupProxy',
     'isPostBoLD',
   )
-
-  if (sequencers.accounts.length === 0) {
-    throw new Error(
-      `No sequencers found for ${templateVars.discovery.projectName}. Assign 'Sequencer' role to at least one account.`,
-    )
-  }
 
   const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',

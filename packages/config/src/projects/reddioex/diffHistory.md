@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xbe3e588784b15e8eb9dad5fb73452b7022f81131
+
+# Diff at Tue, 09 Jun 2026 12:43:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1715171819
+- current timestamp: 1715171819
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1715171819 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x2e1c08E457F0E0F462Ef99eC9271dc5BfAd88b2a) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.0.permission:
+-        "operateStarkEx"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.0.permission:
+-        "operateStarkEx"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x6b7763b749073e892c83E674c1EC4799D6f339Ef) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
 Generated with discovered.json: 0x5c4873e5dcf49d498de1277c8f624a0553e861e4
 
 # Diff at Wed, 03 Sep 2025 15:52:19 GMT:

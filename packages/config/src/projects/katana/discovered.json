@@ -427,8 +427,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -7152,5 +7153,5 @@
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
   "usedBlockNumbers": { "ethereum": 25229774, "katana": 33661418 },
-  "permissionsConfigHash": "0xa30446cf0798ae420c88e9141d14896552eab31019f9193d77c3ae55dfc3a0f9"
+  "permissionsConfigHash": "0xac843086047dce2910a31289220a514a31afeb40ce63ab08c41014bc1e9d9719"
 }

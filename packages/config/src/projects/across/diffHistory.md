@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xae75558b7abc3fe3e9245e4489f64b7c6548e94e
+
+# Diff at Tue, 09 Jun 2026 12:43:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779355521
+- current timestamp: 1779355521
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779355521 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can propose new root bundles (containing settlement info to refund relayers), which are validated optimistically by the UMA oracle."
+      receivedPermissions.0.permission:
+-        "acrossPropose"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x894e4eb696b7625cdb36481785432477e426b75c
 
 # Diff at Thu, 21 May 2026 09:26:54 GMT:

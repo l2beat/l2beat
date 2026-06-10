@@ -21,8 +21,9 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "governStarknet",
+          "permission": "interact",
           "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
           "role": ".$admin"
         },
         {
@@ -314,8 +315,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "operateStarknet",
+          "permission": "interact",
           "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
           "role": ".operators"
         }
       ]
@@ -654,11 +656,6 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "governStarknet",
-          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
-          "role": ".$admin"
-        },
-        {
           "permission": "interact",
           "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
           "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
@@ -675,6 +672,12 @@
           "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
           "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
           "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
@@ -1197,5 +1200,5 @@
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
   "usedBlockNumbers": { "ethereum": 25244905 },
-  "permissionsConfigHash": "0xba6d461ecd7210b9d603bff8317958608db923622fa9e5146c00253aea16eeb2"
+  "permissionsConfigHash": "0x002437dd00ea871ccd9f477d449f254ece0118f14582e44823e0b2bcf6135054"
 }

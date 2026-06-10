@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x840b7b5f72b53139bbadf4d83f50c80b4783880b
+
+# Diff at Tue, 09 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1762264414
+- current timestamp: 1762264414
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264414 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x353800524721e11B453f73f523dD8840c215a213) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x1056015c35e22daeebffc390e66ad76849a61588
 
 # Diff at Tue, 04 Nov 2025 11:34:52 GMT:
