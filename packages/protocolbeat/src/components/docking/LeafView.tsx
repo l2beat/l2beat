@@ -1,111 +1,61 @@
-import * as RadixSelect from '@radix-ui/react-select'
 import clsx from 'clsx'
-import { IconChecked } from '../../icons/IconChcked'
-import { IconChevronDown } from '../../icons/IconChevronDown'
 import { IconClose } from '../../icons/IconClose'
 import { IconFullscreen } from '../../icons/IconFullscreen'
 import { IconFullscreenExit } from '../../icons/IconFullscreenExit'
 import { useDockingHook } from './context'
 import type { LeafNode } from './types'
 
+// The generic frame. Docking owns the header bar (drag handle + fullscreen +
+// close) and the body container; the consumer fills both via renderHeader /
+// renderBody and never has to wire the move/fullscreen/close I/O itself.
 export function LeafView(props: { node: LeafNode }) {
   const useStore = useDockingHook()
   const config = useStore((state) => state.config)
-  const activeTab = useStore((state) => state.activeTab)
-  const fullScreenTab = useStore((state) => state.fullScreenTab)
-  const pickedUpTab = useStore((state) => state.pickedUpTab)
+  const activeLeaf = useStore((state) => state.activeLeaf)
+  const fullScreenLeaf = useStore((state) => state.fullScreenLeaf)
+  const pickedUpLeaf = useStore((state) => state.pickedUpLeaf)
   const toggleFullScreen = useStore((state) => state.toggleFullScreen)
-  const removeTab = useStore((state) => state.removeTab)
-  const changeTab = useStore((state) => state.changeTab)
+  const removeLeaf = useStore((state) => state.removeLeaf)
 
-  const isActive = activeTab === props.node.tab
-  const isFullScreen = fullScreenTab === props.node.tab
-  const isPickedUp = pickedUpTab === props.node.tab
-
-  const filter = config.filterTab ?? (() => true)
-  const availableTabs = config.availableTabs.filter(filter)
+  const key = props.node.key
+  const isActive = activeLeaf === key
+  const isFullScreen = fullScreenLeaf === key
+  const isPickedUp = pickedUpLeaf === key
 
   return (
     <div
-      data-leaf-tab={props.node.tab}
+      data-leaf-key={key}
       className={clsx(
         'flex h-full w-full flex-col bg-coffee-900',
         isPickedUp && 'opacity-50',
       )}
     >
       <div
-        data-leaf-handle={props.node.tab}
+        data-leaf-handle={key}
         className="flex h-[36px] shrink-0 cursor-move select-none items-center gap-2 border-coffee-600 border-y bg-coffee-800 pr-2"
       >
-        <RadixSelect.Root
-          value={props.node.tab}
-          onValueChange={(v) => changeTab(props.node.tab, v)}
+        {config.renderHeader({ key, isActive, isFullScreen })}
+        <button
+          type="button"
+          className="w-4 text-coffee-200 hover:text-coffee-100"
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={() => toggleFullScreen(key)}
+          aria-label={isFullScreen ? 'Exit full screen' : 'Full screen'}
         >
-          <RadixSelect.Trigger
-            aria-label="Panel"
-            onMouseDown={(e) => e.stopPropagation()}
-            className={clsx(
-              'group/sel inline-flex h-[26px] items-center gap-1.5 border-b px-3 font-bold text-xs uppercase outline-none transition-colors focus-visible:outline-none',
-              isActive
-                ? 'border-coffee-200 text-coffee-100'
-                : 'border-transparent text-coffee-200 hover:text-coffee-100',
-            )}
-          >
-            <span className="flex items-center gap-1.5">
-              {config.renderTabLabel(props.node.tab)}
-            </span>
-            <IconChevronDown className="ml-auto size-3 opacity-60 transition-transform group-data-[state=open]/sel:rotate-180" />
-          </RadixSelect.Trigger>
-          <RadixSelect.Portal>
-            <RadixSelect.Content
-              position="popper"
-              sideOffset={4}
-              className="z-[1000] cursor-default select-none border border-coffee-500 bg-coffee-800 font-bold text-coffee-200 text-xs uppercase shadow-lg"
-            >
-              <RadixSelect.Viewport>
-                {availableTabs.map((id) => (
-                  <RadixSelect.Item
-                    key={id}
-                    value={id}
-                    className="relative flex cursor-pointer items-center gap-2.5 py-2 pr-9 pl-2.5 outline-none focus-visible:outline-none data-[highlighted]:bg-coffee-600 data-[highlighted]:text-coffee-100"
-                  >
-                    <span className="flex items-center gap-1.5">
-                      {config.renderTabLabel(id)}
-                    </span>
-                    <RadixSelect.ItemIndicator className="absolute right-2.5">
-                      <IconChecked className="size-3" />
-                    </RadixSelect.ItemIndicator>
-                  </RadixSelect.Item>
-                ))}
-              </RadixSelect.Viewport>
-            </RadixSelect.Content>
-          </RadixSelect.Portal>
-        </RadixSelect.Root>
-        <div className="flex-1" />
-        <div className="flex items-center gap-1">
-          {config.renderTabExtras?.({ id: props.node.tab })}
-          <button
-            type="button"
-            className="w-4 text-coffee-200 hover:text-coffee-100"
-            onMouseDown={(e) => e.stopPropagation()}
-            onClick={() => toggleFullScreen(props.node.tab)}
-            aria-label={isFullScreen ? 'Exit full screen' : 'Full screen'}
-          >
-            {isFullScreen ? <IconFullscreenExit /> : <IconFullscreen />}
-          </button>
-          <button
-            type="button"
-            className="w-4 text-coffee-200 hover:text-coffee-100"
-            onMouseDown={(e) => e.stopPropagation()}
-            onClick={() => removeTab(props.node.tab)}
-            aria-label="Close panel"
-          >
-            <IconClose />
-          </button>
-        </div>
+          {isFullScreen ? <IconFullscreenExit /> : <IconFullscreen />}
+        </button>
+        <button
+          type="button"
+          className="w-4 text-coffee-200 hover:text-coffee-100"
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={() => removeLeaf(key)}
+          aria-label="Close panel"
+        >
+          <IconClose />
+        </button>
       </div>
       <div className="relative min-h-0 flex-1 overflow-auto">
-        {config.renderBody(props.node.tab)}
+        {config.renderBody(key)}
       </div>
     </div>
   )

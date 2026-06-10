@@ -5,7 +5,7 @@ import { useIsomorphicKeys } from '../../hooks/useIsomorphicKeys'
 import { useDiscoveryCommand } from '../../panel-terminal/useDiscoveryCommand'
 import { useSearchStore } from '../../search/store'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
-import { useDockingStore } from '../store'
+import { addPanel, useDockingStore } from '../store'
 import { Keys } from './Keys'
 import { StatusRibbon } from './StatusRibbon'
 
@@ -13,8 +13,7 @@ export function BottomBar() {
   const { project } = useParams()
   const [hintOpen, setHintOpen] = useState(false)
   const loadLayout = useDockingStore((state) => state.loadLayout)
-  const addTab = useDockingStore((state) => state.addTab)
-  const removeTab = useDockingStore((state) => state.removeTab)
+  const removeLeaf = useDockingStore((state) => state.removeLeaf)
   const toggleFullScreen = useDockingStore((state) => state.toggleFullScreen)
   const { discover, killCommand } = useDiscoveryCommand()
   const { altKey } = useIsomorphicKeys()
@@ -37,10 +36,10 @@ export function BottomBar() {
         }
       }
       if (e.code === 'Enter' && e.altKey) {
-        addTab()
+        addPanel()
       }
       if (e.code === 'KeyQ' && e.altKey) {
-        removeTab()
+        removeLeaf()
       }
       if (e.code === 'KeyF' && e.altKey) {
         toggleFullScreen()

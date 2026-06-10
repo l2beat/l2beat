@@ -25,7 +25,7 @@ function SplitView(props: { node: SplitNode }) {
       }
     >
       {props.node.children.map((child, i) => (
-        <Fragment key={child.kind === 'leaf' ? child.tab : child.id}>
+        <Fragment key={child.kind === 'leaf' ? child.key : child.id}>
           {i > 0 && (
             <Splitter splitId={props.node.id} index={i - 1} isRow={isRow} />
           )}

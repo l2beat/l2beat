@@ -1,25 +1,24 @@
 import { type Validator, v } from '@l2beat/validate'
 import { create, type StoreApi, type UseBoundStore } from 'zustand'
 import {
-  allTabs,
-  canRemoveTab,
+  allKeys,
+  canRemoveLeaf,
   findFirstLeaf,
-  findLeafByTab,
-  nextAvailableTab,
+  findLeafByKey,
   normalizeTree,
-  changeTab as treeChangeTab,
-  ensureTab as treeEnsureTab,
-  moveTab as treeMoveTab,
-  removeTab as treeRemoveTab,
+  ensureLeaf as treeEnsureLeaf,
+  moveLeaf as treeMoveLeaf,
+  removeLeaf as treeRemoveLeaf,
   resizeSplit as treeResizeSplit,
+  setLeafKey as treeSetLeafKey,
   validateLayout,
 } from './tree'
 import type {
   DockingConfig,
   DropTarget,
   LayoutNode,
+  LeafKey,
   NodeId,
-  TabId,
 } from './types'
 
 const DEFAULT_MAX_LAYOUTS = 6
@@ -28,27 +27,26 @@ export interface DockingState {
   tree: LayoutNode
   layouts: LayoutNode[]
   selectedLayout: number
-  activeTab: TabId | undefined
-  fullScreenTab: TabId | undefined
-  pickedUpTab: TabId | undefined
+  activeLeaf: LeafKey | undefined
+  fullScreenLeaf: LeafKey | undefined
+  pickedUpLeaf: LeafKey | undefined
   dragHover: DropTarget | undefined
   mouse: { x: number; y: number }
   config: DockingConfig
 }
 
 export interface DockingActions {
-  ensureTab: (id: TabId) => void
-  addTab: () => void
-  removeTab: (id?: TabId) => void
-  activateTab: (id: TabId) => void
-  changeTab: (tab: TabId, newTab: TabId) => void
-  moveTab: (id: TabId, target: DropTarget) => void
+  ensureLeaf: (key: LeafKey) => void
+  removeLeaf: (key?: LeafKey) => void
+  activateLeaf: (key: LeafKey) => void
+  setLeafKey: (key: LeafKey, newKey: LeafKey) => void
+  moveLeaf: (key: LeafKey, target: DropTarget) => void
   resizeSplit: (splitId: NodeId, index: number, fraction: number) => void
   resetLayout: () => void
-  toggleFullScreen: (id?: TabId) => void
-  pickUpTab: (id: TabId) => void
+  toggleFullScreen: (key?: LeafKey) => void
+  pickUpLeaf: (key: LeafKey) => void
   setDragHover: (target: DropTarget | undefined) => void
-  dropTab: () => void
+  dropLeaf: () => void
   setMouse: (x: number, y: number) => void
   loadLayout: (n: number) => void
 }
@@ -57,7 +55,7 @@ export type DockingStore = DockingState & DockingActions
 
 const zLeaf = v.object({
   kind: v.literal('leaf'),
-  tab: v.string(),
+  key: v.string(),
 })
 
 const zLayoutNode: Validator<LayoutNode> = v.lazy(() =>
@@ -81,17 +79,14 @@ function selectedKey(storageKey: string): string {
   return `${storageKey}/selected`
 }
 
-function isValidLayout(node: LayoutNode, available: readonly TabId[]): boolean {
-  const allowed = new Set(available)
+function isValidLayout(node: LayoutNode, config: DockingConfig): boolean {
   try {
     validateLayout(node)
   } catch {
     return false
   }
-  for (const tab of allTabs(node)) {
-    if (!allowed.has(tab)) return false
-  }
-  return true
+  if (!config.isValidKey) return true
+  return allKeys(node).every(config.isValidKey)
 }
 
 function readLayouts(config: DockingConfig): LayoutNode[] {
@@ -105,7 +100,7 @@ function readLayouts(config: DockingConfig): LayoutNode[] {
     const parsed = v.array(zLayoutNode).parse(JSON.parse(raw))
     for (let i = 0; i < max; i++) {
       const candidate = parsed[i]
-      if (candidate && isValidLayout(candidate, config.availableTabs)) {
+      if (candidate && isValidLayout(candidate, config)) {
         fallback[i] = normalizeTree(candidate)
       }
     }
@@ -132,24 +127,24 @@ function readSelected(config: DockingConfig): number {
   return 0
 }
 
-function firstTab(tree: LayoutNode): TabId | undefined {
-  return findFirstLeaf(tree).tab
+function firstKey(tree: LayoutNode): LeafKey | undefined {
+  return findFirstLeaf(tree).key
 }
 
 // Every structural action writes the new tree into both `tree` and the active
-// slot of `layouts`, and usually sets the focused tab. Centralizing that here
+// slot of `layouts`, and usually sets the focused leaf. Centralizing that here
 // keeps the actions to a single expressive line each.
 function applyTree(
   state: DockingState,
   tree: LayoutNode,
-  activeTab: TabId | undefined = state.activeTab,
+  activeLeaf: LeafKey | undefined = state.activeLeaf,
 ): Partial<DockingState> {
   return {
     tree,
     layouts: state.layouts.map((layout, i) =>
       i === state.selectedLayout ? tree : layout,
     ),
-    activeTab,
+    activeLeaf,
   }
 }
 
@@ -166,63 +161,53 @@ export function createDockingStore(
     tree: initialTree,
     layouts,
     selectedLayout: selected,
-    activeTab: firstTab(initialTree),
-    fullScreenTab: undefined,
-    pickedUpTab: undefined,
+    activeLeaf: firstKey(initialTree),
+    fullScreenLeaf: undefined,
+    pickedUpLeaf: undefined,
     dragHover: undefined,
     mouse: { x: 0, y: 0 },
     config,
-    ensureTab: (id) =>
+    ensureLeaf: (key) =>
       set((state) => {
-        if (!config.availableTabs.includes(id)) return state
-        if (findLeafByTab(state.tree, id)) return { activeTab: id }
-        const tree = treeEnsureTab(state.tree, id, state.activeTab)
-        return applyTree(state, tree, id)
+        if (config.isValidKey && !config.isValidKey(key)) return state
+        if (findLeafByKey(state.tree, key)) return { activeLeaf: key }
+        const tree = treeEnsureLeaf(state.tree, key, state.activeLeaf)
+        return applyTree(state, tree, key)
       }),
-    addTab: () =>
+    removeLeaf: (key) =>
       set((state) => {
-        const filter = config.filterTab ?? (() => true)
-        const next = nextAvailableTab(
-          state.tree,
-          config.availableTabs.filter(filter),
-        )
-        if (!next) return state
-        const tree = treeEnsureTab(state.tree, next, state.activeTab)
-        return applyTree(state, tree, next)
-      }),
-    removeTab: (id) =>
-      set((state) => {
-        const targetId = id ?? state.activeTab
-        if (!targetId || !canRemoveTab(state.tree, targetId)) return state
-        const tree = treeRemoveTab(state.tree, targetId)
+        const target = key ?? state.activeLeaf
+        if (!target || !canRemoveLeaf(state.tree, target)) return state
+        const tree = treeRemoveLeaf(state.tree, target)
         return {
           ...applyTree(
             state,
             tree,
-            state.activeTab === targetId ? firstTab(tree) : state.activeTab,
+            state.activeLeaf === target ? firstKey(tree) : state.activeLeaf,
           ),
-          fullScreenTab:
-            state.fullScreenTab === targetId ? undefined : state.fullScreenTab,
+          fullScreenLeaf:
+            state.fullScreenLeaf === target ? undefined : state.fullScreenLeaf,
         }
       }),
-    activateTab: (id) =>
+    activateLeaf: (key) =>
       set((state) =>
-        findLeafByTab(state.tree, id) ? { activeTab: id } : state,
+        findLeafByKey(state.tree, key) ? { activeLeaf: key } : state,
       ),
-    changeTab: (tab, newTab) =>
+    setLeafKey: (key, newKey) =>
       set((state) => {
-        if (!config.availableTabs.includes(newTab)) return state
-        if (!findLeafByTab(state.tree, tab)) return state
+        if (config.isValidKey && !config.isValidKey(newKey)) return state
+        if (!findLeafByKey(state.tree, key)) return state
+        const tree = treeSetLeafKey(state.tree, key, newKey)
         return {
-          ...applyTree(state, treeChangeTab(state.tree, tab, newTab), newTab),
-          fullScreenTab:
-            state.fullScreenTab === tab ? newTab : state.fullScreenTab,
+          ...applyTree(state, tree, newKey),
+          fullScreenLeaf:
+            state.fullScreenLeaf === key ? newKey : state.fullScreenLeaf,
         }
       }),
-    moveTab: (id, target) =>
+    moveLeaf: (key, target) =>
       set((state) => {
-        if (!findLeafByTab(state.tree, id)) return state
-        return applyTree(state, treeMoveTab(state.tree, id, target), id)
+        if (!findLeafByKey(state.tree, key)) return state
+        return applyTree(state, treeMoveLeaf(state.tree, key, target), key)
       }),
     resizeSplit: (splitId, index, fraction) =>
       set((state) =>
@@ -232,35 +217,32 @@ export function createDockingStore(
       set((state) => {
         const tree = structuredClone(config.defaultLayout)
         return {
-          ...applyTree(state, tree, firstTab(tree)),
-          fullScreenTab: undefined,
+          ...applyTree(state, tree, firstKey(tree)),
+          fullScreenLeaf: undefined,
         }
       }),
-    toggleFullScreen: (id) =>
+    toggleFullScreen: (key) =>
       set((state) => {
-        const targetId = id ?? state.activeTab
-        if (!targetId) return state
+        const target = key ?? state.activeLeaf
+        if (!target) return state
         return {
-          fullScreenTab:
-            state.fullScreenTab === targetId ? undefined : targetId,
+          fullScreenLeaf: state.fullScreenLeaf === target ? undefined : target,
         }
       }),
-    pickUpTab: (id) => set(() => ({ pickedUpTab: id, dragHover: undefined })),
+    pickUpLeaf: (key) =>
+      set(() => ({ pickedUpLeaf: key, dragHover: undefined })),
     setDragHover: (target) => set(() => ({ dragHover: target })),
-    dropTab: () =>
+    dropLeaf: () =>
       set((state) => {
-        const tab = state.pickedUpTab
+        const key = state.pickedUpLeaf
         const target = state.dragHover
-        if (!tab || !target) {
-          return { pickedUpTab: undefined, dragHover: undefined }
+        if (!key || !target || !findLeafByKey(state.tree, key)) {
+          return { pickedUpLeaf: undefined, dragHover: undefined }
         }
-        if (!findLeafByTab(state.tree, tab)) {
-          return { pickedUpTab: undefined, dragHover: undefined }
-        }
-        const tree = treeMoveTab(state.tree, tab, target)
+        const tree = treeMoveLeaf(state.tree, key, target)
         return {
-          ...applyTree(state, tree, tab),
-          pickedUpTab: undefined,
+          ...applyTree(state, tree, key),
+          pickedUpLeaf: undefined,
           dragHover: undefined,
         }
       }),
@@ -273,8 +255,8 @@ export function createDockingStore(
         return {
           tree: layout,
           selectedLayout: n,
-          activeTab: firstTab(layout),
-          fullScreenTab: undefined,
+          activeLeaf: firstKey(layout),
+          fullScreenLeaf: undefined,
         }
       }),
   }))

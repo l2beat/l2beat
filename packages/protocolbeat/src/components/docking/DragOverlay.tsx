@@ -4,7 +4,7 @@ import type { DropTarget } from './types'
 
 export function DragOverlay() {
   const useStore = useDockingHook()
-  const pickedUpTab = useStore((state) => state.pickedUpTab)
+  const pickedUpLeaf = useStore((state) => state.pickedUpLeaf)
   const mouse = useStore((state) => state.mouse)
   const dragHover = useStore((state) => state.dragHover)
   const config = useStore((state) => state.config)
@@ -18,7 +18,7 @@ export function DragOverlay() {
     setHoverRect(computeSplitRect(dragHover))
   }, [dragHover, mouse.x, mouse.y])
 
-  if (pickedUpTab === undefined) return null
+  if (pickedUpLeaf === undefined) return null
 
   return (
     <>
@@ -37,7 +37,7 @@ export function DragOverlay() {
         className="pointer-events-none fixed z-[1000] flex h-[28px] items-center gap-1.5 border border-coffee-400 bg-coffee-800 px-3 font-bold text-coffee-100 text-xs uppercase opacity-90 shadow-lg"
         style={{ left: mouse.x + 8, top: mouse.y + 8 }}
       >
-        {config.renderTabLabel(pickedUpTab)}
+        {config.renderDragPreview?.(pickedUpLeaf) ?? pickedUpLeaf}
       </div>
     </>
   )
@@ -45,7 +45,7 @@ export function DragOverlay() {
 
 function computeSplitRect(target: DropTarget): DOMRect | null {
   const body = document.querySelector<HTMLElement>(
-    `[data-leaf-tab="${CSS.escape(target.tab)}"]`,
+    `[data-leaf-key="${CSS.escape(target.key)}"]`,
   )
   if (!body) return null
   const rect = body.getBoundingClientRect()

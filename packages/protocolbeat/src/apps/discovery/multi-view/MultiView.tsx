@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Docking, findLeafByTab } from '../../../components/docking'
+import { Docking, findLeafByKey } from '../../../components/docking'
 import { useIsMobile } from '../../../hooks/useIsMobile'
 import { BottomBar } from './BottomBar/BottomBar'
 import { useDockingStore } from './store'
@@ -11,27 +11,27 @@ export interface MultiViewProps {
 
 export function MultiView(props: MultiViewProps) {
   const isMobileOrTablet = useIsMobile()
-  const fullScreenTab = useDockingStore((state) => state.fullScreenTab)
-  const activeTab = useDockingStore((state) => state.activeTab)
+  const fullScreenLeaf = useDockingStore((state) => state.fullScreenLeaf)
+  const activeLeaf = useDockingStore((state) => state.activeLeaf)
   const hasNodes = useDockingStore(
-    (state) => findLeafByTab(state.tree, 'nodes') !== undefined,
+    (state) => findLeafByKey(state.tree, 'nodes') !== undefined,
   )
-  const activateTab = useDockingStore((state) => state.activateTab)
+  const activateLeaf = useDockingStore((state) => state.activateLeaf)
   const toggleFullScreen = useDockingStore((state) => state.toggleFullScreen)
 
   useEffect(() => {
-    if (!isMobileOrTablet || fullScreenTab !== undefined) return
+    if (!isMobileOrTablet || fullScreenLeaf !== undefined) return
     // Phones/tablets open a single pane; default to the graph when present.
-    const preferred = hasNodes ? 'nodes' : activeTab
+    const preferred = hasNodes ? 'nodes' : activeLeaf
     if (!preferred) return
-    activateTab(preferred)
+    activateLeaf(preferred)
     toggleFullScreen(preferred)
   }, [
     isMobileOrTablet,
-    fullScreenTab,
+    fullScreenLeaf,
     hasNodes,
-    activeTab,
-    activateTab,
+    activeLeaf,
+    activateLeaf,
     toggleFullScreen,
   ])
 

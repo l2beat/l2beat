@@ -32,7 +32,7 @@ interface OpenSearchProps {
 export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const ensureTab = useDockingStore((state) => state.ensureTab)
+  const ensureLeaf = useDockingStore((state) => state.ensureLeaf)
   const { setSourceIndex, showRange } = useCodeStore()
   const selectedAddress = usePanelStore((state) => state.selected)
   const {
@@ -109,7 +109,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
         }
 
         if (entry !== undefined) {
-          ensureTab('code')
+          ensureLeaf('code')
           select(entry.address)
           const codeLocation = entry.codeLocation[selectedIndex - runningIndex]
           if (codeLocation !== undefined) {

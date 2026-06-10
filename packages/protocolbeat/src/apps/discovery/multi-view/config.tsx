@@ -1,10 +1,16 @@
+import * as RadixSelect from '@radix-ui/react-select'
+import clsx from 'clsx'
 import type { FC, JSX } from 'react'
 import {
   type DockingConfig,
+  type LeafApi,
   newLeaf,
   newSplit,
+  useDockingHook,
 } from '../../../components/docking'
 import { IS_READONLY } from '../../../config/readonly'
+import { IconChecked } from '../../../icons/IconChcked'
+import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconCode } from '../../../icons/IconCode'
 import { IconFileDiff } from '../../../icons/IconFileDiff'
 import { IconGear } from '../../../icons/IconGear'
@@ -39,50 +45,102 @@ export const PANEL_IDS = [
 
 export type PanelId = (typeof PANEL_IDS)[number]
 
-const ICONS: Record<PanelId, FC<{ className?: string }>> = {
-  list: IconList,
-  values: IconSigma,
-  nodes: IconNodes,
-  code: IconCode,
-  preview: IconWebApp,
-  terminal: IconTerminal,
-  template: IconStamp,
-  config: IconGear,
-  diffHistory: IconFileDiff,
+interface Panel {
+  icon: FC<{ className?: string }>
+  body: () => JSX.Element
 }
 
-const PANELS: Record<PanelId, () => JSX.Element> = {
-  list: ListPanel,
-  values: ValuesPanel,
-  nodes: NodesPanel,
-  code: CodePanel,
-  preview: PreviewPanel,
-  terminal: TerminalPanel,
-  template: TemplatePanel,
-  config: ConfigPanel,
-  diffHistory: DiffHistoryPanel,
+const PANELS: Record<PanelId, Panel> = {
+  list: { icon: IconList, body: ListPanel },
+  values: { icon: IconSigma, body: ValuesPanel },
+  nodes: { icon: IconNodes, body: NodesPanel },
+  code: { icon: IconCode, body: CodePanel },
+  preview: { icon: IconWebApp, body: PreviewPanel },
+  terminal: { icon: IconTerminal, body: TerminalPanel },
+  template: { icon: IconStamp, body: TemplatePanel },
+  config: { icon: IconGear, body: ConfigPanel },
+  diffHistory: { icon: IconFileDiff, body: DiffHistoryPanel },
 }
 
-function renderBody(id: string): JSX.Element {
-  const panelId = id as PanelId
-  const Component =
-    IS_READONLY && panelId === 'terminal' ? ListPanel : PANELS[panelId]
-  return <Component />
+export function isAllowedPanel(id: PanelId): boolean {
+  return !(IS_READONLY && id === 'terminal')
 }
 
-function renderTabLabel(id: string): JSX.Element {
-  const panelId = id as PanelId
-  const Icon = ICONS[panelId]
+function isPanelId(key: string): key is PanelId {
+  return (PANEL_IDS as readonly string[]).includes(key)
+}
+
+function PanelLabel(props: { id: PanelId }) {
+  const Icon = PANELS[props.id].icon
+  return (
+    <span className="flex items-center gap-1.5">
+      <Icon className="size-3.5 shrink-0" />
+      <span>{props.id}</span>
+    </span>
+  )
+}
+
+// The header content discovery plugs into docking's generic frame: a panel-type
+// switcher plus the per-panel extras. It reaches the layout store through the
+// generic context hook, so config.tsx never imports the concrete store.
+function PanelHeader(props: { api: LeafApi }) {
+  const useStore = useDockingHook()
+  const setLeafKey = useStore((state) => state.setLeafKey)
+  const id = props.api.key as PanelId
+
   return (
     <>
-      <Icon className="size-3.5 shrink-0" />
-      <span>{panelId}</span>
+      <RadixSelect.Root
+        value={id}
+        onValueChange={(value) => setLeafKey(id, value)}
+      >
+        <RadixSelect.Trigger
+          aria-label="Panel"
+          onMouseDown={(e) => e.stopPropagation()}
+          className={clsx(
+            'group/sel inline-flex h-[26px] items-center gap-1.5 border-b px-3 font-bold text-xs uppercase outline-none transition-colors focus-visible:outline-none',
+            props.api.isActive
+              ? 'border-coffee-200 text-coffee-100'
+              : 'border-transparent text-coffee-200 hover:text-coffee-100',
+          )}
+        >
+          <PanelLabel id={id} />
+          <IconChevronDown className="ml-auto size-3 opacity-60 transition-transform group-data-[state=open]/sel:rotate-180" />
+        </RadixSelect.Trigger>
+        <RadixSelect.Portal>
+          <RadixSelect.Content
+            position="popper"
+            sideOffset={4}
+            className="z-[1000] cursor-default select-none border border-coffee-500 bg-coffee-800 font-bold text-coffee-200 text-xs uppercase shadow-lg"
+          >
+            <RadixSelect.Viewport>
+              {PANEL_IDS.filter(isAllowedPanel).map((panelId) => (
+                <RadixSelect.Item
+                  key={panelId}
+                  value={panelId}
+                  className="relative flex cursor-pointer items-center gap-2.5 py-2 pr-9 pl-2.5 outline-none focus-visible:outline-none data-[highlighted]:bg-coffee-600 data-[highlighted]:text-coffee-100"
+                >
+                  <PanelLabel id={panelId} />
+                  <RadixSelect.ItemIndicator className="absolute right-2.5">
+                    <IconChecked className="size-3" />
+                  </RadixSelect.ItemIndicator>
+                </RadixSelect.Item>
+              ))}
+            </RadixSelect.Viewport>
+          </RadixSelect.Content>
+        </RadixSelect.Portal>
+      </RadixSelect.Root>
+      <div className="flex-1" />
+      <TabExtras id={id} />
     </>
   )
 }
 
-function renderTabExtras(props: { id: string }): JSX.Element {
-  return <TabExtras id={props.id as PanelId} />
+function renderBody(key: string): JSX.Element {
+  if (!isPanelId(key)) return <ListPanel />
+  const Component =
+    IS_READONLY && key === 'terminal' ? ListPanel : PANELS[key].body
+  return <Component />
 }
 
 const defaultLayout = newSplit(
@@ -93,11 +151,10 @@ const defaultLayout = newSplit(
 
 export const dockingConfig: DockingConfig = {
   storageKey: 'docking/v2:discovery',
-  availableTabs: PANEL_IDS,
-  filterTab: (id) => !(IS_READONLY && id === 'terminal'),
   defaultLayout,
   maxLayouts: 6,
+  isValidKey: isPanelId,
+  renderHeader: (api) => <PanelHeader api={api} />,
   renderBody,
-  renderTabLabel,
-  renderTabExtras,
+  renderDragPreview: (key) => (isPanelId(key) ? <PanelLabel id={key} /> : key),
 }

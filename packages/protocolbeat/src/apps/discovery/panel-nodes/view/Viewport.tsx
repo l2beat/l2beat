@@ -42,7 +42,7 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
     desktopControls,
   })
 
-  const currentPanel = useDockingStore((state) => state.activeTab)
+  const currentPanel = useDockingStore((state) => state.activeLeaf)
   const searchOpened = useSearchStore((state) => state.opened)
   // Always capture if we're not in panel mode, or if we're in nodes panel
   const shouldCapture =

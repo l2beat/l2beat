@@ -1,16 +1,23 @@
-export type { DockingHook } from './context'
+export { type DockingHook, useDockingHook } from './context'
 export { Docking } from './Docking'
 export type { DockingActions, DockingState, DockingStore } from './store'
 export { createDockingStore } from './store'
-export { findLeafByTab, newLeaf, newSplit } from './tree'
+export {
+  allKeys,
+  findLeafByKey,
+  newLeaf,
+  newSplit,
+  nextAvailableKey,
+} from './tree'
 export type {
   DockingConfig,
   DropTarget,
   Edge,
   LayoutNode,
+  LeafApi,
+  LeafKey,
   LeafNode,
   NodeId,
   SplitDirection,
   SplitNode,
-  TabId,
 } from './types'

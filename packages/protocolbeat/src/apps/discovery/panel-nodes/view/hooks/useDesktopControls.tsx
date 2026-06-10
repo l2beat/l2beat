@@ -24,7 +24,7 @@ export function useDesktopControls({
   viewRef,
   containerRef,
 }: Props): DesktopControls {
-  const currentPanel = useDockingStore((state) => state.activeTab)
+  const currentPanel = useDockingStore((state) => state.activeLeaf)
   const searchOpened = useSearchStore((state) => state.opened)
 
   const onKeyDown = useStore((state) => state.onKeyDown)

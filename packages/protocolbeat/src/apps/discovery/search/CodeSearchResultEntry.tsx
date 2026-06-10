@@ -18,7 +18,7 @@ export function CodeSearchResultEntry({
 }: CodeSearchEntryProps) {
   const { setOpen, searchTerm, selectedIndex } = useSearchStore()
   const { setSourceIndex, showRange } = useCodeStore()
-  const ensureTab = useDockingStore((state) => state.ensureTab)
+  const ensureLeaf = useDockingStore((state) => state.ensureLeaf)
   const codeSearchTerm = getCodeSearchTerm(searchTerm).content
 
   let runningIndex = 0
@@ -52,7 +52,7 @@ export function CodeSearchResultEntry({
                       : 'bg-coffee-700 text-coffee-200 hover:bg-coffee-600 hover:text-autumn-300',
                   )}
                   onClick={() => {
-                    ensureTab('code')
+                    ensureLeaf('code')
                     select(result.address)
                     setOpen(false)
                     setSourceIndex(result.address, loc.index)

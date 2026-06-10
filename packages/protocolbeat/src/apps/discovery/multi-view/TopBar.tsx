@@ -9,14 +9,13 @@ import { useTerminalStore } from '../panel-terminal/store'
 import { useDiscoveryCommand } from '../panel-terminal/useDiscoveryCommand'
 import { Search } from '../search/Search'
 import { SettingsDialog } from './SettingsDialog'
-import { useDockingStore } from './store'
+import { addPanel, useDockingStore } from './store'
 
 export function TopBar(props: { project: string }) {
   const layouts = useDockingStore((state) => state.layouts)
   const selectedLayout = useDockingStore((state) => state.selectedLayout)
   const loadLayout = useDockingStore((state) => state.loadLayout)
   const resetLayout = useDockingStore((state) => state.resetLayout)
-  const addTab = useDockingStore((state) => state.addTab)
   const { command } = useTerminalStore()
   const { killCommand, discover } = useDiscoveryCommand()
 
@@ -76,7 +75,11 @@ export function TopBar(props: { project: string }) {
               </button>
             ))}
           </div>
-          <Button size="small" className="rounded-sm" onClick={() => addTab()}>
+          <Button
+            size="small"
+            className="rounded-sm"
+            onClick={() => addPanel()}
+          >
             <IconPlus />
             <span className="max-lg:hidden">Panel</span>
           </Button>
