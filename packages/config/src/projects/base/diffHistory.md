@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x50e5cf659c693f6a12e82237d0991dc997930805
+
+# Diff at Wed, 10 Jun 2026 15:33:22 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@3d7d193af6bb84bba0cb2817621d9f6c8df11cf4 block: 1780924988
+- current timestamp: 1781105531
+
+## Description
+
+Rotated TEE signers.
+
+## Watched changes
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
++++ severity: LOW
+      values.getRegisteredSigners.0:
+-        "eth:0xBeF9176fa15489735Cc8B1ddD97E53b4a656287e"
++        "eth:0x8a2B99252bad63813e704237Bf2A40A6a4cEBda9"
++++ severity: LOW
+      values.getRegisteredSigners.1:
+-        "eth:0xB830004297a91c10ed7428f462FCf0cc5073e9A2"
++        "eth:0xf3aef21F74AD989812D066ad3e51b986ED312875"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780924988 (main branch discovery), not current.
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
+      fieldMeta.getRegisteredSigners.severity:
+-        "HIGH"
++        "LOW"
+    }
+```
+
 Generated with discovered.json: 0xdcf8bd9b053165cd4698e363f3455912d2a77695
 
 # Diff at Tue, 09 Jun 2026 12:43:31 GMT:
