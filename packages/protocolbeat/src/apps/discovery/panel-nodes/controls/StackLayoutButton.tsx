@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
+import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
 import type { NodeLocations } from '../store/utils/storage'
 import { ControlButton } from './ControlButton'
 import { IconControlStack } from './icons/IconControlStack'
@@ -19,7 +20,19 @@ export function StackLayoutButton({ className }: { className?: string }) {
 
   return (
     <ControlButton
-      onClick={() => layout(stackAutoLayout(visibleNodes, considerAllNodes))}
+      onClick={() => {
+        let locations = stackAutoLayout(visibleNodes, considerAllNodes)
+        if (considerAllNodes) {
+          const { transform, viewportContainer } = useStore.getState()
+          locations = centerLocationsInViewport(
+            locations,
+            visibleNodes,
+            transform,
+            viewportContainer,
+          )
+        }
+        layout(locations)
+      }}
       className={clsx('px-3 py-2.5', className)}
     >
       <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
