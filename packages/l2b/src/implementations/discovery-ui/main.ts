@@ -110,7 +110,6 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const diffoveryController = new DiffoveryController(flatSourceClient)
 
   app.use(express.json())
-  attachAnalyzeRouter(app, configReader)
 
   app.get('/health', (_, res) => {
     res.status(200).send('OK')
@@ -274,6 +273,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   attachLayoutRouter(app, configReader, readonly)
 
   if (!readonly) {
+    attachAnalyzeRouter(app, configReader)
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
 
