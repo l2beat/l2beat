@@ -32,7 +32,8 @@ export async function getScalingRiskDataAvailabilityData(
           'Compare data availability solutions used by Ethereum scaling projects.',
         url: req.originalUrl,
         openGraph: {
-          image: '/meta-images/scaling/data-availability/opengraph-image.png',
+          image:
+            '/meta-images/scaling/risks/data-availability/opengraph-image.png',
         },
       }),
     },
