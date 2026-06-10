@@ -41,7 +41,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
         <NavTabRow
           links={activeSubLinks}
           pathname={pathname}
-          tabClassName="bg-header-secondary"
+          tabClassName="h-8 text-[10px]"
         />
       )}
     </>
