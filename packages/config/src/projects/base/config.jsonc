@@ -60,6 +60,11 @@
       "manualSourcePaths": {
         "eth:0x0000F90827F1C53a10cb7A02335B175320002935": "https://eips.ethereum.org/EIPS/eip-2935"
       }
+    },
+    "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA": {
+      "fields": {
+        "getRegisteredSigners": { "severity": "LOW" }
+      }
     }
   }
 }
