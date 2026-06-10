@@ -72,12 +72,7 @@ export const scalingSequencingColumns = [
     columnHelper.accessor((entry) => adjustTableValue(entry[key]), {
       id: key,
       header,
-      cell: (ctx) => (
-        <TableValueCell
-          value={ctx.row.original[key]}
-          href={getSequencingHref(ctx.row.original)}
-        />
-      ),
+      cell: (ctx) => <TableValueCell value={ctx.row.original[key]} />,
       meta: tooltip ? { tooltip } : undefined,
       sortDescFirst: true,
       sortUndefined: 'last',
