@@ -19,10 +19,11 @@
     "lint": "biome check --formatter-enabled=false .",
     "format": "biome check .",
     "format:fix": "biome check --write .",
-    "test": "mocha",
+    "test": "pnpm test:unit && pnpm:test:e2e",
+    "test:unit": "mocha",
+    "test:e2e": "pnpm build && playwright test",
     "typecheck": "tsc --noEmit",
-    "test-all-pages": "scripts/test-all-pages/test.sh",
-    "test-prefetches": "scripts/test-prefetches/test.sh"
+    "test-all-pages": "scripts/test-all-pages/test.sh"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",

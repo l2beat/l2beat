@@ -6,8 +6,9 @@ export interface PageToVerify {
   expectedQueries: string[]
 }
 
-function page(url: string, expectedQueries: string[]): PageToVerify {
-  return { url, expectedQueries }
+export interface DynamicPageToVerify {
+  name: string
+  resolve: () => Promise<PageToVerify | undefined>
 }
 
 /**
@@ -19,7 +20,7 @@ function page(url: string, expectedQueries: string[]): PageToVerify {
  * page should have at least one expected query path; pages without SSR
  * prefetches are not useful for this check.
  */
-const STATIC_PAGES: PageToVerify[] = [
+export const STATIC_PAGES: PageToVerify[] = [
   page('/scaling/summary', [
     'tvs.recategorisedChart',
     'activity.recategorisedChart',
@@ -50,9 +51,7 @@ const STATIC_PAGES: PageToVerify[] = [
     'interop.flows',
     'da.projectCharts',
   ]),
-  page('/data-availability/projects/eigenda/eigenda-v2#throughput', [
-    'da.projectCharts',
-  ]),
+  page('/data-availability/projects/eigenda/eigenda-v2', ['da.projectCharts']),
   page('/interop/summary', ['interop.flows']),
   page('/interop/lock-and-mint?from=ethereum&to=arbitrum', [
     'interop.dashboard',
@@ -72,32 +71,48 @@ const STATIC_PAGES: PageToVerify[] = [
   ]),
 ]
 
+export const DYNAMIC_PAGES: DynamicPageToVerify[] = [
+  {
+    name: 'representative ecosystem page',
+    async resolve() {
+      const [ecosystem] = await ps.getProjects({ where: ['ecosystemConfig'] })
+      return ecosystem
+        ? page(`/ecosystems/${ecosystem.slug}`, ['activity.chart'])
+        : undefined
+    },
+  },
+  {
+    name: 'representative privacy project page',
+    async resolve() {
+      const [privacyProject] = await ps.getProjects({
+        where: ['privacyInfo'],
+      })
+
+      return privacyProject
+        ? page(`/privacy/projects/${privacyProject.slug}`, [
+            'privacy.flowsChart',
+            'privacy.tvlChart',
+          ])
+        : undefined
+    },
+  },
+]
+
 /**
  * Resolves the full list of page URLs to verify, adding one representative
  * dynamic page per pattern (slugs resolved the same way SitemapRouter does).
  */
 export async function resolvePages(): Promise<PageToVerify[]> {
-  const [ecosystemProjects, privacyProjects] = await Promise.all([
-    ps.getProjects({ where: ['ecosystemConfig'] }),
-    ps.getProjects({ where: ['privacyInfo'] }),
-  ])
-
   const pages = [...STATIC_PAGES]
-
-  const ecosystem = ecosystemProjects[0]
-  if (ecosystem) {
-    pages.push(page(`/ecosystems/${ecosystem.slug}`, ['activity.chart']))
+  for (const dynamicPage of DYNAMIC_PAGES) {
+    const resolved = await dynamicPage.resolve()
+    if (resolved) {
+      pages.push(resolved)
+    }
   }
-
-  const privacyProject = privacyProjects[0]
-  if (privacyProject) {
-    pages.push(
-      page(`/privacy/projects/${privacyProject.slug}`, [
-        'privacy.flowsChart',
-        'privacy.tvlChart',
-      ]),
-    )
-  }
-
   return pages
+}
+
+function page(url: string, expectedQueries: string[]): PageToVerify {
+  return { url, expectedQueries }
 }

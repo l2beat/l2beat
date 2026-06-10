@@ -30,6 +30,7 @@ export function FlowsGraphPanel({
 }: FlowsGraphPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
+  console.log(width, height)
   const size =
     width && height ? getSteppedSize(Math.min(width, height)) : undefined
   const isSmallScreen = size ? size <= 500 : false

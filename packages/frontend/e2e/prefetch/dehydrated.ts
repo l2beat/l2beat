@@ -53,7 +53,7 @@ export async function checkDehydrated(
   const { url } = page
   let html: string
   try {
-    const response = await fetch(`${baseUrl}${url}`, {
+    const response = await fetch(new URL(url, baseUrl), {
       headers: { 'User-Agent': 'L2Beat-Prefetch-Test/1.0' },
       signal: AbortSignal.timeout(30000),
     })

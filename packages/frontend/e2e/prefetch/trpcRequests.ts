@@ -1,4 +1,4 @@
-import { type Browser, chromium } from 'playwright'
+import type { Page } from 'playwright/test'
 
 /** A query the server actually prefetched (path + the exact input it used). */
 export interface PrefetchedKey {
@@ -99,16 +99,22 @@ function parseCalls(rawUrl: string): TrpcCall[] {
   })
 }
 
-async function checkPage(
-  browser: Browser,
-  baseUrl: string,
+/**
+ * Layer 2: verifies the client serves prefetched queries from the hydrated
+ * cache instead of refetching. Loads each page and:
+ *  - FAILS if a prefetched query's exact key is requested over the wire
+ *    (hydration regression), and
+ *  - WARNS if the same procedure is fetched with a different input than
+ *    prefetched (possible wasted prefetch).
+ */
+export async function checkNoRefetch(
+  page: Page,
   item: PageWithPrefetch,
 ): Promise<NoRefetchResult> {
   const { url, prefetched } = item
-  const tab = await browser.newPage()
   const observed = new Map<string, unknown[]>()
 
-  tab.on('request', (request) => {
+  page.on('request', (request) => {
     const reqUrl = request.url()
     if (reqUrl.includes('/api/trpc/')) {
       for (const call of parseCalls(reqUrl)) {
@@ -120,16 +126,15 @@ async function checkPage(
   })
 
   try {
-    await tab.goto(`${baseUrl}${url}`, {
+    await page.goto(url, {
       waitUntil: 'networkidle',
       timeout: 45000,
     })
     // Trigger any below-the-fold charts that fetch on becoming visible, then
     // wait for the network to settle again so their requests are observed.
-    await tab.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
-    await tab.waitForLoadState('networkidle', { timeout: 15000 })
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+    await page.waitForLoadState('networkidle', { timeout: 15000 })
   } catch (error) {
-    await tab.close()
     return {
       url,
       ok: false,
@@ -139,8 +144,6 @@ async function checkPage(
       error: error instanceof Error ? error.message : 'navigation failed',
     }
   }
-
-  await tab.close()
 
   const refetched: PrefetchedKey[] = []
   const mismatched: MismatchedProcedure[] = []
@@ -167,29 +170,5 @@ async function checkPage(
     refetched,
     mismatched,
     observed: [...observed.keys()],
-  }
-}
-
-/**
- * Layer 2: verifies the client serves prefetched queries from the hydrated
- * cache instead of refetching. Loads each page in a headless browser and:
- *  - FAILS if a prefetched query's exact key is requested over the wire
- *    (hydration regression), and
- *  - WARNS if the same procedure is fetched with a different input than
- *    prefetched (possible wasted prefetch).
- */
-export async function checkNoRefetch(
-  baseUrl: string,
-  items: PageWithPrefetch[],
-): Promise<NoRefetchResult[]> {
-  const browser = await chromium.launch()
-  try {
-    const results: NoRefetchResult[] = []
-    for (const item of items) {
-      results.push(await checkPage(browser, baseUrl, item))
-    }
-    return results
-  } finally {
-    await browser.close()
   }
 }
