@@ -77,9 +77,7 @@ function FlowsViewContent({
     ? highlightedChains
     : highlightedChains.filter((chainId) => activeIds.has(chainId))
   const hasGraphSelection = visibleHighlightedChains.length > 0
-  const shouldRenderInactiveChainsInfo = hasEnoughChains && hasEnoughProtocols
-  const shouldShowInactiveChainsInfo =
-    !!data && inactiveChains.length > 0 && !isLoading
+  const showInactiveChainsInfo = !!data && inactiveChains.length > 0
 
   return (
     <>
@@ -95,7 +93,7 @@ function FlowsViewContent({
           <FlowsGeneralStats />
         </div>
         <div className="flex h-full min-w-0 flex-col">
-          <div className="group/flows flex h-full w-full min-w-0 flex-col items-center gap-10 pb-4 xl:h-[calc(100svh-12rem)]">
+          <div className="group/flows flex h-full w-full min-w-0 flex-col items-center gap-10 pb-4 xl:h-[max(calc(100svh-24rem),40rem)]">
             <div className="flex flex-col items-center gap-3 max-lg:order-1">
               <div className="flex gap-2">
                 <FlowsChainsSelector allChains={interopChains} />
@@ -113,18 +111,18 @@ function FlowsViewContent({
               isLoading={isLoading}
             />
           </div>
-          {shouldRenderInactiveChainsInfo && (
+          {(isLoading || showInactiveChainsInfo) && (
             <div className="mt-3 flex min-h-6 w-full items-center justify-center gap-1 pt-1 max-lg:order-2">
-              {shouldShowInactiveChainsInfo ? (
+              {isLoading ? (
+                <Skeleton className="h-4 w-40 md:h-5" />
+              ) : (
                 <>
                   <span className="font-normal text-secondary text-xs leading-none md:text-base">
                     No transfers detected for
                   </span>
                   <InactiveChainsDialog chains={inactiveChains} />
                 </>
-              ) : isLoading ? (
-                <Skeleton className="h-4 w-40 md:h-5" />
-              ) : null}
+              )}
             </div>
           )}
         </div>

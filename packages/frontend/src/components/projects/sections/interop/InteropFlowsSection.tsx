@@ -95,9 +95,7 @@ function Content({
     activeIds.has(chainId),
   )
   const hasGraphSelection = visibleHighlightedChains.length > 0
-  const shouldRenderInactiveChainsInfo = hasEnoughChains && hasEnoughProtocols
-  const shouldShowInactiveChainsInfo =
-    !!data && inactiveChains.length > 0 && !isLoading
+  const showInactiveChainsInfo = !!data && inactiveChains.length > 0
   const { dollarsPerParticle } = useScaledParticleCounts(
     selectedChains,
     data?.chainData,
@@ -132,18 +130,18 @@ function Content({
             topChainId={defaultStatsChainId}
           />
         </div>
-        {shouldRenderInactiveChainsInfo && (
+        {(isLoading || showInactiveChainsInfo) && (
           <div className="mt-3 flex min-h-6 w-full items-center justify-center gap-1 pt-1 max-lg:order-2">
-            {shouldShowInactiveChainsInfo ? (
+            {isLoading ? (
+              <Skeleton className="h-4 w-40 md:h-5" />
+            ) : (
               <>
                 <span className="font-normal text-secondary text-xs leading-none md:text-base">
                   No transfers detected for
                 </span>
                 <InactiveChainsDialog chains={inactiveChains} />
               </>
-            ) : isLoading ? (
-              <Skeleton className="h-4 w-40 md:h-5" />
-            ) : null}
+            )}
           </div>
         )}
       </div>
