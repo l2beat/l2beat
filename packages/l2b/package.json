@@ -39,6 +39,7 @@
     "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
     "express": "^4.21.1",
+    "form-data": "^4.0.4",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
     "readline-sync": "^1.4.10",

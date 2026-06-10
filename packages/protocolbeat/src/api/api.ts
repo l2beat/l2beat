@@ -1,10 +1,8 @@
-import { withoutUndefinedKeys } from '../utils/withoutUndefinedKeys'
 import {
-  type ApiAnalyzer,
-  type ApiAnalyzerResult,
-  ApiAnalyzerResultSchema,
-  ApiAnalyzersSchema,
-} from './analyzerTypes'
+  AnalyzerResultApiResponse,
+  AnalyzersApiResponse,
+} from '@l2beat/shared-pure'
+import { withoutUndefinedKeys } from '../utils/withoutUndefinedKeys'
 import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
@@ -317,13 +315,13 @@ export async function getHandlers(): Promise<ApiHandlersResponse> {
   return data as ApiHandlersResponse
 }
 
-export async function getAnalyzers(): Promise<ApiAnalyzer[]> {
+export async function getAnalyzers(): Promise<AnalyzersApiResponse> {
   const res = await fetch('/api/analyze/analyzers')
   if (!res.ok) {
     throw new Error(await readErrorMessage(res))
   }
   const data = await res.json()
-  return ApiAnalyzersSchema.parse(data)
+  return AnalyzersApiResponse.parse(data)
 }
 
 export async function runAnalyzer(
@@ -331,7 +329,7 @@ export async function runAnalyzer(
   address: string,
   analyzerId: string,
   sourceName: string,
-): Promise<ApiAnalyzerResult> {
+): Promise<AnalyzerResultApiResponse> {
   const res = await fetch(`/api/projects/${project}/analyze/${address}`, {
     method: 'POST',
     body: JSON.stringify({ analyzerId, sourceName }),
@@ -345,7 +343,7 @@ export async function runAnalyzer(
   }
 
   const data = await res.json()
-  return ApiAnalyzerResultSchema.parse(data)
+  return AnalyzerResultApiResponse.parse(data)
 }
 
 export async function createShape(

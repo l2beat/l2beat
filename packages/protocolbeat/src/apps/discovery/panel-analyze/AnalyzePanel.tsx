@@ -1,7 +1,7 @@
+import type { AnalyzerResultApiResponse } from '@l2beat/shared-pure'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { getAnalyzers, getCode, runAnalyzer } from '../../../api/api'
-import type { ApiAnalyzerResult } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { Button } from '../../../components/Button'
 import { ErrorState } from '../../../components/ErrorState'
@@ -185,7 +185,7 @@ function StatusText(props: { error: string }) {
 }
 
 function ResultView(props: {
-  result: ApiAnalyzerResult | undefined
+  result: AnalyzerResultApiResponse | undefined
   error: Error | null
 }) {
   if (props.error) {

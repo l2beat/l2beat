@@ -1,12 +1,10 @@
+import {
+  AnalyzerResultApiResponse,
+  AnalyzersApiResponse,
+} from '@l2beat/shared-pure'
+import FormData from 'form-data'
 import { Agent as HttpsAgent } from 'https'
 import fetch, { Headers, type RequestInit } from 'node-fetch'
-import {
-  type ApiAnalyzer,
-  type ApiAnalyzerResult,
-  ApiAnalyzerResultSchema,
-  ApiAnalyzersSchema,
-} from './models'
-import { createAnalyzeMultipartBody, type MultipartBody } from './multipart'
 
 const DEFAULT_ANALYZE_URL = 'https://analyze.internal.l2beat.com'
 
@@ -17,10 +15,6 @@ interface Schema<T> {
 interface AnalyzeClientOptions {
   baseUrl?: string
   apiKey?: string
-}
-
-type AnalyzeRequestInit = Omit<RequestInit, 'body' | 'headers'> & {
-  body?: RequestInit['body'] | MultipartBody
 }
 
 export class AnalyzeClientError extends Error {
@@ -35,20 +29,27 @@ export class AnalyzeClientError extends Error {
 export class AnalyzeClient {
   constructor(private readonly options: AnalyzeClientOptions = {}) {}
 
-  async getAnalyzers(): Promise<ApiAnalyzer[]> {
-    return await this.requestJson('/v1/analyzers', ApiAnalyzersSchema)
+  async getAnalyzers(): Promise<AnalyzersApiResponse> {
+    return await this.requestJson('/v1/analyzers', AnalyzersApiResponse)
   }
 
   async runAnalyzer(
     analyzerId: string,
     source: { name: string; code: string },
-  ): Promise<ApiAnalyzerResult> {
+  ): Promise<AnalyzerResultApiResponse> {
+    const body = new FormData()
+    body.append('file', source.code, {
+      filename: source.name,
+      contentType: 'text/plain',
+    })
+    body.append('entrypoint', source.name)
+
     return await this.requestJson(
       `/v1/analyze/${encodeURIComponent(analyzerId)}`,
-      ApiAnalyzerResultSchema,
+      AnalyzerResultApiResponse,
       {
         method: 'POST',
-        body: createAnalyzeMultipartBody(source.name, source.code),
+        body,
       },
     )
   }
@@ -56,13 +57,12 @@ export class AnalyzeClient {
   private async requestJson<T>(
     path: string,
     schema: Schema<T>,
-    init: AnalyzeRequestInit = {},
+    init: RequestInit = {},
   ): Promise<T> {
     const url = new URL(path, this.getBaseUrl())
     const response = await fetch(url.toString(), {
       ...init,
-      headers: this.getHeaders(init.body),
-      body: isMultipartBody(init.body) ? init.body.buffer : init.body,
+      headers: this.getHeaders(),
       agent: getHttpsAgent(url),
     })
     const body = await response.text()
@@ -91,30 +91,14 @@ export class AnalyzeClient {
     )
   }
 
-  private getHeaders(body: AnalyzeRequestInit['body']) {
+  private getHeaders() {
     const headers = new Headers()
     const apiKey = this.options.apiKey ?? process.env.L2ANALYZE_API_KEY
     if (apiKey) {
       headers.set('Authorization', `Bearer ${apiKey}`)
     }
-    if (isMultipartBody(body)) {
-      headers.set('Content-Type', body.contentType)
-      headers.set('Content-Length', body.contentLength.toString())
-    }
     return headers
   }
-}
-
-function isMultipartBody(
-  body: AnalyzeRequestInit['body'],
-): body is MultipartBody {
-  return (
-    typeof body === 'object' &&
-    body !== null &&
-    'buffer' in body &&
-    'contentType' in body &&
-    'contentLength' in body
-  )
 }
 
 function parseJson(body: string, status: number, statusText: string): unknown {
@@ -146,9 +130,7 @@ function getHttpsAgent(url: URL) {
     return undefined
   }
 
-  const allowBrokenCert =
-    process.env.L2ANALYZE_ALLOW_BROKEN_CERT === 'true' ||
-    url.hostname === 'analyze.internal.l2beat.com'
+  const allowBrokenCert = process.env.L2ANALYZE_ALLOW_BROKEN_CERT === 'true'
 
   return allowBrokenCert
     ? new HttpsAgent({ rejectUnauthorized: false })

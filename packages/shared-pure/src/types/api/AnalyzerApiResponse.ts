@@ -2,7 +2,7 @@ import { v } from '@l2beat/validate'
 
 const UnknownRecord = v.record(v.string(), v.unknown())
 
-export const ApiAnalyzerSchema = v.object({
+export const AnalyzerApiResponse = v.object({
   id: v.string(),
   title: v.string(),
   description: v.string(),
@@ -11,10 +11,12 @@ export const ApiAnalyzerSchema = v.object({
   timeoutMs: v.number(),
   cacheable: v.boolean(),
 })
+export type AnalyzerApiResponse = v.infer<typeof AnalyzerApiResponse>
 
-export const ApiAnalyzersSchema = v.array(ApiAnalyzerSchema)
+export const AnalyzersApiResponse = v.array(AnalyzerApiResponse)
+export type AnalyzersApiResponse = v.infer<typeof AnalyzersApiResponse>
 
-export const ApiAnalyzerResultSchema = v.union([
+export const AnalyzerResultApiResponse = v.union([
   v.object({
     status: v.literal('ok'),
     output: v.object({
@@ -33,6 +35,6 @@ export const ApiAnalyzerResultSchema = v.union([
     metadata: UnknownRecord.optional(),
   }),
 ])
-
-export type ApiAnalyzer = v.infer<typeof ApiAnalyzerSchema>
-export type ApiAnalyzerResult = v.infer<typeof ApiAnalyzerResultSchema>
+export type AnalyzerResultApiResponse = v.infer<
+  typeof AnalyzerResultApiResponse
+>
