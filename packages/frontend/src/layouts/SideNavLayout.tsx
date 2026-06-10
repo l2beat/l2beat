@@ -66,13 +66,13 @@ export function SideNavLayout({
                   exactMatch: true,
                 },
                 {
+                  title: 'State Validation',
+                  href: '/scaling/risk/state-validation',
+                },
+                {
                   title: 'Data Availability',
                   shortTitle: 'DA',
                   href: '/scaling/risk/data-availability',
-                },
-                {
-                  title: 'State Validation',
-                  href: '/scaling/risk/state-validation',
                 },
                 {
                   title: 'Sequencing',
