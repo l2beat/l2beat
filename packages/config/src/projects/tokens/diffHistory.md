@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x78612c36145f6070d753ab0c7c8862eb18046744
+
+# Diff at Mon, 08 Jun 2026 13:27:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b249a098f7367cb0ead3d881bbc57b408521134 block: 1780406494
+- current timestamp: 1780406494
+
+## Description
+
+rm circle (moved to shared-circle disco)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780406494 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract TokenMessenger (base:0x1682Ae6375C4E4A97e4B583BC394c861A46D8962) [tokens/circle/TokenMessenger]
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayMinter (base:0x2222222d7164433c4C09B0b0D809a9b52C04C205) [tokens/circle/GatewayMinter]
+    +++ description: Entrypoint or minter of USDC on this chain for the Gateway protocol.
+```
+
+```diff
+-   Status: DELETED
+    contract MasterMinter (base:0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1) [tokens/circle/MasterMinter]
+    +++ description: Manager contract for minter management [sic].
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessengerV2 (base:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d) [tokens/circle/TokenMessenger]
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayWallet (base:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE) [tokens/circle/GatewayWallet]
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+```
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitterV2 (base:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64) [tokens/circle/MessageTransmitter]
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) [tokens/circle/USDC]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitter (base:0xAD09780d193884d503182aD4588450C416D6F9D4) [tokens/circle/MessageTransmitter]
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinter (base:0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6) [tokens/circle/TokenMinter]
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinterV2 (base:0xfd78EE919681417d192449715b2594ab58f5D002) [tokens/circle/TokenMinter]
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
 Generated with discovered.json: 0x9f32bfe92123317754e52ad3a4c4460394568990
 
 # Diff at Tue, 02 Jun 2026 13:23:14 GMT:
