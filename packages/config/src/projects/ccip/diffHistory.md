@@ -15,7 +15,7 @@ FeeQuoter v2 deployed: heavily simplified compared to the previous version.
 - Only one token transfer per message is allowed now and out of order execution is mandatory.
 - Fee tokens are now added implicitly when updating prices, removed ad-hoc functions. Events remain the same so handlers still work.
 
-Since the price update fallback has been removed, a lot of new authorized priced updaters have been added. The net change is not that less actors can update the price but just that the code is simpler.
+Since the price update fallback has been removed, a lot of new authorized priced updaters have been added. The net change is not that less actors can update the price but just that the code is simpler. Diff is big because a lot of CommitStores have been added.
 
 ## Watched changes
 
