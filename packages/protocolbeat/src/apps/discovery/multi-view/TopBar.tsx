@@ -8,7 +8,7 @@ import { IconRefresh } from '../../../icons/IconRefresh'
 import { useTerminalStore } from '../panel-terminal/store'
 import { useDiscoveryCommand } from '../panel-terminal/useDiscoveryCommand'
 import { Search } from '../search/Search'
-import { getAvailablePanelIds } from './panels'
+import { AVAILABLE_PANEL_IDS } from './panels'
 import { SettingsDialog } from './SettingsDialog'
 import { useMultiViewStore } from './store'
 
@@ -19,7 +19,6 @@ export function TopBar(props: { project: string }) {
   const addPanel = useMultiViewStore((state) => state.addPanel)
   const { command } = useTerminalStore()
   const { killCommand, discover } = useDiscoveryCommand()
-  const availablePanelIds = getAvailablePanelIds(IS_READONLY)
 
   // By default when using top bar
   const useDevMode = true
@@ -80,7 +79,7 @@ export function TopBar(props: { project: string }) {
           <Button
             size="small"
             className="rounded-sm"
-            onClick={() => addPanel(availablePanelIds)}
+            onClick={() => addPanel(AVAILABLE_PANEL_IDS)}
           >
             <IconPlus />
             <span className="max-lg:hidden">Panel</span>

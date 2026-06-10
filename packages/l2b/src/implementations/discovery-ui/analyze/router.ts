@@ -52,7 +52,8 @@ export function attachAnalyzeRouter(app: Express, configReader: ConfigReader) {
     const { analyzerId, sourceName } = bodyValidation.data
     let source: ApiCodeResponse['sources'][number] | undefined
     try {
-      source = readSource(configReader, project, address, sourceName)
+      const code = getCodeFromDisk(configReader, project, address)
+      source = code.sources.find((source) => source.name === sourceName)
     } catch (error) {
       console.error(error)
       res.status(500).json({ error: 'Failed to load source file' })
@@ -71,16 +72,6 @@ export function attachAnalyzeRouter(app: Express, configReader: ConfigReader) {
       respondWithAnalyzeError(res, error, 'Failed to run analyzer')
     }
   })
-}
-
-function readSource(
-  configReader: ConfigReader,
-  project: string,
-  address: ChainSpecificAddress,
-  sourceName: string,
-): ApiCodeResponse['sources'][number] | undefined {
-  const code = getCodeFromDisk(configReader, project, address)
-  return code.sources.find((source) => source.name === sourceName)
 }
 
 function respondWithAnalyzeError(

@@ -3,7 +3,6 @@ import clsx from 'clsx'
 import { useParams } from 'react-router-dom'
 import { getCode } from '../../../api/api'
 import type { ApiAbi, Field } from '../../../api/types'
-import { IS_READONLY } from '../../../config/readonly'
 import { IconChatbot } from '../../../icons/IconChatbot'
 import { IconChecked } from '../../../icons/IconChcked'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
@@ -13,8 +12,8 @@ import { IconFullscreenExit } from '../../../icons/IconFullscreenExit'
 import { findSelected } from '../../../utils/findSelected'
 import { getProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
-import { getAvailablePanelIds, PANEL_DEFINITIONS, type PanelId } from './panels'
-import { useMultiViewStore } from './store'
+import { AVAILABLE_PANEL_IDS, PANEL_DEFINITIONS } from './panels'
+import { type PanelId, useMultiViewStore } from './store'
 
 export function PanelHeader(props: { id: PanelId }) {
   const isFullScreen = useMultiViewStore(
@@ -29,7 +28,6 @@ export function PanelHeader(props: { id: PanelId }) {
   const selectedAddress = usePanelStore((state) => state.selected)
   const highlighted = usePanelStore((state) => state.highlighted)
 
-  const availablePanels = getAvailablePanelIds(IS_READONLY)
   const Icon = PANEL_DEFINITIONS[props.id].icon
 
   return (
@@ -58,7 +56,7 @@ export function PanelHeader(props: { id: PanelId }) {
             className="z-[1000] cursor-default select-none border border-coffee-500 bg-coffee-800 font-bold text-coffee-200 text-xs uppercase shadow-lg"
           >
             <RadixSelect.Viewport>
-              {availablePanels.map((id) => {
+              {AVAILABLE_PANEL_IDS.map((id) => {
                 const ItemIcon = PANEL_DEFINITIONS[id].icon
                 return (
                   <RadixSelect.Item

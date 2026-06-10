@@ -6,7 +6,8 @@ import { IS_READONLY } from '../../config/readonly'
 import { findSelected } from '../../utils/findSelected'
 import { useProjectQueryOptions } from './hooks/projectQuery'
 import { MultiView } from './multi-view/MultiView'
-import { isReadonlyPanel, type PanelId } from './multi-view/panels'
+import { PANEL_DEFINITIONS } from './multi-view/panels'
+import type { PanelId } from './multi-view/store'
 import { AnalyzePanel } from './panel-analyze/AnalyzePanel'
 import { CodePanel } from './panel-code/CodePanel'
 import { ConfigPanel } from './panel-config/ConfigPanel'
@@ -67,6 +68,8 @@ const PANELS: Record<PanelId, () => JSX.Element> = {
 
 function Panel(props: { kind: PanelId }) {
   const Component =
-    IS_READONLY && !isReadonlyPanel(props.kind) ? ListPanel : PANELS[props.kind]
+    IS_READONLY && !PANEL_DEFINITIONS[props.kind].readonly
+      ? ListPanel
+      : PANELS[props.kind]
   return <Component />
 }

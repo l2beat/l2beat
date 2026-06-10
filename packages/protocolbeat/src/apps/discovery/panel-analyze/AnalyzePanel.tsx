@@ -63,17 +63,12 @@ export function AnalyzePanel() {
   )
 
   const analyzeMutation = useMutation({
-    mutationFn: () => {
-      if (!selectedAddress || !selectedAnalyzer || !selectedSource) {
-        throw new Error('Missing analyzer inputs')
-      }
-      return runAnalyzer(
-        project,
-        selectedAddress,
-        selectedAnalyzer,
-        selectedSource,
-      )
-    },
+    mutationFn: (input: {
+      address: string
+      analyzerId: string
+      sourceName: string
+    }) =>
+      runAnalyzer(project, input.address, input.analyzerId, input.sourceName),
   })
 
   if (projectResponse.isError) {
@@ -113,11 +108,15 @@ export function AnalyzePanel() {
         </Button>
 
         {analyzersResponse.isError && (
-          <StatusText error={analyzersResponse.error.message} />
+          <div className="text-aux-red text-xs">
+            {analyzersResponse.error.message}
+          </div>
         )}
 
         <div className="grid gap-1">
-          <Label>Analyzer</Label>
+          <div className="font-bold text-coffee-200 text-xs uppercase">
+            Analyzer
+          </div>
           <Select.Root
             value={selectedAnalyzer}
             onValueChange={setPreferredAnalyzer}
@@ -140,7 +139,9 @@ export function AnalyzePanel() {
         </div>
 
         <div className="grid gap-1">
-          <Label>Source</Label>
+          <div className="font-bold text-coffee-200 text-xs uppercase">
+            Source
+          </div>
           <Select.Root
             value={selectedSource}
             onValueChange={setPreferredSource}
@@ -155,33 +156,37 @@ export function AnalyzePanel() {
               ))}
             </Select.Content>
           </Select.Root>
-          {codeResponse.isError && <StatusText error="Failed to load code" />}
+          {codeResponse.isError && (
+            <div className="text-aux-red text-xs">Failed to load code</div>
+          )}
         </div>
 
         <Button
           className="w-fit"
           disabled={!canRun}
-          onClick={() => analyzeMutation.mutate()}
+          onClick={() => {
+            if (!selectedAddress || !selectedAnalyzer || !selectedSource) {
+              return
+            }
+            analyzeMutation.mutate({
+              address: selectedAddress,
+              analyzerId: selectedAnalyzer,
+              sourceName: selectedSource,
+            })
+          }}
         >
           {analyzeMutation.isPending ? 'Running...' : 'Run'}
         </Button>
       </div>
 
-      <ResultView result={analyzeMutation.data} error={analyzeMutation.error} />
+      {analyzeMutation.variables?.address === selectedAddress && (
+        <ResultView
+          result={analyzeMutation.data}
+          error={analyzeMutation.error}
+        />
+      )}
     </div>
   )
-}
-
-function Label(props: { children: string }) {
-  return (
-    <div className="font-bold text-coffee-200 text-xs uppercase">
-      {props.children}
-    </div>
-  )
-}
-
-function StatusText(props: { error: string }) {
-  return <div className="text-aux-red text-xs">{props.error}</div>
 }
 
 function ResultView(props: {

@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { IS_READONLY } from '../../../config/readonly'
 import { IconChatbot } from '../../../icons/IconChatbot'
 import { IconCode } from '../../../icons/IconCode'
 import { IconFileDiff } from '../../../icons/IconFileDiff'
@@ -10,8 +11,6 @@ import { IconStamp } from '../../../icons/IconStamp'
 import { IconTerminal } from '../../../icons/IconTerminal'
 import { IconWebApp } from '../../../icons/IconWebApp'
 import { PANEL_IDS, type PanelId } from './store'
-
-export type { PanelId } from './store'
 
 interface PanelDefinition {
   icon: FC<{ className?: string }>
@@ -31,10 +30,6 @@ export const PANEL_DEFINITIONS: Record<PanelId, PanelDefinition> = {
   diffHistory: { icon: IconFileDiff, readonly: true },
 }
 
-export function isReadonlyPanel(id: PanelId) {
-  return PANEL_DEFINITIONS[id].readonly
-}
-
-export function getAvailablePanelIds(readonly: boolean): readonly PanelId[] {
-  return readonly ? PANEL_IDS.filter(isReadonlyPanel) : PANEL_IDS
-}
+export const AVAILABLE_PANEL_IDS: readonly PanelId[] = IS_READONLY
+  ? PANEL_IDS.filter((id) => PANEL_DEFINITIONS[id].readonly)
+  : PANEL_IDS

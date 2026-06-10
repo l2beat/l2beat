@@ -2,15 +2,19 @@ import {
   AnalyzerResultApiResponse,
   AnalyzersApiResponse,
 } from '@l2beat/shared-pure'
+import { type Validator, v } from '@l2beat/validate'
 import FormData from 'form-data'
 import { Agent as HttpsAgent } from 'https'
 import fetch, { Headers, type RequestInit } from 'node-fetch'
 
 const DEFAULT_ANALYZE_URL = 'https://analyze.internal.l2beat.com'
 
-interface Schema<T> {
-  parse(value: unknown): T
-}
+const UpstreamErrorResponse = v.object({
+  error: v.object({
+    code: v.string(),
+    message: v.string(),
+  }),
+})
 
 interface AnalyzeClientOptions {
   baseUrl?: string
@@ -56,7 +60,7 @@ export class AnalyzeClient {
 
   private async requestJson<T>(
     path: string,
-    schema: Schema<T>,
+    schema: Validator<T>,
     init: RequestInit = {},
   ): Promise<T> {
     const url = new URL(path, this.getBaseUrl())
@@ -69,9 +73,10 @@ export class AnalyzeClient {
     const data = parseJson(body, response.status, response.statusText)
 
     if (!response.ok) {
+      const error = UpstreamErrorResponse.safeParse(data)
       throw new AnalyzeClientError(
         response.status,
-        readUpstreamError(data) ?? response.statusText,
+        error.success ? error.data.error.message : response.statusText,
       )
     }
 
@@ -110,19 +115,6 @@ function parseJson(body: string, status: number, statusText: string): unknown {
       statusText || 'Analyze service returned invalid JSON',
     )
   }
-}
-
-function readUpstreamError(data: unknown): string | undefined {
-  if (typeof data !== 'object' || data === null) {
-    return undefined
-  }
-  if ('error' in data && typeof data.error === 'string') {
-    return data.error
-  }
-  if ('message' in data && typeof data.message === 'string') {
-    return data.message
-  }
-  return undefined
 }
 
 function getHttpsAgent(url: URL) {
