@@ -13,22 +13,22 @@ import {
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
 import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
-import { getDaLayerRisks } from '../../data-availability/utils/getDaLayerRisks'
-import type { ProjectsEconomicSecurity } from '../../data-availability/utils/getDaProjectsEconomicSecurity'
-import { getDaProjectsEconomicSecurity } from '../../data-availability/utils/getDaProjectsEconomicSecurity'
+import { getDaLayerRisks } from '../../../data-availability/utils/getDaLayerRisks'
+import type { ProjectsEconomicSecurity } from '../../../data-availability/utils/getDaProjectsEconomicSecurity'
+import { getDaProjectsEconomicSecurity } from '../../../data-availability/utils/getDaProjectsEconomicSecurity'
 import {
   getDaProjectsTvs,
   pickTvsForProjects,
-} from '../../data-availability/utils/getDaProjectsTvs'
-import { getDaUsers } from '../../data-availability/utils/getDaUsers'
-import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
-import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import type { CommonScalingEntry } from '../getCommonScalingEntry'
-import { getCommonScalingEntry } from '../getCommonScalingEntry'
-import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
-import { compareTvs } from '../tvs/utils/compareTvs'
+} from '../../../data-availability/utils/getDaProjectsTvs'
+import { getDaUsers } from '../../../data-availability/utils/getDaUsers'
+import type { ProjectChanges } from '../../../projects-change-report/getProjectsChangeReport'
+import { getProjectsChangeReport } from '../../../projects-change-report/getProjectsChangeReport'
+import type { CommonScalingEntry } from '../../getCommonScalingEntry'
+import { getCommonScalingEntry } from '../../getCommonScalingEntry'
+import { get7dTvsBreakdown } from '../../tvs/get7dTvsBreakdown'
+import { compareTvs } from '../../tvs/utils/compareTvs'
 
-export async function getScalingDaEntries() {
+export async function getScalingRiskDaEntries() {
   const [
     tvs,
     projectsChangeReport,
@@ -73,7 +73,7 @@ export async function getScalingDaEntries() {
         getTvs,
         projectsEconomicSecurity,
       )
-      return getScalingDaEntry(
+      return getScalingRiskDaEntry(
         project,
         risks,
         daLayers,
@@ -88,31 +88,31 @@ export async function getScalingDaEntries() {
   return groupByScalingTabs(entries)
 }
 
-export interface ScalingDaEntry extends CommonScalingEntry {
+export interface ScalingRiskDaEntry extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem | undefined
   dataAvailability: (ProjectScalingDa & {
-    daHref?: ScalingDaEntryHref
+    daHref?: ScalingRiskDaEntryHref
   })[]
   stacks: ProjectScalingStack[] | undefined
   tvsOrder: number
   risks:
     | (EntryRisks & {
-        daHref?: ScalingDaEntryHref
+        daHref?: ScalingRiskDaEntryHref
       })[]
     | undefined
 }
 
-function getScalingDaEntry(
+function getScalingRiskDaEntry(
   project: Project<
     'scalingInfo' | 'statuses' | 'scalingDa' | 'display',
     'customDa' | 'contracts'
   >,
-  risks: ScalingDaEntry['risks'] | undefined,
+  risks: ScalingRiskDaEntry['risks'] | undefined,
   daLayers: Project<'daLayer'>[],
   changes: ProjectChanges,
   tvs: number | undefined,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
-): ScalingDaEntry {
+): ScalingRiskDaEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),
     dataAvailability: project.scalingDa.map((da) => ({
@@ -145,7 +145,7 @@ function getRisks(
     sevenDaysAgo: number
   },
   projectsEconomicSecurity: ProjectsEconomicSecurity,
-): ScalingDaEntry['risks'] | undefined {
+): ScalingRiskDaEntry['risks'] | undefined {
   return project.scalingDa
     .map((da) => {
       if (da.layer.value === 'DAC' && project.customDa) {
@@ -200,7 +200,7 @@ function getRisks(
     .filter((da) => da !== undefined)
 }
 
-interface ScalingDaEntryHref {
+interface ScalingRiskDaEntryHref {
   summary: string
   risk: string | undefined
 }
@@ -208,7 +208,7 @@ function getDaHref(
   project: Project,
   scalingDa: ProjectScalingDa,
   daLayers: Project<'daLayer'>[],
-): ScalingDaEntryHref | undefined {
+): ScalingRiskDaEntryHref | undefined {
   if (scalingDa.layer.value === 'DAC') {
     return {
       summary: `/data-availability/summary?tab=custom&highlight=${project.slug}`,

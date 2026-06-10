@@ -74,12 +74,14 @@ function MobileProjectIconTooltip({
 function DesktopStatusIcons({
   project,
   ignoreUnderReviewIcon,
+  className,
 }: {
   project: ProjectCellProject
   ignoreUnderReviewIcon?: boolean
+  className?: string
 }) {
   return (
-    <div className="flex items-center gap-1.5">
+    <div className={cn('flex items-center gap-1.5', className)}>
       {project.isLayer3 && <Layer3Icon className="size-4" />}
       {project.ecosystemInfo?.isPartOfSuperchain && <SuperchainIcon />}
       {project.quantumResistant && <QuantumResistanceIcon className="size-4" />}
@@ -264,13 +266,14 @@ function DesktopProjectNameContent({
 
   return (
     <div className="max-md:hidden">
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center">
         <PrimaryValueCell className="font-bold leading-none!">
           {projectName}
         </PrimaryValueCell>
         <DesktopStatusIcons
           project={project}
           ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+          className="ml-1.5"
         />
       </div>
       <CellBottomContent project={project} />

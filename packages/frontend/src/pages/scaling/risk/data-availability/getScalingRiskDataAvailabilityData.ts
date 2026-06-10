@@ -1,12 +1,12 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getScalingDaEntries } from '~/server/features/scaling/data-availability/getScalingDaEntries'
+import { getScalingRiskDaEntries } from '~/server/features/scaling/risks/data-availability/getScalingRiskDaEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
-export async function getScalingDataAvailabilityData(
+export async function getScalingRiskDataAvailabilityData(
   req: Request,
   manifest: Manifest,
   cache: InMemoryCache,
@@ -15,11 +15,11 @@ export async function getScalingDataAvailabilityData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['scaling', 'data-availability', 'entries'],
+        key: ['scaling', 'risk', 'data-availability', 'entries'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
-      getScalingDaEntries,
+      getScalingRiskDaEntries,
     ),
   ])
 
@@ -32,12 +32,13 @@ export async function getScalingDataAvailabilityData(
           'Compare data availability solutions used by Ethereum scaling projects.',
         url: req.originalUrl,
         openGraph: {
-          image: '/meta-images/scaling/data-availability/opengraph-image.png',
+          image:
+            '/meta-images/scaling/risks/data-availability/opengraph-image.png',
         },
       }),
     },
     ssr: {
-      page: 'ScalingDataAvailabilityPage',
+      page: 'ScalingRiskDataAvailabilityPage',
       props: {
         ...appLayoutProps,
         entries,

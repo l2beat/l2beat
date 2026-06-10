@@ -5,11 +5,11 @@ import {
   adjustTableValue,
   sortTableValues,
 } from '~/components/table/sorting/sortTableValues'
-import type { ScalingSequencingEntry } from '~/server/features/scaling/sequencing/getScalingSequencingEntries'
+import type { ScalingRiskSequencingEntry } from '~/server/features/scaling/risks/sequencing/getScalingRiskSequencingEntries'
 
-const columnHelper = createColumnHelper<ScalingSequencingEntry>()
+const columnHelper = createColumnHelper<ScalingRiskSequencingEntry>()
 
-function getSequencingHref(entry: ScalingSequencingEntry) {
+function getSequencingHref(entry: ScalingRiskSequencingEntry) {
   return `/scaling/projects/${entry.slug}#sequencing`
 }
 

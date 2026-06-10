@@ -1,12 +1,12 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getScalingSequencingEntries } from '~/server/features/scaling/sequencing/getScalingSequencingEntries'
+import { getScalingRiskSequencingEntries } from '~/server/features/scaling/risks/sequencing/getScalingRiskSequencingEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
-export async function getScalingSequencingData(
+export async function getScalingRiskSequencingData(
   req: Request,
   manifest: Manifest,
   cache: InMemoryCache,
@@ -15,11 +15,11 @@ export async function getScalingSequencingData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['scaling', 'sequencing', 'entries'],
+        key: ['scaling', 'risk', 'sequencing', 'entries'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
-      getScalingSequencingEntries,
+      getScalingRiskSequencingEntries,
     ),
   ])
 
@@ -32,12 +32,12 @@ export async function getScalingSequencingData(
           'Compare Ethereum scaling projects with decentralized sequencer sets and understand how they differ from centralized sequencers with forced-inclusion mechanisms.',
         url: req.originalUrl,
         openGraph: {
-          image: '/meta-images/scaling/sequencing/opengraph-image.png',
+          image: '/meta-images/scaling/risks/sequencing/opengraph-image.png',
         },
       }),
     },
     ssr: {
-      page: 'ScalingSequencingPage',
+      page: 'ScalingRiskSequencingPage',
       props: {
         ...appLayoutProps,
         ...props,

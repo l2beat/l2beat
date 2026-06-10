@@ -13,12 +13,15 @@ export const pageLoaders = {
   ScalingActivityPage: async () =>
     (await import('./scaling/activity/ScalingActivityPage'))
       .ScalingActivityPage,
-  ScalingDataAvailabilityPage: async () =>
-    (await import('./scaling/data-availability/ScalingDataAvailabilityPage'))
-      .ScalingDataAvailabilityPage,
-  ScalingSequencingPage: async () =>
-    (await import('./scaling/sequencing/ScalingSequencingPage'))
-      .ScalingSequencingPage,
+  ScalingRiskDataAvailabilityPage: async () =>
+    (
+      await import(
+        './scaling/risk/data-availability/ScalingRiskDataAvailabilityPage'
+      )
+    ).ScalingRiskDataAvailabilityPage,
+  ScalingRiskSequencingPage: async () =>
+    (await import('./scaling/risk/sequencing/ScalingRiskSequencingPage'))
+      .ScalingRiskSequencingPage,
   ScalingLivenessPage: async () =>
     (await import('./scaling/liveness/ScalingLivenessPage'))
       .ScalingLivenessPage,

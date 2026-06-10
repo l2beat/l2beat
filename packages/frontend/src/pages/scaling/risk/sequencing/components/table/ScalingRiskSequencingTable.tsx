@@ -4,14 +4,14 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
-import type { ScalingSequencingEntry } from '~/server/features/scaling/sequencing/getScalingSequencingEntries'
+import type { ScalingRiskSequencingEntry } from '~/server/features/scaling/risks/sequencing/getScalingRiskSequencingEntries'
 import { scalingSequencingColumns } from './columns'
 
 interface Props {
-  entries: ScalingSequencingEntry[]
+  entries: ScalingRiskSequencingEntry[]
 }
 
-export function ScalingSequencingTable({ entries }: Props) {
+export function ScalingRiskSequencingTable({ entries }: Props) {
   const { sorting, setSorting } = useTableSorting()
   const table = useTable({
     data: entries,
