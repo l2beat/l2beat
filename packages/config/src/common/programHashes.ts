@@ -467,6 +467,29 @@ fn main() {
 \`\`\`
     `,
   },
+  '0x679bc13716cdb49416a9ca9e297b10d76390df2c343690d4172676c207517915': {
+    ...AGGCHAIN_PROG('v2.0.0'),
+    programUrl:
+      'https://github.com/agglayer/provers/tree/v2.0.0/crates/aggchain-proof-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+3. Install pkg-config and OpenSSL development headers, e.g. on Debian/Ubuntu: \`sudo apt-get install pkg-config libssl-dev\`
+4. Install protobuf compiler, e.g. on Debian/Ubuntu: \`sudo apt-get install protobuf-compiler\`. Make sure \`protoc --version\` works.
+
+Verify:
+
+1. Checkout the correct branch in [provers repo](https://github.com/agglayer/provers): \`git checkout v2.0.0\`. Commit hash should be \`5c51190e0c0edd1ee9ba8bc4383bd74f361760e7\`.
+2. Make sure docker is running by running \`docker ps\`
+3. From the root dir: \`cargo make ap-elf\` to generate aggchain program elf from sources. The generated ELF should be at \`crates/aggchain-proof-program/target/elf-compilation/docker/riscv64im-succinct-zkvm-elf/release/aggchain-proof-program\`.
+4. From the root dir: \`cargo run -p aggkit-prover -- vkey\` to compute vkey hash bytes for the aggchain program. This should print \`0x679bc13716cdb49416a9ca9e297b10d76390df2c343690d4172676c207517915\`.
+
+Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey representation for this program, not the \`hash_bytes()\` program hash used here.
+    `,
+  },
   '0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53': {
     ...AGGCHAIN_PROG('v1.8.0'),
     programUrl:

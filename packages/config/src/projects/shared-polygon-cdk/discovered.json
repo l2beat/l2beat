@@ -1,6 +1,6 @@
 {
   "name": "shared-polygon-cdk",
-  "timestamp": 1777963087,
+  "timestamp": 1781095928,
   "configHash": "0x4f0f68aa1dcb12de04354a0e4d95d35ae84a82445a02904096e8caa21463ae5d",
   "entries": [
     {
@@ -107,6 +107,12 @@
               "selector": "0x000a0001",
               "newVKey": "0x7767a8330ce68dac35265ba15d9eec6722b943cf00dc3b733779e1ae55696f70"
             }
+          ],
+          "0x000b0001": [
+            {
+              "selector": "0x000b0001",
+              "newVKey": "0x679bc13716cdb49416a9ca9e297b10d76390df2c343690d4172676c207517915"
+            }
           ]
         },
         "aggchainVKeysUpdated": {},
@@ -147,14 +153,14 @@
       },
       "fieldMeta": {
         "aggchainVKeys": {
-          "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey()."
+          "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey(), which some chains (ECDSA) override and do not call."
         },
         "aggchainVKeysUpdated": {
           "description": "emitted when an existing aggchainVKey in `aggchainVKeys` is updated."
         },
         "routes": {
           "severity": "HIGH",
-          "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey. It is freely chosen by the aggregator from among any of the listed routes."
+          "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey for all VerifierType 2 (algateway) chains. It wraps the aggchainVKey, which can be FEP or just ECDSA or anything else. It is freely chosen by the aggregator from among any of the listed routes."
         },
         "aggchainMultisigHash": { "severity": "HIGH" }
       },
@@ -412,7 +418,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 100,
+        "nonce": 101,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -467,7 +473,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0xfb49d8196f4e50aa13eeaa1f9a503cfcb33d748c05cb3e37558e4f8b071bab80",
+        "getRoot": "0x36015d66fb3282b7a4eed28e1dad581fed1e2846d74583ead1110e646e9941eb",
         "getWrappedTokenBridgeImplementation": "eth:0x83D7B775de608e6e5566E86a307AE65548F341F4",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -729,10 +735,10 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x2bd01cc5aadf0896f77935ef8a579af2e21efdeaeab2f7fbe5aead343fd19331",
+        "getRollupExitRoot": "0x895fc4804bdabb579556c38209514db3b43314f7338c8139a5a5e6fc378c74ec",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1777962659,
+        "lastAggregationTimestamp": 1781093771,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [
           14, 17, 18, 19, 20, 3, 21, 22, 23, 7, 24, 26, 1, 16
@@ -1100,8 +1106,8 @@
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 873539,
-        "totalVerifiedBatches": 873036,
+        "totalSequencedBatches": 879799,
+        "totalVerifiedBatches": 879323,
         "trustedAggregatorAC": [
           "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
           "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
@@ -1183,9 +1189,9 @@
         ],
         "$upgradeCount": 5,
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 104701,
+        "depositCount": 116652,
         "GER_VERSION": "v1.0.0",
-        "getRoot": "0xe2d85900bff79b4db6d9389b9a6c8f3603290a60efeed2f7b4394cd5736345aa",
+        "getRoot": "0x4760e1e56c8e4aca9da1def733380dc663e5039e102b841d8e0655c1370c63bf",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "version": "v1.0.0"
       },
@@ -2059,6 +2065,18 @@
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "259200"
+          },
+          {
+            "target": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+            "value": "0",
+            "function": "addPessimisticVKeyRoute",
+            "inputs": {
+              "pessimisticVKeySelector": "0x0000000e",
+              "verifier": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
+              "pessimisticVKey": "0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
           }
         ],
         "timelockAdminAC": [
@@ -2603,6 +2621,6 @@
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25027059 },
+  "usedBlockNumbers": { "ethereum": 25287166 },
   "permissionsConfigHash": "0xafeb0c6a88f34b781b61d66bf0d71fc11027c4b8a391855ced4dc960edafd484"
 }
