@@ -138,8 +138,7 @@ function PanelHeader(props: { api: LeafApi }) {
 
 function renderBody(key: string): JSX.Element {
   if (!isPanelId(key)) return <ListPanel />
-  const Component =
-    IS_READONLY && key === 'terminal' ? ListPanel : PANELS[key].body
+  const Component = PANELS[key].body
   return <Component />
 }
 
@@ -153,7 +152,9 @@ export const dockingConfig: DockingConfig = {
   storageKey: 'docking/v2:discovery',
   defaultLayout,
   maxLayouts: 6,
-  isValidKey: isPanelId,
+  // Disallowed panels (terminal in readonly) are rejected here, so persisted
+  // layouts self-heal and ensureLeaf/setLeafKey cannot resurrect them.
+  isValidKey: (key) => isPanelId(key) && isAllowedPanel(key),
   renderHeader: (api) => <PanelHeader api={api} />,
   renderBody,
   renderDragPreview: (key) => (isPanelId(key) ? <PanelLabel id={key} /> : key),

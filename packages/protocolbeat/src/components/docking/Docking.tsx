@@ -71,7 +71,6 @@ function useGlobalMouseHandlers(args: {
     }
 
     function onMouseMove(e: MouseEvent) {
-      useStore.getState().setMouse(e.clientX, e.clientY)
       const pending = pendingDragRef.current
       if (pending) {
         const dx = e.clientX - pending.startX
@@ -82,7 +81,10 @@ function useGlobalMouseHandlers(args: {
         }
       }
       const state = useStore.getState()
+      // Only the drag overlay reads the mouse; tracking it outside a drag
+      // would run a store update on every mouse movement in the app.
       if (state.pickedUpLeaf !== undefined) {
+        state.setMouse(e.clientX, e.clientY)
         const hover = hitTestDropTarget(
           e.clientX,
           e.clientY,
@@ -90,7 +92,7 @@ function useGlobalMouseHandlers(args: {
           state.tree,
         )
         if (!sameTarget(state.dragHover, hover)) {
-          useStore.getState().setDragHover(hover)
+          state.setDragHover(hover)
         }
       }
     }

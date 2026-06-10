@@ -6,6 +6,7 @@ import {
   findFirstLeaf,
   findLeafByKey,
   normalizeTree,
+  reassignSplitIds,
   ensureLeaf as treeEnsureLeaf,
   moveLeaf as treeMoveLeaf,
   removeLeaf as treeRemoveLeaf,
@@ -101,7 +102,7 @@ function readLayouts(config: DockingConfig): LayoutNode[] {
     for (let i = 0; i < max; i++) {
       const candidate = parsed[i]
       if (candidate && isValidLayout(candidate, config)) {
-        fallback[i] = normalizeTree(candidate)
+        fallback[i] = normalizeTree(reassignSplitIds(candidate))
       }
     }
   } catch (e) {
@@ -170,9 +171,15 @@ export function createDockingStore(
     ensureLeaf: (key) =>
       set((state) => {
         if (config.isValidKey && !config.isValidKey(key)) return state
-        if (findLeafByKey(state.tree, key)) return { activeLeaf: key }
+        // Exit another leaf's fullscreen, otherwise the ensured leaf would
+        // appear or focus invisibly behind it.
+        const fullScreenLeaf =
+          state.fullScreenLeaf === key ? state.fullScreenLeaf : undefined
+        if (findLeafByKey(state.tree, key)) {
+          return { activeLeaf: key, fullScreenLeaf }
+        }
         const tree = treeEnsureLeaf(state.tree, key, state.activeLeaf)
-        return applyTree(state, tree, key)
+        return { ...applyTree(state, tree, key), fullScreenLeaf }
       }),
     removeLeaf: (key) =>
       set((state) => {
@@ -262,7 +269,10 @@ export function createDockingStore(
   }))
 
   let timeout: ReturnType<typeof setTimeout>
+  let persistedLayouts = layouts
   store.subscribe((state) => {
+    if (state.layouts === persistedLayouts) return
+    persistedLayouts = state.layouts
     clearTimeout(timeout)
     timeout = setTimeout(() => {
       localStorage.setItem(

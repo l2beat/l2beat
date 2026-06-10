@@ -7,6 +7,7 @@ import {
   newLeaf,
   newSplit,
   normalizeTree,
+  reassignSplitIds,
   removeLeaf,
   splitLeaf,
   validateLayout,
@@ -115,6 +116,27 @@ describe('docking/tree', () => {
     })
   })
 
+  describe('validateLayout', () => {
+    it('rejects duplicate split ids', () => {
+      // Persisted layouts carry ids from a previous session while newId
+      // restarts at zero, so collisions are reachable unless ids are
+      // re-stamped at the storage boundary. This is the paired assertion.
+      const inner = newSplit('column', [newLeaf('b'), newLeaf('c')], [1, 1])
+      const root = newSplit('row', [newLeaf('a'), inner], [1, 1])
+      inner.id = root.id
+      expect(() => validateLayout(root)).toThrow()
+    })
+
+    it('accepts the same tree after reassignSplitIds', () => {
+      const inner = newSplit('column', [newLeaf('b'), newLeaf('c')], [1, 1])
+      const root = newSplit('row', [newLeaf('a'), inner], [1, 1])
+      inner.id = root.id
+      const fixed = reassignSplitIds(root)
+      validateLayout(fixed)
+      expect(sortedKeys(fixed)).toEqual(['a', 'b', 'c'])
+    })
+  })
+
   describe('removeLeaf', () => {
     it('collapses the parent split when a pane is removed', () => {
       const root = newSplit('row', [newLeaf('a'), newLeaf('b')], [1, 1])
@@ -131,6 +153,15 @@ describe('docking/tree', () => {
   })
 
   describe('moveLeaf', () => {
+    it('no-ops on a stale target instead of dropping the moved leaf', () => {
+      // The drop target is hit-tested at hover time; the tree can change
+      // before the drop lands. The leaf must never be silently lost.
+      const root = newSplit('row', [newLeaf('a'), newLeaf('b')], [1, 1])
+      const moved = moveLeaf(root, 'a', { key: 'ghost', edge: 'left' })
+      expect(moved).toEqual(root)
+      expect(sortedKeys(moved)).toEqual(['a', 'b'])
+    })
+
     it('preserves the full set of tabs and stays well-formed', () => {
       const root = newSplit(
         'row',

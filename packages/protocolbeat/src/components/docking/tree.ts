@@ -46,6 +46,19 @@ export function cloneTree(root: LayoutNode): LayoutNode {
   return structuredClone(root)
 }
 
+// Persisted layouts carry split ids minted by a previous session, while newId
+// restarts at zero on every page load. Re-stamping ids at the storage boundary
+// keeps ids unique against everything this session will mint.
+export function reassignSplitIds(root: LayoutNode): LayoutNode {
+  const clone = cloneTree(root)
+  for (const node of iterNodes(clone)) {
+    if (node.kind === 'split') {
+      node.id = newId()
+    }
+  }
+  return clone
+}
+
 export function* iterNodes(root: LayoutNode): Generator<LayoutNode> {
   const stack: LayoutNode[] = [root]
   while (stack.length > 0) {
@@ -129,11 +142,14 @@ export function leafCount(root: LayoutNode): number {
 
 export function validateLayout(root: LayoutNode): void {
   const seen = new Set<LeafKey>()
+  const seenIds = new Set<NodeId>()
   for (const node of iterNodes(root)) {
     if (node.kind === 'leaf') {
       assert(!seen.has(node.key), `duplicate key in tree: ${node.key}`)
       seen.add(node.key)
     } else {
+      assert(!seenIds.has(node.id), `duplicate split id in tree: ${node.id}`)
+      seenIds.add(node.id)
       assert(node.children.length >= 2, 'single-child split must collapse')
       assert(
         node.sizes.length === node.children.length,
@@ -296,10 +312,12 @@ export function moveLeaf(
   target: DropTarget,
 ): LayoutNode {
   if (!findLeafByKey(root, key)) return root
+  // A stale target (e.g. the tree changed between drag-hover and drop) must
+  // no-op; removing first and bailing after would silently drop the leaf.
+  if (!findLeafByKey(root, target.key)) return root
   if (key === target.key) return root
   if (leafCount(root) <= 1) return root
   const removed = removeLeaf(root, key)
-  if (!findLeafByKey(removed, target.key)) return removed
   return splitLeaf(removed, target.key, target.edge, key)
 }
 

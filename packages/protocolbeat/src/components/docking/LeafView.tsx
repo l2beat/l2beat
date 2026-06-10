@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { memo } from 'react'
 import { IconClose } from '../../icons/IconClose'
 import { IconFullscreen } from '../../icons/IconFullscreen'
 import { IconFullscreenExit } from '../../icons/IconFullscreenExit'
@@ -8,7 +9,17 @@ import type { LeafNode } from './types'
 // The generic frame. Docking owns the header bar (drag handle + fullscreen +
 // close) and the body container; the consumer fills both via renderHeader /
 // renderBody and never has to wire the move/fullscreen/close I/O itself.
-export function LeafView(props: { node: LeafNode }) {
+//
+// Memoized on the leaf key (a leaf node is only its key): every resize
+// pointermove produces a new tree, and without this the prop cascade would
+// re-render every panel body at pointer rate. Focus/fullscreen/drag updates
+// still flow through the store hooks below.
+export const LeafView = memo(
+  LeafViewImpl,
+  (prev, next) => prev.node.key === next.node.key,
+)
+
+function LeafViewImpl(props: { node: LeafNode }) {
   const useStore = useDockingHook()
   const config = useStore((state) => state.config)
   const activeLeaf = useStore((state) => state.activeLeaf)

@@ -10,13 +10,15 @@ export function DragOverlay() {
   const config = useStore((state) => state.config)
   const [hoverRect, setHoverRect] = useState<DOMRect | null>(null)
 
+  // The layout cannot change mid-drag (tree mutations happen on drop), so the
+  // hover rect only moves when the hover target does, not with the mouse.
   useEffect(() => {
     if (!dragHover) {
       setHoverRect(null)
       return
     }
     setHoverRect(computeSplitRect(dragHover))
-  }, [dragHover, mouse.x, mouse.y])
+  }, [dragHover])
 
   if (pickedUpLeaf === undefined) return null
 
