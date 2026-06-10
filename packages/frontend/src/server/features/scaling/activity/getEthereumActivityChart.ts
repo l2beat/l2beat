@@ -75,7 +75,7 @@ export async function getEthereumActivityChart({
 
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedRange[1]],
-    'daily',
+    'day',
   )
 
   const data: EthereumActivityChartDataPoint[] = timestamps.map((timestamp) => {
@@ -182,7 +182,7 @@ function getMockEthereumActivityChart({
   range,
 }: EthereumActivityChartParams): EthereumActivityChartData {
   const adjustedRange: [UnixTime, UnixTime] = [range[0] ?? 1590883200, range[1]]
-  const timestamps = generateTimestamps(adjustedRange, 'daily')
+  const timestamps = generateTimestamps(adjustedRange, 'day')
 
   return {
     data: timestamps.map((timestamp) => [+timestamp, 15, 11]),

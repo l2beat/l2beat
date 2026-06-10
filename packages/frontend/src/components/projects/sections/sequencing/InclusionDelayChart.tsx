@@ -19,20 +19,17 @@ import {
   ChartLegendItemLabel,
   ChartTooltip,
   ChartTooltipWrapper,
+  useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import type {
-  InclusionDelayChartPoint,
+  InclusionDelayChartDataPoint,
   InclusionDelayEntityMarker,
   InclusionDelayThresholdMarker,
 } from '~/utils/project/technology/inclusion-delay/calculateInclusionDelay'
 import { SECONDS_PER_DAY } from '~/utils/project/technology/inclusion-delay/shared'
 
 export type InclusionDelayYAxisScale = 'linear' | 'log'
-
-export type InclusionDelayChartDataPoint = InclusionDelayChartPoint & {
-  timestamp: number
-}
 
 const INCLUSION_DELAY_ENTITY_MARKER_COLOR = 'var(--chart-cyan)'
 const DELAY_THRESHOLD_COLOR = 'var(--chart-yellow)'
@@ -42,8 +39,8 @@ interface Props {
   chartMeta: ChartMeta
   maxCensorFraction: number
   yAxisScale: InclusionDelayYAxisScale
-  thresholdMarkers: InclusionDelayThresholdMarker[]
-  entityMarkers: InclusionDelayEntityMarker[]
+  thresholdMarkers?: InclusionDelayThresholdMarker[]
+  entityMarkers?: InclusionDelayEntityMarker[]
 }
 
 export function InclusionDelayChart({
@@ -51,10 +48,16 @@ export function InclusionDelayChart({
   chartMeta,
   maxCensorFraction,
   yAxisScale,
-  thresholdMarkers,
-  entityMarkers,
+  thresholdMarkers = [],
+  entityMarkers = [],
 }: Props) {
-  const yDomain = getYDomain(data, yAxisScale, thresholdMarkers)
+  const dataKeys = Object.keys(chartMeta)
+  const yDomain = getInclusionDelayYDomain(
+    data,
+    dataKeys,
+    yAxisScale,
+    thresholdMarkers,
+  )
 
   return (
     <ChartContainer data={data} meta={chartMeta} isLoading={false}>
@@ -112,25 +115,28 @@ export function InclusionDelayChart({
           tick={{ width: 350 }}
           allowDataOverflow={yAxisScale === 'log'}
         />
-        <Line
-          dataKey="projectDelayDays"
-          type="monotone"
-          stroke={chartMeta.projectDelayDays?.color}
-          strokeWidth={2}
-          dot={false}
-          connectNulls
-          isAnimationActive={false}
-        />
-        <Line
-          dataKey="ethereumDelayDays"
-          type="monotone"
-          stroke={chartMeta.ethereumDelayDays?.color}
-          strokeWidth={2}
-          strokeDasharray="5 5"
-          dot={false}
-          connectNulls
-          isAnimationActive={false}
-        />
+        {dataKeys.map((dataKey) => {
+          const meta = chartMeta[dataKey]
+          if (!meta || meta.indicatorType.shape !== 'line') {
+            return null
+          }
+
+          return (
+            <Line
+              key={dataKey}
+              dataKey={dataKey}
+              type="monotone"
+              stroke={meta.color}
+              strokeWidth={2}
+              strokeDasharray={
+                meta.indicatorType.strokeDasharray ? '5 5' : undefined
+              }
+              dot={false}
+              connectNulls
+              isAnimationActive={false}
+            />
+          )
+        })}
         {entityMarkers.map((marker) => (
           <ReferenceDot
             key={marker.id}
@@ -181,45 +187,60 @@ function InclusionDelayTooltip({
   payload,
   label: censoringFraction,
 }: CustomChartTooltipProps) {
+  const { meta } = useChart()
   if (!payload || typeof censoringFraction !== 'number') return null
-  const projectDelay = payload.find(
-    (entry) => entry.dataKey === 'projectDelayDays',
-  )?.value
-  const ethereumDelay = payload.find(
-    (entry) => entry.dataKey === 'ethereumDelayDays',
-  )?.value
+
+  const rows = payload.filter(
+    (entry) => typeof entry.dataKey === 'string' && meta[entry.dataKey],
+  )
 
   return (
     <ChartTooltipWrapper>
-      <div className="w-64 font-medium text-label-value-14">
-        {formatCensoringFraction(censoringFraction)} censoring lead to{' '}
-        {formatTooltipDelay(projectDelay, {
-          suffix: 'inclusion delay',
-          fallback: 'no finite inclusion delay',
-        })}{' '}
-        (
-        {formatTooltipDelay(ethereumDelay, {
-          suffix: 'on Ethereum for comparison',
-          fallback: 'no finite delay on Ethereum for comparison',
-        })}
-        )
+      <div className="flex w-64 flex-col gap-2 font-medium text-label-value-14">
+        <div>
+          {formatCensoringFraction(censoringFraction)} censoring would incur a
+          transaction inclusion delay of
+        </div>
+        <div className="flex flex-col gap-1">
+          {rows.map((entry) => {
+            const dataKey = `${entry.dataKey}`
+            const item = meta[dataKey]
+            if (!item) return null
+
+            return (
+              <div
+                key={dataKey}
+                className="flex items-center justify-between gap-3"
+              >
+                <div className="flex min-w-0 items-center gap-1.5">
+                  <ChartDataIndicator
+                    type={item.indicatorType}
+                    backgroundColor={item.color}
+                  />
+                  <span className="truncate text-secondary">{item.label}</span>
+                </div>
+                <span className="shrink-0 text-primary">
+                  {formatTooltipDelay(entry.value)}
+                </span>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </ChartTooltipWrapper>
   )
 }
 
-function getYDomain(
-  data: { projectDelayDays: number | null; ethereumDelayDays: number | null }[],
+function getInclusionDelayYDomain(
+  data: InclusionDelayChartDataPoint[],
+  dataKeys: string[],
   scale: InclusionDelayYAxisScale,
   thresholdMarkers: InclusionDelayThresholdMarker[],
 ): [number, number] {
   const values = [
-    ...data.flatMap((point) => [
-      point.projectDelayDays,
-      point.ethereumDelayDays,
-    ]),
+    ...data.flatMap((point) => dataKeys.map((key) => point[key])),
     ...thresholdMarkers.map((marker) => marker.delayDays),
-  ].filter((value): value is number => value !== null && value > 0)
+  ].filter((value): value is number => typeof value === 'number' && value > 0)
 
   if (values.length === 0) {
     return scale === 'log' ? [1 / SECONDS_PER_DAY, 1] : [0, 1]
@@ -284,14 +305,11 @@ function formatDelayDays(days: number) {
   return formatSeconds(seconds)
 }
 
-function formatTooltipDelay(
-  value: unknown,
-  labels: { suffix: string; fallback: string },
-) {
-  if (value === null || value === undefined) return labels.fallback
+function formatTooltipDelay(value: unknown) {
+  if (value === null || value === undefined) return 'no inclusion'
 
   const days = Number(value)
-  if (!Number.isFinite(days)) return labels.fallback
+  if (!Number.isFinite(days)) return 'no inclusion'
 
-  return `${formatDelayDays(days)} ${labels.suffix}`
+  return formatDelayDays(days)
 }

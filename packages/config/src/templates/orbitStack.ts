@@ -562,10 +562,11 @@ function orbitStackCommon(
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
-      programHashes: templateVars.nonTemplateProgramHashes ?? [
-        PROGRAM_HASHES(wasmModuleRoot),
-      ],
-      zkVerifiers: templateVars.nonTemplateZkVerifiers,
+      programHashes:
+        templateVars.nonTemplateProgramHashes ??
+        getOrbitProgramHashes(templateVars, wasmModuleRoot),
+      zkVerifiers:
+        templateVars.nonTemplateZkVerifiers ?? getOrbitVerifiers(templateVars),
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,
@@ -1557,4 +1558,49 @@ function programHashesReproducible(wasmModuleRoot: string): boolean | null {
   if (vStatus === 'unsuccessful') return false
   if (vStatus === 'successful') return true
   return null
+}
+
+function getOrbitProgramHashes(
+  templateVars: OrbitStackConfigCommon,
+  wasmModuleRoot: string,
+): ProjectScalingContractsProgramHash[] {
+  const result = [PROGRAM_HASHES(wasmModuleRoot)]
+  if (templateVars.discovery.hasContract('EspressoNitroTEEVerifier')) {
+    // TEE enclave program hashes
+    const validEnclaveHashes = templateVars.discovery.getContractValue<
+      string[]
+    >('EspressoNitroTEEVerifier', 'validEnclaveHashes')
+    result.push(...validEnclaveHashes.map((h) => PROGRAM_HASHES(h)))
+
+    const succintZkConfig = templateVars.discovery.getContractValue<{
+      verifierId: string
+      aggregatorId: string
+      zkVerifier: ChainSpecificAddress
+    }>('NitroEnclaveVerifier', 'succintZkConfig')
+    const ZERO_HASH =
+      '0x0000000000000000000000000000000000000000000000000000000000000000'
+    if (succintZkConfig.verifierId !== ZERO_HASH) {
+      result.push(PROGRAM_HASHES(succintZkConfig.verifierId))
+    }
+    if (succintZkConfig.aggregatorId !== ZERO_HASH) {
+      result.push(PROGRAM_HASHES(succintZkConfig.aggregatorId))
+    }
+  }
+  return result
+}
+
+function getOrbitVerifiers(
+  templateVars: OrbitStackConfigCommon,
+): ChainSpecificAddress[] {
+  const result = []
+  if (templateVars.discovery.hasContract('NitroEnclaveVerifier')) {
+    result.push(
+      templateVars.discovery.getContractValue<{
+        verifierId: string
+        aggregatorId: string
+        zkVerifier: ChainSpecificAddress
+      }>('NitroEnclaveVerifier', 'succintZkConfig').zkVerifier,
+    )
+  }
+  return result
 }

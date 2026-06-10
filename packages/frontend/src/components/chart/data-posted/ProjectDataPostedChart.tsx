@@ -47,7 +47,8 @@ export function ProjectDataPostedChart({
     [data],
   )
 
-  const timeRange = getChartTimeRangeFromData(chartData)
+  const resolution = rangeToResolution(range)
+  const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
 
   return (
     <div className="flex flex-col">
@@ -58,7 +59,7 @@ export function ProjectDataPostedChart({
       <div className="mt-4">
         <DataPostedChart
           milestones={milestones}
-          resolution={rangeToResolution(range)}
+          resolution={resolution}
           data={chartData}
           syncedUntil={data?.syncedUntil}
           isLoading={isLoading}

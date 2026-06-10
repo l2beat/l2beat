@@ -231,7 +231,8 @@ export const gnosis: ScalingProject = {
         slotTime: { value: formatSeconds(gnosisSlotSeconds) },
         epochTime: {
           value: formatSeconds(gnosisSlotSeconds * 16),
-          description: 'Block production is not committee-based',
+          description:
+            'Block production is not committee-based, sequencers rotate every block (epochs do not affect sequencer rotation)',
         },
         sequencerCount: {
           value: `${gnosisValidatorSetSize.toLocaleString('en-US')} validators`,

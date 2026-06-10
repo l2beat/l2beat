@@ -10,11 +10,7 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import {
-  ChartRange,
-  rangeToResolution,
-  resolutionToPeriod,
-} from '~/utils/range/range'
+import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { isLivenessSynced } from './utils/isLivenessSynced'
@@ -97,7 +93,7 @@ export async function getProjectLivenessChart({
   assert(syncedUntil, 'No syncedUntil found')
 
   const groupedByResolution = groupBy(chartEntries, (e) =>
-    UnixTime.toStartOf(e.timestamp, resolutionToPeriod(resolution)),
+    UnixTime.toStartOf(e.timestamp, resolution),
   )
 
   const dataStart = Math.min(...Object.keys(groupedByResolution).map(Number))
@@ -161,7 +157,7 @@ function getMockProjectLivenessChartData({
     range[0] ?? UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     range[1],
   ]
-  const timestamps = generateTimestamps(adjustedRange, 'daily')
+  const timestamps = generateTimestamps(adjustedRange, 'day')
 
   return {
     data: timestamps.map((timestamp, i) => {

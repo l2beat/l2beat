@@ -76,10 +76,7 @@ const exitWindowRisk = {
   regular: {
     value: upgradeDelayString,
     sentiment: 'warning',
-  },
-  warning: {
-    value: nonEmergencyUpgradeText,
-    sentiment: 'warning',
+    description: nonEmergencyUpgradeText,
   },
 } as const
 

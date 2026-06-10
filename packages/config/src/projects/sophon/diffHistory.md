@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x00925a2490206c99543ca96595654da6017969c9
+
+# Diff at Mon, 08 Jun 2026 10:14:06 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@986b95b3ae833105f37e6f39ab1fd37448dc183a block: 1771251793
+- current timestamp: 1780913579
+
+## Description
+
+Removed one ms member for admin ms, rotated two more and decreased the threshold.
+
+## Watched changes
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x11BB5F79750de2Cc71e80cB2C59cF0a60EFFa95d"
++        "eth:0x4BBBaCCbA75dbb482619722FFE68bBddC9CCc336"
+      values.$members.1:
+-        "eth:0x0BA5557075B4E30bA409B01797c9c78b3Ce192bF"
++        "eth:0x2Ea9CcB15Ceb6c228786a3d4837B0bA3e9736D97"
+      values.$members.5:
+-        "eth:0x7f413262Cb811B034d077d9184b5Efda6943f2c3"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xb7b08c11a40d12d27cd32316755c68d3f7eab55d
 
 # Diff at Fri, 08 May 2026 07:52:24 GMT:

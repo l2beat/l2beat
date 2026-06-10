@@ -13,6 +13,7 @@
     "isBatchPreconfirmed",
     "proxiableUUID"
   ],
+  "ignoreInWatchMode": ["lastFinalizedBatchIndex", "nextBatchIndex"],
   "fields": {
     "nitroVerifiers": {
       "description": "Set of AWS Nitro Enclave verifier contracts allowed to preconfirm batches. Tracked via NitroVerifierEnabled / NitroVerifierDisabled events on the Rollup.",

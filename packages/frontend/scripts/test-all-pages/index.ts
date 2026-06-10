@@ -34,6 +34,7 @@ async function main() {
     '/scaling/tvs',
     '/scaling/activity',
     '/scaling/data-availability',
+    '/scaling/sequencing',
     '/scaling/liveness',
     '/scaling/costs',
     '/scaling/archived',

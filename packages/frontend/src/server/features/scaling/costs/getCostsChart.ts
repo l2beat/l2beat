@@ -201,27 +201,13 @@ function sumByTimestamp(
     }
   >()
 
-  const offset = UnixTime.toStartOf(
-    UnixTime.now(),
-    resolution === 'daily'
-      ? 'day'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'hour',
-  )
+  const offset = UnixTime.toStartOf(UnixTime.now(), resolution)
 
   // Dismiss ranges that are not full
   const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
 
   for (const record of fullySyncedRecords) {
-    const timestamp = UnixTime.toStartOf(
-      record.timestamp,
-      resolution === 'daily'
-        ? 'day'
-        : resolution === 'sixHourly'
-          ? 'six hours'
-          : 'hour',
-    )
+    const timestamp = UnixTime.toStartOf(record.timestamp, resolution)
 
     const existing = result.get(timestamp)
     if (existing) {

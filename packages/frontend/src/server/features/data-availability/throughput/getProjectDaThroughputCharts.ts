@@ -139,7 +139,7 @@ function getMockProjectDaThroughputCharts({
     }
   }
 
-  const timestamps = generateTimestamps([from, to], 'daily')
+  const timestamps = generateTimestamps([from, to], 'day')
   return {
     totalChart: {
       data: timestamps.map((timestamp) => {

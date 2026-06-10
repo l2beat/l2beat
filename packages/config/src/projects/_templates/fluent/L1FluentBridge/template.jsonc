@@ -4,6 +4,12 @@
   "category": "core",
   "description": "Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets anyone process L2->L1 messages with two Merkle proofs against a preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE.",
   "ignoreMethods": ["getMessageAt", "proxiableUUID"],
+  "ignoreInWatchMode": [
+    "getNonce",
+    "getReceivedNonce",
+    "getSentMessageCursor",
+    "getExecuteGasLimit"
+  ],
   "fields": {
     "defaultAdminAC": {
       "handler": {

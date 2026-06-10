@@ -49,21 +49,22 @@ export function ThroughputSectionChart({
     }),
   )
 
+  const resolution = useMemo(() => rangeToResolution(range), [range])
+
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
     data?.totalChart.data,
     configuredThroughputs,
-    rangeToResolution(range),
+    resolution,
   )
 
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
         data?.totalChart.data.map(([timestamp]) => ({ timestamp })),
+        { bucket: resolution },
       ),
-    [data],
+    [data, resolution],
   )
-
-  const resolution = useMemo(() => rangeToResolution(range), [range])
 
   return (
     <div>
@@ -154,9 +155,9 @@ function adjustThoughputToRange(
   if (!throughput) return null
 
   switch (resolution) {
-    case 'hourly':
+    case 'hour':
       return throughput / 24
-    case 'sixHourly':
+    case 'six hours':
       return throughput / 4
     default:
       return throughput

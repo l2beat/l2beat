@@ -7,23 +7,23 @@ describe('generateTimestamps', () => {
   const to = UnixTime(86400 * 3) // Jan 4, 1970
 
   it('generates hourly timestamps', () => {
-    const timestamps = generateTimestamps([from, to], 'hourly')
+    const timestamps = generateTimestamps([from, to], 'hour')
     expect(timestamps.length).toEqual(73) // 72 hours + 1 for the start
   })
 
   it('generates six-hourly timestamps', () => {
-    const timestamps = generateTimestamps([from, to], 'sixHourly')
+    const timestamps = generateTimestamps([from, to], 'six hours')
     expect(timestamps.length).toEqual(13) // 12 six-hour periods + 1 for the start
   })
 
   it('generates daily timestamps', () => {
-    const timestamps = generateTimestamps([from, to], 'daily')
+    const timestamps = generateTimestamps([from, to], 'day')
     expect(timestamps.length).toEqual(4) // 3 days + 1 for the start
   })
 
   it('adds target timestamp if last generated is not target', () => {
     const to = UnixTime(86400 * 3 + 3600) // Jan 4, 1970, 01:00
-    const timestamps = generateTimestamps([from, to], 'daily')
+    const timestamps = generateTimestamps([from, to], 'day')
     expect(timestamps.length).toEqual(5) // 3 days + 1 for the start + 1 for the target
     expect(timestamps.at(-1) === to).toEqual(true)
   })

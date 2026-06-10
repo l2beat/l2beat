@@ -74,7 +74,7 @@ export function EthereumActivityChart({
     }))
   }, [chart?.data])
 
-  const timeRange = getChartTimeRangeFromData(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
   const lastRatio = ratioData?.at(-1)?.ratio
   return (
     <div className="flex flex-col">

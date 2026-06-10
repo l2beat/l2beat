@@ -353,8 +353,8 @@
   "static/images/architecture/opstack-dachallenge.png": "922f0e294c435984e7a688d42e51c5da",
   "static/images/architecture/opstack-optimium-superchain.png": "2b8d8df4cd5570a7be9896aa6c0c9c6e",
   "static/images/architecture/opstack-optimium.png": "304f5590ae7ab196bf49aa24a3d939da",
-  "static/images/architecture/opstack-rollup-superchain-opfp-permissionless.png": "b6a673a70f82290d9572e5e7fc52ea16",
-  "static/images/architecture/opstack-rollup-superchain-opfp.png": "6cec60b5318c40d624cb2ebeaa966780",
+  "static/images/architecture/opstack-rollup-superchain-opfp-permissionless.png": "75eaaa1c7661486d6d3fcde6f999a61a",
+  "static/images/architecture/opstack-rollup-superchain-opfp.png": "382fb4295203ac28b2eaf2ce62bc650a",
   "static/images/architecture/opstack-rollup-superchain.png": "b5620c584ef5f1cf88958e3daaf426ab",
   "static/images/architecture/opstack-rollup.png": "0a3950b9718f89040d868ed25f1d3422",
   "static/images/architecture/orbit-optimium-blobstream-espresso.png": "20a12173e12580fbf7a67e319bf6483c",
@@ -1543,7 +1543,12 @@
   "static/meta-images/publications/privacy-best-practices.png": "6c38650bc1c85336801f4b7bb405ab8c",
   "static/images/privacy/best-practices-root.png": "8f31ef7ec59dd099834546515018138d",
   "static/meta-images/publications/governance-review-96.png": "b2d264b8bf681cc0490731c8d3a6f8b3",
+  "static/images/architecture/opstack-rollup-superchain-opfp-aggverifier.png": "316a1bf06c30b030d15e86c9be1e7ff7",
   "static/icons/lifi.png": "4c745d6e0e43e32b1b308b7658f747e4",
   "static/meta-images/interop/projects/lifi/opengraph-image.png": "25cd2851216e4952dcb559be0a58e523",
-  "static/meta-images/publications/monthly-update-2026-05.png": "5c9112aeb83cde02d01f7866977dd5b3"
+  "static/meta-images/publications/monthly-update-2026-05.png": "5c9112aeb83cde02d01f7866977dd5b3",
+  "static/meta-images/scaling/sequencing/opengraph-image.png": "ee914907aacd8210781571b880915fb7",
+  "static/images/state-validation/aggverifier.png": "f60cef34ba25ba4626ef1b62f73cc9be",
+  "static/images/architecture/opstack-rollup-superchain-opfp-preu16.png": "e867b7db6a7da763b4d7ce6458072c49",
+  "static/meta-images/publications/governance-review-97.png": "de035c69e4ced7538a11081a7f46de5d"
 }

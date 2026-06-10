@@ -75,14 +75,7 @@ export async function getProjectCostsChart(
   )
   const chart: ProjectCostsChartResponse['chart'] = costsChart.chart.map(
     (cost) => {
-      const dailyTimestamp = UnixTime.toStartOf(
-        cost[0],
-        resolution === 'daily'
-          ? 'day'
-          : resolution === 'sixHourly'
-            ? 'six hours'
-            : 'hour',
-      )
+      const dailyTimestamp = UnixTime.toStartOf(cost[0], resolution)
       const daData = timestampedDaData[dailyTimestamp]
       const posted =
         dailyTimestamp <= costsChart.syncedUntil && daData
@@ -94,7 +87,7 @@ export async function getProjectCostsChart(
 
   const total = getTotal(costs)
   const perL2Uop =
-    costsUopsCount !== undefined && resolution !== 'hourly'
+    costsUopsCount !== undefined && resolution !== 'hour'
       ? getPerL2UopsCost(total, {
           costs: costsUopsCount,
         })

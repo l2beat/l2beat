@@ -43,7 +43,7 @@ export function RiskBanner({
           size === 'regular' && 'h-16',
           size === 'large' && 'h-20.5',
           sentimentToTransparentBgColor(adjSentiment),
-          warning && 'rounded-b-none',
+          (regular || warning) && info === 'full' && 'rounded-b-none',
           className,
         )}
       >
@@ -51,7 +51,7 @@ export function RiskBanner({
           sentiment={adjSentiment}
           className={cn(
             'h-full shrink-0 max-md:w-1',
-            warning && 'rounded-b-none',
+            (regular || warning) && info === 'full' && 'rounded-b-none',
             className,
           )}
         />
@@ -75,7 +75,7 @@ export function RiskBanner({
             )}
           >
             {regular ? `${value} (emergency upgrade path)` : value}
-            {warning && !regular && info === 'compact' && (
+            {warning && info === 'compact' && (
               <RoundedWarningIcon
                 className={cn(
                   'ml-1 inline-block fill-current',
@@ -86,7 +86,7 @@ export function RiskBanner({
           </div>
         </div>
       </div>
-      {regular && warning && info === 'full' && (
+      {regular && info === 'full' && (
         <div className="relative">
           <GrissiniStick
             className={cn(
@@ -112,7 +112,7 @@ export function RiskBanner({
               {regular.value} (regular upgrade path)
             </div>
             <Markdown className="font-normal text-paragraph-15 md:text-paragraph-16">
-              {warning.value}
+              {regular.description}
             </Markdown>
           </div>
         </div>
@@ -148,7 +148,7 @@ export function RiskBanner({
     <Tooltip>
       <TooltipTrigger>{content}</TooltipTrigger>
       <TooltipContent>
-        {regular && warning && (
+        {regular && (
           <div className="mb-2">
             <SentimentText
               sentiment={regular.sentiment ?? 'neutral'}
@@ -157,7 +157,7 @@ export function RiskBanner({
             >
               {`${regular.value} (regular upgrade path)`}
             </SentimentText>
-            {warning.value}
+            {regular.description}
           </div>
         )}
         {warning && !regular && (

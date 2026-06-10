@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x7cccd5be719e64dbcaeacfb376df705ef75c7d5a
+
+# Diff at Mon, 08 Jun 2026 13:33:31 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@7b249a098f7367cb0ead3d881bbc57b408521134 block: 1780398295
+- current timestamp: 1780925503
+
+## Description
+
+Ethereal SafeL2 (on ethereal chain) rotated one signer.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (ethereal:0x3F93bCc6201558aE2d7528a85575cF07679Bb50e) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "ethereal:0x66096e581863EC2682e4E317Da41B80510a274F6"
+      values.$members.1:
+-        "ethereal:0xFBE49A82CB2BFF6Fa4C2B1F0d165A5E1175Aac83"
+    }
+```
+
 Generated with discovered.json: 0xcb6d73c472180733e09d5b894f0c1b793852608b
 
 # Diff at Tue, 02 Jun 2026 11:08:46 GMT:

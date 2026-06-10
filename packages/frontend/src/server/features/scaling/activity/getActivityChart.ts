@@ -118,7 +118,7 @@ export async function getActivityChart({
       ? totalCounts?.[projectId]?.sinceTimestamp
       : undefined,
     dataStart: projectDataStart,
-    resolution: 'daily',
+    resolution: 'day',
   })
 
   const aggregatedEntries = aggregateActivityRecords(entries, {
@@ -130,7 +130,7 @@ export async function getActivityChart({
 
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedRange[1]],
-    'daily',
+    'day',
   )
 
   const data: ActivityChartDataPoint[] = timestamps.map((timestamp) => {
@@ -246,7 +246,7 @@ function getMockActivityChart({
   range,
 }: ActivityChartParams): ActivityChartData {
   const adjustedRange: [UnixTime, UnixTime] = [range[0] ?? 1590883200, range[1]]
-  const timestamps = generateTimestamps(adjustedRange, 'daily')
+  const timestamps = generateTimestamps(adjustedRange, 'day')
 
   return {
     data: timestamps.map((timestamp) => [+timestamp, 15, 11, 16, 12]),

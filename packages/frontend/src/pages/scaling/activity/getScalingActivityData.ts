@@ -1,5 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { type InMemoryCache, UnixTime } from '@l2beat/shared-pure'
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getScalingActivityEntries } from '~/server/features/scaling/activity/getScalingActivityEntries'
@@ -58,7 +58,7 @@ async function getCachedData() {
   await Promise.all([
     helpers.queryClient.prefetchQuery(
       helpers.trpc.activity.recategorisedChart.queryOptions({
-        range: optionToRange('1y', { offset: -UnixTime.DAY }),
+        range: optionToRange('1y'),
         filter: {
           type: 'projects',
           projectIds: entries.map((entry) => entry.id),

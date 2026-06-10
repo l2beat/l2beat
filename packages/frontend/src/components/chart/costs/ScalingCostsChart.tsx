@@ -15,7 +15,7 @@ import type { ScalingCostsEntry } from '~/server/features/scaling/costs/getScali
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsProjectsFilter } from '~/server/features/scaling/costs/utils/getCostsProjects'
 import { useTRPC } from '~/trpc/React'
-import { optionToRange } from '~/utils/range/range'
+import { optionToRange, rangeToResolution } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
@@ -113,8 +113,11 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   }, [data, unit])
 
   const timeRange = useMemo(
-    () => getChartTimeRangeFromData(chartData),
-    [chartData],
+    () =>
+      getChartTimeRangeFromData(chartData, {
+        bucket: rangeToResolution(range),
+      }),
+    [chartData, range],
   )
 
   return (

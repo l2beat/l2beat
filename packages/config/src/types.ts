@@ -41,8 +41,13 @@ export interface TableReadyValue<T extends string = string> {
   orderHint?: number
 }
 
+export interface RegularExitWindowRisk
+  extends Pick<TableReadyValue, 'value' | 'sentiment'> {
+  description: string
+}
+
 export interface ExitWindowRisk extends TableReadyValue {
-  regular?: Pick<TableReadyValue, 'value' | 'sentiment'>
+  regular?: RegularExitWindowRisk
 }
 
 export interface ProjectTechnologyChoice {
@@ -1360,8 +1365,6 @@ export type InteropPluginName =
   | 'across-settlement-op'
   | 'across-settlement-orbit'
   | 'agglayer'
-  | 'allbridge'
-  | 'aori'
   | 'avalanche'
   | 'axelar'
   | 'axelar-its'
@@ -1406,7 +1409,6 @@ export type InteropPluginName =
   | 'sorare-base'
   | 'squid-coral'
   | 'stargate'
-  | 'superform'
   | 'synthetix-bridge'
   | 'world-id'
   | 'wormhole'

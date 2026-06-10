@@ -1,6 +1,6 @@
 {
   "name": "shared-eigenlayer",
-  "timestamp": 1777451880,
+  "timestamp": 1780575163,
   "configHash": "0x1b39a18e2ee06cc366d7523836ee434d139d189ff82d6e13349e5c5d261a0411",
   "entries": [
     {
@@ -135,7 +135,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "8710914640518922926634",
+        "totalShares": "7001773188760711145902",
         "underlyingToken": "eth:0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "fieldMeta": {
@@ -160,6 +160,11 @@
         "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230": "StrategyBaseTVLLimits"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "address": "eth:0x10d6CE86113D00CcF071D02C5289e420a14C963F",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "TaskMailbox",
@@ -399,7 +404,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "675363058800775618334",
+        "totalShares": "477487798287696916067",
         "underlyingToken": "eth:0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
       },
       "fieldMeta": {
@@ -486,7 +491,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "4874202894244003034290",
+        "totalShares": "4495998092033296065231",
         "underlyingToken": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "fieldMeta": {
@@ -817,7 +822,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "62048459174028307756175",
+        "totalShares": "1263097605520647747733",
         "underlyingToken": "eth:0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
       },
       "fieldMeta": {
@@ -985,11 +990,6 @@
     },
     {
       "address": "eth:0x3a7a62A4274Da0A5D0E4ba9278aEb1CC19a34154",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1559,14 +1559,14 @@
           "eth:0x9229C290F60F303884073F28EB8E81F9B82506d5",
           "eth:0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927",
           "eth:0xc5280E368648b0e192b355c7d8330593bA7af700",
-          "eth:0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE"
+          "eth:0x10d6CE86113D00CcF071D02C5289e420a14C963F"
         ],
         "$threshold": 3,
         "domainSeparator": "0x61ee3be2a1999f4d0139ce35b0a2142d8ad067c74102210278661869542d9630",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 17,
+        "nonce": 18,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1719,7 +1719,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "1751831682171063450424",
+        "totalShares": "1501117645871823717853",
         "underlyingToken": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "fieldMeta": {
@@ -1842,8 +1842,8 @@
           "maxStalenessPeriod": 0
         },
         "getGeneratorReferenceTimestamp": 1,
-        "getLatestReferenceBlockNumber": 24971837,
-        "getLatestReferenceTimestamp": 1777298411,
+        "getLatestReferenceBlockNumber": 24995362,
+        "getLatestReferenceTimestamp": 1777581527,
         "GLOBAL_TABLE_ROOT_CERT_TYPEHASH": "0x4491f5ee91595f938885ef73c9a1fa8a6d14ff9b9dab4aa24b8802bbb9bfc1cc",
         "globalRootConfirmationThreshold": 10000,
         "MAX_BPS": 10000,
@@ -1925,7 +1925,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "4272305798263884569766",
+        "totalShares": "3957600256445578470684",
         "underlyingToken": "eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
       "fieldMeta": {
@@ -2076,7 +2076,7 @@
         "EMISSIONS_EPOCH_LENGTH": 604800,
         "EMISSIONS_INFLATION_RATE": "2356969864211533000000000",
         "EMISSIONS_START_TIME": 1773878400,
-        "getCurrentEpoch": 5,
+        "getCurrentEpoch": 11,
         "getDistribution": [
           [
             1428,
@@ -2160,9 +2160,9 @@
         "getTotalProcessableDistributions": 2,
         "incentiveCouncil": "eth:0x218B5eC7482e072F6D47feb0463B3297eFb4bA56",
         "isButtonPressable": false,
-        "lastTimeButtonPressable": 1776902400,
+        "lastTimeButtonPressable": 1780531200,
         "MAX_TOTAL_WEIGHT": 10000,
-        "nextTimeButtonPressable": 1777507200,
+        "nextTimeButtonPressable": 1781136000,
         "owner": "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90",
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
@@ -2384,7 +2384,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "1383925787977346559425",
+        "totalShares": "433759418966165822081",
         "underlyingToken": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "fieldMeta": {
@@ -2489,7 +2489,7 @@
         "name": "Backing Eigen",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "bEIGEN",
-        "totalSupply": "1813181898699949779147668696",
+        "totalSupply": "1827323717885218977147668696",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -2808,7 +2808,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "2583242947946462540944",
+        "totalShares": "2493693108502079617794",
         "underlyingToken": "eth:0xac3E018457B222d93114458476f3E3416Abbe38F"
       },
       "fieldMeta": {
@@ -2937,7 +2937,7 @@
         "delegationManager": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 34653,
+        "numPods": 34676,
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
@@ -3072,7 +3072,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "511292058550580762484050",
+        "totalShares": "352477168018567206873742",
         "underlyingToken": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "fieldMeta": {
@@ -3271,7 +3271,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "86194113743688002844567",
+        "totalShares": "68960092243286878130307",
         "underlyingToken": "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "fieldMeta": {
@@ -3353,7 +3353,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "1491759879701629442712",
+        "totalShares": "1486591046118096548532",
         "underlyingToken": "eth:0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
       },
       "fieldMeta": {
@@ -3439,7 +3439,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "411196574633527055008135619",
+        "totalShares": "293252181560896129287024087",
         "underlyingToken": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
       },
       "fieldMeta": {
@@ -3526,7 +3526,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "8242494291469273026820",
+        "totalShares": "8242464640631335200632",
         "underlyingToken": "eth:0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
       },
       "fieldMeta": {
@@ -4400,7 +4400,7 @@
         "name": "Eigen",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "EIGEN",
-        "totalSupply": "1813181898699949779147668696",
+        "totalSupply": "1827323717885218977147668696",
         "transferRestrictionsDisabledAfter": 0,
         "version": "1.6.0"
       },
@@ -6975,6 +6975,6 @@
     "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24984595 },
-  "permissionsConfigHash": "0x391661594324fe0e05815de0fd1d167f42bd4978540cdede203c3cc6990de307"
+  "usedBlockNumbers": { "ethereum": 25243946 },
+  "permissionsConfigHash": "0x02f2293bcfc7978caf87da1339fc1f74ba4898011efc2f102085efbdb99b3122"
 }

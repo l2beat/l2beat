@@ -1,3 +1,76 @@
+Generated with discovered.json: 0x5b5316a3a71600f5c6ac888260ed07ab4fd35fa4
+
+# Diff at Fri, 05 Jun 2026 10:10:30 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3501d14787f111a20580bca1fdb97e32abfb1f2c block: 1778232906
+- current timestamp: 1780654151
+
+## Description
+
+Switched to checking TEE attestations with zk in the style of Appchain. Appchain contracts resued (a slightly older version though): https://disco.l2beat.com/diff/eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f/arb1:0x9bE8dA826D2C6E6708372f0d056f57B97e6dB029, the only difference is that owner can change the TEE verifier contact.
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract CertManager (arb1:0x27CA506AC6567Ef79d364b56cf4dE9C4141d803A) [espresso/Sequencing]
+    +++ description: The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).
+```
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5) [espresso/Sequencing/EspressoTEEVerifier_gateway] {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
++++ severity: HIGH
+      values.espressoNitroTEEVerifier:
+-        "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C"
++        "arb1:0x9bE8dA826D2C6E6708372f0d056f57B97e6dB029"
+    }
+```
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"interact","from":"arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C) [espresso/Sequencing/EspressoNitroTEEVerifier]
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+```
+
+```diff
++   Status: CREATED
+    contract NitroEnclaveVerifier (arb1:0x1b467761E7a125381c4f654e11B397023Fc53DD8) [espresso/Sequencing/NitroEnclaveVerifier]
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (arb1:0x9bE8dA826D2C6E6708372f0d056f57B97e6dB029) [apechain/EspressoNitroTEEVerifier_modifiableVerifier]
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+## Source code changes
+
+```diff
+.../.flat@1778232906/CertManager.sol => /dev/null  | 2003 ---------
+ .../EspressoNitroTEEVerifier.sol                   | 2124 ++-------
+ .../apechain/.flat/NitroEnclaveVerifier.sol        | 4563 ++++++++++++++++++++
+ .../src/projects/apechain/.flat/SP1Verifier.sol    |  664 +++
+ 4 files changed, 5487 insertions(+), 3867 deletions(-)
+```
+
 Generated with discovered.json: 0x17c2993c61f1ef7fa490d2571211f93e994ee764
 
 # Diff at Fri, 22 May 2026 15:38:10 GMT:
