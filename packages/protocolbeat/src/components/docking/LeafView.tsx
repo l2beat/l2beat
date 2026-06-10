@@ -49,7 +49,6 @@ function LeafViewImpl(props: { node: LeafNode }) {
         <button
           type="button"
           className="w-4 text-coffee-200 hover:text-coffee-100"
-          onMouseDown={(e) => e.stopPropagation()}
           onClick={() => toggleFullScreen(key)}
           aria-label={isFullScreen ? 'Exit full screen' : 'Full screen'}
         >
@@ -58,7 +57,6 @@ function LeafViewImpl(props: { node: LeafNode }) {
         <button
           type="button"
           className="w-4 text-coffee-200 hover:text-coffee-100"
-          onMouseDown={(e) => e.stopPropagation()}
           onClick={() => removeLeaf(key)}
           aria-label="Close panel"
         >

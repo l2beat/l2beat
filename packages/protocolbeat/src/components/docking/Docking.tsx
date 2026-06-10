@@ -64,8 +64,11 @@ function useGlobalMouseHandlers(args: {
         target.closest<HTMLElement>('[data-leaf-key]')?.dataset.leafKey
       if (!key) return
       useStore.getState().activateLeaf(key)
-      // Only the header (nested in the pane) is a drag handle; the body just focuses.
-      if (target.closest('[data-leaf-handle]')) {
+      // Only the header (nested in the pane) is a drag handle; the body just
+      // focuses. Interactive controls inside the header (buttons, the kind
+      // switcher) never start drags, so consumers need no propagation guards.
+      const isInteractive = target.closest('button, input, select, textarea, a')
+      if (target.closest('[data-leaf-handle]') && !isInteractive) {
         pendingDragRef.current = { key, startX: e.clientX, startY: e.clientY }
       }
     }

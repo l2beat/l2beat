@@ -96,7 +96,6 @@ function PanelHeader(props: { api: LeafApi }) {
       >
         <RadixSelect.Trigger
           aria-label="Panel"
-          onMouseDown={(e) => e.stopPropagation()}
           className={clsx(
             'group/sel inline-flex h-[26px] items-center gap-1.5 border-b px-3 font-bold text-xs uppercase outline-none transition-colors focus-visible:outline-none',
             props.api.isActive
