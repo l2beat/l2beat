@@ -112,7 +112,7 @@ function FlowsViewContent({
             />
           </div>
           {(isLoading || showInactiveChainsInfo) && (
-            <div className="mt-3 flex min-h-6 w-full items-center justify-center gap-1 pt-1 max-lg:order-2">
+            <div className="mt-10 flex min-h-6 w-full items-center justify-center gap-1 max-lg:order-2">
               {isLoading ? (
                 <Skeleton className="h-4 w-40 md:h-5" />
               ) : (
