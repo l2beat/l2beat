@@ -111,7 +111,16 @@
       "description": "This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.",
       "ignoreMethods": ["isOutputFinalized"],
       "ignoreInWatchMode": ["params"],
-      "fields": { "GUARDIAN": { "permissions": [{ "type": "guard" }] } }
+      "fields": {
+        "GUARDIAN": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+            }
+          ]
+        }
+      }
     },
     "eth:0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a": {
       "description": "Contract used to challenge state roots and prove fraud. If successful, the wrong state root in the {{L2_ORACLE}} is replaced.",

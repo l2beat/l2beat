@@ -5,18 +5,16 @@ import { useIsomorphicKeys } from '../../hooks/useIsomorphicKeys'
 import { useDiscoveryCommand } from '../../panel-terminal/useDiscoveryCommand'
 import { useSearchStore } from '../../search/store'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
-import { AVAILABLE_PANEL_IDS } from '../panels'
-import { useMultiViewStore } from '../store'
+import { addPanel, useDockingStore } from '../store'
 import { Keys } from './Keys'
 import { StatusRibbon } from './StatusRibbon'
 
 export function BottomBar() {
   const { project } = useParams()
   const [hintOpen, setHintOpen] = useState(false)
-  const loadLayout = useMultiViewStore((state) => state.loadLayout)
-  const addPanel = useMultiViewStore((state) => state.addPanel)
-  const removePanel = useMultiViewStore((state) => state.removePanel)
-  const toggleFullScreen = useMultiViewStore((state) => state.toggleFullScreen)
+  const loadLayout = useDockingStore((state) => state.loadLayout)
+  const removeLeaf = useDockingStore((state) => state.removeLeaf)
+  const toggleFullScreen = useDockingStore((state) => state.toggleFullScreen)
   const { discover, killCommand } = useDiscoveryCommand()
   const { altKey } = useIsomorphicKeys()
   const setOpen = useSearchStore((state) => state.setOpen)
@@ -38,10 +36,10 @@ export function BottomBar() {
         }
       }
       if (e.code === 'Enter' && e.altKey) {
-        addPanel(AVAILABLE_PANEL_IDS)
+        addPanel()
       }
       if (e.code === 'KeyQ' && e.altKey) {
-        removePanel()
+        removeLeaf()
       }
       if (e.code === 'KeyF' && e.altKey) {
         toggleFullScreen()

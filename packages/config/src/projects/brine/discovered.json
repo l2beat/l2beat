@@ -136,14 +136,15 @@
       "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
-          "permission": "governStarknet",
+          "permission": "interact",
           "from": "eth:0x1390f521A79BaBE99b69B37154D63D431da27A07",
+          "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "interact",
           "from": "eth:0x1390f521A79BaBE99b69B37154D63D431da27A07",
-          "description": "manage the token admin role.",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
           "role": ".$admin"
         },
         {
@@ -306,8 +307,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "operateStarkEx",
+          "permission": "interact",
           "from": "eth:0x1390f521A79BaBE99b69B37154D63D431da27A07",
+          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
           "role": ".operators"
         }
       ]
@@ -693,5 +695,5 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 25021111 },
-  "permissionsConfigHash": "0x637fe6a8f9a000c2cd3d86693c53a6f39ee353b3cbffdf6ad16a68e4784bd0fe"
+  "permissionsConfigHash": "0x3b8daf4be450e792dafade5a55ed1bc835b7fa2627def13a2e58ae21ee344071"
 }

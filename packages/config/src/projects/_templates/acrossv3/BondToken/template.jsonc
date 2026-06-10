@@ -32,7 +32,8 @@
           "description": "use ABT as a bond to the HubPool contract for root bundle proposals."
         },
         {
-          "type": "acrossPropose"
+          "type": "interact",
+          "description": "Can propose new root bundles (containing settlement info to refund relayers), which are validated optimistically by the UMA oracle."
         }
       ]
     }

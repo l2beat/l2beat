@@ -1,5 +1,7 @@
 export interface MainPage {
   type?: 'scaling' | 'data-availability' | 'interop' | 'privacy'
+  /** Appended to the `type` caption after a divider, e.g. "SCALING | RISKS". */
+  secondaryLabel?: string
   title: string
 }
 
@@ -11,7 +13,13 @@ interface Props extends MainPage {
   baseUrl: string
 }
 
-export function MainPageOpengraphImage({ type, title, size, baseUrl }: Props) {
+export function MainPageOpengraphImage({
+  type,
+  secondaryLabel,
+  title,
+  size,
+  baseUrl,
+}: Props) {
   return (
     <div
       style={{
@@ -99,6 +107,19 @@ export function MainPageOpengraphImage({ type, title, size, baseUrl }: Props) {
             >
               {typeToIcon[type]}
               {type.toUpperCase().split('-').join(' ')}
+              {secondaryLabel
+                ? [
+                    <div
+                      key="separator"
+                      style={{
+                        width: 3,
+                        height: 28,
+                        backgroundColor: '#DB8BF7',
+                      }}
+                    />,
+                    <span key="secondaryLabel">{secondaryLabel}</span>,
+                  ]
+                : null}
             </div>
           ) : null}
           <div

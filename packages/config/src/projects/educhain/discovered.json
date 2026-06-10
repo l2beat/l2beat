@@ -929,7 +929,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "fastconfirm",
+          "permission": "interact",
           "from": "arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer",
@@ -938,7 +938,7 @@
           ]
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
@@ -947,7 +947,7 @@
           ]
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -1077,7 +1077,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -1096,13 +1096,13 @@
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
         {
-          "permission": "fastconfirm",
+          "permission": "interact",
           "from": "arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer"
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -1954,5 +1954,5 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 457276940 },
-  "permissionsConfigHash": "0xdd3b827d31a7dbddffd6a58b2ede37c6a19f0f75ad51b5ad0537f2d7e3147a25"
+  "permissionsConfigHash": "0x11e119e5fe006fb1ad8624bb16991e062be4963ccfcd404f9b1b271b55dda1ed"
 }

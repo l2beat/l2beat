@@ -52,7 +52,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "base:0xdA2445f1cA60bC2C739A96298746aDBB6706f011",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -224,7 +224,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "base:0xdA2445f1cA60bC2C739A96298746aDBB6706f011",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -319,7 +319,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "base:0xdA2445f1cA60bC2C739A96298746aDBB6706f011",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -1013,7 +1013,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".getValidators"
@@ -1883,5 +1883,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
   "usedBlockNumbers": { "base": 46804675 },
-  "permissionsConfigHash": "0xd13c2fcacfb83e173e91c15448c1082d97f1fd5f7c25781b834dc67310fa579a"
+  "permissionsConfigHash": "0xd3d8833262a11a78a4e7ed46feea885a39696fd5d7121e526c7966eee6bf5c5f"
 }
