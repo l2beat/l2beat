@@ -16,8 +16,8 @@ async function main() {
   // verify it succeeded.
   console.log('── Layer 1: dehydrated state (server) ──')
   const dehydrated: DehydratedResult[] = []
-  for (const url of pages) {
-    const result = await checkDehydrated(BASE_URL, url)
+  for (const page of pages) {
+    const result = await checkDehydrated(BASE_URL, page)
     dehydrated.push(result)
     printDehydrated(result)
   }
@@ -61,15 +61,13 @@ function printDehydrated(result: DehydratedResult) {
   console.log(`${mark} ${result.url}`)
   if (result.error) {
     console.log(`    error: ${result.error}`)
-    return
-  }
-  if (result.queries.length === 0) {
-    console.log('    (no prefetched queries)')
-    return
   }
   for (const query of result.queries) {
     const qmark = query.ok ? '✓' : '✗'
     console.log(`    ${qmark} ${query.path} — ${query.detail}`)
+  }
+  for (const path of result.missingExpected) {
+    console.log(`    ✗ ${path} — expected but not dehydrated`)
   }
 }
 

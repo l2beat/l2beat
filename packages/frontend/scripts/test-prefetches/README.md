@@ -11,9 +11,11 @@ pnpm test-prefetches
 It builds the app, starts the mock server, and runs two checks per page:
 
 - **Layer 1 — dehydrated state (server).** Fetches each page's HTML, parses
-  `window.__SSR_DATA__.props.queryState`, and **auto-discovers every prefetched
-  query** from it, asserting each has `status: 'success'` with non-null data.
-  Catches prefetches that threw, were left pending, or returned empty data.
+  `window.__SSR_DATA__.props.queryState`, and verifies the page dehydrated the
+  procedure paths listed in `pages.ts`, asserting each discovered query has
+  `status: 'success'` with non-null data. Catches prefetches that threw, were
+  left pending, returned empty data, or disappeared from a page's expected
+  prefetch list.
 - **Layer 2 — client refetch (browser).** Loads each page in headless Chromium
   and watches `/api/trpc` traffic, feeding in the exact inputs discovered in
   Layer 1:
@@ -26,9 +28,18 @@ It builds the app, starts the mock server, and runs two checks per page:
 
 ## Maintaining the list
 
-You only list **page URLs** in `pages.ts` — the prefetched procedures are
-discovered automatically from each page's dehydrated state, so there is no
-per-procedure config to keep in sync. Add a URL when a new page server-side
+List **page URLs and expected tRPC procedure paths** in `pages.ts`:
+
+```ts
+page('/scaling/tvs', [
+  'tvs.detailedChart',
+  'tvs.table',
+  'tvs.chartStats',
+])
+```
+
+The checker still discovers the exact inputs from each page's dehydrated state,
+so you only maintain procedure paths here. Add a page when it server-side
 prefetches tRPC queries. Dynamic pages (one representative ecosystem / privacy
 project) are resolved at runtime.
 
