@@ -58,7 +58,7 @@ export const funki: ScalingProject = opStackL2({
   display: {
     name: 'Funki',
     slug: 'funki',
-    architectureImage: 'opstack-rollup-superchain-opfp',
+    architectureImage: 'opstack-rollup-superchain-opfp-preu16',
     description:
       'Funki chain is an OP Stack Optimium on Ethereum reimagining the blockchain experience as an interconnected world brimming with wonder, adventure, and fun.',
     redWarning: {

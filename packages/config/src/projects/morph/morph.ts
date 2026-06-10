@@ -64,8 +64,8 @@ export const morph: ScalingProject = {
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   proofSystem: {
     type: 'Optimistic',
-    name: 'SP1',
-    zkCatalogId: ProjectId('sp1turbo'),
+    name: 'SP1 Hypercube',
+    zkCatalogId: ProjectId('sp1hypercube'),
     challengeProtocol: 'Single-step',
   },
   display: {
