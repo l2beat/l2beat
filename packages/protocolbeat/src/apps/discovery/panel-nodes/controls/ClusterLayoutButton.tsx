@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import { cn } from '../../../../utils/cn'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
+import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
 import type { NodeLocations } from '../store/utils/storage'
 import { ControlButton } from './ControlButton'
 import { IconControlCluster } from './icons/IconControlCluster'
@@ -46,10 +47,13 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
       selected.length === 0,
     )
 
+    // NaN tells d3 to assign its deterministic phyllotaxis seed. Seeding
+    // from current positions makes repeated presses non-idempotent:
+    // disconnected components repel each other further on every run.
     const simNodes: SimulationNode[] = simulationNodes.map((node) => ({
       id: node.id,
-      x: node.box.x / SIM_SCALE,
-      y: node.box.y / SIM_SCALE,
+      x: Number.NaN,
+      y: Number.NaN,
       node,
     }))
 
@@ -84,11 +88,23 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
 
       simNodes.forEach((simNode) => {
         nodeLocations[simNode.id] = {
-          x: (simNode.x - minY) * SIM_SCALE + left,
-          y: (simNode.y - minX) * SIM_SCALE + top,
+          x: (simNode.x - minX) * SIM_SCALE + left,
+          y: (simNode.y - minY) * SIM_SCALE + top,
         }
       })
-      layout(nodeLocations)
+      if (selected.length === 0) {
+        const { transform, viewportContainer } = useStore.getState()
+        layout(
+          centerLocationsInViewport(
+            nodeLocations,
+            simulationNodes,
+            transform,
+            viewportContainer,
+          ),
+        )
+      } else {
+        layout(nodeLocations)
+      }
       simulation.stop()
       setUpdatingLayout(false)
     }
