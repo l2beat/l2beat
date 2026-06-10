@@ -93,7 +93,7 @@ function FlowsViewContent({
           <FlowsGeneralStats />
         </div>
         <div className="flex h-full min-w-0 flex-col">
-          <div className="group/flows flex h-full w-full min-w-0 flex-col items-center gap-10 pb-4 xl:h-[max(calc(100svh-24rem),40rem)]">
+          <div className="group/flows flex w-full min-w-0 flex-1 flex-col items-center gap-10 pb-4 xl:min-h-[max(calc(100svh-24rem),40rem)]">
             <div className="flex flex-col items-center gap-3 max-lg:order-1">
               <div className="flex gap-2">
                 <FlowsChainsSelector allChains={interopChains} />
