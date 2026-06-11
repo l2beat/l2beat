@@ -563,6 +563,116 @@ describe(TokenIngestionProcessor.name, () => {
       ).toEqual(true)
     })
 
+    it('downgrades pending insert with a transfer-resolved abstract to conflict when symbols differ', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<TokenDatabase['chain']>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'WETH',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+      })
+
+      const result = await processor.fetch({
+        id: 'ing_test',
+        address,
+        steps: [],
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: {
+            kind: 'existing',
+            token: { id: 'USDC01', symbol: 'USDC' },
+          },
+          symbolFallback: undefined,
+          neighborsToEnqueue: [],
+          proof: nonSwappingProof(),
+        },
+      })
+
+      expect(result.outcome).toEqual({
+        kind: 'conflict',
+        message:
+          'Non-swapping transfers point to abstract token USDC01:USDC, but the deployed token symbol is WETH.',
+      })
+      expect(
+        result.steps.some((step) => step.kind === 'fetched-facts'),
+      ).toEqual(true)
+    })
+
+    it('keeps a transfer-resolved insert on write when symbols match case-insensitively', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<TokenDatabase['chain']>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'SUSDE',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+      })
+
+      const result = await processor.fetch({
+        id: 'ing_test',
+        address,
+        steps: [],
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: {
+            kind: 'existing',
+            token: { id: 'SUSDE1', symbol: 'sUSDe' },
+          },
+          symbolFallback: undefined,
+          neighborsToEnqueue: [],
+          proof: nonSwappingProof(),
+        },
+      })
+
+      expect(result.outcome.kind).toEqual('write')
+      if (result.outcome.kind !== 'write') return
+      expect(result.outcome.newAbstractToken).toEqual(undefined)
+      expect(
+        result.outcome.deployedToken.type === 'insert' &&
+          result.outcome.deployedToken.record.symbol,
+      ).toEqual('SUSDE')
+      expect(
+        result.steps.some(
+          (step) => step.kind === 'corrected-coingecko-symbol-casing',
+        ),
+      ).toEqual(false)
+    })
+
     it('does not use the new CoinGecko abstract symbol as deployed-token fallback', async () => {
       const address = token('ethereum', '0xaaa')
 
@@ -929,6 +1039,17 @@ function queueEntry(
     message: null,
     createdAt: UnixTime(1),
     updatedAt: UnixTime(1),
+  }
+}
+
+function nonSwappingProof() {
+  return {
+    kind: 'non-swapping-transfer' as const,
+    transfer: {
+      ...transfer({ bridgeType: 'lockAndMint' }),
+      srcRawAmount: '1',
+      dstRawAmount: '1',
+    },
   }
 }
 

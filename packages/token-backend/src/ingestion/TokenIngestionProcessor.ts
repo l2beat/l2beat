@@ -263,10 +263,9 @@ export class TokenIngestionProcessor {
       }
     }
 
-    const conflict = getNewCoingeckoSymbolConflict(
-      newAbstractToken,
-      built.record.symbol,
-    )
+    const conflict =
+      getNewCoingeckoSymbolConflict(newAbstractToken, built.record.symbol) ??
+      getTransferAbstractSymbolConflict(pending, built.record.symbol)
     if (conflict) {
       return {
         ...trace,
@@ -901,6 +900,31 @@ function getNewCoingeckoSymbolConflict(
   }
 
   return `CoinGecko would create abstract token ${newAbstractToken.id}:${newAbstractToken.symbol}, but the deployed token symbol is ${deployedTokenSymbol}.`
+}
+
+/**
+ * Counterpart of `getNewCoingeckoSymbolConflict` for abstract tokens resolved
+ * from non-swapping transfers. The transfer-resolved abstract's symbol is
+ * known at plan time, but the deployed token's symbol only arrives with the
+ * RPC facts, so the comparison has to happen in `fetch()`. Case-insensitive
+ * because deployments of the same asset routinely differ in casing only;
+ * unlike the CoinGecko path no casing is adopted — the abstract token already
+ * exists and its symbol stays as-is.
+ */
+function getTransferAbstractSymbolConflict(
+  pending: Extract<IngestionOutcome, { kind: 'pending' }>,
+  deployedTokenSymbol: string,
+): string | undefined {
+  if (pending.proof.kind !== 'non-swapping-transfer') return undefined
+  if (pending.abstract.kind !== 'existing') return undefined
+  const abstractToken = pending.abstract.token
+  if (
+    abstractToken.symbol.toLowerCase() === deployedTokenSymbol.toLowerCase()
+  ) {
+    return undefined
+  }
+
+  return `Non-swapping transfers point to abstract token ${formatRef(abstractToken)}, but the deployed token symbol is ${deployedTokenSymbol}.`
 }
 
 /**
