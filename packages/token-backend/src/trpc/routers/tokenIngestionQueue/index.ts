@@ -52,9 +52,7 @@ export const tokenIngestionQueueRouter = router({
         rows.push({
           entry,
           predictedOutcome: toIngestionOutcomeView(trace.outcome),
-          deployedTokenExists: trace.steps.some(
-            (step) => step.kind === 'existing-token',
-          ),
+          deployedTokenExists: trace.existingDeployedToken !== undefined,
         })
       }
 

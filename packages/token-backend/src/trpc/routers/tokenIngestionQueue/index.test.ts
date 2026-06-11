@@ -60,12 +60,14 @@ describe('tokenIngestionQueueRouter', () => {
             chain: existingEntry.chain,
             address: existingEntry.address,
           },
-          steps: [{ kind: 'existing-token', record: deployedToken }],
+          existingDeployedToken: deployedToken,
+          steps: [],
           outcome: { kind: 'conflict', message: 'test conflict' },
         })
         .resolvesToOnce({
           address: { chain: newEntry.chain, address: newEntry.address },
-          steps: [{ kind: 'no-existing-token' }],
+          existingDeployedToken: undefined,
+          steps: [],
           outcome: { kind: 'noop', deployedToken },
         })
 
@@ -122,6 +124,7 @@ describe('tokenIngestionQueueRouter', () => {
       const trace = {
         id: 'ing_test',
         address: input,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: { kind: 'skip' as const, reason: 'test' },
       }

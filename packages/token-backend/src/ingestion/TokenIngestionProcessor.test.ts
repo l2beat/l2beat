@@ -48,6 +48,7 @@ describe(TokenIngestionProcessor.name, () => {
       )
 
       expect(trace.id).toMatchRegex(/^ing_[0-9a-f-]{36}$/)
+      expect(trace.existingDeployedToken).toEqual(undefined)
       expect(
         trace.steps.find((step) => step.kind === 'transfer-evidence'),
       ).toEqual({
@@ -57,6 +58,44 @@ describe(TokenIngestionProcessor.name, () => {
         abstractTokens: [],
       })
       expect(getByPrimaryKeys).toHaveBeenCalledWith([])
+    })
+
+    it('records the existing deployed token on the trace', async () => {
+      const address = token('ethereum', '0xaaa')
+      const existing = {
+        ...address,
+        abstractTokenId: 'USDC01',
+        symbol: 'USDC',
+        comment: null,
+        decimals: 6,
+        deploymentTimestamp: UnixTime(1),
+        metadata: null,
+      }
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            findByChainAndAddress: mockFn().resolvesTo(existing),
+            getByPrimaryKeys: mockFn().resolvesTo([]),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            getByIds: mockFn().resolvesTo([
+              abstractTokenRecord('USDC01', 'USDC'),
+            ]),
+            findById: mockFn().resolvesTo(
+              abstractTokenRecord('USDC01', 'USDC'),
+            ),
+          }),
+        }),
+      })
+
+      const trace = await processor.plan(
+        queueEntry(address),
+        buildInteropTransferIndex([]),
+      )
+
+      expect(trace.existingDeployedToken).toEqual(existing)
+      expect(trace.outcome).toEqual({ kind: 'noop', deployedToken: existing })
     })
 
     it('returns pending-insert without fetching deployed-token facts for a new address', async () => {
@@ -274,6 +313,7 @@ describe(TokenIngestionProcessor.name, () => {
       const trace = {
         id: 'ing_test',
         address: token('ethereum', '0xaaa'),
+        existingDeployedToken: undefined,
         steps: [],
         outcome: { kind: 'skip', reason: 'whatever' } as const,
       }
@@ -310,6 +350,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -390,6 +431,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -457,6 +499,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -534,6 +577,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -607,6 +651,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -666,6 +711,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: existing,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -716,6 +762,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -764,6 +811,7 @@ describe(TokenIngestionProcessor.name, () => {
       const trace: IngestionTrace = {
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'write',
@@ -797,6 +845,7 @@ describe(TokenIngestionProcessor.name, () => {
       const trace: IngestionTrace = {
         id: 'ing_test',
         address: token('ethereum', '0xaaa'),
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
