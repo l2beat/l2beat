@@ -11,8 +11,6 @@
     "og-images": "cd ../config && pnpm build && cd ../frontend && tsx scripts/opengraph-images/index.ts",
     "tinify": "tsx scripts/tinify",
     "new-project": "pnpm og-images && pnpm tinify",
-    "performance-test": "tsx scripts/performance-tests/performanceTest.ts",
-    "size-test": "tsx scripts/performance-tests/detailedDataSizeTest.ts",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:frontend",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:frontend",
     "lint:fix": "biome check --formatter-enabled=false --write .",
