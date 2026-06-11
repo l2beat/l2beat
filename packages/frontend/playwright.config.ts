@@ -13,7 +13,6 @@ export default defineConfig({
   use: {
     baseURL: process.env.BASE_URL ?? 'http://localhost:7357',
   },
-  workers: process.env.CI ? 2 : undefined,
   webServer: {
     env: {
       PORT: '7357',

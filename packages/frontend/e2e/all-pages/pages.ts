@@ -1,9 +1,13 @@
 import compact from 'lodash/compact'
 import { getCollection } from '~/content/getCollection'
 import { ps } from '~/server/projects'
-import { testPage } from './testPage'
 
-async function main() {
+/**
+ * Resolves every page that should render successfully in the frontend mock app.
+ * Dynamic routes are resolved from the same project/content sources used by
+ * the old test-all-pages script.
+ */
+export async function resolvePages(): Promise<string[]> {
   const [
     scalingProjects,
     daLayerProjects,
@@ -28,7 +32,7 @@ async function main() {
   const governancePublications = getCollection('governance-publications')
   const monthlyUpdates = getCollection('monthly-updates')
 
-  const pages = compact([
+  return compact([
     '/scaling/summary',
     '/scaling/risk',
     '/scaling/tvs',
@@ -72,20 +76,4 @@ async function main() {
     '/glossary',
     '/faq',
   ])
-
-  for (const page of pages) {
-    console.log(
-      `Testing ${page} (${pages.indexOf(page) + 1} of ${pages.length})`,
-    )
-
-    const result = await testPage(`http://localhost:3000${page}`)
-    if (result.type === 'error') {
-      console.error(
-        `HTTP ${result.status}: ${result.message} - Failed to fetch ${result.url}`,
-      )
-      process.exit(1)
-    }
-  }
 }
-
-main().catch(console.error)
