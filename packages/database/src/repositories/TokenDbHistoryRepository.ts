@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TokenDbHistory } from '../kysely/generated/types'
+import { escapeLikePattern } from '../utils/escapeLikePattern'
 import { toJsonSafe } from '../utils/toJsonSafe'
 
 export type TokenDbHistorySource = 'manual' | 'ingestion'
@@ -69,9 +70,7 @@ export class TokenDbHistoryRepository extends BaseRepository {
     search?: string
   }): Promise<TokenDbHistoryPage> {
     const search = options.search?.trim()
-    const pattern = search
-      ? `%${search.replace(/[\\%_]/g, (char) => `\\${char}`)}%`
-      : undefined
+    const pattern = search ? `%${escapeLikePattern(search)}%` : undefined
 
     let rowsQuery = this.db
       .selectFrom('TokenDbHistory')
