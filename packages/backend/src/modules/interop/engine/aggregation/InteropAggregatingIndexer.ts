@@ -50,8 +50,12 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
 
     const transfers = await this.$.db.interopTransfer.getByRange(from, to)
 
-    const { aggregatedTransfers, aggregatedTokens, aggregatedTokensPairs } =
-      this.$.aggregationService.aggregate(transfers, this.$.configs, to)
+    const {
+      aggregatedTransfers,
+      aggregatedTokens,
+      aggregatedDeployedTokens,
+      aggregatedTokensPairs,
+    } = this.$.aggregationService.aggregate(transfers, this.$.configs, to)
     const analysis = await this.runAggregateAnalysis(to, aggregatedTransfers)
 
     await this.$.db.transaction(async () => {
@@ -61,14 +65,21 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       await this.$.db.aggregatedInteropToken.deleteAllButEarliestPerDayBefore(
         retentionCutoff,
       )
+      await this.$.db.aggregatedInteropDeployedToken.deleteAllButEarliestPerDayBefore(
+        retentionCutoff,
+      )
       await this.$.db.aggregatedInteropTokensPair.deleteAllButEarliestPerDayBefore(
         retentionCutoff,
       )
       await this.$.db.aggregatedInteropToken.deleteByTimestamp(to)
+      await this.$.db.aggregatedInteropDeployedToken.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTokensPair.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.insertMany(aggregatedTransfers)
       await this.$.db.aggregatedInteropToken.insertMany(aggregatedTokens)
+      await this.$.db.aggregatedInteropDeployedToken.insertMany(
+        aggregatedDeployedTokens,
+      )
       await this.$.db.aggregatedInteropTokensPair.insertMany(
         aggregatedTokensPairs,
       )
@@ -87,6 +98,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     this.logger.info('Aggregated interop transfers saved to db', {
       aggregatedRecords: aggregatedTransfers.length,
       aggregatedTokens: aggregatedTokens.length,
+      aggregatedDeployedTokens: aggregatedDeployedTokens.length,
       aggregatedTokenPairs: aggregatedTokensPairs.length,
       suspiciousGroups: analysis?.suspiciousGroups.length ?? 0,
     })
