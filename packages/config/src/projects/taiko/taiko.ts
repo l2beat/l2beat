@@ -581,6 +581,11 @@ function getTaikoVKeys(): string[] {
 
 function getVerifiers(): ChainSpecificAddress[] {
   const result: ChainSpecificAddress[] = getSP1Verifiers(discovery)
-  result.push(discovery.getContract('RiscZeroGroth16Verifier').address)
+  result.push(
+    ...discovery
+      .getContracts()
+      .filter((contract) => contract.name === 'RiscZeroGroth16Verifier')
+      .map((contract) => contract.address),
+  )
   return result
 }

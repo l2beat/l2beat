@@ -80,6 +80,52 @@ const RAIKO_BATCH = (version: string) => ({
     'Proves correct state transition function within Rust-based Taiko L2 client (raiko) over a batch of consecutive L2 blocks.',
 })
 
+const RAIKO2_PROPOSAL = (version: string) => ({
+  title: `Proposal program of Raiko2 ${version}`,
+  description: 'Proves a Taiko Shasta proposal state transition with Raiko2.',
+})
+
+const RAIKO2_AGG = (version: string) => ({
+  title: `Aggregation program of Raiko2 ${version}`,
+  description: 'Aggregates Raiko2 proofs for multiple Taiko Shasta proposals.',
+})
+
+const RAIKO2_BOUNDLESS_AGG = (version: string) => ({
+  title: `Boundless aggregation program of Raiko2 ${version}`,
+  description:
+    'Aggregates RISC0 Boundless proofs for multiple Taiko Shasta proposals with Raiko2.',
+})
+
+const RAIKO2_GUEST_DIGEST_STEPS = (
+  objectName: string,
+  digestSource: string,
+) => `
+Dependencies: Git, Rust/Cargo, Docker with a running daemon, and either \`just\` or the equivalent Cargo command below. The build pulls Docker images and locked Rust/git dependencies.
+
+1. Check out the correct tag in [raiko2](https://github.com/taikoxyz/raiko2):
+\`\`\`
+git clone https://github.com/taikoxyz/raiko2.git
+cd raiko2
+git checkout v0.1.0
+\`\`\`
+Commit hash should be \`a3fb34237daeddab65b965c33b2f85570dd3ff74\`.
+2. From the \`raiko2\` root dir, rebuild the Shasta guest ELFs from source:
+\`\`\`
+just build-guest all
+\`\`\`
+If \`just\` is unavailable, run the equivalent command:
+\`\`\`
+cargo run -r -p xtask-build-guest --bin xtask-build-guest -- all
+\`\`\`
+This exports fresh ELFs to \`crates/guests/elf\`.
+3. Generate the guest digest summary from the rebuilt ELFs:
+\`\`\`
+cargo run -p xtask-build-guest --bin guest-digests -- \\
+  --output /tmp/raiko2-v0.1.0-guest-digests.json
+\`\`\`
+4. In \`/tmp/raiko2-v0.1.0-guest-digests.json\`, find the entry with \`object_name: "${objectName}"\` and \`digest_source: "${digestSource}"\`. Its \`digest\` field should match this program hash.
+`
+
 const KAILUA_FP = (version: string, descAppendix = '') => ({
   title: `Kailua fault proof program ${version}`,
   description:
@@ -465,6 +511,29 @@ fn main() {
     println!("0x{}", hex);
 }
 \`\`\`
+    `,
+  },
+  '0x679bc13716cdb49416a9ca9e297b10d76390df2c343690d4172676c207517915': {
+    ...AGGCHAIN_PROG('v2.0.0'),
+    programUrl:
+      'https://github.com/agglayer/provers/tree/v2.0.0/crates/aggchain-proof-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+3. Install pkg-config and OpenSSL development headers, e.g. on Debian/Ubuntu: \`sudo apt-get install pkg-config libssl-dev\`
+4. Install protobuf compiler, e.g. on Debian/Ubuntu: \`sudo apt-get install protobuf-compiler\`. Make sure \`protoc --version\` works.
+
+Verify:
+
+1. Checkout the correct branch in [provers repo](https://github.com/agglayer/provers): \`git checkout v2.0.0\`. Commit hash should be \`5c51190e0c0edd1ee9ba8bc4383bd74f361760e7\`.
+2. Make sure docker is running by running \`docker ps\`
+3. From the root dir: \`cargo make ap-elf\` to generate aggchain program elf from sources. The generated ELF should be at \`crates/aggchain-proof-program/target/elf-compilation/docker/riscv64im-succinct-zkvm-elf/release/aggchain-proof-program\`.
+4. From the root dir: \`cargo run -p aggkit-prover -- vkey\` to compute vkey hash bytes for the aggchain program. This should print \`0x679bc13716cdb49416a9ca9e297b10d76390df2c343690d4172676c207517915\`.
+
+Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey representation for this program, not the \`hash_bytes()\` program hash used here.
     `,
   },
   '0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53': {
@@ -889,6 +958,50 @@ Verify:
       'Implements a light client of Ethereum, validating state data and block headers in a trust-minimized way.',
     proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
+  },
+  '0x0033e2cccc3296e7def7b381a4fb96fafec64f45420b6d24686779ef6236dff1': {
+    ...RAIKO2_PROPOSAL('v0.1.0'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/sp1_shasta_proposal.elf',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_proposal',
+      'vk_bn254',
+    ),
+  },
+  '0x19f166660ca5b9f75ef670344fb96faf76327a2a082db49150cef3de6236dff1': {
+    ...RAIKO2_PROPOSAL('v0.1.0'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/sp1_shasta_proposal.elf',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_proposal',
+      'vk_hash_bytes',
+    ),
+  },
+  '0x009d26a03d10b4e70eef6a339187c258a7701d6a0150524684cb46b56cf9e540': {
+    ...RAIKO2_AGG('v0.1.0'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/sp1_shasta_aggregation.elf',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_aggregation',
+      'vk_bn254',
+    ),
+  },
+  '0x4e93501e442d39c35ded4672187c258a3b80eb500541491a09968d6a6cf9e540': {
+    ...RAIKO2_AGG('v0.1.0'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/sp1_shasta_aggregation.elf',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_aggregation',
+      'vk_hash_bytes',
+    ),
   },
   '0x0040b6021bbe547fc651492bcc4eea12eaaa9b0a60086439206e27495ec6d6c3': {
     ...RAIKO_AGG('v1.10.4'),
@@ -1466,6 +1579,39 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk has
     verificationStatus: 'unsuccessful',
     verificationSteps:
       'The sources for this program are under development and not published yet. The hash cannot be independently regenerated.',
+  },
+  '0xbee1be4cbe2bdf9b0034a1ab6572061a76019e73189ff96322e58ab229b75f92': {
+    ...RAIKO2_PROPOSAL('v0.1.0'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/risc0_shasta_proposal.elf',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'risc0_shasta_proposal',
+      'image_id',
+    ),
+  },
+  '0xa9cc799b246826a3a1b9545e82a290227a65044612a6273b0aaf90dd51169831': {
+    ...RAIKO2_AGG('v0.1.0'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/risc0_shasta_aggregation.elf',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'risc0_shasta_aggregation',
+      'image_id',
+    ),
+  },
+  '0xcecc85819e15d173c2991577727525b136e820728f7aaaede612f1281cac2249': {
+    ...RAIKO2_BOUNDLESS_AGG('v0.1.0'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/risc0_shasta_boundless_aggregation.elf',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'risc0_shasta_boundless_aggregation',
+      'image_id',
+    ),
   },
   '0xe9aec1d30d25da1ccfc02a81c4b71f32e0a6f675dff4ce01fe4bd5f96ff320bd': {
     ...RAIKO_AGG('v1.10.4'),
