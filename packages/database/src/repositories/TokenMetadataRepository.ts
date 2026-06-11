@@ -2,13 +2,16 @@ import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TokenMetadata } from '../kysely/generated/types'
 
-export type TokenCategory =
-  | 'ether'
-  | 'stablecoin'
-  | 'btc'
-  | 'rwaRestricted'
-  | 'rwaPublic'
-  | 'other'
+export const TOKEN_CATEGORIES = [
+  'ether',
+  'stablecoin',
+  'btc',
+  'rwaRestricted',
+  'rwaPublic',
+  'other',
+] as const
+
+export type TokenCategory = (typeof TOKEN_CATEGORIES)[number]
 
 export type TokenSource =
   | 'canonical'
