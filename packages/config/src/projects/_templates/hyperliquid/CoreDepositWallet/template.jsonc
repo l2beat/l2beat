@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Manages USDC transfers between HyperEVM and HyperCore. It handles user deposits, optionally deducts a fee for new HyperCore accounts, and routes assets to specific DEXs. It also processes cross-chain withdrawals from HyperCore to external chains via Circle CCTP.",
+  "ignoreRelatives": ["token", "tokenMessenger", "tokenSystemAddress"],
+  "fields": {
+    "owner": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "update cross-chain and new account fees, enable or disable destination DEXs, toggle DEX forwarding, and manage the pauser and rescuer roles."
+          }
+        ]
+      }
+    },
+    "pauser": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "pause and unpause token deposits and cross-chain withdrawals."
+          }
+        ]
+      }
+    },
+    "rescuer": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "rescue arbitrary ERC20 tokens (other than the primary deposited token) accidentally sent to this contract."
+          }
+        ]
+      }
+    }
+  }
+}

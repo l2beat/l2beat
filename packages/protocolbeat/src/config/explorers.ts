@@ -23,6 +23,7 @@ export const EXPLORER_URLS: Record<string, string> = {
   blastmainnet: 'https://blastscan.io/address',
   kinto: 'https://explorer.kinto.xyz/address',
   unichain: 'https://uniscan.xyz/address',
+  hyperevm: 'https://hyperevmscan.io/address',
   ink: 'https://explorer.inkonchain.com/address',
   everclear: 'https://scan.everclear.org/address',
   taiko: 'https://taikoscan.io/address',
