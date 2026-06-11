@@ -248,6 +248,13 @@ export const chains: ChainConfig[] = [
     coingeckoPlatform: 'unichain',
   },
   {
+    name: 'hyperevm',
+    chainId: 999,
+    shortName: 'hyperevm',
+    multicall: getMulticall3Config(13051),
+    explorer: { type: 'etherscan' },
+  },
+  {
     name: 'ink',
     chainId: 57073,
     shortName: 'ink',
