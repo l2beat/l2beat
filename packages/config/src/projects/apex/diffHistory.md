@@ -1,3 +1,88 @@
+Generated with discovered.json: 0x0bbe69fd2bd1a6c3a146c515dc9b3c1803a174d8
+
+# Diff at Tue, 09 Jun 2026 12:43:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1767634866
+- current timestamp: 1767634866
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767634866 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x53c6Ec9640761c669B800088F097E01A8207Ac8b) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+```diff
+    EOA  (eth:0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","description":"Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.","role":".operators"}
+      receivedPermissions.2:
+-        {"permission":"operateStarknet","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","role":".operators"}
+      receivedPermissions.3.description:
++        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+      receivedPermissions.3.permission:
+-        "operateStarknet"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "interact"
+    }
+```
+
+```diff
+    contract ApexAdminMultisig (eth:0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+```diff
+    EOA  (eth:0xef75e1199B0599BA823b7770AcE8eb34864a1D55) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
 Generated with discovered.json: 0xc42718fb2343feb968d7892d52a4d910e32fda67
 
 # Diff at Tue, 14 Oct 2025 11:52:55 GMT:

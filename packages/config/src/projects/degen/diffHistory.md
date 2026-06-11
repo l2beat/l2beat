@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x2dfdb66434ab1779cb2c11dcd8ede3805fc6ba28
+
+# Diff at Tue, 09 Jun 2026 12:43:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1778508895
+- current timestamp: 1778508895
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778508895 (main branch discovery), not current.
+
+```diff
+    EOA  (base:0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      receivedPermissions.1.permission:
+-        "validate"
++        "interact"
+      receivedPermissions.2.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    contract DegenFastConfirmerMultisig (base:0xc207cbC35DD3CD172059730380A45aE14eb0e403) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      directlyReceivedPermissions.1.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (base:0xc98A32DdD1b30B3788670C9992f3B18EF83Da491) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x4b5c2134bddbc823ee4cc7ecc6fc59d931e1f387
 
 # Diff at Fri, 22 May 2026 15:40:52 GMT:

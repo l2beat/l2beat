@@ -20,17 +20,37 @@
     },
     "proposer": {
       "severity": "HIGH",
-      "permissions": [{ "type": "propose" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to post new state roots of the current layer to the host chain."
+        }
+      ]
     },
     "PROPOSER": {
-      "permissions": [{ "type": "propose" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to post new state roots of the current layer to the host chain."
+        }
+      ]
     },
     "challenger": {
       "severity": "HIGH",
-      "permissions": [{ "type": "challenge" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+        }
+      ]
     },
     "CHALLENGER": {
-      "permissions": [{ "type": "challenge" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+        }
+      ]
     },
     "deletedOutputs": {
       "severity": "HIGH",

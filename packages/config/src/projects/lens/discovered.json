@@ -1,7 +1,7 @@
 {
   "name": "lens",
-  "timestamp": 1780586386,
-  "configHash": "0x7d875efa5cdb1dce524e44deb329bfe1a5503c0995cfc82f372a49fb89765d28",
+  "timestamp": 1780999809,
+  "configHash": "0x1a3cd3cc74bcd5e07da700dfcbaafe8b6dcddcb367ffe8e24edbee9b6c01828a",
   "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
   "entries": [
     {
@@ -126,8 +126,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTLFullAC"
         }
       ]
@@ -138,8 +139,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTLFullAC"
         }
       ]
@@ -281,24 +283,28 @@
       "address": "eth:0x7CBba07e31Dc7b12bB69a1209C5B11A8aC50acf5",
       "type": "EOA",
       "sourceHashes": [
-        "0x7c13d2cfb57c882bc260e74dcb008156f303789097df3876ce6c099f1957c71b"
+        "0x39d3c680bc45b2c9a848f9ffcd0355b99f65f6a6cd626699fdb311dec621e134"
       ],
       "proxyType": "EIP7702 EOA",
       "values": {
-        "$implementation": "eth:0x80296FF8D1ED46f8e3C7992664D13B833504c2Bb",
-        "ADDRESS_THIS": "eth:0x80296FF8D1ED46f8e3C7992664D13B833504c2Bb",
+        "$implementation": "eth:0x612373D7003d694220f7800EeaF8E3924c0951D3",
+        "CUSTOM_STORAGE_ROOT": "0x3b86514c5c56b21f08d8e56ab090292e07c2483b3e667a2a45849dcb71368600",
+        "domainBytes": "0xc7e4f5b2d381bdfacf8506a24542052ab4e951573cab4ce34bb1c9509c84cbbf06c015bd22b4c69690933c1058878ebdfef31f9aaae40bbe86d8a09fe1b2972c00000000000000000000000000000000000000000000000000000000000000010000000000000000000000007cbba07e31dc7b12bb69a1209c5b11a8ac50acf5000000000000000000000000612373d7003d694220f7800eeaf8e3924c0951d3",
+        "domainSeparator": "0xb2c9668300ebd842c31e9ecddb570b09936392cb518ce4287a8a5668258738f3",
         "eip712Domain": {
-          "fields": "0x0f",
-          "name": "wallet-core",
+          "fields": "0x1f",
+          "name": "Calibur",
           "version": "1.0.0",
           "chainId": 1,
           "verifyingContract": "eth:0x7CBba07e31Dc7b12bB69a1209C5B11A8aC50acf5",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "salt": "0x000000000000000000000000612373d7003d694220f7800eeaf8e3924c0951d3",
           "extensions": []
         },
-        "getMainStorage": "eth:0x08Bd365bb4908a93F778564B956d710e6858B063",
-        "MAIN_STORAGE_IMPL": "eth:0x7DAF91DFe55FcAb363416A6E3bceb3Da34ff1d30",
-        "SESSION_TYPEHASH": "0x162b80b4d2b49568d8cbb7ac5385094c9e5e14680ef0333beeddbfae562f0472"
+        "ENTRY_POINT": "eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108",
+        "keyAt": [],
+        "keyCount": 0,
+        "keyHashes": 0,
+        "namespaceAndVersion": "Uniswap.Calibur.1.0.0"
       }
     },
     {
@@ -640,7 +646,7 @@
           "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120",
           "eth:0xdA6661Df15E79cFe1e679ccD138D813b955ba492"
         ],
-        "getFirstUnprocessedPriorityTx": 6121,
+        "getFirstUnprocessedPriorityTx": 6210,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -648,8 +654,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 8,
-        "getPriorityTreeRoot": "0x1e831b77d23d8fa4bf988b9c396b0a9b5a35bf03f90bb706616d4a80aa35a163",
+        "getPriorityQueueSize": 3,
+        "getPriorityTreeRoot": "0xca91e175b418afa3857c15ef8aa3ce31a4306dabc7533369a0f09224e3035876",
         "getPriorityTreeStartIndex": 25,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051588,
@@ -657,13 +663,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 4],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 8760,
-        "getTotalBatchesExecuted": 8759,
-        "getTotalBatchesVerified": 8760,
-        "getTotalBlocksCommitted": 8760,
-        "getTotalBlocksExecuted": 8759,
-        "getTotalBlocksVerified": 8760,
-        "getTotalPriorityTxs": 6129,
+        "getTotalBatchesCommitted": 8774,
+        "getTotalBatchesExecuted": 8774,
+        "getTotalBatchesVerified": 8774,
+        "getTotalBlocksCommitted": 8774,
+        "getTotalBlocksExecuted": 8774,
+        "getTotalBlocksVerified": 8774,
+        "getTotalPriorityTxs": 6213,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45",
         "getVerifierParams": {
@@ -1259,6 +1265,73 @@
       "function setRoleAdmin(address _chainAddress, bytes32 _role, bytes32 _adminRole)",
       "function transferOwnership(address newOwner)"
     ],
+    "eth:0x612373D7003d694220f7800EeaF8E3924c0951D3": [
+      "error AllowanceExceeded()",
+      "error CallFailed(bytes reason)",
+      "error CannotRegisterRootKey()",
+      "error CannotUpdateRootKey()",
+      "error ExcessiveInvalidation()",
+      "error FnSelectorNotRecognized()",
+      "error IncorrectSender()",
+      "error IndexOutOfBounds()",
+      "error InvalidHookResponse()",
+      "error InvalidNonce()",
+      "error InvalidSignature()",
+      "error KeyDoesNotExist()",
+      "error KeyExpired(uint40 expiration)",
+      "error NotEntryPoint()",
+      "error OnlyAdminCanSelfCall()",
+      "error SignatureExpired()",
+      "error TransferNativeFailed()",
+      "error Unauthorized()",
+      "error UnsupportedExecutionMode()",
+      "event ApproveNative(address indexed owner, address indexed spender, uint256 value)",
+      "event ApproveNativeTransient(address indexed owner, address indexed spender, uint256 value)",
+      "event EIP712DomainChanged()",
+      "event EntryPointUpdated(address indexed newEntryPoint)",
+      "event KeySettingsUpdated(bytes32 indexed keyHash, uint256 settings)",
+      "event NativeAllowanceUpdated(address indexed spender, uint256 value)",
+      "event NonceInvalidated(uint256 nonce)",
+      "event Registered(bytes32 indexed keyHash, tuple(uint8 keyType, bytes publicKey) key)",
+      "event Revoked(bytes32 indexed keyHash)",
+      "event TransferFromNative(address indexed from, address indexed to, uint256 value)",
+      "event TransferFromNativeTransient(address indexed from, address indexed to, uint256 value)",
+      "function CUSTOM_STORAGE_ROOT() view returns (bytes32)",
+      "function ENTRY_POINT() view returns (address)",
+      "function approveNative(address spender, uint256 amount) returns (bool)",
+      "function approveNativeTransient(address spender, uint256 amount) returns (bool)",
+      "function domainBytes() view returns (bytes)",
+      "function domainSeparator() view returns (bytes32)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function execute(tuple(tuple(address to, uint256 value, bytes data)[] calls, bool revertOnFailure) batchedCall) payable",
+      "function execute(tuple(tuple(tuple(address to, uint256 value, bytes data)[] calls, bool revertOnFailure) batchedCall, uint256 nonce, bytes32 keyHash, address executor, uint256 deadline) signedBatchedCall, bytes wrappedSignature) payable",
+      "function execute(bytes32 mode, bytes executionData) payable",
+      "function executeUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32)",
+      "function getKey(bytes32 keyHash) view returns (tuple(uint8 keyType, bytes publicKey))",
+      "function getKeySettings(bytes32 keyHash) view returns (uint256)",
+      "function getSeq(uint256 key) view returns (uint256 seq)",
+      "function hashTypedData(bytes32 hash) view returns (bytes32)",
+      "function invalidateNonce(uint256 newNonce)",
+      "function isRegistered(bytes32 keyHash) view returns (bool)",
+      "function isValidSignature(bytes32 digest, bytes wrappedSignature) view returns (bytes4)",
+      "function keyAt(uint256 i) view returns (tuple(uint8 keyType, bytes publicKey))",
+      "function keyCount() view returns (uint256)",
+      "function keyHashes() view returns (uint256 _spacer)",
+      "function multicall(bytes[] data) payable returns (bytes[] results)",
+      "function namespaceAndVersion() pure returns (string)",
+      "function nativeAllowance(address spender) view returns (uint256 allowance)",
+      "function nonceSequenceNumber(uint256 key) view returns (uint256 seq)",
+      "function register(tuple(uint8 keyType, bytes publicKey) key)",
+      "function revoke(bytes32 keyHash)",
+      "function supportsExecutionMode(bytes32 mode) pure returns (bool result)",
+      "function transferFromNative(address from, address recipient, uint256 amount) returns (bool)",
+      "function transferFromNativeTransient(address from, address recipient, uint256 amount) returns (bool)",
+      "function transientNativeAllowance(address spender) view returns (uint256)",
+      "function update(bytes32 keyHash, uint256 settings)",
+      "function updateEntryPoint(address entryPoint)",
+      "function updateSalt(uint96 prefix)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 missingAccountFunds) returns (uint256 validationData)"
+    ],
     "eth:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433": [
       "constructor(address _initialOwner, address _initialTokenMultiplierSetter)",
       "error NoCallsProvided()",
@@ -1284,43 +1357,6 @@
     "eth:0x7f33D100f482093182111d69a4a457289e99f4ec": [
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
       "function verify(uint256[], uint256[]) view returns (bool)"
-    ],
-    "eth:0x80296FF8D1ED46f8e3C7992664D13B833504c2Bb": [
-      "constructor(address mainStorageImpl, string name, string version)",
-      "error CallFailed(uint256 index, bytes returnData)",
-      "error CloneArgumentsTooLong()",
-      "error Create2EmptyBytecode()",
-      "error FailedDeployment()",
-      "error InsufficientBalance(uint256 balance, uint256 needed)",
-      "error InvalidExecutor()",
-      "error InvalidSession()",
-      "error InvalidShortString()",
-      "error InvalidSignature()",
-      "error InvalidValidatorImpl(address validatorImpl)",
-      "error NameTooLong()",
-      "error NotFromSelf()",
-      "error StringTooLong(string str)",
-      "error VersionTooLong()",
-      "event EIP712DomainChanged()",
-      "event StorageCreated(address storageAddress)",
-      "event StorageInitialized()",
-      "event ValidatorAdded(address validator)",
-      "function ADDRESS_THIS() view returns (address)",
-      "function MAIN_STORAGE_IMPL() view returns (address)",
-      "function SESSION_TYPEHASH() view returns (bytes32)",
-      "function addValidator(address validatorImpl, bytes immutableArgs)",
-      "function computeValidatorAddress(address validatorImpl, bytes immutableArgs) view returns (address)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function executeFromExecutor(tuple(address target, uint256 value, bytes data)[] calls, tuple(uint256 id, address executor, address validator, uint256 validUntil, uint256 validAfter, bytes preHook, bytes postHook, bytes signature) session)",
-      "function executeFromSelf(tuple(address target, uint256 value, bytes data)[] calls)",
-      "function executeWithValidator(tuple(address target, uint256 value, bytes data)[] calls, address validator, bytes validationData)",
-      "function getMainStorage() view returns (address)",
-      "function getSessionTypedHash(tuple(uint256 id, address executor, address validator, uint256 validUntil, uint256 validAfter, bytes preHook, bytes postHook, bytes signature) session) view returns (bytes32)",
-      "function getValidationTypedHash(uint256 nonce, tuple(address target, uint256 value, bytes data)[] calls) view returns (bytes32)",
-      "function initialize()",
-      "function isValidSignature(bytes32 _hash, bytes signature) view returns (bytes4)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function validateSession(tuple(uint256 id, address executor, address validator, uint256 validUntil, uint256 validAfter, bytes preHook, bytes postHook, bytes signature) session) view"
     ],
     "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120": [
       "constructor(address _availBridge)",
@@ -1377,6 +1413,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 25244873 },
-  "permissionsConfigHash": "0x2c5ff5d411d3f3e967d9a7eefaeddda82998d5b9808730a65d11721f5913bb5c"
+  "usedBlockNumbers": { "ethereum": 25279178 },
+  "permissionsConfigHash": "0xbae674328a1b2feda107b498b31a1d23b4685db098f0ff74424825f1df3910d6"
 }

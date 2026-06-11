@@ -185,13 +185,15 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         },
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".defaultAdmin"
         },
         {
@@ -524,8 +526,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         }
       ]
@@ -856,8 +859,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -893,15 +897,16 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "challenge",
-          "from": "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4",
-          "role": ".challenger"
-        },
-        {
           "permission": "interact",
           "from": "eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
         },
         {
           "permission": "interact",
@@ -2056,5 +2061,5 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 25229334, "zircuit": 30231359 },
-  "permissionsConfigHash": "0xc3dfd76c89cbfd504893b9fa382d3fe89543bb53b737f4bb33785dac9c84c143"
+  "permissionsConfigHash": "0x18f9f98ee1aca35843908712e4379633a55a939e488ceed6adeddfcdf10d70b0"
 }

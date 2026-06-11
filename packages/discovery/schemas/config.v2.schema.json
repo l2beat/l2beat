@@ -59,36 +59,7 @@
                     "type": "object",
                     "properties": {
                       "type": {
-                        "enum": [
-                          "challenge",
-                          "guard",
-                          "propose",
-                          "sequence",
-                          "validate",
-                          "disperse",
-                          "relayDA",
-                          "operateLinea",
-                          "fastconfirm",
-                          "validateZkStack",
-                          "validateBridge",
-                          "validateBridge2",
-                          "validateBridge3",
-                          "relay",
-                          "aggregatePolygon",
-                          "operateStarknet",
-                          "operateStarkEx",
-                          "governStarknet",
-                          "metisGameCreator",
-                          "stateDeleterMetis",
-                          "hotValidatorHyperliquid",
-                          "coldValidatorHyperliquid",
-                          "acrossPropose",
-                          "validateLighter",
-                          "member",
-                          "act",
-                          "interact",
-                          "upgrade"
-                        ]
+                        "enum": ["member", "act", "interact", "upgrade"]
                       },
                       "delay": {
                         "anyOf": [{ "type": "number" }, { "type": "string" }]

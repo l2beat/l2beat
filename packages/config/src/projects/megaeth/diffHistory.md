@@ -1,3 +1,76 @@
+Generated with discovered.json: 0x7272e7ff1107c020da1b9f947f5284fb306f63f2
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1778535511
+- current timestamp: 1778535511
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778535511 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    contract Safe (eth:0xB2A9EB0c7b729c3EC704e843eF260084B3caE67F) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      directlyReceivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xB98c6b1A805b96707A43e1F1ACFa163B68098FA6) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can store and serve both unencoded blobs as well as encoded chunks."
+      receivedPermissions.0.permission:
+-        "relayDA"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can disperse EigenDA blobs to the EigenDA node operators."
+      receivedPermissions.0.permission:
+-        "disperse"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xb5d6cffbd6eedf37cab2e8b8316dc2d287eca5c0
 
 # Diff at Thu, 04 Jun 2026 17:41:35 GMT:

@@ -1,3 +1,2517 @@
+Generated with discovered.json: 0x7cc3ba242a3af37474aef6071eff9e7d28713c5f
+
+# Diff at Wed, 10 Jun 2026 10:06:48 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@1df0ac6344e91e243b578fcd27e91367ce8b8406 block: 1778572081
+- current timestamp: 1781085930
+
+## Description
+
+FeeQuoter v2 deployed: heavily simplified compared to the previous version.
+- Fallback price feeds are removed entirely because they were largely unused before anyway. The only path available now is `updatePrices`.
+- Staleness price checks are now entirely removed.
+- Fee model heavily simplified by removing many knobs, for example DA costs settings that now should be accounted for in the calldata pricing.
+- Only one token transfer per message is allowed now and out of order execution is mandatory.
+- Fee tokens are now added implicitly when updating prices, removed ad-hoc functions. Events remain the same so handlers still work.
+
+Since the price update fallback has been removed, a lot of new authorized priced updaters have been added. The net change is not that less actors can update the price but just that the code is simpler. Diff is big because a lot of CommitStores have been added.
+
+## Watched changes
+
+```diff
+    contract ArbitrumOffRamp_v1_6 (arb1:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae) [transporter/OfframpV3] {
+    +++ description: v1.6 OffRamp on Arbitrum One.
+      values.getDynamicConfig.feeQuoter:
+-        "arb1:0x509074C7B16cA21Aa581c20b4567c99eA350D84A"
++        "arb1:0x0CD18bCDC13DB7465b2Ff5728Ca045aDeC1D182f"
+      values.sourceChainConfigs.avalanche:
++        {"router":"arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8","isEnabled":true,"isRMNVerificationDisabled":true,"onRamp":"0x00000000000000000000000002a4d69cffec00fbf7f3b60c93e3529dfc58894d"}
+      values.sourceChainConfigs.base:
++        {"router":"arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8","isEnabled":true,"isRMNVerificationDisabled":true,"onRamp":"0x000000000000000000000000ee85aefb15b9489563a6a29891ebe0750aa1a7ae"}
+      values.sourceChainConfigs.unichain:
++        {"router":"arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8","isEnabled":true,"isRMNVerificationDisabled":true,"onRamp":"0x000000000000000000000000c23071a8ae83671f37bda1dadbc745a9780f632a"}
+      values.sourceChainConfigs.adi:
++        {"router":"arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8","isEnabled":true,"isRMNVerificationDisabled":true,"onRamp":"0x000000000000000000000000abd3f7722c178e42db20065f063b1e758b19fdb6"}
+      values.sourceChainConfigs.katana:
++        {"router":"arb1:0x141fa059441E0ca23ce184B6A78bafD2A517DdE8","isEnabled":true,"isRMNVerificationDisabled":true,"onRamp":"0x000000000000000000000000c23071a8ae83671f37bda1dadbc745a9780f632a"}
+    }
+```
+
+```diff
+    contract BaseOffRamp_v1_6 (base:0xf09AFe78d3c7d359b334d7cB88995751F7eC5E13) [transporter/OfframpV3] {
+    +++ description: v1.6 OffRamp on Base.
+      values.getDynamicConfig.feeQuoter:
+-        "base:0x71052BAe71C25C78E37fD12E5ff1101A71d9018F"
++        "base:0x0352750e6e37e3af39E314D26EB75b950eB3Cb62"
+      values.sourceChainConfigs.arbitrum:
++        {"router":"base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD","isEnabled":true,"isRMNVerificationDisabled":true,"onRamp":"0x00000000000000000000000076a443768a5e3b8d1aed0105fc250877841deb40"}
+      values.sourceChainConfigs.adi:
++        {"router":"base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD","isEnabled":true,"isRMNVerificationDisabled":true,"onRamp":"0x000000000000000000000000abd3f7722c178e42db20065f063b1e758b19fdb6"}
+      values.sourceChainConfigs.astar:
++        {"router":"base:0x881e3A65B4d4a04dD529061dd0071cf975F58bCD","isEnabled":true,"isRMNVerificationDisabled":true,"onRamp":"0x000000000000000000000000c23071a8ae83671f37bda1dadbc745a9780f632a"}
+    }
+```
+
+```diff
+    EOA  (eth:0x062f05CD6c835677B05a8658A351969476861316) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens.","role":".getAllAuthorizedCallers"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x0dE127A00242D8b7B477Df58656Ffbb127835468) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    EOA  (eth:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    contract ARM_Multisig4 (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 8 signatures across 67 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 8-of-67 multisig and is strictly more constrained. Root: 3-of-3, childGroups=(1,5,6). [click for per-group breakdown: Group 1: 2-of-3, parent=0, childGroups=(2,3,4) | Group 2: 2-of-14, parent=1, signers=14 | Group 3: 2-of-12, parent=1, signers=12 | Group 4: 2-of-5, parent=1, signers=5 | Group 5: 1-of-7, parent=0, signers=7 | Group 6: 3-of-16, parent=0, childGroups=(7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22) | Group 7: 1-of-2, parent=6, signers=2 | Group 8: 1-of-2, parent=6, signers=2 | Group 9: 1-of-2, parent=6, signers=2 | Group 10: 1-of-1, parent=6, signers=1 | Group 11: 1-of-2, parent=6, signers=2 | Group 12: 1-of-2, parent=6, signers=2 | Group 13: 1-of-4, parent=6, signers=4 | Group 14: 1-of-1, parent=6, signers=1 | Group 15: 1-of-1, parent=6, signers=1 | Group 16: 1-of-1, parent=6, signers=1 | Group 17: 1-of-1, parent=6, signers=1 | Group 18: 1-of-3, parent=6, signers=3 | Group 19: 1-of-1, parent=6, signers=1 | Group 20: 1-of-1, parent=6, signers=1 | Group 21: 1-of-3, parent=6, signers=3 | Group 22: 1-of-2, parent=6, signers=2]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 8 signatures across 67 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 8-of-67 multisig and is strictly more constrained. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-3, parent=0, childGroups=(20,21,22) | Group 20: 2-of-14, parent=19, signers=14 | Group 21: 2-of-12, parent=19, signers=12 | Group 22: 2-of-5, parent=19, signers=5]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 8 signatures across 67 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 8-of-67 multisig and is strictly more constrained. Root: 3-of-3, childGroups=(1,5,6). [click for per-group breakdown: Group 1: 2-of-3, parent=0, childGroups=(2,3,4) | Group 2: 2-of-14, parent=1, signers=14 | Group 3: 2-of-12, parent=1, signers=12 | Group 4: 2-of-5, parent=1, signers=5 | Group 5: 1-of-7, parent=0, signers=7 | Group 6: 3-of-16, parent=0, childGroups=(7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22) | Group 7: 1-of-2, parent=6, signers=2 | Group 8: 1-of-2, parent=6, signers=2 | Group 9: 1-of-2, parent=6, signers=2 | Group 10: 1-of-1, parent=6, signers=1 | Group 11: 1-of-2, parent=6, signers=2 | Group 12: 1-of-2, parent=6, signers=2 | Group 13: 1-of-4, parent=6, signers=4 | Group 14: 1-of-1, parent=6, signers=1 | Group 15: 1-of-1, parent=6, signers=1 | Group 16: 1-of-1, parent=6, signers=1 | Group 17: 1-of-1, parent=6, signers=1 | Group 18: 1-of-3, parent=6, signers=3 | Group 19: 1-of-1, parent=6, signers=1 | Group 20: 1-of-1, parent=6, signers=1 | Group 21: 1-of-3, parent=6, signers=3 | Group 22: 1-of-2, parent=6, signers=2]. The owner can rotate the entire signer tree."
+      values.config.summary:
+-        "Root: 3-of-3, childGroups=(1,18,19) | Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-3, parent=0, childGroups=(20,21,22) | Group 20: 2-of-14, parent=19, signers=14 | Group 21: 2-of-12, parent=19, signers=12 | Group 22: 2-of-5, parent=19, signers=5"
++        "Root: 3-of-3, childGroups=(1,5,6) | Group 1: 2-of-3, parent=0, childGroups=(2,3,4) | Group 2: 2-of-14, parent=1, signers=14 | Group 3: 2-of-12, parent=1, signers=12 | Group 4: 2-of-5, parent=1, signers=5 | Group 5: 1-of-7, parent=0, signers=7 | Group 6: 3-of-16, parent=0, childGroups=(7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22) | Group 7: 1-of-2, parent=6, signers=2 | Group 8: 1-of-2, parent=6, signers=2 | Group 9: 1-of-2, parent=6, signers=2 | Group 10: 1-of-1, parent=6, signers=1 | Group 11: 1-of-2, parent=6, signers=2 | Group 12: 1-of-2, parent=6, signers=2 | Group 13: 1-of-4, parent=6, signers=4 | Group 14: 1-of-1, parent=6, signers=1 | Group 15: 1-of-1, parent=6, signers=1 | Group 16: 1-of-1, parent=6, signers=1 | Group 17: 1-of-1, parent=6, signers=1 | Group 18: 1-of-3, parent=6, signers=3 | Group 19: 1-of-1, parent=6, signers=1 | Group 20: 1-of-1, parent=6, signers=1 | Group 21: 1-of-3, parent=6, signers=3 | Group 22: 1-of-2, parent=6, signers=2"
+      values.config.summaryRoot:
+-        "Root: 3-of-3, childGroups=(1,18,19)"
++        "Root: 3-of-3, childGroups=(1,5,6)"
+      values.config.summaryGroups:
+-        "Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-3, parent=0, childGroups=(20,21,22) | Group 20: 2-of-14, parent=19, signers=14 | Group 21: 2-of-12, parent=19, signers=12 | Group 22: 2-of-5, parent=19, signers=5"
++        "Group 1: 2-of-3, parent=0, childGroups=(2,3,4) | Group 2: 2-of-14, parent=1, signers=14 | Group 3: 2-of-12, parent=1, signers=12 | Group 4: 2-of-5, parent=1, signers=5 | Group 5: 1-of-7, parent=0, signers=7 | Group 6: 3-of-16, parent=0, childGroups=(7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22) | Group 7: 1-of-2, parent=6, signers=2 | Group 8: 1-of-2, parent=6, signers=2 | Group 9: 1-of-2, parent=6, signers=2 | Group 10: 1-of-1, parent=6, signers=1 | Group 11: 1-of-2, parent=6, signers=2 | Group 12: 1-of-2, parent=6, signers=2 | Group 13: 1-of-4, parent=6, signers=4 | Group 14: 1-of-1, parent=6, signers=1 | Group 15: 1-of-1, parent=6, signers=1 | Group 16: 1-of-1, parent=6, signers=1 | Group 17: 1-of-1, parent=6, signers=1 | Group 18: 1-of-3, parent=6, signers=3 | Group 19: 1-of-1, parent=6, signers=1 | Group 20: 1-of-1, parent=6, signers=1 | Group 21: 1-of-3, parent=6, signers=3 | Group 22: 1-of-2, parent=6, signers=2"
+      values.config.signerGroups.root.childGroups.1:
+-        18
++        5
+      values.config.signerGroups.root.childGroups.2:
+-        19
++        6
+      values.config.signerGroups.group1.quorum:
+-        3
++        2
+      values.config.signerGroups.group1.childGroups.3:
+-        5
+      values.config.signerGroups.group1.childGroups.4:
+-        6
+      values.config.signerGroups.group1.childGroups.5:
+-        7
+      values.config.signerGroups.group1.childGroups.6:
+-        8
+      values.config.signerGroups.group1.childGroups.7:
+-        9
+      values.config.signerGroups.group1.childGroups.8:
+-        10
+      values.config.signerGroups.group1.childGroups.9:
+-        11
+      values.config.signerGroups.group1.childGroups.10:
+-        12
+      values.config.signerGroups.group1.childGroups.11:
+-        13
+      values.config.signerGroups.group1.childGroups.12:
+-        14
+      values.config.signerGroups.group1.childGroups.13:
+-        15
+      values.config.signerGroups.group1.childGroups.14:
+-        16
+      values.config.signerGroups.group1.childGroups.15:
+-        17
+      values.config.signerGroups.group2.quorum:
+-        1
++        2
+      values.config.signerGroups.group2.members.0:
++        "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845"
+      values.config.signerGroups.group2.members.1:
++        "eth:0x34e42200901133bdceb1195f2c5241cb03D06274"
+      values.config.signerGroups.group2.members.2:
++        "eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8"
+      values.config.signerGroups.group2.members.3:
++        "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D"
+      values.config.signerGroups.group2.members.4:
++        "eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf"
+      values.config.signerGroups.group2.members.5:
++        "eth:0x532657dDd472E9f9061963a44955acCCeE318B1c"
+      values.config.signerGroups.group2.members.6:
++        "eth:0x843742760078Df85609690D85827173A1A96D14a"
+      values.config.signerGroups.group2.members.7:
++        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
+      values.config.signerGroups.group2.members.8:
++        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
+      values.config.signerGroups.group2.members.9:
++        "eth:0xd107276078c6605bE0CEC43D765733291B7102aF"
+      values.config.signerGroups.group2.members.10:
++        "eth:0xE062e7D123AC8dF480C56147f911144F55C10f88"
+      values.config.signerGroups.group2.members.11:
++        "eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162"
+      values.config.signerGroups.group2.members.0:
+-        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
++        "eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8"
+      values.config.signerGroups.group2.members.1:
+-        "eth:0xF721cEFDBD939Ba732E145817Dca810e6064c4b7"
++        "eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"
+      values.config.signerGroups.group3.quorum:
+-        1
++        2
+      values.config.signerGroups.group3.members.0:
++        "eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0"
+      values.config.signerGroups.group3.members.1:
++        "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142"
+      values.config.signerGroups.group3.members.2:
++        "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887"
+      values.config.signerGroups.group3.members.3:
++        "eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253"
+      values.config.signerGroups.group3.members.4:
++        "eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6"
+      values.config.signerGroups.group3.members.5:
++        "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0"
+      values.config.signerGroups.group3.members.6:
++        "eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226"
+      values.config.signerGroups.group3.members.7:
++        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.signerGroups.group3.members.8:
++        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
+      values.config.signerGroups.group3.members.9:
++        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
+      values.config.signerGroups.group3.members.0:
+-        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
++        "eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C"
+      values.config.signerGroups.group3.members.1:
+-        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
++        "eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6"
+      values.config.signerGroups.group4.quorum:
+-        1
++        2
+      values.config.signerGroups.group4.members.0:
++        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
+      values.config.signerGroups.group4.members.1:
++        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
+      values.config.signerGroups.group4.members.2:
++        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
+      values.config.signerGroups.group4.members.0:
+-        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
++        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
+      values.config.signerGroups.group4.members.1:
+-        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
++        "eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"
+      values.config.signerGroups.group5.parent:
+-        1
++        0
+      values.config.signerGroups.group5.members.0:
++        "eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34"
+      values.config.signerGroups.group5.members.1:
++        "eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472"
+      values.config.signerGroups.group5.members.2:
++        "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94"
+      values.config.signerGroups.group5.members.3:
++        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.config.signerGroups.group5.members.4:
++        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.config.signerGroups.group5.members.5:
++        "eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028"
+      values.config.signerGroups.group5.members.0:
+-        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
++        "eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"
+      values.config.signerGroups.group6.quorum:
+-        1
++        3
+      values.config.signerGroups.group6.parent:
+-        1
++        0
+      values.config.signerGroups.group6.childGroups.0:
++        7
+      values.config.signerGroups.group6.childGroups.1:
++        8
+      values.config.signerGroups.group6.childGroups.2:
++        9
+      values.config.signerGroups.group6.childGroups.3:
++        10
+      values.config.signerGroups.group6.childGroups.4:
++        11
+      values.config.signerGroups.group6.childGroups.5:
++        12
+      values.config.signerGroups.group6.childGroups.6:
++        13
+      values.config.signerGroups.group6.childGroups.7:
++        14
+      values.config.signerGroups.group6.childGroups.8:
++        15
+      values.config.signerGroups.group6.childGroups.9:
++        16
+      values.config.signerGroups.group6.childGroups.10:
++        17
+      values.config.signerGroups.group6.childGroups.11:
++        18
+      values.config.signerGroups.group6.childGroups.12:
++        19
+      values.config.signerGroups.group6.childGroups.13:
++        20
+      values.config.signerGroups.group6.childGroups.14:
++        21
+      values.config.signerGroups.group6.childGroups.15:
++        22
+      values.config.signerGroups.group6.members.0:
+-        "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
+      values.config.signerGroups.group6.members.1:
+-        "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
+      values.config.signerGroups.group7.parent:
+-        1
++        6
+      values.config.signerGroups.group7.members.0:
+-        "eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112"
++        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
+      values.config.signerGroups.group7.members.1:
+-        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
++        "eth:0xF721cEFDBD939Ba732E145817Dca810e6064c4b7"
+      values.config.signerGroups.group8.parent:
+-        1
++        6
+      values.config.signerGroups.group8.members.0:
+-        "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8"
+      values.config.signerGroups.group8.members.1:
+-        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.config.signerGroups.group8.members.2:
+-        "eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624"
++        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
+      values.config.signerGroups.group8.members.3:
+-        "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
++        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
+      values.config.signerGroups.group9.parent:
+-        1
++        6
+      values.config.signerGroups.group9.members.0:
++        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
+      values.config.signerGroups.group9.members.0:
+-        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
++        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
+      values.config.signerGroups.group10.parent:
+-        1
++        6
+      values.config.signerGroups.group10.members.0:
+-        "eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
++        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
+      values.config.signerGroups.group11.parent:
+-        1
++        6
+      values.config.signerGroups.group11.members.0:
++        "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
+      values.config.signerGroups.group11.members.0:
+-        "eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F"
++        "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
+      values.config.signerGroups.group12.parent:
+-        1
++        6
+      values.config.signerGroups.group12.members.0:
++        "eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112"
+      values.config.signerGroups.group12.members.0:
+-        "eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"
++        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
+      values.config.signerGroups.group13.parent:
+-        1
++        6
+      values.config.signerGroups.group13.members.0:
++        "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8"
+      values.config.signerGroups.group13.members.0:
+-        "eth:0x1620E85235C124303d03671b5de5ca12249a16BF"
++        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.config.signerGroups.group13.members.1:
+-        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
++        "eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624"
+      values.config.signerGroups.group13.members.2:
+-        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
++        "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
+      values.config.signerGroups.group14.parent:
+-        1
++        6
+      values.config.signerGroups.group14.members.0:
+-        "eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"
++        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
+      values.config.signerGroups.group15.parent:
+-        1
++        6
+      values.config.signerGroups.group15.members.0:
+-        "eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
++        "eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
+      values.config.signerGroups.group16.parent:
+-        1
++        6
+      values.config.signerGroups.group16.members.0:
+-        "eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60"
+      values.config.signerGroups.group16.members.1:
+-        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
+      values.config.signerGroups.group16.members.2:
+-        "eth:0xa85936633588Fc7a120061CA973e65cE83839F87"
++        "eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F"
+      values.config.signerGroups.group17.parent:
+-        1
++        6
+      values.config.signerGroups.group17.members.0:
+-        "eth:0x4189a291cC7E497015B45D4bb046dC0A82580688"
+      values.config.signerGroups.group17.members.1:
+-        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
++        "eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"
+      values.config.signerGroups.group18.parent:
+-        0
++        6
+      values.config.signerGroups.group18.members.0:
+-        "eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34"
+      values.config.signerGroups.group18.members.1:
+-        "eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472"
+      values.config.signerGroups.group18.members.2:
+-        "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94"
+      values.config.signerGroups.group18.members.3:
+-        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.config.signerGroups.group18.members.4:
+-        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
++        "eth:0x1620E85235C124303d03671b5de5ca12249a16BF"
+      values.config.signerGroups.group18.members.5:
+-        "eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028"
++        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
+      values.config.signerGroups.group18.members.6:
+-        "eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"
++        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
+      values.config.signerGroups.group19.quorum:
+-        2
++        1
+      values.config.signerGroups.group19.parent:
+-        0
++        6
+      values.config.signerGroups.group19.childGroups.0:
+-        20
+      values.config.signerGroups.group19.childGroups.1:
+-        21
+      values.config.signerGroups.group19.childGroups.2:
+-        22
+      values.config.signerGroups.group19.members.0:
++        "eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"
+      values.config.signerGroups.group20.quorum:
+-        2
++        1
+      values.config.signerGroups.group20.parent:
+-        19
++        6
+      values.config.signerGroups.group20.members.0:
+-        "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845"
+      values.config.signerGroups.group20.members.1:
+-        "eth:0x34e42200901133bdceb1195f2c5241cb03D06274"
+      values.config.signerGroups.group20.members.2:
+-        "eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8"
+      values.config.signerGroups.group20.members.3:
+-        "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D"
+      values.config.signerGroups.group20.members.4:
+-        "eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf"
+      values.config.signerGroups.group20.members.5:
+-        "eth:0x532657dDd472E9f9061963a44955acCCeE318B1c"
+      values.config.signerGroups.group20.members.6:
+-        "eth:0x843742760078Df85609690D85827173A1A96D14a"
+      values.config.signerGroups.group20.members.7:
+-        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
+      values.config.signerGroups.group20.members.8:
+-        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
+      values.config.signerGroups.group20.members.9:
+-        "eth:0xd107276078c6605bE0CEC43D765733291B7102aF"
+      values.config.signerGroups.group20.members.10:
+-        "eth:0xE062e7D123AC8dF480C56147f911144F55C10f88"
+      values.config.signerGroups.group20.members.11:
+-        "eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162"
+      values.config.signerGroups.group20.members.12:
+-        "eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8"
+      values.config.signerGroups.group20.members.13:
+-        "eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"
++        "eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
+      values.config.signerGroups.group21.quorum:
+-        2
++        1
+      values.config.signerGroups.group21.parent:
+-        19
++        6
+      values.config.signerGroups.group21.members.0:
+-        "eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0"
+      values.config.signerGroups.group21.members.1:
+-        "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142"
+      values.config.signerGroups.group21.members.2:
+-        "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887"
+      values.config.signerGroups.group21.members.3:
+-        "eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253"
+      values.config.signerGroups.group21.members.4:
+-        "eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6"
+      values.config.signerGroups.group21.members.5:
+-        "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0"
+      values.config.signerGroups.group21.members.6:
+-        "eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226"
+      values.config.signerGroups.group21.members.7:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.signerGroups.group21.members.8:
+-        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
+      values.config.signerGroups.group21.members.9:
+-        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
++        "eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60"
+      values.config.signerGroups.group21.members.10:
+-        "eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C"
++        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
+      values.config.signerGroups.group21.members.11:
+-        "eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6"
++        "eth:0xa85936633588Fc7a120061CA973e65cE83839F87"
+      values.config.signerGroups.group22.quorum:
+-        2
++        1
+      values.config.signerGroups.group22.parent:
+-        19
++        6
+      values.config.signerGroups.group22.members.0:
+-        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
+      values.config.signerGroups.group22.members.1:
+-        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
+      values.config.signerGroups.group22.members.2:
+-        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
+      values.config.signerGroups.group22.members.3:
+-        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
++        "eth:0x4189a291cC7E497015B45D4bb046dC0A82580688"
+      values.config.signerGroups.group22.members.4:
+-        "eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"
++        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
++++ description: One-line readable form of the full tree-quorum, e.g. "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-14, ...". Exposed as a top-level field so it can be interpolated into the entry's description.
+      values.summary:
+-        "Root: 3-of-3, childGroups=(1,18,19) | Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-3, parent=0, childGroups=(20,21,22) | Group 20: 2-of-14, parent=19, signers=14 | Group 21: 2-of-12, parent=19, signers=12 | Group 22: 2-of-5, parent=19, signers=5"
++        "Root: 3-of-3, childGroups=(1,5,6) | Group 1: 2-of-3, parent=0, childGroups=(2,3,4) | Group 2: 2-of-14, parent=1, signers=14 | Group 3: 2-of-12, parent=1, signers=12 | Group 4: 2-of-5, parent=1, signers=5 | Group 5: 1-of-7, parent=0, signers=7 | Group 6: 3-of-16, parent=0, childGroups=(7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22) | Group 7: 1-of-2, parent=6, signers=2 | Group 8: 1-of-2, parent=6, signers=2 | Group 9: 1-of-2, parent=6, signers=2 | Group 10: 1-of-1, parent=6, signers=1 | Group 11: 1-of-2, parent=6, signers=2 | Group 12: 1-of-2, parent=6, signers=2 | Group 13: 1-of-4, parent=6, signers=4 | Group 14: 1-of-1, parent=6, signers=1 | Group 15: 1-of-1, parent=6, signers=1 | Group 16: 1-of-1, parent=6, signers=1 | Group 17: 1-of-1, parent=6, signers=1 | Group 18: 1-of-3, parent=6, signers=3 | Group 19: 1-of-1, parent=6, signers=1 | Group 20: 1-of-1, parent=6, signers=1 | Group 21: 1-of-3, parent=6, signers=3 | Group 22: 1-of-2, parent=6, signers=2"
++++ description: The per-sub-group lines of the tree summary, joined with ' | '. Empty when the root has no sub-groups. Hidden behind the [click for per-group breakdown] collapsible in the entry description.
+      values.summaryGroups:
+-        "Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-3, parent=0, childGroups=(20,21,22) | Group 20: 2-of-14, parent=19, signers=14 | Group 21: 2-of-12, parent=19, signers=12 | Group 22: 2-of-5, parent=19, signers=5"
++        "Group 1: 2-of-3, parent=0, childGroups=(2,3,4) | Group 2: 2-of-14, parent=1, signers=14 | Group 3: 2-of-12, parent=1, signers=12 | Group 4: 2-of-5, parent=1, signers=5 | Group 5: 1-of-7, parent=0, signers=7 | Group 6: 3-of-16, parent=0, childGroups=(7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22) | Group 7: 1-of-2, parent=6, signers=2 | Group 8: 1-of-2, parent=6, signers=2 | Group 9: 1-of-2, parent=6, signers=2 | Group 10: 1-of-1, parent=6, signers=1 | Group 11: 1-of-2, parent=6, signers=2 | Group 12: 1-of-2, parent=6, signers=2 | Group 13: 1-of-4, parent=6, signers=4 | Group 14: 1-of-1, parent=6, signers=1 | Group 15: 1-of-1, parent=6, signers=1 | Group 16: 1-of-1, parent=6, signers=1 | Group 17: 1-of-1, parent=6, signers=1 | Group 18: 1-of-3, parent=6, signers=3 | Group 19: 1-of-1, parent=6, signers=1 | Group 20: 1-of-1, parent=6, signers=1 | Group 21: 1-of-3, parent=6, signers=3 | Group 22: 1-of-2, parent=6, signers=2"
++++ description: Just the root-group line of the tree summary (e.g. "Root: 2-of-4, childGroups=(1,2,3,4)"). Always-visible head of the description.
+      values.summaryRoot:
+-        "Root: 3-of-3, childGroups=(1,18,19)"
++        "Root: 3-of-3, childGroups=(1,5,6)"
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x01346721418045A6c07b71052e452eF8615e9084","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0428dF02c581E605AABF83005b427b1561b587De","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x0d26BaE784c8986502E072F4e73B6168e2052045","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x0F254ECcC89219CEC945BCeA48A4681eb5a380d7","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x0f5552d17505dC8f70D6cd65BEADFE20f42bBE75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x0f89C7c0586536B618e0469402e1c8234bc52959","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x10D5611D4E1fBB0Eb614C25f14ED6AfD6C945c75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x1807769Abe5133c9B41cA6746044b6a1d83F5633","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x1bddbA5DC2cd6ED3343A8E94D02023cC720533B9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.9:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.10:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.11:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.12.description:
+-        "add or remove fee tokens accepted by CCIP pricing."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      receivedPermissions.12.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x27A4E7ff4a6E28056Ac3e39445639876Ee9926FB"
+      receivedPermissions.13.description:
+-        "update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead)."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      receivedPermissions.13.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x38A806580D93c5B3e295F5181723C11f15c43271"
+      receivedPermissions.14.role:
+-        ".getAllAuthorizedCallers"
++        ".owner"
+      receivedPermissions.14.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      receivedPermissions.14.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x3f1c3541B7035dEd84E4502E41D5C919da4C4527"
+      receivedPermissions.26:
++        {"permission":"interact","from":"eth:0x459154447d3BD41392Ea3f49738a887dD3f1e5d0","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.27:
++        {"permission":"interact","from":"eth:0x4B50Cd4637a8EA94729811201A699f4800ee3282","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.28:
++        {"permission":"interact","from":"eth:0x52275dC17f9eD92230C8C4d57fD36d128701f694","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.29:
++        {"permission":"interact","from":"eth:0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.31:
++        {"permission":"interact","from":"eth:0x5Fd81cF5734498467634Ed9432aad298022e15Ff","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.32:
++        {"permission":"interact","from":"eth:0x607c0979C55628680167260Ca68e0EF22e8f128C","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.34:
++        {"permission":"interact","from":"eth:0x67b972054152E6F4B7434D84439EE225e5a00b90","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.35:
++        {"permission":"interact","from":"eth:0x6818278a6e4DA0aD588ef4dd04b59bC4E6703248","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.36:
++        {"permission":"interact","from":"eth:0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.37:
++        {"permission":"interact","from":"eth:0x6f4AbCe0B22343e66C856F28e2d07074c5c5BF75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.38:
++        {"permission":"interact","from":"eth:0x6fe6F73F7Cd11E34b6908cdC080683690229d0A4","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.39:
++        {"permission":"interact","from":"eth:0x700b6adcCfAa4c66638b1AD36BDeFE2038794E02","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.40:
++        {"permission":"interact","from":"eth:0x70Ac0F926a64D82f0cC69A3E505f0eE57E27006a","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.43:
++        {"permission":"interact","from":"eth:0x807dd69Bc9BC4e9411490f7b79Ff30c91E799A04","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.44:
++        {"permission":"interact","from":"eth:0x83F3DA5aa2C7534d694B0acde7624573c830250D","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.45:
++        {"permission":"interact","from":"eth:0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.46:
++        {"permission":"interact","from":"eth:0x8A1680fBbDb3Da1e0E7cA9078435631bEaf8a2cF","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.47:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.48:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"add or remove price updater accounts.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.49:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"change the staleness threshold for token and gas prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.50:
++        {"permission":"interact","from":"eth:0x8D846b1E9032827546B62160c32aDe293f77B1AB","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.51:
++        {"permission":"interact","from":"eth:0x8FC54E798eAC51353E160C9113682714F5e9E262","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.55:
++        {"permission":"interact","from":"eth:0x913A2AC13907F29EF2346E21368214B9b3dDc04B","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.56:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"add destination chains and update per-chain fee config (size and gas limits, gas overheads, network fee, LINK fee multiplier).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.57:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.58:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"remove accepted fee tokens and delete their stored prices (tokens are added implicitly when authorized callers price them).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.59:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"set or delete per-(destChain, token) transfer fee overrides.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.60:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.61:
++        {"permission":"interact","from":"eth:0x95deB0c4bB9168202d50E874865f9A1842b82D64","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.62:
++        {"permission":"interact","from":"eth:0x98d0f843AE9BA7c55F6e3941E6660a5947a67Ed9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.63:
++        {"permission":"interact","from":"eth:0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.64:
++        {"permission":"interact","from":"eth:0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.65:
++        {"permission":"interact","from":"eth:0x9f592c28590595F3F78a8881E8Dbb9984ed705cD","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.66:
++        {"permission":"interact","from":"eth:0xA4755Cd68CA2092447c8c842659a2931f9110320","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.67:
++        {"permission":"interact","from":"eth:0xA48269e5c9A234daBfEBE98b82390Be705536d1c","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.68:
++        {"permission":"interact","from":"eth:0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.69:
++        {"permission":"interact","from":"eth:0xA7E77BD47e2fDeE61df271E8b9206F3F1E804427","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.70:
++        {"permission":"interact","from":"eth:0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.73:
++        {"permission":"interact","from":"eth:0xb86C91861A7043fffC26C7740C3678eE09599234","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.74:
++        {"permission":"interact","from":"eth:0xbAf669bBe01882082C83F8B2d146057202fc4cB7","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.75:
++        {"permission":"interact","from":"eth:0xc46890D248a389A40725dbd9fa5e13548B56Ad8d","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.76:
++        {"permission":"interact","from":"eth:0xc5164AF94Be6737fE21085eDDa4E43BcBf224F9f","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.77:
++        {"permission":"interact","from":"eth:0xd079265E929C845707e816E3855721D055d40235","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.78:
++        {"permission":"interact","from":"eth:0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.79:
++        {"permission":"interact","from":"eth:0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.81:
++        {"permission":"interact","from":"eth:0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.82:
++        {"permission":"interact","from":"eth:0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.83:
++        {"permission":"interact","from":"eth:0xDb156E875Ef17dDe70c90a1529023fFf376e627c","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.84:
++        {"permission":"interact","from":"eth:0xdCF6F209d36d93A26B251D2CFE994bEF02954110","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.85:
++        {"permission":"interact","from":"eth:0xE41677500B425999cB4133950ca3aB79eA7470a6","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.87:
++        {"permission":"interact","from":"eth:0xF191733ea5be14E4a5f381a3c375A4F3F8fd4793","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.88:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.89:
++        {"permission":"interact","from":"eth:0xf7D68CcC92B836316C40B24ea77F6805DcBb8F02","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.90:
++        {"permission":"interact","from":"eth:0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.91:
++        {"permission":"interact","from":"eth:0xfacFe88fdf03Ab7D30d6CA45A070Df7C54551fd6","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+      receivedPermissions.92:
++        {"permission":"interact","from":"eth:0xFE73BccC5b88D22969099EBb4E2eb5e19eFb0165","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+    }
+```
+
+```diff
+    EOA  (eth:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    EOA  (eth:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    contract EthereumOffRamp_v1_6 (eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5) [transporter/OfframpV3] {
+    +++ description: OffRamp used to receive messages on Ethereum from other chains. It stores the list and threshold of "OCR" signers that authorize the commitment of crosschain messages and the list of "transmitters", i.e. addresses can relay messages signed by the signers. Currently 16 signers are configured with F=5, so 5+1 signatures are required on every commit report. Committed message are usually executed by whitelisted "execution transmitters". If they are not executed within 1h, anyone can execute them.
+      values.getDynamicConfig.feeQuoter:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
++++ description: Per-source-chain config for inbound CCIP messages: local Router used to deliver to receivers, whether the lane is enabled, whether RMN signature blessing is required on commits (false = blessing REQUIRED, true = blessing skipped — only OCR signatures gate the commit), and the bytes-encoded source-chain OnRamp address (left-padded EVM address for EVM sources; native encoding for non-EVM families). Keys are source-chain names. Replayed from SourceChainConfigSet events. minSeqNr is omitted because the event captures the value at config-change time, not the current commit counter (which advances on every _commitRoot).
+      values.sourceChainConfigs.6180753054346818345:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","isEnabled":true,"isRMNVerificationDisabled":true,"onRamp":"0x000000000000000000000000e72d25add538e8ef9cef85622ea8912a6cb98be6"}
+      directlyReceivedPermissions.0.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      directlyReceivedPermissions.0.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    EOA  (eth:0x2D2251fAC6871Df405450337E327683822baFc52) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FeeQuoter (eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57) [transporter/FeeQuoter]
+    +++ description: Fee oracle + price registry. It holds the per-destination-chain config (gas overheads, DA multipliers, network fee, gas multiplier, size limits, chain-family selector, etc.), the per-fee-token premium config, the per-(destChain, token) transfer fee overrides, and the live USD price tables for tokens and destination gas. The OnRamp delegates fee quoting to this contract.
+```
+
+```diff
+    contract Router (eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E) [N/A] {
+    +++ description: Deprecated router used by BSC.
+      values.getOffRamps.4:
++        {"sourceChainSelector":"1556008542357238666","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+      values.getOffRamps.5:
++        {"sourceChainSelector":"3461204551265785888","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
+    }
+```
+
+```diff
+    EOA  (eth:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Gho Token (eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f) [N/A]
+    +++ description: Token accepted as fee token for sending outgoing messages.
+```
+
+```diff
+    contract ARMTimelock (eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449) [transporter/RBACTimelock] {
+    +++ description: Role based timelock used to administer CCIP contracts.
+      directlyReceivedPermissions.0:
++        {"permission":"interact","from":"eth:0x01346721418045A6c07b71052e452eF8615e9084","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0428dF02c581E605AABF83005b427b1561b587De","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x0d26BaE784c8986502E072F4e73B6168e2052045","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0x0F254ECcC89219CEC945BCeA48A4681eb5a380d7","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"eth:0x0f5552d17505dC8f70D6cd65BEADFE20f42bBE75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"eth:0x0f89C7c0586536B618e0469402e1c8234bc52959","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.6:
++        {"permission":"interact","from":"eth:0x10D5611D4E1fBB0Eb614C25f14ED6AfD6C945c75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.8:
++        {"permission":"interact","from":"eth:0x1807769Abe5133c9B41cA6746044b6a1d83F5633","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.9:
++        {"permission":"interact","from":"eth:0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.10:
++        {"permission":"interact","from":"eth:0x1bddbA5DC2cd6ED3343A8E94D02023cC720533B9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.9:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner"}
+      directlyReceivedPermissions.10:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner"}
+      directlyReceivedPermissions.11:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner"}
+      directlyReceivedPermissions.12.description:
+-        "add or remove fee tokens accepted by CCIP pricing."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      directlyReceivedPermissions.12.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x27A4E7ff4a6E28056Ac3e39445639876Ee9926FB"
+      directlyReceivedPermissions.13.description:
+-        "update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead)."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      directlyReceivedPermissions.13.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x38A806580D93c5B3e295F5181723C11f15c43271"
+      directlyReceivedPermissions.14.role:
+-        ".getAllAuthorizedCallers"
++        ".owner"
+      directlyReceivedPermissions.14.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      directlyReceivedPermissions.14.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x3f1c3541B7035dEd84E4502E41D5C919da4C4527"
+      directlyReceivedPermissions.24:
++        {"permission":"interact","from":"eth:0x459154447d3BD41392Ea3f49738a887dD3f1e5d0","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.25:
++        {"permission":"interact","from":"eth:0x4B50Cd4637a8EA94729811201A699f4800ee3282","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.26:
++        {"permission":"interact","from":"eth:0x52275dC17f9eD92230C8C4d57fD36d128701f694","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.27:
++        {"permission":"interact","from":"eth:0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.28:
++        {"permission":"interact","from":"eth:0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.29:
++        {"permission":"interact","from":"eth:0x5Fd81cF5734498467634Ed9432aad298022e15Ff","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.30:
++        {"permission":"interact","from":"eth:0x607c0979C55628680167260Ca68e0EF22e8f128C","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.32:
++        {"permission":"interact","from":"eth:0x67b972054152E6F4B7434D84439EE225e5a00b90","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.33:
++        {"permission":"interact","from":"eth:0x6818278a6e4DA0aD588ef4dd04b59bC4E6703248","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.34:
++        {"permission":"interact","from":"eth:0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.35:
++        {"permission":"interact","from":"eth:0x6f4AbCe0B22343e66C856F28e2d07074c5c5BF75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.36:
++        {"permission":"interact","from":"eth:0x6fe6F73F7Cd11E34b6908cdC080683690229d0A4","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.37:
++        {"permission":"interact","from":"eth:0x700b6adcCfAa4c66638b1AD36BDeFE2038794E02","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.38:
++        {"permission":"interact","from":"eth:0x70Ac0F926a64D82f0cC69A3E505f0eE57E27006a","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.41:
++        {"permission":"interact","from":"eth:0x807dd69Bc9BC4e9411490f7b79Ff30c91E799A04","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.42:
++        {"permission":"interact","from":"eth:0x83F3DA5aa2C7534d694B0acde7624573c830250D","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.43:
++        {"permission":"interact","from":"eth:0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.44:
++        {"permission":"interact","from":"eth:0x8A1680fBbDb3Da1e0E7cA9078435631bEaf8a2cF","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.45:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner"}
+      directlyReceivedPermissions.46:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"add or remove price updater accounts.","role":".owner"}
+      directlyReceivedPermissions.47:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"change the staleness threshold for token and gas prices.","role":".owner"}
+      directlyReceivedPermissions.48:
++        {"permission":"interact","from":"eth:0x8D846b1E9032827546B62160c32aDe293f77B1AB","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.49:
++        {"permission":"interact","from":"eth:0x8FC54E798eAC51353E160C9113682714F5e9E262","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.53:
++        {"permission":"interact","from":"eth:0x913A2AC13907F29EF2346E21368214B9b3dDc04B","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.54:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"add destination chains and update per-chain fee config (size and gas limits, gas overheads, network fee, LINK fee multiplier).","role":".owner"}
+      directlyReceivedPermissions.55:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner"}
+      directlyReceivedPermissions.56:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"remove accepted fee tokens and delete their stored prices (tokens are added implicitly when authorized callers price them).","role":".owner"}
+      directlyReceivedPermissions.57:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"set or delete per-(destChain, token) transfer fee overrides.","role":".owner"}
+      directlyReceivedPermissions.58:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens.","role":".getAllAuthorizedCallers"}
+      directlyReceivedPermissions.59:
++        {"permission":"interact","from":"eth:0x95deB0c4bB9168202d50E874865f9A1842b82D64","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.60:
++        {"permission":"interact","from":"eth:0x98d0f843AE9BA7c55F6e3941E6660a5947a67Ed9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.61:
++        {"permission":"interact","from":"eth:0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.62:
++        {"permission":"interact","from":"eth:0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.63:
++        {"permission":"interact","from":"eth:0x9f592c28590595F3F78a8881E8Dbb9984ed705cD","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.64:
++        {"permission":"interact","from":"eth:0xA4755Cd68CA2092447c8c842659a2931f9110320","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.65:
++        {"permission":"interact","from":"eth:0xA48269e5c9A234daBfEBE98b82390Be705536d1c","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.66:
++        {"permission":"interact","from":"eth:0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.67:
++        {"permission":"interact","from":"eth:0xA7E77BD47e2fDeE61df271E8b9206F3F1E804427","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.68:
++        {"permission":"interact","from":"eth:0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.71:
++        {"permission":"interact","from":"eth:0xb86C91861A7043fffC26C7740C3678eE09599234","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.72:
++        {"permission":"interact","from":"eth:0xbAf669bBe01882082C83F8B2d146057202fc4cB7","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.73:
++        {"permission":"interact","from":"eth:0xc46890D248a389A40725dbd9fa5e13548B56Ad8d","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.74:
++        {"permission":"interact","from":"eth:0xc5164AF94Be6737fE21085eDDa4E43BcBf224F9f","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.75:
++        {"permission":"interact","from":"eth:0xd079265E929C845707e816E3855721D055d40235","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.76:
++        {"permission":"interact","from":"eth:0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.77:
++        {"permission":"interact","from":"eth:0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.79:
++        {"permission":"interact","from":"eth:0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.80:
++        {"permission":"interact","from":"eth:0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.81:
++        {"permission":"interact","from":"eth:0xDb156E875Ef17dDe70c90a1529023fFf376e627c","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.82:
++        {"permission":"interact","from":"eth:0xdCF6F209d36d93A26B251D2CFE994bEF02954110","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.83:
++        {"permission":"interact","from":"eth:0xE41677500B425999cB4133950ca3aB79eA7470a6","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.85:
++        {"permission":"interact","from":"eth:0xF191733ea5be14E4a5f381a3c375A4F3F8fd4793","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.86:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.87:
++        {"permission":"interact","from":"eth:0xf7D68CcC92B836316C40B24ea77F6805DcBb8F02","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.88:
++        {"permission":"interact","from":"eth:0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.89:
++        {"permission":"interact","from":"eth:0xfacFe88fdf03Ab7D30d6CA45A070Df7C54551fd6","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+      directlyReceivedPermissions.90:
++        {"permission":"interact","from":"eth:0xFE73BccC5b88D22969099EBb4E2eb5e19eFb0165","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
+    }
+```
+
+```diff
+    EOA  (eth:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    EOA  (eth:0x68ad36Ad55bc29eE5a4C4781d9640DD47c8675Bc) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.0.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    EOA  (eth:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    EOA  (eth:0x73EBEB20D2DdaED1Fe8fbEc6D802560c1aB54bf4) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    EOA  (eth:0x7502128aF7a58E9906696EA6B60434f75d0026E0) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) [transporter/RouterV1_2_0] {
+    +++ description: Ethereum CCIP Router for this route. Users call it to send and receive messages from other chains. It dispatches to the appropriate OnRamp or OffRamp based on source or destination chain.
+      values.onRamps.blast:
+-        "eth:0x6751cA96b769129dFE6eB8E349c310deCEDb4e36"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.onRamps.mind:
+-        "eth:0x9cb0FF2Ea9110dc8831b39F620811a0da09747D3"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.onRamps.mint:
+-        "eth:0x1Fa3aF677DC1b627f8A57e26b2a55d5F7945F06b"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: All OnRamp registrations the Router knows about, keyed by destination chain name. Each maps to the OnRamp contract address that ccipSend() will delegate to for that destination. Replayed from OnRampSet events. ignoreRelative is set because the v1.6 architecture uses a single per-chain OnRamp serving all destinations, already walked via arbitrumOnRamp.
+      values.onRamps.6180753054346818345:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    EOA  (eth:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    EOA  (eth:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    contract EthereumOnRamp_v1_6 (eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa) [transporter/OnRampV1_6] {
+    +++ description: Contract used to send outgoing messages to other chains. It saves destination chain configs, storing the router that is allowed to call the OnRamp and whether a whitelist is enabled to send messages.
++++ description: Per-destination-chain lane config (which local Router can send ccipSend() for this destination, and whether the per-chain allowlist gate is enabled). Replayed from DestChainConfigSet events; keys are CCIP chain selectors, value is the latest (router, allowlistEnabled) pair. The sequenceNumber field on the event reflects the seq at the moment of the config change, not the current send counter, so it is dropped.
+      values.destChainConfigs.6180753054346818345:
++        {"router":"eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D","allowlistEnabled":false}
+      values.getDynamicConfig.feeQuoter:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    EOA  (eth:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    contract ARM_Multisig3 (eth:0xAD97C0270a243270136E40278155C12ce7C7F87B) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 2 signatures across 67 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-67 multisig and is strictly more constrained. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-38, parent=0, signers=38 | Group 2: 3-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 2 signatures across 67 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-67 multisig and is strictly more constrained. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-31, parent=0, signers=31 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 2 signatures across 67 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-67 multisig and is strictly more constrained. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-38, parent=0, signers=38 | Group 2: 3-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]. The owner can rotate the entire signer tree."
+      values.config.summary:
+-        "Root: 1-of-3, childGroups=(1,2,3) | Group 1: 4-of-31, parent=0, signers=31 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2"
++        "Root: 1-of-2, childGroups=(1,2) | Group 1: 2-of-38, parent=0, signers=38 | Group 2: 3-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2"
+      values.config.summaryRoot:
+-        "Root: 1-of-3, childGroups=(1,2,3)"
++        "Root: 1-of-2, childGroups=(1,2)"
+      values.config.summaryGroups:
+-        "Group 1: 4-of-31, parent=0, signers=31 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2"
++        "Group 1: 2-of-38, parent=0, signers=38 | Group 2: 3-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2"
+      values.config.signerGroups.root.childGroups.2:
+-        3
+      values.config.signerGroups.group1.quorum:
+-        4
++        2
+      values.config.signerGroups.group1.members.0:
++        "eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34"
+      values.config.signerGroups.group1.members.1:
++        "eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472"
+      values.config.signerGroups.group1.members.3:
++        "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94"
+      values.config.signerGroups.group1.members.19:
++        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.config.signerGroups.group1.members.25:
++        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.config.signerGroups.group1.members.35:
++        "eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028"
+      values.config.signerGroups.group1.members.36:
++        "eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"
+      values.config.signerGroups.group2.quorum:
+-        2
++        3
+      values.config.signerGroups.group2.childGroups.0:
++        3
+      values.config.signerGroups.group2.childGroups.1:
++        4
+      values.config.signerGroups.group2.childGroups.2:
++        5
+      values.config.signerGroups.group2.childGroups.3:
++        6
+      values.config.signerGroups.group2.childGroups.4:
++        7
+      values.config.signerGroups.group2.childGroups.5:
++        8
+      values.config.signerGroups.group2.childGroups.6:
++        9
+      values.config.signerGroups.group2.childGroups.7:
++        10
+      values.config.signerGroups.group2.childGroups.8:
++        11
+      values.config.signerGroups.group2.childGroups.9:
++        12
+      values.config.signerGroups.group2.childGroups.10:
++        13
+      values.config.signerGroups.group2.childGroups.11:
++        14
+      values.config.signerGroups.group2.childGroups.12:
++        15
+      values.config.signerGroups.group2.childGroups.13:
++        16
+      values.config.signerGroups.group2.childGroups.14:
++        17
+      values.config.signerGroups.group2.childGroups.15:
++        18
+      values.config.signerGroups.group2.members.0:
+-        "eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34"
+      values.config.signerGroups.group2.members.1:
+-        "eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472"
+      values.config.signerGroups.group2.members.2:
+-        "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94"
+      values.config.signerGroups.group2.members.3:
+-        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.config.signerGroups.group2.members.4:
+-        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.config.signerGroups.group2.members.5:
+-        "eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028"
+      values.config.signerGroups.group2.members.6:
+-        "eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"
+      values.config.signerGroups.group3.quorum:
+-        6
++        1
+      values.config.signerGroups.group3.parent:
+-        0
++        2
+      values.config.signerGroups.group3.childGroups.0:
+-        4
+      values.config.signerGroups.group3.childGroups.1:
+-        5
+      values.config.signerGroups.group3.childGroups.2:
+-        6
+      values.config.signerGroups.group3.childGroups.3:
+-        7
+      values.config.signerGroups.group3.childGroups.4:
+-        8
+      values.config.signerGroups.group3.childGroups.5:
+-        9
+      values.config.signerGroups.group3.childGroups.6:
+-        10
+      values.config.signerGroups.group3.childGroups.7:
+-        11
+      values.config.signerGroups.group3.childGroups.8:
+-        12
+      values.config.signerGroups.group3.childGroups.9:
+-        13
+      values.config.signerGroups.group3.childGroups.10:
+-        14
+      values.config.signerGroups.group3.childGroups.11:
+-        15
+      values.config.signerGroups.group3.childGroups.12:
+-        16
+      values.config.signerGroups.group3.childGroups.13:
+-        17
+      values.config.signerGroups.group3.childGroups.14:
+-        18
+      values.config.signerGroups.group3.childGroups.15:
+-        19
+      values.config.signerGroups.group3.members.0:
++        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
+      values.config.signerGroups.group3.members.1:
++        "eth:0xF721cEFDBD939Ba732E145817Dca810e6064c4b7"
+      values.config.signerGroups.group4.parent:
+-        3
++        2
+      values.config.signerGroups.group4.members.0:
+-        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
++        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
+      values.config.signerGroups.group4.members.1:
+-        "eth:0xF721cEFDBD939Ba732E145817Dca810e6064c4b7"
++        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
+      values.config.signerGroups.group5.parent:
+-        3
++        2
+      values.config.signerGroups.group5.members.0:
+-        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
++        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
+      values.config.signerGroups.group5.members.1:
+-        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
++        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
+      values.config.signerGroups.group6.parent:
+-        3
++        2
+      values.config.signerGroups.group6.members.0:
+-        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
+      values.config.signerGroups.group6.members.1:
+-        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
++        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
+      values.config.signerGroups.group7.parent:
+-        3
++        2
+      values.config.signerGroups.group7.members.0:
++        "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
+      values.config.signerGroups.group7.members.0:
+-        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
++        "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
+      values.config.signerGroups.group8.parent:
+-        3
++        2
+      values.config.signerGroups.group8.members.0:
+-        "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
++        "eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112"
+      values.config.signerGroups.group8.members.1:
+-        "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
++        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
+      values.config.signerGroups.group9.parent:
+-        3
++        2
+      values.config.signerGroups.group9.members.0:
++        "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8"
+      values.config.signerGroups.group9.members.1:
++        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.config.signerGroups.group9.members.0:
+-        "eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112"
++        "eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624"
+      values.config.signerGroups.group9.members.1:
+-        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
++        "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
+      values.config.signerGroups.group10.parent:
+-        3
++        2
+      values.config.signerGroups.group10.members.0:
+-        "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8"
+      values.config.signerGroups.group10.members.1:
+-        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.config.signerGroups.group10.members.2:
+-        "eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624"
+      values.config.signerGroups.group10.members.3:
+-        "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
++        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
+      values.config.signerGroups.group11.parent:
+-        3
++        2
+      values.config.signerGroups.group11.members.0:
+-        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
++        "eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
+      values.config.signerGroups.group12.parent:
+-        3
++        2
+      values.config.signerGroups.group12.members.0:
+-        "eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
++        "eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F"
+      values.config.signerGroups.group13.parent:
+-        3
++        2
+      values.config.signerGroups.group13.members.0:
+-        "eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F"
++        "eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"
+      values.config.signerGroups.group14.parent:
+-        3
++        2
+      values.config.signerGroups.group14.members.0:
++        "eth:0x1620E85235C124303d03671b5de5ca12249a16BF"
+      values.config.signerGroups.group14.members.1:
++        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
+      values.config.signerGroups.group14.members.0:
+-        "eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"
++        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
+      values.config.signerGroups.group15.parent:
+-        3
++        2
+      values.config.signerGroups.group15.members.0:
+-        "eth:0x1620E85235C124303d03671b5de5ca12249a16BF"
+      values.config.signerGroups.group15.members.1:
+-        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
+      values.config.signerGroups.group15.members.2:
+-        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
++        "eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"
+      values.config.signerGroups.group16.parent:
+-        3
++        2
+      values.config.signerGroups.group16.members.0:
+-        "eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"
++        "eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
+      values.config.signerGroups.group17.parent:
+-        3
++        2
+      values.config.signerGroups.group17.members.0:
++        "eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60"
+      values.config.signerGroups.group17.members.1:
++        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
+      values.config.signerGroups.group17.members.0:
+-        "eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
++        "eth:0xa85936633588Fc7a120061CA973e65cE83839F87"
+      values.config.signerGroups.group18.parent:
+-        3
++        2
+      values.config.signerGroups.group18.members.0:
+-        "eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60"
+      values.config.signerGroups.group18.members.1:
+-        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
++        "eth:0x4189a291cC7E497015B45D4bb046dC0A82580688"
+      values.config.signerGroups.group18.members.2:
+-        "eth:0xa85936633588Fc7a120061CA973e65cE83839F87"
++        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
+      values.config.signerGroups.group19:
+-        {"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x4189a291cC7E497015B45D4bb046dC0A82580688","eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"]}
++++ description: One-line readable form of the full tree-quorum, e.g. "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-14, ...". Exposed as a top-level field so it can be interpolated into the entry's description.
+      values.summary:
+-        "Root: 1-of-3, childGroups=(1,2,3) | Group 1: 4-of-31, parent=0, signers=31 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2"
++        "Root: 1-of-2, childGroups=(1,2) | Group 1: 2-of-38, parent=0, signers=38 | Group 2: 3-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2"
++++ description: The per-sub-group lines of the tree summary, joined with ' | '. Empty when the root has no sub-groups. Hidden behind the [click for per-group breakdown] collapsible in the entry description.
+      values.summaryGroups:
+-        "Group 1: 4-of-31, parent=0, signers=31 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2"
++        "Group 1: 2-of-38, parent=0, signers=38 | Group 2: 3-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2"
++++ description: Just the root-group line of the tree summary (e.g. "Root: 2-of-4, childGroups=(1,2,3,4)"). Always-visible head of the description.
+      values.summaryRoot:
+-        "Root: 1-of-3, childGroups=(1,2,3)"
++        "Root: 1-of-2, childGroups=(1,2)"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) [transporter/TokenAdminRegistry] {
+    +++ description: Central token registry that defines token pools and administrative rights to change such token pools. Tokens can either be centrally administered by Chainlink, or by the actual token admin / issuer.
+      values.administrators.eth:0x97F2C6e5E15a68321087eb8998df7E2d67031588:
+-        "eth:0x17D8a409fE2ceF2d3808bcB61F14aBEFfc28876e"
++        "eth:0xb0699D347a64870ec9A7fEd63055436040983af2"
+      values.administrators.eth:0x5c4652fCd79878F7949FA0D264216ce0dfA8E3a6:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0xC6fbE4779F33Ce09A38029403101fc5B9fA70421:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0x726795eeb1AE5D6F2F969bc4db451B426dfA6b68:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0x1dD3B294FB10F888EcB8d46888a7DfaFbA754447:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0x3bBbd74A1CA0e824D06cB7a326f6f6a3BC68169c:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0xC13AECd025404fFa1Bc68537A0C68B354BA5df83:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0xD9A5FE0ac79BAB4801CDA7CFd901BffE20a2AD09:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0xc6D59cAc77613B4B43Cfe65017eC3E2F2580Be08:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0x61579bC8597BF2c6d8Ea5526184551FDD3114d33:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0x8612d3DA69600e6f45Bbf2328ACacb44E522F10a:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0xe499f554a9dedCeBD611E623c5dF379b619D72ff:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0xcEe38BFF775E122deE65F645a30499b300C63078:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0x807F1b3aF75b9fe2a04677203eF08285BeDdf8E8:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0xFB9220B25EBaD4d655b6A63786b6b84d398e62F3:
++        "eth:0x5486CC5251459b0AAd010dd016d1f6c5C3C3e4e6"
+      values.administrators.eth:0x23238f20b894f29041f48D88eE91131C395Aaa71:
++        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
+      values.administrators.eth:0xD166337499E176bbC38a1FBd113Ab144e5bd2Df7:
++        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
+      values.administrators.eth:0xFB0Bd86210d2a10543Bb40289E92d108b3A5334F:
++        "eth:0x142a96Da210DeC495a76E56058563549ac12BAB4"
+      values.administrators.eth:0xd55159FE5633e24510D5317d224324413407C5B8:
++        "eth:0xB1dD2Fdb023cB54b7cc2a0f5D9e8d47a9F7723ce"
+      values.administrators.eth:0xFDFfB411C4A70AA7C95D5C981a6Fb4Da867e1111:
++        "eth:0x6601ee913f8b431F300120Dc0FFDee670Ba4e109"
+      values.administrators.eth:0x214A4B5349dF4301bf2F65c415eb22DfE2f6392c:
++        "eth:0x04E2c634Bcc14287a22b0Db5aBb1F47CdC2BF317"
+      values.administrators.eth:0x5086bf358635B81D8C47C66d1C8b9E567Db70c72:
++        "eth:0x8eec10616802Ef639CA55c98ac856553fAdEfBaD"
+      values.administrators.eth:0xf326C8c9A691319f6330e27aa4A39F2d22C88dC5:
++        "eth:0x4DdAE1D1Bb8DAcd4C8fa56792FDe60f446755D0F"
+      values.administrators.eth:0x169E36F327cAA83d004f5c2668AC25A1424C940d:
++        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
+      values.administrators.eth:0x6C474583D9acB8c7e6140F86aA2F8e9aBaB1c43E:
++        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
+      values.administrators.eth:0x87b65C4aAFFA76881f9E96F3e7ED945ddFC3Cd7A:
++        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
+      values.administrators.eth:0x49dc0B8446B61c70DC377549e87e6812a473D4f9:
++        "eth:0x7E45A13F8fD70A797B1BF0b6a041A481C7Cd4f99"
+      values.administrators.eth:0xeA14a0f64412Af9a411A7e8543913376337c0E06:
++        "eth:0x7E45A13F8fD70A797B1BF0b6a041A481C7Cd4f99"
+      values.poolsMap.eth:0x5c4652fCd79878F7949FA0D264216ce0dfA8E3a6:
++        "eth:0xE6f0abed9816c60580837FF19bf83221d78505ba"
+      values.poolsMap.eth:0xC6fbE4779F33Ce09A38029403101fc5B9fA70421:
++        "eth:0xeA72227ec708305f81B7B0FA7BAC8CCAfBEfDE47"
+      values.poolsMap.eth:0x726795eeb1AE5D6F2F969bc4db451B426dfA6b68:
++        "eth:0x686ac397Fe3F9fa01891a84FE06df2B6d3A4111d"
+      values.poolsMap.eth:0x1dD3B294FB10F888EcB8d46888a7DfaFbA754447:
++        "eth:0x6aF8698661b8e11A9151440D7851AcB84DD328D4"
+      values.poolsMap.eth:0x3bBbd74A1CA0e824D06cB7a326f6f6a3BC68169c:
++        "eth:0x16Dc61EE780Acf1Fd5276e77a1d00B5232B29f2B"
+      values.poolsMap.eth:0xC13AECd025404fFa1Bc68537A0C68B354BA5df83:
++        "eth:0xB462A3C5bA802A01EDFE36987aEdA9Fb42Dda2BC"
+      values.poolsMap.eth:0xD9A5FE0ac79BAB4801CDA7CFd901BffE20a2AD09:
++        "eth:0x29504E69540352C065c6af1AB40DE8BF6F860bC1"
+      values.poolsMap.eth:0xc6D59cAc77613B4B43Cfe65017eC3E2F2580Be08:
++        "eth:0xdB1dbd0CaDD2E144d29C9b45c9a2A15FD57Ad666"
+      values.poolsMap.eth:0x61579bC8597BF2c6d8Ea5526184551FDD3114d33:
++        "eth:0x8754c12b9ACe29C4D160751740AEF4386db2B67c"
+      values.poolsMap.eth:0x8612d3DA69600e6f45Bbf2328ACacb44E522F10a:
++        "eth:0x9D9daA9B45eC72D8Cd254F7fee6a831C938206C8"
+      values.poolsMap.eth:0xe499f554a9dedCeBD611E623c5dF379b619D72ff:
++        "eth:0xf56483D3103984d1b01E9A5328f8FfDeF08A2D08"
+      values.poolsMap.eth:0xcEe38BFF775E122deE65F645a30499b300C63078:
++        "eth:0x96E82b1f8a34Fa08D749fe788a42f34b5a6d6B96"
+      values.poolsMap.eth:0x807F1b3aF75b9fe2a04677203eF08285BeDdf8E8:
++        "eth:0xF4713c4c47B7c16FcE496ed7aEd1150612813a73"
+      values.poolsMap.eth:0xFB9220B25EBaD4d655b6A63786b6b84d398e62F3:
++        "eth:0xd385271881C3fdBFf650c23d7480ACD59e73C1Fd"
+      values.poolsMap.eth:0x23238f20b894f29041f48D88eE91131C395Aaa71:
++        "eth:0xA0dE671eb84dE9dEe1d311d996d25c41F63a0D86"
+      values.poolsMap.eth:0xD166337499E176bbC38a1FBd113Ab144e5bd2Df7:
++        "eth:0xF3fC7FDE5081192177f38895e57a1489e4bD56f2"
+      values.poolsMap.eth:0xFB0Bd86210d2a10543Bb40289E92d108b3A5334F:
++        "eth:0xF3067615579d59C64f16f1382b6A8032622f810a"
+      values.poolsMap.eth:0xd55159FE5633e24510D5317d224324413407C5B8:
++        "eth:0x6d29b5F25C4f9d5398a42e6900bC9D641F9de30f"
+      values.poolsMap.eth:0xFDFfB411C4A70AA7C95D5C981a6Fb4Da867e1111:
++        "eth:0x194E4C58DED42b35ed984C8e8F85E854bD1e62B4"
+      values.poolsMap.eth:0x214A4B5349dF4301bf2F65c415eb22DfE2f6392c:
++        "eth:0x370316C4a7E0CA55aFFD00477D682C2b29F933E5"
+      values.poolsMap.eth:0xf326C8c9A691319f6330e27aa4A39F2d22C88dC5:
++        "eth:0xa306010367397e9089b682Ade7b23652BcfB7d34"
+      values.poolsMap.eth:0x169E36F327cAA83d004f5c2668AC25A1424C940d:
++        "eth:0xA0676f98b22d97e50D98361C1725C1b03E05DB15"
+      values.poolsMap.eth:0x6C474583D9acB8c7e6140F86aA2F8e9aBaB1c43E:
++        "eth:0x0bE60d79fD5108Bbe800Ab529eD9f0270117b4B0"
+      values.poolsMap.eth:0x87b65C4aAFFA76881f9E96F3e7ED945ddFC3Cd7A:
++        "eth:0x120391E1512287f0eB8036037D464De2DA602543"
+      values.poolsMap.eth:0x49dc0B8446B61c70DC377549e87e6812a473D4f9:
++        "eth:0x10e1a9CA34bD0fE65397813311668b8ddb5bB36A"
+      values.poolsMap.eth:0xeA14a0f64412Af9a411A7e8543913376337c0E06:
++        "eth:0x0F44E67Be6D04288dc57Aae4397fd18d2AC7218A"
+    }
+```
+
+```diff
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) [N/A] {
+    +++ description: Token accepted as fee token for sending outgoing messages.
+      values.totalSupply:
+-        "2194168877021750981562816"
++        "2622789835369690476759147"
+    }
+```
+
+```diff
+    EOA  (eth:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    EOA  (eth:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
+    contract ARM_GnosisSafe (eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x01346721418045A6c07b71052e452eF8615e9084","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0428dF02c581E605AABF83005b427b1561b587De","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x0d26BaE784c8986502E072F4e73B6168e2052045","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x0F254ECcC89219CEC945BCeA48A4681eb5a380d7","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x0f5552d17505dC8f70D6cd65BEADFE20f42bBE75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x0f89C7c0586536B618e0469402e1c8234bc52959","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x10D5611D4E1fBB0Eb614C25f14ED6AfD6C945c75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x1807769Abe5133c9B41cA6746044b6a1d83F5633","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x1bddbA5DC2cd6ED3343A8E94D02023cC720533B9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.9:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.10:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.11:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.12.description:
+-        "add or remove fee tokens accepted by CCIP pricing."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      receivedPermissions.12.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x27A4E7ff4a6E28056Ac3e39445639876Ee9926FB"
+      receivedPermissions.13.description:
+-        "update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead)."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      receivedPermissions.13.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x38A806580D93c5B3e295F5181723C11f15c43271"
+      receivedPermissions.14.role:
+-        ".getAllAuthorizedCallers"
++        ".owner"
+      receivedPermissions.14.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      receivedPermissions.14.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x3f1c3541B7035dEd84E4502E41D5C919da4C4527"
+      receivedPermissions.26:
++        {"permission":"interact","from":"eth:0x459154447d3BD41392Ea3f49738a887dD3f1e5d0","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.27:
++        {"permission":"interact","from":"eth:0x4B50Cd4637a8EA94729811201A699f4800ee3282","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.28:
++        {"permission":"interact","from":"eth:0x52275dC17f9eD92230C8C4d57fD36d128701f694","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.29:
++        {"permission":"interact","from":"eth:0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.31:
++        {"permission":"interact","from":"eth:0x5Fd81cF5734498467634Ed9432aad298022e15Ff","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.32:
++        {"permission":"interact","from":"eth:0x607c0979C55628680167260Ca68e0EF22e8f128C","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.34:
++        {"permission":"interact","from":"eth:0x67b972054152E6F4B7434D84439EE225e5a00b90","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.35:
++        {"permission":"interact","from":"eth:0x6818278a6e4DA0aD588ef4dd04b59bC4E6703248","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.36:
++        {"permission":"interact","from":"eth:0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.37:
++        {"permission":"interact","from":"eth:0x6f4AbCe0B22343e66C856F28e2d07074c5c5BF75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.38:
++        {"permission":"interact","from":"eth:0x6fe6F73F7Cd11E34b6908cdC080683690229d0A4","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.39:
++        {"permission":"interact","from":"eth:0x700b6adcCfAa4c66638b1AD36BDeFE2038794E02","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.40:
++        {"permission":"interact","from":"eth:0x70Ac0F926a64D82f0cC69A3E505f0eE57E27006a","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.43:
++        {"permission":"interact","from":"eth:0x807dd69Bc9BC4e9411490f7b79Ff30c91E799A04","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.44:
++        {"permission":"interact","from":"eth:0x83F3DA5aa2C7534d694B0acde7624573c830250D","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.45:
++        {"permission":"interact","from":"eth:0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.46:
++        {"permission":"interact","from":"eth:0x8A1680fBbDb3Da1e0E7cA9078435631bEaf8a2cF","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.47:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.48:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"add or remove price updater accounts.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.49:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"change the staleness threshold for token and gas prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.50:
++        {"permission":"interact","from":"eth:0x8D846b1E9032827546B62160c32aDe293f77B1AB","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.51:
++        {"permission":"interact","from":"eth:0x8FC54E798eAC51353E160C9113682714F5e9E262","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.55:
++        {"permission":"interact","from":"eth:0x913A2AC13907F29EF2346E21368214B9b3dDc04B","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.56:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"add destination chains and update per-chain fee config (size and gas limits, gas overheads, network fee, LINK fee multiplier).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.57:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.58:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"remove accepted fee tokens and delete their stored prices (tokens are added implicitly when authorized callers price them).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.59:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"set or delete per-(destChain, token) transfer fee overrides.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.60:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.61:
++        {"permission":"interact","from":"eth:0x95deB0c4bB9168202d50E874865f9A1842b82D64","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.62:
++        {"permission":"interact","from":"eth:0x98d0f843AE9BA7c55F6e3941E6660a5947a67Ed9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.63:
++        {"permission":"interact","from":"eth:0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.64:
++        {"permission":"interact","from":"eth:0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.65:
++        {"permission":"interact","from":"eth:0x9f592c28590595F3F78a8881E8Dbb9984ed705cD","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.66:
++        {"permission":"interact","from":"eth:0xA4755Cd68CA2092447c8c842659a2931f9110320","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.67:
++        {"permission":"interact","from":"eth:0xA48269e5c9A234daBfEBE98b82390Be705536d1c","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.68:
++        {"permission":"interact","from":"eth:0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.69:
++        {"permission":"interact","from":"eth:0xA7E77BD47e2fDeE61df271E8b9206F3F1E804427","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.70:
++        {"permission":"interact","from":"eth:0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.73:
++        {"permission":"interact","from":"eth:0xb86C91861A7043fffC26C7740C3678eE09599234","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.74:
++        {"permission":"interact","from":"eth:0xbAf669bBe01882082C83F8B2d146057202fc4cB7","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.75:
++        {"permission":"interact","from":"eth:0xc46890D248a389A40725dbd9fa5e13548B56Ad8d","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.76:
++        {"permission":"interact","from":"eth:0xc5164AF94Be6737fE21085eDDa4E43BcBf224F9f","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.77:
++        {"permission":"interact","from":"eth:0xd079265E929C845707e816E3855721D055d40235","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.78:
++        {"permission":"interact","from":"eth:0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.79:
++        {"permission":"interact","from":"eth:0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.81:
++        {"permission":"interact","from":"eth:0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.82:
++        {"permission":"interact","from":"eth:0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.83:
++        {"permission":"interact","from":"eth:0xDb156E875Ef17dDe70c90a1529023fFf376e627c","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.84:
++        {"permission":"interact","from":"eth:0xdCF6F209d36d93A26B251D2CFE994bEF02954110","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.85:
++        {"permission":"interact","from":"eth:0xE41677500B425999cB4133950ca3aB79eA7470a6","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.87:
++        {"permission":"interact","from":"eth:0xF191733ea5be14E4a5f381a3c375A4F3F8fd4793","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.88:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.89:
++        {"permission":"interact","from":"eth:0xf7D68CcC92B836316C40B24ea77F6805DcBb8F02","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.90:
++        {"permission":"interact","from":"eth:0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.91:
++        {"permission":"interact","from":"eth:0xfacFe88fdf03Ab7D30d6CA45A070Df7C54551fd6","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.92:
++        {"permission":"interact","from":"eth:0xFE73BccC5b88D22969099EBb4E2eb5e19eFb0165","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+    }
+```
+
+```diff
+    contract ARM_Multisig1 (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 38 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-38 multisig and is strictly more constrained. Root: 2-of-4, childGroups=(1,2,3,4). [click for per-group breakdown: Group 1: 2-of-14, parent=0, signers=14 | Group 2: 2-of-12, parent=0, signers=12 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x01346721418045A6c07b71052e452eF8615e9084","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0428dF02c581E605AABF83005b427b1561b587De","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x0d26BaE784c8986502E072F4e73B6168e2052045","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x0F254ECcC89219CEC945BCeA48A4681eb5a380d7","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x0f5552d17505dC8f70D6cd65BEADFE20f42bBE75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x0f89C7c0586536B618e0469402e1c8234bc52959","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x10D5611D4E1fBB0Eb614C25f14ED6AfD6C945c75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x1807769Abe5133c9B41cA6746044b6a1d83F5633","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x1bddbA5DC2cd6ED3343A8E94D02023cC720533B9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.9:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.10:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.11:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.12.description:
+-        "add or remove fee tokens accepted by CCIP pricing."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      receivedPermissions.12.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x27A4E7ff4a6E28056Ac3e39445639876Ee9926FB"
+      receivedPermissions.13.description:
+-        "update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead)."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      receivedPermissions.13.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x38A806580D93c5B3e295F5181723C11f15c43271"
+      receivedPermissions.14.role:
+-        ".getAllAuthorizedCallers"
++        ".owner"
+      receivedPermissions.14.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      receivedPermissions.14.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x3f1c3541B7035dEd84E4502E41D5C919da4C4527"
+      receivedPermissions.26:
++        {"permission":"interact","from":"eth:0x459154447d3BD41392Ea3f49738a887dD3f1e5d0","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.27:
++        {"permission":"interact","from":"eth:0x4B50Cd4637a8EA94729811201A699f4800ee3282","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.28:
++        {"permission":"interact","from":"eth:0x52275dC17f9eD92230C8C4d57fD36d128701f694","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.29:
++        {"permission":"interact","from":"eth:0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.31:
++        {"permission":"interact","from":"eth:0x5Fd81cF5734498467634Ed9432aad298022e15Ff","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.32:
++        {"permission":"interact","from":"eth:0x607c0979C55628680167260Ca68e0EF22e8f128C","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.34:
++        {"permission":"interact","from":"eth:0x67b972054152E6F4B7434D84439EE225e5a00b90","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.35:
++        {"permission":"interact","from":"eth:0x6818278a6e4DA0aD588ef4dd04b59bC4E6703248","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.36:
++        {"permission":"interact","from":"eth:0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.37:
++        {"permission":"interact","from":"eth:0x6f4AbCe0B22343e66C856F28e2d07074c5c5BF75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.38:
++        {"permission":"interact","from":"eth:0x6fe6F73F7Cd11E34b6908cdC080683690229d0A4","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.39:
++        {"permission":"interact","from":"eth:0x700b6adcCfAa4c66638b1AD36BDeFE2038794E02","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.40:
++        {"permission":"interact","from":"eth:0x70Ac0F926a64D82f0cC69A3E505f0eE57E27006a","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.43:
++        {"permission":"interact","from":"eth:0x807dd69Bc9BC4e9411490f7b79Ff30c91E799A04","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.44:
++        {"permission":"interact","from":"eth:0x83F3DA5aa2C7534d694B0acde7624573c830250D","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.45:
++        {"permission":"interact","from":"eth:0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.46:
++        {"permission":"interact","from":"eth:0x8A1680fBbDb3Da1e0E7cA9078435631bEaf8a2cF","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.47:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.48:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"add or remove price updater accounts.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.49:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"change the staleness threshold for token and gas prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.50:
++        {"permission":"interact","from":"eth:0x8D846b1E9032827546B62160c32aDe293f77B1AB","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.51:
++        {"permission":"interact","from":"eth:0x8FC54E798eAC51353E160C9113682714F5e9E262","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.55:
++        {"permission":"interact","from":"eth:0x913A2AC13907F29EF2346E21368214B9b3dDc04B","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.56:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"add destination chains and update per-chain fee config (size and gas limits, gas overheads, network fee, LINK fee multiplier).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.57:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.58:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"remove accepted fee tokens and delete their stored prices (tokens are added implicitly when authorized callers price them).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.59:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"set or delete per-(destChain, token) transfer fee overrides.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.60:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.61:
++        {"permission":"interact","from":"eth:0x95deB0c4bB9168202d50E874865f9A1842b82D64","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.62:
++        {"permission":"interact","from":"eth:0x98d0f843AE9BA7c55F6e3941E6660a5947a67Ed9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.63:
++        {"permission":"interact","from":"eth:0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.64:
++        {"permission":"interact","from":"eth:0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.65:
++        {"permission":"interact","from":"eth:0x9f592c28590595F3F78a8881E8Dbb9984ed705cD","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.66:
++        {"permission":"interact","from":"eth:0xA4755Cd68CA2092447c8c842659a2931f9110320","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.67:
++        {"permission":"interact","from":"eth:0xA48269e5c9A234daBfEBE98b82390Be705536d1c","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.68:
++        {"permission":"interact","from":"eth:0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.69:
++        {"permission":"interact","from":"eth:0xA7E77BD47e2fDeE61df271E8b9206F3F1E804427","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.70:
++        {"permission":"interact","from":"eth:0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.73:
++        {"permission":"interact","from":"eth:0xb86C91861A7043fffC26C7740C3678eE09599234","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.74:
++        {"permission":"interact","from":"eth:0xbAf669bBe01882082C83F8B2d146057202fc4cB7","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.75:
++        {"permission":"interact","from":"eth:0xc46890D248a389A40725dbd9fa5e13548B56Ad8d","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.76:
++        {"permission":"interact","from":"eth:0xc5164AF94Be6737fE21085eDDa4E43BcBf224F9f","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.77:
++        {"permission":"interact","from":"eth:0xd079265E929C845707e816E3855721D055d40235","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.78:
++        {"permission":"interact","from":"eth:0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.79:
++        {"permission":"interact","from":"eth:0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.81:
++        {"permission":"interact","from":"eth:0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.82:
++        {"permission":"interact","from":"eth:0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.83:
++        {"permission":"interact","from":"eth:0xDb156E875Ef17dDe70c90a1529023fFf376e627c","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.84:
++        {"permission":"interact","from":"eth:0xdCF6F209d36d93A26B251D2CFE994bEF02954110","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.85:
++        {"permission":"interact","from":"eth:0xE41677500B425999cB4133950ca3aB79eA7470a6","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.87:
++        {"permission":"interact","from":"eth:0xF191733ea5be14E4a5f381a3c375A4F3F8fd4793","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.88:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.89:
++        {"permission":"interact","from":"eth:0xf7D68CcC92B836316C40B24ea77F6805DcBb8F02","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.90:
++        {"permission":"interact","from":"eth:0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.91:
++        {"permission":"interact","from":"eth:0xfacFe88fdf03Ab7D30d6CA45A070Df7C54551fd6","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.92:
++        {"permission":"interact","from":"eth:0xFE73BccC5b88D22969099EBb4E2eb5e19eFb0165","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+    }
+```
+
+```diff
+    contract ARM_Multisig2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 38 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-38 multisig and is strictly more constrained. Root: 2-of-4, childGroups=(1,2,3,4). [click for per-group breakdown: Group 1: 2-of-14, parent=0, signers=14 | Group 2: 2-of-12, parent=0, signers=12 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 41 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-41 multisig and is strictly more constrained. Root: 2-of-4, childGroups=(1,2,3,4). [click for per-group breakdown: Group 1: 2-of-15, parent=0, signers=15 | Group 2: 2-of-14, parent=0, signers=14 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 38 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-38 multisig and is strictly more constrained. Root: 2-of-4, childGroups=(1,2,3,4). [click for per-group breakdown: Group 1: 2-of-14, parent=0, signers=14 | Group 2: 2-of-12, parent=0, signers=12 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
++++ description: Flat union of every signer address across all groups. Wired through so the frontend lists this contract as a Multisig and renders participants the same way Gnosis Safes do. The tree-quorum semantics are encoded in the description, not in this flat list.
+      values.$members.24:
+-        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
++++ description: Flat union of every signer address across all groups. Wired through so the frontend lists this contract as a Multisig and renders participants the same way Gnosis Safes do. The tree-quorum semantics are encoded in the description, not in this flat list.
+      values.$members.29:
+-        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
++++ description: Flat union of every signer address across all groups. Wired through so the frontend lists this contract as a Multisig and renders participants the same way Gnosis Safes do. The tree-quorum semantics are encoded in the description, not in this flat list.
+      values.$members.30:
+-        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
+      values.config.summary:
+-        "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-15, parent=0, signers=15 | Group 2: 2-of-14, parent=0, signers=14 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7"
++        "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-14, parent=0, signers=14 | Group 2: 2-of-12, parent=0, signers=12 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7"
+      values.config.summaryGroups:
+-        "Group 1: 2-of-15, parent=0, signers=15 | Group 2: 2-of-14, parent=0, signers=14 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7"
++        "Group 1: 2-of-14, parent=0, signers=14 | Group 2: 2-of-12, parent=0, signers=12 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7"
+      values.config.allMembers.24:
+-        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
+      values.config.allMembers.29:
+-        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
+      values.config.allMembers.30:
+-        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
+      values.config.signerGroups.group1.members.8:
+-        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
+      values.config.signerGroups.group2.members.10:
+-        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
+      values.config.signerGroups.group2.members.11:
+-        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
++++ description: Total number of distinct signer addresses across all groups. NOT to be combined with minSigs as a flat M-of-N: see summary for the actual access-control rule.
+      values.memberCount:
+-        41
++        38
++++ description: One-line readable form of the full tree-quorum, e.g. "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-14, ...". Exposed as a top-level field so it can be interpolated into the entry's description.
+      values.summary:
+-        "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-15, parent=0, signers=15 | Group 2: 2-of-14, parent=0, signers=14 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7"
++        "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-14, parent=0, signers=14 | Group 2: 2-of-12, parent=0, signers=12 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7"
++++ description: The per-sub-group lines of the tree summary, joined with ' | '. Empty when the root has no sub-groups. Hidden behind the [click for per-group breakdown] collapsible in the entry description.
+      values.summaryGroups:
+-        "Group 1: 2-of-15, parent=0, signers=15 | Group 2: 2-of-14, parent=0, signers=14 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7"
++        "Group 1: 2-of-14, parent=0, signers=14 | Group 2: 2-of-12, parent=0, signers=12 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7"
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x01346721418045A6c07b71052e452eF8615e9084","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0428dF02c581E605AABF83005b427b1561b587De","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x0d26BaE784c8986502E072F4e73B6168e2052045","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x0F254ECcC89219CEC945BCeA48A4681eb5a380d7","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x0f5552d17505dC8f70D6cd65BEADFE20f42bBE75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x0f89C7c0586536B618e0469402e1c8234bc52959","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x10D5611D4E1fBB0Eb614C25f14ED6AfD6C945c75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x1807769Abe5133c9B41cA6746044b6a1d83F5633","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x1bddbA5DC2cd6ED3343A8E94D02023cC720533B9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.9:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.10:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.11:
+-        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fallback price feed oracles if the default path fails or is stale.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.12.description:
+-        "add or remove fee tokens accepted by CCIP pricing."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      receivedPermissions.12.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x27A4E7ff4a6E28056Ac3e39445639876Ee9926FB"
+      receivedPermissions.13.description:
+-        "update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead)."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      receivedPermissions.13.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x38A806580D93c5B3e295F5181723C11f15c43271"
+      receivedPermissions.14.role:
+-        ".getAllAuthorizedCallers"
++        ".owner"
+      receivedPermissions.14.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+      receivedPermissions.14.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x3f1c3541B7035dEd84E4502E41D5C919da4C4527"
+      receivedPermissions.26:
++        {"permission":"interact","from":"eth:0x459154447d3BD41392Ea3f49738a887dD3f1e5d0","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.27:
++        {"permission":"interact","from":"eth:0x4B50Cd4637a8EA94729811201A699f4800ee3282","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.28:
++        {"permission":"interact","from":"eth:0x52275dC17f9eD92230C8C4d57fD36d128701f694","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.29:
++        {"permission":"interact","from":"eth:0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.31:
++        {"permission":"interact","from":"eth:0x5Fd81cF5734498467634Ed9432aad298022e15Ff","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.32:
++        {"permission":"interact","from":"eth:0x607c0979C55628680167260Ca68e0EF22e8f128C","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.34:
++        {"permission":"interact","from":"eth:0x67b972054152E6F4B7434D84439EE225e5a00b90","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.35:
++        {"permission":"interact","from":"eth:0x6818278a6e4DA0aD588ef4dd04b59bC4E6703248","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.36:
++        {"permission":"interact","from":"eth:0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.37:
++        {"permission":"interact","from":"eth:0x6f4AbCe0B22343e66C856F28e2d07074c5c5BF75","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.38:
++        {"permission":"interact","from":"eth:0x6fe6F73F7Cd11E34b6908cdC080683690229d0A4","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.39:
++        {"permission":"interact","from":"eth:0x700b6adcCfAa4c66638b1AD36BDeFE2038794E02","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.40:
++        {"permission":"interact","from":"eth:0x70Ac0F926a64D82f0cC69A3E505f0eE57E27006a","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.43:
++        {"permission":"interact","from":"eth:0x807dd69Bc9BC4e9411490f7b79Ff30c91E799A04","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.44:
++        {"permission":"interact","from":"eth:0x83F3DA5aa2C7534d694B0acde7624573c830250D","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.45:
++        {"permission":"interact","from":"eth:0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.46:
++        {"permission":"interact","from":"eth:0x8A1680fBbDb3Da1e0E7cA9078435631bEaf8a2cF","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.47:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.48:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"add or remove price updater accounts.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.49:
++        {"permission":"interact","from":"eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad","description":"change the staleness threshold for token and gas prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.50:
++        {"permission":"interact","from":"eth:0x8D846b1E9032827546B62160c32aDe293f77B1AB","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.51:
++        {"permission":"interact","from":"eth:0x8FC54E798eAC51353E160C9113682714F5e9E262","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.55:
++        {"permission":"interact","from":"eth:0x913A2AC13907F29EF2346E21368214B9b3dDc04B","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.56:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"add destination chains and update per-chain fee config (size and gas limits, gas overheads, network fee, LINK fee multiplier).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.57:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"add or remove addresses in the authorized whitelist that can update prices.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.58:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"remove accepted fee tokens and delete their stored prices (tokens are added implicitly when authorized callers price them).","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.59:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"set or delete per-(destChain, token) transfer fee overrides.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.60:
++        {"permission":"interact","from":"eth:0x93669Cf8EabE869687544De34B453063fb23Bb69","description":"update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.61:
++        {"permission":"interact","from":"eth:0x95deB0c4bB9168202d50E874865f9A1842b82D64","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.62:
++        {"permission":"interact","from":"eth:0x98d0f843AE9BA7c55F6e3941E6660a5947a67Ed9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.63:
++        {"permission":"interact","from":"eth:0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.64:
++        {"permission":"interact","from":"eth:0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.65:
++        {"permission":"interact","from":"eth:0x9f592c28590595F3F78a8881E8Dbb9984ed705cD","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.66:
++        {"permission":"interact","from":"eth:0xA4755Cd68CA2092447c8c842659a2931f9110320","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.67:
++        {"permission":"interact","from":"eth:0xA48269e5c9A234daBfEBE98b82390Be705536d1c","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.68:
++        {"permission":"interact","from":"eth:0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.69:
++        {"permission":"interact","from":"eth:0xA7E77BD47e2fDeE61df271E8b9206F3F1E804427","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.70:
++        {"permission":"interact","from":"eth:0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.73:
++        {"permission":"interact","from":"eth:0xb86C91861A7043fffC26C7740C3678eE09599234","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.74:
++        {"permission":"interact","from":"eth:0xbAf669bBe01882082C83F8B2d146057202fc4cB7","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.75:
++        {"permission":"interact","from":"eth:0xc46890D248a389A40725dbd9fa5e13548B56Ad8d","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.76:
++        {"permission":"interact","from":"eth:0xc5164AF94Be6737fE21085eDDa4E43BcBf224F9f","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.77:
++        {"permission":"interact","from":"eth:0xd079265E929C845707e816E3855721D055d40235","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.78:
++        {"permission":"interact","from":"eth:0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.79:
++        {"permission":"interact","from":"eth:0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.81:
++        {"permission":"interact","from":"eth:0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.82:
++        {"permission":"interact","from":"eth:0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.83:
++        {"permission":"interact","from":"eth:0xDb156E875Ef17dDe70c90a1529023fFf376e627c","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.84:
++        {"permission":"interact","from":"eth:0xdCF6F209d36d93A26B251D2CFE994bEF02954110","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.85:
++        {"permission":"interact","from":"eth:0xE41677500B425999cB4133950ca3aB79eA7470a6","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.87:
++        {"permission":"interact","from":"eth:0xF191733ea5be14E4a5f381a3c375A4F3F8fd4793","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.88:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.89:
++        {"permission":"interact","from":"eth:0xf7D68CcC92B836316C40B24ea77F6805DcBb8F02","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.90:
++        {"permission":"interact","from":"eth:0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.91:
++        {"permission":"interact","from":"eth:0xfacFe88fdf03Ab7D30d6CA45A070Df7C54551fd6","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+      receivedPermissions.92:
++        {"permission":"interact","from":"eth:0xFE73BccC5b88D22969099EBb4E2eb5e19eFb0165","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+    }
+```
+
+```diff
+    EOA  (eth:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "update token and destination-chain gas prices used for fee calculation."
++        "update token and destination-chain gas prices used for fee calculation and register new accepted fee tokens."
+      receivedPermissions.1.from:
+-        "eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57"
++        "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x01346721418045A6c07b71052e452eF8615e9084) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x0428dF02c581E605AABF83005b427b1561b587De) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x0d26BaE784c8986502E072F4e73B6168e2052045) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x0F254ECcC89219CEC945BCeA48A4681eb5a380d7) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x0f5552d17505dC8f70D6cd65BEADFE20f42bBE75) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x0f89C7c0586536B618e0469402e1c8234bc52959) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x10D5611D4E1fBB0Eb614C25f14ED6AfD6C945c75) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x1807769Abe5133c9B41cA6746044b6a1d83F5633) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x1bddbA5DC2cd6ED3343A8E94D02023cC720533B9) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x27A4E7ff4a6E28056Ac3e39445639876Ee9926FB) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x38A806580D93c5B3e295F5181723C11f15c43271) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x3f1c3541B7035dEd84E4502E41D5C919da4C4527) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x459154447d3BD41392Ea3f49738a887dD3f1e5d0) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x4B50Cd4637a8EA94729811201A699f4800ee3282) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x52275dC17f9eD92230C8C4d57fD36d128701f694) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x5Fd81cF5734498467634Ed9432aad298022e15Ff) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x607c0979C55628680167260Ca68e0EF22e8f128C) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x67b972054152E6F4B7434D84439EE225e5a00b90) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x6818278a6e4DA0aD588ef4dd04b59bC4E6703248) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x6f4AbCe0B22343e66C856F28e2d07074c5c5BF75) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x6fe6F73F7Cd11E34b6908cdC080683690229d0A4) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x700b6adcCfAa4c66638b1AD36BDeFE2038794E02) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x70Ac0F926a64D82f0cC69A3E505f0eE57E27006a) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x807dd69Bc9BC4e9411490f7b79Ff30c91E799A04) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x83F3DA5aa2C7534d694B0acde7624573c830250D) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x8A1680fBbDb3Da1e0E7cA9078435631bEaf8a2cF) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract PriceRegistry (eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) [transporter/PriceRegistry]
+    +++ description: USD price oracle used by CCIP OnRamps and CommitStores to value gas and tokens for fee calculation. Maintains a set of fee tokens, a set of authorized price updaters, and per-token / per-destination-chain prices written by the updaters and consumed by OnRamps for fee quoting and CommitStores for piggybacked price updates.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x8D846b1E9032827546B62160c32aDe293f77B1AB) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x8FC54E798eAC51353E160C9113682714F5e9E262) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x913A2AC13907F29EF2346E21368214B9b3dDc04B) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract FeeQuoter (eth:0x93669Cf8EabE869687544De34B453063fb23Bb69) [transporter/FeeQuoterV2]
+    +++ description: Fee oracle and price registry for CCIP. Holds the per-destination-chain fee config (size and gas limits, gas overheads, flat per-byte gas rate, flat network fee, LINK fee multiplier percent, chain-family selector), the per-(destChain, token) flat transfer fee overrides, and the USD price tables for tokens and destination gas pushed by authorized callers through updatePrices(). Prices are not staleness-checked: quoting only requires that a price was set at least once. Exposes both the CCIP 2.0 quoting interface (quoteGasForExec, getTokenTransferFee, resolveLegacyArgs) and the legacy 1.6 one (getValidatedFee, processMessageArgs), so both ramp generations can use it.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x95deB0c4bB9168202d50E874865f9A1842b82D64) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x98d0f843AE9BA7c55F6e3941E6660a5947a67Ed9) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0x9f592c28590595F3F78a8881E8Dbb9984ed705cD) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xA4755Cd68CA2092447c8c842659a2931f9110320) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xA48269e5c9A234daBfEBE98b82390Be705536d1c) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xA7E77BD47e2fDeE61df271E8b9206F3F1E804427) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xb86C91861A7043fffC26C7740C3678eE09599234) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xbAf669bBe01882082C83F8B2d146057202fc4cB7) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xc46890D248a389A40725dbd9fa5e13548B56Ad8d) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xc5164AF94Be6737fE21085eDDa4E43BcBf224F9f) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xd079265E929C845707e816E3855721D055d40235) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xDb156E875Ef17dDe70c90a1529023fFf376e627c) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xdCF6F209d36d93A26B251D2CFE994bEF02954110) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xE41677500B425999cB4133950ca3aB79eA7470a6) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xF191733ea5be14E4a5f381a3c375A4F3F8fd4793) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xf7D68CcC92B836316C40B24ea77F6805DcBb8F02) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xfacFe88fdf03Ab7D30d6CA45A070Df7C54551fd6) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xFE73BccC5b88D22969099EBb4E2eb5e19eFb0165) [transporter/CommitStoreV1]
+    +++ description: Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+```
+
+## Source code changes
+
+```diff
+...:0x01346721418045A6c07b71052e452eF8615e9084.sol | 1431 +++++
+ ...:0x0428dF02c581E605AABF83005b427b1561b587De.sol | 1431 +++++
+ ...:0x0F254ECcC89219CEC945BCeA48A4681eb5a380d7.sol | 1431 +++++
+ ...:0x0d26BaE784c8986502E072F4e73B6168e2052045.sol | 1431 +++++
+ ...:0x0f5552d17505dC8f70D6cd65BEADFE20f42bBE75.sol | 1431 +++++
+ ...:0x0f89C7c0586536B618e0469402e1c8234bc52959.sol | 1431 +++++
+ ...:0x10D5611D4E1fBB0Eb614C25f14ED6AfD6C945c75.sol | 1431 +++++
+ ...:0x1807769Abe5133c9B41cA6746044b6a1d83F5633.sol | 1431 +++++
+ ...:0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d.sol | 1431 +++++
+ ...:0x1bddbA5DC2cd6ED3343A8E94D02023cC720533B9.sol | 1431 +++++
+ ...:0x27A4E7ff4a6E28056Ac3e39445639876Ee9926FB.sol | 1431 +++++
+ ...:0x38A806580D93c5B3e295F5181723C11f15c43271.sol | 1431 +++++
+ ...:0x3f1c3541B7035dEd84E4502E41D5C919da4C4527.sol | 1431 +++++
+ ...:0x459154447d3BD41392Ea3f49738a887dD3f1e5d0.sol | 1431 +++++
+ ...:0x4B50Cd4637a8EA94729811201A699f4800ee3282.sol | 1431 +++++
+ ...:0x52275dC17f9eD92230C8C4d57fD36d128701f694.sol | 1431 +++++
+ ...:0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3.sol | 1431 +++++
+ ...:0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114.sol | 1431 +++++
+ ...:0x5Fd81cF5734498467634Ed9432aad298022e15Ff.sol | 1431 +++++
+ ...:0x607c0979C55628680167260Ca68e0EF22e8f128C.sol | 1431 +++++
+ ...:0x67b972054152E6F4B7434D84439EE225e5a00b90.sol | 1431 +++++
+ ...:0x6818278a6e4DA0aD588ef4dd04b59bC4E6703248.sol | 1431 +++++
+ ...:0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9.sol | 1431 +++++
+ ...:0x6f4AbCe0B22343e66C856F28e2d07074c5c5BF75.sol | 1431 +++++
+ ...:0x6fe6F73F7Cd11E34b6908cdC080683690229d0A4.sol | 1431 +++++
+ ...:0x700b6adcCfAa4c66638b1AD36BDeFE2038794E02.sol | 1431 +++++
+ ...:0x70Ac0F926a64D82f0cC69A3E505f0eE57E27006a.sol | 1431 +++++
+ ...:0x807dd69Bc9BC4e9411490f7b79Ff30c91E799A04.sol | 1431 +++++
+ ...:0x83F3DA5aa2C7534d694B0acde7624573c830250D.sol | 1431 +++++
+ ...:0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159.sol | 1431 +++++
+ ...:0x8A1680fBbDb3Da1e0E7cA9078435631bEaf8a2cF.sol | 1431 +++++
+ ...:0x8D846b1E9032827546B62160c32aDe293f77B1AB.sol | 1431 +++++
+ ...:0x8FC54E798eAC51353E160C9113682714F5e9E262.sol | 1431 +++++
+ ...:0x913A2AC13907F29EF2346E21368214B9b3dDc04B.sol | 1431 +++++
+ ...:0x95deB0c4bB9168202d50E874865f9A1842b82D64.sol | 1431 +++++
+ ...:0x98d0f843AE9BA7c55F6e3941E6660a5947a67Ed9.sol | 1431 +++++
+ ...:0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb.sol | 1431 +++++
+ ...:0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A.sol | 1431 +++++
+ ...:0x9f592c28590595F3F78a8881E8Dbb9984ed705cD.sol | 1431 +++++
+ ...:0xA4755Cd68CA2092447c8c842659a2931f9110320.sol | 1431 +++++
+ ...:0xA48269e5c9A234daBfEBE98b82390Be705536d1c.sol | 1431 +++++
+ ...:0xA7E77BD47e2fDeE61df271E8b9206F3F1E804427.sol | 1431 +++++
+ ...:0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8.sol | 1431 +++++
+ ...:0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72.sol | 1431 +++++
+ ...:0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe.sol | 1431 +++++
+ ...:0xDb156E875Ef17dDe70c90a1529023fFf376e627c.sol | 1431 +++++
+ ...:0xE41677500B425999cB4133950ca3aB79eA7470a6.sol | 1431 +++++
+ ...:0xF191733ea5be14E4a5f381a3c375A4F3F8fd4793.sol | 1431 +++++
+ ...:0xFE73BccC5b88D22969099EBb4E2eb5e19eFb0165.sol | 1431 +++++
+ ...:0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210.sol | 1431 +++++
+ ...:0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9.sol | 1431 +++++
+ ...:0xb86C91861A7043fffC26C7740C3678eE09599234.sol | 1431 +++++
+ ...:0xbAf669bBe01882082C83F8B2d146057202fc4cB7.sol | 1431 +++++
+ ...:0xc46890D248a389A40725dbd9fa5e13548B56Ad8d.sol | 1431 +++++
+ ...:0xc5164AF94Be6737fE21085eDDa4E43BcBf224F9f.sol | 1431 +++++
+ ...:0xd079265E929C845707e816E3855721D055d40235.sol | 1431 +++++
+ ...:0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99.sol | 1431 +++++
+ ...:0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802.sol | 1431 +++++
+ ...:0xdCF6F209d36d93A26B251D2CFE994bEF02954110.sol | 1431 +++++
+ ...:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3.sol | 1431 +++++
+ ...:0xf7D68CcC92B836316C40B24ea77F6805DcBb8F02.sol | 1431 +++++
+ ...:0xfacFe88fdf03Ab7D30d6CA45A070Df7C54551fd6.sol | 1431 +++++
+ .../ccip/{.flat@1778572081 => .flat}/FeeQuoter.sol | 5819 +++++++++++++++-----
+ .../.flat@1778572081/Gho Token.sol => /dev/null    | 1680 ------
+ .../src/projects/ccip/.flat/PriceRegistry.sol      | 1104 ++++
+ 65 files changed, 94155 insertions(+), 3170 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778572081 (main branch discovery), not current.
+
+```diff
+    contract Router (eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E) [N/A] {
+    +++ description: Deprecated router used by BSC.
+      name:
+-        ""
++        "Router"
+      unverified:
+-        true
+      values.getArmProxy:
++        "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+      values.getOffRamps:
++        [{"sourceChainSelector":"11344663589394136015","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"},{"sourceChainSelector":"15971525489660198786","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"},{"sourceChainSelector":"4949039107694359620","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"},{"sourceChainSelector":"124615329519749607","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}]
+      values.getWrappedNative:
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.MAX_RET_BYTES:
++        132
+      values.owner:
++        "eth:0x062f05CD6c835677B05a8658A351969476861316"
+      values.typeAndVersion:
++        "Router 1.2.0"
+      implementationNames.eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E:
+-        ""
++        "Router"
+      sourceHashes:
++        ["0x7194051726bebe186057b3e109f4a54e8fd634b1a564c87954f7e685c4e18214"]
+    }
+```
+
 Generated with discovered.json: 0x0f4d1f1adc62b76883472c4f8641f4b84e6abbfd
 
 # Diff at Mon, 01 Jun 2026 17:11:33 GMT:

@@ -45,7 +45,7 @@ export const ccip: BaseProject = {
     The OCR set corresponds to a ${ocrCommitQuorum}/${ocrCommitN} multisig on Ethereum. The owner of the OffRamp can arbitrarily update the threshold and signer set used to validate messages, so trust in this permissioned actor is required. The actual permission structure behind this role is complex, see the Permissions section for more details.
 
     # Fee estimation
-    The FeeQuoter contract holds configuration for each destination chain such as whether the route is enabled, maximum message size, gas overheads, DA cost multipliers, default fee, min fee, network fee, gas multipliers etc. It also stores token prices and other chain gas prices to properly estimate fees. A whitelist of addresses is permissioned to update such prices.
+    The FeeQuoter contract holds configuration for each destination chain such as whether the route is enabled, maximum message size and gas limit, gas overheads, a flat per-byte gas rate, a flat network fee and a LINK fee discount. It also stores token prices and destination chain gas prices to estimate fees, without checking them for staleness. A whitelist of addresses is permissioned to update such prices, and any token they price is automatically accepted as a fee token.
 
     # Cursing
     The Risk Management Network (RMN) is a contract that allows to blacklist either all paths with a universal "curse" or specific paths with more targeted curses. The RMN is represented by its own timelock and set of multisigs that can either propose, cancel, or immediately execute, bypassing any delay. The network can both block incoming and outgoing messages concerning all or specific chains. See Permissions section for more details.

@@ -1,4 +1,46 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Part of CCTP: Used for automated access control for minting."
+  "description": "Part of CCTP: Used for automated access control for minting.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the local TokenMessenger, token controller, pauser, rescuer, and transfer ownership."
+        }
+      ]
+    },
+    "localTokenMessenger": {
+      "permissions": [
+        {
+          "type": "act",
+          "description": "mint and burn USDC through this TokenMinter."
+        }
+      ]
+    },
+    "tokenController": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "link or unlink remote tokens and configure per-message burn limits."
+        }
+      ]
+    },
+    "pauser": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause minting and burning through this TokenMinter."
+        }
+      ]
+    },
+    "rescuer": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer any ERC-20 tokens out of the contract."
+        }
+      ]
+    }
+  }
 }

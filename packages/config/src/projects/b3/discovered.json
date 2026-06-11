@@ -210,8 +210,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "base:0xA9Bc65Ff5A3106351fa92B04C91d505BcCd92Cad",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -495,13 +496,9 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "base:0x3a314A6a3c1470Bf2854960D3Ce9D2435c7Ba794",
-          "role": ".guardian"
-        },
-        {
-          "permission": "guard",
-          "from": "base:0xe736142a3e957660cBae61AC4bD61e5b65635140",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         },
         {
@@ -509,6 +506,12 @@
           "from": "base:0xA9Bc65Ff5A3106351fa92B04C91d505BcCd92Cad",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0xe736142a3e957660cBae61AC4bD61e5b65635140",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -579,13 +582,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "base:0x536cf1ABfD22E61a13753c0F08613aDdF4ca0595",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         },
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "base:0x536cf1ABfD22E61a13753c0F08613aDdF4ca0595",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".PROPOSER"
         }
       ]
@@ -767,13 +772,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "base:0x536cf1ABfD22E61a13753c0F08613aDdF4ca0595",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challenger"
         },
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "base:0x536cf1ABfD22E61a13753c0F08613aDdF4ca0595",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".CHALLENGER"
         }
       ]
@@ -1197,5 +1204,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "base": 42534102 },
-  "permissionsConfigHash": "0xda594b39d885152db1a0fb910a49e1dba7863617bcda498bb7d4b47cbcbc6683"
+  "permissionsConfigHash": "0x4011dddf9570ae6876d4de9a23cc3656f3aae1e2bbeea5f2f926f6648e79ee21"
 }

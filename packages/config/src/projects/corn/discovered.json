@@ -876,7 +876,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0x09eD7e66Dd7c7129Ec3994498A521B502Ca7D61b",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".getValidators"
@@ -946,7 +946,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -1731,5 +1731,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
   "usedBlockNumbers": { "ethereum": 24520240 },
-  "permissionsConfigHash": "0x5c9ead965eabce72bdac16cefb2d923f657c08a758d8ab5dc42dc585a4eb3092"
+  "permissionsConfigHash": "0xa221b3648f2ea04efa52a75cc97f543fa09ec75cfe93a2be7a2050278152181c"
 }

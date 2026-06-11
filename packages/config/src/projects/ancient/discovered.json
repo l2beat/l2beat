@@ -610,8 +610,9 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         },
         {
@@ -768,8 +769,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -2185,5 +2187,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 25229217 },
-  "permissionsConfigHash": "0x85f03f322b9e37fcfb63f996434ba270798a30bf0b99fb295fba8733930a0276"
+  "permissionsConfigHash": "0x719521e3056ac8700b915e878b681e9df3a870e362211fe7ea15f37308bad9a7"
 }

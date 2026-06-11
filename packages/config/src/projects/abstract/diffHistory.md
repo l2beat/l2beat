@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x7e5cfc1e501e4062176943abeb5269582a587872
+
+# Diff at Tue, 09 Jun 2026 12:43:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779442556
+- current timestamp: 1779442556
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779442556 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xe90ba8913244653fd81feec99fc63a64478532b0
 
 # Diff at Fri, 22 May 2026 09:37:07 GMT:

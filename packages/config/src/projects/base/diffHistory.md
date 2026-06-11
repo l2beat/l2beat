@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x50e5cf659c693f6a12e82237d0991dc997930805
+
+# Diff at Wed, 10 Jun 2026 15:33:22 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@3d7d193af6bb84bba0cb2817621d9f6c8df11cf4 block: 1780924988
+- current timestamp: 1781105531
+
+## Description
+
+Rotated TEE signers.
+
+## Watched changes
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
++++ severity: LOW
+      values.getRegisteredSigners.0:
+-        "eth:0xBeF9176fa15489735Cc8B1ddD97E53b4a656287e"
++        "eth:0x8a2B99252bad63813e704237Bf2A40A6a4cEBda9"
++++ severity: LOW
+      values.getRegisteredSigners.1:
+-        "eth:0xB830004297a91c10ed7428f462FCf0cc5073e9A2"
++        "eth:0xf3aef21F74AD989812D066ad3e51b986ED312875"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780924988 (main branch discovery), not current.
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
+      fieldMeta.getRegisteredSigners.severity:
+-        "HIGH"
++        "LOW"
+    }
+```
+
+Generated with discovered.json: 0xdcf8bd9b053165cd4698e363f3455912d2a77695
+
+# Diff at Tue, 09 Jun 2026 12:43:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780924988
+- current timestamp: 1780924988
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780924988 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x5050F69a9786F081509234F1a7F4684b5E5b76C9) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","role":".guardian"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+    }
+```
+
 Generated with discovered.json: 0xbd232caacd0fb5e78a8737a98659e054ae48a8bb
 
 # Diff at Mon, 08 Jun 2026 13:24:24 GMT:

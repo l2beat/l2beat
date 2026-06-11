@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xb833518de0c1ac00ef010b2c4e92b12768cf3218
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1777891423
+- current timestamp: 1777891423
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891423 (main branch discovery), not current.
+
+```diff
+    contract Safe (eth:0x57814cC6e075f517781cB7c3B42897B3Bb2C54d8) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+```diff
+    EOA  (eth:0xCBe6fbf5e3c427013688E04D0fDE56705890c4bE) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xfa90ba245db44ebb0b55c652102a8caaff80489c
 
 # Diff at Fri, 08 May 2026 07:51:16 GMT:
