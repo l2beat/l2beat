@@ -1,7 +1,8 @@
 import { expect, test } from 'playwright/test'
 import { resolvePages } from './pages'
 
-const PAGE_SHARD_COUNT = Number(process.env.ALL_PAGES_SHARDS)
+const PAGE_SHARD_COUNT = getPageShardCount()
+const pagesPromise = resolvePages()
 
 test.describe.configure({ mode: 'parallel' })
 test.setTimeout(5 * 60 * 1000)
@@ -10,7 +11,7 @@ for (let shardIndex = 0; shardIndex < PAGE_SHARD_COUNT; shardIndex++) {
   test(`all configured pages return non-empty successful responses (${shardIndex + 1}/${PAGE_SHARD_COUNT})`, async ({
     request,
   }) => {
-    const pages = await resolvePages()
+    const pages = await pagesPromise
     const shardPages = pages
       .map((page, index) => ({ page, index }))
       .filter(({ index }) => index % PAGE_SHARD_COUNT === shardIndex)
@@ -37,4 +38,10 @@ for (let shardIndex = 0; shardIndex < PAGE_SHARD_COUNT; shardIndex++) {
       })
     }
   })
+}
+
+function getPageShardCount() {
+  const parsed = Number.parseInt(process.env.ALL_PAGES_SHARDS ?? '16')
+
+  return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : 16
 }

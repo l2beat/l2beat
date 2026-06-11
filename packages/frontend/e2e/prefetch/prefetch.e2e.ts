@@ -7,6 +7,8 @@ import {
   type PageWithPrefetch,
 } from './trpcRequests'
 
+test.describe.configure({ mode: 'parallel' })
+
 test.describe('tRPC SSR prefetches', () => {
   for (const pageToVerify of STATIC_PAGES) {
     test(pageToVerify.url, async ({ baseURL, page }) => {
