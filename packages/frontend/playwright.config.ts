@@ -14,7 +14,12 @@ export default defineConfig({
     baseURL: process.env.BASE_URL ?? 'http://localhost:7357',
   },
   webServer: {
-    command: 'LOG_LEVEL=ERROR PORT=7357 pnpm start:mock',
+    env: {
+      PORT: '7357',
+      LOG_LEVEL: 'ERROR',
+      INTEROP_CHAINS: 'ethereum,arbitrum,base,optimism',
+    },
+    command: 'pnpm start:mock',
     url: 'http://localhost:7357',
     reuseExistingServer: !process.env.CI,
   },
