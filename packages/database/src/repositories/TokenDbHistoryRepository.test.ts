@@ -115,6 +115,50 @@ describeTokenDatabase(TokenDbHistoryRepository.name, (db) => {
       expect(page.totalCount).toEqual(3)
       expect(page.entries.map((e) => e.userEmail)).toEqual(['second@x.io'])
     })
+
+    it('filters entries by token data in the command via search', async () => {
+      await repository.insert(manualAddDeployed(UnixTime(1000), 'first@x.io'))
+      await repository.insert({
+        timestamp: UnixTime(2000),
+        source: 'manual',
+        userEmail: 'second@x.io',
+        commandType: 'AddDeployedTokenCommand',
+        command: {
+          type: 'AddDeployedTokenCommand',
+          record: {
+            chain: 'arbitrum',
+            address: '0x0000000000000000000000000000000000000bbb',
+            symbol: 'DAI',
+            abstractTokenId: 'DAI01',
+          },
+        },
+        ingestionLog: null,
+      })
+
+      const bySymbol = await repository.getPage({
+        offset: 0,
+        limit: 100,
+        search: 'dai',
+      })
+      expect(bySymbol.totalCount).toEqual(1)
+      expect(bySymbol.entries.map((e) => e.userEmail)).toEqual(['second@x.io'])
+
+      const byChain = await repository.getPage({
+        offset: 0,
+        limit: 100,
+        search: 'ethereum',
+      })
+      expect(byChain.totalCount).toEqual(1)
+      expect(byChain.entries.map((e) => e.userEmail)).toEqual(['first@x.io'])
+
+      const noMatch = await repository.getPage({
+        offset: 0,
+        limit: 100,
+        search: 'nonexistent',
+      })
+      expect(noMatch.totalCount).toEqual(0)
+      expect(noMatch.entries).toEqual([])
+    })
   })
 })
 
