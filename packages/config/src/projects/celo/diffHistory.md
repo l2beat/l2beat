@@ -1,3 +1,106 @@
+Generated with discovered.json: 0x81d7690decaa79791e524fbd949d3190192f415e
+
+# Diff at Thu, 11 Jun 2026 11:09:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@91b2eba1ff9c1c8341d0eaf6594dac4179405ef6 block: 1777038237
+- current timestamp: 1781176085
+
+## Description
+
+OPSuccinct fault-proof upgrade to `celo/v2.1.0` (SP1 Hypercube).
+
+The respected dispute game implementation (game type 42) was swapped on the
+DisputeGameFactory from `0xE7bd695…` to a new `0xfF1caC738…`,
+rotating the program verification keys:
+- aggregationVkey: `0x004f4bbc…0377` -> `0x00b04647…4be4`
+- rangeVkeyCommitment: `0x1fffeb5a…7c2c` -> `0x1dd60be4…5c94`
+
+Both new vkeys reproduce from the `celo/v2.1.0` source (verified; steps in common/programHashes.ts).
+On-chain game code change is small and confined to anchoring:
+the starting output root now reads `ANCHOR_STATE_REGISTRY.getAnchorRoot()` instead of the deprecated
+`anchors(GAME_TYPE)`, and a new invariant requires a parent game's L2 block to be ahead of the anchor
+(handles game-type-switch / retirement recovery; prevents duplicate or stale-parent games). The proof
+system and proposer/challenger access control are unchanged.
+diff: https://disco.l2beat.com/diff/eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1/eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF
+
+SystemConfig minBaseFee raised 0.1 -> 0.2 gwei.
+
+Routine shared OP governance rotations (not Celo-specific, tracked across OP Stack chains):
+- DeputyPauseModule deputy: `0x352f1de…` -> `0x2fA1503…`. Scheduled key hygiene.
+- OpFoundationUpgradeSafe member[6]: `0xc222ab08…` -> `0xa2A58E31…`. Member rotated.
+- Optimism Security Council member[12]: `0x9282722…` -> `0xcbC7dCe…`. Member rotated.
+
+## Watched changes
+
+```diff
+    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) [opstack/DeputyPauseModule] {
+    +++ description: Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+      description:
+-        "Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module."
++        "Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module."
+      values.deputy:
+-        "eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC"
++        "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.6:
+-        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
++        "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minBaseFee:
+-        100000000000
++        200000000000
+    }
+```
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      values.$members.12:
+-        "eth:0x92827223f6b397CE9F208eE352bacA710765cACb"
++        "eth:0xcbC7dCeb857F0b25523618cCa0A03c419a6d7eA6"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OPSuccinctFaultDisputeGame (eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1) [succinct/OPSuccinct/OPSuccinctFaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
+-        "eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1"
++        "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OPSuccinctFaultDisputeGame (eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF) [succinct/OPSuccinct/OPSuccinctFaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+## Source code changes
+
+```diff
+.../OPSuccinctFaultDisputeGame.sol                      | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
+```
+
 Generated with discovered.json: 0xd6730e8ba3571bc547007e55c3c8829f07bbd9ba
 
 # Diff at Tue, 09 Jun 2026 12:43:32 GMT:

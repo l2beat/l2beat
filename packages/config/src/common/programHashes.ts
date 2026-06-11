@@ -245,12 +245,52 @@ Verify:
       'As shared by the Celo team, this program fixes a security issue and because of that it is not yet public. Program hash could not be regenerated.',
   },
   '0x1fffeb5a6f932e26084c284829e79973121fe5d456a7ec9029febc1308167c2c': {
-    ...OP_SUCCINCT_FDP_RANGE_EIGENDA(''), // idk which version this is exactly, but not 2.0.0
+    ...OP_SUCCINCT_FDP_RANGE_EIGENDA(''), // prior on-chain version, superseded by celo/v2.1.0 below; exact version unidentified (not 2.0.0)
     // programUrl:
     //   'https://github.com/celo-org/op-succinct/tree/celo/v2.0.0/programs/range/eigenda',
     verificationStatus: 'unsuccessful',
     verificationSteps:
       'As shared by the Celo team, this program fixes a security issue and because of that it is not yet public. Program hash could not be regenerated.',
+  },
+  '0x00b04647b693a1024f3f6524643693ac5445fbabe5cdfcd3b2d3d468274d4be4': {
+    ...OP_SUCCINCT_FDP_AGG_EIGENDA('v2.1.0'),
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v2.1.0/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo: \`git checkout celo/v2.1.0\`. Commit hash should be \`00ac9f41a19917be8add5f7b60bef5be93b5b2b7\`.
+2. Make sure docker is running by running \`docker ps\`
+3. Reproducibly rebuild the program ELF from source: from \`programs/aggregation\` run \`cargo prove build --elf-name aggregation-elf --docker --tag v6.1.0 --output-directory ../../elf\`. The rebuilt ELF is byte-identical to the one committed in the release.
+4. From the \`op-succinct\` dir run \`cargo run --bin config --release --features eigenda\` to print the verification key hashes.
+    `,
+  },
+  '0x1dd60be45aa2e74722e16f3a7c2d3b0a3339c1b72dc4e5b513487da3528e5c94': {
+    ...OP_SUCCINCT_FDP_RANGE_EIGENDA('v2.1.0'),
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v2.1.0/programs/range/eigenda',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo: \`git checkout celo/v2.1.0\`. Commit hash should be \`00ac9f41a19917be8add5f7b60bef5be93b5b2b7\`.
+2. Make sure docker is running by running \`docker ps\`
+3. Reproducibly rebuild the program ELF from source: from \`programs/range/eigenda\` run \`cargo prove build --elf-name eigenda-range-elf-embedded --docker --tag v6.1.0 --output-directory ../../../elf\`. The rebuilt ELF is byte-identical to the one committed in the release.
+4. From the \`op-succinct\` dir run \`cargo run --bin config --release --features eigenda\` to print the verification key hashes.
+    `,
   },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     ...OP_SUCCINCT_AGG_BLOBS,
