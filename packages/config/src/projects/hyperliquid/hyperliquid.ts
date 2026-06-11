@@ -74,6 +74,15 @@ export const hyperliquid: ScalingProject = {
         tokens: ['USDC'],
         description: 'Hyperliquid bridge escrow on Arbitrum.',
       }),
+      discovery.getEscrowDetails({
+        includeInTotal: false,
+        address: ChainSpecificAddress(
+          'hyperevm:0x6B9E773128f453f5c2C60935Ee2DE2CBc5390A24',
+        ),
+        sinceTimestamp: UnixTime(1763482980),
+        tokens: ['USDC'],
+        description: 'Hyperliquid bridge escrow on HyperEVM.',
+      }),
     ],
   },
   dataAvailability: {
