@@ -249,7 +249,8 @@
     }
   },
   "hyperliquid-bridge": {
-    "description": "Arbitrum <> Hyperliquid USDC bridge (one-sided)",
+    "description": "Arbitrum/HyperEVM <> Hyperliquid USDC bridge (one-sided)",
+    "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "arbitrum",
@@ -262,12 +263,35 @@
       {
         "chain": "arbitrum",
         "tx": "0x0fa1d62afe91f99fa5292db2afd0988e5a9fcc5346ae44296814722e5011ef49"
+      },
+      // Source tx for the CCTP withdrawal below. The relevant HyperEVM logs
+      // are present in receipts but missing from eth_getLogs, so this tx mainly
+      // makes the example load the HyperEVM CCTP domain config.
+      {
+        "chain": "hyperevm",
+        "tx": "0x033404436a2a559ae86401438213056f4b810fe848d5376f455db4441b492c6b"
+      },
+      // HyperCore -> HyperEVM -> Arbitrum withdrawal. The HyperEVM source
+      // MessageSent/DepositForBurn/CrossChainWithdraw logs are present in
+      // receipts but missing from eth_getLogs, so the Arbitrum CCTP receive is
+      // counted as a one-sided hyperliquid -> arbitrum transfer.
+      {
+        "chain": "arbitrum",
+        "tx": "0x309869eb0dcc36fe0962c396aea336a599bbb898f77e506fe6bd2256072acdfe"
       }
     ],
     "expects": {
       "events": [
         { "type": "hyperliquid-bridge.Deposit" },
-        { "type": "hyperliquid-bridge.FinalizedWithdrawal" }
+        { "type": "hyperliquid-bridge.FinalizedWithdrawal" },
+        {
+          "type": "cctp-v2.MessageReceived",
+          "plugin": "cctp-v2",
+          "args": {
+            "$srcChain": "hyperliquid",
+            "dstAmount": "99999800000"
+          }
+        }
       ],
       "messages": [],
       "transfers": [
@@ -282,6 +306,17 @@
           "bridgeType": "lockAndMint",
           "src": { "chain": "hyperliquid" },
           "dst": { "event": { "ctx": { "chain": "arbitrum" } } }
+        },
+        {
+          "type": "cctp-v2.Transfer",
+          "plugin": "cctp-v2",
+          "bridgeType": "burnAndMint",
+          "src": { "chain": "hyperliquid" },
+          "dst": {
+            "event": { "ctx": { "chain": "arbitrum" } },
+            "tokenAmount": "99999800000",
+            "wasMinted": true
+          }
         }
       ]
     }

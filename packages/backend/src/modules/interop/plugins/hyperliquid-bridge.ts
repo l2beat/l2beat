@@ -47,13 +47,10 @@ const transferLog =
 const finalizedWithdrawalLog =
   'event FinalizedWithdrawal(address indexed user, address destination, uint64 usd, uint64 nonce, bytes32 message)'
 const withdrawLog = 'event Withdraw(address indexed to, uint256 value)'
-const crossChainWithdrawalLog =
-  'event CrossChainWithdraw(address indexed from, bytes32 indexed to, uint256 value, uint32 destinationDomain, uint64 indexed coreNonce)'
 
 const parseTransfer = createEventParser(transferLog)
 const parseFinalizedWithdrawal = createEventParser(finalizedWithdrawalLog)
 const parseWithdraw = createEventParser(withdrawLog)
-const parseCrossChainWithdrawal = createEventParser(crossChainWithdrawalLog)
 
 interface HyperliquidDepositArgs {
   $dstChain: 'hyperliquid'
@@ -85,15 +82,6 @@ interface HyperliquidCoreWithdrawalArgs {
   recipient: EthereumAddress
 }
 
-interface HyperliquidCrossChainWithdrawalArgs {
-  $srcChain: 'hyperliquid'
-  sender: EthereumAddress
-  recipient: Address32
-  amount: bigint
-  destinationDomain: number
-  coreNonce: bigint
-}
-
 const HyperliquidDeposit = createInteropEventType<HyperliquidDepositArgs>(
   'hyperliquid-bridge.Deposit',
   { direction: 'outgoing' },
@@ -115,12 +103,6 @@ const HyperliquidCoreWithdrawal =
   createInteropEventType<HyperliquidCoreWithdrawalArgs>(
     'hyperliquid-bridge.CoreWithdrawal',
     { direction: 'incoming' },
-  )
-
-export const HyperliquidCrossChainWithdrawal =
-  createInteropEventType<HyperliquidCrossChainWithdrawalArgs>(
-    'hyperliquid-bridge.CrossChainWithdrawal',
-    { direction: 'outgoing' },
   )
 
 export class HyperliquidBridgePlugin implements InteropPluginResyncable {
@@ -145,15 +127,10 @@ export class HyperliquidBridgePlugin implements InteropPluginResyncable {
         signature: withdrawLog,
         addresses: [HYPEREVM_CORE_DEPOSIT_WALLET],
       },
-      {
-        type: 'event',
-        signature: crossChainWithdrawalLog,
-        addresses: [HYPEREVM_CORE_DEPOSIT_WALLET],
-      },
     ]
   }
 
-  capture(input: LogToCapture) {
+  capture(input: LogToCapture): Omit<InteropEvent, 'plugin'>[] | undefined {
     if (input.chain === 'hyperevm') {
       return this.captureHyperevm(input)
     }
@@ -209,22 +186,6 @@ export class HyperliquidBridgePlugin implements InteropPluginResyncable {
       ]
     }
 
-    const crossChainWithdrawal = parseCrossChainWithdrawal(input.log, [
-      HYPEREVM_CORE_DEPOSIT_WALLET_ADDRESS,
-    ])
-    if (crossChainWithdrawal) {
-      return [
-        HyperliquidCrossChainWithdrawal.create(input, {
-          $srcChain: 'hyperliquid',
-          sender: EthereumAddress(crossChainWithdrawal.from),
-          recipient: Address32.from(crossChainWithdrawal.to),
-          amount: crossChainWithdrawal.value,
-          destinationDomain: Number(crossChainWithdrawal.destinationDomain),
-          coreNonce: crossChainWithdrawal.coreNonce,
-        }),
-      ]
-    }
-
     const withdraw = parseWithdraw(input.log, [
       HYPEREVM_CORE_DEPOSIT_WALLET_ADDRESS,
     ])
@@ -245,7 +206,6 @@ export class HyperliquidBridgePlugin implements InteropPluginResyncable {
     HyperliquidFinalizedWithdrawal,
     HyperliquidCoreDeposit,
     HyperliquidCoreWithdrawal,
-    HyperliquidCrossChainWithdrawal,
   ]
 
   match(event: InteropEvent, _db: InteropEventDb): MatchResult | undefined {
@@ -277,19 +237,6 @@ export class HyperliquidBridgePlugin implements InteropPluginResyncable {
           dstEvent: event,
           dstAmount: event.args.dstAmount,
           dstTokenAddress: event.args.dstTokenAddress,
-          dstWasMinted: false,
-          bridgeType: 'lockAndMint',
-        }),
-      ]
-    }
-
-    if (HyperliquidCrossChainWithdrawal.checkType(event)) {
-      return [
-        Result.Transfer('hyperliquid-bridge.Transfer', {
-          srcChain: 'hyperliquid',
-          dstEvent: event,
-          dstAmount: event.args.amount,
-          dstTokenAddress: HYPEREVM_USDC_TOKEN,
           dstWasMinted: false,
           bridgeType: 'lockAndMint',
         }),
