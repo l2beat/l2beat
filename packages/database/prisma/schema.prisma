@@ -662,6 +662,28 @@ model AggregatedInteropToken {
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
 }
 
+model AggregatedInteropDeployedToken {
+  timestamp                  DateTime @db.Timestamp(6)
+  id                         String   @db.VarChar(255)
+  srcChain                   String   @db.VarChar(255)
+  dstChain                   String   @db.VarChar(255)
+  bridgeType                 String   @default("unknown") @db.VarChar(255)
+  tokenChain                 String   @db.VarChar(255)
+  tokenAddress               String   @db.VarChar(255)
+  transferTypeStats          Json?
+  mintedValueUsd             Float?   @db.Real
+  burnedValueUsd             Float?   @db.Real
+  transferCount              Int
+  transfersWithDurationCount Int      @default(0)
+  totalDurationSum           Int
+  volume                     Float    @db.Real
+  minTransferValueUsd        Float?   @db.Real
+  maxTransferValueUsd        Float?   @db.Real
+
+  @@id([timestamp, srcChain, dstChain, bridgeType, id, tokenChain, tokenAddress])
+  @@index([timestamp, srcChain, dstChain, id, bridgeType])
+}
+
 model TokenFactInput {
   id        Int    @id @default(autoincrement())
   name      String @db.VarChar(255)
