@@ -39,21 +39,35 @@ describe('tokenIngestionQueueRouter', () => {
 
   describe('getPage', () => {
     it('returns one page of queue entries with predicted outcomes', async () => {
-      const entry = queueEntry({
+      const existingEntry = queueEntry({
         chain: 'ethereum',
         address: '0x111',
+        state: 'conflict',
+      })
+      const newEntry = queueEntry({
+        chain: 'base',
+        address: '0x222',
         state: 'staged',
       })
-      const page = { entries: [entry], totalCount: 12 }
+      const page = { entries: [existingEntry, newEntry], totalCount: 12 }
       const getPage = mockFn().resolvesTo(page)
       const deployedToken = mockObject<DeployedTokenRecord>({})
       const transferIndex = { findInvolving: mockFn().returns([]) }
       const getInteropTransferIndex = mockFn().resolvesTo(transferIndex)
-      const plan = mockFn().resolvesTo({
-        address: { chain: entry.chain, address: entry.address },
-        steps: [],
-        outcome: { kind: 'noop', deployedToken },
-      })
+      const plan = mockFn()
+        .resolvesToOnce({
+          address: {
+            chain: existingEntry.chain,
+            address: existingEntry.address,
+          },
+          steps: [{ kind: 'existing-token', record: deployedToken }],
+          outcome: { kind: 'conflict', message: 'test conflict' },
+        })
+        .resolvesToOnce({
+          address: { chain: newEntry.chain, address: newEntry.address },
+          steps: [{ kind: 'no-existing-token' }],
+          outcome: { kind: 'noop', deployedToken },
+        })
 
       const caller = createRouter({
         tokenDb: mockObject<TokenDatabase>({
@@ -71,19 +85,32 @@ describe('tokenIngestionQueueRouter', () => {
 
       const result = await caller.getPage({ page: 2, pageSize: 5 })
 
-      expect(result.entries).toEqual([entry])
       expect(result.totalCount).toEqual(12)
-      expect(result.predictedOutcomes).toEqual([
+      expect(result.rows).toEqual([
         {
-          kind: 'noop',
-          deployedToken,
-          description: expect.a(String),
+          entry: existingEntry,
+          predictedOutcome: {
+            kind: 'conflict',
+            message: 'test conflict',
+            description: expect.a(String),
+          },
+          deployedTokenExists: true,
+        },
+        {
+          entry: newEntry,
+          predictedOutcome: {
+            kind: 'noop',
+            deployedToken,
+            description: expect.a(String),
+          },
+          deployedTokenExists: false,
         },
       ])
       expect(getPage).toHaveBeenCalledWith({ offset: 5, limit: 5 })
       expect(getInteropTransferIndex).toHaveBeenCalledWith()
-      expect(plan).toHaveBeenCalledTimes(1)
-      expect(plan).toHaveBeenCalledWith(entry, transferIndex)
+      expect(plan).toHaveBeenCalledTimes(2)
+      expect(plan).toHaveBeenNthCalledWith(1, existingEntry, transferIndex)
+      expect(plan).toHaveBeenNthCalledWith(2, newEntry, transferIndex)
     })
   })
 

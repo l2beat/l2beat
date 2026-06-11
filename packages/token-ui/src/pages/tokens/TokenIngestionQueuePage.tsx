@@ -4,6 +4,7 @@ import {
   CheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  DatabaseIcon,
   EyeIcon,
   ListChecksIcon,
   RotateCwIcon,
@@ -35,6 +36,11 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/core/Table'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/Tooltip'
 import { ExplorerLink } from '~/components/ExplorerLink'
 import {
   ConflictBadge,
@@ -62,10 +68,11 @@ export function TokenIngestionQueuePage() {
     ),
   )
   const { data: chains } = useQuery(trpc.chains.getAll.queryOptions())
-  const queue = queuePage?.entries ?? []
-  const predictedOutcomes = queuePage?.predictedOutcomes ?? []
+  const rows = queuePage?.rows ?? []
   const totalCount = queuePage?.totalCount ?? 0
-  const stagedEntries = queue.filter((entry) => entry.state === 'staged')
+  const stagedEntries = rows
+    .filter((row) => row.entry.state === 'staged')
+    .map((row) => row.entry)
   const pageCount = queuePage
     ? Math.max(1, Math.ceil(queuePage.totalCount / PAGE_SIZE))
     : page
@@ -214,7 +221,7 @@ export function TokenIngestionQueuePage() {
         <CardContent className="min-h-0 flex-1 overflow-y-auto">
           {isLoading ? (
             <LoadingState className="h-full" />
-          ) : queue.length === 0 ? (
+          ) : rows.length === 0 ? (
             <Empty className="h-full">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
@@ -236,97 +243,99 @@ export function TokenIngestionQueuePage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {queue.map((entry, index) => {
-                  const key = getQueueEntryKey(entry)
-                  const chain = chainsByName.get(entry.chain)
-                  const predicted = predictedOutcomes[index]
+                {rows.map(
+                  ({ entry, predictedOutcome, deployedTokenExists }) => {
+                    const key = getQueueEntryKey(entry)
+                    const chain = chainsByName.get(entry.chain)
 
-                  return (
-                    <TableRow key={key}>
-                      <TableCell>
-                        <QueueStateBadge state={entry.state} />
-                      </TableCell>
-                      <TableCell>{entry.chain}</TableCell>
-                      <TableCell className="font-mono text-xs">
-                        {chain?.explorerUrl ? (
-                          <ExplorerLink
-                            explorerUrl={chain.explorerUrl}
-                            value={entry.address}
-                            type="address"
-                          />
-                        ) : (
-                          entry.address
-                        )}
-                      </TableCell>
-                      <TableCell className="max-w-[520px] whitespace-normal break-words text-muted-foreground">
-                        {entry.message ?? '-'}
-                      </TableCell>
-                      <TableCell className="max-w-[420px] whitespace-normal break-words">
-                        {predicted ? (
-                          <PredictedOutcome outcome={predicted} />
-                        ) : (
-                          '-'
-                        )}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() =>
-                              startPreview({
-                                chain: entry.chain,
-                                address: entry.address,
-                              })
-                            }
-                          >
-                            <EyeIcon />
-                            Preview
-                          </Button>
-                          {entry.state === 'staged' && (
-                            <ButtonWithSpinner
+                    return (
+                      <TableRow key={key}>
+                        <TableCell>
+                          <div className="flex items-center gap-1.5">
+                            <QueueStateBadge state={entry.state} />
+                            {deployedTokenExists && <DeployedTokenExistsIcon />}
+                          </div>
+                        </TableCell>
+                        <TableCell>{entry.chain}</TableCell>
+                        <TableCell className="font-mono text-xs">
+                          {chain?.explorerUrl ? (
+                            <ExplorerLink
+                              explorerUrl={chain.explorerUrl}
+                              value={entry.address}
+                              type="address"
+                            />
+                          ) : (
+                            entry.address
+                          )}
+                        </TableCell>
+                        <TableCell className="max-w-[520px] whitespace-normal break-words text-muted-foreground">
+                          {entry.message ?? '-'}
+                        </TableCell>
+                        <TableCell className="max-w-[420px] whitespace-normal break-words">
+                          <PredictedOutcome outcome={predictedOutcome} />
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex justify-end gap-2">
+                            <Button
                               variant="outline"
                               size="sm"
-                              className="border-green-600/40 text-green-700 hover:bg-green-50 hover:text-green-800 dark:border-green-500/40 dark:text-green-400 dark:hover:bg-green-950/30 dark:hover:text-green-300"
-                              spinnerClassName="fill-green-700 dark:fill-green-400"
-                              isLoading={
-                                approve.isPending && approvingKey === key
+                              onClick={() =>
+                                startPreview({
+                                  chain: entry.chain,
+                                  address: entry.address,
+                                })
                               }
-                              onClick={() => {
-                                setApprovingKey(key)
-                                approve.mutate({
-                                  chain: entry.chain,
-                                  address: entry.address,
-                                })
-                              }}
                             >
-                              <CheckIcon />
-                              Approve
-                            </ButtonWithSpinner>
-                          )}
-                          {(entry.state === 'conflict' ||
-                            entry.state === 'error') && (
-                            <ButtonWithSpinner
-                              variant="outline"
-                              size="sm"
-                              isLoading={retry.isPending && retryingKey === key}
-                              onClick={() => {
-                                setRetryingKey(key)
-                                retry.mutate({
-                                  chain: entry.chain,
-                                  address: entry.address,
-                                })
-                              }}
-                            >
-                              <RotateCwIcon />
-                              Retry
-                            </ButtonWithSpinner>
-                          )}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
+                              <EyeIcon />
+                              Preview
+                            </Button>
+                            {entry.state === 'staged' && (
+                              <ButtonWithSpinner
+                                variant="outline"
+                                size="sm"
+                                className="border-green-600/40 text-green-700 hover:bg-green-50 hover:text-green-800 dark:border-green-500/40 dark:text-green-400 dark:hover:bg-green-950/30 dark:hover:text-green-300"
+                                spinnerClassName="fill-green-700 dark:fill-green-400"
+                                isLoading={
+                                  approve.isPending && approvingKey === key
+                                }
+                                onClick={() => {
+                                  setApprovingKey(key)
+                                  approve.mutate({
+                                    chain: entry.chain,
+                                    address: entry.address,
+                                  })
+                                }}
+                              >
+                                <CheckIcon />
+                                Approve
+                              </ButtonWithSpinner>
+                            )}
+                            {(entry.state === 'conflict' ||
+                              entry.state === 'error') && (
+                              <ButtonWithSpinner
+                                variant="outline"
+                                size="sm"
+                                isLoading={
+                                  retry.isPending && retryingKey === key
+                                }
+                                onClick={() => {
+                                  setRetryingKey(key)
+                                  retry.mutate({
+                                    chain: entry.chain,
+                                    address: entry.address,
+                                  })
+                                }}
+                              >
+                                <RotateCwIcon />
+                                Retry
+                              </ButtonWithSpinner>
+                            )}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  },
+                )}
               </TableBody>
             </Table>
           )}
@@ -355,6 +364,17 @@ function QueueStateBadge({
     case 'error':
       return <Badge variant="destructive">Error</Badge>
   }
+}
+
+function DeployedTokenExistsIcon() {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <DatabaseIcon className="size-4 shrink-0 text-green-600 dark:text-green-400" />
+      </TooltipTrigger>
+      <TooltipContent>The deployed token is already in TokenDB.</TooltipContent>
+    </Tooltip>
+  )
 }
 
 function getQueueEntryKey(entry: { chain: string; address: string }) {
