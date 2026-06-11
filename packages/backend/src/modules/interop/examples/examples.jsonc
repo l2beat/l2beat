@@ -321,6 +321,54 @@
       ]
     }
   },
+  "hyperliquid-bridge-hyperevm": {
+    "description": "HyperEVM <> Hyperliquid USDC bridge (one-sided)",
+    "txs": [
+      {
+        "chain": "hyperevm",
+        "tx": "0x083b623f4e3ac3330a29aad9daa89a404eb2170c006ddaf51f3957a157f3416d"
+      },
+      {
+        "chain": "hyperevm",
+        "tx": "0xb85911ae9ba0fab229480f800eaf8b46d928f49bb539ad6fc151ea7fa8682a52"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "hyperliquid-bridge.CoreDeposit",
+          "args": { "srcAmount": "43884677" }
+        },
+        {
+          "type": "hyperliquid-bridge.CoreWithdrawal",
+          "args": { "dstAmount": "3904958097" }
+        }
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "hyperliquid-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "event": { "ctx": { "chain": "hyperevm" } },
+            "tokenAmount": "43884677",
+            "wasBurned": false
+          },
+          "dst": { "chain": "hyperliquid" }
+        },
+        {
+          "type": "hyperliquid-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "hyperliquid" },
+          "dst": {
+            "event": { "ctx": { "chain": "hyperevm" } },
+            "tokenAmount": "3904958097",
+            "wasMinted": false
+          }
+        }
+      ]
+    }
+  },
   "avalanche": {
     "txs": [
       {
