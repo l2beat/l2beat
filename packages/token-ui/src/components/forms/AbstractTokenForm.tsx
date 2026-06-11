@@ -1,3 +1,4 @@
+import type { TokenCategory } from '@l2beat/token-backend'
 import { v } from '@l2beat/validate'
 import { ArrowRightIcon, RefreshCwIcon } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
@@ -34,7 +35,7 @@ const categoryValues = [
   'rwaRestricted',
   'rwaPublic',
   'other',
-] as const
+] as const satisfies readonly TokenCategory[]
 const EMPTY_CATEGORY_VALUE = '__none__'
 
 export type AbstractTokenSchema = v.infer<typeof AbstractTokenSchema>

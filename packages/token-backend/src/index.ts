@@ -1,4 +1,5 @@
 export { getTokenDbClient, type TokenDbClient } from './client'
+export type { TokenCategory } from '@l2beat/database'
 export type { Command } from './commands'
 export type {
   AbstractTokenRef,
