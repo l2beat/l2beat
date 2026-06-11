@@ -4,6 +4,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropTokenData } from '~/server/features/scaling/interop/getInteropTokenData'
 import { getAbstractTokenSlug } from '~/server/features/scaling/interop/token/getAbstractTokenSlug'
 import { getInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
+import { getInteropTokenDeployments } from '~/server/features/scaling/interop/token/getInteropTokenDeployments'
 import { getInteropTokenEntry } from '~/server/features/scaling/interop/token/getInteropTokenEntry'
 import { resolveInteropTokenBySlug } from '~/server/features/scaling/interop/token/resolveInteropTokenBySlug'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
@@ -106,12 +107,19 @@ async function getCachedData({
 
   const apiSelection = initialSelection
 
-  const tokenData = await getInteropTokenData({
-    tokenId: token.id,
-    ...apiSelection,
-  })
+  const [tokenData, deployments] = await Promise.all([
+    getInteropTokenData({
+      tokenId: token.id,
+      ...apiSelection,
+    }),
+    getInteropTokenDeployments(token.id),
+  ])
 
-  const tokenEntry = getInteropTokenEntry(token.id, interopChainsWithIcons)
+  const tokenEntry = getInteropTokenEntry(
+    token.id,
+    interopChainsWithIcons,
+    deployments,
+  )
 
   return {
     token: {

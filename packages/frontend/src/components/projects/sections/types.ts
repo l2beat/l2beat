@@ -7,6 +7,7 @@ import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
 import type { InteropFlowsSectionProps } from './interop/InteropFlowsSection'
+import type { InteropTokenDeploymentsSectionProps } from './interop/InteropTokenDeploymentsSection'
 import type { InteropTokenProtocolsSectionProps } from './interop/InteropTokenProtocolsSection'
 import type { InteropTokensSectionProps } from './interop/InteropTokensSection'
 import type { InteropTokenTransfersSectionProps } from './interop/InteropTokenTransfersSection'
@@ -71,6 +72,7 @@ type SectionId =
   | 'interop-transfers'
   | 'interop-tokens'
   | 'interop-protocols'
+  | 'onchain-deployments'
   | 'privacy-tvl'
   | 'privacy-flows'
   | 'privacy-assets-breakdown'
@@ -230,6 +232,11 @@ interface ProjectDetailsInteropTokenProtocolsSection {
   props: ProjectDetailsProps<InteropTokenProtocolsSectionProps>
 }
 
+interface ProjectDetailsInteropTokenDeploymentsSection {
+  type: 'InteropTokenDeploymentsSection'
+  props: ProjectDetailsProps<InteropTokenDeploymentsSectionProps>
+}
+
 interface ProjectDetailsInteropTokenTransfersSection {
   type: 'InteropTokenTransfersSection'
   props: ProjectDetailsProps<InteropTokenTransfersSectionProps>
@@ -311,6 +318,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsInteropTokensSection
   | ProjectDetailsInteropTokenVolumeSection
   | ProjectDetailsInteropTokenProtocolsSection
+  | ProjectDetailsInteropTokenDeploymentsSection
   | ProjectDetailsInteropTokenTransfersSection
   | ProjectDetailsUpgradesAndGovernanceSection
   | ProjectDetailsUpdatesSection
