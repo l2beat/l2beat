@@ -1,8 +1,8 @@
-import {
-  type AbstractTokenRecord as DbAbstractTokenRecord,
-  type AbstractTokenUpdateable as DbAbstractTokenUpdateable,
-  TOKEN_CATEGORIES,
+import type {
+  AbstractTokenRecord as DbAbstractTokenRecord,
+  AbstractTokenUpdateable as DbAbstractTokenUpdateable,
 } from '@l2beat/database'
+import { TOKEN_CATEGORIES } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { Equal, Expect } from '../utils/expectEqual'
 

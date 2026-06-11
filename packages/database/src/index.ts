@@ -118,7 +118,6 @@ export type {
   TokenCategory,
   TokenMetadataRecord,
 } from './repositories/TokenMetadataRepository'
-export { TOKEN_CATEGORIES } from './repositories/TokenMetadataRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,
   SummedByTimestampTokenValueRecord,
