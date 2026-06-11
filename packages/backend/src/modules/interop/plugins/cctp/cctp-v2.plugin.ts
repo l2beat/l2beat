@@ -82,8 +82,9 @@ import {
   parseCctpV2ReceivedTransfer,
 } from './cctp.utils'
 
-// HyperCore-origin CCTP burns on HypereVM are not discoverable via eth_getLogs, only eth_getTransactionReceipt and eth_getBlockReceipts
-// so we treat it as onesided in this plugin (source only)
+// Some HyperEVM system-origin CCTP burns, e.g. Hyperliquid CoreDepositWallet
+// withdrawals, are present in transaction/block receipts but missing from
+// eth_getLogs. Keep HyperEVM as a received-only fallback for those CCTP legs.
 const CCTP_V2_ONE_SIDED_SOURCE_CHAINS = new Set(['hyperevm'])
 
 export const CCTPv2MessageSent = createInteropEventType<{
