@@ -262,7 +262,10 @@ export const gnosis: ScalingProject = {
       },
       inclusionDelayChartDescription:
         'The chart uses the Ethereum-style single-proposer formula with Gnosis-specific constants. It excludes finality, inactivity leaks, validator-set changes, hard forks, and blanket-censorship resistance gadgets.',
-      censorshipResistance: readProjectMarkdown('gnosis', 'censorshipResistance'),
+      censorshipResistance: readProjectMarkdown(
+        'gnosis',
+        'censorshipResistance',
+      ),
       references: [
         {
           title: 'Gnosis Chain specifications',

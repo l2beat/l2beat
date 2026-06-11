@@ -19,7 +19,10 @@ export const layerzero: BaseProject = {
   interopConfig: {
     description:
       'LayerZero OFT (omnichain fungible token) is a multichain token framework built on the modular, highly customizable LayerZero messaging protocol. While it theoretically supports any form of validation, ~100% of messages are validated by multisig-like smart contracts called DVNs ("Decentralized" Validator Networks). The protocol supports a vast set of EVM and non-EVM destinations.',
-    detailedDescription: readProjectMarkdown('layerzero', 'detailedDescription'),
+    detailedDescription: readProjectMarkdown(
+      'layerzero',
+      'detailedDescription',
+    ),
     isAggregate: true,
     plugins: [
       {

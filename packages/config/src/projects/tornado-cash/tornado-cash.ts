@@ -97,7 +97,10 @@ export const tornadoCash: BaseProject = {
   display: {
     description:
       'A classic Ethereum mixer design based on fixed-denomination pools and zk withdrawals.',
-    detailedDescription: readProjectMarkdown('tornado-cash', 'detailedDescription'),
+    detailedDescription: readProjectMarkdown(
+      'tornado-cash',
+      'detailedDescription',
+    ),
     links: {
       websites: ['https://app.ens.domains/tornadocash.eth?tab=records'],
     },

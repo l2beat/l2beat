@@ -17,8 +17,8 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import stakeDistribution from './stake-distribution.json'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import stakeDistribution from './stake-distribution.json'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -315,7 +315,10 @@ export const polygonpos: ScalingProject = {
       },
       inclusionDelayChartDescription:
         'The chart models live-chain selective censorship only. Since proposing is stake-weighted, the x-axis represents the censoring POL stake, and does not cover validator-set changes, or blanket-censorship resistance gadgets.',
-      censorshipResistance: readProjectMarkdown('polygon-pos', 'censorshipResistance'),
+      censorshipResistance: readProjectMarkdown(
+        'polygon-pos',
+        'censorshipResistance',
+      ),
       references: [
         {
           title: 'Polygon PoS architecture documentation',
