@@ -99,6 +99,8 @@ const RAIKO2_BOUNDLESS_AGG = (version: string) => ({
 const RAIKO2_GUEST_DIGEST_STEPS = (
   objectName: string,
   digestSource: string,
+  version = 'v0.1.0',
+  commitHash = 'a3fb34237daeddab65b965c33b2f85570dd3ff74',
 ) => `
 Dependencies: Git, Rust/Cargo, Docker with a running daemon, and either \`just\` or the equivalent Cargo command below. The build pulls Docker images and locked Rust/git dependencies.
 
@@ -106,9 +108,9 @@ Dependencies: Git, Rust/Cargo, Docker with a running daemon, and either \`just\`
 \`\`\`
 git clone https://github.com/taikoxyz/raiko2.git
 cd raiko2
-git checkout v0.1.0
+git checkout ${version}
 \`\`\`
-Commit hash should be \`a3fb34237daeddab65b965c33b2f85570dd3ff74\`.
+Commit hash should be \`${commitHash}\`.
 2. From the \`raiko2\` root dir, rebuild the Shasta guest ELFs from source:
 \`\`\`
 just build-guest all
@@ -121,9 +123,9 @@ This exports fresh ELFs to \`crates/guests/elf\`.
 3. Generate the guest digest summary from the rebuilt ELFs:
 \`\`\`
 cargo run -p xtask-build-guest --bin guest-digests -- \\
-  --output /tmp/raiko2-v0.1.0-guest-digests.json
+  --output /tmp/raiko2-${version}-guest-digests.json
 \`\`\`
-4. In \`/tmp/raiko2-v0.1.0-guest-digests.json\`, find the entry with \`object_name: "${objectName}"\` and \`digest_source: "${digestSource}"\`. Its \`digest\` field should match this program hash.
+4. In \`/tmp/raiko2-${version}-guest-digests.json\`, find the entry with \`object_name: "${objectName}"\` and \`digest_source: "${digestSource}"\`. Its \`digest\` field should match this program hash.
 `
 
 const KAILUA_FP = (version: string, descAppendix = '') => ({
@@ -1003,6 +1005,58 @@ Verify:
       'vk_hash_bytes',
     ),
   },
+  '0x00cbb3390c27696467170dd5dac119dc7d579da7d069afae078806f9d6f47580': {
+    ...RAIKO2_PROPOSAL('v0.2.0'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/sp1_shasta_proposal.elf',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_proposal',
+      'vk_bn254',
+      'v0.2.0',
+      'f5d46652658f63c0bbd6d6e47871d57abd50c349',
+    ),
+  },
+  '0x65d99c8609da591962e1babb2c119dc76abced3e41a6beb80f100df356f47580': {
+    ...RAIKO2_PROPOSAL('v0.2.0'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/sp1_shasta_proposal.elf',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_proposal',
+      'vk_hash_bytes',
+      'v0.2.0',
+      'f5d46652658f63c0bbd6d6e47871d57abd50c349',
+    ),
+  },
+  '0x001e209da7d70983b826d88cb227861d1263435fe54fad6e4e5d83c593ee94c5': {
+    ...RAIKO2_AGG('v0.2.0'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/sp1_shasta_aggregation.elf',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_aggregation',
+      'vk_bn254',
+      'v0.2.0',
+      'f5d46652658f63c0bbd6d6e47871d57abd50c349',
+    ),
+  },
+  '0x0f104ed375c260ee04db1196227861d1131a1aff153eb5b91cbb078b13ee94c5': {
+    ...RAIKO2_AGG('v0.2.0'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/sp1_shasta_aggregation.elf',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_aggregation',
+      'vk_hash_bytes',
+      'v0.2.0',
+      'f5d46652658f63c0bbd6d6e47871d57abd50c349',
+    ),
+  },
   '0x0040b6021bbe547fc651492bcc4eea12eaaa9b0a60086439206e27495ec6d6c3': {
     ...RAIKO_AGG('v1.10.4'),
     proverSystemProject: ProjectId('sp1turbo'),
@@ -1600,6 +1654,32 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk has
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'risc0_shasta_aggregation',
       'image_id',
+    ),
+  },
+  '0x588c81521db5bef5e07f5beab37f1f0b2bba925ac82e733db7cc72e046362754': {
+    ...RAIKO2_PROPOSAL('v0.2.0'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/risc0_shasta_proposal.elf',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'risc0_shasta_proposal',
+      'image_id',
+      'v0.2.0',
+      'f5d46652658f63c0bbd6d6e47871d57abd50c349',
+    ),
+  },
+  '0x91ddc48054ff4ec62a93bfa0583582d0e04de6ab3928e51e0ea3ee523fee129f': {
+    ...RAIKO2_AGG('v0.2.0'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/risc0_shasta_aggregation.elf',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'risc0_shasta_aggregation',
+      'image_id',
+      'v0.2.0',
+      'f5d46652658f63c0bbd6d6e47871d57abd50c349',
     ),
   },
   '0xcecc85819e15d173c2991577727525b136e820728f7aaaede612f1281cac2249': {
