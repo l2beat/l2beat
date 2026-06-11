@@ -134,6 +134,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(1),
       })
+      const aggregatedInteropDeployedToken = mockObject<
+        Database['aggregatedInteropDeployedToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
       const aggregatedInteropTokensPair = mockObject<
         Database['aggregatedInteropTokensPair']
       >({
@@ -149,6 +156,7 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
@@ -159,6 +167,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregate: mockFn().returns({
           aggregatedTransfers,
           aggregatedTokens,
+          aggregatedDeployedTokens: [],
           aggregatedTokensPairs,
           warnings: [],
         }),
@@ -244,6 +253,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const aggregatedInteropDeployedToken = mockObject<
+        Database['aggregatedInteropDeployedToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
       const aggregatedInteropTokensPair = mockObject<
         Database['aggregatedInteropTokensPair']
       >({
@@ -259,6 +275,7 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
@@ -269,6 +286,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregate: mockFn().returns({
           aggregatedTransfers: [],
           aggregatedTokens: [],
+          aggregatedDeployedTokens: [],
           aggregatedTokensPairs: [],
           warnings: [],
         }),
@@ -318,12 +336,20 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const aggregatedInteropDeployedToken = mockObject<
+        Database['aggregatedInteropDeployedToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
       const transaction = mockFn(async (fn: any) => await fn())
       const db = mockDatabase({
         transaction,
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropDeployedToken,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
         areAllSyncersFollowing: mockFn().returns(false),
@@ -333,6 +359,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregate: mockFn().returns({
           aggregatedTransfers: [],
           aggregatedTokens: [],
+          aggregatedDeployedTokens: [],
           aggregatedTokensPairs: [],
           warnings: [],
         }),
@@ -382,6 +409,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const aggregatedInteropDeployedToken = mockObject<
+        Database['aggregatedInteropDeployedToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
       const aggregatedInteropTokensPair = mockObject<
         Database['aggregatedInteropTokensPair']
       >({
@@ -395,6 +429,7 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
@@ -405,6 +440,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregate: mockFn().returns({
           aggregatedTransfers: [],
           aggregatedTokens: [],
+          aggregatedDeployedTokens: [],
           aggregatedTokensPairs: [],
           warnings: [],
         }),
@@ -467,6 +503,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const aggregatedInteropDeployedToken = mockObject<
+        Database['aggregatedInteropDeployedToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
       const aggregatedInteropTokensPair = mockObject<
         Database['aggregatedInteropTokensPair']
       >({
@@ -481,6 +524,7 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
@@ -490,6 +534,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregate: mockFn().returns({
           aggregatedTransfers: [],
           aggregatedTokens: [],
+          aggregatedDeployedTokens: [],
           aggregatedTokensPairs: [],
           warnings: [],
         }),
@@ -588,6 +633,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const aggregatedInteropDeployedToken = mockObject<
+        Database['aggregatedInteropDeployedToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
       const aggregatedInteropTokensPair = mockObject<
         Database['aggregatedInteropTokensPair']
       >({
@@ -602,6 +654,7 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
@@ -611,6 +664,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregate: mockFn().returns({
           aggregatedTransfers: [],
           aggregatedTokens: [],
+          aggregatedDeployedTokens: [],
           aggregatedTokensPairs: [],
           warnings: [],
         }),
@@ -682,6 +736,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const aggregatedInteropDeployedToken = mockObject<
+        Database['aggregatedInteropDeployedToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
       const aggregatedInteropTokensPair = mockObject<
         Database['aggregatedInteropTokensPair']
       >({
@@ -696,6 +757,7 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
@@ -705,6 +767,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregate: mockFn().returns({
           aggregatedTransfers: [],
           aggregatedTokens: [],
+          aggregatedDeployedTokens: [],
           aggregatedTokensPairs: [],
           warnings: [],
         }),

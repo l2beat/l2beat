@@ -1,4 +1,5 @@
 import type {
+  AggregatedInteropDeployedTokenRecord,
   AggregatedInteropTokenRecord,
   AggregatedInteropTokensPairRecord,
   AggregatedInteropTransferRecord,
@@ -345,6 +346,191 @@ export function getAggregatedTokens(
     srcChain: first.srcChain,
     dstChain: first.dstChain,
     abstractTokenId: abstractTokenId,
+    transferTypeStats: data.transferTypeStats,
+    transferCount: data.transferCount,
+    transfersWithDurationCount: data.transfersWithDurationCount,
+    totalDurationSum: data.totalDurationSum,
+    volume: data.volume,
+    minTransferValueUsd:
+      data.minTransferValueUsd !== undefined
+        ? Math.round(data.minTransferValueUsd * 100) / 100
+        : undefined,
+    maxTransferValueUsd:
+      data.maxTransferValueUsd !== undefined
+        ? Math.round(data.maxTransferValueUsd * 100) / 100
+        : undefined,
+    mintedValueUsd: data.mintedValueUsd,
+    burnedValueUsd: data.burnedValueUsd,
+  }))
+}
+
+export function getAggregatedDeployedTokens(
+  group: InteropTransferRecord[],
+  options?: {
+    calculateNetMinted?: boolean
+  },
+): Omit<
+  AggregatedInteropDeployedTokenRecord,
+  'id' | 'timestamp' | 'bridgeType'
+>[] {
+  const first = group[0]
+  assert(first, 'Group is empty')
+  const tokens: Record<
+    string,
+    {
+      tokenChain: string
+      tokenAddress: string
+      transferCount: number
+      totalDurationSum: number
+      transfersWithDurationCount: number
+      volume: number
+      minTransferValueUsd: number | undefined
+      maxTransferValueUsd: number | undefined
+      mintedValueUsd: number | undefined
+      burnedValueUsd: number | undefined
+      transferTypeStats: InteropTransferTypeStatsMap | undefined
+    }
+  > = {}
+
+  for (const transfer of group) {
+    const duration = transfer.duration
+    const isSameToken =
+      transfer.srcChain === transfer.dstChain &&
+      transfer.srcTokenAddress === transfer.dstTokenAddress
+
+    const isBurn =
+      transfer.srcWasBurned === true && transfer.dstWasMinted === false
+    const isMint =
+      transfer.srcWasBurned === false && transfer.dstWasMinted === true
+    const mintValue = transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
+    const burnValue = transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
+
+    if (transfer.srcTokenAddress) {
+      const srcTokenKey = `${transfer.srcChain}|${transfer.srcTokenAddress}`
+      const srcTokenTransferValueUsd =
+        transfer.srcValueUsd ?? transfer.dstValueUsd
+      const currentSrcToken = tokens[srcTokenKey]
+      tokens[srcTokenKey] = {
+        tokenChain: transfer.srcChain,
+        tokenAddress: transfer.srcTokenAddress,
+        transferCount: (currentSrcToken?.transferCount ?? 0) + 1,
+        totalDurationSum:
+          (currentSrcToken?.totalDurationSum ?? 0) + (duration ?? 0),
+        transfersWithDurationCount:
+          (currentSrcToken?.transfersWithDurationCount ?? 0) +
+          (duration !== undefined ? 1 : 0),
+        transferTypeStats:
+          duration !== undefined
+            ? addTransferTypeStats(
+                currentSrcToken?.transferTypeStats,
+                transfer.type,
+                duration,
+              )
+            : currentSrcToken?.transferTypeStats,
+        volume: (currentSrcToken?.volume ?? 0) + (transfer.srcValueUsd ?? 0),
+        minTransferValueUsd:
+          srcTokenTransferValueUsd !== undefined
+            ? Math.min(
+                currentSrcToken?.minTransferValueUsd ??
+                  Number.POSITIVE_INFINITY,
+                srcTokenTransferValueUsd,
+              )
+            : currentSrcToken?.minTransferValueUsd,
+        maxTransferValueUsd:
+          srcTokenTransferValueUsd !== undefined
+            ? Math.max(
+                currentSrcToken?.maxTransferValueUsd ??
+                  Number.NEGATIVE_INFINITY,
+                srcTokenTransferValueUsd,
+              )
+            : currentSrcToken?.maxTransferValueUsd,
+        mintedValueUsd: options?.calculateNetMinted
+          ? (currentSrcToken?.mintedValueUsd ?? 0)
+          : undefined,
+        burnedValueUsd: options?.calculateNetMinted
+          ? (currentSrcToken?.burnedValueUsd ?? 0)
+          : undefined,
+      }
+
+      if (options?.calculateNetMinted && isBurn) {
+        tokens[srcTokenKey].burnedValueUsd =
+          (tokens[srcTokenKey]?.burnedValueUsd ?? 0) + burnValue
+      }
+
+      if (
+        options?.calculateNetMinted &&
+        isMint &&
+        (isSameToken || !transfer.dstTokenAddress)
+      ) {
+        tokens[srcTokenKey].mintedValueUsd =
+          (tokens[srcTokenKey]?.mintedValueUsd ?? 0) + mintValue
+      }
+    }
+
+    if (transfer.dstTokenAddress && !isSameToken) {
+      const dstTokenKey = `${transfer.dstChain}|${transfer.dstTokenAddress}`
+      const dstTokenTransferValueUsd =
+        transfer.dstValueUsd ?? transfer.srcValueUsd
+      const currentDstToken = tokens[dstTokenKey]
+      tokens[dstTokenKey] = {
+        tokenChain: transfer.dstChain,
+        tokenAddress: transfer.dstTokenAddress,
+        transferCount: (currentDstToken?.transferCount ?? 0) + 1,
+        totalDurationSum:
+          (currentDstToken?.totalDurationSum ?? 0) + (duration ?? 0),
+        transfersWithDurationCount:
+          (currentDstToken?.transfersWithDurationCount ?? 0) +
+          (duration !== undefined ? 1 : 0),
+        transferTypeStats:
+          duration !== undefined
+            ? addTransferTypeStats(
+                currentDstToken?.transferTypeStats,
+                transfer.type,
+                duration,
+              )
+            : currentDstToken?.transferTypeStats,
+        volume: (currentDstToken?.volume ?? 0) + (transfer.dstValueUsd ?? 0),
+        minTransferValueUsd:
+          dstTokenTransferValueUsd !== undefined
+            ? Math.min(
+                currentDstToken?.minTransferValueUsd ??
+                  Number.POSITIVE_INFINITY,
+                dstTokenTransferValueUsd,
+              )
+            : currentDstToken?.minTransferValueUsd,
+        maxTransferValueUsd:
+          dstTokenTransferValueUsd !== undefined
+            ? Math.max(
+                currentDstToken?.maxTransferValueUsd ??
+                  Number.NEGATIVE_INFINITY,
+                dstTokenTransferValueUsd,
+              )
+            : currentDstToken?.maxTransferValueUsd,
+        mintedValueUsd: options?.calculateNetMinted
+          ? (currentDstToken?.mintedValueUsd ?? 0)
+          : undefined,
+        burnedValueUsd: options?.calculateNetMinted
+          ? (currentDstToken?.burnedValueUsd ?? 0)
+          : undefined,
+      }
+
+      if (options?.calculateNetMinted && isMint) {
+        tokens[dstTokenKey].mintedValueUsd =
+          (tokens[dstTokenKey]?.mintedValueUsd ?? 0) + mintValue
+      }
+
+      if (options?.calculateNetMinted && isBurn && !transfer.srcTokenAddress) {
+        tokens[dstTokenKey].burnedValueUsd =
+          (tokens[dstTokenKey]?.burnedValueUsd ?? 0) + burnValue
+      }
+    }
+  }
+
+  return Object.values(tokens).map((data) => ({
+    srcChain: first.srcChain,
+    dstChain: first.dstChain,
+    tokenChain: data.tokenChain,
+    tokenAddress: data.tokenAddress,
     transferTypeStats: data.transferTypeStats,
     transferCount: data.transferCount,
     transfersWithDurationCount: data.transfersWithDurationCount,
