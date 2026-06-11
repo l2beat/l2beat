@@ -19,4 +19,36 @@ describe(buildInteropUrl.name, () => {
 
     expect(result).toEqual('/interop/summary')
   })
+
+  it('returns path without query when selection equals default selection', () => {
+    const result = buildInteropUrl(
+      '/interop/tokens/circle-usdc',
+      {
+        from: ['ethereum', 'arbitrum'],
+        to: ['ethereum', 'arbitrum'],
+      },
+      {
+        from: ['ethereum', 'arbitrum'],
+        to: ['ethereum', 'arbitrum'],
+      },
+    )
+
+    expect(result).toEqual('/interop/tokens/circle-usdc')
+  })
+
+  it('builds URL with empty params when selection is empty but default is not', () => {
+    const result = buildInteropUrl(
+      '/interop/tokens/circle-usdc',
+      {
+        from: [],
+        to: [],
+      },
+      {
+        from: ['ethereum', 'arbitrum'],
+        to: ['ethereum', 'arbitrum'],
+      },
+    )
+
+    expect(result).toEqual('/interop/tokens/circle-usdc?from=&to=')
+  })
 })

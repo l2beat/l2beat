@@ -54,6 +54,7 @@ export function InteropTokenPage({
       <InteropSelectedChainsProvider
         interopChains={interopChains}
         initialSelection={initialSelection}
+        selectAllByDefault
       >
         <Content
           token={token}

@@ -31,8 +31,12 @@ export async function getInteropTokenPageData(
     activeInteropChains,
   )
 
+  // On the token page all chains are selected by default
   const initialSelection = getInitialInteropSelection({
-    query: req.query,
+    query: {
+      from: req.query?.from ?? activeInteropChainIds,
+      to: req.query?.to ?? activeInteropChainIds,
+    },
     interopChainsIds: activeInteropChainIds,
   })
 

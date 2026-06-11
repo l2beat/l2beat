@@ -14,6 +14,7 @@ import { useTracking } from '~/hooks/useTracking'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
 import { getValidInteropSelection } from './getValidInteropSelection'
+import { isSameInteropSelection } from './isSameInteropSelection'
 import { parseInteropSelectionFromSearchParams } from './parseInteropSelectionFromSearchParams'
 import type { InteropSelection } from './types'
 
@@ -37,16 +38,25 @@ interface InteropSelectedChainsProviderProps {
   children: ReactNode
   interopChains: InteropChainWithIcon[]
   initialSelection: InteropSelection
+  selectAllByDefault?: boolean
 }
 
 export function InteropSelectedChainsProvider({
   children,
   interopChains,
   initialSelection,
+  selectAllByDefault,
 }: InteropSelectedChainsProviderProps) {
   const allChainIds = useMemo(
     () => interopChains.map((c) => c.id),
     [interopChains],
+  )
+  const defaultSelection = useMemo<InteropSelection>(
+    () =>
+      selectAllByDefault
+        ? { from: allChainIds, to: allChainIds }
+        : { from: [], to: [] },
+    [selectAllByDefault, allChainIds],
   )
   const chainsById = useMemo(
     () => new Map(interopChains.map((chain) => [chain.id, chain])),
@@ -79,17 +89,33 @@ export function InteropSelectedChainsProvider({
       return
     }
 
+    const searchParams = new URLSearchParams(window.location.search)
     const currentSelection = parseInteropSelectionFromSearchParams({
-      searchParams: new URLSearchParams(window.location.search),
+      searchParams,
       interopChainsIds: allChainIds,
+      defaultSelection,
     })
-    if (isSameSelection(currentSelection, debouncedSelection)) {
+    if (isSameInteropSelection(currentSelection, debouncedSelection)) {
+      if (
+        isSameInteropSelection(debouncedSelection, defaultSelection) &&
+        (searchParams.has('from') || searchParams.has('to'))
+      ) {
+        searchParams.delete('from')
+        searchParams.delete('to')
+        const search = searchParams.toString()
+        window.history.replaceState(
+          {},
+          '',
+          window.location.pathname + (search ? `?${search}` : ''),
+        )
+      }
       return
     }
 
     const nextUrl = buildInteropUrl(
       window.location.pathname,
       debouncedSelection,
+      defaultSelection,
     )
 
     const currentUrl = window.location.pathname + window.location.search
@@ -108,7 +134,7 @@ export function InteropSelectedChainsProvider({
       chains,
       page: window.location.pathname,
     })
-  }, [debouncedSelection, allChainIds, track])
+  }, [debouncedSelection, allChainIds, defaultSelection, track])
 
   useEventListener('popstate', () => {
     skipNextUrlUpdate.current = true
@@ -116,6 +142,7 @@ export function InteropSelectedChainsProvider({
     const parsedSelection = parseInteropSelectionFromSearchParams({
       searchParams: new URLSearchParams(window.location.search),
       interopChainsIds: allChainIds,
+      defaultSelection,
     })
 
     setSelection(getValidInteropSelection(parsedSelection, allChainIds))
@@ -217,15 +244,6 @@ function toggleSelection(
   }
 
   return allChainIds.filter((id) => nextSet.has(id))
-}
-
-function isSameSelection(left: InteropSelection, right: InteropSelection) {
-  return (
-    left.from.length === right.from.length &&
-    left.to.length === right.to.length &&
-    left.from.every((value, index) => value === right.from[index]) &&
-    left.to.every((value, index) => value === right.to[index])
-  )
 }
 
 export function useInteropSelectedChains() {

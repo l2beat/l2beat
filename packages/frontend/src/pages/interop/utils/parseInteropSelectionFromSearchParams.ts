@@ -4,14 +4,16 @@ import type { InteropSelection } from './types'
 export function parseInteropSelectionFromSearchParams({
   searchParams,
   interopChainsIds,
+  defaultSelection,
 }: {
   searchParams: URLSearchParams
   interopChainsIds: string[]
+  defaultSelection?: InteropSelection
 }): InteropSelection {
   return getInitialInteropSelection({
     query: {
-      from: parseQueryArray(searchParams.get('from')),
-      to: parseQueryArray(searchParams.get('to')),
+      from: parseQueryArray(searchParams.get('from')) ?? defaultSelection?.from,
+      to: parseQueryArray(searchParams.get('to')) ?? defaultSelection?.to,
     },
     interopChainsIds,
   })

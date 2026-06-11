@@ -1,10 +1,14 @@
+import { isSameInteropSelection } from './isSameInteropSelection'
 import type { InteropSelection } from './types'
+
+const EMPTY_SELECTION: InteropSelection = { from: [], to: [] }
 
 export function buildInteropUrl(
   path: string,
   selection: InteropSelection,
+  defaultSelection: InteropSelection = EMPTY_SELECTION,
 ): string {
-  if (selection.from.length === 0 && selection.to.length === 0) {
+  if (isSameInteropSelection(selection, defaultSelection)) {
     return path
   }
 

@@ -29,4 +29,30 @@ describe(parseInteropSelectionFromSearchParams.name, () => {
       to: [],
     })
   })
+
+  it('returns default selection when params are missing', () => {
+    const result = parseInteropSelectionFromSearchParams({
+      searchParams: new URLSearchParams(''),
+      interopChainsIds: CHAINS,
+      defaultSelection: { from: CHAINS, to: CHAINS },
+    })
+
+    expect(result).toEqual({
+      from: CHAINS,
+      to: CHAINS,
+    })
+  })
+
+  it('ignores default selection when params are present', () => {
+    const result = parseInteropSelectionFromSearchParams({
+      searchParams: new URLSearchParams('from=ethereum&to='),
+      interopChainsIds: CHAINS,
+      defaultSelection: { from: CHAINS, to: CHAINS },
+    })
+
+    expect(result).toEqual({
+      from: ['ethereum'],
+      to: [],
+    })
+  })
 })
