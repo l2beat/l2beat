@@ -1,6 +1,6 @@
 {
   "name": "edgechain",
-  "timestamp": 1780398259,
+  "timestamp": 1781176973,
   "configHash": "0x65361a4bf4af796701b00747defda098131dcf72710ed5183c0839274546170b",
   "entries": [
     {
@@ -107,7 +107,7 @@
         ],
         "$upgradeCount": 1,
         "anyTrustFastConfirmer": "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836",
-        "arbOsFromWmRoot": "ArbOS v40 wasmModuleRoot",
+        "arbOsFromWmRoot": "ArbOS v51.1 wasmModuleRoot",
         "baseStake": 0,
         "bridge": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
         "chainId": 3343,
@@ -116,13 +116,13 @@
         "confirmPeriodBlocks": 50400,
         "currentRequiredStake": 0,
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 103494,
+        "firstUnresolvedNode": 106983,
         "inbox": "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 25138705,
-        "latestConfirmed": 103493,
-        "latestNodeCreated": 103493,
+        "latestConfirmed": 106982,
+        "latestNodeCreated": 106982,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 5,
         "outbox": "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764",
@@ -144,7 +144,7 @@
         "validatorUtils": "arb1:0xa0d6E6b1B950aCC748B45F3419FeAd4b52f7389A",
         "validatorWalletCreator": "arb1:0xc8C95B8b35772Ce4bF9E602336082696C2dC0DB8",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a",
+        "wasmModuleRoot": "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -358,7 +358,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 103118,
+        "nonce": 106607,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -404,7 +404,7 @@
         "allowedOutboxList": [
           "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764"
         ],
-        "delayedMessageCount": 133040,
+        "delayedMessageCount": 136824,
         "inboxHistory": [
           "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
           "arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD"
@@ -412,8 +412,8 @@
         "outboxHistory": ["arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764"],
         "rollup": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
         "sequencerInbox": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
-        "sequencerMessageCount": 116522,
-        "sequencerReportedSubMessageCount": 717084
+        "sequencerMessageCount": 120298,
+        "sequencerReportedSubMessageCount": 728956
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -645,7 +645,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1000,7 +1000,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 116522,
+        "batchCount": 120298,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x9f787F6e07469BBA84f0BE488c42eDC4c766cC83"],
         "bridge": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
@@ -1034,7 +1034,7 @@
         "rollup": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 133039,
+        "totalDelayedMessagesRead": 136823,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1879,6 +1879,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 469251994 },
+  "usedBlockNumbers": { "arbitrum": 472358609 },
   "permissionsConfigHash": "0x47c88c4e5788d05806e3b41dda7a1ff6cefba1d545e5e6f50fbf04e29431c002"
 }
