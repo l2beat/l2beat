@@ -3,8 +3,6 @@ import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TokenMetadata } from '../kysely/generated/types'
 
-export type { TokenCategory }
-
 export type TokenSource =
   | 'canonical'
   | 'custom-canonical'
