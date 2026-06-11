@@ -71,6 +71,15 @@ export function toRow(
   }
 }
 
+export interface AggregatedInteropDeployedTokenStats {
+  tokenChain: string
+  tokenAddress: string
+  transferCount: number
+  transfersWithDurationCount: number
+  totalDurationSum: number
+  volume: number
+}
+
 export class AggregatedInteropDeployedTokenRepository extends BaseRepository {
   async insertMany(
     records: AggregatedInteropDeployedTokenRecord[],
@@ -106,6 +115,48 @@ export class AggregatedInteropDeployedTokenRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getSummedStatsByTimestampAndTokens(
+    timestamp: UnixTime,
+    tokens: { tokenChain: string; tokenAddress: string }[],
+  ): Promise<AggregatedInteropDeployedTokenStats[]> {
+    if (tokens.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('AggregatedInteropDeployedToken')
+      .select((eb) => [
+        'tokenChain',
+        'tokenAddress',
+        eb.fn.sum<number>('transferCount').as('transferCount'),
+        eb.fn
+          .sum<number>('transfersWithDurationCount')
+          .as('transfersWithDurationCount'),
+        eb.fn.sum<number>('totalDurationSum').as('totalDurationSum'),
+        eb.fn.sum<number>('volume').as('volume'),
+      ])
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .where((eb) =>
+        eb.or(
+          tokens.map((token) =>
+            eb.and([
+              eb('tokenChain', '=', token.tokenChain),
+              eb('tokenAddress', '=', token.tokenAddress),
+            ]),
+          ),
+        ),
+      )
+      .groupBy(['tokenChain', 'tokenAddress'])
+      .execute()
+
+    return rows.map((row) => ({
+      tokenChain: row.tokenChain,
+      tokenAddress: row.tokenAddress,
+      transferCount: Number(row.transferCount),
+      transfersWithDurationCount: Number(row.transfersWithDurationCount),
+      totalDurationSum: Number(row.totalDurationSum),
+      volume: Number(row.volume),
+    }))
   }
 
   async deleteAllButEarliestPerDayBefore(timestamp: UnixTime): Promise<number> {

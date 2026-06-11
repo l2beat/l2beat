@@ -682,6 +682,7 @@ model AggregatedInteropDeployedToken {
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id, tokenChain, tokenAddress])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
+  @@index([timestamp, tokenChain, tokenAddress])
 }
 
 model TokenFactInput {
