@@ -21,4 +21,4 @@ CREATE TABLE "AggregatedInteropDeployedToken" (
 );
 
 -- CreateIndex
-CREATE INDEX "AggregatedInteropDeployedToken_timestamp_srcChain_dstChain_idx" ON "AggregatedInteropDeployedToken"("timestamp", "srcChain", "dstChain", "id", "bridgeType");
+CREATE INDEX "AggregatedInteropDeployedToken_timestamp_srcChain_dstChain__idx" ON "AggregatedInteropDeployedToken"("timestamp", "srcChain", "dstChain", "id", "bridgeType");
