@@ -82,39 +82,48 @@ const RAIKO_BATCH = (version: string) => ({
 
 const RAIKO2_PROPOSAL = (version: string) => ({
   title: `Proposal program of Raiko2 ${version}`,
-  description:
-    'Proves correct state transition function within Rust-based Taiko L2 client (raiko2) for a Shasta proposal.',
+  description: 'Proves a Taiko Shasta proposal state transition with Raiko2.',
 })
 
 const RAIKO2_AGG = (version: string) => ({
   title: `Aggregation program of Raiko2 ${version}`,
-  description:
-    'Aggregates proofs of correct execution for several Shasta proposals within Rust-based Taiko L2 client (raiko2).',
+  description: 'Aggregates Raiko2 proofs for multiple Taiko Shasta proposals.',
 })
 
 const RAIKO2_BOUNDLESS_AGG = (version: string) => ({
   title: `Boundless aggregation program of Raiko2 ${version}`,
   description:
-    'Aggregates RISC0 Boundless proofs of correct execution for several Shasta proposals within Rust-based Taiko L2 client (raiko2).',
+    'Aggregates RISC0 Boundless proofs for multiple Taiko Shasta proposals with Raiko2.',
 })
 
 const RAIKO2_GUEST_DIGEST_STEPS = (
   objectName: string,
   digestSource: string,
 ) => `
-1. Check out the correct tag in [raiko2 repo](https://github.com/taikoxyz/raiko2):
+Dependencies: Git, Rust/Cargo, Docker with a running daemon, and either \`just\` or the equivalent Cargo command below. The build pulls Docker images and locked Rust/git dependencies.
+
+1. Check out the correct tag in [raiko2](https://github.com/taikoxyz/raiko2):
 \`\`\`
 git clone https://github.com/taikoxyz/raiko2.git
 cd raiko2
 git checkout v0.1.0
 \`\`\`
 Commit hash should be \`a3fb34237daeddab65b965c33b2f85570dd3ff74\`.
-2. From the \`raiko2\` root dir, export guest digests from the checked-in Shasta guest ELFs:
+2. From the \`raiko2\` root dir, rebuild the Shasta guest ELFs from source:
+\`\`\`
+just build-guest all
+\`\`\`
+If \`just\` is unavailable, run the equivalent command:
+\`\`\`
+cargo run -r -p xtask-build-guest --bin xtask-build-guest -- all
+\`\`\`
+This exports fresh ELFs to \`crates/guests/elf\`.
+3. Generate the guest digest summary from the rebuilt ELFs:
 \`\`\`
 cargo run -p xtask-build-guest --bin guest-digests -- \\
   --output /tmp/raiko2-v0.1.0-guest-digests.json
 \`\`\`
-3. In \`/tmp/raiko2-v0.1.0-guest-digests.json\`, find the entry with \`object_name: "${objectName}"\` and \`digest_source: "${digestSource}"\`. Its \`digest\` field should match this program hash.
+4. In \`/tmp/raiko2-v0.1.0-guest-digests.json\`, find the entry with \`object_name: "${objectName}"\` and \`digest_source: "${digestSource}"\`. Its \`digest\` field should match this program hash.
 `
 
 const KAILUA_FP = (version: string, descAppendix = '') => ({
