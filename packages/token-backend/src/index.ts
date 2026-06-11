@@ -1,4 +1,4 @@
-export type { TokenCategory } from '@l2beat/database'
+export { TOKEN_CATEGORIES, type TokenCategory } from '@l2beat/database'
 export { getTokenDbClient, type TokenDbClient } from './client'
 export type { Command } from './commands'
 export type {
