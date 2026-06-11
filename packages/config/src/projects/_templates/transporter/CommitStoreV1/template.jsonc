@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "canActIndependently": false,
-  "description": "Arbitrum-to-Ethereum CommitStore. Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.",
+  "description": "Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.",
   "ignoreMethods": ["getTransmitters"],
   "ignoreRelatives": ["getDynamicConfig", "getStaticConfig", "owner"],
   "ignoreInWatchMode": [
@@ -32,11 +32,7 @@
       ]
     },
     "priceRegistry": {
-      "handler": {
-        "type": "call",
-        "args": [],
-        "method": "getDynamicConfig"
-      },
+      "handler": { "type": "call", "args": [], "method": "getDynamicConfig" },
       "edit": ["get", "priceRegistry"],
       "permissions": [
         {

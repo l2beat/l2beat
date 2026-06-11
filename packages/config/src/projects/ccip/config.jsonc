@@ -2,7 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "ccip",
   "import": ["../globalConfig.jsonc"],
-  "maxAddresses": 200,
+  "maxAddresses": 250,
   "initialAddresses": [
     "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
     "eth:0x06179f7C1be40863405f374E7f5F8806c728660A",
@@ -268,7 +268,8 @@
       }
     },
     "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E": {
-      "description": "Deprecated router used by BSC."
+      "description": "Deprecated router used by BSC.",
+      "ignoreRelatives": ["getOffRamps"]
     }
   }
 }
