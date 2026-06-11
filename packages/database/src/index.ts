@@ -114,11 +114,7 @@ export type {
   TokenIngestionQueueRecord,
   TokenIngestionQueueState,
 } from './repositories/TokenIngestionQueueRepository'
-export type {
-  TokenCategory,
-  TokenMetadataRecord,
-} from './repositories/TokenMetadataRepository'
-export { TOKEN_CATEGORIES } from './repositories/TokenMetadataRepository'
+export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,
   SummedByTimestampTokenValueRecord,

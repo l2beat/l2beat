@@ -1,9 +1,8 @@
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { assert, type TokenCategory, type UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable, Updateable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AbstractToken } from '../kysely/generated/types'
 import { fromTimestamp, toTimestamp } from '../utils/timestamp'
-import type { TokenCategory } from './TokenMetadataRepository'
 
 export type AbstractTokenRecord = {
   symbol: string
