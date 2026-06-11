@@ -1,8 +1,7 @@
 import { expect, test } from 'playwright/test'
-import { resolvePages } from './pages'
+import { getPagePaths } from '~/server/pagePaths'
 
 const PAGE_SHARD_COUNT = getPageShardCount()
-const pagesPromise = resolvePages()
 
 test.describe.configure({ mode: 'parallel' })
 test.setTimeout(5 * 60 * 1000)
@@ -11,7 +10,7 @@ for (let shardIndex = 0; shardIndex < PAGE_SHARD_COUNT; shardIndex++) {
   test(`all configured pages return non-empty successful responses (${shardIndex + 1}/${PAGE_SHARD_COUNT})`, async ({
     request,
   }) => {
-    const pages = await pagesPromise
+    const pages = await getPagePaths()
     const shardPages = pages
       .map((page, index) => ({ page, index }))
       .filter(({ index }) => index % PAGE_SHARD_COUNT === shardIndex)
