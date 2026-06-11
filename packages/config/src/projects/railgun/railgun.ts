@@ -16,6 +16,7 @@ import {
   getTokenBySymbol,
 } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('railgun')
 
@@ -200,16 +201,7 @@ Because Railgun allows private transfers, optional PPoIs that can be enforced by
       PRIVACY_ATTRIBUTES.anyAmount,
       PRIVACY_ATTRIBUTES.sourceAvailable,
     ],
-    riskSummary: `## Funds can be stolen if
-1. the zk proof system is broken, allowing invalid spends or withdrawals.
-2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid spends or withdrawals.
-3. the DAO passes a malicious [upgrade](#upgrades-and-governance) and users do not react before the 7-day execution delay expires.
-<br>
-## Funds can be lost if
-1. a user loses the private keys required to control their private balance.
-<br>
-## Privacy can be lost if
-1. no broadcaster is available and transactions must be sent from a public address that can be linked to the user.`,
+    riskSummary: readProjectMarkdown('railgun', 'riskSummary'),
     upgradesAndGovernance: `Railgun features an omnipotent DAO governed by the stakers of the RAIL token. The DAO has the authority to change ZK circuit logic on the core Railgun contract, which can arbitrarily change the rules for shielded tokens; as well as manage blacklisted tokens, mint RAIL tokens and manage governance rewards. See docs here: <https://docs.railgun.org/wiki/rail-token/protocol-governance>
 
 ## Governance flow

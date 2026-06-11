@@ -12,6 +12,7 @@ import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscov
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('privacy-pools')
 
@@ -115,17 +116,7 @@ The anonymity set consists of all whitelisted deposits of the same token with th
       PRIVACY_ATTRIBUTES.anyAmount,
       PRIVACY_ATTRIBUTES.sourceAvailable,
     ],
-    riskSummary: `## Funds can be stolen if
-1. the zk proof system is broken, allowing invalid withdrawals.
-2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid withdrawals.
-3. the Entrypoint owner deploys a malicious [upgrade](#upgrades-and-governance) that steals new deposits.
-<br>
-## Funds can be lost if
-1. a user loses the secret and nullifier required to spend their deposit.
-<br>
-## Privacy can be lost if
-1. no relayer is available and the withdrawal must be submitted from an address that can be linked to the user.
-2. the ASP manager refuses to whitelist a deposit, forcing the user to either wait or exit publicly through ragequit.`,
+    riskSummary: readProjectMarkdown('privacy-pools', 'riskSummary'),
     upgradesAndGovernance: `The ${discovery.getMultisigStats('Privacy Pools Multisig')} Privacy Pools Multisig can instantly change the system’s critical configs, including the Entrypoint implementation and ASP root used for private withdrawals. The ASP postman (EOA) can also remove any deposit from the whitelist at any time, forcing a public rage-quit if the affected party wishes to withdraw. The guaranteed immutable escape hatch is pool-level ragequit (public withdrawal) to the original depositor address, because that logic lives in the immutable pool contracts and does not depend on the Entrypoint registry and config. This means the system is permissioned in its deposit logic and deposit privacy, but non-custodial for deposited assets. Past, successful (non-ragequit) withdrawals can not be deanonymized by the protocol.`,
   },
   permissions: discovery.getDiscoveredPermissions(),

@@ -16,6 +16,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('gnosis')
 
@@ -261,13 +262,7 @@ export const gnosis: ScalingProject = {
       },
       inclusionDelayChartDescription:
         'The chart uses the Ethereum-style single-proposer formula with Gnosis-specific constants. It excludes finality, inactivity leaks, validator-set changes, hard forks, and blanket-censorship resistance gadgets.',
-      censorshipResistance: `Gnosis Chain does not have dedicated censorship resistance gadgets, but the sequencer set is open and there are no committees that can block inclusion.
-### Selective censorship
-Even with high percentages of stake censoring, users have very fast inclusion times. There are also initial tests of an out-of-protocol solution for encrypting transactions in the mempool (Shutterized Gnosis Chain).
-### Blanket censorship
-There is no way to circumvent the validator set from Ethereum in a case of active censorship by all (or a majority of) validators.
-### Walkaway
-Since the validator set is open, new validators can join it in case validators passively stop block production. If all validators stop at the same time, a social recovery and hard fork would be necessary.`,
+      censorshipResistance: readProjectMarkdown('gnosis', 'censorshipResistance'),
       references: [
         {
           title: 'Gnosis Chain specifications',
