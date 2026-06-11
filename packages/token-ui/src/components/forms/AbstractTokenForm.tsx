@@ -27,7 +27,14 @@ import { parseDatePaste } from '~/utils/parseDate'
 import { Checkbox } from '../core/Checkbox'
 import { ExternalLink } from '../ExternalLink'
 
-const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
+const categoryValues = [
+  'btc',
+  'ether',
+  'stablecoin',
+  'rwaRestricted',
+  'rwaPublic',
+  'other',
+] as const
 const EMPTY_CATEGORY_VALUE = '__none__'
 
 export type AbstractTokenSchema = v.infer<typeof AbstractTokenSchema>
