@@ -81,7 +81,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       ?.colors,
     statuses: {
       yellowWarning: p.display.headerWarning,
-      redWarning: getEoaUpgradeRedWarning(p.display.slug, p.display.redWarning),
+      redWarning: getEoaUpgradeRedWarning(p.id, p.display.redWarning),
       emergencyWarning: p.display.emergencyWarning,
       reviewStatus: p.reviewStatus,
       unverifiedContracts: getProjectUnverifiedContracts(p, daBridges),
