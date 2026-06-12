@@ -104,6 +104,21 @@ describe(groupSearchResults.name, () => {
       grouped.flatMap(([, entries]) => entries.map((entry) => entry.name)),
     ).toEqual(['Ethereal', 'Ethereum with Enshrined Bridge'])
   })
+
+  it('places tokens as the last shown group', () => {
+    const grouped = groupSearchResults(
+      searchEntries('eth', [
+        tokenEntry({ name: 'ETH', tags: ['ETH'] }),
+        projectEntry({
+          name: 'Ethereal',
+          tags: ['ethereal', 'Ethereal'],
+          category: 'scaling',
+        }),
+      ]),
+    )
+
+    expect(grouped.map(([category]) => category)).toEqual(['scaling', 'tokens'])
+  })
 })
 
 function projectEntry({
@@ -121,6 +136,16 @@ function projectEntry({
     name,
     tags,
     href: `/${name.toLowerCase()}`,
+  }
+}
+
+function tokenEntry({ name, tags }: { name: string; tags: string[] }) {
+  return {
+    type: 'token' as const,
+    category: 'tokens' as const,
+    name,
+    tags,
+    href: `/interop/tokens/${name.toLowerCase()}`,
   }
 }
 
