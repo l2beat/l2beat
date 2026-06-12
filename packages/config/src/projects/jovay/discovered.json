@@ -1,7 +1,7 @@
 {
   "name": "jovay",
   "timestamp": 1762443722,
-  "configHash": "0x81e0bd7020fa7519e8264de66319184b8f53b723994303a54089c169cbc6e064",
+  "configHash": "0xe9658509362dc22f96663fb2977ba48c373e2761dea67695dd22b78dcc311c20",
   "entries": [
     {
       "name": "DcapAttestationRouter",
@@ -9,10 +9,11 @@
       "type": "Contract",
       "template": "jovay/DcapAttestationRouter",
       "sourceHashes": [
-        "0x72685fb6903e0fdf30c628dc03d9edfcb4e4b3d794608041b6067813534ece90"
+        "0xdb0d0c431d1fee41dc61fd21d552f96dd689cfdeffa7bbf899a97fbb3f9aee15"
       ],
       "proxyType": "immutable",
       "description": "The DcapAttestationRouter contract is used for routing and verifying Intel SGX/TDX DCAP attestation proofs. The contract sends each quote to the corresponding verification path (cache verifier vs. Automata DCAP contract, and SGX vs. TDX measurement checks).",
+      "deployerAddress": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
       "sinceTimestamp": 1758378383,
       "sinceBlock": 23404861,
       "values": {
@@ -35,11 +36,12 @@
       "type": "Contract",
       "template": "jovay/MeasurementDao",
       "sourceHashes": [
-        "0x07b7f6602924af994b2f11cc4afd891109497ecc6a4778d3566d7fa5f661c91f"
+        "0x5f691d56c69dd42a2593f69fdd57348662acb00882bd090a084a960f92ff4167"
       ],
       "proxyType": "immutable",
       "description": "The MeasurementDao contract is an onchain registry that allowlists SGX MR_ENCLAVE<->MR_SIGNER pairs and TDX RTMR3/MRTD values, and verifies DCAP quotes by matching quote fields to the stored measurements.",
       "ignoreInWatchMode": ["get_rtMr"],
+      "deployerAddress": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
       "sinceTimestamp": 1758378371,
       "sinceBlock": 23404860,
       "values": {
@@ -62,10 +64,11 @@
       "type": "Contract",
       "template": "jovay/TEEVerifierProxy",
       "sourceHashes": [
-        "0x80454675a5da4224889198f682aa88832ceb0090238ea70781541ca71781e547"
+        "0x016dead35ada83cde9a7f93c29121ce47681e47cb2cd799efc25022a92677655"
       ],
       "proxyType": "immutable",
       "description": "The TEEVerifierProxy contract is used to verify L2 batches using TEE attestations. It delegates proof verification to the dcapAttestationRouter contract. ",
+      "deployerAddress": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
       "sinceTimestamp": 1758378407,
       "sinceBlock": 23404863,
       "values": {
@@ -78,6 +81,65 @@
       }
     },
     {
+      "name": "",
+      "address": "eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
+          "role": ".owner"
+        }
+      ],
+      "deployerAddress": "eth:0xa3627912a8C36100670d57fCb4324Cd81242b2a3",
+      "sinceTimestamp": 1758618407,
+      "sinceBlock": 23424727,
+      "values": {
+        "$admin": "eth:0x83088c8Dd196a83f43140ddBD7B4727bD1d43AD4",
+        "$implementation": "eth:0x3D99cAc6f6c0e466b45d6FBF1E8E0971352d9527",
+        "$pastUpgrades": [
+          [
+            "2025-09-23T09:06:47.000Z",
+            "0x320278ab9f6f8e254faebd1c1733c84137f9e4b4f04faa067717f789a721fdff",
+            ["eth:0x3D99cAc6f6c0e466b45d6FBF1E8E0971352d9527"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77": "",
+        "eth:0x3D99cAc6f6c0e466b45d6FBF1E8E0971352d9527": ""
+      }
+    },
+    {
       "name": "DaimoP256Verifier",
       "address": "eth:0x783377992FCA09009eaD952D4fBa6519e25726b4",
       "type": "Contract",
@@ -85,6 +147,7 @@
         "0x0a2d99248be742112143646b2ff95a3c6b8c422ab665c560345dfa8b7e15a734"
       ],
       "proxyType": "EIP2535 diamond proxy",
+      "deployerAddress": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
       "sinceTimestamp": 1758378119,
       "sinceBlock": 23404839,
       "values": {
@@ -103,6 +166,7 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0xa3627912a8C36100670d57fCb4324Cd81242b2a3",
       "sinceTimestamp": 1758618419,
       "sinceBlock": 23424728,
       "values": {
@@ -123,17 +187,39 @@
       }
     },
     {
+      "name": "",
+      "address": "eth:0x83088c8Dd196a83f43140ddBD7B4727bD1d43AD4",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "eth:0xa3627912a8C36100670d57fCb4324Cd81242b2a3",
+      "sinceTimestamp": 1758618407,
+      "sinceBlock": 23424727,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x83088c8Dd196a83f43140ddBD7B4727bD1d43AD4": ""
+      }
+    },
+    {
       "name": "L1ETHBridge",
       "address": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
       "type": "Contract",
       "template": "jovay/L1ETHBridge",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xc962a92e7061cd67db98262fe8c93bb63cb5243ffa419d7a0de0fbb11ca67ed2"
+        "0x999eea41e760c1104d77283157a23af3dd92ddbf79143aa0e9cac6b62bf3728c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L1ETHBridge contract is used to bridge ETH between the L1 and L2.",
       "ignoreInWatchMode": ["balance"],
+      "deployerAddress": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
       "sinceTimestamp": 1758377315,
       "sinceBlock": 23404772,
       "values": {
@@ -170,10 +256,11 @@
       "type": "Contract",
       "template": "jovay/TEECacheVerifier",
       "sourceHashes": [
-        "0x83e211bc7cab27dfd4f9b534866214075fc19cc7ab8fa549535f3373c27dcd4f"
+        "0xc959736cef221601b95fbf522fae099d638a06d02801db82987c2f2780edf1de"
       ],
       "proxyType": "immutable",
       "description": "A cache-enabled P-256 ECDSA verifier for Intel SGX/TDX DCAP quotes (v3/v4/v5) that authenticates local attestation data, extracts the 32-byte commitment, and lets the owner/authorized callers initialize, manage, and reuse cached attestation keys to skip repeat verifications.",
+      "deployerAddress": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
       "sinceTimestamp": 1758378359,
       "sinceBlock": 23404859,
       "values": {
@@ -197,7 +284,7 @@
       "template": "jovay/L1Mailbox",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x1afeeca3afb0add55ce45f9bed97c7faa33f9e7a59e5b8a43ce5da15d1cfc0f0"
+        "0xc2370021389922ce05e38cd7574c68e85717da9998d7bbca98ea3fafef50ec84"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L1Mailbox contract is used to send messages to the L2.",
@@ -208,6 +295,7 @@
         "pendingQueueIndex",
         "rollingHash"
       ],
+      "deployerAddress": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
       "sinceTimestamp": 1758377279,
       "sinceBlock": 23404769,
       "values": {
@@ -258,13 +346,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".relayer"
         },
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".relayer"
         }
       ]
@@ -275,13 +365,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".relayer"
         },
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".relayer"
         }
       ]
@@ -292,10 +384,11 @@
       "type": "Contract",
       "template": "jovay/AutomataDcapAttestationFee",
       "sourceHashes": [
-        "0x78e36d40e4a3b55ce9e4abfe59503bdd40cf6648a024f8228d80c8acae540f95"
+        "0xf3f27ad5242107c0a8d3f091ee68d095444a9039e63f7ad5918d65ceaa32596b"
       ],
       "proxyType": "immutable",
       "description": "Contract used to charge a configurable basis-point fee to verify Intel DCAP quotes. Currently set to 0 basis points.",
+      "deployerAddress": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
       "sinceTimestamp": 1758378347,
       "sinceBlock": 23404858,
       "values": {
@@ -314,11 +407,12 @@
       "template": "jovay/Rollup",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x847ae7ac442ea5bc5906a79d4ecf73fd4c3b9a115b93d29d5053f76459dace60"
+        "0x5c808860b3d5e90c1028449c6c9e67bf022636cfc5728a92c4b23557b8a4f0e0"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Rollup contract is used to submit and verify L2 batches.",
       "ignoreInWatchMode": ["lastCommittedBatch", "lastTeeVerifiedBatch"],
+      "deployerAddress": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
       "sinceTimestamp": 1758377339,
       "sinceBlock": 23404774,
       "values": {
@@ -364,12 +458,15 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "",
+      "name": "ProxyAdmin",
       "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
       "type": "Contract",
-      "unverified": true,
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+      ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
@@ -386,11 +483,15 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
       "sinceTimestamp": 1758377243,
       "sinceBlock": 23404766,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77"
+      },
       "implementationNames": {
-        "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b": ""
+        "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b": "ProxyAdmin"
       }
     },
     {
@@ -406,6 +507,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xa3627912a8C36100670d57fCb4324Cd81242b2a3",
       "sinceTimestamp": 1758618419,
       "sinceBlock": 23424728,
       "values": { "$immutable": true },
@@ -731,9 +833,21 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "jovay/AutomataDcapAttestationFee": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "jovay/DcapAttestationRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "jovay/L1ETHBridge": "0x9f1260719db2abb008347c8137fabdb0709ce0fa5e33f48f35437eb36c9d8d11",
@@ -744,5 +858,5 @@
     "jovay/TEEVerifierProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23741202 },
-  "permissionsConfigHash": "0x519465cb7e1e84c96fef130afd717a0553a0369133c7edb08542054a77898879"
+  "permissionsConfigHash": "0x99138f5142542eb410a1492561394edbbc6be57d6b25748a71d69e2c82e16604"
 }

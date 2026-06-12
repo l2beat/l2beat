@@ -1,5 +1,9 @@
 import type { HTMLAttributes } from 'react'
 import {
+  AdditionalTrustAssumptionsBanner,
+  AdditionalTrustAssumptionsText,
+} from '~/components/breakdown/AdditionalTrustAssumptions'
+import {
   TokenBreakdown,
   TokenBreakdownTooltipContent,
 } from '~/components/breakdown/TokenBreakdown'
@@ -20,6 +24,7 @@ import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLin
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
+import { InteropTopItems } from '~/pages/interop/components/top-items/TopItems'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
 import { ProjectScalingRosette } from './ScalingProjectRosette'
@@ -147,24 +152,48 @@ export function ProjectScalingSummary({ project }: Props) {
                         : undefined
                     }
                   >
-                    <ValueSecuredBreakdown
-                      canonical={project.header.tvs?.breakdown?.canonical ?? 0}
-                      external={project.header.tvs?.breakdown?.external ?? 0}
-                      native={project.header.tvs?.breakdown?.native ?? 0}
-                      className="h-1.5 w-full"
-                    />
+                    <div className="flex w-full flex-col items-end gap-1">
+                      <ValueSecuredBreakdown
+                        canonical={
+                          project.header.tvs?.breakdown?.canonical ?? 0
+                        }
+                        external={project.header.tvs?.breakdown?.external ?? 0}
+                        native={project.header.tvs?.breakdown?.native ?? 0}
+                        className="h-1.5 w-full"
+                      />
+                      {project.header.tvs
+                        ?.additionalTrustAssumptionsPercentage !==
+                        undefined && (
+                        <AdditionalTrustAssumptionsText
+                          percentage={
+                            project.header.tvs
+                              .additionalTrustAssumptionsPercentage
+                          }
+                          className="self-start"
+                        />
+                      )}
+                    </div>
                   </ConditionalLink>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className="flex flex-col gap-2">
                   <ValueSecuredBreakdownTooltipContent
                     canonical={project.header.tvs?.breakdown?.canonical ?? 0}
                     external={project.header.tvs?.breakdown?.external ?? 0}
                     native={project.header.tvs?.breakdown?.native ?? 0}
                     change={project.header.tvs?.breakdown?.totalChange ?? 0}
+                    syncWarning={undefined}
                     tvsWarnings={[]}
                   />
+                  {project.header.tvs?.additionalTrustAssumptionsPercentage !==
+                    undefined && (
+                    <AdditionalTrustAssumptionsBanner
+                      percentage={
+                        project.header.tvs.additionalTrustAssumptionsPercentage
+                      }
+                    />
+                  )}
                   {project.header.tvs && (
-                    <p className="mt-2 text-label-value-13 text-secondary max-md:hidden">
+                    <p className="text-label-value-13 text-secondary max-md:hidden">
                       Click to view TVS breakdown
                     </p>
                   )}
@@ -178,6 +207,12 @@ export function ProjectScalingSummary({ project }: Props) {
               </CustomLink>
             </div>
           </div>
+          {project.header.interop && (
+            <>
+              <HorizontalSeparator className="mt-5 mb-4" />
+              <InteropMetrics interop={project.header.interop} />
+            </>
+          )}
         </div>
         <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-lg:hidden" />
 
@@ -206,7 +241,7 @@ export function ProjectScalingSummary({ project }: Props) {
       <div className="max-md:hidden">
         <div className="mt-6 flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
           {project.header.badges && project.header.badges.length > 0 && (
-            <BadgesSection badges={project.header.badges} />
+            <BadgesSection badges={project.header.badges} withDialog />
           )}
           {project.header.description && (
             <AboutSection description={project.header.description} />
@@ -214,6 +249,70 @@ export function ProjectScalingSummary({ project }: Props) {
         </div>
       </div>
     </section>
+  )
+}
+
+function InteropMetrics({
+  interop,
+}: {
+  interop: NonNullable<ProjectScalingEntry['header']['interop']>
+}) {
+  return (
+    <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
+      <InteropMetric
+        title="Interop protocols used"
+        items={{
+          items: interop.protocols.items.map((protocol) => ({
+            id: protocol.id,
+            displayName: protocol.name,
+            iconUrl: protocol.iconUrl,
+            volume: protocol.volume,
+          })),
+          remainingCount: interop.protocols.remainingCount,
+        }}
+      />
+      <InteropMetric
+        title="Tokens transferred"
+        items={{
+          items: interop.tokens.items.map((token) => ({
+            id: token.id,
+            displayName: token.symbol,
+            iconUrl: token.iconUrl,
+            volume: token.volume,
+          })),
+          remainingCount: interop.tokens.remainingCount,
+        }}
+      />
+    </div>
+  )
+}
+
+function InteropMetric({
+  title,
+  items,
+}: {
+  title: string
+  items: {
+    items: {
+      id: string
+      displayName: string
+      iconUrl: string
+      volume: number
+    }[]
+    remainingCount: number
+  }
+}) {
+  if (items.items.length === 0) {
+    return null
+  }
+
+  return (
+    <div>
+      <p className="mb-2 font-medium text-label-value-12 text-secondary">
+        {title}
+      </p>
+      <InteropTopItems topItems={items} hideDialog />
+    </div>
   )
 }
 

@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority'
 import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 
-interface BadgeProps extends VariantProps<typeof badgeVariants> {
+export interface BadgeProps extends VariantProps<typeof badgeVariants> {
   className?: string
   children: ReactNode
 }
@@ -17,6 +17,8 @@ const badgeVariants = cva('inline rounded text-center font-medium', {
       brightYellow: 'bg-yellow-200 text-purple-700',
       pink: 'bg-pink-900 text-white',
       purple: 'bg-purple-100',
+      blue: 'border border-n-sky-500 bg-n-sky-500/20 text-n-sky-500 dark:border-n-sky-300 dark:bg-n-sky-300/20 dark:text-n-sky-300',
+      green: 'border border-positive bg-positive/20 text-positive',
     },
     size: {
       extraSmall: 'text-3xs',
@@ -34,19 +36,27 @@ const badgeVariants = cva('inline rounded text-center font-medium', {
   },
 })
 
-export function Badge(props: BadgeProps) {
+export function Badge({
+  className,
+  children,
+  type,
+  size,
+  padding,
+  ...rest
+}: BadgeProps) {
   return (
     <div
       className={cn(
         badgeVariants({
-          type: props.type,
-          size: props.size,
-          padding: props.padding,
+          type: type,
+          size: size,
+          padding: padding,
         }),
-        props.className,
+        className,
       )}
+      {...rest}
     >
-      {props.children}
+      {children}
     </div>
   )
 }

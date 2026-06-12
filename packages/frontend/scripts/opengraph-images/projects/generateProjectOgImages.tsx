@@ -14,7 +14,13 @@ export async function generateProjectOgImages(
   },
 ) {
   const projects = await ps.getProjects({
-    optional: ['isScaling', 'isDaLayer', 'zkCatalogInfo', 'interopConfig'],
+    optional: [
+      'scalingInfo',
+      'daLayer',
+      'zkCatalogInfo',
+      'interopConfig',
+      'privacyInfo',
+    ],
   })
 
   for (const project of projects) {
@@ -48,7 +54,7 @@ export async function generateProjectOgImages(
 
 async function generateProjectOgImage(
   project: Project<never, 'interopConfig'>,
-  type: 'scaling' | 'zk-catalog' | 'data-availability' | 'interop',
+  type: 'scaling' | 'zk-catalog' | 'data-availability' | 'interop' | 'privacy',
   size: { width: number; height: number },
   fonts: {
     robotoMedium: Buffer
@@ -93,22 +99,34 @@ async function generateProjectOgImage(
 export function getOpengraphProjectTypes(
   project: Project<
     never,
-    'isScaling' | 'isDaLayer' | 'zkCatalogInfo' | 'interopConfig'
+    | 'scalingInfo'
+    | 'daLayer'
+    | 'zkCatalogInfo'
+    | 'interopConfig'
+    | 'privacyInfo'
   >,
 ) {
-  const types: ('scaling' | 'zk-catalog' | 'data-availability' | 'interop')[] =
-    []
-  if (project.isScaling) {
+  const types: (
+    | 'scaling'
+    | 'zk-catalog'
+    | 'data-availability'
+    | 'interop'
+    | 'privacy'
+  )[] = []
+  if (project.scalingInfo) {
     types.push('scaling')
   }
   if (project.zkCatalogInfo) {
     types.push('zk-catalog')
   }
-  if (project.isDaLayer) {
+  if (project.daLayer) {
     types.push('data-availability')
   }
   if (project.interopConfig) {
     types.push('interop')
+  }
+  if (project.privacyInfo) {
+    types.push('privacy')
   }
   return types
 }

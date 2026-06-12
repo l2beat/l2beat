@@ -260,13 +260,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTL"
         },
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTL"
         }
       ]
@@ -277,13 +279,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTL"
         },
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTL"
         }
       ]
@@ -1077,5 +1081,5 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23037398 },
-  "permissionsConfigHash": "0x61e6ecbeeb0a56fca206aa8b48ff6a5ea1855245eb3cc275396561e9d8cf62b0"
+  "permissionsConfigHash": "0x2b4fb3de972e544c9f2e2e02300b56d4c3fc16f8b6a4682ca34e619eef07ff1e"
 }

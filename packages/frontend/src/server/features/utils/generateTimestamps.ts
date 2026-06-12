@@ -1,4 +1,4 @@
-import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 import type { ChartResolution } from '~/utils/range/range'
 
@@ -11,26 +11,12 @@ export function generateTimestamps(
   resolution: ChartResolution,
   opts?: Options,
 ) {
-  const adjustedFrom = UnixTime.toEndOf(
-    from,
-    resolution === 'hourly'
-      ? 'hour'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'day',
-  )
+  const adjustedFrom = UnixTime.toEndOf(from, resolution)
+  const step = UnixTime.periodToSeconds(resolution)
 
-  const generated = range(
-    Math.floor((to - adjustedFrom) / divider(resolution)) + 1,
-  ).map((i) => {
-    return (
-      adjustedFrom +
-      UnixTime(i * (resolution === 'sixHourly' ? 6 : 1)) *
-        (resolution === 'hourly' || resolution === 'sixHourly'
-          ? UnixTime.HOUR
-          : UnixTime.DAY)
-    )
-  })
+  const generated = range(Math.floor((to - adjustedFrom) / step) + 1).map((i) =>
+    UnixTime(adjustedFrom + i * step),
+  )
 
   const isLastGeneratedTarget = generated.at(-1) === to
   if (
@@ -42,17 +28,4 @@ export function generateTimestamps(
   }
 
   return generated
-}
-
-function divider(resolution: ChartResolution) {
-  switch (resolution) {
-    case 'hourly':
-      return UnixTime.HOUR
-    case 'sixHourly':
-      return UnixTime.SIX_HOURS
-    case 'daily':
-      return UnixTime.DAY
-    default:
-      assertUnreachable(resolution)
-  }
 }

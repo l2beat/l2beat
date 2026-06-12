@@ -21,12 +21,15 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import { formatRange } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/formatBytes'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatNumber } from '~/utils/number-format/formatNumber'
-import type { ChartRange, ChartResolution } from '~/utils/range/range'
+import {
+  type ChartRange,
+  type ChartResolution,
+  rangeToResolution,
+} from '~/utils/range/range'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from '../../../server/features/data-availability/throughput/utils/consts'
 
 interface CostsChartDataPoint {
@@ -328,15 +331,7 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatRange(
-            label,
-            label +
-              (resolution === 'daily'
-                ? UnixTime.DAY
-                : resolution === 'sixHourly'
-                  ? UnixTime.HOUR * 6
-                  : UnixTime.HOUR),
-          )}
+          {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
         </div>
         {actualPayload.filter((p) => p.name !== 'posted').length > 1 && (
           <>

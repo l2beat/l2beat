@@ -1,13 +1,17 @@
 {
   "FeeDisburser.sol": {
-    "hash": "0x62c0410a08a90b339fd9d345a563e2f93aa3afb72082cb32c23ab6dee23706ed",
+    "hash": "0x168161ee55ab6bd661fa0a2ecd396dbbb0bb3fe837698c241766c7fb8cf74ce2",
     "address": "base:0x45969D00739d518f0Dde41920B67cE30395135A0",
     "blockNumber": 29605802
   },
   "FeeDisburser_v2": {
-    "hash": "0x9e4d8a31512b7aaafcbf23f817cbdc9bbe404a0fa262aaf98220120c52fde7cb",
+    "hash": "0x47fa5302bfb0ab45eb3f9cf66d0ed741c33d36dcf3dad3018f728645ef11c631",
     "address": "base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75",
-    "chain": "base",
     "blockNumber": 42923027
+  },
+  "FeeDisburser_v3": {
+    "hash": "0xa148110f199cc44cf63e134b936505af8e1b8912da8834107398451c5b5b888c",
+    "address": "base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6",
+    "blockNumber": 43301167
   }
 }

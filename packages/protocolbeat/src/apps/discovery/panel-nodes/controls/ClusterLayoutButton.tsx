@@ -6,11 +6,13 @@ import {
   type SimulationNodeDatum,
 } from 'd3-force'
 import { useEffect, useState } from 'react'
-
+import { cn } from '../../../../utils/cn'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
+import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
 import type { NodeLocations } from '../store/utils/storage'
 import { ControlButton } from './ControlButton'
+import { IconControlCluster } from './icons/IconControlCluster'
 
 // d3 assumes each node is a single point (no width and height),
 // so we scale the coordinates of the simulation to move the nodes
@@ -24,7 +26,7 @@ interface SimulationNode extends SimulationNodeDatum {
   node: Node
 }
 
-export function ClusterLayoutButton() {
+export function ClusterLayoutButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
   const hiddenNodes = useStore((state) => state.hidden)
   const selected = useStore((state) => state.selected)
@@ -45,10 +47,13 @@ export function ClusterLayoutButton() {
       selected.length === 0,
     )
 
+    // NaN tells d3 to assign its deterministic phyllotaxis seed. Seeding
+    // from current positions makes repeated presses non-idempotent:
+    // disconnected components repel each other further on every run.
     const simNodes: SimulationNode[] = simulationNodes.map((node) => ({
       id: node.id,
-      x: node.box.x / SIM_SCALE,
-      y: node.box.y / SIM_SCALE,
+      x: Number.NaN,
+      y: Number.NaN,
       node,
     }))
 
@@ -83,11 +88,23 @@ export function ClusterLayoutButton() {
 
       simNodes.forEach((simNode) => {
         nodeLocations[simNode.id] = {
-          x: (simNode.x - minY) * SIM_SCALE + left,
-          y: (simNode.y - minX) * SIM_SCALE + top,
+          x: (simNode.x - minX) * SIM_SCALE + left,
+          y: (simNode.y - minY) * SIM_SCALE + top,
         }
       })
-      layout(nodeLocations)
+      if (selected.length === 0) {
+        const { transform, viewportContainer } = useStore.getState()
+        layout(
+          centerLocationsInViewport(
+            nodeLocations,
+            simulationNodes,
+            transform,
+            viewportContainer,
+          ),
+        )
+      } else {
+        layout(nodeLocations)
+      }
       simulation.stop()
       setUpdatingLayout(false)
     }
@@ -101,8 +118,11 @@ export function ClusterLayoutButton() {
     <ControlButton
       disabled={updatingLayout}
       onClick={() => setUpdatingLayout(true)}
+      className={cn('px-3 py-2.5', className)}
     >
-      {updatingLayout ? 'Wait...' : 'Cluster layout'}
+      <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
+        <IconControlCluster />
+      </span>
     </ControlButton>
   )
 }

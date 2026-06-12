@@ -1,7 +1,7 @@
 {
   "name": "gateway",
   "timestamp": 1770639543,
-  "configHash": "0xee8cac618f84bfd45661f528056fe9340f0d9361ac66d33773c343d95813eff3",
+  "configHash": "0xa50f184bc2cbe73277a7d7cfe575038aa2ccccec6a4e700010ccbc5268aad9ad",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -24,7 +24,7 @@
       "template": "shared-zk-stack/ValidatorTimelock_post29",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x1331a809e6d864cad7a57d9b2e1ae6cc5dcc4b3fd344e9cbe0551ce2b879c01d"
+        "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
@@ -36,6 +36,7 @@
           "role": ".validators"
         }
       ],
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758289595,
       "sinceBlock": 23397515,
       "values": {
@@ -155,7 +156,7 @@
       "template": "shared-zk-stack/GatewayTransactionFilterer",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xddf32cb09a89624e3afcd665003e3a8f81d87a3408a0cf844ec4238889f8c850"
+        "0x25d72c2ef1e6a1841fd9ab5e28eba4bdb10044b24219f2df3633ab39de69e64f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A contract implementing the ITransactionFilterer interface, filtering with a configurable whitelist of sender addresses and a blacklist of target contract addresses. Chain migration transactions are generally whitelisted. The filter lists are managed by the owner (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3).",
@@ -167,6 +168,7 @@
           "role": ".getTransactionFilterer"
         }
       ],
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1748609843,
       "sinceBlock": 22595693,
       "values": {
@@ -251,6 +253,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1748530883,
       "sinceBlock": 22589160,
       "values": {
@@ -268,7 +271,7 @@
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xc18e3ec7d4fda7be44236a2bff585089b85466b00d09a1c3a2529c604f99143b",
-        "0xc7513302e4e09efc907df5e645d9f8037b1d02409f9a9089f61061c8951ef1ff"
+        "0xee0eeb13b78cdf1b9227960a31b35310c9e00441cd082d6a975f5225946b5693"
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
@@ -287,6 +290,7 @@
         "baseTokenGasPriceMultiplierDenominator",
         "baseTokenGasPriceMultiplierNominator"
       ],
+      "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1747086455,
       "sinceBlock": 22469956,
       "values": {
@@ -620,6 +624,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770209963,
       "sinceBlock": 24383644,
       "values": {
@@ -653,6 +658,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770209927,
       "sinceBlock": 24383641,
       "values": {
@@ -699,6 +705,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770210095,
       "sinceBlock": 24383655,
       "values": {
@@ -723,10 +730,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1769802035,
       "sinceBlock": 24349836,
       "values": {
@@ -772,6 +780,7 @@
           "role": ".validatorVTL"
         }
       ],
+      "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1769799107,
       "sinceBlock": 24349594,
       "values": {
@@ -847,7 +856,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
-        "0x52d297ca518abe8d71a6d8911487860414e682b1d0d1e7169c4151b619d55832"
+        "0x3071b29c9d3c65c02f422ab100df2d586db80b598bf89958951c8dffea457c52"
       ],
       "proxyType": "immutable",
       "description": "A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.",
@@ -880,6 +889,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1745941307,
       "sinceBlock": 22375679,
       "values": {
@@ -910,10 +920,11 @@
       "type": "Contract",
       "template": "shared-zk-stack/L1Messenger",
       "sourceHashes": [
-        "0x2c4e54d52c2919d3fc227e2a04b26b5e9daee5ef7031fb0e076ac5ed9f2cc7a5"
+        "0x55ee82706e9d484c0a6eab3f809b16ad202747dda686c4f90b39842162e47e00"
       ],
       "proxyType": "immutable",
       "description": "System contract implementing public L2->L1 messaging functionality. Part of the canonical bridge.",
+      "deployerAddress": "gateway:0x0000000000000000000000000000000000008007",
       "sinceTimestamp": 1761040360,
       "sinceBlock": 74512,
       "values": { "$immutable": true },

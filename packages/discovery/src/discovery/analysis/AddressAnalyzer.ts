@@ -22,7 +22,7 @@ import {
   get$Implementations,
   get$PastUpgrades,
 } from '../utils/extractors'
-import { codeIsEOA } from './codeIsEOA'
+import { codeIsEOA } from './bytecode'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 import type { TemplateService } from './TemplateService'
 
@@ -30,6 +30,7 @@ export type Analysis = AnalyzedContract | AnalyzedEOA | Reference
 
 interface AnalyzedCommon {
   address: ChainSpecificAddress
+  deployerAddress?: ChainSpecificAddress
   deploymentTimestamp?: UnixTime
   deploymentBlockNumber?: number
   implementationNames?: Record<ChainSpecificAddress, string>
@@ -196,6 +197,7 @@ export class AddressAnalyzer {
       name: isEOA ? undefined : sources.name,
       isVerified: sources.isVerified,
       address,
+      deployerAddress: deployment?.deployer,
       deploymentTimestamp: deployment?.timestamp,
       deploymentBlockNumber: deployment?.blockNumber,
       implementations: implementations,

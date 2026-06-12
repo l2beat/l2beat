@@ -1,27 +1,42 @@
 {
   "CollateralManager.sol": {
-    "hash": "0x09b192ba7fe0c948d056b981a202a7c6bf2f7535255539908256c1914b716764",
+    "hash": "0x7e9156bdbe2b0f1e2fca8925f034693bdf5abaae1b868270c2a4f44956e1ea6a",
     "address": "ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA",
     "blockNumber": 38804
   },
   "ExchangeConfig.sol": {
-    "hash": "0x9ffa8cb4f60c8030f1786fd22cc1e6f9903e82114fb4ae3f713c47f60178c0de",
+    "hash": "0x2eb254b441530c0a6a36c063566a20b1b99f95ee5d7100456468373d3d97e905",
     "address": "ethereal:0xC199cC890F61B847bec9cec4212C35b759A9fD38",
     "blockNumber": 38804
   },
   "Liquidation.sol": {
-    "hash": "0x9882e7baf79921bbc376de21ba5de774ccd2b47186ed8ba389a8ca85f3e94316",
+    "hash": "0x251070b48a9218c480d188c1ae3850276e33f6fe8a8949af19a9b31e3e2b8e48",
     "address": "ethereal:0xF925Bf7d50abe2Abb21E832c81a6454D791Ad5c0",
     "blockNumber": 38804
   },
   "PerpEngine.sol": {
-    "hash": "0x1f2d6ea306a2ce3c1e94fee76d9184cd06fa8a76178bc2a973d42d495f56d3cf",
+    "hash": "0x56d246b21257a122c9a36355cbe338200a35274157d5e06d354df138145365f5",
     "address": "ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37",
     "blockNumber": 38804
   },
   "ActionHandler.sol": {
-    "hash": "0x14594f4ec76a9468af01b5bd9b65a895ce8eeaec7e303d2c2953abbb6eb37fe2",
+    "hash": "0x0797c82c00545aba38d13c7577adbafddaf63a2c41daba2fd70890a11513f86b",
     "address": "ethereal:0xA2308112941f9bc2843C41a971F56B3Ac6E2167a",
     "blockNumber": 38804
+  },
+  "ActionHandler_v2.sol": {
+    "hash": "0x92593ae99a9bb91cca005c4db1025ad553c96de856d66c0ee21e2ad15daf1634",
+    "address": "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96",
+    "blockNumber": 4259455
+  },
+  "Liquidation_v2.sol": {
+    "hash": "0x9cee872c7e0a49b46aa8f9658d16530e50e5989aa34cecea6e4fd75968589123",
+    "address": "ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1",
+    "blockNumber": 4259455
+  },
+  "Deleverage.sol": {
+    "hash": "0x8c1e8d72f479be706a4a4e2347f8720df282d156fe80278400864c17c67e2490",
+    "address": "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B",
+    "blockNumber": 4259455
   }
 }

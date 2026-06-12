@@ -17,9 +17,8 @@ import { EstimatedBarPatternDef } from '~/components/core/chart/defs/EstimatedBa
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
-import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { formatRange } from '~/utils/dates'
-import type { ChartRange } from '~/utils/range/range'
+import type { ChartRange, ChartResolution } from '~/utils/range/range'
 import { getDaChartMeta } from './meta'
 
 interface Props {
@@ -27,7 +26,7 @@ interface Props {
   isLoading: boolean
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
-  resolution: DaThroughputResolution
+  resolution: ChartResolution
   range: ChartRange
 }
 export function DaPercentageThroughputChart({
@@ -188,7 +187,7 @@ function CustomTooltip({
 }: CustomChartTooltipProps & {
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
-  resolution: DaThroughputResolution
+  resolution: ChartResolution
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -198,15 +197,7 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatRange(
-          label,
-          label +
-            (resolution === 'daily'
-              ? UnixTime.DAY
-              : resolution === 'sixHourly'
-                ? UnixTime.HOUR * 6
-                : UnixTime.HOUR),
-        )}
+        {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
       </div>
       <HorizontalSeparator className="my-1" />
       <div className="flex flex-col gap-2">

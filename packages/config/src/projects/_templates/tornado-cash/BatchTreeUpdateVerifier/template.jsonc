@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BatchTreeUpdateVerifier",
+  "description": "Anonymity Mining - Verifier contract for batched Tornado Trees root updates.",
+  "category": "bridge-external"
+}

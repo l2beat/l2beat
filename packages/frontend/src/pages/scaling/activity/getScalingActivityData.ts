@@ -1,5 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { type InMemoryCache, UnixTime } from '@l2beat/shared-pure'
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getScalingActivityEntries } from '~/server/features/scaling/activity/getScalingActivityEntries'
@@ -33,8 +33,8 @@ export async function getScalingActivityData(
         title: 'Activity - L2BEAT',
         description:
           'Track activity across Ethereum scaling projects with interactive charts.',
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/activity/opengraph-image.png',
         },
       }),
@@ -56,19 +56,23 @@ async function getCachedData() {
   const entries = await getScalingActivityEntries()
 
   await Promise.all([
-    helpers.activity.recategorisedChart.prefetch({
-      range: optionToRange('1y', { offset: -UnixTime.DAY }),
-      filter: {
-        type: 'projects',
-        projectIds: entries.map((entry) => entry.id),
-      },
-    }),
-    helpers.activity.chartStats.prefetch({
-      filter: {
-        type: 'projects',
-        projectIds: entries.map((entry) => entry.id),
-      },
-    }),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.activity.recategorisedChart.queryOptions({
+        range: optionToRange('1y'),
+        filter: {
+          type: 'projects',
+          projectIds: entries.map((entry) => entry.id),
+        },
+      }),
+    ),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.activity.chartStats.queryOptions({
+        filter: {
+          type: 'projects',
+          projectIds: entries.map((entry) => entry.id),
+        },
+      }),
+    ),
   ])
 
   return {

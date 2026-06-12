@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ARMProxy",
+  "description": "Proxy pointing to the active ARM/RMN contract used by CCIP to report whether routes are cursed.",
+  "fields": {
+    "getARM": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "block or allow CCIP activity by reporting whether global or route-specific subjects are cursed."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the active ARM/RMN contract used for CCIP safety checks."
+        }
+      ]
+    }
+  }
+}

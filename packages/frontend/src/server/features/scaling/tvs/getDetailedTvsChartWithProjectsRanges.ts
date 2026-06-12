@@ -1,14 +1,14 @@
-import type { SummedByTimestampTvsValuesPerProjectRecord } from '@l2beat/dal'
+import type { SummedByTimestampTokenValuePerProjectRecord } from '@l2beat/database'
 import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
+import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { queryExecutor } from '~/server/queryExecutor'
-import { ChartRange } from '~/utils/range/range'
+import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
+import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import { isTvsSynced } from './utils/isTvsSynced'
-import { rangeToResolution } from './utils/range'
 
 export const TvsChartWithProjectsRangesDataParams = v.object({
   range: ChartRange,
@@ -69,6 +69,7 @@ export async function getDetailedTvsChartWithProjectsRanges({
       projects,
     })
   }
+  const db = getDb()
 
   if (projects.length === 0) {
     return { chart: [], projectIds: [], syncedUntil: UnixTime.now() }
@@ -79,26 +80,37 @@ export async function getDetailedTvsChartWithProjectsRanges({
 
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),
-    queryExecutor.execute({
-      name: 'getSummedByTimestampTvsValuesPerProjectQuery',
-      args: [
-        projects,
-        range,
-        false,
+    db.tvsTokenValue.getSummedByTimestampWithProjectsRangesPerProject(
+      projects,
+      range[0],
+      range[1],
+      {
+        forSummary: false,
         excludeAssociatedTokens,
         excludeRwaRestrictedTokens,
-      ],
-    }),
+      },
+    ),
   ])
 
-  return getChartData(values, ethPrices, projectIds, range)
+  const firstProjectTimestamp = Math.min(
+    ...projects.map((p) => p.sinceTimestamp),
+  )
+
+  return getChartData(
+    values,
+    ethPrices,
+    projectIds,
+    range,
+    firstProjectTimestamp,
+  )
 }
 
 function getChartData(
-  values: SummedByTimestampTvsValuesPerProjectRecord[],
+  values: SummedByTimestampTokenValuePerProjectRecord[],
   ethPrices: Record<number, number>,
   projectIds: ProjectId[],
   range: ChartRange,
+  firstProjectTimestamp: number,
 ): DetailedTvsChartWithProjectsRangesData {
   if (values.length === 0) {
     return {
@@ -109,27 +121,23 @@ function getChartData(
   }
 
   const valuesByProjectId = new Map<
-    ProjectId,
+    string,
     Map<number, PerProjectTvsValuesRecord>
   >()
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY
 
   for (const value of values) {
-    const mappedValue = mapArrayToObject(value)
-    minTimestamp = Math.min(minTimestamp, mappedValue.timestamp)
-    maxTimestamp = Math.max(maxTimestamp, mappedValue.timestamp)
+    minTimestamp = Math.min(minTimestamp, value.timestamp)
+    maxTimestamp = Math.max(maxTimestamp, value.timestamp)
 
-    const projectValues = valuesByProjectId.get(mappedValue.projectId)
+    const projectValues = valuesByProjectId.get(value.projectId)
     if (projectValues) {
-      projectValues.set(mappedValue.timestamp, mappedValue)
+      projectValues.set(value.timestamp, value)
       continue
     }
 
-    valuesByProjectId.set(
-      mappedValue.projectId,
-      new Map([[mappedValue.timestamp, mappedValue]]),
-    )
+    valuesByProjectId.set(value.projectId, new Map([[value.timestamp, value]]))
   }
 
   assert(
@@ -144,8 +152,14 @@ function getChartData(
   const syncedUntil = maxTimestamp
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
   const resolution = rangeToResolution(range)
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp,
+    dataStart: minTimestamp,
+    resolution,
+  })
   const timestamps = generateTimestamps(
-    [minTimestamp, adjustedTo],
+    [startTimestamp, adjustedTo],
     resolution,
     {
       addTarget: true,
@@ -162,7 +176,6 @@ function getChartData(
 
       for (const projectId of projectIds) {
         const value = valuesByProjectId.get(projectId)?.get(timestamp)
-
         if (value) {
           projectsForTimestamp[projectId] = mapValue(value)
           continue
@@ -236,10 +249,11 @@ const EMPTY_PROJECT_TVS: ProjectTvsChartDataPoint = [
 ]
 
 type PerProjectTvsValuesRecord = {
-  projectId: ProjectId
+  projectId: string
   timestamp: number
   value: number
   canonical: number
+  customCanonical: number
   external: number
   native: number
   ether: number
@@ -250,40 +264,10 @@ type PerProjectTvsValuesRecord = {
   other: number
 }
 
-function mapArrayToObject([
-  projectId,
-  timestamp,
-  value,
-  canonical,
-  external,
-  native,
-  ether,
-  stablecoin,
-  btc,
-  rwaRestricted,
-  rwaPublic,
-  other,
-]: SummedByTimestampTvsValuesPerProjectRecord): PerProjectTvsValuesRecord {
-  return {
-    projectId,
-    timestamp,
-    value,
-    canonical,
-    external,
-    native,
-    ether,
-    stablecoin,
-    btc,
-    rwaRestricted,
-    rwaPublic,
-    other,
-  }
-}
-
 function mapValue(value: PerProjectTvsValuesRecord): ProjectTvsChartDataPoint {
   return [
     value.value,
-    value.canonical,
+    value.canonical + value.customCanonical,
     value.external,
     value.native,
     value.ether,

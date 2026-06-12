@@ -1,12 +1,17 @@
 {
   "SgxVerifier.sol": {
-    "hash": "0x076c7d823685a1a394ad6ec677d2d7707207efa9e8e482f479c2cdfd92008904",
+    "hash": "0x18d3184e72c1735d77620ae9deebfcc9145c66824f9eb109ba8dc62956131487",
     "address": "eth:0x81DFEA931500cdcf0460e9EC45FA283A6B7f0838",
     "blockNumber": 22297586
   },
   "SGXPostPacaya": {
-    "hash": "0x623df54827648dd7289a821d9020c19faccf1c24e7cea82e7157f2dc2c548511",
+    "hash": "0xd6771f7fc79ec6b80dcf1228d9df261718b154e106c3b259fd018d77d108b347",
     "address": "eth:0x8ADDcf5d4CD7BD9dA1CE62eF84AeE22c9E2BfbA5",
     "blockNumber": 22565516
+  },
+  "SgxVerifier.sol_postshasta": {
+    "hash": "0x64982ac2280542d1f822ed34b0d5a76af39b8c23309b9fa29e2e028aaaf409ed",
+    "address": "eth:0x08568Df252ecf37D6C3eFD24f6ca3688118697F1",
+    "blockNumber": 24840827
   }
 }

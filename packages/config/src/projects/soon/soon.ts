@@ -1,6 +1,7 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS } from '../../common'
 import { BADGES } from '../../common/badges'
+import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
@@ -12,13 +13,48 @@ export const soon: ScalingProject = opStackL2({
   discovery,
   daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
   additionalBadges: [BADGES.VM.SolanaVM, BADGES.Stack.OPKailua],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
+  stage: getAltDaStage(
+    {
+      stage0: {
+        callsItselfValidiumOrOptimium: true,
+        stateRootsPostedToL1: true,
+        stateVerificationOnL1: true,
+        daAttestedByIndependentParty: true,
+        nodeSourceAvailable: true,
+        fraudProofSystemAtLeast5Outsiders: true,
+      },
+      stage1: {
+        principle: false,
+        usersCanExitWithoutCooperation: 'UnderReview',
+        usersHave7DaysToExit: 'UnderReview',
+        securityCouncilProperlySetUp: 'UnderReview',
+        daVerifierSecureOnL1: false,
+        daVerifier7DayExitWindow: 'UnderReview',
+        daCommitteeDecentralized: true,
+        noRedTrustedSetups: 'UnderReview',
+        proverSourcePublished: 'UnderReview',
+        verifierContractsReproducible: 'UnderReview',
+        programHashesReproducible: 'UnderReview',
+      },
+      stage2: {
+        fraudProofSystemIsPermissionless: true,
+        delayWith30DExitWindow: 'UnderReview',
+        proofSystemOverriddenOnlyInCaseOfABug: 'UnderReview',
+        daVerifier30DayExitWindow: 'UnderReview',
+        daMechanismEconomicSecurity: false,
+      },
+    },
+    {
+      nodeSourceLink: 'https://github.com/soonlabs',
+    },
+  ),
   nonTemplateProofSystem: {
     type: 'Optimistic',
     name: 'OP Kailua',
     zkCatalogId: ProjectId('risc0'),
     challengeProtocol: 'Single-step',
   },
+
   display: {
     name: 'Soon Alpha Mainnet',
     shortName: 'Soon',
@@ -98,5 +134,11 @@ export const soon: ScalingProject = opStackL2({
       sinceTimestamp: UnixTime(1753412400),
       customerId: '0x420ad2641f22bf6f180c52d0b0566e7ec701c45a',
     },
+  ],
+  nonTemplateZkVerifiers: [
+    discovery.getContractValue<ChainSpecificAddress>(
+      'KailuaTreasury',
+      'RISC_ZERO_VERIFIER',
+    ),
   ],
 })

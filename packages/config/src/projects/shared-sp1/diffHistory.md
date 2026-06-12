@@ -1,3 +1,407 @@
+Generated with discovered.json: 0x995409be114ffb8124ac94980bfcefec090df6dc
+
+# Diff at Fri, 08 May 2026 07:52:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1776418775
+- current timestamp: 1776418775
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776418775 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (arb1:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
++        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayArb (arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sourceHashes.0:
+-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
++        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
+    }
+```
+
+```diff
+    contract SP1Verifier (arb1:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      sourceHashes.0:
+-        "0x8a1f2f8a442ecce12d0692b2117333692fe151bb272cd1e8b2f92ec437bf8d9c"
++        "0xe1cb8acc21214c3652ccc33caf9aca78a1e818c7cba5652c17c9d1a67bce341b"
+    }
+```
+
+```diff
+    contract SP1Verifier (arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
++        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract SP1Verifier (base:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
++        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayBase (base:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sourceHashes.0:
+-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
++        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
+    }
+```
+
+```diff
+    contract SP1Verifier (base:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      sourceHashes.0:
+-        "0x8a1f2f8a442ecce12d0692b2117333692fe151bb272cd1e8b2f92ec437bf8d9c"
++        "0xe1cb8acc21214c3652ccc33caf9aca78a1e818c7cba5652c17c9d1a67bce341b"
+    }
+```
+
+```diff
+    contract SP1Verifier (base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
++        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
++        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sourceHashes.0:
+-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
++        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      sourceHashes.0:
+-        "0x8a1f2f8a442ecce12d0692b2117333692fe151bb272cd1e8b2f92ec437bf8d9c"
++        "0xe1cb8acc21214c3652ccc33caf9aca78a1e818c7cba5652c17c9d1a67bce341b"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
++        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+Generated with discovered.json: 0x004c6a7eaaa3de3d1d1c6ee5d622799f0c46d44a
+
+# Diff at Tue, 05 May 2026 10:23:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1776418775
+- current timestamp: 1776418775
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776418775 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (arb1:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "arb1:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayArb (arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      deployerAddress:
++        "arb1:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+```diff
+    contract SP1Verifier (arb1:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      deployerAddress:
++        "arb1:0x9193a78157957F3E03beE50A3E6a51F0f1669E23"
+    }
+```
+
+```diff
+    contract SP1Verifier (arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x9193a78157957F3E03beE50A3E6a51F0f1669E23"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+```diff
+    contract SP1Verifier (base:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "base:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayBase (base:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      deployerAddress:
++        "base:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+```diff
+    contract SP1Verifier (base:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      deployerAddress:
++        "base:0x9193a78157957F3E03beE50A3E6a51F0f1669E23"
+    }
+```
+
+```diff
+    contract SP1Verifier (base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) {
+    +++ description: None
+      deployerAddress:
++        "base:0x9193a78157957F3E03beE50A3E6a51F0f1669E23"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      deployerAddress:
++        "base:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      deployerAddress:
++        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      deployerAddress:
++        "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+Generated with discovered.json: 0xda8438b1a49f73451d77cbd99fcdea1b1f1a8dd2
+
+# Diff at Fri, 17 Apr 2026 09:56:28 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@d9425d72430f52ecfaaa73cd408cc555f17ba016 block: 1771497368
+- current timestamp: 1776418775
+
+## Description
+
+Deployed Plonk verifier v6.1 on the SP1 gateway.
+
+## Watched changes
+
+```diff
+    contract SP1VerifierGatewayArb (arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.2:
++        {"selector":"0x5a093a2f","verifier":"arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
++++ description: All verifiers that were ever routed to by this gateway.
+      values.allVerifiers.11:
++        {"selector":"0x5a093a2f","verifier":"arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayBase (base:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.2:
++        {"selector":"0x5a093a2f","verifier":"base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
++++ description: All verifiers that were ever routed to by this gateway.
+      values.allVerifiers.11:
++        {"selector":"0x5a093a2f","verifier":"base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.2:
++        {"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
++++ description: All verifiers that were ever routed to by this gateway.
+      values.allVerifiers.11:
++        {"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A.sol | 1421 ++++++++++++++++++++
+ ...:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A.sol | 1421 ++++++++++++++++++++
+ ...:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A.sol | 1421 ++++++++++++++++++++
+ 3 files changed, 4263 insertions(+)
+```
+
+Generated with discovered.json: 0xee072f21cdc2853ab5e44984cee83ad076233a61
+
+# Diff at Tue, 24 Mar 2026 14:28:22 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@0f2989bd93540d1da7b1b07eb7ab704c5a9355e8 block: 1771497368
+- current timestamp: 1771497368
+
+## Description
+
+Renamed SP1VerifierGateway on other chains for convenient processing of Ethereum-based contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771497368 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGatewayArb (arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      name:
+-        "SP1VerifierGateway"
++        "SP1VerifierGatewayArb"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayBase (base:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      name:
+-        "SP1VerifierGateway"
++        "SP1VerifierGatewayBase"
+    }
+```
+
 Generated with discovered.json: 0x7ad39bdc8dcc0c4b78308517adcbb95572485aa8
 
 # Diff at Thu, 19 Feb 2026 10:37:18 GMT:

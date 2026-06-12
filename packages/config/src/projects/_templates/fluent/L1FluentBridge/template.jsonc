@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L1FluentBridge",
+  "category": "core",
+  "description": "Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets anyone process L2->L1 messages with two Merkle proofs against a preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE.",
+  "ignoreMethods": ["getMessageAt", "proxiableUUID"],
+  "ignoreInWatchMode": [
+    "getNonce",
+    "getReceivedNonce",
+    "getSentMessageCursor",
+    "getExecuteGasLimit"
+  ],
+  "fields": {
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure the rollup binding, oracles, gas parameters and gateway whitelist on the L1 bridge core, and grant / revoke its other roles."
+        },
+        { "type": "upgrade" }
+      ]
+    },
+    "pauserAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PAUSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause / unpause the L1 bridge core and clear expired L1->L2 deposits via skipExpiredDeposits (no user-initiated refund path exists; rollbackMessageWithProof reverts with NOT_IMPLEMENTED)."
+        }
+      ]
+    },
+    "accessControl": { "handler": { "type": "accessControl" } }
+  }
+}

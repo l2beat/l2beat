@@ -19,7 +19,7 @@ export function createDataAvailabilityRouter(
   const router = express.Router()
 
   router.get('/data-availability', (_req, res) => {
-    res.redirect('/data-availability/summary')
+    res.redirect(301, '/data-availability/summary')
   })
 
   router.get('/data-availability/summary', async (req, res) => {

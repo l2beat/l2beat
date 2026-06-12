@@ -212,7 +212,7 @@
       "project": "shared-sharp-verifier"
     },
     "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe": {
-      "name": "SHARPVerifier",
+      "name": "SHARPVerifier_2026_13",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
@@ -266,6 +266,11 @@
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
+    "eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7": {
+      "name": "SHARPVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
     "eth:0x8055948c530dbBc19cc350d53473EEe3a1e3d22B": {
       "name": "CpuFrilessVerifier",
       "type": "Contract",
@@ -280,9 +285,17 @@
       "type": "EOA",
       "project": "shared-sharp-verifier"
     },
+    "eth:0x8Cdcf93be2508cb8b348E539EC8EEF2434BFB2DE": {
+      "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
     "eth:0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775": {
       "name": "CpuOods",
       "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x93b1F80BaDc57AE16Ef21d25EEc31A3785e7c426": {
+      "type": "EOA",
       "project": "shared-sharp-verifier"
     },
     "eth:0x955B978F3ee7818dA71fA25c676062E6BC462Fec": {

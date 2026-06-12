@@ -16,6 +16,7 @@ import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
 import type { VerificationStatus } from '~/utils/project/contracts-and-permissions/toVerificationStatus'
 import { type PastUpgradesData, PastUpgradesDialog } from './PastUpgradesDialog'
+import { GroupedActorAddresses } from './permissions/GroupedActorAddresses'
 import type { Participant } from './permissions/Participants'
 import { ParticipantsEntry } from './permissions/Participants'
 import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
@@ -62,9 +63,14 @@ interface TechnologyContractEscrowToken {
 interface ContractEntryProps {
   contract: TechnologyContract
   className?: string
+  expandableAddresses?: boolean
 }
 
-export function ContractEntry({ contract, className }: ContractEntryProps) {
+export function ContractEntry({
+  contract,
+  className,
+  expandableAddresses = false,
+}: ContractEntryProps) {
   const sharedProxies = contract.usedInProjects?.filter(
     (c) => c.type === 'proxy',
   )
@@ -95,32 +101,39 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
             {contract.escrow && (
               <EscrowBadge isCustom={contract.escrow.isCustom} />
             )}
-            {entries.map((address, i) => (
-              <HighlightableLink
-                key={i}
-                variant={
-                  address.verificationStatus === 'unverified'
-                    ? 'danger'
-                    : undefined
-                }
-                href={address.href}
-                address={address.address}
-                className="flex items-center gap-0.5"
-              >
-                {address.verificationStatus === 'unverified' &&
-                color !== 'red' ? (
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <UnverifiedIcon className="fill-red-300" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      This contract is not verified
-                    </TooltipContent>
-                  </Tooltip>
-                ) : null}
-                {address.name}
-              </HighlightableLink>
-            ))}
+            {expandableAddresses ? (
+              <GroupedActorAddresses
+                addresses={contract.addresses}
+                className="basis-full"
+              />
+            ) : (
+              entries.map((address, i) => (
+                <HighlightableLink
+                  key={i}
+                  variant={
+                    address.verificationStatus === 'unverified'
+                      ? 'danger'
+                      : undefined
+                  }
+                  href={address.href}
+                  address={address.address}
+                  className="flex items-center gap-0.5"
+                >
+                  {address.verificationStatus === 'unverified' &&
+                  color !== 'red' ? (
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <UnverifiedIcon className="fill-red-300" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        This contract is not verified
+                      </TooltipContent>
+                    </Tooltip>
+                  ) : null}
+                  {address.name}
+                </HighlightableLink>
+              ))
+            )}
           </div>
           {contract.pastUpgrades?.upgrades &&
             contract.pastUpgrades.upgrades.length > 0 && (
@@ -298,6 +311,7 @@ export function technologyContractKey(contract: TechnologyContract) {
 export function ContractsWithImpactfulChanges(props: {
   contracts: TechnologyContract[]
   type: 'contracts' | 'permissions'
+  expandableAddresses?: boolean
 }) {
   return (
     <div className="rounded-lg border border-yellow-200 border-dashed px-4 py-3 text-paragraph-15 md:text-paragraph-16">
@@ -310,6 +324,9 @@ export function ContractsWithImpactfulChanges(props: {
           key={technologyContractKey(contract)}
           contract={contract}
           className="my-4 p-0"
+          expandableAddresses={
+            props.expandableAddresses && contract.addresses.length > 1
+          }
         />
       ))}
     </div>

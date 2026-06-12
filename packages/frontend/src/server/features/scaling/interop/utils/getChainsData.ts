@@ -1,25 +1,22 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import type { InteropDurationSplit } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
-import type { ChainData, CommonInteropData, DurationSplitMap } from '../types'
+import type { ChainData, CommonInteropData } from '../types'
 import { getAverageDuration } from './getAverageDuration'
 import { getInteropChains } from './getInteropChains'
+import { getNetMintedValueUsd } from './getNetMintedValueUsd'
 
 type Params = {
-  projectId: string
-  bridgeTypes: KnownInteropBridgeType[] | undefined
   chains: Map<string, CommonInteropData>
-  durationSplitMap: DurationSplitMap | undefined
+  durationSplit: InteropDurationSplit | undefined
   logger: Logger
 }
 
 export function getChainsData({
-  projectId,
-  bridgeTypes,
   chains,
-  durationSplitMap,
   logger,
+  durationSplit,
 }: Params): ChainData[] {
   const interopChains = getInteropChains()
   return Array.from(chains.entries())
@@ -30,12 +27,7 @@ export function getChainsData({
         return undefined
       }
 
-      const avgDuration = getAverageDuration(
-        projectId,
-        bridgeTypes,
-        chainData,
-        durationSplitMap,
-      )
+      const avgDuration = getAverageDuration(chainData, durationSplit)
 
       return {
         id: chainId,
@@ -47,11 +39,7 @@ export function getChainsData({
         avgValue: Math.floor(chainData.volume / chainData.transferCount),
         minTransferValueUsd: chainData.minTransferValueUsd,
         maxTransferValueUsd: chainData.maxTransferValueUsd,
-        netMintedValue:
-          chainData.mintedValueUsd !== undefined &&
-          chainData.burnedValueUsd !== undefined
-            ? chainData.mintedValueUsd - chainData.burnedValueUsd
-            : undefined,
+        netMintedValue: getNetMintedValueUsd(chainData),
       }
     })
     .filter(notUndefined)

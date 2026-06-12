@@ -3,7 +3,7 @@ import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
 export interface DetailedDescriptionSectionProps extends ProjectSectionProps {
-  description: string
+  description: string | undefined
   detailedDescription: string | undefined
 }
 
@@ -14,10 +14,10 @@ export function DetailedDescriptionSection({
 }: DetailedDescriptionSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <div className="mt-4 text-paragraph-15 md:text-paragraph-16">
-        <Markdown>{description}</Markdown>
+      <div className="text-paragraph-15 md:text-paragraph-16">
+        {description && <Markdown>{description}</Markdown>}
         {detailedDescription && (
-          <Markdown className="mt-2">{detailedDescription}</Markdown>
+          <Markdown className="mt-4">{detailedDescription}</Markdown>
         )}
       </div>
     </ProjectSection>

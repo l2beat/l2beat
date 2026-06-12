@@ -7,10 +7,12 @@ import type {
   ApiConfigSyncStatusResponse,
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
-  ApiGlobalConfigSyncStatusResponse,
+  ApiDiffHistoryResponse,
   ApiHandlersResponse,
   ApiListTemplatesResponse,
   ApiPreviewResponse,
+  ApiProjectLayoutResponse,
+  ApiProjectLayoutsResponse,
   ApiProjectResponse,
   ApiProjectsResponse,
   ApiTemplateFileResponse,
@@ -25,8 +27,16 @@ export async function getProjects(): Promise<ApiProjectsResponse> {
   return data as ApiProjectsResponse
 }
 
-export async function getProject(project: string): Promise<ApiProjectResponse> {
-  const res = await fetch(`/api/projects/${project}`)
+export async function getProject(
+  project: string,
+  maxDepth?: number,
+): Promise<ApiProjectResponse> {
+  const params = new URLSearchParams()
+  if (maxDepth !== undefined) {
+    params.set('maxDepth', String(maxDepth))
+  }
+  const qs = params.toString()
+  const res = await fetch(`/api/projects/${project}${qs ? `?${qs}` : ''}`)
   if (!res.ok) {
     throw new Error(res.statusText)
   }
@@ -149,6 +159,73 @@ export async function readConfigFile(
   return data as ApiConfigFileResponse
 }
 
+export async function getDiffHistory(
+  project: string,
+  offset: number,
+  limit: number,
+): Promise<ApiDiffHistoryResponse> {
+  const params = new URLSearchParams({
+    offset: String(offset),
+    limit: String(limit),
+  })
+  const res = await fetch(`/api/projects/${project}/diff-history?${params}`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiDiffHistoryResponse
+}
+
+export async function listProjectLayouts(
+  project: string,
+): Promise<ApiProjectLayoutsResponse> {
+  const res = await fetch(`/api/projects/${project}/layouts`)
+  if (!res.ok) {
+    throw new Error(await readErrorMessage(res))
+  }
+  const data = await res.json()
+  return data as ApiProjectLayoutsResponse
+}
+
+export async function getProjectLayout(
+  project: string,
+  name: string,
+): Promise<ApiProjectLayoutResponse> {
+  const res = await fetch(
+    `/api/projects/${project}/layouts/${encodeURIComponent(name)}`,
+  )
+  if (!res.ok) {
+    throw new Error(await readErrorMessage(res))
+  }
+  const data = await res.json()
+  return data as ApiProjectLayoutResponse
+}
+
+export async function saveProjectLayout(
+  project: string,
+  name: string,
+  layout: unknown,
+  overwrite = false,
+): Promise<ApiProjectLayoutResponse> {
+  const res = await fetch(
+    `/api/projects/${project}/layouts/${encodeURIComponent(name)}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify({ layout, overwrite }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  )
+
+  if (!res.ok) {
+    throw new Error(await readErrorMessage(res))
+  }
+
+  const data = await res.json()
+  return data as ApiProjectLayoutResponse
+}
+
 export async function getConfigSyncStatus(
   project: string,
 ): Promise<ApiConfigSyncStatusResponse> {
@@ -158,15 +235,6 @@ export async function getConfigSyncStatus(
   }
   const data = await res.json()
   return data as ApiConfigSyncStatusResponse
-}
-
-export async function getGlobalConfigSyncStatus(): Promise<ApiGlobalConfigSyncStatusResponse> {
-  const res = await fetch('/api/config/sync-status')
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-  const data = await res.json()
-  return data as ApiGlobalConfigSyncStatusResponse
 }
 
 export async function getConfigHealth(): Promise<ApiConfigHealthResponse> {
@@ -180,7 +248,6 @@ export async function getConfigHealth(): Promise<ApiConfigHealthResponse> {
 
 export async function createConfigFile(
   project: string,
-  type: 'project' | 'token',
   initialAddresses: string[],
   overwrite: boolean,
   maxDepth?: number,
@@ -190,7 +257,6 @@ export async function createConfigFile(
     method: 'POST',
     body: JSON.stringify({
       project,
-      type,
       initialAddresses,
       overwrite,
       maxDepth,
@@ -285,4 +351,13 @@ export function executeFindMinters(address: string): EventSource {
     address,
   })
   return new EventSource(`/api/terminal/find-minters?${params}`)
+}
+
+async function readErrorMessage(res: Response): Promise<string> {
+  try {
+    const data = (await res.json()) as { error?: string; errors?: string }
+    return data.error ?? data.errors ?? res.statusText
+  } catch {
+    return res.statusText
+  }
 }

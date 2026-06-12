@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { ScalingAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ScalingAssetCategoryTvsChart'
 import { ScalingBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ScalingBridgeTypeTvsChart'
@@ -9,43 +10,38 @@ import type { ChartUnit } from '~/components/chart/types'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
-import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { ChartTabs } from '../../summary/components/ChartTabs'
 import { useScalingTvsTimeRangeContext } from './ScalingTvsTimeRangeContext'
 
 interface Props {
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
   entries: ScalingTvsEntry[]
   milestones: Milestone[]
 }
 
-export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
+export function ScalingTvsCharts({ entries, milestones }: Props) {
+  const trpc = useTRPC()
   const { display } = useTvsDisplayControlsContext()
-  const { state: filters } = useTableFilterContext()
   const { range, setRange } = useScalingTvsTimeRangeContext()
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
   const filter = useMemo<TvsProjectFilter>(() => {
-    if (Object.keys(filters).length === 0) {
-      return {
-        type: tab,
-      }
-    }
     return {
       type: 'projects',
       projectIds: entries.map((project) => project.id),
     }
-  }, [entries, filters, tab])
+  }, [entries])
 
-  const { data } = api.tvs.detailedChart.useQuery({
-    range,
-    filter,
-    excludeAssociatedTokens: display.excludeAssociatedTokens,
-    excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
-  })
+  const { data } = useQuery(
+    trpc.tvs.detailedChart.queryOptions({
+      range,
+      filter,
+      excludeAssociatedTokens: display.excludeAssociatedTokens,
+      excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
+    }),
+  )
 
   const timeRange = getChartTimeRangeFromData(
     data?.chart.map(([timestamp]) => ({

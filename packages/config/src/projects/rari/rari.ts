@@ -18,6 +18,7 @@ export const rari: ScalingProject = orbitStackL3({
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'RARI Chain',
+    aliases: ['Rarible'],
     slug: 'rari',
     description:
       'RARI Chain embeds royalties on the node level to guarantee royalty payments. A secure, low-cost, decentralized Ethereum L3 blockchain powered by Arbitrum.',

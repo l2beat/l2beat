@@ -1,22 +1,32 @@
 {
   "SP1Verifier": {
-    "hash": "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b",
+    "hash": "0xe05547fe99aaf19edf21062e78b3d48a6e747fcebb95f7377c61ee16cc54491b",
     "address": "eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
     "blockNumber": 22188285
   },
   "SP1Verifier_v5": {
-    "hash": "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42",
+    "hash": "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278",
     "address": "arb1:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
     "blockNumber": 343837105
   },
   "SP1Verifier_Groth16": {
-    "hash": "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582",
+    "hash": "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702",
     "address": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
     "blockNumber": 22985449
   },
   "SP1Verifier_v6": {
-    "hash": "0x8a1f2f8a442ecce12d0692b2117333692fe151bb272cd1e8b2f92ec437bf8d9c",
+    "hash": "0xe1cb8acc21214c3652ccc33caf9aca78a1e818c7cba5652c17c9d1a67bce341b",
     "address": "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C",
     "blockNumber": 24456046
+  },
+  "SP1Verifier_v6_0_0_Groth16": {
+    "hash": "0x42f46686613948c377586d511d315e6d67b9fd747a18225cce7c4cf32d14c7be",
+    "address": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508",
+    "blockNumber": 25193152
+  },
+  "SP1Verifier_v6_1_0_Groth16": {
+    "hash": "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6",
+    "address": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2",
+    "blockNumber": 25193152
   }
 }

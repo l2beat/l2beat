@@ -1,0 +1,75 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "GovernorRewards",
+  "description": "Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.",
+  "category": "gov",
+  "canActIndependently": false,
+  "ignoreMethods": [
+    "currentInterval",
+    "distributionIntervalToStakingInterval",
+    "nextSnapshotPreCalcInterval",
+    "precalculatedGlobalSnapshots",
+    "safetyVector"
+  ],
+  "fields": {
+    "$admin": {
+      "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the GovernorRewards proxy.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        { "type": "act" },
+        {
+          "type": "interact",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the GovernorRewards implementation."
+        }
+      ]
+    },
+    "$implementation": {
+      "description": "Current GovernorRewards implementation.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "owner": {
+      "description": "Current owner of the GovernorRewards logic.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the per-interval reward rate."
+        },
+        {
+          "type": "interact",
+          "description": "add or remove reward tokens from the distribution set."
+        },
+        {
+          "type": "interact",
+          "description": "add or remove allowed reward safety vectors."
+        }
+      ]
+    },
+    "staking": {
+      "description": "Staking contract whose snapshots determine each interval's reward allocation.",
+      "severity": "HIGH"
+    },
+    "treasury": {
+      "description": "Treasury contract that supplies tokens distributed by GovernorRewards.",
+      "severity": "HIGH"
+    },
+    "intervalBP": {
+      "description": "Basis points of treasury balance earmarked for rewards on each distribution interval.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "DISTRIBUTION_INTERVAL": {
+      "description": "Length of one reward-distribution interval.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "STAKING_DISTRIBUTION_INTERVAL_MULTIPLIER": {
+      "description": "Number of staking snapshot intervals combined into one rewards interval.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

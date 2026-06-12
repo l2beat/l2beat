@@ -1,3 +1,166 @@
+Generated with discovered.json: 0xa9bef6b2520c2a2f5589eb2badd18eece47b299c
+
+# Diff at Fri, 08 May 2026 07:51:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1753092647
+- current timestamp: 1753092647
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753092647 (main branch discovery), not current.
+
+```diff
+    contract DeBridgeGate (eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xcd8bce7612cc46b4eb6dae7d913880fdd47ee8fcd03d90bd5d99fe145638685c"
++        "0x3d57a786d8c79ccc942d2a3375eaf1689a6851ee180123f59f8acea2f8887998"
+    }
+```
+
+```diff
+    contract Admin Multisig (eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract DeBridgeTokenDeployer (eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x90a8fe0eeb8f61a691fd579cb10499f4fd9167497e9aeab3b1ce4f6427fabc96"
++        "0xff2a8bb5572e1959e22acdc6818bcb1da107807340ef1416129cae0cf740d02a"
+    }
+```
+
+```diff
+    contract CallProxy (eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd67e23441d8b22dcf363c048ad14a86a4de64b242cb242fd7ef0fa11da2cb6ff"
++        "0x9b964fcb858bec965b5b4ed4acaf48a574fb1f40262511974c332b0aeea50b14"
+    }
+```
+
+```diff
+    contract SignatureVerifier (eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xbda27aaf69ce4f365f73f0436a7e06bffede3a693579569ec42ae41718b94c75"
++        "0x935f17b78605c215122116db0dace0d318ba1f183cb0372d2dcc3f68c4a4ac62"
+    }
+```
+
+```diff
+    contract SimpleFeeProxy (eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x90a1adff0012e17a22d9eb35cecd932a71923919b443758b02b2c43ad666a352"
++        "0x6f2663359a667325f9c0eb5f1347674f6f48403728de36a9f61e0e8cad5f8232"
+    }
+```
+
+```diff
+    contract DeBridgeToken (eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x13def2c5fc95163873f1d15d260b9e03ac811bd830b6ed282e527268e3ca7759"
++        "0xe06ac978b2bdb39e529b3f1100c773c0aafc641c30f76bc1a526daf4d070e8ef"
+    }
+```
+
+Generated with discovered.json: 0x8b97b34d0fff646274b3c2954a18df0b3e284bdf
+
+# Diff at Tue, 05 May 2026 10:22:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1753092647
+- current timestamp: 1753092647
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753092647 (main branch discovery), not current.
+
+```diff
+    contract DeBridgeGate (eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844"
+    }
+```
+
+```diff
+    contract Admin Multisig (eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9f856fC3e2ea6D2ef7b1f030D4A8BF34556eAc5d"
+    }
+```
+
+```diff
+    contract DeBridgeTokenDeployer (eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844"
+    }
+```
+
+```diff
+    contract CallProxy (eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844"
+    }
+```
+
+```diff
+    contract SignatureVerifier (eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844"
+    }
+```
+
+```diff
+    contract SimpleFeeProxy (eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844"
+    }
+```
+
+```diff
+    contract DeBridgeToken (eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x51256C824B193909F1B1BCD9F4a5Fa200cBCee78"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844"
+    }
+```
+
 Generated with discovered.json: 0x6a6aced6f6ba01565af4f1973d2a6240e691eb0a
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

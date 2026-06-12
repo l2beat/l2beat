@@ -120,6 +120,13 @@ export const zkCatalogTags = [
     description:
       'Extensible instruction set for OpenVM zkVM developed by Axiom.',
   },
+  {
+    id: 'AVM',
+    type: ZkCatalogTagType.ISA,
+    name: 'AVM',
+    description:
+      'VM that executes the public part of Aztec L2 transactions, conceptually similar to EVM.',
+  },
   // Plonk
   {
     id: 'Bellman',
@@ -177,6 +184,20 @@ export const zkCatalogTags = [
     description:
       'Open-source toolkit of various cryptographic primitives, including an implementation of Plonk SNARK, developed in Rust by Espresso Systems.',
   },
+  {
+    id: 'UltraHonk',
+    type: ZkCatalogTagType.Plonk,
+    name: 'UltraHonk',
+    description:
+      'A KZG-based PLONKish proving system featuring many optimizations, including a sumcheck argument over a boolean hypercube. Developed by Aztec as a part of Barretenberg library.',
+  },
+  {
+    id: 'CHONK',
+    type: ZkCatalogTagType.Plonk,
+    name: 'CHONK',
+    description:
+      'PLONKish proving system, designed for client-side proving. Includes sumcheck argument over a hypercube, HyperNova-like folding schemes and GoblinPlonk EC operation optimization over Grumpkin curve. Developed by Aztec as a part of Barretenberg library.',
+  },
   // Fflonk
   {
     id: 'Zksync',
@@ -199,6 +220,18 @@ export const zkCatalogTags = [
     name: 'Gnark',
     description:
       'Consensys implementation of Groth16 proving system written in Go.',
+  },
+  {
+    id: 'SP1_v6_0_0',
+    type: ZkCatalogTagType.Groth16,
+    name: 'SP1 v6.0.0',
+    description: "Succinct's Groth16 final wrap circuit for SP1 zkVM v6.0.0",
+  },
+  {
+    id: 'SP1_v6_1_0',
+    type: ZkCatalogTagType.Groth16,
+    name: 'SP1 v6.1.0',
+    description: "Succinct's Groth16 final wrap circuit for SP1 zkVM v6.1.0",
   },
   {
     id: 'Snarkjs',
@@ -235,6 +268,13 @@ export const zkCatalogTags = [
     name: 'BLS12-377',
     description:
       'Pairing-friendly 377-bit prime field Weierstrass elliptic curve.',
+  },
+  {
+    id: 'Grumpkin',
+    type: ZkCatalogTagType.curve,
+    name: 'Grumpkin',
+    description:
+      'Curve that forms a curve cycle together with BN254, which allows highly efficient recursive proof composition by switching between these two curves.',
   },
   // Field
   {

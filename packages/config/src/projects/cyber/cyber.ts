@@ -66,7 +66,7 @@ export const cyber: ScalingProject = opStackL2({
   display: {
     name: 'Cyber',
     slug: 'cyber',
-    architectureImage: 'opstack-rollup-superchain-opfp',
+    architectureImage: 'opstack-rollup-superchain-opfp-preu16',
     description:
       'Cyber is a chain designed for social applications using an implementation of OP Plasma with DA challenges.',
     links: {

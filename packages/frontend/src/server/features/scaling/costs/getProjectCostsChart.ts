@@ -1,13 +1,12 @@
 import type { ActivityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { ChartRange } from '~/utils/range/range'
+import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { getScalingProjectDaThroughputChart } from '../../data-availability/throughput/getScalingProjectDaThroughtputChart'
 import { getActivityForProjectAndRange } from '../activity/getActivityForProjectAndRange'
 import { type CostsChartDataPoint, getCostsChart } from './getCostsChart'
 import { getCostsForProject } from './getCostsForProject'
 import type { LatestCostsProjectResponse } from './types'
-import { rangeToResolution } from './utils/range'
 
 export type ProjectCostsChartParams = v.infer<typeof ProjectCostsChartParams>
 export const ProjectCostsChartParams = v.object({
@@ -76,14 +75,7 @@ export async function getProjectCostsChart(
   )
   const chart: ProjectCostsChartResponse['chart'] = costsChart.chart.map(
     (cost) => {
-      const dailyTimestamp = UnixTime.toStartOf(
-        cost[0],
-        resolution === 'daily'
-          ? 'day'
-          : resolution === 'sixHourly'
-            ? 'six hours'
-            : 'hour',
-      )
+      const dailyTimestamp = UnixTime.toStartOf(cost[0], resolution)
       const daData = timestampedDaData[dailyTimestamp]
       const posted =
         dailyTimestamp <= costsChart.syncedUntil && daData
@@ -95,7 +87,7 @@ export async function getProjectCostsChart(
 
   const total = getTotal(costs)
   const perL2Uop =
-    costsUopsCount !== undefined && resolution !== 'hourly'
+    costsUopsCount !== undefined && resolution !== 'hour'
       ? getPerL2UopsCost(total, {
           costs: costsUopsCount,
         })
@@ -138,7 +130,7 @@ function getPerL2UopsCost(
   },
 ) {
   function divideIfValid(value: number | null): number | null {
-    return uops.costs && value !== null ? value / uops.costs : value
+    return uops.costs && value !== null ? value / uops.costs : null
   }
 
   return {

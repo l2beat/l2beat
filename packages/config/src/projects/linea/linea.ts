@@ -20,7 +20,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -118,6 +118,7 @@ export const linea: ScalingProject = {
   addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
   display: {
     name: 'Linea',
+    aliases: ['ConsenSys'],
     slug: 'linea',
     description:
       'Linea is a ZK Rollup powered by a zkEVM developed at Consensys, designed to scale the Ethereum network.',
@@ -152,6 +153,8 @@ export const linea: ScalingProject = {
     },
   },
   interopConfig: {
+    description:
+      "The canonical or trust-minimized bridge: Validated with Linea's validity proof system but supporting external L1 yield sources.",
     name: 'Linea Canonical',
     durationSplit: {
       lockAndMint: [
@@ -454,7 +457,7 @@ export const linea: ScalingProject = {
         ' Eventually (after 6 months of no finalized blocks) the Operator role becomes public, theoretically allowing anyone to propose state with valid proofs.',
     },
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -495,7 +498,7 @@ export const linea: ScalingProject = {
         {
           title:
             'LineaRollup.sol - Etherscan source code, submitBlobs() function',
-          url: 'https://etherscan.io/address/0x04728BF704a716C26F9EF4085013b760AC885631#code',
+          url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code',
         },
       ],
     },
@@ -515,7 +518,7 @@ export const linea: ScalingProject = {
         {
           title:
             'LineaRollup.sol - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
-          url: 'https://etherscan.io/address/0x04728BF704a716C26F9EF4085013b760AC885631#code',
+          url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code',
         },
       ],
     },
@@ -533,12 +536,12 @@ export const linea: ScalingProject = {
           {
             title:
               'L1MessageService.sol - Etherscan source code, claimMessageWithProof() function',
-            url: 'https://etherscan.io/address/0x04728BF704a716C26F9EF4085013b760AC885631#code',
+            url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code#F21#L92',
           },
           {
             title:
-              'LineaRollup.sol - Etherscan source code, setFallbackOperator() function',
-            url: 'https://etherscan.io/address/0x04728BF704a716C26F9EF4085013b760AC885631#code#F29#L178',
+              'LineaRollup.sol - Etherscan source code, setLivenessRecoveryOperator() function',
+            url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code#F36#L41',
           },
         ],
       },
@@ -548,6 +551,7 @@ export const linea: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(timelockDelayString)],
+    zkVerifiers: getVerifiers(),
   },
   stateDerivation: {
     nodeSoftware:
@@ -584,15 +588,15 @@ export const linea: ScalingProject = {
           {
             title:
               'LineaRollup.sol - Etherscan source code, finalizeBlocks() and _verifyProof() calls',
-            url: 'https://etherscan.io/address/0x04728BF704a716C26F9EF4085013b760AC885631#code#F29#L432',
+            url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code#F38#L277',
           },
           {
-            title: 'PlonkVerifierMainnetFull.sol (Proof Type 3)',
-            url: 'https://etherscan.io/address/0x814D80782aA8c508aBABE9C6956D8F1f90E5177a',
+            title: 'PlonkVerifierMainnetFull.sol (Proof Type 0)',
+            url: 'https://etherscan.io/address/0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc',
           },
           {
-            title: 'PlonkVerifierMainnetFull.sol (Proof Type 4)',
-            url: 'https://etherscan.io/address/0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b',
+            title: 'PlonkVerifierMainnetFull.sol (Proof Type 1)',
+            url: 'https://etherscan.io/address/0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb',
           },
         ],
       },
@@ -645,4 +649,14 @@ export const linea: ScalingProject = {
   ],
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const verifiersArray = discovery.getContractValue<ChainSpecificAddress[]>(
+    'LineaRollup',
+    'verifiers',
+  )
+  return verifiersArray.filter(
+    (v) => ChainSpecificAddress.address(v) !== EthereumAddress.ZERO,
+  )
 }

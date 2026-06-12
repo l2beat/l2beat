@@ -1,14 +1,12 @@
 {
   "TallySlashingProposer.sol": {
-    "hash": "0xb74d109a937010524abe2393cfaedb3100583e50cc78c56cd4168137b11883d2",
+    "hash": "0x9478b51db39a469fac7221ce85e2b067374c973bbb885851dd172d67c29369f4",
     "address": "eth:0x7a318c3DaA9f21f8fc8238c65755eB0394Fbf189",
-    "chain": "ethereum",
     "blockNumber": 23834069
   },
   "TallySlashingProposer_alpha.sol": {
-    "hash": "0x0b4f1c707812b207e031a78710120f6962597aca1d9bfa47b0aa4c940fadbbdb",
+    "hash": "0x3400d2f1f605f55a5f01114dcb37590633d756230f7829fa3949433b038befa2",
     "address": "eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958",
-    "chain": "ethereum",
     "blockNumber": 24590324
   }
 }

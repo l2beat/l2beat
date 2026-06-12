@@ -28,6 +28,7 @@ export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
   name: string
   icon: string
   creator?: string
+  quantumResistant?: boolean
   tvs: {
     value: number
     numberOfProjects: number
@@ -41,9 +42,10 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
     await Promise.all([
       ps.getProjects({
         select: ['zkCatalogInfo', 'display', 'statuses'],
+        whereNot: ['archivedAt'],
       }),
       ps.getProjects({
-        optional: ['daBridge', 'isScaling', 'isDaLayer'],
+        optional: ['display', 'daBridge', 'scalingInfo', 'daLayer'],
       }),
       get7dTvsBreakdown({ type: 'all' }),
       getContractUtils(),
@@ -58,7 +60,10 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
 
 function getZkCatalogEntry(
   project: Project<'zkCatalogInfo' | 'display' | 'statuses'>,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
   tvs: SevenDayTvsBreakdown,
   contractUtils: ContractUtils,
 ): ZkCatalogEntry {
@@ -80,8 +85,10 @@ function getZkCatalogEntry(
     backgroundColor: undefined,
     statuses: project.statuses,
     name: project.name,
+    description: project.display.description,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     creator: project.zkCatalogInfo.creator,
+    quantumResistant: project.zkCatalogInfo.quantumResistant,
     tvs: {
       value: tvsForProject,
       numberOfProjects,

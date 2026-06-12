@@ -1,5 +1,5 @@
 import { getTokenDb } from '~/server/tokenDb'
-import { manifest } from '~/utils/Manifest'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 
 export type TokensDetailsMap = Map<string, TokensDetails>
 
@@ -19,7 +19,7 @@ export async function buildTokensDetailsMap(abstractTokenIds: string[]) {
       t.id,
       {
         ...t,
-        iconUrl: t.iconUrl ?? manifest.getUrl('/images/token-placeholder.png'),
+        iconUrl: t.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
       },
     ]),
   )

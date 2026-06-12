@@ -4,14 +4,44 @@
   "category": "non-critical",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure supported tokens, mint authorities, attestation signers, pauser, denylister, and transfer ownership."
+        }
+      ]
+    },
+    "pauser": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause Gateway minting."
+        }
+      ]
+    },
+    "denylister": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "denylist addresses, preventing them from interacting with the GatewayMinter."
+        }
+      ]
+    },
     "attestationSigners": {
-      "description": "Brigde validators, trusted to sign each minting payload on an incoming bridge tx.",
+      "description": "Bridge validators, trusted to sign each minting payload on an incoming bridge tx.",
       "handler": {
         "type": "event",
         "select": "signer",
         "add": { "event": "AttestationSignerAdded" },
         "remove": { "event": "AttestationSignerRemoved" }
-      }
+      },
+      "permissions": [
+        {
+          "type": "act",
+          "description": "sign mint attestations accepted by GatewayMinter."
+        }
+      ]
     }
   }
 }

@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
@@ -6,55 +7,50 @@ import { useTvsDisplayControlsContext } from '~/components/table/display/context
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
-import { api } from '~/trpc/React'
-import { toTableRows } from '../../utils/ToTableRows'
+import { useTRPC } from '~/trpc/React'
+import { toTableRows } from '../../utils/toTableRows'
 import { getScalingTvsColumns } from './columns'
 
 interface Props {
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed'
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
   entries: ScalingTvsEntry[]
   breakdownType: 'bridgeType' | 'assetCategory'
-  ignoreUnderReviewIcon?: boolean
 }
 
-export function ScalingTvsTable({
-  tab,
-  entries,
-  breakdownType,
-  ignoreUnderReviewIcon,
-}: Props) {
+export function ScalingTvsTable({ tab, entries, breakdownType }: Props) {
+  const trpc = useTRPC()
   const { display } = useTvsDisplayControlsContext()
   const { sorting, setSorting } = useTableSorting()
 
-  const { data: sevenDayBreakdown, isLoading: isTvsLoading } =
-    api.tvs.table.useQuery({
+  const { data, isLoading: isTvsLoading } = useQuery(
+    trpc.tvs.table.queryOptions({
       type: tab,
       excludeAssociatedTokens: display.excludeAssociatedTokens,
       excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
-    })
+    }),
+  )
 
-  const data = useMemo(
+  const tableRows = useMemo(
     () =>
       toTableRows({
-        projects: entries,
-        sevenDayBreakdown,
+        entries,
+        data: data?.projects,
       }),
-    [entries, sevenDayBreakdown],
+    [entries, data],
   )
 
   const columns = useMemo(
     () =>
       getScalingTvsColumns({
-        ignoreUnderReviewIcon,
         breakdownType,
         excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
         isTvsLoading,
       }),
-    [breakdownType, ignoreUnderReviewIcon, display, isTvsLoading],
+    [breakdownType, display, isTvsLoading],
   )
 
   const table = useTable({
-    data,
+    data: tableRows,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

@@ -1,16 +1,16 @@
 {
   "L2CrossDomainMessenger_v1_4_0": {
-    "hash": "0x54d303632c7acb15a0f8c319289166a6c178e02f2c930685ab3cdcbe5b19ca29",
+    "hash": "0xc976dd7891ac59d37603c7648ea8e3a566365094a242d169a646ebfed971bab8",
     "address": "oeth:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
     "blockNumber": 134041720
   },
   "L2CrossDomainMessenger_v2_1_1beta_1": {
-    "hash": "0x232dce20746263348611758da13c5157e6731aa8b6a6fde61475eb230f8a87f0",
+    "hash": "0x1ef37a50dbdd57f7019208b81019e52087cb92379f963e1ec092bd3eb81ec978",
     "address": "ink:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
     "blockNumber": 10183769
   },
   "L2CrossDomainMessenger_metis": {
-    "hash": "0xb0aa46ed830058877d2309a8dbc2d6fcaedcebb1a787e272e4b9548df740d186",
+    "hash": "0xfa22fdbd3110142a813b224a89d371bb62a79a6907e822265020c1c69a8c546d",
     "address": "metis-andromeda:0x4200000000000000000000000000000000000007",
     "blockNumber": 21197158
   }

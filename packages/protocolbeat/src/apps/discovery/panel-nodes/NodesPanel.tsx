@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getProject } from '../../../api/api'
 import type {
   Field as ApiField,
   ApiProjectResponse,
@@ -9,6 +8,7 @@ import type {
 } from '../../../api/types'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
+import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
 import type { Field, Node } from './store/State'
@@ -21,10 +21,7 @@ export function NodesPanel() {
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
-  const response = useQuery({
-    queryKey: ['projects', project],
-    queryFn: () => getProject(project),
-  })
+  const response = useQuery(useProjectQueryOptions(project))
 
   useLoadNodes(response.data, project)
   useSynchronizeSelection()
@@ -182,17 +179,15 @@ function getNodeFields(
   }
 
   if (value.type === 'object') {
-    return value.values.flatMap(([key, value]) =>
-      [
-        getNodeFields(
-          `${path}.${extractFieldValue(key)}`,
-          value,
-          bannedKeys,
-          bannedValues,
-        ),
-        getNodeFields(`${path}.#key`, key, bannedKeys, bannedValues),
-      ].flat(),
-    )
+    return value.values.flatMap(([key, value]) => {
+      const entryPath = `${path}.${extractFieldValue(key)}`
+      const valueIsComplex = value.type === 'object' || value.type === 'array'
+      const keyPath = valueIsComplex ? `${entryPath}.#key` : `${entryPath}#key`
+      return [
+        getNodeFields(entryPath, value, bannedKeys, bannedValues),
+        getNodeFields(keyPath, key, bannedKeys, bannedValues),
+      ].flat()
+    })
   }
   if (value.type === 'array') {
     return value.values.flatMap((value, i) =>

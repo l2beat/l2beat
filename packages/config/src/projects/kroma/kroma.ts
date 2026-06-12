@@ -20,7 +20,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common/liveness'
 import { RISK_VIEW } from '../../common/riskView'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
@@ -63,8 +63,9 @@ export const kroma: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    redWarning:
-      'Kroma shut down on June 30, 2025. After this date, funds retrieval is not guaranteed. See [announcement](https://x.com/kroma_network/status/1936692354603520198) for details.',
+    redWarning: {
+      text: 'Kroma shut down on June 30, 2025. After this date, funds retrieval is not guaranteed. See [announcement](https://x.com/kroma_network/status/1936692354603520198) for details.',
+    },
     name: 'Kroma',
     slug: 'kroma',
     description:
@@ -221,7 +222,7 @@ export const kroma: ScalingProject = {
     ),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,

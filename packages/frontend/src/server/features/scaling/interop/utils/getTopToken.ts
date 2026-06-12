@@ -1,18 +1,21 @@
 import type { Project } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
-import { manifest } from '~/utils/Manifest'
-import type { AggregatedInteropTransferWithTokens } from '../types'
+import type { ProjectId } from '@l2beat/shared-pure'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import type {
+  AggregatedInteropTransferWithTokens,
+  ProtocolDisplayable,
+} from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
+import { getTopProtocolDisplay } from './getTopProtocolDisplay'
 
 export interface InteropTopTokenData {
+  id: string
   symbol: string
+  issuer: string | null
   iconUrl: string
   volume: number
   transferCount: number
-  topProtocol?: {
-    name: string
-    iconUrl: string
-  }
+  topProtocol?: ProtocolDisplayable
 }
 
 export interface GetTopTokenParams {
@@ -28,9 +31,6 @@ export function getTopToken({
   interopProjects,
   subgroupProjects,
 }: GetTopTokenParams): InteropTopTokenData | undefined {
-  const placeholderTokenIconUrl = manifest.getUrl(
-    '/images/token-placeholder.png',
-  )
   const projectsById = new Map(
     interopProjects.map((project) => [project.id, project]),
   )
@@ -38,7 +38,9 @@ export function getTopToken({
   const tokenVolumes = new Map<
     string,
     {
+      id: string
       symbol: string
+      issuer: string | null
       iconUrl: string
       volume: number
       transferCount: number
@@ -52,14 +54,16 @@ export function getTopToken({
 
     for (const token of record.tokens) {
       const tokenDetails = tokensDetailsMap.get(token.abstractTokenId)
-      if (!tokenDetails || tokenDetails.iconUrl === placeholderTokenIconUrl)
+      if (!tokenDetails || tokenDetails.iconUrl === TOKEN_PLACEHOLDER_ICON_URL)
         continue
 
       const tokenVolume = token.volume ?? 0
       const tokenTransferCount = token.transferCount ?? 0
 
       const current = tokenVolumes.get(token.abstractTokenId) ?? {
+        id: token.abstractTokenId,
         symbol: tokenDetails.symbol,
+        issuer: tokenDetails.issuer,
         iconUrl: tokenDetails.iconUrl,
         volume: 0,
         transferCount: 0,
@@ -82,25 +86,12 @@ export function getTopToken({
 
   if (!topToken) return undefined
 
-  const topProtocolId = Array.from(topToken.protocols.entries())
-    .toSorted((a, b) => b[1] - a[1])
-    .map(([key]) => key)[0]
-
-  const protocolProject = topProtocolId
-    ? projectsById.get(ProjectId(topProtocolId))
-    : undefined
-  const topProtocol = protocolProject
-    ? {
-        name:
-          protocolProject.interopConfig.name ??
-          protocolProject.shortName ??
-          protocolProject.name,
-        iconUrl: manifest.getUrl(`/icons/${protocolProject.slug}.png`),
-      }
-    : undefined
+  const topProtocol = getTopProtocolDisplay(topToken.protocols, projectsById)
 
   return {
+    id: topToken.id,
     symbol: topToken.symbol,
+    issuer: topToken.issuer,
     iconUrl: topToken.iconUrl,
     volume: topToken.volume,
     transferCount: topToken.transferCount,

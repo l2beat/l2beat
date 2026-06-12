@@ -1,47 +1,52 @@
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
+import { useTRPC } from '~/trpc/React'
 import {
-  DaThroughputTimeRangeValues,
+  type ChartRange,
+  optionToRange,
   rangeToResolution,
-} from '~/server/features/data-availability/throughput/utils/range'
-import { api } from '~/trpc/React'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+} from '~/utils/range/range'
 import { ChartRangeControls } from '../../core/chart/ChartRangeControls'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import { DaAbsoluteThroughputChart } from './DaAbsoluteThroughputChart'
 import { DaPercentageThroughputChart } from './DaPercentageThroughputChart'
+import { DaThroughputTimeRangeValues } from './timeRangeValues'
 
 export function DaThroughputChart() {
+  const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
   const [metric, setMetric] = useState<'percentage' | 'absolute'>('percentage')
   const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
 
-  const { data: chartData, isLoading } = api.da.chart.useQuery({
-    range,
-    includeScalingOnly,
-  })
+  const { data: chartData, isLoading } = useQuery(
+    trpc.da.chart.queryOptions({
+      range,
+      includeScalingOnly,
+    }),
+  )
 
+  const resolution = rangeToResolution(range)
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
         chartData?.data.map(([timestamp]) => ({ timestamp })),
+        { bucket: resolution },
       ),
-    [chartData],
+    [chartData, resolution],
   )
-
-  const resolution = rangeToResolution(range)
 
   return (
     <div>
       <div className="mb-4">
-        <h1 className="whitespace-nowrap font-bold text-xl md:text-2xl">
+        <h2 className="whitespace-nowrap font-bold text-xl md:text-2xl">
           {metric === 'percentage'
             ? 'Share of total data posted'
             : 'Total data posted'}
-        </h1>
+        </h2>
         <ChartTimeRange timeRange={timeRange} />
       </div>
       {metric === 'percentage' ? (

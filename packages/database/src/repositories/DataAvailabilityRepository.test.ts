@@ -662,6 +662,273 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     },
   )
 
+  describe(
+    DataAvailabilityRepository.prototype.getLatestTimestampsByConfigId.name,
+    () => {
+      it('returns latest timestamp for each configuration ID', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+          record(
+            'project-a',
+            'layer-a',
+            'config-id-1',
+            START + 1 * UnixTime.DAY,
+            200n,
+          ),
+          record('project-b', 'layer-a', 'config-id-2', START, 300n),
+          record(
+            'project-b',
+            'layer-a',
+            'config-id-2',
+            START + 2 * UnixTime.DAY,
+            400n,
+          ),
+        ])
+
+        const results = await repository.getLatestTimestampsByConfigId()
+
+        expect(results).toEqualUnsorted([
+          {
+            configurationId: 'config-id-1',
+            latestTimestamp: START + 1 * UnixTime.DAY,
+          },
+          {
+            configurationId: 'config-id-2',
+            latestTimestamp: START + 2 * UnixTime.DAY,
+          },
+        ])
+      })
+    },
+  )
+
+  describe(
+    DataAvailabilityRepository.prototype.getFirstTimestampByProjectIds.name,
+    () => {
+      it('returns the earliest timestamp across the given projects', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+          record(
+            'project-a',
+            'layer-a',
+            'config-id-1',
+            START - 2 * UnixTime.DAY,
+            100n,
+          ),
+          record(
+            'project-b',
+            'layer-a',
+            'config-id-2',
+            START - 5 * UnixTime.DAY,
+            100n,
+          ),
+        ])
+
+        const result = await repository.getFirstTimestampByProjectIds([
+          'project-a',
+          'project-b',
+        ])
+
+        expect(result).toEqual(START - 5 * UnixTime.DAY)
+      })
+
+      it('is scoped to the given projects', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+          record(
+            'project-b',
+            'layer-a',
+            'config-id-2',
+            START - 5 * UnixTime.DAY,
+            100n,
+          ),
+        ])
+
+        const result = await repository.getFirstTimestampByProjectIds([
+          'project-a',
+        ])
+
+        expect(result).toEqual(START)
+      })
+
+      it('returns undefined when there are no matching records', async () => {
+        const result = await repository.getFirstTimestampByProjectIds([
+          'missing',
+        ])
+
+        expect(result).toEqual(undefined)
+      })
+
+      it('returns undefined for an empty project list', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+        ])
+
+        const result = await repository.getFirstTimestampByProjectIds([])
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
+    DataAvailabilityRepository.prototype
+      .getFirstTimestampOfSummedProjectsByDaLayers.name,
+    () => {
+      it('returns the earliest project timestamp, excluding the daLayer own record', async () => {
+        await repository.upsertMany([
+          // daLayer's own aggregate record - must be ignored
+          record(
+            'layer-a',
+            'layer-a',
+            'config-id-0',
+            START - 10 * UnixTime.DAY,
+            100n,
+          ),
+          record(
+            'project-a',
+            'layer-a',
+            'config-id-1',
+            START - 3 * UnixTime.DAY,
+            100n,
+          ),
+          record(
+            'project-b',
+            'layer-a',
+            'config-id-2',
+            START - 1 * UnixTime.DAY,
+            100n,
+          ),
+          // different layer - must be ignored
+          record(
+            'project-c',
+            'layer-b',
+            'config-id-3',
+            START - 20 * UnixTime.DAY,
+            100n,
+          ),
+        ])
+
+        const result =
+          await repository.getFirstTimestampOfSummedProjectsByDaLayers([
+            'layer-a',
+          ])
+
+        expect(result).toEqual(START - 3 * UnixTime.DAY)
+      })
+
+      it('respects excludedProjectIds', async () => {
+        await repository.upsertMany([
+          record(
+            'project-a',
+            'layer-a',
+            'config-id-1',
+            START - 3 * UnixTime.DAY,
+            100n,
+          ),
+          record(
+            'project-b',
+            'layer-a',
+            'config-id-2',
+            START - 1 * UnixTime.DAY,
+            100n,
+          ),
+        ])
+
+        const result =
+          await repository.getFirstTimestampOfSummedProjectsByDaLayers(
+            ['layer-a'],
+            ['project-a'],
+          )
+
+        expect(result).toEqual(START - 1 * UnixTime.DAY)
+      })
+
+      it('returns undefined for an empty daLayer list', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+        ])
+
+        const result =
+          await repository.getFirstTimestampOfSummedProjectsByDaLayers([])
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
+    DataAvailabilityRepository.prototype.getFirstTimestampByDaLayers.name,
+    () => {
+      it('returns the earliest timestamp including the daLayer own record', async () => {
+        await repository.upsertMany([
+          // daLayer's own aggregate record - must be included
+          record(
+            'layer-a',
+            'layer-a',
+            'config-id-0',
+            START - 10 * UnixTime.DAY,
+            100n,
+          ),
+          record(
+            'project-a',
+            'layer-a',
+            'config-id-1',
+            START - 3 * UnixTime.DAY,
+            100n,
+          ),
+          // different layer - must be ignored
+          record(
+            'project-c',
+            'layer-b',
+            'config-id-3',
+            START - 20 * UnixTime.DAY,
+            100n,
+          ),
+        ])
+
+        const result = await repository.getFirstTimestampByDaLayers(['layer-a'])
+
+        expect(result).toEqual(START - 10 * UnixTime.DAY)
+      })
+
+      it('respects excludedProjectIds', async () => {
+        await repository.upsertMany([
+          record(
+            'project-a',
+            'layer-a',
+            'config-id-1',
+            START - 3 * UnixTime.DAY,
+            100n,
+          ),
+          record(
+            'project-b',
+            'layer-a',
+            'config-id-2',
+            START - 1 * UnixTime.DAY,
+            100n,
+          ),
+        ])
+
+        const result = await repository.getFirstTimestampByDaLayers(
+          ['layer-a'],
+          ['project-a'],
+        )
+
+        expect(result).toEqual(START - 1 * UnixTime.DAY)
+      })
+
+      it('returns undefined for an empty daLayer list', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+        ])
+
+        const result = await repository.getFirstTimestampByDaLayers([])
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
   describe(DataAvailabilityRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.upsertMany([

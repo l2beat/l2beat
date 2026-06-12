@@ -16,7 +16,7 @@ export const ArbitrumScheduledTransactionsHandlerDefinition = v.strictObject({
 
 const executeFn = 'execute(address upgrade, bytes upgradeCallData) payable'
 const executeCallFn =
-  'executeCall(address upgrade, bytes upgradesCallData) payable'
+  'executeCall(address upgrade, bytes upgradeCallData) payable'
 const ExecutorInterface = new utils.Interface([
   `function ${executeFn}`,
   `function ${executeCallFn}`,

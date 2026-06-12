@@ -3,7 +3,7 @@ import type { ApiCodeSearchResponse } from '../../../api/types'
 import { useCodeStore } from '../../../components/editor/store'
 import { IS_READONLY } from '../../../config/readonly'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
-import { useMultiViewStore } from '../multi-view/store'
+import { useDockingStore } from '../multi-view/store'
 import { HighlightedText } from './HighlightedText'
 import { useSearchStore } from './store'
 
@@ -18,7 +18,7 @@ export function CodeSearchResultEntry({
 }: CodeSearchEntryProps) {
   const { setOpen, searchTerm, selectedIndex } = useSearchStore()
   const { setSourceIndex, showRange } = useCodeStore()
-  const { ensurePanel } = useMultiViewStore()
+  const ensureLeaf = useDockingStore((state) => state.ensureLeaf)
   const codeSearchTerm = getCodeSearchTerm(searchTerm).content
 
   let runningIndex = 0
@@ -52,7 +52,7 @@ export function CodeSearchResultEntry({
                       : 'bg-coffee-700 text-coffee-200 hover:bg-coffee-600 hover:text-autumn-300',
                   )}
                   onClick={() => {
-                    ensurePanel('code')
+                    ensureLeaf('code')
                     select(result.address)
                     setOpen(false)
                     setSourceIndex(result.address, loc.index)

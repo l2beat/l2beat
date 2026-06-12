@@ -20,7 +20,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
@@ -29,6 +29,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 import {
   explorerReferences,
   safeGetImplementation,
@@ -144,7 +145,7 @@ export const zircuit: ScalingProject = {
       )} after it has been posted.`,
     },
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -178,6 +179,7 @@ export const zircuit: ScalingProject = {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
       executionDelay: ZIRCUIT_FINALIZATION_PERIOD_SECONDS,
+      permissioned: true,
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -371,6 +373,7 @@ export const zircuit: ScalingProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     programHashes: zircuitProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getVerifiers(),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   technology: {
@@ -511,4 +514,11 @@ export const zircuit: ScalingProject = {
       type: 'general',
     },
   ],
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const sp1Verifiers = getSP1Verifiers(discovery)
+  // mock verifier is not an actual sp1 verifier and needs to be removed
+  const mockVerifier = discovery.getContract('SP1MockVerifierWithHash').address
+  return sp1Verifiers.filter((item) => item !== mockVerifier)
 }

@@ -4,7 +4,10 @@ import {
   type LoggerOptions,
   type LoggerTransport,
 } from '@l2beat/backend-tools'
-import type { ElasticSearchTransportOptions } from '@l2beat/backend-tools/elastic-search'
+import {
+  ElasticSearchTransport,
+  type ElasticSearchTransportOptions,
+} from '@l2beat/backend-tools/elastic-search'
 import { env } from '~/env'
 
 let logger: Logger | undefined
@@ -31,13 +34,11 @@ export function getLogger(): Logger {
       throw new Error('ES_NODE, ES_API_KEY, and ES_INDEX_PREFIX must be set')
     }
 
-    const {
-      ElasticSearchTransport,
-    } = require('@l2beat/backend-tools/elastic-search')
     const options: ElasticSearchTransportOptions = {
       node: env.ES_NODE,
       apiKey: env.ES_API_KEY,
       indexPrefix: env.ES_INDEX_PREFIX,
+      bufferAlertBytes: env.ES_BUFFER_ALERT_BYTES,
       flushInterval: env.ES_FLUSH_INTERVAL,
     }
 

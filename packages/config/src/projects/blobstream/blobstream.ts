@@ -12,6 +12,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('blobstream')
@@ -21,6 +22,7 @@ export const blobstream: BaseProject = {
   slug: 'blobstream',
   name: 'Blobstream',
   shortName: undefined,
+  aliases: ['Celestia'],
   addedAt: UnixTime(1729253328), // 2024-10-18T12:08:48Z
   // data
   statuses: {
@@ -148,6 +150,7 @@ export const blobstream: BaseProject = {
       },
     ],
     programHashes: getBlobstreamVKeys().map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getSP1Verifiers(discovery),
   },
   milestones: [
     {

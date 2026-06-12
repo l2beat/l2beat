@@ -6,6 +6,7 @@ import type {
   MulticallV3Response,
 } from '../../clients/rpc/multicall/MulticallV3Client'
 import { isLimitExceededError } from '../../clients/rpc/RpcClient'
+import type { RpcMetricsAggregator } from '../../clients/rpc/RpcMetricsAggregator'
 import type {
   CallParameters,
   EVMBlock,
@@ -38,6 +39,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   chain: string
   generateId?: () => string
   multicallClient?: MulticallV3Client
+  rpcMetricsAggregator?: RpcMetricsAggregator
   timeout?: number
 }
 
@@ -103,6 +105,10 @@ export class RpcClientCompat implements IRpcClient {
       `${RpcClientCompat.name}:${deps.chain}`,
       deps.generateId,
       deps.timeout,
+      deps.rpcMetricsAggregator?.createRecorder({
+        rpcChain: deps.chain,
+        rpcClient: RpcClientCompat.name,
+      }),
     )
     const retryOptions = toRetryOptions(deps.retryStrategy)
     const compat = new RpcClientCompat(client, deps.chain, deps.multicallClient)
@@ -231,7 +237,7 @@ export class RpcClientCompat implements IRpcClient {
     const result = await this.ethRpcClient.call(
       {
         to: callParams.to,
-        input: callParams.data.toString(),
+        input: callParams.input.toString(),
       },
       blockNumber === 'latest' ? 'latest' : BigInt(blockNumber),
     )
@@ -264,12 +270,17 @@ export class RpcClientCompat implements IRpcClient {
 
 function toTx(tx: RpcTransaction): EVMTransaction {
   return {
+    hash: tx.hash,
     from: tx.from,
     to: tx.to ?? undefined,
     data: tx.input,
-    hash: tx.hash,
     type: tx.type?.toString(),
     value: tx.value,
+    calls: tx.calls?.map((call) => ({
+      to: call.to?.toString(),
+      data: call.input ?? call.data,
+      value: call.value,
+    })),
     blobVersionedHashes: tx.blobVersionedHashes ?? undefined,
     blockNumber: tx.blockNumber !== null ? Number(tx.blockNumber) : null,
   }
@@ -284,6 +295,8 @@ export function toEVMLog(log: RpcLog): EVMLog {
     logIndex: Number(log.logIndex ?? -1),
     topics: log.topics,
     transactionHash: log.transactionHash ?? '',
+    blockTimestamp:
+      log.blockTimestamp !== undefined ? Number(log.blockTimestamp) : undefined,
   }
 }
 

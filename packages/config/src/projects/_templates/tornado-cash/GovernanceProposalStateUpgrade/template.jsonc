@@ -1,0 +1,74 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "GovernanceProposalStateUpgrade",
+  "description": "Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.",
+  "category": "gov",
+  "ignoreMethods": ["checkIfQuorumReached", "proposalCodehashes", "proposals"],
+  "fields": {
+    "$admin": {
+      "description": "Can upgrade the governance implementation.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the governance implementation, changing proposal execution and treasury-control logic."
+        }
+      ]
+    },
+    "$implementation": {
+      "description": "Current governance implementation.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "EXECUTION_DELAY": {
+      "description": "Delay between a proposal succeeding and becoming executable.",
+      "severity": "HIGH"
+    },
+    "EXECUTION_EXPIRATION": {
+      "description": "Window after the execution delay during which a successful proposal can still be executed.",
+      "severity": "LOW"
+    },
+    "QUORUM_VOTES": {
+      "description": "Minimum combined votes required for a proposal to reach quorum.",
+      "severity": "LOW"
+    },
+    "PROPOSAL_THRESHOLD": {
+      "description": "Minimum voting power required to create a proposal.",
+      "severity": "LOW"
+    },
+    "VOTING_DELAY": {
+      "description": "Delay between proposal creation and the start of voting.",
+      "severity": "LOW"
+    },
+    "VOTING_PERIOD": {
+      "description": "Length of the voting window for proposals.",
+      "severity": "LOW"
+    },
+    "CLOSING_PERIOD": {
+      "description": "Additional period used while closing proposals in the patched governance logic.",
+      "severity": "LOW"
+    },
+    "VOTE_EXTEND_TIME": {
+      "description": "Extra lock time applied to voting positions around proposal participation.",
+      "severity": "LOW"
+    },
+    "gasCompensationVault": {
+      "description": "Vault that funds gas reimbursements for governance actions.",
+      "severity": "HIGH"
+    },
+    "returnMultisigAddress": {
+      "description": "Multisig hardcoded into the upgrade path for specific return flows in governance.",
+      "severity": "HIGH"
+    },
+    "Staking": {
+      "description": "Staking rewards contract notified when governance lock balances change."
+    },
+    "torn": {
+      "description": "Governance token used for proposal creation, voting, and locking."
+    },
+    "userVault": {
+      "description": "Vault that escrows users' locked TORN and serves governance withdrawals.",
+      "severity": "HIGH"
+    }
+  }
+}

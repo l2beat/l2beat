@@ -1,23 +1,24 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Project } from '@l2beat/config'
-import type {
-  KnownInteropBridgeType,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import type { KnownInteropBridgeType, UnixTime } from '@l2beat/shared-pure'
+import capitalize from 'lodash/capitalize'
+import { mapInteropChainsToWithIcons } from '~/pages/interop/utils/mapInteropChainsToWithIcons'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
+import { INTEROP_PAIR_SEPARATOR } from '../consts'
 import type {
-  AggregatedInteropTransferWithTokens,
   ByBridgeTypeData,
-  DurationSplitMap,
   InteropSelectionInput,
+  InteropTransferWithTokens,
+  ProtocolDisplayable,
   ProtocolEntry,
 } from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
-import { buildDurationSplitMap, getAverageDuration } from './getAverageDuration'
+import { getAverageDuration, getDurationSplit } from './getAverageDuration'
 import { getChainsData } from './getChainsData'
 import { flowsMapToSorted } from './getFlows'
+import { getInteropChains } from './getInteropChains'
+import { getNetMintedValueUsd } from './getNetMintedValueUsd'
 import {
   getProtocolsDataMap,
   getProtocolsDataMapByBridgeType,
@@ -31,7 +32,7 @@ const TOP_ITEMS_LIMIT = 3
 const logger = getLogger().for('getAllProtocolEntries')
 
 export function getProtocolEntries(
-  records: AggregatedInteropTransferWithTokens[],
+  records: InteropTransferWithTokens[],
   tokensDetailsMap: TokensDetailsMap,
   interopProjects: Project<'interopConfig'>[],
   type: KnownInteropBridgeType | undefined,
@@ -39,14 +40,19 @@ export function getProtocolEntries(
   selection: InteropSelectionInput,
 ): {
   entries: ProtocolEntry[]
-  zeroTransferProtocols: { name: string; iconUrl: string }[]
+  zeroTransferProtocols: ProtocolDisplayable[]
 } {
-  const durationSplitMap = buildDurationSplitMap(interopProjects)
   const protocolsDataMap = getProtocolsDataMap(records)
   const protocolsDataByBridgeTypeMap = getProtocolsDataMapByBridgeType(records)
+  const chainsById = new Map(
+    mapInteropChainsToWithIcons(manifest, getInteropChains()).map((chain) => [
+      chain.id,
+      { id: chain.id, name: chain.name, iconUrl: chain.iconUrl },
+    ]),
+  )
 
   const entries: ProtocolEntry[] = []
-  const zeroTransferProtocols: { name: string; iconUrl: string }[] = []
+  const zeroTransferProtocols: ProtocolDisplayable[] = []
 
   for (const project of interopProjects) {
     const data = protocolsDataMap.get(project.id)
@@ -55,14 +61,17 @@ export function getProtocolEntries(
       (p) => p.id === project.interopConfig.subgroupId,
     )
 
+    const byBridgeData = protocolsDataByBridgeTypeMap.get(project.id)
     const byBridgeType = getByBridgeTypeData(
-      project.id,
+      project,
       protocolsDataByBridgeTypeMap,
       tokensDetailsMap,
-      durationSplitMap,
       logger,
       selection,
     )
+    const topRoute = byBridgeData
+      ? getTopRoute(byBridgeData, chainsById)
+      : undefined
 
     const bridgeTypes = getRelevantBridgeTypes(project, undefined).sort(
       sortBridgeTypesFn,
@@ -72,6 +81,7 @@ export function getProtocolEntries(
     if (!data && (!type || bridgeTypes.includes(type))) {
       zeroTransferProtocols.push({
         name: project.interopConfig.name ?? project.name,
+        slug: project.slug,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       })
       continue
@@ -81,30 +91,28 @@ export function getProtocolEntries(
     if (!data) continue
 
     const relevantBridgeTypes = getRelevantBridgeTypes(project, type)
+    const durationSplitForProtocol = getDurationSplit(
+      project,
+      relevantBridgeTypes,
+    )
     const averageDuration =
       project.interopConfig.transfersTimeMode === 'unknown'
         ? { type: 'unknown' as const }
-        : getAverageDuration(
-            project.id,
-            relevantBridgeTypes,
-            data,
-            durationSplitMap,
-          )
+        : getAverageDuration(data, durationSplitForProtocol)
 
     const tokens = getTokensData({
-      projectId: project.id,
-      bridgeTypes: undefined, // No bridge type split for aggregated view
       tokens: data.tokens,
       tokensDetailsMap,
-      durationSplitMap: undefined, // No duration split map for aggregated view
+      interopProjects,
       unknownTransfersCount: data.transferCount - data.identifiedTransferCount,
+      // No duration split map for aggregated view
+      durationSplit: undefined,
       logger,
     })
     const chains = getChainsData({
-      projectId: project.id,
-      bridgeTypes: undefined, // No bridge type split for aggregated view
       chains: data.chains,
-      durationSplitMap: undefined, // No duration split map for aggregated view
+      // No duration split map for aggregated view
+      durationSplit: undefined,
       logger,
     })
 
@@ -114,6 +122,8 @@ export function getProtocolEntries(
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       name: project.interopConfig.name ?? project.name,
       shortName: project.interopConfig.shortName,
+      description: project.interopConfig.description,
+      type: project.interopConfig.type,
       bridgeTypes,
       isAggregate: project.interopConfig.isAggregate,
       subgroup: subgroupProject
@@ -135,11 +145,12 @@ export function getProtocolEntries(
       maxTransferValueUsd: data.maxTransferValueUsd,
       averageDuration,
       averageValueInFlight: data.averageValueInFlight,
-      netMintedValue:
-        data.mintedValueUsd !== undefined && data.burnedValueUsd !== undefined
-          ? data.mintedValueUsd - data.burnedValueUsd
-          : undefined,
+      netMintedValue: getNetMintedValueUsd(data),
+      topRoute,
       snapshotTimestamp,
+      filterable: [
+        { id: 'category', value: capitalize(project.interopConfig.type) },
+      ],
     })
   }
 
@@ -150,14 +161,13 @@ export function getProtocolEntries(
 }
 
 function getByBridgeTypeData(
-  projectId: ProjectId,
+  project: Project<'interopConfig'>,
   protocolsDataByBridgeTypeMap: Map<string, ProtocolDataByBridgeType>,
   tokensDetailsMap: TokensDetailsMap,
-  durationSplitMap: DurationSplitMap | undefined,
   logger: Logger,
   selection: InteropSelectionInput,
 ): ByBridgeTypeData | undefined {
-  const data = protocolsDataByBridgeTypeMap.get(projectId)
+  const data = protocolsDataByBridgeTypeMap.get(project.id)
   if (!data) return undefined
 
   return {
@@ -172,11 +182,10 @@ function getByBridgeTypeData(
               : null,
           tokens: getTopItems(
             getTokensData({
-              projectId,
-              bridgeTypes: ['lockAndMint'],
               tokens: data.lockAndMint.tokens,
               tokensDetailsMap,
-              durationSplitMap,
+              interopProjects: [project],
+              durationSplit: getDurationSplit(project, ['lockAndMint']),
               unknownTransfersCount:
                 data.lockAndMint.transferCount -
                 data.lockAndMint.identifiedTransferCount,
@@ -185,12 +194,7 @@ function getByBridgeTypeData(
             TOP_ITEMS_LIMIT,
           ),
           flows: flowsMapToSorted(data.lockAndMint.flows, selection),
-          netMintedValue:
-            data.lockAndMint.mintedValueUsd !== undefined &&
-            data.lockAndMint.burnedValueUsd !== undefined
-              ? data.lockAndMint.mintedValueUsd -
-                data.lockAndMint.burnedValueUsd
-              : undefined,
+          netMintedValue: getNetMintedValueUsd(data.lockAndMint),
         }
       : undefined,
     nonMinting: data.nonMinting
@@ -203,11 +207,10 @@ function getByBridgeTypeData(
               : null,
           tokens: getTopItems(
             getTokensData({
-              projectId,
-              bridgeTypes: ['nonMinting'],
               tokens: data.nonMinting.tokens,
               tokensDetailsMap,
-              durationSplitMap,
+              interopProjects: [project],
+              durationSplit: getDurationSplit(project, ['nonMinting']),
               unknownTransfersCount:
                 data.nonMinting.transferCount -
                 data.nonMinting.identifiedTransferCount,
@@ -230,11 +233,10 @@ function getByBridgeTypeData(
               : null,
           tokens: getTopItems(
             getTokensData({
-              projectId,
-              bridgeTypes: ['burnAndMint'],
               tokens: data.burnAndMint.tokens,
               tokensDetailsMap,
-              durationSplitMap,
+              interopProjects: [project],
+              durationSplit: getDurationSplit(project, ['burnAndMint']),
               unknownTransfersCount:
                 data.burnAndMint.transferCount -
                 data.burnAndMint.identifiedTransferCount,
@@ -243,6 +245,30 @@ function getByBridgeTypeData(
             TOP_ITEMS_LIMIT,
           ),
           flows: flowsMapToSorted(data.burnAndMint.flows, selection),
+        }
+      : undefined,
+    unknown: data.unknown
+      ? {
+          volume: data.unknown.volume,
+          transferCount: data.unknown.transferCount,
+          averageValue:
+            data.unknown.identifiedTransferCount > 0
+              ? data.unknown.volume / data.unknown.identifiedTransferCount
+              : null,
+          tokens: getTopItems(
+            getTokensData({
+              tokens: data.unknown.tokens,
+              tokensDetailsMap,
+              interopProjects: [project],
+              durationSplit: undefined,
+              unknownTransfersCount:
+                data.unknown.transferCount -
+                data.unknown.identifiedTransferCount,
+              logger,
+            }),
+            TOP_ITEMS_LIMIT,
+          ),
+          flows: flowsMapToSorted(data.unknown.flows, selection),
         }
       : undefined,
   }
@@ -255,4 +281,54 @@ function sortBridgeTypesFn(
   b: KnownInteropBridgeType,
 ): number {
   return bridgeTypesOrder.indexOf(a) - bridgeTypesOrder.indexOf(b)
+}
+
+/**
+ * Returns the highest-volume cross-chain route across all bridge types for a
+ * single protocol, with src/dst chain names and icon URLs resolved for direct
+ * rendering. Same-chain entries are skipped.
+ */
+function getTopRoute(
+  data: ProtocolDataByBridgeType,
+  chainsById: Map<
+    string,
+    {
+      id: string
+      name: string
+      iconUrl: string
+    }
+  >,
+): ProtocolEntry['topRoute'] {
+  let topSrcId: string | undefined
+  let topDstId: string | undefined
+  let topVolume = 0
+  const seen = new Map<string, number>()
+
+  for (const sub of [
+    data.lockAndMint,
+    data.nonMinting,
+    data.burnAndMint,
+    data.unknown,
+  ]) {
+    if (!sub) continue
+    for (const [key, volume] of sub.flows) {
+      const total = (seen.get(key) ?? 0) + volume
+      seen.set(key, total)
+
+      const [srcId, dstId] = key.split(INTEROP_PAIR_SEPARATOR)
+      if (!srcId || !dstId || srcId === dstId) continue
+      if (total > topVolume) {
+        topSrcId = srcId
+        topDstId = dstId
+        topVolume = total
+      }
+    }
+  }
+
+  if (!topSrcId || !topDstId) return undefined
+  const srcChain = chainsById.get(topSrcId)
+  const dstChain = chainsById.get(topDstId)
+  if (!srcChain || !dstChain) return undefined
+
+  return { srcChain, dstChain, volume: topVolume }
 }

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf583178e295eb439c5fd38cc76a7d27634849f87
+Generated with discovered.json: 0xc57abece6053f7e812d4a86bb12da9c260b2fd8b
 
-# Diff at Mon, 23 Mar 2026 10:57:05 GMT:
+# Diff at Fri, 12 Jun 2026 10:18:55 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1771857555
-- current timestamp: 1771857555
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780654176
+- current timestamp: 1780654176
 
 ## Description
 
@@ -14,7 +14,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1771857555 (main branch discovery), not current.
+discovery. Values are for block 1780654176 (main branch discovery), not current.
 
 ```diff
     EOA  (arb1:0x2E5d207a4C0F7e7C52F6622DCC6EB44bC0fE1A13) {
@@ -23,6 +23,787 @@ discovery. Values are for block 1771857555 (main branch discovery), not current.
 -        true
       eoaWithUpgradePermissions:
 +        true
+    }
+```
+
+Generated with discovered.json: 0x777435225bb5fb65a1099b7fb61d09a2bc571e68
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780654176
+- current timestamp: 1780654176
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780654176 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x152FFeF04881BD1390D2A52009f42d56EaC7AA03) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x6870ab4bd4c113ef385349199edad6d6e4d5de41
+
+# Diff at Fri, 05 Jun 2026 10:11:37 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3501d14787f111a20580bca1fdb97e32abfb1f2c block: 1779719447
+- current timestamp: 1780654176
+
+## Description
+
+Molten changed to reproducible TEE verification SP1 programs, also upgraded to SP1 v6.1.0.
+
+## Watched changes
+
+```diff
+    contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22) [espresso/Sequencing/NitroEnclaveVerifier] {
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+      values.succintZkConfig.verifierId:
+-        "0x00e874289e8c7f42381b6220f438801d2d1478dc8230f866a31e5ceec6e93322"
++        "0x00643c7149cf335e7ec9d3f3301e69658a7f0ef2bc7546509c257ed8809f28e1"
+      values.succintZkConfig.aggregatorId:
+-        "0x002bb66c60302a81a621d7899e3f6ee1d0db9fb1eae5d1e80e94a33cb1e24922"
++        "0x00294928e44f0cdc9c74848c4cafcdb29f733a3bc07408c240be3d5afe750b3e"
+      values.succintZkConfig.zkVerifier:
+-        "arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D"
++        "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1779719447 => .flat}/SP1Verifier.sol    | 114 +++++++++++++++------
+ 1 file changed, 82 insertions(+), 32 deletions(-)
+```
+
+Generated with discovered.json: 0xc4133f2ab037b45c02e16f7dad7dda9d35b8b01e
+
+# Diff at Mon, 25 May 2026 14:33:27 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6898129972dbc5b1b4f1389afaf9cb3fb7fd3380 block: 1779198858
+- current timestamp: 1779719447
+
+## Description
+
+Picked up the new `ArbOS v51.1 wasmModuleRoot` label from the globalConfig type map. Config-only — chain's own wasmModuleRoot is unchanged.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779198858 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x83bbc4faf9f265527dcb0f36b54b14b253076ed2
+
+# Diff at Tue, 19 May 2026 13:56:37 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@307f5c3dfdab6a4f88448861a0bb75f0043b762b block: 1778232916
+- current timestamp: 1779198858
+
+## Description
+
+Caldera Multisig 1 signer removed. Included even though the project is archived (#11869) because it still appears on the discovery status dashboard.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "arb1:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.multisigThreshold:
+-        "3 of 8 (38%)"
++        "3 of 7 (43%)"
+    }
+```
+
+Generated with discovered.json: 0xdebc655d6f44a749101c6ac5a976c4d6408ca02d
+
+# Diff at Fri, 15 May 2026 12:36:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778232916
+- current timestamp: 1778232916
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778232916 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.1:
+-        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
++        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x23b7734232dA19D2Cf73010a25C8Ffc4eBfc2f5f) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
++        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x59CDE86f1a538a7a2329269d3704CA302DF23736) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
++        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
++        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8) [orbitstack/OneStepProverHostIo_Celestia] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.
+      sourceHashes.0:
+-        "0xa7c3a1f78e84574d1701344ee35b627f4f00d0fbf73f1e7a2ae8aeaeb15007d8"
++        "0x75ce118e7fcc2ffbfdf5d8f1e027174a2e1dffbed589ff660d8ad7d7b12ac8b5"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0xe3b13e7b160aE4b799A7B3F9877316e717706291) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
++        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
+    }
+```
+
+Generated with discovered.json: 0x69d379ff55e8cfba7e1f25ec28f34ff95d149517
+
+# Diff at Fri, 08 May 2026 09:37:24 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1776085185
+- current timestamp: 1778232916
+
+## Description
+
+Shared SafeL2 (`arb1:0x6Dc61D9E...`) — signer `0x5582a8A4` removed. Threshold unchanged at 2; total signers 4 → 3 (50% → 67%). Same shared multisig change observed on `apechain`, `appchain`, `rari`.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "arb1:0x5582a8A4f2B04341697cEA4Cf4289a01814C26e6"
+      values.multisigThreshold:
+-        "2 of 4 (50%)"
++        "2 of 3 (67%)"
+    }
+```
+
+Generated with discovered.json: 0x1d90eb9515a33624d2ee3dd6497a0b45e2869918
+
+# Diff at Fri, 08 May 2026 07:51:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1776085185
+- current timestamp: 1776085185
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776085185 (main branch discovery), not current.
+
+```diff
+    contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22) [espresso/Sequencing/NitroEnclaveVerifier] {
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+      sourceHashes.0:
+-        "0x17b0e343334d9d6d39fead84d7cfc2adec7c0a43842d1ad09bd2674f4cd1c813"
++        "0xf656ce2d63c52a1771ea6f9603f0b5af9463f80b497d23d4a26cd8ed015fb107"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.0:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
++        "0xb739f8156f36efd1dca81c7048413241da1e5bf4a5f98001523a474136b8defd"
+      sourceHashes.1:
+-        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
++        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) [orbitstack/SequencerInbox_Celestia_Espresso] {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      sourceHashes.1:
+-        "0xcdaa3b1ff5e1273f61b232e8a628be7cb2d01589513ea173153802912905243c"
++        "0x7f099bc73853bb4dbfd28a6dbf92ffa40a5845cb2fa715ebb3be41b4ee20e699"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x235000876bd58336C802B3546Fc0250f285fCc79) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
++        "0xb33f29d585cf178f81b64440ee9a3c598cd398ad18d2b3c6dc6c711eaf63d5e4"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x23b7734232dA19D2Cf73010a25C8Ffc4eBfc2f5f) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
++        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x59CDE86f1a538a7a2329269d3704CA302DF23736) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
++        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
+    }
+```
+
+```diff
+    contract ERC20Gateway (arb1:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80) [orbitstack/ERC20Gateway] {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      sourceHashes.1:
+-        "0x17c9d8bf5017982cb88ab1d4f22a085c097ab9c7a910fa109fe9e7204840bef8"
++        "0xe51bf51c986c2124e5af39cc6e16ee63de27ee0cfa9b73dc4b10c49a4d994d2f"
+    }
+```
+
+```diff
+    contract QuoteVerifier (arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7) [espresso/Sequencing/QuoteVerifier] {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      sourceHashes.0:
+-        "0x17cf7a67e150ce8a604a58eacd58d5a05651d1783698d5782148bdaf167b3236"
++        "0x3a2d0c56ad02170b854c91e68bf5664f91e6ffeaf6e4c03da8815afea464c874"
+    }
+```
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
++        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+    }
+```
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3) [espresso/Sequencing/EspressoTEEVerifier_gateway] {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+      sourceHashes.0:
+-        "0x6ccdd5bbf0ec94df446cc0d8fb3fc929c373c8d1dcbaced844d6e39997b294cb"
++        "0x01a9491f3fb770154d17c7bba9803dedc2c226526e22ef5f13a068811dac8b75"
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
++        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8) [orbitstack/OneStepProverHostIo_Celestia] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.
+      sourceHashes.0:
+-        "0xd8aa733150471ae7c5f80c9da64d49d363b060d6a993934483a9c749033b3678"
++        "0xa7c3a1f78e84574d1701344ee35b627f4f00d0fbf73f1e7a2ae8aeaeb15007d8"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0x7E67B50d510929610f840fb09707feA01b8E457B) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
++        "0xd38b92884347e76d4ce463bc343cbf508eefb150146ed51cb80c2aee8c565122"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sourceHashes.1:
+-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
++        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
+    }
+```
+
+```diff
+    contract ValidatorUtils (arb1:0x9e83136d4B3AD04C766591EA51712F9aEa3194C0) [orbitstack/ValidatorUtils] {
+    +++ description: This contract implements view only utilities for validators.
+      sourceHashes.0:
+-        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
++        "0xebcd95194086ae9c3b9095578172a3192d9d209e5b159956f1d266910d248334"
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      sourceHashes.1:
+-        "0x33422e0ac90902db5dad442b006c9df60e262556d8ad286808d133b5429a3eb0"
++        "0xf536eecfe8b70bf9ba1ea603efcc5ee20c36b0413e4e5258494893cbde454898"
+    }
+```
+
+```diff
+    contract SP1Verifier (arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
++        "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0xE1d32C985825562edAa906fAC39295370Db72195) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
++        "0x44eab8a1244ce0ae33674b88b4211d02a3f4d060cf9a7791854f3263c039813a"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0xe3b13e7b160aE4b799A7B3F9877316e717706291) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
++        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
+    }
+```
+
+```diff
+    contract EspressoSGXTEEVerifier (arb1:0xEA25045bC30ceE23A280c51020F0bBb78781A297) [espresso/Sequencing/EspressoSGXTEEVerifier] {
+    +++ description: Verifies attestations of an Intel SGX TEE.
+      sourceHashes.0:
+-        "0xb506b0038120d7c5021a0964fa2fa3ac35c16fe8c6d8942f99102c158074d57a"
++        "0xbbe9c2cadf076bfa995abfadb25ecea15fdba6af89aefc39fca6442113844b93"
+    }
+```
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89) [espresso/Sequencing/EspressoNitroTEEVerifier] {
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+      sourceHashes.0:
+-        "0x2962b9a9d9e69990175a96ba7720ca7314ad014f804211ba3f1f588c406a349e"
++        "0x2605440fbb12f634b4f76ca3df637bfb0ac30ae84b0c455e6dee76bd20010c2f"
+    }
+```
+
+Generated with discovered.json: 0xe559ca42eaaf8548a15916914ddd145afc7e8952
+
+# Diff at Tue, 05 May 2026 10:22:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1776085185
+- current timestamp: 1776085185
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776085185 (main branch discovery), not current.
+
+```diff
+    contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22) {
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+      deployerAddress:
++        "arb1:0xf37831515e1ddf6bB30eE612545bf87047946602"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x235000876bd58336C802B3546Fc0250f285fCc79) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x23b7734232dA19D2Cf73010a25C8Ffc4eBfc2f5f) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x59CDE86f1a538a7a2329269d3704CA302DF23736) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract ERC20Gateway (arb1:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract QuoteVerifier (arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      deployerAddress:
++        "arb1:0xDf841B239bE7a6b37366005107069b7410da4Ff9"
+    }
+```
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xba9A3c0a22bAebE8c4926227BdE32d6EdC0D5d28"
+    }
+```
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+      deployerAddress:
++        "arb1:0x8Cde072E84932857262648C100d0A2227c495a55"
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0x7E67B50d510929610f840fb09707feA01b8E457B) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract ValidatorUtils (arb1:0x9e83136d4B3AD04C766591EA51712F9aEa3194C0) {
+    +++ description: This contract implements view only utilities for validators.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract Outbox (arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract SP1Verifier (arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "arb1:0xf37831515e1ddf6bB30eE612545bf87047946602"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0xE1d32C985825562edAa906fAC39295370Db72195) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0xe3b13e7b160aE4b799A7B3F9877316e717706291) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract EspressoSGXTEEVerifier (arb1:0xEA25045bC30ceE23A280c51020F0bBb78781A297) {
+    +++ description: Verifies attestations of an Intel SGX TEE.
+      deployerAddress:
++        "arb1:0x8Cde072E84932857262648C100d0A2227c495a55"
+    }
+```
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89) {
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+      deployerAddress:
++        "arb1:0x8Cde072E84932857262648C100d0A2227c495a55"
+    }
+```
+
+Generated with discovered.json: 0x50ccae477e3687629d42c61439f5fb88155a2806
+
+# Diff at Tue, 14 Apr 2026 10:18:02 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@cab23b784a70bbaea251f1f4559cea26a4d51f77 block: 1771857555
+- current timestamp: 1776085185
+
+## Description
+
+Espresso TEE verification architecture changed: AWS Nitro enclave attestations are now verified via ZK proofs (RiscZero or Succinct SP1) instead of on-chain X.509 certificate chain validation.
+
+- Old EspressoNitroTEEVerifier (0xf55BeB) + CertManager (0x1A484E) deleted. CertManager previously validated AWS Nitro cert chains in Solidity - expensive gas cost.
+- New EspressoNitroTEEVerifier (0xF99De7) delegates attestation verification to a new NitroEnclaveVerifier (0x0d4cD6) that accepts ZK proofs of off-chain attestation validation. Currently EspressoNitroTEEVerifier only works with Succinct SP1 Turbo proofs, however RiscZero and Pico proofs could easily be supported as well.
+- New NitroEnclaveVerifier (0x0d4cD6) manages zk verifier contracts and allowed program ids, currently only for SP1.
+- EspressoTEEVerifier (0x7A7E3B, unchanged) now points to the new NitroTEEVerifier.
+- SafeL2 lost the interact permission on the old verifier (no longer exists).
+
+Security implications: same TEE trust model (AWS Nitro), but adds trust in the ZK verifier (RiscZero/Succinct/Pico) and configured program IDs. Owner of EspressoNitroTEEVerifier can still register signers and set valid enclave hashes.
+
+EspressoNitroTEEVerifier: [diff](https://disco.l2beat.com/diff/arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5/arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89)
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      values.sequencerVersion:
+-        "0x88"
++        "0x00"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CertManager (arb1:0x1A484E3f74984d29EBC39909535D45896502a3E7)
+    +++ description: None
+```
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) {
+    +++ description: None
+      receivedPermissions.2.from:
+-        "arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5"
++        "arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89"
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
++++ severity: HIGH
+      values.espressoNitroTEEVerifier:
+-        "arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5"
++        "arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoNitroTEEVerifier (arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5)
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+```
+
+```diff
++   Status: CREATED
+    contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22)
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89)
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+```
+
+## Source code changes
+
+```diff
+.../.flat@1771857555/CertManager.sol => /dev/null  | 1966 ---------
+ .../EspressoNitroTEEVerifier.sol                   | 1861 +--------
+ .../projects/molten/.flat/NitroEnclaveVerifier.sol | 4283 ++++++++++++++++++++
+ .../src/projects/molten/.flat/SP1Verifier.sol      |  602 +++
+ 4 files changed, 4981 insertions(+), 3731 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771857555 (main branch discovery), not current.
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5) {
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+      description:
+-        "Verifies attestations of an AWS Nitro TEE."
++        "Verifies attestations of an AWS Nitro TEE. \nNote: currently only Succinct proofs are used."
     }
 ```
 

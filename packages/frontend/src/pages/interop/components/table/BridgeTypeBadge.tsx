@@ -1,54 +1,46 @@
-import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import type { InteropBridgeType } from '@l2beat/shared-pure'
+import { Badge, type BadgeProps } from '~/components/badge/Badge'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { cn } from '~/utils/cn'
-import { interopDescriptions } from '../../descriptions'
+import {
+  INTEROP_TYPE_TO_BG_COLOR,
+  TRANSFER_TYPE_DISPLAY,
+} from '../../utils/display'
 
-const typeToLabel = {
-  nonMinting: {
-    label: 'Non-minting',
-    bgColor: 'bg-blue-600',
-  },
-  lockAndMint: {
-    label: 'Lock & Mint',
-    bgColor: 'bg-yellow-700',
-  },
-  burnAndMint: {
-    label: 'Burn & Mint',
-    bgColor: 'bg-teal-500',
-  },
-} as const
-
-interface BridgeTypeBadgeProps {
-  bridgeType: KnownInteropBridgeType
-  className?: string
+interface BridgeTypeBadgeProps extends Omit<BadgeProps, 'children'> {
+  bridgeType: InteropBridgeType
 }
 
 export function BridgeTypeBadge({
   bridgeType,
   className,
+  padding,
+  size,
+  type,
 }: BridgeTypeBadgeProps) {
-  const config = typeToLabel[bridgeType]
-  const description = interopDescriptions[bridgeType]
+  const config = TRANSFER_TYPE_DISPLAY[bridgeType]
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div
-          key={bridgeType}
+        <Badge
           className={cn(
-            config.bgColor,
-            'flex h-min w-max cursor-pointer items-center justify-center whitespace-nowrap rounded px-1.5 py-1 text-subtitle-10 text-white uppercase',
+            INTEROP_TYPE_TO_BG_COLOR[bridgeType],
+            'cursor-pointer whitespace-nowrap text-white uppercase',
             className,
           )}
+          padding={padding}
+          size={size}
+          type={type}
         >
           {config.label}
-        </div>
+        </Badge>
       </TooltipTrigger>
-      <TooltipContent>{description}</TooltipContent>
+      <TooltipContent>{config.description}</TooltipContent>
     </Tooltip>
   )
 }

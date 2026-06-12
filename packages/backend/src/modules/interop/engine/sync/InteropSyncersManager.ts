@@ -1,6 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { EthRpcClient, Http, UpsertMap } from '@l2beat/shared'
+import {
+  EthRpcClient,
+  Http,
+  type RpcMetricsAggregator,
+  UpsertMap,
+} from '@l2beat/shared'
 import type { Block, Log, LongChainName } from '@l2beat/shared-pure'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { BlockProcessor } from '../../../types'
@@ -9,6 +14,16 @@ import { isPluginResyncable } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropDataCleaner } from './InteropDataCleaner'
 import { InteropEventSyncer } from './InteropEventSyncer'
+
+export type BlockProcessingStat = {
+  cluster: string
+  chain: string
+  totalMs: number
+  cpuMs: number
+  count: number
+  avgMs: number
+  avgCpuMs: number
+}
 
 export type PluginSyncStatus = {
   pluginName: string
@@ -36,6 +51,7 @@ export class InteropSyncersManager {
     eventStore: InteropEventStore,
     private readonly db: Database,
     private readonly logger: Logger,
+    private readonly rpcMetricsAggregator: RpcMetricsAggregator,
   ) {
     for (const cluster of pluginClusters) {
       const resyncablePlugins = cluster.plugins.filter(isPluginResyncable)
@@ -95,6 +111,21 @@ export class InteropSyncersManager {
     }
   }
 
+  areAllSyncersFollowing(): boolean {
+    for (const byChain of this.syncers.values()) {
+      for (const syncer of byChain.values()) {
+        if (
+          syncer.state.name !== 'following' ||
+          syncer.state.status === 'starting' ||
+          syncer.hasError
+        ) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   getSyncer(
     plugin: string,
     chain: LongChainName,
@@ -109,11 +140,16 @@ export class InteropSyncersManager {
   }
 
   async processNewestBlock(chain: LongChainName, block: Block, logs: Log[]) {
-    for (const v of this.syncers.values()) {
-      const syncer = v.get(chain)
-      if (syncer) {
-        await syncer.processNewestBlock(block, logs)
-      }
+    const results = await Promise.allSettled(
+      Array.from(this.syncers.values())
+        .map((syncersByChain) => syncersByChain.get(chain))
+        .filter((syncer): syncer is InteropEventSyncer => syncer !== undefined)
+        .map((syncer) => syncer.processNewestBlock(block, logs)),
+    )
+
+    const rejected = results.find((result) => result.status === 'rejected')
+    if (rejected?.status === 'rejected') {
+      throw rejected.reason
     }
   }
 
@@ -146,10 +182,31 @@ export class InteropSyncersManager {
         http,
         rpcConfig.url,
         `${EthRpcClient.name}:${chainConfig.name}`,
+        undefined,
+        undefined,
+        this.rpcMetricsAggregator.createRecorder({
+          rpcChain: chainConfig.name,
+          rpcClient: EthRpcClient.name,
+        }),
       )
       this.rpcClients[chainConfig.name] = client
     }
     return client
+  }
+
+  getBlockProcessingStats() {
+    const result: BlockProcessingStat[] = []
+    for (const chainMap of this.syncers.values()) {
+      for (const syncer of chainMap.values()) {
+        const stats = syncer.blockProcessingStats.get()
+        result.push({
+          cluster: syncer.cluster.name,
+          chain: syncer.chain,
+          ...stats,
+        })
+      }
+    }
+    return result
   }
 
   async getPluginSyncStatuses(): Promise<PluginSyncStatus[]> {

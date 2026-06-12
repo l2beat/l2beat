@@ -1,3 +1,195 @@
+Generated with discovered.json: 0x9a2176bc34c7f3c410c1d06d2b2abc330e2a8948
+
+# Diff at Mon, 11 May 2026 14:19:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@37cdce03260dfa5682c2b693e3c1d4a9ccb125af block: 1760005725
+- current timestamp: 1778509082
+
+## Description
+
+The new `blobstreamProgramVkey` corresponds to the Blobstream guest program rebuilt against SP1 zkVM **v6.1.0** ([succinctlabs/sp1-blobstream#66](https://github.com/succinctlabs/sp1-blobstream/pull/66), merged 2026-05-05).
+
+The underlying prover system moves from `sp1turbo` (v5.x) to `sp1hypercube` (v6.x).
+
+Verification path confirmed on-chain by decoding the SP1 proof selector from a recent `commitHeaderRange` call (first 4 bytes = `0x5a093a2f`, which routes via `SP1VerifierGateway.activeVerifiers` to `0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A` — the SP1Verifier v6.1.0 deployment).
+
+## Watched changes
+
+```diff
+    contract ArbitrumBlobstream (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) [succinct/SP1Blobstream] {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.blobstreamProgramVkey:
+-        "0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef"
++        "0x00b451fcd696cd0a4025e30bfed96343b1767ac6523a360fee1183f9e2e20745"
+    }
+```
+
+```diff
+    contract BaseBlobstream (base:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) [succinct/SP1Blobstream] {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.blobstreamProgramVkey:
+-        "0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef"
++        "0x00b451fcd696cd0a4025e30bfed96343b1767ac6523a360fee1183f9e2e20745"
+    }
+```
+
+```diff
+    contract EthereumBlobstream (eth:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) [succinct/SP1Blobstream] {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.blobstreamProgramVkey:
+-        "0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef"
++        "0x00b451fcd696cd0a4025e30bfed96343b1767ac6523a360fee1183f9e2e20745"
+    }
+```
+
+Generated with discovered.json: 0x05c882d6eb3fe952224f265f30d1a9872f77cdbc
+
+# Diff at Fri, 08 May 2026 07:51:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1760005725
+- current timestamp: 1760005725
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760005725 (main branch discovery), not current.
+
+```diff
+    contract BlobstreamMultisig (arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract ArbitrumBlobstream (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) [succinct/SP1Blobstream] {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
++        "0x34cb26aa383177d58a2f4f1984ad3fbcd3fdb946a53633f98bdd79a2300de340"
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (base:0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract BaseBlobstream (base:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) [succinct/SP1Blobstream] {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
++        "0x34cb26aa383177d58a2f4f1984ad3fbcd3fdb946a53633f98bdd79a2300de340"
+    }
+```
+
+```diff
+    contract EthereumBlobstream (eth:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) [succinct/SP1Blobstream] {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
++        "0x34cb26aa383177d58a2f4f1984ad3fbcd3fdb946a53633f98bdd79a2300de340"
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (eth:0x8bF34D8df1eF0A8A7f27fC587202848E528018E6) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+Generated with discovered.json: 0xcea36b812d6ab05e5bff7000edc35ba57a680165
+
+# Diff at Tue, 05 May 2026 10:22:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1760005725
+- current timestamp: 1760005725
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760005725 (main branch discovery), not current.
+
+```diff
+    contract BlobstreamMultisig (arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x87AEb10Fcf8a1E646Fb09deF89e93eFC9ec77B4C"
+    }
+```
+
+```diff
+    contract ArbitrumBlobstream (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      deployerAddress:
++        "arb1:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (base:0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6) {
+    +++ description: None
+      deployerAddress:
++        "base:0x87AEb10Fcf8a1E646Fb09deF89e93eFC9ec77B4C"
+    }
+```
+
+```diff
+    contract BaseBlobstream (base:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      deployerAddress:
++        "base:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+```diff
+    contract EthereumBlobstream (eth:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      deployerAddress:
++        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (eth:0x8bF34D8df1eF0A8A7f27fC587202848E528018E6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x32d45a5105FE6B497936018542cD5af6960d42a0"
+    }
+```
+
 Generated with discovered.json: 0xaee1b0c6fa5bd920fe36a875a0e2477fed45ba81
 
 # Diff at Thu, 09 Oct 2025 10:29:48 GMT:

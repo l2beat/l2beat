@@ -1,26 +1,74 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "canActIndependently": false,
+  "description": "Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.",
   "ignoreMethods": ["getTransmitters"],
+  "ignoreRelatives": ["getDynamicConfig", "getStaticConfig", "owner"],
   "ignoreInWatchMode": [
     "getExpectedNextSequenceNumber",
     "getLatestPriceEpochAndRound"
   ],
   "fields": {
-    "priceRegistry": {
+    "ocrConfig": {
+      "description": "Commit OCR config from ConfigSet. transmit() requires exactly f+1 valid OCR signer signatures, and msg.sender must be one of the transmitters.",
       "handler": {
-        "type": "call",
-        "args": [],
-        "method": "getDynamicConfig"
+        "type": "event",
+        "select": [
+          "configCount",
+          "signers",
+          "transmitters",
+          "f",
+          "offchainConfigVersion"
+        ],
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        }
       },
-      "edit": ["get", "priceRegistry"]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses."
+        }
+      ]
+    },
+    "priceRegistry": {
+      "handler": { "type": "call", "args": [], "method": "getDynamicConfig" },
+      "edit": ["get", "priceRegistry"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "provide gas and token price data used when committing CCIP state."
+        }
+      ]
     },
     "getStaticConfig": {
+      "description": "Immutable commit lane config: Ethereum destination selector, Arbitrum source selector, trusted Arbitrum OnRamp, and ARM/RMN proxy used for blessing checks.",
       "edit": [
-        "shape",
-        ["chainSelector", ["format", "ChainIdMap"]],
-        ["sourceChainSelector", ["format", "ChainIdMap"]],
+        "pick",
+        "chainSelector",
+        "sourceChainSelector",
         "onRamp",
         "armProxy"
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "define the trusted source OnRamp and ARM/RMN safety gate for commits accepted by this CommitStore."
+        }
+      ]
+    },
+    "getDynamicConfig": {
+      "description": "Mutable commit config: PriceRegistry used for price updates included in commit reports."
+    },
+    "latestConfigDetails": {
+      "description": "Digest and config count for the currently accepted commit OCR config. Commit reports must use this digest."
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+        }
       ]
     }
   }

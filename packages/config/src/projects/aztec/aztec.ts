@@ -1,4 +1,5 @@
 import {
+  type ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -14,7 +15,7 @@ import {
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -151,6 +152,7 @@ export const aztec: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
+      permissioned: false,
       executionDelay: finalizationPeriod,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -176,7 +178,7 @@ export const aztec: ScalingProject = {
       SOA.trustedSetup,
     ],
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -321,6 +323,12 @@ export const aztec: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    zkVerifiers: [
+      discovery.getContractValue<ChainSpecificAddress>(
+        'RollupProcessor',
+        'verifier',
+      ),
+    ],
   },
   permissions: {
     ethereum: {

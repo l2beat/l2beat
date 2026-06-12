@@ -171,12 +171,14 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
           symbol: 'ETH',
           iconUrl: 'https://example.com/eth.png',
           issuer: 'ethereum',
+          category: 'ether',
         },
         {
           id: 'TK0003',
           symbol: 'DAI',
           iconUrl: null,
           issuer: null,
+          category: null,
         },
       ])
     })
@@ -209,6 +211,7 @@ function abstractToken(
     coingeckoId: overrides.coingeckoId ?? null,
     coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,
     comment: overrides.comment ?? null,
-    reviewed: false,
+    reviewed: overrides.reviewed ?? false,
+    isPriceUnreliable: overrides.isPriceUnreliable ?? false,
   }
 }

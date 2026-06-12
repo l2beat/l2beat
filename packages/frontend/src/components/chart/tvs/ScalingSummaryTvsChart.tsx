@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import compact from 'lodash/compact'
 import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
@@ -34,7 +35,7 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartRange } from '~/utils/range/range'
@@ -72,11 +73,16 @@ export function ScalingSummaryTvsChart({
   unit: ChartUnit
   range: ChartRange
 }) {
+  const trpc = useTRPC()
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
-  const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
-    range,
-    filter: { type: 'layer2' },
-  })
+  const { data, isLoading } = useQuery(
+    trpc.tvs.recategorisedChart.queryOptions({
+      range,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
+      filter: { type: 'layer2' },
+    }),
+  )
 
   const chartData = useMemo(() => {
     return data?.chart.map(
@@ -113,7 +119,8 @@ export function ScalingSummaryTvsChart({
         <AreaChart
           responsive
           data={chartData}
-          margin={{ top: 20, right: 0, left: 0, bottom: 0 }}
+          // Without right:1 the chart last point is not hoverable for some reason
+          margin={{ top: 20, right: 1, left: 0, bottom: 0 }}
         >
           <defs>
             <PinkFillGradientDef id="rollups-fill" />
@@ -303,15 +310,10 @@ function getStats(
   }
   const pointsWithData = data.filter(
     (point) =>
-      point.rollups !== null &&
-      point.validiumsAndOptimiums !== null &&
+      point.rollups !== null ||
+      point.validiumsAndOptimiums !== null ||
       point.others !== null,
-  ) as {
-    timestamp: number
-    rollups: number
-    validiumsAndOptimiums: number
-    others: number
-  }[]
+  )
 
   const oldestDataPoint = pointsWithData.at(0)
   const newestDataPoint = pointsWithData.at(-1)
@@ -340,8 +342,8 @@ function getStats(
       : undefined,
   ])
 
-  const oldestTotal = toSum.reduce((acc, curr) => acc + curr.oldest, 0)
-  const newestTotal = toSum.reduce((acc, curr) => acc + curr.newest, 0)
+  const oldestTotal = toSum.reduce((acc, curr) => acc + (curr.oldest ?? 0), 0)
+  const newestTotal = toSum.reduce((acc, curr) => acc + (curr.newest ?? 0), 0)
   const change = newestTotal / oldestTotal - 1
 
   return {

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xa29e3149cb1e7a02ee8504f40fde6e9bf03c918d
+Generated with discovered.json: 0xf2b0791d750b1b5fc7d778caac64c6194d0c4823
 
-# Diff at Mon, 23 Mar 2026 10:57:11 GMT:
+# Diff at Fri, 12 Jun 2026 10:19:04 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1770983165
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1770983165
 - current timestamp: 1770983165
 
 ## Description
@@ -23,6 +23,74 @@ discovery. Values are for block 1770983165 (main branch discovery), not current.
 -        true
       eoaWithUpgradePermissions:
 +        true
+    }
+```
+
+Generated with discovered.json: 0xc759bde87a5fd37c70cbc2cd8d95fdf6aae8a12b
+
+# Diff at Tue, 09 Jun 2026 12:43:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1770983165
+- current timestamp: 1770983165
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770983165 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.role:
+-        ".challenger"
++        ".guardian"
+      receivedPermissions.0.from:
+-        "eth:0x542102Bb35C32ADa5D72cB791295d97574A71C84"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.1.role:
+-        ".guardian"
++        ".challenger"
+      receivedPermissions.1.from:
+-        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
++        "eth:0x542102Bb35C32ADa5D72cB791295d97574A71C84"
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x5c53f2fF1030C7fbC0616fD5B8fC6bE97aa27e00) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xb6E2Eee22b684f6AAb2083097F7E874994bA930e) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
     }
 ```
 

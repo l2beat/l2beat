@@ -14,7 +14,10 @@ export function getStateValidationSection(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
   allProjectsWithContracts: Project<'contracts'>[],
 ):
   | Omit<StateValidationSectionProps, 'id' | 'title' | 'sectionOrder'>
@@ -31,8 +34,7 @@ export function getStateValidationSection(
       !!project.statuses.reviewStatus ||
       !!project.scalingTechnology.stateValidation.isUnderReview,
     proverInfo: getProverInfo(
-      project.id,
-      project.scalingInfo.proofSystem?.zkCatalogId,
+      project,
       zkCatalogProjects,
       contractUtils,
       tvs,
@@ -44,5 +46,6 @@ export function getStateValidationSection(
       allProjectsWithContracts,
       tvs,
     ),
+    programHashesDescription: project.contracts?.programHashesDescription,
   }
 }

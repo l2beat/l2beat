@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TreeUpdateVerifier",
+  "description": "Anonymity Mining - Verifier contract for Tornado mining account-tree update proofs.",
+  "category": "bridge-external"
+}

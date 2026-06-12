@@ -21,7 +21,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -47,12 +47,16 @@ const cooldownPeriod = discovery.getContractValue<number>(
   'pauseCooldownPeriod',
 )
 
-const upgradesSC = {
-  upgradableBy: [{ name: 'Scroll Security Council', delay: 'no' }],
+const upgradesAdmin = {
+  upgradableBy: [{ name: 'ScrollAdminMultisig', delay: 'no' }],
 }
 
 const upgradeDelay = discovery.getContractValue<number>(
   'TimelockSCEmergency',
+  'getMinDelay',
+)
+const slowUpgradeDelay = discovery.getContractValue<number>(
+  'eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd',
   'getMinDelay',
 )
 
@@ -119,7 +123,7 @@ export const scroll: ScalingProject = {
     ],
     notInScope: ['Upgradability of other external ERC20 token contracts'],
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -130,10 +134,15 @@ export const scroll: ScalingProject = {
         fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
-        principle: true,
-        usersHave7DaysToExit: true,
-        usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: true,
+        principle: false,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: {
+          satisfied: false,
+          message:
+            'On 2026-06-01, Scroll replaced its independent 9-of-12 Security Council with a 3-of-4 multisig of Scroll team members (ScrollAdminMultisig, 0xcca54B...). The new entity does not meet the size or organisational-diversity requirements of a Security Council.',
+          mode: 'replace',
+        },
         noRedTrustedSetups: true,
         programHashesReproducible: true,
         proverSourcePublished: true,
@@ -147,8 +156,6 @@ export const scroll: ScalingProject = {
     },
     {
       rollupNodeLink: 'https://github.com/scroll-tech/go-ethereum',
-      securityCouncilReference:
-        'https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council',
     },
   ),
   chainConfig: {
@@ -168,7 +175,8 @@ export const scroll: ScalingProject = {
     coingeckoPlatform: 'scroll',
     apis: [
       { type: 'rpc', url: 'https://rpc.scroll.io', callsPerMinute: 120 },
-      { type: 'etherscan', chainId },
+      { type: 'sourcify', chainId },
+      { type: 'blockscout', url: 'https://scrollscan.com/api' },
     ],
   },
   config: {
@@ -180,35 +188,35 @@ export const scroll: ScalingProject = {
         ),
         tokens: '*',
         excludedTokens: ['rsETH'],
-        ...upgradesSC,
+        ...upgradesAdmin,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367',
         ),
         tokens: ['ETH'],
-        ...upgradesSC,
+        ...upgradesAdmin,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff',
         ), // custom gateway
         tokens: '*',
-        ...upgradesSC,
+        ...upgradesAdmin,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B',
         ),
         tokens: ['USDC'],
-        ...upgradesSC,
+        ...upgradesAdmin,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515',
         ),
         tokens: ['DAI'],
-        ...upgradesSC,
+        ...upgradesAdmin,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
@@ -287,6 +295,7 @@ export const scroll: ScalingProject = {
           functionSignature:
             'function finalizeBatchWithProof4844(bytes _batchHeader, bytes32 _prevStateRoot, bytes32 _postStateRoot, bytes32 _withdrawRoot, bytes _blobDataProof, bytes _aggrProof)',
           sinceTimestamp: UnixTime(1714362335), // first blob tx: https://etherscan.io/tx/0x0c2b6063a92ab124c45ef518c12fe181a5728bb3a40015270493bd430ed400ea
+          untilTimestamp: UnixTime(1724229443), // last call: https://etherscan.io/tx/0x823e2e65c62306957dc9332f471bd435c808a3d3dc8a8b10cafd80f750802cf6
         },
       },
       {
@@ -303,6 +312,7 @@ export const scroll: ScalingProject = {
           functionSignature:
             'function finalizeBundleWithProof(bytes,bytes32,bytes32,bytes)',
           sinceTimestamp: UnixTime(1724227415),
+          untilTimestamp: UnixTime(1745309183), // last call: https://etherscan.io/tx/0x5a90ef68d881b7b4f4de38bf87c545cc79c103f58fdcefb3ea3a30f7349f5efb
         },
       },
       {
@@ -318,7 +328,7 @@ export const scroll: ScalingProject = {
           selector: '0xc1aa4e19',
           functionSignature:
             'function finalizeBundlePostEuclidV2(bytes,uint256,bytes32,bytes32,bytes)',
-          sinceTimestamp: UnixTime(1745508700),
+          sinceTimestamp: UnixTime(1745316335), // first call: https://etherscan.io/tx/0x04f9f09aeb12063883db691e7f005f2be468ffa6baee5eabbb59196f9bb746bf
         },
       },
       {
@@ -352,6 +362,7 @@ export const scroll: ScalingProject = {
           functionSignature:
             'function commitBatchWithBlobProof(uint8,bytes,bytes[],bytes,bytes)',
           sinceTimestamp: UnixTime(1724227415),
+          untilTimestamp: UnixTime(1745305547), // last call: https://etherscan.io/tx/0x0371738167d4e426aac5ea9e60000d21253bca00a112db76a3defee087c8594a
         },
       },
       {
@@ -367,7 +378,7 @@ export const scroll: ScalingProject = {
           selector: '0x9bbaa2ba',
           functionSignature:
             'function commitBatches(uint8 version, bytes32 parentBatchHash, bytes32 lastBatchHash)',
-          sinceTimestamp: UnixTime(1745508700),
+          sinceTimestamp: UnixTime(1745308727), // first call: https://etherscan.io/tx/0x0da7cd78c30021c34e4335d7ed8c71f0ee0a75308a43fa4921db9deea2fb8704
         },
       },
     ],
@@ -496,12 +507,23 @@ export const scroll: ScalingProject = {
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     programHashes: getScrollVKeys().map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getVerifiers(),
   },
   permissions: {
     ...discovery.getDiscoveredPermissions(),
   },
-  upgradesAndGovernance: `All core contracts in the Scroll protocol are upgradable by the \`ProxyAdmin\`, which is controlled by the Security Council through the \`ScrollOwner\` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the \`TimelockSCSlow\`) and upgrading the affected contracts. The Security Council can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the \`updateMessageQueueParameters\` and \`updateEnforcedBatchParameters\` functions or by pausing the \`EnforcedTXGateway\`. Emergency pause of core contracts is managed through the \`PauseController\`, which allows the team to pause batch commitment and finalization in permissioned mode, as well as L1->L2 messaging. Each pause is subject to a cooldown period of ${formatExecutionDelay(cooldownPeriod)}, during which the Security Council minority can unpause, while the Security Council majority is authorized to update and reset the cooldown period. SCR token holders perform onchain voting on governance proposals through the \`AgoraGovernor\` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check. The Security Council is in charge of executing upgrades.`,
+  upgradesAndGovernance: {
+    content: `All core contracts in the Scroll protocol are upgradable by the \`ProxyAdmin\`, which is controlled by the \`ScrollAdminMultisig\` through the \`ScrollOwner\` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the \`ScrollAdminMultisig\` and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. On 2026-06-01, Scroll removed its independent 9-of-12 Security Council and transferred its roles on the \`TimelockSCSlow\` (${formatExecutionDelay(slowUpgradeDelay)}) and \`TimelockSCEmergency\` (${formatExecutionDelay(upgradeDelay)}) on both chains to the \`ScrollAdminMultisig\`, along with admin of the L2 \`AgoraGovernor\`. Emergency pause of core contracts is managed through the \`PauseController\`, which allows the team to pause batch commitment and finalization in permissioned mode, as well as L1->L2 messaging. Each pause is subject to a cooldown period of ${formatExecutionDelay(cooldownPeriod)}, during which the \`Scroll Security Council Minority\` can unpause. SCR token holders perform onchain voting on governance proposals through the \`AgoraGovernor\` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check.`,
+  },
   milestones: [
+    {
+      title: 'Security Council removal',
+      url: 'https://etherscan.io/tx/0xbc6079d54f7a5fc548402db349168732c3f02430c156f4723865934bdb373765',
+      date: '2026-06-01T00:00:00Z',
+      description:
+        'Independent 9-of-12 Security Council replaced by a 3-of-4 team admin multisig; drops to Stage 0.',
+      type: 'incident',
+    },
     {
       title: 'Emergency verifier upgrade',
       url: 'https://etherscan.io/tx/0x74e5de74ff014b78b3bfcde9e3bf3c83f60ce10345ec10148ea918abeb2a9799',
@@ -638,4 +660,26 @@ function getScrollVKeys(): string[] {
     }
   }
   return Array.from(vKeys)
+}
+
+// gets all verifiers that could be used to check STF of Scroll L2
+function getVerifiers(): ChainSpecificAddress[] {
+  const uniqueVerifierAddresses = new Set<ChainSpecificAddress>()
+  const verifiers = discovery.getContractValue<
+    { startBatchIndex: number; verifier: string }[]
+  >('MultipleVersionRollupVerifier', 'latestVerifier')
+
+  // Verifiers of version before 7 can not be used by scroll
+  // Confusingly enough, version 7 is at index 6 because version 5 is skipped
+  for (const verifier of verifiers.slice(6)) {
+    const plonkVerifier =
+      discovery.getContractValueOrUndefined<ChainSpecificAddress>(
+        verifier.verifier,
+        'plonkVerifier',
+      )
+    if (plonkVerifier) {
+      uniqueVerifierAddresses.add(plonkVerifier)
+    }
+  }
+  return Array.from(uniqueVerifierAddresses)
 }

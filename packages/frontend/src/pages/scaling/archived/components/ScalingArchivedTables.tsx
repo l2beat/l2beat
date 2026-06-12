@@ -26,7 +26,6 @@ export function ScalingArchivedTables(
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    notReviewed: props.notReviewed.filter(filterEntries),
   }
 
   const initialSort = {
@@ -37,6 +36,7 @@ export function ScalingArchivedTables(
   return (
     <>
       <TableFilters
+        className="max-md:mt-4 max-md:px-4"
         entries={[
           ...props.rollups,
           ...props.validiumsAndOptimiums,

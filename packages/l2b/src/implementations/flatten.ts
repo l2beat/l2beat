@@ -19,7 +19,11 @@ export async function fetchAndFlatten(
     }))
     .filter((e) => e.path.endsWith('.sol'))
 
-  return flattenStartingFrom(source.name, input, source.remappings, {
-    includeAll: includeAll,
-  })
+  return flattenStartingFrom(
+    source.name,
+    source.rootFile,
+    input,
+    source.remappings,
+    { includeAll: includeAll },
+  )
 }

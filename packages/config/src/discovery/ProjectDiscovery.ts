@@ -8,7 +8,6 @@ import {
   ConfigReader,
   getDiscoveryPaths,
   getReachableEntries,
-  RolePermissionEntries,
 } from '@l2beat/discovery'
 import {
   assert,
@@ -21,7 +20,6 @@ import {
 import { utils } from 'ethers'
 import groupBy from 'lodash/groupBy'
 import isString from 'lodash/isString'
-import uniq from 'lodash/uniq'
 import { EXPLORER_URLS } from '../common/explorerUrls'
 import type {
   ProjectContract,
@@ -34,7 +32,6 @@ import type {
   ReferenceLink,
   SharedEscrow,
 } from '../types'
-import { RoleDescriptions } from './descriptions'
 import { get$Admins, get$Implementations, toAddressArray } from './extractors'
 import { pastUpgradesSchema } from './models'
 import type { PermissionRegistry } from './PermissionRegistry'
@@ -159,7 +156,6 @@ export class ProjectDiscovery {
     excludedTokens,
     premintedTokens,
     upgradableBy,
-    isUpcoming,
     includeInTotal,
     source,
     bridgedUsing,
@@ -178,7 +174,6 @@ export class ProjectDiscovery {
     excludedTokens?: string[]
     premintedTokens?: string[]
     upgradableBy?: ProjectUpgradeableActor[]
-    isUpcoming?: boolean
     includeInTotal?: boolean
     source?: ProjectEscrow['source']
     bridgedUsing?: LegacyTokenBridgedUsing
@@ -209,7 +204,6 @@ export class ProjectDiscovery {
       excludedTokens,
       premintedTokens,
       contract,
-      isUpcoming,
       chain,
       includeInTotal:
         (includeInTotal ?? chain === 'ethereum') ? true : includeInTotal,
@@ -251,6 +245,17 @@ export class ProjectDiscovery {
       modulesDescriptions.length === 0
         ? ''
         : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
+
+    // Tree-quorum multisigs (e.g. ManyChainMultiSig) wire $threshold/$members
+    // through as a lower bound only — the real access-control rule is encoded
+    // in the per-group tree. The flat "M/N threshold" prefix is misleading
+    // here, so skip it and let the entry's own description carry the semantics.
+    if (
+      contract.values?.minSigs !== undefined &&
+      contract.values?.memberCount !== undefined
+    ) {
+      return fullModulesDescription === '' ? [] : [fullModulesDescription]
+    }
 
     return [
       `A Multisig with ${this.getMultisigStats(identifier)} threshold. ` +
@@ -465,17 +470,40 @@ export class ProjectDiscovery {
     return this.formatPermissionedAccounts(addresses)
   }
 
+  withPermissionedAccountDisplayNames(
+    accounts: ProjectPermissionedAccount[],
+    displayNames: string[],
+  ): ProjectPermissionedAccount[] {
+    assert(
+      accounts.length === displayNames.length,
+      `Every permissioned account must have a display name. Found ${accounts.length} accounts and ${displayNames.length} display names.`,
+    )
+
+    return accounts.map((account, index) => ({
+      ...account,
+      displayName: displayNames[index],
+    }))
+  }
+
   getPermissionDetails(
     name: string,
     accounts: ProjectPermissionedAccount[],
     description: string,
     opts?: {
       references?: ReferenceLink[]
+      accountDisplayNames?: string[]
     },
   ): ProjectPermission {
+    const accountsWithDisplayNames = opts?.accountDisplayNames
+      ? this.withPermissionedAccountDisplayNames(
+          accounts,
+          opts.accountDisplayNames,
+        )
+      : accounts
+
     let chain = 'ethereum'
-    if (accounts.length > 0) {
-      const chains = accounts.map((a) =>
+    if (accountsWithDisplayNames.length > 0) {
+      const chains = accountsWithDisplayNames.map((a) =>
         ChainSpecificAddress.longChain(a.address),
       )
       const uniqueChains = unique(chains)
@@ -491,10 +519,10 @@ export class ProjectDiscovery {
     return {
       id: name,
       name,
-      accounts,
+      accounts: accountsWithDisplayNames,
       description,
       chain,
-      ...(opts ?? {}),
+      ...(opts?.references ? { references: opts.references } : {}),
     }
   }
 
@@ -585,12 +613,6 @@ export class ProjectDiscovery {
   get$Implementations(contractIdentifier: string) {
     const contract = this.getContract(contractIdentifier)
     return get$Implementations(contract.values)
-  }
-
-  get$TokenData() {
-    return this.getContracts()
-      .flatMap((contract) => contract.values?.$tokenData)
-      .filter(notUndefined)
   }
 
   getAccessControlField(
@@ -727,18 +749,6 @@ export class ProjectDiscovery {
     return [...contractsAddresses, ...implementations, ...eoasAddresses]
   }
 
-  getPermissionsByRole(
-    role: (typeof RolePermissionEntries)[number],
-  ): ProjectPermissionedAccount[] {
-    const addresses = this.getContractsAndEoas()
-      .filter((x) =>
-        (x.receivedPermissions ?? []).find((p) => p.permission === role),
-      )
-      .map((x) => x.address)
-
-    return this.formatPermissionedAccounts(addresses)
-  }
-
   describeGnosisSafeMembership(
     contractOrEoa: EntryParameters,
   ): string | undefined {
@@ -754,90 +764,6 @@ export class ProjectDiscovery {
     return safesWithThisMember.length === 0
       ? undefined
       : `Member of ${safesWithThisMember.join(', ')}.`
-  }
-
-  describeRolePermissions(
-    relevantContracts: EntryParameters[],
-  ): ProjectPermission[] {
-    const result: ProjectPermission[] = []
-    for (const role of RolePermissionEntries) {
-      const matching = relevantContracts.filter(
-        (c) =>
-          (c.receivedPermissions ?? []).find((p) => p.permission === role) !==
-          undefined,
-      )
-
-      if (matching.length === 0) {
-        continue
-      }
-
-      const addresses = matching.map((c) => c.address)
-      const descriptions = uniq(
-        matching
-          .flatMap((c) =>
-            (c.receivedPermissions ?? []).filter((p) => p.permission === role),
-          )
-          .map((p) => p.description)
-          .filter((d) => d !== undefined),
-      )
-      assert(
-        descriptions.length <= 1,
-        `Conflicting descriptions found ${descriptions}`,
-      )
-
-      const finalDescription = [
-        descriptions[0] ?? RoleDescriptions[role].description,
-      ]
-
-      for (const c of matching) {
-        const initialConditions = (c.receivedPermissions ?? [])
-          .filter((p) => p.permission === role)
-          .map((p) =>
-            this.formatViaPath(
-              {
-                address: c.address,
-                condition: p.condition,
-                delay: p.delay,
-              },
-              true,
-            ),
-          )
-          .filter((p) => p !== '')
-        const pathConditions = (c.receivedPermissions ?? [])
-          .filter((p) => p.permission === role)
-          .flatMap((p) => p.via?.map((v) => this.formatViaPath(v, true)))
-          .filter((p) => p !== '')
-        const conditions = uniq([
-          ...initialConditions,
-          ...pathConditions,
-        ]).filter(notUndefined)
-
-        if (conditions.length > 0) {
-          finalDescription.push(
-            `* ${c.name} has the role ${conditions.join(', ')}`,
-          )
-        }
-      }
-
-      const allAccounts = this.formatPermissionedAccounts(addresses)
-      const uniqueChains = unique(
-        allAccounts.map((a) => ChainSpecificAddress.longChain(a.address)),
-      )
-      for (const uniqueChain of uniqueChains) {
-        const accounts = allAccounts.filter(
-          (a) => ChainSpecificAddress.longChain(a.address) === uniqueChain,
-        )
-        const r = RoleDescriptions[role]
-        result.push({
-          id: r.name,
-          ...r,
-          description: finalDescription.join('\n'),
-          accounts,
-          chain: uniqueChain,
-        })
-      }
-    }
-    return result
   }
 
   formatViaPath(path: ResolvedPermissionPath, skipName = false): string {
@@ -921,7 +847,10 @@ export class ProjectDiscovery {
       return {
         id: name,
         name: name,
-        accounts: this.formatPermissionedAccounts([eoa.address]),
+        accounts: this.withPermissionedAccountDisplayNames(
+          this.formatPermissionedAccounts([eoa.address]),
+          [name],
+        ),
         chain: ChainSpecificAddress.longChain(eoa.address),
         description,
       }
@@ -1011,11 +940,6 @@ export class ProjectDiscovery {
     )
     // assert(allUnique(allActors.map((actor) => actor.accounts[0].name))) // TODO(radomski): Between chains
 
-    const roles = this.describeRolePermissions([
-      ...permissionedContracts,
-      ...permissionedEoas.raw,
-    ])
-
     allActors.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
@@ -1028,20 +952,6 @@ export class ProjectDiscovery {
       }
     })
 
-    roles.forEach((permission) => {
-      permission.description = this.replaceAddressesWithNames(
-        permission.description,
-      )
-      permission.accounts = this.linkupActorsIntoAccounts(permission.accounts, [
-        ...contractActors,
-        ...permissionedEoas.linkable,
-      ])
-    })
-
-    const rolesGrouped = groupBy(
-      roles.map((p) => ({ ...p, discoveryDrivenData: true })),
-      (p) => p.chain,
-    )
     const actorsGrouped = groupBy(
       allActors.map((p) => ({
         ...p,
@@ -1050,16 +960,13 @@ export class ProjectDiscovery {
       (p) => p.chain,
     )
 
-    const allChains = new Set([
-      ...Object.keys(rolesGrouped),
-      ...Object.keys(actorsGrouped),
-    ])
+    const allChains = new Set(Object.keys(actorsGrouped))
 
     const result = Object.fromEntries(
       Array.from(allChains).map((chain) => [
         chain,
         {
-          roles: rolesGrouped[chain] || [],
+          roles: [],
           actors: actorsGrouped[chain] || [],
         },
       ]),

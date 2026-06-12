@@ -1,0 +1,76 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RBACTimelock",
+  "description": "Role based timelock used to administer CCIP contracts.",
+  "category": "gov",
+  "fields": {
+    "accessControl": {
+      "description": "Full role map: per-role admin role and current members.",
+      "handler": { "type": "accessControl", "ignoreRelative": true }
+    },
+    "adminRoleMembers": {
+      "description": "Current accounts granted the admin role.",
+      "handler": { "type": "accessControl", "pickRoleMembers": "ADMIN_ROLE" },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke roles on this timelock."
+        }
+      ]
+    },
+    "bypasserRoleMembers": {
+      "description": "Current accounts granted permission to bypass the timelock delay.",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "BYPASSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "execute calls through this timelock without waiting for the configured delay."
+        },
+        { "type": "act", "delay": 0 }
+      ]
+    },
+    "cancellerRoleMembers": {
+      "description": "Current accounts granted permission to cancel scheduled operations.",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "CANCELLER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "cancel scheduled operations before they are executed."
+        }
+      ]
+    },
+    "executorRoleMembers": {
+      "description": "Current accounts granted permission to execute scheduled operations.",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EXECUTOR_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "execute scheduled operations after the configured timelock delay has elapsed."
+        }
+      ]
+    },
+    "proposerRoleMembers": {
+      "description": "Current accounts granted permission to schedule operations.",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PROPOSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "schedule operations that can be executed after the configured timelock delay."
+        },
+        { "type": "act", "delay": "{{getMinDelay}}" }
+      ]
+    }
+  }
+}

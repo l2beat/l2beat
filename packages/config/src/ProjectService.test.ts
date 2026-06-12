@@ -3,7 +3,7 @@ import { expect } from 'earl'
 import { unlinkSync } from 'fs'
 import { ProjectDatabase } from './ProjectDatabase'
 import { ProjectService } from './ProjectService'
-import type { BaseProject } from './types'
+import type { BaseProject, ProjectScalingInfo } from './types'
 
 describe(ProjectService.name, () => {
   const projects: BaseProject[] = [
@@ -13,7 +13,7 @@ describe(ProjectService.name, () => {
       name: 'Foo Chain',
       shortName: undefined,
       addedAt: 0,
-      isScaling: true,
+      scalingInfo: {} as ProjectScalingInfo,
       archivedAt: UnixTime(1112470620),
     },
     {
@@ -22,7 +22,7 @@ describe(ProjectService.name, () => {
       name: 'Bar Network',
       shortName: 'Bar',
       addedAt: 0,
-      isScaling: true,
+      scalingInfo: {} as ProjectScalingInfo,
     },
   ]
 
@@ -69,7 +69,7 @@ describe(ProjectService.name, () => {
     const ps = new ProjectService(TEMP_PATH)
     const result = await ps.getProject({
       id: ProjectId('foo'),
-      select: ['isScaling'],
+      select: ['scalingInfo'],
       optional: ['archivedAt'],
     })
     expect(result).toEqual({
@@ -78,7 +78,7 @@ describe(ProjectService.name, () => {
       name: 'Foo Chain',
       shortName: undefined,
       addedAt: 0,
-      isScaling: true,
+      scalingInfo: {} as ProjectScalingInfo,
       archivedAt: UnixTime(1112470620),
     })
   })
@@ -86,7 +86,7 @@ describe(ProjectService.name, () => {
   it('returns multiple projects', async () => {
     const ps = new ProjectService(TEMP_PATH)
     const result = await ps.getProjects({
-      select: ['isScaling'],
+      select: ['scalingInfo'],
       optional: ['archivedAt'],
     })
     expect(result).toEqual([
@@ -96,7 +96,7 @@ describe(ProjectService.name, () => {
         name: 'Foo Chain',
         shortName: undefined,
         addedAt: 0,
-        isScaling: true,
+        scalingInfo: {} as ProjectScalingInfo,
         archivedAt: UnixTime(1112470620),
       },
       {
@@ -105,7 +105,7 @@ describe(ProjectService.name, () => {
         name: 'Bar Network',
         shortName: 'Bar',
         addedAt: 0,
-        isScaling: true,
+        scalingInfo: {} as ProjectScalingInfo,
         archivedAt: undefined,
       },
     ])

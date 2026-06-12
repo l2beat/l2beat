@@ -6,7 +6,6 @@ import {
   BlockIndexerClient,
   CelestiaRpcClient,
   CoingeckoClient,
-  DiscordClient,
   DuneClient,
   EigenApiClient,
   EspressoClient,
@@ -21,6 +20,7 @@ import {
   PolkadotRpcClient,
   RpcClient,
   RpcClientCompat,
+  RpcMetricsAggregator,
   StarkexClient,
   StarknetClient,
   type SvmBlockClient,
@@ -32,7 +32,6 @@ import {
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import type { Config } from '../config/Config'
-import { DiscordWebhookClient } from '../modules/anomalies/clients/DiscordWebhookClient'
 
 export interface Clients {
   block: BlockClient[]
@@ -54,17 +53,18 @@ export interface Clients {
   getRpcClient: (chain: string) => IRpcClient
   getStarknetClient: (chain: string) => StarknetClient
   rpcClients: IRpcClient[]
+  rpcMetricsAggregator: RpcMetricsAggregator
   starknetClients: StarknetClient[]
   near: NearClient | undefined
   espresso: EspressoClient | undefined
   dune: DuneClient | undefined
-  discord: DiscordClient | undefined
-  blobNotifierDiscord: DiscordWebhookClient | undefined
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
   const http = new HttpClient()
-
+  const rpcMetricsAggregator = new RpcMetricsAggregator({
+    logger: logger.for(RpcMetricsAggregator.name),
+  })
   let starkexClient: StarkexClient | undefined
   let voyagerClient: VoyagerClient | undefined
   let loopringClient: LoopringClient | undefined
@@ -79,8 +79,6 @@ export function initClients(config: Config, logger: Logger): Clients {
   let espresso: EspressoClient | undefined
   let eigen: EigenApiClient | undefined
   let dune: DuneClient | undefined
-  let discord: DiscordClient | undefined
-  let blobNotifierDiscord: DiscordWebhookClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -121,6 +119,7 @@ export function initClients(config: Config, logger: Logger): Clients {
                 retryStrategy: blockApi.retryStrategy,
                 logger,
                 multicallClient,
+                rpcMetricsAggregator,
                 timeout: blockApi.timeout,
               })
             : new RpcClient({
@@ -131,6 +130,10 @@ export function initClients(config: Config, logger: Logger): Clients {
                 retryStrategy: blockApi.retryStrategy,
                 logger,
                 multicallClient,
+                rpcMetrics: rpcMetricsAggregator.createRecorder({
+                  rpcChain: chain.name,
+                  rpcClient: RpcClient.name,
+                }),
                 timeout: blockApi.timeout,
               })
           blockClients.push(rpcClient)
@@ -275,12 +278,6 @@ export function initClients(config: Config, logger: Logger): Clients {
           assertUnreachable(layer.type)
       }
     }
-
-    if (config.da.ethereumNotifierDiscordWebhookUrl) {
-      blobNotifierDiscord = new DiscordWebhookClient(
-        config.da.ethereumNotifierDiscordWebhookUrl,
-      )
-    }
   }
 
   if (config.trackedTxsConfig && config.trackedTxsConfig.duneApiKey) {
@@ -379,10 +376,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     return client
   }
 
-  if (config.updateMonitor && config.updateMonitor.discord) {
-    discord = new DiscordClient(http, config.updateMonitor.discord)
-  }
-
   return {
     block: blockClients,
     logs: logsClients,
@@ -403,11 +396,10 @@ export function initClients(config: Config, logger: Logger): Clients {
     getStarknetClient,
     getRpcClient,
     rpcClients,
+    rpcMetricsAggregator,
     starknetClients,
     voyager: voyagerClient,
     lighter: lighterClient,
     dune,
-    discord,
-    blobNotifierDiscord,
   }
 }

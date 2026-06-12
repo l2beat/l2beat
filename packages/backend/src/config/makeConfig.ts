@@ -1,18 +1,16 @@
 import type { Env } from '@l2beat/backend-tools'
-import {
-  type ChainConfig,
-  INTEROP_CHAINS,
-  ProjectService,
-} from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { type ChainConfig, ProjectService } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Config } from './Config'
 import { getChainConfig } from './chain/getChainConfig'
 import { FeatureFlags } from './FeatureFlags'
 import { getActivityConfig } from './features/activity'
+import { getBackofficeConfig } from './features/backoffice'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getEcosystemsConfig } from './features/ecosystemToken'
-import { getInteropAggregationConfigs } from './features/interop'
+import { getInteropFeatureConfig } from './features/interop'
+import { getPrivacyConfig } from './features/privacy'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
@@ -46,15 +44,15 @@ export async function makeConfig(
     isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
   )
 
+  const clockOffsetSeconds = UnixTime.HOUR
+
   return {
     name,
     isReadonly,
     clock: {
       minBlockTimestamp:
         minTimestampOverride ?? getEthereumMinTimestamp(chains),
-      safeTimeOffsetSeconds: 60 * 60,
-      hourlyCutoffDays: 7,
-      sixHourlyCutoffDays: 90,
+      safeTimeOffsetSeconds: clockOffsetSeconds,
     },
     database: isLocal
       ? {
@@ -87,6 +85,9 @@ export async function makeConfig(
           },
           isReadonly,
         },
+    notifications:
+      flags.isEnabled('notifications') &&
+      getNotificationsConfig(env, flags, clockOffsetSeconds),
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
     api: {
       port: env.integer('PORT', isLocal ? 3001 : undefined),
@@ -150,64 +151,72 @@ export async function makeConfig(
       ethereumWsUrl: env.optionalString(['ETHEREUM_WS_URL']),
     },
     anomalies: flags.isEnabled('anomalies') && {
-      anomaliesWebhookUrl: env.optionalString('ANOMALIES_DISCORD_WEBHOOK_URL'),
       anomaliesMinDuration: env.integer(
         'ANOMALIES_MIN_DURATION',
         60 * 60, // 1 hour
       ),
     },
-    interop: flags.isEnabled('interop') && {
-      aggregation: flags.isEnabled('interop', 'aggregation')
-        ? { configs: await getInteropAggregationConfigs(ps) }
-        : false,
-      capture: {
-        enabled: flags.isEnabled('interop', 'capture'),
-        chains: INTEROP_CHAINS.filter((c) =>
-          flags.isEnabled('interop', 'capture', c.id),
-        ),
-      },
-      matching: flags.isEnabled('interop', 'matching'),
-      cleaner: flags.isEnabled('interop', 'cleaner'),
-      dangerousOperationsEnabled: env.boolean(
-        'INTEROP_DANGEROUS_OPERATIONS_ENABLED',
-        false,
-      ),
-      dashboard: {
-        enabled: flags.isEnabled('interop', 'dashboard'),
-        getExplorerUrl: (chain: string) => {
-          const c = chains.find((cc) => cc.name === chain)
-
-          return c?.explorerUrl
-        },
-      },
-      compare: {
-        enabled: flags.isEnabled('interop', 'compare'),
-      },
-      financials: {
-        enabled: flags.isEnabled('interop', 'financials'),
-        tokenDbApiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
-        tokenDbAuthToken: env.optionalString('TOKEN_BACKEND_CF_TOKEN'),
-      },
-      config: {
-        enabled: flags.isEnabled('interop', 'config'),
-        chains: activeChains
-          .filter((c) => c.chainId !== undefined)
-          .map((c) => ({ id: c.chainId as number, name: c.name })),
-        configIntervalMs: env.integer(
-          'INTEROP_CONFIG_INTERVAL_MS',
-          12 * 60 * 60 * 1000, // 12 hours
-        ),
-      },
-      inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
-      notifications: flags.isEnabled('interop', 'notifications') && {
-        discordWebhookUrl: env.string(
-          'INTEROP_NOTIFICATIONS_DISCORD_WEBHOOK_URL',
-        ),
-      },
-    },
+    interop: await getInteropFeatureConfig(
+      ps,
+      env,
+      flags,
+      chains,
+      activeChains,
+    ),
+    privacy:
+      flags.isEnabled('privacy') && (await getPrivacyConfig(ps, env, flags)),
+    backoffice: getBackofficeConfig(env, flags, isLocal),
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last
     flags: flags.getResolved(),
+  }
+}
+
+function getNotificationsConfig(
+  env: Env,
+  flags: FeatureFlags,
+  clockOffsetSeconds: number,
+): Config['notifications'] {
+  return {
+    updateMonitor: flags.isEnabled('notifications', 'updateMonitor') && {
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_UPDATE_MONITOR_DISCORD_WEBHOOK_URL',
+      ),
+    },
+    anomalies: flags.isEnabled('notifications', 'anomalies') && {
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_ANOMALIES_DISCORD_WEBHOOK_URL',
+      ),
+    },
+    interop: flags.isEnabled('notifications', 'interop') && {
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_INTEROP_DISCORD_WEBHOOK_URL',
+      ),
+    },
+    ethereumBlobs: flags.isEnabled('notifications', 'ethereumBlobs') && {
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_ETHEREUM_BLOBS_DISCORD_WEBHOOK_URL',
+      ),
+    },
+    dailyChecks: flags.isEnabled('notifications', 'dailyChecks') && {
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_DAILY_CHECKS_DISCORD_WEBHOOK_URL',
+      ),
+      discordUserIds: env
+        .string('NOTIFICATIONS_DAILY_CHECKS_DISCORD_USER_IDS')
+        .split(',')
+        .map((id) => id.trim())
+        .filter((id) => id.length > 0),
+      timezone: env.string(
+        'NOTIFICATIONS_DAILY_CHECKS_TIMEZONE',
+        'Europe/Warsaw',
+      ),
+      hour:
+        (env.integer('NOTIFICATIONS_DAILY_CHECKS_HOUR', 9) -
+          clockOffsetSeconds / UnixTime.HOUR +
+          24) %
+        24,
+    },
   }
 }
 

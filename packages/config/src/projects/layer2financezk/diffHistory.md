@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x089b6d94ff32aecc1176cb406a3005fa7d63da73
+Generated with discovered.json: 0x292c3d525c130a264dbf36e1235b3cf5f5e6aca8
 
-# Diff at Mon, 23 Mar 2026 10:57:04 GMT:
+# Diff at Fri, 12 Jun 2026 10:18:53 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1761551414
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1761551414
 - current timestamp: 1761551414
 
 ## Description
@@ -23,6 +23,50 @@ discovery. Values are for block 1761551414 (main branch discovery), not current.
 -        true
       eoaWithUpgradePermissions:
 +        true
+    }
+```
+
+Generated with discovered.json: 0x3957f7df4ac9b8af29f80eb8a6f611815a70b528
+
+# Diff at Tue, 09 Jun 2026 12:43:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1761551414
+- current timestamp: 1761551414
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761551414 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+      receivedPermissions.2.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.2.permission:
+-        "operateStarkEx"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.0.permission:
+-        "operateStarkEx"
++        "interact"
     }
 ```
 

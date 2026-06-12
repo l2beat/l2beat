@@ -1,7 +1,7 @@
 {
   "name": "superposition",
-  "timestamp": 1770824047,
-  "configHash": "0x62338da5d493e7fc626d34eebd6b3f8deca6589090d0541725e5bccfe0515cb2",
+  "timestamp": 1780398840,
+  "configHash": "0x1647d2d22303b240cedfe4da9064af0475c7d61f76e37c40a44c45ab18ede624",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -9,10 +9,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
-        "0x95e26ae3077f12aa3b383e87c553884e67eaf30c17ca083768d76822d0916cb8"
+        "0x130f30b3e9318970d22dad0a549e532b9a19290ebaaad3a0ce20352ff33cc104"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117760,
       "sinceBlock": 332189402,
       "values": { "$immutable": true },
@@ -27,10 +28,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
       "sinceTimestamp": 1737016164,
       "sinceBlock": 295966374,
       "values": {
@@ -42,7 +44,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 7825,
+        "nonce": 10643,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -62,10 +64,11 @@
       "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x421aa98d340c2ad3e475ce29bb1e72660c213f0997591e567c0fd3d3ae2365a8"
+        "0xa8ec42edee4ac983b2d5fed2ee80ff160072927ebae439c96414a1b729fd6455"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "deployerAddress": "arb1:0xB23558BC6C234F5A51A95F142Fe66f4f9f4D621a",
       "sinceTimestamp": 1725644220,
       "sinceBlock": 250756028,
       "values": {
@@ -109,10 +112,11 @@
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x6ce471861570d55dc6e9a09337d990c13efb0c7abb47f36a5de48a9a7086f6e8"
+        "0x6aedbb6059216584b86626e8ce4bc3f123bb7cdf3890b83063e1d3ef2b16be19"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "deployerAddress": "arb1:0xB23558BC6C234F5A51A95F142Fe66f4f9f4D621a",
       "sinceTimestamp": 1725644220,
       "sinceBlock": 250756028,
       "values": {
@@ -145,22 +149,12 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
       ]
-    },
-    {
-      "address": "arb1:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "UpgradeExecutor",
@@ -169,7 +163,7 @@
       "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
+        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
@@ -191,6 +185,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0xB23558BC6C234F5A51A95F142Fe66f4f9f4D621a",
       "sinceTimestamp": 1725644220,
       "sinceBlock": 250756028,
       "values": {
@@ -240,7 +235,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -253,7 +248,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -266,7 +261,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -284,7 +279,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -297,10 +292,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
-        "0x9da1c11f886667abb57a92659891b066372dde4fe1a3eebce72c722ecf872874"
+        "0xa7a92329b6a7a74a22b00e80ded5f76b2d46cddfc3fef149bd93c941f577388b"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117617,
       "sinceBlock": 332188829,
       "values": { "$immutable": true },
@@ -314,10 +310,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
-        "0xfdda77bfcb4ee6e1d88939c755d6eda90f3250c8053b15b511ad9148cce8a787"
+        "0x8342918a09a9fc42d1b623e96c5f3ba476a095f6fb99d619383113945b1aee41"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117833,
       "sinceBlock": 332189694,
       "values": {
@@ -338,10 +335,11 @@
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x12b277cae4866b3d1f1772fcb7f861dc23247452179f0736c9dbe7012f6c14f6"
+        "0xbcc7c87f75509deb2df1f6e2f6388514c4bdb5807f953974c9687b19d36b2475"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
+      "deployerAddress": "arb1:0xB23558BC6C234F5A51A95F142Fe66f4f9f4D621a",
       "sinceTimestamp": 1725644465,
       "sinceBlock": 250757002,
       "values": {
@@ -380,10 +378,11 @@
       "template": "orbitstack/EdgeChallengeManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x6c09a44175196122c17b285af0789d13088361d0f4244fbe65f00f40d3036cb8"
+        "0xe3bfba89667a59af2f558ead22d7fe0c142232b464bdae0f9e4b03555c7699f2"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that implements the main challenge protocol logic of the fraud proof system.",
+      "deployerAddress": "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
       "sinceTimestamp": 1770631357,
       "sinceBlock": 430237290,
       "values": {
@@ -430,10 +429,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
-        "0x549b7c350bf6e1da7e8aa5fda9440889a76d5611ed7c6e37411d364ee36f8d5b"
+        "0x165bc2eea08646ff24d665db74c1cd2deedc703052ceccac716f25eea2c23d80"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117542,
       "sinceBlock": 332188531,
       "values": { "$immutable": true },
@@ -448,7 +448,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -559,14 +559,15 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c",
       "sinceTimestamp": 1701465533,
       "sinceBlock": 155965667,
       "values": {
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb1:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "arb1:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
-          "arb1:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07",
           "arb1:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "arb1:0x2103c69696CB2D3779f5445393808239034E911c",
           "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
@@ -574,7 +575,6 @@
           "arb1:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "arb1:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "arb1:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
-          "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "arb1:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "arb1:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
         ],
@@ -582,8 +582,8 @@
         "domainSeparator": "0x8e983e66cfd245a874ba795dfb67eec98f9f6261d8eed2360f67db156c7d3a86",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 126,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 138,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -597,7 +597,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -610,7 +610,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -683,6 +683,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0xB23558BC6C234F5A51A95F142Fe66f4f9f4D621a",
       "sinceTimestamp": 1725644220,
       "sinceBlock": 250756028,
       "values": {
@@ -699,7 +700,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -713,10 +714,11 @@
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x61cc407871b0c56af41887c99354633d150e4586f0a6d237c6efd10966b17bd7"
+        "0x4600f997060ae2ef832240d3416d7837131270d347c85a9227f193804349f0d1"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
+      "deployerAddress": "arb1:0xB23558BC6C234F5A51A95F142Fe66f4f9f4D621a",
       "sinceTimestamp": 1725644465,
       "sinceBlock": 250757002,
       "values": {
@@ -764,6 +766,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "deployerAddress": "arb1:0xB23558BC6C234F5A51A95F142Fe66f4f9f4D621a",
       "sinceTimestamp": 1725644220,
       "sinceBlock": 250756028,
       "values": {
@@ -804,7 +807,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -822,10 +825,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
-        "0xeb0b77a8bbbb65eabcb1e26f29f9eac4db26d0b5974e37d9cc57ffc03b7be0e1"
+        "0x5bd5c472d09dfca8febfe8da2a09b7c0a1a11653ed9a4908ce4719abc68caf2b"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117689,
       "sinceBlock": 332189122,
       "values": { "$immutable": true },
@@ -839,7 +843,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -847,12 +851,17 @@
       ]
     },
     {
+      "address": "arb1:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0xCe957F6aFadFFA08dAa90cE5b47208C02a9b9B4F",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -865,7 +874,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -878,7 +887,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -891,7 +900,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".getValidators"
@@ -905,7 +914,7 @@
       "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xb57f3e67e08492b235337cda4f3ea0117e3e043cceaf8e9a7a51b57611ba99de"
+        "0xd9d7945b3c909d8777cc1798e1b56051640a57595cc65064235a913104f4e9e9"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
@@ -915,6 +924,7 @@
         "buffer",
         "postsBlobs"
       ],
+      "deployerAddress": "arb1:0xB23558BC6C234F5A51A95F142Fe66f4f9f4D621a",
       "sinceTimestamp": 1725644220,
       "sinceBlock": 250756028,
       "values": {
@@ -938,7 +948,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 12108,
+        "batchCount": 15610,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90",
@@ -993,7 +1003,7 @@
         "rollup": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 48995,
+        "totalDelayedMessagesRead": 52762,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1014,7 +1024,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -1028,7 +1038,7 @@
       "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xbce819ea96dfba398ca731b4457e9b9a01621df028c459eb74b15b6a687130b1"
+        "0x29acc2652c0eb213e1a10f1c211600303d26e856116587d65e6fb4d40f0e6bae"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
@@ -1037,6 +1047,7 @@
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
       ],
+      "deployerAddress": "arb1:0xB23558BC6C234F5A51A95F142Fe66f4f9f4D621a",
       "sinceTimestamp": 1725644220,
       "sinceBlock": 250756028,
       "values": {
@@ -1063,7 +1074,7 @@
         "allowedOutboxList": [
           "arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798"
         ],
-        "delayedMessageCount": 48996,
+        "delayedMessageCount": 52763,
         "inboxHistory": [
           "arb1:0x2EAf07A964c6601c4fAefd6D8969DF0B84f65e55",
           "arb1:0x31F535A566FE1Ef994858cf4D97b1207fC7388A8"
@@ -1071,8 +1082,8 @@
         "outboxHistory": ["arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798"],
         "rollup": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075",
         "sequencerInbox": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
-        "sequencerMessageCount": 12108,
-        "sequencerReportedSubMessageCount": 2761229
+        "sequencerMessageCount": 15610,
+        "sequencerReportedSubMessageCount": 3176808
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1114,8 +1125,8 @@
       "type": "Contract",
       "template": "orbitstack/RollupProxyBoLD",
       "sourceHashes": [
-        "0x951637f3a8787d8273dbd619921f256bd87a38b9d955e65c2e520772c2e0a642",
-        "0x7b0429a0a98808dee6774a44d8d1ed15305ecc4b6fee4670db2d49f9caf65e51"
+        "0xc66527a2dd7fcfbb954018194b0db35218725aa1072451f6ec2470d103b4a0a2",
+        "0x865eda6aeccd46252ab6f23f58421b95f106676e38c62d4aaa768a6d5f2c26e9"
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).",
@@ -1124,6 +1135,7 @@
         "latestConfirmed",
         "latestNodeCreated"
       ],
+      "deployerAddress": "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
       "sinceTimestamp": 1770631357,
       "sinceBlock": 430237290,
       "values": {
@@ -1156,7 +1168,7 @@
         "getValidators": ["arb1:0xd76a3aCEd4115B017301C54C211EC36aA5E37e05"],
         "inbox": "arb1:0x2EAf07A964c6601c4fAefd6D8969DF0B84f65e55",
         "isPostBoLD": true,
-        "latestConfirmed": "0xea7140534c85060bc784954dd4b89e6649482d2a1e2c3458a70cf3fc384f4bbe",
+        "latestConfirmed": "0x37616dbe24580b524e8e88bec1fe061ffdb902aa4828e21a86167e8c00fafa4a",
         "loserStakeEscrow": "arb1:0xd76a3aCEd4115B017301C54C211EC36aA5E37e05",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798",
@@ -1222,6 +1234,7 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
+            "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -2063,6 +2076,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 431011052 },
-  "permissionsConfigHash": "0xa59c2733170748871275e2254cb4a6457e917a2de250975a28450f6cef4f6f8d"
+  "usedBlockNumbers": { "arbitrum": 469254311 },
+  "permissionsConfigHash": "0x178fae062077b485858941a36af7780ab02a53ce04dc6b56e19e0f210a4ed2e1"
 }

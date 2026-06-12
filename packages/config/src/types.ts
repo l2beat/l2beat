@@ -20,6 +20,17 @@ export interface WarningWithSentiment {
   sentiment: 'bad' | 'warning' | 'neutral'
 }
 
+export type ProjectDetailsSectionId =
+  | 'contracts'
+  | 'program-hashes'
+  | 'permissions'
+  | 'liveness'
+
+export interface ProjectRedWarning {
+  text: string
+  detailAnchor?: ProjectDetailsSectionId
+}
+
 export interface TableReadyValue<T extends string = string> {
   value: T
   secondLine?: string
@@ -30,13 +41,84 @@ export interface TableReadyValue<T extends string = string> {
   orderHint?: number
 }
 
+export interface RegularExitWindowRisk
+  extends Pick<TableReadyValue, 'value' | 'sentiment'> {
+  description: string
+}
+
+export interface ExitWindowRisk extends TableReadyValue {
+  regular?: RegularExitWindowRisk
+}
+
 export interface ProjectTechnologyChoice {
   name: string
   description: string
   references: ReferenceLink[]
   risks: ProjectRisk[]
+  sequencerSetSpec?: ProjectSequencerSetSpec
+  inclusionDelayChart?: ProjectInclusionDelayChart
+  inclusionDelayChartDescription?: string
+  censorshipResistance?: string
   isIncomplete?: boolean
   isUnderReview?: boolean
+}
+
+export interface ProjectSequencerSetSpec {
+  slotTime?: TableReadyValue
+  epochTime?: TableReadyValue
+  sequencerCount?: TableReadyValue
+  blockProductionAccess?: TableReadyValue
+  stakePerValidator?: TableReadyValue
+  rateLimit?: TableReadyValue
+  deterministicCrGadget?: TableReadyValue
+  additionalCrGadgets?: TableReadyValue
+}
+
+export type ProjectInclusionDelayChart =
+  | ProjectEthereumLikeInclusionDelayChart
+  | ProjectCommitteeLikeInclusionDelayChart
+  | ProjectSpanLikeInclusionDelayChart
+
+interface ProjectInclusionDelayChartBase {
+  target: number
+  maxCensorFraction: number
+  stakeDistribution?: ProjectInclusionDelayChartStakeDistribution
+}
+
+export interface ProjectInclusionDelayChartStakeDistribution {
+  stakeToken: string
+  totalStake: number
+  entities: ProjectInclusionDelayChartEntityStake[]
+}
+
+export interface ProjectInclusionDelayChartEntityStake {
+  name: string
+  stake: number
+}
+
+export interface ProjectEthereumLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'ethereumlike'
+  validatorCount: number
+  slotSeconds: number
+}
+
+export interface ProjectCommitteeLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'committeelike'
+  validatorCount: number
+  committeeSize: number
+  epochSlots: number
+  slotSeconds: number
+  blockingThreshold: number
+}
+
+export interface ProjectSpanLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'spanlike'
+  validatorCount: number
+  spanBlocks: number
+  blockSeconds: number
 }
 
 export interface ReferenceLink {
@@ -62,7 +144,7 @@ export type ProjectRiskCategory =
   | 'Withdrawals can be delayed if'
 // #endregion
 
-export type ProjectReviewStatus = 'initialReview' | 'inReview'
+export type ProjectReviewStatus = 'inReview'
 
 export interface BaseProject {
   id: ProjectId
@@ -70,6 +152,7 @@ export interface BaseProject {
   name: string
   /** Used in place of name in tables to save space. */
   shortName: string | undefined
+  aliases?: string[]
   addedAt: UnixTime
 
   // common data
@@ -101,6 +184,9 @@ export interface BaseProject {
   // interop data
   interopConfig?: InteropConfig
 
+  // privacy data
+  privacyInfo?: ProjectPrivacyInfo
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -120,10 +206,6 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
 
   // tags
-  isScaling?: true
-  isInteropProtocol?: true
-  isDaLayer?: true
-  isUpcoming?: true
   archivedAt?: UnixTime
   hasTestnet?: true
 }
@@ -142,7 +224,7 @@ export interface ProjectCustomColors {
 
 export interface ProjectStatuses {
   yellowWarning: string | undefined
-  redWarning: string | undefined
+  redWarning: ProjectRedWarning | undefined
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
   unverifiedContracts: ChainSpecificAddress[]
@@ -150,8 +232,10 @@ export interface ProjectStatuses {
 
 export interface ProjectDisplay {
   description: string
+  detailedDescription?: string
   links: ProjectLinks
   badges: Badge[]
+  redWarning?: ProjectRedWarning
 }
 
 export interface ProjectLinks {
@@ -229,8 +313,7 @@ interface IncidentMilestone extends BaseMilestone {
 }
 
 interface ProjectIconMilestone extends BaseMilestone {
-  projectId: ProjectId
-  projectIcon: string
+  project: { id: string; name: string; icon: string }
   type: 'project'
 }
 
@@ -527,13 +610,34 @@ export interface ProjectRiskView {
   stateValidation: TableReadyValue & {
     /** @unit seconds */
     executionDelay?: number
+    /** Whether `executionDelay` is applied on every withdrawal or only when a
+     *  challenge is raised. Treated as 'always' when omitted. */
+    executionDelayMode?: 'always' | 'if-challenged'
     /** @unit seconds */
     challengeDelay?: number
-    /** @unit ETH */
-    initialBond?: string
+    /** Defaults to ETH (rendered with Ξ prefix). Set `token` when the bond is
+     *  paid in a non-ETH token; the value is then rendered as
+     *  "<value> <token>". */
+    initialBond?: {
+      value: string
+      token?: string
+    }
+    /** Whether challenging is restricted to a whitelist. When true, the bond
+     *  amount is set by the project rather than reflecting an open economic
+     *  barrier, so values across permissioned systems aren't comparable to
+     *  permissionless ones. */
+    permissioned?: boolean
+    /** Worst-case ratio of defender funds to attacker funds required to
+     *  protect the chain in a resource-exhaustion attack. See
+     *  https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a. */
+    defenderAdvantage?:
+      | { multiplier: number; shape: 'linear' }
+      | { shape: 'log' }
+      | 'not-applicable'
+      | 'not-assessed'
   }
   dataAvailability: TableReadyValue
-  exitWindow: TableReadyValue
+  exitWindow: ExitWindowRisk
   sequencerFailure: TableReadyValue
   proposerFailure: TableReadyValue
 }
@@ -542,6 +646,12 @@ export interface ProjectScalingDa {
   layer: TableReadyValue & { projectId?: ProjectId }
   bridge: TableReadyValue & { projectId?: ProjectId }
   mode: TableReadyValue
+}
+
+export interface ProjectGovernanceInfo {
+  securityCouncil?: Record<string, string>
+  upgrades?: Record<string, string>
+  tokenGovernance?: Record<string, string>
 }
 
 export interface ProjectScalingTechnology {
@@ -556,12 +666,17 @@ export interface ProjectScalingTechnology {
   exitMechanisms?: ProjectTechnologyChoice[]
   massExit?: ProjectTechnologyChoice
   otherConsiderations?: ProjectTechnologyChoice[]
-  upgradesAndGovernance?: string
-  upgradesAndGovernanceImage?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   stateValidationImage?: string
   isUnderReview?: boolean
+}
+
+export interface ProjectUpgradesAndGovernance {
+  content?: string
+  governanceInfo?: ProjectGovernanceInfo
+  image?: string
 }
 
 export interface ProjectScalingStateDerivation {
@@ -593,6 +708,7 @@ export interface ProjectScalingStateValidationCategory {
     | 'Fraud proofs'
     // Other
     | 'No state validation'
+    | 'Slashing'
   description: string
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
@@ -772,6 +888,7 @@ export type DaChallengeMechanism = 'DA Challenges' | 'None'
 // #region zk catalog data
 export interface ProjectZkCatalogInfo {
   creator?: string
+  quantumResistant?: true
   formalVerificationLinks?: {
     name: string
     url: string
@@ -796,11 +913,12 @@ export interface ProjectZkCatalogInfo {
     untilTimestamp?: UnixTime
   }[]
   verifierHashes: {
+    name: string
+    sourceLink?: string
     hash: string
     proofSystem: ZkCatalogTag
     knownDeployments: {
-      address: EthereumAddress
-      chain: string
+      address: ChainSpecificAddress
       overrideUsedIn?: ProjectId[]
     }[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
@@ -824,7 +942,80 @@ export interface TrustedSetup {
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
+  participantCount?: number
 }
+
+// #endregion
+
+// #region privacy data
+
+export interface ProjectPrivacyInfo {
+  trustedSetup: TrustedSetup
+  tokens: ProjectPrivacyToken[]
+  attributes?: PrivacyAttribute[]
+  riskSummary?: string
+  upgradesAndGovernance?: string
+}
+
+export interface PrivacyAttribute {
+  id: string
+  label: string
+  description: string
+}
+
+export interface ProjectPrivacyToken {
+  token: {
+    address: EthereumAddress
+    iconUrl: string | undefined
+    symbol: string
+    decimals: number
+    priceId: string
+    sinceTimestamp: UnixTime
+  }
+  buckets: ProjectPrivacyBucket[]
+}
+
+export interface ProjectPrivacyBucket {
+  id: string
+  type: 'pool' | 'denomination'
+  label: string
+  address: ChainSpecificAddress
+  sinceTimestamp: UnixTime
+  denomination?: string
+  deposit: PrivacyFlowSource
+  withdrawal: PrivacyFlowSource
+}
+
+export type PrivacyFlowSource = {
+  event: string
+} & PrivacyFlowExtractorConfig
+
+export type PrivacyFlowExtractorConfig =
+  | {
+      extractor: 'fixedAmount'
+      params: {
+        amount: string
+      }
+    }
+  | {
+      extractor: 'privacyPoolsValue'
+      params: Record<string, never>
+    }
+  | {
+      extractor: 'railgunShield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'railgunUnshield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+
+export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
+export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
 
 // #endregion
 
@@ -1050,6 +1241,7 @@ export interface ProjectPermission {
 
 export interface ProjectPermissionedAccount {
   name: string
+  displayName?: string
   url: string
   address: ChainSpecificAddress
   isVerified: boolean
@@ -1063,6 +1255,8 @@ export interface ProjectContracts {
   risks: ProjectRisk[]
   escrows?: ProjectEscrow[]
   programHashes?: ProjectScalingContractsProgramHash[]
+  programHashesDescription?: string
+  zkVerifiers?: ChainSpecificAddress[]
 }
 
 export interface ProjectContract {
@@ -1142,8 +1336,6 @@ export interface ProjectEscrow {
   premintedTokens?: string[]
   /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
   isHistorical?: boolean
-  /** Upcoming projects needs upcoming escrows (needed for TVL) */
-  isUpcoming?: boolean
   /** Inclusive */
   untilTimestamp?: UnixTime
   includeInTotal?: boolean
@@ -1173,8 +1365,6 @@ export type InteropPluginName =
   | 'across-settlement-op'
   | 'across-settlement-orbit'
   | 'agglayer'
-  | 'allbridge'
-  | 'aori'
   | 'avalanche'
   | 'axelar'
   | 'axelar-its'
@@ -1193,10 +1383,12 @@ export type InteropPluginName =
   | 'hyperlane-hwr'
   | 'hyperlane-merkly-tokenbridge'
   | 'hyperlane-simple-apps'
-  | 'layerzero-v1'
+  | 'hyperliquid-bridge'
   | 'layerzero-v2'
+  | 'lighter-bridge'
   | 'layerzero-v2-ofts'
   | 'lido-wsteth'
+  | 'lifi-intents'
   | 'maker-bridge'
   | 'mayan-forwarder'
   | 'mayan-mctp'
@@ -1217,7 +1409,6 @@ export type InteropPluginName =
   | 'sorare-base'
   | 'squid-coral'
   | 'stargate'
-  | 'superform'
   | 'synthetix-bridge'
   | 'world-id'
   | 'wormhole'
@@ -1233,6 +1424,9 @@ export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 export interface InteropConfig {
   name?: string
   shortName?: string
+  description?: string
+  /** Longer markdown description visible on interop detailed pages. */
+  detailedDescription?: string
   type: InteropType
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'
@@ -1249,6 +1443,12 @@ export interface InteropConfig {
   /** If configured avg. duration can be split into custom labeled groups.
    The listed transfer types are intentionally allowed to be non-exhaustive. */
   durationSplit?: Partial<Record<KnownInteropBridgeType, InteropDurationSplit>>
+  /** Contracts displayed on the interop project page. For canonical bridges,
+   * this is intentionally a different (narrower) set than the chain page. */
+  contracts?: ProjectContracts
+  /** Permissions displayed on the interop project page. For canonical bridges,
+   * this is intentionally a different (narrower) set than the chain page. */
+  permissions?: Record<string, ProjectPermissions>
 }
 
 export type InteropPlugin = {

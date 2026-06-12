@@ -34,6 +34,7 @@ export const redstone: ScalingProject = opStackL2({
     isPartOfSuperchain: false,
   },
   addedAt: UnixTime(1714996778), // 2024-05-06T11:59:38Z
+  archivedAt: UnixTime(1779388559), // 2026-05-21T18:35:59Z, last batch submission
   discovery,
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
@@ -41,6 +42,9 @@ export const redstone: ScalingProject = opStackL2({
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
+    redWarning: {
+      text: 'Redstone will shut down on May 15, 2026 (23:59 UTC). Users must withdraw their funds before that date, especially assets held in contracts like Uniswap pools, which will not be recoverable after shutdown. See [announcement](https://x.com/latticexyz/status/2044103611072835744) for details.',
+    },
     name: 'Redstone',
     slug: 'redstone',
     architectureImage: 'opstack-dachallenge',
@@ -68,6 +72,16 @@ export const redstone: ScalingProject = opStackL2({
   ),
   genesisTimestamp: UnixTime(1712192291),
   isNodeAvailable: 'UnderReview',
+  milestones: [
+    {
+      title: 'Redstone shutdown announcement',
+      url: 'https://x.com/latticexyz/status/2044103611072835744',
+      date: '2026-04-15T00:00:00Z',
+      description:
+        'Lattice announces Redstone shutdown on May 15, 2026. Users must withdraw before that date.',
+      type: 'incident',
+    },
+  ],
   chainConfig: {
     name: 'redstone',
     chainId: 690,

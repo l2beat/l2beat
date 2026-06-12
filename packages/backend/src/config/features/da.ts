@@ -174,9 +174,6 @@ export async function getDaTrackingConfig(
     timestampLayers,
     blockProjects: allBlockProjects,
     timestampProjects: allTimestampProjects,
-    ethereumNotifierDiscordWebhookUrl: env.optionalString(
-      'ETHEREUM_NOTIFIER_DISCORD_WEBHOOK_URL',
-    ),
   }
 }
 
@@ -186,7 +183,6 @@ async function getBlockDaTrackingProjects(
 ): Promise<BlockDaIndexedConfig[]> {
   const projects = await ps.getProjects({
     select: ['daTrackingConfig'],
-    whereNot: ['isUpcoming'],
   })
 
   return projects
@@ -272,7 +268,6 @@ async function getTimestampDaTrackingProjects(
 ): Promise<TimestampDaIndexedConfig[]> {
   const projects = await ps.getProjects({
     select: ['daTrackingConfig'],
-    whereNot: ['isUpcoming'],
   })
 
   return projects

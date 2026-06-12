@@ -1,7 +1,11 @@
 import type { InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { getAggregatedTokens, getAggregatedTransfer } from './aggregation'
+import {
+  getAggregatedTokens,
+  getAggregatedTokensPairs,
+  getAggregatedTransfer,
+} from './aggregation'
 
 describe('aggregation', () => {
   const timestamp = UnixTime.now()
@@ -353,7 +357,7 @@ describe('aggregation', () => {
       expect(result.avgValueInFlight).toEqual(324.07)
     })
 
-    it('calculates minted & burned value correctly', () => {
+    it('sums net mint and burn for strict lock-and-mint flags', () => {
       const transfers: InteropTransferRecord[] = [
         createTransfer({
           timestamp,
@@ -435,11 +439,124 @@ describe('aggregation', () => {
         calculateNetMinted: true,
       })
 
-      // Only the first transfer counts (minting)
-      // mintedValueUsd = 2000
-      // burnedValueUsd = 0
+      // Only the first transfer counts (minting); no burn total → field omitted
       expect(result.mintedValueUsd).toEqual(2000)
-      expect(result.burnedValueUsd).toEqual(0)
+      expect(result.burnedValueUsd).toEqual(undefined)
+    })
+
+    it('two-sided transfers omit net mint or burn unless src/dst booleans are strict pairs', () => {
+      const mintNeedsExplicitNotBurn = getAggregatedTransfer(
+        [
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            duration: 1000,
+            srcValueUsd: 10,
+            dstValueUsd: 10,
+            dstWasMinted: true,
+          }),
+        ],
+        { calculateNetMinted: true },
+      ).mintedValueUsd
+
+      expect(mintNeedsExplicitNotBurn).toEqual(undefined)
+
+      const burnNeedsExplicitNotMint = getAggregatedTransfer(
+        [
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            duration: 1000,
+            srcValueUsd: 10,
+            dstValueUsd: 10,
+            srcWasBurned: true,
+          }),
+        ],
+        { calculateNetMinted: true },
+      ).burnedValueUsd
+
+      expect(burnNeedsExplicitNotMint).toEqual(undefined)
+    })
+
+    it('one-sided transfers use loose burn/mint booleans for net minted', () => {
+      const mintOnlyDstFlag = getAggregatedTransfer(
+        [
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            duration: 1000,
+            srcValueUsd: 10,
+            dstValueUsd: 10,
+            srcEventId: undefined,
+            dstWasMinted: true,
+          }),
+        ],
+        { calculateNetMinted: true },
+      ).mintedValueUsd
+
+      expect(mintOnlyDstFlag).toEqual(10)
+
+      const burnOnlySrcFlag = getAggregatedTransfer(
+        [
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            duration: 1000,
+            srcValueUsd: 10,
+            dstValueUsd: 10,
+            dstEventId: undefined,
+            srcWasBurned: true,
+          }),
+        ],
+        { calculateNetMinted: true },
+      ).burnedValueUsd
+
+      expect(burnOnlySrcFlag).toEqual(10)
+    })
+
+    it('omits net mint and burn when both burn/mint booleans are unset', () => {
+      const twoSided = getAggregatedTransfer(
+        [
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            duration: 1000,
+            srcValueUsd: 100,
+            dstValueUsd: 100,
+            srcWasBurned: undefined,
+            dstWasMinted: undefined,
+          }),
+        ],
+        { calculateNetMinted: true },
+      )
+
+      expect(twoSided.mintedValueUsd).toEqual(undefined)
+      expect(twoSided.burnedValueUsd).toEqual(undefined)
+
+      const oneSided = getAggregatedTransfer(
+        [
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            duration: 1000,
+            srcValueUsd: 100,
+            dstValueUsd: 100,
+            srcEventId: undefined,
+            srcWasBurned: undefined,
+            dstWasMinted: undefined,
+          }),
+        ],
+        { calculateNetMinted: true },
+      )
+
+      expect(oneSided.mintedValueUsd).toEqual(undefined)
+      expect(oneSided.burnedValueUsd).toEqual(undefined)
     })
 
     it('correctly counts identified transfers', () => {
@@ -1041,6 +1158,207 @@ describe('aggregation', () => {
       })
     })
   })
+
+  describe(getAggregatedTokensPairs.name, () => {
+    it('aggregates two transfers with same pair', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth___',
+          dstAbstractTokenId: 'usdc__',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: 2000,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth___',
+          dstAbstractTokenId: 'usdc__',
+          duration: 3000,
+          srcValueUsd: 1000,
+          dstValueUsd: 1000,
+        }),
+      ]
+
+      const result = getAggregatedTokensPairs(transfers)
+
+      expect(result).toHaveLength(1)
+      expect(result[0]).toEqual({
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        tokenA: 'eth___',
+        tokenB: 'usdc__',
+        transferTypeStats: {
+          deposit: { transferCount: 2, totalDurationSum: 8000 },
+        },
+        transferCount: 2,
+        transfersWithDurationCount: 2,
+        totalDurationSum: 8000,
+        volume: 3000,
+        minTransferValueUsd: 1000,
+        maxTransferValueUsd: 2000,
+      })
+    })
+
+    it('is direction agnostic - ETH->USDC and USDC->ETH are same pair', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth___',
+          dstAbstractTokenId: 'usdc__',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: 2000,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'usdc__',
+          dstAbstractTokenId: 'eth___',
+          duration: 3000,
+          srcValueUsd: 1000,
+          dstValueUsd: 1000,
+        }),
+      ]
+
+      const result = getAggregatedTokensPairs(transfers)
+
+      expect(result).toHaveLength(1)
+      expect(result[0]?.tokenA).toEqual('eth___')
+      expect(result[0]?.tokenB).toEqual('usdc__')
+      expect(result[0]?.transferCount).toEqual(2)
+    })
+
+    it('handles same-token pairs (ETH->ETH)', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth___',
+          dstAbstractTokenId: 'eth___',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: 2000,
+        }),
+      ]
+
+      const result = getAggregatedTokensPairs(transfers)
+
+      expect(result).toHaveLength(1)
+      expect(result[0]?.tokenA).toEqual('eth___')
+      expect(result[0]?.tokenB).toEqual('eth___')
+      expect(result[0]?.transferCount).toEqual(1)
+    })
+
+    it('aggregates transfers with missing token IDs into unknown pair', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth___',
+          dstAbstractTokenId: undefined,
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: 2000,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: undefined,
+          dstAbstractTokenId: 'usdc__',
+          duration: 3000,
+          srcValueUsd: 1000,
+          dstValueUsd: 1000,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: undefined,
+          dstAbstractTokenId: undefined,
+          duration: 4000,
+          srcValueUsd: 500,
+          dstValueUsd: 500,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth___',
+          dstAbstractTokenId: 'usdc__',
+          duration: 6000,
+          srcValueUsd: 3000,
+          dstValueUsd: 3000,
+        }),
+      ]
+
+      const result = getAggregatedTokensPairs(transfers)
+
+      expect(result).toHaveLength(2)
+
+      const knownPair = result.find(
+        (r) => r.tokenA === 'eth___' && r.tokenB === 'usdc__',
+      )
+      expect(knownPair?.transferCount).toEqual(1)
+      expect(knownPair?.volume).toEqual(3000)
+
+      const unknownPair = result.find((r) => r.tokenA === 'unknown')
+      expect(unknownPair?.transferCount).toEqual(3)
+      expect(unknownPair?.volume).toEqual(3500)
+    })
+
+    it('tracks transfer type stats per pair', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          type: 'taxi',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth___',
+          dstAbstractTokenId: 'usdc__',
+          duration: 2000,
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+        }),
+        createTransfer({
+          timestamp,
+          type: 'bus',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth___',
+          dstAbstractTokenId: 'usdc__',
+          duration: 8000,
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+        }),
+      ]
+
+      const result = getAggregatedTokensPairs(transfers)
+
+      expect(result[0]?.transferTypeStats).toEqual({
+        taxi: { transferCount: 1, totalDurationSum: 2000 },
+        bus: { transferCount: 1, totalDurationSum: 8000 },
+      })
+    })
+
+    it('throws error when group is empty', () => {
+      const transfers: InteropTransferRecord[] = []
+
+      expect(() => getAggregatedTokensPairs(transfers)).toThrow(
+        'Group is empty',
+      )
+    })
+  })
 })
 
 function createTransfer(overrides: {
@@ -1055,6 +1373,8 @@ function createTransfer(overrides: {
   dstValueUsd?: number
   srcWasBurned?: boolean
   dstWasMinted?: boolean
+  srcEventId?: string | undefined
+  dstEventId?: string | undefined
 }): InteropTransferRecord {
   return {
     plugin: 'test-plugin',
@@ -1065,7 +1385,8 @@ function createTransfer(overrides: {
     srcTime: overrides.timestamp,
     srcTxHash: 'random-hash',
     srcLogIndex: 0,
-    srcEventId: 'random-event-id',
+    srcEventId:
+      'srcEventId' in overrides ? overrides.srcEventId : 'random-event-id',
     srcTokenAddress: undefined,
     srcRawAmount: undefined,
     srcWasBurned: overrides.srcWasBurned ?? undefined,
@@ -1078,7 +1399,8 @@ function createTransfer(overrides: {
         : undefined,
     dstTxHash: 'random-hash',
     dstLogIndex: 0,
-    dstEventId: 'random-event-id',
+    dstEventId:
+      'dstEventId' in overrides ? overrides.dstEventId : 'random-event-id',
     dstTokenAddress: undefined,
     dstRawAmount: undefined,
     dstWasMinted: overrides.dstWasMinted ?? undefined,

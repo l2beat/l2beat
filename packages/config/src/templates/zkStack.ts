@@ -2,7 +2,7 @@ import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   ChainSpecificAddress,
-  type EthereumAddress,
+  EthereumAddress,
   formatSeconds,
   ProjectId,
   type UnixTime,
@@ -22,7 +22,8 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { PROGRAM_HASHES } from '../common/programHashes'
-import { getStage } from '../common/stages/getStage'
+import { getAltDaStage } from '../common/stages/getAltDaStage'
+import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
@@ -54,6 +55,7 @@ import type {
 } from '../types'
 import { getActivityConfig } from './activity'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
+import { getSP1Verifiers } from './opStack'
 import { mergeBadges, mergePermissions } from './utils'
 
 export interface DAProvider {
@@ -123,6 +125,23 @@ export interface ZkStackConfigCommon {
   interopConfig?: InteropConfig
   // For Stage 1 requirement. In theory could also be determined from discovery and zk catalog
   zkVerifierContractsReproducible?: boolean
+  // altDA stage inputs (used when the project is a Validium/Optimium)
+  daAttestedByIndependentParty?: boolean
+  daVerifierSecureOnL1?: boolean
+  daVerifier7DayExitWindow?: boolean
+  daVerifier30DayExitWindow?: boolean
+  daCommitteeDecentralized?: boolean
+  /** Override for the static economic-security check derived from the DA layer. */
+  daMechanismEconomicSecurity?: boolean
+  daVerifierLink?: string
+  proverSourceLink?: string
+  securityCouncilReference?: string
+  /** Override for altDA Stage 1 principle description (rollup keeps hardcoded). */
+  stage1PrincipleDescription?: string
+  /** Manual altDA Stage 1 principle verdict (defaults to false, matching rollup). */
+  stage1Principle?: boolean | 'UnderReview'
+  /** Stage 1: is the chain's own Security Council / ChainAdmin properly set up? */
+  hasProperSecurityCouncil?: boolean
 }
 
 export type Upgradeability = {
@@ -304,7 +323,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         'Universal',
         ...(templateVars.additionalPurposes ?? []),
       ],
-      upgradesAndGovernanceImage: 'zkstack',
       stacks: ['ZK Stack'],
       architectureImage:
         templateVars.daProvider !== undefined
@@ -357,7 +375,13 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,
       mode: DA_MODES.STATE_DIFFS_COMPRESSED,
     },
-    interopConfig: templateVars.interopConfig,
+    interopConfig: templateVars.interopConfig
+      ? {
+          description:
+            'The canonical or trust-minimized bridge: ZK stack uses canonical bridges to and from Ethereum, based on the security of validity proofs. Native interop within the stack is not enabled',
+          ...templateVars.interopConfig,
+        }
+      : undefined,
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
@@ -381,10 +405,55 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     stage:
       templateVars.stage ??
       (templateVars.daProvider !== undefined
-        ? {
-            stage: 'NotApplicable',
-          }
-        : getStage(
+        ? getAltDaStage(
+            {
+              stage0: {
+                callsItselfValidiumOrOptimium: true,
+                stateRootsPostedToL1: true,
+                stateVerificationOnL1: true,
+                daAttestedByIndependentParty:
+                  templateVars.daAttestedByIndependentParty ?? null,
+                nodeSourceAvailable: true,
+                fraudProofSystemAtLeast5Outsiders: null,
+              },
+              stage1: {
+                principle: templateVars.stage1Principle ?? false,
+                usersCanExitWithoutCooperation: false,
+                usersHave7DaysToExit: false,
+                securityCouncilProperlySetUp:
+                  templateVars.hasProperSecurityCouncil ?? false,
+                daVerifierSecureOnL1: templateVars.daVerifierSecureOnL1 ?? null,
+                daVerifier7DayExitWindow:
+                  templateVars.daVerifier7DayExitWindow ?? null,
+                daCommitteeDecentralized:
+                  templateVars.daCommitteeDecentralized ?? null,
+                noRedTrustedSetups: true,
+                proverSourcePublished: true,
+                verifierContractsReproducible:
+                  templateVars.zkVerifierContractsReproducible ?? null,
+                programHashesReproducible:
+                  programHashesReproducible(l2BootloaderHash),
+              },
+              stage2: {
+                fraudProofSystemIsPermissionless: null,
+                delayWith30DExitWindow: false,
+                proofSystemOverriddenOnlyInCaseOfABug: null,
+                daVerifier30DayExitWindow:
+                  templateVars.daVerifier30DayExitWindow ?? null,
+                daMechanismEconomicSecurity:
+                  templateVars.daMechanismEconomicSecurity ?? null,
+              },
+            },
+            {
+              nodeSourceLink: 'https://github.com/matter-labs/zksync-era',
+              proverSourceLink: templateVars.proverSourceLink,
+              securityCouncilReference: templateVars.securityCouncilReference,
+              stage1PrincipleDescription:
+                templateVars.stage1PrincipleDescription,
+              daVerifierLink: templateVars.daVerifierLink,
+            },
+          )
+        : getRollupStage(
             {
               stage0: {
                 callsItselfRollup: true,
@@ -423,9 +492,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
         technologyDA(daProvider),
-      operator:
-        templateVars.nonTemplateTechnology?.operator ??
-        OPERATOR.CENTRALIZED_OPERATOR,
+      operator: getTechnologyOperator(templateVars),
       forceTransactions: templateVars.nonTemplateTechnology
         ?.forceTransactions ?? {
         name: 'Users can force any transaction via L1',
@@ -480,8 +547,9 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
             ]
           : undefined),
     },
-    upgradesAndGovernance: (() => {
-      const description = `
+    upgradesAndGovernance: {
+      content: (() => {
+        const description = `
 There are two main paths for contract upgrades in the shared ZK stack ecosystem - standard and emergency - both converging on the shared upgrade management contract ProtocolUpgradeHandler.
 The standard path involves a governance proposal and voting through the DAO, multiple timelock delays and finally approval by the Guardians or ${scApprovalThreshold} SecurityCouncil participants.
 The emergency path allows for contract upgrades without any delay by the EmergencyUpgradeBoard, which acts as a 3/3 Multisig between SecurityCouncil, Guardians and the FoundationMultisig.
@@ -489,24 +557,24 @@ The emergency path allows for contract upgrades without any delay by the Emergen
 ### On ZKsync Era
 Delegates can start new proposals by reaching a threshold of ${protocolStartProposalThresholdM}M ZK tokens on the ZKsync Era Rollup's ZkProtocolGovernor contract.
 This launches a ${formatSeconds(
-        protVotingDelayS,
-      )} 'voting delay' after which the ${formatSeconds(protVotingPeriodS)} voting period starts. During these first two periods, the proposal can be canceled by the proposer or if it falls below the proposing threshold.
+          protVotingDelayS,
+        )} 'voting delay' after which the ${formatSeconds(protVotingPeriodS)} voting period starts. During these first two periods, the proposal can be canceled by the proposer or if it falls below the proposing threshold.
 A proposal is only successful if it reaches both quorum (${protocolQuorumM}M ZK tokens) and simple majority. When it reaches quorum, a remaining voting period of ${formatSeconds(
-        protLateQuorumVoteExtensionS,
-      )} is guaranteed by a potential late quorum vote extension.
+          protLateQuorumVoteExtensionS,
+        )} is guaranteed by a potential late quorum vote extension.
 In the successful case, it can be queued in the ${formatSeconds(
-        protTlMinDelayS,
-      )} timelock which forwards it via the Gateway to Ethereum as an L2->L1 log.
+          protTlMinDelayS,
+        )} timelock which forwards it via the Gateway to Ethereum as an L2->L1 log.
 ### On Ethereum
 After the execution of the proposal-containing batch (${executionDelay} delay), the proposal is now picked up by the ProtocolUpgradeHandler and enters the ${formatSeconds(
-        legalVetoStandardS,
-      )} 'legal veto period'.
+          legalVetoStandardS,
+        )} 'legal veto period'.
 This serves as a window in which a veto could be coordinated offchain, to be then enforced by non-approval of Guardians and SecurityCouncil. A threshold of ${guardiansExtendThreshold} Guardians can extend the veto period to ${formatSeconds(
-        legalVetoExtendedS,
-      )}.
+          legalVetoExtendedS,
+        )}.
 After this a proposal enters a \*waiting\* state of ${formatSeconds(
-        upgradeWaitOrExpireS,
-      )}, from which it can be immediately approved (cancelling the delay) by ${scApprovalThreshold} participants of the SecurityCouncil.
+          upgradeWaitOrExpireS,
+        )}, from which it can be immediately approved (cancelling the delay) by ${scApprovalThreshold} participants of the SecurityCouncil.
 For the unlikely case that the Security Council does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is enforced in full.
 A proposal cannot be actively cancelled in the ProtocolUpgradeHandler, but will expire if not approved within the waiting period. An approved proposal now enters the \*pendingExecution\* state for a final delay of ${formatSeconds(upgradeDelayPeriodS)} and can then be executed.
 ### Other governance tracks
@@ -516,22 +584,22 @@ The protocol for these two other tracks is similar to the first part of the stan
 Further customizations are that the ZkFoundationMultisig can propose to the ZkTokenGovernor without a threshold and that the Guardians' L2 alias can cancel proposals in the ZkTokenGovernor and the ZkGovOpsGovernor.
 ## Emergency path
 SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${templateVars.discovery.getMultisigStats(
-        'ZK Foundation Multisig',
-      )}) form a de-facto 3/3 Multisig
+          'ZK Foundation Multisig',
+        )}) form a de-facto 3/3 Multisig
 by pushing an immediate upgrade proposal through the EmergencyUpgradeBoard, which circumvents all delays and executes immediately via the ProtocolUpgradeHandler.
 ## Upgrade Delays
 The cumulative duration of the upgrade paths from the moment of a voted 'successful' proposal is ${formatSeconds(
-        upgradeDelayWithScApprovalS,
-      )} or ${formatSeconds(
-        upgradeDelayWithScApprovalExtendedLegalVotingS,
-      )} (depending on Guardians extending the LegalVetoPeriod) for Standard, 0 for Emergency and ${formatSeconds(
-        upgradeDelayNoScS,
-      )} for the path in which the SecurityCouncil is not approving the proposal.
+          upgradeDelayWithScApprovalS,
+        )} or ${formatSeconds(
+          upgradeDelayWithScApprovalExtendedLegalVotingS,
+        )} (depending on Guardians extending the LegalVetoPeriod) for Standard, 0 for Emergency and ${formatSeconds(
+          upgradeDelayNoScS,
+        )} for the path in which the SecurityCouncil is not approving the proposal.
 ## Freezing
 The SecurityCouncil can freeze (pause withdrawals and settlement) all chains connected to the current ChainTypeManager.
 Either for a softFreeze of ${formatSeconds(
-        softFreezeS,
-      )} or a hardFreeze of ${formatSeconds(hardFreezeS)}.
+          softFreezeS,
+        )} or a hardFreeze of ${formatSeconds(hardFreezeS)}.
 After a softFreeze and / or a hardFreeze, a proposal from the EmergencyUpgradeBoard has to be passed before subsequent freezes are possible.
 Only the SecurityCouncil can unfreeze an active freeze.
 ## ZK cluster Admin and Chain Admin
@@ -541,8 +609,10 @@ These chain-specific actions include critical operations like setting a transact
 For rollups, data availability on Ethereum is validated by a RollupL1DAValidator contract (or a RelayedSLDAValidator on the Gateway). Each rollup can become a permanent rollup (through their Chain Admin) which disallows DA changes to non-whitelisted sources or settlement layers in the future.
 The source of truth for rollup-compliant DA validator contracts is the RollupDAManager contract, which is administered via the ProtocolUpgradeHandler.
 ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cluster Admin* role in the shared ZK stack contracts.`
-      return description
-    })(),
+        return description
+      })(),
+      image: 'zkstack',
+    },
     permissions: mergePermissions(
       templateVars.discovery.getDiscoveredPermissions(),
       templateVars.nonTemplatePermissions ?? {},
@@ -559,6 +629,10 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
         ),
       ],
       programHashes: [PROGRAM_HASHES(l2BootloaderHash)],
+      zkVerifiers: getZKStackVerifiers(
+        templateVars.discovery,
+        templateVars.archivedAt !== undefined,
+      ),
     },
     stateDerivation:
       daProvider !== undefined
@@ -604,6 +678,45 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     scopeOfAssessment: templateVars.scopeOfAssessment,
     discoveryInfo: getDiscoveryInfo([templateVars.discovery]),
+  }
+}
+
+function getTechnologyOperator(
+  templateVars: ZkStackConfigCommon,
+): ProjectTechnologyChoice {
+  if (templateVars.nonTemplateTechnology?.operator !== undefined) {
+    return templateVars.nonTemplateTechnology.operator
+  }
+
+  if (!templateVars.discovery.hasContract('EraMultisigValidator')) {
+    return OPERATOR.CENTRALIZED_OPERATOR
+  }
+
+  const eraMultisigValidator = templateVars.discovery.getContract(
+    'EraMultisigValidator',
+  )
+
+  return {
+    ...OPERATOR.CENTRALIZED_OPERATOR,
+    description:
+      OPERATOR.CENTRALIZED_OPERATOR.description +
+      '\n\n' +
+      'Batch execution is initiated by permissioned executor EOAs, but each batch also requires approval from the sufficient number of EraMultisigValidator members before it can be executed on L1.',
+    references: [
+      {
+        title: `${eraMultisigValidator.name} - Etherscan proxy contract`,
+        url: `https://etherscan.io/address/${ChainSpecificAddress.address(
+          eraMultisigValidator.address,
+        )}`,
+      },
+    ],
+    risks: [
+      ...OPERATOR.CENTRALIZED_OPERATOR.risks,
+      {
+        category: 'Users can be censored if',
+        text: 'the validator multisig does not approve batch execution.',
+      },
+    ],
   }
 }
 
@@ -678,4 +791,75 @@ function programHashesReproducible(l2BootloaderHash: string): boolean | null {
   if (vStatus === 'unsuccessful') return false
   if (vStatus === 'successful') return true
   return null
+}
+
+// get all verifiers that can prove STF of an L2
+// export because adi is not currently set up as a template but should get verifiers by this logic
+export function getZKStackVerifiers(
+  discovery: ProjectDiscovery,
+  isArchived: boolean,
+): ChainSpecificAddress[] {
+  const result: ChainSpecificAddress[] = []
+  if (isArchived) {
+    // don't want to bother setting up archived projects
+    return result
+  }
+  if (discovery.hasContract('DualVerifier')) {
+    result.push(
+      discovery.getContractValue<ChainSpecificAddress>(
+        'DualVerifier',
+        'FFLONK_VERIFIER',
+      ),
+    )
+    result.push(
+      discovery.getContractValue<ChainSpecificAddress>(
+        'DualVerifier',
+        'PLONK_VERIFIER',
+      ),
+    )
+  } else if (discovery.hasContract('Verifier')) {
+    // currently only Treasury has this setup
+    result.push(discovery.getContract('Verifier').address)
+  } else if (discovery.hasContract('ZKsyncOSDualVerifier')) {
+    // probably all aibender-based chains will fall under this case
+    const fflonk0 = discovery.getContractValue<ChainSpecificAddress>(
+      'ZKsyncOSDualVerifier',
+      'fflonkVerifier0',
+    )
+    if (ChainSpecificAddress.address(fflonk0) !== EthereumAddress.ZERO) {
+      result.push(fflonk0)
+    }
+    const plonk0 = discovery.getContractValue<ChainSpecificAddress>(
+      'ZKsyncOSDualVerifier',
+      'plonkVerifier0',
+    )
+    if (ChainSpecificAddress.address(plonk0) !== EthereumAddress.ZERO) {
+      result.push(plonk0)
+    }
+    const fflonk1 = discovery.getContractValue<ChainSpecificAddress>(
+      'ZKsyncOSDualVerifier',
+      'fflonkVerifier1',
+    )
+    const plonk1 = discovery.getContractValue<ChainSpecificAddress>(
+      'ZKsyncOSDualVerifier',
+      'plonkVerifier1',
+    )
+    if (
+      ChainSpecificAddress.address(fflonk1) !== EthereumAddress.ZERO ||
+      ChainSpecificAddress.address(plonk1) !== EthereumAddress.ZERO
+    ) {
+      throw new Error(
+        `Verifier discovery for ${discovery.projectName} is misconfigured: both plonk1 and fflonk1 are expected to be zero addresses. Manually review and setup verifiers for zk catalog.`,
+      )
+    }
+  } else {
+    throw new Error(
+      `Cannot configure ZK Stack project verifiers (${discovery.projectName}), edit template file`,
+    )
+  }
+  if (discovery.hasContract('SP1VerifierGateway')) {
+    // happens for vector projects
+    return result.concat(getSP1Verifiers(discovery))
+  }
+  return result
 }

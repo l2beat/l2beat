@@ -1,12 +1,13 @@
 import {
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { EXITS, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
@@ -42,6 +43,16 @@ assert(
 const sanctionExpirySeconds = discovery.getContractValue<number>(
   'KintoID',
   'SANCTION_EXPIRY_PERIOD',
+)
+
+const sequencerInbox = discovery.getContract('SequencerInbox')
+const outbox = discovery.getContract('Outbox')
+assert(
+  sequencerInbox.sinceTimestamp !== undefined &&
+    outbox.sinceTimestamp !== undefined,
+)
+const genesisTimestamp = UnixTime(
+  Math.min(sequencerInbox.sinceTimestamp, outbox.sinceTimestamp),
 )
 
 // Validators: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators
@@ -100,13 +111,29 @@ export const kinto: ScalingProject = orbitStackL2({
   isNodeAvailable: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
-  sequencerInbox: discovery.getContract('SequencerInbox'),
+  sequencerInbox,
+  additionalTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(sequencerInbox.address),
+        selector: '0x3e5aa082',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+  ],
   usesEthereumBlobs: true,
   nonTemplateRiskView: {
     exitWindow: {
       value: 'None',
       description:
-        'There is no exit window for users to exit in case of unwanted regular upgrades of the L1 as they are initiated by the Security Council with instant upgrade power and without proper notice. Upgrades initiated by actors other than the Security Council (e.g. KYC providers) on Layer 2 guarantee at least a 7d exit window to the user.',
+        'There is no exit window for users to exit in case of unwanted upgrades of the L1 as they are initiated by the Security Council with instant upgrade power and without proper notice. Upgrades initiated by actors other than the Security Council (e.g. KYC providers) on Layer 2 guarantee at least a 7d exit window to the user.',
       sentiment: 'bad',
       orderHint: 0, // 0-7 days
     },
@@ -132,7 +159,7 @@ export const kinto: ScalingProject = orbitStackL2({
       'Crosschain DeFi applications',
     ],
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -180,7 +207,8 @@ Contracts outside of the ones necessary to interact with the smart wallet and to
       },
     },
   ),
-  upgradesAndGovernance: `
+  upgradesAndGovernance: {
+    content: `
 All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is held by the ${discovery.getMultisigStats('Kinto Security Council')} Kinto Security Council on Layer 1 and can be executed without any delay.
 On the Kinto Layer 2, critical permissions are mostly guarded by an AccessManager contract, and then passed down with configurable delays to both the Security Council and the ${discovery.getMultisigStats('Kinto Multisig 2')} Kinto Multisig 2.
 
@@ -197,6 +225,7 @@ Additionally, each smart wallet must use a recoverer address custodied by Turnke
 It also necessitates a recovery delay to prevent turnkey from maliciously using their recoverer permission. During this period of ${formatSeconds(discovery.getContractValue<number>('Kinto Multisig 2', 'RECOVERY_TIME'))}, the user can cancel the recovery process with any transaction in their smart wallet.
 
 The permissioned sanctions logic by KYC providers necessitates at least an ${formatSeconds(l2critDelay)} delay on all upgrades that aren't executed by the Security Council, allowing the user at least 7d to exit.`,
+  },
   nonTemplateTechnology: {
     otherConsiderations: [
       {

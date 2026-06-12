@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 
 const coerceBoolean = z.string().transform((val) => {
@@ -19,12 +18,9 @@ const CLIENT_CONFIG = {
     .default('development'),
   DEPLOYMENT_ENV: z.enum(['preview', 'staging', 'production']).optional(),
   CLIENT_SIDE_GITCOIN_ROUND_LIVE: featureFlag.default(false),
-  CLIENT_SIDE_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
-  CLIENT_SIDE_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
   CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
   CLIENT_SIDE_TRACKED_TXS_OUTAGE: featureFlag.default(false),
-  CLIENT_SIDE_INTEROP_ENABLED: featureFlag.default(false),
-  CLIENT_SIDE_INTEROP_DETAILED_PAGES: featureFlag.default(false),
+  CLIENT_SIDE_OPENPANEL_CLIENT_ID: z.string().optional(),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -42,7 +38,6 @@ const SERVER_CONFIG = {
   TOKENS_DATABASE_LOG_ENABLED: coerceBoolean.default(false),
   DISABLE_CACHE: coerceBoolean.default(false),
   MOCK: coerceBoolean.default(false),
-  REDIS_URL: z.string().optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
   COOLIFY_URL: z.string().optional(),
@@ -60,15 +55,15 @@ const SERVER_CONFIG = {
     .optional(),
   ES_API_KEY: z.string().optional(),
   ES_INDEX_PREFIX: z.string().optional(),
+  ES_BUFFER_ALERT_BYTES: z
+    .unknown()
+    .transform((v) => Number(v))
+    .optional(),
   ES_FLUSH_INTERVAL: z
     .unknown()
     .transform((v) => Number(v))
     .optional(),
-  INTEROP_DISABLED_CHAINS: stringArray.optional(),
-  INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE: z
-    .string()
-    .transform((v) => UnixTime(Number(v)))
-    .optional(),
+  INTEROP_CHAINS: stringArray.optional(),
   INTEROP_UPCOMING_CHAINS: stringArray.optional(),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
@@ -121,27 +116,22 @@ function getRawEnv(): Record<
     COOLIFY_URL: process.env.COOLIFY_URL,
     COOLIFY_RESOURCE_UUID: process.env.COOLIFY_RESOURCE_UUID,
     DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
-    REDIS_URL: process.env.REDIS_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
     ES_ENABLED: process.env.ES_ENABLED,
     ES_NODE: process.env.ES_NODE,
     ES_API_KEY: process.env.ES_API_KEY,
     ES_INDEX_PREFIX: process.env.ES_INDEX_PREFIX,
+    ES_BUFFER_ALERT_BYTES: process.env.ES_BUFFER_ALERT_BYTES,
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
     LOG_LEVEL: process.env.LOG_LEVEL,
-    INTEROP_DISABLED_CHAINS: process.env.INTEROP_DISABLED_CHAINS,
-    INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE:
-      process.env.INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE,
+    INTEROP_CHAINS: process.env.INTEROP_CHAINS,
     INTEROP_UPCOMING_CHAINS: process.env.INTEROP_UPCOMING_CHAINS,
     // Client
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
-    CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,
-    CLIENT_SIDE_PLAUSIBLE_ENABLED: process.env.CLIENT_SIDE_PLAUSIBLE_ENABLED,
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.CLIENT_SIDE_SHOW_HIRING_BADGE,
     CLIENT_SIDE_TRACKED_TXS_OUTAGE: process.env.CLIENT_SIDE_TRACKED_TXS_OUTAGE,
-    CLIENT_SIDE_INTEROP_ENABLED: process.env.CLIENT_SIDE_INTEROP_ENABLED,
-    CLIENT_SIDE_INTEROP_DETAILED_PAGES:
-      process.env.CLIENT_SIDE_INTEROP_DETAILED_PAGES,
+    CLIENT_SIDE_OPENPANEL_CLIENT_ID:
+      process.env.CLIENT_SIDE_OPENPANEL_CLIENT_ID,
   }
 }

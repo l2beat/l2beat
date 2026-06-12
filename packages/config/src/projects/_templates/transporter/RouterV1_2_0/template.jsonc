@@ -1,22 +1,42 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Ethereum CCIP Router for this route. Users call it to send and receive messages from other chains. It dispatches to the appropriate OnRamp or OffRamp based on source or destination chain.",
+  "canActIndependently": false,
+  "ignoreMethods": ["getOffRamps"],
+  "ignoreRelatives": ["getWrappedNative", "owner"],
   "fields": {
     "onRamps": {
+      "description": "All OnRamp registrations the Router knows about, keyed by destination chain name. Each maps to the OnRamp contract address that ccipSend() will delegate to for that destination. Replayed from OnRampSet events. ignoreRelative is set because the v1.6 architecture uses a single per-chain OnRamp serving all destinations, already walked via arbitrumOnRamp.",
       "handler": {
         "type": "event",
-        "select": "onRamp",
         "groupBy": "destChainSelector",
-        "set": { "event": "OnRampSet" }
-      }
+        "select": "onRamp",
+        "set": {
+          "event": "event OnRampSet(uint64 indexed destChainSelector, address onRamp)"
+        },
+        "ignoreRelative": true
+      },
+      "edit": ["map_keys", ["format", "CCIPChainName"]]
     },
-    "offRamps": {
-      "handler": { "type": "call", "args": [], "method": "getOffRamps" },
-      "edit": [
-        "map",
-        ["shape", ["sourceChainSelector", ["format", "ChainIdMap"]], "offRamp"]
+    "getArmProxy": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "block routed messages when ARM/RMN reports the relevant subject as cursed."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add, remove, or replace OnRamps and OffRamps used by the Router."
+        },
+        {
+          "type": "interact",
+          "description": "change the wrapped native token used for native-fee payments."
+        }
       ]
     }
-  },
-  "ignoreMethods": ["getOffRamps"],
-  "ignoreRelatives": ["getWrappedNative", "owner", "onRamps", "offRamps"]
+  }
 }

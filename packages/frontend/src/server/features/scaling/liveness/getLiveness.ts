@@ -42,7 +42,7 @@ async function getLivenessData(projectId?: ProjectId) {
     ps.getProjects({
       select: ['trackedTxsConfig'],
       optional: ['livenessConfig'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      whereNot: ['archivedAt'],
     }),
   ])
 
@@ -282,10 +282,17 @@ function getAnomalies(
         (r) => r.subtype === a.subtype,
       )?.avg
       assert(avgInterval, 'Avg interval must exist')
+      const computedEnd = a.timestamp + a.duration
+      const isOngoing =
+        computedEnd ===
+        UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR
+
       return {
         start: a.timestamp,
-        durationInSeconds: a.duration,
-        end: a.timestamp + a.duration,
+        durationInSeconds: isOngoing
+          ? UnixTime.now() - a.timestamp
+          : a.duration,
+        end: isOngoing ? undefined : computedEnd,
         subtype: a.subtype,
         avgInterval,
         isApproved: false,

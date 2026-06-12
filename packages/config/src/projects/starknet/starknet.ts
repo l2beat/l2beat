@@ -20,7 +20,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
@@ -224,6 +224,7 @@ export const starknet: ScalingProject = {
   ],
   display: {
     name: 'Starknet',
+    aliases: ['StarkWare'],
     slug: 'starknet',
     stacks: ['SN Stack'],
     description:
@@ -296,7 +297,7 @@ export const starknet: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_CAN_SKIP('L1'),
     proposerFailure: RISK_VIEW.PROPOSER_WHITELIST_SECURITY_COUNCIL(),
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -312,7 +313,7 @@ export const starknet: ScalingProject = {
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
         noRedTrustedSetups: true,
-        programHashesReproducible: false,
+        programHashesReproducible: true,
         proverSourcePublished: true,
         verifierContractsReproducible: true,
       },
@@ -384,14 +385,20 @@ export const starknet: ScalingProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
     programHashes: starknetProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    // stwo verifier address, could be deduced from analyzing trx traces
+    zkVerifiers: [discovery.getContract('SHARPVerifier_2025_11').address],
+    programHashesDescription:
+      'Starknet state transition function could be proven with unverified ZK programs (bootloaders) on older versions of verifiers. Compliance with the rules of L2 STF can not be independently verified without the sources of these programs.',
   },
-  upgradesAndGovernance: `
+  upgradesAndGovernance: {
+    content: `
 The Starknet zk Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the main Starknet rollup contract and its core bridge escrows (ETHBridge, STRKBridge) is currently split between the ${scThreshold} Security Council with instant upgrade capability and the ${discovery.getMultisigStats('Starkware Multisig 2')} Starkware Multisig 2 who can upgrade with a ${discovery.getContractValue('DelayedExecutor', 'executionDelayFmt')} delay. The former Multisig also governs most other bridge escrows with instant upgradeability. The shared SHARP verifier used for state validation can be changed by the ${sharpMsThreshold} SHARP Multisig with and a ${discovery.getContractValue('SHARPVerifierCallProxy', 'upgradeActivationDelayFmt')} delay, affecting all rollups like Starknet that are sharing it. 
 
 The Operator role in the Starknet contract is permissioned to update the state of the Starknet rollup by supplying valid (zk) state transition proofs. Since this role is not permissionless, Starknet implements a StarknetSCMinorityMultisig with the Operator role, which allows a ${discovery.getMultisigStats('Starkware SCMinority Multisig')} minority of the StarknetSecurityCouncil to enforce censorship resistance by including transactions that are not included by regular Operators.
 
 All bridge escrows allow enabling a withdrawal throttle of 5% of the locked funds per 24h period. Enabling it is permissioned to a Multisig while disabling it in the core bridge escrows (STRKBridge, ETHBridge) can be done by a ${discovery.getMultisigStats('Starkware SCMinority Multisig')} minority of the Security Council.
 `,
+  },
   milestones: [
     {
       title: 'Starknet reverts 18mins of history',
@@ -914,6 +921,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: UnixTime(1636979180),
+          untilTimestamp: UnixTime(1710352043), // last call: https://etherscan.io/tx/0xd7cfa525566850a190eec7937da2f8e43c8e87873747e5a41c74adb404210472
         },
       },
       {

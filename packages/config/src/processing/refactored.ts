@@ -5,6 +5,7 @@ import { avalanche } from '../projects/avalanche/avalanche'
 import { axelar } from '../projects/axelar/axelar'
 import { axelarits } from '../projects/axelar-its/axelar-its'
 import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
+import { barretenberg } from '../projects/barretenberg/barretenberg'
 import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
@@ -14,28 +15,33 @@ import { cctpv1 } from '../projects/cctpv1/cctpv1'
 import { cctpv2 } from '../projects/cctpv2/cctpv2'
 import { celestia } from '../projects/celestia/celestia'
 import { circlegateway } from '../projects/circlegateway/circlegateway'
+import { debridge } from '../projects/debridge/debridge'
 import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
 import { eigenda } from '../projects/eigenda/eigenda'
 import { eigendaV2 } from '../projects/eigenda-v2/eigenda-v2'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
+import { freetunnel } from '../projects/freetunnel/freetunnel'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
 import { gaszip } from '../projects/gaszip/gaszip'
 import { gateway } from '../projects/gateway/gateway'
-import { gnosis } from '../projects/gnosis/gnosis'
 import { hyperevm } from '../projects/hyperevm/hyperevm'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
 import { layerzero } from '../projects/layerzero/layerzero'
+import { lifi } from '../projects/lifi/lifi'
 import { lighterprover } from '../projects/lighterprover/lighterprover'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
 import { loopringprover } from '../projects/loopringprover/loopringprover'
 import { mayan } from '../projects/mayan/mayan'
 import { memo } from '../projects/memo/memo'
 import { meson } from '../projects/meson/meson'
+import { monad } from '../projects/monad/monad'
 import { near } from '../projects/near/near-da'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
+import { privacyPools } from '../projects/privacy-pools/privacy-pools'
+import { railgun } from '../projects/railgun/railgun'
 import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
@@ -45,6 +51,8 @@ import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { stwo } from '../projects/stwo/stwo'
 import { teeBridge } from '../projects/tee-bridge/tee-bridge'
+import { tempo } from '../projects/tempo/tempo'
+import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
 import { vector } from '../projects/vector/vector'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
@@ -71,6 +79,7 @@ export const refactored: BaseProject[] = [
   espressoprover,
   lighterprover,
   stwo,
+  barretenberg,
   // da-beat
   ethereum,
   avail,
@@ -85,9 +94,10 @@ export const refactored: BaseProject[] = [
   memo,
   // chains
   bsc,
-  gnosis,
   gateway,
   avalanche,
+  monad,
+  tempo,
   // interop protocols
   debridgeDln,
   hyperlaneHwr,
@@ -96,6 +106,7 @@ export const refactored: BaseProject[] = [
   cctpv2,
   relay,
   gaszip,
+  lifi,
   layerzero,
   axelar,
   axelarits,
@@ -107,8 +118,13 @@ export const refactored: BaseProject[] = [
   mayan,
   meson,
   across,
-  // debridge,
+  debridge,
   stargate,
   cbridge,
   hyperevm,
+  freetunnel,
+  // privacy
+  privacyPools,
+  railgun,
+  tornadoCash,
 ]

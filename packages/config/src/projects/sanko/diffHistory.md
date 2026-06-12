@@ -1,3 +1,573 @@
+Generated with discovered.json: 0xf0aa4059c48281728ba9a7600c5aa0ebb9a03e2a
+
+# Diff at Tue, 09 Jun 2026 12:43:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779198937
+- current timestamp: 1779198937
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779198937 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x795aA8E945b571c57b12E7b5B77De10A88a1FADe) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x839ed36E86D36328c687a211CBe36C271065BAfD) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x964C83a66F78b67F75f076e386C433A1a10cefDB) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xa4902879430cbb45bfdbfab88ea0707b3384e028
+
+# Diff at Tue, 19 May 2026 13:57:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@307f5c3dfdab6a4f88448861a0bb75f0043b762b block: 1779128593
+- current timestamp: 1779198937
+
+## Description
+
+RollupProxy `currentRequiredStake` (computed: rises above `baseStake` while the first unresolved node is past its deadline) increased from `0.6 ETH` to `0.7 ETH`. Automatic on-chain reaction — `baseStake` unchanged.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "600000000000000000"
++        "700000000000000000"
+    }
+```
+
+Generated with discovered.json: 0xf1079508cc0cc3025017f07d754cd01b2a6bed4d
+
+# Diff at Mon, 18 May 2026 18:25:03 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b70f892b88d1263a724194cd3b4ec927d71a6fd9 block: 1778508954
+- current timestamp: 1779128593
+
+## Description
+
+RollupProxy `currentRequiredStake` (computed: rises above `baseStake` when the first unresolved node is past its deadline; enforced only on `_newStake`/`reduceDeposit`, not on every proposal) increased from `0.3 ETH` to `0.6 ETH`. This is an automatic on-chain reaction to an overdue unresolved node, not a governance config change — `baseStake` is unchanged.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "300000000000000000"
++        "600000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x652a4e9893937b606f3dc3cf05b621af27e8fd2f
+
+# Diff at Fri, 15 May 2026 12:36:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778508954
+- current timestamp: 1778508954
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778508954 (main branch discovery), not current.
+
+```diff
+    contract ChallengeManager (arb1:0x1f269F38196484ef81e58C0144AaD2c5F6394bB4) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
++        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x2D81591AfB19e1a1C1c932303790370c7257f454) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
++        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0x5C864714456935f05cd74D78CFE05Bcc726CddEe) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
++        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x5D1E3dC946fC8F2DD6C96C018e5a120CC2b76368) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
++        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.1:
+-        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
++        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0xE13987CcaFD999397021222630DEC78BaAa9fE15) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xd64745a0edbb2ada69b81d849f2737d7c082d18ca14a715c23c4165e4eecc637"
++        "0x081875b93df655e91ec23245390ad21db0990c12125dad497f1cbf118501ccc2"
+    }
+```
+
+Generated with discovered.json: 0x38fc195764b90fd30ee7db4db3d1bb5c823df25f
+
+# Diff at Mon, 11 May 2026 14:18:01 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@37cdce03260dfa5682c2b693e3c1d4a9ccb125af block: 1778233023
+- current timestamp: 1778508954
+
+## Description
+
+RollupProxy (`arb1:0x9A59EdF7...`) — `currentRequiredStake` raised from 0.2 ETH → 0.3 ETH. Continued ramp from the 0.1 → 0.2 ETH increase on 2026-05-08.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "200000000000000000"
++        "300000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x3a92b231501aef6ed93faf96a4d556e2bf2496f1
+
+# Diff at Fri, 08 May 2026 09:38:24 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1746206122
+- current timestamp: 1778233023
+
+## Description
+
+RollupProxy (`arb1:0x9A59EdF7...`) — `currentRequiredStake` doubled from 0.1 ETH → 0.2 ETH. Pure parameter change; validator set unaffected.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "100000000000000000"
++        "200000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x776dc227aa381560a95d6752f184876156314f77
+
+# Diff at Fri, 08 May 2026 07:51:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1746206122
+- current timestamp: 1746206122
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1746206122 (main branch discovery), not current.
+
+```diff
+    contract ChallengeManager (arb1:0x1f269F38196484ef81e58C0144AaD2c5F6394bB4) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
++        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
+    }
+```
+
+```diff
+    contract SankoOftMultisig (arb1:0x2227E9C08ae00750e0a5eD8da09Fa321A9DD7185) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x24B68936C13A414cd91437aE7AA730321B9ff159) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
++        "0x38fab1c44903c11839e1113e339b7268b07f99808721133182f57fdd891be63a"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0x29E1631710Fa96920eB2F65EaD4B1F270daB59cB) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
++        "0xd38b92884347e76d4ce463bc343cbf508eefb150146ed51cb80c2aee8c565122"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x2D81591AfB19e1a1C1c932303790370c7257f454) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
++        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0x2f285781B8d58678a3483de52D618198E4d27532) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
++        "0x44eab8a1244ce0ae33674b88b4211d02a3f4d060cf9a7791854f3263c039813a"
+    }
+```
+
+```diff
+    contract Sanko Multisig (arb1:0x420B4d16119127E4b96E55CB8a9D0c2828a161BB) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0x5C864714456935f05cd74D78CFE05Bcc726CddEe) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
++        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x5D1E3dC946fC8F2DD6C96C018e5a120CC2b76368) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
++        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
++        "0xb33f29d585cf178f81b64440ee9a3c598cd398ad18d2b3c6dc6c711eaf63d5e4"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sourceHashes.1:
+-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
++        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      sourceHashes.1:
+-        "0x33422e0ac90902db5dad442b006c9df60e262556d8ad286808d133b5429a3eb0"
++        "0xf536eecfe8b70bf9ba1ea603efcc5ee20c36b0413e4e5258494893cbde454898"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.0:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
++        "0xb739f8156f36efd1dca81c7048413241da1e5bf4a5f98001523a474136b8defd"
+      sourceHashes.1:
+-        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
++        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
+    }
+```
+
+```diff
+    contract ValidatorUtils (arb1:0x9e83136d4B3AD04C766591EA51712F9aEa3194C0) [orbitstack/ValidatorUtils] {
+    +++ description: This contract implements view only utilities for validators.
+      sourceHashes.0:
+-        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
++        "0xebcd95194086ae9c3b9095578172a3192d9d209e5b159956f1d266910d248334"
+    }
+```
+
+```diff
+    contract OrbitProxyOFT1_2 (arb1:0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29) [N/A] {
+    +++ description: OFT Adapter contract using the LayerZero v1 AMB for messaging. This contract can mint tokens on Sanko and steal tokens from the canonical bridge escrow. Its security depends on LayerZero v1 security.
+      sourceHashes.0:
+-        "0xaac6964570677f2a9cc26eed15a64f832ab05b188f5b82dfaa6ebf64bed99f7a"
++        "0xdc817403364e3088bc506a10158cc52f354fff1e0ab0b6b3885f54e68a0a4687"
+    }
+```
+
+```diff
+    contract ERC20Gateway (arb1:0xb4951c0C41CFceB0D195A95FE66280457A80a990) [orbitstack/ERC20Gateway] {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      sourceHashes.1:
+-        "0x58abad5f338bc4be7d8039fe95309d2627ff20dd8dc73da45278e512c6ff2866"
++        "0xa83b4e83023ccbf0a06179831a67d9b72f2d289e8a20c02094f1b8a30ac0e68a"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0xE13987CcaFD999397021222630DEC78BaAa9fE15) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
++        "0xd64745a0edbb2ada69b81d849f2737d7c082d18ca14a715c23c4165e4eecc637"
+    }
+```
+
+Generated with discovered.json: 0x1e0e3c432c6f1d8c1bb00347e1e3c947b3b35e96
+
+# Diff at Tue, 05 May 2026 10:22:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1746206122
+- current timestamp: 1746206122
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1746206122 (main branch discovery), not current.
+
+```diff
+    contract ChallengeManager (arb1:0x1f269F38196484ef81e58C0144AaD2c5F6394bB4) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      deployerAddress:
++        "arb1:0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400"
+    }
+```
+
+```diff
+    contract SankoOftMultisig (arb1:0x2227E9C08ae00750e0a5eD8da09Fa321A9DD7185) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x82Ef0CBb725852D7CC30ADeA95415e23B8f433E3"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x24B68936C13A414cd91437aE7AA730321B9ff159) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
++        "arb1:0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0x29E1631710Fa96920eB2F65EaD4B1F270daB59cB) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x2D81591AfB19e1a1C1c932303790370c7257f454) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0x2f285781B8d58678a3483de52D618198E4d27532) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "arb1:0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400"
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x365ce7234CE515c2e0139f3578b6c5989da1a863) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "arb1:0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400"
+    }
+```
+
+```diff
+    contract Sanko Multisig (arb1:0x420B4d16119127E4b96E55CB8a9D0c2828a161BB) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+    }
+```
+
+```diff
+    contract Outbox (arb1:0x575d32f7ff0C72921645e302cb14d2757E300786) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "arb1:0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0x5C864714456935f05cd74D78CFE05Bcc726CddEe) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x5D1E3dC946fC8F2DD6C96C018e5a120CC2b76368) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "arb1:0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "arb1:0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400"
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      deployerAddress:
++        "arb1:0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      deployerAddress:
++        "arb1:0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400"
+    }
+```
+
+```diff
+    contract ValidatorUtils (arb1:0x9e83136d4B3AD04C766591EA51712F9aEa3194C0) {
+    +++ description: This contract implements view only utilities for validators.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract OrbitProxyOFT1_2 (arb1:0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29) {
+    +++ description: OFT Adapter contract using the LayerZero v1 AMB for messaging. This contract can mint tokens on Sanko and steal tokens from the canonical bridge escrow. Its security depends on LayerZero v1 security.
+      deployerAddress:
++        "arb1:0x86f2e9E8DF3c49f3c079E5D5c4686f01642934b7"
+    }
+```
+
+```diff
+    contract ERC20Gateway (arb1:0xb4951c0C41CFceB0D195A95FE66280457A80a990) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      deployerAddress:
++        "arb1:0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xd18b1C6376633000c85541F7c15c591Ffe5f9556) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0xE13987CcaFD999397021222630DEC78BaAa9fE15) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
 Generated with discovered.json: 0x69dd603b85673774c38d81eea6a2952d0fc2d4e1
 
 # Diff at Mon, 05 Jan 2026 17:45:00 GMT:

@@ -1,25 +1,57 @@
+import compact from 'lodash/compact'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
+import { getTvsSyncWarning } from '~/server/features/scaling/tvs/utils/syncStatus'
 
 export function toTableRows({
-  projects,
-  sevenDayBreakdown,
-  excludeAssociatedTokens,
+  entries,
+  data,
 }: {
-  projects: ScalingSummaryEntry[]
-  sevenDayBreakdown: SevenDayTvsBreakdown | undefined
-  excludeAssociatedTokens: boolean | undefined
+  entries: ScalingSummaryEntry[]
+  data: TvsTableData | undefined
 }) {
-  return projects.map((project) => {
-    const sevenDayBreakdownProject = sevenDayBreakdown?.projects[project.id]
+  return entries.map((entry) => {
+    const projectData = data?.[entry.id]
+
+    if (!projectData) {
+      return {
+        ...entry,
+        tvs: {
+          ...entry.tvs,
+          breakdown: undefined,
+          change: undefined,
+          additionalTrustAssumptionsPercentage: undefined,
+          syncWarning: undefined,
+        },
+      }
+    }
+
+    const {
+      warnings,
+      breakdown,
+      change,
+      additionalTrustAssumptionsPercentage,
+      syncState,
+    } = projectData
+
+    const tvsSyncWarning = getTvsSyncWarning(syncState)
+
     return {
-      ...project,
+      ...entry,
+      statuses: {
+        ...entry.statuses,
+        syncWarning: compact([
+          tvsSyncWarning,
+          entry.statuses?.syncWarning,
+        ]).join('\n'),
+      },
       tvs: {
-        associatedTokens: project.tvs.associatedTokens,
-        ...sevenDayBreakdownProject,
-        warnings: excludeAssociatedTokens
-          ? project.tvs.associatedTokensExcludedWarnings
-          : project.tvs.warnings,
+        ...entry.tvs,
+        breakdown,
+        change,
+        warnings: [...entry.tvs.warnings, ...warnings],
+        additionalTrustAssumptionsPercentage,
+        syncWarning: tvsSyncWarning,
       },
     }
   })

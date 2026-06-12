@@ -2,14 +2,14 @@ import type {
   Project,
   ProjectAssociatedToken,
   ProjectCustomColors,
+  ProjectRedWarning,
   ProjectScalingCategory,
   ProjectScalingProofSystem,
   ProjectScalingStage,
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -19,6 +19,7 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
+import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -26,6 +27,10 @@ import { linkAddresses } from '~/utils/markdown/linkAddresses'
 import { getActivitySection } from '~/utils/project/activity/getActivitySection'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
+import {
+  getPastUpgradesData,
+  getProjectPastUpgrades,
+} from '~/utils/project/contracts-and-permissions/getPastUpgradesData'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getCostsSection } from '~/utils/project/costs/getCostsSection'
 import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedSection'
@@ -49,6 +54,10 @@ import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
+import {
+  getProjectInteropData,
+  type ProjectInteropData,
+} from '../interop/getProjectInteropData'
 import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
@@ -65,7 +74,6 @@ export interface ProjectScalingEntry {
   slug: string
   icon: string
   archivedAt: UnixTime | undefined
-  isUpcoming: boolean
   isAppchain: boolean
   colors:
     | {
@@ -76,7 +84,7 @@ export interface ProjectScalingEntry {
   underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
-    redWarning?: string
+    redWarning?: ProjectRedWarning
     emergencyWarning?: string
     ongoingAnomaly?: 'single' | 'multiple'
     description?: string
@@ -96,6 +104,7 @@ export interface ProjectScalingEntry {
         totalChange: number
       }
       warning?: WarningWithSentiment
+      additionalTrustAssumptionsPercentage: number
       tokens: {
         breakdown?: {
           total: number
@@ -116,6 +125,7 @@ export interface ProjectScalingEntry {
       uopsWeeklyChange: number
     }
     gasTokens?: string[]
+    interop?: ProjectInteropData['summary']
   }
   rosette: ScalingRosette
   sections: ProjectDetailsSection[]
@@ -141,7 +151,6 @@ export async function getScalingProjectEntry(
     | 'scalingDa'
     | 'customDa'
     | 'chainConfig'
-    | 'isUpcoming'
     | 'archivedAt'
     | 'milestones'
     | 'trackedTxsConfig'
@@ -171,6 +180,7 @@ export async function getScalingProjectEntry(
     zkCatalogProjects,
     allProjectsWithContracts,
     allProjects,
+    interopProjects,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -189,17 +199,29 @@ export async function getScalingProjectEntry(
       select: ['contracts'],
     }),
     ps.getProjects({
-      optional: ['daBridge', 'isScaling', 'isDaLayer'],
+      select: ['display'],
+      optional: ['daBridge', 'scalingInfo', 'daLayer'],
+    }),
+    ps.getProjects({
+      select: ['interopConfig'],
     }),
   ])
 
   const projectLiveness = liveness[project.id]
+  const discoveryUpdates = project.discoveryInfo?.hasDiscoUi
+    ? getDiscoveryUpdates(project.id)
+    : []
 
   const ongoingAnomalies = projectLiveness?.anomalies.filter(
     (a) => a.end === undefined,
   )
 
   const tvsProjectStats = tvsStats.projects[project.id]
+  const interopData = await getProjectInteropData(
+    project.id,
+    interopProjects,
+    helpers,
+  )
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
@@ -230,6 +252,8 @@ export async function getScalingProjectEntry(
               totalChange: tvsProjectStats.change.total,
             },
             warning: project.tvsInfo.warnings[0],
+            additionalTrustAssumptionsPercentage:
+              tvsProjectStats.additionalTrustAssumptionsPercentage,
             tokens: {
               breakdown: tvsProjectStats.breakdown,
               warnings: compact([
@@ -251,6 +275,7 @@ export async function getScalingProjectEntry(
       .map((badge) => getBadgeWithParamsAndLink(badge, project))
       .filter((b) => !!b),
     gasTokens: project.chainConfig?.gasTokens,
+    interop: interopData?.summary,
   }
 
   const changes = projectsChangeReport.getChanges(project.id)
@@ -283,7 +308,6 @@ export async function getScalingProjectEntry(
       ...changes,
     }),
     archivedAt: project.archivedAt,
-    isUpcoming: !!project.isUpcoming,
     isAppchain: project.scalingInfo.capability === 'appchain',
     colors: {
       project: project.colors,
@@ -329,7 +353,11 @@ export async function getScalingProjectEntry(
         hostChain,
         projectsChangeReport.getChanges(hostChain.id),
       )
-    : { contracts: undefined, programHashes: undefined }
+    : {
+        contracts: undefined,
+        programHashes: undefined,
+        programHashesDescription: undefined,
+      }
   const hostChainWarning = hostChain
     ? {
         hostChainName: hostChain.name,
@@ -353,7 +381,7 @@ export async function getScalingProjectEntry(
 
   const projectWithIcon = withProjectIcon(project)
 
-  if (!project.isUpcoming && scalingTvsSection && tvsProjectStats) {
+  if (scalingTvsSection && tvsProjectStats) {
     sections.push({
       type: 'ScalingTvsSection',
       props: {
@@ -365,6 +393,20 @@ export async function getScalingProjectEntry(
         tvsInfo: project.tvsInfo,
         project: projectWithIcon,
         ...scalingTvsSection,
+      },
+    })
+  }
+
+  if (interopData) {
+    sections.push({
+      type: 'InteropFlowsSection',
+      props: {
+        id: 'interop-flows',
+        title: 'Volume and flows',
+        interopChains: interopData.interopChains,
+        protocols: interopData.protocols,
+        defaultSelectedChains: interopData.defaultSelectedChains,
+        defaultStatsChainId: interopData.chainId,
       },
     })
   }
@@ -383,7 +425,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (!project.isUpcoming && costsSection) {
+  if (costsSection) {
     sections.push({
       type: 'CostsSection',
       props: {
@@ -428,11 +470,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (
-    !project.isUpcoming &&
-    project.milestones &&
-    project.milestones.length > 0
-  ) {
+  if (project.milestones && project.milestones.length > 0) {
     sections.push({
       type: 'MilestonesAndIncidentsSection',
       props: {
@@ -475,14 +513,6 @@ export async function getScalingProjectEntry(
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
-  }
-
-  if (project.isUpcoming) {
-    sections.push({
-      type: 'UpcomingDisclaimer',
-      excludeFromNavigation: true,
-    })
-    return { ...common, sections }
   }
 
   if (hostChain && common.rosette.host) {
@@ -529,7 +559,7 @@ export async function getScalingProjectEntry(
       type: 'StageSection',
       props: {
         id: 'stage',
-        title: 'Rollup stage',
+        title: 'Stage',
         stageConfig: project.scalingStage,
         name: project.name,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
@@ -587,22 +617,44 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (project.scalingTechnology.upgradesAndGovernance) {
+  const allPastUpgrades = getProjectPastUpgrades(project.contracts)
+  const upgradesAndGovernance = project.scalingTechnology.upgradesAndGovernance
+
+  if (
+    upgradesAndGovernance?.content ||
+    upgradesAndGovernance?.governanceInfo ||
+    allPastUpgrades.length > 0
+  ) {
     sections.push({
-      type: 'MarkdownSection',
+      type: 'UpgradesAndGovernanceSection',
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: linkAddresses(
-          project.scalingTechnology.upgradesAndGovernance,
-          project.contracts,
-          project.permissions,
-        ),
+        content: upgradesAndGovernance?.content
+          ? linkAddresses(
+              upgradesAndGovernance.content,
+              project.contracts,
+              project.permissions,
+            )
+          : undefined,
         diagram: getDiagramParams(
           'upgrades-and-governance',
-          project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
+          upgradesAndGovernance?.image ?? project.slug,
         ),
+        governanceInfo: upgradesAndGovernance?.governanceInfo,
+        pastUpgrades: getPastUpgradesData(allPastUpgrades),
         isUnderReview: !!project.statuses.reviewStatus,
+      },
+    })
+  }
+
+  if (discoveryUpdates.length > 0) {
+    sections.push({
+      type: 'UpdatesSection',
+      props: {
+        id: 'updates',
+        title: 'Updates',
+        updates: discoveryUpdates,
       },
     })
   }

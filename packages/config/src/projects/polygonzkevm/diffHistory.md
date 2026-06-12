@@ -1,3 +1,115 @@
+Generated with discovered.json: 0x2d31dcd2dcf67cd7ec9ac8d2242521ab80760319
+
+# Diff at Fri, 08 May 2026 07:51:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1767608184
+- current timestamp: 1767608184
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767608184 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) [N/A] {
+    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      sourceHashes.1:
+-        "0x608730e7656b64bd18a9a04f2b0024b9dc95d2145d3e6cde1f5d590f31f4fff4"
++        "0x3e1eb9c378df411293f28164505df385291041842a50abbc26aa95a3a734383f"
+    }
+```
+
+```diff
+    contract usdcBridge (eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) [N/A] {
+    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      sourceHashes.1:
+-        "0xefc52c461b0de070fb85381ef77033d1a68b13e59d2ca477477b766802ab1164"
++        "0x707bbdde9ad813be34b64219e23d4bc72ecbbb2925c535fa79b0c0c899a60fd6"
+    }
+```
+
+```diff
+    contract wstETHBridge (eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) [N/A] {
+    +++ description: Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      sourceHashes.1:
+-        "0x768cec78a852b6918281dca4675713010a4e764f5eb658f4f98c8ae258523e62"
++        "0x621302f1683070cb9e1d962df0633d808576501e2096fc636fa24f609ae1665b"
+    }
+```
+
+```diff
+    contract Polygon zkEVM Multisig (eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+Generated with discovered.json: 0x48d88a18e6bd3c8820b360189672dfd9f992bfbb
+
+# Diff at Tue, 05 May 2026 10:22:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1767608184
+- current timestamp: 1767608184
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767608184 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      deployerAddress:
++        "eth:0x17ae0a6BE2e97b384165626dB2569729d5006640"
+    }
+```
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: System contract defining the polygon zkEVM Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      deployerAddress:
++        "eth:0x0F8352cA7C57731382cB7e1b80D2603e31e056F4"
+    }
+```
+
+```diff
+    contract usdcBridge (eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
+    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      deployerAddress:
++        "eth:0x528Ce6792fC825115e6537C2e3b3af53f385d927"
+    }
+```
+
+```diff
+    contract wstETHBridge (eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      deployerAddress:
++        "eth:0x17C8acE2dBa0d3060a7400B5AF79094a714d1537"
+    }
+```
+
+```diff
+    contract Polygon zkEVM Multisig (eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x099198353446A9E3a20672eDC1Bd461E978842c3"
+    }
+```
+
 Generated with discovered.json: 0xff71a32df1b34c61b6cd0f08c9efad95ec7e760d
 
 # Diff at Mon, 05 Jan 2026 10:17:33 GMT:

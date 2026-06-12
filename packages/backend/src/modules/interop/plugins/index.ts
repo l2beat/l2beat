@@ -14,7 +14,6 @@ import { AcrossPlugin } from './across/across.plugin'
 import { AcrossSettlementOpPlugin } from './across-settlement-op'
 import { AcrossSettlementOrbitPlugin } from './across-settlement-orbit'
 import { AgglayerPlugin } from './agglayer'
-import { AllbridgePlugIn } from './allbridge'
 import { AvalanchePlugin } from './avalanche'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
@@ -29,17 +28,21 @@ import { CentriFugePlugin } from './centrifuge'
 import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
 import { DeBridgeDlnPlugin } from './debridge-dln'
+import { GasZipConfigPlugin } from './gaszip/gaszip.config'
 import { GasZipPlugin } from './gaszip/gaszip.plugin'
 import { HyperlanePlugIn } from './hyperlane'
+import { HyperlaneConfigPlugin } from './hyperlane.config'
 import { HyperlaneEcoPlugin } from './hyperlane-eco'
 import { HyperlaneHwrPlugin } from './hyperlane-hwr'
 import { HyperlaneMerklyTokenBridgePlugin } from './hyperlane-merkly-tokenbridge'
 import { HyperlaneSimpleAppsPlugIn } from './hyperlane-simple-apps'
+import { HyperliquidBridgePlugin } from './hyperliquid-bridge'
 import { LayerZeroConfigPlugin } from './layerzero/layerzero.config'
-import { LayerZeroV1Plugin } from './layerzero/layerzero-v1.plugin'
 import { LayerZeroV2Plugin } from './layerzero/layerzero-v2.plugin'
 import { LayerZeroV2OFTsPlugin } from './layerzero/layerzero-v2-ofts.plugin'
 import { LidoWstethPlugin } from './lido-wsteth'
+import { LifiIntentsPlugin } from './lifi-intents'
+import { LighterBridgePlugin } from './lighter-bridge'
 import { LineaPlugin } from './linea'
 import { MakerBridgePlugin } from './maker-bridge'
 import { MayanForwarderPlugin } from './mayan-forwarder'
@@ -55,6 +58,7 @@ import { OrbitStackStandardGatewayPlugin } from './orbitstack/orbitstack-standar
 import { OrbitStackWethGatewayPlugin } from './orbitstack/orbitstack-wethgateway'
 import { PolygonConfigPlugin } from './polygon/polygon.config'
 import { PolygonPlugin } from './polygon/polygon.plugin'
+import { RelayConfigPlugin } from './relay/relay.config'
 import { RelayPlugin } from './relay/relay.plugin'
 import { SkyBridgePlugin } from './sky-bridge'
 import { SorareBasePlugin } from './sorare-base'
@@ -86,6 +90,7 @@ export interface InteropPlugins {
 
 export interface InteropPluginDependencies {
   chains: { name: string; id: number }[]
+  oneSidedChains: string[]
   httpClient: HttpClient
   rpcClients: IRpcClient[]
   logger: Logger
@@ -111,7 +116,6 @@ export function createInteropPlugins(
         deps.configIntervalMs,
       ),
       new LayerZeroConfigPlugin(
-        deps.chains,
         deps.configs,
         deps.logger,
         deps.httpClient,
@@ -132,6 +136,13 @@ export function createInteropPlugins(
         rpcs,
         deps.configIntervalMs,
       ),
+      new HyperlaneConfigPlugin(
+        deps.chains,
+        deps.configs,
+        deps.logger,
+        deps.httpClient,
+        deps.configIntervalMs,
+      ),
       new CCIPConfigPlugin(
         deps.chains,
         deps.configs,
@@ -146,30 +157,43 @@ export function createInteropPlugins(
         deps.tokenDbClient,
         deps.configIntervalMs,
       ),
+      new RelayConfigPlugin(
+        deps.chains,
+        deps.configs,
+        deps.logger,
+        deps.httpClient,
+        deps.configIntervalMs,
+      ),
       new PolygonConfigPlugin(
         deps.configs,
         deps.logger,
         rpcs,
         deps.configIntervalMs,
       ),
+      new GasZipConfigPlugin(
+        deps.chains,
+        deps.configs,
+        deps.logger,
+        deps.httpClient,
+        deps.configIntervalMs,
+      ),
     ],
     eventPlugins: [
       new SquidCoralPlugin(),
-      new DeBridgePlugin(),
-      new DeBridgeDlnPlugin(),
+      new DeBridgePlugin(deps.oneSidedChains),
+      new DeBridgeDlnPlugin(deps.oneSidedChains),
       new AgglayerPlugin(),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
       new MesonPlugin(),
-      new CCIPPlugin(deps.configs),
-      new CentriFugePlugin(),
+      new CCIPPlugin(deps.configs, deps.oneSidedChains),
+      new CentriFugePlugin(deps.oneSidedChains),
       {
         name: 'layerzero',
         plugins: [
           new StargatePlugin(deps.configs), // should be run before ofts, lzv2
-          new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
+          new LayerZeroV2OFTsPlugin(deps.configs, deps.oneSidedChains), // should be run before LayerZeroV2
           new LayerZeroV2Plugin(deps.configs),
-          new LayerZeroV1Plugin(deps.configs),
         ],
       },
       {
@@ -177,31 +201,30 @@ export function createInteropPlugins(
         plugins: [
           // Mayan plugins (use both Wormhole messaging and CCTP for transfers)
           new MayanForwarderPlugin(deps.configs), // should be run before MayanSwift
-          new MayanSwiftPlugin(deps.configs), // should be run before CCTP
+          new MayanSwiftPlugin(deps.configs, deps.oneSidedChains), // should be run before CCTP
           new MayanSwiftSettlementPlugin(deps.configs), // should be run after MayanSwiftPlugin
           new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
           // Wormhole-specific plugins
-          new WormholeNTTPlugin(deps.configs), // should be run before WormholeCore and WormholeRelayer
-          new WormholeTokenBridgePlugin(deps.configs), // should be run before Wormhole
+          new WormholeNTTPlugin(deps.configs, deps.oneSidedChains), // should be run before WormholeCore and WormholeRelayer
+          new WormholeTokenBridgePlugin(deps.configs, deps.oneSidedChains), // should be run before Wormhole
           new WormholeRelayerPlugin(deps.configs), // should be run before Wormhole
           // CCTP plugins (Circle's cross-chain USDC)
-          new CCTPV1Plugin(deps.configs),
-          new CCTPV2Plugin(deps.configs),
+          new CCTPV1Plugin(deps.configs, deps.oneSidedChains),
+          new CCTPV2Plugin(deps.configs, deps.oneSidedChains),
           // Core Wormhole messaging (most generic, runs last)
           new WormholePlugin(deps.configs),
         ],
       },
-      new AllbridgePlugIn(),
       new AvalanchePlugin(),
       new LineaPlugin(),
       {
         name: 'axelar',
         plugins: [
-          new AxelarITSPlugin(), // should be run before Axelar
-          new AxelarPlugin(),
+          new AxelarITSPlugin(deps.oneSidedChains), // should be run before Axelar
+          new AxelarPlugin(deps.oneSidedChains),
         ],
       },
-      new AcrossPlugin(deps.configs),
+      new AcrossPlugin(deps.configs, deps.oneSidedChains),
       {
         name: 'orbitstack',
         plugins: [
@@ -231,16 +254,22 @@ export function createInteropPlugins(
       {
         name: 'hyperlane',
         plugins: [
-          new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
-          new HyperlaneHwrPlugin(), // should be run before Hyperlane
-          new HyperlaneEcoPlugin(), // should be run before Hyperlane
-          new HyperlaneSimpleAppsPlugIn(), // should be run before Hyperlane
-          new HyperlanePlugIn(),
+          new HyperlaneMerklyTokenBridgePlugin(
+            deps.configs,
+            deps.oneSidedChains,
+          ), // should be run before HyperlaneHWR
+          new HyperlaneHwrPlugin(deps.configs, deps.oneSidedChains), // should be run before Hyperlane
+          new HyperlaneEcoPlugin(deps.configs), // should be run before Hyperlane
+          new HyperlaneSimpleAppsPlugIn(deps.configs), // should be run before Hyperlane
+          new HyperlanePlugIn(deps.configs),
         ],
       },
       new OneinchFusionPlusPlugin(),
-      new RelayPlugin(),
-      new GasZipPlugin(deps.logger),
+      new LifiIntentsPlugin(),
+      new HyperliquidBridgePlugin(deps.oneSidedChains),
+      new LighterBridgePlugin(deps.oneSidedChains),
+      new RelayPlugin(deps.oneSidedChains),
+      new GasZipPlugin(deps.configs, deps.oneSidedChains),
       new PolygonPlugin(deps.configs),
       new ZkStackPlugin(deps.configs),
     ],

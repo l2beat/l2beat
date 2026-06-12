@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  type ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -19,8 +24,6 @@ export const espresso: BaseProject = {
   name: 'Espresso DA',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
-  // tags
-  isDaLayer: true,
   // data
   statuses: {
     yellowWarning: undefined,
@@ -284,6 +287,7 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
         text: 'the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.',
       },
     ],
+    zkVerifiers: getVerifiers(),
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
@@ -305,4 +309,13 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
     },
   ],
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+// should return the address of deployed plonk verifier library
+function getVerifiers(): ChainSpecificAddress[] {
+  const libraries = discovery.getContractValue<ChainSpecificAddress[]>(
+    'HotShotLightClient',
+    '$libraries',
+  )
+  return [libraries[1]]
 }

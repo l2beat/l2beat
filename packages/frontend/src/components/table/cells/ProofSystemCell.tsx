@@ -11,6 +11,7 @@ interface ProofSystemCellProps {
   slug: string
   stacks?: ProjectScalingStack[]
   hideType?: boolean
+  permissioned?: boolean
 }
 
 export function ProofSystemCell({
@@ -18,7 +19,16 @@ export function ProofSystemCell({
   slug,
   stacks,
   hideType,
+  permissioned,
 }: ProofSystemCellProps) {
+  const secondLine =
+    permissioned !== undefined
+      ? permissioned
+        ? 'Permissioned'
+        : 'Permissionless'
+      : proofSystem?.name && !hideType
+        ? proofSystem.name
+        : undefined
   return (
     <TableLink
       href={
@@ -37,14 +47,7 @@ export function ProofSystemCell({
             <TypeInfo stacks={stacks}>{proofSystem?.type ?? 'None'}</TypeInfo>
           )}
         </TwoRowCell.First>
-        {proofSystem?.name && !hideType && (
-          <TwoRowCell.Second>{proofSystem?.name}</TwoRowCell.Second>
-        )}
-        {hideType && proofSystem?.challengeProtocol && (
-          <TwoRowCell.Second>
-            {proofSystem?.challengeProtocol}
-          </TwoRowCell.Second>
-        )}
+        {secondLine && <TwoRowCell.Second>{secondLine}</TwoRowCell.Second>}
       </TwoRowCell>
     </TableLink>
   )

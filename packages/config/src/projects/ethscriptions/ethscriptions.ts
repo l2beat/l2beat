@@ -10,10 +10,11 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('ethscriptions')
 
@@ -64,10 +65,11 @@ export const ethscriptions: ScalingProject = {
   },
   proofSystem: {
     type: 'Optimistic',
+    name: 'SP1',
     zkCatalogId: ProjectId('sp1turbo'),
     challengeProtocol: 'Single-step',
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -197,7 +199,9 @@ export const ethscriptions: ScalingProject = {
       ...RISK_VIEW.STATE_ZKP_OPTIMISTIC,
       challengeDelay: MAX_CHALLENGE_SECS,
       executionDelay: 0,
-      initialBond: formatEther(proposerBond),
+      initialBond: { value: formatEther(proposerBond) },
+      permissioned: false,
+      defenderAdvantage: 'not-assessed',
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
@@ -294,6 +298,7 @@ export const ethscriptions: ScalingProject = {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
     programHashes: ethscriptionsProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getSP1Verifiers(discovery),
   },
   permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {

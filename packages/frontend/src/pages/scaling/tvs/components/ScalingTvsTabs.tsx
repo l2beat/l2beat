@@ -15,7 +15,6 @@ import {
   TabsTrigger,
 } from '~/components/core/Tabs'
 import {
-  NotReviewedInfo,
   OthersInfo,
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
@@ -29,6 +28,7 @@ import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingT
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { ScalingTvsCharts } from './ScalingTvsCharts'
 import { ScalingTvsDataKeysProvider } from './ScalingTvsDataKeysContext'
+import { ScalingTvsStats } from './ScalingTvsStats'
 import { ScalingTvsTable } from './table/ScalingTvsTable'
 
 type Props = TabbedScalingEntries<ScalingTvsEntry> & {
@@ -46,7 +46,6 @@ export function ScalingTvsTabs(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    notReviewed: props.notReviewed.filter(filterEntries),
   }
 
   const initialSort = {
@@ -56,18 +55,18 @@ export function ScalingTvsTabs(props: Props) {
 
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-x-2 max-md:mt-4 max-md:px-4">
         <TableFilters
           entries={[
             ...props.rollups,
             ...props.validiumsAndOptimiums,
             ...props.others,
-            ...props.notReviewed,
           ]}
         />
-        <div className="max-md:mt-4 max-md:mr-4">
-          <DisplayControls display={display} setDisplay={setDisplay} />
-        </div>
+        <DisplayControls display={display} setDisplay={setDisplay} />
+      </div>
+      <div className="mt-4">
+        <ScalingTvsStats entries={entries} />
       </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
@@ -81,19 +80,12 @@ export function ScalingTvsTabs(props: Props) {
           <DirectoryTabsTrigger value="others">
             Others <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.notReviewed.length > 0 && (
-            <DirectoryTabsTrigger value="notReviewed">
-              Not reviewed
-              <CountBadge>{entries.notReviewed.length}</CountBadge>
-            </DirectoryTabsTrigger>
-          )}
         </DirectoryTabsList>
         <ScalingTvsDataKeysProvider>
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
               <RollupsInfo />
               <ScalingTvsCharts
-                tab="rollups"
                 entries={entries.rollups}
                 milestones={props.milestones}
               />
@@ -113,7 +105,6 @@ export function ScalingTvsTabs(props: Props) {
             >
               <ValidiumsAndOptimiumsInfo />
               <ScalingTvsCharts
-                tab="validiumsAndOptimiums"
                 entries={entries.validiumsAndOptimiums}
                 milestones={props.milestones}
               />
@@ -130,7 +121,6 @@ export function ScalingTvsTabs(props: Props) {
             <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
               <OthersInfo />
               <ScalingTvsCharts
-                tab="others"
                 entries={entries.others}
                 milestones={props.milestones}
               />
@@ -140,18 +130,6 @@ export function ScalingTvsTabs(props: Props) {
                 entries={entries.others}
                 breakdownType={breakdownType}
                 setBreakdownType={setBreakdownType}
-              />
-            </DirectoryTabsContent>
-          </TableSortingProvider>
-          <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="notReviewed" className="pt-4 sm:pt-3">
-              <NotReviewedInfo />
-              <BreakdownTypeTabs
-                tab="notReviewed"
-                entries={entries.notReviewed}
-                breakdownType={breakdownType}
-                setBreakdownType={setBreakdownType}
-                ignoreUnderReviewIcon
               />
             </DirectoryTabsContent>
           </TableSortingProvider>
@@ -166,13 +144,11 @@ function BreakdownTypeTabs({
   entries,
   breakdownType,
   setBreakdownType,
-  ignoreUnderReviewIcon,
 }: {
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed'
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
   entries: ScalingTvsEntry[]
   breakdownType: 'bridgeType' | 'assetCategory'
   setBreakdownType: (value: 'bridgeType' | 'assetCategory') => void
-  ignoreUnderReviewIcon?: boolean
 }) {
   return (
     <Tabs
@@ -191,7 +167,6 @@ function BreakdownTypeTabs({
           tab={tab}
           entries={entries}
           breakdownType={breakdownType}
-          ignoreUnderReviewIcon={ignoreUnderReviewIcon}
         />
       </TabsContent>
       <TabsContent value="assetCategory">
@@ -199,7 +174,6 @@ function BreakdownTypeTabs({
           tab={tab}
           entries={entries}
           breakdownType={breakdownType}
-          ignoreUnderReviewIcon={ignoreUnderReviewIcon}
         />
       </TabsContent>
     </Tabs>

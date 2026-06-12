@@ -42,14 +42,14 @@ export abstract class TimeLoop {
     }
     this.running = true
     const runStartTime = Date.now()
-    this.logger.info('Run started')
+    this.logger.debug('Run started')
     try {
       await this.run()
     } catch (e) {
       this.logger.error(e)
     }
     const durationMs = Date.now() - runStartTime
-    this.logger.info('Run ended', { durationMs })
+    this.logger.debug('Run ended', { durationMs })
     this.running = false
   }
 

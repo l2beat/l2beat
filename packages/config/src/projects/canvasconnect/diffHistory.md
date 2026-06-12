@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xd2df27c03cf6e91acfae5c5ef47096c808a765b1
+Generated with discovered.json: 0x5281d7e5694515a5caa0baba2169a0db95a1f1fa
 
-# Diff at Mon, 23 Mar 2026 10:56:57 GMT:
+# Diff at Fri, 12 Jun 2026 10:18:42 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1715171555
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1715171555
 - current timestamp: 1715171555
 
 ## Description
@@ -23,6 +23,56 @@ discovery. Values are for block 1715171555 (main branch discovery), not current.
 -        true
       eoaWithUpgradePermissions:
 +        true
+    }
+```
+
+Generated with discovered.json: 0x418f7f1a6dbab8bd3134177d0503b984dd115655
+
+# Diff at Tue, 09 Jun 2026 12:43:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1715171555
+- current timestamp: 1715171555
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1715171555 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x107691bD4F590270B9793c807cB912DD278e8cB5) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.0.permission:
+-        "operateStarkEx"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.0.permission:
+-        "operateStarkEx"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
     }
 ```
 

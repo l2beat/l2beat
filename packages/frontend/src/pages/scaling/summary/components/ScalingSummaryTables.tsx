@@ -7,7 +7,6 @@ import {
 } from '~/components/core/DirectoryTabs'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
-  NotReviewedInfo,
   OthersInfo,
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
@@ -19,7 +18,6 @@ import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import type { TabbedScalingEntries } from '../../utils/groupByScalingTabs'
-import { ScalingSummaryNotReviewedTable } from './table/ScalingSummaryNotReviewedTable'
 import { ScalingSummaryOthersTable } from './table/ScalingSummaryOthersTable'
 import { ScalingSummaryRollupsTable } from './table/ScalingSummaryRollupsTable'
 import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/ScalingSummaryValidiumsAndOptimiumsTable'
@@ -33,7 +31,6 @@ export function ScalingSummaryTables(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    notReviewed: props.notReviewed.filter(filterEntries),
   }
 
   const initialSort = {
@@ -44,13 +41,12 @@ export function ScalingSummaryTables(props: Props) {
   return (
     <>
       <HorizontalSeparator className="my-4 max-md:hidden" />
-      <div className="mr-4 flex flex-wrap items-end justify-between gap-y-1 md:mr-0">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-x-2 max-md:mt-4 max-md:px-4">
         <TableFilters
           entries={[
             ...props.rollups,
             ...props.validiumsAndOptimiums,
             ...props.others,
-            ...props.notReviewed,
           ]}
         />
         <DisplayControls display={display} setDisplay={setDisplay} />
@@ -68,12 +64,6 @@ export function ScalingSummaryTables(props: Props) {
             Others
             <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.notReviewed.length > 0 && (
-            <DirectoryTabsTrigger value="notReviewed">
-              Not reviewed
-              <CountBadge>{entries.notReviewed.length}</CountBadge>
-            </DirectoryTabsTrigger>
-          )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
@@ -93,12 +83,6 @@ export function ScalingSummaryTables(props: Props) {
           <DirectoryTabsContent value="others">
             <OthersInfo />
             <ScalingSummaryOthersTable entries={entries.others} />
-          </DirectoryTabsContent>
-        </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="notReviewed">
-            <NotReviewedInfo />
-            <ScalingSummaryNotReviewedTable entries={entries.notReviewed} />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

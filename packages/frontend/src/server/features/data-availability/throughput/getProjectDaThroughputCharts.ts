@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { v } from '@l2beat/validate'
 import { env } from '~/env'
-import type { ChartRange } from '~/utils/range/range'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import {
@@ -14,7 +14,6 @@ import {
   ProjectDaThroughputChartParams,
   type ProjectDaThroughputChartPoint,
 } from './getProjectDaThroughputChart'
-import { rangeToResolution } from './utils/range'
 
 export type getProjectDaThroughputChartsData = {
   totalChart: {
@@ -47,7 +46,7 @@ export type ProjectDaThroughputChartDataParams = v.infer<
 
 export async function getProjectDaThroughputCharts(
   params: ProjectDaThroughputChartDataParams,
-): Promise<getProjectDaThroughputChartsData | undefined> {
+): Promise<getProjectDaThroughputChartsData | null> {
   if (env.MOCK) {
     return getMockProjectDaThroughputCharts(params)
   }
@@ -65,7 +64,7 @@ export async function getProjectDaThroughputCharts(
     : throughputTable.data[params.projectId]
 
   if (!totalChartData || !byProjectChartData || !projectData) {
-    return undefined
+    return null
   }
 
   const from = Math.min(totalChartData.from, byProjectChartData.from)
@@ -140,7 +139,7 @@ function getMockProjectDaThroughputCharts({
     }
   }
 
-  const timestamps = generateTimestamps([from, to], 'daily')
+  const timestamps = generateTimestamps([from, to], 'day')
   return {
     totalChart: {
       data: timestamps.map((timestamp) => {

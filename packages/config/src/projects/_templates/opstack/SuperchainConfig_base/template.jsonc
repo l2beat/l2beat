@@ -15,10 +15,20 @@
       "edit": ["format", "FormatSeconds"]
     },
     "guardian": {
-      "permissions": [{ "type": "guard" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+        }
+      ]
     },
     "INCIDENT_RESPONDER": {
-      "permissions": [{ "type": "guard" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pause for up to {{pauseExpiryFmt}}, but cannot unpause or extend pauses."
+        }
+      ]
     }
   },
   "category": "core"

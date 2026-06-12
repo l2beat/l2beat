@@ -74,6 +74,7 @@ const ONEINCH_FUSIONPLUS_NETWORKS = defineNetworks('oneinch-fusion-plus', [
     chainId: 43114,
     address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
   },
+  // monad, tempo unsupported
 ])
 
 const parseSrcEscrowCreated = createEventParser(

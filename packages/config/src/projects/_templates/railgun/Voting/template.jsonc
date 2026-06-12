@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Voting",
+  "description": "Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.",
+  "category": "gov",
+  "ignoreMethods": ["getActions", "proposals", "proposalsLength"],
+  "fields": {
+    "DELEGATOR_CONTRACT": {
+      "description": "Delegator contract that executes successful proposal actions.",
+      "severity": "HIGH"
+    },
+    "STAKING_CONTRACT": {
+      "description": "Staking contract whose snapshots determine sponsorship and voting power.",
+      "severity": "HIGH"
+    },
+    "QUORUM": {
+      "description": "Minimum affirmative voting power required for a proposal to reach quorum.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "PROPOSAL_SPONSOR_THRESHOLD": {
+      "description": "Minimum sponsorship required before a proposal can be moved into the voting phase.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "SPONSOR_WINDOW": {
+      "description": "Maximum time after publication during which a proposal can collect sponsorship.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "SPONSOR_LOCKOUT_TIME": {
+      "description": "Cooldown that limits how often the same account can newly sponsor different proposals.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "VOTING_START_OFFSET": {
+      "description": "Delay between calling a proposal to vote and the opening of the voting window.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "VOTING_YAY_END_OFFSET": {
+      "description": "Deadline for casting affirmative votes after a vote has been called.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "VOTING_NAY_END_OFFSET": {
+      "description": "Deadline for casting negative votes after a vote has been called.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "EXECUTION_START_OFFSET": {
+      "description": "Delay between a successful vote and when execution can begin.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "EXECUTION_END_OFFSET": {
+      "description": "End of the execution window for a successful proposal.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

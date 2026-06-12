@@ -5,7 +5,7 @@ import { manifest } from '~/utils/Manifest'
 
 export function getDaLayersInfo(
   configs: ProjectDaTrackingConfig[],
-  daLayers: Project<'isDaLayer'>[],
+  daLayers: Project<'daLayer'>[],
 ): {
   currentDaLayers: DaLayerInfo[]
   pastDaLayers: DaLayerInfo[]
@@ -46,7 +46,7 @@ interface DaLayerInfo {
 
 function getDaLayer(
   config: ProjectDaTrackingConfig,
-  daLayers: Project<'isDaLayer'>[],
+  daLayers: Project<'daLayer'>[],
 ): DaLayerInfo {
   const daLayer = daLayers.find((d) => d.id === config.daLayer)
   assert(daLayer, 'Da layer not found')

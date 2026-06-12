@@ -12,8 +12,8 @@ import uniqBy from 'lodash/uniqBy'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
-import { manifest } from '~/utils/Manifest'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { TechnologyContract } from '../../../components/projects/sections/ContractEntry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/ContractsSection'
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
@@ -32,7 +32,7 @@ type ProjectParams = {
   tvsConfig?: TvsToken[]
 }
 
-type ContractsSection = Omit<
+export type ContractsSection = Omit<
   ContractsSectionProps,
   keyof Omit<ProjectSectionProps, 'isUnderReview'>
 >
@@ -144,6 +144,7 @@ export function getContractsSection(
       allProjects,
       tvs,
     ),
+    programHashesDescription: projectParams.contracts.programHashesDescription,
   }
 }
 
@@ -250,6 +251,15 @@ function makeTechnologyContract(
     ),
     'id',
   )
+  const contractAddress = ChainSpecificAddress.address(item.address)
+  const pastUpgrades = item.pastUpgrades?.map((upgrade) => ({
+    ...upgrade,
+    explorerUrl,
+    proxyContract: {
+      name: item.name,
+      address: contractAddress,
+    },
+  }))
 
   return {
     id: item.name,
@@ -263,7 +273,7 @@ function makeTechnologyContract(
     impactfulChange,
     upgradeableBy: item.upgradableBy,
     upgradeConsiderations: item.upgradeConsiderations,
-    pastUpgrades: getPastUpgradesData(item.pastUpgrades, explorerUrl),
+    pastUpgrades: getPastUpgradesData(pastUpgrades),
     escrow,
   }
 }
@@ -286,9 +296,7 @@ function getEscrowDetails(
     tokens: escrow.tokens,
     tokenIcons: escrow.tokens.map((symbol) => ({
       symbol,
-      iconUrl:
-        tokenIconMap.get(symbol) ??
-        manifest.getUrl('/images/token-placeholder.png'),
+      iconUrl: tokenIconMap.get(symbol) ?? TOKEN_PLACEHOLDER_ICON_URL,
     })),
     isCustom,
   }
@@ -302,8 +310,7 @@ function getEscrowTokenIconMap(tvsConfig?: TvsToken[]) {
   const result = new Map<string, string>()
 
   for (const token of tvsConfig ?? []) {
-    const iconUrl =
-      token.iconUrl ?? manifest.getUrl('/images/token-placeholder.png')
+    const iconUrl = token.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL
 
     if (!result.has(token.symbol)) {
       result.set(token.symbol, iconUrl)

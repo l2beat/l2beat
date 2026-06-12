@@ -1,8 +1,11 @@
 import { expect } from 'earl'
 import {
+  diffInteropConfig,
   diffInteropConfigValues,
   type InteropConfigDiff,
+  type InteropConfigDiffFilters,
   interopConfigDiffToMarkdown,
+  removeMutedInteropConfigDiffEntries,
 } from './InteropConfigDiff'
 
 describe('InteropConfigDiff', () => {
@@ -28,6 +31,34 @@ describe('InteropConfigDiff', () => {
     expect(entries.length).toEqual(0)
   })
 
+  it('ignores order-only changes in arrays of objects', () => {
+    const previous = [
+      {
+        chain: 'ethereum',
+        chainId: 1,
+        domain: 0,
+        messageTransmitter: '0x81D40F21F12A8F0E3252Bccb954D722d4c464B64',
+      },
+      {
+        chain: 'linea',
+        chainId: 59144,
+        domain: 11,
+        messageTransmitter: '0x81D40F21F12A8F0E3252Bccb954D722d4c464B64',
+      },
+      {
+        chain: 'optimism',
+        chainId: 10,
+        domain: 2,
+        messageTransmitter: '0x81D40F21F12A8F0E3252Bccb954D722d4c464B64',
+      },
+    ]
+    const current = [previous[1], previous[2], previous[0]]
+
+    const interopDiff = diffInteropConfig('cctp-v2', previous, current)
+
+    expect(interopDiff.entries.length).toEqual(0)
+  })
+
   it('formats a readable markdown diff', () => {
     const interopDiff: InteropConfigDiff = {
       key: 'ccip',
@@ -47,5 +78,42 @@ describe('InteropConfigDiff', () => {
     expect(markdown.includes('- $.networks[1].offRamp: "0xdef"')).toEqual(true)
     expect(markdown.includes('~ $.version')).toEqual(true)
     expect(markdown.endsWith('```')).toEqual(true)
+  })
+
+  it('removes muted entries for selected config keys', () => {
+    const interopDiff: InteropConfigDiff = {
+      key: 'polygon',
+      previous: undefined,
+      current: undefined,
+      entries: [
+        { kind: 'change', path: ['lastSyncedBlock'], lhs: 1, rhs: 2 },
+        {
+          kind: 'change',
+          path: ['predicates', 0],
+          lhs: '0xabc',
+          rhs: '0xdef',
+        },
+      ],
+    }
+
+    const testFilters = {
+      polygon: [
+        (diff) => diff.path.length === 1 && diff.path[0] === 'lastSyncedBlock',
+      ],
+    } satisfies InteropConfigDiffFilters
+
+    const filtered = removeMutedInteropConfigDiffEntries(
+      interopDiff,
+      testFilters,
+    )
+
+    expect(filtered.entries).toEqual([
+      {
+        kind: 'change',
+        path: ['predicates', 0],
+        lhs: '0xabc',
+        rhs: '0xdef',
+      },
+    ])
   })
 })

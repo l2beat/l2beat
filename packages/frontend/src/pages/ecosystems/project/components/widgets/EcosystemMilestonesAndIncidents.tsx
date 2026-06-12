@@ -41,7 +41,7 @@ export function EcosystemMilestonesAndIncidents({
       UnixTime.toStartOf(minTimestamp, 'day')) /
     UnixTime.DAY
 
-  const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
+  const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'day')
   return (
     <EcosystemWidget className={className}>
       <div className="grid grid-cols-3 gap-6" ref={sectionRef}>
@@ -55,10 +55,9 @@ export function EcosystemMilestonesAndIncidents({
                 height="9"
                 viewBox="0 0 12 9"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
                 className="-right-0.5 -top-1 absolute fill-secondary"
               >
-                <path d="M12 4.177L-3.93401e-07 8.99996L0 -4.55091e-05L12 4.177Z" />
+                <path d="M12 4.177 0 9V0z" />
               </svg>
               <Timeline
                 timestamps={timestamps}

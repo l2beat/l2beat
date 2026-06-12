@@ -1,4 +1,4 @@
-import type { InteropDurationSplit } from '@l2beat/config'
+import type { InteropType } from '@l2beat/config'
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
@@ -6,6 +6,7 @@ import type {
 } from '@l2beat/database'
 import { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import type { InteropFlowData } from './utils/getFlows'
 import type { TopItems } from './utils/getTopItems'
 
@@ -15,6 +16,8 @@ export type ProtocolEntry = {
   iconUrl: string
   name: string
   shortName: string | undefined
+  description: string | undefined
+  type: InteropType
   bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:
@@ -34,11 +37,19 @@ export type ProtocolEntry = {
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
   netMintedValue: number | undefined
+  topRoute:
+    | {
+        srcChain: { id: string; name: string; iconUrl: string }
+        dstChain: { id: string; name: string; iconUrl: string }
+        volume: number
+      }
+    | undefined
   snapshotTimestamp: number | undefined
-}
+} & FilterableEntry
 
 export type ProtocolDisplayable = {
   name: string
+  slug: string
   iconUrl: string
 }
 
@@ -46,6 +57,7 @@ export type ByBridgeTypeData = {
   lockAndMint: LockAndMintProtocolData | undefined
   nonMinting: NonMintingProtocolData | undefined
   burnAndMint: BurnAndMintProtocolData | undefined
+  unknown: BridgeTypeCommonData | undefined
 }
 
 type BridgeTypeCommonData = {
@@ -61,7 +73,7 @@ export type LockAndMintProtocolData = BridgeTypeCommonData & {
 }
 
 export type NonMintingProtocolData = BridgeTypeCommonData & {
-  averageValueInFlight: number
+  averageValueInFlight: number | undefined
 }
 
 export type BurnAndMintProtocolData = BridgeTypeCommonData
@@ -85,56 +97,126 @@ export const InteropProtocolParams = v.object({
   ...InteropSelectionInputShape,
 })
 
-export type InteropProtocolTokensParams = v.infer<
-  typeof InteropProtocolTokensParams
->
-export const InteropProtocolTokensParams = v.object({
-  id: v.string().transform((value) => ProjectId(value)),
+export type InteropTokenParams = v.infer<typeof InteropTokenParams>
+export const InteropTokenParams = v.object({
+  tokenId: v.string(),
+  ...InteropSelectionInputShape,
+})
+
+export type InteropTopItemsParams = v.infer<typeof InteropTopItemsParams>
+export const InteropTopItemsSort = v.object({
+  id: v.enum([
+    'symbol',
+    'pair',
+    'topProtocol',
+    'volume',
+    'transferCount',
+    'avgDuration',
+    'avgValue',
+    'flows',
+    'netMintedValue',
+  ]),
+  desc: v.boolean(),
+})
+export type InteropTopItemsSort = v.infer<typeof InteropTopItemsSort>
+export const InteropTopItemsSorting = v.array(InteropTopItemsSort)
+export type InteropTopItemsSorting = v.infer<typeof InteropTopItemsSorting>
+
+const InteropTopItemsParamsShape = {
+  id: v.union([
+    v.string().transform((value) => ProjectId(value)),
+    v.undefined(),
+  ]),
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
+  protocolIds: v.array(v.string()).optional(),
+}
+export const InteropTopItemsParams = v.object(InteropTopItemsParamsShape)
+
+export type InteropTopItemsInfiniteParams = v.infer<
+  typeof InteropTopItemsInfiniteParams
+>
+export const InteropTopItemsInfiniteParams = v.object({
+  ...InteropTopItemsParamsShape,
+  cursor: v.number().optional(),
+  limit: v.number().optional(),
+  sort: InteropTopItemsSorting.optional(),
 })
 
 export type InteropProtocolTransfersParams = v.infer<
   typeof InteropProtocolTransfersParams
 >
+export type InteropProtocolTransfersCursor = v.infer<
+  typeof InteropProtocolTransfersCursor
+>
+export const InteropProtocolTransfersCursor = v.object({
+  timestamp: v.number(),
+  transferId: v.string(),
+})
 export const InteropProtocolTransfersParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
-  expectedTransferCount: v.number(),
-  expectedVolume: v.number(),
+  tokenId: v.string().optional(),
   snapshotTimestamp: v.number(),
-  cursor: v.number().optional(),
+  limit: v.number().optional(),
+  cursor: InteropProtocolTransfersCursor.optional(),
+})
+
+export type InteropTokenTransfersParams = v.infer<
+  typeof InteropTokenTransfersParams
+>
+export const InteropTokenTransfersParams = v.object({
+  tokenId: v.string(),
+  ...InteropSelectionInputShape,
+  snapshotTimestamp: v.number(),
+  limit: v.number().optional(),
+  cursor: InteropProtocolTransfersCursor.optional(),
+})
+
+export type InteropFlowsParams = v.infer<typeof InteropFlowsParams>
+export const InteropFlowsParams = v.object({
+  chains: v.array(v.string()),
+  protocolIds: v.array(v.string()),
+  tokenId: v.string().optional(),
+})
+
+export type InteropProtocolsByVolumeParams = v.infer<
+  typeof InteropProtocolsByVolumeParams
+>
+export const InteropProtocolsByVolumeParams = v.object({
+  chains: v.array(v.string()),
+  protocolIds: v.array(v.string()),
 })
 
 export type InteropProtocolTransferDetailsItem = {
   transferId: string
   timestamp: number
   srcAmount: number | undefined
-  srcSymbol: string | undefined
+  srcSymbol: string
+  srcAbstractTokenId: string | undefined
+  srcTokenIssuer: string | null
   srcTokenIconUrl: string
   dstAmount: number | undefined
-  dstSymbol: string | undefined
+  dstSymbol: string
+  dstAbstractTokenId: string | undefined
+  dstTokenIssuer: string | null
   dstTokenIconUrl: string
   valueUsd: number | undefined
   duration: number | undefined
   srcChain: string
+  srcChainIconUrl: string | undefined
   srcTxHash: string | undefined
   srcTxHashHref: string | undefined
   dstChain: string
+  dstChainIconUrl: string | undefined
   dstTxHash: string | undefined
   dstTxHashHref: string | undefined
 }
 
-export type InteropProtocolTransferStats = {
-  transferCount: number
-  volume: number
-}
-
 export type InteropProtocolTransfersResponse = {
   items: InteropProtocolTransferDetailsItem[]
-  hasIntegrityMismatch: boolean
-  nextCursor: number | undefined
+  nextCursor: InteropProtocolTransfersCursor | undefined
 }
 
 export type AggregatedInteropTransferWithTokens =
@@ -144,6 +226,21 @@ export type AggregatedInteropTransferWithTokens =
       'id' | 'timestamp' | 'srcChain' | 'dstChain' | 'bridgeType'
     >[]
   }
+
+export type ScopedInteropTransfer = Pick<
+  AggregatedInteropTransferWithTokens,
+  'id' | 'timestamp' | 'bridgeType' | 'srcChain' | 'dstChain'
+> &
+  CommonInteropData & {
+    tokens: [AggregatedInteropTransferWithTokens['tokens'][number]]
+    volume: number
+    identifiedCount: number
+    avgValueInFlight: undefined
+  }
+
+export type InteropTransferWithTokens =
+  | AggregatedInteropTransferWithTokens
+  | ScopedInteropTransfer
 
 export type CommonInteropData = {
   volume: number
@@ -174,6 +271,7 @@ export type TokenData = {
   symbol: string
   issuer: string | null
   iconUrl: string
+  topProtocol: ProtocolDisplayable | undefined
   volume: number | null
   transferCount: number
   avgDuration: AverageDuration | null
@@ -182,6 +280,31 @@ export type TokenData = {
   maxTransferValueUsd: number | undefined
   netMintedValue: number | undefined
   flows: TokenFlowData[]
+}
+
+export type InteropTokensResponse = {
+  items: TokenData[]
+  nextCursor: number | undefined
+}
+
+export type TokensPairData = {
+  id: string
+  tokenA: { id: string; symbol: string; issuer: string | null; iconUrl: string }
+  tokenB: { id: string; symbol: string; issuer: string | null; iconUrl: string }
+  topProtocol: ProtocolDisplayable | undefined
+  volume: number | null
+  transferCount: number
+  avgDuration: AverageDuration | null
+  avgValue: number | null
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
+  netMintedValue: number | undefined
+  flows: TokenFlowData[]
+}
+
+export type InteropTokensPairsResponse = {
+  items: TokensPairData[]
+  nextCursor: number | undefined
 }
 
 export type ChainData = {
@@ -218,9 +341,3 @@ export type AverageDuration =
   | SingleAverageDuration
   | SplitAverageDuration
   | UnknownAverageDuration
-/** Two-level map: projectId -> bridgeType -> durationSplit config */
-
-export type DurationSplitMap = Map<
-  string,
-  Map<KnownInteropBridgeType, NonNullable<InteropDurationSplit>>
->

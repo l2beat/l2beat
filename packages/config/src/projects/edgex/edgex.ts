@@ -80,7 +80,6 @@ export const edgex: ScalingProject = {
     BADGES.Stack.StarkEx,
     BADGES.Infra.SHARP,
   ],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
     name: 'EdgeX',
     slug: 'edgex',
@@ -104,6 +103,7 @@ export const edgex: ScalingProject = {
     type: 'Validity',
     zkCatalogId: ProjectId('stone'),
   },
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   stage: {
     stage: 'NotApplicable',
   },
@@ -136,7 +136,10 @@ export const edgex: ScalingProject = {
     mode: DA_MODES.STATE_DIFFS,
   },
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_ST,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_ST,
+      executionDelay: 0,
+    },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC(dacConfig),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
@@ -166,6 +169,8 @@ export const edgex: ScalingProject = {
       ),
     ],
     programHashes: edgexProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    // stone verifier address, could be deduced from analyzing trx traces
+    zkVerifiers: [discovery.getContract('SHARPVerifier_2024_10').address],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

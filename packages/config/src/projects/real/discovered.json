@@ -26,7 +26,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -50,13 +50,13 @@
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
         {
-          "permission": "fastconfirm",
+          "permission": "interact",
           "from": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer"
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -110,7 +110,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -172,7 +172,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "fastconfirm",
+          "permission": "interact",
           "from": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer",
@@ -181,7 +181,7 @@
           ]
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
@@ -190,7 +190,7 @@
           ]
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -604,7 +604,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -622,7 +622,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -959,8 +959,7 @@
       "implementationNames": {
         "eth:0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8": "UUPSProxy",
         "eth:0x977cA9732E618D32552BA16a52f258cEFadf970a": "Bridger"
-      },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      }
     },
     {
       "address": "eth:0xC410B8657FBB2CdbF0c5c5d5128576974467ba5e",
@@ -968,7 +967,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -1130,7 +1129,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -1160,7 +1159,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -1276,7 +1275,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -1317,7 +1316,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -2374,5 +2373,5 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23046516 },
-  "permissionsConfigHash": "0x97b6758e22a392ab87dae48c4775c65bebccc26a97693069963cb7027f7b4723"
+  "permissionsConfigHash": "0x9d01391f389fcb27216dc4cbe9cf2f6b24d4e90e2c49e69218da7b3695f24bbe"
 }

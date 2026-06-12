@@ -64,26 +64,25 @@ const requiredSignaturesDAC = discovery.getContractValue<number>(
   'requiredAmountOfSignatures',
 )
 
+const nonEmergencyUpgradeText = `Even though there is a ${upgradeDelayString} Timelock for non-emergency upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
+  trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
+)}.`
+
 const exitWindowRisk = {
   ...RISK_VIEW.EXIT_WINDOW(
-    upgradeDelay,
+    0,
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-    {
-      upgradeDelay2: 0,
-    },
   ),
-  description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
-    trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-  )}.`,
-  warning: {
-    value: 'The ZkFair Owner can upgrade with no delay.',
-    sentiment: 'bad',
+  regular: {
+    value: upgradeDelayString,
+    sentiment: 'warning',
+    description: nonEmergencyUpgradeText,
   },
 } as const
 
 const timelockUpgrades = {
   upgradableBy: [{ name: 'ZKFairAdmin', delay: exitWindowRisk.value }],
-  upgradeConsiderations: exitWindowRisk.description,
+  upgradeConsiderations: nonEmergencyUpgradeText,
 }
 
 const isForcedBatchDisallowed = discovery.getContractValue<boolean>(
@@ -125,8 +124,9 @@ export const zkfair: ScalingProject = {
     name: 'ZKFair',
     slug: 'zkfair',
     purposes: ['Universal'],
-    redWarning:
-      'The canonical bridge escrow was upgraded to an unverified implementation and user funds were moved to [an EOA, then deposited to AAVE](https://etherscan.io/tx/0x0f1ca15e92757dc08e1ac62ef5cfc45a37735c589c655f521f0fd99fb0d5a5d2). They were subsequently withdrawn and [moved to a new contract](https://etherscan.io/tx/0x59304b6420a556c303b4fbcc0608c14d57d06b7aa13366f3851b3be3d6e167ed). Related [tweet by the ZKFair team](https://x.com/ZKFCommunity/status/1910329561105252694).',
+    redWarning: {
+      text: 'The canonical bridge escrow was upgraded to an unverified implementation and user funds were moved to [an EOA, then deposited to AAVE](https://etherscan.io/tx/0x0f1ca15e92757dc08e1ac62ef5cfc45a37735c589c655f521f0fd99fb0d5a5d2). They were subsequently withdrawn and [moved to a new contract](https://etherscan.io/tx/0x59304b6420a556c303b4fbcc0608c14d57d06b7aa13366f3851b3be3d6e167ed). Related [tweet by the ZKFair team](https://x.com/ZKFCommunity/status/1910329561105252694).',
+    },
     warning:
       'The forced transaction mechanism is currently disabled. The project claims to use CelestiaDA but smart contracts on L1 use DAC. Arbitrary messaging passing is removed from the bridge.',
     description: 'ZKFair is a Validium based on Polygon CDK and Celestia DA.',

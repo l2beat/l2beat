@@ -1,7 +1,7 @@
 import { assert, formatSeconds, type ProjectId } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { ProjectScalingRiskView } from '../internalTypes'
-import type { Sentiment, TableReadyValue, WarningWithSentiment } from '../types'
+import type { ExitWindowRisk, Sentiment, TableReadyValue } from '../types'
 import { getDacSentiment } from './dataAvailability'
 
 // State validation
@@ -32,13 +32,15 @@ export const STATE_FP_1R: ProjectScalingRiskView['stateValidation'] = {
 
 export function STATE_FP_INT(
   challengePeriodSeconds?: number,
-  executionDelaySeconds?: number,
+  executionDelaySeconds = 0,
+  executionDelayMode?: 'always' | 'if-challenged',
 ): ProjectScalingRiskView['stateValidation'] {
   return {
     value: 'Fraud proofs (INT)',
     description:
       'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
     executionDelay: executionDelaySeconds,
+    executionDelayMode,
     challengeDelay: challengePeriodSeconds,
     sentiment: 'good',
     orderHint: Number.POSITIVE_INFINITY,
@@ -83,6 +85,7 @@ export const STATE_ZKP_SN: ProjectScalingRiskView['stateValidation'] = {
     'SNARKs are succinct zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
+  permissioned: true,
 }
 
 export const STATE_ZKP_ST: ProjectScalingRiskView['stateValidation'] = {
@@ -91,6 +94,7 @@ export const STATE_ZKP_ST: ProjectScalingRiskView['stateValidation'] = {
     'STARKs are zero knowledge proofs that ensure state correctness.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
+  permissioned: true,
 }
 
 export const STATE_ZKP_ST_SN_WRAP: ProjectScalingRiskView['stateValidation'] = {
@@ -99,6 +103,7 @@ export const STATE_ZKP_ST_SN_WRAP: ProjectScalingRiskView['stateValidation'] = {
     'STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
+  permissioned: true,
 }
 
 export function STATE_ZKP_L3(
@@ -109,6 +114,7 @@ export function STATE_ZKP_L3(
     description: `Zero knowledge cryptography is used to ensure state correctness. Proofs are first verified on ${L2} and finally on Ethereum.`,
     sentiment: 'good',
     orderHint: Number.POSITIVE_INFINITY,
+    permissioned: true,
   }
 }
 
@@ -125,6 +131,7 @@ export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
   hasAtLeastFiveExternalChallengers?: boolean,
   challengeWindowSeconds?: number,
   executionDelaySeconds?: number,
+  executionDelayMode?: 'always' | 'if-challenged',
 ): ProjectScalingRiskView['stateValidation'] {
   const challengePeriod = challengeWindowSeconds
     ? ` There is a ${formatSeconds(challengeWindowSeconds)} challenge period.`
@@ -161,10 +168,26 @@ export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
     value: 'Fraud proofs (INT)',
     description: descriptionBase + challengePeriod,
     executionDelay: executionDelaySeconds,
+    executionDelayMode,
     challengeDelay: challengeWindowSeconds,
+    permissioned: true,
+    defenderAdvantage: 'not-applicable',
     sentiment: sentiment,
     orderHint: nOfChallengers,
   }
+}
+
+export function computeBoldDefenderAdvantage(
+  baseStake: number | string | bigint,
+  stakeAmounts: (number | string | bigint)[],
+): { multiplier: number; shape: 'linear' } {
+  const levels = [BigInt(baseStake), ...stakeAmounts.slice(1).map(BigInt)]
+  let worstRatio = 0
+  for (let i = 1; i < levels.length; i++) {
+    const ratio = Number(levels[i]) / Number(levels[i - 1])
+    if (ratio > worstRatio) worstRatio = ratio
+  }
+  return { multiplier: 1 / worstRatio, shape: 'linear' }
 }
 
 // Data availability
@@ -307,6 +330,13 @@ export const DATA_POS: TableReadyValue = {
   sentiment: 'warning',
 }
 
+export const DATA_POS_NOBRIDGE: TableReadyValue = {
+  value: 'PoS network',
+  description:
+    'Data is made available by an external proof of stake network of validators. Since there is no DA bridge, Ethereum cannot verify whether any data was made available on Gnosis Chain or whether incoming messages originate from state that was attested to by the PoS network.',
+  sentiment: 'bad',
+}
+
 export function DATA_ESPRESSO(isUsingLightClient: boolean): TableReadyValue {
   const additional = isUsingLightClient
     ? ' Sequencer tx roots are checked against the HotShot light client bridge data roots, signed off by Espresso validators.'
@@ -366,20 +396,6 @@ export const CANONICAL_USDC: TableReadyValue = {
   description:
     'USDC transferred is considered canonical as it is the basis of the perpetual protocol on the chain.',
   sentiment: 'good',
-}
-
-export const UPCOMING_RISK: TableReadyValue = {
-  value: '',
-  description: 'No information available.',
-  sentiment: 'neutral',
-}
-
-export const UPCOMING_RISK_VIEW: ProjectScalingRiskView = {
-  stateValidation: UPCOMING_RISK,
-  dataAvailability: UPCOMING_RISK,
-  exitWindow: UPCOMING_RISK,
-  sequencerFailure: UPCOMING_RISK,
-  proposerFailure: UPCOMING_RISK,
 }
 
 export const UNDER_REVIEW_RISK: TableReadyValue = {
@@ -638,7 +654,6 @@ export function EXIT_WINDOW(
   options: {
     upgradeDelay2?: number
     existsBlocklist?: boolean
-    multisig?: { threshold: number; count: number }
   } = {},
 ): TableReadyValue & { seconds?: number } {
   let window: number = upgradeDelay - exitDelay
@@ -662,10 +677,10 @@ export function EXIT_WINDOW(
     upgradeDelay === 0 ? ' since contracts are instantly upgradable' : ''
   const description =
     (windowText === 'None'
-      ? `There is no window for users to exit in case of an unwanted regular upgrade${instantlyUpgradable}.`
-      : `Users have ${windowText} to exit funds in case of an unwanted regular upgrade. There is a ${formatSeconds(
+      ? `There is no window for users to exit in case of an unwanted upgrade${instantlyUpgradable}.`
+      : `Users have ${windowText} to exit funds in case of an unwanted upgrade. There is a ${formatSeconds(
           upgradeDelay,
-        )} delay before a regular upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
+        )} delay before a upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
           exitDelay,
         )} to be processed.`) +
     (options.existsBlocklist
@@ -675,21 +690,31 @@ export function EXIT_WINDOW(
   return {
     value: windowText,
     description: description,
-    secondLine: options.multisig
-      ? `${options.multisig.threshold}/${options.multisig.count} Multisig`
-      : undefined,
     sentiment,
     orderHint: window,
   }
 }
 
-export function EXIT_WINDOW_ZKSTACK(upgradeDelay: number): TableReadyValue {
+export function EXIT_WINDOW_ZKSTACK(upgradeDelay: number): ExitWindowRisk {
+  if (upgradeDelay > 0) {
+    const regularValue = formatSeconds(upgradeDelay)
+    return {
+      ...EXIT_WINDOW(0, 0),
+      regular: {
+        value: regularValue,
+        sentiment: 'warning',
+        description: `Non-emergency upgrades go through a ${regularValue} delay, but the central operator can still censor withdrawal transactions by implementing a TransactionFilterer with no delay.`,
+      },
+    }
+  }
+
   return {
-    value: 'None',
-    sentiment: 'bad',
-    description: `There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is ${formatSeconds(
-      upgradeDelay,
-    )}.`,
+    ...EXIT_WINDOW(0, 0),
+    warning: {
+      value:
+        'The central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay.',
+      sentiment: 'warning',
+    },
   }
 }
 
@@ -700,15 +725,19 @@ export function EXIT_WINDOW_NITRO(
   validatorAfkTime: number,
   l1TimelockDelay: number,
   isPostBoLD: boolean,
-): TableReadyValue {
+): ExitWindowRisk {
+  const emergency = EXIT_WINDOW(0, selfSequencingDelay)
+  const regular = EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay)
+  const regularExitWindow = formatExitWindowForDescription(
+    l2TimelockDelay,
+    selfSequencingDelay,
+  )
   const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(
     l2TimelockDelay,
   )} delay. Since there is a ${formatSeconds(
     selfSequencingDelay,
-  )} delay to force a tx (forcing the inclusion in the following state update), users have only ${formatSeconds(
-    l2TimelockDelay - selfSequencingDelay,
-  )} to exit. 
-    
+  )} delay to force a tx (forcing the inclusion in the following state update), users have only ${regularExitWindow} to exit.
+
   If users post a tx after that time, they would only be able to self propose a state root ${formatSeconds(
     isPostBoLD ? validatorAfkTime : challengeWindowSeconds + validatorAfkTime, // see `_validatorIsAfk()` https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43
   )} after the last state root was proposed and then wait for the ${formatSeconds(
@@ -716,14 +745,8 @@ export function EXIT_WINDOW_NITRO(
   )} challenge window, while the upgrade would be confirmed just after the ${formatSeconds(
     challengeWindowSeconds,
   )} challenge window and the ${formatSeconds(l1TimelockDelay)} L1 timelock.`
-  const warning: WarningWithSentiment = {
-    value: 'The Security Council can upgrade with no delay.',
-    sentiment: 'bad',
-  }
   return {
-    ...EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay),
-    description: description,
-    warning: warning,
+    ...withRegularExitWindow(emergency, regular, description),
   }
 }
 
@@ -731,16 +754,19 @@ export function EXIT_WINDOW_PERMISSIONLESS_BOLD(
   l2TimelockDelay: number,
   selfSequencingDelay: number,
   l1TimelockDelay: number,
-): TableReadyValue {
-  const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(l2TimelockDelay)} delay on L2 and a ${formatSeconds(l1TimelockDelay)} delay on L1. Since there is a ${formatSeconds(selfSequencingDelay)} delay to force a tx (forcing the inclusion in the following state update), users have ${formatSeconds(l2TimelockDelay + l1TimelockDelay - selfSequencingDelay)} to exit.`
-  const warning: WarningWithSentiment = {
-    value: 'The Security Council can upgrade with no delay.',
-    sentiment: 'bad',
-  }
+): ExitWindowRisk {
+  const emergency = EXIT_WINDOW(0, selfSequencingDelay)
+  const regular = EXIT_WINDOW(
+    l2TimelockDelay + l1TimelockDelay,
+    selfSequencingDelay,
+  )
+  const regularExitWindow = formatExitWindowForDescription(
+    l2TimelockDelay + l1TimelockDelay,
+    selfSequencingDelay,
+  )
+  const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(l2TimelockDelay)} delay on L2 and a ${formatSeconds(l1TimelockDelay)} delay on L1. Since there is a ${formatSeconds(selfSequencingDelay)} delay to force a tx (forcing the inclusion in the following state update), users have ${regularExitWindow} to exit.`
   return {
-    ...EXIT_WINDOW(l2TimelockDelay + l1TimelockDelay, selfSequencingDelay),
-    description: description,
-    warning: warning,
+    ...withRegularExitWindow(emergency, regular, description),
   }
 }
 
@@ -760,18 +786,41 @@ export const EXIT_WINDOW_UNKNOWN: TableReadyValue = {
   orderHint: Number.NEGATIVE_INFINITY,
 }
 
-export function EXIT_WINDOW_STARKNET(upgradeDelay: number): TableReadyValue {
+export function EXIT_WINDOW_STARKNET(upgradeDelay: number): ExitWindowRisk {
   const scReactionTime = 60 * 60 * 24 * 1 // time needed for the sc minority to be alerted and prove/propose a new state root
-  const value = formatSeconds(upgradeDelay - scReactionTime)
+  const emergency = EXIT_WINDOW(0, scReactionTime)
+  const regular = EXIT_WINDOW(upgradeDelay, scReactionTime)
+  const regularExitWindow = formatExitWindowForDescription(
+    upgradeDelay,
+    scReactionTime,
+  )
+  const description = `Non-emergency upgrades are initiated on L1 and go through a ${formatSeconds(upgradeDelay)} delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take ${formatSeconds(scReactionTime)}, leaving users ${regularExitWindow} to exit.`
   return {
-    value,
-    sentiment: 'warning',
-    description: `Standard upgrades are initiated on L1 and go through a ${formatSeconds(upgradeDelay)} delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take ${formatSeconds(scReactionTime)}.`,
-    warning: {
-      value: 'The Security Council can upgrade with no delay.',
-      sentiment: 'bad',
+    ...withRegularExitWindow(emergency, regular, description),
+  }
+}
+
+function withRegularExitWindow(
+  emergency: TableReadyValue,
+  regular: TableReadyValue,
+  regularDescription: string,
+): ExitWindowRisk {
+  return {
+    ...emergency,
+    regular: {
+      value: regular.value,
+      sentiment: regular.sentiment,
+      description: regularDescription,
     },
   }
+}
+
+function formatExitWindowForDescription(
+  upgradeDelay: number,
+  exitDelay: number,
+): string {
+  const window = upgradeDelay - exitDelay
+  return window <= 0 ? 'no time' : formatSeconds(window)
 }
 
 export const RISK_VIEW = {
@@ -805,6 +854,7 @@ export const RISK_VIEW = {
   DATA_AVAIL,
   DATA_EIGENDA,
   DATA_POS,
+  DATA_POS_NOBRIDGE,
   DATA_ESPRESSO,
 
   // validatedBy
@@ -883,6 +933,21 @@ export function compareRisk(a: TableReadyValue, b: TableReadyValue): -1 | 1 {
 
 export const pickWorseRisk = (a: TableReadyValue, b: TableReadyValue) =>
   compareRisk(a, b) === -1 ? a : b
+
+export function stackExitWindowRisk(
+  common: ExitWindowRisk,
+  baseChain: ExitWindowRisk,
+): ExitWindowRisk {
+  const worse = pickWorseRisk(common, baseChain) as ExitWindowRisk
+  // The stacked regular exit window only exists if BOTH layers have one.
+  // If either layer can be upgraded instantly on its regular path, the
+  // stacked regular path collapses to no exit window.
+  if (common.regular && baseChain.regular) {
+    return worse
+  }
+  const { regular: _regular, ...rest } = worse
+  return rest
+}
 
 export function sumRisk(
   a: TableReadyValue,

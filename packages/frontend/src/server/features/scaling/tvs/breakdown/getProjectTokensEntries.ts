@@ -17,8 +17,9 @@ import { env } from '~/env'
 import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
-import { manifest } from '~/utils/Manifest'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
 import { sourceToLabel } from '../utils/sourceToLabel'
 import {
@@ -37,10 +38,10 @@ export interface ProjectTvsBreakdownTokenEntry extends FilterableEntry {
   name: string
   symbol: TvsToken['symbol']
   iconUrl: string
-  valueForProject: number
+  valueForProject: { value: number; change?: number }
   value: number
   amount: number
-  priceUsd: number
+  priceUsd: { value: number; change?: number }
   category: TvsToken['category']
   source: TvsToken['source']
   isAssociated: TvsToken['isAssociated']
@@ -65,20 +66,34 @@ export async function getProjectTokensEntries(
 
   const db = getDb()
   const targetTimestamp = getTvsTargetTimestamp()
+  const oneDayAgoTargetTimestamp = targetTimestamp - UnixTime.DAY
 
-  const [projects, tokenValues] = await Promise.all([
+  const [projects, tokenValues, oneDayAgoTokenValues] = await Promise.all([
     ps.getProjects({
       select: ['chainConfig'],
     }),
     db.tvsTokenValue.getByProjectAtOrBefore(project.id, targetTimestamp),
+    db.tvsTokenValue.getByProjectAtOrBefore(
+      project.id,
+      oneDayAgoTargetTimestamp,
+    ),
   ])
 
   const chains = projects.map((x) => x.chainConfig)
   const tokenValuesMap = new Map(
     tokenValues.map((x) => [TokenId(x.tokenId), x]),
   )
+  const oneDayAgoTokenValuesMap = new Map(
+    oneDayAgoTokenValues.map((x) => [TokenId(x.tokenId), x]),
+  )
 
-  const entries = getEntries(project, tokenValuesMap, chains, targetTimestamp)
+  const entries = getEntries(
+    project,
+    tokenValuesMap,
+    oneDayAgoTokenValuesMap,
+    chains,
+    targetTimestamp,
+  )
 
   return entries
 }
@@ -86,6 +101,7 @@ export async function getProjectTokensEntries(
 function getEntries(
   project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
   tokenValuesMap: Map<TokenId, TokenValueRecord>,
+  oneDayAgoTokenValuesMap: Map<TokenId, TokenValueRecord>,
   chains: ChainConfig[],
   targetTimestamp: UnixTime,
 ) {
@@ -105,6 +121,14 @@ function getEntries(
       project.contracts?.addresses,
     )
 
+    // Only compute change when we have a record exactly one day before the current record's timestamp
+    const oneDayAgoTokenValue = oneDayAgoTokenValuesMap.get(token.id)
+    const matchedOneDayAgo =
+      oneDayAgoTokenValue &&
+      oneDayAgoTokenValue.timestamp === tokenValue.timestamp - UnixTime.DAY
+        ? oneDayAgoTokenValue
+        : undefined
+
     const tokenWithValues: ProjectTvsBreakdownTokenEntry = {
       id: token.id,
       name: token.name,
@@ -118,10 +142,25 @@ function getEntries(
         chains,
         project.contracts?.addresses,
       ),
-      iconUrl:
-        token.iconUrl ?? manifest.getUrl('/images/token-placeholder.png'),
-      priceUsd: tokenValue.priceUsd,
-      valueForProject: tokenValue.valueForProject,
+      iconUrl: token.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
+      priceUsd: {
+        value: tokenValue.priceUsd,
+        change: matchedOneDayAgo
+          ? calculatePercentageChange(
+              tokenValue.priceUsd,
+              matchedOneDayAgo.priceUsd,
+            )
+          : undefined,
+      },
+      valueForProject: {
+        value: tokenValue.valueForProject,
+        change: matchedOneDayAgo
+          ? calculatePercentageChange(
+              tokenValue.valueForProject,
+              matchedOneDayAgo.valueForProject,
+            )
+          : undefined,
+      },
       value: tokenValue.value,
       amount: tokenValue.amount,
       isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
@@ -149,7 +188,9 @@ function getEntries(
     breakdown.push(tokenWithValues)
   }
 
-  return breakdown.sort((a, b) => +b.valueForProject - +a.valueForProject)
+  return breakdown.sort(
+    (a, b) => b.valueForProject.value - a.valueForProject.value,
+  )
 }
 
 // Ik its ugly but it works and is type safe
@@ -304,7 +345,13 @@ async function getMockTvsBreakdownForProjectData(
     ),
   )
 
-  const entries = getEntries(project, tokenValuesMap, chains, UnixTime.now())
+  const entries = getEntries(
+    project,
+    tokenValuesMap,
+    new Map(),
+    chains,
+    UnixTime.now(),
+  )
 
   return entries
 }

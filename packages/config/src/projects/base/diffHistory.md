@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6c810485c5135aba5841ebe78ec73651c9d628fc
+Generated with discovered.json: 0xb15162cd79a14842eece0395af8c30ed0da296fb
 
-# Diff at Mon, 23 Mar 2026 10:56:57 GMT:
+# Diff at Fri, 12 Jun 2026 10:18:41 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1773160404
-- current timestamp: 1773160404
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1781105531
+- current timestamp: 1781105531
 
 ## Description
 
@@ -14,10 +14,10 @@ Discovery rerun on the same block number with only config-related changes.
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1773160404 (main branch discovery), not current.
+discovery. Values are for block 1781105531 (main branch discovery), not current.
 
 ```diff
-    contract FeeDisburser (base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA) {
+    contract FeeDisburser (base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA) [opstack/Layer2/FeeDisburser] {
     +++ description: Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.
       category:
 +        {"name":"Non-Critical","priority":0}
@@ -25,7 +25,7 @@ discovery. Values are for block 1773160404 (main branch discovery), not current.
 ```
 
 ```diff
-    contract SequencerFeeVault (base:0x4200000000000000000000000000000000000011) {
+    contract SequencerFeeVault (base:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault] {
     +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
       category:
 +        {"name":"Non-Critical","priority":0}
@@ -33,7 +33,7 @@ discovery. Values are for block 1773160404 (main branch discovery), not current.
 ```
 
 ```diff
-    contract BaseFeeVault (base:0x4200000000000000000000000000000000000019) {
+    contract BaseFeeVault (base:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault] {
     +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
       category:
 +        {"name":"Non-Critical","priority":0}
@@ -41,7 +41,7 @@ discovery. Values are for block 1773160404 (main branch discovery), not current.
 ```
 
 ```diff
-    contract L1FeeVault (base:0x420000000000000000000000000000000000001A) {
+    contract L1FeeVault (base:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault] {
     +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
       category:
 +        {"name":"Non-Critical","priority":0}
@@ -54,6 +54,1378 @@ discovery. Values are for block 1773160404 (main branch discovery), not current.
       controlsMajorityOfUpgradePermissions:
 -        true
     }
+```
+
+Generated with discovered.json: 0x50e5cf659c693f6a12e82237d0991dc997930805
+
+# Diff at Wed, 10 Jun 2026 15:33:22 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@3d7d193af6bb84bba0cb2817621d9f6c8df11cf4 block: 1780924988
+- current timestamp: 1781105531
+
+## Description
+
+Rotated TEE signers.
+
+## Watched changes
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
++++ severity: LOW
+      values.getRegisteredSigners.0:
+-        "eth:0xBeF9176fa15489735Cc8B1ddD97E53b4a656287e"
++        "eth:0x8a2B99252bad63813e704237Bf2A40A6a4cEBda9"
++++ severity: LOW
+      values.getRegisteredSigners.1:
+-        "eth:0xB830004297a91c10ed7428f462FCf0cc5073e9A2"
++        "eth:0xf3aef21F74AD989812D066ad3e51b986ED312875"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780924988 (main branch discovery), not current.
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
+      fieldMeta.getRegisteredSigners.severity:
+-        "HIGH"
++        "LOW"
+    }
+```
+
+Generated with discovered.json: 0xdcf8bd9b053165cd4698e363f3455912d2a77695
+
+# Diff at Tue, 09 Jun 2026 12:43:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780924988
+- current timestamp: 1780924988
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780924988 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x5050F69a9786F081509234F1a7F4684b5E5b76C9) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","role":".guardian"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+    }
+```
+
+Generated with discovered.json: 0xbd232caacd0fb5e78a8737a98659e054ae48a8bb
+
+# Diff at Mon, 08 Jun 2026 13:24:24 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2833791c759e0b601057d3baef6d5e07a60e296c block: 1780667635
+- current timestamp: 1780924988
+
+## Description
+
+Rotated TEE signer.
+
+## Watched changes
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
++++ severity: HIGH
+      values.getRegisteredSigners.0:
+-        "eth:0xA200e289262F76dD422f688e65C453F5aeF7709B"
++++ severity: HIGH
+      values.getRegisteredSigners.1:
++        "eth:0xB830004297a91c10ed7428f462FCf0cc5073e9A2"
+    }
+```
+
+Generated with discovered.json: 0xde867a7fe5e71e113c1bf7fb9dfe70cdcf0a1fd3
+
+# Diff at Fri, 05 Jun 2026 13:55:04 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@986b95b3ae833105f37e6f39ab1fd37448dc183a block: 1780473821
+- current timestamp: 1780667635
+
+## Description
+
+Rotated TEE signer.
+
+## Watched changes
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
++++ severity: HIGH
+      values.getRegisteredSigners.0:
+-        "eth:0xA4F50DA2549C7E79C175a1359e7DAa97139Dd611"
++++ severity: HIGH
+      values.getRegisteredSigners.1:
++        "eth:0xBeF9176fa15489735Cc8B1ddD97E53b4a656287e"
+    }
+```
+
+Generated with discovered.json: 0xfb18f26a0205fc3ea50fd6a0ecbb7ea4b9a8d8d4
+
+# Diff at Fri, 05 Jun 2026 09:21:41 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779198836
+- current timestamp: 1780473821
+
+## Description
+
+Azul multiproof activated: state validation now combines a TEE attestation arm and an SP1 ZK proof arm, either un-nullified proof resolves a game.
+
+`OptimismPortal2` impl `0x97cEbbf8` → `0x66d94eE8`. `proofMaturityDelaySeconds` 604800 (7d) → 86400 (1d); `disputeGameFinalityDelaySeconds` 302400 (3.5d) → 0; `respectedGameType` 0 → 621 (now read from AnchorStateRegistry). https://disco.l2beat.com/diff/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B/eth:0x66d94eE8F529b683ED6013729784e8bb44697A64
+
+`DisputeGameFactory` impl `0xc040F392` → `0x468C2345`. https://disco.l2beat.com/diff/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c/eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c
+
+`AnchorStateRegistry` (0x909f6cf4) impl `0x36398155` → `0x4483F964`. Now stores `respectedGameType` (621) and `retirementTimestamp` (1779825599); legacy `vmFromGame`, `wethFromGame`, `oracleFromVm`, `challengePeriodFromOracle`, `absolutePrestateFromGame` removed. https://disco.l2beat.com/diff/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5/eth:0x4483F964F6711Cb55f633820ED174E780369b99D
+
+Game type 621 = AggregateVerifier `0xeEcb8A5944…D259` v0.1.0, bond 0.05 ETH. `TEE_VERIFIER=0x1FbA0C57…2228` v0.2.0, `ZK_VERIFIER=0xB88D95bDf…9B75` v0.1.0 → `SP1VerifierGateway=0xdc32E22863…C106` → SP1 v6.1.0 `0xb69f2584…f4e2`. `DELAYED_WETH=0xd0D07924…EF71`, `SLOW_FINALIZATION_DELAY=7d`, `FAST_FINALIZATION_DELAY=1d`, `PROOF_THRESHOLD=1`.
+
+Game types registered on the new factory: 1 = `0x58bf355C` (PermissionedDisputeGame v2.2.0, fallback), 621 = AggregateVerifier (respected). All other types empty.
+
+`ProxyAdmin` upgrade rights moved from deleted DelayedWETHs to new `DelayedWETH_PermissionlessGames` and second ASR. `Base Governance Multisig` gained emergency-withdraw on `DelayedWETH_PermissionlessGames`.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.2.from:
+-        "eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec"
++        "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA"
+      directlyReceivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      template:
+-        "opstack/DisputeGameFactory"
++        "opstack/DisputeGameFactory_v2"
+      sourceHashes.1:
+-        "0x8f21dbc160582c568a2a925ddad1b2bb889a9f72bac2067c6e72d43b662ef538"
++        "0x780eaf9d8daa77c3325b79e5f3467c1bd8eec57b5d7e84651bdf2d24754d6838"
+      description:
+-        "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them."
++        "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation."
+      values.$implementation:
+-        "eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"
++        "eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c"
+      values.$pastUpgrades.5:
++        ["2026-05-26T19:59:59.000Z","0x75b1c9b2090ba2b311d6be08c319340b87dc1aabfae2505d126e7a0f1fc6b11c",["eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.game2000:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.gameImpls:
+-        ["eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499","eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"]
+      values.initBonds:
+-        ["80000000000000000","80000000000000000",0,0,0]
++++ severity: HIGH
+      values.game0:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game1:
++        "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A"
++++ severity: HIGH
+      values.game621:
++        "eth:0xeEcb8A5944B217585817E802702b1262a049D259"
+      values.initBondGame0:
++        "80000000000000000"
+      values.initBondGame1:
++        "80000000000000000"
+      values.initBondGame621:
++        "50000000000000000"
+      fieldMeta.gameImpls:
+-        {"severity":"HIGH"}
+      fieldMeta.game2000:
+-        {"severity":"HIGH"}
+      fieldMeta.game621:
++        {"severity":"HIGH"}
+      fieldMeta.game0:
++        {"severity":"HIGH"}
+      fieldMeta.game1:
++        {"severity":"HIGH"}
+      implementationNames.eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c:
+-        "DisputeGameFactory"
+      implementationNames.eth:0x468C2345D1d409d5b0F2f8bE4aE2082150cC1a0c:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      sourceHashes.1:
+-        "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
++        "0x247eac30dea3a06b4a7142ac53d0b9ad882952c87406f165ec8721b0d97bd6da"
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier."
+      values.$implementation:
+-        "eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"
++        "eth:0x66d94eE8F529b683ED6013729784e8bb44697A64"
+      values.$pastUpgrades.10:
++        ["2026-05-26T19:59:59.000Z","0x75b1c9b2090ba2b311d6be08c319340b87dc1aabfae2505d126e7a0f1fc6b11c",["eth:0x66d94eE8F529b683ED6013729784e8bb44697A64"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.disputeGameFinalityDelaySeconds:
+-        302400
++        0
+      values.proofMaturityDelaySeconds:
+-        604800
++        86400
+      values.RespectedGameString:
+-        "FaultDisputeGame"
++        "AggregateVerifier"
++++ severity: HIGH
+      values.respectedGameType:
+-        0
++        621
+      values.respectedGameTypeUpdatedAt:
+-        1759862579
++        1779825599
+      implementationNames.eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B:
+-        "OptimismPortal2"
+      implementationNames.eth:0x66d94eE8F529b683ED6013729784e8bb44697A64:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xdc32E228636273285Befa5F001dBB5142517C106","description":"affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","role":".owner"}
+      receivedPermissions.3.from:
+-        "eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec"
++        "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA"
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71","role":"admin","via":[{"address":"eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      template:
+-        "opstack/AnchorStateRegistry_post13"
++        "opstack/AnchorStateRegistry_post20"
+      sourceHashes.1:
+-        "0xfdabc8b9b4db9b7aa78227b26e936abaf24f058502b96e8d9a293d49b1e89b47"
++        "0x9340bfba7b4bbba23fe6fc74f5da06cee233a4745de93049330a76ef3ce23972"
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation."
+      values.$implementation:
+-        "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5"
++        "eth:0x4483F964F6711Cb55f633820ED174E780369b99D"
+      values.$pastUpgrades.2:
++        ["2026-05-26T19:59:59.000Z","0x75b1c9b2090ba2b311d6be08c319340b87dc1aabfae2505d126e7a0f1fc6b11c",["eth:0x4483F964F6711Cb55f633820ED174E780369b99D"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.absolutePrestateFromGame:
+-        "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e"
+      values.challengePeriodFromOracle:
+-        86400
++++ severity: HIGH
+      values.disputeGameFinalityDelaySeconds:
+-        302400
++        0
+      values.getStartingAnchorRoot.root:
+-        "0x9a37fe32cd2b49385bec0236b7b5c2177e71176bb306d19a49a8a77651ce2cd0"
++        "0xc34c9f98b74b2fb85a516e302f86bc9bedcf5623ab078a671d40beac0e120329"
+      values.getStartingAnchorRoot.l2SequenceNumber:
+-        36233266
++        46302960
+      values.initVersion:
+-        1
++        2
+      values.oracleFromVm:
+-        "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3"
+      values.RespectedGameString:
+-        "FaultDisputeGame"
++        "AggregateVerifier"
++++ severity: HIGH
+      values.respectedGameType:
+-        0
++        621
++++ severity: HIGH
+      values.retirementTimestamp:
+-        1759862579
++        1779825599
+      values.vmFromGame:
+-        "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908"
+      values.wethFromGame:
+-        "eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec"
+      fieldMeta.retirementTimestamp:
++        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5:
+-        "AnchorStateRegistry"
+      implementationNames.eth:0x4483F964F6711Cb55f633820ED174E780369b99D:
++        "AnchorStateRegistry"
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract HistoryStorage (eth:0x0000F90827F1C53a10cb7A02335B175320002935) [N/A]
+    +++ description: EIP-2935 system contract storing the last 8191 L1 blockhashes. Bytecode is canonical to the EIP, deployed at the same address across networks.
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+```
+
+```diff
++   Status: CREATED
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry]
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract TEEVerifier (eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228) [base/TEEVerifier]
+    +++ description: Stateless verifier that validates AggregateVerifier TEE proofs by recovering an ECDSA signature over the journal and checking the recovered signer against TEEProverRegistry. Enforces PCR0 match by comparing the signer's registered image hash to the AggregateVerifier's TEE_IMAGE_HASH. Can be permanently nullified by a successful AggregateVerifier.nullify call.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier]
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract NitroEnclaveVerifier (eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb) [base/NitroEnclaveVerifier]
+    +++ description: ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter]
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+```diff
++   Status: CREATED
+    contract ZkVerifier (eth:0xB88D95bDf6972508942d184866890c1834219B75) [base/ZkVerifier]
+    +++ description: Thin router that forwards SP1 ZK proof verification from the AggregateVerifier game to the SP1 verifier gateway. Can be permanently nullified by a successful AggregateVerifier.nullify call.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (eth:0xd0D07924AdD740a87e41Ca8A0d4CBBf6b074EF71) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (eth:0xdc32E228636273285Befa5F001dBB5142517C106) [succinct/SP1VerifierGateway]
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract AggregateVerifier (eth:0xeEcb8A5944B217585817E802702b1262a049D259) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (7d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AggregateVerifier.sol}                         | 3948 ++++++------------
+ .../AnchorStateRegistry/AnchorStateRegistry.sol    |  181 +-
+ .../Proxy.p.sol => /dev/null                       | 1389 ------
+ .../DelayedWETH.sol                                |  160 +-
+ .../Proxy.p.sol                                    |  244 ++
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  124 +-
+ .../base/.flat@1779198836/MIPS.sol => /dev/null    | 3274 ---------------
+ .../projects/base/.flat/NitroEnclaveVerifier.sol   | 1393 +++++++
+ .../OptimismPortal2/OptimismPortal2.sol            |  461 +-
+ .../PreimageOracle.sol => /dev/null                | 1463 -------
+ ...:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97.sol | 1767 ++++++++
+ ...:0x2a098988600d87650Fb061FfAff08B97149Fa84D.sol | 1780 ++++++++
+ ...:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF.sol | 1779 ++++++++
+ ...:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9.sol | 1780 ++++++++
+ ...:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C.sol | 1760 ++++++++
+ .../projects/base/.flat/RiscZeroSetVerifier.sol    |  900 ++++
+ ...:0x1efDd13f831ceeEa14940806705A53D3211CD698.sol |  366 ++
+ ...:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7.sol |  366 ++
+ ...:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3.sol |  366 ++
+ ...:0x844D5f01161E3559d36f23d0Aa9E9620949aF782.sol |  366 ++
+ ...:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696.sol |  366 ++
+ ...:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1.sol |  366 ++
+ .../projects/base/.flat/RiscZeroVerifierRouter.sol |  282 ++
+ .../src/projects/base/.flat/SP1Verifier.sol        |  664 +++
+ .../src/projects/base/.flat/SP1VerifierGateway.sol |  271 ++
+ .../src/projects/base/.flat/Safe/Safe.sol          | 1216 ++++++
+ .../src/projects/base/.flat/Safe/SafeProxy.p.sol   |   42 +
+ .../base/.flat/TEEProverRegistry/Proxy.p.sol       |  244 ++
+ .../.flat/TEEProverRegistry/TEEProverRegistry.sol  | 2364 +++++++++++
+ .../src/projects/base/.flat/TEEVerifier.sol        | 4402 ++++++++++++++++++++
+ .../src/projects/base/.flat/TimelockController.sol | 1111 +++++
+ .../src/projects/base/.flat/ZkVerifier.sol         | 1862 +++++++++
+ 32 files changed, 27953 insertions(+), 9104 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779198836 (main branch discovery), not current.
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","role":".INCIDENT_RESPONDER"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","description":"can pause for up to 3mo 1d, but cannot unpause or extend pauses.","role":".INCIDENT_RESPONDER"}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
+```diff
+    contract SkyLink Bridge (eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A) [maker/SkyLinkBridge] {
+    +++ description: Custom bridge for USDS and sUSDS managed by Sky governance.
+      template:
++        "maker/SkyLinkBridge"
+      fieldMeta:
++        {"escrow":{"severity":"HIGH"},"messenger":{"severity":"HIGH"},"otherBridge":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x2527024ac04992905aab58dbe5d4a3b956093038
+
+# Diff at Wed, 20 May 2026 10:24:31 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@307f5c3dfdab6a4f88448861a0bb75f0043b762b block: 1775028919
+- current timestamp: 1779198836
+
+## Description
+
+Base Multisig 1: 4 signers swapped (4 added, 4 removed). Threshold unchanged at 3.
+
+## Watched changes
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xD56C6462DC3A943596c7a54d6B0Dba404490E206"
+      values.$members.1:
++        "eth:0x8faB0B6b31A0b50A2c3d1FFBE6C0e1125699aE9d"
+      values.$members.2:
++        "eth:0x0c1Ea3aCA9fc2cFa3640fec98a3214A849715b43"
+      values.$members.3:
++        "eth:0x082Cc00d1031a57d53496aBf6dAD8A6247159452"
+      values.$members.3:
+-        "eth:0x4427683AA1f0ff25ccDC4a5Db83010c1DE9b5fF4"
+      values.$members.4:
+-        "eth:0xA31E1c38d5c37D8ECd0e94C80C0F7FD624d009A3"
+      values.$members.6:
+-        "eth:0x24c3AE1AeDB8142D32BB6d3B988f5910F272D53b"
+      values.$members.9:
+-        "eth:0x5468985B560D966dEDEa2DAF493f5756101137DC"
+    }
+```
+
+Generated with discovered.json: 0x3469650e4f081da242b2615e6f1b59785f3d8436
+
+# Diff at Fri, 08 May 2026 07:51:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1775028919
+- current timestamp: 1775028919
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775028919 (main branch discovery), not current.
+
+```diff
+    contract FeeDisburser (base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA) [opstack/Layer2/FeeDisburser] {
+    +++ description: Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.
+      sourceHashes.1:
+-        "0x3191b674fc342aed9eded2ad3c79eead2fb38e8a2b0589a8ec5058dadfe2d5be"
++        "0xa148110f199cc44cf63e134b936505af8e1b8912da8834107398451c5b5b888c"
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (base:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      sourceHashes.1:
+-        "0x54d303632c7acb15a0f8c319289166a6c178e02f2c930685ab3cdcbe5b19ca29"
++        "0xc976dd7891ac59d37603c7648ea8e3a566365094a242d169a646ebfed971bab8"
+    }
+```
+
+```diff
+    contract L2StandardBridge (base:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      sourceHashes.1:
+-        "0xb1264cdbc9eb25c5d5f9542dc05d942009b4443379d97b246c66b11e2319215f"
++        "0x4354fe0c1ae65beab0a93e37ea50f3964a7d5e51a2f4a33c98cb041a1d18d32c"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (base:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault] {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      sourceHashes.1:
+-        "0xa6e80925a541b18f301edb66231f85cc8aee7aba084674ca3e2822f55d5295d1"
++        "0x999b85df983a6440f746afe1973bc01ad232f02932cfa2ed42e2bbf7d214bdde"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (base:0x4200000000000000000000000000000000000012) [opstack/Layer2/OptimismMintableERC20Factory] {
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+      sourceHashes.1:
+-        "0xaf8d1aec41a22039c90d3ea23d8b660cbe441037e0fe15f90b7c39c46c34d07d"
++        "0xee8e51fe818ec5a2ef914c7dfa2ca739f1197b202e9424a30c945892002ce7e8"
+    }
+```
+
+```diff
+    contract L1BlockNumber (base:0x4200000000000000000000000000000000000013) [opstack/Layer2/L1BlockNumber] {
+    +++ description: Simple contract that returns the latest L1 block number.
+      sourceHashes.1:
+-        "0x0ac40be66f726a1d64904e03831f746ee3fd847922d5e54ba4ad0e509602ccf8"
++        "0xbbb8ccc7d5265fef9343b1084b2b73e3fa883345355a70c2c6f99bd6d7a8c138"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (base:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge] {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      sourceHashes.1:
+-        "0x5e60fa0150197ecbd302b46ad0cc0b6f3f024342d97f052ed2f9a8c2a6ed3846"
++        "0xe7457c0a0e9e7ba45f45fb369ff94f8a3613c4bb9083999a6eb18eaf6a077cdd"
+    }
+```
+
+```diff
+    contract L1Block (base:0x4200000000000000000000000000000000000015) [opstack/Layer2/L1Block] {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      sourceHashes.1:
+-        "0x1d69ab3b3edee9b7eeccc72b0980f9041777fdc5f5224f97aa5e69f0a8b68c7c"
++        "0x399e57fff478211b47d61c5acb60592a4df8ffa5716959a1a6ee2ccabc44915e"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (base:0x4200000000000000000000000000000000000016) [opstack/Layer2/L2ToL1MessagePasser] {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      sourceHashes.1:
+-        "0x362ef15b4c72a78e42b10222a63ec31da455fc051e5fc3e6bade09de4d19bdd9"
++        "0xa8bdac224f506426db48b13c4933c57cbe3d88178a3499712638d559204c5eaa"
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (base:0x4200000000000000000000000000000000000017) [opstack/Layer2/OptimismMintableERC721Factory] {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      sourceHashes.1:
+-        "0x8dc81ca02eba8fc262038825d8c633ed5542af30e92e629f65787cf7161c0b69"
++        "0x889f9ffc10090c8df747b3523aa4fde7bcc0aade333f7ddabece6b3f005a2e80"
+    }
+```
+
+```diff
+    contract BaseFeeVault (base:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault] {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      sourceHashes.1:
+-        "0x0834e3a66bf6d3446ab3f5e42dde52e5ce5072d98b3b4a7e049ca96280b9f635"
++        "0x6984953cd11a9b147f3a7fbf655a7d6046b30101f3e0893c6f6d24df3c437faa"
+    }
+```
+
+```diff
+    contract L1FeeVault (base:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault] {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      sourceHashes.1:
+-        "0x2bbc4761e06b3858a304723900de8a855d85d9eb247116f2315f3714a47ad71b"
++        "0x4a4c92d8fcf0087704a0745d2ea7824a9670e30bd16ffc8cb6ef253417eb0842"
+    }
+```
+
+```diff
+    contract SchemaRegistry (base:0x4200000000000000000000000000000000000020) [opstack/Layer2/SchemaRegistry] {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      sourceHashes.1:
+-        "0x612d21c1676a505153f40dceb55f1251798affb5ed211cfc9c00efa2a51fcbfd"
++        "0xc94799f3b35c3dedb3578da655614d2690e56477b3e176966113bbf06888e05d"
+    }
+```
+
+```diff
+    contract EAS (base:0x4200000000000000000000000000000000000021) [opstack/Layer2/EAS] {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      sourceHashes.1:
+-        "0x662edc082d445c579bb50a631e8c4137c8d9d9016da29683e3f1ccf24b835092"
++        "0x22dcc9bc6d8b0463159f8a96f6f2ee61c897a8ae5e1b684e38e74e2b25b48e66"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x25bad2bdb7df4347412a48e271dea1489299460192b43b8ca52ed191b4940992"
++        "0x307d4cb83e682629880fe9bb874a188805e3b93cb11a2cbf80095975f1e5b04e"
+    }
+```
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      sourceHashes.0:
+-        "0xd9838f1f137bd5397f583f33c414ec9c0fc3dc69401213fae0f09c36d4ac8e47"
++        "0x16701fcaa0e04e5481701a81736e7c8ee2c8aa32da272bf74e0589e6a90c3615"
+    }
+```
+
+```diff
+    contract Base Security Council (eth:0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sourceHashes.1:
+-        "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1"
++        "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x0114d3af66179d6404d14360203dc6bcf404f23e2db4ee1b5848e923e131bc00"
++        "0xcacd38e7b52353ad3463da40b7e7a29b028f95500a82590d2b8f8ffd26b83f6d"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x0fdb3ea7873ad716dd0f5f9d2fdbab989f3b308066977be182ddc31d150e12f5"
++        "0x8f21dbc160582c568a2a925ddad1b2bb889a9f72bac2067c6e72d43b662ef538"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      sourceHashes.1:
+-        "0x3410684a7a8c16c4f87db990b834ce7c3be33136857c103791b132b824bfd951"
++        "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x282b981348a4ab1395edfcf6b2e0eeb3e9cfa9df3decce6b4d2cdd480825613d"
++        "0xc36a2d08c78e94899e169e68b8ae59394b021eb370f8b104550c3892e4ca8cad"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x608d94945A64503E642E6370Ec598e519a2C1E53) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x75cd470a9d1c1afc343b599b1c14731f55bb36fe8a4e844ddb88a0b791918795"
++        "0x1f65fda230b6d0df44e466b06418b2e12a401ef82c07521ad18d2f4ae6c70fb2"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS] {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0xff203abbbb6edba7fff3caefb2752c4e7b786992b19c4f0f8ab568bc0a5fbf04"
++        "0x4a578c18a0b50fb7778c6a6b805dcb18427478d4002c8f7f28c2146dcfbf3a33"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sourceHashes.1:
+-        "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1"
++        "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame] {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sourceHashes.0:
+-        "0x127a5a9b6364f01a1835b317e119b9e894fc7eedf3e9a939569f741f74378a8f"
++        "0x2987fcaf908b3baa0ae4ff6ad30ef75935c87c0b317ba03f034967803c7778ca"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xe6e96ed1643d7aa0bde96b58e278bd6716600479c36623c8cbca4da634304c97"
++        "0x05f19560cc64e41a40dcb3e2efd7011156ab03192fcc0bfadffccd4019c99e8e"
+    }
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xfa9c986019a03bd66efb7584a7064e708f6fb71956643a9d4daa2c0972a29c03"
++        "0x1f2c13ad1144ce6548e578b834c33b0d65b1564aeb0d5c708ed4e7fb50535cc6"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      sourceHashes.1:
+-        "0xa1c629e3a86e4cba49482956c04d921b52551c4ee9833ddda7e44ca155bc6cab"
++        "0xfdabc8b9b4db9b7aa78227b26e936abaf24f058502b96e8d9a293d49b1e89b47"
+    }
+```
+
+```diff
+    contract Base Coordinator Multisig (eth:0x9855054731540A48b28990B63DcF4f33d8AE46A1) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract wstETHEscrow (eth:0x9de443AdC5A411E83F1878Ef24C3F52C61571e72) [lido/L1ERC20TokenBridge] {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      sourceHashes.1:
+-        "0xc4b0423b7d0fcada3862027e805c2fc79676feb6f4bc3978e5a86b390bfd7be3"
++        "0x40e05a5687c31241ba914eeb7831d870e410c699c2cc59094759947e8d4148fa"
+    }
+```
+
+```diff
+    contract SkyLink Bridge (eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A) [N/A] {
+    +++ description: Custom bridge for USDS and sUSDS managed by Sky governance.
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c) [opstack/SuperchainConfig_base] {
+    +++ description: Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months.
+      sourceHashes.1:
+-        "0x96cc0e27c01fa6d20f27d851526b1c6c638f8051e7951254dabb531bed30d6d5"
++        "0x90c9d86019dbb1478cc3800cbd0ff9e6716aa05485a870ab6624490ce3739ee8"
+    }
+```
+
+Generated with discovered.json: 0x9cb7dd088b7e3153e6d23b2dd055bb47d04b6bd9
+
+# Diff at Tue, 05 May 2026 10:21:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1775028919
+- current timestamp: 1775028919
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775028919 (main branch discovery), not current.
+
+```diff
+    contract FeeDisburser (base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA) {
+    +++ description: Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.
+      deployerAddress:
++        "base:0x0cF966857325db9a9B4dada66e80cE581C18Aca1"
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (base:0x4200000000000000000000000000000000000007) {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2StandardBridge (base:0x4200000000000000000000000000000000000010) {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (base:0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (base:0x4200000000000000000000000000000000000012) {
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1BlockNumber (base:0x4200000000000000000000000000000000000013) {
+    +++ description: Simple contract that returns the latest L1 block number.
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (base:0x4200000000000000000000000000000000000014) {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1Block (base:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (base:0x4200000000000000000000000000000000000016) {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (base:0x4200000000000000000000000000000000000017) {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract ProxyAdmin (base:0x4200000000000000000000000000000000000018) {
+    +++ description: None
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract BaseFeeVault (base:0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1FeeVault (base:0x420000000000000000000000000000000000001A) {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract SchemaRegistry (base:0x4200000000000000000000000000000000000020) {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract EAS (base:0x4200000000000000000000000000000000000021) {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      deployerAddress:
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      deployerAddress:
++        "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A"
+    }
+```
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract Base Security Council (eth:0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x644e3DedB0e4F83Bfcf8F9992964d240224B74dc"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      deployerAddress:
++        "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      deployerAddress:
++        "eth:0x4B7FcC44F12b1F7A61D0E5f34521cF37E38e23E5"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      deployerAddress:
++        "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      deployerAddress:
++        "eth:0x926E9595fb147A376800022a554C8c05444EB658"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x608d94945A64503E642E6370Ec598e519a2C1E53) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      deployerAddress:
++        "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      deployerAddress:
++        "eth:0x926E9595fb147A376800022a554C8c05444EB658"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A"
+    }
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
+    }
+```
+
+```diff
+    contract Escrow (eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3) {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      deployerAddress:
++        "eth:0x54eAde20f7DD1A67624626A3DB9408185eD0039e"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      deployerAddress:
++        "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937"
+    }
+```
+
+```diff
+    contract Base Coordinator Multisig (eth:0x9855054731540A48b28990B63DcF4f33d8AE46A1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c"
+    }
+```
+
+```diff
+    contract wstETHEscrow (eth:0x9de443AdC5A411E83F1878Ef24C3F52C61571e72) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      deployerAddress:
++        "eth:0xfa8123fE01e71ec5e749b66B71821B4Ee2BA4Ed2"
+    }
+```
+
+```diff
+    contract SkyLink Bridge (eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A) {
+    +++ description: Custom bridge for USDS and sUSDS managed by Sky governance.
+      deployerAddress:
++        "eth:0x54eAde20f7DD1A67624626A3DB9408185eD0039e"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c) {
+    +++ description: Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months.
+      deployerAddress:
++        "eth:0x644e3DedB0e4F83Bfcf8F9992964d240224B74dc"
+    }
+```
+
+Generated with discovered.json: 0x9c517e0124bac89a5dcd0287da1df6bb1bdf52b3
+
+# Diff at Wed, 01 Apr 2026 07:37:03 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1774387648
+- current timestamp: 1775028919
+
+## Description
+
+Gas parameter changes: daFootprintGasScalar increased, eip1559Denominator lowered from 125 to 100 and eip1559Elasticity from 6 to 5 for quicker L2 fee adjustments.
+
+## Watched changes
+
+```diff
+    contract L1Block (base:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      values.daFootprintGasScalar:
+-        139
++        148
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.daFootprintGasScalar:
+-        139
++        148
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        125
++        100
+      values.eip1559Elasticity:
+-        6
++        5
+    }
+```
+
+Generated with discovered.json: 0x5591a3365d8cc9d0d9e1d61949f341ce62f8e615
+
+# Diff at Tue, 24 Mar 2026 21:28:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1773160404
+- current timestamp: 1774387648
+
+## Description
+
+FeeDisburser implementation upgraded (base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75 → base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6). The only code change is the version string from `1.0.0` to `1.0.0+fee-vault-withdraw-compat`, indicating compatibility with a new FeeVault withdrawal interface. No functional changes to the contract logic. [Diff](https://disco.l2beat.com/diff/base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75/base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6)
+
+## Watched changes
+
+```diff
+    contract FeeDisburser (base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA) {
+    +++ description: Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.
+      sourceHashes.1:
+-        "0x9e4d8a31512b7aaafcbf23f817cbdc9bbe404a0fa262aaf98220120c52fde7cb"
++        "0x3191b674fc342aed9eded2ad3c79eead2fb38e8a2b0589a8ec5058dadfe2d5be"
+      values.$implementation:
+-        "base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75"
++        "base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6"
+      values.$pastUpgrades.2:
++        ["2026-03-13T21:06:31.000Z","0x68c2a1b66361dcb9ec2f8b1fe26ae275021b6d78751d0577fc0bd410dfd47518",["base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "1.0.0"
++        "1.0.0+fee-vault-withdraw-compat"
+      implementationNames.base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75:
+-        "FeeDisburser"
+      implementationNames.base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6:
++        "FeeDisburser"
+    }
+```
+
+## Source code changes
+
+```diff
+.../base/{.flat@1773160404 => .flat}/FeeDisburser/FeeDisburser.sol    | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 ```
 
 Generated with discovered.json: 0x29f8c3eeca9cab5e3e253c55ad66a37fa4b5dd30

@@ -30,7 +30,7 @@ const getCachedBlobsData = async (
     now - UnixTime.DAY,
     now,
   )
-  const summedRecords = sumByResolutionAndProject(records, 'daily')
+  const summedRecords = sumByResolutionAndProject(records, 'day')
 
   const ethereumRecord = summedRecords.find(
     (record) => record.projectId === ProjectId.ETHEREUM,

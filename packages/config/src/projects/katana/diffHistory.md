@@ -1,3 +1,1535 @@
+Generated with discovered.json: 0x571012f08b4d382395f4140f82a9dc7d7db5ba3e
+
+# Diff at Fri, 12 Jun 2026 10:18:52 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1781102006
+- current timestamp: 1781102006
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781102006 (main branch discovery), not current.
+
+```diff
+    contract SequencerFeeVault (katana:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault] {
+    +++ description: Collects the sequencer fees.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract BaseFeeVault (katana:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault] {
+    +++ description: Collects EIP-1559 base fees
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract L1FeeVault (katana:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault] {
+    +++ description: Collects the L1 portion of the L2 transaction fees.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract OperatorFeeVault (katana:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault] {
+    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+Generated with discovered.json: 0x92270f0b72061a01cfdfcbcab46015b628df80e2
+
+# Diff at Wed, 10 Jun 2026 14:34:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9b1a27959a14343aae7c71ebbc397f62f0aab99c block: 1780404229
+- current timestamp: 1781102006
+
+## Description
+
+Two conduit ms members removed.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.8:
+-        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 10 (40%)"
+    }
+```
+
+Generated with discovered.json: 0xfff1bddfab4dadb902e76d1be2aff47085690aa6
+
+# Diff at Tue, 09 Jun 2026 12:43:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780404229
+- current timestamp: 1780404229
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780404229 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x1FFDA89C755f6D4Af069897D77CcAbb580Fd412a) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x0251a2794590405eaf15a11c0b27a318d30fa327
+
+# Diff at Tue, 02 Jun 2026 13:01:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1539447d4bb0403294997ea5e5110946d04275ef block: 1780060245
+- current timestamp: 1780404229
+
+## Description
+
+Config ignores and conduit ms changes.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853"
+      values.$members.8:
+-        "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2"
+      values.$members.1:
++        "eth:0xe0e8e6bBDef7bbcf8dF1F5Ac0ab9906BFe991d8B"
+      values.$members.2:
++        "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 8 (25%)"
+    }
+```
+
+Generated with discovered.json: 0xe824b1443430c192ebe87217a567053c8b28e80e
+
+# Diff at Fri, 29 May 2026 13:34:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@443bb13c9fd1bf4ce2a2df0f1b00bfcf0933f006 block: 1779956198
+- current timestamp: 1780060245
+
+## Description
+
+Standard L2 contract sources have been verified.
+
+## Watched changes
+
+```diff
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2] {
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+      values.claimedGlobalIndexHashChain:
+-        "0x5fede20963bde12c20e3076c4426550f570914a8a035c1381bc98f8bed306a46"
++        "0xdef05ec6820a531b383dc3f9dbbc1aac9846e2eab7a821929b5a07cc51659e4c"
+      values.getRoot:
+-        "0x1d743ae7262c7410af3fb680660e6c1f336b2f49609f709a69a9fd8b9ad21bb2"
++        "0x5ed5cfaf86b2b848194a0a9ebfa969a88ddee6b8f6f007a0ef658482f2665402"
+    }
+```
+
+```diff
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain] {
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+      values.insertedGERHashChain:
+-        "0xaae24c57922b6453c1812383dba7b31cf9788b57cfc281e208b4e2911e5feee7"
++        "0x59bc3b88b56a09b106e04e1ffe3fd6dc754bf81029ef9cfe2723275b8f5b347c"
+      values.lastRollupExitRoot:
+-        "0x1d743ae7262c7410af3fb680660e6c1f336b2f49609f709a69a9fd8b9ad21bb2"
++        "0x5ed5cfaf86b2b848194a0a9ebfa969a88ddee6b8f6f007a0ef658482f2665402"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779956198 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) [global/ProxyAdmin] {
+    +++ description: None
+      name:
+-        "upgradeProxy"
++        "ProxyAdmin"
+      unverified:
+-        true
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","role":"admin"},{"permission":"upgrade","from":"katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA","role":"admin"}]
+      values.owner:
++        "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13"
+      implementationNames.katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","role":"admin"},{"permission":"upgrade","from":"katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA","role":"admin"}]
+    }
+```
+
+```diff
+    contract GasPriceOracle (katana:0x420000000000000000000000000000000000000F) [opstack/Layer2/GasPriceOracle] {
+    +++ description: Provides the current gas price for L2 transactions.
+      unverified:
+-        true
+      values.baseFee:
++        0
+      values.baseFeeScalar:
++        1368
+      values.decimals:
++        6
+      values.DECIMALS:
++        6
+      values.gasPrice:
++        0
+      values.isEcotone:
++        true
+      values.isFjord:
++        true
+      values.isIsthmus:
++        true
+      values.isJovian:
++        true
+      values.version:
++        "1.6.0"
+      implementationNames.katana:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1:
+-        ""
++        "GasPriceOracle"
+      template:
++        "opstack/Layer2/GasPriceOracle"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x2a3c7909036a30543d4aaa8e9501caab6f998a671d40cc3822f89c6239e6b8ab"]
+      description:
++        "Provides the current gas price for L2 transactions."
+    }
+```
+
+```diff
+    contract L1Block (katana:0x4200000000000000000000000000000000000015) [opstack/Layer2/L1Block] {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      unverified:
+-        true
+      values.baseFeeScalar:
++        1368
+      values.batcherHash:
++        "0x0000000000000000000000001ffda89c755f6d4af069897d77ccabb580fd412a"
+      values.daFootprintGasScalar:
++        400
+      values.DEPOSITOR_ACCOUNT:
++        "katana:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+      values.gasPayingToken:
++        {"addr_":"katana:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
++        "Ether"
+      values.gasPayingTokenSymbol:
++        "ETH"
+      values.isCustomGasToken:
++        false
+      values.l1FeeOverhead:
++        0
+      values.l1FeeScalar:
++        0
+      values.version:
++        "1.7.0"
+      implementationNames.katana:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C:
+-        ""
++        "L1Block"
+      template:
++        "opstack/Layer2/L1Block"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x399e57fff478211b47d61c5acb60592a4df8ffa5716959a1a6ee2ccabc44915e"]
+      description:
++        "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain."
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"interact","from":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"description":"propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.","role":".timelockAdminAC","condition":"(no delay if in emergency state)"}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","role":"admin","via":[{"address":"katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"condition":"(no delay if in emergency state)"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA","role":"admin","via":[{"address":"katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"condition":"(no delay if in emergency state)"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"role":".timelockAdminAC","condition":"(no delay if in emergency state)"}]
+    }
+```
+
+```diff
+    contract SafeL2 (katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"description":"propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.","role":".timelockAdminAC","condition":"(no delay if in emergency state)"}
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","role":"admin","via":[{"address":"katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"condition":"(no delay if in emergency state)"}]}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA","role":"admin","via":[{"address":"katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"condition":"(no delay if in emergency state)"}]}
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13","delay":43200,"role":".timelockAdminAC","condition":"(no delay if in emergency state)"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L2Timelock (katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13) [polygon-cdk/L2Timelock]
+    +++ description: A timelock with access control. The current minimum delay is 12h.
+```
+
+Generated with discovered.json: 0xff12c061a5c326f80ec4e60917a1c65d9a03f1ce
+
+# Diff at Thu, 28 May 2026 12:57:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@66dc249f7108a6fbf8b6581aed0b7625deeebb2a block: 1778675724
+- current timestamp: 1779956198
+
+## Description
+
+minimal diff upgrade to the OptiPortal that adds deposited transactions! https://flat.l2beat.com/diff/ink:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016/katana:0xFBF44D0341C03098A1D9C0336e3d5C34E8BFdf1A
+
+users can now force transactions that do not relate to bridging (they still cannot force ETH- or token deposits). the force tx delay in op stack (or op-succinct) depends on the node config/programHash and both are unverified for katana. as soon as we have a source, we should look for `sequencerWindowSize` (OP stack standard is 3600). we will assume standard and show the delay as 12h but say that this is unverified.
+
+proposals are also still permissioned, meaning that, assuming sequencer and proposer/prover are the same entity, the system changed from 'sequencer can cherry-pick/censor' to 'proposer must blanket-censor, no cherry-pick'.
+
+the agglayer bridge is separate from the OP stack proof system and bridge and has its own proof system and l2 smart contract. this includes the gas token (ETH) bridge. the oracle on L2 that allows to update the agglayer bridge state roots is permissioned to an EOA atm.
+
+## Watched changes
+
+```diff
+    contract Yearn Strategist Multisig (eth:0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x5E5D6f849Fa86c058f148E9D3f643C8F4c43f20b"
+      values.$members.1:
++        "eth:0x5250077c42627cBd112988f32D482acC9ff40bDB"
+      values.$members.2:
++        "eth:0xC357eE8a8DdE88Dd5a3Ea54847Adef6846A28c51"
+      values.$members.3:
++        "eth:0xFcc3796370e1538F8cC60bec19A8be5457f2C74F"
+      values.$members.4:
++        "eth:0xFafFb75e14faFf9f11315E44a2E54A22872c7a34"
+      values.$members.2:
+-        "eth:0xBD5f1429Ab467E69BEeba51E547C00A21F2a2092"
+      values.$members.3:
+-        "eth:0x787aba336583f4A1D4f8cBBFDFFD49f3a38De665"
+      values.$members.4:
+-        "eth:0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C"
+      values.$members.5:
+-        "eth:0xd0002c648CCa8DeE2f2b8D70D542Ccde8ad6EC03"
+      values.$members.6:
+-        "eth:0x1b5f15DCb82d25f91c65b53CEe151E8b9fBdD271"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) [katana/OptimismPortal2] {
+    +++ description: Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions.
+      name:
+-        "OptimismPortal2_neutered"
++        "OptimismPortal2"
+      template:
+-        "opstack/OptimismPortal2_noForce"
++        "katana/OptimismPortal2"
+      sourceHashes.1:
+-        "0x4cc0e4525ed77b81565c05c0e673e043a93d9878924197f772581f72c11c91c5"
++        "0xfcecb325a86c39482f8e9d29272f25089eec0b5fbefe21444fd1ea690c911f0c"
+      description:
+-        "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system."
++        "Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions."
+      values.$implementation:
+-        "eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4"
++        "eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a"
+      values.$pastUpgrades.8:
++        ["2026-05-22T16:31:35.000Z","0x46d8e0a3a5383c133292ef51e4d7eef96fddc443b892d38e62c39b1186055691",["eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a"]]
+      values.$upgradeCount:
+-        8
++        9
+      values.version:
+-        "5.1.1"
++        "agg3.15.0"
+      fieldMeta.respectedGameType:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4:
+-        "OptimismPortal2"
+      implementationNames.eth:0x5dEcbEEEFeCc5353355CD79A8fECC4c03F61ce8a:
++        "OptimismPortal2"
+      usedTypes.0.arg.1337:
++        "KailuaGame"
+    }
+```
+
+```diff
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2] {
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+      values.claimedGlobalIndexHashChain:
+-        "0xfcb94fe6eae1dd3db9426645c49bdd5a55f574591df36333e3822c2e28a6aa5d"
++        "0x5fede20963bde12c20e3076c4426550f570914a8a035c1381bc98f8bed306a46"
+      values.getRoot:
+-        "0x77b2c19aaa8daa89496903e91a84dfdf09cbc2821671eb351e953ed0c646be5b"
++        "0x1d743ae7262c7410af3fb680660e6c1f336b2f49609f709a69a9fd8b9ad21bb2"
+    }
+```
+
+```diff
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain] {
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+      values.insertedGERHashChain:
+-        "0x64bc5ca77fa29cfc3cd117f2314df1d7c1c5f3d01f31f2c58bd277f3e75b1016"
++        "0xaae24c57922b6453c1812383dba7b31cf9788b57cfc281e208b4e2911e5feee7"
+      values.lastRollupExitRoot:
+-        "0x77b2c19aaa8daa89496903e91a84dfdf09cbc2821671eb351e953ed0c646be5b"
++        "0x1d743ae7262c7410af3fb680660e6c1f336b2f49609f709a69a9fd8b9ad21bb2"
+    }
+```
+
+## Source code changes
+
+```diff
+.../OptimismPortal2}/OptimismPortal2.sol           | 25 +++++++++++++++-------
+ .../OptimismPortal2}/Proxy.p.sol                   |  0
+ 2 files changed, 17 insertions(+), 8 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778675724 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract upgradeProxy (katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AgglayerBridgeL2 (katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [katana/AgglayerBridgeL2]
+    +++ description: Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.
+```
+
+```diff
++   Status: CREATED
+    contract DeployerWhitelist (katana:0x4200000000000000000000000000000000000002) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2CrossDomainMessenger (katana:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger]
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+```
+
+```diff
++   Status: CREATED
+    contract GasPriceOracle (katana:0x420000000000000000000000000000000000000F) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2StandardBridge (katana:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge]
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+```
+
+```diff
++   Status: CREATED
+    contract SequencerFeeVault (katana:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault]
+    +++ description: Collects the sequencer fees.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (katana:0x4200000000000000000000000000000000000012) [opstack/Layer2/OptimismMintableERC20Factory]
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract L1BlockNumber (katana:0x4200000000000000000000000000000000000013) [opstack/Layer2/L1BlockNumber]
+    +++ description: Simple contract that returns the latest L1 block number.
+```
+
+```diff
++   Status: CREATED
+    contract L2ERC721Bridge (katana:0x4200000000000000000000000000000000000014) [opstack/Layer2/L2ERC721Bridge]
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+```
+
+```diff
++   Status: CREATED
+    contract L1Block (katana:0x4200000000000000000000000000000000000015) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ToL1MessagePasser (katana:0x4200000000000000000000000000000000000016) [katana/L2ToL1MessagePasser]
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1. It can also be used directly as a low-level interface.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC721Factory (katana:0x4200000000000000000000000000000000000017) [opstack/Layer2/OptimismMintableERC721Factory]
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (katana:0x4200000000000000000000000000000000000018) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BaseFeeVault (katana:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault]
+    +++ description: Collects EIP-1559 base fees
+```
+
+```diff
++   Status: CREATED
+    contract L1FeeVault (katana:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault]
+    +++ description: Collects the L1 portion of the L2 transaction fees.
+```
+
+```diff
++   Status: CREATED
+    contract OperatorFeeVault (katana:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault]
+    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+```
+
+```diff
++   Status: CREATED
+    contract SchemaRegistry (katana:0x4200000000000000000000000000000000000020) [opstack/Layer2/SchemaRegistry]
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+```
+
+```diff
++   Status: CREATED
+    contract EAS (katana:0x4200000000000000000000000000000000000021) [opstack/Layer2/EAS]
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GlobalExitRootManagerL2SovereignChain (katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA) [katana/GlobalExitRootManagerL2SovereignChain]
+    +++ description: Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.
+```
+
+```diff
++   Status: CREATED
+    contract BridgeLib (katana:0xb30C032b183525de7427f04e79F45Cd19866E124) [katana/BridgeLib]
+    +++ description: Utility library contract for the AgglayerBridgeL2.
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenWrappedBridgeUpgradeable (katana:0xF0777a825470092b3Debc9af291634460b8E1a2c) [katana/TokenWrappedBridgeUpgradeable]
+    +++ description: An ERC-20 implementation designed for cross-chain assets on the L2. It restricts token minting or burning strictly to the primary bridge contract.
+```
+
+Generated with discovered.json: 0xa9cc009f3c137deb4732a8e3a64b9059552d4b55
+
+# Diff at Fri, 15 May 2026 12:36:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778675724
+- current timestamp: 1778675724
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778675724 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
++        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+    }
+```
+
+Generated with discovered.json: 0x4d8fadab31298992bbc352ba7910c7320f30e8ae
+
+# Diff at Wed, 13 May 2026 12:37:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd13366f13be78635363f6f5a496347735f4ea4e block: 1777451715
+- current timestamp: 1778675724
+
+## Description
+
+ms member change.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1"
++        "eth:0xFAc88BB6229F47A31A78F0Ba91E5a541Cb1866a3"
+    }
+```
+
+Generated with discovered.json: 0x3e2fbb7e627e10c95bbd7a3491e0e2a9cb62d6a4
+
+# Diff at Fri, 08 May 2026 07:51:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777451715
+- current timestamp: 1777451715
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777451715 (main branch discovery), not current.
+
+```diff
+    contract L1ERC721Bridge (eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x75cd470a9d1c1afc343b599b1c14731f55bb36fe8a4e844ddb88a0b791918795"
++        "0x1f65fda230b6d0df44e466b06418b2e12a401ef82c07521ad18d2f4ae6c70fb2"
+    }
+```
+
+```diff
+    contract Yearn Strategist Multisig (eth:0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      sourceHashes.0:
+-        "0xd9838f1f137bd5397f583f33c414ec9c0fc3dc69401213fae0f09c36d4ac8e47"
++        "0x16701fcaa0e04e5481701a81736e7c8ee2c8aa32da272bf74e0589e6a90c3615"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xfa9c986019a03bd66efb7584a7064e708f6fb71956643a9d4daa2c0972a29c03"
++        "0x1f2c13ad1144ce6548e578b834c33b0d65b1564aeb0d5c708ed4e7fb50535cc6"
+    }
+```
+
+```diff
+    EOA  (eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
++        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
+    }
+```
+
+```diff
+    contract OptimismPortal2_neutered (eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) [opstack/OptimismPortal2_noForce] {
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      sourceHashes.1:
+-        "0x9b5cb94efaca7f6a941c6e29cd8f71079ec5ea2360e3f4948e59560dd107d7f9"
++        "0x4cc0e4525ed77b81565c05c0e673e043a93d9878924197f772581f72c11c91c5"
+    }
+```
+
+```diff
+    contract Safe (eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract vbWBTC (eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      sourceHashes.0:
+-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762"
++        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f"
+      sourceHashes.1:
+-        "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
++        "0x4d93504fbe4f7e569851aa1ad2bf15b62fe0e98e6d460705aa239938e1cde799"
+    }
+```
+
+```diff
+    contract vbETH (eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      sourceHashes.0:
+-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762"
++        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f"
+      sourceHashes.1:
+-        "0x4988be5ea9a1e587b7ad36189901d0e442b1905a12fcfb0f0896de5d089234cd"
++        "0x319536f70acef24a56b3d5a84702a68097dc967c05df69d22fcb616bdd39a50a"
+    }
+```
+
+```diff
+    contract Katana vaultBridge Multisig 1 (eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811) [opstack/SuperchainConfigNoGuard] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system. Since the OptimismPortal is not used for state root management in this setup, the guardian role and pausing may be inconsequential.
+      sourceHashes.1:
+-        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
++        "0x5fb525d1572fb90d060d122143b915059cbff39e0298b345857fd4267d7f6b28"
+    }
+```
+
+```diff
+    contract vbUSDS (eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      sourceHashes.0:
+-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762"
++        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f"
+      sourceHashes.1:
+-        "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
++        "0x4d93504fbe4f7e569851aa1ad2bf15b62fe0e98e6d460705aa239938e1cde799"
+    }
+```
+
+```diff
+    contract Safe (eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract MigrationManager (eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02) [polygon-cdk/MigrationManager] {
+    +++ description: Helper contract for the vaultBridge tokens on Layer 2. If any vbTokens are minted 'natively' on Layer 2, this contract can receive the underlying assets and lock them in the Layer 1 vaults.
+      sourceHashes.0:
+-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762"
++        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f"
+      sourceHashes.1:
+-        "0x9b0e45306537c9239f8f5b642a4beaafd206728e42a557b88f1eeccee5647066"
++        "0x0492945ad94df8f6644e545e7fb05a7a5caa0c34e24d6aa529a5a04458f78ed2"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract vbUSDC (eth:0x53E82ABbb12638F09d9e624578ccB666217a765e) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      sourceHashes.0:
+-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762"
++        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f"
+      sourceHashes.1:
+-        "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
++        "0x4d93504fbe4f7e569851aa1ad2bf15b62fe0e98e6d460705aa239938e1cde799"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS] {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0xff203abbbb6edba7fff3caefb2752c4e7b786992b19c4f0f8ab568bc0a5fbf04"
++        "0x4a578c18a0b50fb7778c6a6b805dcb18427478d4002c8f7f28c2146dcfbf3a33"
+    }
+```
+
+```diff
+    contract Katana yieldRecipient Mulsitig (eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract vbUSDT (eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC) [polygon-cdk/GenericVaultBridgeToken] {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      sourceHashes.0:
+-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762"
++        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f"
+      sourceHashes.1:
+-        "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
++        "0x4d93504fbe4f7e569851aa1ad2bf15b62fe0e98e6d460705aa239938e1cde799"
+    }
+```
+
+```diff
+    contract Katana Steakhouse Financial / Morpho Multisig (eth:0x827e86072B06674a077f592A531dcE4590aDeCdB) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x0114d3af66179d6404d14360203dc6bcf404f23e2db4ee1b5848e923e131bc00"
++        "0xcacd38e7b52353ad3463da40b7e7a29b028f95500a82590d2b8f8ffd26b83f6d"
+    }
+```
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xA7A26BbA1191a064637d7B0b23896589F4e4d22D) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x284eddae8c2726c3558d3ce1656fcd222947612b13d4d440519d6a82fc68acec"
++        "0x23375b62bc80656613e6e37217856dbef4aa805d14edc5827ca5e26e87cf4af4"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x25bad2bdb7df4347412a48e271dea1489299460192b43b8ca52ed191b4940992"
++        "0x307d4cb83e682629880fe9bb874a188805e3b93cb11a2cbf80095975f1e5b04e"
+    }
+```
+
+```diff
+    contract Katana vaultBridge Multisig 2 (eth:0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xaA8a62563CFe4E36118ED479B5486F503b438376) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      sourceHashes.1:
+-        "0x1601463fd2e47d8994c28a90b556c6933f38e8685214f702dc41a5ae08d9787c"
++        "0xf808a203af41f7932eb8e39985e56a7c75c940a260fb17d76d1003a3793281b5"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0xb41151Bf2B989d3771caBd5BCb5C435949543322) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sourceHashes.1:
+-        "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1"
++        "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x09e12b8c0307a4da75a8b84ed7c88ced81e386ec09025ec5b36873b4f69614d0"
++        "0xaa1b3bedab4e63198240e9dea4503f0e615e4d18a545961c9f11b72143279fbc"
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x19f3f7c7ee3977705261bfb86f826d5f97b885796f2246be7cc3e815c3e95dca"
++        "0x7daf6049672fd2ab7dc8dd3b6287e1d0a40958346c5e2857c4616a73dcac4da6"
+    }
+```
+
+```diff
+    contract Katana vaultBridge Multisig 3 (eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+Generated with discovered.json: 0xb46265823c9828953238730cac67a9ef8dbfaef7
+
+# Diff at Tue, 05 May 2026 10:22:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777451715
+- current timestamp: 1777451715
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777451715 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      deployerAddress:
++        "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49"
+    }
+```
+
+```diff
+    contract Yearn Strategist Multisig (eth:0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x73f2f3A4fF97B6A6d7afc03C449f0e9a0c0d90aB"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49"
+    }
+```
+
+```diff
+    contract OptimismPortal2_neutered (eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) {
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      deployerAddress:
++        "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49"
+    }
+```
+
+```diff
+    contract Safe (eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x263b251D67BB154DD6b8352539466ACE7948ED56) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+    }
+```
+
+```diff
+    contract vbWBTC (eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      deployerAddress:
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+    }
+```
+
+```diff
+    contract vbETH (eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      deployerAddress:
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+    }
+```
+
+```diff
+    contract Katana vaultBridge Multisig 1 (eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system. Since the OptimismPortal is not used for state root management in this setup, the guardian role and pausing may be inconsequential.
+      deployerAddress:
++        "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+    }
+```
+
+```diff
+    contract vbUSDS (eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      deployerAddress:
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+    }
+```
+
+```diff
+    contract Safe (eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x23CDc4Bc7713A1a8cb2adBbb5BdfCd135F74Bd50"
+    }
+```
+
+```diff
+    contract MigrationManager (eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02) {
+    +++ description: Helper contract for the vaultBridge tokens on Layer 2. If any vbTokens are minted 'natively' on Layer 2, this contract can receive the underlying assets and lock them in the Layer 1 vaults.
+      deployerAddress:
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0954eC5B731501abf85766B5c6f5DE4C2B60BC44"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
+    }
+```
+
+```diff
+    contract vbUSDC (eth:0x53E82ABbb12638F09d9e624578ccB666217a765e) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      deployerAddress:
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract Katana yieldRecipient Mulsitig (eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x52EAF3F04cbac0a4B9878A75AB2523722325D4D4"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49"
+    }
+```
+
+```diff
+    contract vbUSDT (eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50.
+      deployerAddress:
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+    }
+```
+
+```diff
+    contract Katana Steakhouse Financial / Morpho Multisig (eth:0x827e86072B06674a077f592A531dcE4590aDeCdB) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49"
+    }
+```
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xA7A26BbA1191a064637d7B0b23896589F4e4d22D) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      deployerAddress:
++        "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      deployerAddress:
++        "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49"
+    }
+```
+
+```diff
+    contract Katana vaultBridge Multisig 2 (eth:0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xaA8a62563CFe4E36118ED479B5486F503b438376) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      deployerAddress:
++        "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0xb41151Bf2B989d3771caBd5BCb5C435949543322) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      deployerAddress:
++        "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49"
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xD1e389c046FB734D2a0c7C390312210c408ba832) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      deployerAddress:
++        "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49"
+    }
+```
+
+```diff
+    contract Katana vaultBridge Multisig 3 (eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
+    }
+```
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b"
+    }
+```
+
+Generated with discovered.json: 0x803e30e063e2afd6d194e087d3d9e822847241e0
+
+# Diff at Wed, 29 Apr 2026 08:37:50 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0695512a70f7175257fb7756eb2008702d3f0dc5 block: 1777024331
+- current timestamp: 1777451715
+
+## Description
+
+Two unrelated changes:
+
+1. **EOA `0x227D9Ea8...` set up an EIP-7702 delegation.** This EOA is a signer on two katana multisigs. It now delegates to `0x63c0c19a...` (MetaMask's `EIP7702StatelessDeleGator` v1.3.0) with `delegationManager = 0xdb9B1e94...` and `entryPoint = 0x00000000...da032` (ERC-4337 EntryPoint v0.7). No protocol change for katana — just the signer's own EOA upgrading to a smart-account setup that runs through ERC-4337.
+
+2. **Conduit Multisig 1 (`eth:0x4a496227...`)** — signer `0x381624F7` removed. Threshold unchanged at 4; total signers 13 → 12 (31% → 33%). Same shared multisig change observed on `forknet`.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x876a24e12d1595ba43f838917743b4ea108e3957c4df5ec812cf3348b156d941","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07"
+      values.multisigThreshold:
+-        "4 of 13 (31%)"
++        "4 of 12 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x3c1d650d30e35bc107663c7573d3b22015fd3be6
+
+# Diff at Fri, 24 Apr 2026 10:10:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ffb976d00306d4043b30ea28fd12565a6eb5d7ab block: 1776863221
+- current timestamp: 1777024331
+
+## Description
+
+New opsuccinct config.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x0065e407807b2b3610cc9ff6637ea16e815552bc34b48c206529d3cfcd9d1152"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x5c7c05114bc5dd360fdb52ec2b4977a45f7e22806bc949a72759ea1172202229"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x352a9738897d236014fd5bd11986bf008b3b623b037405900ab338f93cdf5272"
++++ description: currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.
++++ severity: HIGH
+      values.selectedOpSuccinctConfigName:
+-        "0x36e852219a68060b42e38154cd2c3e2b36ae97ea0445b1b9a034232cda5b3c00"
++        "0xe719c402037f76346e69e021164101e16954889c052f75f16a29758815723dde"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776863221 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x00987c64e3710bc9ab5f3a93f3f1249be821b1a6eedb14dbc1ae2d6fc4fd9337"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x05f486d43f4066c24b8652cd52e122df59f0ea4c33c0df8155dc58de37f93330"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "0x352a9738897d236014fd5bd11986bf008b3b623b037405900ab338f93cdf5272"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x3dabedc1e0d35c0eb02aead7964f84dd156ecb50
+
+# Diff at Wed, 22 Apr 2026 13:08:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2164a3ed7ae404dbff0f676d052e9bf58c88f761 block: 1775809429
+- current timestamp: 1776863221
+
+## Description
+
+fee and multisig changes.
+
+## Watched changes
+
+```diff
+    contract Katana Steakhouse Financial / Morpho Multisig (eth:0x827e86072B06674a077f592A531dcE4590aDeCdB) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xf83dB716A1Ff12F9005F98f678D8BE97B8Bc81d6"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minBaseFee:
+-        0
++        1000000
+      values.operatorFeeConstant:
+-        1351351351351
++        0
+      values.operatorFeeScalar:
+-        0
++        100000
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x6f8CC67A7F6c61E4047aC4870583899CC1fBD08a"
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0xd5330447b7517fadfe067dcefe4d35ee9fe67c54
+
+# Diff at Fri, 10 Apr 2026 08:24:59 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@cab23b784a70bbaea251f1f4559cea26a4d51f77 block: 1775561575
+- current timestamp: 1775809429
+
+## Description
+
+Rotated one member, removed two members from Polygon admin ms.
+
+## Watched changes
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x1B054e6c9F424879d8ad829EE254F88B4D3ac304"
++        "eth:0x4A658D678804DD0a4Ad0A2c26AD4F4EB2517154b"
+      values.$members.3:
+-        "eth:0x34d23C4fb6542B467cA8724bAD30AC811399b184"
+      values.$members.4:
+-        "eth:0x1DD6473a6bb5fF9041D945C7d15AC8fBc2Ee1164"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 4 (75%)"
+    }
+```
+
+Generated with discovered.json: 0xd89f2ed9ba53595826282026a670b0527d96f786
+
+# Diff at Tue, 07 Apr 2026 11:34:04 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6939c1061ac26e2572f4c6c6aafc9329a8ef2113 block: 1773665394
+- current timestamp: 1775561575
+
+## Description
+
+Rotated MS member.
+
+## Watched changes
+
+```diff
+    contract Katana yieldRecipient Mulsitig (eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1"
++        "eth:0xf2dc90d4645579f261cA36E81181986dB576BbEe"
+    }
+```
+
 Generated with discovered.json: 0xca5b85eab7c1e405516bbd8f5c2a12a5e0d48b7b
 
 # Diff at Mon, 16 Mar 2026 12:53:36 GMT:

@@ -13,19 +13,23 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   RISK_VIEW,
-  SEQUENCER_NO_MECHANISM,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { formatDelay } from '../../common/formatDelays'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
+import { getAgglayerVerifiers } from '../../templates/agglayer'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+
+type ProgramHashDict = Record<string, Record<string, string>[]>
 
 const discovery = new ProjectDiscovery('katana')
 const upgradeDelayString = formatSeconds(
@@ -36,6 +40,9 @@ const emergencyActivatedCount = discovery.getContractValue<number>(
   'emergencyStateCount',
 )
 const katanaVKeys = getKatanaVKeys()
+
+const forcedTxUnverifiedDescription =
+  'The self-sequencing delay is configured offchain and the node source and config are unverified.'
 
 export const katana: ScalingProject = {
   id: ProjectId('katana'),
@@ -59,7 +66,6 @@ export const katana: ScalingProject = {
       'Katana is a Layer 2 specializing on DeFi. Its unique architecture combines an OP stack base with Agglayer shared bridge interoperability and OP-Succinct SP1 validity proofs.',
     purposes: ['Universal'],
     stacks: ['Agglayer CDK', 'OP Stack'],
-    upgradesAndGovernanceImage: 'agglayer',
     links: {
       websites: ['https://katana.network/'],
       bridges: [
@@ -172,23 +178,29 @@ export const katana: ScalingProject = {
     dataAvailability: DATA_ON_CHAIN,
     exitWindow: {
       value: 'None',
-      description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled.`,
+      description:
+        'There is no window for users to exit in case of an unwanted upgrade since the Security Council can remove the delay on upgrades.',
       sentiment: 'bad',
       orderHint: -1, // worse than forced tx available but instantly upgradable
       warning: {
-        value: 'The Security Council can remove the delay on upgrades.',
-        sentiment: 'bad',
+        value: `Even though there is a ${upgradeDelayString} Timelock for non-emergency upgrades, self-proposing is disabled.`,
+        sentiment: 'warning',
       },
     },
-    // no node source available, assuming the op stack standard SEQUENCING_WINDOW_SECONDS is not configured
-    sequencerFailure: SEQUENCER_NO_MECHANISM(false),
-    // sequencerFailure: {
-    //   ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(SEQUENCING_WINDOW_SECONDS),
-    //   secondLine: formatDelay(SEQUENCING_WINDOW_SECONDS),
-    // },
+    // no node source nor programHash source available, assuming the op stack standard SEQUENCING_WINDOW_SECONDS
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      ),
+      secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
+      description: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      ).description,
+      warning: { value: forcedTxUnverifiedDescription, sentiment: 'warning' },
+    },
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  stage: getStage({
+  stage: getRollupStage({
     stage0: {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
@@ -223,7 +235,7 @@ export const katana: ScalingProject = {
       {
         title: 'Prover Architecture',
         description:
-          "Katana uses the Agglayer CDK in CDK-opgeth-zkrollup configuration. This combines an OP-Succinct zk rollup base with Agglayer shared bridge interoperability. Both parts are verified in a single nested proof using the Succinct Sp1Verifier. This proof is called the pessimistic proof by Agglayer which contains 1) the bridge accounting proof proving only the secure accounting of the Agglayer shared bridge and can have 2) a reference to an 'aggchain proof', which can define additional programs to be proven. In the case of Katana, these are the op-succinct block range proofs as an aggregated proof proving the state transitions of the L2.",
+          "Katana uses the Agglayer CDK in CDK-opgeth-zkrollup configuration. This combines an OP-Succinct zk rollup base with Agglayer shared bridge interoperability. Both parts are verified in a single nested proof using the Succinct Sp1Verifier. This proof is called the pessimistic proof by Agglayer which contains 1) the bridge accounting proof proving only the secure accounting of the Agglayer shared bridge and can have 2) a reference to an 'aggchain proof', which can define additional programs to be proven. In the case of Katana, these are the op-succinct block range proofs as an aggregated proof proving the state transitions of the L2, resulting in a full validity proof of L2 execution and agglayer bridge accounting.",
         references: [
           {
             url: 'https://docs.agglayer.dev/cdk/cdk-opgeth/architecture/#cdk-opgeth-zkrollup-not-live-yet',
@@ -293,10 +305,6 @@ export const katana: ScalingProject = {
           category: 'Funds can be frozen if',
           text: 'the permissioned proposer fails to publish state roots to the L1.',
         },
-        {
-          category: 'Funds can be frozen if',
-          text: 'the permissioned sequencer fails to publish transaction data to the L1.',
-        },
       ],
       references: [
         {
@@ -306,14 +314,16 @@ export const katana: ScalingProject = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       description:
-        'The mechanism for allowing users to submit their own transactions is currently disabled.',
+        FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract').description +
+        ' ' +
+        forcedTxUnverifiedDescription,
       references: [
         {
-          url: 'https://etherscan.io/address/0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4#code#F1#L563',
+          url: 'https://etherscan.io/address/0x5decbeeefecc5353355cd79a8fecc4c03f61ce8a#code#F1#L553',
           title:
-            '_depositTransaction() in OptimismPortal2 - Etherscan source code',
+            'depositTransaction() in OptimismPortal2 - Etherscan source code',
         },
       ],
     },
@@ -343,12 +353,15 @@ export const katana: ScalingProject = {
       },
     ],
   },
-  upgradesAndGovernance: `
+  upgradesAndGovernance: {
+    content: `
 The regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for ${upgradeDelayString} and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the AgglayerManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.
 
 The PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the AgglayerManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated ${emergencyActivatedCount} time(s) since inception.
 
 Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rollupTypes and manage operational parameters and fees in the AgglayerManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Finally, it can manage SP1 verification keys for pessimistic proofs and aggchain proofs, which defines the affected chains' state validation. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
+    image: 'agglayer',
+  },
 
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {
@@ -360,6 +373,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
       },
     ],
     programHashes: katanaVKeys.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getAgglayerVerifiers(discovery),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
@@ -382,7 +396,6 @@ function getKatanaVKeys(): string[] {
   vKeys.push(opSuccinctConfig['rangeVkeyCommitment'])
   // If default gateway is used, aggchain program hashes are taken from AggLayerGateway
   // Otherwise they are taken from AggchainFEP itself
-  type ProgramHashDict = Record<string, Record<string, string>[]>
   const useDefaultVkeys = discovery.getContractValue<boolean>(
     'AggchainFEP',
     'useDefaultVkeys',

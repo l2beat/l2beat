@@ -1,3 +1,742 @@
+Generated with discovered.json: 0x5a9bf86f2822071d1e97f9133b137c9ade472276
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1778830889
+- current timestamp: 1778830889
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778830889 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x6667961f5e9C98A76a48767522150889703Ed77D) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xdb6c0f3a93d4252e1c77dda9eeb9062db0aae162
+
+# Diff at Fri, 15 May 2026 07:43:09 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@da451cba8e944a28754be7e17bcb7555d857f312 block: 1778001356
+- current timestamp: 1778830889
+
+## Description
+
+MantleEngineeringMultisig: Two members rotated. No threshold or permission changes.
+
+## Watched changes
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x00da2F87c56C3a19BD863613995705095F55b524"
++        "eth:0xAAc91F5766905cE034FE9f650d067a236E845c45"
+      values.$members.4:
+-        "eth:0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e"
++        "eth:0xE8Da2d2381500E863dE1d8396c86C947c8E3Fd3a"
+    }
+```
+
+Generated with discovered.json: 0x28ce4e04e1243620d098692a5a487ca9ad5c2d29
+
+# Diff at Fri, 08 May 2026 07:51:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1778001356
+- current timestamp: 1778001356
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778001356 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
++        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract MantleTokenProxyAdmin (eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F"
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0x34e17BaAdec22651c5d0080042C216cbebe237bE"
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      sourceHashes.1:
+-        "0xdd58c04f5920f546ba5a9bc5b046cdae6bf42acb819e90e2f66e10cc81afbc9f"
++        "0x5ba794a317144f857f090c8090b62eb3c5298c27997195f2c228e69a963185b7"
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sourceHashes.0:
+-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
++        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
+      deployerAddress:
++        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+```diff
+    contract L1MantleToken (eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354) [N/A] {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      sourceHashes.1:
+-        "0x13e07c3c64aef03cfd7f5c01b2b1b443fd1dfb19c4128447fe316bb5fcd128cd"
++        "0x146dfe4172ee213a2ecadf64147444034579195d9a7ce8b7bb7876a3c66836a8"
+      deployerAddress:
++        "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) [opstack/SystemConfig_v1_4_0_mantle] {
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      sourceHashes.1:
+-        "0x7ccc5496582a9154f67199e39a3b2e8f330f1acf0fe0b80d8f151067e7e9fa14"
++        "0xf52a1767b39f4e5846bd5513d6364b45eaf56ab811e845034b00a90d48571a3f"
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8"
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      sourceHashes.0:
+-        "0xc4d0d6be09d9d589447b5e4983d9fb98fc772a22d463cef44caa7bd943eff26d"
++        "0xf1c1bcdf800cd074b5987af3602d4d084ca9b584b10e61e3b67667182b17eabb"
+      deployerAddress:
++        "eth:0x207E804758e28F2b3fD6E4219671B327100b82f8"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x676A795fe6E43C17c668de16730c3F690FEB7120) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x430d270834512dafe98bf268d6912f12a10c5a6287e7463830a22e4616dd63a0"
++        "0x01d69f591187dbe58c84e701387641109e14feaa0c31fe47b08656d62f764402"
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      sourceHashes.0:
+-        "0x8a1f2f8a442ecce12d0692b2117333692fe151bb272cd1e8b2f92ec437bf8d9c"
++        "0xe1cb8acc21214c3652ccc33caf9aca78a1e818c7cba5652c17c9d1a67bce341b"
+      deployerAddress:
++        "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x1cd5cb2fa146b2a5dfb07279a52cd93855b268115912df60292b18394cc532e8"
++        "0xd4b757d2c4b36e44a92f7755697b6a3742f20a7eda628679a17ee342311dfd84"
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
++        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
+      deployerAddress:
++        "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes.1:
+-        "0x3a064711ad01291b3644b5f657fd8317cd07f19222c9f216e25557d4d69ea295"
++        "0x770c1a8c93e98473de9ed37ba3472410dcf3c535af1df99255ea85436d42783b"
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xca35F8338054739D138884685e08b39EE2217794) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+Generated with discovered.json: 0x4154084cb81734e256f304afcf2132990a5de404
+
+# Diff at Tue, 05 May 2026 17:17:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@64b89bcc30a16f751bceb5977051cc87d0d45934 block: 1777038258
+- current timestamp: 1778001356
+
+## Description
+
+**Mantle SP1 prover upgrade — moved from a single SP1Verifier to a gateway-based verification system.**
+- **OPSuccinctL2OutputOracle** vkey rotation: `aggregationVkey 0x002237... → 0x0006e0a9...` and `rangeVkeyCommitment 0x08666b... → 0x1d1e0ac7...`. New entries added to `programHashes.ts` as `notVerified` (sp1hypercube prover system, exact mantle-xyz/op-succinct tag not yet identified).
+- New **SP1VerifierGateway** (`0x3B604117...`) replaces the previous direct SP1Verifier reference. The gateway routes proofs to underlying verifier contracts by program identifier.
+- New **SP1Verifier (v6.0.0)** at `0x8a0fd5e8...` and a second SP1Verifier at `0xc3c6dDDA...` registered via the gateway.
+- New **SP1VerifierGatewayMultisig** (`0xCafEf00d...`) — Gnosis Safe controlling the gateway's verifier route registry.
+- `zkCatalogId` flipped from `sp1turbo` to `sp1hypercube` to reflect the new SP1Verifier v6.0.0 routes wired into the gateway. The legacy sp1turbo verifier (`0x0459d576...`, selector `0xd4e8ecd2`) is still registered in the gateway's `activeVerifiers`, so mantle remains listed in `sp1turbo.tvsProjects` (no `untilTimestamp` set).
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x0022379400ea3157fae440ae7a8101e8bb01ca58e6a5f132c66751513aa58f08"
++        "0x0006e0a9f37edc912bb269856518599d61689c78300c23615b2f90868d0181cf"
+      values.rangeVkeyCommitment:
+-        "0x08666bcf03c2240b14b399040abdc4aa2fe934535315fd3c158f010926d1e4a5"
++        "0x1d1e0ac74bb66ded0388062e779adae47925fd572a49a3424e2684f83d776004"
+      values.verifier:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C)
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459.sol} |    0
+ ...:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C.sol | 1429 ++++++++++++++++++++
+ ...:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A.sol | 1427 +++++++++++++++++++
+ .../projects/mantle/.flat/SP1VerifierGateway.sol   |  271 ++++
+ .../SP1VerifierGatewayMultisig/GnosisSafe.sol      | 1026 ++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   38 +
+ 6 files changed, 4191 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777038258 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
+-        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract MantleTokenProxyAdmin (eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F"
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x34e17BaAdec22651c5d0080042C216cbebe237bE"
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      deployerAddress:
+-        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract L1MantleToken (eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      deployerAddress:
+-        "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      deployerAddress:
+-        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8"
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      deployerAddress:
+-        "eth:0x207E804758e28F2b3fD6E4219671B327100b82f8"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x676A795fe6E43C17c668de16730c3F690FEB7120) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
+-        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
+-        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
+-        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      deployerAddress:
+-        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xca35F8338054739D138884685e08b39EE2217794) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+Generated with discovered.json: 0x2fdaa22b42ce2471cfb1d76eaa9bc0d5bddf837a
+
+# Diff at Tue, 05 May 2026 10:22:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777038258
+- current timestamp: 1777038258
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777038258 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract MantleTokenProxyAdmin (eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F"
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x34e17BaAdec22651c5d0080042C216cbebe237bE"
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract L1MantleToken (eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      deployerAddress:
++        "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8"
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      deployerAddress:
++        "eth:0x207E804758e28F2b3fD6E4219671B327100b82f8"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x676A795fe6E43C17c668de16730c3F690FEB7120) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xca35F8338054739D138884685e08b39EE2217794) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+Generated with discovered.json: 0x374ea1a79e3c9d9cce4f42a0e7bc229ecc004105
+
+# Diff at Fri, 24 Apr 2026 13:45:33 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bbeac755425cc0dab000cb7f8f3fa390682be9b7 block: 1776375430
+- current timestamp: 1777038258
+
+## Description
+
+Arsia fee mechanics activated: owner populated the Arsia-era SystemConfig fields that had been zero since the v1.4.0 upgrade. `basefeeScalar` set to 169019, `daFootprintGasScalar` to 400, `eip1559Denominator` to 50, `eip1559Elasticity` to 4, `minBaseFee` to 50 gwei, `operatorFeeScalar` to 100000000. `gasLimit` decreased from 200B (a pre-Arsia placeholder above the 500M cap) to a normal 60M.
+
+OPSuccinctL2OutputOracle rotated SP1 verification keys: `aggregationVkey` → `0x0022379400ea3157...`, `rangeVkeyCommitment` → `0x08666bcf03c2240b...`. Program hashes regenerated from [mantle-xyz/op-succinct@v2.2.0-beta.8](https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.8) (commit `8542b244fac50b3db2cb027c6282b9f42fd81af9`) and added to `programHashes.ts` as `successful`.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x00767dc6943b07bd7c57755dad9156b5e89c23d714f8475d5b7a207f74360654"
++        "0x0022379400ea3157fae440ae7a8101e8bb01ca58e6a5f132c66751513aa58f08"
+      values.rangeVkeyCommitment:
+-        "0x47fd478c5b2111934c7a233c409f16553d0f67d5701e58fa76c77339764bfd7a"
++        "0x08666bcf03c2240b14b399040abdc4aa2fe934535315fd3c158f010926d1e4a5"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      values.basefeeScalar:
+-        0
++        169019
+      values.daFootprintGasScalar:
+-        0
++        400
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        0
++        50
+      values.eip1559Elasticity:
+-        0
++        4
++++ description: Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage.
++++ severity: LOW
+      values.gasLimit:
+-        200000000000
++        60000000
+      values.minBaseFee:
+-        0
++        50000000000
+      values.operatorFeeScalar:
+-        0
++        100000000
+    }
+```
+
+Generated with discovered.json: 0x73f9634ad29a5b09ba32aa344b854881e170810c
+
+# Diff at Thu, 16 Apr 2026 21:38:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@dbe59fab54b844bd6d80a91ca8129ddbc1292028 block: 1769533383
+- current timestamp: 1776375430
+
+## Description
+
+SystemConfig upgraded to v1.4.0 (Arsia upgrade), new implementation at `0x9CA047689261E35c9e507b1BB0B7443C2A436310` ([diff](https://disco.l2beat.com/diff/eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3/eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310)). The owner (MantleSecurityMultisig) keeps `onlyOwner` control but the setter surface changes significantly:
+
+- Removed `setPreconfer`, `setBatchInbox`, and the `preconfer` / `batchInbox` storage fields. The shape is moved to a new dedicated `opstack/SystemConfig_v1_4_0_mantle` template (restricted by `validAddresses` to the Mantle SystemConfig proxy) so the owner-permission description matches the actual v1.4.0 setter surface instead of the shared template's stale "preconfer/batch submitter" wording.
+- Added separate base/blob fee scalars via `setGasConfigArsia(basefeeScalar, blobbasefeeScalar)`; the legacy `setGasConfig(overhead, scalar)` is still callable and marked deprecated.
+- Added `setEIP1559Params(denominator, elasticity)`, `setMinBaseFee`, `setDAFootprintGasScalar`, `setBaseFee`, and an EIP-7706-style `setOperatorFeeScalars(operatorFeeScalar, operatorFeeConstant)`.
+- Added `maximumGasLimit()` pure getter returning `500_000_000`. The currently stored `gasLimit` is `200_000_000_000` — i.e. 400× the new cap — and is retained as-is in storage (the cap is enforced on `initialize` and `setGasLimit`, not on existing storage). As a consequence, any future owner-initiated `setGasLimit` call must reduce the limit to `≤ 500_000_000`; raising it back above that ceiling would require another implementation upgrade. `batcherHash` now returns a raw `bytes32` from the new ABI (the template's view override casts it back to an address).
+
+The new Arsia-era fields (`basefeeScalar`, `blobbasefeeScalar`, `daFootprintGasScalar`, `eip1559Denominator`, `eip1559Elasticity`, `minBaseFee`, `operatorFeeConstant`, `operatorFeeScalar`) all initialize to zero, so the new fee mechanics are not yet activated onchain. The legacy `baseFee`, `overhead`, `scalar`, and `resourceConfig` values remain populated as before. `sequencerInbox` is still derived by the template from `batcherHash` and continues to track the same batch inbox address.
+
+OPSuccinctL2OutputOracle rotated its SP1 verification keys (`aggregationVkey` `0x00767dc6...`, `rangeVkeyCommitment` `0x47fd478c...`) and the `rollupConfigHash`. The Mantle team confirmed the ELFs were produced from [mantle-xyz/op-succinct@v2.2.0-beta.5](https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.5) (commit `c269e9b792d762889f869c4526bba1bfe016036e`), and that the EigenDA code path has been removed entirely in the Arsia build — `programs/range/eigenda/` and the `EIGENDA_RANGE_ELF_EMBEDDED` constant are gone, only `programs/range/ethereum/` remains. The entries in `programHashes.ts` are labeled `OP_SUCCINCT_AGG_BLOBS` / `OP_SUCCINCT_RANGE_BLOBS` with `programUrl` and `verificationSteps` pinned to the `v2.2.0-beta.5` tag.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x006110a295396036ad8df48c333e2b99b11624799138fbc18e10181551e29eb1"
++        "0x00767dc6943b07bd7c57755dad9156b5e89c23d714f8475d5b7a207f74360654"
+      values.rangeVkeyCommitment:
+-        "0x05044f60230e1ea664a43fa92e27735e3bbc97736c2e7ab961a5115a732a6da5"
++        "0x47fd478c5b2111934c7a233c409f16553d0f67d5701e58fa76c77339764bfd7a"
+      values.rollupConfigHash:
+-        "0x7e7ac4e2e568c2b6cc18427820fa07f8d1e1bd2c360058db04b1bf4b7e775bcd"
++        "0x6681c11eccf96068a081bbb888fd64ce72aa83bd1ccda5bbb53b4c43368cf87f"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      template:
+-        "opstack/SystemConfig"
++        "opstack/SystemConfig_v1_4_0_mantle"
+      sourceHashes.1:
+-        "0xb2a3bda11c08328ecb46ec5789f3264be5d816bc218a5024a4cafd1c59017160"
++        "0x7ccc5496582a9154f67199e39a3b2e8f330f1acf0fe0b80d8f151067e7e9fa14"
+      description:
+-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
++        "Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee)."
+      values.$implementation:
+-        "eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"
++        "eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310"
+      values.$pastUpgrades.1:
++        ["2026-04-16T06:58:35.000Z","0xa9f65671c6b80206db6f058626a8702cf9171dc5d5ab7e382bf124d2b0e1e55a",["eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.3.0"
++        "1.4.0"
+      values.basefeeScalar:
++        0
+      values.blobbasefeeScalar:
++        0
+      values.daFootprintGasScalar:
++        0
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
++        0
+      values.eip1559Elasticity:
++        0
+      values.maximumGasLimit:
++        500000000
+      values.minBaseFee:
++        0
+      values.operatorFeeConstant:
++        0
+      values.operatorFeeScalar:
++        0
+      fieldMeta.gasLimit.description:
+-        "Gas limit for blocks on L2."
++        "Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage."
+      implementationNames.eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3:
+-        "SystemConfig"
+      implementationNames.eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
++        "it can update the batch submitter (Sequencer) address, the unsafe block signer, the L2 gas limit (bounded by `maximumGasLimit()`), the resource metering config, and all fee/gas parameters: legacy `setGasConfig(overhead, scalar)`, Arsia `setGasConfigArsia(basefeeScalar, blobbasefeeScalar)`, `setBaseFee`, `setEIP1559Params`, `setMinBaseFee`, `setDAFootprintGasScalar` and `setOperatorFeeScalars`."
+    }
+```
+
+## Source code changes
+
+```diff
+.../SystemConfig/SystemConfig.sol                  | 220 +++++++++++++++++----
+ 1 file changed, 181 insertions(+), 39 deletions(-)
+```
+
 Generated with discovered.json: 0x9dc37b6c07b7d4b61f985c2d68acbcc7658cf044
 
 # Diff at Tue, 27 Jan 2026 17:04:07 GMT:

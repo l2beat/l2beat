@@ -16,6 +16,7 @@ import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getProjectInteropData } from '../../scaling/interop/getProjectInteropData'
 import { getLiveness } from '../../scaling/liveness/getLiveness'
 import type { ProjectVerificationWarnings } from '../../utils/getCommonProjectEntry'
 import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
@@ -32,7 +33,6 @@ interface CommonDaProjectPageEntry {
   type: string
   description: string
   isUnderReview: boolean
-  isUpcoming: boolean
   archivedAt: number | undefined
   colors: ProjectCustomColors | undefined
   projectVariants?: {
@@ -98,7 +98,7 @@ export async function getDaProjectEntry(
   helpers: SsrHelpers,
   layer: Project<
     'daLayer' | 'display' | 'statuses',
-    'isUpcoming' | 'milestones' | 'archivedAt' | 'colors'
+    'milestones' | 'archivedAt' | 'colors'
   >,
   bridgeSlug: string,
 ): Promise<DaProjectPageEntry | undefined> {
@@ -183,7 +183,6 @@ export async function getDaProjectEntry(
     type: layer.daLayer.type,
     description: `${layer.display.description} ${selected?.display.description ?? ''}`,
     isUnderReview: !!layer.statuses.reviewStatus,
-    isUpcoming: layer.isUpcoming ?? false,
     archivedAt: layer.archivedAt,
     colors: layer.colors,
     selectedBridge: {
@@ -280,10 +279,7 @@ export async function getDaProjectEntry(
 
 export async function getEthereumDaProjectEntry(
   helpers: SsrHelpers,
-  layer: Project<
-    'daLayer' | 'display' | 'statuses',
-    'isUpcoming' | 'milestones'
-  >,
+  layer: Project<'daLayer' | 'display' | 'statuses', 'milestones'>,
   bridge: Project<'daBridge' | 'display', 'contracts' | 'permissions'>,
 ): Promise<EthereumDaProjectPageEntry> {
   const layerGrissiniValues = mapLayerRisksToRosetteValues(
@@ -291,6 +287,15 @@ export async function getEthereumDaProjectEntry(
   )
   const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(
     bridge.daBridge.risks,
+  )
+
+  const interopProjects = await ps.getProjects({
+    select: ['interopConfig'],
+  })
+  const interopData = await getProjectInteropData(
+    layer.id,
+    interopProjects,
+    helpers,
   )
 
   const [economicSecurity, tvsPerProject, sections, validators] =
@@ -304,6 +309,7 @@ export async function getEthereumDaProjectEntry(
         layerGrissiniValues,
         bridgeGrissiniValues,
         helpers,
+        interopData,
       }),
       getDaProjectValidators(layer.id, layer.daLayer.validators),
     ])
@@ -333,7 +339,6 @@ export async function getEthereumDaProjectEntry(
     type: layer.daLayer.type,
     description: `${layer.display.description} ${bridge.display.description}`,
     isUnderReview: !!layer.statuses.reviewStatus,
-    isUpcoming: false,
     archivedAt: undefined,
     colors: undefined,
     header: {

@@ -8,7 +8,7 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -21,10 +21,17 @@ export const intmax: ScalingProject = {
   type: 'layer3',
   hostChain: ProjectId('scroll'),
   id: ProjectId('intmax'),
-  capability: 'universal',
+  capability: 'appchain',
   addedAt: UnixTime(1722256071), // 2024-07-29T12:27:51Z
-  badges: [BADGES.L3ParentChain.Scroll],
+  badges: [
+    BADGES.L3ParentChain.Scroll,
+    BADGES.VM.AppChain,
+    BADGES.Other.Privacy,
+  ],
   display: {
+    redWarning: {
+      text: 'Legacy withdrawals on this version of INTMAX2 are suspended after a cryptographic vulnerability was discovered in the balance proof circuit. No exploitation has been observed and funds remain secure in the Ethereum liquidity contract, but users are urged to exit via the new Exit system before assisted support ends. See the [exit documentation](https://intmax-exit.gitbook.io/intmax-exit-documentation) and [announcement](https://x.com/intmaxIO/status/2049396434513138094) for details.',
+    },
     name: 'INTMAX',
     slug: 'intmax',
     description:
@@ -173,7 +180,7 @@ export const intmax: ScalingProject = {
     sequencerFailure: scroll.riskView.sequencerFailure,
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -209,6 +216,7 @@ export const intmax: ScalingProject = {
       ...discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkVerifiers: getVerifiers(),
   },
   permissions: {
     ...discovery.getDiscoveredPermissions(),
@@ -222,5 +230,27 @@ export const intmax: ScalingProject = {
         'After a testnet launch in December 2024, INTMAX publicly launches its mainnet.',
       type: 'general',
     },
+    {
+      title: 'INTMAX operation paused',
+      url: 'https://x.com/intmaxIO/status/2020160706893553808',
+      date: '2026-02-07T00:00:00Z',
+      description:
+        'Due to technical problems with ZK proving system, INTMAX L2 operation was paused and users were encouraged to withdraw deposited tokens.',
+      type: 'incident',
+    },
   ],
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const uniqueVerifierAddresses = new Set<ChainSpecificAddress>()
+  uniqueVerifierAddresses.add(
+    discovery.getContractValue<ChainSpecificAddress>('Claim', 'claimVerifier'),
+  )
+  uniqueVerifierAddresses.add(
+    discovery.getContractValue<ChainSpecificAddress>(
+      'Withdrawal',
+      'withdrawalVerifier',
+    ),
+  )
+  return Array.from(uniqueVerifierAddresses)
 }

@@ -1,7 +1,12 @@
 {
   "GatewayWallet": {
-    "hash": "0x3c7ddc87aeb7595467ac7d4919823954068ac25a492948abebba618e2a522c0e",
+    "hash": "0x540740d09e1337361cb56c884a3b950733bc085f7470fb71654c89b3f32a0132",
     "address": "base:0x899a4f5f5422cC5E8183280182e7096Fb923C762",
     "blockNumber": 34110983
+  },
+  "GatewayWallet_batch": {
+    "hash": "0x58abac7a9c89cc1bb5e3008040a2a14acbee3ba234aab0da096e9163c2ba3962",
+    "address": "base:0x57DC761789b7fb1Ed4b33c3e55F2DFf14150b1e8",
+    "blockNumber": 45038469
   }
 }

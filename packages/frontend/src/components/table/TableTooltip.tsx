@@ -2,6 +2,7 @@ import { InfoIcon } from '~/icons/Info'
 import {
   Tooltip,
   TooltipContent,
+  TooltipPortal,
   TooltipTrigger,
 } from '../core/tooltip/Tooltip'
 
@@ -15,7 +16,9 @@ export function TableTooltip({ children }: Props) {
       <TooltipTrigger className="mb-px">
         <InfoIcon className="size-3 fill-current" />
       </TooltipTrigger>
-      <TooltipContent>{children}</TooltipContent>
+      <TooltipPortal>
+        <TooltipContent className="z-1000">{children}</TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   )
 }

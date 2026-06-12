@@ -1,3 +1,397 @@
+Generated with discovered.json: 0x919382f3ebf8e69f4aa387215a09a560ced5c6ca
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1775220597
+- current timestamp: 1775220597
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775220597 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x262711cA4DA6409Da795D8af9E18DDaF47397f80) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x3648e2c562F00DeEA11B0b335Cf55C5EB2Df3A5F) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x75feC8Bb2d99076D776A5D46D1E3d42686520eF1) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      receivedPermissions.1.permission:
+-        "validate"
++        "interact"
+      receivedPermissions.2.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x7D9A25f61865D5A211a8be80a4Ef6bd201112717) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xC410B8657FBB2CdbF0c5c5d5128576974467ba5e) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (eth:0xC5Ec2e1EA44699FcF406aB19EA2aeB684CAC5C43) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      directlyReceivedPermissions.1.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xCD795E6003Da105f4a1E11F73fb64b58B5C0f325) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xD19ee3f6Bf22A3A23eCd25B5ED0C655a2a56F65E) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xe778F5Bf5dDB8614a1ab6321Cc557EDbC90e615f) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xf244224843657bb59A6456754992Ea973655D918) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x20e6d84c92f99df98c1153fac9845d71c5f7f50a
+
+# Diff at Fri, 03 Apr 2026 12:51:03 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1774433280
+- current timestamp: 1775220597
+
+## Description
+
+Fluence shut down its Orbit Stack L2 rollup on 2026-04-01 as part of a strategic pivot to AI/GPU infrastructure. https://www.fluence.network/blog/ai-focus-flt-updates/
+
+All core Orbit Stack contracts deleted from active use: RollupProxy, SequencerInbox, Inbox, Outbox, ChallengeManager, all fraud proof contracts, GatewayRouter. Bridge and ERC20Gateway both upgraded to trivial "Sweeper" contracts that transfer any remaining FLT/USDC to a new 2-of-4 GnosisSafe (0x7F6294). UpgradeExecutor executor changed from Gelato Multisig to the new Safe. FLT and USDC assets migrated from L2 to L1, claims open until April 2027. Project marked as archived.
+
+Sweeper (was ERC20Gateway): [diff](https://disco.l2beat.com/diff/eth:0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848/eth:0x5c2C972de4ef50f51265E1fc06d17eDf4dd2afAF)
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790) {
+    +++ description: None
+      directlyReceivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0x89De2771f84b8fd0d09560f75908D6F6a1273A6e","role":"admin"}
+      directlyReceivedPermissions.8:
+-        {"permission":"upgrade","from":"eth:0xEed3cDE012D1F46304dE892186Ad391Ccb994BBd","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x28bB9385A588EF4747264D19B9A9F1603591680c)
+    +++ description: None
+```
+
+```diff
+    contract Sweeper (eth:0x5d436201d1fD53Dc9ECeA4268f257C6fC87c598D) {
+    +++ description: None
+      name:
+-        "ERC20Gateway"
++        "Sweeper"
+      template:
+-        "orbitstack/ERC20Gateway"
+      sourceHashes.1:
+-        "0x17c9d8bf5017982cb88ab1d4f22a085c097ab9c7a910fa109fe9e7204840bef8"
++        "0x3a90041b323301457142c4bba96daca9a045cad104fb2ce19d52cf5062fd6217"
+      description:
+-        "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+      values.$implementation:
+-        "eth:0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848"
++        "eth:0x5c2C972de4ef50f51265E1fc06d17eDf4dd2afAF"
+      values.$pastUpgrades.1:
++        ["2026-04-01T15:42:59.000Z","0x8bf339873118ab07c165309a3f06b616b94d4414f1cad8f56a577ee394e73ca5",["eth:0x5c2C972de4ef50f51265E1fc06d17eDf4dd2afAF"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.cloneableProxyHash:
+-        "0xce61ab08155a3a368bfd165ba9e1151d023608a155fce1ec0d87bba89a59cb4d"
+      values.counterpartGateway:
+-        "eth:0x08dE8bf67c62e5cf73729372750f79E82388df6a"
+      values.inbox:
+-        "eth:0x06084a0AC843084a1d1B8ba0f67E048e4f8f3B95"
+      values.l2BeaconProxyFactory:
+-        "eth:0x27Cc0f325627dBaDC1731EF4D031126573e0E870"
+      values.router:
+-        "eth:0xEed3cDE012D1F46304dE892186Ad391Ccb994BBd"
+      values.whitelist:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.FLT:
++        "eth:0x236501327e701692a281934230AF0b6BE8Df3353"
+      values.RECIPIENT:
++        "eth:0x7F629403fDCC02aD83aA5debd1D4B1548982afaC"
+      values.USDC:
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.eth:0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848:
+-        "L1OrbitERC20Gateway"
+      implementationNames.eth:0x5c2C972de4ef50f51265E1fc06d17eDf4dd2afAF:
++        "Sweeper"
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract Bridge (eth:0x5E6B2D08EA7B3251fef4a244F54D508E0cBD6D3A) {
+    +++ description: None
+      template:
+-        "orbitstack/Bridge"
+      sourceHashes.1:
+-        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
++        "0x3a90041b323301457142c4bba96daca9a045cad104fb2ce19d52cf5062fd6217"
+      description:
+-        "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+      values.$implementation:
+-        "eth:0xEfA1De858293593732a09c9dAA238BEC49595751"
++        "eth:0x5c2C972de4ef50f51265E1fc06d17eDf4dd2afAF"
+      values.$pastUpgrades.2:
++        ["2026-04-01T15:42:59.000Z","0x8bf339873118ab07c165309a3f06b616b94d4414f1cad8f56a577ee394e73ca5",["eth:0x5c2C972de4ef50f51265E1fc06d17eDf4dd2afAF"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.activeOutbox:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.allowedDelayedInboxList:
+-        ["eth:0x06084a0AC843084a1d1B8ba0f67E048e4f8f3B95","eth:0x89De2771f84b8fd0d09560f75908D6F6a1273A6e"]
+      values.allowedOutboxList:
+-        ["eth:0x50Df2E43aDefee3b6510b637697d30e7dc155e13"]
+      values.delayedMessageCount:
+-        1029
+      values.inboxHistory:
+-        ["eth:0x06084a0AC843084a1d1B8ba0f67E048e4f8f3B95","eth:0x89De2771f84b8fd0d09560f75908D6F6a1273A6e"]
+      values.nativeToken:
+-        "eth:0x236501327e701692a281934230AF0b6BE8Df3353"
+      values.nativeTokenDecimals:
+-        18
+      values.outboxHistory:
+-        ["eth:0x50Df2E43aDefee3b6510b637697d30e7dc155e13"]
+      values.rollup:
+-        "eth:0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f"
+      values.sequencerInbox:
+-        "eth:0xD04Cf183526aDC4a37B72D49bFe6eE19d9E19bd0"
+      values.sequencerMessageCount:
+-        17693
+      values.sequencerReportedSubMessageCount:
+-        17446809
+      values.FLT:
++        "eth:0x236501327e701692a281934230AF0b6BE8Df3353"
+      values.RECIPIENT:
++        "eth:0x7F629403fDCC02aD83aA5debd1D4B1548982afaC"
+      values.USDC:
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      fieldMeta:
+-        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"outboxHistory":{"severity":"HIGH","description":"All Outboxes that were ever set as allowed in the bridge."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."},"inboxHistory":{"severity":"HIGH","description":"All Inboxes that were ever set as allowed in the bridge."}}
+      implementationNames.eth:0xEfA1De858293593732a09c9dAA238BEC49595751:
+-        "ERC20Bridge"
+      implementationNames.eth:0x5c2C972de4ef50f51265E1fc06d17eDf4dd2afAF:
++        "Sweeper"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x6BCe4c44668C77ff67730C14d2378857103F53C7) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0x7F629403fDCC02aD83aA5debd1D4B1548982afaC"
+      values.executors.0:
+-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0x7F629403fDCC02aD83aA5debd1D4B1548982afaC"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RollupEventInbox (eth:0x89De2771f84b8fd0d09560f75908D6F6a1273A6e)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb)
+    +++ description: None
+```
+
+```diff
+    contract SequencerInbox (eth:0xD04Cf183526aDC4a37B72D49bFe6eE19d9E19bd0) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.inboxAccs.0:
+-        "0x90feb96d5782f182251f3c5e36ca315be4242397e7f55289f04410a6865bee5c"
+      values.inboxAccs.1:
+-        "0xc54b552147e16946ad856848c4e5a46ef9106d1b8e2d54094341e4e0b97f9487"
+      values.inboxAccs.2:
+-        "0x7fd6f8865da1f4eda1adfcb34ee2fdf7b860a15251e7ab912a58f85b09f108c7"
+      values.inboxAccs.3:
+-        "0x0fe0402aed28d7e4430c963db603a537b4a16ff63e5dc0bed1bc0966ee0b9db3"
+      values.inboxAccs.4:
+-        "0x50985994fee3c0de12be157d063e06d5c11de8b020bf5792cad38a252ea91d89"
+      errors:
+-        {"inboxAccs":"Processing error occurred."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayRouter (eth:0xEed3cDE012D1F46304dE892186Ad391Ccb994BBd)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
++   Status: CREATED
+    contract Fluence Token (eth:0x236501327e701692a281934230AF0b6BE8Df3353)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x7F629403fDCC02aD83aA5debd1D4B1548982afaC)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Bridge/ERC20Bridge.sol => /dev/null            | 1129 -----
+ .../src/projects/fluence/.flat/Bridge/Sweeper.sol  |   16 +
+ .../L1OrbitERC20Gateway.sol => /dev/null           | 1537 -------
+ .../fluence/.flat/Fluence Token/ERC1967Proxy.p.sol |  523 +++
+ .../fluence/.flat/Fluence Token/FluenceToken.sol   | 4724 ++++++++++++++++++++
+ .../L1OrbitGatewayRouter.sol => /dev/null          | 1423 ------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  695 ---
+ .../GnosisSafe}/GnosisSafe.sol                     |    0
+ .../GnosisSafe}/GnosisSafeProxy.p.sol              |    0
+ .../ERC20RollupEventInbox.sol => /dev/null         |  135 -
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ---
+ .../src/projects/fluence/.flat/Sweeper/Sweeper.sol |   16 +
+ .../Sweeper}/TransparentUpgradeableProxy.p.sol     |    0
+ 13 files changed, 5279 insertions(+), 5548 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774433280 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (eth:0xD04Cf183526aDC4a37B72D49bFe6eE19d9E19bd0) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.inboxAccs:
++        ["0x90feb96d5782f182251f3c5e36ca315be4242397e7f55289f04410a6865bee5c","0xc54b552147e16946ad856848c4e5a46ef9106d1b8e2d54094341e4e0b97f9487","0x7fd6f8865da1f4eda1adfcb34ee2fdf7b860a15251e7ab912a58f85b09f108c7","0x0fe0402aed28d7e4430c963db603a537b4a16ff63e5dc0bed1bc0966ee0b9db3","0x50985994fee3c0de12be157d063e06d5c11de8b020bf5792cad38a252ea91d89"]
+      errors:
++        {"inboxAccs":"Processing error occurred."}
+    }
+```
+
+Generated with discovered.json: 0x88f18b08d1b8b62db16f98d5f1ec43ce7e94d01e
+
+# Diff at Wed, 25 Mar 2026 10:09:06 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1764335280
+- current timestamp: 1774433280
+
+## Description
+
+A Gelato Multisig signer (0x28bB9385A588EF4747264D19B9A9F1603591680c) has set an EIP-7702 delegation to an EIP7702StatelessDeleGator contract.
+## Watched changes
+
+```diff
+    EOA  (eth:0x28bB9385A588EF4747264D19B9A9F1603591680c) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x28bB9385A588EF4747264D19B9A9F1603591680c","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x4831558cc7e858c354d05912425f7b608f63f175997992468f288e0d88c4cc50","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
 Generated with discovered.json: 0xb764eda8c456317bdc913d10acf560be2bef6fc1
 
 # Diff at Mon, 05 Jan 2026 17:44:18 GMT:

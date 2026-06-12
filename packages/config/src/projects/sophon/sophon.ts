@@ -37,6 +37,13 @@ export const sophon: ScalingProject = zkStackL2({
   discovery,
   additionalBadges: [BADGES.DA.AvailVector],
   addedAt: UnixTime(1734480000), // 2024-12-18T00:00:00Z
+  daAttestedByIndependentParty: true,
+  daVerifier7DayExitWindow: true,
+  daCommitteeDecentralized: true,
+  daVerifier30DayExitWindow: false,
+  daMechanismEconomicSecurity: false,
+  daVerifierLink:
+    'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
   display: {
     name: 'Sophon',
     slug: 'sophon',

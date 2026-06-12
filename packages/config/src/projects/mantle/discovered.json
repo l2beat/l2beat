@@ -1,15 +1,10 @@
 {
   "name": "mantle",
-  "timestamp": 1769533383,
-  "configHash": "0x4f3ac957f4eae0e424a58d3f3f063a3d53dccb6945b04e474f65dd0c1a6cef23",
+  "timestamp": 1778830889,
+  "configHash": "0x1dc3de9a7dac4ea4960b78e0aa4ba8c9def65698b39b1d152fd478354142b901",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x00da2F87c56C3a19BD863613995705095F55b524",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -19,10 +14,11 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
       "values": {
@@ -50,6 +46,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F",
       "sinceTimestamp": 1687241639,
       "sinceBlock": 17519057,
       "values": {
@@ -71,8 +68,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -84,17 +82,19 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".GUARDIAN"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x34e17BaAdec22651c5d0080042C216cbebe237bE",
       "sinceTimestamp": 1686902471,
       "sinceBlock": 17491078,
       "values": {
@@ -104,8 +104,8 @@
           "eth:0xC37642355c18ec9c3b3268AAC67e33516aa115eb",
           "eth:0x207E804758e28F2b3fD6E4219671B327100b82f8",
           "eth:0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317",
-          "eth:0x00da2F87c56C3a19BD863613995705095F55b524",
-          "eth:0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e",
+          "eth:0xAAc91F5766905cE034FE9f650d067a236E845c45",
+          "eth:0xE8Da2d2381500E863dE1d8396c86C947c8E3Fd3a",
           "eth:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8",
           "eth:0x915dc866e2e5E64f912A5ac1D40E3be4597F172a"
         ],
@@ -114,7 +114,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 140,
+        "nonce": 145,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -134,7 +134,7 @@
       "template": "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0xdd58c04f5920f546ba5a9bc5b046cdae6bf42acb819e90e2f66e10cc81afbc9f"
+        "0x5ba794a317144f857f090c8090b62eb3c5298c27997195f2c228e69a963185b7"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.",
@@ -145,6 +145,7 @@
         "latestOutputIndex",
         "lastProposalTimestamp"
       ],
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710439931,
       "sinceBlock": 19434935,
       "values": {
@@ -164,7 +165,7 @@
         ],
         "$upgradeCount": 2,
         "additionalProposers": [],
-        "aggregationVkey": "0x006110a295396036ad8df48c333e2b99b11624799138fbc18e10181551e29eb1",
+        "aggregationVkey": "0x0006e0a9f37edc912bb269856518599d61689c78300c23615b2f90868d0181cf",
         "challenger": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "CHALLENGER": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "FINALIZATION_PERIOD_SECONDS": 43200,
@@ -173,21 +174,21 @@
         "initialProposer": "eth:0x6667961f5e9c98a76a48767522150889703ed77d",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 90699146,
-        "latestOutputIndex": 16403,
-        "nextBlockNumber": 90700946,
-        "nextOutputIndex": 16404,
+        "latestBlockNumber": 95348546,
+        "latestOutputIndex": 18986,
+        "nextBlockNumber": 95350346,
+        "nextOutputIndex": 18987,
         "optimisticMode": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "proposer": "eth:0x0000000000000000000000000000000000000000",
         "PROPOSER": "eth:0x0000000000000000000000000000000000000000",
-        "rangeVkeyCommitment": "0x05044f60230e1ea664a43fa92e27735e3bbc97736c2e7ab961a5115a732a6da5",
-        "rollupConfigHash": "0x7e7ac4e2e568c2b6cc18427820fa07f8d1e1bd2c360058db04b1bf4b7e775bcd",
+        "rangeVkeyCommitment": "0x1d1e0ac74bb66ded0388062e779adae47925fd572a49a3424e2684f83d776004",
+        "rollupConfigHash": "0x6681c11eccf96068a081bbb888fd64ce72aa83bd1ccda5bbb53b4c43368cf87f",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
         "SUBMISSION_INTERVAL": 1800,
         "submissionInterval": 1800,
-        "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+        "verifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "version": "2.0.1"
       },
       "implementationNames": {
@@ -196,16 +197,110 @@
       }
     },
     {
+      "name": "SP1VerifierGateway",
+      "address": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "type": "Contract",
+      "template": "succinct/SP1VerifierGateway",
+      "sourceHashes": [
+        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
+      ],
+      "proxyType": "immutable",
+      "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
+      "sinceTimestamp": 1720099223,
+      "sinceBlock": 20233410,
+      "values": {
+        "$immutable": true,
+        "activeVerifiers": [
+          {
+            "selector": "0xd4e8ecd2",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          },
+          {
+            "selector": "0xbb1a6f29",
+            "verifier": "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"
+          },
+          {
+            "selector": "0x5a093a2f",
+            "verifier": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"
+          }
+        ],
+        "allVerifiers": [
+          {
+            "selector": "0x801c66ac",
+            "verifier": "eth:0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2"
+          },
+          {
+            "selector": "0x8c5bc5e4",
+            "verifier": "eth:0x331b350dDA287d0A65ce43103984CD44cb4Da9f0"
+          },
+          {
+            "selector": "0xfedc1fcc",
+            "verifier": "eth:0x36B353776AF6EF3A2bD707049e783F52c4209017"
+          },
+          {
+            "selector": "0xc430ff7f",
+            "verifier": "eth:0xc350F063C13a3Ca21331610fe159E697a5c9c2FB"
+          },
+          {
+            "selector": "0xc865c1b6",
+            "verifier": "eth:0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"
+          },
+          {
+            "selector": "0x4aca240a",
+            "verifier": "eth:0x1764C29FBd94865198588f10FC75D4f6636d158d"
+          },
+          {
+            "selector": "0x09069090",
+            "verifier": "eth:0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3"
+          },
+          {
+            "selector": "0x54bdcae3",
+            "verifier": "eth:0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"
+          },
+          {
+            "selector": "0x1b34fe11",
+            "verifier": "eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+          },
+          {
+            "selector": "0xd4e8ecd2",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          },
+          {
+            "selector": "0xbb1a6f29",
+            "verifier": "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"
+          },
+          {
+            "selector": "0x5a093a2f",
+            "verifier": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"
+          }
+        ],
+        "owner": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
+      },
+      "fieldMeta": {
+        "activeVerifiers": {
+          "description": "Verifiers that are routed to by their selector and not frozen."
+        },
+        "allVerifiers": {
+          "description": "All verifiers that were ever routed to by this gateway."
+        }
+      },
+      "implementationNames": {
+        "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
+      }
+    },
+    {
       "name": "L1MantleToken",
       "address": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
       "type": "Contract",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x13e07c3c64aef03cfd7f5c01b2b1b443fd1dfb19c4128447fe316bb5fcd128cd"
+        "0x146dfe4172ee213a2ecadf64147444034579195d9a7ce8b7bb7876a3c66836a8"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F",
       "sinceTimestamp": 1687241795,
       "sinceBlock": 17519070,
       "values": {
@@ -229,7 +324,7 @@
         "nextMint": 1718777795,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "symbol": "MNT",
-        "totalSupply": "6219316794890000000000000000"
+        "totalSupply": "6219316794889999291248757829"
       },
       "implementationNames": {
         "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354": "TransparentUpgradeableProxy",
@@ -245,31 +340,46 @@
       "name": "SystemConfig",
       "address": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
       "type": "Contract",
-      "template": "opstack/SystemConfig",
+      "template": "opstack/SystemConfig_v1_4_0_mantle",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0xb2a3bda11c08328ecb46ec5789f3264be5d816bc218a5024a4cafd1c59017160"
+        "0xf52a1767b39f4e5846bd5513d6364b45eaf56ab811e845034b00a90d48571a3f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "description": "Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710440051,
       "sinceBlock": 19434945,
       "values": {
         "$admin": "eth:0xca35F8338054739D138884685e08b39EE2217794",
-        "$implementation": "eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3",
+        "$implementation": "eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310",
         "$pastUpgrades": [
           [
             "2024-03-15T01:47:47.000Z",
             "0x667a55493b70812eedb69586be570fa87bb305ff046ebd1419cdc71163f770ac",
             ["eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"]
+          ],
+          [
+            "2026-04-16T06:58:35.000Z",
+            "0xa9f65671c6b80206db6f058626a8702cf9171dc5d5ab7e382bf124d2b0e1e55a",
+            ["eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "baseFee": 20000000,
+        "basefeeScalar": 169019,
         "batcherHash": "eth:0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
-        "gasLimit": 200000000000,
+        "blobbasefeeScalar": 0,
+        "daFootprintGasScalar": 400,
+        "eip1559Denominator": 50,
+        "eip1559Elasticity": 4,
+        "gasLimit": 60000000,
+        "maximumGasLimit": 500000000,
+        "minBaseFee": 50000000000,
         "minimumGasLimit": 21000000,
+        "operatorFeeConstant": 0,
+        "operatorFeeScalar": 100000000,
         "opStackDA": {
           "isSequencerSendingBlobTx": true,
           "isUsingCelestia": false,
@@ -285,17 +395,17 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": 10000,
+        "scalar": "452312848583266388373324160190187140051835877600158453279131187530910831675",
         "sequencerInbox": "eth:0xFFEEDDCcBbAA0000000000000000000000000000",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "eth:0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc",
-        "version": "1.3.0",
+        "version": "1.4.0",
         "VERSION": 0
       },
       "fieldMeta": {
         "gasLimit": {
           "severity": "LOW",
-          "description": "Gas limit for blocks on L2."
+          "description": "Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage."
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
@@ -303,7 +413,7 @@
       },
       "implementationNames": {
         "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf": "Proxy",
-        "eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3": "SystemConfig"
+        "eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -324,7 +434,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -337,7 +447,7 @@
         {
           "permission": "interact",
           "from": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "description": "it can update the batch submitter (Sequencer) address, the unsafe block signer, the L2 gas limit (bounded by `maximumGasLimit()`), the resource metering config, and all fee/gas parameters: legacy `setGasConfig(overhead, scalar)`, Arsia `setGasConfigArsia(basefeeScalar, blobbasefeeScalar)`, `setBaseFee`, `setEIP1559Params`, `setMinBaseFee`, `setDAFootprintGasScalar` and `setOperatorFeeScalars`.",
           "role": ".owner"
         },
         {
@@ -453,6 +563,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8",
       "sinceTimestamp": 1683509999,
       "sinceBlock": 17212573,
       "values": {
@@ -479,7 +590,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 14 (43%)",
-        "nonce": 68,
+        "nonce": 78,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -508,7 +619,7 @@
       "type": "Contract",
       "template": "global/TimelockController",
       "sourceHashes": [
-        "0xc4d0d6be09d9d589447b5e4983d9fb98fc772a22d463cef44caa7bd943eff26d"
+        "0xf1c1bcdf800cd074b5987af3602d4d084ca9b584b10e61e3b67667182b17eabb"
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 1d.",
@@ -525,6 +636,7 @@
           "role": ".defaultAdminAC"
         }
       ],
+      "deployerAddress": "eth:0x207E804758e28F2b3fD6E4219671B327100b82f8",
       "sinceTimestamp": 1739349323,
       "sinceBlock": 21829257,
       "values": {
@@ -574,8 +686,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".initialProposer"
         }
       ]
@@ -587,11 +700,12 @@
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7",
-        "0x430d270834512dafe98bf268d6912f12a10c5a6287e7463830a22e4616dd63a0"
+        "0x01d69f591187dbe58c84e701387641109e14feaa0c31fe47b08656d62f764402"
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1687953527,
       "sinceBlock": 17577670,
       "values": {
@@ -620,7 +734,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292702268",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292703529",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -650,6 +764,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1687951883,
       "sinceBlock": 17577535,
       "values": {
@@ -662,7 +777,40 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0xe1cb8acc21214c3652ccc33caf9aca78a1e818c7cba5652c17c9d1a67bce341b"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.0.0).",
+      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
+      "sinceTimestamp": 1771084331,
+      "sinceBlock": 24456046,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xbb1a6f2930e94bfe8b35e794faf43133214534a17d2ad8e51358cad437b3c317",
+        "VERSION": "v6.0.0",
+        "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
+      },
+      "implementationNames": {
+        "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": "SP1Verifier"
+      }
+    },
+    {
       "address": "eth:0x915dc866e2e5E64f912A5ac1D40E3be4597F172a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -673,10 +821,11 @@
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
-        "0x1cd5cb2fa146b2a5dfb07279a52cd93855b268115912df60292b18394cc532e8"
+        "0xd4b757d2c4b36e44a92f7755697b6a3742f20a7eda628679a17ee342311dfd84"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1687954103,
       "sinceBlock": 17577718,
       "values": {
@@ -708,12 +857,17 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xAAc91F5766905cE034FE9f650d067a236E845c45",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e",
+      "address": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -721,6 +875,28 @@
       "address": "eth:0xC37642355c18ec9c3b3268AAC67e33516aa115eb",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
+      "type": "Contract",
+      "template": "shared-sp1/SP1Verifier",
+      "sourceHashes": [
+        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
+      "sinceTimestamp": 1776172415,
+      "sinceBlock": 24878258,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
+      }
     },
     {
       "address": "eth:0xc4143711aA5bd6d37F1b0A690120AA5859e32A93",
@@ -734,11 +910,12 @@
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x3a064711ad01291b3644b5f657fd8317cd07f19222c9f216e25557d4d69ea295"
+        "0x770c1a8c93e98473de9ed37ba3472410dcf3c535af1df99255ea85436d42783b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "ignoreInWatchMode": ["params"],
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710439967,
       "sinceBlock": 19434938,
       "values": {
@@ -758,8 +935,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 591926,
-          "prevBlockNum": 24326995
+          "prevBoughtGas": 539404,
+          "prevBlockNum": 25099101
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -819,6 +996,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710439895,
       "sinceBlock": 19434932,
       "values": {
@@ -829,6 +1007,49 @@
       },
       "implementationNames": {
         "eth:0xca35F8338054739D138884685e08b39EE2217794": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "SP1VerifierGatewayMultisig",
+      "address": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
+      "sinceTimestamp": 1724204135,
+      "sinceBlock": 20573748,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+          "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+          "eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x9ce9716cc3ee4040796acdd48cea971343ff05b11468ce9e8d815c2ce3fc8b9e",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 14,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
@@ -843,6 +1064,11 @@
     },
     {
       "address": "eth:0xe75D7324d6BC4E70A200c5E268160332F43b2d2B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xE8Da2d2381500E863dE1d8396c86C947c8E3Fd3a",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -895,6 +1121,25 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RouteAlreadyExists(address verifier)",
+      "error RouteIsFrozen(bytes4 selector)",
+      "error RouteNotFound(bytes4 selector)",
+      "error SelectorCannotBeZero()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RouteAdded(bytes4 selector, address verifier)",
+      "event RouteFrozen(bytes4 selector, address verifier)",
+      "function addRoute(address verifier)",
+      "function freezeRoute(bytes4 selector)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function routes(bytes4) view returns (address verifier, bool frozen)",
+      "function transferOwnership(address newOwner)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1037,32 +1282,17 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3": [
-      "constructor(address _owner, uint256 _overhead, uint256 _scalar, bytes32 _batcherHash, uint64 _gasLimit, uint256 _baseFee, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
-      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
-      "function VERSION() view returns (uint256)",
-      "function baseFee() view returns (uint256)",
-      "function batcherHash() view returns (bytes32)",
-      "function gasLimit() view returns (uint64)",
-      "function initialize(address _owner, uint256 _overhead, uint256 _scalar, bytes32 _batcherHash, uint64 _gasLimit, uint256 _baseFee, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
-      "function minimumGasLimit() view returns (uint64)",
-      "function overhead() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
-      "function scalar() view returns (uint256)",
-      "function setBaseFee(uint256 _baseFee)",
-      "function setBatcherHash(bytes32 _batcherHash)",
-      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
-      "function setGasLimit(uint64 _gasLimit)",
-      "function setResourceConfig(tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
-      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
-      "function transferOwnership(address newOwner)",
-      "function unsafeBlockSigner() view returns (address)",
-      "function version() view returns (string)"
+    "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": [
       "constructor(address _owner)",
@@ -1071,6 +1301,47 @@
       "function setCode(bytes _code)",
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
+    ],
+    "eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310": [
+      "constructor(address _owner, uint32 _basefeeScalar, uint32 _blobbasefeeScalar, bytes32 _batcherHash, uint64 _gasLimit, uint256 _baseFee, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
+      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
+      "function VERSION() view returns (uint256)",
+      "function baseFee() view returns (uint256)",
+      "function basefeeScalar() view returns (uint32)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobbasefeeScalar() view returns (uint32)",
+      "function daFootprintGasScalar() view returns (uint16)",
+      "function eip1559Denominator() view returns (uint32)",
+      "function eip1559Elasticity() view returns (uint32)",
+      "function gasLimit() view returns (uint64)",
+      "function initialize(address _owner, uint32 _basefeeScalar, uint32 _blobbasefeeScalar, bytes32 _batcherHash, uint64 _gasLimit, uint256 _baseFee, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
+      "function maximumGasLimit() pure returns (uint64)",
+      "function minBaseFee() view returns (uint64)",
+      "function minimumGasLimit() view returns (uint64)",
+      "function operatorFeeConstant() view returns (uint64)",
+      "function operatorFeeScalar() view returns (uint32)",
+      "function overhead() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
+      "function scalar() view returns (uint256)",
+      "function setBaseFee(uint256 _baseFee)",
+      "function setBatcherHash(bytes32 _batcherHash)",
+      "function setDAFootprintGasScalar(uint16 _daFootprintGasScalar)",
+      "function setEIP1559Params(uint32 _denominator, uint32 _elasticity)",
+      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
+      "function setGasConfigArsia(uint32 _basefeeScalar, uint32 _blobbasefeeScalar)",
+      "function setGasLimit(uint64 _gasLimit)",
+      "function setMinBaseFee(uint64 _minBaseFee)",
+      "function setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant)",
+      "function setResourceConfig(tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
+      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
+      "function transferOwnership(address newOwner)",
+      "function unsafeBlockSigner() view returns (address)",
+      "function version() view returns (string)"
     ],
     "eth:0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f": [
       "constructor(address _messenger, address _l1mnt)",
@@ -1143,6 +1414,18 @@
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
     ],
+    "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1173,6 +1456,9 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ],
+    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
+      "constructor(address _singleton)"
     ],
     "eth:0xCd368c1d80120b0Dd92447c87eB570154f8e685c": [
       "constructor()",
@@ -1309,10 +1595,12 @@
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
+    "opstack/SystemConfig_v1_4_0_mantle": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
+    "shared-sp1/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0xa79616124fab7c30287f805f0a8e9e56f748448020c9eebcebe266d1172d19e8",
-    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24327537 },
-  "permissionsConfigHash": "0x9a7a5139fc1184892b495118a6dca7035f2adcb82142b5b7454b508c256be750"
+  "usedBlockNumbers": { "ethereum": 25099115 },
+  "permissionsConfigHash": "0x9f5351521710eae283ff36abcf259ada70736bb3b1a118ae52ecfcf53594a619"
 }

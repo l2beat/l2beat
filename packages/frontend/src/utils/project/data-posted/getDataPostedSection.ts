@@ -20,12 +20,14 @@ export async function getDataPostedSection(
 
   const range = project.archivedAt ? optionToRange('max') : optionToRange('1y')
   const [data, daLayers] = await Promise.all([
-    helpers.da.scalingProjectChart.fetch({
-      range,
-      projectId: project.id,
-    }),
+    helpers.queryClient.fetchQuery(
+      helpers.trpc.da.scalingProjectChart.queryOptions({
+        range,
+        projectId: project.id,
+      }),
+    ),
     ps.getProjects({
-      select: ['isDaLayer'],
+      select: ['daLayer'],
     }),
   ])
   if (!data || data.chart.length === 0) return undefined

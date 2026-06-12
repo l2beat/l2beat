@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
@@ -6,7 +7,7 @@ import { useTvsDisplayControlsContext } from '~/components/table/display/context
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { toTableRows } from '../../utils/toTableRows'
 import { getScalingSummaryOthersColumns } from './columns'
 
@@ -15,23 +16,25 @@ interface Props {
 }
 
 export function ScalingSummaryOthersTable({ entries }: Props) {
+  const trpc = useTRPC()
   const { sorting, setSorting } = useTableSorting()
   const { display } = useTvsDisplayControlsContext()
 
-  const { data, isLoading } = api.tvs.table.useQuery({
-    type: 'others',
-    excludeAssociatedTokens: display.excludeAssociatedTokens,
-    excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.tvs.table.queryOptions({
+      type: 'others',
+      excludeAssociatedTokens: display.excludeAssociatedTokens,
+      excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
+    }),
+  )
 
   const tableEntries = useMemo(
     () =>
       toTableRows({
-        projects: entries,
-        sevenDayBreakdown: data,
-        excludeAssociatedTokens: display.excludeAssociatedTokens,
+        entries,
+        data: data?.projects,
       }),
-    [entries, display, data],
+    [entries, data],
   )
 
   const columns = useMemo(

@@ -32,7 +32,11 @@ export interface AggregatedInteropTransferRecord {
 export interface AggregatedInteropTransferSeriesRecord {
   day: UnixTime
   id: string
+  bridgeType: InteropBridgeType
+  srcChain: string
+  dstChain: string
   transferCount: number
+  identifiedCount: number
   totalSrcValueUsd: number
   totalDstValueUsd: number
 }
@@ -40,11 +44,30 @@ export interface AggregatedInteropTransferSeriesRecord {
 export interface AggregatedInteropTransferIdSeriesRecord {
   timestamp: UnixTime
   id: string
+  bridgeType: InteropBridgeType
+  srcChain: string
+  dstChain: string
   transferCount: number
+  identifiedCount: number
   transfersWithDurationCount: number
   totalDurationSum: number
   totalSrcValueUsd: number
   totalDstValueUsd: number
+}
+
+export interface AggregatedInteropTransferGroupStatsRecord {
+  timestamp: UnixTime
+  transferCount: number
+  identifiedCount: number
+  srcVolumeUsd: number
+  dstVolumeUsd: number
+}
+
+export interface AggregatedInteropTransferGroupRecord {
+  id: string
+  bridgeType: InteropBridgeType
+  srcChain: string
+  dstChain: string
 }
 
 export function toRecord(
@@ -140,18 +163,39 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
           .select((eb) => [
             sql<Date>`date_trunc('day', timestamp)`.as('day'),
             'id',
+            'bridgeType',
+            'srcChain',
+            'dstChain',
             eb.fn.max('timestamp').as('latest_ts'),
           ])
-          .groupBy(['id', sql`date_trunc('day', timestamp)`]),
+          .where('srcChain', 'is not', null)
+          .where('dstChain', 'is not', null)
+          .groupBy([
+            'id',
+            'bridgeType',
+            'srcChain',
+            'dstChain',
+            sql`date_trunc('day', timestamp)`,
+          ]),
       )
       .selectFrom('AggregatedInteropTransfer')
       .innerJoin('latest_per_day', (join) =>
         join
           .onRef('AggregatedInteropTransfer.id', '=', 'latest_per_day.id')
-          .on(
-            sql`date_trunc('day', "AggregatedInteropTransfer"."timestamp")`,
+          .onRef(
+            'AggregatedInteropTransfer.bridgeType',
             '=',
-            sql`"latest_per_day"."day"`,
+            'latest_per_day.bridgeType',
+          )
+          .onRef(
+            'AggregatedInteropTransfer.srcChain',
+            '=',
+            'latest_per_day.srcChain',
+          )
+          .onRef(
+            'AggregatedInteropTransfer.dstChain',
+            '=',
+            'latest_per_day.dstChain',
           )
           .onRef(
             'AggregatedInteropTransfer.timestamp',
@@ -162,26 +206,50 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .select((eb) => [
         sql<Date>`"latest_per_day"."day"`.as('day'),
         sql<string>`"latest_per_day"."id"`.as('id'),
+        sql<string>`"latest_per_day"."bridgeType"`.as('bridge_type'),
+        sql<string>`"latest_per_day"."srcChain"`.as('src_chain'),
+        sql<string>`"latest_per_day"."dstChain"`.as('dst_chain'),
         eb.fn.sum('transferCount').as('transfer_count'),
-        eb.fn.sum('srcValueUsd').as('total_src_value_usd'),
-        eb.fn.sum('dstValueUsd').as('total_dst_value_usd'),
+        eb.fn.sum('identifiedCount').as('identified_count'),
+        sql<number>`sum(coalesce("AggregatedInteropTransfer"."srcValueUsd", 0))`.as(
+          'total_src_value_usd',
+        ),
+        sql<number>`sum(coalesce("AggregatedInteropTransfer"."dstValueUsd", 0))`.as(
+          'total_dst_value_usd',
+        ),
       ])
-      .groupBy(['latest_per_day.day', 'latest_per_day.id'])
+      .groupBy([
+        'latest_per_day.day',
+        'latest_per_day.id',
+        'latest_per_day.bridgeType',
+        'latest_per_day.srcChain',
+        'latest_per_day.dstChain',
+      ])
       .orderBy('latest_per_day.id', 'asc')
+      .orderBy('latest_per_day.bridgeType', 'asc')
+      .orderBy('latest_per_day.srcChain', 'asc')
+      .orderBy('latest_per_day.dstChain', 'asc')
       .orderBy('latest_per_day.day', 'asc')
       .execute()
 
     return rows.map((row) => ({
       day: UnixTime.fromDate(row.day),
       id: row.id,
+      bridgeType: row.bridge_type as InteropBridgeType,
+      srcChain: row.src_chain,
+      dstChain: row.dst_chain,
       transferCount: Number(row.transfer_count ?? 0),
+      identifiedCount: Number(row.identified_count ?? 0),
       totalSrcValueUsd: Number(row.total_src_value_usd ?? 0),
       totalDstValueUsd: Number(row.total_dst_value_usd ?? 0),
     }))
   }
 
-  async getDailySeriesById(
+  async getDailySeriesByGroup(
     id: string,
+    bridgeType: InteropBridgeType,
+    srcChain: string,
+    dstChain: string,
   ): Promise<AggregatedInteropTransferIdSeriesRecord[]> {
     const rows = await this.db
       .with('latest_per_day', (db) =>
@@ -190,19 +258,41 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
           .select((eb) => [
             sql<Date>`date_trunc('day', timestamp)`.as('day'),
             'id',
+            'bridgeType',
+            'srcChain',
+            'dstChain',
             eb.fn.max('timestamp').as('latest_ts'),
           ])
           .where('id', '=', id)
-          .groupBy(['id', sql`date_trunc('day', timestamp)`]),
+          .where('bridgeType', '=', bridgeType)
+          .where('srcChain', '=', srcChain)
+          .where('dstChain', '=', dstChain)
+          .groupBy([
+            'id',
+            'bridgeType',
+            'srcChain',
+            'dstChain',
+            sql`date_trunc('day', timestamp)`,
+          ]),
       )
       .selectFrom('AggregatedInteropTransfer')
       .innerJoin('latest_per_day', (join) =>
         join
           .onRef('AggregatedInteropTransfer.id', '=', 'latest_per_day.id')
-          .on(
-            sql`date_trunc('day', "AggregatedInteropTransfer"."timestamp")`,
+          .onRef(
+            'AggregatedInteropTransfer.bridgeType',
             '=',
-            sql`"latest_per_day"."day"`,
+            'latest_per_day.bridgeType',
+          )
+          .onRef(
+            'AggregatedInteropTransfer.srcChain',
+            '=',
+            'latest_per_day.srcChain',
+          )
+          .onRef(
+            'AggregatedInteropTransfer.dstChain',
+            '=',
+            'latest_per_day.dstChain',
           )
           .onRef(
             'AggregatedInteropTransfer.timestamp',
@@ -212,21 +302,39 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       )
       .select((eb) => [
         sql<string>`"latest_per_day"."id"`.as('id'),
+        sql<string>`"latest_per_day"."bridgeType"`.as('bridge_type'),
+        sql<string>`"latest_per_day"."srcChain"`.as('src_chain'),
+        sql<string>`"latest_per_day"."dstChain"`.as('dst_chain'),
         sql<Date>`"latest_per_day"."day"`.as('day'),
         eb.fn.sum('transferCount').as('transfer_count'),
+        eb.fn.sum('identifiedCount').as('identified_count'),
         eb.fn.sum('transfersWithDurationCount').as('duration_count'),
         eb.fn.sum('totalDurationSum').as('total_duration_sum'),
-        eb.fn.sum('srcValueUsd').as('total_src_value_usd'),
-        eb.fn.sum('dstValueUsd').as('total_dst_value_usd'),
+        sql<number>`sum(coalesce("AggregatedInteropTransfer"."srcValueUsd", 0))`.as(
+          'total_src_value_usd',
+        ),
+        sql<number>`sum(coalesce("AggregatedInteropTransfer"."dstValueUsd", 0))`.as(
+          'total_dst_value_usd',
+        ),
       ])
-      .groupBy(['latest_per_day.day', 'latest_per_day.id'])
+      .groupBy([
+        'latest_per_day.day',
+        'latest_per_day.id',
+        'latest_per_day.bridgeType',
+        'latest_per_day.srcChain',
+        'latest_per_day.dstChain',
+      ])
       .orderBy('latest_per_day.day', 'asc')
       .execute()
 
     return rows.map((row) => ({
       timestamp: UnixTime.fromDate(row.day),
       id: row.id,
+      bridgeType: row.bridge_type as InteropBridgeType,
+      srcChain: row.src_chain,
+      dstChain: row.dst_chain,
       transferCount: Number(row.transfer_count ?? 0),
+      identifiedCount: Number(row.identified_count ?? 0),
       transfersWithDurationCount: Number(row.duration_count ?? 0),
       totalDurationSum: Number(row.total_duration_sum ?? 0),
       totalSrcValueUsd: Number(row.total_src_value_usd ?? 0),
@@ -278,6 +386,174 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       : undefined
   }
 
+  async getMaxTimestampAtOrBefore(
+    timestamp: UnixTime,
+  ): Promise<UnixTime | undefined> {
+    const result = await this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
+      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .executeTakeFirst()
+    return result?.max_timestamp
+      ? UnixTime.fromDate(result.max_timestamp)
+      : undefined
+  }
+
+  async getByTimestamp(
+    timestamp: UnixTime,
+  ): Promise<AggregatedInteropTransferRecord[]> {
+    const rows = await this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .selectAll()
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getRecentStatsForGroup(
+    limit: number,
+    id: string,
+    bridgeType: InteropBridgeType,
+    srcChain: string,
+    dstChain: string,
+    options?: {
+      before?: UnixTime
+    },
+  ): Promise<AggregatedInteropTransferGroupStatsRecord[]> {
+    let latestPerDayQuery = this.db
+      .selectFrom('AggregatedInteropTransfer as a')
+      .select((eb) => [
+        sql<Date>`date_trunc('day', "a"."timestamp")`.as('day'),
+        eb.fn.max('a.timestamp').as('latest_ts'),
+      ])
+      .where('a.id', '=', id)
+      .where('a.bridgeType', '=', bridgeType)
+      .where('a.srcChain', '=', srcChain)
+      .where('a.dstChain', '=', dstChain)
+      .groupBy(sql`date_trunc('day', "a"."timestamp")`)
+
+    if (options?.before !== undefined) {
+      latestPerDayQuery = latestPerDayQuery.where(
+        'a.timestamp',
+        '<',
+        UnixTime.toDate(options.before),
+      )
+    }
+
+    const rows = await this.db
+      .with('latest_per_day', () => latestPerDayQuery)
+      .selectFrom('AggregatedInteropTransfer as a')
+      .innerJoin('latest_per_day as l', (join) =>
+        join.onRef('a.timestamp', '=', 'l.latest_ts'),
+      )
+      .select((eb) => [
+        sql<Date>`"a"."timestamp"`.as('timestamp'),
+        eb.fn.sum('a.transferCount').as('transfer_count'),
+        eb.fn.sum('a.identifiedCount').as('identified_count'),
+        sql<number>`sum(coalesce("a"."srcValueUsd", 0))`.as('src_volume_usd'),
+        sql<number>`sum(coalesce("a"."dstValueUsd", 0))`.as('dst_volume_usd'),
+      ])
+      .where('a.id', '=', id)
+      .where('a.bridgeType', '=', bridgeType)
+      .where('a.srcChain', '=', srcChain)
+      .where('a.dstChain', '=', dstChain)
+      .groupBy('a.timestamp')
+      .orderBy('a.timestamp', 'desc')
+      .limit(limit)
+      .execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      transferCount: Number(row.transfer_count ?? 0),
+      identifiedCount: Number(row.identified_count ?? 0),
+      srcVolumeUsd: Number(row.src_volume_usd ?? 0),
+      dstVolumeUsd: Number(row.dst_volume_usd ?? 0),
+    }))
+  }
+
+  async getGroupsWithStatsInTimeRange(
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<AggregatedInteropTransferGroupRecord[]> {
+    const rows = await this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .select(['id', 'bridgeType', 'srcChain', 'dstChain'])
+      .distinct()
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<', UnixTime.toDate(to))
+      .where('srcChain', 'is not', null)
+      .where('dstChain', 'is not', null)
+      .execute()
+
+    return rows.flatMap((row) => {
+      if (!row.srcChain || !row.dstChain) {
+        return []
+      }
+
+      return [
+        {
+          id: row.id,
+          bridgeType: row.bridgeType as InteropBridgeType,
+          srcChain: row.srcChain,
+          dstChain: row.dstChain,
+        },
+      ]
+    })
+  }
+
+  async getDailyStatsForGroupInTimeRange(
+    id: string,
+    bridgeType: InteropBridgeType,
+    srcChain: string,
+    dstChain: string,
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<AggregatedInteropTransferGroupStatsRecord[]> {
+    const latestPerDayQuery = this.db
+      .selectFrom('AggregatedInteropTransfer as a')
+      .select((eb) => [
+        sql<Date>`date_trunc('day', "a"."timestamp")`.as('day'),
+        eb.fn.max('a.timestamp').as('latest_ts'),
+      ])
+      .where('a.id', '=', id)
+      .where('a.bridgeType', '=', bridgeType)
+      .where('a.srcChain', '=', srcChain)
+      .where('a.dstChain', '=', dstChain)
+      .where('a.timestamp', '>=', UnixTime.toDate(from))
+      .where('a.timestamp', '<', UnixTime.toDate(to))
+      .groupBy(sql`date_trunc('day', "a"."timestamp")`)
+
+    const rows = await this.db
+      .with('latest_per_day', () => latestPerDayQuery)
+      .selectFrom('AggregatedInteropTransfer as a')
+      .innerJoin('latest_per_day as l', (join) =>
+        join.onRef('a.timestamp', '=', 'l.latest_ts'),
+      )
+      .select((eb) => [
+        sql<Date>`"a"."timestamp"`.as('timestamp'),
+        eb.fn.sum('a.transferCount').as('transfer_count'),
+        eb.fn.sum('a.identifiedCount').as('identified_count'),
+        sql<number>`sum(coalesce("a"."srcValueUsd", 0))`.as('src_volume_usd'),
+        sql<number>`sum(coalesce("a"."dstValueUsd", 0))`.as('dst_volume_usd'),
+      ])
+      .where('a.id', '=', id)
+      .where('a.bridgeType', '=', bridgeType)
+      .where('a.srcChain', '=', srcChain)
+      .where('a.dstChain', '=', dstChain)
+      .groupBy('a.timestamp')
+      .orderBy('a.timestamp', 'asc')
+      .execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      transferCount: Number(row.transfer_count ?? 0),
+      identifiedCount: Number(row.identified_count ?? 0),
+      srcVolumeUsd: Number(row.src_volume_usd ?? 0),
+      dstVolumeUsd: Number(row.dst_volume_usd ?? 0),
+    }))
+  }
+
   async getEarliestTimestampForDay(timestamp: UnixTime) {
     const result = await this.db
       .selectFrom('AggregatedInteropTransfer')
@@ -298,13 +574,18 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     timestamp: UnixTime,
     sourceChains: string[],
     destinationChains: string[],
-    type?: InteropBridgeType,
-    protocolId?: string,
+    types?: InteropBridgeType[],
+    protocolIds?: string[],
     options?: {
       includeSameChainTransfers?: boolean
     },
   ): Promise<AggregatedInteropTransferRecord[]> {
-    if (sourceChains.length === 0 || destinationChains.length === 0) {
+    if (
+      sourceChains.length === 0 ||
+      destinationChains.length === 0 ||
+      protocolIds?.length === 0 ||
+      types?.length === 0
+    ) {
       return []
     }
 
@@ -315,16 +596,16 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .where('srcChain', 'in', sourceChains)
       .where('dstChain', 'in', destinationChains)
 
-    if (protocolId) {
-      query = query.where('id', '=', protocolId)
+    if (protocolIds) {
+      query = query.where('id', 'in', protocolIds)
     }
 
     if (!options?.includeSameChainTransfers) {
       query = query.whereRef('srcChain', '!=', 'dstChain')
     }
 
-    if (type) {
-      query = query.where('bridgeType', '=', type)
+    if (types) {
+      query = query.where('bridgeType', 'in', types)
     }
 
     const rows = await query.execute()

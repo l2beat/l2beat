@@ -5,10 +5,11 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
-import { getStage } from '../../common/stages/getStage'
+import { PROGRAM_HASHES } from '../../common/programHashes'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getSP1Verifiers, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('base')
 const genesisTimestamp = UnixTime(1686074603)
@@ -20,8 +21,9 @@ export const base: ScalingProject = opStackL2({
   genesisTimestamp,
   display: {
     name: 'Base Chain',
+    aliases: ['Coinbase'],
     slug: 'base',
-    stateValidationImage: 'opfp',
+    stateValidationImage: 'aggverifier',
     stacks: ['OP Stack'],
     description:
       'Base is an Optimistic Rollup built with the OP Stack. It offers a low-cost and builder-friendly way for anyone, anywhere, to build onchain.',
@@ -34,7 +36,7 @@ export const base: ScalingProject = opStackL2({
         'https://basedscan.io/',
         'https://base.blockscout.com/',
       ],
-      repositories: ['https://github.com/base-org'],
+      repositories: ['https://github.com/base'],
       socialMedia: [
         'https://twitter.com/BuildOnBase',
         'https://discord.com/invite/buildonbase',
@@ -208,6 +210,22 @@ export const base: ScalingProject = opStackL2({
         sinceTimestamp: UnixTime(1730303471), // after proofs
       },
     },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(
+          discovery.getContract('DisputeGameFactory').address,
+        ),
+        selector: '0x1011f377',
+        functionSignature:
+          'function createWithInitData(uint32 _gameType, bytes32 _rootClaim, bytes _extraData, bytes _initData) payable returns (address proxy_)',
+        sinceTimestamp: UnixTime(1779825599), // Azul AggregateVerifier activation
+      },
+    },
   ],
 
   isNodeAvailable: true,
@@ -239,7 +257,7 @@ export const base: ScalingProject = opStackL2({
     ],
   },
   stateDerivation: DERIVATION.OPSTACK('BASE'),
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -254,10 +272,10 @@ export const base: ScalingProject = opStackL2({
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
-        noRedTrustedSetups: null,
-        programHashesReproducible: null,
-        proverSourcePublished: null,
-        verifierContractsReproducible: null,
+        noRedTrustedSetups: false,
+        programHashesReproducible: true,
+        proverSourcePublished: true,
+        verifierContractsReproducible: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -267,9 +285,18 @@ export const base: ScalingProject = opStackL2({
     },
     {
       rollupNodeLink: 'https://github.com/base-org/node',
+      proverSourceLink: 'https://github.com/succinctlabs/op-succinct',
     },
   ),
   milestones: [
+    {
+      title: 'Base Azul: multi-proof',
+      url: 'https://blog.base.dev/introducing-base-azul',
+      date: '2026-05-26T00:00:00Z',
+      description:
+        'Base activates the multiproof system combining TEE attestations and SP1 ZK proofs.',
+      type: 'general',
+    },
     {
       title: 'Base leaves the Superchain',
       url: 'https://blog.base.dev/next-chapter-for-base-chain-1',
@@ -322,8 +349,10 @@ export const base: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
-  upgradesAndGovernance:
-    'All contracts are upgradable by a `ProxyAdmin` contract controlled by a nested 2/2 `Base Governance Multisig` composed of the `Base Coordinator Multisig` and the `Base Security Council`. Upgrades require approval from both parties. There is no delay on upgrades. The Guardian role for the SuperchainConfig is assigned to the Base Governance Multisig, which can pause and unpause withdrawals. `Base Multisig 1` serves as Incident Responder and can pause withdrawals but cannot unpause or extend pauses. Each pause automatically expires after 3 months if not extended by the Guardian. The single Sequencer actor can be modified by `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.',
+  upgradesAndGovernance: {
+    content:
+      'All contracts are upgradable by a `ProxyAdmin` contract controlled by a nested 2/2 `Base Governance Multisig` composed of the `Base Coordinator Multisig` and the `Base Security Council`. Upgrades require approval from both parties. There is no delay on upgrades. The Guardian role for the SuperchainConfig is assigned to the Base Governance Multisig, which can pause and unpause withdrawals. `Base Multisig 1` serves as Incident Responder and can pause withdrawals but cannot unpause or extend pauses. Each pause automatically expires after 3 months if not extended by the Guardian. The single Sequencer actor can be modified by `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.\n\nState validation runs through the `AggregateVerifier` game type (621), which accepts either an AWS Nitro TEE attestation or an SP1 ZK proof. The TEE prover allowlist in the `TEEProverRegistry` is managed solely by the `Base Coordinator Multisig` (without Base Security Council approval), and a separate Manager EOA can register or deregister enclave signers. The ZK arm routes through a Base-owned SP1 verifier gateway; the Base Governance Multisig can add or freeze verifier routes. The Base Governance Multisig can swap the AggregateVerifier implementation, change the respected game type, blacklist individual games, or retire all in-flight games via the AnchorStateRegistry.',
+  },
   nonTemplateContractRisks: {
     category: 'Funds can be stolen if',
     text: 'a contract receives a malicious code upgrade. Upgrades must be approved by 2 parties: the Base Coordinator Multisig and the Base Security Council. There is no delay on upgrades.',
@@ -332,9 +361,78 @@ export const base: ScalingProject = opStackL2({
     exitWindow: {
       value: 'None',
       description:
-        'There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable. Upgrades need to be approved by 2 parties: the Base Coordinator Multisig and the Base Security Council.',
+        'There is no window for users to exit in case of an unwanted upgrade since contracts are instantly upgradable. Upgrades need to be approved by 2 parties: the Base Coordinator Multisig and the Base Security Council.',
       sentiment: 'bad',
       orderHint: 0, // 0-7 days
     },
   },
+  nonTemplateZkVerifiers: getBaseVerifiers(),
+  nonTemplateProgramHashes: getBaseProgramHashes().map((el) =>
+    PROGRAM_HASHES(el),
+  ),
 })
+
+function getBaseProgramHashes(): string[] {
+  const result = []
+  result.push(
+    discovery.getContractValue<string>(
+      'AggregateVerifier',
+      'ZK_AGGREGATE_HASH',
+    ),
+  )
+  result.push(
+    discovery.getContractValue<string>('AggregateVerifier', 'ZK_RANGE_HASH'),
+  )
+  // risc0 set verifier program
+  result.push(
+    discovery.getContractValue<string[]>('RiscZeroSetVerifier', 'imageInfo')[0],
+  )
+  // TEE image hash
+  result.push(
+    discovery.getContractValue<string>(
+      'TEEProverRegistry',
+      'getExpectedImageHash',
+    ),
+  )
+  // TEE verification programs
+  const zkConfigRiscZero = discovery.getContractValue<{
+    verifierId: string
+    aggregatorId: string
+    zkVerifier: string
+  }>('NitroEnclaveVerifier', 'zkConfigRiscZero')
+  const zkConfigSuccinct = discovery.getContractValue<{
+    verifierId: string
+    aggregatorId: string
+    zkVerifier: string
+  }>('NitroEnclaveVerifier', 'zkConfigSuccinct')
+  result.push(zkConfigRiscZero.aggregatorId)
+  result.push(zkConfigRiscZero.verifierId)
+  result.push(zkConfigSuccinct.aggregatorId)
+  result.push(zkConfigSuccinct.verifierId)
+  return result.filter(
+    (h) =>
+      h !==
+      '0x0000000000000000000000000000000000000000000000000000000000000000',
+  )
+}
+
+function getBaseVerifiers(): ChainSpecificAddress[] {
+  const sp1Verifiers = getSP1Verifiers(discovery)
+  const router = discovery.getContract('RiscZeroVerifierRouter')
+  const wrappers = Object.entries(router.values ?? {})
+    .filter(([key]) => key.startsWith('verifier_'))
+    .map(([, value]) => value as ChainSpecificAddress)
+
+  // get all risc zero verifiers via verifier_... on the router
+  const riscZeroVerifiers = wrappers
+    .map((wrapper) =>
+      discovery.getContractValue<ChainSpecificAddress>(wrapper, 'verifier'),
+    )
+    .filter(
+      // RiscZeroSetVerifier is not actually a verifier, it redirects zk verification to other contracts
+      (verifier) =>
+        discovery.getContract(verifier).name === 'RiscZeroGroth16Verifier',
+    )
+
+  return [...sp1Verifiers, ...riscZeroVerifiers]
+}

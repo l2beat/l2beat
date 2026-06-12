@@ -28,6 +28,8 @@ ARG TURBO_TOKEN
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ENV VITE_READONLY=true
+ARG VITE_OPENPANEL_CLIENT_ID
+ENV VITE_OPENPANEL_CLIENT_ID=${VITE_OPENPANEL_CLIENT_ID}
 WORKDIR /src
 
 # Install turbo in builder stage
@@ -47,9 +49,6 @@ COPY --from=pruner /src/.discovery.json .
 # Build application
 RUN pnpm build
 
-WORKDIR packages/l2b/
-RUN node cli.js fetch-flat-sources -q -y
-WORKDIR ../..
 RUN rm -rf node_modules
 RUN pnpm install --frozen-lockfile --prod
 

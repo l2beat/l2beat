@@ -1,6 +1,19 @@
 import { type Difference, diff } from '@l2beat/discovery'
 import { withoutUndefinedKeys } from '@l2beat/shared-pure'
 
+type InteropConfigDiffMuteCallback = (entry: Difference) => boolean
+
+export type InteropConfigDiffFilters = Record<
+  string,
+  InteropConfigDiffMuteCallback[]
+>
+
+export const INTEROP_CONFIG_DIFF_FILTERS = {
+  polygon: [
+    (diff) => diff.path.length === 1 && diff.path[0] === 'lastSyncedBlock',
+  ],
+} satisfies InteropConfigDiffFilters
+
 export interface InteropConfigDiff {
   key: string
   previous: unknown
@@ -26,6 +39,24 @@ export function diffInteropConfigValues(
   current: unknown,
 ): Difference[] {
   return diff(normalizeForDiff(previous), normalizeForDiff(current))
+}
+
+export function removeMutedInteropConfigDiffEntries(
+  interopDiff: InteropConfigDiff,
+  filters: InteropConfigDiffFilters = INTEROP_CONFIG_DIFF_FILTERS,
+): InteropConfigDiff {
+  const filtersForPlugin = filters[interopDiff.key] ?? []
+
+  if (filtersForPlugin.length === 0) {
+    return interopDiff
+  }
+
+  return {
+    ...interopDiff,
+    entries: interopDiff.entries.filter(
+      (entry) => !filtersForPlugin.some((isFiltered) => isFiltered(entry)),
+    ),
+  }
 }
 
 export function formatDiffPath(path: (string | number)[]): string {
@@ -96,5 +127,33 @@ function normalizeForDiff(value: unknown): unknown {
   if (typeof value !== 'object') {
     return value
   }
-  return withoutUndefinedKeys(value)
+
+  if (Array.isArray(value)) {
+    return value.map(normalizeForDiff).sort(byNormalizedValues)
+  }
+
+  const normalizedObject = withoutUndefinedKeys(value)
+
+  return Object.keys(normalizedObject)
+    .sort()
+    .reduce(
+      (result, key) => {
+        result[key] = normalizeForDiff(
+          (normalizedObject as Record<string, unknown>)[key],
+        )
+        return result
+      },
+      {} as Record<string, unknown>,
+    )
+}
+
+function byNormalizedValues(left: unknown, right: unknown): number {
+  return serializeNormalizedValue(left).localeCompare(
+    serializeNormalizedValue(right),
+  )
+}
+
+function serializeNormalizedValue(value: unknown): string {
+  const serialized = JSON.stringify(value)
+  return serialized ?? String(value)
 }

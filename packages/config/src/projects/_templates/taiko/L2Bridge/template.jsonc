@@ -1,6 +1,13 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "context",
+    "getMessageMinGasLimit",
+    "nextMessageId",
+    "proxiableUUID"
+  ],
   "fields": {
+    // uses bytes32("signal_service"), e.g. https://tools.deth.net/string-bytes32-conversion
     "signalService": {
       "handler": {
         "type": "call",
@@ -11,14 +18,38 @@
         ]
       }
     },
-    "proxiableUUID": {
+    "quotaManager": {
       "handler": {
         "type": "call",
-        "method": "function proxiableUUID() view returns (bytes32)",
-        "args": [],
-        "expectRevert": true
-      }
+        "method": "resolve",
+        "args": [
+          "0x71756f74615f6d616e6167657200000000000000000000000000000000000000",
+          1
+        ]
+      },
+      "description": "only relevant if not zero address"
+    },
+    "chainWatchdog": {
+      "handler": {
+        "type": "call",
+        "method": "resolve",
+        "args": [
+          "0x636861696e5f7761746368646f67000000000000000000000000000000000000",
+          1
+        ]
+      },
+      "description": "only relevant if not zero address"
+    },
+    "bridgeWatchdog": {
+      "handler": {
+        "type": "call",
+        "method": "resolve",
+        "args": [
+          "0x6272696467655f7761746368646f670000000000000000000000000000000000",
+          1
+        ]
+      },
+      "description": "only relevant if not zero address"
     }
-  },
-  "ignoreMethods": ["context", "getMessageMinGasLimit", "nextMessageId"]
+  }
 }

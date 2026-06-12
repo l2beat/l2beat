@@ -89,7 +89,7 @@ export function getScalingLivenessColumns(hideProofSystem?: boolean) {
         return (
           <AnomalyIndicator
             anomalies={entry.anomalies}
-            hasTrackedContractsChanged={entry.hasTrackedContractsChanged}
+            href={`/scaling/projects/${entry.slug}#liveness`}
           />
         )
       },

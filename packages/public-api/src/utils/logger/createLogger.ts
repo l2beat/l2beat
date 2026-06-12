@@ -27,6 +27,7 @@ export function createLogger(env: Env): Logger {
       node: env.string('ES_NODE'),
       apiKey: env.string('ES_API_KEY'),
       indexPrefix: env.string('ES_INDEX_PREFIX'),
+      bufferAlertBytes: env.optionalInteger('ES_BUFFER_ALERT_BYTES'),
       flushInterval: env.optionalInteger('ES_FLUSH_INTERVAL'),
     }
 

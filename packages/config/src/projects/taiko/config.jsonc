@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "taiko",
   "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 200,
   "initialAddresses": [
     "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
     "eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
@@ -9,12 +10,18 @@
     "eth:0x2affadeb2ef5e1f2a7f58964ee191f1e88317ecd", // SC: emrgMultisig
     "eth:0xd7da1c25e915438720692bc55eb3a7170ca90321", // SC: standardMultisig
     "eth:0x989E348275b659d36f8751ea1c10D146211650BE", // OptimisticTokenVotingPlugin
-    "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9", // TaikoLabs Prover
+    // "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9", // TaikoLabs Prover, ignored post shasta
+    "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f", // post-Shasta Inbox
     "taiko:0x1670000000000000000000000000000000000001",
-    "taiko:0x1670000000000000000000000000000000010001"
+    "taiko:0x1670000000000000000000000000000000010001",
+    "taiko:0x1670000000000000000000000000000000000002"
   ],
   "names": {},
   "overrides": {
+    "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a": {
+      // this is the pre-shasta mainnetInbox, ignored post shasta
+      "ignoreDiscovery": true
+    },
     "eth:0x280eAbfd252f017B78e15b69580F249F45FB55Fa": {
       "description": "Implementation contract for DAOFallbackProposer",
       "category": "spam"
@@ -22,7 +29,6 @@
     "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": {
       "ignoreMethods": ["proxiableUUID"]
     },
-    // SC members below
     "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894": {
       "category": "spam"
     },
@@ -52,6 +58,24 @@
     },
     "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C": {
       "ignoreMethods": ["proxiableUUID"]
+    },
+    "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": {
+      "fields": {
+        "verifier": {
+          "handler": {
+            "type": "call",
+            "method": "function getVerifier(bytes4 selector) view returns (address)",
+            "args": ["0x73c457ba"]
+          },
+          "description": "Currently used Risc0 verifier contract, selector determined manually from calldata"
+        }
+      }
+    },
+    "taiko:0x1670000000000000000000000000000000000001": {
+      "description": "Bridge escrow holding preminted ETH on Taiko."
+    },
+    "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E": {
+      "category": "spam"
     }
   }
 }

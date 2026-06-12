@@ -8,8 +8,11 @@
  */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { TokenMap } from '../engine/match/TokenMap'
-import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
-import { findParsedAround } from './logScan'
+import { findBestTransferLogByExactAmount, findParsedAround } from './logScan'
+import {
+  getBestEffortTokenFrameworkBridgeType,
+  getTokenFrameworkBridgeType,
+} from './tokenFrameworkBridgeTyping'
 import {
   createEventParser,
   createInteropEventType,
@@ -72,6 +75,9 @@ export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'celo', chain: 'celo' },
   { axelarChainName: 'Avalanche', chain: 'avalanche' },
   { axelarChainName: 'hyperliquid', chain: 'hyperevm' },
+  { axelarChainName: 'monad', chain: 'monad' },
+  { axelarChainName: 'solana', chain: 'solana' },
+  // tempo unsupported
 ])
 
 export const SquidExpressExecutedWithToken = createInteropEventType<{
@@ -131,23 +137,20 @@ export const ContractCallExecuted = createInteropEventType<{
 export class AxelarPlugin implements InteropPlugin {
   readonly name = 'axelar'
 
+  constructor(private oneSidedChains: string[] = []) {}
+
   capture(input: LogToCapture) {
     const expressExecutedWithToken = parseExpressExecutedWithToken(
       input.log,
       null,
     )
     if (expressExecutedWithToken) {
-      const tokenAddress = findParsedAround(
+      const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
+        expressExecutedWithToken.amount,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== expressExecutedWithToken.amount) return
-          return Address32.from(log.address)
-        },
+        (log) => parseTransfer(log, null),
       )
 
       const srcChain = findChain(
@@ -159,7 +162,7 @@ export class AxelarPlugin implements InteropPlugin {
       return [
         SquidExpressExecutedWithToken.create(input, {
           commandId: expressExecutedWithToken.commandId,
-          tokenAddress,
+          tokenAddress: transferMatch.transfer?.logAddress,
           amount: expressExecutedWithToken.amount,
           symbol: expressExecutedWithToken.symbol,
           $srcChain: srcChain === 'Unknown_axelar' ? undefined : srcChain,
@@ -187,20 +190,12 @@ export class AxelarPlugin implements InteropPlugin {
 
     const contractCallWithToken = parseContractCallWithToken(input.log, null)
     if (contractCallWithToken) {
-      const transferData = findParsedAround(
+      const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
+        contractCallWithToken.amount,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== contractCallWithToken.amount) return
-          return {
-            address: Address32.from(log.address),
-            burned: Address32.from(transfer.to) === Address32.ZERO,
-          }
-        },
+        (log) => parseTransfer(log, null),
       )
 
       const dstChain = findChain(
@@ -215,11 +210,13 @@ export class AxelarPlugin implements InteropPlugin {
           destinationContractAddress:
             contractCallWithToken.destinationContractAddress,
           payloadHash: contractCallWithToken.payloadHash,
-          tokenAddress: transferData?.address,
+          tokenAddress: transferMatch.transfer?.logAddress,
           symbol: contractCallWithToken.symbol,
           amount: contractCallWithToken.amount,
           $dstChain: dstChain === 'Unknown_axelar' ? undefined : dstChain,
-          srcWasBurned: transferData?.burned,
+          srcWasBurned: transferMatch.transfer
+            ? transferMatch.transfer.to === Address32.ZERO
+            : undefined,
         }),
       ]
     }
@@ -323,129 +320,204 @@ export class AxelarPlugin implements InteropPlugin {
 
   */
 
-  matchTypes = [ContractCallExecuted]
+  matchTypes = [ContractCallExecuted, ContractCallWithToken]
   match(
-    contractCallExecuted: InteropEvent,
+    event: InteropEvent,
     db: InteropEventDb,
     tokenMap: TokenMap,
   ): MatchResult | undefined {
-    if (ContractCallExecuted.checkType(contractCallExecuted)) {
-      const contractCallApproved = db.find(ContractCallApproved, {
-        commandId: contractCallExecuted.args.commandId,
-      })
-      if (contractCallApproved) {
-        const contractCall = db.find(ContractCall, {
-          ctx: {
-            txHash: contractCallApproved.args.srcTxHash, // TODO: this does not match if axelar chain is used as an intermediate hop, same with the payloadHash
-          },
-        })
-        if (!contractCall) return
-        return [
-          Result.Message('axelar.Message', {
-            app: contractCallExecuted.args.isLayerZeroApp
-              ? 'layerzero-wrapper'
-              : 'unknown',
-            srcEvent: contractCall,
-            dstEvent: contractCallExecuted,
-            extraEvents: [contractCallApproved],
-          }),
-        ]
-      }
+    if (ContractCallExecuted.checkType(event)) {
+      return this.matchExecuted(event, db, tokenMap)
+    }
 
-      const contractCallApprovedWithMint = db.find(
-        ContractCallApprovedWithMint,
-        {
-          commandId: contractCallExecuted.args.commandId,
-        },
-      )
-      if (!contractCallApprovedWithMint) return
+    if (ContractCallWithToken.checkType(event)) {
+      return this.matchOneSidedSent(event, db)
+    }
+  }
 
-      const contractCallWithToken = db.find(ContractCallWithToken, {
+  private matchExecuted(
+    contractCallExecuted: InteropEvent<{
+      commandId: `0x${string}`
+      tokenAddressUnsafe?: Address32
+      amountUnsafe?: bigint
+      isLayerZeroApp?: boolean
+      dstWasMinted?: boolean
+    }>,
+    db: InteropEventDb,
+    tokenMap: TokenMap,
+  ): MatchResult | undefined {
+    const contractCallApproved = db.find(ContractCallApproved, {
+      commandId: contractCallExecuted.args.commandId,
+    })
+    if (contractCallApproved) {
+      const contractCall = db.find(ContractCall, {
         ctx: {
-          txHash: contractCallApprovedWithMint.args.srcTxHash, // TODO: this does not match if axelar chain is used as an intermediate hop, same with the payloadHash
+          txHash: contractCallApproved.args.srcTxHash, // TODO: this does not match if axelar chain is used as an intermediate hop, same with the payloadHash
         },
       })
-      if (!contractCallWithToken) return
-
-      const matchingUnsafeAmount =
-        contractCallApprovedWithMint.args.amount ===
-        contractCallExecuted.args.amountUnsafe
-
-      const expressExecuted = db.find(SquidExpressExecutedWithToken, {
-        commandId: contractCallExecuted.args.commandId,
-      })
-
-      const srcTokenAddress = contractCallWithToken.args.tokenAddress
-      const dstTokenAddress = matchingUnsafeAmount
-        ? contractCallExecuted.args.tokenAddressUnsafe
-        : undefined
-      const srcWasBurned = contractCallWithToken.args.srcWasBurned
-      const dstWasMinted = contractCallExecuted.args.dstWasMinted
-      // we are using this implicitly with
-      // defaultBridgeType = 'burnAndMint' because axelar has axlUSDC
-      const bridgeType = getBridgeType({
-        srcTokenAddress,
-        dstTokenAddress,
-        srcWasBurned,
-        dstWasMinted,
-        srcChain: contractCallWithToken.ctx.chain,
-        dstChain: contractCallExecuted.ctx.chain,
-        tokenMap,
-      })
-
-      const result: MatchResult = []
-      if (expressExecuted) {
-        result.push(
-          // TODO: do we want to count intent fill AND settlement as message/transfer?
-          // INTENT FILL
-          Result.Message('axelar-squid.Message', {
-            app: 'axelar-squid',
-            srcEvent: contractCallWithToken,
-            dstEvent: expressExecuted,
-          }),
-          Result.Transfer('axelar-squid.Transfer', {
-            srcEvent: contractCallWithToken,
-            srcTokenAddress: contractCallWithToken.args.tokenAddress,
-            srcAmount: contractCallWithToken.args.amount,
-            srcWasBurned: contractCallWithToken.args.srcWasBurned,
-            dstEvent: expressExecuted,
-            dstTokenAddress: expressExecuted.args.tokenAddress,
-            dstAmount: expressExecuted.args.amount,
-            dstWasMinted: false,
-            // fast execution special case: the destination is intent-based (never minted)
-            // but the source often is burned since it is part of the token bridge
-            // so this fast execution is non-minting, while the
-            // axelar transfer (settlement) in lock-mint or even burn-mint
-            bridgeType: 'nonMinting',
-          }),
-        )
-      }
-
-      result.push(
+      if (!contractCall) return
+      return [
         Result.Message('axelar.Message', {
-          app: expressExecuted
-            ? 'axelar-tokenbridge-squid-settlement'
-            : 'axelar-tokenbridge',
-          srcEvent: contractCallWithToken,
+          app: contractCallExecuted.args.isLayerZeroApp
+            ? 'layerzero-wrapper'
+            : 'unknown',
+          srcEvent: contractCall,
           dstEvent: contractCallExecuted,
-          extraEvents: [contractCallApprovedWithMint],
+          extraEvents: [contractCallApproved],
         }),
+      ]
+    }
+
+    const contractCallApprovedWithMint = db.find(ContractCallApprovedWithMint, {
+      commandId: contractCallExecuted.args.commandId,
+    })
+    if (!contractCallApprovedWithMint) return
+
+    const contractCallWithToken = db.find(ContractCallWithToken, {
+      ctx: {
+        txHash: contractCallApprovedWithMint.args.srcTxHash, // TODO: this does not match if axelar chain is used as an intermediate hop, same with the payloadHash
+      },
+    })
+
+    const matchingUnsafeAmount =
+      contractCallApprovedWithMint.args.amount ===
+      contractCallExecuted.args.amountUnsafe
+
+    if (!contractCallWithToken) {
+      const srcChain = contractCallApprovedWithMint.args.$srcChain
+      if (!srcChain || !this.oneSidedChains.includes(srcChain)) return
+
+      return [
         Result.Transfer('axelar.Transfer', {
-          srcEvent: contractCallWithToken,
-          srcTokenAddress,
-          srcAmount: contractCallWithToken.args.amount,
-          srcWasBurned,
+          srcChain,
           dstEvent: contractCallExecuted,
-          dstTokenAddress,
+          dstTokenAddress: matchingUnsafeAmount
+            ? contractCallExecuted.args.tokenAddressUnsafe
+            : undefined,
           dstAmount: matchingUnsafeAmount
             ? contractCallApprovedWithMint.args.amount
             : undefined,
-          dstWasMinted,
-          bridgeType,
+          dstWasMinted: contractCallExecuted.args.dstWasMinted,
+          bridgeType: getBestEffortTokenFrameworkBridgeType({
+            srcWasBurned: undefined,
+            dstWasMinted: contractCallExecuted.args.dstWasMinted,
+          }),
+          extraEvents: [contractCallApprovedWithMint],
+        }),
+      ]
+    }
+
+    const expressExecuted = db.find(SquidExpressExecutedWithToken, {
+      commandId: contractCallExecuted.args.commandId,
+    })
+
+    const srcTokenAddress = contractCallWithToken.args.tokenAddress
+    const dstTokenAddress = matchingUnsafeAmount
+      ? contractCallExecuted.args.tokenAddressUnsafe
+      : undefined
+    const srcWasBurned = contractCallWithToken.args.srcWasBurned
+    const dstWasMinted = contractCallExecuted.args.dstWasMinted
+    // Axelar token bridge is not a token framework, but the local supply-action
+    // model is the same. We use the helper out of context, with the implicit
+    // defaultBridgeType = 'burnAndMint' because Axelar has axlUSDC.
+    const bridgeType = getTokenFrameworkBridgeType({
+      srcTokenAddress,
+      dstTokenAddress,
+      srcWasBurned,
+      dstWasMinted,
+      srcChain: contractCallWithToken.ctx.chain,
+      dstChain: contractCallExecuted.ctx.chain,
+      tokenMap,
+    })
+
+    const result: MatchResult = []
+    if (expressExecuted) {
+      result.push(
+        // TODO: do we want to count intent fill AND settlement as message/transfer?
+        // INTENT FILL
+        Result.Message('axelar-squid.Message', {
+          app: 'axelar-squid',
+          srcEvent: contractCallWithToken,
+          dstEvent: expressExecuted,
+        }),
+        Result.Transfer('axelar-squid.Transfer', {
+          srcEvent: contractCallWithToken,
+          srcTokenAddress: contractCallWithToken.args.tokenAddress,
+          srcAmount: contractCallWithToken.args.amount,
+          srcWasBurned: contractCallWithToken.args.srcWasBurned,
+          dstEvent: expressExecuted,
+          dstTokenAddress: expressExecuted.args.tokenAddress,
+          dstAmount: expressExecuted.args.amount,
+          dstWasMinted: false,
+          // fast execution special case: the destination is intent-based (never minted)
+          // but the source often is burned since it is part of the token bridge
+          // so this fast execution is non-minting, while the
+          // axelar transfer (settlement) in lock-mint or even burn-mint
+          bridgeType: 'nonMinting',
         }),
       )
-
-      return result
     }
+
+    result.push(
+      Result.Message('axelar.Message', {
+        app: expressExecuted
+          ? 'axelar-tokenbridge-squid-settlement'
+          : 'axelar-tokenbridge',
+        srcEvent: contractCallWithToken,
+        dstEvent: contractCallExecuted,
+        extraEvents: [contractCallApprovedWithMint],
+      }),
+      Result.Transfer('axelar.Transfer', {
+        srcEvent: contractCallWithToken,
+        srcTokenAddress,
+        srcAmount: contractCallWithToken.args.amount,
+        srcWasBurned,
+        dstEvent: contractCallExecuted,
+        dstTokenAddress,
+        dstAmount: matchingUnsafeAmount
+          ? contractCallApprovedWithMint.args.amount
+          : undefined,
+        dstWasMinted,
+        bridgeType,
+      }),
+    )
+
+    return result
+  }
+
+  private matchOneSidedSent(
+    contractCallWithToken: InteropEvent<{
+      sender: EthereumAddress
+      destinationContractAddress: string
+      payloadHash: `0x${string}`
+      tokenAddress?: Address32
+      symbol: string
+      amount: bigint
+      $dstChain?: string
+      srcWasBurned?: boolean
+    }>,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
+    const dstChain = contractCallWithToken.args.$dstChain
+    if (!dstChain || !this.oneSidedChains.includes(dstChain)) return
+
+    const hasCounterpart = db.find(ContractCallApprovedWithMint, {
+      srcTxHash: contractCallWithToken.ctx.txHash as `0x${string}`,
+    })
+    if (hasCounterpart) return
+
+    return [
+      Result.Transfer('axelar.Transfer', {
+        srcEvent: contractCallWithToken,
+        dstChain,
+        srcTokenAddress: contractCallWithToken.args.tokenAddress,
+        srcAmount: contractCallWithToken.args.amount,
+        srcWasBurned: contractCallWithToken.args.srcWasBurned,
+        bridgeType: getBestEffortTokenFrameworkBridgeType({
+          srcWasBurned: contractCallWithToken.args.srcWasBurned,
+          dstWasMinted: undefined,
+        }),
+      }),
+    ]
   }
 }

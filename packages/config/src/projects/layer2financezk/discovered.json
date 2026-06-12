@@ -10,19 +10,21 @@
       "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
-          "permission": "governStarknet",
-          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
-          "role": ".$admin"
-        },
-        {
           "permission": "interact",
           "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
-          "permission": "operateStarkEx",
+          "permission": "interact",
           "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
           "role": ".operators"
         },
         {
@@ -282,8 +284,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "operateStarkEx",
+          "permission": "interact",
           "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
           "role": ".operators"
         }
       ]
@@ -767,5 +770,5 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 23667402 },
-  "permissionsConfigHash": "0x3dd4c3416e4ea233c251c36e36e5edb123aa9c4db8fe35cb6748dad047d32a1a"
+  "permissionsConfigHash": "0x8d8988a05711b34e6afe9c324d6ffd3d065729fe81a3eabb0b0e40fc628f795e"
 }

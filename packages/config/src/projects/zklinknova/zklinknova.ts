@@ -1,4 +1,5 @@
 import {
+  type ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -382,7 +383,10 @@ export const zklinknova: ScalingProject = {
   },
   stage: { stage: 'NotApplicable' },
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+      executionDelay: 0,
+    },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       upgradeDelaySeconds,
@@ -685,6 +689,12 @@ export const zklinknova: ScalingProject = {
       ],
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkVerifiers: [
+      discovery.getContractValue<ChainSpecificAddress>(
+        'LineazkLink',
+        'getVerifier',
+      ),
+    ],
   },
   permissions: {
     linea: {

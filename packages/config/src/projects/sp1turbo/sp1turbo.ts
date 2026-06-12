@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -9,6 +9,7 @@ export const sp1turbo: BaseProject = {
   slug: 'sp1turbo',
   name: 'SP1 Turbo',
   shortName: undefined,
+  aliases: ['Succinct'],
   addedAt: UnixTime.fromDate(new Date('2025-07-08')),
   statuses: {
     yellowWarning: undefined,
@@ -100,6 +101,10 @@ export const sp1turbo: BaseProject = {
     ],
     projectsForTvs: [
       {
+        projectId: ProjectId('fluent'),
+        sinceTimestamp: UnixTime(1776599267), // first onchain commitBatch 2026-04-19
+      },
+      {
         projectId: ProjectId('forknet'),
         sinceTimestamp: UnixTime(1753882500),
       },
@@ -131,6 +136,7 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('galxegravity'),
         sinceTimestamp: UnixTime(1745880540),
+        untilTimestamp: UnixTime(1763420400),
       },
       {
         projectId: ProjectId('rari'),
@@ -199,6 +205,7 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('morph'),
         sinceTimestamp: UnixTime(1737359447),
+        untilTimestamp: UnixTime(1780559831),
       },
       // archived projects
       {
@@ -225,23 +232,49 @@ export const sp1turbo: BaseProject = {
         projectId: ProjectId('celo'),
         sinceTimestamp: UnixTime(1765324800),
       },
+      {
+        projectId: ProjectId('appchain'),
+        sinceTimestamp: UnixTime(1776165024),
+        untilTimestamp: UnixTime(1780326419),
+      },
     ],
     verifierHashes: [
       {
         hash: '0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7',
+        name: 'SP1 Turbo Plonk v5.0.0',
+        sourceLink:
+          'https://github.com/succinctlabs/sp1/tree/v5.0.0/crates/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459',
             ),
-            chain: 'ethereum',
           },
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0xFF5Adab685362DC4C33536a65aF5873738D1216B',
             ),
-            chain: 'ethereum',
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'arbitrum',
+              '0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x059adC0Db833f7cCb12dC41BE0017626337AfA63',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x294a1Ee119C4B2510530572481A6a50892A9ae9f',
+            ),
           },
         ],
         verificationStatus: 'successful',
@@ -283,13 +316,20 @@ The script will generate Plonk verifier smart contract with verification keys an
       },
       {
         hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',
+        name: 'SP1 Turbo Groth16 v5.0.0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
             ),
-            chain: 'ethereum',
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'arbitrum',
+              '0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D',
+            ),
           },
           // {
           //   address: EthereumAddress(
@@ -332,25 +372,6 @@ export SP1_ALLOW_DEPRECATED_HOOKS=true  # fixes compilation errors
 make build-circuits
 \`\`\`
       `,
-      },
-      {
-        hash: '0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0x045d4BC73Bd1918192f34e98532A5272Ef620423',
-            ),
-            chain: 'ethereum',
-          },
-          {
-            address: EthereumAddress(
-              '0x5ff102a4A4Ce2040288a797CE4CCCa85eE1E2d70',
-            ),
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'notVerified',
       },
     ],
   },

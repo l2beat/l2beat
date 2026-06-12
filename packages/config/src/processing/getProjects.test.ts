@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared'
 import {
   assert,
-  ChainSpecificAddress,
+  type ChainSpecificAddress,
   EthereumAddress,
   type ProjectId,
 } from '@l2beat/shared-pure'
@@ -139,7 +139,6 @@ describe('getProjects', () => {
       // It can be squashed, but it's more readable this way
       const target = [...layer2s, ...layer3s].filter(
         (project) =>
-          !project.isUpcoming &&
           !project.reviewStatus &&
           !project.archivedAt &&
           // It makes no sense to list them on the DA-BEAT
@@ -228,8 +227,7 @@ describe('getProjects', () => {
         const usedInVerifiers = uniq(
           project.zkCatalogInfo.verifierHashes.flatMap((v) =>
             v.knownDeployments.flatMap(
-              (d) =>
-                d.overrideUsedIn ?? usageMap.get(`${d.chain}-${d.address}`),
+              (d) => d.overrideUsedIn ?? usageMap.get(`${d.address}`),
             ),
           ),
         ).filter((p) => p !== undefined)
@@ -259,6 +257,47 @@ describe('getProjects', () => {
             expect(usedInVerifiersSet.has(tvsProject)).toEqual(true)
           })
         }
+      })
+    }
+  })
+
+  describe('scaling project zkVerifiers are configured in zk catalog', () => {
+    const zkCatalogAddresses = new Set<ChainSpecificAddress>()
+    for (const project of projects) {
+      if (!project.zkCatalogInfo) continue
+      for (const verifierHash of project.zkCatalogInfo.verifierHashes) {
+        for (const deployment of verifierHash.knownDeployments) {
+          zkCatalogAddresses.add(deployment.address)
+        }
+      }
+    }
+
+    for (const project of projects) {
+      if (!project.scalingInfo || !project.contracts?.zkVerifiers) continue
+      for (const verifier of project.contracts.zkVerifiers) {
+        it(`${project.id} verifier ${verifier} is in at least one zk catalog project`, () => {
+          expect(zkCatalogAddresses.has(verifier)).toEqual(true)
+        })
+      }
+    }
+  })
+
+  describe('zk catalog projects are archived when all their projects are archived', () => {
+    for (const project of projects) {
+      if (!project.zkCatalogInfo) continue
+
+      const tvsProjects = project.zkCatalogInfo.projectsForTvs ?? []
+      if (tvsProjects.length === 0) continue
+
+      const allTvsProjectsArchived = tvsProjects.every((tvsProject) => {
+        const tvsProjectConfig = projectsById.get(tvsProject.projectId)
+        return tvsProjectConfig?.archivedAt !== undefined
+      })
+
+      if (!allTvsProjectsArchived) continue
+
+      it(`${project.id} should be archived because all projects using it are archived`, () => {
+        expect(project.archivedAt).not.toEqual(undefined)
       })
     }
   })
@@ -698,11 +737,7 @@ describe('getProjects', () => {
 
   describe('all new projects are discovery driven', () => {
     const isNormalProject = (p: BaseProject) => {
-      return (
-        p.isScaling === true &&
-        p.archivedAt === undefined &&
-        p.isUpcoming !== true
-      )
+      return p.scalingInfo && p.archivedAt === undefined
     }
 
     const filteredProjects = projects.filter(
@@ -756,10 +791,10 @@ describe('getProjects', () => {
 
 // This is simpler version of getContractUtils that we have in FE. It's used only for testing.
 function getUsageMap(projects: BaseProject[]) {
-  const usageMap = new Map<`${string}-${EthereumAddress}`, ProjectId[]>()
+  const usageMap = new Map<`${ChainSpecificAddress}`, ProjectId[]>()
 
-  function addUsage(chain: string, address: EthereumAddress, usage: ProjectId) {
-    const key = `${chain}-${address}` as const
+  function addUsage(address: ChainSpecificAddress, usage: ProjectId) {
+    const key = `${address}` as const
     const uses = usageMap.get(key)
     if (!uses) {
       usageMap.set(key, [usage])
@@ -771,19 +806,14 @@ function getUsageMap(projects: BaseProject[]) {
   }
 
   for (const project of projects) {
-    if (!(project.isScaling || project.daBridge) || !project.contracts) continue
+    if (!(project.scalingInfo || project.daBridge) || !project.contracts)
+      continue
 
-    for (const [chain, contracts] of Object.entries(
-      project.contracts.addresses,
-    )) {
+    for (const [, contracts] of Object.entries(project.contracts.addresses)) {
       for (const contract of contracts) {
-        addUsage(
-          chain,
-          ChainSpecificAddress.address(contract.address),
-          project.id,
-        )
+        addUsage(contract.address, project.id)
         for (const impl of contract.upgradeability?.implementations ?? []) {
-          addUsage(chain, ChainSpecificAddress.address(impl), project.id)
+          addUsage(impl, project.id)
         }
       }
     }

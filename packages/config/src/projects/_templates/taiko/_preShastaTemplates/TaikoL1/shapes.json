@@ -1,0 +1,48 @@
+{
+  "TaikoL1": {
+    "hash": "0x66af9831680a42b386063fc51fdf7e250744806d9b22174283fc974f57c8d81c",
+    "address": [
+      "eth:0x4e030b19135869F6fd926614754B7F9c184E2B83",
+      "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+      "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
+    ],
+    "blockNumber": 22565516
+  },
+  "TaikoL1PostPacaya_sharingPct75": {
+    "hash": "0x2d43465181464fcad433c32aba4f2f07e8c880a86dd78cc4291cd85d0d29c2e4",
+    "address": [
+      "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319",
+      "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+      "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
+    ],
+    "blockNumber": 22923197
+  },
+  "TaikoL1PostPacaya_maxbatches8": {
+    "hash": "0x06e83166b8782255cf2f6c3bfcb53baf6f6886e8823299dac3d5af61d1c68499",
+    "address": [
+      "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F",
+      "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+      "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"
+    ],
+    "blockNumber": 23123976
+  },
+  "TaikoL1PostPacaya_2908": {
+    "hash": "0xf120b8e4526bdd313f5abacbb327eb5ee804918fed4c7c5d26dbd3602d24ce80",
+    "address": [
+      "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7",
+      "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+      "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8"
+    ],
+    "blockNumber": 23246164
+  },
+  "TaikoL1PostPacaya_251203": {
+    "hash": "0x29060c7497071aae24fba9411a6b212a882d103fd6d42b786249b42baa22d03b",
+    "address": "eth:0xB0600e011e02eD35A142B45B506B16A35493c3F5",
+    "blockNumber": 23932452
+  },
+  "MainnetInbox_preshasta": {
+    "hash": "0xd4ae07d9c2bcb875fd56ed38da048fc8ed7ae74b22e3c0d5ae49164f3dde6d4a",
+    "address": "eth:0x38Dd73fed93F8051E7A0dDd6FB3b9E7C25668187",
+    "blockNumber": 24791653
+  }
+}

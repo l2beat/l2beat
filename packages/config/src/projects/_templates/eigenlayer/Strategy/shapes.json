@@ -5,7 +5,7 @@
     "blockNumber": 22188285
   },
   "StrategyBase": {
-    "hash": "0x6be5dd10217b2d3a9bca287766865129906f886adb603752ddcb21538ef683ea",
+    "hash": "0x57478c3f5f5ce6b3f294d2585c9c4af1c5dc7a7079e8410ebd2d5b78de1689b8",
     "address": "eth:0xe9FA8F904d97854C7389b68923262ADCC6C27827",
     "blockNumber": 22188285
   },
@@ -15,17 +15,17 @@
     "blockNumber": 22188285
   },
   "StrategyBase.sol": {
-    "hash": "0xa8977021c807da9ada79ae0a11a62aa80d60ee5c15615df7acdd595f6dfbca9d",
+    "hash": "0x6db74cc2deb36653508413b6b8410287525e7d6a8057796f08949faac118dc2b",
     "address": "eth:0x0EC17ef9c00F360DB28CA8008684a4796b11E456",
     "blockNumber": 22424645
   },
   "Strategy_2": {
-    "hash": "0x162ffe3ef6e872099c9fd14d63e6aa37922cde251b0e9af8360ccf20aa375274",
+    "hash": "0x609cde4839409bd4e16a6e44bb79bd2a125664ea23d9870854d72c0a7fb62c7c",
     "address": "eth:0xD4d1746142642Db4c1ab17b03B9c58baac913E5B",
     "blockNumber": 23083601
   },
   "Strategy_bEIGEN": {
-    "hash": "0xb58160c9903763d4c6dd724e3ce4e687fa5eeff34a50885a3a3b614aee688553",
+    "hash": "0xde2da45f8d3a0fae29c7891b340d3312062f75586f46fabbf9ec0394d70b981e",
     "address": "eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be",
     "blockNumber": 23083608
   },
@@ -40,8 +40,18 @@
     "blockNumber": 24350294
   },
   "StrategyBase_v1.9.0": {
-    "hash": "0x5234a1c479bda8867e26056b51731358e59cec30e9e5f7f057e545c395f72f05",
+    "hash": "0xf9100f1f6bd21e12ba7b160b4962d47a1653aee897ea9bf193e3c8ed83d2d303",
     "address": "eth:0xd33AAccc7E1a29Bc8E09Af55F8fa6fF3301e2780",
     "blockNumber": 24350294
+  },
+  "Strategy_v1.12.0": {
+    "hash": "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b",
+    "address": "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230",
+    "blockNumber": 24643873
+  },
+  "Strategy_bEIGEN_v1.12.0": {
+    "hash": "0xfe47d627ac94734b18f2a972ade182f47e93f82b06e081000845b09ca0de1503",
+    "address": "eth:0x509Aadb99487182b21fF4E9e7Eb362a9Ea8E8f40",
+    "blockNumber": 24643873
   }
 }

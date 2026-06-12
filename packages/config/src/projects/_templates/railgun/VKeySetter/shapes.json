@@ -1,0 +1,12 @@
+{
+  "VKeySetter_64DA": {
+    "hash": "0x9be46f47e8f61b9d373f7d991c68bc9d68a40d875ddb9da58563121fdeb69a85",
+    "address": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+    "blockNumber": 22919063
+  },
+  "VKeySetter_9086": {
+    "hash": "0x302a2769069056aa8c4a9be3ba0d53d9d831149d84f14b7650cc2ff13729d27f",
+    "address": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+    "blockNumber": 16709316
+  }
+}

@@ -21,6 +21,7 @@ export const layer2finance: ScalingProject = {
   capability: 'universal',
   display: {
     name: 'Layer2.Finance',
+    aliases: ['Celer'],
     slug: 'layer2finance',
     warning:
       'Currently the TVS is calculated incorrectly, because it does not take assets locked in DeFi into account.',

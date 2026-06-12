@@ -23,6 +23,18 @@ export const celo: ScalingProject = opStackL2({
   additionalBadges: [BADGES.Other.MigratedFromL1, BADGES.Stack.OPSuccinct],
   daProvider: EIGENDA_DA_PROVIDER(true, DA_LAYERS.ETH_BLOBS),
   isPartOfSuperchain: true,
+  stage1Principle: false,
+  daAttestedByIndependentParty: true,
+  daVerifierSecureOnL1: true,
+  daVerifier7DayExitWindow: false,
+  daCommitteeDecentralized: true,
+  daVerifier30DayExitWindow: false,
+  daMechanismEconomicSecurity: false,
+  zkVerifierContractsReproducible: true,
+  nodeSourceLink: 'https://github.com/celo-org/op-geth',
+  proverSourceLink: 'https://github.com/succinctlabs/sp1',
+  securityCouncilReference:
+    'https://docs.celo.org/home/protocol/security-council',
   additionalStateValidationReferences: [
     {
       url: 'https://docs.celo.org/home/protocol/challengers',
@@ -86,7 +98,7 @@ export const celo: ScalingProject = opStackL2({
     ],
   },
   nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
   interopConfig: {
     name: 'Celo Canonical',
     durationSplit: {

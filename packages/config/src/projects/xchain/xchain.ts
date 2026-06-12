@@ -17,8 +17,10 @@ export const xchain: ScalingProject = orbitStackL2({
     REASON_FOR_BEING_OTHER.SMALL_DAC,
   ],
   display: {
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+    redWarning: {
+      text: 'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+      detailAnchor: 'permissions',
+    },
     name: 'XCHAIN',
     slug: 'xchain',
     description:

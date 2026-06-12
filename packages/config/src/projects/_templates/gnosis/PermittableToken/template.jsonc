@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "$admin": {
+      "handler": {
+        "type": "hardcoded",
+        "value": "0x0000000000000000000000000000000000000000" // non-upgradeable (bug: 0x00 still gets the permission)
+      },
+      "permissions": []
+    },
+    "$implementation": {
+      "description": "Address of the underlying token logic. The TokenProxy constructor permanently sets this slot, meaning this proxy is explicitly non-upgradeable."
+    },
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint the token, update the designated bridge contract, recover unsupported tokens accidentally sent to the contract and set the `mintingFinished` state, which disallows further minting."
+        }
+      ]
+    },
+    "bridgeContract": {
+      "description": "Recognized bridge contract. Token transfers to this address automatically trigger a call to `onTokenTransfer()`, which is by default the cross-chain bridging operation.",
+      "severity": "HIGH"
+    }
+  },
+  "ignoreInWatchMode": ["totalSupply"]
+}

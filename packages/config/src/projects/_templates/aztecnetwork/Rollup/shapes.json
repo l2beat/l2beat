@@ -1,8 +1,7 @@
 {
   "Rollup.sol": {
-    "hash": "0x21cee9d37dad194e69c515e0f50b13b0dcc334145b92dc9e962db46eb134cac3",
+    "hash": "0xa60bb5f8f4c3654fa6cc8d33bfde2b72af58a55740d815a0c52832dca5ec3a57",
     "address": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
-    "chain": "ethereum",
     "blockNumber": 24590324
   }
 }

@@ -1,14 +1,7 @@
-import { CountBadge } from '~/components/badge/CountBadge'
-import {
-  DirectoryTabs,
-  DirectoryTabsContent,
-  DirectoryTabsList,
-  DirectoryTabsTrigger,
-} from '~/components/core/DirectoryTabs'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
-import { ScalingUpcomingTable } from '~/pages/scaling/upcoming/components/table/ScalingUpcomingTable'
 import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { EcosystemProjectsTable } from './EcosystemProjectsTable'
 
@@ -19,10 +12,7 @@ interface Props {
 export function EcosystemProjectPageTables({ ecosystem }: Props) {
   const filterEntries = useFilterEntries()
 
-  const entries = {
-    liveProjects: ecosystem.liveProjects.filter(filterEntries),
-    upcomingProjects: ecosystem.upcomingProjects.filter(filterEntries),
-  }
+  const entries = ecosystem.liveProjects.filter(filterEntries)
 
   const initialSort = {
     id: '#',
@@ -31,37 +21,15 @@ export function EcosystemProjectPageTables({ ecosystem }: Props) {
 
   return (
     <>
-      <TableFilters
-        entries={[...ecosystem.liveProjects, ...ecosystem.upcomingProjects]}
-        className="max-md:px-0"
-      />
-      <DirectoryTabs
-        defaultValue="live"
-        className="max-md:-mx-4 rounded-b-none p-0!"
-      >
-        <DirectoryTabsList>
-          <DirectoryTabsTrigger value="live">
-            Live <CountBadge>{entries.liveProjects.length}</CountBadge>
-          </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="upcoming">
-            Upcoming
-            <CountBadge>{entries.upcomingProjects.length}</CountBadge>
-          </DirectoryTabsTrigger>
-        </DirectoryTabsList>
+      <TableFilters entries={ecosystem.liveProjects} className="max-md:mt-4" />
+      <PrimaryCard className="max-md:-mx-4 mt-4 max-md:rounded-none">
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="live">
-            <EcosystemProjectsTable
-              entries={entries.liveProjects}
-              ecosystemId={ecosystem.id}
-            />
-          </DirectoryTabsContent>
+          <EcosystemProjectsTable
+            entries={entries}
+            ecosystemId={ecosystem.id}
+          />
         </TableSortingProvider>
-        <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="upcoming">
-            <ScalingUpcomingTable entries={entries.upcomingProjects} />
-          </DirectoryTabsContent>
-        </TableSortingProvider>
-      </DirectoryTabs>
+      </PrimaryCard>
     </>
   )
 }

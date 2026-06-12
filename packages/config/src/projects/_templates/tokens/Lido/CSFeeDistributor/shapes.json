@@ -1,11 +1,11 @@
 {
   "CSFeeDistributor": {
-    "hash": "0xd5604f959d89ec8d8a68b4679f1ac04a3e991d52f605de25f20be7f57a4e669b",
+    "hash": "0xd84d170162ff8b04d08037377740832d3a2aad7accaf8f1fe91faac16a630376",
     "address": "eth:0x17Fc610ecbbAc3f99751b3B2aAc1bA2b22E444f0",
     "blockNumber": 22188285
   },
   "CSFeeDistributor_v2": {
-    "hash": "0x881e365358bb714cd1d4c59279039f33010f934835d0bd8406443a9bb43c5b9f",
+    "hash": "0xd9dc270d40f391b4b91c286bc179319e2886781eeeb5d1744dea73ed801c4f1b",
     "address": "eth:0x5DCF7cF7c6645E9E822a379dF046a8b0390251A1",
     "blockNumber": 23519375
   }

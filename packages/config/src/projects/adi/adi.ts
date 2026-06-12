@@ -17,10 +17,11 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getZKStackVerifiers } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('adi')
 
@@ -199,7 +200,7 @@ export const adi: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -263,7 +264,8 @@ export const adi: ScalingProject = {
       EXITS.FORCED_MESSAGING('forced-messages'),
     ],
   },
-  upgradesAndGovernance: `
+  upgradesAndGovernance: {
+    content: `
 Upgrades are managed by a Governance smart contract on L1. The owner of smart contract (${govOwnerAddress}) can schedule either transparent or shadow proposals.
 Transparent proposals have full upgrade data onchain when scheduled. Shadow proposals post only the hash of the upgrade data onchain when proposed, and the full upgrade data during execution.
 
@@ -271,6 +273,7 @@ Scheduled proposals must wait a minimal delay before being executed (currently $
 
 Currently, the governance process does not involve ADI token holders. See this link for more info: [https://docs.adi.foundation/appendix/appendix-b-governance](https://docs.adi.foundation/appendix/appendix-b-governance).
   `,
+  },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
@@ -278,6 +281,7 @@ Currently, the governance process does not involve ADI token holders. See this l
       CONTRACTS.UPGRADE_NO_DELAY_RISK, // There is a Governance minDelay, but it is set to 0 now. This should be updated if minDelay increases
     ],
     // zkProgramHashes: [ZK_PROGRAM_HASHES(l2BootloaderHash)],  still need to check how this actually works with Airbender
+    zkVerifiers: getZKStackVerifiers(discovery, false),
   },
   stateValidation: {
     description:

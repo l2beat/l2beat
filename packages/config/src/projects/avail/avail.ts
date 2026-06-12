@@ -9,8 +9,6 @@ export const avail: BaseProject = {
   name: 'Avail',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
-  // tags
-  isDaLayer: true,
   // data
   statuses: {
     yellowWarning: undefined,

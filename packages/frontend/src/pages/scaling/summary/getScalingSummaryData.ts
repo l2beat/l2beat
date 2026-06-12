@@ -33,8 +33,8 @@ export async function getScalingSummaryData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/summary/opengraph-image.png',
         },
       }),
@@ -58,19 +58,27 @@ async function getCachedData() {
   )
   const [entries] = await Promise.all([
     getScalingSummaryEntries(),
-    helpers.tvs.recategorisedChart.prefetch({
-      range: tvsChartRange,
-      filter: { type: 'layer2' },
-    }),
-    helpers.activity.recategorisedChart.prefetch({
-      range: activityChartRange,
-      filter: { type: 'all' },
-    }),
-    helpers.tvs.table.prefetch({
-      type: 'rollups',
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
-    }),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.tvs.recategorisedChart.queryOptions({
+        range: tvsChartRange,
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens: true,
+        filter: { type: 'layer2' },
+      }),
+    ),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.activity.recategorisedChart.queryOptions({
+        range: activityChartRange,
+        filter: { type: 'all' },
+      }),
+    ),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.tvs.table.queryOptions({
+        type: 'rollups',
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens: true,
+      }),
+    ),
   ])
 
   return {

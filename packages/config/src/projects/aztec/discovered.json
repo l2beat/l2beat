@@ -1,7 +1,7 @@
 {
   "name": "aztec",
   "timestamp": 1747043363,
-  "configHash": "0xe30954f1f437d3dd2685463c8dddb83df21223564ab948e06157f53a08165b70",
+  "configHash": "0x8bdd1aa50abfc09ed92238ffe164f8c0c4acbafe5eec0abbac4f6eed15481d7c",
   "entries": [
     {
       "address": "eth:0x1D93fE338A035f297819EA867275661a4f5B4fdD",
@@ -14,11 +14,12 @@
       "type": "Contract",
       "template": "aztecv1/AztecFeeDistributor",
       "sourceHashes": [
-        "0x13139c06d2946718f6b4470f6346e54f4e2b26075fe5daa3b3a631092f7dd76e"
+        "0xe40f63f80dfb4ee0a5cdacbc4527030d3aa33252e5dd11fcae487ffba3ee38ef"
       ],
       "proxyType": "immutable",
       "description": "Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.",
       "ignoreInWatchMode": ["txFeeBalance"],
+      "deployerAddress": "eth:0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",
       "sinceTimestamp": 1619631231,
       "sinceBlock": 12330310,
       "values": {
@@ -48,10 +49,11 @@
       "type": "Contract",
       "template": "aztecv1/TurboVerifier",
       "sourceHashes": [
-        "0x72846aa5544e4499c54463014cbacb03ad291385be297b56c638ccfb15717b8b"
+        "0x0107cb80d1b32a9caa69a09106fbac1b902447a8bab90fa84c2641697ffb7fd6"
       ],
       "proxyType": "immutable",
       "description": "Turbo Plonk ZK verifier.",
+      "deployerAddress": "eth:0x36bB84D28Bb2d9772158cc9A09feaa5472Ebfd32",
       "sinceTimestamp": 1707995675,
       "sinceBlock": 19232962,
       "values": { "$immutable": true },
@@ -65,7 +67,7 @@
       "type": "Contract",
       "template": "aztecv1/RollupProcessor",
       "sourceHashes": [
-        "0xc055a6555317d1508d60d0c1bf5b2332973126ca1ba545b095e733d95e490844"
+        "0x428db99da42e85b2493386db1e8328805b9ace32faa93a787f2451603e5c9043"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": [
@@ -84,6 +86,7 @@
         "totalPendingDeposit",
         "totalWithdrawn"
       ],
+      "deployerAddress": "eth:0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",
       "sinceTimestamp": 1614799636,
       "sinceBlock": 11967192,
       "values": {
@@ -178,10 +181,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD4CD0b1EF54E8E4D73f68b01b5ccc125b13E3d1e",
       "sinceTimestamp": 1610552620,
       "sinceBlock": 11647532,
       "values": {

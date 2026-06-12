@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x4cf2abfa149808c2aec4c079ea6709cc8436f8d4
+
+# Diff at Tue, 09 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1763728682
+- current timestamp: 1763728682
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763728682 (main branch discovery), not current.
+
+```diff
+    EOA  (base:0x63d02F40A14c54283D5Dc3451d3Ed4DC134833e5) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (base:0xADE1F8C181934052fD1958F06B63Ef0D875803C5) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (base:0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xf0e93298c00b8644d44a7cb30e18285c624e8146
 
 # Diff at Fri, 21 Nov 2025 12:39:19 GMT:

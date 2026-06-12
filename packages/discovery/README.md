@@ -20,7 +20,7 @@ You also MUST install an environment file called `.env` in the `packages/config`
 - `l2b discover [chain] [project]` run discovery for the project (e.g., `pnpm discover ethereum optimism`)
 - `l2b discover --help` print out all the possible switches for discovery
 
-A list of currently supported chains is [here](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts).
+A list of currently supported chains is [here](./src/config/chains.ts).
 In the case you have discovery of the same project on multiple chains, you can discover all of them for a single project running: `l2b discover all [project]`.
 It's possible to discover all projects that contain a given address by running `l2b discover (<chain> | all) [address]`, it's useful when a change to a shared multisig has occurred.
 
@@ -37,7 +37,7 @@ Discovery is based on two sources of information: the chain's RPC and it's explo
 To run you will need to provide the RPC url to use: (`CHAIN_RPC_URL_FOR_DISCOVERY`).
 Explorer is also required, most chains use Etherscan, for those that do use it, it's enough to configure only (`ETHERSCAN_API_KEY_FOR_DISCOVERY`).
 If your chain uses Blockscout you don't need to provide it.
-Chain information is already precompiled in the file mentioned [above](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts).
+Chain information is already precompiled in the file mentioned [above](./src/config/chains.ts).
 It stores information as the name, chain id, configuration of the multicall contract and the explorer instance.
 Adding a new chain boils down to just adding a new entry to the array and filling out all the data.
 
@@ -602,6 +602,8 @@ The event handler allows you to query and process blockchain events to track sta
 - `select` - event parameter(s) to extract. Accepts a single string or array of strings (e.g., `"user"` or `["batchIndex", "chainId"]`)
 - `groupBy` - (optional) groups results by the specified event parameter. Returns an object with grouped keys when used.
 - `ignoreRelative` - (optional, default: `false`) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+- `flatten` - (optional, add/remove only) expands array-valued selected fields into one row per element.
+- `dedupBy` - (optional, add/remove only) field(s) that define row identity; later add/remove match on these while other selected fields stay in the output. Defaults to `select`.
 - `add` - (optional) configuration for events that add entries:
   - `event` - event name(s) to listen to (string or array).
   - `where` - (optional) conditional filter using a LISP like format `[OPERATOR, ...args]`.

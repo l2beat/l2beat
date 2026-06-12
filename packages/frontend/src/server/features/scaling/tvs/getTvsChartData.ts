@@ -2,7 +2,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { ChartRange } from '~/utils/range/range'
+import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import {
   getSummedTvsValues,
@@ -13,7 +13,6 @@ import {
   createTvsProjectsFilter,
   TvsProjectFilter,
 } from './utils/projectFilterUtils'
-import { rangeToResolution } from './utils/range'
 
 export const TvsChartDataParams = v.object({
   range: ChartRange,
@@ -66,7 +65,7 @@ export async function getTvsChart({
 
   const projectsFilter = createTvsProjectsFilter(filter)
   const tvsProjects = await getTvsProjects(projectsFilter, {
-    withoutArchivedAndUpcoming: forSummary,
+    withoutArchived: forSummary,
   })
   if (tvsProjects.length === 0) {
     return { chart: [], syncedUntil: UnixTime.now() }

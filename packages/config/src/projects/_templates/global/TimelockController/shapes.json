@@ -1,23 +1,27 @@
 {
   "TimelockController": {
-    "hash": "0xc4d0d6be09d9d589447b5e4983d9fb98fc772a22d463cef44caa7bd943eff26d",
+    "hash": "0xf1c1bcdf800cd074b5987af3602d4d084ca9b584b10e61e3b67667182b17eabb",
     "address": "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
     "blockNumber": 22188285
   },
   "TimelockController_Vector": {
-    "hash": "0x98201d53847b5f763bccbb14f9d4e7ffa8a4ed16c8a4a388949f76850c3d1671",
+    "hash": "0x2699a8e9ab56350f4ca6bf41e86895f77f53e2cf6dcf3e9b5d3a6b309992f942",
     "address": "eth:0x45828180bbE489350D621d002968A0585406d487",
     "blockNumber": 22417833
   },
   "TimelockController_risczero": {
-    "hash": "0x5b8836fe706f4142d9d19316f7ae849ba43b55173015f72bc3f9216f7a86cf0d",
+    "hash": "0xd75c3ac3fe43e81cc406b9316c4f35ab4c97b399585f8ed181cc438845d520be",
     "address": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
     "blockNumber": 22944504
   },
   "TimelockControllerUpgradeable.sol": {
-    "hash": "0xd6475b362415a3692a3b5af6ae0a14fcdd0a99ac3a39ffc5523dd78dd2b00713",
+    "hash": "0x201f99073fc761fc50bdc6a6f101584c6fe16793fc83bfd0ce67103f30eea656",
     "address": "eth:0x5F0CAaf0d3b8dd8eA9f80CDbb0021930d3c17353",
-    "chain": "ethereum",
     "blockNumber": 24570419
+  },
+  "OpsTimelock.sol": {
+    "hash": "0x2f718e8f9028fd6ca3bfa90dbf6f309f933824cd21d199579903acd45da577f5",
+    "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+    "blockNumber": 24878444
   }
 }

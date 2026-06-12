@@ -1,3 +1,404 @@
+Generated with discovered.json: 0x9f88da79d9f5fc4fd52c43ea6151efdffff136f0
+
+# Diff at Tue, 09 Jun 2026 12:43:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1777300652
+- current timestamp: 1777300652
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777300652 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x7ef00577fAAa44D0491970D6516eB7b90EC3c80E) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.2.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.2.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xa5CB506D2de132006204183E2f1869575cA646Bd) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xB5C248B428f9b2D8E8a03eE016760145b84098a9) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.1.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xC180574374b8FdE9C5b40E0d5D34946b228b7316) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xbcf115e86f016b6cf8b765d90049db924605538e
+
+# Diff at Fri, 08 May 2026 07:51:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777300652
+- current timestamp: 1777300652
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777300652 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x1D89222C28C3ba471be822203998f27Df4727C0b) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xc8499f9201a44a50616e551c4310400af4a2e940806a884e8ebefd8d26446dca"
++        "0xc8321f6a3634901d0fd0ba0f6703f261ab470d0eae3f77b0ed5ea5509f2505a8"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x65dcaf0bdde7cc90f916020b1615321a4b086bfd802f2c27f6ed226fc486b65d"
++        "0x8aa9dc344ef454068c4a504d25159b2b6b30ea2eb8754695afd9b5d12fe65453"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438) [N/A] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay.
+      sourceHashes.1:
+-        "0x4940bd1f0459679a56c4724a92058ea37f085b3bd72df87063c6c3f5b4381f5d"
++        "0xd2ec70529195035ccc974be0be22572b0ae72209a50f6b048cb921f0f12d5552"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x6A12432491bbbE8d3babf75F759766774C778Db4) [N/A] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the OptimismPortal also allows an 'operator' address to overwrite the calldata of withdrawals on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts.
+      sourceHashes.1:
+-        "0x84fc56b8558ed12594b26997990b30e8da2a496417a7d467aa0e31e5281f9168"
++        "0xc7ea367475b1d1e52b5f8ced3996d24621b83af99a22e89cd6fb7e6aa4384a9d"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x80e73D6BfC73c567032304C3891a06c2d9954d09) [opstack/SystemConfig_rss3] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x23906eab59a5d34b78a6e0c14f84da0cf651dab8b02049d1dd24c9ca2ed38d25"
++        "0x4b4de7f80942fd5fbbc948041122b1ce2ef51ff8155f92e6a5e66faf903a43c0"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x892CAa506c86C5101f5eC11C6f09589c9dC8A85C) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xa5412b02e8b3af8383f1867f3324f5951f12edb80be357efdbc8b1c9df0aca59"
++        "0xd9939b0b82806c9d07de312d6fe5374f2f47f9d731d2b3f0ae181100d29c23aa"
+    }
+```
+
+```diff
+    contract RSS3Multisig (eth:0x8AC80fa0993D95C9d6B8Cb494E561E6731038941) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x938D0Bb4B584d4F6f793fCB7808cA2Eea15B69A8) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0xd94510e3fe5d022d391bd48ca1c159a4ac4457403b9326aaaba5bda5d5d4b59e"
++        "0x11fdd1bac717fdd4a4af34aa4e5abb646b5c78e27fe668013479e19daa94d797"
+    }
+```
+
+```diff
+    contract WithdrawalOverwriterMultisig (eth:0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0xE6f24d2C32B3109B18ed33cF08eFb490b1e09C10) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes.1:
+-        "0xdbe40da010f1cfaa643259f5ca1e966b3c7ecdae7b0af2d8aa07a6181a307831"
++        "0x89abb31f2436fc57f5e92bd1cdd3e982db88fd9f634302f0a0a25057e22ce876"
+    }
+```
+
+Generated with discovered.json: 0xfc69e0ba5452a45f87b497bbdd541c4d6525920d
+
+# Diff at Tue, 05 May 2026 10:22:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777300652
+- current timestamp: 1777300652
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777300652 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x1075B29e5F7a911128C77F3989702E150C988904) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x1D89222C28C3ba471be822203998f27Df4727C0b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x6A12432491bbbE8d3babf75F759766774C778Db4) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the OptimismPortal also allows an 'operator' address to overwrite the calldata of withdrawals on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x75D340E5BF2eAbC39A04AF4229Ce7875B4A73B03) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x80e73D6BfC73c567032304C3891a06c2d9954d09) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x892CAa506c86C5101f5eC11C6f09589c9dC8A85C) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract RSS3Multisig (eth:0x8AC80fa0993D95C9d6B8Cb494E561E6731038941) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x938D0Bb4B584d4F6f793fCB7808cA2Eea15B69A8) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract WithdrawalOverwriterMultisig (eth:0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF209b7Bbadf8d9518a822aEaa7119B38b17377A7"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0xE6f24d2C32B3109B18ed33cF08eFb490b1e09C10) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+Generated with discovered.json: 0xe49019bc82d031bfda4fa1cd1c40077d0e0d7810
+
+# Diff at Mon, 27 Apr 2026 14:38:42 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bbeac755425cc0dab000cb7f8f3fa390682be9b7 block: 1760307209
+- current timestamp: 1777300652
+
+## Description
+
+**RSS3 has [announced the retirement of VSL](https://rss3.io/blog/the-next-stage-of-rss3.html) and is migrating to Ethereum.** On 2026-04-24 the L2 stopped producing blocks (last VSL block at 08:59 UTC), the L1 sequencer inbox went silent (last batch at 05:24 UTC), and the batcher EOA was swept to the RSS3 Multisig. VSL bridge withdrawals are paused; pending withdrawals will be completed as part of the migration and $RSS3 on VSL will be claimable on Ethereum via a portal in the coming weeks. Added a `redWarning` and incident milestone on the project.
+
+**L1StandardBridge — operator sweep added and used** (on-chain upgrade, new implementation `0x12665984...` deployed 2026-04-17 and activated before the halt). The new impl sets `operator = RSS3Multisig (0x8AC80fa0)` and exposes an operator-only `sweep(token, to, amount)` that transfers any ERC-20 held by the bridge to an arbitrary address with no withdrawal proof or delay. On 2026-04-22 06:29 UTC (block 24933678) the operator used this to move the full bridge escrow to the RSS3 Multisig in a single batched sweep: ~464,630,520 RSS3, 1,023 USDC, 284 USDT, and 0.84 WETH. Mirrors the pre-existing OptimismPortal `operator = WithdrawalOverwriterMultisig` (which can rewrite withdrawal calldata on finalization).
+
+**SystemConfig modeling fix** (no on-chain upgrade — same impl `0x164883d4...` as before). With the L2 halted, the batcher's last 10 outgoing txs include 3 consolidation transfers into the RSS3 Multisig (one of 33.45 ETH), dropping its top-address ratio to 7/10 = 0.70. That trips the standard `opStackSequencerInbox` handler's 80% qualification threshold, which derives `sequencerInbox` from the batcher's tx pattern, so the field errored out. Fixed via a new `opstack/SystemConfig_rss3` template variant (scoped to RSS3's SystemConfig via `validAddresses`) that hardcodes `sequencerInbox` to `0xfFFF...12553` — the pre-halt discovered value, matching RSS3's chainId 12553 under the standard OP Stack predeploy convention and consistent with 47/50 (94%) of the batcher's outgoing txs over a 50-tx window going to that address.
+
+L1StandardBridge: [diff](https://disco.l2beat.com/diff/eth:0xE27083804bFf17Ec05f4300a43b7c40F3E01e486/eth:0x12665984Ba38943C74D8504d4E8a41a96dE25E83)
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x1075B29e5F7a911128C77F3989702E150C988904) {
+    +++ description: None
+      directlyReceivedPermissions.3.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.3.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay.
+      template:
+-        "opstack/L1StandardBridge"
+      sourceHashes.1:
+-        "0x6799eb37a55a04ec21fc5819a2f479c30a69b3e79258d12ac41c10342b9f76b1"
++        "0x4940bd1f0459679a56c4724a92058ea37f085b3bd72df87063c6c3f5b4381f5d"
+      values.$implementation:
+-        "eth:0xE27083804bFf17Ec05f4300a43b7c40F3E01e486"
++        "eth:0x12665984Ba38943C74D8504d4E8a41a96dE25E83"
+      values.operator:
++        "eth:0x8AC80fa0993D95C9d6B8Cb494E561E6731038941"
+      implementationNames.eth:0xE27083804bFf17Ec05f4300a43b7c40F3E01e486:
+-        "L1StandardBridge"
+      implementationNames.eth:0x12665984Ba38943C74D8504d4E8a41a96dE25E83:
++        "L1StandardBridge"
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract RSS3Multisig (eth:0x8AC80fa0993D95C9d6B8Cb494E561E6731038941) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438","description":"can call sweep(token, to, amount) to transfer any ERC-20 held by the L1StandardBridge to an arbitrary address — the mechanism RSS3 is using to move bridge escrow during the VSL → Ethereum migration.","role":".operator"}
+      receivedPermissions.3.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.3.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1StandardBridge/L1StandardBridge.sol             | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760307209 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay."
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x80e73D6BfC73c567032304C3891a06c2d9954d09) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      template:
+-        "opstack/SystemConfig"
++        "opstack/SystemConfig_rss3"
+    }
+```
+
 Generated with discovered.json: 0x8fcd1236fe0bb02124f1863b1987ea1275be0273
 
 # Diff at Sun, 12 Oct 2025 22:14:34 GMT:

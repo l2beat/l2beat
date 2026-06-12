@@ -1,5 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
 import { EthRpcClient } from './EthRpcClient'
 import { Http, MockHttp } from './Http'
 
@@ -102,6 +103,110 @@ describe(EthRpcClient.name, () => {
         'latest',
       ),
     ).toBeRejected()
+  })
+
+  it('accepts custom envelope tx with calls and missing top-level input/value', async () => {
+    const http = new MockHttp()
+    const client = new EthRpcClient(http, 'https://rpc.url', '', () => 1337)
+    http.queueResponse(
+      200,
+      JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1337,
+        result: {
+          blockHash: `0x${'11'.repeat(32)}`,
+          blockNumber: '0x64',
+          from: '0x0000000000000000000000000000000000000001',
+          gas: '0x5208',
+          hash: `0x${'22'.repeat(32)}`,
+          to: '0x0000000000000000000000000000000000000002',
+          transactionIndex: '0x0',
+          type: '0x76',
+          calls: [
+            {
+              to: '0x0000000000000000000000000000000000000003',
+              value: '0x9',
+              input: '0xabcd',
+              data: null,
+            },
+          ],
+        },
+      }),
+    )
+
+    const result = await client.getTransactionByHash(`0x${'ff'.repeat(32)}`)
+
+    expect(result).toEqual({
+      blockHash: `0x${'11'.repeat(32)}`,
+      blockNumber: 100n,
+      from: EthereumAddress('0x0000000000000000000000000000000000000001'),
+      gas: 21000n,
+      hash: `0x${'22'.repeat(32)}`,
+      to: EthereumAddress('0x0000000000000000000000000000000000000002'),
+      transactionIndex: 0n,
+      type: 118n,
+      calls: [
+        {
+          to: EthereumAddress('0x0000000000000000000000000000000000000003'),
+          value: 9n,
+          input: '0xabcd',
+          data: undefined,
+        },
+      ],
+    })
+  })
+
+  it('treats calls: null as missing in transaction response', async () => {
+    const http = new MockHttp()
+    const client = new EthRpcClient(http, 'https://rpc.url', '', () => 1337)
+    http.queueResponse(
+      200,
+      JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1337,
+        result: {
+          blockHash: null,
+          blockNumber: null,
+          from: '0x0000000000000000000000000000000000000001',
+          gas: '0x5208',
+          hash: `0x${'22'.repeat(32)}`,
+          to: '0x0000000000000000000000000000000000000002',
+          transactionIndex: null,
+          calls: null,
+        },
+      }),
+    )
+
+    const result = await client.getTransactionByHash(`0x${'ff'.repeat(32)}`)
+
+    expect(result?.calls).toEqual(undefined)
+  })
+
+  it('records rpc metrics for calls', async () => {
+    const http = new MockHttp()
+    const recorded: Parameters<RpcMetricsRecorder['record']>[0][] = []
+    const rpcMetrics: RpcMetricsRecorder = {
+      record: (metric) => {
+        recorded.push(metric)
+      },
+    }
+    const client = new EthRpcClient(
+      http,
+      'https://rpc.url',
+      '',
+      () => 1337,
+      undefined,
+      rpcMetrics,
+    )
+    http.queueResponse(
+      200,
+      JSON.stringify({ jsonrpc: '2.0', id: 1337, result: '0x1234' }),
+    )
+
+    await client.getBlockNumber()
+
+    expect(recorded).toHaveLength(1)
+    expect(recorded[0]?.method).toEqual('eth_blockNumber')
   })
 })
 

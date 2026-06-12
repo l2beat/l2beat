@@ -4,7 +4,12 @@
   "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
   "fields": {
     "guardian": {
-      "permissions": [{ "type": "guard" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+        }
+      ]
     }
   },
   "category": "gov"

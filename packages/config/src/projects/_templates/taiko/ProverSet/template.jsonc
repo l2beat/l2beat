@@ -1,6 +1,0 @@
-{
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses.",
-  "category": "non-critical",
-  "ignoreMethods": ["proxiableUUID"]
-}

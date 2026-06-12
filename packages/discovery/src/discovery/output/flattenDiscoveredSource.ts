@@ -60,8 +60,10 @@ export function flattenDiscoveredSources(
         const result = timed(() => {
           const output = flattenStartingFrom(
             bundle.name,
+            bundle.source.rootFile,
             input,
             bundle.source.remappings,
+            { includeAll: true },
           )
 
           return output

@@ -1,8 +1,13 @@
-import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import type {
-  AggregatedInteropTransferWithTokens,
-  CommonInteropData,
-} from '../types'
+  AggregatedInteropTokensPairRecord,
+  AggregatedInteropTransferRecord,
+} from '@l2beat/database'
+import { manifest } from '~/utils/Manifest'
+import { INTEROP_PAIR_SEPARATOR } from '../consts'
+import type { CommonInteropData, InteropTransferWithTokens } from '../types'
+import type { TokenInteropData } from './buildTokensDataMap'
+import { getInteropChains } from './getInteropChains'
+import { getInteropTransferRecordValue } from './getInteropTransferRecordValue'
 import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
@@ -17,20 +22,78 @@ export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
   burnedValueUsd: undefined,
 }
 
+const chainIconMap = new Map(
+  getInteropChains().map((chain) => [
+    chain.id,
+    manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+  ]),
+)
+
 export function accumulateTokens(
-  current: CommonInteropData,
-  token: AggregatedInteropTransferWithTokens['tokens'][number],
+  current: TokenInteropData,
+  token: InteropTransferWithTokens['tokens'][number],
+  chainInfo: { protocolId: string; srcChain: string; dstChain: string },
 ) {
-  return accumulate(current, token)
+  const result = {
+    ...accumulate(current, token),
+    flows: current.flows,
+    protocols: current.protocols,
+  }
+
+  const flowKey = `${chainInfo.srcChain}${INTEROP_PAIR_SEPARATOR}${chainInfo.dstChain}`
+  const currentFlow = current.flows.get(flowKey)
+  if (currentFlow) {
+    currentFlow.volume += token.volume
+  } else {
+    current.flows.set(flowKey, {
+      srcChain: {
+        id: chainInfo.srcChain,
+        iconUrl: chainIconMap.get(chainInfo.srcChain),
+      },
+      dstChain: {
+        id: chainInfo.dstChain,
+        iconUrl: chainIconMap.get(chainInfo.dstChain),
+      },
+      volume: token.volume,
+    })
+  }
+
+  const currentProtocol = current.protocols.get(chainInfo.protocolId)
+  if (currentProtocol) {
+    current.protocols.set(
+      chainInfo.protocolId,
+      (currentProtocol ?? 0) + token.volume,
+    )
+  } else {
+    current.protocols.set(chainInfo.protocolId, token.volume)
+  }
+
+  return result
+}
+
+export function accumulateTokensPairs(
+  current: CommonInteropData,
+  pair: AggregatedInteropTokensPairRecord,
+) {
+  return accumulate(current, {
+    ...pair,
+    mintedValueUsd: undefined,
+    burnedValueUsd: undefined,
+  })
 }
 
 export function accumulateChains(
   current: CommonInteropData,
-  record: AggregatedInteropTransferRecord,
+  record: AggregatedInteropTransferRecord | InteropTransferWithTokens,
   source: 'src' | 'dst',
 ) {
   return accumulate(current, {
-    volume: source === 'src' ? record.srcValueUsd : record.dstValueUsd,
+    volume:
+      'volume' in record
+        ? getInteropTransferRecordValue(record)
+        : source === 'src'
+          ? record.srcValueUsd
+          : record.dstValueUsd,
     transferCount: record.transferCount,
     transfersWithDurationCount: record.transfersWithDurationCount,
     totalDurationSum: record.totalDurationSum,

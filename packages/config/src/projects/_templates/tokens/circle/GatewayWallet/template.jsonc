@@ -4,14 +4,52 @@
   "category": "non-critical",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure supported tokens, withdrawal delay, burn signers, batch signers, fee recipient, pauser, denylister, contract signer allowlister, and transfer ownership."
+        }
+      ]
+    },
+    "pauser": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause deposits, burns, and withdrawals."
+        }
+      ]
+    },
+    "denylister": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "denylist addresses, preventing them from interacting with the GatewayWallet."
+        }
+      ]
+    },
+    "contractSignersAllowlister": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "allowlist or disallowlist contract signers for Gateway burn intents."
+        }
+      ]
+    },
     "attestationSigners": {
-      "description": "Brigde validators, trusted to sign each burning payload on an outbound bridge tx.",
+      "description": "Bridge validators, trusted to sign each burning payload on an outbound bridge tx.",
       "handler": {
         "type": "event",
         "select": "signer",
         "add": { "event": "BurnSignerAdded" },
         "remove": { "event": "BurnSignerRemoved" }
-      }
+      },
+      "permissions": [
+        {
+          "type": "act",
+          "description": "sign burn payloads accepted by GatewayWallet."
+        }
+      ]
     }
   }
 }

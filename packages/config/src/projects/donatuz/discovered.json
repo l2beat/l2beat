@@ -118,20 +118,22 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "base:0x88dBaaeCDa265241a1BABe4A0ce69ad4957da8a2",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".CHALLENGER"
-        },
-        {
-          "permission": "guard",
-          "from": "base:0xb765Df9d2925a82678F4B7bc60eF5294c1604514",
-          "role": ".GUARDIAN"
         },
         {
           "permission": "interact",
           "from": "base:0xa096dD38362bd2cE3C696474329989960722A7Fd",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0xb765Df9d2925a82678F4B7bc60eF5294c1604514",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".GUARDIAN"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -294,8 +296,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "base:0xa096dD38362bd2cE3C696474329989960722A7Fd",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -534,8 +537,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "base:0x88dBaaeCDa265241a1BABe4A0ce69ad4957da8a2",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".PROPOSER"
         }
       ]
@@ -811,5 +815,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "base": 39295911 },
-  "permissionsConfigHash": "0x72d9ec772a19615e405b96ccab95dbf076b89e484246a5cadead951c586289ae"
+  "permissionsConfigHash": "0x42373a7c033178ec110509febacf4b1063232c92b925e8983f2c56e5cf6c0338"
 }

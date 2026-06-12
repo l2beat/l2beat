@@ -3,13 +3,21 @@ import type {
   ProjectActivityConfig,
   TimestampDaTrackingConfig,
 } from '@l2beat/config'
+import type { CleanableRepoName } from '@l2beat/database'
 import type {
   ConfigReader,
   DiscoveryChainConfig,
   DiscoveryPaths,
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type {
+  CoingeckoId,
+  Configuration,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import type { createRemoteJWKSet } from 'jose'
+import type { PrivacyConfig } from '../modules/privacy/types'
 import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
@@ -26,6 +34,7 @@ export interface Config {
   readonly isReadonly: boolean
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
+  readonly notifications: NotificationsConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
   readonly api: ApiConfig
@@ -51,7 +60,10 @@ export interface Config {
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
   readonly interop: InteropFeatureConfig | false
+  readonly privacy: PrivacyConfig | false
   readonly newClientsEnabled: boolean
+
+  readonly backoffice: BackofficeFeatureConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -84,8 +96,6 @@ export interface DatabaseConfig {
 export interface ClockConfig {
   readonly minBlockTimestamp: UnixTime
   readonly safeTimeOffsetSeconds: number
-  readonly hourlyCutoffDays: number
-  readonly sixHourlyCutoffDays: number
 }
 
 export interface TvsConfig {
@@ -94,6 +104,11 @@ export interface TvsConfig {
   readonly prices: PriceConfig[]
   readonly chains: string[]
   readonly blockTimestamps: BlockTimestampConfig[]
+  readonly cleaner: false | Configuration<TvsCleanerConfig>[]
+}
+
+export type TvsCleanerConfig = {
+  name: CleanableRepoName
 }
 
 export interface TrackedTxProject {
@@ -177,7 +192,6 @@ export interface UpdateMonitorConfig {
   readonly chains: DiscoveryChainConfig[]
   readonly disabledChains: string[]
   readonly disabledProjects: string[]
-  readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
   readonly workerPool: {
     readonly workerCount: number
@@ -186,15 +200,38 @@ export interface UpdateMonitorConfig {
   }
 }
 
-export interface DiscordConfig {
-  readonly token: string
-  readonly publicChannelId?: string
-  readonly internalChannelId: string
-  readonly callsPerMinute: number
+export interface NotificationsConfig {
+  readonly updateMonitor:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly anomalies:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly interop:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly ethereumBlobs:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly dailyChecks:
+    | {
+        discordWebhookUrl: string
+        discordUserIds: string[]
+        timezone: string
+        hour: number
+      }
+    | false
 }
 
 export interface AnomaliesConfig {
-  readonly anomaliesWebhookUrl?: string
   readonly anomaliesMinDuration: number
 }
 
@@ -225,6 +262,8 @@ export interface InteropFeatureConfig {
     enabled: boolean
     tokenDbApiUrl: string
     tokenDbAuthToken?: string
+    maxTokenPriceUsd: number
+    maxTransferValueUsd: number
   }
   config: {
     enabled: boolean
@@ -232,11 +271,22 @@ export interface InteropFeatureConfig {
     configIntervalMs: number
   }
   inMemoryEventCap: number
-  notifications:
-    | {
-        discordWebhookUrl: string
-      }
-    | false
+  oneSidedChains: string[]
+}
+
+export interface BackofficeFeatureConfig {
+  auth: BackofficeAuthConfig | false
+}
+
+export interface BackofficeAuthConfig {
+  zeroTrust: BackofficeZeroTrustAuthConfig
+  authToken?: string
+}
+
+export interface BackofficeZeroTrustAuthConfig {
+  JWKS: ReturnType<typeof createRemoteJWKSet>
+  aud: string
+  teamDomain: string
 }
 
 export interface DaBeatConfig {
@@ -314,7 +364,6 @@ export interface DataAvailabilityTrackingConfig {
   readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
   readonly timestampProjects: TimestampDaIndexedConfig[]
-  readonly ethereumNotifierDiscordWebhookUrl?: string
 }
 
 export interface BlockSyncModuleConfig {

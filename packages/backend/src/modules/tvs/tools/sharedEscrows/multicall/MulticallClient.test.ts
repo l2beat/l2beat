@@ -51,8 +51,8 @@ describe(MulticallClient.name, () => {
     const calls: Call[] = []
     const ethereumClient = mockObject<RpcClient>({
       async call(parameters, blockTag) {
-        calls.push({ to: parameters.to, data: parameters.data, blockTag })
-        return parameters.data ?? Bytes.EMPTY
+        calls.push({ to: parameters.to, data: parameters.input, blockTag })
+        return parameters.input ?? Bytes.EMPTY
       },
     })
 
@@ -63,9 +63,9 @@ describe(MulticallClient.name, () => {
     const blockTag = MULTICALL_V1_BLOCK - 1
     const result = await multicallClient.multicall(
       [
-        { address: ADDRESS_A, data: Bytes.fromHex('0x123456') },
-        { address: ADDRESS_B, data: Bytes.fromHex('0x') },
-        { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef') },
+        { address: ADDRESS_A, input: Bytes.fromHex('0x123456') },
+        { address: ADDRESS_B, input: Bytes.fromHex('0x') },
+        { address: ADDRESS_C, input: Bytes.fromHex('0xdeadbeef') },
       ],
       blockTag,
     )
@@ -86,7 +86,7 @@ describe(MulticallClient.name, () => {
     const calls: Call[] = []
     const ethereumClient = mockObject<RpcClient>({
       async call(parameters, blockTag) {
-        calls.push({ to: parameters.to, data: parameters.data, blockTag })
+        calls.push({ to: parameters.to, data: parameters.input, blockTag })
         return Bytes.fromHex(
           multicallInterface.encodeFunctionResult('aggregate', [
             blockTag.toString(),
@@ -104,9 +104,9 @@ describe(MulticallClient.name, () => {
 
     const result = await multicallClient.multicall(
       [
-        { address: ADDRESS_A, data: Bytes.fromHex('0x123456') },
-        { address: ADDRESS_B, data: Bytes.fromHex('0x') },
-        { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef') },
+        { address: ADDRESS_A, input: Bytes.fromHex('0x123456') },
+        { address: ADDRESS_B, input: Bytes.fromHex('0x') },
+        { address: ADDRESS_C, input: Bytes.fromHex('0xdeadbeef') },
       ],
       blockTag,
     )
@@ -120,9 +120,9 @@ describe(MulticallClient.name, () => {
       {
         to: ADDRESS_V1,
         data: encodeMulticallV1([
-          { address: ADDRESS_A, data: Bytes.fromHex('0x123456') },
-          { address: ADDRESS_B, data: Bytes.fromHex('0x') },
-          { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef') },
+          { address: ADDRESS_A, input: Bytes.fromHex('0x123456') },
+          { address: ADDRESS_B, input: Bytes.fromHex('0x') },
+          { address: ADDRESS_C, input: Bytes.fromHex('0xdeadbeef') },
         ]),
         blockTag,
       },
@@ -133,7 +133,7 @@ describe(MulticallClient.name, () => {
     const calls: Call[] = []
     const ethereumClient = mockObject<RpcClient>({
       async call(parameters, blockTag) {
-        calls.push({ to: parameters.to, data: parameters.data, blockTag })
+        calls.push({ to: parameters.to, data: parameters.input, blockTag })
         return Bytes.fromHex(
           multicallInterface.encodeFunctionResult('tryAggregate', [
             [
@@ -154,9 +154,9 @@ describe(MulticallClient.name, () => {
 
     const result = await multicallClient.multicall(
       [
-        { address: ADDRESS_A, data: Bytes.fromHex('0x123456') },
-        { address: ADDRESS_B, data: Bytes.fromHex('0x') },
-        { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef') },
+        { address: ADDRESS_A, input: Bytes.fromHex('0x123456') },
+        { address: ADDRESS_B, input: Bytes.fromHex('0x') },
+        { address: ADDRESS_C, input: Bytes.fromHex('0xdeadbeef') },
       ],
       blockTag,
     )
@@ -169,9 +169,9 @@ describe(MulticallClient.name, () => {
       {
         to: ADDRESS_V2,
         data: encodeMulticallV2([
-          { address: ADDRESS_A, data: Bytes.fromHex('0x123456') },
-          { address: ADDRESS_B, data: Bytes.fromHex('0x') },
-          { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef') },
+          { address: ADDRESS_A, input: Bytes.fromHex('0x123456') },
+          { address: ADDRESS_B, input: Bytes.fromHex('0x') },
+          { address: ADDRESS_C, input: Bytes.fromHex('0xdeadbeef') },
         ]),
         blockTag,
       },
@@ -184,7 +184,7 @@ describe(MulticallClient.name, () => {
       async call(parameters) {
         const callCount: number = multicallInterface.decodeFunctionData(
           'tryAggregate',
-          parameters.data?.toString() ?? '',
+          parameters.input?.toString() ?? '',
         )[1].length
         calls.push(callCount)
         return Bytes.fromHex(
@@ -204,7 +204,7 @@ describe(MulticallClient.name, () => {
     const result = await multicallClient.multicall(
       new Array(BATCH_SIZE * 2 + 1).fill(0).map(() => ({
         address: ADDRESS_A,
-        data: Bytes.fromHex('0x123456'),
+        input: Bytes.fromHex('0x123456'),
       })),
       blockTag,
     )

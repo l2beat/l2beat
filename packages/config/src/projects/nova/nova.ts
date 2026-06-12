@@ -118,10 +118,25 @@ export const nova: ScalingProject = orbitStackL2({
   ],
   discovery,
   hasAtLeastFiveExternalChallengers: true,
+  usersHave7DaysToExit: true,
+  hasProperSecurityCouncil: true,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  isNodeAvailable: true,
+  nodeSourceLink: 'https://github.com/OffchainLabs/nitro',
+  stage1Principle: false,
+  daAttestedByIndependentParty: true,
+  daVerifierSecureOnL1: true,
+  daVerifier7DayExitWindow: true,
+  daCommitteeDecentralized: true,
+  daVerifier30DayExitWindow: false,
+  daMechanismEconomicSecurity: false,
+  securityCouncilReference:
+    'https://docs.arbitrum.foundation/security-council-members',
+  stage1PrincipleDescription:
+    'The Security Council is properly set up (9/12), but BoLD fraud proof submission on Nova is restricted to a whitelist of 10 validators (validatorWhitelistDisabled = false on the RollupProxy). The whitelisted validators colluding to push a malicious assertion without external challenge is a residual attack path beyond Security Council compromise or sequencer+DAC collusion.',
   display: {
     name: 'Arbitrum Nova',
     slug: 'nova',
@@ -175,7 +190,10 @@ export const nova: ScalingProject = orbitStackL2({
         url: 'https://nova.arbitrum.io/rpc',
         callsPerMinute: 300,
       },
-      { type: 'etherscan', chainId },
+      {
+        type: 'blockscout',
+        url: 'https://arbitrum-nova.blockscout.com/api',
+      },
     ],
   },
   nonTemplateProofSystem: {
@@ -183,15 +201,17 @@ export const nova: ScalingProject = orbitStackL2({
     name: 'BoLD',
     challengeProtocol: 'Interactive',
   },
-  upgradesAndGovernance: getNitroGovernance(
-    l2CoreQuorumPercent,
-    l2TimelockDelay,
-    challengeWindowSeconds,
-    l1TimelockDelay,
-    treasuryTimelockDelay,
-    l2TreasuryQuorumPercent,
-    challengeGracePeriodSeconds,
-  ),
+  upgradesAndGovernance: {
+    content: getNitroGovernance(
+      l2CoreQuorumPercent,
+      l2TimelockDelay,
+      challengeWindowSeconds,
+      l1TimelockDelay,
+      treasuryTimelockDelay,
+      l2TreasuryQuorumPercent,
+      challengeGracePeriodSeconds,
+    ),
+  },
   nonTemplateRiskView: {
     exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
       l2TimelockDelay,
@@ -202,13 +222,19 @@ export const nova: ScalingProject = orbitStackL2({
       isPostBoLD,
     ),
     stateValidation: {
-      ...RISK_VIEW.STATE_FP_INT(
+      ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
+        discovery.getContractValue<string[]>('RollupProxy', 'getValidators')
+          .length,
+        true,
         challengeWindowSeconds,
         challengeGracePeriodSeconds,
+        'if-challenged',
       ),
-      initialBond: formatEther(
-        discovery.getContractValue<number>('RollupProxy', 'baseStake'),
-      ),
+      initialBond: {
+        value: formatEther(
+          discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+        ),
+      },
     },
   },
   nonTemplateEscrows: [

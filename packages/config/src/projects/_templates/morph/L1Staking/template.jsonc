@@ -6,7 +6,7 @@
     "getActiveStakers": {
       "permissions": [
         {
-          "type": "sequence",
+          "type": "interact",
           "description": "Actors allowed to commit transaction batches and propose and prove state roots"
         }
       ]

@@ -1,13 +1,17 @@
 {
   "KailuaTreasury": {
-    "hash": "0x114d2fa4777cda59fdbe4bbaa3e319588066e3d66bff66ae8dc4b96589ac1d4b",
+    "hash": "0xda724e59049862aec67c8e164b7c54b1943194e1d17baa1576e7e73bb8c99da6",
     "address": "eth:0x0fbC22B052f4745Bc9F80760D2D47E4993F36746",
     "blockNumber": 22961594
   },
   "KailuaTreasury_v5compat": {
-    "hash": "0x35b14b7fe8f45053c4a94391397d28b9c761b99f61f05a08762e1f6acb6faa1f",
+    "hash": "0x1f5d136d9ef3211ce0ae011887b99791adcb1bb954819882098164842ddd6508",
     "address": "eth:0xE99AF5F4C60E06Beb3827F4ffdD06E88c55fB895",
-    "chain": "ethereum",
     "blockNumber": 24537231
+  },
+  "KailuaTreasury_v5withVerifier": {
+    "hash": "0xf5a7c7ac441165b26526d65aee55070adb438e0b29658447e1d24955d1a26648",
+    "address": "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336",
+    "blockNumber": 25198521
   }
 }

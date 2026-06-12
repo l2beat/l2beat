@@ -48,16 +48,30 @@ export const AcrossFilledRelay = createInteropEventType<{
 export class AcrossPlugin implements InteropPluginResyncable {
   readonly name = 'across'
 
-  constructor(private configs: InteropConfigStore) {}
+  constructor(
+    private configs: InteropConfigStore,
+    private oneSidedChains: string[] = [],
+  ) {}
 
   getDataRequests(): DataRequest[] {
     const acrossNetworks = this.configs.get(AcrossConfig) ?? []
-    const spokePoolAddresses = acrossNetworks
-      // skip solana - non-EVM
-      .filter((network) => !['solana'].includes(network.chain))
-      .map((network) =>
-        ChainSpecificAddress.fromLong(network.chain, network.spokePool),
-      )
+    const spokePoolAddresses: ChainSpecificAddress[] = []
+
+    for (const network of acrossNetworks) {
+      // One-sided and name-only chains are referenced for matching,
+      // but not captured directly.
+      if (!network.spokePool || this.oneSidedChains.includes(network.chain)) {
+        continue
+      }
+
+      try {
+        spokePoolAddresses.push(
+          ChainSpecificAddress.fromLong(network.chain, network.spokePool),
+        )
+      } catch {
+        // Chain not supported by ChainSpecificAddress, skip capture
+      }
+    }
 
     return [
       {
@@ -83,7 +97,7 @@ export class AcrossPlugin implements InteropPluginResyncable {
     if (!networks) return
 
     const network = networks.find((n) => n.chain === input.chain)
-    if (!network) return
+    if (!network?.spokePool) return
 
     const fundsDeposited = parseFundsDeposited(input.log, [network.spokePool])
     if (fundsDeposited) {
@@ -140,19 +154,48 @@ export class AcrossPlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [AcrossFilledRelay]
-  match(
-    filledRelay: InteropEvent,
+  matchTypes = [AcrossFilledRelay, AcrossFundsDeposited]
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (AcrossFilledRelay.checkType(event)) {
+      return this.matchFilledRelay(event, db)
+    }
+
+    if (AcrossFundsDeposited.checkType(event)) {
+      return this.matchFundsDeposited(event, db)
+    }
+  }
+
+  private matchFilledRelay(
+    filledRelay: InteropEvent<{
+      $srcChain: string
+      originChainId: number
+      destinationChainId: number
+      depositId: bigint
+      tokenAddress: Address32
+      amount: bigint
+    }>,
     db: InteropEventDb,
   ): MatchResult | undefined {
-    if (!AcrossFilledRelay.checkType(filledRelay)) return
-
     const fundsDeposited = db.find(AcrossFundsDeposited, {
       originChainId: filledRelay.args.originChainId,
       destinationChainId: filledRelay.args.destinationChainId,
       depositId: filledRelay.args.depositId,
     })
-    if (!fundsDeposited) return
+    if (!fundsDeposited) {
+      const srcChain = filledRelay.args.$srcChain
+      if (!this.oneSidedChains.includes(srcChain)) return
+
+      return [
+        Result.Transfer('across.Transfer', {
+          srcChain,
+          dstEvent: filledRelay,
+          dstTokenAddress: filledRelay.args.tokenAddress,
+          dstAmount: filledRelay.args.amount,
+          dstWasMinted: false,
+          bridgeType: 'nonMinting',
+        }),
+      ]
+    }
 
     return [
       Result.Message('across.Message', {
@@ -170,6 +213,39 @@ export class AcrossPlugin implements InteropPluginResyncable {
         dstTokenAddress: filledRelay.args.tokenAddress,
         dstAmount: filledRelay.args.amount,
         dstWasMinted: false,
+        bridgeType: 'nonMinting',
+      }),
+    ]
+  }
+
+  private matchFundsDeposited(
+    fundsDeposited: InteropEvent<{
+      $dstChain: string
+      originChainId: number
+      destinationChainId: number
+      depositId: bigint
+      tokenAddress: Address32
+      amount: bigint
+    }>,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
+    const dstChain = fundsDeposited.args.$dstChain
+    if (!this.oneSidedChains.includes(dstChain)) return
+
+    const hasCounterpart = db.find(AcrossFilledRelay, {
+      originChainId: fundsDeposited.args.originChainId,
+      destinationChainId: fundsDeposited.args.destinationChainId,
+      depositId: fundsDeposited.args.depositId,
+    })
+    if (hasCounterpart) return
+
+    return [
+      Result.Transfer('across.Transfer', {
+        srcEvent: fundsDeposited,
+        dstChain,
+        srcTokenAddress: fundsDeposited.args.tokenAddress,
+        srcAmount: fundsDeposited.args.amount,
+        srcWasBurned: false,
         bridgeType: 'nonMinting',
       }),
     ]

@@ -12,12 +12,14 @@ import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
-import { env } from '~/env'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { TopTokensCell } from '../top-items/TopTokensCell'
+import type { InteropSelection } from '../../utils/types'
+import { InteropNoDataBadge } from '../InteropNoDataBadge'
+import { TopTokensCell } from '../tokens/TopTokensCell'
 import { AvgDurationCell } from './AvgDurationCell'
 import { BridgeTypeBadge } from './BridgeTypeBadge'
+import { InteropProjectNameTooltip } from './InteropProjectNameTooltip'
 import { SubgroupTooltip } from './SubgroupTooltip'
 import { TransferCountCell } from './transfer-count-cell/TransferCountCell'
 
@@ -25,73 +27,68 @@ export type ProtocolRow = ProtocolEntry & BasicTableRow
 
 const columnHelper = createColumnHelper<ProtocolEntry>()
 
-function getCommonColumns(getProtocolHref?: (slug: string) => string) {
-  return [
-    columnHelper.display({
-      id: 'logo',
-      cell: (ctx) => (
-        <img
-          className="min-h-[20px] min-w-[20px]"
-          src={ctx.row.original.iconUrl}
-          width={20}
-          height={20}
-          alt={`${ctx.row.original.name} logo`}
-        />
-      ),
-      meta: {
-        headClassName: 'w-0',
-        cellClassName: 'lg:pr-1.5!',
-      },
-      size: 28,
-      enableHiding: false,
-    }),
-    columnHelper.accessor('name', {
-      header: 'Name',
-      cell: (ctx) => {
-        const nameCell = (
-          <TwoRowCell>
-            <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-              <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
-                {ctx.row.original.name}
-              </div>
-              {ctx.row.original.subgroup && (
-                <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
-              )}
-            </TwoRowCell.First>
-            <TwoRowCell.Second>
-              {ctx.row.original.isAggregate && 'Aggregate'}
-            </TwoRowCell.Second>
-          </TwoRowCell>
-        )
-
-        return env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
-          <TableLink
-            href={
-              getProtocolHref?.(ctx.row.original.slug) ??
-              `/interop/protocols/${ctx.row.original.slug}`
-            }
-          >
-            {nameCell}
+const commonColumns = [
+  columnHelper.display({
+    id: 'logo',
+    cell: (ctx) => (
+      <img
+        className="min-h-[20px] min-w-[20px]"
+        src={ctx.row.original.iconUrl}
+        width={20}
+        height={20}
+        alt={`${ctx.row.original.name} logo`}
+      />
+    ),
+    meta: {
+      headClassName: 'w-0',
+      cellClassName: 'lg:pr-1.5!',
+    },
+    size: 28,
+    enableHiding: false,
+  }),
+  columnHelper.accessor('name', {
+    header: 'Name',
+    cell: (ctx) => {
+      return (
+        <InteropProjectNameTooltip
+          projectName={ctx.row.original.name}
+          description={ctx.row.original.description}
+        >
+          <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
+            <TwoRowCell>
+              <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
+                <div className="w-fit max-w-[78px] break-words font-bold text-label-value-15 md:leading-none">
+                  {ctx.row.original.name}
+                </div>
+                {ctx.row.original.subgroup && (
+                  <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
+                )}
+              </TwoRowCell.First>
+              <TwoRowCell.Second>
+                {ctx.row.original.isAggregate && 'Aggregate'}
+              </TwoRowCell.Second>
+            </TwoRowCell>
           </TableLink>
-        ) : (
-          nameCell
-        )
-      },
-      meta: {
-        cellClassName: 'whitespace-normal',
-        headClassName: 'text-2xs',
-      },
-    }),
-  ]
-}
+        </InteropProjectNameTooltip>
+      )
+    },
+    meta: {
+      cellClassName: 'whitespace-normal',
+      headClassName: 'text-2xs',
+    },
+  }),
+]
 
 const last24hVolumeColumn = columnHelper.accessor('volume', {
   header: 'Last 24h\nVolume',
-  cell: (ctx) => (
-    <span className="font-medium text-label-value-15">
-      {formatCurrency(ctx.row.original.volume, 'usd')}
-    </span>
-  ),
+  cell: (ctx) => {
+    if (!ctx.row.original.volume) return EM_DASH
+    return (
+      <span className="font-medium text-label-value-15">
+        {formatCurrency(ctx.row.original.volume, 'usd')}
+      </span>
+    )
+  },
   meta: {
     align: 'right',
     headClassName: 'text-2xs text-right',
@@ -112,7 +109,8 @@ const averageInFlightValueColumn = columnHelper.accessor(
         'The average USD value of funds in transit at any given second over the past 24 hours.',
     },
     cell: (ctx) => {
-      if (ctx.row.original.averageValueInFlight === undefined) return EM_DASH
+      if (ctx.row.original.averageValueInFlight === undefined)
+        return <InteropNoDataBadge />
       return (
         <span className="font-medium text-label-value-15">
           {formatCurrency(ctx.row.original.averageValueInFlight, 'usd')}
@@ -124,10 +122,11 @@ const averageInFlightValueColumn = columnHelper.accessor(
 
 export function getAllProtocolsColumns(
   type: KnownInteropBridgeType | undefined,
+  apiSelection: InteropSelection,
   hideTypeColumn?: boolean,
   showAverageInFlightValueColumn?: boolean,
   showNetMintedValueColumn?: boolean,
-  getProtocolHref?: (slug: string) => string,
+  hideTokensColumn?: boolean,
 ) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
@@ -140,7 +139,7 @@ export function getAllProtocolsColumns(
       },
       size: 44,
     }),
-    ...getCommonColumns(getProtocolHref),
+    ...commonColumns,
     !hideTypeColumn &&
       columnHelper.accessor('bridgeTypes', {
         header: 'Type',
@@ -149,7 +148,11 @@ export function getAllProtocolsColumns(
           return (
             <div className="flex items-center gap-1" key={ctx.row.original.id}>
               {ctx.row.original.bridgeTypes.map((bridgeType) => (
-                <BridgeTypeBadge key={bridgeType} bridgeType={bridgeType} />
+                <BridgeTypeBadge
+                  size="extraSmall"
+                  key={bridgeType}
+                  bridgeType={bridgeType}
+                />
               ))}
             </div>
           )
@@ -164,13 +167,12 @@ export function getAllProtocolsColumns(
       cell: (ctx) => (
         <TransferCountCell
           transferCount={ctx.row.original.transferCount}
-          expectedTransferCount={ctx.row.original.transferCount}
-          expectedVolume={ctx.row.original.volume}
           snapshotTimestamp={ctx.row.original.snapshotTimestamp}
           type={type}
           protocol={{
             id: ctx.row.original.id,
             name: ctx.row.original.name,
+            slug: ctx.row.original.slug,
             iconUrl: ctx.row.original.iconUrl,
           }}
         />
@@ -204,7 +206,8 @@ export function getAllProtocolsColumns(
             'The average time it takes for a transfer to be received on the destination chain, measured over the past 24 hours.',
         },
         cell: (ctx) => {
-          if (ctx.row.original.averageDuration === null) return EM_DASH
+          if (ctx.row.original.averageDuration === null)
+            return <InteropNoDataBadge />
           return (
             <AvgDurationCell
               averageDuration={ctx.row.original.averageDuration}
@@ -282,38 +285,43 @@ export function getAllProtocolsColumns(
           tooltip:
             "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
         },
-        cell: (ctx) => (
-          <span className="font-medium text-label-value-15">
-            {ctx.row.original.netMintedValue
-              ? formatCurrency(ctx.row.original.netMintedValue, 'usd')
-              : EM_DASH}
-          </span>
-        ),
+        cell: (ctx) => {
+          if (ctx.row.original.netMintedValue === undefined)
+            return <InteropNoDataBadge />
+          return (
+            <span className="font-medium text-label-value-15">
+              {formatCurrency(ctx.row.original.netMintedValue, 'usd')}
+            </span>
+          )
+        },
       }),
-    columnHelper.accessor('tokens', {
-      header: 'Tokens\nby volume',
-      meta: {
-        cellClassName: '!pr-0',
-        headClassName: 'text-2xs',
-        tooltip:
-          'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
-      },
-      cell: (ctx) => {
-        if (ctx.row.original.tokens.items.length === 0) return EM_DASH
-        return (
-          <TopTokensCell
-            topItems={ctx.row.original.tokens}
-            type={type}
-            protocol={{
-              id: ctx.row.original.id,
-              name: ctx.row.original.name,
-              iconUrl: ctx.row.original.iconUrl,
-              bridgeTypes: ctx.row.original.bridgeTypes,
-            }}
-            showNetMintedValueColumn={showNetMintedValueColumn}
-          />
-        )
-      },
-    }),
+    !hideTokensColumn &&
+      columnHelper.accessor('tokens', {
+        header: 'Tokens\nby volume',
+        meta: {
+          cellClassName: '!pr-0',
+          headClassName: 'text-2xs',
+          tooltip:
+            'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
+        },
+        cell: (ctx) => {
+          if (ctx.row.original.tokens.items.length === 0) return EM_DASH
+          return (
+            <TopTokensCell
+              topItems={ctx.row.original.tokens}
+              type={type}
+              apiSelection={apiSelection}
+              protocol={{
+                id: ctx.row.original.id,
+                name: ctx.row.original.name,
+                slug: ctx.row.original.slug,
+                iconUrl: ctx.row.original.iconUrl,
+                bridgeTypes: ctx.row.original.bridgeTypes,
+              }}
+              showNetMintedValueColumn={showNetMintedValueColumn}
+            />
+          )
+        },
+      }),
   ])
 }

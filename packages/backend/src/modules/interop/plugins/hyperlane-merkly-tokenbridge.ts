@@ -5,6 +5,7 @@
  * NON-MINTING
  */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   Dispatch,
   dispatchIdLog,
@@ -13,13 +14,13 @@ import {
   parseDispatch,
   parseDispatchId,
 } from './hyperlane'
+import { findHyperlaneChain, HyperlaneConfig } from './hyperlane.config'
 import { parseSentTransferRemote, sentTransferRemoteLog } from './hyperlane-hwr'
 import { findParsedAround } from './logScan'
 import {
   createInteropEventType,
   type DataRequest,
   defineNetworks,
-  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
@@ -79,6 +80,12 @@ const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
       chainId: 57073,
       address: EthereumAddress('0x25730BDE542aDBEf1FD978526Bf20c04b5251530'),
     },
+    // monad, tempo unsupported
+    {
+      chain: 'worldchain',
+      chainId: 480,
+      address: EthereumAddress('0x6E55472109E6aBE4054a8E8b8d9EdFfCb31032C5'),
+    },
   ],
 )
 
@@ -96,6 +103,11 @@ export class HyperlaneMerklyTokenBridgePlugin
 {
   readonly name = 'hyperlane-merkly-tokenbridge'
 
+  constructor(
+    private configs: InteropConfigStore,
+    private oneSidedChains: string[] = [],
+  ) {}
+
   getDataRequests(): DataRequest[] {
     return [
       {
@@ -108,6 +120,7 @@ export class HyperlaneMerklyTokenBridgePlugin
   }
 
   capture(input: LogToCapture) {
+    const hyperlaneNetworks = this.configs.get(HyperlaneConfig) ?? []
     const network = MERKLY_TOKENBRIDGE_NETWORKS.find(
       (n) => n.chain === input.chain,
     )
@@ -140,9 +153,8 @@ export class HyperlaneMerklyTokenBridgePlugin
       )
       if (!messageId) return
 
-      const $dstChain = findChain(
-        MERKLY_TOKENBRIDGE_NETWORKS,
-        (x) => x.chainId,
+      const $dstChain = findHyperlaneChain(
+        hyperlaneNetworks,
         Number(sentTransferRemote.destination),
       )
 
@@ -161,19 +173,19 @@ export class HyperlaneMerklyTokenBridgePlugin
     }
   }
 
-  matchTypes = [Process]
-  match(process: InteropEvent, db: InteropEventDb): MatchResult | undefined {
-    if (Process.checkType(process)) {
+  matchTypes = [Process, HwrTransferSentMerkly]
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (Process.checkType(event)) {
       const network = MERKLY_TOKENBRIDGE_NETWORKS.find(
-        (n) => n.chain === process.ctx.chain,
+        (n) => n.chain === event.ctx.chain,
       )
       const hwrSentMerkly = db.find(HwrTransferSentMerkly, {
-        messageId: process.args.messageId,
+        messageId: event.args.messageId,
       })
       if (!hwrSentMerkly) return
 
       const dispatch = db.find(Dispatch, {
-        messageId: process.args.messageId,
+        messageId: event.args.messageId,
       })
       if (!dispatch) {
         return
@@ -184,13 +196,13 @@ export class HyperlaneMerklyTokenBridgePlugin
           // there are non-hyperlane merkly bridges
           app: 'merkly-tokenbridge-hyperlane',
           srcEvent: dispatch,
-          dstEvent: process,
+          dstEvent: event,
         }),
         Result.Transfer('merkly-tokenbridge-hyperlane.Transfer', {
           srcEvent: hwrSentMerkly,
           srcTokenAddress: hwrSentMerkly.args.tokenAddress,
           srcAmount: hwrSentMerkly.args.amount,
-          dstEvent: process, // merkly does not emit at destination
+          dstEvent: event, // merkly does not emit at destination
           dstTokenAddress: network?.token
             ? Address32.from(network.token)
             : Address32.NATIVE,
@@ -198,5 +210,34 @@ export class HyperlaneMerklyTokenBridgePlugin
         }),
       ]
     }
+
+    if (!HwrTransferSentMerkly.checkType(event)) return
+
+    const process = db.find(Process, {
+      messageId: event.args.messageId,
+    })
+    if (process) return
+
+    const dstChain = event.args.$dstChain
+    if (!dstChain || !this.oneSidedChains.includes(dstChain)) return
+
+    const dstNetwork = MERKLY_TOKENBRIDGE_NETWORKS.find(
+      (network) => network.chain === dstChain,
+    )
+
+    return [
+      Result.Transfer('merkly-tokenbridge-hyperlane.Transfer', {
+        srcEvent: event,
+        srcTokenAddress: event.args.tokenAddress,
+        srcAmount: event.args.amount,
+        dstChain,
+        dstTokenAddress: dstNetwork?.token
+          ? Address32.from(dstNetwork.token)
+          : dstNetwork
+            ? Address32.NATIVE
+            : undefined,
+        dstAmount: event.args.amount,
+      }),
+    ]
   }
 }

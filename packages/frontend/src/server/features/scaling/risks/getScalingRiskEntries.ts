@@ -24,13 +24,12 @@ export async function getScalingRiskEntries() {
         'scalingTechnology',
       ],
       optional: ['customDa', 'scalingDa', 'contracts'],
-      where: ['isScaling'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      where: ['scalingInfo'],
+      whereNot: ['archivedAt'],
     }),
   ])
 
   const entries = projects
-    .filter((p) => p.statuses.reviewStatus !== 'initialReview')
     .map((project) =>
       getScalingRiskEntry(
         project,

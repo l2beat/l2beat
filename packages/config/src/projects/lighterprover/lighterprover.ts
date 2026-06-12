@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -51,17 +51,21 @@ Lighter prover is a zk proving system for Lighter L2 based on [Plonky2](https://
 
 However Lighter wraps these STARK in a [gnark](https://github.com/Consensys/gnark) implementation of Plonk over BN254 curve, which requires a trusted setup.
 
-### Circuits
+### Lighter Circuits
 
-The proof system operates on Lighter STF circuits and desert mode circuits. All published circuits are available [here](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit), note that the Lighter team has not published the desert circuits yet. 
+The proof system operates on Lighter STF circuits and desert mode circuits. All published circuits are available [here](https://github.com/elliottech/lighter-prover/tree/main). 
 
-Lighter proof system defines circuits for proving all transactions, including internal, L1 and L2 transactions. The full list of available transactions that define Lighter STF can be seen [here](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/transactions). 
+Lighter proof system defines circuits for proving all transactions, including internal, L1 and L2 transactions. The full list of available transactions that define Lighter STF can be seen [here](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/transactions). 
 
-Transaction circuits use custom implementations for arithmetic operations ([bigint](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/bigint), [uint](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/uint)), cryptographic primitives ([ecdsa](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/ecdsa) on the Secp256k1 curve, [eddsa](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/eddsa) on the ECgFp5 curve, [keccak](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/keccak), [poseidon_bn128](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/poseidon_bn128)) and other helper circuits.
+Transaction circuits use custom implementations for arithmetic operations ([bigint](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/bigint), [uint](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/uint)), cryptographic primitives ([ecdsa](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/ecdsa) on the Secp256k1 curve, [eddsa](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/eddsa) on the ECgFp5 curve, [keccak](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/keccak), [poseidon_bn128](https://github.com/elliottech/lighter-prover/tree/main/circuit/src/poseidon_bn128)) and other helper circuits.
+
+### Desert circuits
+
+Lighter also provides [desert exit circuits](https://github.com/elliottech/lighter-prover/tree/main/desertexit) that allow users to permissionlessly exit L2 when it is in the desert mode. Users can use desert circuit to generate a proof of ownership of all their positions locally, which could be submitted on L1 for withdrawing funds.
 
 ### Recursion
 
-Lighter prover implements recursive aggregation of transaction proofs to make the whole pipeline more efficient and parallelizable. First, fixed-size blocks of consecutive transactions are processed and proven by [BlockTx circuit](https://github.com/elliottech/lighter-prover/blob/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/block_tx_constraints.rs), which can be done on separate machines. Next, arbitrary number of BlockTx proofs are aggregated into a single proof by [BlockTxChain circuit](https://github.com/elliottech/lighter-prover/blob/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/block_tx_chain_constraints.rs), which includes continuity checks across all BlockTx proofs.
+Lighter prover implements recursive aggregation of transaction proofs to make the whole pipeline more efficient and parallelizable. First, fixed-size blocks of consecutive transactions are processed and proven by [BlockTx circuit](https://github.com/elliottech/lighter-prover/blob/main/circuit/src/block_tx_constraints.rs), which can be done on separate machines. Next, arbitrary number of BlockTx proofs are aggregated into a single proof by [BlockTxChain circuit](https://github.com/elliottech/lighter-prover/blob/main/circuit/src/block_tx_chain_constraints.rs), which includes continuity checks across all BlockTx proofs.
 `,
     trustedSetups: [
       {
@@ -77,35 +81,75 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
     ],
     verifierHashes: [
       {
-        hash: '0x8dcfa8132726f2dcc75e6b791c48f5e5b375e6ea78a5e161e75b657195192b9d',
+        hash: '0x16992bb868b32c1f4bd94d70267468928932f15df9b6ac22e62719f26b0eb221',
+        name: 'Lighter verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
-              '0x840b49E7d53699C7eC4333ffFe27Dc679B171Db8',
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xAa0b5b65890162C5C96D82F088822247EC5Df5D6',
             ),
-            chain: 'ethereum',
           },
         ],
-        verificationStatus: 'unsuccessful',
+        verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps:
-          'At the time of writing, the sources for this version of the verifier circuits are not published and thus the verifier cannot be independently regenerated.',
+        verificationSteps: `
+The verification process below is based on the \`build_circuits.sh\` [script](https://github.com/elliottech/lighter-prover/blob/main/build_circuits.sh) in the lighter-prover repo. It consumed around 100 GiB of memory at the peak, so we recommend rerunning it on a machine with 128 GiB of RAM.
+
+The steps below are for Ubuntu 22.04 OS.
+
+1. Install rust, gcc, go version 1.21 and later.
+
+\`\`\`
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. .cargo/env
+
+sudo apt update
+sudo apt install build-essential
+
+# one way to install latest go on Ubuntu 22.04
+wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
+sudo tar -xvf go1.21.0.linux-amd64.tar.gz
+sudo mv go /usr/local
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+source ~/.profile
+\`\`\`
+
+2. Run the correct version of the script to regenerate the keys.
+
+\`\`\`
+git clone https://github.com/elliottech/lighter-prover.git
+cd lighter-prover
+git checkout 90af1be311ffce17e6c58f9983fa5ec1c8d3a097
+chmod +x build_circuits.sh
+./build_circuits.sh
+\`\`\`
+
+The script will generate the \`final::....sol\` file that contains the verifier smart contract with the verification keys.
+`,
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
-      //       {
-      //         hash: '0xcc7a955cdac9c7eee6db96238adf13925fda70f0f144347170cb59c3e9f1064d',
-      //         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-      //         knownDeployments: [
-      //           {
-      //             address: EthereumAddress(
-      //               '0xa271df8660a318f155a31e64d0529ed85c2d1616',
-      //             ),
-      //             chain: 'ethereum',
-      //           },
-      //         ],
-      //         verificationStatus: 'successful',
-      //         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-      //         verificationSteps: `
+      //     {
+      //       hash: '0x8d5bf346c2d12732ea0b947623dcb66bfffa532e8c33d0b9493cffca41c8fa39',
+      //       name: 'Lighter verifier',
+      //       sourceLink:
+      //         'https://github.com/elliottech/lighter-prover/tree/a07b2759345d53a29b22ebd97d815e4d443b59b0/circuit/src',
+      //       proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //       knownDeployments: [
+      //         {
+      //           address: ChainSpecificAddress.fromLong(
+      //             'ethereum',
+      //             '0xb20De28D78b63bc0c94eef89Db53F6338af17825',
+      //           ),
+      //         },
+      //       ],
+      //       verificationStatus: 'successful',
+      //       attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //       verificationSteps: `
       // The verification process below is based on the \`build_circuits.sh\` [script](https://github.com/elliottech/lighter-prover/blob/main/build_circuits.sh) in the lighter-prover repo. It consumed around 100 GiB of memory at the peak, so we recommend rerunning it on a machine with 128 GiB of RAM.
 
       // The steps below are for Ubuntu 22.04 OS.
@@ -134,29 +178,68 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
       // \`\`\`
       // git clone https://github.com/elliottech/lighter-prover.git
       // cd lighter-prover
-      // git checkout dd7d2182f7d9ec29ca452f410a5ffb1f3dc13925
+      // git checkout a07b2759345d53a29b22ebd97d815e4d443b59b0
       // chmod +x build_circuits.sh
       // ./build_circuits.sh
       // \`\`\`
 
       // The script will generate the \`final::....sol\` file that contains the verifier smart contract with the verification keys.
       //   `,
-      //       },
+      //     },
       {
         // DesertVerifier
-        hash: '0xc3d58029fabf2a93d6cb9b96315c484e4bea2e238aaa081460c9027863c650e7',
+        hash: '0x6048c1a7d7e5439f458f927009811f3d95775d8b52775688db857cf6c70a816f',
+        name: 'Lighter Desert verifier',
+        sourceLink:
+          'https://github.com/elliottech/lighter-prover/tree/aec951b36ffcdb67818ff7e237209d547b4bb78f/desertexit/circuits',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
-              '0xd4460475F00307845082d3a146f36661354FBc67',
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x2aDBd91742B64105a097bC37D20Ebbca9a496085',
             ),
-            chain: 'ethereum',
           },
         ],
-        verificationStatus: 'unsuccessful',
-        verificationSteps:
-          'The sources for desert verifier circuits are not published and thus the verifier cannot be independently regenerated.',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: `
+The verification process below is based on the \`build.sh\` [script](https://github.com/elliottech/lighter-prover/blob/main/desertexit/build.sh) in the lighter-prover repo. It consumed around 100 GiB of memory at the peak, so we recommend rerunning it on a machine with 128 GiB of RAM.
+
+The steps below are for Ubuntu 22.04 OS.
+
+1. Install rust, gcc, go version 1.21 and later.
+
+\`\`\`
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. .cargo/env
+
+sudo apt update
+sudo apt install build-essential
+sudo apt install jq
+
+# one way to install latest go on Ubuntu 22.04
+wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
+sudo tar -xvf go1.21.0.linux-amd64.tar.gz
+sudo mv go /usr/local
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+source ~/.profile
+\`\`\`
+
+2. Run the correct version of the script to regenerate the keys.
+
+\`\`\`
+git clone https://github.com/elliottech/lighter-prover.git
+cd lighter-prover/desertexit
+git checkout aec951b36ffcdb67818ff7e237209d547b4bb78f
+chmod +x build.sh
+./build.sh
+\`\`\`
+
+The script will generate the \`desertwrapper::....sol\` file in the \`lighter-prover/desertexit/artifacts\` directory that contains the verifier smart contract with the verification keys.
+        `,
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },

@@ -372,11 +372,11 @@ export function StageSection({
         })}
       </div>
       <CustomLink href="/stages" className="mt-3 block text-label-value-14">
-        Learn more about Rollup stages
+        Learn more about Stages
       </CustomLink>
       <Callout
         color="blue"
-        body="Please keep in mind that these stages do not reflect rollup security, this is an opinionated assessment of rollup maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
+        body="Please keep in mind that these stages do not reflect project security, this is an opinionated assessment of project maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
         icon={
           <InfoIcon className="size-4 max-md:mt-0.5 md:size-5" variant="blue" />
         }

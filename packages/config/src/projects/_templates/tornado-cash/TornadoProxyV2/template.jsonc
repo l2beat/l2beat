@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TornadoProxyV2",
+  "description": "Anonymity Mining - Newer immutable Tornado proxy that routes deposits and withdrawals to supported pool instances and records them in the upgraded Tornado Trees contract.",
+  "category": "bridge-external",
+  "fields": {
+    "governance": {
+      "description": "Governance address controlling the newer proxy.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or update supported pool instances."
+        },
+        {
+          "type": "interact",
+          "description": "replace the connected Tornado Trees contract."
+        },
+        {
+          "type": "interact",
+          "description": "rescue tokens sent to the proxy."
+        }
+      ]
+    },
+    "tornadoTrees": {
+      "description": "Upgraded tree manager that records deposits and withdrawals from this proxy.",
+      "severity": "HIGH"
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useId, useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import { getDaDataParams } from '~/components/chart/data-availability/getDaDataParams'
@@ -15,9 +16,9 @@ import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradie
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
-import { rangeToResolution } from '~/server/features/data-availability/throughput/utils/range'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
+import { rangeToResolution } from '~/utils/range/range'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateThroughputChart({
@@ -33,12 +34,15 @@ export function MonthlyUpdateThroughputChart({
   pastDayPosted: number
   dataPosted: number
 }) {
+  const trpc = useTRPC()
   const fillId = useId()
-  const { data, isLoading } = api.da.projectChart.useQuery({
-    range: [from, to + UnixTime.DAY],
-    projectId: id,
-    includeScalingOnly: false,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.da.projectChart.queryOptions({
+      range: [from, to + UnixTime.DAY],
+      projectId: id,
+      includeScalingOnly: false,
+    }),
+  )
 
   const chartMeta = useMemo(() => {
     return {
@@ -69,7 +73,9 @@ export function MonthlyUpdateThroughputChart({
     })
   }, [data?.chart, denominator])
 
-  const timeRange = getChartTimeRangeFromData(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData, {
+    bucket: rangeToResolution([from, to]),
+  })
 
   return (
     <PrimaryCard className="rounded-lg! border border-divider">

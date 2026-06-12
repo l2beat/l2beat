@@ -2,5 +2,47 @@
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Part of CCTP",
   "category": "non-critical",
-  "ignoreInWatchMode": ["nextAvailableNonce"]
+  "ignoreInWatchMode": ["nextAvailableNonce"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the attester manager, pauser, rescuer, maximum message body size, and transfer ownership."
+        }
+      ]
+    },
+    "attesterManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "enable or disable attesters and set the attestation signature threshold."
+        }
+      ]
+    },
+    "getEnabledAttester": {
+      "permissions": [
+        {
+          "type": "act",
+          "description": "sign messages accepted by this MessageTransmitter."
+        }
+      ]
+    },
+    "pauser": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause message transmission and receiving."
+        }
+      ]
+    },
+    "rescuer": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer any ERC-20 tokens out of the contract."
+        }
+      ]
+    }
+  }
 }

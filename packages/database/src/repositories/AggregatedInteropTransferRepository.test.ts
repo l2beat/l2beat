@@ -120,6 +120,289 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
   })
 
   describe(
+    AggregatedInteropTransferRepository.prototype.getRecentStatsForGroup.name,
+    () => {
+      it('returns the latest record per day for a specific group before a timestamp', async () => {
+        const day1Early = UnixTime(UnixTime.DAY + 100)
+        const day1Late = UnixTime(UnixTime.DAY + 200)
+        const day2Early = UnixTime(2 * UnixTime.DAY + 100)
+        const day2Late = UnixTime(2 * UnixTime.DAY + 200)
+        const day3Early = UnixTime(3 * UnixTime.DAY + 100)
+
+        await repository.insertMany([
+          record({
+            id: 'stargate',
+            timestamp: day1Early,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+            transferCount: 10,
+            identifiedCount: 8,
+            srcValueUsd: 100,
+            dstValueUsd: 90,
+          }),
+          record({
+            id: 'stargate',
+            timestamp: day1Late,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+            transferCount: 11,
+            identifiedCount: 9,
+            srcValueUsd: 110,
+            dstValueUsd: 95,
+          }),
+          record({
+            id: 'stargate',
+            timestamp: day2Early,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+            transferCount: 12,
+            identifiedCount: 10,
+            srcValueUsd: 120,
+            dstValueUsd: 100,
+          }),
+          record({
+            id: 'stargate',
+            timestamp: day2Late,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+            transferCount: 13,
+            identifiedCount: 11,
+            srcValueUsd: 130,
+            dstValueUsd: 105,
+          }),
+          record({
+            id: 'stargate',
+            timestamp: day3Early,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+            transferCount: 14,
+            identifiedCount: 12,
+            srcValueUsd: 140,
+            dstValueUsd: 110,
+          }),
+          record({
+            id: 'other',
+            timestamp: day2Late,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+            transferCount: 999,
+            identifiedCount: 999,
+            srcValueUsd: 999,
+            dstValueUsd: 999,
+          }),
+        ])
+
+        const result = await repository.getRecentStatsForGroup(
+          2,
+          'stargate',
+          'nonMinting',
+          'ethereum',
+          'arbitrum',
+          {
+            before: day3Early,
+          },
+        )
+
+        expect(result).toEqual([
+          {
+            timestamp: day2Late,
+            transferCount: 13,
+            identifiedCount: 11,
+            srcVolumeUsd: 130,
+            dstVolumeUsd: 105,
+          },
+          {
+            timestamp: day1Late,
+            transferCount: 11,
+            identifiedCount: 9,
+            srcVolumeUsd: 110,
+            dstVolumeUsd: 95,
+          },
+        ])
+      })
+    },
+  )
+
+  describe(
+    AggregatedInteropTransferRepository.prototype.getGroupsWithStatsInTimeRange
+      .name,
+    () => {
+      it('returns distinct groups that have stats in the provided range', async () => {
+        const day1Early = UnixTime(UnixTime.DAY + 100)
+        const day1Late = UnixTime(UnixTime.DAY + 200)
+        const day2Late = UnixTime(2 * UnixTime.DAY + 200)
+        const day3Early = UnixTime(3 * UnixTime.DAY + 100)
+
+        await repository.insertMany([
+          record({
+            id: 'stargate',
+            timestamp: day1Early,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+          }),
+          record({
+            id: 'stargate',
+            timestamp: day1Late,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+          }),
+          record({
+            id: 'across',
+            timestamp: day2Late,
+            srcChain: 'ethereum',
+            dstChain: 'base',
+            bridgeType: 'lockAndMint',
+          }),
+          record({
+            id: 'outside',
+            timestamp: day3Early,
+            srcChain: 'arbitrum',
+            dstChain: 'optimism',
+            bridgeType: 'burnAndMint',
+          }),
+        ])
+
+        const result = await repository.getGroupsWithStatsInTimeRange(
+          UnixTime.toStartOf(day1Early, 'day'),
+          UnixTime.toStartOf(day3Early, 'day'),
+        )
+
+        expect(result).toEqualUnsorted([
+          {
+            id: 'stargate',
+            bridgeType: 'nonMinting',
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+          },
+          {
+            id: 'across',
+            bridgeType: 'lockAndMint',
+            srcChain: 'ethereum',
+            dstChain: 'base',
+          },
+        ])
+      })
+    },
+  )
+
+  describe(
+    AggregatedInteropTransferRepository.prototype
+      .getDailyStatsForGroupInTimeRange.name,
+    () => {
+      it('returns the latest record per day for a specific group within the provided range', async () => {
+        const day1Early = UnixTime(UnixTime.DAY + 100)
+        const day1Late = UnixTime(UnixTime.DAY + 200)
+        const day2Early = UnixTime(2 * UnixTime.DAY + 100)
+        const day2Late = UnixTime(2 * UnixTime.DAY + 200)
+        const day3Early = UnixTime(3 * UnixTime.DAY + 100)
+
+        await repository.insertMany([
+          record({
+            id: 'stargate',
+            timestamp: day1Early,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+            transferCount: 10,
+            identifiedCount: 8,
+            srcValueUsd: 100,
+            dstValueUsd: 90,
+          }),
+          record({
+            id: 'stargate',
+            timestamp: day1Late,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+            transferCount: 11,
+            identifiedCount: 9,
+            srcValueUsd: 110,
+            dstValueUsd: 95,
+          }),
+          record({
+            id: 'stargate',
+            timestamp: day2Early,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+            transferCount: 12,
+            identifiedCount: 10,
+            srcValueUsd: 120,
+            dstValueUsd: 100,
+          }),
+          record({
+            id: 'stargate',
+            timestamp: day2Late,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+            transferCount: 13,
+            identifiedCount: 11,
+            srcValueUsd: 130,
+            dstValueUsd: 105,
+          }),
+          record({
+            id: 'stargate',
+            timestamp: day3Early,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+            transferCount: 14,
+            identifiedCount: 12,
+            srcValueUsd: 140,
+            dstValueUsd: 110,
+          }),
+          record({
+            id: 'other',
+            timestamp: day2Late,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+            transferCount: 999,
+            identifiedCount: 999,
+            srcValueUsd: 999,
+            dstValueUsd: 999,
+          }),
+        ])
+
+        const result = await repository.getDailyStatsForGroupInTimeRange(
+          'stargate',
+          'nonMinting',
+          'ethereum',
+          'arbitrum',
+          UnixTime.toStartOf(day1Early, 'day'),
+          UnixTime.toStartOf(day3Early, 'day'),
+        )
+
+        expect(result).toEqual([
+          {
+            timestamp: day1Late,
+            transferCount: 11,
+            identifiedCount: 9,
+            srcVolumeUsd: 110,
+            dstVolumeUsd: 95,
+          },
+          {
+            timestamp: day2Late,
+            transferCount: 13,
+            identifiedCount: 11,
+            srcVolumeUsd: 130,
+            dstVolumeUsd: 105,
+          },
+        ])
+      })
+    },
+  )
+
+  describe(
     AggregatedInteropTransferRepository.prototype.getEarliestTimestampForDay
       .name,
     () => {
@@ -653,6 +936,117 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
   )
 
   describe(
+    AggregatedInteropTransferRepository.prototype.getMaxTimestampAtOrBefore
+      .name,
+    () => {
+      it('returns the latest timestamp at or before the requested timestamp', async () => {
+        await repository.insertMany([
+          record({
+            id: 'id1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+          }),
+          record({
+            id: 'id2',
+            timestamp: UnixTime(200),
+            srcChain: 'arbitrum',
+            dstChain: 'ethereum',
+          }),
+          record({
+            id: 'id3',
+            timestamp: UnixTime(300),
+            srcChain: 'polygon',
+            dstChain: 'ethereum',
+          }),
+        ])
+
+        const result = await repository.getMaxTimestampAtOrBefore(UnixTime(250))
+
+        expect(result).toEqual(UnixTime(200))
+      })
+
+      it('returns undefined when no timestamp is available at or before the requested timestamp', async () => {
+        await repository.insertMany([
+          record({
+            id: 'id1',
+            timestamp: UnixTime(200),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+          }),
+        ])
+
+        const result = await repository.getMaxTimestampAtOrBefore(UnixTime(100))
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
+    AggregatedInteropTransferRepository.prototype.getByTimestamp.name,
+    () => {
+      it('returns records with matching timestamp', async () => {
+        const record1 = record({
+          id: 'id1',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 5,
+          identifiedCount: 1000,
+        })
+        const record2 = record({
+          id: 'id2',
+          timestamp: UnixTime(200),
+          srcChain: 'arbitrum',
+          dstChain: 'ethereum',
+          transferCount: 3,
+          identifiedCount: 2000,
+        })
+        const record3 = record({
+          id: 'id3',
+          timestamp: UnixTime(200),
+          srcChain: 'polygon',
+          dstChain: 'ethereum',
+          transferCount: 7,
+          identifiedCount: 3000,
+        })
+        const record4 = record({
+          id: 'id4',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'polygon',
+          transferCount: 2,
+          identifiedCount: 4000,
+        })
+
+        await repository.insertMany([record1, record2, record3, record4])
+
+        const result = await repository.getByTimestamp(UnixTime(200))
+
+        expect(result).toEqualUnsorted([record2, record3])
+      })
+
+      it('returns empty array when no records match timestamp', async () => {
+        await repository.insertMany([
+          record({
+            id: 'id1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            transferCount: 5,
+            identifiedCount: 1000,
+          }),
+        ])
+
+        const result = await repository.getByTimestamp(UnixTime(200))
+
+        expect(result).toEqual([])
+      })
+    },
+  )
+
+  describe(
     AggregatedInteropTransferRepository.prototype.getByChainsAndTimestamp.name,
     () => {
       it('returns records matching timestamp, srcChains and dstChains', async () => {
@@ -797,13 +1191,13 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           UnixTime(300),
           ['ethereum', 'arbitrum'],
           ['ethereum', 'arbitrum'],
-          'lockAndMint',
+          ['lockAndMint'],
         )
 
         expect(result).toEqualUnsorted([record1, record3])
       })
 
-      it('filters by protocolId when provided', async () => {
+      it('filters by protocolIds when provided', async () => {
         const record1 = record({
           id: 'protocol1',
           timestamp: UnixTime(300),
@@ -820,17 +1214,25 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           transferCount: 3,
           identifiedCount: 2000,
         })
-        await repository.insertMany([record1, record2])
+        const record3 = record({
+          id: 'protocol3',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 7,
+          identifiedCount: 3000,
+        })
+        await repository.insertMany([record1, record2, record3])
 
         const result = await repository.getByChainsAndTimestamp(
           UnixTime(300),
           ['ethereum', 'arbitrum'],
           ['ethereum', 'arbitrum'],
           undefined,
-          'protocol1',
+          ['protocol1', 'protocol3'],
         )
 
-        expect(result).toEqual([record1])
+        expect(result).toEqualUnsorted([record1, record3])
       })
 
       it('returns all matching records when bridgeType is undefined', async () => {

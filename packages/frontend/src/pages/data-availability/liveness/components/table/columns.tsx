@@ -153,10 +153,7 @@ export const publicColumns = () => [
       }
 
       return (
-        <AnomalyIndicator
-          anomalies={bridge.anomalies}
-          hasTrackedContractsChanged={bridge.hasTrackedContractsChanged}
-        />
+        <AnomalyIndicator anomalies={bridge.anomalies} href={bridge.href} />
       )
     },
     meta: {
@@ -172,7 +169,7 @@ export const publicColumns = () => [
             <AnomalyIndicator
               key={bridge.slug}
               anomalies={bridge.anomalies}
-              hasTrackedContractsChanged={bridge.hasTrackedContractsChanged}
+              href={bridge.href}
             />
           )
         })

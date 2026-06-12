@@ -1,25 +1,35 @@
 {
   "name": "cbridge",
-  "timestamp": 1736926655,
-  "configHash": "0x438a736573ac183a85ead3f548487de0b0fc12707bb43fbdd7f05f9716e76eb4",
+  "timestamp": 1779355836,
+  "configHash": "0x634828873cc74ae5a6f0a647a5ab5048eb31401f96bffabfe8f4f18fe6a84b4d",
   "entries": [
     {
       "name": "PeggedTokenBridge",
       "address": "eth:0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB",
       "type": "Contract",
+      "template": "cbridge/PeggedTokenBridge",
       "sourceHashes": [
-        "0x3434f13a03ea3f4494cedceb0a2fe1054473c529ae3c067ba96d7102c3225852"
+        "0x75f3bc873ea97132896d89c889c787a6a90e0862a3a96219e2d73e634f3a7a98"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1639581534,
       "sinceBlock": 13810512,
       "values": {
         "$immutable": true,
-        "delayPeriod": 1800,
-        "epochLength": 1800,
+        "delayPeriod": 21600,
+        "epochLength": 21600,
         "owner": "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
         "paused": false,
         "sigsVerifier": "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      },
+      "fieldMeta": {
+        "delayPeriod": {
+          "description": "a transfer that exceeds the per-asset delayThreshold amount is delayed by this period"
+        },
+        "epochLength": {
+          "description": "time spans during which per-token rate-limiting is applied"
+        }
       },
       "implementationNames": {
         "eth:0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB": "PeggedTokenBridge"
@@ -47,9 +57,10 @@
       "type": "Contract",
       "sourceHashes": [
         "0x2cffb288804b4b9aa5855910610b396abe44ded0ad8ed35981ed74d056ae8ba1",
-        "0x985f30f6f1cec4239d77034618e116e07dae859f0ded01ba80f897dadb7101f3"
+        "0x8a55a023d998f0f0a6d3b7d5e99bb9f87b51e0921a0853bc9e94723351e188f3"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1649432556,
       "sinceBlock": 14546010,
       "values": {
@@ -68,8 +79,8 @@
           ]
         ],
         "$upgradeCount": 2,
-        "feeBase": 15000000000000,
-        "feePerByte": 150000000000,
+        "feeBase": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "feePerByte": 0,
         "liquidityBridge": "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
         "owner": "eth:0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175",
         "pegBridge": "eth:0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB",
@@ -104,6 +115,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1649432377,
       "sinceBlock": 14545993,
       "values": {
@@ -118,19 +130,29 @@
       "name": "PeggedTokenBridgeV2",
       "address": "eth:0x52E4f244f380f8fA51816c8a10A63105dd4De084",
       "type": "Contract",
+      "template": "cbridge/PeggedTokenBridgeV2",
       "sourceHashes": [
-        "0xa8ad65c174f2e76f58ba6abc073545979d712d31810b818fa4ff50bfa9cffc09"
+        "0xa8a7aa10654a7637ccfba9e06c63f15180f8ff30a4328c3269c13a63565f3861"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1650529338,
       "sinceBlock": 14627208,
       "values": {
         "$immutable": true,
-        "delayPeriod": 1800,
-        "epochLength": 1800,
+        "delayPeriod": 21600,
+        "epochLength": 21600,
         "owner": "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
         "paused": false,
         "sigsVerifier": "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      },
+      "fieldMeta": {
+        "epochLength": {
+          "description": "time spans during which per-token rate-limiting is applied"
+        },
+        "delayPeriod": {
+          "description": "a transfer that exceeds the per-asset delayThreshold amount is delayed by this period"
+        }
       },
       "implementationNames": {
         "eth:0x52E4f244f380f8fA51816c8a10A63105dd4De084": "PeggedTokenBridgeV2"
@@ -141,17 +163,18 @@
       "address": "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
       "type": "Contract",
       "sourceHashes": [
-        "0x28057aec4ce9e7459369838e4a925c15a3b424afd948d070512e8a54c2870ec8"
+        "0xaacb25a591a45ae3c9cce7b533e79f57c6879b8d3eb4a6851608a61ce59eb1fd"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["addseq", "ssHash", "triggerTime"],
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1638346811,
       "sinceBlock": 13719989,
       "values": {
         "$immutable": true,
-        "addseq": 5385,
-        "delayPeriod": 1800,
-        "epochLength": 1800,
+        "addseq": 6796,
+        "delayPeriod": 21600,
+        "epochLength": 21600,
         "governors": [
           "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
           "eth:0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
@@ -171,8 +194,8 @@
           "eth:0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0x2873508ac0686ac90ca233a0e1279190271073db2b081aea5ce736f7ed8ae6b2",
-        "triggerTime": 1736781066
+        "ssHash": "0x54300c7089193f6ce728b01d8d4834e7c342960d95077597b7cc4cee6642d271",
+        "triggerTime": 1779274543
       },
       "implementationNames": {
         "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": "Bridge"
@@ -186,6 +209,7 @@
         "0x208be8f798080de1d60fcd5cba233b86c43f382ace673f95ad32b633d98be2dd"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1676671175,
       "sinceBlock": 16651238,
       "values": {
@@ -195,7 +219,7 @@
             "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
             "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
             "eth:0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
-            "eth:0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
+            "eth:0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
             "eth:0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
           ],
           [10000, 10000, 10000, 10000, 10000]
@@ -213,15 +237,16 @@
       "address": "eth:0x7510792A3B1969F9307F3845CE88e39578f2bAE1",
       "type": "Contract",
       "sourceHashes": [
-        "0x66b162a0fe8e04147d94a9ec40e3cf9a69114ed6e3fca427cc303eeb2d223fb9"
+        "0xebb59d221d754d4d0a2c6524302ea6268dae997b9a08ddd45a378db7b5f57a7d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1651661389,
       "sinceBlock": 14710499,
       "values": {
         "$immutable": true,
-        "delayPeriod": 1800,
-        "epochLength": 1800,
+        "delayPeriod": 21600,
+        "epochLength": 21600,
         "nativeWrap": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "owner": "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
         "paused": false,
@@ -257,6 +282,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1690520231,
       "sinceBlock": 17789313,
       "values": {
@@ -277,9 +303,10 @@
       "address": "eth:0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b",
       "type": "Contract",
       "sourceHashes": [
-        "0xa8c0aeb1e8c7671f05a401b4d5b518a38e96dc6378d59e3f2b13ea55ea9f7f9f"
+        "0xa86ffcf8ddc72c73bc8e3667bf6f9f92b29b959dac47c95c44b0a18f19f2e402"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4",
       "sinceTimestamp": 1666193927,
       "sinceBlock": 15783099,
       "values": {
@@ -291,24 +318,20 @@
       }
     },
     {
-      "address": "eth:0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "OriginalTokenVault",
       "address": "eth:0xB37D31b2A74029B5951a2778F959282E2D518595",
       "type": "Contract",
       "sourceHashes": [
-        "0xf4773d39e3c19f28a41b1b526474a51db5a28bb3fa5ea530f6af164e5263f209"
+        "0xa0c5154cdcc97dff3f46365d746f8639b74c72081d9f9b36a57f5360d6deb8a2"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1639553135,
       "sinceBlock": 13808358,
       "values": {
         "$immutable": true,
-        "delayPeriod": 1800,
-        "epochLength": 1800,
+        "delayPeriod": 21600,
+        "epochLength": 21600,
         "governors": [
           "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
           "eth:0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
@@ -351,10 +374,11 @@
       "type": "Contract",
       "sourceHashes": [
         "0x4a43bdaa7c21f911802bc9e3457cf5fef469f43b372ea6944d53823caf2f53f2",
-        "0x03c52122def17f5a3403dd9a188a1e30bee36b86dc98fb8c07a5157ccc7da286"
+        "0x00a0facbfe72f59cf9ec3510d279b712a043959fc815e7b4271ae8a3336d5f2e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.",
+      "deployerAddress": "eth:0x1c69b0347E63094669aa4f4D9061B748871CEC79",
       "sinceTimestamp": 1691384579,
       "sinceBlock": 17860848,
       "values": {
@@ -439,6 +463,7 @@
         }
       ],
       "ignoreInWatchMode": ["nextProposalId"],
+      "deployerAddress": "eth:0x108e64Be829981dF9B4a5e526041385F4662Ead2",
       "sinceTimestamp": 1656926298,
       "sinceBlock": 15075143,
       "values": {
@@ -993,8 +1018,10 @@
     ]
   },
   "usedTemplates": {
+    "cbridge/PeggedTokenBridge": "0x08b47d97e35ec94bae1a461f262ce3c4c61103671e9ed5ad6b8caa683860bfbd",
+    "cbridge/PeggedTokenBridgeV2": "0x08b47d97e35ec94bae1a461f262ce3c4c61103671e9ed5ad6b8caa683860bfbd",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 21628437 },
-  "permissionsConfigHash": "0x608f2f69275f3da0b810339f9fa5c9696f9f363fe6cc9a88193b8802fc601ec5"
+  "usedBlockNumbers": { "ethereum": 25142734 },
+  "permissionsConfigHash": "0x17f9d772d70b3d074b16bc0c586165280767da45e2191e5e810f401eb6cde10b"
 }

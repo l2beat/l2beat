@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xdecd2969bfce57257c3acf6c6dd93ed564ec633b
+Generated with discovered.json: 0xb1dda77805d00614c21e6295c6ffd33ebb1d4094
 
-# Diff at Mon, 23 Mar 2026 10:57:10 GMT:
+# Diff at Fri, 12 Jun 2026 10:19:03 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1762264428
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1762264428
 - current timestamp: 1762264428
 
 ## Description
@@ -23,6 +23,121 @@ discovery. Values are for block 1762264428 (main branch discovery), not current.
 -        true
       eoaWithUpgradePermissions:
 +        true
+    }
+```
+
+Generated with discovered.json: 0xf134221addbf891dcf6dd02193a16b88c532f37e
+
+# Diff at Tue, 09 Jun 2026 12:43:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1762264428
+- current timestamp: 1762264428
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264428 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x521531382d78933c319cecfdeefc3a65e6f5be5f
+
+# Diff at Fri, 08 May 2026 07:52:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1762264428
+- current timestamp: 1762264428
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264428 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) [polygon-cdk/PolygonDataCommittee] {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).
+      sourceHashes.1:
+-        "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
++        "0x104785224960bd811f19412b23435d0d80fa4eb4d05a7d50a857009b583bafa5"
+    }
+```
+
+```diff
+    contract Validium (eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB) [polygon-cdk/PolygonZkEVM] {
+    +++ description: The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.
+      sourceHashes.1:
+-        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
++        "0x5684ac32eb941b26475b5792fd1549caa9c2a7b9da3c5163c16ca5cd4eb4b4a5"
+    }
+```
+
+Generated with discovered.json: 0x240c4e3ea8df9473e03380feaea97a924c8dcc59
+
+# Diff at Tue, 05 May 2026 10:23:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1762264428
+- current timestamp: 1762264428
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264428 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).
+      deployerAddress:
++        "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
+```diff
+    contract Validium (eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB) {
+    +++ description: The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.
+      deployerAddress:
++        "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891"
+    }
+```
+
+```diff
+    contract Verifier (eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      deployerAddress:
++        "eth:0x082cCe3072A26a3871D3e5D40afB425fF5038Cf6"
     }
 ```
 

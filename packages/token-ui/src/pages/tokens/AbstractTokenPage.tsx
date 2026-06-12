@@ -1,11 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { ArrowRightIcon, CoinsIcon, PlusIcon, TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
+import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {
   Card,
@@ -28,15 +30,18 @@ import { LoadingState } from '~/components/LoadingState'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AbstractTokenPage() {
+  const trpc = useTRPC()
   const { id } = useParams()
-  const { data } = api.abstractTokens.getById.useQuery(id ?? '', {
-    enabled: id !== '',
-  })
+  const { data } = useQuery(
+    trpc.abstractTokens.getById.queryOptions(id ?? '', {
+      enabled: id !== '',
+    }),
+  )
 
   if (!id || data === null) {
     return <Navigate to="/not-found" replace />
@@ -58,6 +63,7 @@ function AbstractTokenView({
 }: {
   token: AbstractTokenWithDeployedTokens
 }) {
+  const trpc = useTRPC()
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
   const form = useForm<AbstractTokenSchema>({
@@ -75,23 +81,30 @@ function AbstractTokenView({
     },
   })
 
-  const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
-    onSuccess: (data) => {
-      if (data.outcome === 'success') {
-        setPlan(data.plan)
-      } else {
-        toast.error(data.error)
-      }
-    },
-  })
+  const { mutate: planMutate, isPending } = useMutation(
+    trpc.plan.generate.mutationOptions({
+      onSuccess: (data) => {
+        if (data.outcome === 'success') {
+          setPlan(data.plan)
+        } else {
+          toast.error(data.error)
+        }
+      },
+    }),
+  )
 
-  const { data: suggestions, isLoading: isLoadingSuggestions } =
-    api.deployedTokens.getSuggestionsByCoingeckoId.useQuery(
+  const { data: suggestions, isLoading: isLoadingSuggestions } = useQuery(
+    trpc.deployedTokens.getSuggestionsByCoingeckoId.queryOptions(
       token.coingeckoId ?? '',
       {
         enabled: !!token.coingeckoId,
       },
-    )
+    ),
+  )
+
+  const sortedSuggestions = [...(suggestions ?? [])].sort(
+    (a, b) => Number(b.isInterop) - Number(a.isInterop),
+  )
 
   return (
     <>
@@ -157,29 +170,13 @@ function AbstractTokenView({
               {isLoadingSuggestions ? (
                 <LoadingState />
               ) : suggestions && suggestions.length !== 0 ? (
-                <div className="-mx-6 flex flex-col gap-2">
-                  {suggestions.map((suggestion) => {
-                    return (
-                      <div
-                        key={suggestion.chain}
-                        className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
-                      >
-                        {suggestion.chain} ({suggestion.address})
-                        <Button variant="link" asChild size="icon">
-                          <Link
-                            to={buildUrlWithParams('/tokens/new', {
-                              tab: 'deployed',
-                              chain: suggestion.chain,
-                              address: suggestion.address,
-                            })}
-                            target="_blank"
-                          >
-                            <PlusIcon />
-                          </Link>
-                        </Button>
-                      </div>
-                    )
-                  })}
+                <div className="-mx-6 flex flex-col">
+                  {sortedSuggestions.map((suggestion) => (
+                    <SuggestionRow
+                      key={`${suggestion.chain}-${suggestion.address}`}
+                      suggestion={suggestion}
+                    />
+                  ))}
                 </div>
               ) : (
                 <Empty>
@@ -249,5 +246,41 @@ function AbstractTokenView({
         </ButtonWithSpinner>
       </div>
     </>
+  )
+}
+
+function SuggestionRow({
+  suggestion,
+}: {
+  suggestion: { chain: string; address: string; isInterop: boolean }
+}) {
+  return (
+    <div className="flex items-center justify-between gap-2 px-6 py-2 odd:bg-muted">
+      <div className="min-w-0">
+        <div className="flex items-center gap-2">
+          <span className="font-medium">{suggestion.chain}</span>
+          {suggestion.isInterop && (
+            <Badge variant="outline" className="text-[10px] uppercase">
+              Interop
+            </Badge>
+          )}
+        </div>
+        <p className="truncate font-mono text-muted-foreground text-xs">
+          {suggestion.address}
+        </p>
+      </div>
+      <Button variant="link" asChild size="icon">
+        <Link
+          to={buildUrlWithParams('/tokens/new', {
+            tab: 'deployed',
+            chain: suggestion.chain,
+            address: suggestion.address,
+          })}
+          target="_blank"
+        >
+          <PlusIcon />
+        </Link>
+      </Button>
+    </div>
   )
 }

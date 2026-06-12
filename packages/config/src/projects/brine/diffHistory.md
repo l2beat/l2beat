@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x528141c118a38e70fb4e15c82128b8b23c0d9ad8
+Generated with discovered.json: 0x87d3a1e15d8b329e0032ae4fef49660f313eac2a
 
-# Diff at Mon, 23 Mar 2026 11:19:21 GMT:
+# Diff at Fri, 12 Jun 2026 10:18:42 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@0f2989bd93540d1da7b1b07eb7ab704c5a9355e8 block: 1741185671
-- current timestamp: 1741185671
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1777891418
+- current timestamp: 1777891418
 
 ## Description
 
@@ -14,7 +14,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1741185671 (main branch discovery), not current.
+discovery. Values are for block 1777891418 (main branch discovery), not current.
 
 ```diff
     EOA  (eth:0x303775491494a08b07365938787274F742a81F63) {
@@ -23,6 +23,189 @@ discovery. Values are for block 1741185671 (main branch discovery), not current.
 -        true
       eoaWithUpgradePermissions:
 +        true
+    }
+```
+
+Generated with discovered.json: 0x7774fb8b7f26189407a6d213e1b02b1988128d23
+
+# Diff at Tue, 09 Jun 2026 12:43:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1777891418
+- current timestamp: 1777891418
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891418 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x303775491494a08b07365938787274F742a81F63) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0x1390f521A79BaBE99b69B37154D63D431da27A07","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x1390f521A79BaBE99b69B37154D63D431da27A07","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+```diff
+    EOA  (eth:0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.0.permission:
+-        "operateStarkEx"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x0cf520744f3226ae1a186e2d96844709d0d5eb1f
+
+# Diff at Fri, 08 May 2026 07:51:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777891418
+- current timestamp: 1777891418
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891418 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (eth:0x1390f521A79BaBE99b69B37154D63D431da27A07) [starkex/StarkExchange] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.0:
+-        "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918"
++        "0xa2b51d5024b872eb502c2abfec88397c41c32d42494dd19905514a69d38abfec"
+      sourceHashes.1:
+-        "0xfb3c0545e8c9aeebaa6547f71087a1ad7d93e3344e0dfdb1051e1a18fd44a18b"
++        "0x9b28596a715350d61f719241f35d6ee159c111c93c05da1d4804157142ee790c"
+    }
+```
+
+```diff
+    contract DACommittee (eth:0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446) [starkex/Committee] {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
+      sourceHashes.0:
+-        "0xb7173602faa329abf6af13a2dca4512d58504df7a9a3beace2a8a0470b416b02"
++        "0x3d6dc38f062f4e182e3747ac0f40d99d53cc28b9da249e406ca3f44f77154b29"
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143) [starkex/GpsFactRegistryAdapter] {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+      sourceHashes.0:
+-        "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
++        "0x1bb1677263f0cad4764f3620f45cf353df37fb489e3404889126f7897afcdffd"
+    }
+```
+
+Generated with discovered.json: 0xe6d07ef9eaeb0a5f0ccc1c0d20a1676ba926b77a
+
+# Diff at Tue, 05 May 2026 10:22:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777891418
+- current timestamp: 1777891418
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891418 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (eth:0x1390f521A79BaBE99b69B37154D63D431da27A07) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract DACommittee (eth:0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446) {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract OrderRegistry (eth:0x806d435a82B0381bD884540c2235147c13B97fe6) {
+    +++ description: Helper contract for registering limit orders from L1.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+Generated with discovered.json: 0x71a2a83ea4dc893703cbd80434860d2c50af4d60
+
+# Diff at Mon, 04 May 2026 10:44:41 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@49e04c9893b7bab5ccd06ae4d7a23fa1d10918a8 block: 1777546397
+- current timestamp: 1777891418
+
+## Description
+
+Verifier upgrade finalized, it is now actively used.
+
+## Watched changes
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+      values.hasRegisteredFact:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0xda7aa6b6b512512eff6343c3be20ab039b47b63d
+
+# Diff at Thu, 30 Apr 2026 10:54:20 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@48c82436aca63abdd2a1dd0798daa7eaa9ef5e58 block: 1741185671
+- current timestamp: 1777546397
+
+## Description
+
+Verifier automatically changed hasRegisteredFact flag, indicating that verifier upgrade is not finalized yet.
+
+## Watched changes
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+      values.hasRegisteredFact:
+-        true
++        false
     }
 ```
 

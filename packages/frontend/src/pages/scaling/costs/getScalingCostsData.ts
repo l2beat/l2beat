@@ -33,8 +33,8 @@ export async function getScalingCostsData(
         title: 'Costs - L2BEAT',
         description:
           'Compare transaction costs across Ethereum scaling solutions.',
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/costs/opengraph-image.png',
         },
       }),
@@ -73,9 +73,11 @@ async function getCachedData(cache: InMemoryCache, tab: 'rollups' | 'others') {
 async function getQueryState(tab: 'rollups' | 'others') {
   const helpers = getSsrHelpers()
 
-  await helpers.costs.chart.prefetch({
-    range: optionToRange('30d'),
-    filter: { type: tab },
-  })
+  await helpers.queryClient.prefetchQuery(
+    helpers.trpc.costs.chart.queryOptions({
+      range: optionToRange('30d'),
+      filter: { type: tab },
+    }),
+  )
   return helpers.dehydrate()
 }

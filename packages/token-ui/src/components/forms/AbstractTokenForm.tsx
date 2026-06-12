@@ -1,3 +1,4 @@
+import { TOKEN_CATEGORIES } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { ArrowRightIcon, RefreshCwIcon } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
@@ -6,6 +7,7 @@ import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,7 +28,6 @@ import { parseDatePaste } from '~/utils/parseDate'
 import { Checkbox } from '../core/Checkbox'
 import { ExternalLink } from '../ExternalLink'
 
-const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
 const EMPTY_CATEGORY_VALUE = '__none__'
 
 export type AbstractTokenSchema = v.infer<typeof AbstractTokenSchema>
@@ -34,7 +35,7 @@ export const AbstractTokenSchema = v.object({
   id: v.string(),
   issuer: v.string().optional(),
   symbol: v.string().check(minLengthCheck(1)),
-  category: v.union([v.enum(categoryValues), v.null()]),
+  category: v.union([v.enum(TOKEN_CATEGORIES), v.null()]),
   coingeckoId: v.string().optional(),
   coingeckoListingTimestamp: v.string().optional(),
   iconUrl: v
@@ -48,6 +49,7 @@ export const AbstractTokenSchema = v.object({
     .optional(),
   comment: v.string().optional(),
   reviewed: v.boolean(),
+  isPriceUnreliable: v.boolean(),
 })
 
 export function AbstractTokenForm({
@@ -239,7 +241,7 @@ export function AbstractTokenForm({
                     <SelectItem value={EMPTY_CATEGORY_VALUE}>
                       No category
                     </SelectItem>
-                    {categoryValues.map((category) => (
+                    {TOKEN_CATEGORIES.map((category) => (
                       <SelectItem key={category} value={category}>
                         {category}
                       </SelectItem>
@@ -281,6 +283,35 @@ export function AbstractTokenForm({
                   />
                 </FormControl>
                 <FormLabel className="font-normal text-sm">Reviewed</FormLabel>
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="isPriceUnreliable"
+            render={({ field }) => (
+              <FormItem className="grid gap-1">
+                <div className="flex flex-row items-center gap-2">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(checked) => {
+                        return checked
+                          ? field.onChange(true)
+                          : field.onChange(false)
+                      }}
+                    />
+                  </FormControl>
+                  <FormLabel className="font-normal text-sm">
+                    Unreliable price
+                  </FormLabel>
+                </div>
+                <FormDescription>
+                  Set this when the upstream provider price is wrong or
+                  inconsistent. Interop will not calculate the USD value for
+                  this token.
+                </FormDescription>
               </FormItem>
             )}
           />

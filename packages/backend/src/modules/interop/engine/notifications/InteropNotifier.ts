@@ -1,21 +1,62 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { DISCORD_MAX_MESSAGE_LENGTH } from '@l2beat/shared'
-import { Retries } from '@l2beat/shared-pure'
+import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
+import { Retries, UnixTime } from '@l2beat/shared-pure'
 import { TaskQueue } from '../../../../tools/queue/TaskQueue'
-import type { DiscordWebhookClient } from '../../../anomalies/clients/DiscordWebhookClient'
+import type { InteropAggregationAnalysis } from '../aggregation/InteropAggregationAnalyzer'
 import {
   diffInteropConfig,
   type InteropConfigDiff,
   interopConfigDiffToMarkdown,
+  removeMutedInteropConfigDiffEntries,
 } from '../config/InteropConfigDiff'
 
 const MAX_ENTRIES_IN_MESSAGE = 200
+const MAX_SUSPICIOUS_GROUPS_IN_MESSAGE = 20
+const MAX_REASONS_PER_GROUP = 3
+const MAX_SUSPICIOUS_TRANSFERS_IN_MESSAGE = 6
+const MAX_SKIPPED_VALUATIONS_IN_MESSAGE = 10
+
+export interface InteropSuspiciousTransferNotification {
+  plugin: string
+  type: string
+  transferId: string
+  timestamp: UnixTime
+  srcChain: string
+  srcTxHash: string | undefined
+  srcTokenAddress: string | undefined
+  srcSymbol: string | undefined
+  srcValueUsd: number
+  dstChain: string
+  dstTxHash: string | undefined
+  dstTokenAddress: string | undefined
+  dstSymbol: string | undefined
+  dstValueUsd: number
+  dominantSide: 'src' | 'dst'
+  valueDifferencePercent: number
+  valueRatio: number
+}
+
+export interface InteropSkippedTransferValuationNotification {
+  plugin: string
+  type: string
+  transferId: string
+  srcChain: string
+  dstChain: string
+  side: 'src' | 'dst'
+  symbol: string | undefined
+  coingeckoId: string
+  priceUsd: number
+  amount: number
+  valueUsd: number | undefined
+  reason: 'priceAboveThreshold' | 'valueAboveThreshold'
+  thresholdUsd: number
+}
 
 export class InteropNotifier {
   private readonly messageQueue: TaskQueue<string>
 
   constructor(
-    private readonly client: DiscordWebhookClient,
+    private readonly client: DiscordClient,
     private readonly logger: Logger,
   ) {
     this.logger = logger.for(this)
@@ -40,11 +81,115 @@ export class InteropNotifier {
 
   handleConfigChange(key: string, previous: unknown, current: unknown): void {
     const diff = diffInteropConfig(key, previous, current)
-    if (diff.entries.length === 0) {
+    const filteredDiff = removeMutedInteropConfigDiffEntries(diff)
+
+    if (filteredDiff.entries.length === 0) {
       return
     }
 
-    this.notifyConfigDiff(diff)
+    this.notifyConfigDiff(filteredDiff)
+  }
+
+  notifySuspiciousAggregates(
+    timestamp: UnixTime,
+    analysis: InteropAggregationAnalysis,
+  ): void {
+    if (analysis.suspiciousGroups.length === 0) {
+      return
+    }
+
+    const renderedGroups = analysis.suspiciousGroups
+      .slice(0, MAX_SUSPICIOUS_GROUPS_IN_MESSAGE)
+      .map((group) => {
+        const reasons = group.reasons.slice(0, MAX_REASONS_PER_GROUP).join('; ')
+        const remainingReasons = group.reasons.length - MAX_REASONS_PER_GROUP
+        const remainingSuffix =
+          remainingReasons > 0 ? `; +${remainingReasons} more` : ''
+
+        return `- ${group.id} ${group.bridgeType} transfers on the ${group.srcChain} -> ${group.dstChain} path: ${reasons}${remainingSuffix}`
+      })
+
+    const remainingGroups =
+      analysis.suspiciousGroups.length - MAX_SUSPICIOUS_GROUPS_IN_MESSAGE
+    if (remainingGroups > 0) {
+      renderedGroups.push(`- ...and ${remainingGroups} more groups`)
+    }
+
+    const message = [
+      `🚨 Interop aggregate analysis flagged \`${analysis.suspiciousGroups.length}\` suspicious groups at \`${formatTimestamp(timestamp)}\``,
+      '',
+      ...renderedGroups,
+    ].join('\n')
+
+    this.messageQueue.addToBack(message)
+  }
+
+  notifySuspiciousTransfers(
+    timestamp: UnixTime,
+    transfers: InteropSuspiciousTransferNotification[],
+  ): void {
+    if (transfers.length === 0) {
+      return
+    }
+
+    const renderedTransfers = transfers
+      .slice(0, MAX_SUSPICIOUS_TRANSFERS_IN_MESSAGE)
+      .map((transfer) => {
+        const largerSide = transfer.dominantSide
+        const smallerSide = largerSide === 'src' ? 'dst' : 'src'
+
+        return `- \`${transfer.transferId}\` \`${transfer.plugin}\` \`${transfer.type}\` \`${transfer.srcSymbol} on ${transfer.srcChain} -> ${transfer.dstSymbol} on ${transfer.dstChain}\` ${formatDollars(transfer.srcValueUsd)} vs ${formatDollars(transfer.dstValueUsd)} (${formatRatio(transfer.valueRatio)} ${largerSide}/${smallerSide}, ${formatPercent(transfer.valueDifferencePercent)})`
+      })
+
+    const remainingTransfers =
+      transfers.length - MAX_SUSPICIOUS_TRANSFERS_IN_MESSAGE
+    if (remainingTransfers > 0) {
+      renderedTransfers.push(`- ...and ${remainingTransfers} more transfers`)
+    }
+
+    const message = [
+      `🕵🏻‍♂️ Interop financials flagged \`${transfers.length}\` suspicious transfers at \`${formatTimestamp(timestamp)}\``,
+      '',
+      ...renderedTransfers,
+    ].join('\n')
+
+    this.messageQueue.addToBack(message)
+  }
+
+  notifySkippedTransferValuations(
+    timestamp: UnixTime,
+    valuations: InteropSkippedTransferValuationNotification[],
+  ): void {
+    if (valuations.length === 0) {
+      return
+    }
+
+    const renderedValuations = valuations
+      .slice(0, MAX_SKIPPED_VALUATIONS_IN_MESSAGE)
+      .map((valuation) => {
+        const path = `${valuation.srcChain} -> ${valuation.dstChain}`
+        const symbol = valuation.symbol ?? valuation.coingeckoId
+
+        if (valuation.reason === 'priceAboveThreshold') {
+          return `- \`${valuation.transferId}\` \`${valuation.plugin}\` \`${valuation.type}\` \`${valuation.side}\` \`${symbol}\` on ${path}: skipped valuation because price ${formatDollars(valuation.priceUsd)} is above ${formatDollars(valuation.thresholdUsd)}`
+        }
+
+        return `- \`${valuation.transferId}\` \`${valuation.plugin}\` \`${valuation.type}\` \`${valuation.side}\` \`${symbol}\` on ${path}: skipped value ${formatDollars(valuation.valueUsd ?? 0)} above ${formatDollars(valuation.thresholdUsd)} at price ${formatDollars(valuation.priceUsd)} and amount ${formatAmount(valuation.amount)}`
+      })
+
+    const remainingValuations =
+      valuations.length - MAX_SKIPPED_VALUATIONS_IN_MESSAGE
+    if (remainingValuations > 0) {
+      renderedValuations.push(`- ...and ${remainingValuations} more valuations`)
+    }
+
+    const message = [
+      `⚠️ Interop financials skipped \`${valuations.length}\` transfer valuations at \`${formatTimestamp(timestamp)}\``,
+      '',
+      ...renderedValuations,
+    ].join('\n')
+
+    this.messageQueue.addToBack(message)
   }
 
   private notifyConfigDiff(diff: InteropConfigDiff): void {
@@ -75,4 +220,33 @@ export class InteropNotifier {
   _TEST_ONLY_waitTillEmpty(): Promise<void> {
     return this.messageQueue.waitTillEmpty()
   }
+}
+
+function formatTimestamp(timestamp: UnixTime): string {
+  return UnixTime.toDate(timestamp).toISOString().replace('.000Z', 'Z')
+}
+
+const dollarsFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 2,
+})
+const amountFormatter = new Intl.NumberFormat('en-US', {
+  maximumFractionDigits: 6,
+})
+
+function formatDollars(value: number): string {
+  return dollarsFormatter.format(value)
+}
+
+function formatAmount(value: number): string {
+  return amountFormatter.format(value)
+}
+
+function formatPercent(value: number): string {
+  return `${value.toFixed(2)}%`
+}
+
+function formatRatio(value: number): string {
+  return `${value.toFixed(2)}x`
 }

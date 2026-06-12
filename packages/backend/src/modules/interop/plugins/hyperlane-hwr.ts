@@ -6,12 +6,17 @@
  */
 
 import { Address32 } from '@l2beat/shared-pure'
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import type { TokenMap } from '../engine/match/TokenMap'
+import {
+  cctpV1DepositForBurnLog,
+  cctpV2DepositForBurnLog,
+  parseCctpDepositForBurn,
+} from './cctp/cctp.utils'
 import {
   Dispatch,
   dispatchIdLog,
   dispatchLog,
-  HYPERLANE_NETWORKS,
   Process,
   parseDispatch,
   parseDispatchId,
@@ -20,13 +25,21 @@ import {
   processIdLog,
   processLog,
 } from './hyperlane'
-import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
-import { findParsedAround, type ParsedTransferLog } from './logScan'
+import { findHyperlaneChain, HyperlaneConfig } from './hyperlane.config'
+import {
+  findBestTransferLog as findBestTransferLogWithParser,
+  findParsedAround,
+  findParsedBefore,
+  type ParsedTransferLog,
+} from './logScan'
+import {
+  getBestEffortTokenFrameworkBridgeType,
+  getTokenFrameworkBridgeType,
+} from './tokenFrameworkBridgeTyping'
 import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
@@ -47,21 +60,14 @@ const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
 export const parseTransfer = createEventParser(transferLog)
 
-const depositForBurnCCTPv1Log =
-  'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)'
-const parseDepositForBurnCCTPv1 = createEventParser(depositForBurnCCTPv1Log)
-const depositForBurnCCTPv2Log =
-  'event DepositForBurn(address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller, uint256 maxFee, uint32 indexed minFinalityThreshold, bytes hookData)'
-const parseDepositForBurnCCTPv2 = createEventParser(depositForBurnCCTPv2Log)
-
 const hwrTxEventSignatures = [
   dispatchLog,
   dispatchIdLog,
   processLog,
   processIdLog,
   transferLog,
-  depositForBurnCCTPv1Log,
-  depositForBurnCCTPv2Log,
+  cctpV1DepositForBurnLog,
+  cctpV2DepositForBurnLog,
 ]
 
 const HwrTransferSent = createInteropEventType<{
@@ -88,6 +94,11 @@ const HwrTransferReceived = createInteropEventType<{
 export class HyperlaneHwrPlugin implements InteropPluginResyncable {
   readonly name = 'hyperlane-hwr'
 
+  constructor(
+    private configs: InteropConfigStore,
+    private oneSidedChains: string[] = [],
+  ) {}
+
   getDataRequests(): DataRequest[] {
     return [
       {
@@ -108,6 +119,12 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
   }
 
   capture(input: LogToCapture) {
+    const networks = this.configs.get(HyperlaneConfig) ?? []
+
+    if (input.tx.kind !== 'canonical') {
+      return
+    }
+
     const sentTransferRemote = parseSentTransferRemote(input.log, null)
     if (sentTransferRemote) {
       const senderAddress = input.log.address.toLowerCase()
@@ -132,9 +149,8 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
       )
       if (!messageId) return
 
-      const $dstChain = findChain(
-        HYPERLANE_NETWORKS,
-        (x) => x.chainId,
+      const $dstChain = findHyperlaneChain(
+        networks,
         Number(sentTransferRemote.destination),
       )
 
@@ -142,12 +158,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => {
-          return (
-            parseDepositForBurnCCTPv1(log, null) ||
-            parseDepositForBurnCCTPv2(log, null)
-          )
-        },
+        (log, _index) => parseCctpDepositForBurn(log),
       )
       const transferMatch = findBestTransferLog(
         input.txLogs,
@@ -196,7 +207,8 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
     const receivedTransferRemote = parseReceivedTransferRemote(input.log, null)
     if (receivedTransferRemote) {
       const recipientAddress = input.log.address.toLowerCase()
-      const messageId = findParsedAround(
+      // Batched deliveries can place the next Process right after this receive, we do not want to accidently consume those
+      const messageId = findParsedBefore(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
@@ -214,9 +226,8 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
       )
       if (!messageId) return
 
-      const $srcChain = findChain(
-        HYPERLANE_NETWORKS,
-        (x) => x.chainId,
+      const $srcChain = findHyperlaneChain(
+        networks,
         Number(receivedTransferRemote.origin),
       )
 
@@ -252,145 +263,136 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [HwrTransferReceived]
+  matchTypes = [HwrTransferSent, HwrTransferReceived]
   match(
     event: InteropEvent,
     db: InteropEventDb,
     tokenMap: TokenMap,
   ): MatchResult | undefined {
-    if (!HwrTransferReceived.checkType(event)) return
+    if (HwrTransferReceived.checkType(event)) {
+      const hwrSent = db.find(HwrTransferSent, {
+        messageId: event.args.messageId,
+      })
+      if (!hwrSent) {
+        // The CCTP-wrapped send path is only detectable on the source side, so
+        // destination-only one-sided receives are best-effort HWR transfers.
+        const srcChain = event.args.$srcChain
+        if (!srcChain || !this.oneSidedChains.includes(srcChain)) return
 
-    const hwrSent = db.find(HwrTransferSent, {
-      messageId: event.args.messageId,
-    })
-    if (!hwrSent) return
+        return [
+          Result.Transfer('hyperlaneHwr.Transfer', {
+            srcChain,
+            dstEvent: event,
+            dstTokenAddress: event.args.tokenAddress,
+            dstAmount: event.args.amount,
+            dstWasMinted: event.args.minted,
+            bridgeType: getBestEffortTokenFrameworkBridgeType({
+              srcWasBurned: undefined,
+              dstWasMinted: event.args.minted,
+            }),
+          }),
+        ]
+      }
 
-    const dispatch = db.find(Dispatch, {
-      messageId: event.args.messageId,
-    })
-    if (!dispatch) {
-      return
-    }
+      const dispatch = db.find(Dispatch, {
+        messageId: event.args.messageId,
+      })
+      if (!dispatch) {
+        return
+      }
 
-    const process = db.find(Process, {
-      messageId: event.args.messageId,
-    })
-    if (!process) {
-      return
-    }
+      const process = db.find(Process, {
+        messageId: event.args.messageId,
+      })
+      if (!process) {
+        return
+      }
 
-    if (hwrSent.args.cctp) {
+      if (hwrSent.args.cctp) {
+        return [
+          Result.Message('hyperlane.Message', {
+            app: 'cctp',
+            srcEvent: hwrSent,
+            dstEvent: process,
+            extraEvents: [dispatch, event],
+          }),
+        ]
+      }
+
+      const srcTokenAddress = hwrSent.args.tokenAddress
+      const dstTokenAddress = event.args.tokenAddress
+      const srcWasBurned = hwrSent.args.burned
+      const dstWasMinted = event.args.minted
+      const bridgeType = getTokenFrameworkBridgeType({
+        srcTokenAddress,
+        dstTokenAddress,
+        srcWasBurned,
+        dstWasMinted,
+        srcChain: hwrSent.ctx.chain,
+        dstChain: event.ctx.chain,
+        tokenMap,
+      })
+
       return [
         Result.Message('hyperlane.Message', {
-          app: 'cctp',
-          srcEvent: hwrSent,
+          app: 'hwr',
+          srcEvent: dispatch,
           dstEvent: process,
-          extraEvents: [dispatch, event],
+        }),
+        Result.Transfer('hyperlaneHwr.Transfer', {
+          srcEvent: hwrSent,
+          srcTokenAddress,
+          srcAmount: hwrSent.args.amount,
+          dstEvent: event,
+          dstTokenAddress,
+          dstAmount: event.args.amount,
+          srcWasBurned,
+          dstWasMinted,
+          bridgeType,
         }),
       ]
     }
 
-    const srcTokenAddress = hwrSent.args.tokenAddress
-    const dstTokenAddress = event.args.tokenAddress
-    const srcWasBurned = hwrSent.args.burned
-    const dstWasMinted = event.args.minted
-    const bridgeType = getBridgeType({
-      srcTokenAddress,
-      dstTokenAddress,
-      srcWasBurned,
-      dstWasMinted,
-      srcChain: hwrSent.ctx.chain,
-      dstChain: event.ctx.chain,
-      tokenMap,
+    if (!HwrTransferSent.checkType(event)) return
+
+    const hwrReceived = db.find(HwrTransferReceived, {
+      messageId: event.args.messageId,
     })
+    if (hwrReceived || event.args.cctp) return
+
+    const dstChain = event.args.$dstChain
+    if (!dstChain || !this.oneSidedChains.includes(dstChain)) return
 
     return [
-      Result.Message('hyperlane.Message', {
-        app: 'hwr',
-        srcEvent: dispatch,
-        dstEvent: process,
-      }),
       Result.Transfer('hyperlaneHwr.Transfer', {
-        srcEvent: hwrSent,
-        srcTokenAddress,
-        srcAmount: hwrSent.args.amount,
-        dstEvent: event,
-        dstTokenAddress,
-        dstAmount: event.args.amount,
-        srcWasBurned,
-        dstWasMinted,
-        bridgeType,
+        srcEvent: event,
+        srcTokenAddress: event.args.tokenAddress,
+        srcAmount: event.args.amount,
+        srcWasBurned: event.args.burned,
+        dstChain,
+        bridgeType: getBestEffortTokenFrameworkBridgeType({
+          srcWasBurned: event.args.burned,
+          dstWasMinted: undefined,
+        }),
       }),
     ]
   }
 }
 
 // meson has a different version of this that normalizes amounts (for unknown decimal situations)
-// priorities: smallest amount delta, then zero-address mint/burn among same-value matches, then log index distance
+// 1. exclude xERC20 lockbox mint+burn pairs (same token, same amount)
+// 2. smallest amount delta, then zero-address mint/burn among same-value matches, then log index distance
 export function findBestTransferLog(
   logs: LogToCapture['txLogs'],
   targetAmount: bigint,
   startLogIndex: number,
 ): { transfer?: ParsedTransferLog; hasTransfer: boolean } {
-  let closestMatch: ParsedTransferLog | undefined
-  let closestDelta: bigint | undefined
-  let closestDistance: number | undefined
-  let hasTransfer = false
-
-  for (const log of logs) {
-    const transfer = parseTransfer(log, null)
-    if (!transfer) continue
-
-    hasTransfer = true
-    const parsed: ParsedTransferLog = {
-      logAddress: Address32.from(log.address),
-      from: Address32.from(transfer.from),
-      to: Address32.from(transfer.to),
-      value: transfer.value,
-    }
-
-    const delta = absDiff(transfer.value, targetAmount)
-    const distance =
-      log.logIndex === null
-        ? Number.POSITIVE_INFINITY
-        : Math.abs(log.logIndex - startLogIndex)
-
-    if (closestDelta === undefined || delta < closestDelta) {
-      closestDelta = delta
-      closestDistance = distance
-      closestMatch = parsed
-      continue
-    }
-
-    if (delta > closestDelta) continue
-
-    if (
-      closestMatch &&
-      parsed.value === closestMatch.value &&
-      isMintOrBurnTransfer(parsed) !== isMintOrBurnTransfer(closestMatch)
-    ) {
-      if (isMintOrBurnTransfer(parsed)) {
-        closestDistance = distance
-        closestMatch = parsed
-      }
-      continue
-    }
-
-    if (closestDistance === undefined || distance < closestDistance) {
-      closestDistance = distance
-      closestMatch = parsed
-    }
-  }
-
-  return { transfer: closestMatch, hasTransfer }
-}
-
-function absDiff(value: bigint, target: bigint): bigint {
-  return value >= target ? value - target : target - value
-}
-
-function isMintOrBurnTransfer(transfer: ParsedTransferLog): boolean {
-  return transfer.from === Address32.ZERO || transfer.to === Address32.ZERO
+  return findBestTransferLogWithParser(
+    logs,
+    targetAmount,
+    startLogIndex,
+    (log) => parseTransfer(log, null),
+  )
 }
 
 function pickTransferAmount(

@@ -1,7 +1,10 @@
 import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
+import type { ProjectRedWarning } from '../types'
 
-const EOA_RED_WARNING =
-  'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.'
+const EOA_RED_WARNING: ProjectRedWarning = {
+  text: 'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+  detailAnchor: 'permissions',
+}
 
 const paths = getDiscoveryPaths()
 const configReader = new ConfigReader(paths.discovery)
@@ -19,8 +22,8 @@ export function hasEoaWithUpgradePermissions(projectName: string): boolean {
 
 export function getEoaUpgradeRedWarning(
   projectName: string,
-  manualRedWarning: string | undefined,
-): string | undefined {
+  manualRedWarning: ProjectRedWarning | undefined,
+): ProjectRedWarning | undefined {
   if (manualRedWarning !== undefined) {
     return manualRedWarning
   }

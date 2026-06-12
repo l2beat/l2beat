@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -13,8 +14,8 @@ import { useCostsUnitContext } from '~/pages/scaling/costs/components/CostsUnitC
 import type { ScalingCostsEntry } from '~/server/features/scaling/costs/getScalingCostsEntries'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsProjectsFilter } from '~/server/features/scaling/costs/utils/getCostsProjects'
-import { api } from '~/trpc/React'
-import { optionToRange } from '~/utils/range/range'
+import { useTRPC } from '~/trpc/React'
+import { optionToRange, rangeToResolution } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
@@ -29,6 +30,7 @@ interface Props {
 }
 
 export function ScalingCostsChart({ tab, milestones, entries }: Props) {
+  const trpc = useTRPC()
   const { range, setRange } = useCostsTimeRangeContext()
   const { unit, setUnit } = useCostsUnitContext()
   const { metric, setMetric } = useCostsMetricContext()
@@ -59,10 +61,12 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
     }
   }, [entries, filters, tab])
 
-  const { data, isLoading } = api.costs.chart.useQuery({
-    range,
-    filter,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.costs.chart.queryOptions({
+      range,
+      filter,
+    }),
+  )
 
   const chartData = useMemo(() => {
     return data?.chart.map(
@@ -109,8 +113,11 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   }, [data, unit])
 
   const timeRange = useMemo(
-    () => getChartTimeRangeFromData(chartData),
-    [chartData],
+    () =>
+      getChartTimeRangeFromData(chartData, {
+        bucket: rangeToResolution(range),
+      }),
+    [chartData, range],
   )
 
   return (
@@ -145,10 +152,10 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
 function Header({ timeRange }: { timeRange: [number, number] | undefined }) {
   return (
     <header>
-      <h1 className="font-bold text-xl md:text-2xl">
+      <h2 className="font-bold text-xl md:text-2xl">
         Onchain costs
         <span className="max-md:hidden"> stacked by type</span>
-      </h1>
+      </h2>
       <ChartTimeRange timeRange={timeRange} />
     </header>
   )

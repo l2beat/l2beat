@@ -1,3 +1,272 @@
+Generated with discovered.json: 0x35431eee855a014b8d5772b53ce55772db25ee07
+
+# Diff at Tue, 09 Jun 2026 12:43:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1772526845
+- current timestamp: 1772526845
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772526845 (main branch discovery), not current.
+
+```diff
+    contract KarakMultisig (eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637","role":".challenger"}
+      receivedPermissions.1:
+-        {"permission":"challenge","from":"eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637","role":".CHALLENGER"}
+      receivedPermissions.2.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.2.role:
+-        ".guardian"
++        ".challenger"
+      receivedPermissions.2.from:
+-        "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
++        "eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
+      receivedPermissions.2.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.3.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.3.role:
+-        ".GUARDIAN"
++        ".CHALLENGER"
+      receivedPermissions.3.from:
+-        "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
++        "eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
+      receivedPermissions.3.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".GUARDIAN"}
+    }
+```
+
+```diff
+    EOA  (eth:0x4179f43f3b994e97090557363b09F403138a729e) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x239c3f0bdca0b2c39ace3e1478f7f3509694d8ac
+
+# Diff at Fri, 08 May 2026 07:51:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1772526845
+- current timestamp: 1772526845
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772526845 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes.1:
+-        "0x373b0cddb16922a75ab98dfce0c4913a0970c018bfa1d55d123d4ff6511179a6"
++        "0xb98a912ef3dacfba71ec38e29d64fe80ab46fde5a4c148a569e500522bccbce0"
+    }
+```
+
+```diff
+    contract KarakMultisig (eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x622333688CC1878C7ff4205c89bDe051798788A7) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x8c104e5ac734cb73cbe75544fcd4f1f7f3bfefd5b61947c5d716d02c89866d64"
++        "0x6a1f80c1348ab58c7b19c178b4e1ad20d747b9a41a2252ce0383abac9f34331f"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x952851CecB07705A5bb483C1CE080F97e1E7491E) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0xf43d12b96b6c43853b7001daea5e33f38797c6847d565052a0edb0b191a665da"
++        "0xefc86ec30e2973f0ee879cbe823b635c61162205f58dd1115da3f67e46c1ba8a"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xcec1afd157e4ccd04657ae8c428d6fc2aef84d29e92d58582dc06dcb4f0f2074"
++        "0x4a6157544065ae21222c213f402c43edde8d3a6c1122f3d26fe8a6f7fe3e219c"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x97db8b5a9741ddac67a8c6409fa1e545a9db896a6118f08c76f866f1ff767024"
++        "0x59c3a5c6d2b22ffe8a2e4bc09e8deb308fa757230ac6f0f854c7bd1244755f8d"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes.1:
+-        "0x77dff740c401aa2b4cdb05f0661e7578cdb0cd0aebfd642fb728b3c6a389253c"
++        "0x620d0104aa94a7390fc59343e3d3a822959da7dc77b3a42f65586020da2e4faf"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x00d8fbe998d6c51cacd085e73a9c76bea61e6cafe5ec4e669d62cf085374ccff"
++        "0x38883b9d2058ae1951e5fa3c052620c39ffda8188ce4b01cb6e987db1588801d"
+    }
+```
+
+Generated with discovered.json: 0xf1b6b8f433559b8ddb5aadaaafc19d33b5d305d8
+
+# Diff at Tue, 05 May 2026 10:22:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1772526845
+- current timestamp: 1772526845
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772526845 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract KarakMultisig (eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x282DB123D1cbf5437c295EA0df0137E5FaDbD117"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x622333688CC1878C7ff4205c89bDe051798788A7) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x952851CecB07705A5bb483C1CE080F97e1E7491E) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
 Generated with discovered.json: 0x4f526592798c68272316c90f0005bb7ea717eb56
 
 # Diff at Fri, 12 Dec 2025 10:26:42 GMT:

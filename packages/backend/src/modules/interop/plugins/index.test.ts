@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ProjectService } from '@l2beat/config'
+import { INTEROP_ONE_SIDED_CHAINS, ProjectService } from '@l2beat/config'
 import type { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
@@ -18,6 +18,7 @@ describe('Interop Plugins', async () => {
   const chainNames = new Set<string>()
   const plugins = createInteropPlugins({
     chains: [],
+    oneSidedChains: [],
     configs: mockObject<InteropConfigStore>(),
     httpClient: mockObject<HttpClient>(),
     logger: Logger.SILENT,
@@ -31,6 +32,9 @@ describe('Interop Plugins', async () => {
     const projects = await ps.getProjects({ select: ['chainConfig'] })
     for (const p of projects) {
       chainNames.add(p.chainConfig.name)
+    }
+    for (const chain of INTEROP_ONE_SIDED_CHAINS) {
+      chainNames.add(chain)
     }
   })
 

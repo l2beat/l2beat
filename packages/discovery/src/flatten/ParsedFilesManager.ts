@@ -1,6 +1,7 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, unique } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { parse } from '@mradomski/fast-solidity-parser'
+import { createHash } from 'crypto'
 import * as posix from 'path'
 import { findLeadingCommentStart } from './commentUtilities'
 import { getASTIdentifiers } from './getASTIdentifiers'
@@ -13,7 +14,7 @@ export interface ByteRange {
   end: number
 }
 
-type DeclarationType =
+export type DeclarationType =
   | 'contract'
   | 'interface'
   | 'library'
@@ -25,6 +26,8 @@ type DeclarationType =
   | 'constant'
   | 'event'
   | 'error'
+  | 'using'
+  | 'pragma'
 
 type TopLevelDeclarationNode =
   | AST.StructDefinition
@@ -35,6 +38,7 @@ type TopLevelDeclarationNode =
   | AST.FileLevelConstant
   | AST.EventDefinition
   | AST.CustomErrorDefinition
+  | AST.UsingForDeclaration
 
 export interface TopLevelDeclaration {
   name: string
@@ -42,9 +46,10 @@ export interface TopLevelDeclaration {
 
   ast: AST.ASTNode
   content: string
+  id: string
 
-  inheritsFrom: string[]
-  dynamicReferences: string[]
+  implementationReferences: string[]
+  signatureReferences: string[]
 }
 
 // If import is:
@@ -85,9 +90,19 @@ export interface DeclarationFilePair {
   file: ParsedFile
 }
 
+const extendedDeclaration = new Set([
+  'contract',
+  'abstract',
+  'interface',
+  'event',
+  'error',
+  'constant',
+])
+
 export class ParsedFilesManager {
   private files: ParsedFile[] = []
   private options: FlattenOptions = {}
+  private remappings: Remapping[] = []
 
   static parseFiles(
     files: FileContent[],
@@ -97,9 +112,9 @@ export class ParsedFilesManager {
     const result = new ParsedFilesManager()
     result.options = options ?? result.options
 
-    const remappings = decodeRemappings(remappingStrings)
+    result.remappings = decodeRemappings(remappingStrings)
     result.files = files.map(({ path, content }) => {
-      const remappedPath = resolveRemappings(path, remappings)
+      const remappedPath = result.resolveRemappings(path)
       return {
         path: remappedPath,
         normalizedPath: posix.normalize(remappedPath),
@@ -109,6 +124,7 @@ export class ParsedFilesManager {
         importDirectives: [],
       }
     })
+    result.files = deduplicateFiles(result.files)
 
     // Pass 1: Find all contract declarations
     for (const file of result.files) {
@@ -117,26 +133,31 @@ export class ParsedFilesManager {
 
     // Pass 2: Resolve all imports
     for (const file of result.files) {
-      const alreadyImportedObjects = new Map<string, string[]>()
-      alreadyImportedObjects.set(
+      const alreadyImportedMap = new Map<string, string[]>()
+      alreadyImportedMap.set(
         file.normalizedPath,
         file.topLevelDeclarations.map((c) => c.name),
       )
 
       file.importDirectives = result.resolveFileImports(
         file,
-        remappings,
-        alreadyImportedObjects,
+        result.remappings,
+        alreadyImportedMap,
       )
     }
 
     // Pass 3: Resolve all references to other contracts
     for (const file of result.files) {
       for (const declaration of file.topLevelDeclarations) {
-        declaration.dynamicReferences = result.resolveDynamicReferences(
-          file,
-          declaration.ast,
-        )
+        const { signatureReferences, implementationReferences, backwardLinks } =
+          result.resolveReferences(file, declaration.ast)
+
+        declaration.signatureReferences.push(...signatureReferences)
+        declaration.implementationReferences.push(...implementationReferences)
+        for (const backwardLink of backwardLinks) {
+          const decl = result.tryFindDeclaration(backwardLink, file)
+          decl?.declaration.signatureReferences.push(declaration.name)
+        }
       }
     }
 
@@ -153,7 +174,8 @@ export class ParsedFilesManager {
         n.type === 'EnumDefinition' ||
         n.type === 'FileLevelConstant' ||
         n.type === 'EventDefinition' ||
-        n.type === 'CustomErrorDefinition',
+        n.type === 'CustomErrorDefinition' ||
+        n.type === 'UsingForDeclaration',
     )
 
     const getDeclarationType = (
@@ -176,15 +198,18 @@ export class ParsedFilesManager {
           return 'event'
         case 'CustomErrorDefinition':
           return 'error'
+        case 'UsingForDeclaration':
+          return 'using'
       }
     }
 
+    let unnamedIndex = 0
     const declarations = declarationNodes.map((d) => {
       assert(d.range !== undefined, 'Invalid contract definition')
 
-      const inheritsFrom = []
+      const implementationReferences = []
       if (d.type === 'ContractDefinition') {
-        inheritsFrom.push(
+        implementationReferences.push(
           ...d.baseContracts.map((c) => {
             // biome-ignore lint/style/noNonNullAssertion: we know it's there
             return c.baseName.namePath.split('.').at(-1)!
@@ -198,14 +223,16 @@ export class ParsedFilesManager {
           ? findLeadingCommentStart(file.content, d.range[0])
           : d.range[0]
 
+      const content = file.content.slice(adjustedStart, d.range[1] + 1)
       return {
         ast: d,
-        name: d.name ?? '',
+        name: 'name' in d ? (d.name ?? '') : `$${unnamedIndex++}`,
         type: getDeclarationType(d),
-        inheritsFrom,
-        dynamicReferences: [],
-        content: file.content.slice(adjustedStart, d.range[1] + 1),
-      }
+        implementationReferences,
+        signatureReferences: [],
+        content,
+        id: sha1(content),
+      } satisfies TopLevelDeclaration
     })
 
     return declarations
@@ -214,7 +241,7 @@ export class ParsedFilesManager {
   private resolveFileImports(
     file: ParsedFile,
     remappings: Remapping[],
-    alreadyImportedObjects: Map<string, string[]>,
+    alreadyImportedMap: Map<string, string[]>,
   ): ImportDirective[] {
     const importDirectives = file.rootASTNode.children.filter(
       (n) => n.type === 'ImportDirective',
@@ -225,105 +252,59 @@ export class ParsedFilesManager {
         i.type === 'ImportDirective' && i.range !== undefined,
         'Invalid import directive',
       )
+      const { path, symbolAliases } = i
 
-      const resolvedPath = this.resolveImportPath(i.path, file, remappings)
+      const resolvedPath = this.resolveImportPath(path, file, remappings)
       const importedFile = this.resolveImport(file, resolvedPath)
+      const { topLevelDeclarations, normalizedPath } = importedFile
 
-      let alreadyImported = alreadyImportedObjects.get(
-        importedFile.normalizedPath,
-      )
-      if (alreadyImported !== undefined) {
-        let gotEverything = true
-        for (const declaration of importedFile.topLevelDeclarations) {
-          gotEverything &&= alreadyImported.includes(declaration.name)
-        }
+      const alreadyImported = alreadyImportedMap.get(normalizedPath) ?? []
 
-        if (gotEverything) {
-          return []
-        }
-      }
-      alreadyImported ??= []
+      const gotEverything =
+        alreadyImported.length > 0 &&
+        topLevelDeclarations.every(({ name }) => alreadyImported.includes(name))
 
-      const result = []
-      const importEverything = i.symbolAliases === null
-      if (importEverything) {
-        for (const declaration of importedFile.topLevelDeclarations) {
-          const object = {
-            absolutePath: importedFile.normalizedPath,
-            originalName: declaration.name,
-            importedName: declaration.name,
-          }
-
-          if (!alreadyImported.includes(object.originalName)) {
-            result.push(object)
-          }
-        }
-
-        alreadyImportedObjects.set(
-          importedFile.normalizedPath,
-          importedFile.topLevelDeclarations.map((c) => c.name),
-        )
-
-        const recursiveResult = this.resolveFileImports(
-          importedFile,
-          remappings,
-          alreadyImportedObjects,
-        )
-
-        const filteredRecursiveResult = recursiveResult.filter(
-          (r) => alreadyImported?.includes(r.originalName) === false,
-        )
-        return result.concat(filteredRecursiveResult)
+      if (gotEverything) {
+        return []
       }
 
-      assert(i.symbolAliases !== null, 'Invalid import directive')
-      for (const alias of i.symbolAliases) {
-        const object = {
-          absolutePath: importedFile.normalizedPath,
-          originalName: alias[0],
-          importedName: alias[1] ?? alias[0],
-        }
+      const importEverything = symbolAliases === null
+      const topLevelImports = (
+        importEverything
+          ? topLevelDeclarations.map((e) => ({
+              absolutePath: normalizedPath,
+              originalName: e.name,
+              importedName: e.name,
+            }))
+          : symbolAliases.map(([name, as]) => ({
+              absolutePath: normalizedPath,
+              originalName: name,
+              importedName: as ?? name,
+            }))
+      ).filter(({ originalName }) => !alreadyImported.includes(originalName))
 
-        const isAlreadyImported = alreadyImported.includes(object.originalName)
-        if (isAlreadyImported) {
-          continue
-        }
+      alreadyImported.push(...topLevelImports.map((e) => e.originalName))
+      alreadyImportedMap.set(importedFile.normalizedPath, alreadyImported)
 
-        const isDeclared = importedFile.topLevelDeclarations.some(
-          (c) => c.name === object.originalName,
-        )
-        let isImported = false
-        if (!isDeclared) {
-          const copiedAlreadyImportedMap = structuredClone(
-            alreadyImportedObjects,
-          )
-          const recursiveResult = this.resolveFileImports(
-            importedFile,
-            remappings,
-            copiedAlreadyImportedMap,
-          )
-
-          isImported = recursiveResult.some(
-            (id) => id.originalName === object.originalName,
-          )
-        }
-
-        if (isDeclared || isImported) {
-          alreadyImported.push(object.originalName)
-          result.push(object)
-        }
-      }
-
-      alreadyImportedObjects.set(importedFile.normalizedPath, alreadyImported)
-
-      return result
+      const transitive = importEverything
+        ? this.resolveFileImports(importedFile, remappings, alreadyImportedMap)
+        : []
+      return [...transitive, ...topLevelImports]
     })
   }
 
-  private resolveDynamicReferences(file: ParsedFile, c: AST.ASTNode): string[] {
+  private resolveReferences(
+    file: ParsedFile,
+    c: AST.ASTNode,
+  ): {
+    signatureReferences: string[]
+    implementationReferences: string[]
+    backwardLinks: string[]
+  } {
     let subNodes: AST.BaseASTNode[] = []
+    let backwardLinks: string[] = []
     if (c.type === 'ContractDefinition') {
-      subNodes = c.subNodes
+      subNodes = [...c.subNodes, ...c.baseContracts.flatMap((b) => b.arguments)]
     } else if (c.type === 'StructDefinition') {
       subNodes = c.members
     } else if (c.type === 'FunctionDefinition') {
@@ -338,44 +319,50 @@ export class ParsedFilesManager {
       subNodes = c.parameters ?? []
     } else if (c.type === 'CustomErrorDefinition') {
       subNodes = c.parameters ?? []
+    } else if (c.type === 'UsingForDeclaration') {
+      subNodes = [c]
+      const [typeName, ...rest] = getASTIdentifiers(c.typeName)
+      if (typeName !== undefined && rest.length === 0) {
+        backwardLinks = [typeName]
+      }
     } else {
       throw new Error('Invalid node type')
     }
 
-    const identifiers = new Set(
-      subNodes.flatMap((n) => getASTIdentifiers(n)).map(extractNamespace),
-    )
+    const implementationReferences: string[] = []
+    const allIdentifiers: string[] = []
 
-    const referenced = []
-    for (const identifier of identifiers) {
-      const result = this.tryFindDeclaration(identifier, file)
-      if (result === undefined) {
-        continue
-      }
-
-      const isContract = result.declaration.type === 'contract'
-      const isAbstract = result.declaration.type === 'abstract'
-      const isInterface = result.declaration.type === 'interface'
-      const isEvent = result.declaration.type === 'event'
-      const isError = result.declaration.type === 'error'
-      const isConstant = result.declaration.type === 'constant'
-
-      const isExtendedDeclaration =
-        isContract ||
-        isAbstract ||
-        isInterface ||
-        isEvent ||
-        isError ||
-        isConstant
-
-      if (isExtendedDeclaration && this.options.includeAll !== true) {
-        continue
-      }
-
-      referenced.push(identifier)
+    for (const node of subNodes) {
+      const ids = getASTIdentifiers(node, (n, i) => {
+        // NOTE(radomski): You can only _new_ arrays or contracts.
+        //
+        // - new [], creates an array and uses the signature but not the implementation
+        // - new Ident, creates a new contract and Ident has to be a contract
+        //
+        // We only care about contracts here, so it's fine to drop all arrays
+        if (
+          n.type === 'NewExpression' &&
+          (n as AST.NewExpression).typeName.type !== 'ArrayTypeName'
+        ) {
+          implementationReferences.push(...i)
+        }
+      })
+      allIdentifiers.push(...ids)
     }
 
-    return referenced
+    const identifiers = unique(
+      allIdentifiers.map((i) => i.split('.')[0] as string),
+    )
+
+    const signatureReferences = identifiers.filter((identifier) => {
+      const type = this.tryFindDeclaration(identifier, file)?.declaration.type
+      return (
+        type !== undefined &&
+        (this.options.includeAll || !extendedDeclaration.has(type))
+      )
+    })
+
+    return { signatureReferences, implementationReferences, backwardLinks }
   }
 
   tryFindDeclaration(
@@ -437,21 +424,6 @@ export class ParsedFilesManager {
     return matchingFile
   }
 
-  findRootDeclaration(declarationName: string): DeclarationFilePair {
-    const file = this.findFileRootDeclaring(declarationName)
-
-    const matchingDeclaration = findOne(
-      file.topLevelDeclarations,
-      (c) => c.name === declarationName,
-    )
-    assert(matchingDeclaration !== undefined, 'Declaration not found')
-
-    return {
-      declaration: matchingDeclaration,
-      file,
-    }
-  }
-
   findDeclaration(
     declarationName: string,
     file?: ParsedFile,
@@ -468,6 +440,33 @@ export class ParsedFilesManager {
       declaration: matchingDeclaration,
       file,
     }
+  }
+
+  findDeclarationAt(
+    declarationName: string,
+    path?: string,
+  ): DeclarationFilePair {
+    const file = path
+      ? this.findFile(path)
+      : this.findFileRootDeclaring(declarationName)
+
+    const matchingDeclaration = findOne(
+      file.topLevelDeclarations,
+      (c) => c.name === declarationName,
+    )
+    assert(matchingDeclaration !== undefined, 'Declaration not found')
+
+    return {
+      declaration: matchingDeclaration,
+      file,
+    }
+  }
+
+  private findFile(rawPath: string): ParsedFile {
+    const path = this.resolveRemappings(rawPath)
+    const matchingFile = findOne(this.files, (f) => f.path === path)
+    assert(matchingFile !== undefined, `Failed to find the root file ${path}`)
+    return matchingFile
   }
 
   private resolveImportPath(
@@ -499,16 +498,32 @@ export class ParsedFilesManager {
 
     return matchingFile
   }
+
+  private resolveRemappings(path: string): string {
+    const matchingRemappings = this.remappings
+      .filter((r) => path.startsWith(r.prefix))
+      .filter((r) => r.context.length === 0)
+
+    if (matchingRemappings.length > 0) {
+      const longest = matchingRemappings.reduce((a, b) =>
+        a.prefix.length > b.prefix.length ? a : b,
+      )
+
+      const result = posix.join(
+        longest.target,
+        path.slice(longest.prefix.length),
+      )
+      return result
+    }
+
+    return path
+  }
 }
 
-// Takes a user defined type name such as `MyLibrary.MyStructInLibrary` and
-// returns only the namespace - the part before the dot.
-function extractNamespace(identifier: string): string {
-  const dotIndex = identifier.indexOf('.')
-  if (dotIndex === -1) {
-    return identifier
-  }
-  return identifier.substring(0, dotIndex)
+function sha1(s: string): string {
+  const hasher = createHash('sha1')
+  hasher.update(s)
+  return `0x${hasher.digest('hex')}`
 }
 
 function decodeRemappings(remappingStrings: string[]): Remapping[] {
@@ -529,20 +544,6 @@ function decodeRemappings(remappingStrings: string[]): Remapping[] {
     assert(target !== undefined, 'Invalid remapping, missing target.')
     return { context, prefix, target }
   })
-}
-
-function resolveRemappings(path: string, remappings: Remapping[]): string {
-  const matchingRemappings = remappings.filter((r) => path.startsWith(r.prefix))
-  if (matchingRemappings.length > 0) {
-    const longest = matchingRemappings.reduce((a, b) =>
-      a.prefix.length > b.prefix.length ? a : b,
-    )
-
-    const result = posix.join(longest.target, path.slice(longest.prefix.length))
-    return result
-  }
-
-  return path
 }
 
 function solcAbsolutePath(path: string, context: string): string {
@@ -608,6 +609,19 @@ function resolveImportRemappings(
 
   const result = posix.join(longest.target, path.slice(longest.prefix.length))
   return result
+}
+
+function deduplicateFiles(files: ParsedFile[]): ParsedFile[] {
+  const byPath = new Map<string, ParsedFile>()
+  for (const file of files) {
+    const existing = byPath.get(file.normalizedPath)
+    assert(
+      existing === undefined || existing.content === file.content,
+      `Conflicting content for file ${file.normalizedPath}`,
+    )
+    byPath.set(file.normalizedPath, file)
+  }
+  return [...byPath.values()]
 }
 
 function findOne<T>(

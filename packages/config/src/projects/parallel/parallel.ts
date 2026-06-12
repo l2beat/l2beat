@@ -1,14 +1,20 @@
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('parallel')
+
+const sequencerInbox = discovery.getContract('SequencerInbox')
+const outbox = discovery.getContract('Outbox')
+assert(
+  sequencerInbox.sinceTimestamp !== undefined &&
+    outbox.sinceTimestamp !== undefined,
+)
+const genesisTimestamp = UnixTime(
+  Math.min(sequencerInbox.sinceTimestamp, outbox.sinceTimestamp),
+)
 
 export const parallel: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1704289654), // 2024-01-03T13:47:34Z
@@ -18,8 +24,10 @@ export const parallel: ScalingProject = orbitStackL2({
   display: {
     name: 'Parallel',
     slug: 'parallel',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+    redWarning: {
+      text: 'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+      detailAnchor: 'permissions',
+    },
     headerWarning:
       'Parallel is [deprecating their Orbit stack Layer 2](https://medium.com/@ParallelFi/the-withdrawal-on-parallel-l2-is-now-available-c3b4b572864e).',
     description:
@@ -38,78 +46,6 @@ export const parallel: ScalingProject = orbitStackL2({
       ],
     },
   },
-  trackedTxs: [
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0xb4795A0edae98d7820C37F06f6b858e7acb51DF8'),
-        selector: '0x8f111f3c',
-        functionSignature:
-          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: UnixTime(1704125939),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0xb4795A0edae98d7820C37F06f6b858e7acb51DF8'),
-        selector: '0x6f12b0c9',
-        functionSignature:
-          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
-        sinceTimestamp: UnixTime(1704125939),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0xb4795A0edae98d7820C37F06f6b858e7acb51DF8'),
-        selector: '0xe0bc9729',
-        functionSignature:
-          'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: UnixTime(1704125939),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0xb4795A0edae98d7820C37F06f6b858e7acb51DF8'),
-        selector: '0x3e5aa082',
-        functionSignature:
-          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: UnixTime(1712861435),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'stateUpdates' },
-        { type: 'l2costs', subtype: 'stateUpdates' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0xb6e0586616ebe79b2f86ddb32048c500d23b3ac3'),
-        selector: '0xa04cee60',
-        functionSignature:
-          'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
-        sinceTimestamp: UnixTime(1704125939),
-      },
-    },
-  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: ChainSpecificAddress(
@@ -131,7 +67,23 @@ export const parallel: ScalingProject = orbitStackL2({
   ],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
-  sequencerInbox: discovery.getContract('SequencerInbox'),
+  sequencerInbox,
+  additionalTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(sequencerInbox.address),
+        selector: '0x3e5aa082',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+  ],
   chainConfig: {
     name: 'parallel',
     chainId: 1024,

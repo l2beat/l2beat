@@ -1,35 +1,77 @@
+import { useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../../core/OverflowWrapper'
 import type { BadgeWithParams } from '../ProjectBadge'
 import { ProjectBadge } from '../ProjectBadge'
+import { BadgesDialog } from './BadgesDialog'
 
 interface BadgesSectionProps {
   badges: BadgeWithParams[]
   hideTitle?: boolean
   className?: string
+  withDialog?: boolean
 }
 
 export function BadgesSection({
   badges,
   hideTitle,
   className,
+  withDialog,
 }: BadgesSectionProps) {
+  const trpc = useTRPC()
+  const queryClient = useQueryClient()
+  const [selectedBadgeId, setSelectedBadgeId] = useState<string>()
+
   return (
-    <div
-      className={cn('flex shrink-0 flex-col gap-2 lg:min-w-[288px]', className)}
-    >
-      {!hideTitle && (
-        <h2 className="text-secondary text-subtitle-12 uppercase max-md:hidden">
-          Badges
-        </h2>
+    <>
+      <div
+        className={cn(
+          'flex shrink-0 flex-col gap-2 lg:min-w-[288px]',
+          className,
+        )}
+      >
+        {!hideTitle && (
+          <h2 className="text-secondary text-subtitle-12 uppercase max-md:hidden">
+            Badges
+          </h2>
+        )}
+        <OverflowWrapper className="-m-4">
+          <div className="flex flex-row gap-1 p-4 lg:flex-wrap">
+            {badges.map((badge, key) =>
+              withDialog ? (
+                <button
+                  key={key}
+                  className="shrink-0 cursor-pointer"
+                  onMouseEnter={() =>
+                    queryClient.prefetchQuery(
+                      trpc.projects.badgesDialog.queryOptions({
+                        badgeId: badge.id,
+                      }),
+                    )
+                  }
+                  onClick={() => setSelectedBadgeId(badge.id)}
+                >
+                  <ProjectBadge badge={badge} disableInteraction />
+                </button>
+              ) : (
+                <ProjectBadge key={key} badge={badge} />
+              ),
+            )}
+          </div>
+        </OverflowWrapper>
+      </div>
+      {withDialog && selectedBadgeId && (
+        <BadgesDialog
+          initialBadgeId={selectedBadgeId}
+          onOpenChange={(open) => {
+            if (!open) {
+              setSelectedBadgeId(undefined)
+            }
+          }}
+        />
       )}
-      <OverflowWrapper className="-m-4">
-        <div className="flex flex-row gap-1 p-4 lg:flex-wrap">
-          {badges.map((badge, key) => (
-            <ProjectBadge key={key} badge={badge} />
-          ))}
-        </div>
-      </OverflowWrapper>
-    </div>
+    </>
   )
 }

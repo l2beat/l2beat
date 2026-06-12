@@ -1,0 +1,72 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RelayerRegistry",
+  "description": "Upgradeable registry that tracks registered relayers, their worker addresses, and their staked TORN balances used to service withdrawals. Relayers registered here could be queried by a tornadocash frontend to facilitate discovery for users, but users are free to use any (unregistered) relayer at withdrawal time.",
+  "category": "core",
+  "fields": {
+    "$admin": {
+      "description": "Can upgrade the relayer registry implementation.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the relayer registry implementation, changing relayer registration and slashing logic."
+        }
+      ]
+    },
+    "$implementation": {
+      "description": "Current relayer registry implementation.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "governance": {
+      "description": "Governance address controlling relayer system parameters.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the minimum TORN stake required to become a relayer."
+        },
+        {
+          "type": "interact",
+          "description": "change the router address allowed to burn relayer stake during withdrawals."
+        },
+        {
+          "type": "interact",
+          "description": "nullify a registered relayer's staked balance."
+        }
+      ]
+    },
+    "ens": {
+      "description": "ENS registry used to verify ownership of relayer names during registration."
+    },
+    "feeManager": {
+      "description": "Fee manager used to determine how much relayer stake is burned per withdrawal."
+    },
+    "registeredRelayers": {
+      "description": "Current set of registered relayer addresses, derived from relayer registration and unregistration events.",
+      "handler": {
+        "type": "event",
+        "select": "relayer",
+        "add": {
+          "event": "event RelayerRegistered(bytes32 relayerId, string ensName, address relayer, uint256 stakedAmount)"
+        },
+        "remove": { "event": "event RelayerUnregistered(address relayer)" }
+      }
+    },
+    "minStakeAmount": {
+      "description": "Minimum TORN stake required for relayer registration.",
+      "severity": "LOW"
+    },
+    "staking": {
+      "description": "Staking contract that escrows relayer stake and receives burned-stake rewards."
+    },
+    "torn": { "description": "TORN token used as relayer stake collateral." },
+    "tornadoRouter": {
+      "description": "Only this router is allowed to burn relayer stake during withdrawals.",
+      "severity": "HIGH"
+    }
+  },
+  "ignoreInWatchMode": ["registeredRelayers"],
+  "ignoreRelatives": ["registeredRelayers"]
+}

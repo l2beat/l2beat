@@ -10,10 +10,10 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { ChartRange } from '~/utils/range/range'
+import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { isLivenessSynced } from './utils/isLivenessSynced'
-import { rangeToResolution } from './utils/range'
 
 export type ProjectLivenessChartParams = v.infer<
   typeof ProjectLivenessChartParams
@@ -57,7 +57,7 @@ export async function getProjectLivenessChart({
   if (livenessConfig?.duplicateData.to === subtype) {
     effectiveSubtype = livenessConfig.duplicateData.from
   }
-  const [chartEntries, subtypeAverages] = await Promise.all([
+  const [chartEntries, subtypeAverages, firstTimestamp] = await Promise.all([
     db.aggregatedLiveness.getByProjectAndSubtypeInTimeRange(
       ProjectId(projectId),
       effectiveSubtype,
@@ -66,6 +66,10 @@ export async function getProjectLivenessChart({
     db.aggregatedLiveness.getAvgByProjectAndTimeRange(
       ProjectId(projectId),
       range,
+    ),
+    db.aggregatedLiveness.getFirstTimestampByProjectAndSubtype(
+      ProjectId(projectId),
+      effectiveSubtype,
     ),
   ])
 
@@ -89,24 +93,22 @@ export async function getProjectLivenessChart({
   assert(syncedUntil, 'No syncedUntil found')
 
   const groupedByResolution = groupBy(chartEntries, (e) =>
-    UnixTime.toStartOf(
-      e.timestamp,
-      resolution === 'hourly'
-        ? 'hour'
-        : resolution === 'daily'
-          ? 'day'
-          : 'six hours',
-    ),
+    UnixTime.toStartOf(e.timestamp, resolution),
   )
 
-  const startTimestamp = Math.min(
-    ...Object.keys(groupedByResolution).map(Number),
-  )
+  const dataStart = Math.min(...Object.keys(groupedByResolution).map(Number))
   const lastTimestamp = Math.max(
     ...Object.keys(groupedByResolution).map(Number),
   )
 
   const adjustedTo = isLivenessSynced(syncedUntil) ? lastTimestamp : range[1]
+
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp: firstTimestamp,
+    dataStart,
+    resolution,
+  })
 
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedTo],
@@ -155,7 +157,7 @@ function getMockProjectLivenessChartData({
     range[0] ?? UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     range[1],
   ]
-  const timestamps = generateTimestamps(adjustedRange, 'daily')
+  const timestamps = generateTimestamps(adjustedRange, 'day')
 
   return {
     data: timestamps.map((timestamp, i) => {

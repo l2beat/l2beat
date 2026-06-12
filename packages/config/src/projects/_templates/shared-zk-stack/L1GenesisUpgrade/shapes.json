@@ -1,34 +1,32 @@
 {
   "L1GenesisUpgrade": {
-    "hash": "0x50ee4004563b12b9636ff48384e6053aa1e8505ff7d5c63166b342d4eb69f6aa",
+    "hash": "0xe19277122c7c12f8ff3597e4b1fd986c7f908f6a3be2e2e7ce97424b7a8ecf6a",
     "address": "eth:0x107e92E7360e595d8129B522ABD458361f32f66C",
     "blockNumber": 22188285
   },
   "L1GenesisUpgrade_v27": {
-    "hash": "0xb026196cfab337e1604a0cb6f378b0598841b3bf3e05d8d82403801eff55a3b6",
+    "hash": "0x20b61359a124cc3896fe7bc106cf77c12b735b276b2d82e2b8012488bd8a1ccb",
     "address": "eth:0xC5bBb8bA0302215Da343D47EC617649E59c7d61C",
     "blockNumber": 22374168
   },
   "L1GenesisUpgrade_v28": {
-    "hash": "0xc75c7be9ac7357405aa86630f69e44a24c26a15d36cb11f64fa4e3c1f9de257e",
+    "hash": "0x787e3a49ab6290059af2557920bfbbee84f348349dde433e36570b78b60d28c9",
     "address": "eth:0x7Dde6ce8Ee4865f4BBD134d3BE827DBE5282100E",
     "blockNumber": 22744143
   },
   "L1GenesisUpgrade_v29": {
-    "hash": "0xcf720c550063195782639668a10f51f4795d77e30b60eb7428b5adff5bff7969",
+    "hash": "0x498ba68d18053951cf58bd03df87be7f557cf92d298261a54437d221ac879073",
     "address": "eth:0x390bc10e854e137d2625573272b3fEe2C615eBA4",
     "blockNumber": 23588465
   },
   "L1GenesisUpgrade_v29_ADI": {
-    "hash": "0x2ac2e89a0c7be1dc3b8323404c216f0eaa3547a44632d578bbfefb54b8d46b21",
+    "hash": "0x0fddecb8cc12c6e814c7dd9ca73342e64a87a18777334d7ac426c05dd9f95678",
     "address": "eth:0x5C9B360aB320a23692c9E81006ddB15de991ab65",
-    "chain": "ethereum",
     "blockNumber": 24038982
   },
   "L1GenesisUpgrade_v30_0_ADI": {
-    "hash": "0xdabd17d82509137683ca1251589cb2b5daee701c795cbf6c0fc0554d0d97977c",
+    "hash": "0x2bf1da6a2e717e38594c5d3afdc1f4167f4ffaba6dfea36e504503d2ee06f6c7",
     "address": "eth:0x03174e2BE35A2Dd4380c93385181B1299949eE28",
-    "chain": "ethereum",
     "blockNumber": 24275768
   }
 }

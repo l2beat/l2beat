@@ -8,23 +8,16 @@ import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { withProjectIcon } from '~/utils/withProjectIcon'
-import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import type { InteropQuery } from '../InteropRouter'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
-import { toInteropApiSelection } from '../utils/toInteropApiSelection'
-import type { InteropMode, InteropSelection } from '../utils/types'
-
-interface GetInteropNonMintingDataOptions {
-  mode?: InteropMode
-}
+import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
+import type { InteropSelection } from '../utils/types'
 
 export async function getInteropNonMintingData(
   req: Request<unknown, unknown, unknown, InteropQuery>,
   manifest: Manifest,
   cache: InMemoryCache,
-  options?: GetInteropNonMintingDataOptions,
 ): Promise<RenderData> {
-  const mode = options?.mode ?? 'public'
   const appLayoutProps = await getAppLayoutProps()
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
@@ -32,7 +25,6 @@ export async function getInteropNonMintingData(
   const initialSelection = getInitialInteropSelection({
     query: req.query,
     interopChainsIds,
-    mode,
   })
 
   const queryState = await cache.get(
@@ -40,7 +32,6 @@ export async function getInteropNonMintingData(
       key: [
         'interop',
         'non-minting',
-        mode,
         'prefetch',
         initialSelection.from.join(','),
         initialSelection.to.join(','),
@@ -48,14 +39,12 @@ export async function getInteropNonMintingData(
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    async () => getCachedData(initialSelection, mode),
+    async () => getCachedData(initialSelection),
   )
 
-  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains.map(
-    (chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-    }),
+  const interopChainsWithIcons = mapInteropChainsToWithIcons(
+    manifest,
+    interopChains,
   )
 
   return {
@@ -66,18 +55,17 @@ export async function getInteropNonMintingData(
         description:
           'Compare interoperability protocols across the Ethereum ecosystem. Track bridge volumes, transfer times & sizes, and explore how Non-minting, Lock & Mint, and Burn & Mint mechanisms affect cross-chain risk.',
 
+        url: req.originalUrl,
+
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/interop/non-minting/opengraph-image.png',
         },
-        excludeFromSearchEngines: mode === 'internal',
       }),
     },
     ssr: {
       page: 'InteropNonMintingPage',
       props: {
         ...appLayoutProps,
-        mode,
         ...queryState,
         interopChains: interopChainsWithIcons.filter(
           (chain) => !chain.isUpcoming,
@@ -89,21 +77,19 @@ export async function getInteropNonMintingData(
   }
 }
 
-async function getCachedData(
-  initialSelection: InteropSelection,
-  mode: InteropMode,
-) {
+async function getCachedData(initialSelection: InteropSelection) {
   const helpers = getSsrHelpers()
-  const apiSelection = toInteropApiSelection(initialSelection, mode)
   const [protocols] = await Promise.all([
     ps.getProjects({
       select: ['interopConfig'],
     }),
-    apiSelection.from.length > 0 && apiSelection.to.length > 0
-      ? helpers.interop.dashboard.prefetch({
-          ...apiSelection,
-          type: 'nonMinting',
-        })
+    initialSelection.from.length > 0 && initialSelection.to.length > 0
+      ? helpers.queryClient.prefetchQuery(
+          helpers.trpc.interop.dashboard.queryOptions({
+            ...initialSelection,
+            type: 'nonMinting',
+          }),
+        )
       : undefined,
   ])
 

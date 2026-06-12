@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -20,28 +21,81 @@ const discovery = new ProjectDiscovery('megaeth', undefined, {
   },
 })
 
+const respectedGameType = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'respectedGameType',
+)
+const activeKailuaGame = discovery.getContractValue<ChainSpecificAddress>(
+  'DisputeGameFactory',
+  `game${respectedGameType}`,
+)
+const activeKailuaTreasury = discovery.getContractValue<ChainSpecificAddress>(
+  activeKailuaGame,
+  'KAILUA_TREASURY',
+)
+const vanguardAdvantage = discovery.getContractValue<number>(
+  activeKailuaTreasury,
+  'vanguardAdvantage',
+)
+
 export const megaeth: ScalingProject = opStackL2({
   addedAt: UnixTime(1764143601),
   discovery,
   daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
   additionalBadges: [BADGES.Stack.OPKailua],
+  kailuaVanguardAppliesToAllProposals: true,
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   nonTemplateProofSystem: {
     type: 'Optimistic',
-    name: 'OP Kailua',
+    name: 'Kailua',
     zkCatalogId: ProjectId('risc0'),
     challengeProtocol: 'Single-step',
   },
   nonTemplateProgramHashes: [
     PROGRAM_HASHES(
-      discovery.getContractValue<string>('KailuaTreasury', 'FPVM_IMAGE_ID'),
+      discovery.getContractValue<string>(activeKailuaGame, 'FPVM_IMAGE_ID'),
     ),
   ],
+
   architectureImage: 'megaeth',
   stateValidationImage: 'megaeth',
+  interopConfig: {
+    name: 'MegaETH Canonical',
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: [
+            'opstack.L1ToL2Transfer',
+            'opstack-standardbridge.L1ToL2Transfer',
+          ],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: [
+            'opstack.L2ToL1Transfer',
+            'opstack-standardbridge.L2ToL1Transfer',
+          ],
+        },
+      ],
+    },
+    plugins: [
+      {
+        chain: 'megaeth',
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'megaeth',
+        plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+  },
   display: {
     name: 'MegaETH',
     slug: 'megaeth',
@@ -49,9 +103,15 @@ export const megaeth: ScalingProject = opStackL2({
       'MegaETH is a real-time blockchain based on the OP Stack architecture and the hybrid Kailua proof system, targeting sub-millisecond latency and over 100,000 transactions per second.',
     links: {
       websites: ['https://megaeth.com/'],
-      bridges: ['https://docs.megaeth.com/frontier#using-the-canonical-bridge'],
+      bridges: [
+        'https://bridge.megaeth.com/',
+        'https://rabbithole.megaeth.com/bridge',
+      ],
       documentation: ['https://docs.megaeth.com/'],
-      explorers: ['https://megaeth.blockscout.com/'],
+      explorers: [
+        'https://mega.etherscan.io/',
+        'https://megaeth.blockscout.com/',
+      ],
       repositories: ['https://github.com/megaeth-labs'],
       socialMedia: [
         'https://x.com/megaeth',
@@ -65,23 +125,25 @@ export const megaeth: ScalingProject = opStackL2({
   nonTemplateRiskView: {
     stateValidation: {
       value: 'Fraud proofs (1R, ZK)',
-      description:
-        'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof eliminates a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used. Since the node source is not available, challengers cannot watch the chain independently.',
+      description: `Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof eliminates a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used. Since the node source is not available, challengers cannot watch the chain independently. \`vanguardAdvantage\` applies to every proposal and is set to ${formatSeconds(vanguardAdvantage)}, so only the Vanguard can submit state proposals; faulty proposals can be flagged but not replaced, halting the chain until the Vanguard proposes a correct state root.`,
       sentiment: 'bad',
+      permissioned: true,
       executionDelay: discovery.getContractValue<number>(
         'OptimismPortal2',
         'disputeGameFinalityDelaySeconds',
       ),
       challengeDelay: discovery.getContractValue<number>(
-        'KailuaGame',
+        activeKailuaGame,
         'MAX_CLOCK_DURATION',
       ),
-      initialBond: formatEther(
-        discovery.getContractValue<number>(
-          'KailuaTreasury',
-          'participationBond',
+      initialBond: {
+        value: formatEther(
+          discovery.getContractValue<number>(
+            activeKailuaTreasury,
+            'participationBond',
+          ),
         ),
-      ),
+      },
       orderHint: Number.NEGATIVE_INFINITY,
     },
   },
@@ -90,6 +152,7 @@ export const megaeth: ScalingProject = opStackL2({
     chainId: 4326,
     explorerUrl: 'https://megaeth.blockscout.com',
     sinceTimestamp: UnixTime(1762797011), // block 1
+    coingeckoPlatform: 'megaeth',
     gasTokens: ['ETH'],
     multicallContracts: [
       {
@@ -155,7 +218,7 @@ export const megaeth: ScalingProject = opStackL2({
         ),
         to: EthereumAddress('0x00656C604FC470e6a566A695B74455e18a6D75D3'),
         sinceTimestamp: UnixTime(1762797011),
-        untilTimestamp: UnixTime(1770612479), // 2026-02-09T04:47:59Z batch inbox changed to BunnyInbox
+        // no until because the inbox was changed back to this one later
       },
     },
     {
@@ -173,6 +236,7 @@ export const megaeth: ScalingProject = opStackL2({
         ),
         to: EthereumAddress('0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2'), // BunnyInbox
         sinceTimestamp: UnixTime(1770612479), // 2026-02-09T04:47:59Z
+        untilTimestamp: UnixTime(1776134387), // end of bunnyInbox
       },
     },
     {
@@ -194,4 +258,10 @@ export const megaeth: ScalingProject = opStackL2({
   ],
   genesisTimestamp: UnixTime(1762797011),
   isNodeAvailable: 'UnderReview', // this is important because challenging is permissionless, but impossible without a node
+  nonTemplateZkVerifiers: [
+    discovery.getContractValue<ChainSpecificAddress>(
+      'RiscZeroVerifierRouter',
+      'verifier',
+    ),
+  ],
 })

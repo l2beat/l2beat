@@ -1,4 +1,8 @@
-import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
+import type {
+  Project,
+  ProjectRedWarning,
+  ProjectZkCatalogInfo,
+} from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -25,13 +29,14 @@ export interface ProjectZkCatalogEntry {
   name: string
   shortName: string | undefined
   creator?: string
+  quantumResistant?: boolean
   slug: string
   icon: string
   archivedAt: UnixTime | undefined
   underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
-    redWarning?: string
+    redWarning?: ProjectRedWarning
     emergencyWarning?: string
     description?: string
     links: ProjectLink[]
@@ -54,7 +59,7 @@ export async function getZkCatalogProjectEntry(
   const [allProjects, allProjectsWithContracts, tvs, contractUtils] =
     await Promise.all([
       ps.getProjects({
-        optional: ['daBridge', 'isScaling', 'isDaLayer'],
+        optional: ['display', 'daBridge', 'scalingInfo', 'daLayer'],
       }),
       ps.getProjects({
         select: ['contracts'],
@@ -97,6 +102,7 @@ export async function getZkCatalogProjectEntry(
   const common = {
     name: project.name,
     creator: project.zkCatalogInfo.creator,
+    quantumResistant: project.zkCatalogInfo.quantumResistant,
     shortName: project.shortName,
     slug: project.slug,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),

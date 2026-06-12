@@ -2,17 +2,18 @@
 
 source .env
 
-FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop" "interop-aggregates" "tokens-ui" "tracked-txs")
+FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop" "interop-aggregates" "tokens-ui" "tracked-txs" "privacy")
 FEATURES_TABLES=(
     "IndexerState IndexerConfiguration DataAvailability Blob SyncMetadata"
     "IndexerState IndexerConfiguration Liveness AggregatedLiveness"
     "IndexerState IndexerConfiguration TvsBlockTimestamp TvsPrice TvsAmount TokenValue SyncMetadata"
     "IndexerState IndexerConfiguration Activity SyncMetadata"
     "IndexerState IndexerConfiguration AnomalyStats RealTimeLiveness RealTimeAnomaly"
-    "IndexerState IndexerConfiguration InteropEvent InteropMessage InteropTransfer InteropConfig InteropRecentPrices"
+    "IndexerState IndexerConfiguration InteropEvent InteropMessage InteropTransfer InteropConfig InteropRecentPrices InteropPluginSyncState InteropPluginSyncedRange"
     "IndexerState IndexerConfiguration AggregatedInteropTransfer AggregatedInteropToken"
     "AbstractToken DeployedToken TokenConnection Chain"
     "IndexerState IndexerConfiguration L2Cost Liveness AggregatedL2Cost AggregatedLiveness"
+    "IndexerState IndexerConfiguration PrivacyBlockTimestamp PrivacyFlowEvent PrivacyPrice"
 )
 
 clear_tables() {
@@ -34,13 +35,20 @@ DO \$\$
 DECLARE
     tables TEXT[] := ARRAY[$quoted_tables];
     table_name TEXT;
+    existing_tables TEXT[] := ARRAY[]::TEXT[];
+    table_list TEXT;
 BEGIN
     FOREACH table_name IN ARRAY tables
     LOOP
         IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = table_name) THEN
-            EXECUTE format('DELETE FROM %I', table_name);
+            existing_tables := array_append(existing_tables, format('%I', table_name));
         END IF;
     END LOOP;
+
+    IF array_length(existing_tables, 1) IS NOT NULL THEN
+        table_list := array_to_string(existing_tables, ', ');
+        EXECUTE format('TRUNCATE TABLE %s', table_list);
+    END IF;
 END \$\$;
 "
 }

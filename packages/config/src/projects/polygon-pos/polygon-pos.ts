@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -16,6 +17,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import stakeDistribution from './stake-distribution.json'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -42,6 +44,26 @@ const currentValidatorSetCap = discovery.getContractValue<number>(
   'validatorThreshold',
 )
 
+const minDeposit = discovery.getContractValue<string>(
+  'StakeManager',
+  'minDeposit',
+)
+
+const replacementCoolDown = discovery.getContractValue<number>(
+  'StakeManager',
+  'replacementCoolDown',
+)
+assert(
+  replacementCoolDown === 2018083,
+  'The far-future replacement cooldown which effectively closed the vali set whenever it was at the cap has changed and the sequencer section and risk rosette should be adjusted if the set is now open+capped with a working replacement auction.',
+)
+
+const polygonSpanBlocks = 6400
+const polygonBlockSeconds = 2
+const polygonSpanTimeString = formatSeconds(
+  polygonSpanBlocks * polygonBlockSeconds,
+)
+
 const chainId = 137
 
 export const polygonpos: ScalingProject = {
@@ -53,6 +75,7 @@ export const polygonpos: ScalingProject = {
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Polygon PoS',
+    aliases: ['Matic'],
     slug: 'polygon-pos',
     purposes: ['Universal'],
     links: {
@@ -80,6 +103,8 @@ export const polygonpos: ScalingProject = {
     stage: 'NotApplicable',
   },
   interopConfig: {
+    description:
+      'The canonical bridge. Validated by the Polygon PoS validator set.',
     durationSplit: {
       lockAndMint: [
         {
@@ -217,10 +242,9 @@ export const polygonpos: ScalingProject = {
     dataAvailability: RISK_VIEW.DATA_POS,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
-      description:
-        RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1').description +
-        ` In Polygon PoS, the sequencers network corresponds to the PoS validators network, which is composed of ${currentValidatorSetSize} members.`,
+      value: 'Decentralized Sequencer Set',
+      sentiment: 'warning',
+      description: `Although there is a sequencer set of ${currentValidatorSetSize} (called validators), if the cap of ${currentValidatorSetCap} is reached, no new stakers can join. A minimum of ${minDeposit} POL stake is required to obtain block production rights. There is no specific censorship resistance mechanism against selective censorship by parts of the active validator set nor a way to force transactions from Ethereum L1. The canonical bridge between Polygon PoS and Ethereum allows for queuing transactions from the Ethereum and Polygon PoS sides, which cannot be skipped, except for halting the queue entirely.`,
     },
     proposerFailure: RISK_VIEW.PROPOSER_POS(
       currentValidatorSetSize,
@@ -256,6 +280,60 @@ export const polygonpos: ScalingProject = {
     //operator: {},
     //forceTransactions: {},
     //exitMechanisms: [],
+    sequencing: {
+      name: 'Transactions are ordered by Polygon PoS validators',
+      description: `Polygon PoS is operated by a closed proof-of-stake validator set with ${currentValidatorSetSize} active validators. Block production rights are given to validators randomly (stake-weighted) for the duration of a *span*. In practice, validators delegate the block production further to centralised validator-elected block producers (VeBloPs). Ethereum smart contracts accept checkpoints signed by more than two thirds of Polygon PoS validator stake.`,
+      sequencerSetSpec: {
+        slotTime: { value: formatSeconds(polygonBlockSeconds) },
+        epochTime: {
+          value: `${polygonSpanTimeString}`,
+          description: `Randomly sampled validators delegate block production for the duration of a span: ${polygonSpanBlocks} blocks`,
+        },
+        sequencerCount: { value: `${currentValidatorSetSize} validators` },
+        blockProductionAccess: {
+          value: 'Closed and capped',
+          sentiment: 'bad',
+          description: `The current validator cap is ${currentValidatorSetCap}. Joining the set is permissioned (Multisig).`,
+        },
+        stakePerValidator: {
+          value: minDeposit + ' POL minimum, variable',
+          description: 'stake-weighted block production rights, no maximum',
+        },
+        rateLimit: { value: 'No (permissioned)' },
+        deterministicCrGadget: { value: 'No', sentiment: 'warning' },
+        additionalCrGadgets: { value: 'No', sentiment: 'bad' },
+      },
+      inclusionDelayChart: {
+        type: 'spanlike',
+        validatorCount: currentValidatorSetSize,
+        spanBlocks: polygonSpanBlocks,
+        blockSeconds: polygonBlockSeconds,
+        target: 0.99,
+        maxCensorFraction: 0.33,
+        stakeDistribution,
+      },
+      inclusionDelayChartDescription:
+        'The chart models live-chain selective censorship only. Since proposing is stake-weighted, the x-axis represents the censoring POL stake, and does not cover validator-set changes, or blanket-censorship resistance gadgets.',
+      censorshipResistance: `The validator set (on Polygon PoS, validators are both proposers and sequencers) is closed and capped, but includes a diverse set of known entities who share block production rights. There are no specific censorship resistance gadgets built into the protocol.
+### Selective censorship
+As long as the Polygon PoS blockchain is producing blocks, users can expect to include their transactions due to the rotating, diverse block producers, even if they are censored by some of them. Unfortunately, the rotation is very slow (see *span* time) and even just a few entities censoring can cause long inclusion delays.
+### Blanket censorship
+Validators holding more than 1/3 of Polygon PoS stake among them can censor users if they actively refuse to attest to blocks with their transactions. Polygon Multisig controls the core smart contracts on Ethereum and can administer the validator set (including malicious changes) as a consequence.
+### Walkaway
+If validators holding more than 1/3 of the stake on Polygon PoS stop block production, the chain stops and there is no way for users to include any transactions. As the validator set is currently closed by a permissioned smart contract setting on ethereum, walkaway of the permissioned actor would require social coordination and a hard fork to progress the chain.`,
+      references: [
+        {
+          title: 'Polygon PoS architecture documentation',
+          url: 'https://docs.polygon.technology/pos/architecture/',
+        },
+      ],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'the active span proposer censors them, or if at least one third of Polygon PoS stake refuses to attest blocks that include their transactions.',
+        },
+      ],
+    },
     otherConsiderations: [
       {
         name: 'Destination tokens are upgradeable',

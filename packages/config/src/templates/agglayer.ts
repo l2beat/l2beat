@@ -1,5 +1,6 @@
 import {
   assert,
+  ChainSpecificAddress,
   formatSeconds,
   ProjectId,
   type UnixTime,
@@ -49,9 +50,11 @@ import type {
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingScopeOfAssessment,
+  ProjectScalingStage,
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
+  ProjectUpgradesAndGovernance,
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
@@ -97,7 +100,8 @@ interface AgglayerBaseConfig {
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
+  stage?: ProjectScalingStage
   stateValidation?: ProjectScalingStateValidation
   associatedTokens?: string[]
   additionalBadges?: Badge[]
@@ -254,8 +258,11 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     config.nonTemplatePermissions ?? {},
   )
 
-  const upgradesAndGovernance =
-    config.upgradesAndGovernance ?? buildUpgradesAndGovernance(context)
+  const upgradesAndGovernance: ProjectUpgradesAndGovernance = {
+    content: buildUpgradesAndGovernance(context),
+    image: 'agglayer',
+    ...config.upgradesAndGovernance,
+  }
 
   const fallbackActivityConfig =
     config.variant === 'cdk-opgeth-sovereign'
@@ -279,7 +286,6 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     ecosystemInfo: { id: ProjectId('agglayer') },
     display: {
       ...config.display,
-      upgradesAndGovernanceImage: 'agglayer',
       purposes: config.overridingPurposes ?? [
         'Universal',
         ...(config.additionalPurposes ?? []),
@@ -306,7 +312,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     },
     dataAvailability: variantSections.dataAvailability,
     riskView: variantSections.riskView,
-    stage: { stage: 'NotApplicable' },
+    stage: config.stage ?? { stage: 'NotApplicable' },
     technology: variantSections.technology,
     stateDerivation: variantSections.stateDerivation,
     stateValidation: variantSections.stateValidation,
@@ -317,6 +323,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
       ...(variantSections.programHashes?.length
         ? { programHashes: variantSections.programHashes }
         : {}),
+      zkVerifiers: getAgglayerVerifiers(config.discovery),
     },
     upgradesAndGovernance,
     milestones: config.milestones,
@@ -400,12 +407,14 @@ function buildSharedContext(config: AgglayerConfig): SharedContext {
   const upgradeDelayString = formatSeconds(upgradeDelaySeconds)
   const exitWindowRisk: ScalingProject['riskView']['exitWindow'] = {
     value: 'None',
-    description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, there are no forced transactions and thus no way to exit during operator censorship or downtime.`,
+    description:
+      'There is no window for users to exit in case of an unwanted upgrade since the Security Council can remove the delay on upgrades.',
     sentiment: 'bad',
     orderHint: -1,
-    warning: {
-      value: 'The Security Council can remove the delay on upgrades.',
-      sentiment: 'bad',
+    regular: {
+      value: upgradeDelayString,
+      sentiment: 'warning',
+      description: `Even though there is a ${upgradeDelayString} Timelock for non-emergency upgrades, there are no forced transactions and thus no way to exit during operator censorship or downtime.`,
     },
   }
 
@@ -893,4 +902,27 @@ function getPessimisticVKeys(discovery: ProjectDiscovery): string[] {
   return Object.values(pessimisticVKeyDict).flatMap((arr) =>
     arr.map((el) => el['pessimisticVKey']),
   )
+}
+
+export function getAgglayerVerifiers(
+  discovery: ProjectDiscovery,
+): ChainSpecificAddress[] {
+  if (discovery.hasContract('Verifier')) {
+    // zkProver case
+    return [discovery.getContract('Verifier').address]
+  }
+  type ProgramHashDict = Record<string, Record<string, string>[]>
+  const uniqueVerifierAddresses = new Set<ChainSpecificAddress>()
+  const routesDict = discovery.getContractValue<ProgramHashDict>(
+    'AgglayerGateway',
+    'routes',
+  )
+  for (const routes of Object.values(routesDict)) {
+    for (const route of routes) {
+      if (route['verifier']) {
+        uniqueVerifierAddresses.add(ChainSpecificAddress(route['verifier']))
+      }
+    }
+  }
+  return Array.from(uniqueVerifierAddresses)
 }

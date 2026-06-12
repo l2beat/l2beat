@@ -13,6 +13,10 @@ describe('tinify', () => {
     const metadata = getTinifiyMetadata()
 
     const missing = pngs.filter((png) => {
+      // We dont want to tinify brand kit images because we want to serve them in best quality
+      if (png.startsWith(path.join(process.cwd(), 'static/brand-kit')))
+        return false
+
       const hash = metadata[path.relative(process.cwd(), png)]
       const buffer = readFileSync(png)
       return hash !== hashPng(buffer)

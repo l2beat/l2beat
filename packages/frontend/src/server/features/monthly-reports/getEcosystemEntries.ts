@@ -70,7 +70,7 @@ export interface EcosystemMonthlyUpdateEntry
 
 export async function getEcosystemMonthlyUpdateEntries(
   ecosystemUpdateEntries: EcosystemUpdate[],
-  allScalingProjects: Project<'isScaling'>[],
+  allScalingProjects: Project<'scalingInfo'>[],
   tvs: SevenDayTvsBreakdown,
   activity: ActivityLatestUopsData,
   from: UnixTime,
@@ -79,8 +79,8 @@ export async function getEcosystemMonthlyUpdateEntries(
   const [projects, ecosystems, newProjects] = await Promise.all([
     ps.getProjects({
       select: ['ecosystemInfo'],
-      where: ['isScaling'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      where: ['scalingInfo'],
+      whereNot: ['archivedAt'],
     }),
     ps.getProjects({
       select: ['ecosystemConfig', 'colors'],

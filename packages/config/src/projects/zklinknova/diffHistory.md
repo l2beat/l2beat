@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xbb4baf8c0d6aff8ae42e0ccaea70557d12ecfaf4
+Generated with discovered.json: 0x367455f29b4075d43cf3c8f97404718d953f3a91
 
-# Diff at Mon, 23 Mar 2026 10:57:14 GMT:
+# Diff at Fri, 12 Jun 2026 10:31:31 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1753687799
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1753687799
 - current timestamp: 1753687799
 
 ## Description
@@ -17,42 +17,10 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1753687799 (main branch discovery), not current.
 
 ```diff
-    contract ArbitrumL2Gateway (arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract BaseL2Gateway (base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
     EOA  (base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
     +++ description: None
       eoaWithUpgradePermissions:
 +        true
-    }
-```
-
-```diff
-    contract BlastL2Gateway (blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract ArbitrumL1Gateway (eth:0x273D59aed2d793167c162E64b9162154B07583C0) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
@@ -65,102 +33,6 @@ discovery. Values are for block 1753687799 (main branch discovery), not current.
 ```
 
 ```diff
-    contract BlastL1Gateway (eth:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract BaseL1Gateway (eth:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract MantaL1Gateway (eth:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract OptimismL1Gateway (eth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract LineaL1Gateway (eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract EthereumL1Gateway (eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract ScrollL1Gateway (eth:0x986c905087a663db3C81ad319b94c1E9dd388e92) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract MantleL1Gateway (eth:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract EraL1Gateway (eth:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract LineaL2Gateway (linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract MantaL2Gateway (manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract MantleL2Gateway (mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
     EOA  (oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
     +++ description: None
       eoaWithUpgradePermissions:
@@ -168,20 +40,1248 @@ discovery. Values are for block 1753687799 (main branch discovery), not current.
     }
 ```
 
+Generated with discovered.json: 0xc5bad0cd4982c3101ab5036eaad22e81331f1512
+
+# Diff at Fri, 15 May 2026 12:37:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
++        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
+      implementationNames.scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77:
+-        "GnosisSafeL2"
++        "GnosisSafeProxy"
+    }
+```
+
+Generated with discovered.json: 0x0e6d5884e45832eebdb25818b6fce190628ff986
+
+# Diff at Fri, 08 May 2026 07:52:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumL2Gateway (arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x92d18063ee33accb564a80045a642ccab59919fc97ffb5f4a4849874239d7bc0"
++        "0x05f41bafb0b0ddec3d9cc38cde1566548e2be76855839c001335ac75954d775d"
+    }
+```
+
+```diff
+    contract ArbitrumOwner (arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract ArbitrumL1ERC20Bridge (arb1:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413"
+      sourceHashes.1:
+-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
++        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
+    }
+```
+
+```diff
+    contract ArbitrumzkLink (arb1:0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A) [zklinknova/secondaryZkLink] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
++        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
+    }
+```
+
+```diff
+    contract BaseL2Gateway (base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x650e6121058aa74419a8d997f6cf169c5bb82b7e6302193672de5f10c1c1e561"
++        "0x203cb1c4a589ccec0b4a6b1db073cff1bf125cfe423111d8bbf66aa641fbd3c3"
+    }
+```
+
+```diff
+    contract BaseL1ERC20Bridge (base:0x80d12A78EfE7604F00ed07aB2f16F643301674D5) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413"
+      sourceHashes.1:
+-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
++        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
+    }
+```
+
+```diff
+    contract BasezkLink (base:0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd) [zklinknova/secondaryZkLink] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
++        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
+    }
+```
+
+```diff
+    contract BaseOwner (base:0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract BlastzkLink (blastmainnet:0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD) [zklinknova/secondaryZkLink] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
++        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
+    }
+```
+
+```diff
+    contract BlastL2Gateway (blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x54984eed0ba905283811bcd69e63428602cc4c290c8eed30fc28011383549ff2"
++        "0xa6f74e73041f17918a28cbf8539229c36823ee1b0b4ac6d06d605c6ffab4b1b3"
+    }
+```
+
+```diff
+    contract BlastOwner (blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract BlastL1ERC20Bridge (blastmainnet:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413"
+      sourceHashes.1:
+-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
++        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
+    }
+```
+
+```diff
+    contract Arbitrator (eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0xff7b9bda4ccb0ae0e1775f82206c54ef89c794f6b4ffa42edbb65996bf7d0e8c"
++        "0xf6400e0c02bc34451a6c1894ec98ff6207a86224805bc4d5cd3694899ddd0c63"
+    }
+```
+
+```diff
+    contract ArbitrumL1Gateway (eth:0x273D59aed2d793167c162E64b9162154B07583C0) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x9158bf76b126cdaa6a8fe310085a77d400ab2458c21f79e637846d8bc3cc2a13"
++        "0x6e4a4073d413a623b7bd3465ecbf3a23efd55e86f478e6bde3f1aa51e6b74294"
+    }
+```
+
+```diff
+    contract BlastL1Gateway (eth:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0xc39118a9cebca411d42cb5759e7387270a0a8472860288b0e01aa3235777afe5"
++        "0x5dc63c95ce93d7ac175b61834b7411e49e976a9d344a7884f64f92a0e9bda744"
+    }
+```
+
+```diff
+    contract BaseL1Gateway (eth:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x9487f6c6e032e98bef376a27f09d5a3e8c83a059eaf6d8b092c80138cb37459f"
++        "0xbebda23695697e81503840056106c565dd9a0c9884980a96cff5ba3bdecc74ad"
+    }
+```
+
+```diff
+    contract EthereumzkLink (eth:0x5fD9F73286b7E8683Bab45019C94553b93e015Cf) [zklinknova/secondaryZkLink] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
++        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
+    }
+```
+
+```diff
+    contract MantaL1Gateway (eth:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0xb3ae8d5bec68fa0994192ecdc4f2ad4126bb1ef22051378f5b605d59193955e4"
++        "0x9b65803e562ba8c4e2f362a0666690c8e5e777458db2809055a9a810f25750eb"
+    }
+```
+
+```diff
+    contract OptimismL1Gateway (eth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x9487f6c6e032e98bef376a27f09d5a3e8c83a059eaf6d8b092c80138cb37459f"
++        "0xbebda23695697e81503840056106c565dd9a0c9884980a96cff5ba3bdecc74ad"
+    }
+```
+
+```diff
+    contract LineaL1Gateway (eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x7f9e12d70f78945c6ea417774b5faf2e0a78ed4fbbdcaec591bf123428f28197"
++        "0x2e8636f7784e4f2d33d32f5f6b9c21169c305262c225c9706c093728bfc57228"
+    }
+```
+
+```diff
+    contract EthereumL1Gateway (eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x6f5cdba451da8c1759148644f4daf8344ed2853d765413e18cd2fcf662f4694a"
++        "0xe6ffb915b8c2c5406c8d72162a0edd46255f145821e228c0f7c49603f93f72eb"
+    }
+```
+
+```diff
+    contract ScrollL1Gateway (eth:0x986c905087a663db3C81ad319b94c1E9dd388e92) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x91cc3c90f1b2c05558c8c2f9575ffcc8f7cb39a023073a028d6b6abb3986d601"
++        "0x8a9a34cec905da99318c2140f97842722d52a0093245b055f0617f65afe49393"
+    }
+```
+
+```diff
+    contract EthereumL1ERC20Bridge (eth:0xAd16eDCF7DEB7e90096A259c81269d811544B6B6) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413"
+      sourceHashes.1:
+-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
++        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
+    }
+```
+
+```diff
+    contract EthereumOwner (eth:0xdb4D755E3b8735314147b9bB146327C269701E2D) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract MantleL1Gateway (eth:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0xb3ae8d5bec68fa0994192ecdc4f2ad4126bb1ef22051378f5b605d59193955e4"
++        "0x9b65803e562ba8c4e2f362a0666690c8e5e777458db2809055a9a810f25750eb"
+    }
+```
+
+```diff
+    contract EraL1Gateway (eth:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x070067bfd007d5f15c96e1e404a8b9b5eab4a2616d8ea8ebeab0a22f58262461"
++        "0xe6a894ed2f785fe6796138b8b72d44ab5b11b3558e593f6522181d8946069f83"
+    }
+```
+
+```diff
+    contract LineaOwner (linea:0x0Bff4B38792a95314b3463E1Bf9831BDa1995391) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (linea:0x509ff56c152315EdeE91A2e0f059195519507e01) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x12cecfbcc6781dd4b8196aa7774f756e4f6b1ffa89386aee473d301f8b6e50a9"
++        "0x8c02abd7d6d6ab83a0fd7551279095d7b79038885ea6e4456cd598e98950cd92"
+    }
+```
+
+```diff
+    contract LineaL1ERC20Bridge (linea:0x62cE247f34dc316f93D3830e4Bf10959FCe630f8) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xa03991e1bce15902cbac3b622d56b1d1a7ffac18bd69a20e1b22a38a350b1246"
++        "0x074d0d1532ad3c5782c0e723f02fa54a70a418277e129b9c2674695a65788c78"
+    }
+```
+
+```diff
+    contract LineaL2Gateway (linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x9cdec4676ceb81fecae56fb51bb2b303a5e0c13d98bb75c91e343bbe6b6d3d59"
++        "0xa0605e5a74aceabb3204d7e8828b9d3e068b1d18f97b7bab7fa9052a0e790cc4"
+    }
+```
+
+```diff
+    contract Governance (linea:0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x200762223206dfe40a648627db22f3403b1bdb04c59d8753a1e7525591876fda"
++        "0x8c6f9e70207e3d28fb1b1b95d14964d982278de0ac87c8a90b62543fdec7f63e"
+    }
+```
+
+```diff
+    contract MantaL1ERC20Bridge (manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413"
+      sourceHashes.1:
+-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
++        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
+    }
+```
+
+```diff
+    contract MantaOwner (manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract MantazkLink (manta:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) [zklinknova/secondaryZkLink] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
++        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
+    }
+```
+
+```diff
+    contract MantaL2Gateway (manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x54984eed0ba905283811bcd69e63428602cc4c290c8eed30fc28011383549ff2"
++        "0xa6f74e73041f17918a28cbf8539229c36823ee1b0b4ac6d06d605c6ffab4b1b3"
+    }
+```
+
+```diff
+    contract MantleOwner (mantle:0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract MantleL1ERC20Bridge (mantle:0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413"
+      sourceHashes.1:
+-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
++        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
+    }
+```
+
+```diff
+    contract MantlezkLink (mantle:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) [zklinknova/secondaryZkLink] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0xce3f5eaddd62b6c043d92c0ff2cc4eed6369114f68e9d57c1b76f3d26dd29fa2"
++        "0x883c1311587ca8c9a1bd7dfbdc6cc756c1e57e6138d68d9942020d1d3077b95b"
+    }
+```
+
+```diff
+    contract MantleL2Gateway (mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0xf74567f04dfc1337e1295ac8ee70891c3e1543ec852c2205630c0bcc4e0b6a19"
++        "0x176736cab5151b084da0fbe6c378f127442a0ffc06e823b0f4741eefa923a7df"
+    }
+```
+
+```diff
+    contract OptimismOwner (oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract OptimismzkLink (oeth:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b) [zklinknova/secondaryZkLink] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
++        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
+    }
+```
+
+```diff
+    contract OptimismL1ERC20Bridge (oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413"
+      sourceHashes.1:
+-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
++        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
+    }
+```
+
+```diff
+    contract OptimismL2Gateway (oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x650e6121058aa74419a8d997f6cf169c5bb82b7e6302193672de5f10c1c1e561"
++        "0x203cb1c4a589ccec0b4a6b1db073cff1bf125cfe423111d8bbf66aa641fbd3c3"
+    }
+```
+
+```diff
+    contract ScrollzkLink (scr:0x119B9459D9119D07c23aD06778AeaBec804Fd1a2) [zklinknova/secondaryZkLink] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0xcbd3207b9109e4f409b0253248655dee17cc83299a5e19d4d7c8bdc792b30008"
++        "0xc18029183330bee4c9182bcc1ffbfc3619e87f0bb8edcc72c37d7274430fe5cf"
+    }
+```
+
+```diff
+    contract ScrollL1ERC20Bridge (scr:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413"
+      sourceHashes.1:
+-        "0xd57c5157a667afc64df8bc542f1eb01744f7d6b961e031361d442aac61b7d5a0"
++        "0xcb4dd20abe47f9c0d374d660b6c4fef7f5649e1735ddcc38e0fb52b366f82f16"
+    }
+```
+
+```diff
+    contract ScrollL2Gateway (scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x3712da36508b3467318e72889e31c55c8421214be5ff058dba1d8a7cd33b4f9b"
++        "0x15392164422ad793ce776226be6341ec0bd2e740e6b2eb15e1d90e93403823a3"
+    }
+```
+
+```diff
+    contract ScrollOwner (scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract EraOwner (zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract EraL1ERC20Bridge (zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
++        "0xc9a4af373a40654b9e7b9f03ed4938062d91c738a277459c1a5ff548e1c94bc8"
+    }
+```
+
+```diff
+    contract ErazkLink (zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A) [zklinknova/secondaryZkLink] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
++        "0x30beca6347ba49415cb24fbebf5b9b2797b0b60431fd0d669324b3015e8adb56"
+    }
+```
+
+```diff
+    contract EraL2Gateway (zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535) [zklinknova/secondaryGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858"
+      sourceHashes.1:
+-        "0xe0235f35c0fdaea3f676b1101581911d1a9b4bbc4bdbd2c76d9e93ab3da4762c"
++        "0x119e04b91c8e63c65c9cfb24741d8fd98080d11f9ccde409198f92cde1cc63c3"
+    }
+```
+
+Generated with discovered.json: 0x572af8ba4b7263fe279de41b8e1b0d2e45494921
+
+# Diff at Tue, 05 May 2026 10:24:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumProxyAdmin (arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ArbitrumL2Gateway (arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ArbitrumOwner (arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract ArbitrumL1ERC20Bridge (arb1:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ArbitrumzkLink (arb1:0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BaseL2Gateway (base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011) {
+    +++ description: None
+      deployerAddress:
++        "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BaseL1ERC20Bridge (base:0x80d12A78EfE7604F00ed07aB2f16F643301674D5) {
+    +++ description: None
+      deployerAddress:
++        "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BaseProxyAdmin (base:0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE) {
+    +++ description: None
+      deployerAddress:
++        "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BasezkLink (base:0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd) {
+    +++ description: None
+      deployerAddress:
++        "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BaseOwner (base:0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C) {
+    +++ description: None
+      deployerAddress:
++        "base:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract BlastzkLink (blastmainnet:0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD) {
+    +++ description: None
+      deployerAddress:
++        "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050"
+    }
+```
+
+```diff
+    contract BlastL2Gateway (blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1) {
+    +++ description: None
+      deployerAddress:
++        "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050"
+    }
+```
+
+```diff
+    contract BlastOwner (blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E) {
+    +++ description: None
+      deployerAddress:
++        "blastmainnet:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract BlastL1ERC20Bridge (blastmainnet:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b) {
+    +++ description: None
+      deployerAddress:
++        "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050"
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) {
+    +++ description: None
+      deployerAddress:
++        "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050"
+    }
+```
+
+```diff
+    contract Arbitrator (eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ArbitrumL1Gateway (eth:0x273D59aed2d793167c162E64b9162154B07583C0) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EthereumProxyAdmin (eth:0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BlastL1Gateway (eth:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BaseL1Gateway (eth:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EthereumzkLink (eth:0x5fD9F73286b7E8683Bab45019C94553b93e015Cf) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantaL1Gateway (eth:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract OptimismL1Gateway (eth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract LineaL1Gateway (eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EthereumL1Gateway (eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ScrollL1Gateway (eth:0x986c905087a663db3C81ad319b94c1E9dd388e92) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EthereumL1ERC20Bridge (eth:0xAd16eDCF7DEB7e90096A259c81269d811544B6B6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EthereumOwner (eth:0xdb4D755E3b8735314147b9bB146327C269701E2D) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract MantleL1Gateway (eth:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EraL1Gateway (eth:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract LineaOwner (linea:0x0Bff4B38792a95314b3463E1Bf9831BDa1995391) {
+    +++ description: None
+      deployerAddress:
++        "linea:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (linea:0x509ff56c152315EdeE91A2e0f059195519507e01) {
+    +++ description: None
+      deployerAddress:
++        "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9"
+    }
+```
+
+```diff
+    contract LineazkLink (linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05) {
+    +++ description: None
+      deployerAddress:
++        "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9"
+    }
+```
+
+```diff
+    contract LineaL1ERC20Bridge (linea:0x62cE247f34dc316f93D3830e4Bf10959FCe630f8) {
+    +++ description: None
+      deployerAddress:
++        "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9"
+    }
+```
+
+```diff
+    contract LineaL2Gateway (linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB) {
+    +++ description: None
+      deployerAddress:
++        "linea:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract Verifier (linea:0x902C3806A84f4e855a8746e92d7F1C9a51400458) {
+    +++ description: None
+      deployerAddress:
++        "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9"
+    }
+```
+
+```diff
+    contract Governance (linea:0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec) {
+    +++ description: None
+      deployerAddress:
++        "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9"
+    }
+```
+
+```diff
+    contract MantaProxyAdmin (manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05) {
+    +++ description: None
+      deployerAddress:
++        "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantaL1ERC20Bridge (manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF) {
+    +++ description: None
+      deployerAddress:
++        "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantaOwner (manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3) {
+    +++ description: None
+      deployerAddress:
++        "manta:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+    }
+```
+
+```diff
+    contract MantazkLink (manta:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      deployerAddress:
++        "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantaL2Gateway (manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) {
+    +++ description: None
+      deployerAddress:
++        "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantleOwner (mantle:0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60) {
+    +++ description: None
+      deployerAddress:
++        "mantle:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+    }
+```
+
+```diff
+    contract MantleL1ERC20Bridge (mantle:0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2) {
+    +++ description: None
+      deployerAddress:
++        "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantlezkLink (mantle:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      deployerAddress:
++        "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantleL2Gateway (mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) {
+    +++ description: None
+      deployerAddress:
++        "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantleProxyAdmin (mantle:0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82) {
+    +++ description: None
+      deployerAddress:
++        "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract OptimismOwner (oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) {
+    +++ description: None
+      deployerAddress:
++        "oeth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract OptimismzkLink (oeth:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b) {
+    +++ description: None
+      deployerAddress:
++        "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract OptimismL1ERC20Bridge (oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA) {
+    +++ description: None
+      deployerAddress:
++        "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) {
+    +++ description: None
+      deployerAddress:
++        "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
 ```diff
     contract OptimismL2Gateway (oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c) {
     +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
+      deployerAddress:
++        "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ScrollzkLink (scr:0x119B9459D9119D07c23aD06778AeaBec804Fd1a2) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ScrollL1ERC20Bridge (scr:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ScrollProxyAdmin (scr:0xC4673dAbfAf04D2A430e244B63F040D27199102f) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
     }
 ```
 
 ```diff
     contract ScrollL2Gateway (scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7) {
     +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
+      deployerAddress:
++        "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
     }
+```
+
+```diff
+    contract ScrollOwner (scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      deployerAddress:
++        "scr:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+    }
+```
+
+```diff
+    contract EraOwner (zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca) {
+    +++ description: None
+      deployerAddress:
++        "zksync:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract EraL1ERC20Bridge (zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08) {
+    +++ description: None
+      deployerAddress:
++        "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ErazkLink (zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A) {
+    +++ description: None
+      deployerAddress:
++        "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EraL2Gateway (zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535) {
+    +++ description: None
+      deployerAddress:
++        "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EraProxyAdmin (zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) {
+    +++ description: None
+      deployerAddress:
++        "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+Generated with discovered.json: 0x3ff268f3009e5b9803d5674fcd8170ffd26c788c
+
+# Diff at Tue, 05 May 2026 09:27:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@33baeefbd652187149f13ba1f2d74d0c748bdb2d block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
++        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      implementationNames.scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77:
+-        "GnosisSafeProxy"
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    contract EraOwner (zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535","role":"admin"}
+    }
+```
+
+```diff
+    contract EraL1ERC20Bridge (zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08) {
+    +++ description: None
+      unverified:
+-        true
+      values.l2Bridge:
++        "zksync:0x7187DB8AB8F65450a74dD40474bE778CF468C44a"
+      values.l2TokenBeacon:
++        "zksync:0x2140d3e4008592E1a6c106ACCfc24335A49AeC8C"
+      values.l2TokenProxyBytecodeHash:
++        "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
+      implementationNames.zksync:0xdBA32e62e929a7e2Fa65782F812416CA65208E40:
+-        ""
++        "L1ERC20Bridge"
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"]
+    }
+```
+
+```diff
+    contract ErazkLink (zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A) {
+    +++ description: None
+      unverified:
+-        true
+      values.feeParams:
++        {"pubdataPricingMode":0,"batchOverheadL1Gas":1000000,"maxPubdataPerBatch":120000,"maxL2GasPerBatch":80000000,"priorityTxMaxPubdata":99000,"minimalL2GasPrice":250000000}
+      values.FORWARD_REQUEST_TYPE_HASH:
++        "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c"
+      values.forwardFeeAllocator:
++        "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      values.gateway:
++        "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535"
+      values.getGateway:
++        "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535"
+      values.getGovernor:
++        "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      values.getPriorityTxMaxGasLimit:
++        72000000
+      values.IS_ETH_GAS_TOKEN:
++        true
+      values.owner:
++        "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      values.paused:
++        false
+      values.txGasPrice:
++        40000000000
+      implementationNames.zksync:0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E:
+-        ""
++        "ZkLink"
+      template:
++        "zklinknova/secondaryZkLink"
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"]
+    }
+```
+
+```diff
+    contract EraProxyAdmin (zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
++        "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EraL2Gateway (zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x94e0207fd47e2edc81a09d7ec295676165c1c03b
