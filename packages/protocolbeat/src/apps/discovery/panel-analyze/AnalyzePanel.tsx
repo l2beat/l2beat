@@ -112,7 +112,6 @@ export function AnalyzePanel() {
             disabled={analyzers.length === 0}
           >
             <Select.Trigger
-              size="default"
               placeholder={
                 analyzersResponse.isFetching
                   ? 'Loading analyzers...'
@@ -159,7 +158,7 @@ export function AnalyzePanel() {
             onValueChange={setPreferredSource}
             disabled={sources.length === 0 || codeResponse.isPending}
           >
-            <Select.Trigger size="default" placeholder="Select entrypoint" />
+            <Select.Trigger placeholder="Select entrypoint" />
             <Select.Content>
               {sources.map((source) => (
                 <Select.Item key={source.name} value={source.name}>
