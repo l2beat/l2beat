@@ -382,7 +382,7 @@ export const facet: ScalingProject = {
         name: 'Gas Token Minting',
         description: readProjectMarkdown(
           'facet',
-          'technology-other-considerations-2',
+          'technologyOtherConsiderations2',
         ),
         risks: [],
         references: [
