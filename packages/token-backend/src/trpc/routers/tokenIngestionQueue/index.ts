@@ -1,3 +1,4 @@
+import type { TokenIngestionQueueRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { TRPCError } from '@trpc/server'
@@ -19,6 +20,12 @@ const QueuePageInput = v.object({
   pageSize: v.number(),
 })
 
+export interface QueuePageRow {
+  entry: TokenIngestionQueueRecord
+  predictedOutcome: IngestionOutcomeView
+  deployedTokenExists: boolean
+}
+
 export const tokenIngestionQueueRouter = router({
   getAll: readOnlyProcedure.query(({ ctx }) => {
     return ctx.tokenDb.tokenIngestionQueue.getAll()
@@ -36,16 +43,20 @@ export const tokenIngestionQueueRouter = router({
 
       const transferIndex =
         await ctx.tokenIngestionProcessor.getInteropTransferIndex()
-      const predictedOutcomes: IngestionOutcomeView[] = []
+      const rows: QueuePageRow[] = []
       for (const entry of result.entries) {
         const trace = await ctx.tokenIngestionProcessor.plan(
           entry,
           transferIndex,
         )
-        predictedOutcomes.push(toIngestionOutcomeView(trace.outcome))
+        rows.push({
+          entry,
+          predictedOutcome: toIngestionOutcomeView(trace.outcome),
+          deployedTokenExists: trace.existingDeployedToken !== undefined,
+        })
       }
 
-      return { ...result, predictedOutcomes }
+      return { rows, totalCount: result.totalCount }
     }),
   approve: readWriteProcedure
     .input(QueueEntryAddress)
