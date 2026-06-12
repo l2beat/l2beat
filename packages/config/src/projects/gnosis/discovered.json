@@ -1072,7 +1072,6 @@
       "address": "gno:0x0000000000000000000000000000000000000000",
       "type": "EOA",
       "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

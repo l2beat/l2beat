@@ -65,6 +65,7 @@ export function combinePermissionsIntoDiscovery(
 
     entry.eoaWithUpgradePermissions =
       permissionsOutput.eoasWithUpgradePermissions?.includes(entry.address) &&
+      !isZeroAddress(entry.address) &&
       !isAlias(entry.address, allAddresses) &&
       upgradesCriticalContract(entry, discovery)
         ? true
@@ -85,6 +86,14 @@ export function combinePermissionsIntoDiscovery(
       ? undefined // remove entry if there are no dependent discoveries
       : timestampsWithoutCurProj
   }
+}
+
+// Renounced admin slots point at the zero address, which the modelling
+// still reports as an EOA with upgrade permissions even though nobody
+// controls it.
+function isZeroAddress(address: ChainSpecificAddress): boolean {
+  const hexAddr = address.split(':0x')[1]
+  return hexAddr !== undefined && BigInt('0x' + hexAddr) === 0n
 }
 
 // Known address alias offsets per chain prefix.
