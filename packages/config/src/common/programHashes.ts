@@ -1007,7 +1007,7 @@ Verify:
   },
   '0x00cbb3390c27696467170dd5dac119dc7d579da7d069afae078806f9d6f47580': {
     ...RAIKO2_PROPOSAL('v0.2.0'),
-    proverSystemProject: ProjectId('sp1turbo'),
+    proverSystemProject: ProjectId('sp1hypercube'),
     programUrl:
       'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/sp1_shasta_proposal.elf',
     verificationStatus: 'successful',
@@ -1020,7 +1020,7 @@ Verify:
   },
   '0x65d99c8609da591962e1babb2c119dc76abced3e41a6beb80f100df356f47580': {
     ...RAIKO2_PROPOSAL('v0.2.0'),
-    proverSystemProject: ProjectId('sp1turbo'),
+    proverSystemProject: ProjectId('sp1hypercube'),
     programUrl:
       'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/sp1_shasta_proposal.elf',
     verificationStatus: 'successful',
@@ -1033,7 +1033,7 @@ Verify:
   },
   '0x001e209da7d70983b826d88cb227861d1263435fe54fad6e4e5d83c593ee94c5': {
     ...RAIKO2_AGG('v0.2.0'),
-    proverSystemProject: ProjectId('sp1turbo'),
+    proverSystemProject: ProjectId('sp1hypercube'),
     programUrl:
       'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/sp1_shasta_aggregation.elf',
     verificationStatus: 'successful',
@@ -1046,7 +1046,7 @@ Verify:
   },
   '0x0f104ed375c260ee04db1196227861d1131a1aff153eb5b91cbb078b13ee94c5': {
     ...RAIKO2_AGG('v0.2.0'),
-    proverSystemProject: ProjectId('sp1turbo'),
+    proverSystemProject: ProjectId('sp1hypercube'),
     programUrl:
       'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/sp1_shasta_aggregation.elf',
     verificationStatus: 'successful',
