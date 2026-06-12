@@ -3,6 +3,10 @@
   "displayName": "L1StandardBridge",
   "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
   "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge", "l2TokenBridge"],
+  // deposits is per-token-pair escrow bookkeeping keyed by bridged ERC20 token
+  // addresses (the legacy non-mintable path), not protocol topology. The
+  // spacers are reserved storage gaps. None are tracked.
+  "ignoreInCoverage": ["deposits", "spacer_1_0_20", "spacer_50_0_20", "spacer_51_0_20"],
   "fields": {
     "$admin": {
       "permissions": [

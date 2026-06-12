@@ -1,4 +1,6 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  // _registry holds user-registered EAS schemas (each with a resolver), not protocol topology.
+  "ignoreInCoverage": ["_registry"],
   "description": "Contracts to register schemas for the Ethereum Attestation Service (EAS)."
 }

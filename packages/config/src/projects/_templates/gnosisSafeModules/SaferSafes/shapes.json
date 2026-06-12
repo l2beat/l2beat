@@ -3,5 +3,11 @@
     "hash": "0xf3c2f517bc8bfc612fa686bea9f5a85b983b23a9d407b3a4fd3c0f18fc824469",
     "address": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
     "blockNumber": 23919014
+  },
+  "SaferSafes_L2": {
+    "hash": "0xd366f745f0b211567995cba05bc2f3ec23d5b5816955b2151befbd1be367438f",
+    "address": "oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
+    "chain": "optimism",
+    "blockNumber": 151626520
   }
 }

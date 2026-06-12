@@ -1,5 +1,22 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SaferSafes",
-  "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling."
+  "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
+  // _livenessSafeConfiguration maps each managed Safe to its ModuleConfig, whose
+  // fallbackOwner can claim ownership of an unresponsive Safe — a real
+  // permission. Reconstruct the set of fallback owners from ModuleConfigured.
+  "fields": {
+    "_livenessSafeConfiguration": {
+      "handler": {
+        "type": "event",
+        "select": "fallbackOwner",
+        "add": { "event": "ModuleConfigured" },
+        "ignoreRelative": true
+      }
+    }
+  },
+  // The remaining per-Safe state is bookkeeping keyed by the (already-discovered)
+  // managed Safes: config nonces, timelock operation state, and challenge
+  // timestamps. SENTINEL_OWNER is the constant 0x1 linked-list terminator.
+  "ignoreInCoverage": ["_safeConfigNonces", "_safeStates", "challengeStartTime", "SENTINEL_OWNER"]
 }

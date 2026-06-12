@@ -23,6 +23,7 @@
       ]
     },
     "ignoreInWatchMode": { "type": "array", "items": { "type": "string" } },
+    "ignoreInCoverage": { "type": "array", "items": { "type": "string" } },
     "ignoreMethods": { "type": "array", "items": { "type": "string" } },
     "ignoreRelatives": {
       "anyOf": [

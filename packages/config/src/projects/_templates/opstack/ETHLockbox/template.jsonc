@@ -1,4 +1,25 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "A simple escrow contract storing ETH for the canonical bridge."
+  "description": "A simple escrow contract storing ETH for the canonical bridge.",
+  // authorizedPortals / authorizedLockboxes are add-only authorization sets
+  // (mapping(address => bool)) with no enumerable getter. Reconstruct each from
+  // its authorization event; both the initial (via initialize) and later
+  // authorizations route through _authorizePortal/authorizeLockbox and emit, so
+  // the reconstructed set is complete. Neither is ever de-authorized.
+  "fields": {
+    "authorizedPortals": {
+      "handler": {
+        "type": "event",
+        "select": "portal",
+        "add": { "event": "PortalAuthorized" }
+      }
+    },
+    "authorizedLockboxes": {
+      "handler": {
+        "type": "event",
+        "select": "lockbox",
+        "add": { "event": "LockboxAuthorized" }
+      }
+    }
+  }
 }

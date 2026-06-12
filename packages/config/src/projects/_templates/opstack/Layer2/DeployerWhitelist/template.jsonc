@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  // whitelist is the deprecated (Bedrock-disabled) deployer allowlist; unused.
+  "ignoreInCoverage": ["whitelist"],
+  "displayName": "DeployerWhitelist",
+  "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to deploy to the network. Fully unused and deprecated since the Bedrock upgrade."
+}

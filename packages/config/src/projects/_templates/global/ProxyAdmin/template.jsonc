@@ -1,5 +1,10 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ProxyAdmin",
-  "fields": { "owner": { "permissions": [{ "type": "act" }] } }
+  "fields": { "owner": { "permissions": [{ "type": "act" }] } },
+  // proxyType / implementationName are per-proxy management bookkeeping keyed by
+  // the proxies this admin manages. Their onlyOwner setters emit no events (so
+  // the keys are not enumerable), and the proxies plus their types are already
+  // discovered independently via proxy detection. Not tracked here.
+  "ignoreInCoverage": ["proxyType", "implementationName"]
 }

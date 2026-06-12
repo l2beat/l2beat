@@ -23,6 +23,17 @@
     }
   },
   "fields": {
+    // disputeGameBlacklist is a mapping(IDisputeGame => bool) with no
+    // enumerable getter; reconstruct the blacklisted set from events.
+    // blacklistDisputeGame() only ever sets entries to true, so add-only.
+    "disputeGameBlacklist": {
+      "handler": {
+        "type": "event",
+        "select": "disputeGame",
+        "add": { "event": "DisputeGameBlacklisted" },
+        "ignoreRelative": true
+      }
+    },
     "respectedGameType": {
       "severity": "HIGH"
     },

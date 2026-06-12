@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // deposits is per-token escrow bookkeeping keyed by bridged ERC721 addresses; spacer is a reserved storage gap.
+  "ignoreInCoverage": ["deposits", "spacer_50_0_20"],
   "displayName": "L1ERC721Bridge",
   "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
   "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge"],

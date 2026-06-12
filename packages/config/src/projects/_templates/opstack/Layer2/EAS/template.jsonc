@@ -1,4 +1,6 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  // User attestation/revocation data, EIP-712 nonces, and the address(this) cache; not protocol topology.
+  "ignoreInCoverage": ["_db", "_revocationsOffchain", "_nonces", "_CACHED_THIS"],
   "description": "Contract containing the main logic for the Ethereum Attestation Service (EAS)."
 }

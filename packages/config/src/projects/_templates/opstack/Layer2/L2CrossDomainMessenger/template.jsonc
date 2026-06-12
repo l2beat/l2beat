@@ -3,5 +3,13 @@
   "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
   "ignoreMethods": ["xDomainMessageSender"],
   "ignoreInWatchMode": ["messageNonce"],
-  "ignoreRelatives": ["l1CrossDomainMessenger", "OTHER_MESSENGER"]
+  "ignoreRelatives": ["l1CrossDomainMessenger", "OTHER_MESSENGER"],
+  // Reserved storage spacers (the dedicated CrossDomainMessengerLegacySpacer
+  // contracts) and the transient xDomainMsgSender slot (default 0x...dead, its
+  // getter reverts) carry no protocol topology.
+  "ignoreInCoverage": [
+    "CrossDomainMessengerLegacySpacer0",
+    "CrossDomainMessengerLegacySpacer1",
+    "xDomainMsgSender"
+  ]
 }

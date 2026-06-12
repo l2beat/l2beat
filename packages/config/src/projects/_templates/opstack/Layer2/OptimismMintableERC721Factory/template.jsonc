@@ -1,5 +1,9 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "OptimismMintableERC721Factory",
-  "description": "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens."
+  "description": "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.",
+  // isOptimismMintableERC721 is the registry of tokens this factory created.
+  // Creation is permissionless and unbounded (any bridged NFT collection), so
+  // it is a user token registry, not protocol topology.
+  "ignoreInCoverage": ["isOptimismMintableERC721"]
 }

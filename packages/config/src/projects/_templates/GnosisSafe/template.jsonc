@@ -2,6 +2,11 @@
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreInWatchMode": ["nonce"],
   "ignoreMethods": ["getThreshold", "getOwners"],
+  // SENTINEL_MODULES / SENTINEL_OWNERS are the constant 0x1 linked-list
+  // terminators, and approvedHashes is transient per-owner tx pre-approval
+  // state — none are protocol topology. (owners/modules/singleton are covered
+  // via $members / GnosisSafe_modules / $implementation.)
+  "ignoreInCoverage": ["SENTINEL_MODULES", "SENTINEL_OWNERS", "approvedHashes"],
   "fields": {
     "GnosisSafe_modules": {
       "permissions": [{ "type": "act" }]

@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L1DAITokenBridge",
+  "description": "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.",
+  "ignoreRelatives": ["l1Token", "l2DAITokenBridge", "l2Token", "messenger"],
+  "fields": {
+    // wards is the Maker rely/deny auth set: rely(usr) sets wards[usr]=1 and
+    // emits Rely, deny(usr) sets it to 0 and emits Deny (the constructor relies
+    // the deployer with a Rely too). Reconstruct the live set from events.
+    "wards": {
+      "handler": {
+        "type": "event",
+        "select": "usr",
+        "add": { "event": "Rely" },
+        "remove": { "event": "Deny" },
+        // Record the ward addresses (Maker governance) but do not crawl into
+        // Maker's internal contracts, which belong to the Maker project.
+        "ignoreRelative": true
+      }
+    }
+  }
+}
