@@ -965,7 +965,7 @@ Verify:
     ...RAIKO2_PROPOSAL('v0.1.0'),
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
-      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/sp1_shasta_proposal.elf',
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/guests/sp1/src/shasta_proposal.rs',
     verificationStatus: 'successful',
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'sp1_shasta_proposal',
@@ -976,7 +976,7 @@ Verify:
     ...RAIKO2_PROPOSAL('v0.1.0'),
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
-      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/sp1_shasta_proposal.elf',
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/guests/sp1/src/shasta_proposal.rs',
     verificationStatus: 'successful',
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'sp1_shasta_proposal',
@@ -987,7 +987,7 @@ Verify:
     ...RAIKO2_AGG('v0.1.0'),
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
-      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/sp1_shasta_aggregation.elf',
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/guests/sp1/src/shasta_aggregation.rs',
     verificationStatus: 'successful',
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'sp1_shasta_aggregation',
@@ -998,7 +998,7 @@ Verify:
     ...RAIKO2_AGG('v0.1.0'),
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
-      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/sp1_shasta_aggregation.elf',
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/guests/sp1/src/shasta_aggregation.rs',
     verificationStatus: 'successful',
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'sp1_shasta_aggregation',
@@ -1009,7 +1009,7 @@ Verify:
     ...RAIKO2_PROPOSAL('v0.2.0'),
     proverSystemProject: ProjectId('sp1hypercube'),
     programUrl:
-      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/sp1_shasta_proposal.elf',
+      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/guests/sp1/src/shasta_proposal.rs',
     verificationStatus: 'successful',
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'sp1_shasta_proposal',
@@ -1022,7 +1022,7 @@ Verify:
     ...RAIKO2_PROPOSAL('v0.2.0'),
     proverSystemProject: ProjectId('sp1hypercube'),
     programUrl:
-      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/sp1_shasta_proposal.elf',
+      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/guests/sp1/src/shasta_proposal.rs',
     verificationStatus: 'successful',
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'sp1_shasta_proposal',
@@ -1035,7 +1035,7 @@ Verify:
     ...RAIKO2_AGG('v0.2.0'),
     proverSystemProject: ProjectId('sp1hypercube'),
     programUrl:
-      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/sp1_shasta_aggregation.elf',
+      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/guests/sp1/src/shasta_aggregation.rs',
     verificationStatus: 'successful',
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'sp1_shasta_aggregation',
@@ -1048,7 +1048,7 @@ Verify:
     ...RAIKO2_AGG('v0.2.0'),
     proverSystemProject: ProjectId('sp1hypercube'),
     programUrl:
-      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/sp1_shasta_aggregation.elf',
+      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/guests/sp1/src/shasta_aggregation.rs',
     verificationStatus: 'successful',
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'sp1_shasta_aggregation',
@@ -1638,7 +1638,7 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk has
     ...RAIKO2_PROPOSAL('v0.1.0'),
     proverSystemProject: ProjectId('risc0'),
     programUrl:
-      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/risc0_shasta_proposal.elf',
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/guests/risc0/src/shasta_proposal.rs',
     verificationStatus: 'successful',
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'risc0_shasta_proposal',
@@ -1649,7 +1649,7 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk has
     ...RAIKO2_AGG('v0.1.0'),
     proverSystemProject: ProjectId('risc0'),
     programUrl:
-      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/risc0_shasta_aggregation.elf',
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/guests/risc0/src/shasta_aggregation.rs',
     verificationStatus: 'successful',
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'risc0_shasta_aggregation',
@@ -1660,7 +1660,7 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk has
     ...RAIKO2_PROPOSAL('v0.2.0'),
     proverSystemProject: ProjectId('risc0'),
     programUrl:
-      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/risc0_shasta_proposal.elf',
+      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/guests/risc0/src/shasta_proposal.rs',
     verificationStatus: 'successful',
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'risc0_shasta_proposal',
@@ -1673,7 +1673,7 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk has
     ...RAIKO2_AGG('v0.2.0'),
     proverSystemProject: ProjectId('risc0'),
     programUrl:
-      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/crates/guests/elf/risc0_shasta_aggregation.elf',
+      'https://github.com/taikoxyz/raiko2/blob/v0.2.0/guests/risc0/src/shasta_aggregation.rs',
     verificationStatus: 'successful',
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'risc0_shasta_aggregation',
@@ -1686,7 +1686,7 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk has
     ...RAIKO2_BOUNDLESS_AGG('v0.1.0'),
     proverSystemProject: ProjectId('risc0'),
     programUrl:
-      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/crates/guests/elf/risc0_shasta_boundless_aggregation.elf',
+      'https://github.com/taikoxyz/raiko2/blob/v0.1.0/guests/risc0/src/boundless_aggregation.rs',
     verificationStatus: 'successful',
     verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
       'risc0_shasta_boundless_aggregation',
