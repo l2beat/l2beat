@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // _cachedThis is the OZ EIP-712 address(this) cache, not protocol topology.
+  "ignoreInCoverage": ["_cachedThis"],
   "description": "Allows {{deputy}}, called the deputy pauser, to act on behalf of the {{foundationSafe}} if set as its Safe module.",
   "fields": {
     "deputy": {

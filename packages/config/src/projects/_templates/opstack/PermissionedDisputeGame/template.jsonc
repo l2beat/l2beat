@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // Per-claimant bond-credit bookkeeping (keyed by game participants) and internal game-resolution state; not protocol topology.
+  "ignoreInCoverage": ["hasUnlockedCredit", "normalModeCredit", "refundModeCredit", "resolutionCheckpoints"],
   "displayName": "PermissionedDisputeGame",
   "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
   "ignoreMethods": [

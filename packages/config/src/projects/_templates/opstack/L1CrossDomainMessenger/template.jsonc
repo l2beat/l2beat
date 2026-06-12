@@ -5,5 +5,17 @@
   "ignoreMethods": ["xDomainMessageSender"],
   "ignoreRelatives": ["OTHER_MESSENGER", "otherMessenger"],
   "ignoreInWatchMode": ["messageNonce"],
+  // Storage spacers are reserved backwards-compatibility gaps (the two
+  // CrossDomainMessengerLegacySpacer contracts exist only to hold them, plus
+  // two inline ones). xDomainMsgSender is a transient slot — default
+  // 0x...dead outside a relay, and its getter reverts (ignoreMethods above).
+  // None carry protocol topology.
+  "ignoreInCoverage": [
+    "CrossDomainMessengerLegacySpacer0",
+    "CrossDomainMessengerLegacySpacer1",
+    "spacer_251_0_20",
+    "spacer_253_0_20",
+    "xDomainMsgSender"
+  ],
   "category": "bridge-canonical"
 }

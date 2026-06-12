@@ -1,4 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners."
+  "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
+  // lastLive is per-owner liveness bookkeeping: mapping(owner => timestamp),
+  // keyed by the Safe's owners (already discovered via the Safe) with timestamp
+  // values. No protocol topology to track.
+  "ignoreInCoverage": ["lastLive"]
 }

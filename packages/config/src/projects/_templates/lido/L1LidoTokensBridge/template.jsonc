@@ -14,7 +14,7 @@
     "proxy__getAdmin"
   ],
   "fields": {
-    "accesscontrol": {
+    "accessControl": {
       "handler": {
         "type": "accessControl",
         "ignoreRelative": true

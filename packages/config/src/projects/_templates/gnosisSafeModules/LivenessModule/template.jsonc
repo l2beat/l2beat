@@ -23,6 +23,11 @@
           "description": "can remove members of {{ safe }} inactive for {{ livenessInterval }}."
         }
       ]
+    },
+    // getRequiredThreshold(numOwners) is a view function; read it as an array
+    // over owner counts 0..19 rather than the auto single-value handler.
+    "getRequiredThreshold": {
+      "handler": { "type": "array", "length": 20 }
     }
   }
 }

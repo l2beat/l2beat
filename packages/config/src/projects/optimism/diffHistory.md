@@ -1,3 +1,358 @@
+Generated with discovered.json: 0x1a6b625814b44808c7cf9e1b2b78c5736ae95af0
+
+# Diff at Fri, 12 Jun 2026 07:55:28 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@3e1a2baeabeeaef8ae8278115ae4859984484bac block: 1778851817
+- current timestamp: 1778851817
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778851817 (main branch discovery), not current.
+
+```diff
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) [GnosisSafe] {
+    +++ description: None
+      ignoreInCoverage:
++        ["SENTINEL_MODULES","SENTINEL_OWNERS","approvedHashes"]
+    }
+```
+
+```diff
+    contract L1DAITokenBridge (eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F) [maker/L1DAITokenBridge] {
+    +++ description: Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.
+      values.wards:
++        ["eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB","eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"]
+      template:
++        "maker/L1DAITokenBridge"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      ignoreInCoverage:
++        ["proposalBlocks","proposalBonds","proposalBranches","proposalMetadata","proposalParts"]
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x23B2C62946350F4246f9f9D027e071f0264FD113) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      values.disputeGameBlacklist:
++        []
+    }
+```
+
+```diff
+    contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25) [gnosisSafeModules/LivenessGuard] {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      ignoreInCoverage:
++        ["lastLive"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      ignoreInCoverage:
++        ["CrossDomainMessengerLegacySpacer0","CrossDomainMessengerLegacySpacer1","spacer_251_0_20","spacer_253_0_20","xDomainMsgSender"]
+    }
+```
+
+```diff
+    contract ETHLockbox (eth:0x322b47Ff1FA8D5611F761e3E275C45B71b294D43) [opstack/ETHLockbox] {
+    +++ description: A simple escrow contract storing ETH for the canonical bridge.
+      values.authorizedLockboxes:
++        []
+      values.authorizedPortals:
++        ["eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin] {
+    +++ description: None
+      ignoreInCoverage:
++        ["proxyType","implementationName"]
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      ignoreInCoverage:
++        ["hasUnlockedCredit","normalModeCredit","refundModeCredit","resolutionCheckpoints"]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
+    +++ description: None
+      ignoreInCoverage:
++        ["SENTINEL_MODULES","SENTINEL_OWNERS","approvedHashes"]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      ignoreInCoverage:
++        ["deposits","spacer_50_0_20"]
+    }
+```
+
+```diff
+    contract SynthetixBridgeEscrow (eth:0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f) [synthetix/SynthetixBridgeEscrow] {
+    +++ description: Custom escrow for SNX bridged via canonical messaging.
+      template:
++        "synthetix/SynthetixBridgeEscrow"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame] {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      ignoreInCoverage:
++        ["hasUnlockedCredit","normalModeCredit","refundModeCredit","resolutionCheckpoints"]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x75505a97BD334E7BD3C476893285569C4136Fa0F) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      ignoreInCoverage:
++        ["deployments"]
+    }
+```
+
+```diff
+    contract wstETHEscrow (eth:0x76943C0D61395d8F2edF9060e1533529cAe05dE6) [lido/L1LidoTokensBridge] {
+    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
+      values.accesscontrol:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","eth:0x73b047fe6337183A454c5217241D780a932777bD"]},"0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","eth:0x73b047fe6337183A454c5217241D780a932777bD"]}}
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","eth:0x73b047fe6337183A454c5217241D780a932777bD"]},"0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","eth:0x73b047fe6337183A454c5217241D780a932777bD"]}}
+    }
+```
+
+```diff
+    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) [opstack/DeputyPauseModule] {
+    +++ description: Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+      ignoreInCoverage:
++        ["_cachedThis"]
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      ignoreInCoverage:
++        ["SENTINEL_MODULES","SENTINEL_OWNERS","approvedHashes"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      ignoreInCoverage:
++        ["pauseTimestamps"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      ignoreInCoverage:
++        ["deposits","spacer_1_0_20","spacer_50_0_20","spacer_51_0_20"]
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) [GnosisSafe] {
+    +++ description: None
+      ignoreInCoverage:
++        ["SENTINEL_MODULES","SENTINEL_OWNERS","approvedHashes"]
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      values._livenessSafeConfiguration:
++        ["eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"]
+      ignoreInCoverage:
++        ["_safeConfigNonces","_safeStates","challengeStartTime","SENTINEL_OWNER"]
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      ignoreInCoverage:
++        ["proofSubmitters","provenWithdrawals","spacer_53_1_20","spacer_54_0_20","spacer_56_0_20"]
+    }
+```
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      ignoreInCoverage:
++        ["SENTINEL_MODULES","SENTINEL_OWNERS","approvedHashes"]
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0xD061AB95069987868768818cc1248705351e2D0e) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      ignoreInCoverage:
++        ["_allowance","_balanceOf","withdrawals"]
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      ignoreInCoverage:
++        ["addresses"]
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0xe03F4d1D0E6B8b18b97198598b3f792E57BA17d4) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      ignoreInCoverage:
++        ["_allowance","_balanceOf","withdrawals"]
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.2:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.gameImpls.3:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract MintManagerOwner (oeth:0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26) [GnosisSafe] {
+    +++ description: None
+      ignoreInCoverage:
++        ["SENTINEL_MODULES","SENTINEL_OWNERS","approvedHashes"]
+    }
+```
+
+```diff
+    contract SafeL2 (oeth:0x3F3Cd78Ef9Bd85961C0729E6BbB11E94Ca6f61D2) [GnosisSafe] {
+    +++ description: None
+      ignoreInCoverage:
++        ["SENTINEL_MODULES","SENTINEL_OWNERS","approvedHashes"]
+    }
+```
+
+```diff
+    contract DeployerWhitelist (oeth:0x4200000000000000000000000000000000000002) [opstack/Layer2/DeployerWhitelist] {
+    +++ description: Legacy contract that was originally used to act as a whitelist of addresses allowed to deploy to the network. Fully unused and deprecated since the Bedrock upgrade.
+      description:
+-        "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
++        "Legacy contract that was originally used to act as a whitelist of addresses allowed to deploy to the network. Fully unused and deprecated since the Bedrock upgrade."
+      template:
++        "opstack/Layer2/DeployerWhitelist"
+      ignoreInCoverage:
++        ["whitelist"]
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (oeth:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      ignoreInCoverage:
++        ["CrossDomainMessengerLegacySpacer0","CrossDomainMessengerLegacySpacer1","xDomainMsgSender"]
+    }
+```
+
+```diff
+    contract L2StandardBridge (oeth:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      ignoreInCoverage:
++        ["deposits","spacer_0_0_20","spacer_1_0_20"]
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (oeth:0x4200000000000000000000000000000000000017) [opstack/Layer2/OptimismMintableERC721Factory] {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      ignoreInCoverage:
++        ["isOptimismMintableERC721"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (oeth:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
+      ignoreInCoverage:
++        ["proxyType","implementationName"]
+    }
+```
+
+```diff
+    contract SchemaRegistry (oeth:0x4200000000000000000000000000000000000020) [opstack/Layer2/SchemaRegistry] {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      ignoreInCoverage:
++        ["_registry"]
+    }
+```
+
+```diff
+    contract EAS (oeth:0x4200000000000000000000000000000000000021) [opstack/Layer2/EAS] {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      ignoreInCoverage:
++        ["_db","_revocationsOffchain","_nonces","_CACHED_THIS"]
+    }
+```
+
+```diff
+    contract OPToken (oeth:0x4200000000000000000000000000000000000042) [opstack/GovernanceToken] {
+    +++ description: The OP token contract. The minting policy is controlled by the oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005.
+      template:
++        "opstack/GovernanceToken"
+      ignoreInCoverage:
++        ["ERC20","ERC20Permit","ERC20Votes","EIP712"]
+    }
+```
+
+```diff
+    contract MintManager (oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005) [opstack/MintManager] {
+    +++ description: Controls the OP inflation rate, which is currently hardcoded to 2% annually.
+      template:
++        "opstack/MintManager"
+    }
+```
+
+```diff
+    contract SaferSafes (oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      values._livenessSafeConfiguration:
++        ["oeth:0xacB7E03d8b90DE867373DB8Cf1a58D2F7f007C4b"]
+      template:
++        "gnosisSafeModules/SaferSafes"
+      description:
++        "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling."
+      ignoreInCoverage:
++        ["_safeConfigNonces","_safeStates","challengeStartTime","SENTINEL_OWNER"]
+    }
+```
+
 Generated with discovered.json: 0xb932b2d22819a1acb39b5f37e197ff1818ea3062
 
 # Diff at Tue, 09 Jun 2026 12:43:37 GMT:

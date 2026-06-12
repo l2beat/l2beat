@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "GovernanceToken",
+  "description": "The OP token contract. The minting policy is controlled by the {{ owner }}.",
+  "ignoreMethods": ["getPastTotalSupply"],
+  "ignoreInWatchMode": ["totalSupply"],
+  // The address-bearing storage in these standard OpenZeppelin bases is
+  // per-holder bookkeeping (balances, allowances, permit nonces, vote
+  // checkpoints/delegates) and the EIP-712 address(this) cache — none of it is
+  // protocol topology we track, so acknowledge it for coverage.
+  "ignoreInCoverage": ["ERC20", "ERC20Permit", "ERC20Votes", "EIP712"]
+}

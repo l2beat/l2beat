@@ -1,5 +1,9 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
-  "ignoreRelatives": ["l1TokenBridge", "OTHER_BRIDGE"]
+  "ignoreRelatives": ["l1TokenBridge", "OTHER_BRIDGE"],
+  // deposits is per-token-pair liquidity bookkeeping keyed by bridged ERC20
+  // token addresses (the legacy non-mintable path), not protocol topology. The
+  // two spacers are reserved storage gaps. None are tracked.
+  "ignoreInCoverage": ["deposits", "spacer_0_0_20", "spacer_1_0_20"]
 }

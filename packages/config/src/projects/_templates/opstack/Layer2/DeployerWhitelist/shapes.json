@@ -1,0 +1,8 @@
+{
+  "DeployerWhitelist": {
+    "hash": "0x40a3a457f0e922425ed48d80603e24e652453f57be197487f62795991cff2c2b",
+    "address": "oeth:0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002",
+    "chain": "optimism",
+    "blockNumber": 151626520
+  }
+}

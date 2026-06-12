@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // addresses is the legacy name->address registry; protocol-relevant entries are extracted explicitly via the Proxy__OVM_* handlers above.
+  "ignoreInCoverage": ["addresses"],
   "displayName": "AddressManager",
   "category": "spam",
   "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
@@ -11,6 +13,22 @@
           "description": "set and change address mappings."
         }
       ]
+    },
+    // The legacy ResolvedDelegateProxy system resolves implementations through
+    // these standard registry names, present in every OP-stack AddressManager.
+    "Proxy__OVM_L1CrossDomainMessenger": {
+      "handler": {
+        "type": "call",
+        "method": "getAddress",
+        "args": ["Proxy__OVM_L1CrossDomainMessenger"]
+      }
+    },
+    "Proxy__OVM_L1StandardBridge": {
+      "handler": {
+        "type": "call",
+        "method": "getAddress",
+        "args": ["Proxy__OVM_L1StandardBridge"]
+      }
     }
   }
 }

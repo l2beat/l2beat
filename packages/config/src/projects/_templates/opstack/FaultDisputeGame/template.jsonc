@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // Per-claimant bond-credit bookkeeping (keyed by game participants) and internal game-resolution state; not protocol topology.
+  "ignoreInCoverage": ["hasUnlockedCredit", "normalModeCredit", "refundModeCredit", "resolutionCheckpoints"],
   "displayName": "FaultDisputeGame",
   "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
   "ignoreMethods": [
