@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x04ceae88ebd4616a4db5a000f3be20958ab85163
+Generated with discovered.json: 0x87cb70c631d2ef726a94fec4da7aa4ad4e378f7c
 
-# Diff at Fri, 12 Jun 2026 10:19:04 GMT:
+# Diff at Fri, 12 Jun 2026 10:54:23 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1776761835
@@ -17,18 +17,38 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1776761835 (main branch discovery), not current.
 
 ```diff
-    EOA  (eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A) {
-    +++ description: None
-      eoaWithUpgradePermissions:
-+        true
+    contract LBTCBridge (eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e) [starknet/StarknetMultiBridge] {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.
+      category.name:
+-        "External Bridges"
++        "Non-Critical"
+      category.priority:
+-        1
++        0
     }
 ```
 
 ```diff
-    EOA  (eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b) {
-    +++ description: None
-      eoaWithUpgradePermissions:
-+        true
+    contract SolvBTCBridge (eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10) [starknet/StarknetMultiBridge_haltable] {
+    +++ description: Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.
+      category.name:
+-        "External Bridges"
++        "Non-Critical"
+      category.priority:
+-        1
++        0
+    }
+```
+
+```diff
+    contract LUSDBridge (eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      category.name:
+-        "External Bridges"
++        "Non-Critical"
+      category.priority:
+-        1
++        0
     }
 ```
 
