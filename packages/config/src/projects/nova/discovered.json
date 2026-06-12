@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "timestamp": 1779719590,
-  "configHash": "0xd3ff0f54b39748bcf9d3436c09219471aa9d7232d5089096b087c983bc324c46",
+  "configHash": "0x7f9a7f1a3b9f1453d6df54f4fc41ac2c4bf572b844e1925187852424df77dcfa",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -906,7 +906,8 @@
       "implementationNames": {
         "eth:0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23": "TransparentUpgradeableProxy",
         "eth:0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779": "ValidatorWallet"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "SequencerInbox",
@@ -1120,7 +1121,8 @@
       "implementationNames": {
         "eth:0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3": "TransparentUpgradeableProxy",
         "eth:0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779": "ValidatorWallet"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0x290Aa3E7533c873B3326DabFe7579e86ed951428",
@@ -1213,7 +1215,8 @@
       "implementationNames": {
         "eth:0x3B0369CAD35d257793F51c28213a4Cf4001397AC": "TransparentUpgradeableProxy",
         "eth:0x11e5Ea5Ba5c4394a11e88e2cf474E09bfD583bbF": "Validator"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "UpgradeExecutor",
@@ -1450,7 +1453,6 @@
       "address": "eth:0x5B3E4404d05339D41A7E672BC912CBf511Cca294",
       "type": "EOA",
       "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1516,7 +1518,8 @@
       "implementationNames": {
         "eth:0x658e8123722462F888b6fa01a7dbcEFe1D6DD709": "TransparentUpgradeableProxy",
         "eth:0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779": "ValidatorWallet"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "ProxyAdmin",
@@ -1656,7 +1659,6 @@
       "address": "eth:0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47",
       "type": "EOA",
       "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -2218,7 +2220,6 @@
       "address": "eth:0xd3132d052C9045D7cB0236586C9E2276e654343D",
       "type": "EOA",
       "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -2297,7 +2298,6 @@
       "address": "eth:0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB",
       "type": "EOA",
       "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -7171,6 +7171,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 25172938, "nova": 84974442 },
+  "usedBlockNumbers": { "ethereum": 25172938, "nova": 84974443 },
   "permissionsConfigHash": "0x862cb52a1d70553d58ca9e51d5ff646bc942c40c56e26f185aca0dde542eac7b"
 }

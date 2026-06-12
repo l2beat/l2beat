@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x700e5f25f04c4c6dccf49ac3e59ebccd180ae477
+Generated with discovered.json: 0x962481e8f9418d28c369d80bfb9e94150af8cac3
 
-# Diff at Fri, 12 Jun 2026 10:18:56 GMT:
+# Diff at Fri, 12 Jun 2026 10:57:50 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1779719590
@@ -25,34 +25,34 @@ discovery. Values are for block 1779719590 (main branch discovery), not current.
 ```
 
 ```diff
-    EOA  (eth:0x5B3E4404d05339D41A7E672BC912CBf511Cca294) {
+    contract ValidatorWallet (eth:0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23) [N/A] {
     +++ description: None
-      eoaWithUpgradePermissions:
-+        true
+      category:
++        {"name":"Non-Critical","priority":0}
     }
 ```
 
 ```diff
-    EOA  (eth:0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47) {
+    contract ValidatorWallet (eth:0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3) [N/A] {
     +++ description: None
-      eoaWithUpgradePermissions:
-+        true
+      category:
++        {"name":"Non-Critical","priority":0}
     }
 ```
 
 ```diff
-    EOA  (eth:0xd3132d052C9045D7cB0236586C9E2276e654343D) {
+    contract Validator (eth:0x3B0369CAD35d257793F51c28213a4Cf4001397AC) [N/A] {
     +++ description: None
-      eoaWithUpgradePermissions:
-+        true
+      category:
++        {"name":"Non-Critical","priority":0}
     }
 ```
 
 ```diff
-    EOA  (eth:0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB) {
+    contract ValidatorWallet (eth:0x658e8123722462F888b6fa01a7dbcEFe1D6DD709) [N/A] {
     +++ description: None
-      eoaWithUpgradePermissions:
-+        true
+      category:
++        {"name":"Non-Critical","priority":0}
     }
 ```
 
