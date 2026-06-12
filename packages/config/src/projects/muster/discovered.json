@@ -240,7 +240,7 @@
       "address": "arb1:0x52D5E794B5a4C77Af1197EEB21ea67BEa51a238E",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

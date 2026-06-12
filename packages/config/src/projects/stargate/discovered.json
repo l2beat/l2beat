@@ -866,7 +866,7 @@
       "address": "eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

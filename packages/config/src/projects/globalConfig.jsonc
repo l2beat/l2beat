@@ -21,6 +21,10 @@
       "name": "External Bridges",
       "priority": 1
     },
+    "non-critical": {
+      "name": "Non-Critical",
+      "priority": 0
+    },
     "spam": {
       "name": "Spam",
       "priority": -1

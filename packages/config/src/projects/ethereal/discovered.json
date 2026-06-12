@@ -1304,7 +1304,6 @@
       "address": "ethereal:0x98046Bd286715D3B0BC227Dd7a956b83D8978603",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1380,7 +1379,8 @@
       "implementationNames": {
         "ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481": "ERC1967Proxy",
         "ethereal:0x486908B534E34D1Ca04d12F01b5Bf47aC62A68F5": "PythLazer"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "ExchangeGateway",

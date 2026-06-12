@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x2da45483ac18283c7ad4b39cbd76c1ee3c0f069d
+
+# Diff at Fri, 12 Jun 2026 10:25:51 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780913745
+- current timestamp: 1780913745
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780913745 (main branch discovery), not current.
+
+```diff
+    contract AxelarGasService (eth:0x2d5d7d31F671F86C782533cc367F14109a082712) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
 Generated with discovered.json: 0x899ddb0b40a8152bc7dd8c93491b82ed1dee98c3
 
 # Diff at Mon, 08 Jun 2026 10:16:49 GMT:

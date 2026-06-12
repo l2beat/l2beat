@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc619395c6e37184aa9643f40ab7b37f7ef84d9bd
+
+# Diff at Fri, 12 Jun 2026 10:19:06 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780406494
+- current timestamp: 1780406494
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780406494 (main branch discovery), not current.
+
+```diff
+    contract Paxos Gold Token (eth:0x45804880De22913dAFE09f4980848ECE6EcbAf78) [tokens/PAXG] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
 Generated with discovered.json: 0x78612c36145f6070d753ab0c7c8862eb18046744
 
 # Diff at Mon, 08 Jun 2026 13:27:01 GMT:

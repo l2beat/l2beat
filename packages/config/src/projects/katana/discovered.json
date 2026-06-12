@@ -3319,7 +3319,8 @@
       "implementationNames": {
         "katana:0x4200000000000000000000000000000000000011": "Proxy",
         "katana:0x8A52Ca0E8459460C6861C117285E6973Ecf7EE3f": "SequencerFeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -3689,7 +3690,8 @@
       "implementationNames": {
         "katana:0x4200000000000000000000000000000000000019": "Proxy",
         "katana:0x7e27d992B349B96ea8D32378B7c53b3D58139a2E": "BaseFeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "L1FeeVault",
@@ -3727,7 +3729,8 @@
       "implementationNames": {
         "katana:0x420000000000000000000000000000000000001A": "Proxy",
         "katana:0x0ebC896698De72A444d00Dc3d046B432c555EB09": "L1FeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "OperatorFeeVault",
@@ -3767,7 +3770,8 @@
       "implementationNames": {
         "katana:0x420000000000000000000000000000000000001b": "Proxy",
         "katana:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537": "OperatorFeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "SchemaRegistry",

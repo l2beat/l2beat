@@ -2494,7 +2494,8 @@
       "implementationNames": {
         "unichain:0x4200000000000000000000000000000000000011": "Proxy",
         "unichain:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011": "SequencerFeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -2816,7 +2817,8 @@
       "implementationNames": {
         "unichain:0x4200000000000000000000000000000000000019": "Proxy",
         "unichain:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019": "BaseFeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "L1FeeVault",
@@ -2848,7 +2850,8 @@
       "implementationNames": {
         "unichain:0x420000000000000000000000000000000000001A": "Proxy",
         "unichain:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A": "L1FeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "SchemaRegistry",
@@ -3013,7 +3016,6 @@
       "address": "unichain:0x7E6c183F538abb8572F5cd17109C617b994d6944",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

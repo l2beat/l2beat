@@ -35,6 +35,7 @@ import {
 } from '../utils/discoveryDriven'
 import { runConfigAdjustments } from './adjustments'
 import { ecosystems } from './ecosystems'
+import { getEoaUpgradeRedWarning } from './getEoaRedWarning'
 import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
@@ -80,7 +81,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       ?.colors,
     statuses: {
       yellowWarning: p.display.headerWarning,
-      redWarning: p.display.redWarning,
+      redWarning: getEoaUpgradeRedWarning(p.display.slug, p.display.redWarning),
       emergencyWarning: p.display.emergencyWarning,
       reviewStatus: p.reviewStatus,
       unverifiedContracts: getProjectUnverifiedContracts(p, daBridges),
