@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x515808ad8b32e236aede73b20a7fd4cdb2d2fabf
+
+# Diff at Fri, 12 Jun 2026 11:52:44 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@77f62933d564f65f6ab803a9850a637ea4a77091 block: 1777891423
+- current timestamp: 1777891423
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891423 (main branch discovery), not current.
+
+```diff
+    contract FinalizableGpsFactAdapter (eth:0x4abBc1826389aC0FEaA49E70c30a041b665e8562) [starkex/FinalizableGpsFactAdapter] {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`), which can be changed until the adapter is finalized.
+      name:
+-        "GpsFactRegistryAdapter"
++        "FinalizableGpsFactAdapter"
+      template:
+-        "starkex/GpsFactRegistryAdapter"
++        "starkex/FinalizableGpsFactAdapter"
+      description:
+-        "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`)."
++        "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`), which can be changed until the adapter is finalized."
++++ severity: HIGH
+      values.owner:
++        "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e"
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Safe (eth:0x57814cC6e075f517781cB7c3B42897B3Bb2C54d8) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD","description":"Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract.","role":".$admin"}
+      receivedPermissions.1.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "change the global configuration hash committing to the L2 system parameters."
+      receivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+    }
+```
+
 Generated with discovered.json: 0xb833518de0c1ac00ef010b2c4e92b12768cf3218
 
 # Diff at Tue, 09 Jun 2026 12:43:33 GMT:

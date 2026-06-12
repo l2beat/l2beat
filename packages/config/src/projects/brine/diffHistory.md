@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xea781d84cccb7157bdc97c3eed7b73bb592cc5b6
+
+# Diff at Fri, 12 Jun 2026 11:53:38 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@77f62933d564f65f6ab803a9850a637ea4a77091 block: 1777891418
+- current timestamp: 1777891418
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891418 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x303775491494a08b07365938787274F742a81F63) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract."
+    }
+```
+
 Generated with discovered.json: 0x87d3a1e15d8b329e0032ae4fef49660f313eac2a
 
 # Diff at Fri, 12 Jun 2026 10:18:42 GMT:

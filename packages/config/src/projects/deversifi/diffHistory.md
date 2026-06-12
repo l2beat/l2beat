@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x9adb347fd5a4d6c38080a6c6ef7e90b543e2c030
+
+# Diff at Fri, 12 Jun 2026 11:52:43 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@77f62933d564f65f6ab803a9850a637ea4a77091 block: 1741185503
+- current timestamp: 1741185503
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1741185503 (main branch discovery), not current.
+
+```diff
+    contract DACommittee (eth:0x28780349A33eEE56bb92241bAAB8095449e24306) [starkex/Committee] {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 4.
+      sourceHashes.0:
+-        "0x83a4f7af4e5a371aadb57903aed1b1f96556a0b3eb4665044a65ad8f70a89edc"
++        "0x020c9c9c17945e048bf65721f9e88fb40a4337b59004006d8572b0280ba4bd9e"
+      deployerAddress:
++        "eth:0x325870CB1c06C3A619e461425712248FE269AFCa"
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73) [starkex/GpsFactRegistryAdapter] {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`).
+      sourceHashes.0:
+-        "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
++        "0x1bb1677263f0cad4764f3620f45cf353df37fb489e3404889126f7897afcdffd"
+      deployerAddress:
++        "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+    }
+```
+
+```diff
+    contract OrderRegistry (eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8) [starkex/OrderRegistry] {
+    +++ description: Helper contract for registering limit orders from L1.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract StarkExchange (eth:0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) [starkex/StarkExchangeOld] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.0:
+-        "0x46eae4f2e7b6b0f5096ba403f113ff3c86205368a36af081ab280441d64942fc"
++        "0xc66ba691d8b15208a55f7e85542f058e0e9ff48d81d4b3cc2bcbf63548155fa1"
+      sourceHashes.1:
+-        "0xbe79d78e7db305a3c7147712a7cca3e0f82bacad7f00a96fa6b07bc8abfe9974"
++        "0xa8cecfdb411346cb244897e1d9ab3a1c20a7661db141cc9288851db26d46e69b"
+      deployerAddress:
++        "eth:0x325870CB1c06C3A619e461425712248FE269AFCa"
+    }
+```
+
+```diff
+    contract RhinofiAdminMultisig (eth:0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      receivedPermissions.1.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract."
+      deployerAddress:
++        "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+    }
+```
+
 Generated with discovered.json: 0xf3d141b25ac82cff4c29d46368f4ebeac1432474
 
 # Diff at Tue, 09 Jun 2026 12:43:32 GMT:

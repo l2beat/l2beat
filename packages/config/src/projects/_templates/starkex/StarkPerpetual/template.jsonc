@@ -32,8 +32,13 @@
       "permissions": [
         { "type": "upgrade", "delay": "{{getUpgradeActivationDelay}}" },
         {
+          "type": "upgrade",
+          "delay": "{{configurationDelay}}",
+          "description": "change the global configuration hash committing to the L2 system parameters."
+        },
+        {
           "type": "interact",
-          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract."
         },
         { "type": "interact", "description": "manage the token admin role." }
       ]

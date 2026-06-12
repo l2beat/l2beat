@@ -1,7 +1,7 @@
 {
   "name": "reddioex",
   "timestamp": 1715171819,
-  "configHash": "0xf922fd92a5d95ec79f06c14b32e41435b3d1692609dbe5de1a87753d38af68ed",
+  "configHash": "0xc6d1bf971a918be70c2c0f34dbf91d7f66e0bb9a3e2d394166ad58fc1b9417d6",
   "entries": [
     {
       "address": "eth:0x2e1c08E457F0E0F462Ef99eC9271dc5BfAd88b2a",
@@ -29,10 +29,11 @@
       "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
-        "0x220ee35d4e83e9cca7e8fa42dcab4d9571ce3078b50bacbdb2fc75afa7f0290e"
+        "0x3b7f5470a746d06671f24e4231b09df04ea52e7555e4fb874e093867c094c437"
       ],
       "proxyType": "immutable",
       "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1663498763,
       "sinceBlock": 15559994,
       "values": {
@@ -65,10 +66,11 @@
       "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
-        "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
+        "0x1bb1677263f0cad4764f3620f45cf353df37fb489e3404889126f7897afcdffd"
       ],
       "proxyType": "immutable",
       "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657453372,
       "sinceBlock": 15114702,
       "values": {
@@ -142,7 +144,7 @@
         {
           "permission": "interact",
           "from": "eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
-          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract.",
           "role": ".$admin"
         },
         {
@@ -175,6 +177,7 @@
       ],
       "proxyType": "immutable",
       "description": "Helper contract for registering limit orders from L1.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657453372,
       "sinceBlock": 15114702,
       "values": {
@@ -202,8 +205,8 @@
       "type": "Contract",
       "template": "starkex/StarkExchange",
       "sourceHashes": [
-        "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918",
-        "0xfb3c0545e8c9aeebaa6547f71087a1ad7d93e3344e0dfdb1051e1a18fd44a18b"
+        "0xa2b51d5024b872eb502c2abfec88397c41c32d42494dd19905514a69d38abfec",
+        "0x9b28596a715350d61f719241f35d6ee159c111c93c05da1d4804157142ee790c"
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
@@ -215,6 +218,7 @@
         "getRollupVaultRoot",
         "getValidiumVaultRoot"
       ],
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1663498763,
       "sinceBlock": 15559994,
       "values": {
@@ -688,5 +692,5 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 19825385 },
-  "permissionsConfigHash": "0xf2acc1366a118bc2d97ad932df0b2f1bc7bcab6f67bbc088880495ebe4c3c770"
+  "permissionsConfigHash": "0x4fae9900e3cb391ff4e447702f5448637d1f9e6d0356e565b7428c4e06e63ca1"
 }

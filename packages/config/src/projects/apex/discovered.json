@@ -1,7 +1,7 @@
 {
   "name": "apex",
   "timestamp": 1767634866,
-  "configHash": "0xe5caefe8207cf1906d47ac619fe52cde7187dc3d08214798fd6c869401dc1608",
+  "configHash": "0x948e9f121b346ff725b2faf7402bd03dbc0df5fdaca84abcaee5d9afd8d2275d",
   "entries": [
     {
       "address": "eth:0x0cbb676d12745948f75aF3A172cb7E4A4f8546e8",
@@ -24,10 +24,11 @@
       "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
-        "0x581fe96c5df565dd8524d044e5dcfdad1b613513021dce348f4c85f8c881a7b5"
+        "0x3cb57744ed0806e1e1604c1bbb564187321e4f492cadddae15c71324f33bfda2"
       ],
       "proxyType": "immutable",
       "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1671630143,
       "sinceBlock": 16233442,
       "values": {
@@ -61,12 +62,13 @@
       "name": "FinalizableGpsFactAdapterUSDT",
       "address": "eth:0x40e1e5Ece49A878062fA9F87eA6dc81281098B22",
       "type": "Contract",
-      "template": "starkex/GpsFactRegistryAdapter",
+      "template": "starkex/FinalizableGpsFactAdapter",
       "sourceHashes": [
-        "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
+        "0xc8212559a530b4ba272dfc6c98851fa8aa4c1b36e2da1bdbe18091f2c59754f0"
       ],
       "proxyType": "immutable",
-      "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`).",
+      "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`), which can be changed until the adapter is finalized.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1697631587,
       "sinceBlock": 18377195,
       "values": {
@@ -75,9 +77,11 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
         "isFinalized": false,
+        "owner": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
         "programHash": "770346231394331402493200980986217737662224545740427952627288191358999988146",
         "programHashMapped": "ApeX-USDT"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x40e1e5Ece49A878062fA9F87eA6dc81281098B22": "FinalizableGpsFactAdapter"
       },
@@ -140,13 +144,19 @@
         {
           "permission": "interact",
           "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
           "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "delay": 1209600,
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "description": "change the global configuration hash committing to the L2 system parameters.",
           "role": ".$admin"
         }
       ]
@@ -168,6 +178,7 @@
       "address": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -192,6 +203,20 @@
           "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
           "role": ".operators"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x40e1e5Ece49A878062fA9F87eA6dc81281098B22",
+          "description": "change the programHash, replacing the L2 execution logic whose proofs are accepted, directly or through appointed admins.",
+          "role": ".owner",
+          "condition": "if the adapter is not finalized"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953",
+          "description": "change the programHash, replacing the L2 execution logic whose proofs are accepted, directly or through appointed admins.",
+          "role": ".owner",
+          "condition": "if the adapter is not finalized"
         }
       ]
     },
@@ -206,10 +231,11 @@
       "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
-        "0xab5a8f616268fb3ec919ff2c4566b29938a53013be74e966348bf881eecd4c0a"
+        "0xa6c615cde1a1180a0bfa1c17038acb3ab6104b449aaed4d326f7a0d3baf0e5ce"
       ],
       "proxyType": "immutable",
       "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1697631587,
       "sinceBlock": 18377195,
       "values": {
@@ -267,8 +293,8 @@
       "type": "Contract",
       "template": "starkex/StarkPerpetual",
       "sourceHashes": [
-        "0xb5e622bd6406dd3d2188cae22f160599ee0953d520795bb86831c4c266e45587",
-        "0xd2cfc40f85f0171f0b9b5a88fc7638bbb2af49fb1b87cf13a11d58f32403c598"
+        "0x409415b9d5b1c07a1e521ad99a73a466d1a6a681df98a3f0241a82a9dcb861f1",
+        "0x7cd422f025b0fd3210c5dd5116401aea5673db49cd24c6a040b7b148d25dc7f4"
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
@@ -283,6 +309,7 @@
         "getValidiumTreeHeight",
         "getValidiumVaultRoot"
       ],
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1660252039,
       "sinceBlock": 15322967,
       "values": {
@@ -432,10 +459,11 @@
       "type": "Contract",
       "template": "edgex/PerpetualEscapeVerifier",
       "sourceHashes": [
-        "0xb56ab8d20ca2ce7897c0448957f5ad2bb634a2019411b1cb0453afe5c86f4f5f"
+        "0x7b9a6fc1405ce527115c6c286c0e85ba27c6c9a0576b4ca39fe647103101c676"
       ],
       "proxyType": "immutable",
       "description": "Special verifier for the escape() function.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1660252035,
       "sinceBlock": 15322966,
       "values": {
@@ -464,7 +492,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -477,7 +505,7 @@
         {
           "permission": "interact",
           "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract.",
           "role": ".$admin"
         },
         {
@@ -485,9 +513,16 @@
           "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "delay": 1209600,
           "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "change the global configuration hash committing to the L2 system parameters.",
+          "role": ".$admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xB7B2d6d7a1ca768410B424bEd7f065F9756Cc299",
       "sinceTimestamp": 1672216439,
       "sinceBlock": 16282082,
       "values": {
@@ -516,8 +551,8 @@
       "type": "Contract",
       "template": "starkex/StarkPerpetual",
       "sourceHashes": [
-        "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
-        "0xd44985473645ee33ac39b971c16c6b06bbada1d7c54ae7aa1e106e020fc3f4c1"
+        "0x4c21fb0aff75ac1755959abe5aace71b3d70cd508a697c0a16ffbd2f81b5420a",
+        "0xcf0ce6605c3fb6262ab3bd6dcc022c17b07991a65c45c0a2a2d97ed59da1a36e"
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
@@ -532,6 +567,7 @@
         "getValidiumTreeHeight",
         "getValidiumVaultRoot"
       ],
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1697631539,
       "sinceBlock": 18377191,
       "values": {
@@ -639,12 +675,13 @@
       "name": "FinalizableGpsFactAdapterUSDC",
       "address": "eth:0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953",
       "type": "Contract",
-      "template": "starkex/GpsFactRegistryAdapter",
+      "template": "starkex/FinalizableGpsFactAdapter",
       "sourceHashes": [
-        "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
+        "0xc8212559a530b4ba272dfc6c98851fa8aa4c1b36e2da1bdbe18091f2c59754f0"
       ],
       "proxyType": "immutable",
-      "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).",
+      "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`), which can be changed until the adapter is finalized.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1661254231,
       "sinceBlock": 15396280,
       "values": {
@@ -653,9 +690,11 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
         "isFinalized": false,
+        "owner": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
         "programHash": "2530337539466159944237001094809327283009177793361359619481044346150483328860",
         "programHashMapped": "ApeX-USDC 20250130"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953": "FinalizableGpsFactAdapter"
       },
@@ -706,13 +745,19 @@
         {
           "permission": "interact",
           "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
           "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "delay": 1209600,
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "change the global configuration hash committing to the L2 system parameters.",
           "role": ".$admin"
         }
       ]
@@ -1371,9 +1416,9 @@
     "edgex/PerpetualEscapeVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "starkex/Committee": "0xea8d2e95c84337933f471b8c21505791bd94685784b7e5c407f5e7045403a683",
-    "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
+    "starkex/FinalizableGpsFactAdapter": "0x2c4115608421d0d7aabe41291500b1f02a4d2989db1976f2c05a07b91fe4ba47",
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
   "usedBlockNumbers": { "ethereum": 24170019 },
-  "permissionsConfigHash": "0x62b2d4606178d73c21cf64c65a0a097f88bc3964c5914426822a4d037f5990fe"
+  "permissionsConfigHash": "0x3bfa56b1b0e1dfb901ada410023d521b701a38baa0f5135cf8ce910344255906"
 }

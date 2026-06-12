@@ -1,3 +1,422 @@
+Generated with discovered.json: 0xeb1ed541402d55f17cab344647508b4a43b0a7bb
+
+# Diff at Fri, 12 Jun 2026 11:52:43 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@77f62933d564f65f6ab803a9850a637ea4a77091 block: 1733483111
+- current timestamp: 1733483111
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1733483111 (main branch discovery), not current.
+
+```diff
+    contract MerkleDistributor (eth:0x01d3348601968aB85b4bb028979006eac235a588) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5e3d09f8089d63a7a6d8546086c617af3d5dd46af7590b5ef30cc4ca39754dda"
++        "0x5fc846f80d7760e9d7acbb0c4ad947b118b9ee40b5e53d7aa48135c2fcaf3980"
+      sourceHashes.1:
+-        "0x5eb26cee90dca2178b42fc264fc447af3272c9c84f97decb89285baa230ed77b"
++        "0x46df256871469d149a39c59c292ad8edef869b654c1776a8c303f170e660b4e0"
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x4ed0a8fed2fb6b8cc5ecf363781107f0fea73b810fb2a78b6ff0e7565fac2f62"
++        "0xd90ba494c13eb50647848d3c0cbb13eda118ed2a2de43cb2a5361a16a46c194f"
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc9f95b23f16315cabf114838b357854b67aa18bffeb85f3e4763dd0b2ebdac5b"
++        "0xc864967dfaa57559f17b4d44fac4c9b4a942d3c744dddd26b36646a869ace30b"
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract MerkleStatementContract (eth:0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xa671d6ba3e3803dbd31bbc7ade04cc66b5b41ef6553c5efe6b8645e4d2ea6030"
++        "0xff09c99e2b5180213c57497b300b4c69236daadf95c809aef260bb9cbbda1bc2"
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract ClaimsProxy (eth:0x0fd829C3365A225FB9226e75c97c3A114bD3199e) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract PedersenHashPointsYColumn (eth:0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract CairoBootloaderProgram (eth:0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (eth:0x1F5459AA7857291112A8172ae1328248948d9d13) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract TreasuryProxyAdmin (eth:0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract WrappedEthereumDydxToken (eth:0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xece96853a5bdf87e554329700585a08c5c2cd492e0bd37f88d30bc44e530cc74"
++        "0xcc0780151a3848085cbe24f0b872869600778ba89b5a8eab80003c72f13c1b10"
+      deployerAddress:
++        "eth:0x10855066fc7823BA41eE5cF61C3fEdd8EEAd5FF9"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x4922f8750DFd040954b44F23980160342e308863) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x40ad0c189ae6d45546284ca7cfba8a4147e474ac91828f587c736afe8ef3a668"
++        "0xe9e4d574b6a31d9700c03e3c26a60f3f8c60d1a6662e97bd707c21d82628f4c9"
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract EcdsaPointsXColumn (eth:0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract LiquidityStaking (eth:0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5e3d09f8089d63a7a6d8546086c617af3d5dd46af7590b5ef30cc4ca39754dda"
++        "0x5fc846f80d7760e9d7acbb0c4ad947b118b9ee40b5e53d7aa48135c2fcaf3980"
+      sourceHashes.1:
+-        "0x0111ff9c30eb270b8df99390defd855542974eb8a6a6200212cee243a9ba9679"
++        "0x68826ff941ca67f46ef9f55ad212fa5e7418492ff27eeb938792a07951eb0eb9"
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract PerpetualEscapeVerifier (eth:0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x684921b3b4e6212f66865889daeb916ea5de2487eb8558ef4ef000b6fb159b35"
++        "0x17a50eeee4ef724aeacace03a95bfda8dc5e04fd39a88e579eb2f0ad4ba976ad"
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract TreasuryBridge (eth:0x639192D54431F8c816368D3FB4107Bc168d0E871) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5e3d09f8089d63a7a6d8546086c617af3d5dd46af7590b5ef30cc4ca39754dda"
++        "0x5fc846f80d7760e9d7acbb0c4ad947b118b9ee40b5e53d7aa48135c2fcaf3980"
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract ShortTimelockExecutor (eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x2b69eb06923cd9704b99e54ed0d1294ea96da2ec719476b1f93b1d9176b6fe98"
++        "0x333128f42facd19bd1250ceaf07b48e383354aed5c9b2602e665b5c653cc77f0"
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract SafetyModule (eth:0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5e3d09f8089d63a7a6d8546086c617af3d5dd46af7590b5ef30cc4ca39754dda"
++        "0x5fc846f80d7760e9d7acbb0c4ad947b118b9ee40b5e53d7aa48135c2fcaf3980"
+      sourceHashes.1:
+-        "0x57553f9e7638b7b9c78914908fedcfd695b2973d1860afc5395c8328e8a55a1d"
++        "0xd18171fd00e188cbe4f0b2d3e45c212c023ff24102e78e11bed179c6d5273885"
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract SafetyModuleProxyAdmin (eth:0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract MerkleDistributorProxyAdmin (eth:0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract DydxGovernor (eth:0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x2fe37952f2fff616157e00a7389810ee76f2ee19c2fd0449571e0c362f030aa1"
++        "0x7656211ec1b864e6cfeb49243a3cf6c9e48bd2c321c24be91e2758d1c83a9525"
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract GpsStatementVerifier (eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xfe731822f194cf686e57ab136911f5128f6262c4ecadef68cee6eba0751ca77b"
++        "0x28a0980438d6222829f7035602ed87662e61a8b0ec4a5911ffda35c37edcfb55"
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract Committee (eth:0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xca16a90f8e3d769dcf7c193aade241726dd9cca439bdf131740e54b7725ee599"
++        "0x8cbb14b58dfef3e0ae420e37e2483d8dd8eb6733939754efee17eaad3e816bb4"
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract DydxToken (eth:0x92D6C1e31e14520e676a687F0a93788B716BEff5) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xa1c6b779016519cd0e36109115853fdb48caef5ca257585e2ff61ca5a6e990c6"
++        "0x799fb1efc8d95575ed4a703acd617acbcf1f290aa178ba8a70a6571cc020c34e"
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract ChainlinkAdapter (eth:0x99B0599952a4FD2d1A1561Fa4C010827EaD30354) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x3450d9fd6eeaee34343e727534e9aef6f035cc7b19eab0f5690268f9ddd379d6"
++        "0x7f73af3b3e5f33bb05fdb44ad5e2db02cde584258826e93f3c847d51a7082f67"
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract PedersenHashPointsXColumn (eth:0x9Bcf13C6b68450B427bfa86698D61901A8a3456D) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract PriorityExecutor (eth:0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5e7ffe4bf5cc430b1f4d7ee4515f29578b78793ea6192f9c9015849f1a25b493"
++        "0xa58ae3064418f58afccc55c9e3934f162836d3577ef427abb74c4056163e51d4"
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract LiquidityStakingProxyAdmin (eth:0xAc5D8bCD13da463bea96c75f9085c4e40037F790) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract TreasuryVester (eth:0xb9431E19B29B952d9358025f680077C3Fd37292f) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract GovernanceStrategyV2 (eth:0xc2f5F3505910Da80F0592a3Cc023881C50b16505) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x10855066fc7823BA41eE5cF61C3fEdd8EEAd5FF9"
+    }
+```
+
+```diff
+    contract EcdsaPointsYColumn (eth:0xD14fd39630Ec941C3bA6C791E3af9E0027013A15) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract StarkPerpetual (eth:0xD54f502e184B6B739d7D27a6410a67dc462D69c8) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xcbc560d276343abe292d73f08cd9006d7faaf560c300a437744a6e8646c9baa6"
++        "0x04b744718ab1359591f09af5bd0c0128aa230df8320cd3e039e9e500537ea5d7"
+      sourceHashes.1:
+-        "0xbe20bbe6c3b6a691ea8198517ba23e844544647f6d12c96c2f69d20075251c3a"
++        "0x4d0d095ea175ac9b3355f36cdf5959bac2cf6de7a33823c06f2ab23747fb4c7e"
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract MerklePauserExecutor (eth:0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x2b69eb06923cd9704b99e54ed0d1294ea96da2ec719476b1f93b1d9176b6fe98"
++        "0x333128f42facd19bd1250ceaf07b48e383354aed5c9b2602e665b5c653cc77f0"
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0b61340aa73762dba13146142086ff4fbd1b253748bc6c19238d628db084e076"
++        "0xb29012481187f4f36fb71b178cc4774da85ce78ad3cdd9e9e29e311e9f889f06"
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract LongTimelockExecutor (eth:0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x2b69eb06923cd9704b99e54ed0d1294ea96da2ec719476b1f93b1d9176b6fe98"
++        "0x333128f42facd19bd1250ceaf07b48e383354aed5c9b2602e665b5c653cc77f0"
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
+```diff
+    contract MemoryPageFactRegistry (eth:0xEfbCcE4659db72eC6897F46783303708cf9ACef8) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x1a064332cbf420353ceab684146a9c730873a5617ce302e26a88da05ea14b449"
++        "0x6f0dd1f218c7ba2b2808d07f8c6dee2bc265e3b69f579a2f357c07a6130a01fb"
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapter (eth:0xF23754231BC4cE8C8E92C3bADfB37d922d46053C) [starkex/FinalizableGpsFactAdapter] {
+    +++ description: Adapter between the core contract and the eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`), which can be changed until the adapter is finalized.
+      template:
+-        "starkex/GpsFactRegistryAdapter"
++        "starkex/FinalizableGpsFactAdapter"
+      sourceHashes.0:
+-        "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
++        "0xc8212559a530b4ba272dfc6c98851fa8aa4c1b36e2da1bdbe18091f2c59754f0"
+      description:
+-        "Adapter between the core contract and the eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`)."
++        "Adapter between the core contract and the eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`), which can be changed until the adapter is finalized."
++++ severity: HIGH
+      values.owner:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract FriStatementContract (eth:0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x193add6f23ec1dadc0f158bf31a76ebee58c7f4c229944b80585c7abf71b4d2d"
++        "0x81762cef9a7d773d7cf15480ebaf0f4bb51b6eb7babd0d74588c8e641879d2a7"
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract StarkExRemoverGovernorV2 (eth:0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83"
+    }
+```
+
 Generated with discovered.json: 0x5ffa7fdca9dcb04978e72e8bf795e56da0eb5af3
 
 # Diff at Tue, 02 Sep 2025 14:30:02 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "dydx",
   "timestamp": 1733483111,
-  "configHash": "0x98fd5186d42b571696bd66d77a50c8315a91bd25f32c3fab40ac4eb42b318e08",
+  "configHash": "0x8875d703c7abc23b25c76fe48320020560de9f398af352b3495699f36fec03b2",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
@@ -13,8 +13,8 @@
       "address": "eth:0x01d3348601968aB85b4bb028979006eac235a588",
       "type": "Contract",
       "sourceHashes": [
-        "0x5e3d09f8089d63a7a6d8546086c617af3d5dd46af7590b5ef30cc4ca39754dda",
-        "0x5eb26cee90dca2178b42fc264fc447af3272c9c84f97decb89285baa230ed77b"
+        "0x5fc846f80d7760e9d7acbb0c4ad947b118b9ee40b5e53d7aa48135c2fcaf3980",
+        "0x46df256871469d149a39c59c292ad8edef869b654c1776a8c303f170e660b4e0"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -27,6 +27,7 @@
         "TRADER_SCORE_ALPHA_BASE",
         "WAITING_PERIOD"
       ],
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1627709502,
       "sinceBlock": 12931482,
       "values": {
@@ -91,9 +92,10 @@
       "address": "eth:0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73",
       "type": "Contract",
       "sourceHashes": [
-        "0x4ed0a8fed2fb6b8cc5ecf363781107f0fea73b810fb2a78b6ff0e7565fac2f62"
+        "0xd90ba494c13eb50647848d3c0cbb13eda118ed2a2de43cb2a5361a16a46c194f"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1612752384,
       "sinceBlock": 11813202,
       "values": { "$immutable": true },
@@ -106,9 +108,10 @@
       "address": "eth:0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5",
       "type": "Contract",
       "sourceHashes": [
-        "0xc9f95b23f16315cabf114838b357854b67aa18bffeb85f3e4763dd0b2ebdac5b"
+        "0xc864967dfaa57559f17b4d44fac4c9b4a942d3c744dddd26b36646a869ace30b"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1612752351,
       "sinceBlock": 11813198,
       "values": { "$immutable": true },
@@ -121,9 +124,10 @@
       "address": "eth:0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830",
       "type": "Contract",
       "sourceHashes": [
-        "0xa671d6ba3e3803dbd31bbc7ade04cc66b5b41ef6553c5efe6b8645e4d2ea6030"
+        "0xff09c99e2b5180213c57497b300b4c69236daadf95c809aef260bb9cbbda1bc2"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1612752351,
       "sinceBlock": 11813198,
       "values": { "$immutable": true, "hasRegisteredFact": true },
@@ -139,6 +143,7 @@
         "0x14247f67293c931189c2f13126a402c94b2afb17f22e034e27562a726393e921"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1627709848,
       "sinceBlock": 12931509,
       "values": {
@@ -160,6 +165,7 @@
         "0x05c19e648542d62b4ddf24a4fa4c15a3a6e25cd850736e41c5544eb570a9f2a2"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1612752276,
       "sinceBlock": 11813192,
       "values": { "$immutable": true },
@@ -175,6 +181,7 @@
         "0x910ee17561c1bd968dbc0547bafcc9e8321d4ee336392525c0956ec59c94b799"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1612752200,
       "sinceBlock": 11813182,
       "values": {
@@ -418,6 +425,7 @@
         "0xeda6df888e68f267f04ff010db56b1a7b83756e14076d73718df7d33b1e2ae41"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1612752229,
       "sinceBlock": 11813186,
       "values": { "$immutable": true },
@@ -440,6 +448,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1627708831,
       "sinceBlock": 12931441,
       "values": {
@@ -455,10 +464,11 @@
       "address": "eth:0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9",
       "type": "Contract",
       "sourceHashes": [
-        "0xece96853a5bdf87e554329700585a08c5c2cd492e0bd37f88d30bc44e530cc74"
+        "0xcc0780151a3848085cbe24f0b872869600778ba89b5a8eab80003c72f13c1b10"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["_nextAvailableBridgeId", "totalSupply"],
+      "deployerAddress": "eth:0x10855066fc7823BA41eE5cF61C3fEdd8EEAd5FF9",
       "sinceTimestamp": 1694426279,
       "sinceBlock": 18112365,
       "values": {
@@ -490,9 +500,10 @@
       "address": "eth:0x4922f8750DFd040954b44F23980160342e308863",
       "type": "Contract",
       "sourceHashes": [
-        "0x40ad0c189ae6d45546284ca7cfba8a4147e474ac91828f587c736afe8ef3a668"
+        "0xe9e4d574b6a31d9700c03e3c26a60f3f8c60d1a6662e97bd707c21d82628f4c9"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1612752363,
       "sinceBlock": 11813200,
       "values": {
@@ -525,6 +536,7 @@
         "0x412fb414e7fea74325d60a077f704a49cf6d23a7a1d43c9fd09be7e9a4e5e76f"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1612752276,
       "sinceBlock": 11813192,
       "values": { "$immutable": true },
@@ -533,12 +545,26 @@
       }
     },
     {
+      "address": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF23754231BC4cE8C8E92C3bADfB37d922d46053C",
+          "description": "change the programHash, replacing the L2 execution logic whose proofs are accepted, directly or through appointed admins.",
+          "role": ".owner",
+          "condition": "if the adapter is not finalized"
+        }
+      ]
+    },
+    {
       "name": "LiquidityStaking",
       "address": "eth:0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941",
       "type": "Contract",
       "sourceHashes": [
-        "0x5e3d09f8089d63a7a6d8546086c617af3d5dd46af7590b5ef30cc4ca39754dda",
-        "0x0111ff9c30eb270b8df99390defd855542974eb8a6a6200212cee243a9ba9679"
+        "0x5fc846f80d7760e9d7acbb0c4ad947b118b9ee40b5e53d7aa48135c2fcaf3980",
+        "0x68826ff941ca67f46ef9f55ad212fa5e7418492ff27eeb938792a07951eb0eb9"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -565,6 +591,7 @@
         "totalSupply",
         "TOTAL_ALLOCATION"
       ],
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1627709656,
       "sinceBlock": 12931493,
       "values": {
@@ -655,9 +682,10 @@
       "address": "eth:0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD",
       "type": "Contract",
       "sourceHashes": [
-        "0x684921b3b4e6212f66865889daeb916ea5de2487eb8558ef4ef000b6fb159b35"
+        "0x17a50eeee4ef724aeacace03a95bfda8dc5e04fd39a88e579eb2f0ad4ba976ad"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1620888418,
       "sinceBlock": 12424523,
       "values": {
@@ -674,10 +702,11 @@
       "address": "eth:0x639192D54431F8c816368D3FB4107Bc168d0E871",
       "type": "Contract",
       "sourceHashes": [
-        "0x5e3d09f8089d63a7a6d8546086c617af3d5dd46af7590b5ef30cc4ca39754dda",
+        "0x5fc846f80d7760e9d7acbb0c4ad947b118b9ee40b5e53d7aa48135c2fcaf3980",
         "0xa1f45598b0f289ead20121783ac8f948cb7005845b5646ab5b8918e8252d2644"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1627708861,
       "sinceBlock": 12931442,
       "values": {
@@ -707,9 +736,10 @@
       "address": "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
       "type": "Contract",
       "sourceHashes": [
-        "0x2b69eb06923cd9704b99e54ed0d1294ea96da2ec719476b1f93b1d9176b6fe98"
+        "0x333128f42facd19bd1250ceaf07b48e383354aed5c9b2602e665b5c653cc77f0"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1626145373,
       "sinceBlock": 12816312,
       "values": {
@@ -735,11 +765,12 @@
       "address": "eth:0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC",
       "type": "Contract",
       "sourceHashes": [
-        "0x5e3d09f8089d63a7a6d8546086c617af3d5dd46af7590b5ef30cc4ca39754dda",
-        "0x57553f9e7638b7b9c78914908fedcfd695b2973d1860afc5395c8328e8a55a1d"
+        "0x5fc846f80d7760e9d7acbb0c4ad947b118b9ee40b5e53d7aa48135c2fcaf3980",
+        "0xd18171fd00e188cbe4f0b2d3e45c212c023ff24102e78e11bed179c6d5273885"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["totalSupply", "inBlackoutWindow"],
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1627709015,
       "sinceBlock": 12931454,
       "values": {
@@ -843,6 +874,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1627708955,
       "sinceBlock": 12931449,
       "values": {
@@ -868,6 +900,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1627709450,
       "sinceBlock": 12931480,
       "values": {
@@ -883,10 +916,11 @@
       "address": "eth:0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
       "type": "Contract",
       "sourceHashes": [
-        "0x2fe37952f2fff616157e00a7389810ee76f2ee19c2fd0449571e0c362f030aa1"
+        "0x7656211ec1b864e6cfeb49243a3cf6c9e48bd2c321c24be91e2758d1c83a9525"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["getProposalsCount"],
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1626145334,
       "sinceBlock": 12816310,
       "values": {
@@ -940,9 +974,10 @@
       "address": "eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
       "type": "Contract",
       "sourceHashes": [
-        "0xfe731822f194cf686e57ab136911f5128f6262c4ecadef68cee6eba0751ca77b"
+        "0x28a0980438d6222829f7035602ed87662e61a8b0ec4a5911ffda35c37edcfb55"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1615417556,
       "sinceBlock": 12013702,
       "values": {
@@ -968,9 +1003,10 @@
       "address": "eth:0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1",
       "type": "Contract",
       "sourceHashes": [
-        "0xca16a90f8e3d769dcf7c193aade241726dd9cca439bdf131740e54b7725ee599"
+        "0x8cbb14b58dfef3e0ae420e37e2483d8dd8eb6733939754efee17eaad3e816bb4"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1613033682,
       "sinceBlock": 11834295,
       "values": {
@@ -995,9 +1031,10 @@
       "address": "eth:0x92D6C1e31e14520e676a687F0a93788B716BEff5",
       "type": "Contract",
       "sourceHashes": [
-        "0xa1c6b779016519cd0e36109115853fdb48caef5ca257585e2ff61ca5a6e990c6"
+        "0x799fb1efc8d95575ed4a703acd617acbcf1f290aa178ba8a70a6571cc020c34e"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1626053832,
       "sinceBlock": 12809555,
       "values": {
@@ -1030,9 +1067,10 @@
       "address": "eth:0x99B0599952a4FD2d1A1561Fa4C010827EaD30354",
       "type": "Contract",
       "sourceHashes": [
-        "0x3450d9fd6eeaee34343e727534e9aef6f035cc7b19eab0f5690268f9ddd379d6"
+        "0x7f73af3b3e5f33bb05fdb44ad5e2db02cde584258826e93f3c847d51a7082f67"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1627709600,
       "sinceBlock": 12931491,
       "values": {
@@ -1055,6 +1093,7 @@
         "0x6eb94f42b6ee59326d27f5ec055a5872adf1df7825af5df411459832c72ba175"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1612752231,
       "sinceBlock": 11813187,
       "values": { "$immutable": true },
@@ -1067,7 +1106,7 @@
       "address": "eth:0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
       "type": "Contract",
       "sourceHashes": [
-        "0x5e7ffe4bf5cc430b1f4d7ee4515f29578b78793ea6192f9c9015849f1a25b493"
+        "0xa58ae3064418f58afccc55c9e3934f162836d3577ef427abb74c4056163e51d4"
       ],
       "proxyType": "immutable",
       "receivedPermissions": [
@@ -1077,6 +1116,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1627710079,
       "sinceBlock": 12931528,
       "values": {
@@ -1121,6 +1161,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1627709620,
       "sinceBlock": 12931492,
       "values": {
@@ -1140,6 +1181,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["lastUpdate"],
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1627709382,
       "sinceBlock": 12931477,
       "values": {
@@ -1164,6 +1206,7 @@
         "0xee1844f59c7ff492ee5430d8673a00537a966cb0de1e21ec8c8ff1adf630e0af"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x10855066fc7823BA41eE5cF61C3fEdd8EEAd5FF9",
       "sinceTimestamp": 1694426291,
       "sinceBlock": 18112366,
       "values": {
@@ -1184,6 +1227,7 @@
         "0x16786b57094cb8c3157552703287a310748c4453d743f9f2fa22adc7a6bf991c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1612752276,
       "sinceBlock": 11813192,
       "values": { "$immutable": true },
@@ -1196,11 +1240,12 @@
       "address": "eth:0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
       "type": "Contract",
       "sourceHashes": [
-        "0xcbc560d276343abe292d73f08cd9006d7faaf560c300a437744a6e8646c9baa6",
-        "0xbe20bbe6c3b6a691ea8198517ba23e844544647f6d12c96c2f69d20075251c3a"
+        "0x04b744718ab1359591f09af5bd0c0128aa230df8320cd3e039e9e500537ea5d7",
+        "0x4d0d095ea175ac9b3355f36cdf5959bac2cf6de7a33823c06f2ab23747fb4c7e"
       ],
       "proxyType": "StarkWare diamond",
       "ignoreInWatchMode": ["getLastBatchId", "getSequenceNumber"],
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1613033682,
       "sinceBlock": 11834295,
       "values": {
@@ -1325,9 +1370,10 @@
       "address": "eth:0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52",
       "type": "Contract",
       "sourceHashes": [
-        "0x2b69eb06923cd9704b99e54ed0d1294ea96da2ec719476b1f93b1d9176b6fe98"
+        "0x333128f42facd19bd1250ceaf07b48e383354aed5c9b2602e665b5c653cc77f0"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1626145414,
       "sinceBlock": 12816315,
       "values": {
@@ -1358,9 +1404,10 @@
       "address": "eth:0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3",
       "type": "Contract",
       "sourceHashes": [
-        "0x0b61340aa73762dba13146142086ff4fbd1b253748bc6c19238d628db084e076"
+        "0xb29012481187f4f36fb71b178cc4774da85ce78ad3cdd9e9e29e311e9f889f06"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1615417455,
       "sinceBlock": 12013692,
       "values": { "$immutable": true },
@@ -1373,9 +1420,10 @@
       "address": "eth:0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B",
       "type": "Contract",
       "sourceHashes": [
-        "0x2b69eb06923cd9704b99e54ed0d1294ea96da2ec719476b1f93b1d9176b6fe98"
+        "0x333128f42facd19bd1250ceaf07b48e383354aed5c9b2602e665b5c653cc77f0"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1626145348,
       "sinceBlock": 12816311,
       "values": {
@@ -1401,9 +1449,10 @@
       "address": "eth:0xEfbCcE4659db72eC6897F46783303708cf9ACef8",
       "type": "Contract",
       "sourceHashes": [
-        "0x1a064332cbf420353ceab684146a9c730873a5617ce302e26a88da05ea14b449"
+        "0x6f0dd1f218c7ba2b2808d07f8c6dee2bc265e3b69f579a2f357c07a6130a01fb"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1612752200,
       "sinceBlock": 11813182,
       "values": { "$immutable": true, "hasRegisteredFact": true },
@@ -1415,12 +1464,13 @@
       "name": "FinalizableGpsFactAdapter",
       "address": "eth:0xF23754231BC4cE8C8E92C3bADfB37d922d46053C",
       "type": "Contract",
-      "template": "starkex/GpsFactRegistryAdapter",
+      "template": "starkex/FinalizableGpsFactAdapter",
       "sourceHashes": [
-        "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
+        "0xc8212559a530b4ba272dfc6c98851fa8aa4c1b36e2da1bdbe18091f2c59754f0"
       ],
       "proxyType": "immutable",
-      "description": "Adapter between the core contract and the eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`).",
+      "description": "Adapter between the core contract and the eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`), which can be changed until the adapter is finalized.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1681722659,
       "sinceBlock": 17065528,
       "values": {
@@ -1429,9 +1479,11 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
         "isFinalized": true,
+        "owner": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
         "programHash": "3022993219738828102988654230098311570191704199468817569337520096526584973032",
         "programHashMapped": "3022993219738828102988654230098311570191704199468817569337520096526584973032"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xF23754231BC4cE8C8E92C3bADfB37d922d46053C": "FinalizableGpsFactAdapter"
       },
@@ -1465,16 +1517,18 @@
             "109586309220455887239200613090920758778188956576212125550190099009305121410": "StarkNet (old)"
           }
         }
-      ]
+      ],
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "FriStatementContract",
       "address": "eth:0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1",
       "type": "Contract",
       "sourceHashes": [
-        "0x193add6f23ec1dadc0f158bf31a76ebee58c7f4c229944b80585c7abf71b4d2d"
+        "0x81762cef9a7d773d7cf15480ebaf0f4bb51b6eb7babd0d74588c8e641879d2a7"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1612752351,
       "sinceBlock": 11813198,
       "values": { "$immutable": true, "hasRegisteredFact": true },
@@ -1497,6 +1551,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x301DF37d653b281AF83a1DDf4464eF21A622eC83",
       "sinceTimestamp": 1627913849,
       "sinceBlock": 12946416,
       "values": {
@@ -2645,8 +2700,8 @@
     ]
   },
   "usedTemplates": {
-    "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb"
+    "starkex/FinalizableGpsFactAdapter": "0x2c4115608421d0d7aabe41291500b1f02a4d2989db1976f2c05a07b91fe4ba47"
   },
   "usedBlockNumbers": { "ethereum": 21343041 },
-  "permissionsConfigHash": "0x481b3728c4b52fe868305fcfe5718333fcc66d5450d25375e5417f5b40941587"
+  "permissionsConfigHash": "0x28028f4a468312ec5978cc440b78d4461d933bc30e6477be6ef3f0a14d862cb6"
 }

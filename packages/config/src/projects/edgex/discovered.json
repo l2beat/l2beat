@@ -35,6 +35,21 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4abBc1826389aC0FEaA49E70c30a041b665e8562",
+          "description": "change the programHash, replacing the L2 execution logic whose proofs are accepted, directly or through appointed admins.",
+          "role": ".owner",
+          "condition": "if the adapter is not finalized"
+        }
+      ]
+    },
+    {
       "address": "eth:0x223c0EF36fEe905a40175d92704b1d3624218EE7",
       "type": "EOA",
       "proxyType": "EOA"
@@ -113,15 +128,15 @@
       "targetProject": "shared-sharp-verifier"
     },
     {
-      "name": "GpsFactRegistryAdapter",
+      "name": "FinalizableGpsFactAdapter",
       "address": "eth:0x4abBc1826389aC0FEaA49E70c30a041b665e8562",
       "type": "Contract",
-      "template": "starkex/GpsFactRegistryAdapter",
+      "template": "starkex/FinalizableGpsFactAdapter",
       "sourceHashes": [
         "0xc8212559a530b4ba272dfc6c98851fa8aa4c1b36e2da1bdbe18091f2c59754f0"
       ],
       "proxyType": "immutable",
-      "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).",
+      "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`), which can be changed until the adapter is finalized.",
       "deployerAddress": "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e",
       "sinceTimestamp": 1720435919,
       "sinceBlock": 20261312,
@@ -131,9 +146,11 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
         "isFinalized": false,
+        "owner": "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e",
         "programHash": "2530337539466159944237001094809327283009177793361359619481044346150483328860",
         "programHashMapped": "ApeX-USDC 20250130"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x4abBc1826389aC0FEaA49E70c30a041b665e8562": "FinalizableGpsFactAdapter"
       },
@@ -189,7 +206,13 @@
         {
           "permission": "interact",
           "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
-          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
+          "description": "change the global configuration hash committing to the L2 system parameters.",
           "role": ".$admin"
         },
         {
@@ -1044,9 +1067,9 @@
     "edgex/MultiSigPoolV5": "0x404c9680db0038ee4a2fbbe47eed77cc3bfb5547b3232fc52e52b15a2fed25b8",
     "edgex/PerpetualEscapeVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
+    "starkex/FinalizableGpsFactAdapter": "0x2c4115608421d0d7aabe41291500b1f02a4d2989db1976f2c05a07b91fe4ba47",
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
   "usedBlockNumbers": { "ethereum": 25021111 },
-  "permissionsConfigHash": "0x0955109f74181271283bc4930702a9833e2498bd192856a9df5e842452e7ff68"
+  "permissionsConfigHash": "0x8c841d343fb62f5dc826d90d4e8ced0f26f7b92fa7c54e8eaaa318cccb588c07"
 }
