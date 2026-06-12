@@ -82,9 +82,27 @@ import {
   parseCctpV2ReceivedTransfer,
 } from './cctp.utils'
 
-// HyperCore-origin CCTP burns on HypereVM are not discoverable via eth_getLogs, only eth_getTransactionReceipt and eth_getBlockReceipts
-// so we treat it as onesided in this plugin (source only)
+// Some HyperEVM system-origin CCTP burns, e.g. Hyperliquid CoreDepositWallet
+// withdrawals, are present in transaction/block receipts but missing from
+// eth_getLogs. Keep HyperEVM as a received-only fallback for those CCTP legs.
 const CCTP_V2_ONE_SIDED_SOURCE_CHAINS = new Set(['hyperevm'])
+const HYPERLIQUID_CHAIN = 'hyperliquid'
+const HYPEREVM_USDC_TOKEN = Address32.from(
+  '0xb88339CB7199b77E23DB6E890353E22632Ba630f',
+)
+const HYPEREVM_CORE_DEPOSIT_WALLET = Address32.from(
+  '0x6B9E773128f453f5c2C60935Ee2DE2CBc5390A24',
+)
+const HYPERLIQUID_CCTP_FORWARD_MAGIC =
+  '0x636374702d666f7277617264000000000000000000000000'
+const HYPERLIQUID_CCTP_ZERO_MAGIC =
+  '0x000000000000000000000000000000000000000000000000'
+const HYPERLIQUID_CCTP_HOOK_PREFIX_BYTES = 24 + 4 + 4
+const HYPERLIQUID_CCTP_HOOK_FIXED_PAYLOAD_BYTES = 20 + 8
+
+type ParsedCctpV2ReceivedTransfer = NonNullable<
+  ReturnType<typeof parseCctpV2ReceivedTransfer>
+>
 
 export const CCTPv2MessageSent = createInteropEventType<{
   fast: boolean
@@ -204,12 +222,14 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
 
     const v2MessageReceived = parseCctpV2ReceivedTransfer(input, networks)
     if (v2MessageReceived) {
+      const srcChain = getCctpV2ReceivedSourceChain(v2MessageReceived)
+
       return [
         CCTPv2MessageReceived.create(input, {
           app: v2MessageReceived.app,
           hookData: v2MessageReceived.hookData,
           caller: v2MessageReceived.caller,
-          $srcChain: v2MessageReceived.srcChain,
+          $srcChain: srcChain,
           nonce: v2MessageReceived.nonce,
           sender: v2MessageReceived.sender,
           finalityThresholdExecuted:
@@ -229,6 +249,28 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       const messageSentMatches = db.findAll(CCTPv2MessageSent, {
         messageHash: event.args.messageHash,
       })
+      if (event.args.$srcChain === HYPERLIQUID_CHAIN) {
+        // Hyperliquid CoreDepositWallet forwards HyperCore withdrawals through
+        // HyperEVM CCTP, but HyperEVM source logs are not reliably available
+        // via eth_getLogs. Keep this as one Hyperliquid -> dst CCTP transfer,
+        // consuming a visible HyperEVM source event only as extra evidence.
+        const messageSent = messageSentMatches.sort(
+          (a, b) => a.ctx.timestamp - b.ctx.timestamp,
+        )[0]
+
+        return [
+          Result.Transfer('cctp-v2.Transfer', {
+            srcChain: HYPERLIQUID_CHAIN,
+            dstEvent: event,
+            dstTokenAddress: event.args.dstTokenAddress,
+            dstAmount: event.args.dstAmount,
+            srcWasBurned: true,
+            dstWasMinted: true,
+            bridgeType: 'burnAndMint',
+            extraEvents: messageSent ? [messageSent] : [],
+          }),
+        ]
+      }
       if (messageSentMatches.length === 0) {
         const srcChain = event.args.$srcChain
         if (!this.isOneSidedSourceChain(srcChain)) return
@@ -331,4 +373,62 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       CCTP_V2_ONE_SIDED_SOURCE_CHAINS.has(chain)
     )
   }
+}
+
+function getCctpV2ReceivedSourceChain(received: ParsedCctpV2ReceivedTransfer) {
+  if (!isHyperliquidCctpWithdrawal(received)) {
+    return received.srcChain
+  }
+
+  return HYPERLIQUID_CHAIN
+}
+
+function isHyperliquidCctpWithdrawal(received: ParsedCctpV2ReceivedTransfer) {
+  const burnMessage = received.burnMessage
+  if (!burnMessage) return false
+  if (received.srcChain !== 'hyperevm') return false
+  if (Address32.from(burnMessage.burnToken) !== HYPEREVM_USDC_TOKEN) {
+    return false
+  }
+  if (
+    Address32.from(burnMessage.messageSender) !== HYPEREVM_CORE_DEPOSIT_WALLET
+  ) {
+    return false
+  }
+
+  return isHyperliquidCctpHookData(burnMessage.hookData)
+}
+
+function isHyperliquidCctpHookData(hookData: string | undefined) {
+  if (!hookData?.startsWith('0x')) return false
+
+  const bytes = hookData.slice(2)
+  const byteLength = bytes.length / 2
+  if (
+    bytes.length % 2 !== 0 ||
+    byteLength <
+      HYPERLIQUID_CCTP_HOOK_PREFIX_BYTES +
+        HYPERLIQUID_CCTP_HOOK_FIXED_PAYLOAD_BYTES
+  ) {
+    return false
+  }
+
+  const magic = `0x${bytes.slice(0, 48)}`
+  if (
+    magic !== HYPERLIQUID_CCTP_FORWARD_MAGIC &&
+    magic !== HYPERLIQUID_CCTP_ZERO_MAGIC
+  ) {
+    return false
+  }
+
+  const version = Number.parseInt(bytes.slice(48, 56), 16)
+  if (version !== 0) return false
+
+  const payloadLength = Number.parseInt(bytes.slice(56, 64), 16)
+  const expectedByteLength = HYPERLIQUID_CCTP_HOOK_PREFIX_BYTES + payloadLength
+
+  return (
+    payloadLength >= HYPERLIQUID_CCTP_HOOK_FIXED_PAYLOAD_BYTES &&
+    byteLength === expectedByteLength
+  )
 }
