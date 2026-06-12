@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xfdd80ece857d5d1aa0848e0dc7b15f0523ea76a0
+Generated with discovered.json: 0x99f4310550e32b4231cc95d543d356dad0f82ece
 
-# Diff at Fri, 12 Jun 2026 11:53:38 GMT:
+# Diff at Fri, 12 Jun 2026 12:07:43 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@77f62933d564f65f6ab803a9850a637ea4a77091 block: 1767634866
@@ -54,9 +54,9 @@ discovery. Values are for block 1767634866 (main branch discovery), not current.
     +++ description: None
       receivedPermissions.1.description:
 -        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
-+        "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract."
++        "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set."
       receivedPermissions.3:
-+        {"permission":"upgrade","from":"eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b","description":"change the global configuration hash committing to the L2 system parameters.","role":".$admin"}
++        {"permission":"upgrade","from":"eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b","description":"change the global and per-asset configuration hashes committing to the L2 system parameters.","role":".$admin"}
     }
 ```
 
@@ -116,9 +116,9 @@ discovery. Values are for block 1767634866 (main branch discovery), not current.
 +        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       receivedPermissions.1.description:
 -        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
-+        "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract."
++        "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set."
       receivedPermissions.3:
-+        {"permission":"upgrade","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","description":"change the global configuration hash committing to the L2 system parameters.","role":".$admin"}
++        {"permission":"upgrade","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","description":"change the global and per-asset configuration hashes committing to the L2 system parameters.","role":".$admin"}
       deployerAddress:
 +        "eth:0xB7B2d6d7a1ca768410B424bEd7f065F9756Cc299"
     }
@@ -165,9 +165,9 @@ discovery. Values are for block 1767634866 (main branch discovery), not current.
     +++ description: None
       receivedPermissions.1.description:
 -        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
-+        "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract."
++        "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set."
       receivedPermissions.3:
-+        {"permission":"upgrade","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","description":"change the global configuration hash committing to the L2 system parameters.","role":".$admin"}
++        {"permission":"upgrade","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","description":"change the global and per-asset configuration hashes committing to the L2 system parameters.","role":".$admin"}
     }
 ```
 

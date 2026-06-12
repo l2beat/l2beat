@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x515808ad8b32e236aede73b20a7fd4cdb2d2fabf
+Generated with discovered.json: 0xb1703c9b23e30fcc16e61c3f884dd5abc84f19ce
 
-# Diff at Fri, 12 Jun 2026 11:52:44 GMT:
+# Diff at Fri, 12 Jun 2026 12:07:47 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@77f62933d564f65f6ab803a9850a637ea4a77091 block: 1777891423
@@ -40,10 +40,10 @@ discovery. Values are for block 1777891423 (main branch discovery), not current.
     contract Safe (eth:0x57814cC6e075f517781cB7c3B42897B3Bb2C54d8) [GnosisSafe] {
     +++ description: None
       receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD","description":"Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract.","role":".$admin"}
++        {"permission":"interact","from":"eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD","description":"Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set.","role":".$admin"}
       receivedPermissions.1.description:
 -        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
-+        "change the global configuration hash committing to the L2 system parameters."
++        "change the global and per-asset configuration hashes committing to the L2 system parameters."
       receivedPermissions.1.permission:
 -        "interact"
 +        "upgrade"

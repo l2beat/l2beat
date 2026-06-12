@@ -34,11 +34,11 @@
         {
           "type": "upgrade",
           "delay": "{{configurationDelay}}",
-          "description": "change the global configuration hash committing to the L2 system parameters."
+          "description": "change the global and per-asset configuration hashes committing to the L2 system parameters."
         },
         {
           "type": "interact",
-          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract."
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set."
         },
         { "type": "interact", "description": "manage the token admin role." }
       ]

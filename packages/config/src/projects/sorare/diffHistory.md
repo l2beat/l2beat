@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xb66f7ef319d749a6255ba7b3e82146df19cb5287
+Generated with discovered.json: 0xc6d846c81d9db0374e0cd5811740ff7d039977ed
 
-# Diff at Fri, 12 Jun 2026 11:53:42 GMT:
+# Diff at Fri, 12 Jun 2026 12:07:50 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@77f62933d564f65f6ab803a9850a637ea4a77091 block: 1780646255
@@ -21,7 +21,7 @@ discovery. Values are for block 1780646255 (main branch discovery), not current.
     +++ description: None
       receivedPermissions.1.description:
 -        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
-+        "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract."
++        "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set."
     }
 ```
 
@@ -30,7 +30,7 @@ discovery. Values are for block 1780646255 (main branch discovery), not current.
     +++ description: None
       receivedPermissions.1.description:
 -        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
-+        "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract."
++        "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set."
     }
 ```
 

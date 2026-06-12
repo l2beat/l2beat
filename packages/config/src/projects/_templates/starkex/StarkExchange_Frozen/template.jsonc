@@ -35,7 +35,7 @@
         },
         {
           "type": "interact",
-          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters in the core contract."
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set."
         },
         {
           "type": "interact",
