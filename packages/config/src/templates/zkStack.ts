@@ -214,7 +214,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       templateVars.validatorTimelockOnGateway?.values?.executionDelay,
     )
   }
-  const executionDelay = executionDelayS > 0 && formatSeconds(executionDelayS)
+  const executionDelay =
+    executionDelayS > 0 ? formatSeconds(executionDelayS) : undefined
 
   const legalVetoStandardS = templateVars.discovery.getContractValue<number>(
     'ProtocolUpgradeHandler',
@@ -559,7 +560,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
           protLateQuorumVoteExtensionS,
         ),
         protTlMinDelayS: formatSeconds(protTlMinDelayS),
-        executionDelay: String(executionDelay),
+        executionDelay,
         legalVetoStandardS: formatSeconds(legalVetoStandardS),
         guardiansExtendThreshold,
         legalVetoExtendedS: formatSeconds(legalVetoExtendedS),

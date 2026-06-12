@@ -69,42 +69,10 @@ export const lighterprover: BaseProject = {
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-The verification process below is based on the \`build_circuits.sh\` [script](https://github.com/elliottech/lighter-prover/blob/main/build_circuits.sh) in the lighter-prover repo. It consumed around 100 GiB of memory at the peak, so we recommend rerunning it on a machine with 128 GiB of RAM.
-
-The steps below are for Ubuntu 22.04 OS.
-
-1. Install rust, gcc, go version 1.21 and later.
-
-\`\`\`
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
-
-sudo apt update
-sudo apt install build-essential
-
-# one way to install latest go on Ubuntu 22.04
-wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
-sudo tar -xvf go1.21.0.linux-amd64.tar.gz
-sudo mv go /usr/local
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-source ~/.profile
-\`\`\`
-
-2. Run the correct version of the script to regenerate the keys.
-
-\`\`\`
-git clone https://github.com/elliottech/lighter-prover.git
-cd lighter-prover
-git checkout 90af1be311ffce17e6c58f9983fa5ec1c8d3a097
-chmod +x build_circuits.sh
-./build_circuits.sh
-\`\`\`
-
-The script will generate the \`final::....sol\` file that contains the verifier smart contract with the verification keys.
-`,
+        verificationSteps: readProjectMarkdown(
+          'lighterprover',
+          'verificationSteps-0x16992bb8',
+        ),
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
@@ -178,43 +146,10 @@ The script will generate the \`final::....sol\` file that contains the verifier 
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-The verification process below is based on the \`build.sh\` [script](https://github.com/elliottech/lighter-prover/blob/main/desertexit/build.sh) in the lighter-prover repo. It consumed around 100 GiB of memory at the peak, so we recommend rerunning it on a machine with 128 GiB of RAM.
-
-The steps below are for Ubuntu 22.04 OS.
-
-1. Install rust, gcc, go version 1.21 and later.
-
-\`\`\`
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
-
-sudo apt update
-sudo apt install build-essential
-sudo apt install jq
-
-# one way to install latest go on Ubuntu 22.04
-wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
-sudo tar -xvf go1.21.0.linux-amd64.tar.gz
-sudo mv go /usr/local
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-source ~/.profile
-\`\`\`
-
-2. Run the correct version of the script to regenerate the keys.
-
-\`\`\`
-git clone https://github.com/elliottech/lighter-prover.git
-cd lighter-prover/desertexit
-git checkout aec951b36ffcdb67818ff7e237209d547b4bb78f
-chmod +x build.sh
-./build.sh
-\`\`\`
-
-The script will generate the \`desertwrapper::....sol\` file in the \`lighter-prover/desertexit/artifacts\` directory that contains the verifier smart contract with the verification keys.
-        `,
+        verificationSteps: readProjectMarkdown(
+          'lighterprover',
+          'verificationSteps-0x6048c1a7',
+        ),
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
