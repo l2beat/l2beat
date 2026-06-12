@@ -10,6 +10,7 @@ import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('roninnetwork')
 
@@ -183,7 +184,10 @@ export const roninNetwork: ScalingProject = opStackL2({
       },
       {
         name: 'Proof system cannot execute for this chain',
-        description: `The dispute games on this chain commit to the op-program v1.3.1 prestate (0x038512e0…6764d54c). That binary embeds the superchain-registry snapshot at commit 42bd03ba8313 (2024-08-21), which lists 17 chain IDs and does not include Ronin (chainId 2020). If a dispute game were stepped through to the VM, op-program's RollupConfigByChainID(2020) would not find a rollup config and would panic, producing an invalid output state — any claim (honest or fraudulent) could then be "disproven" against the panic. Users are not exposed today because the respected game type is PermissionedDisputeGame: only the proposer can create state proposals and only proposer/challenger can move or step. The proof system therefore reduces to an operator-attested delay timer rather than an adversarial fraud-proof. Fix would require redeploying games with either an updated registry snapshot or a chain-specific prestate.`,
+        description: readProjectMarkdown(
+          'roninnetwork',
+          'technologyOtherConsiderations3',
+        ),
         risks: [],
         references: [
           {
