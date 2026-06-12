@@ -66,9 +66,9 @@ export function AnalyzePanel() {
     mutationFn: (input: {
       address: string
       analyzerId: string
-      sourceName: string
+      entrypoint: string
     }) =>
-      runAnalyzer(project, input.address, input.analyzerId, input.sourceName),
+      runAnalyzer(project, input.address, input.analyzerId, input.entrypoint),
   })
 
   if (projectResponse.isError) {
@@ -140,14 +140,14 @@ export function AnalyzePanel() {
 
         <div className="grid gap-1">
           <div className="font-bold text-coffee-200 text-xs uppercase">
-            Source
+            Entrypoint
           </div>
           <Select.Root
             value={selectedSource}
             onValueChange={setPreferredSource}
             disabled={sources.length === 0 || codeResponse.isPending}
           >
-            <Select.Trigger placeholder="Select source" />
+            <Select.Trigger placeholder="Select entrypoint" />
             <Select.Content>
               {sources.map((source) => (
                 <Select.Item key={source.name} value={source.name}>
@@ -171,7 +171,7 @@ export function AnalyzePanel() {
             analyzeMutation.mutate({
               address: selectedAddress,
               analyzerId: selectedAnalyzer,
-              sourceName: selectedSource,
+              entrypoint: selectedSource,
             })
           }}
         >

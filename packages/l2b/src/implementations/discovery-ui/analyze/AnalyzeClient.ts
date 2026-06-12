@@ -3,6 +3,7 @@ import {
   AnalyzersApiResponse,
 } from '@l2beat/shared-pure'
 import { type Validator, v } from '@l2beat/validate'
+import { zipSync } from 'fflate'
 import FormData from 'form-data'
 import fetch, { Headers, type RequestInit } from 'node-fetch'
 
@@ -38,14 +39,14 @@ export class AnalyzeClient {
 
   async runAnalyzer(
     analyzerId: string,
-    source: { name: string; code: string },
+    input: { files: Record<string, Uint8Array>; entrypoint: string },
   ): Promise<AnalyzerResultApiResponse> {
     const body = new FormData()
-    body.append('file', source.code, {
-      filename: source.name,
-      contentType: 'text/plain',
+    body.append('archive', Buffer.from(zipSync(input.files)), {
+      filename: 'sources.zip',
+      contentType: 'application/zip',
     })
-    body.append('entrypoint', source.name)
+    body.append('entrypoint', input.entrypoint)
 
     return await this.requestJson(
       `/v1/analyze/${encodeURIComponent(analyzerId)}`,

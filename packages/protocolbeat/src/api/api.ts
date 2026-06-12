@@ -328,11 +328,11 @@ export async function runAnalyzer(
   project: string,
   address: string,
   analyzerId: string,
-  sourceName: string,
+  entrypoint: string,
 ): Promise<AnalyzerResultApiResponse> {
   const res = await fetch(`/api/projects/${project}/analyze/${address}`, {
     method: 'POST',
-    body: JSON.stringify({ analyzerId, sourceName }),
+    body: JSON.stringify({ analyzerId, entrypoint }),
     headers: {
       'Content-Type': 'application/json',
     },

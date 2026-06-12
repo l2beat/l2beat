@@ -2,8 +2,8 @@ import type { ConfigReader } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import type { Express, Response } from 'express'
-import { getCodeFromDisk } from '../getCode'
-import type { ApiCodeResponse } from '../types'
+import { readFileSync } from 'fs'
+import { getCodePaths } from '../getCode'
 import { AnalyzeClient, AnalyzeClientError } from './AnalyzeClient'
 
 const safeStringSchema = z
@@ -20,7 +20,7 @@ const analyzeParamsSchema = z.object({
 
 const analyzeBodySchema = z.object({
   analyzerId: z.string().check((v) => v.length > 0),
-  sourceName: z.string().check((v) => v.length > 0),
+  entrypoint: z.string().check((v) => v.length > 0),
 })
 
 export function attachAnalyzeRouter(app: Express, configReader: ConfigReader) {
@@ -49,24 +49,28 @@ export function attachAnalyzeRouter(app: Express, configReader: ConfigReader) {
     }
 
     const { project, address } = paramsValidation.data
-    const { analyzerId, sourceName } = bodyValidation.data
-    let source: ApiCodeResponse['sources'][number] | undefined
+    const { analyzerId, entrypoint } = bodyValidation.data
+    let files: Record<string, Uint8Array>
     try {
-      const code = getCodeFromDisk(configReader, project, address)
-      source = code.sources.find((source) => source.name === sourceName)
+      const { codePaths } = getCodePaths(configReader, project, address)
+      if (!codePaths.some(({ name }) => name === entrypoint)) {
+        res.status(404).json({ error: 'Entrypoint not found' })
+        return
+      }
+      files = Object.fromEntries(
+        codePaths.map(({ name, path }) => [name, readFileSync(path)]),
+      )
     } catch (error) {
       console.error(error)
-      res.status(500).json({ error: 'Failed to load source file' })
-      return
-    }
-
-    if (!source) {
-      res.status(404).json({ error: 'Source file not found' })
+      res.status(500).json({ error: 'Failed to load source files' })
       return
     }
 
     try {
-      const result = await analyzeClient.runAnalyzer(analyzerId, source)
+      const result = await analyzeClient.runAnalyzer(analyzerId, {
+        files,
+        entrypoint,
+      })
       res.json(result)
     } catch (error) {
       respondWithAnalyzeError(res, error, 'Failed to run analyzer')
