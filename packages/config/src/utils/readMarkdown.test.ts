@@ -34,4 +34,16 @@ describe(readMarkdown.name, () => {
       /Missing template variable \{\{threshold\}\} for utils\/test\/fixtureWithVars\.md/,
     )
   })
+
+  it('throws when a var has no matching placeholder', () => {
+    expect(() =>
+      readMarkdown('utils/test/fixtureWithVars.md', {
+        delay: '2d 8h',
+        threshold: 1000,
+        quorum: 5,
+      }),
+    ).toThrow(
+      /Unused template variables for utils\/test\/fixtureWithVars\.md: quorum/,
+    )
+  })
 })

@@ -9,7 +9,8 @@ const SRC_DIR = join(__dirname, '../..', 'src')
  * Reads a markdown file relative to packages/config/src.
  * The content is trimmed so it can be used directly as a description.
  * Occurrences of {{name}} are replaced with vars.name; a placeholder
- * without a matching var (or with an undefined value) throws.
+ * without a matching var (or with an undefined value) throws, and so
+ * does a var without a matching placeholder.
  * e.g. readMarkdown('templates/starkex/daTechnology.md')
  */
 export function readMarkdown(
@@ -21,7 +22,9 @@ export function readMarkdown(
     throw new Error(`Markdown file not found: ${filePath}`)
   }
   const content = readFileSync(filePath, 'utf8').replace(/\r\n/g, '\n').trim()
-  return content.replace(/\{\{(\w+)\}\}/g, (_, name: string) => {
+  const used = new Set<string>()
+  const result = content.replace(/\{\{(\w+)\}\}/g, (_, name: string) => {
+    used.add(name)
     const value = vars?.[name]
     if (value === undefined) {
       throw new Error(
@@ -30,6 +33,13 @@ export function readMarkdown(
     }
     return String(value)
   })
+  const unused = Object.keys(vars ?? {}).filter((name) => !used.has(name))
+  if (unused.length > 0) {
+    throw new Error(
+      `Unused template variables for ${pathFromSrc}: ${unused.join(', ')}`,
+    )
+  }
+  return result
 }
 
 /** e.g. readProjectMarkdown('tornado-cash', 'detailedDescription') */
