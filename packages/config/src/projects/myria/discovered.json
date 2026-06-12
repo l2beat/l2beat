@@ -304,7 +304,7 @@
         {
           "permission": "interact",
           "from": "eth:0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7",
-          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set.",
           "role": ".$admin"
         },
         {
@@ -702,5 +702,5 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 25121451 },
-  "permissionsConfigHash": "0xad4f057fea11c359a90cff0578a3786c89051d9285b4c0366bc30c1d1acde81f"
+  "permissionsConfigHash": "0x73a8d057089b01eb7b0d95a56329661442989d7927b00c7d2f09e3a57646e11a"
 }

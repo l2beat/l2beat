@@ -70,7 +70,10 @@ const includingSHARPUpgradeDelaySeconds = Math.min(
 
 const edgexProgramHashes = []
 edgexProgramHashes.push(
-  discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
+  discovery.getContractValue<string>(
+    'FinalizableGpsFactAdapter',
+    'programHash',
+  ),
 )
 edgexProgramHashes.push(...getSHARPBootloaderHashes())
 

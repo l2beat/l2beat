@@ -1,3 +1,74 @@
+Generated with discovered.json: 0xd34805d132337a2efcc743c55fad53249173d34b
+
+# Diff at Fri, 12 Jun 2026 12:07:45 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@77f62933d564f65f6ab803a9850a637ea4a77091 block: 1715171555
+- current timestamp: 1715171555
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1715171555 (main branch discovery), not current.
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143) [starkex/GpsFactRegistryAdapter] {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+      sourceHashes.0:
+-        "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
++        "0x1bb1677263f0cad4764f3620f45cf353df37fb489e3404889126f7897afcdffd"
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract StarkExchange (eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d) [starkex/StarkExchange] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.0:
+-        "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918"
++        "0xa2b51d5024b872eb502c2abfec88397c41c32d42494dd19905514a69d38abfec"
+      sourceHashes.1:
+-        "0xfb3c0545e8c9aeebaa6547f71087a1ad7d93e3344e0dfdb1051e1a18fd44a18b"
++        "0x9b28596a715350d61f719241f35d6ee159c111c93c05da1d4804157142ee790c"
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract OrderRegistry (eth:0x806d435a82B0381bD884540c2235147c13B97fe6) [starkex/OrderRegistry] {
+    +++ description: Helper contract for registering limit orders from L1.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract DACommittee (eth:0x8B3A6662809195453645e37C2005d655f57ca818) [starkex/Committee] {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 1.
+      sourceHashes.0:
+-        "0x220ee35d4e83e9cca7e8fa42dcab4d9571ce3078b50bacbdb2fc75afa7f0290e"
++        "0x3b7f5470a746d06671f24e4231b09df04ea52e7555e4fb874e093867c094c437"
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    EOA  (eth:0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set."
+    }
+```
+
 Generated with discovered.json: 0x5281d7e5694515a5caa0baba2169a0db95a1f1fa
 
 # Diff at Fri, 12 Jun 2026 10:18:42 GMT:

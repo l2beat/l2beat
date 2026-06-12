@@ -1,3 +1,101 @@
+Generated with discovered.json: 0x2c12b950a3cec6da9bb8791e7802c48e54a96c7b
+
+# Diff at Fri, 12 Jun 2026 12:07:47 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@77f62933d564f65f6ab803a9850a637ea4a77091 block: 1761551414
+- current timestamp: 1761551414
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761551414 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set."
+    }
+```
+
+```diff
+    contract OrderRegistry (eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8) [starkex/OrderRegistry] {
+    +++ description: Helper contract for registering limit orders from L1.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract StrategyCompound (eth:0x5b000954F70B0410685193B0afd3074B744B5C97) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xd4db48e0b7efb71ded88f8c4a839b0175d98cfd365e8beaf4630e60dfb8ea404"
++        "0x5f8ab401ee2f38175e6f972f544fd64e926cb83e522dc35ddb91dc17c2061154"
+      deployerAddress:
++        "eth:0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE) [starkex/GpsFactRegistryAdapter] {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).
+      sourceHashes.0:
+-        "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
++        "0x1bb1677263f0cad4764f3620f45cf353df37fb489e3404889126f7897afcdffd"
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract StarkExchange (eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8) [starkex/StarkExchange] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.0:
+-        "0x87045c081a3bd84c271153c36a9a503f84bc3035077d34144332c329d3fcb92d"
++        "0x8288c35b29d53f14d488adf0912b270210d6229d83219151b3f46d77c47dfc7b"
+      sourceHashes.1:
+-        "0xfaa0bf87cf9230ba5a3f5530b447f76606e0cd9fb9d1acd2f3b87d30884e63d1"
++        "0x5c9c7a970280b6bfdb50bdc2ee43b98a98e4d34b47aa0839b68e570d1af16c2a"
+      deployerAddress:
++        "eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e"
+    }
+```
+
+```diff
+    contract Compound Token (eth:0xc00e94Cb662C3520282E6f5717214004A7f26888) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1449e0687810BdDD356ae6Dd87789244A46d9AdB"
+    }
+```
+
+```diff
+    contract Broker (eth:0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xd9040d82f39aa8ff258f35b318bdf0fc513f4d8844c61c34f6c8ce81eee40b55"
++        "0xecdf7fd26bcf3bcbd21e0a1d28dfb5a3bc99c67058d3a883002da12831a8ea45"
+      deployerAddress:
++        "eth:0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"
+    }
+```
+
+```diff
+    contract Committee (eth:0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e"
+    }
+```
+
 Generated with discovered.json: 0x292c3d525c130a264dbf36e1235b3cf5f5e6aca8
 
 # Diff at Fri, 12 Jun 2026 10:18:53 GMT:
