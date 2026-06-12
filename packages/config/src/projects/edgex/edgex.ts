@@ -103,6 +103,9 @@ export const edgex: ScalingProject = {
         'https://t.me/edgeX_exchange',
       ],
     },
+    liveness: {
+      explanation: 'EdgeX is a ZK L2 that posts data to a data availability committee (DAC). A transaction is considered final when proven on L1 with ZK proof.',
+    }
   },
   proofSystem: {
     type: 'Validity',
