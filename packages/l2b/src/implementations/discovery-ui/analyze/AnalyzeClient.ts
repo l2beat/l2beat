@@ -7,19 +7,12 @@ import { zipSync } from 'fflate'
 import FormData from 'form-data'
 import fetch, { Headers, type RequestInit } from 'node-fetch'
 
-const DEFAULT_ANALYZE_URL = 'https://analyze.internal.l2beat.com'
-
 const UpstreamErrorResponse = v.object({
   error: v.object({
     code: v.string(),
     message: v.string(),
   }),
 })
-
-interface AnalyzeClientOptions {
-  baseUrl?: string
-  apiKey?: string
-}
 
 export class AnalyzeClientError extends Error {
   constructor(
@@ -31,8 +24,6 @@ export class AnalyzeClientError extends Error {
 }
 
 export class AnalyzeClient {
-  constructor(private readonly options: AnalyzeClientOptions = {}) {}
-
   async getAnalyzers(): Promise<AnalyzersApiResponse> {
     return await this.requestJson('/v1/analyzers', AnalyzersApiResponse)
   }
@@ -90,14 +81,19 @@ export class AnalyzeClient {
   }
 
   private getBaseUrl() {
-    return (
-      this.options.baseUrl ?? process.env.L2ANALYZE_URL ?? DEFAULT_ANALYZE_URL
-    )
+    const baseUrl = process.env.L2ANALYZE_URL
+    if (!baseUrl) {
+      throw new AnalyzeClientError(
+        500,
+        'L2ANALYZE_URL environment variable is not set',
+      )
+    }
+    return baseUrl
   }
 
   private getHeaders() {
     const headers = new Headers()
-    const apiKey = this.options.apiKey ?? process.env.L2ANALYZE_API_KEY
+    const apiKey = process.env.L2ANALYZE_API_KEY
     if (apiKey) {
       headers.set('Authorization', `Bearer ${apiKey}`)
     }

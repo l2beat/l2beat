@@ -1,4 +1,5 @@
 import * as RadixSelect from '@radix-ui/react-select'
+import { cva, type VariantProps } from 'class-variance-authority'
 import clsx from 'clsx'
 import { IconChecked } from '../icons/IconChcked'
 import { IconChevronDown } from '../icons/IconChevronDown'
@@ -18,12 +19,30 @@ function SelectRoot({ children, ...props }: RadixSelect.SelectProps) {
   return <RadixSelect.Root {...props}>{children}</RadixSelect.Root>
 }
 
+const selectTriggerVariants = cva(
+  'flex items-center justify-between data-[state=open]:border-b-0',
+  {
+    variants: {
+      size: {
+        small: '',
+        default: 'px-2.5',
+      },
+    },
+    defaultVariants: {
+      size: 'small',
+    },
+  },
+)
+
 function SelectTrigger({
   children,
   className,
   placeholder,
+  size = 'small',
   ...props
-}: RadixSelect.SelectTriggerProps & { placeholder?: string }) {
+}: RadixSelect.SelectTriggerProps & {
+  placeholder?: string
+} & VariantProps<typeof selectTriggerVariants>) {
   return (
     <RadixSelect.Trigger
       className={clsx(
@@ -33,10 +52,7 @@ function SelectTrigger({
       {...props}
       asChild
     >
-      <Button
-        size="small"
-        className="flex items-center justify-between data-[state=open]:border-b-0"
-      >
+      <Button size={size} className={selectTriggerVariants({ size })}>
         <RadixSelect.Value placeholder={placeholder ?? 'Select'} />
         <RadixSelect.Icon>
           <IconChevronDown />
