@@ -1,4 +1,9 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -128,6 +133,38 @@ export const edgex: ScalingProject = {
         ),
         tokens: ['USDT'],
       }),
+    ],
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xfAaE2946e846133af314d1Df13684c89fA7d83DD',
+          ),
+          selector: '0x538f9406',
+          functionSignature:
+            'function updateState(uint256[] programOutput, uint256[] applicationData)',
+          sinceTimestamp: UnixTime(1720436183),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          programHashes: [
+            '2530337539466159944237001094809327283009177793361359619481044346150483328860',
+          ],
+          sinceTimestamp: UnixTime(1720435919),
+        },
+      },
     ],
   },
   dataAvailability: {
