@@ -25,6 +25,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { Sentiment } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 import stakeDistribution from './stake-distribution.json'
 
 const discovery = new ProjectDiscovery('aztecnetwork')
@@ -459,7 +460,11 @@ export const aztecnetwork: ScalingProject = {
     },
     sequencing: {
       name: 'Transactions are ordered by a staked validator committee',
-      description: `Joining the sequencer set is permissionless and requires staking ${activationThresholdString}. For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer from the current committee per slot. More than 2/3 of the sequencers in the committee need to attest to each proposed block in an epoch for it to be valid.`,
+      description: readProjectMarkdown('aztecnetwork', 'technologySequencing', {
+        activationThresholdString,
+        targetCommitteeSize,
+        activeSequencerCount,
+      }),
       sequencerSetSpec: {
         slotTime: { value: formatSeconds(slotDuration) },
         epochTime: {
@@ -493,13 +498,11 @@ export const aztecnetwork: ScalingProject = {
       },
       inclusionDelayChartDescription:
         'The chart models live-chain selective censorship only. It does not model the escape hatch, validator-set changes, validator-set lag, and blanket-censorship resistance gadgets.',
-      censorshipResistance: `The committee and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations. The bond is ${escapeHatchBondString}, a high amount that is supposed to protect the single-proof system in case of bugs while still providing a last resort opportunity to circumvent the sequencer set. Aztec has developed a full private execution environment on the L2. This can benefit users because they cannot be censored based on their transaction content.
-### Selective censorship
-On a live Aztec L2 with a given fraction of censoring sequencers, users can either send private transactions or wait for a non-censoring committee and proposing sequencer to include their public transaction.
-### Blanket censorship
-If users are censored by the entire sequencer set, even if it stops block production just to censor, anyone can join the sequencer set permissionlessly at the churn rate or circumvent it completely by bonding and using the escape hatch. In both cases, expensive hardware is required to provide the required validity proof. Motivated censorers can try to saturate the entry queue and the escape hatch with their own new sequencers and thus lower the inclusion chances of the censored.
-### Walkaway
-In the scenario of all sequencers stopping their service, the escape hatch provides an inclusion guarantee of ${escapeHatchFrequencyString} in the worst case and the sequencer set can heal long-term by permissionless entry and churn.`,
+      censorshipResistance: readProjectMarkdown(
+        'aztecnetwork',
+        'censorshipResistance',
+        { escapeHatchBondString, escapeHatchFrequencyString },
+      ),
       references: [
         {
           title: 'Aztec docs - Privacy considerations',
@@ -570,7 +573,11 @@ In the scenario of all sequencers stopping their service, the escape hatch provi
       },
       {
         name: 'Inclusion is probabilistic',
-        description: `All censorship resistance tools that are part of the protocol rely on probabilistic inclusion. In contrast to "forced transactions", there is no simple deterministic inclusion after some maximum delay, but rather different inclusion probabilities after different time horizons. The "time needed to exit" of ${formatSeconds(hardCodedExitSimTime)} for the exit window was simulated by using a simple model of the decentralized sequencer set at launch. The escape hatch and private transactions can give additional inclusion guarantees.`,
+        description: readProjectMarkdown(
+          'aztecnetwork',
+          'technologyOtherConsiderations3',
+          { hardCodedExitSimTime: formatSeconds(hardCodedExitSimTime) },
+        ),
         references: [
           {
             title: 'CRsim - Simulated inclusion probability on Aztec',
@@ -611,22 +618,27 @@ In the scenario of all sequencers stopping their service, the escape hatch provi
       },
       {
         title: 'Slashing',
-        description: `
-Each stake of ${activationThresholdString} that is locked to join the sequencer set and vote in governance can be slashed under certain conditions. Slashing is voted on by sequencers each time they propose a checkpoint and is grouped in rounds that span ${epochsPerRound} epochs (${formatSeconds(epochsPerRound * epochDuration)}) each.
-
-Slashing conditions are programmed into each sequencer node and can be changed by node operators by updating or editing their node software. Nodes usually submit votes to slash automatically on L1. The \`TallySlashingProposer\` contract only enforces the formalities of the slashing system:
-* A given slashing round's votes always target the checkpoint proposals from ${slashOffsetRounds} rounds ago.
-* As soon as a round's votes have reached a quorum of ${tallySlashQuorum}/${slotsPerRound}, it enters an execution delay of ${slashPayloadExecutionDelayRounds} rounds (${formatSeconds(slashPayloadExecutionDelayRounds * epochsPerRound * epochDuration)})
-* An automatically generated slashing payload is executable by anyone on L1 after the execution delay, applying the slashing penalties defined by the sequencer votes.
-
-Slashing penalties are defined onchain in three levels: large (${slashAmount.large}), medium (${slashAmount.medium}), and small (${slashAmount.small}). Offenses that lead to slashing usually include:
-* Inactivity: A sequencer fails to attest or propose when selected.
-* Data Withholding: A sequencer proposes a checkpoint including state diff data availability on L1 but withholds the public transaction bodies and/or CHONK proofs required for permissionless proving.
-* Invalidity: A sequencer attests to invalid proposals, multiple conflicting proposals, with invalid signatures, or proposes a block that is not proven in time.
-
-The above offense list is not exhaustive and not defined onchain but usually in the software the sequencers decide to run. This is also where the mapping of offenses to the slashing penalty levels can be defined.
-
-The SlashVeto Council is a ${slashVetoStats} Multisig that can veto specific proposals and/or all slashing for ${slashingDisableDurationString} at a time.`,
+        description: readProjectMarkdown(
+          'aztecnetwork',
+          'stateValidationSlashing',
+          {
+            activationThresholdString,
+            epochsPerRound,
+            roundDuration: formatSeconds(epochsPerRound * epochDuration),
+            slashOffsetRounds,
+            tallySlashQuorum,
+            slotsPerRound,
+            slashPayloadExecutionDelayRounds,
+            slashExecutionDelay: formatSeconds(
+              slashPayloadExecutionDelayRounds * epochsPerRound * epochDuration,
+            ),
+            slashAmountLarge: slashAmount.large,
+            slashAmountMedium: slashAmount.medium,
+            slashAmountSmall: slashAmount.small,
+            slashVetoStats,
+            slashingDisableDurationString,
+          },
+        ),
         references: [
           {
             title: 'Slashing - Aztec Docs',
@@ -651,41 +663,24 @@ The SlashVeto Council is a ${slashVetoStats} Multisig that can veto specific pro
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   upgradesAndGovernance: {
-    content: `
-# Standard Path (Signaling)
-Because sequencers stake AZTEC tokens to secure the L2 network, they are also the primary governors of the system. Any governance proposal must be encoded and deployed as a smart contract payload on Ethereum. While core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a ${governanceExecutionDelayString} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system. These permissions can only be accessed through the process described below.
-
-## 1. The Signaling Phase (\`GovernanceProposer\`)
-Aztec uses an onchain "Empire" signaling system. Active sequencers operating on the 'canonical rollup' (as defined by the Registry) call \`signal(payloadAddress)\` on the L1 \`GovernanceProposer\` contract during their designated L2 slots to support a specific upgrade payload. A voting round consists of ${governanceSignalRoundSizeString} slots. To win a round and become a formal proposal, a payload must receive signals from at least ${governanceSignalQuorumSizeString} slots. Once quorum is reached, the payload is submitted to the L1 \`Governance\` contract.
-
-## 2. The Voting Phase (\`Governance\`)
-Once submitted, the proposal enters a delay and voting flow:
-*   **Pending (${governanceVotingDelayString}):** At the end of this delay, voting power is snapshotted.
-*   **Active (${governanceVotingDurationString}):** AZTEC token holders can vote. To pass, a proposal must reach a ${governanceQuorumString} Quorum of all staked power, and the \`yea\` votes must exceed a required margin of ${governanceRequiredYeaMarginString}.
-*   **Queued (${governanceExecutionDelayString}):** If successful, the proposal enters an execution delay. This acts as an exit window, allowing dissenting sequencers to initiate a withdrawal of their staked tokens before the malicious/disagreed-upon code is executed.
-*   Executable (${governanceGracePeriodString}): The proposal enters a grace period where anyone can call \`execute()\`. If not executed, it expires.
-
-Total standard delay from proposal to execution: **${governanceTotalDelayString}**.
-
-### Emergency Path (Circumvent Signaling)
-If the L2 sequencer set is offline, censoring, or acting maliciously, the \`GovernanceProposer\` cannot be used. To ensure liveness, anyone can bypass the Sequencer signaling phase using the \`proposeWithLock()\` function directly on the \`Governance\` contract.
-*   An actor must lock **${governanceLockString}**, roughly ${governanceLockShareOfSupplyString} of total supply
-*   These funds are locked for an extended ${governanceLockDelayString}.
-*   Once proposed, the payload enters the exact same ${governanceTotalDelayString} Voting Phase (Pending -> Active -> Queued -> Executable) as the standard path.
-
-### Rollup Immutability
-The smart contract code of \`Rollup\`, its verifier and its canonical messaging contracts cannot be changed. However, \`Governance\` owns critical permissions for configuration parameters that can freeze the L2 indefinitely. 'Upgrading' a Rollup contract involves a \`Governance\` action that designates a new \`Rollup\` contract address as canonical. The \`GSE\` (Governance Staking Escrow) automatically migrates the voting power and stake of all active sequencers to the new rollup version if they staked to the default magic address \`${bonusInstanceAddress.toString()}\` instead of a specific immutable rollup. Importantly, \`Governance\` retains ownership of the old rollup, with the permissions to freeze it in the same or any future governance proposal. In summary and practice, the current Aztec rollup system is not immutable and prone to governance changes with the configured ${governanceExecutionDelayString} delay.
-
-### Slashing and the SlashVeto Council
-Aztec features onchain slashing for equivocation or missing attestations, managed by \`Slasher\` and \`TallySlashingProposer\`. 
-
-There is a protective **Vetoer** role held by the SlashVeto Council. The Council cannot upgrade the protocol, alter governance, or steal funds. Instead it is limited to two permissions:
-*   call \`vetoPayload()\` to stop a specific slashing event.
-*   call \`setSlashingEnabled(false)\`, which pauses all slashing in the protocol for a period of ${slashingDisableDurationString}.
-
-### Economics & Treasury
-*   **Coin Issuer:** The \`CoinIssuer\` contract is owned by Governance and is authorized to mint new AZTEC tokens up to a cap of ${coinIssuerNominalAnnualPercentageCapString}.
-*   **Protocol Treasury:** Funds owned by the DAO sit in the \`ProtocolTreasury\`. The Treasury has a hardcoded timestamp (approx. ${protocolTreasuryGatedUntilString}). Before this date, the DAO cannot spend Treasury funds. After this date, Treasury funds and token ownership can be moved with a Governance Proposal.`,
+    content: readProjectMarkdown('aztecnetwork', 'upgradesAndGovernance', {
+      governanceExecutionDelayString,
+      governanceSignalRoundSizeString,
+      governanceSignalQuorumSizeString,
+      governanceVotingDelayString,
+      governanceVotingDurationString,
+      governanceQuorumString,
+      governanceRequiredYeaMarginString,
+      governanceGracePeriodString,
+      governanceTotalDelayString,
+      governanceLockString,
+      governanceLockShareOfSupplyString,
+      governanceLockDelayString,
+      bonusInstanceAddress: bonusInstanceAddress.toString(),
+      slashingDisableDurationString,
+      coinIssuerNominalAnnualPercentageCapString,
+      protocolTreasuryGatedUntilString,
+    }),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [

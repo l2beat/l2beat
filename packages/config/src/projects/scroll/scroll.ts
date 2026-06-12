@@ -25,6 +25,7 @@ import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('scroll')
 
@@ -513,7 +514,11 @@ export const scroll: ScalingProject = {
     ...discovery.getDiscoveredPermissions(),
   },
   upgradesAndGovernance: {
-    content: `All core contracts in the Scroll protocol are upgradable by the \`ProxyAdmin\`, which is controlled by the \`ScrollAdminMultisig\` through the \`ScrollOwner\` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the \`ScrollAdminMultisig\` and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. On 2026-06-01, Scroll removed its independent 9-of-12 Security Council and transferred its roles on the \`TimelockSCSlow\` (${formatExecutionDelay(slowUpgradeDelay)}) and \`TimelockSCEmergency\` (${formatExecutionDelay(upgradeDelay)}) on both chains to the \`ScrollAdminMultisig\`, along with admin of the L2 \`AgoraGovernor\`. Emergency pause of core contracts is managed through the \`PauseController\`, which allows the team to pause batch commitment and finalization in permissioned mode, as well as L1->L2 messaging. Each pause is subject to a cooldown period of ${formatExecutionDelay(cooldownPeriod)}, during which the \`Scroll Security Council Minority\` can unpause. SCR token holders perform onchain voting on governance proposals through the \`AgoraGovernor\` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check.`,
+    content: readProjectMarkdown('scroll', 'upgradesAndGovernance', {
+      slowUpgradeDelay: formatExecutionDelay(slowUpgradeDelay),
+      upgradeDelay: formatExecutionDelay(upgradeDelay),
+      cooldownPeriod: formatExecutionDelay(cooldownPeriod),
+    }),
   },
   milestones: [
     {

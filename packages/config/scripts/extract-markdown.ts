@@ -23,6 +23,20 @@ const FIELD_ALLOWLIST = new Set([
   'inclusionDelayChartDescription',
 ])
 
+const NAME_IRRELEVANT_IDENTIFIERS = new Set([
+  'formatSeconds',
+  'formatLargeNumber',
+  'formatBasisPoints',
+  'formatExecutionDelay',
+  'formatChallengePeriod',
+  'formatEther',
+  'toString',
+  'Number',
+  'String',
+  'Math',
+  'BigInt',
+])
+
 main()
 function main() {
   const filter = process.argv.slice(2)
@@ -45,8 +59,10 @@ function main() {
 }
 
 interface Candidate {
-  node: ts.NoSubstitutionTemplateLiteral
+  node: ts.NoSubstitutionTemplateLiteral | ts.TemplateExpression
   mdName: string
+  content: string
+  vars: Record<string, string>
 }
 
 function processFile(slug: string, filePath: string): number {
@@ -66,16 +82,23 @@ function processFile(slug: string, filePath: string): number {
       ts.isPropertyAssignment(node) &&
       ts.isIdentifier(node.name) &&
       FIELD_ALLOWLIST.has(node.name.text) &&
-      ts.isNoSubstitutionTemplateLiteral(node.initializer) &&
-      qualifies(node.initializer.text)
+      (ts.isNoSubstitutionTemplateLiteral(node.initializer) ||
+        ts.isTemplateExpression(node.initializer))
     ) {
       const chain = propertyChain(node)
-      const mdName = deriveName(chain, siblingTitle(node))
-      if (mdName) {
-        candidates.push({ node: node.initializer, mdName })
-      } else {
+      const parsed = parseTemplate(node.initializer, sourceFile)
+      if (parsed && qualifies(parsed.content)) {
+        const mdName = deriveName(chain, siblingTitle(node))
+        if (mdName) {
+          candidates.push({ node: node.initializer, mdName, ...parsed })
+        } else {
+          console.log(
+            `SKIP (no name rule): ${slug} ${chain.join('.')} in ${filePath}`,
+          )
+        }
+      } else if (!parsed) {
         console.log(
-          `SKIP (no name rule): ${slug} ${chain.join('.')} in ${filePath}`,
+          `SKIP (complex interpolation): ${slug} ${chain.join('.')} in ${filePath}`,
         )
       }
     }
@@ -94,16 +117,23 @@ function processFile(slug: string, filePath: string): number {
   }
 
   let result = source
-  for (const { node, mdName } of [...candidates].reverse()) {
+  for (const { node, mdName, content, vars } of [...candidates].reverse()) {
     const mdPath = join(PROJECTS_DIR, slug, `${mdName}.md`)
     if (existsSync(mdPath)) {
       console.log(`SKIP (md exists): ${mdPath}`)
       continue
     }
-    writeFileSync(mdPath, `${dedent(node.text)}\n`)
+    writeFileSync(mdPath, `${dedent(content)}\n`)
+    const entries = Object.entries(vars)
+    const varsArg =
+      entries.length === 0
+        ? ''
+        : `, { ${entries
+            .map(([name, expr]) => (name === expr ? name : `${name}: ${expr}`))
+            .join(', ')} }`
     result =
       result.slice(0, node.getStart(sourceFile)) +
-      `readProjectMarkdown('${slug}', '${mdName}')` +
+      `readProjectMarkdown('${slug}', '${mdName}'${varsArg})` +
       result.slice(node.getEnd())
     console.log(`${slug}: ${mdName}.md`)
   }
@@ -123,6 +153,57 @@ function processFile(slug: string, filePath: string): number {
 
 function qualifies(text: string): boolean {
   return text.trim().length >= 400 || /(^|\n)#{2,3} /.test(text)
+}
+
+/**
+ * Turns a template literal into md content with {{name}} placeholders and a
+ * name -> expression-source map. Returns undefined when a var name cannot be
+ * derived unambiguously (handle those by hand).
+ */
+function parseTemplate(
+  node: ts.NoSubstitutionTemplateLiteral | ts.TemplateExpression,
+  sourceFile: ts.SourceFile,
+): { content: string; vars: Record<string, string> } | undefined {
+  if (ts.isNoSubstitutionTemplateLiteral(node)) {
+    return { content: node.text, vars: {} }
+  }
+  let content = node.head.text
+  const vars: Record<string, string> = {}
+  for (const span of node.templateSpans) {
+    const expr = span.expression.getText(sourceFile)
+    const name = deriveVarName(span.expression)
+    if (!name) return undefined
+    // same name must always refer to the same expression
+    if (vars[name] !== undefined && vars[name] !== expr) return undefined
+    vars[name] = expr
+    content += `{{${name}}}${span.literal.text}`
+  }
+  return { content, vars }
+}
+
+/** `${foo}` -> foo, `${a.foo}` -> foo, `${formatSeconds(a.foo)}` -> foo, anything ambiguous -> undefined */
+function deriveVarName(expression: ts.Expression): string | undefined {
+  if (ts.isIdentifier(expression)) return expression.text
+  if (ts.isPropertyAccessExpression(expression)) return expression.name.text
+  if (
+    ts.isCallExpression(expression) &&
+    expression.arguments.length === 1 &&
+    ts.isIdentifier(expression.expression) &&
+    NAME_IRRELEVANT_IDENTIFIERS.has(expression.expression.text)
+  ) {
+    return deriveVarName(expression.arguments[0])
+  }
+  const identifiers = new Set<string>()
+  function walk(node: ts.Node) {
+    if (ts.isIdentifier(node)) identifiers.add(node.text)
+    ts.forEachChild(node, walk)
+  }
+  walk(expression)
+  const relevant = [...identifiers].filter(
+    (id) => !NAME_IRRELEVANT_IDENTIFIERS.has(id),
+  )
+  if (relevant.length === 1) return relevant[0]
+  return undefined
 }
 
 /** Property names (and array indices) from the project object root to this assignment. */

@@ -283,7 +283,9 @@ export const polygonpos: ScalingProject = {
     //exitMechanisms: [],
     sequencing: {
       name: 'Transactions are ordered by Polygon PoS validators',
-      description: `Polygon PoS is operated by a closed proof-of-stake validator set with ${currentValidatorSetSize} active validators. Block production rights are given to validators randomly (stake-weighted) for the duration of a *span*. In practice, validators delegate the block production further to centralised validator-elected block producers (VeBloPs). Ethereum smart contracts accept checkpoints signed by more than two thirds of Polygon PoS validator stake.`,
+      description: readProjectMarkdown('polygon-pos', 'technologySequencing', {
+        currentValidatorSetSize,
+      }),
       sequencerSetSpec: {
         slotTime: { value: formatSeconds(polygonBlockSeconds) },
         epochTime: {

@@ -19,6 +19,7 @@ import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('lighter')
 
@@ -244,7 +245,11 @@ export const lighter: ScalingProject = {
     },
     forceTransactions: {
       name: 'Users can force their transactions on L1',
-      description: `If the centralized operators fail to include user transactions, users can force them themselves through L1. The possible transaction types that users can force are: deposits, withdrawals, order creation, order cancellation, and burning of pool shares. If the operators do not process forced transactions within ${formatSeconds(priorityExpiration)}, the system can be frozen (desert mode) and users can exit using the latest settled state. All open positions are settled using the latest index price.`,
+      description: readProjectMarkdown(
+        'lighter',
+        'technologyForceTransactions',
+        { priorityExpiration: formatSeconds(priorityExpiration) },
+      ),
       risks: [],
       references: [],
     },

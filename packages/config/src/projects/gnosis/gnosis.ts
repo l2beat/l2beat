@@ -178,7 +178,16 @@ export const gnosis: ScalingProject = {
     categories: [
       {
         title: 'No state validation',
-        description: `Gnosis Chain is an independent proof-of-stake chain. Ethereum contracts do not check whether Gnosis state transitions are valid. Cross-chain messages are executed when the relevant bridge contract receives enough validator signatures: ${xDaiBridgeRequiredSignatures}/${xDaiBridgeValidatorCount} for the xDAI bridge and ${ambBridgeRequiredSignatures}/${ambBridgeValidatorCount} for AMB and Omnibridge.`,
+        description: readProjectMarkdown(
+          'gnosis',
+          'stateValidationNoStateValidation',
+          {
+            xDaiBridgeRequiredSignatures,
+            xDaiBridgeValidatorCount,
+            ambBridgeRequiredSignatures,
+            ambBridgeValidatorCount,
+          },
+        ),
         references: [
           {
             title: 'xDAI Bridge documentation',
