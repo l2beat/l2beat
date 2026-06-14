@@ -1,3 +1,4 @@
+import type { InteropType } from '@l2beat/config'
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
@@ -5,6 +6,7 @@ import type {
 } from '@l2beat/database'
 import { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import type { InteropFlowData } from './utils/getFlows'
 import type { TopItems } from './utils/getTopItems'
 
@@ -15,6 +17,7 @@ export type ProtocolEntry = {
   name: string
   shortName: string | undefined
   description: string | undefined
+  type: InteropType
   bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:
@@ -34,8 +37,15 @@ export type ProtocolEntry = {
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
   netMintedValue: number | undefined
+  topRoute:
+    | {
+        srcChain: { id: string; name: string; iconUrl: string }
+        dstChain: { id: string; name: string; iconUrl: string }
+        volume: number
+      }
+    | undefined
   snapshotTimestamp: number | undefined
-}
+} & FilterableEntry
 
 export type ProtocolDisplayable = {
   name: string
@@ -84,6 +94,12 @@ export const InteropDashboardParams = v.object({
 export type InteropProtocolParams = v.infer<typeof InteropProtocolParams>
 export const InteropProtocolParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
+  ...InteropSelectionInputShape,
+})
+
+export type InteropTokenParams = v.infer<typeof InteropTokenParams>
+export const InteropTokenParams = v.object({
+  tokenId: v.string(),
   ...InteropSelectionInputShape,
 })
 
@@ -147,8 +163,28 @@ export const InteropProtocolTransfersParams = v.object({
   cursor: InteropProtocolTransfersCursor.optional(),
 })
 
+export type InteropTokenTransfersParams = v.infer<
+  typeof InteropTokenTransfersParams
+>
+export const InteropTokenTransfersParams = v.object({
+  tokenId: v.string(),
+  ...InteropSelectionInputShape,
+  snapshotTimestamp: v.number(),
+  limit: v.number().optional(),
+  cursor: InteropProtocolTransfersCursor.optional(),
+})
+
 export type InteropFlowsParams = v.infer<typeof InteropFlowsParams>
 export const InteropFlowsParams = v.object({
+  chains: v.array(v.string()),
+  protocolIds: v.array(v.string()),
+  tokenId: v.string().optional(),
+})
+
+export type InteropProtocolsByVolumeParams = v.infer<
+  typeof InteropProtocolsByVolumeParams
+>
+export const InteropProtocolsByVolumeParams = v.object({
   chains: v.array(v.string()),
   protocolIds: v.array(v.string()),
 })
@@ -158,9 +194,13 @@ export type InteropProtocolTransferDetailsItem = {
   timestamp: number
   srcAmount: number | undefined
   srcSymbol: string
+  srcAbstractTokenId: string | undefined
+  srcTokenIssuer: string | null
   srcTokenIconUrl: string
   dstAmount: number | undefined
   dstSymbol: string
+  dstAbstractTokenId: string | undefined
+  dstTokenIssuer: string | null
   dstTokenIconUrl: string
   valueUsd: number | undefined
   duration: number | undefined
@@ -186,6 +226,21 @@ export type AggregatedInteropTransferWithTokens =
       'id' | 'timestamp' | 'srcChain' | 'dstChain' | 'bridgeType'
     >[]
   }
+
+export type ScopedInteropTransfer = Pick<
+  AggregatedInteropTransferWithTokens,
+  'id' | 'timestamp' | 'bridgeType' | 'srcChain' | 'dstChain'
+> &
+  CommonInteropData & {
+    tokens: [AggregatedInteropTransferWithTokens['tokens'][number]]
+    volume: number
+    identifiedCount: number
+    avgValueInFlight: undefined
+  }
+
+export type InteropTransferWithTokens =
+  | AggregatedInteropTransferWithTokens
+  | ScopedInteropTransfer
 
 export type CommonInteropData = {
   volume: number
@@ -234,8 +289,8 @@ export type InteropTokensResponse = {
 
 export type TokensPairData = {
   id: string
-  tokenA: { symbol: string; iconUrl: string }
-  tokenB: { symbol: string; iconUrl: string }
+  tokenA: { id: string; symbol: string; issuer: string | null; iconUrl: string }
+  tokenB: { id: string; symbol: string; issuer: string | null; iconUrl: string }
   topProtocol: ProtocolDisplayable | undefined
   volume: number | null
   transferCount: number

@@ -1,3 +1,99 @@
+Generated with discovered.json: 0xc20a98d52ec760bca1b9aa10d6b38fe82e79198c
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780398259
+- current timestamp: 1780398259
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780398259 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x3f90c4913621e6758eB8767EA934FCa59ae5Dee8) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      receivedPermissions.1.permission:
+-        "validate"
++        "interact"
+      receivedPermissions.2.permission:
+-        "validate"
++        "interact"
+      receivedPermissions.3.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      directlyReceivedPermissions.1.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x9f787F6e07469BBA84f0BE488c42eDC4c766cC83) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (arb1:0xDbB10Cdb2F0611C311E7D7057794a690E7872005) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x4c9d53d834194bbc9004513c884d4ecb0e052b6b
+
+# Diff at Tue, 02 Jun 2026 11:05:54 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1779198854
+- current timestamp: 1780398259
+
+## Description
+
+SequencerInbox DAC keyset grew 3 → 5 members; threshold unchanged at 2, so committee shifted 2-of-3 → 2-of-5.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.dacKeyset.membersCount:
+-        3
++        5
+      values.dacKeyset.blsSignatures.3:
++        "YA8PdhR9G6EFhblLWymAJ931fvjjb4tOk4a377DXogOfYChxbQETJT3GBYtAvIMmlRUujXEY4uCXjmv5toOcVoDkU4w1wYSvoK3r441hwJw7pG+R+aeGUINtROsxI9sqwhiafKADPPdxLy80mUTK5oIaPztF7RG2WhKMFNK7Ebjsrn4si90qAKRIt7sfneEO4wdeuC5erBen3tLJ7lE32uCi13sEJZYU7UKfr2cwoDQSZyvYePb2KX9U3bHhTpXBbwGKg2pIUGZ5g5GiOuV42wdbfqMjrsOZiLuMbgyYfVl3OOUpDUPGZyupZdGvkzk0rhGY/O/dF1Pv+BCcuX9qUCldfrFYiAvWqYcny+5xKXSQLSlU9cBdTePXy/dotyR7vA=="
+      values.dacKeyset.blsSignatures.4:
++        "YBP6/hdXzakIwPZ68/ORUMDJcuhMwQr/C9anzOd5pbWBokbORN1nrEGAOJMmRfLLtRdcABs+DNEopeD4JnwdzbB5e3pHjqqhJvFJzPQ+Rvvo3uPhbECR/Ptf0Umd35mD+AQPB0rLQbAngxs8tNUnS6IllQIW/FeEGm3LwjZ32m+D08Vh5rgqMKWOpGk/Op4sIhGP3Ishpq6yC/kd+GVSDj+vc30oOuNzVtsuAGMTTy8SmlNR47eVX9eMW9bEWIk65QCAaO4T5EqH5IWNKmWZI0Q0yGSHgvslmUZHApw2vIXn0rrzc5DwyUcgn3XZz2H5vhUXvV95qFARTQ9V7SDIXr134ixoaAmhEHqeav9vhlVZE13e9ghd5iNr6BZQn7SrpQ=="
+      values.keySetUpdates:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0x486adf499f2bef2ac4caadaece48b8cab420a301
 
 # Diff at Fri, 22 May 2026 15:41:47 GMT:

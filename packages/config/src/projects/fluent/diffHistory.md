@@ -1,3 +1,151 @@
+Generated with discovered.json: 0xaaf199cc5c4ec4ddd8baad0fb7232eb74cf64e1a
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780653849
+- current timestamp: 1780653849
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780653849 (main branch discovery), not current.
+
+```diff
+    EOA FluentAdminEOA (eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA FluentProverEOA (eth:0xB9E6f78a0F35F96b806D0359AbB251117aCe255C) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA FluentEnclaveAttesterEOA (eth:0xef9Dc1F87BAA090a35B985DAad9c8096440F2012) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+    }
+```
+
+```diff
+    EOA FluentSequencerEOA (eth:0xFd58Bc438d910088C413b889Eaa0aded5C0d1c26) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x1b7b5494de277dc6ffcba400e196521568ca4bb0
+
+# Diff at Fri, 05 Jun 2026 10:05:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778589577
+- current timestamp: 1780653849
+
+## Description
+
+L1FluentBridge implementation swapped by FluentMultisig on 2026-05-20: `0x047A…C227` → `0xF67255…F849` ([diff](https://disco.l2beat.com/diff/eth:0x047AaDf25df7D17bB5B6b1FF31cecD1E4973C227/eth:0xF67255be817061139C9DeeA757f7276916cBF849)). Key changes:
+
+- `receiveMessageWithProof` is now **permissionless** — the `onlyRole(RELAYER_ROLE)` gate was removed, so anyone can relay an L2→L1 message from a preconfirmed or finalized batch. `RELAYER_ROLE` no longer gates the live L1 receive path.
+- Message execution gas is now bounded by `executeGasLimit` instead of `gasleft()` (`_receiveMessage(getExecuteGasLimit(), …)`); the configured limit changed 5000 → 550000, and a `ReceivedMessage(hash, success, data)` event is emitted.
+- Bare ETH transfers to the bridge are rejected — the `receive() external payable {}` fallback was deleted, so ETH must go through `NativeGateway`.
+- `_beforeReceiveMessage` hook gains a `bytes32 messageHash` parameter (propagated through `receiveMessageWithProof` and `receiveFailedMessage`).
+- `registerGateway` now requires the target to be a contract and rejects double-registration; `unregisterGateway` rejects unknown addresses.
+- `rollbackMessageWithProof` still reverts `NOT_IMPLEMENTED`.
+
+## Watched changes
+
+```diff
+    contract L1FluentBridge (eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc) [fluent/L1FluentBridge] {
+    +++ description: Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets anyone process L2->L1 messages with two Merkle proofs against a preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE.
+      sourceHashes.1:
+-        "0x7bda96bf482f46806c7ec01435c28a85aa1cac36fddebecc38ed1b28e23ebc12"
++        "0x73f59c197fe2e902ffd1c1e9ee49d52d05e0df7bf001e7e56cc3d82339a457ea"
+      values.$implementation:
+-        "eth:0x047AaDf25df7D17bB5B6b1FF31cecD1E4973C227"
++        "eth:0xF67255be817061139C9DeeA757f7276916cBF849"
+      values.$pastUpgrades.6:
++        ["2026-05-20T15:00:23.000Z","0x5683f1be2880db1238db0cafc17623f895de685541543b5fd577efdfec53429c",["eth:0xF67255be817061139C9DeeA757f7276916cBF849"]]
+      values.$upgradeCount:
+-        6
++        7
+      implementationNames.eth:0x047AaDf25df7D17bB5B6b1FF31cecD1E4973C227:
+-        "L1FluentBridge"
+      implementationNames.eth:0xF67255be817061139C9DeeA757f7276916cBF849:
++        "L1FluentBridge"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1FluentBridge/L1FluentBridge.sol              | 471 ++++++++++++++-------
+ 1 file changed, 319 insertions(+), 152 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778589577 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"relay","from":"eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc","description":"deliver L2->L1 messages on L1 via receiveMessageWithProof; this is the only entry point for first-time delivery, so user withdrawals progress only when a holder of this role acts (failed-execution retries via receiveFailedMessage are permissionless once a message has been delivered at least once).","role":".relayerAC"}]
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      template:
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.0.0)."
+    }
+```
+
+```diff
+    contract L1FluentBridge (eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc) [fluent/L1FluentBridge] {
+    +++ description: Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets anyone process L2->L1 messages with two Merkle proofs against a preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE.
+      description:
+-        "Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets relayers process L2->L1 messages with two Merkle proofs against the latest preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE."
++        "Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets anyone process L2->L1 messages with two Merkle proofs against a preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE."
+      values.relayerAC:
+-        ["eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48"]
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      template:
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v6.1.0)."
+    }
+```
+
 Generated with discovered.json: 0x2a715f75d799d10de6f858c25495805742c9b703
 
 # Diff at Tue, 12 May 2026 12:40:42 GMT:

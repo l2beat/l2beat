@@ -79,6 +79,14 @@ export function InteropSelectedChainsProvider({
       return
     }
 
+    const currentSelection = parseInteropSelectionFromSearchParams({
+      searchParams: new URLSearchParams(window.location.search),
+      interopChainsIds: allChainIds,
+    })
+    if (isSameSelection(currentSelection, debouncedSelection)) {
+      return
+    }
+
     const nextUrl = buildInteropUrl(
       window.location.pathname,
       debouncedSelection,
@@ -100,7 +108,7 @@ export function InteropSelectedChainsProvider({
       chains,
       page: window.location.pathname,
     })
-  }, [debouncedSelection, track])
+  }, [debouncedSelection, allChainIds, track])
 
   useEventListener('popstate', () => {
     skipNextUrlUpdate.current = true
@@ -209,6 +217,15 @@ function toggleSelection(
   }
 
   return allChainIds.filter((id) => nextSet.has(id))
+}
+
+function isSameSelection(left: InteropSelection, right: InteropSelection) {
+  return (
+    left.from.length === right.from.length &&
+    left.to.length === right.to.length &&
+    left.from.every((value, index) => value === right.from[index]) &&
+    left.to.every((value, index) => value === right.to[index])
+  )
 }
 
 export function useInteropSelectedChains() {

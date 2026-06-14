@@ -1,3 +1,221 @@
+Generated with discovered.json: 0x70598007ac9aab81f908fedc1052b815a10004cc
+
+# Diff at Fri, 12 Jun 2026 10:18:40 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780654139
+- current timestamp: 1780654139
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780654139 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0xc1f28bb545e9326e60e3103d76cbb7eb263fc8d6
+
+# Diff at Tue, 09 Jun 2026 12:43:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780654139
+- current timestamp: 1780654139
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780654139 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xC5dD640885cE582464e2fCa7b169581417822e6C) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xef6Ef32bcC96B9D94f50A51A42dB4825D6337780) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x094080cb6b6973e34da8222d04ef150e4b839eb3
+
+# Diff at Fri, 05 Jun 2026 10:10:05 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3501d14787f111a20580bca1fdb97e32abfb1f2c block: 1779719407
+- current timestamp: 1780654139
+
+## Description
+
+Changes in `EspressoTEEVerifier` (high-level gateway): https://disco.l2beat.com/diff/eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0/eth:0x51835Bbc68679Dd236cC7ed333d1F52a181975e0. Summary:
+
+- Removed Intel SGX TEE support (only Nitro TEE attestations now)
+- Migrated to upgradeable TEE verifier
+- Added some admin / owner functions: `setNitroEnclaveVerifier`, `deleteEnclaveHashes`, `setEnclaveHash`, `setEspressoNitroTEEVerifier`
+
+Changes in `EspressoNitroTEEVerifier`: https://disco.l2beat.com/diff/eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f/eth:0x4e98A1a038831B7D756ea9214508C4b34f4e4D3a. Summary:
+
+- Removed explicit owner address, now this role is taken by `EspressoTEEVerifier` contract.
+- Refactored, e.g. added `TEEHelper`.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract NitroEnclaveVerifier (eth:0x0d1AD56885440A92799dC766D65B5C8377c60A35) [espresso/Sequencing/NitroEnclaveVerifier]
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x294a1Ee119C4B2510530572481A6a50892A9ae9f) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+    contract Safe (eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x98206aBE6bdB21765458f27F199fd813343a3C3b","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"}
+      receivedPermissions.1.description:
+-        "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers."
++        "add, remove or disable supported enclave hashes."
+      receivedPermissions.1.from:
+-        "eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f"
++        "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67"
+      receivedPermissions.2.description:
+-        "change the modular TEE verifier contracts."
++        "change the TEE verifier contract."
+      receivedPermissions.2.from:
+-        "eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0"
++        "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473) [orbitstack/SequencerInbox_Espresso] {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.espressoTEEVerifier:
+-        "eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0"
++        "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract QuoteVerifier (eth:0x816ADa3B63F3c643fb04152eA32B58Db89aadd89) [espresso/Sequencing/QuoteVerifier]
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (eth:0xe20C4d54afBbea5123728d5b7dAcD9CB3c65C39a), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoSGXTEEVerifier (eth:0x98206aBE6bdB21765458f27F199fd813343a3C3b) [espresso/Sequencing/EspressoSGXTEEVerifier]
+    +++ description: Verifies attestations of an Intel SGX TEE.
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoNitroTEEVerifier (eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f) [espresso/Sequencing/EspressoNitroTEEVerifier]
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoTEEVerifier (eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0) [espresso/Sequencing/EspressoTEEVerifier_gateway]
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+```
+
+```diff
+    EOA  (eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B) {
+    +++ description: None
+      receivedPermissions.0.via:
++        [{"address":"eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f"}]
+      receivedPermissions.0.role:
+-        ".owner"
++        "admin"
+      receivedPermissions.0.description:
+-        "set the root certificate, add/remove ZK verifier routes, update verifier and aggregator program IDs, and change the ZK coprocessor configuration."
+      receivedPermissions.0.from:
+-        "eth:0x0d1AD56885440A92799dC766D65B5C8377c60A35"
++        "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67"
+      receivedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f","role":".owner"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract NitroEnclaveVerifier (eth:0x1b467761E7a125381c4f654e11B397023Fc53DD8) [espresso/Sequencing/NitroEnclaveVerifier]
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (eth:0x4e98A1a038831B7D756ea9214508C4b34f4e4D3a) [espresso/Sequencing/EspressoNitroTEEVerifier_WithServices]
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EspressoTEEVerifier (eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67) [espresso/Sequencing/EspressoTEEVerifier_onlyNitro]
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports AWS Nitro TEEs through modular contracts.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+## Source code changes
+
+```diff
+.../EspressoNitroTEEVerifier.sol                   |  809 ++-
+ .../EspressoSGXTEEVerifier.sol => /dev/null        | 4167 ------------
+ .../EspressoTEEVerifier/EspressoTEEVerifier.sol    | 7047 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              | 1038 +++
+ .../EspressoTEEVerifier.sol => /dev/null           | 1030 ---
+ ...:0x546F30e936B1D01f8df1c356fa68833B9AFba99f.sol |  189 +
+ ...0xF025D25aE360D0D33a275dF74863CCc6600E6f8E.sol} |    0
+ .../QuoteVerifier.sol => /dev/null                 | 4107 ------------
+ .../{.flat@1779719407 => .flat}/SP1Verifier.sol    |  112 +-
+ 9 files changed, 8914 insertions(+), 9585 deletions(-)
+```
+
 Generated with discovered.json: 0x992d4f84d241faf2134ce9039c2f15dd480db7e8
 
 # Diff at Mon, 25 May 2026 14:31:14 GMT:

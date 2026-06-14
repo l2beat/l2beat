@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
@@ -7,8 +8,8 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import { api } from '~/trpc/React'
-import type { ChartRange } from '~/utils/range/range'
+import { useTRPC } from '~/trpc/React'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { CostsChart } from './CostsChart'
 import { CostsChartRangeControls } from './CostsChartRangeControls'
 import { ProjectCostsChartStats } from './ProjectCostsChartStats'
@@ -24,13 +25,16 @@ export function ProjectCostsChart({
   project,
   defaultRange,
 }: Props) {
+  const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [unit, setUnit] = useState<CostsUnit>('usd')
 
-  const { data, isLoading } = api.costs.projectChart.useQuery({
-    range,
-    projectId: project.id,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.costs.projectChart.queryOptions({
+      range,
+      projectId: project.id,
+    }),
+  )
 
   const chartData = useMemo(() => {
     if (!data) {
@@ -89,8 +93,11 @@ export function ProjectCostsChart({
   }, [data, unit])
 
   const timeRange = useMemo(
-    () => getChartTimeRangeFromData(chartData),
-    [chartData],
+    () =>
+      getChartTimeRangeFromData(chartData, {
+        bucket: rangeToResolution(range),
+      }),
+    [chartData, range],
   )
 
   return (

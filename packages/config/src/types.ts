@@ -41,8 +41,13 @@ export interface TableReadyValue<T extends string = string> {
   orderHint?: number
 }
 
+export interface RegularExitWindowRisk
+  extends Pick<TableReadyValue, 'value' | 'sentiment'> {
+  description: string
+}
+
 export interface ExitWindowRisk extends TableReadyValue {
-  regular?: Pick<TableReadyValue, 'value' | 'sentiment'>
+  regular?: RegularExitWindowRisk
 }
 
 export interface ProjectTechnologyChoice {
@@ -50,8 +55,70 @@ export interface ProjectTechnologyChoice {
   description: string
   references: ReferenceLink[]
   risks: ProjectRisk[]
+  sequencerSetSpec?: ProjectSequencerSetSpec
+  inclusionDelayChart?: ProjectInclusionDelayChart
+  inclusionDelayChartDescription?: string
+  censorshipResistance?: string
   isIncomplete?: boolean
   isUnderReview?: boolean
+}
+
+export interface ProjectSequencerSetSpec {
+  slotTime?: TableReadyValue
+  epochTime?: TableReadyValue
+  sequencerCount?: TableReadyValue
+  blockProductionAccess?: TableReadyValue
+  stakePerValidator?: TableReadyValue
+  rateLimit?: TableReadyValue
+  deterministicCrGadget?: TableReadyValue
+  additionalCrGadgets?: TableReadyValue
+}
+
+export type ProjectInclusionDelayChart =
+  | ProjectEthereumLikeInclusionDelayChart
+  | ProjectCommitteeLikeInclusionDelayChart
+  | ProjectSpanLikeInclusionDelayChart
+
+interface ProjectInclusionDelayChartBase {
+  target: number
+  maxCensorFraction: number
+  stakeDistribution?: ProjectInclusionDelayChartStakeDistribution
+}
+
+export interface ProjectInclusionDelayChartStakeDistribution {
+  stakeToken: string
+  totalStake: number
+  entities: ProjectInclusionDelayChartEntityStake[]
+}
+
+export interface ProjectInclusionDelayChartEntityStake {
+  name: string
+  stake: number
+}
+
+export interface ProjectEthereumLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'ethereumlike'
+  validatorCount: number
+  slotSeconds: number
+}
+
+export interface ProjectCommitteeLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'committeelike'
+  validatorCount: number
+  committeeSize: number
+  epochSlots: number
+  slotSeconds: number
+  blockingThreshold: number
+}
+
+export interface ProjectSpanLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'spanlike'
+  validatorCount: number
+  spanBlocks: number
+  blockSeconds: number
 }
 
 export interface ReferenceLink {
@@ -1298,8 +1365,6 @@ export type InteropPluginName =
   | 'across-settlement-op'
   | 'across-settlement-orbit'
   | 'agglayer'
-  | 'allbridge'
-  | 'aori'
   | 'avalanche'
   | 'axelar'
   | 'axelar-its'
@@ -1323,6 +1388,7 @@ export type InteropPluginName =
   | 'lighter-bridge'
   | 'layerzero-v2-ofts'
   | 'lido-wsteth'
+  | 'lifi-intents'
   | 'maker-bridge'
   | 'mayan-forwarder'
   | 'mayan-mctp'
@@ -1343,7 +1409,6 @@ export type InteropPluginName =
   | 'sorare-base'
   | 'squid-coral'
   | 'stargate'
-  | 'superform'
   | 'synthetix-bridge'
   | 'world-id'
   | 'wormhole'

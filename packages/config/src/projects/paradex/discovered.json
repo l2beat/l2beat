@@ -1,8 +1,14 @@
 {
   "name": "paradex",
-  "timestamp": 1778579646,
+  "timestamp": 1780586770,
   "configHash": "0xbb00111652aefbd1f8cb91f3ad989bd7152c23ee6c7637ab4588e2620a088aab",
   "entries": [
+    {
+      "address": "eth:0x0405107a60391Eb51821be373ff978115Ee58488",
+      "type": "Reference",
+      "targetType": "EOA",
+      "targetProject": "shared-sharp-verifier"
+    },
     {
       "name": "Paradex Multisig",
       "address": "eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
@@ -15,8 +21,9 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "governStarknet",
+          "permission": "interact",
           "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
           "role": ".$admin"
         },
         {
@@ -33,18 +40,19 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x0405107a60391Eb51821be373ff978115Ee58488",
           "eth:0x64F4396bb0669C72858Cc50C779b48EB25F45770",
-          "eth:0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
+          "eth:0xCe958D997F4a5824D4d503A128216322C6C223a0",
           "eth:0x804d60CB1ade94511f7915A2062948685Ca8C81f",
           "eth:0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6",
           "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0x9bbbe1c3f31b5879894b5efd7e825b6185426f8e8859a7ad70d4d0c32cdde81b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 17,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -162,11 +170,6 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "address": "eth:0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
       "type": "EOA",
       "proxyType": "EOA"
@@ -228,7 +231,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155",
+      "address": "eth:0x6f52712Ae102e6B7970F1e24c83d22e5fF5E8950",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -312,11 +315,17 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "operateStarknet",
+          "permission": "interact",
           "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
           "role": ".operators"
         }
       ]
+    },
+    {
+      "address": "eth:0xCe958D997F4a5824D4d503A128216322C6C223a0",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199",
@@ -552,7 +561,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 32800,
+        "l1ToL2MessageNonce": 32959,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -572,9 +581,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "2365657457133231395904860334624001356306471269792229939677992012105270162864",
-        "stateBlockNumber": 1964785,
-        "stateRoot": "1547411863540145520619226637260493282658311569246842149751680164767093371613",
+        "stateBlockHash": "1579751262640276062293274348473686787984472966790789527176486296198181822132",
+        "stateBlockNumber": 2066385,
+        "stateRoot": "2748937125339172522250449277917910360662820120053053877638159183037412854240",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -647,11 +656,6 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "governStarknet",
-          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
-          "role": ".$admin"
-        },
-        {
           "permission": "interact",
           "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
           "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
@@ -668,6 +672,12 @@
           "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
           "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
           "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "description": "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
@@ -703,14 +713,14 @@
           "eth:0xfF206f46453A9dd8e1664532788f4987c15B937d",
           "eth:0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
           "eth:0x94d5dc7c96Eb6176783787669571970C7ba43e01",
-          "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155"
+          "eth:0x6f52712Ae102e6B7970F1e24c83d22e5fF5E8950"
         ],
         "$threshold": 3,
         "domainSeparator": "0x79153287c895edf58c6e5294023273405c02b4865dae9e64742d80f476d9b88d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 57,
+        "nonce": 61,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1189,6 +1199,6 @@
     "starknet/Starknet": "0x94ec7824dea8f420d9b02624ccb3fee6ea169600cf6665c49d0c82cbc2651cc3",
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
-  "usedBlockNumbers": { "ethereum": 25078268 },
-  "permissionsConfigHash": "0x83626713d39e56baba32892529b290338f1639b1b278909a7fe2c1e37b7eb062"
+  "usedBlockNumbers": { "ethereum": 25244905 },
+  "permissionsConfigHash": "0x002437dd00ea871ccd9f477d449f254ece0118f14582e44823e0b2bcf6135054"
 }

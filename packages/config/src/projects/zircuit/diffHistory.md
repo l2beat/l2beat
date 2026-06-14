@@ -1,3 +1,107 @@
+Generated with discovered.json: 0x81f4d916a419507347b3bf5b5e6f13b1191dae44
+
+# Diff at Tue, 09 Jun 2026 12:43:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780398934
+- current timestamp: 1780398934
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780398934 (main branch discovery), not current.
+
+```diff
+    contract Zircuit Multisig 2 (eth:0x2c0B27F7C8F083B539557a0bA787041BF22DB276) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x691b3588eB87E6163260650D3BB465883EB6A575) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract Zircuit Multisig 1 (eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4","role":".challenger"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challenger"}
+    }
+```
+
+Generated with discovered.json: 0x8478102b2d4545f0e125846711dbd69e3cf95997
+
+# Diff at Tue, 02 Jun 2026 11:17:40 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778832561
+- current timestamp: 1780398934
+
+## Description
+
+Zircuit Multisig 1 rotated two signers (`$members[0]` and `$members[5]`).
+
+## Watched changes
+
+```diff
+    contract Zircuit Multisig 1 (eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xaAf347c2381369cA0bE97320413E3C04f8561f7e"
++        "eth:0xf1829C83C227d3cc30a4204B091A7865AbCD0419"
+      values.$members.5:
+-        "eth:0x38809210f69ed6204E276d2Be6b15cd530698679"
++        "eth:0xf5B2C0bfA18561d5374EAcc5FFfA3E39B049c1ae"
+    }
+```
+
+```diff
+    contract GnosisSafe (zircuit:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "zircuit:0xaAf347c2381369cA0bE97320413E3C04f8561f7e"
++        "zircuit:0xf1829C83C227d3cc30a4204B091A7865AbCD0419"
+      values.$members.5:
+-        "zircuit:0x38809210f69ed6204E276d2Be6b15cd530698679"
++        "zircuit:0xf5B2C0bfA18561d5374EAcc5FFfA3E39B049c1ae"
+    }
+```
+
 Generated with discovered.json: 0xfa7162f8776a16ee0e8d98b4e93602de9d628078
 
 # Diff at Fri, 08 May 2026 07:52:51 GMT:

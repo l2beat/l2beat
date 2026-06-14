@@ -1,7 +1,8 @@
-import { InMemoryCache, unique } from '@l2beat/shared-pure'
+import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type {
   InteropTokensResponse,
   InteropTopItemsInfiniteParams,
@@ -18,7 +19,7 @@ import { sortInteropTopItems } from './utils/sortInteropTopItems'
 
 const logger = getLogger().for('getInteropTokens')
 const PAGE_SIZE = 100
-const interopTokensCache = new InMemoryCache({})
+const interopTokensCache = new FrontendInMemoryCache('getInteropTokensInfinite')
 
 export async function getInteropTokensInfinite({
   cursor,

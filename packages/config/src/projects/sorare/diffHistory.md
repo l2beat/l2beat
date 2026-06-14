@@ -1,4 +1,214 @@
-Generated with discovered.json: 0xcf656478d0f2bec875c3bf77fe1391f7b65a7610
+Generated with discovered.json: 0xc6d846c81d9db0374e0cd5811740ff7d039977ed
+
+# Diff at Fri, 12 Jun 2026 12:07:50 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@77f62933d564f65f6ab803a9850a637ea4a77091 block: 1780646255
+- current timestamp: 1780646255
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780646255 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x5918481F777dBe437De249492B90AffB4e655de4) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set."
+    }
+```
+
+```diff
+    contract SorareAdminMultisig (eth:0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set."
+    }
+```
+
+Generated with discovered.json: 0xa4031c50e8ac1851ca25f997de0a0f5ca13673c2
+
+# Diff at Fri, 12 Jun 2026 10:19:04 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780646255
+- current timestamp: 1780646255
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780646255 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x5918481F777dBe437De249492B90AffB4e655de4) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0xd3f9c7f7452bc788b767e56a0f8a103b5731bab9
+
+# Diff at Tue, 09 Jun 2026 12:43:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780646255
+- current timestamp: 1780646255
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780646255 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.0.permission:
+-        "operateStarkEx"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x5918481F777dBe437De249492B90AffB4e655de4) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xF5C9F957705bea56a7e806943f98F7777B995826","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xF5C9F957705bea56a7e806943f98F7777B995826","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+```diff
+    EOA  (eth:0x63881ac44293E22F3c3183a0C4113586ABb3e653) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+      receivedPermissions.0.permission:
+-        "operateStarkEx"
++        "interact"
+    }
+```
+
+```diff
+    contract SorareAdminMultisig (eth:0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xF5C9F957705bea56a7e806943f98F7777B995826","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xF5C9F957705bea56a7e806943f98F7777B995826","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+Generated with discovered.json: 0xb11f4c7d1881a27af923edffba53ca9e22f3741b
+
+# Diff at Fri, 05 Jun 2026 09:44:19 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1777891517
+- current timestamp: 1780646255
+
+## Description
+
+Froze Sorare rollup contract.
+
+Upgraded Sorare diamond facets.
+
+Verifiers facet: https://disco.l2beat.com/diff/eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12/eth:0xA67821bC089B4374e8D62475526E7e84f09Da086:
+
+- Refactored governance 
+- Reduced `UNFREEZE_DELAY` (the time after which the rollup may be unfrozen after it froze) from 1 year to 1 day
+- Added `adminFreeze_9994` function that allows governor to freeze the rollup
+
+TokensAndRamping facet: https://disco.l2beat.com/diff/eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb/eth:0xb97394B55b4807a835619EDbCC6aF6b1d3C71e98:
+
+- Added support for mintable ERC 1155
+- Added `withdrawWithFee_10` function that allows withdrawing ETH even when rollup is frozen. User authorizes a withdrawal with a signature passed in calldata, and pays a withdrawal fee.
+- Added `withdrawWithFeeToBaseBank` function that allows withdrawing ETH directly to Base L2, otherwise works similarly to the previous function.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OrderRegistry (eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8) [starkex/OrderRegistry]
+    +++ description: Helper contract for registering limit orders from L1.
+```
+
+```diff
+    contract StarkExchange (eth:0xF5C9F957705bea56a7e806943f98F7777B995826) [starkex/StarkExchange_Frozen] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      template:
+-        "starkex/StarkExchange"
++        "starkex/StarkExchange_Frozen"
+      sourceHashes.1:
+-        "0x9b28596a715350d61f719241f35d6ee159c111c93c05da1d4804157142ee790c"
++        "0x0843c70dcca99b2fde3a18013b0af9af358e90066af9d8a2d3754785eb0ff2a0"
+      values.$implementation.1:
+-        "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12"
++        "eth:0xA67821bC089B4374e8D62475526E7e84f09Da086"
+      values.$implementation.2:
+-        "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb"
++        "eth:0xb97394B55b4807a835619EDbCC6aF6b1d3C71e98"
+      values.$pastUpgrades.12:
++        ["2026-05-31T10:22:59.000Z","0xfd3455fd60677c360679dc601a13283ad26f7f618c9c67db9a52b9d7d42d5014",["eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583","eth:0xA67821bC089B4374e8D62475526E7e84f09Da086","eth:0xb97394B55b4807a835619EDbCC6aF6b1d3C71e98","eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D","eth:0x613ee54C54D5548627064B4D648942bF3648f376","eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F","eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"]]
+      values.$upgradeCount:
+-        12
++        13
+      values.defaultVaultWithdrawalLock:
+-        0
+      values.isFrozen:
+-        false
++        true
+      values.orderRegistryAddress:
+-        "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8"
+      values.tokenAdmins:
+-        ["eth:0xA5dAd8339d9279c2F16d02F2e903AB4B79a72815","eth:0x7F6d06eCd94bD899872cd2768e41B7d33EC13e19"]
+      values.UNFREEZE_DELAY:
+-        31536000
++        3600
+      implementationNames.eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12:
+-        "AllVerifiers"
+      implementationNames.eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb:
+-        "TokensAndRamping"
+      implementationNames.eth:0xA67821bC089B4374e8D62475526E7e84f09Da086:
++        "AllVerifiers"
+      implementationNames.eth:0xb97394B55b4807a835619EDbCC6aF6b1d3C71e98:
++        "TokensAndRamping"
+    }
+```
+
+## Source code changes
+
+```diff
+.../OrderRegistry.sol => /dev/null                 | 245 ------
+ .../StarkExchange/AllVerifiers.2.sol               | 206 ++---
+ .../StarkExchange/TokensAndRamping.3.sol           | 871 ++++++++++-----------
+ 3 files changed, 501 insertions(+), 821 deletions(-)
+```
+
+Generated with discovered.json: 0xbcddc22c7c7a964c7e735cdc8058429133443c3c
 
 # Diff at Fri, 08 May 2026 07:52:24 GMT:
 

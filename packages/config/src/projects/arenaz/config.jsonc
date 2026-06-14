@@ -7,8 +7,22 @@
     "eth:0x658656A14AFdf9c507096aC406564497d13EC754": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "fields": {
-        "proposerFromDGF": { "permissions": [{ "type": "propose" }] },
-        "challengerFromDGF": { "permissions": [{ "type": "challenge" }] }
+        "proposerFromDGF": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to post new state roots of the current layer to the host chain."
+            }
+          ]
+        },
+        "challengerFromDGF": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+            }
+          ]
+        }
       }
     }
   }

@@ -1,5 +1,29 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { CONTRACTS } from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../../templates/generateDiscoveryDrivenSections'
 import type { BaseProject } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
+
+const discovery = new ProjectDiscovery('ccip')
+
+const ocrCommitN = discovery.getContractValue(
+  'EthereumOffRamp_v1_6',
+  'ocrCommitN',
+)
+const ocrCommitF = discovery.getContractValue(
+  'EthereumOffRamp_v1_6',
+  'ocrCommitF',
+)
+const ocrCommitQuorum = Number(ocrCommitF) + 1
+
+const permissionLessExecutionThresholdFmt = discovery.getContractValue(
+  'EthereumOffRamp_v1_6',
+  'permissionLessExecutionThresholdFmt',
+)
 
 export const ccip: BaseProject = {
   id: ProjectId('ccip'),
@@ -10,6 +34,13 @@ export const ccip: BaseProject = {
   interopConfig: {
     description:
       "Multichain token framework using the CCIP messaging protocol, validated by Chainlink's offchain reporting (OCR) and 'decentralised oracle network' (DON).",
+    detailedDescription: readProjectMarkdown('ccip', 'detailedDescription', {
+      ocrCommitQuorum,
+      ocrCommitN: String(ocrCommitN),
+      permissionLessExecutionThresholdFmt: String(
+        permissionLessExecutionThresholdFmt,
+      ),
+    }),
     plugins: [
       {
         plugin: 'ccip',
@@ -25,5 +56,10 @@ export const ccip: BaseProject = {
       },
     ],
     type: 'multichain',
+    permissions: generateDiscoveryDrivenPermissions([discovery]),
+    contracts: {
+      addresses: generateDiscoveryDrivenContracts([discovery]),
+      risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    },
   },
 }

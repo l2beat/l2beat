@@ -1,6 +1,6 @@
 {
   "name": "shared-zk-stack",
-  "timestamp": 1779278363,
+  "timestamp": 1780913202,
   "configHash": "0x3cfbef9b419550ca818702997dd476035cf856077dc776dc57bf78ae7be2c697",
   "entries": [
     {
@@ -445,11 +445,16 @@
             "chainId": 88629869,
             "chainTypeManager": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
             "chainGovernance": "eth:0x6EA4B2695c714D2D83c4b850cf0b4a7d93CD66Aa"
+          },
+          {
+            "chainId": 1942323,
+            "chainTypeManager": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+            "chainGovernance": "eth:0x38687A2ac36B68261f122e1F90BC5a82B8ab698E"
           }
         ],
         "getAllZKChainChainIDs": [
           324, 388, 50104, 543210, 2741, 325, 61166, 1345, 9637, 320, 232, 1217,
-          2904, 375, 51888, 9075, 30715, 5010405, 2787, 30716, 88629869
+          2904, 375, 51888, 9075, 30715, 5010405, 2787, 30716, 88629869, 1942323
         ],
         "getAllZKChains": [
           "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -472,7 +477,8 @@
           "eth:0xD08FE81c77860E66525b773fDBeB0b171b9E9e91",
           "eth:0xD366689A90253757f5a7432Df805E50Ff206d692",
           "eth:0x2dba7c0321510f9561D86813D261fA2f74f6D586",
-          "eth:0x3E14850Bc5E34be2e02898c9dD9A53Bf4dC20d72"
+          "eth:0x3E14850Bc5E34be2e02898c9dD9A53Bf4dC20d72",
+          "eth:0x7fC09405616699d4D6a36833a8192F36DD4A9e6D"
         ],
         "L1_CHAIN_ID": 1,
         "l1CtmDeployer": "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
@@ -634,11 +640,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x41814626a9256173B6E6441d8133F9286F02AA16",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x441e5c8910Ef39996B2D01499509861228cbc2d1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -716,7 +717,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 260,
+        "nonce": 263,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -955,13 +956,13 @@
         ],
         "$upgradeCount": 3,
         "BRIDGE_HUB": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "chainCount": 22,
-        "getAggregatedRoot": "0xf2c2a6ae5c43cd15b51398f2e90c5a8853080eac9af12c1e59af691dd1525503",
+        "chainCount": 23,
+        "getAggregatedRoot": "0x2078d697969e64147e31d1a60c39fddbd3fa2de8decc69a6f6104b926478673e",
         "getChainRoot": [
           "0x0000000000000000000000000000000000000000000000000000000000000000"
         ],
         "L1_CHAIN_ID": 1,
-        "sharedTree": { "_height": 5, "_leafNumber": 22 }
+        "sharedTree": { "_height": 5, "_leafNumber": 23 }
       },
       "implementationNames": {
         "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD": "TransparentUpgradeableProxy",
@@ -1754,7 +1755,6 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0x41814626a9256173B6E6441d8133F9286F02AA16",
           "eth:0xf10697cd80FFc0A70bc8E9ab03D6D6596cc143E0",
           "eth:0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735",
           "eth:0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac"
@@ -1763,8 +1763,8 @@
         "domainSeparator": "0x8a595a96d77e992bb9ff8b20fc59215c86b17154838b5386d6b264728a1f4462",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 15,
+        "multisigThreshold": "1 of 3 (33%)",
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2544,7 +2544,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1779278347,
+        "clock": 1780913193,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -2566,7 +2566,7 @@
         "MinterAdmin": ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"],
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "14673669819845790321982481640"
+        "totalSupply": "14749884093830284233696310006"
       },
       "implementationNames": {
         "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "TransparentUpgradeableProxy",
@@ -2652,7 +2652,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1779278347,
+        "clock": 1780913193,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -2762,7 +2762,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1779278347,
+        "clock": 1780913193,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -2780,7 +2780,7 @@
         "isProposeGuarded": false,
         "lateQuorumVoteExtension": 172800,
         "name": "ZkTokenGovernor",
-        "proposalCreatedCount": 17,
+        "proposalCreatedCount": 18,
         "proposalQueuedCount": 15,
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
@@ -3034,7 +3034,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1779278347,
+        "clock": 1780913193,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -3074,7 +3074,6 @@
       "address": "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -4505,6 +4504,6 @@
     "shared-zk-stack/ZkGovernor": "0x0d0c5f1209dfd254e3b76edce6803b2c607f359320da39df8a032f146ab1c46c",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
-  "usedBlockNumbers": { "ethereum": 25136302, "zksync2": 70187317 },
-  "permissionsConfigHash": "0x9f57ec20a0f0bd4fe187930fffb3c1d52423bce6434a2bc3b562ae1488a8e20e"
+  "usedBlockNumbers": { "ethereum": 25271990, "zksync2": 70619736 },
+  "permissionsConfigHash": "0x26f4af096479a01bee8d552335de644890b5d02a9d0ce7e8a452aafa3c078333"
 }

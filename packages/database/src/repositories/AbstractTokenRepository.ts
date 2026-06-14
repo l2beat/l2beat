@@ -1,4 +1,4 @@
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { assert, type TokenCategory, type UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable, Updateable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AbstractToken } from '../kysely/generated/types'
@@ -8,7 +8,7 @@ export type AbstractTokenRecord = {
   symbol: string
   id: string
   issuer: string | null
-  category: 'btc' | 'ether' | 'stablecoin' | 'other' | null
+  category: TokenCategory | null
   iconUrl: string | null
   coingeckoId: string | null
   coingeckoListingTimestamp: UnixTime | null
@@ -34,7 +34,7 @@ function toRecord(row: Selectable<AbstractToken>): AbstractTokenRecord {
     coingeckoId: row.coingeckoId,
 
     coingeckoListingTimestamp: toTimestamp(row.coingeckoListingTimestamp),
-    category: row.category as 'btc' | 'ether' | 'stablecoin' | 'other' | null,
+    category: row.category as TokenCategory | null,
   }
 }
 export { toRecord as toAbstractTokenRecord }
@@ -128,17 +128,23 @@ export class AbstractTokenRepository extends BaseRepository {
   async getByIds(
     ids: string[],
   ): Promise<
-    Pick<AbstractTokenRecord, 'id' | 'symbol' | 'iconUrl' | 'issuer'>[]
+    Pick<
+      AbstractTokenRecord,
+      'id' | 'symbol' | 'iconUrl' | 'issuer' | 'category'
+    >[]
   > {
     if (ids.length === 0) return []
 
     const result = await this.db
       .selectFrom('AbstractToken')
-      .select(['id', 'symbol', 'iconUrl', 'issuer'])
+      .select(['id', 'symbol', 'iconUrl', 'issuer', 'category'])
       .where('id', 'in', ids)
       .execute()
 
-    return result
+    return result.map((row) => ({
+      ...row,
+      category: row.category as AbstractTokenRecord['category'],
+    }))
   }
 
   async getAll(): Promise<AbstractTokenRecord[]> {

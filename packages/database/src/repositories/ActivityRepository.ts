@@ -82,6 +82,35 @@ export class ActivityRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async getMaxTimestampAtOrBeforeForProjects(
+    timestamp: UnixTime,
+    projectIds: readonly string[],
+  ): Promise<UnixTime | undefined> {
+    if (projectIds.length === 0) {
+      return undefined
+    }
+
+    const result = await this.db
+      .selectFrom('Activity')
+      .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
+      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .where('projectId', 'in', projectIds)
+      .executeTakeFirst()
+    return result?.max_timestamp
+      ? UnixTime.fromDate(result.max_timestamp)
+      : undefined
+  }
+
+  async getByTimestamp(timestamp: UnixTime): Promise<ActivityRecord[]> {
+    const rows = await this.db
+      .selectFrom('Activity')
+      .selectAll()
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async getByProjectAndTimeRange(
     projectId: ProjectId,
     timeRange: [UnixTime | null, UnixTime],

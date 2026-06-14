@@ -51,6 +51,13 @@ export class Editor extends EditorPluginStore<'code'> {
   }
 
   setFile(file: EditorFile) {
+    // A remount can queue setFile against the previous editor instance, which
+    // is disposed during the same React commit. Driving a disposed Monaco
+    // editor throws "InstantiationService has been disposed". The live editor
+    // re-registers in the store and receives the file on the next render.
+    if (this.disposed) {
+      return
+    }
     this.saveViewState()
     const model = this.getOrCreateFileModel(file)
 

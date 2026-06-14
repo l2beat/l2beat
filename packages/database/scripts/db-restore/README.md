@@ -1,37 +1,43 @@
-# TVL restore script
+# DB restore scripts
 
-> ⚠️ **Running script will result in wiping local DB**: Be very careful here!
+Restore data from a remote database into your local DB, either by feature (`db-restore.sh`) or by individual tables (`table-restore.sh`).
 
+> ⚠️ **These scripts wipe the affected local tables before restoring.** Be careful.
 
-## How to use
+## Prerequisites
 
-0. If you do not have `psql`, `pg_dump` and `pg_restore`, please install either `postgres` or `libpq`. Remember to add it to `PATH`
+1. Install the PostgreSQL client tools (`psql`, `pg_dump`, `pg_restore`) via the `postgres` or `libpq` package, and make sure they are on your `PATH`.
+2. Run the scripts from the package root (`packages/database`) — Prisma needs it.
+3. Add variables to a `.env` file in `packages/database`:
 
-1. Change directory to `database\scripts\db-restore` (This exact path is need for Prisma to work)
-2. Create .env & set variables
-> ⚠️ **Use readonly credential for remote**: Be very careful here!
-```
-DEV_LOCAL_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
-DEV_REMOTE_DB_URL_READ_ONLY=
-```
-3. Run the script
-```
-./db-restore.sh <FEATURE>
-```
+   ```
+   DEV_LOCAL_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
+   DEV_REMOTE_DB_URL_READ_ONLY=
+   ```
 
-## Table restore script
+   > ⚠️ **Use read-only credentials for the remote URL.**
 
-The `table-restore.sh` script allows you to restore specific tables from the remote database instead of restoring entire features.
+## Restore by feature
 
-### How to use
-
-1. Follow steps 0-2 from the main restore script above (same prerequisites and setup)
-
-2. Run the script with one or more table names:
 ```bash
-# Restore a single table
-./table-restore.sh IndexerState
-
-# Restore multiple tables
-./table-restore.sh IndexerState IndexerConfiguration
+./scripts/db-restore/db-restore.sh <FEATURE>
 ```
+
+Run without arguments to list the available features. Currently:
+`da`, `liveness`, `tvs`, `activity`, `shared`, `interop`, `interop-aggregates`, `tokens-ui`, `tracked-txs`, `privacy`.
+
+## Restore by table
+
+Restore one or more specific tables:
+
+```bash
+./scripts/db-restore/table-restore.sh IndexerState
+./scripts/db-restore/table-restore.sh IndexerState IndexerConfiguration
+```
+
+## What the scripts do
+
+1. Truncate the target tables locally.
+2. Apply pending Prisma migrations (`prisma migrate deploy`).
+3. Dump the tables' data from the remote DB.
+4. Restore the dump into the local DB and clean up the dump file.

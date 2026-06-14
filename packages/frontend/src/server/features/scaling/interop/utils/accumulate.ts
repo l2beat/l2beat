@@ -4,12 +4,10 @@ import type {
 } from '@l2beat/database'
 import { manifest } from '~/utils/Manifest'
 import { INTEROP_PAIR_SEPARATOR } from '../consts'
-import type {
-  AggregatedInteropTransferWithTokens,
-  CommonInteropData,
-} from '../types'
+import type { CommonInteropData, InteropTransferWithTokens } from '../types'
 import type { TokenInteropData } from './buildTokensDataMap'
 import { getInteropChains } from './getInteropChains'
+import { getInteropTransferRecordValue } from './getInteropTransferRecordValue'
 import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
@@ -33,7 +31,7 @@ const chainIconMap = new Map(
 
 export function accumulateTokens(
   current: TokenInteropData,
-  token: AggregatedInteropTransferWithTokens['tokens'][number],
+  token: InteropTransferWithTokens['tokens'][number],
   chainInfo: { protocolId: string; srcChain: string; dstChain: string },
 ) {
   const result = {
@@ -86,11 +84,16 @@ export function accumulateTokensPairs(
 
 export function accumulateChains(
   current: CommonInteropData,
-  record: AggregatedInteropTransferRecord,
+  record: AggregatedInteropTransferRecord | InteropTransferWithTokens,
   source: 'src' | 'dst',
 ) {
   return accumulate(current, {
-    volume: source === 'src' ? record.srcValueUsd : record.dstValueUsd,
+    volume:
+      'volume' in record
+        ? getInteropTransferRecordValue(record)
+        : source === 'src'
+          ? record.srcValueUsd
+          : record.dstValueUsd,
     transferCount: record.transferCount,
     transfersWithDurationCount: record.transfersWithDurationCount,
     totalDurationSum: record.totalDurationSum,

@@ -87,7 +87,12 @@ export function PrivacyFlowChart({
         onItemClick: toggleDataKey,
       }}
     >
-      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
+      <AreaChart
+        responsive
+        data={chartData}
+        // Without right:1 the chart last point is not hoverable for some reason
+        margin={{ top: 20, right: project ? 0 : 1 }}
+      >
         <defs>
           <CustomFillGradientDef
             id={`privacy-${metric}-deposits-fill`}

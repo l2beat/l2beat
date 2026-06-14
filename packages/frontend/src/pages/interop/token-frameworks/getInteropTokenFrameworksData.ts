@@ -8,7 +8,11 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
+import {
+  TRANSFER_SPEED_DEFAULT_FROM,
+  TRANSFER_SPEED_DEFAULT_TO,
+} from './components/transfer-speed/consts'
 
 export type InteropTokenFramework = {
   id: string
@@ -31,12 +35,10 @@ export async function getInteropTokenFrameworksData(
   ])
 
   const interopChains = getInteropChains()
-  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains
-    .filter((chain) => !chain.isUpcoming)
-    .map((chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-    }))
+  const interopChainsWithIcons = mapInteropChainsToWithIcons(
+    manifest,
+    interopChains.filter((chain) => !chain.isUpcoming),
+  )
 
   const initialChainIds = interopChainsWithIcons.map((chain) => chain.id)
 
@@ -82,10 +84,21 @@ export async function getInteropTokenFrameworksData(
 async function getCachedData(initialChainIds: string[]) {
   const helpers = getSsrHelpers()
   if (initialChainIds.length > 0) {
-    await helpers.interop.tokenFrameworks.prefetch({
-      from: initialChainIds,
-      to: initialChainIds,
-    })
+    await Promise.all([
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.interop.tokenFrameworks.queryOptions({
+          from: initialChainIds,
+          to: initialChainIds,
+        }),
+      ),
+      // FrameworkTransferSpeedWidget fetches this exact pair on initial render.
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.interop.tokenFrameworks.queryOptions({
+          from: [TRANSFER_SPEED_DEFAULT_FROM],
+          to: [TRANSFER_SPEED_DEFAULT_TO],
+        }),
+      ),
+    ])
   }
   return { queryState: helpers.dehydrate() }
 }

@@ -1,3 +1,94 @@
+Generated with discovered.json: 0xb1703c9b23e30fcc16e61c3f884dd5abc84f19ce
+
+# Diff at Fri, 12 Jun 2026 12:07:47 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@77f62933d564f65f6ab803a9850a637ea4a77091 block: 1777891423
+- current timestamp: 1777891423
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891423 (main branch discovery), not current.
+
+```diff
+    contract FinalizableGpsFactAdapter (eth:0x4abBc1826389aC0FEaA49E70c30a041b665e8562) [starkex/FinalizableGpsFactAdapter] {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`), which can be changed until the adapter is finalized.
+      name:
+-        "GpsFactRegistryAdapter"
++        "FinalizableGpsFactAdapter"
+      template:
+-        "starkex/GpsFactRegistryAdapter"
++        "starkex/FinalizableGpsFactAdapter"
+      description:
+-        "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`)."
++        "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`), which can be changed until the adapter is finalized."
++++ severity: HIGH
+      values.owner:
++        "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e"
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Safe (eth:0x57814cC6e075f517781cB7c3B42897B3Bb2C54d8) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD","description":"Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set.","role":".$admin"}
+      receivedPermissions.1.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "change the global and per-asset configuration hashes committing to the L2 system parameters."
+      receivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+    }
+```
+
+Generated with discovered.json: 0xb833518de0c1ac00ef010b2c4e92b12768cf3218
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1777891423
+- current timestamp: 1777891423
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891423 (main branch discovery), not current.
+
+```diff
+    contract Safe (eth:0x57814cC6e075f517781cB7c3B42897B3Bb2C54d8) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+```diff
+    EOA  (eth:0xCBe6fbf5e3c427013688E04D0fDE56705890c4bE) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xfa90ba245db44ebb0b55c652102a8caaff80489c
 
 # Diff at Fri, 08 May 2026 07:51:16 GMT:

@@ -20,6 +20,7 @@
       "proxyType": "EOA"
     },
     {
+      "name": "DZack23",
       "address": "arb1:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -987,6 +988,7 @@
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 2 } }]
     },
     {
+      "name": "PabloSabbatella-Opsek",
       "address": "arb1:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2552,7 +2554,6 @@
       "address": "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2714,7 +2715,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -2738,6 +2739,7 @@
       "proxyType": "EOA"
     },
     {
+      "name": "DZack23",
       "address": "eth:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2806,7 +2808,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -3900,6 +3902,7 @@
       "proxyType": "EOA"
     },
     {
+      "name": "PabloSabbatella-Opsek",
       "address": "eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
       "type": "EOA",
       "proxyType": "EOA"
@@ -4134,7 +4137,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -9520,5 +9523,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
   "usedBlockNumbers": { "arbitrum": 466868387, "ethereum": 25179618 },
-  "permissionsConfigHash": "0xdbaf73f7a3d002d4c159f96fdda8c53593e25f5eb7fda79f7ff2cdb0d89ea2fa"
+  "permissionsConfigHash": "0x0b0a6820f5dc112513e9c780da40891dfecf33a434b1b96b048e3872c5c23709"
 }

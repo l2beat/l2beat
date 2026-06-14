@@ -1,4 +1,100 @@
-Generated with discovered.json: 0x3c7379c7c9a84fef641b6767ddf7820373539efd
+Generated with discovered.json: 0x95eb1375056f07b751ffdd6e67a9162493a75559
+
+# Diff at Tue, 09 Jun 2026 12:43:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780586770
+- current timestamp: 1780586770
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780586770 (main branch discovery), not current.
+
+```diff
+    contract Paradex Multisig (eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
+      receivedPermissions.0.permission:
+-        "governStarknet"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "interact"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640","role":".$admin"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+Generated with discovered.json: 0x975e72c1887bbd9ebd725a7a734f9c6bacb6f195
+
+# Diff at Thu, 04 Jun 2026 15:27:16 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1778579646
+- current timestamp: 1780586770
+
+## Description
+
+signer added, threshold increased to 3. Also, rotated ms member.
+
+## Watched changes
+
+```diff
+    contract Paradex Multisig (eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x0405107a60391Eb51821be373ff978115Ee58488"
+      values.$members.1:
+-        "eth:0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
++        "eth:0xCe958D997F4a5824D4d503A128216322C6C223a0"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "3 of 6 (50%)"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) [GnosisSafe] {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155"
++        "eth:0x6f52712Ae102e6B7970F1e24c83d22e5fF5E8950"
+    }
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x0405107a60391Eb51821be373ff978115Ee58488)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xfc9ad18ab91a68f11cdd635bdbb812d950599dd4
 
 # Diff at Tue, 12 May 2026 09:55:12 GMT:
 

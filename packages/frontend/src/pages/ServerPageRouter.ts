@@ -1,6 +1,6 @@
-import { InMemoryCache } from '@l2beat/shared-pure'
 import express from 'express'
 import { env } from '~/env'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
@@ -24,17 +24,13 @@ import { createStagesRouter } from './stages/StagesRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
 import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
 
+const cache = new FrontendInMemoryCache('createServerPageRouter')
+
 export function createServerPageRouter(
   manifest: Manifest,
   render: RenderFunction,
 ) {
   const router = express.Router()
-
-  const cache = new InMemoryCache({
-    enabled:
-      !env.DISABLE_CACHE &&
-      (env.DEPLOYMENT_ENV === 'production' || env.DEPLOYMENT_ENV === 'staging'),
-  })
 
   router.use('/', (_, res, next) => {
     const headers = new Headers({

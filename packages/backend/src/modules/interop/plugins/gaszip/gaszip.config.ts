@@ -152,6 +152,7 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
     chain: 'hyperevm',
     gaszipId: 430,
     chainId: 999,
+    customGas: true,
   }),
   gasZipNetwork({
     chain: 'monad',

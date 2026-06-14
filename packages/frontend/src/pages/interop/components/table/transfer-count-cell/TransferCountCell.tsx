@@ -1,4 +1,5 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { getCoreRowModel } from '@tanstack/react-table'
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import {
@@ -17,10 +18,10 @@ import {
 import { BasicTable } from '~/components/table/BasicTable'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'
-import { columns, type TransferRow } from './columns'
+import { getTransferColumns, type TransferRow } from './columns'
 
 const SCROLL_LOAD_THRESHOLD_PX = 120
 
@@ -90,22 +91,25 @@ export function TransferDetailsDialog({
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
 }) {
+  const trpc = useTRPC()
   const breakpoint = useBreakpoint()
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    api.interop.transfers.useInfiniteQuery(
-      {
-        ...selectedChains,
-        id: protocol.id,
-        type,
-        tokenId,
-        snapshotTimestamp: snapshotTimestamp ?? 0,
-      },
-      {
-        enabled: isOpen && snapshotTimestamp !== undefined,
-        getNextPageParam: (lastPage) => lastPage.nextCursor,
-      },
+    useInfiniteQuery(
+      trpc.interop.transfers.infiniteQueryOptions(
+        {
+          ...selectedChains,
+          id: protocol.id,
+          type,
+          tokenId,
+          snapshotTimestamp: snapshotTimestamp ?? 0,
+        },
+        {
+          enabled: isOpen && snapshotTimestamp !== undefined,
+          getNextPageParam: (lastPage) => lastPage.nextCursor,
+        },
+      ),
     )
 
   const transferRows = useMemo(
@@ -142,7 +146,7 @@ export function TransferDetailsDialog({
 
   const table = useTable<TransferRow>({
     data: transferRows,
-    columns,
+    columns: getTransferColumns(selectedChains),
     getCoreRowModel: getCoreRowModel(),
     manualFiltering: true,
   })

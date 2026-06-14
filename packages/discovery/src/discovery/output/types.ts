@@ -109,7 +109,7 @@ export type ColorEntry = {
 export type PermissionEntry = {
   receivedPermissions?: ReceivedPermission[]
   directlyReceivedPermissions?: ReceivedPermission[]
-  controlsMajorityOfUpgradePermissions?: boolean
+  eoaWithUpgradePermissions?: boolean
 }
 
 export type EntryParameters = StructureEntry & ColorEntry & PermissionEntry
@@ -119,7 +119,7 @@ export interface ColorOutput {
 }
 
 export type PermissionsOutput = {
-  eoasWithMajorityUpgradePermissions?: ChainSpecificAddress[]
+  eoasWithUpgradePermissions?: ChainSpecificAddress[]
   permissionsConfigHash: Hash256
   permissions: {
     receiver: ChainSpecificAddress

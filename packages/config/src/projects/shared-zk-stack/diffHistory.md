@@ -1,3 +1,103 @@
+Generated with discovered.json: 0x5ef179ed57ac54472a3dfa8d83e45b5d09968bf5
+
+# Diff at Fri, 12 Jun 2026 10:19:03 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780913202
+- current timestamp: 1780913202
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780913202 (main branch discovery), not current.
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias (zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+Generated with discovered.json: 0xa2129158580720086e26319fcee41e0c9bc130e4
+
+# Diff at Mon, 08 Jun 2026 10:07:57 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@986b95b3ae833105f37e6f39ab1fd37448dc183a block: 1779962479
+- current timestamp: 1780913202
+
+## Description
+
+Published this funding proposal onchain: https://www.tally.xyz/gov/zksync/proposal/2943455218873421873697799536418607104467185343933430719456358615505163695727?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+It "allocates 12 capped minters of 67M ZK each, distributed monthly to Matter Labs over 12 months (~$1M USD per month at the $0.015/ZK reference price), to execute the 2026 Prividium roadmap".
+
+Also removed one member of MatterLabs ms.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x41814626a9256173B6E6441d8133F9286F02AA16"
+      values.multisigThreshold:
+-        "1 of 4 (25%)"
++        "1 of 3 (33%)"
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        17
++        18
+    }
+```
+
+Generated with discovered.json: 0x42fea8d8f032cb283545fe5a5f8cf192cde315c2
+
+# Diff at Thu, 28 May 2026 10:02:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1779278363
+- current timestamp: 1779962479
+
+## Description
+
+add new chain with chainId 1942323, native asset ETH and airbender proofs.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) [shared-zk-stack/BridgeHub] {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.21:
++        {"chainId":1942323,"chainTypeManager":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","chainGovernance":"eth:0x38687A2ac36B68261f122e1F90BC5a82B8ab698E"}
+      values.getAllZKChainChainIDs.21:
++        1942323
+      values.getAllZKChains.21:
++        "eth:0x7fC09405616699d4D6a36833a8192F36DD4A9e6D"
+    }
+```
+
+```diff
+    contract MessageRoot (eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) [shared-zk-stack/MessageRoot] {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        22
++        23
+    }
+```
+
 Generated with discovered.json: 0x245d7c9cb2c2d6fcc1539090f775674b2d33d943
 
 # Diff at Wed, 20 May 2026 12:14:10 GMT:

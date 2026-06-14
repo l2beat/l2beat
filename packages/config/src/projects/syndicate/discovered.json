@@ -1107,7 +1107,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x12ad349e5d72B582856290736e0f13FE5fA57Aa4",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -1496,6 +1496,7 @@
       "address": "eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1693,6 +1694,7 @@
       "address": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1970,7 +1972,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0x451bD7813909B899DA6EbEC55E8fF823c057e14A",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -2164,8 +2166,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "relayDA",
+          "permission": "interact",
           "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "description": "Can store and serve both unencoded blobs as well as encoded chunks.",
           "role": ".relayers"
         }
       ]
@@ -2181,8 +2184,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "disperse",
+          "permission": "interact",
           "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "description": "Can disperse EigenDA blobs to the EigenDA node operators.",
           "role": ".dispersers"
         }
       ]
@@ -3583,5 +3587,5 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 24830658 },
-  "permissionsConfigHash": "0xa33505d4d6505e0657515cc992277f55aa2b896e2ce476779cfd6f6998d32ab0"
+  "permissionsConfigHash": "0x9f6ab30a90c666c6efcc0a9afc3c5249087795cb101f2c12fc371aea915dfe43"
 }

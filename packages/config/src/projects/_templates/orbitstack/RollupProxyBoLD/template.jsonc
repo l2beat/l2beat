@@ -18,7 +18,7 @@
     "getValidators": {
       "permissions": [
         {
-          "type": "validate",
+          "type": "interact",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]

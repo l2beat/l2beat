@@ -1,5 +1,6 @@
+import { useQuery } from '@tanstack/react-query'
 import { ChevronLeftIcon, RefreshCwIcon } from 'lucide-react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {
@@ -13,25 +14,34 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { formatDollars } from '~/pages/interop/transfers/utils'
-import { useBackendApi } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { AggregateSeriesCharts } from './charts/AggregateSeriesCharts'
 import type { AggregateDetailsInput, AggregateSeriesPoint } from './types'
 import { decodeRouteParam } from './utils'
 
 export function AnomalyDetailsPage() {
-  const api = useBackendApi()
+  const trpc = useBackendTrpc()
   const params = useParams<{ id: string }>()
+  const [searchParams] = useSearchParams()
   const id = decodeRouteParam(params.id)
-  const hasValidParams = id !== undefined
+  const bridgeType = searchParams.get('bridgeType') ?? undefined
+  const srcChain = searchParams.get('srcChain') ?? undefined
+  const dstChain = searchParams.get('dstChain') ?? undefined
+  const hasValidParams =
+    id !== undefined &&
+    bridgeType !== undefined &&
+    srcChain !== undefined &&
+    dstChain !== undefined
 
   const detailsInput: AggregateDetailsInput = hasValidParams
-    ? { id }
-    : { id: '' }
+    ? { id, bridgeType, srcChain, dstChain }
+    : { id: '', bridgeType: '', srcChain: '', dstChain: '' }
 
-  const { data, error, isError, isLoading, isFetching, refetch } =
-    api.interop.anomalies.aggregateDetails.useQuery(detailsInput, {
+  const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
+    trpc.interop.anomalies.aggregateDetails.queryOptions(detailsInput, {
       enabled: hasValidParams,
-    })
+    }),
+  )
 
   const rows: AggregateSeriesPoint[] = data?.items ?? []
   const latestPoint = rows.at(-1)
@@ -70,6 +80,14 @@ export function AnomalyDetailsPage() {
             <Badge variant={hasValidParams ? 'secondary' : 'destructive'}>
               ID: {id ?? 'invalid route'}
             </Badge>
+            {hasValidParams ? (
+              <>
+                <Badge variant="secondary">Bridge: {bridgeType}</Badge>
+                <Badge variant="secondary">
+                  {srcChain} → {dstChain}
+                </Badge>
+              </>
+            ) : null}
             <Badge variant="secondary">{rows.length} daily points</Badge>
             <Badge variant="secondary">
               Latest count: {latestPoint?.transferCount.toLocaleString() ?? '-'}
@@ -96,7 +114,7 @@ export function AnomalyDetailsPage() {
             <CardContent className="px-0">
               <ErrorState
                 className="m-6"
-                cause="Invalid route. Expected /insights/anomalies/aggregate/:id."
+                cause="Invalid route. Expected /insights/anomalies/aggregate/:id?bridgeType=…&srcChain=…&dstChain=…"
               />
             </CardContent>
           </Card>

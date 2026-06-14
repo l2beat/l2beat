@@ -34,7 +34,8 @@
       },
       "permissions": [
         {
-          "type": "metisGameCreator"
+          "type": "interact",
+          "description": "Can create new dispute games."
         }
       ]
     }

@@ -47,8 +47,8 @@ export function CodeEditorComponent({
 
     return () => {
       resizeObserver.disconnect()
+      removeEditor(editorKey, editor)
       editor.dispose()
-      removeEditor(editorKey)
     }
   }, [editorKey, setEditor, removeEditor])
 

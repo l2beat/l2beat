@@ -1,4 +1,39 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Part of CCTP"
+  "description": "Part of CCTP",
+  "category": "non-critical",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure remote TokenMessengers, the local minter, V2 fee recipient and denylister, rescuer, and transfer ownership."
+        }
+      ]
+    },
+    "localMessageTransmitter": {
+      "permissions": [
+        {
+          "type": "act",
+          "description": "deliver accepted CCTP messages to this TokenMessenger."
+        }
+      ]
+    },
+    "denylister": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "denylist addresses, preventing them from interacting with this TokenMessenger."
+        }
+      ]
+    },
+    "rescuer": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer any ERC-20 tokens out of the contract."
+        }
+      ]
+    }
+  }
 }

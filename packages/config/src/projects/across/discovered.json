@@ -2693,8 +2693,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "acrossPropose",
+          "permission": "interact",
           "from": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+          "description": "Can propose new root bundles (containing settlement info to refund relayers), which are validated optimistically by the UMA oracle.",
           "role": ".proposers"
         },
         {
@@ -4027,5 +4028,5 @@
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
   "usedBlockNumbers": { "ethereum": 25142707 },
-  "permissionsConfigHash": "0x0d9786c64b48b82169e67f5e59962553314fa5fa7800d3fae6beb2337b83d3bb"
+  "permissionsConfigHash": "0x123e18a2f37871eef59b139812508f7ac956f5007a17f828ecc68774d3d6d6be"
 }

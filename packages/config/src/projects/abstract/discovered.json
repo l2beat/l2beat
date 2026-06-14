@@ -601,8 +601,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTLFullAC"
         }
       ]
@@ -618,8 +619,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTLFullAC"
         }
       ]
@@ -1528,5 +1530,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 25149937 },
-  "permissionsConfigHash": "0x25bd988ed98d72ffeab5865506772259d2d5646deeb501f6b6ddad25fbd3ecb8"
+  "permissionsConfigHash": "0xd0f6db9b5d55aed277dfcc9f6641c1cb877382884164b5c4780227ebbb6f3251"
 }

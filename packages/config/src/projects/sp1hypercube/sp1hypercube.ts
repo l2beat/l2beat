@@ -3,6 +3,7 @@ import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 export const sp1hypercube: BaseProject = {
   id: ProjectId('sp1hypercube'),
@@ -43,50 +44,24 @@ export const sp1hypercube: BaseProject = {
       ],
       finalWrap: [
         ZK_CATALOG_TAGS.Plonk.Gnark,
-        ZK_CATALOG_TAGS.Groth16.Gnark,
+        ZK_CATALOG_TAGS.Groth16.SP1_v6_0_0,
+        ZK_CATALOG_TAGS.Groth16.SP1_v6_1_0,
         ZK_CATALOG_TAGS.curve.BN254,
         // ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
-    proofSystemInfo: `
-## Description
-
-SP1 Hypercube is the latest Succint's RISC-V zkVM using the [Plonky3](https://github.com/Plonky3/Plonky3) stack. The zkVM execution is proven recursively and is wrapped into a SNARK for final verification. It provides tools to generate onchain Groth16 or Plonk verifiers. SP1 Hypercube provides 98 bits of proven security, as per [Ethereum Foundation’s soundcalc evaluation](https://github.com/ethereum/soundcalc/blob/main/reports/sp1.md).
-
-## Proof system
-
-SP1 Hypercube is an iteration of the previous zkVM version, SP1 Turbo, introducing architectural changes that improve prover performance and memory efficiency.
-
-Hypercube proves execution of a 64-bit RISC-V VM using several ZK circuits, or chips, connected by lookup arguments ([LogUp based on GKR protocol](https://docs.succinct.xyz/docs/sp1/hypercube/logupgkr)). VM execution trace is split into several shards of size approximately 2^22, that could be proven in parallel with a STARK proving system. Additional arguments prove memory consistency across shards. 
-
-The parallelized proofs are recursively checked by the next layer of STARK circuits. The correctness of the final STARK proof is verified with the final wrap SNARK program, the wrap SNARK proof is verified onchain.
-
-### Hypercube vs. Turbo
-
-Proving time and memory optimizations of SP1 Hypercube are based on several design improvements compared to SP1 Turbo.
-
-Hypercube implements a [multilinear polynomial](https://github.com/succinctlabs/sp1/tree/v6.0.0/slop/crates/multilinear) STARK compared to univariate polynomials in Turbo. Multilinear polynomial based proving systems are more efficient than univariate because manipulating them reduces usage of log-linear FFT algorithm.
-
-Multilinear polynomials also allow Hypercube to innovate on a polynomial commitment scheme, implementing [Jagged PCS](https://docs.succinct.xyz/docs/sp1/hypercube/jagged) (defined in [this preprint](https://eprint.iacr.org/2025/917)). Jagged PCS allows efficient packing of computation traces of zkVM chips with different lengths, optimizing the prover memory requirement. More efficient LogUp based on GKR is also made possible because of multilinear polynomials.
-
-### Recursion circuits
-
-SP1 Hypercube provides tools for recursive proof generation by [verifying proofs in a zkVM](https://docs.succinct.xyz/docs/sp1/writing-programs/proof-aggregation#verifying-proofs-inside-the-zkvm). This uses the same toolkit as top-level proof system, but proves the correct verification of all proofs generated on the previous step.
-
-First, proofs for correctness of separate shards are generated. These shards may have different trace shape, so in the next step they are normalized. Finally, normalized shard proofs are recursively compressed in batches of 3-4 to a single zkVM proof. For further details see [this page](https://docs.succinct.xyz/docs/sp1/hypercube/recursion).
-
-### Final wrap
-
-SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final SNARK wrap of the STARK proof for performant onchain proof verification ([link](https://docs.succinct.xyz/docs/sp1/generating-proofs/proof-types#compressed)). The <https://github.com/Consensys/gnark> implementation of these proof systems over BN254 curve is used. For Plonk, Aztec Ignition trusted setup ceremony is used, for Groth16 Succinct run internal circuit-dependent phase 2 trusted setup (todo: link to trusted setups section).
-    
-    `,
+    proofSystemInfo: readProjectMarkdown('sp1hypercube', 'proofSystemInfo'),
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         ...TRUSTED_SETUPS.AztecIgnition,
       },
       {
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
+        proofSystem: ZK_CATALOG_TAGS.Groth16.SP1_v6_1_0,
+        ...TRUSTED_SETUPS.SP1HypercubeGroth16_v6_1_0,
+      },
+      {
+        proofSystem: ZK_CATALOG_TAGS.Groth16.SP1_v6_0_0,
         ...TRUSTED_SETUPS.SP1HypercubeGroth16,
       },
     ],
@@ -152,6 +127,18 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
         projectId: ProjectId('morph'),
         sinceTimestamp: UnixTime(1779354407),
       },
+      {
+        projectId: ProjectId('base'),
+        sinceTimestamp: UnixTime(1779825599), // 2026-05-26 AggregateVerifier upgrade
+      },
+      {
+        projectId: ProjectId('appchain'),
+        sinceTimestamp: UnixTime(1780326419),
+      },
+      {
+        projectId: ProjectId('apechain'),
+        sinceTimestamp: UnixTime(1780346337),
+      },
     ],
     verifierHashes: [
       {
@@ -159,7 +146,7 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
         name: 'SP1 Hypercube Groth16 v6.1.0',
         sourceLink:
           'https://github.com/succinctlabs/sp1/tree/v6.1.0/crates/prover',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
+        proofSystem: ZK_CATALOG_TAGS.Groth16.SP1_v6_1_0,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
@@ -167,8 +154,46 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
               '0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2',
             ),
           },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xD9d5C8456a168Dd25561064F47bF116111131B1D',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'arbitrum',
+              '0xD9d5C8456a168Dd25561064F47bF116111131B1D',
+            ),
+          },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'sp1hypercube',
+          'verificationSteps-0x4388a21c',
+        ),
+      },
+      {
+        hash: '0x0e78f4db7a6771a3a6a7d9c3b0de6fe73d58781368967a7fe84d87aefffec896',
+        name: 'SP1 Hypercube Groth16 v6.0.0',
+        sourceLink:
+          'https://github.com/succinctlabs/sp1/tree/v6.0.0/crates/prover',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.SP1_v6_0_0,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'sp1hypercube',
+          'verificationSteps-0x0e78f4db',
+        ),
       },
       {
         hash: '0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac',
@@ -195,45 +220,19 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
               '0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624',
             ),
           },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692',
+            ),
+          },
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-The regeneration process consumed around 100 GiB of memory on the peak.
-
-1. Install necessary dependencies: rust, docker, sp1 toolkit, go.
-
-\`\`\`
-sudo apt update
-sudo apt install build-essential golang-go protobuf-compiler
-
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
-cargo install --debug --locked cargo-make
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-sudo apt install -y docker-ce
-sudo usermod -aG docker $\{USER\}
-
-curl -L https://sp1up.succinct.xyz/ | bash
-source ~/.bashrc
-sp1up
-\`\`\`
-
-2. Clone [sp1 repo](https://github.com/succinctlabs/sp1), set \`SP1_ALLOW_DEPRECATED_HOOKS\` for correct compilation and run the script to regenerate verifiers.
-
-\`\`\`
-git clone https://github.com/succinctlabs/sp1.git
-cd sp1/crates/prover
-git checkout v6.1.0   # commit should be d454975ac7c1126097e36eceda9bce2cb9899da4
-export SP1_ALLOW_DEPRECATED_HOOKS=true  # fixes compilation errors
-
-make build-circuits
-\`\`\`
-      
-The script will generate Plonk verifier smart contract with verification keys and the verifier hash in \`build/plonk\` dir.
-        `,
+        verificationSteps: readProjectMarkdown(
+          'sp1hypercube',
+          'verificationSteps-0x5a093a2f',
+        ),
       },
       {
         hash: '0xbb1a6f2930e94bfe8b35e794faf43133214534a17d2ad8e51358cad437b3c317',
@@ -257,117 +256,10 @@ The script will generate Plonk verifier smart contract with verification keys an
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-    The regeneration process consumed around 70 GiB of memory on the peak.
-    
-    1. Install necessary dependencies: rust, docker, sp1 toolkit, go.
-    
-    \`\`\`
-    sudo apt update
-    sudo apt install build-essential golang-go protobuf-compiler
-    
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    . .cargo/env
-    cargo install --debug --locked cargo-make
-    
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-    sudo apt install -y docker-ce
-    sudo usermod -aG docker $\{USER\}
-    
-    curl -L https://sp1up.succinct.xyz/ | bash
-    source ~/.bashrc
-    sp1up
-    \`\`\`
-    
-    2. Clone [sp1 repo](https://github.com/succinctlabs/sp1), set \`SP1_ALLOW_DEPRECATED_HOOKS\` for correct compilation and run the script to regenerate verifiers.
-    
-    \`\`\`
-    git clone https://github.com/succinctlabs/sp1.git
-    cd sp1/crates/prover
-    git checkout v6.0.0   # commit should be f87f8d6ff005d542db22e241928319f5e96a4609
-    export SP1_ALLOW_DEPRECATED_HOOKS=true  # fixes compilation errors
-    
-    make build-circuits
-    \`\`\`
-          
-    The script will generate Plonk verifier smart contract with verification keys and the verifier hash in \`build/plonk\` dir.
-            `,
-      },
-      {
-        hash: '0x0e78f4db7a6771a3a6a7d9c3b0de6fe73d58781368967a7fe84d87aefffec896',
-        name: 'SP1 Hypercube Groth16 v6.0.0',
-        sourceLink:
-          'https://github.com/succinctlabs/sp1/tree/v6.0.0/crates/prover',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508',
-            ),
-          },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-    The regeneration process consumed around 70 GiB of memory on the peak.
-    
-    1. Install necessary dependencies: rust, docker, sp1 toolkit, go.
-    
-    \`\`\`
-    sudo apt update
-    sudo apt install build-essential golang-go protobuf-compiler
-    
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    . .cargo/env
-    cargo install --debug --locked cargo-make
-    
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-    sudo apt install -y docker-ce
-    sudo usermod -aG docker $\{USER\}
-    
-    curl -L https://sp1up.succinct.xyz/ | bash
-    source ~/.bashrc
-    sp1up
-    \`\`\`
-    
-    2. Clone [sp1 repo](https://github.com/succinctlabs/sp1), set \`SP1_ALLOW_DEPRECATED_HOOKS\` for correct compilation and run the script to build groth16 circuit file.
-    
-    \`\`\`
-    git clone https://github.com/succinctlabs/sp1.git
-    cd sp1/crates/prover
-    git checkout v6.0.0   # commit should be f87f8d6ff005d542db22e241928319f5e96a4609
-    export SP1_ALLOW_DEPRECATED_HOOKS=true  # fixes compilation errors
-    
-    make build-circuits
-    \`\`\`
-    
-    This script will generate \`groth16_circuit.bin\` file in the \`prover/build/groth16\` directory, however it will not generate correct prover and verifier keys.
-    
-    3. Generate correct pk and vk using the correct SP1 trusted setup. This will require [semaphore-gnark-11](https://github.com/succinctlabs/semaphore-gnark-11/tree/main) repo.
-    
-    \`\`\`
-    cd
-    git clone https://github.com/succinctlabs/semaphore-gnark-11.git  # tested on commit hash 6d6ebc3608e609ec879e9ba99abee6b6b97d937d
-    cd semaphore-gnark-11
-    # Download the trusted setup transcript
-    curl "https://sp1-circuits.s3-us-east-2.amazonaws.com/v6.0.0-trusted-setup.tar.gz" -o trusted-setup.tar.gz
-    
-    # Extract trusted setup transcript.
-    tar -xzf trusted-setup.tar.gz
-    
-    # Build the binary.
-    go build
-    
-    # Generate keys. They are outputted to the files pk and vk in the root directory.
-    ./semaphore-gnark-11 key trusted-setup/phase1 trusted-setup/phase2-11 trusted-setup/evals /path/to/sp1/crates/prover/build/groth16/groth16_circuit.bin
-    \`\`\`
-    The last step will take several hours to complete.
-    
-    4. Compute the hash of generated \`vk\` file: \`shasum vk -a 256\`.
-        `,
+        verificationSteps: readProjectMarkdown(
+          'sp1hypercube',
+          'verificationSteps-0xbb1a6f29',
+        ),
       },
     ],
   },

@@ -24,6 +24,7 @@ export const AVAILABLE_CHAINS = [
   { name: 'kinto', chainId: 7887, shortName: 'kinto' },
   { name: 'katana', chainId: 747474, shortName: 'katana' },
   { name: 'unichain', chainId: 130, shortName: 'unichain' },
+  { name: 'hyperevm', chainId: 999, shortName: 'hyperevm' },
   { name: 'ink', chainId: 57073, shortName: 'ink' },
   { name: 'everclear', chainId: 25327, shortName: 'everclear' },
   { name: 'zircuit', chainId: 48900, shortName: 'zircuit' },

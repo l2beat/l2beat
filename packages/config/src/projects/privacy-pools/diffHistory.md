@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x417330d8fb38dbec620d6a7810b0057096ffb101
+
+# Diff at Thu, 28 May 2026 10:28:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1779457786
+- current timestamp: 1779964040
+
+## Description
+
+two signers change.
+
+## Watched changes
+
+```diff
+    contract Privacy Pools Multisig (eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x554c5aF96E9e3c05AEC01ce18221d0DD25975aB4"
++        "eth:0x652E36f8EA937c19417380dCDb48D6e4375d13dA"
+      values.$members.3:
+-        "eth:0x42FEdcd80C8C9694DBc3b2ff0fD48BB8651dfC62"
++        "eth:0xE8A2cC5c2349615D947b9d9fE5D7F144730cAf77"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779457786 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
++        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+    }
+```
+
 Generated with discovered.json: 0xacd792fd23bdfd9f25eab1b5e3422daa22bf351b
 
 # Diff at Mon, 25 May 2026 09:49:02 GMT:

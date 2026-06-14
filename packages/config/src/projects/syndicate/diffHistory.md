@@ -1,3 +1,95 @@
+Generated with discovered.json: 0x31223a8558a29070654ed5e81cb671858de0e52d
+
+# Diff at Fri, 12 Jun 2026 10:19:05 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1775599220
+- current timestamp: 1775599220
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775599220 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x30b91654787143769d952dfba05230004d2948c0
+
+# Diff at Tue, 09 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1775599220
+- current timestamp: 1775599220
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775599220 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x54dD1659c232DEC31386C52507982a4983D9BCb8) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xb501068Ee205c6A9Eb2974B7D6459bcb3B7514A2) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can store and serve both unencoded blobs as well as encoded chunks."
+      receivedPermissions.0.permission:
+-        "relayDA"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can disperse EigenDA blobs to the EigenDA node operators."
+      receivedPermissions.0.permission:
+-        "disperse"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xf0225a32059b00f3028a5b8de444e869e090c56f
 
 # Diff at Fri, 15 May 2026 12:37:01 GMT:

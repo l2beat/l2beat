@@ -58,6 +58,7 @@ export const myria: ScalingProject = {
   id: ProjectId('myria'),
   capability: 'appchain',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt: UnixTime(1780272000), // 2026-06-01T00:00:00Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -65,10 +66,6 @@ export const myria: ScalingProject = {
     BADGES.Infra.SHARP,
   ],
   display: {
-    redWarning: {
-      text: 'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
-      detailAnchor: 'permissions',
-    },
     architectureImage: 'starkex',
     name: 'Myria',
     slug: 'myria',

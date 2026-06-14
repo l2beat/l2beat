@@ -28,7 +28,7 @@ export async function getTvsChartStats({
   filter,
   excludeAssociatedTokens,
   excludeRwaRestrictedTokens,
-}: TvsChartStatsParams): Promise<TvsChartStats | undefined> {
+}: TvsChartStatsParams): Promise<TvsChartStats | null> {
   const { chart } = await getRecategorisedTvsChart({
     range: optionToRange('7d'),
     excludeAssociatedTokens,
@@ -38,7 +38,7 @@ export async function getTvsChartStats({
 
   const oldest = chart.at(0)
   const newest = chart.at(-1)
-  if (!oldest || !newest) return undefined
+  if (!oldest || !newest) return null
 
   const oldestRollups = oldest[1] ?? 0
   const oldestValidiumsAndOptimiums = oldest[2] ?? 0

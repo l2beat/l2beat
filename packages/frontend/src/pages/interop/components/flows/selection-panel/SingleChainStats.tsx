@@ -1,31 +1,39 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { TopItemsList } from './TopItemsList'
 
 export function SingleChainStats({
   chainId,
   selectedChains,
+  tokenId,
   linkTopProtocols,
   hideTopProtocols,
 }: {
   chainId: string
   selectedChains: string[]
+  tokenId?: string
   linkTopProtocols?: boolean
   hideTopProtocols?: boolean
 }) {
+  const trpc = useTRPC()
   const { selectedProtocols } = useInteropFlows()
-  const { data, isLoading } = api.interop.flows.useQuery({
-    chains: selectedChains,
-    protocolIds: selectedProtocols,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions({
+      chains: selectedChains,
+      protocolIds: selectedProtocols,
+      tokenId,
+    }),
+  )
 
   if (!data || isLoading) {
     return null
@@ -43,6 +51,10 @@ export function SingleChainStats({
           items={chainData.topTokens.map((t) => ({
             ...t,
             title: t.symbol,
+            href: getInteropTokenUrl(t, {
+              from: selectedChains,
+              to: selectedChains,
+            }),
           }))}
         />
       )}

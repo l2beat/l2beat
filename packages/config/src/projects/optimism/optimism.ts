@@ -69,6 +69,7 @@ export const optimism: ScalingProject = opStackL2({
             'maker-bridge.L1ToL2Transfer',
             'sorare-base.L1ToL2Transfer',
             'lido-wsteth.L1ToL2Transfer',
+            'synthetix-bridge.L1ToL2Transfer',
           ],
         },
         {
@@ -78,6 +79,31 @@ export const optimism: ScalingProject = opStackL2({
             'opstack-standardbridge.L2ToL1Transfer',
             'maker-bridge.L2ToL1Transfer',
             'lido-wsteth.L2ToL1Transfer',
+            'synthetix-bridge.L2ToL1Transfer',
+          ],
+        },
+      ],
+      burnAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: [
+            'opstack.L1ToL2Transfer',
+            'opstack-standardbridge.L1ToL2Transfer',
+            'beefy-bridge.L1ToL2Transfer',
+            'maker-bridge.L1ToL2Transfer',
+            'sorare-base.L1ToL2Transfer',
+            'lido-wsteth.L1ToL2Transfer',
+            'synthetix-bridge.L1ToL2Transfer',
+          ],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: [
+            'opstack.L2ToL1Transfer',
+            'opstack-standardbridge.L2ToL1Transfer',
+            'maker-bridge.L2ToL1Transfer',
+            'lido-wsteth.L2ToL1Transfer',
+            'synthetix-bridge.L2ToL1Transfer',
           ],
         },
       ],

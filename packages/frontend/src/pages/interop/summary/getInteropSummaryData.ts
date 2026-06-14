@@ -6,12 +6,13 @@ import { getInteropChains } from '~/server/features/scaling/interop/utils/getInt
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
+import type { RouterOutputs } from '~/trpc/React'
 import { getSsrHelpers } from '~/trpc/server'
 import { type Manifest, manifest } from '~/utils/Manifest'
-import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '../components/flows/consts'
 import type { InteropQuery } from '../InteropRouter'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
+import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import type { InteropSelection } from '../utils/types'
 
 export async function getInteropSummaryData(
@@ -30,13 +31,13 @@ export async function getInteropSummaryData(
     scalingProjects.map((p) => [p.id, p.slug]),
   )
 
-  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains.map(
-    (chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-      href: getInteropChainHref(chain.id, scalingProjectSlugById),
-    }),
-  )
+  const interopChainsWithIcons = mapInteropChainsToWithIcons(
+    manifest,
+    interopChains,
+  ).map((chain) => ({
+    ...chain,
+    href: getInteropChainHref(chain.id, scalingProjectSlugById),
+  }))
 
   const activeInteropChains = interopChainsWithIcons.filter(
     (chain) => !chain.isUpcoming,
@@ -123,7 +124,9 @@ async function getCachedData(
       select: ['interopConfig'],
     }),
     initialSelection.from.length > 0 && initialSelection.to.length > 0
-      ? helpers.interop.dashboard.prefetch({ ...initialSelection })
+      ? helpers.queryClient.prefetchQuery(
+          helpers.trpc.interop.dashboard.queryOptions({ ...initialSelection }),
+        )
       : undefined,
   ])
 
@@ -133,10 +136,17 @@ async function getCachedData(
   let defaultFlowChainOrder = initialFlowsChains
 
   if (shouldPrefetchFlows) {
-    const flowsData = await helpers.interop.flows.fetch({
-      chains: initialFlowsChains,
-      protocolIds: protocols.map((protocol) => protocol.id),
-    })
+    const protocolIds = protocols.map((protocol) => protocol.id)
+    // Determine the volume order across all chains on a throwaway client so the
+    // all-chains query is not dehydrated (the client never requests it).
+    const ordering = getSsrHelpers()
+    const flowsData: RouterOutputs['interop']['flows'] =
+      await ordering.queryClient.fetchQuery(
+        ordering.trpc.interop.flows.queryOptions({
+          chains: initialFlowsChains,
+          protocolIds,
+        }),
+      )
     const chainsByVolume = flowsData.chainData
       .toSorted((a, b) => b.totalVolume - a.totalVolume)
       .map((chain) => chain.chainId)
@@ -144,6 +154,15 @@ async function getCachedData(
     if (chainsByVolume.length > 0) {
       defaultFlowChainOrder = chainsByVolume
     }
+
+    // The client's flows chart defaults to the top chains by volume, so
+    // prefetch that exact query to hydrate it from cache.
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.interop.flows.queryOptions({
+        chains: defaultFlowChainOrder.slice(0, MAX_SELECTED_CHAINS),
+        protocolIds,
+      }),
+    )
   }
 
   return {

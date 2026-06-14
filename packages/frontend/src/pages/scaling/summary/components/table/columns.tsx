@@ -178,7 +178,7 @@ export function getScalingSummaryValidiumAndOptimiumsColumns(
                   ? 'No bridge'
                   : latestValue.bridge.value,
             }}
-            href={`/scaling/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+            href={`/scaling/risk/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
           />
         )
       },
@@ -193,7 +193,7 @@ export function getScalingSummaryValidiumAndOptimiumsColumns(
                   secondLine:
                     da.bridge.value === 'None' ? 'No bridge' : da.bridge.value,
                 }}
-                href={`/scaling/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+                href={`/scaling/risk/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
               />
             )) ?? []
           )

@@ -1,7 +1,7 @@
 {
   "name": "immutablex",
-  "timestamp": 1779377712,
-  "configHash": "0xb9796b5f7ebbb455d888f0aa62f61a8e3b0843e0c16aeabf40d685adf6643044",
+  "timestamp": 1780913745,
+  "configHash": "0xd4ed5c6714ecdc1add8536837ef3aa48553c5f753138c746f896fb4a5599f1dc",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000007B",
@@ -20,6 +20,11 @@
     },
     {
       "address": "eth:0x10cbBBb225BBEA137aC01F0F6D91CDB126BccaA6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x2053E8e8c7456DE57141D1357579520dEaa8Bf9C",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -46,7 +51,7 @@
       "sinceTimestamp": 1661972207,
       "sinceBlock": 15448318,
       "values": {
-        "$admin": "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "$admin": "eth:0x72164D4448fe6cfA472946feDC71e83b4628B1aF",
         "$implementation": "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b",
         "$pastUpgrades": [
           [
@@ -64,13 +69,14 @@
         "contractId": "0xfaa2f015f2ce5aee225904728de2def86eb8837491efd21f1a04fc20d8e923f6",
         "gasCollector": "eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC",
         "implementation": "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b",
-        "owner": "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "owner": "eth:0x72164D4448fe6cfA472946feDC71e83b4628B1aF",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
         "eth:0x2d5d7d31F671F86C782533cc367F14109a082712": "AxelarGasServiceProxy",
         "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b": "AxelarGasService"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0x37AC4a9Bf184aa1130016525631f3Daec11f7b26",
@@ -297,7 +303,7 @@
       }
     },
     {
-      "address": "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+      "address": "eth:0x72164D4448fe6cfA472946feDC71e83b4628B1aF",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -321,7 +327,7 @@
       "sinceBlock": 18782489,
       "values": {
         "$immutable": true,
-        "owner": "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "owner": "eth:0x2053E8e8c7456DE57141D1357579520dEaa8Bf9C",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
@@ -1093,6 +1099,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25144554 },
-  "permissionsConfigHash": "0x6ee71628435c37b719813ff2d8b7e1b312dcaae4576f42a057f05846fcd3c741"
+  "usedBlockNumbers": { "ethereum": 25272035 },
+  "permissionsConfigHash": "0x47bc8c3c40741d25b4375a26055645504556056f8e3b6f4bc0e7cc6d57e171c6"
 }

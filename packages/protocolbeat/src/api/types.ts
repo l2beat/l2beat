@@ -64,6 +64,17 @@ export interface ApiConfigFileResponse {
   config: string
 }
 
+export interface ApiProjectLayoutEntry {
+  name: string
+  description?: string
+}
+
+export type ApiProjectLayoutsResponse = ApiProjectLayoutEntry[]
+
+export interface ApiProjectLayoutResponse {
+  layout: unknown
+}
+
 export type ApiDiffHistorySectionKind =
   | 'watched-changes'
   | 'initial-discovery'
@@ -125,13 +136,6 @@ type RefreshReason =
 
 export interface ApiConfigSyncStatusResponse {
   reasons: RefreshReason[]
-}
-
-export interface ApiGlobalConfigSyncStatusResponse {
-  reasons: {
-    project: string
-    reasons: RefreshReason[]
-  }[]
 }
 
 export type ApiCreateShapeResponse =

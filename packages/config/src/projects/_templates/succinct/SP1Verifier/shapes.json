@@ -18,5 +18,15 @@
     "hash": "0xe1cb8acc21214c3652ccc33caf9aca78a1e818c7cba5652c17c9d1a67bce341b",
     "address": "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C",
     "blockNumber": 24456046
+  },
+  "SP1Verifier_v6_0_0_Groth16": {
+    "hash": "0x42f46686613948c377586d511d315e6d67b9fd747a18225cce7c4cf32d14c7be",
+    "address": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508",
+    "blockNumber": 25193152
+  },
+  "SP1Verifier_v6_1_0_Groth16": {
+    "hash": "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6",
+    "address": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2",
+    "blockNumber": 25193152
   }
 }

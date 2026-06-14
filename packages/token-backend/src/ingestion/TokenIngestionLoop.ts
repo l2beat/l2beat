@@ -4,6 +4,7 @@ import type {
   TokenDatabase,
   TokenIngestionQueueState,
 } from '@l2beat/database'
+import { formatError } from '../utils/formatError'
 import type { IngestionOutcome } from './IngestionTrace'
 import type { TokenIngestionProcessor } from './TokenIngestionProcessor'
 import { normalizeInteropTokenAddress } from './tokenIngestionUtils'
@@ -131,8 +132,20 @@ export class TokenIngestionLoop {
       }
       seenAddresses.add(addressKey)
 
-      const trace = await this.processor.process(entry, transferIndex)
-      outcomeCounts[trace.outcome.kind] += 1
+      try {
+        const trace = await this.processor.process(entry, transferIndex)
+        outcomeCounts[trace.outcome.kind] += 1
+      } catch (error) {
+        this.logger.error('Token ingestion entry processing failed', error, {
+          chain: entry.chain,
+          address: entry.address,
+        })
+        await this.tokenDb.tokenIngestionQueue.markError(
+          entry,
+          `Unexpected token ingestion error: ${formatError(error)}.`,
+        )
+        outcomeCounts.error += 1
+      }
       processed += 1
       entry = await this.tokenDb.tokenIngestionQueue.findNextPending()
     }

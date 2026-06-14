@@ -53,26 +53,12 @@ ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalD
   not member(Giver, Receiver). % for backwards compatibility, we didn't show direct "act" permission for multisig members
 
 % ------------------------------------------------------------------------------------------------
-% BEGIN: Heuristic for determining if a project is controlled by an EOA
+% BEGIN: Flag EOAs that have upgrade permissions
 
-% The number of upgrade permissions received for every actor
-receivedUpgradePermissionsCount(Actor, ReceivedUpgradePermissions) :-
-  address(Actor, _, _),
-  ReceivedUpgradePermissions = #count{Giver: ultimatePermission(Actor, "upgrade", Giver, _, _, _, _, _, _, isFinal)}.
-
-% The maximum number of upgrade permissions received by any actor (per chain):
-maxReceivedUpgradePermissionsCount(Max, Chain) :-
-  address(_, Chain, _),
-  Max = #max{ReceivedUpgradePermissions: receivedUpgradePermissionsCount(Actor, ReceivedUpgradePermissions), address(Actor, Chain, _)}.  
-
-% A potential EOA(s) that controls the maximum number of upgrade permissions (per chain):
-eoaWithMajorityUpgradePermissions(Eoa) :-
-  address(Eoa, Chain, _),
+eoaWithUpgradePermissions(Eoa) :-
   addressType(Eoa, eoa),
-  receivedUpgradePermissionsCount(Eoa, ReceivedUpgradePermissions),
-  maxReceivedUpgradePermissionsCount(Max, Chain),
-  Max > 0, % there are some projects that don't have any upgrade permissions
-  ReceivedUpgradePermissions = Max.
+  ultimatePermission(Eoa, "upgrade", _, _, _, _, _, _, _, isFinal).
+
 % END
 % ------------------------------------------------------------------------------------------------
 
@@ -83,6 +69,4 @@ eoaWithMajorityUpgradePermissions(Eoa) :-
 % #show transitivePermission/9.
 #show ultimatePermission/10.
 
-% #show maxReceivedUpgradePermissionsCount/2.
-% #show receivedUpgradePermissionsCount/2.
-#show eoaWithMajorityUpgradePermissions/1.
+#show eoaWithUpgradePermissions/1.

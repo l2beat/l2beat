@@ -2,8 +2,14 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L1FluentBridge",
   "category": "core",
-  "description": "Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets relayers process L2->L1 messages with two Merkle proofs against the latest preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE.",
+  "description": "Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets anyone process L2->L1 messages with two Merkle proofs against a preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE.",
   "ignoreMethods": ["getMessageAt", "proxiableUUID"],
+  "ignoreInWatchMode": [
+    "getNonce",
+    "getReceivedNonce",
+    "getSentMessageCursor",
+    "getExecuteGasLimit"
+  ],
   "fields": {
     "defaultAdminAC": {
       "handler": {
@@ -27,18 +33,6 @@
         {
           "type": "interact",
           "description": "pause / unpause the L1 bridge core and clear expired L1->L2 deposits via skipExpiredDeposits (no user-initiated refund path exists; rollbackMessageWithProof reverts with NOT_IMPLEMENTED)."
-        }
-      ]
-    },
-    "relayerAC": {
-      "handler": {
-        "type": "accessControl",
-        "pickRoleMembers": "RELAYER_ROLE"
-      },
-      "permissions": [
-        {
-          "type": "relay",
-          "description": "deliver L2->L1 messages on L1 via receiveMessageWithProof; this is the only entry point for first-time delivery, so user withdrawals progress only when a holder of this role acts (failed-execution retries via receiveFailedMessage are permissionless once a message has been delivered at least once)."
         }
       ]
     },

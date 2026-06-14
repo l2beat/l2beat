@@ -8,13 +8,13 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { EM_DASH } from '~/consts/characters'
-import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import type { InteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
 import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
+import { InteropTopPathValue } from '../../components/InteropTopPathValue'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
 import { TopTokensCell } from '../../components/tokens/TopTokensCell'
 import {
@@ -100,7 +100,7 @@ export function InteropProtocolSummary({
           title="Last 24h top path"
           value={
             protocolData?.topPath ? (
-              <TopPathValue path={protocolData.topPath} />
+              <InteropTopPathValue path={protocolData.topPath} />
             ) : (
               EM_DASH
             )
@@ -113,7 +113,7 @@ export function InteropProtocolSummary({
             protocolData?.entry?.averageDuration ? (
               <AvgDurationCell
                 className="font-bold text-label-value-16"
-                splitClassName="flex-row text-label-value-16 font-bold"
+                splitClassName="flex-row gap-3 text-label-value-16 font-bold md:gap-3"
                 averageDuration={protocolData?.entry?.averageDuration}
               />
             ) : (
@@ -122,7 +122,7 @@ export function InteropProtocolSummary({
           }
         />
         <StatsItem
-          title="Last 24 avg. transfer value"
+          title="Last 24h avg. transfer value"
           value={
             protocolData?.entry?.averageValue
               ? formatCurrency(protocolData.entry.averageValue, 'usd')
@@ -219,23 +219,6 @@ export function InteropProtocolSummary({
         </div>
       )}
     </section>
-  )
-}
-
-function TopPathValue({
-  path,
-}: {
-  path: { chainA: string; chainB: string; volume: number }
-}) {
-  return (
-    <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-label-value-16">
-      <span className="capitalize">{path.chainA}</span>
-      <BidirectionalArrowIcon className="size-4 fill-brand" />
-      <span className="capitalize">{path.chainB}</span>
-      <span className="text-secondary">
-        {formatCurrency(path.volume, 'usd')}
-      </span>
-    </div>
   )
 }
 

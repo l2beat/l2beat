@@ -3,6 +3,7 @@ import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 export const boojum: BaseProject = {
   id: ProjectId('boojum'),
@@ -47,25 +48,7 @@ export const boojum: BaseProject = {
         // ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
-    proofSystemInfo: `
-      ## Description
-
-      Boojum is a proving system operating on [EraVM](https://matter-labs.github.io/zksync-era/core/latest/guides/advanced/12_alternative_vm_intro.html) ISA and supporting [zk stack](https://zkstack.io) chains. It includes recursive STARK proving of zkVM execution, as well as the final wrap with [Plonk](https://github.com/matter-labs/franklin-crypto/tree/dev/src/plonk) or [Fflonk](https://github.com/matter-labs/zksync-crypto/blob/main/crates/fflonk/docs/spec.pdf) SNARK proving system. Boojum targets [100 bits of security](https://github.com/matter-labs/era-boojum?tab=readme-ov-file#for-curions-in-benchmarks-only).
-
-      ## Proof system
-
-      ### zkVM component
-
-      [Boojum](https://github.com/matter-labs/era-boojum/tree/main)'s core is an implementation of the [**Redshift**](https://eprint.iacr.org/2019/1400.pdf) protocol which uses the Plonk IOP with a polynomial commitment scheme based on List Polynomial Commitments (LPCs), which is in turn based on FRI, making the scheme transparent. The scheme makes use of the Goldilocks field, which is much smaller than BN254's field. This part of boojum implements a zkVM for EraVM, which is closely aligned with EVM but has essential differences like 16 registers.
-
-      ### Recursion circuits
-
-      The protocol makes use of several layers of recursive proof aggregation for 15 types of [circuits](https://github.com/matter-labs/era-zkevm_test_harness/blob/3cd647aa57fc2e1180bab53f7a3b61ec47502a46/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L29). In particular, node and scheduler circuits aggregate zk proofs and compressor and wrapper circuits reduce the final proof size. Further information about the aggregation architecture can be found [**here**](https://github.com/matter-labs/zksync-era/blob/1b61d0797062ab8b0aa2c1e92b23a3a0d8fd2c61/docs/guides/advanced/15_prover_keys.md#circuits).
-
-      ### Final wrap
-
-      The final proof could either be wrapped into a [Plonk](https://github.com/matter-labs/era-zkevm_test_harness/blob/3cd647aa57fc2e1180bab53f7a3b61ec47502a46/circuit_definitions/src/circuit_definitions/aux_layer/wrapper.rs)+KZG proof, or into [Fflonk](https://github.com/matter-labs/zksync-crypto/tree/main/crates/fflonk)+KZG for cheap verification. The KZG commitment is done over BN254 curve and it uses Aztec Ignition trusted setup ceremony, see [below](#trusted-setups) for more details.
-      `,
+    proofSystemInfo: readProjectMarkdown('boojum', 'proofSystemInfo'),
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
@@ -127,116 +110,116 @@ export const boojum: BaseProject = {
       },
     ],
     verifierHashes: [
-      {
-        hash: '0xe4503cf38485e3d728a7362155d53d3d63293e2fa48dca4f5588aa4625de251f',
-        name: 'Boojum Fflonk Lens verifier',
-        sourceLink:
-          'https://github.com/matter-labs/zksync-era/tree/f57999997f581b557cf8e36e3a9be5650d992022/prover',
-        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d',
-            ),
-          },
-          // {
-          //   address: EthereumAddress(
-          //     '0xA14909eE4D20ebefd039094De75Fb440538799C1',
-          //   ),
-          //   chain: 'gateway',
-          // },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-Verification requires an Ubuntu 22.04 machine with an NVIDIA GPU. We used a g6.4xlarge aws instance with 24 GiB GPU memory and 64 GiB RAM. 
-The setup part is based on [this guide](https://paragraph.com/@zksync/from-integration-to-verification-completing-the-first-steps-in-zksync-s-prover-network) with modifications, the verification is done using [this script](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri).
+      //       {
+      //         hash: '0xe4503cf38485e3d728a7362155d53d3d63293e2fa48dca4f5588aa4625de251f',
+      //         name: 'Boojum Fflonk Lens verifier',
+      //         sourceLink:
+      //           'https://github.com/matter-labs/zksync-era/tree/f57999997f581b557cf8e36e3a9be5650d992022/prover',
+      //         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+      //         knownDeployments: [
+      //           {
+      //             address: ChainSpecificAddress.fromLong(
+      //               'ethereum',
+      //               '0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d',
+      //             ),
+      //           },
+      //           // {
+      //           //   address: EthereumAddress(
+      //           //     '0xA14909eE4D20ebefd039094De75Fb440538799C1',
+      //           //   ),
+      //           //   chain: 'gateway',
+      //           // },
+      //         ],
+      //         verificationStatus: 'successful',
+      //         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //         verificationSteps: `
+      // Verification requires an Ubuntu 22.04 machine with an NVIDIA GPU. We used a g6.4xlarge aws instance with 24 GiB GPU memory and 64 GiB RAM.
+      // The setup part is based on [this guide](https://paragraph.com/@zksync/from-integration-to-verification-completing-the-first-steps-in-zksync-s-prover-network) with modifications, the verification is done using [this script](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri).
 
-1. Install rust, yarn, some essential libraries, docker and cmake:
+      // 1. Install rust, yarn, some essential libraries, docker and cmake:
 
-\`\`\`
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
+      // \`\`\`
+      // curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      // . .cargo/env
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-export NVM_DIR=$HOME/.nvm
-. .bashrc
-nvm install 20
-npm install -g yarn
-yarn set version 1.22.19
+      // curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+      // export NVM_DIR=$HOME/.nvm
+      // . .bashrc
+      // nvm install 20
+      // npm install -g yarn
+      // yarn set version 1.22.19
 
-sudo apt-get update
-sudo apt-get install -y build-essential pkg-config cmake clang lldb lld libssl-dev postgresql apt-transport-https ca-certificates curl software-properties-common
-cargo install sqlx-cli --version 0.8.1
+      // sudo apt-get update
+      // sudo apt-get install -y build-essential pkg-config cmake clang lldb lld libssl-dev postgresql apt-transport-https ca-certificates curl software-properties-common
+      // cargo install sqlx-cli --version 0.8.1
 
-# install the latest version of cmake
-sudo apt remove cmake
-curl -fsSL https://apt.kitware.com/kitware-archive.sh | sudo sh
-sudo apt-get install cmake
-\`\`\`
+      // # install the latest version of cmake
+      // sudo apt remove cmake
+      // curl -fsSL https://apt.kitware.com/kitware-archive.sh | sudo sh
+      // sudo apt-get install cmake
+      // \`\`\`
 
-2. Install CUDA drivers and toolkit 12.2, export necessary env vars. On Ubuntu 22.04 this requires updating gcc to version 12.
+      // 2. Install CUDA drivers and toolkit 12.2, export necessary env vars. On Ubuntu 22.04 this requires updating gcc to version 12.
 
-\`\`\`
-sudo apt-get install gcc-12 g++-12
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
+      // \`\`\`
+      // sudo apt-get install gcc-12 g++-12
+      // sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
+      // sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
 
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-sudo dpkg -i cuda-keyring_1.1-1_all.deb
-sudo apt-get update
-sudo apt-get install -y cuda-drivers-535
-sudo apt-get install -y cuda-toolkit-12-2
-\`\`\`
+      // wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
+      // sudo dpkg -i cuda-keyring_1.1-1_all.deb
+      // sudo apt-get update
+      // sudo apt-get install -y cuda-drivers-535
+      // sudo apt-get install -y cuda-toolkit-12-2
+      // \`\`\`
 
-Reboot the machine to apply the drivers.
+      // Reboot the machine to apply the drivers.
 
-3. Install \`foundryup-zksync\`.
+      // 3. Install \`foundryup-zksync\`.
 
-\`\`\`
-curl -L https://raw.githubusercontent.com/matter-labs/foundry-zksync/main/install-foundry-zksync | bash
-. ~/.bashrc
-foundryup-zksync
-\`\`\`
+      // \`\`\`
+      // curl -L https://raw.githubusercontent.com/matter-labs/foundry-zksync/main/install-foundry-zksync | bash
+      // . ~/.bashrc
+      // foundryup-zksync
+      // \`\`\`
 
-4. Build bellman-cuda. We used the tag version \`prerelease-dev-a87a309\`, commit hash \`a87a309e7c07ef6b3fc5532e50d5d244aab9f4d0\`.
-\`\`\`
-export CUDA_HOME=/usr/local/cuda
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
-export PATH=$PATH:$CUDA_HOME/bin
+      // 4. Build bellman-cuda. We used the tag version \`prerelease-dev-a87a309\`, commit hash \`a87a309e7c07ef6b3fc5532e50d5d244aab9f4d0\`.
+      // \`\`\`
+      // export CUDA_HOME=/usr/local/cuda
+      // export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
+      // export PATH=$PATH:$CUDA_HOME/bin
 
-git clone https://github.com/matter-labs/era-bellman-cuda.git
-cd era-bellman-cuda
-git checkout prerelease-dev-a87a309
-git submodule update --init --recursive
-cmake -B./build -DCMAKE_BUILD_TYPE=Release
-cmake --build ./build
-export BELLMAN_CUDA_DIR=$HOME/era-bellman-cuda
-\`\`\`
+      // git clone https://github.com/matter-labs/era-bellman-cuda.git
+      // cd era-bellman-cuda
+      // git checkout prerelease-dev-a87a309
+      // git submodule update --init --recursive
+      // cmake -B./build -DCMAKE_BUILD_TYPE=Release
+      // cmake --build ./build
+      // export BELLMAN_CUDA_DIR=$HOME/era-bellman-cuda
+      // \`\`\`
 
-5. Run all scripts to regenerate verification keys. The correct commit hash is \`f57999997f581b557cf8e36e3a9be5650d992022\`.
-\`\`\`
-cd ~ 
-git clone https://github.com/matter-labs/zksync-era.git
-cd zksync-era/
-git checkout f57999997f581b557cf8e36e3a9be5650d992022
+      // 5. Run all scripts to regenerate verification keys. The correct commit hash is \`f57999997f581b557cf8e36e3a9be5650d992022\`.
+      // \`\`\`
+      // cd ~
+      // git clone https://github.com/matter-labs/zksync-era.git
+      // cd zksync-era/
+      // git checkout f57999997f581b557cf8e36e3a9be5650d992022
 
-# Download compact CRS for the compressor data step, put in repo root
-curl -o setup_compact.key https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_compact.key
-export COMPACT_CRS_FILE=~/zksync-era/setup_compact.key
+      // # Download compact CRS for the compressor data step, put in repo root
+      // curl -o setup_compact.key https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_compact.key
+      // export COMPACT_CRS_FILE=~/zksync-era/setup_compact.key
 
-cd prover/crates/bin/vk_setup_data_generator_server_fri
-CRS_FILE=https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_2^24.key ZKSYNC_HOME=$HOME 
+      // cd prover/crates/bin/vk_setup_data_generator_server_fri
+      // CRS_FILE=https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_2^24.key ZKSYNC_HOME=$HOME
 
-# Run regeneration steps
-cargo run --release --bin key_generator generate-vk
-cargo run --features gpu --release --bin key_generator generate-compressor-data
-\`\`\`
+      // # Run regeneration steps
+      // cargo run --release --bin key_generator generate-vk
+      // cargo run --features gpu --release --bin key_generator generate-compressor-data
+      // \`\`\`
 
-The output of the last command will contain the required \`fflonk_snark_wrapper\` value.
-      `,
-      },
+      // The output of the last command will contain the required \`fflonk_snark_wrapper\` value.
+      //       `,
+      //       },
       {
         hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
         name: 'Boojum Fflonk core-v29.1.0',
@@ -259,93 +242,10 @@ The output of the last command will contain the required \`fflonk_snark_wrapper\
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-Verification requires an Ubuntu 22.04 machine with an NVIDIA GPU. We used a g6.4xlarge aws instance with 24 GiB GPU memory and 64 GiB RAM. 
-The setup part is based on [this guide](https://paragraph.com/@zksync/from-integration-to-verification-completing-the-first-steps-in-zksync-s-prover-network) with modifications, the verification is done using [this script](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri).
-
-1. Install rust, yarn, some essential libraries, docker and cmake:
-
-\`\`\`
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
-
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-export NVM_DIR=$HOME/.nvm
-. .bashrc
-nvm install 20
-npm install -g yarn
-yarn set version 1.22.19
-
-sudo apt-get update
-sudo apt-get install -y build-essential pkg-config cmake clang lldb lld libssl-dev postgresql apt-transport-https ca-certificates curl software-properties-common
-cargo install sqlx-cli --version 0.8.1
-
-# install the latest version of cmake
-sudo apt remove cmake
-curl -fsSL https://apt.kitware.com/kitware-archive.sh | sudo sh
-sudo apt-get install cmake
-\`\`\`
-
-2. Install CUDA drivers and toolkit 12.2, export necessary env vars. On Ubuntu 22.04 this requires updating gcc to version 12.
-
-\`\`\`
-sudo apt-get install gcc-12 g++-12
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
-
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-sudo dpkg -i cuda-keyring_1.1-1_all.deb
-sudo apt-get update
-sudo apt-get install -y cuda-drivers-535
-sudo apt-get install -y cuda-toolkit-12-2
-\`\`\`
-
-Reboot the machine to apply the drivers.
-
-3. Install \`foundryup-zksync\`.
-
-\`\`\`
-curl -L https://raw.githubusercontent.com/matter-labs/foundry-zksync/main/install-foundry-zksync | bash
-. ~/.bashrc
-foundryup-zksync
-\`\`\`
-
-4. Build bellman-cuda. We used the tag version \`prerelease-dev-a87a309\`, commit hash \`a87a309e7c07ef6b3fc5532e50d5d244aab9f4d0\`.
-\`\`\`
-export CUDA_HOME=/usr/local/cuda
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
-export PATH=$PATH:$CUDA_HOME/bin
-
-git clone https://github.com/matter-labs/era-bellman-cuda.git
-cd era-bellman-cuda
-git checkout prerelease-dev-a87a309
-git submodule update --init --recursive
-cmake -B./build -DCMAKE_BUILD_TYPE=Release
-cmake --build ./build
-export BELLMAN_CUDA_DIR=$HOME/era-bellman-cuda
-\`\`\`
-
-5. Run all scripts to regenerate verification keys. The correct tag version of the repo is \`core-v29.1.0\`, commit hash \`3b61f62b3361404c0c94635caee68c855ce2b9f8\`.
-\`\`\`
-cd ~ 
-git clone https://github.com/matter-labs/zksync-era.git
-cd zksync-era/
-git checkout core-v29.1.0
-
-# Download compact CRS for the compressor data step, put in repo root
-curl -o setup_compact.key https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_compact.key
-export COMPACT_CRS_FILE=~/zksync-era/setup_compact.key
-
-cd prover/crates/bin/vk_setup_data_generator_server_fri
-CRS_FILE=https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_2^24.key ZKSYNC_HOME=$HOME 
-
-# Run regeneration steps
-cargo run --release --bin key_generator generate-vk
-cargo run --features gpu --release --bin key_generator generate-compressor-data
-\`\`\`
-
-The output of the last command will contain the required \`fflonk_snark_wrapper\` value.
-                `,
+        verificationSteps: readProjectMarkdown(
+          'boojum',
+          'verificationSteps-0x6f36a08c',
+        ),
       },
       // {
       //   hash: '0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7',
@@ -371,116 +271,116 @@ The output of the last command will contain the required \`fflonk_snark_wrapper\
       //   ],
       //   verificationStatus: 'notVerified',
       // },
-      {
-        hash: '0x93e83aa1ec05a2ac4de1f0b241394efb9f94a4e7c1784a5a9bf6b85eb930c62a',
-        name: 'Boojum Plonk Lens verifier',
-        sourceLink:
-          'https://github.com/matter-labs/zksync-era/tree/f57999997f581b557cf8e36e3a9be5650d992022/prover',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xB3f4396C2040e502d0556Cbb16C0B22fE777A026',
-            ),
-          },
-          // {
-          //   address: EthereumAddress(
-          //     '0x7e81F6502209F1A114065A8f70820Ab5e28EE369',
-          //   ),
-          //   chain: 'gateway',
-          // },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-Verification requires an Ubuntu 22.04 machine with an NVIDIA GPU. We used a g6.4xlarge aws instance with 24 GiB GPU memory and 64 GiB RAM. 
-The setup part is based on [this guide](https://paragraph.com/@zksync/from-integration-to-verification-completing-the-first-steps-in-zksync-s-prover-network) with modifications, the verification is done using [this script](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri).
+      //       {
+      //         hash: '0x93e83aa1ec05a2ac4de1f0b241394efb9f94a4e7c1784a5a9bf6b85eb930c62a',
+      //         name: 'Boojum Plonk Lens verifier',
+      //         sourceLink:
+      //           'https://github.com/matter-labs/zksync-era/tree/f57999997f581b557cf8e36e3a9be5650d992022/prover',
+      //         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+      //         knownDeployments: [
+      //           {
+      //             address: ChainSpecificAddress.fromLong(
+      //               'ethereum',
+      //               '0xB3f4396C2040e502d0556Cbb16C0B22fE777A026',
+      //             ),
+      //           },
+      //           // {
+      //           //   address: EthereumAddress(
+      //           //     '0x7e81F6502209F1A114065A8f70820Ab5e28EE369',
+      //           //   ),
+      //           //   chain: 'gateway',
+      //           // },
+      //         ],
+      //         verificationStatus: 'successful',
+      //         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //         verificationSteps: `
+      // Verification requires an Ubuntu 22.04 machine with an NVIDIA GPU. We used a g6.4xlarge aws instance with 24 GiB GPU memory and 64 GiB RAM.
+      // The setup part is based on [this guide](https://paragraph.com/@zksync/from-integration-to-verification-completing-the-first-steps-in-zksync-s-prover-network) with modifications, the verification is done using [this script](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri).
 
-1. Install rust, yarn, some essential libraries, docker and cmake:
+      // 1. Install rust, yarn, some essential libraries, docker and cmake:
 
-\`\`\`
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
+      // \`\`\`
+      // curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      // . .cargo/env
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-export NVM_DIR=$HOME/.nvm
-. .bashrc
-nvm install 20
-npm install -g yarn
-yarn set version 1.22.19
+      // curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+      // export NVM_DIR=$HOME/.nvm
+      // . .bashrc
+      // nvm install 20
+      // npm install -g yarn
+      // yarn set version 1.22.19
 
-sudo apt-get update
-sudo apt-get install -y build-essential pkg-config cmake clang lldb lld libssl-dev postgresql apt-transport-https ca-certificates curl software-properties-common
-cargo install sqlx-cli --version 0.8.1
+      // sudo apt-get update
+      // sudo apt-get install -y build-essential pkg-config cmake clang lldb lld libssl-dev postgresql apt-transport-https ca-certificates curl software-properties-common
+      // cargo install sqlx-cli --version 0.8.1
 
-# install the latest version of cmake
-sudo apt remove cmake
-curl -fsSL https://apt.kitware.com/kitware-archive.sh | sudo sh
-sudo apt-get install cmake
-\`\`\`
+      // # install the latest version of cmake
+      // sudo apt remove cmake
+      // curl -fsSL https://apt.kitware.com/kitware-archive.sh | sudo sh
+      // sudo apt-get install cmake
+      // \`\`\`
 
-2. Install CUDA drivers and toolkit 12.2, export necessary env vars. On Ubuntu 22.04 this requires updating gcc to version 12.
+      // 2. Install CUDA drivers and toolkit 12.2, export necessary env vars. On Ubuntu 22.04 this requires updating gcc to version 12.
 
-\`\`\`
-sudo apt-get install gcc-12 g++-12
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
+      // \`\`\`
+      // sudo apt-get install gcc-12 g++-12
+      // sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
+      // sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
 
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-sudo dpkg -i cuda-keyring_1.1-1_all.deb
-sudo apt-get update
-sudo apt-get install -y cuda-drivers-535
-sudo apt-get install -y cuda-toolkit-12-2
-\`\`\`
+      // wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
+      // sudo dpkg -i cuda-keyring_1.1-1_all.deb
+      // sudo apt-get update
+      // sudo apt-get install -y cuda-drivers-535
+      // sudo apt-get install -y cuda-toolkit-12-2
+      // \`\`\`
 
-Reboot the machine to apply the drivers.
+      // Reboot the machine to apply the drivers.
 
-3. Install \`foundryup-zksync\`.
+      // 3. Install \`foundryup-zksync\`.
 
-\`\`\`
-curl -L https://raw.githubusercontent.com/matter-labs/foundry-zksync/main/install-foundry-zksync | bash
-. ~/.bashrc
-foundryup-zksync
-\`\`\`
+      // \`\`\`
+      // curl -L https://raw.githubusercontent.com/matter-labs/foundry-zksync/main/install-foundry-zksync | bash
+      // . ~/.bashrc
+      // foundryup-zksync
+      // \`\`\`
 
-4. Build bellman-cuda. We used the tag version \`prerelease-dev-a87a309\`, commit hash \`a87a309e7c07ef6b3fc5532e50d5d244aab9f4d0\`.
-\`\`\`
-export CUDA_HOME=/usr/local/cuda
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
-export PATH=$PATH:$CUDA_HOME/bin
+      // 4. Build bellman-cuda. We used the tag version \`prerelease-dev-a87a309\`, commit hash \`a87a309e7c07ef6b3fc5532e50d5d244aab9f4d0\`.
+      // \`\`\`
+      // export CUDA_HOME=/usr/local/cuda
+      // export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
+      // export PATH=$PATH:$CUDA_HOME/bin
 
-git clone https://github.com/matter-labs/era-bellman-cuda.git
-cd era-bellman-cuda
-git checkout prerelease-dev-a87a309
-git submodule update --init --recursive
-cmake -B./build -DCMAKE_BUILD_TYPE=Release
-cmake --build ./build
-export BELLMAN_CUDA_DIR=$HOME/era-bellman-cuda
-\`\`\`
+      // git clone https://github.com/matter-labs/era-bellman-cuda.git
+      // cd era-bellman-cuda
+      // git checkout prerelease-dev-a87a309
+      // git submodule update --init --recursive
+      // cmake -B./build -DCMAKE_BUILD_TYPE=Release
+      // cmake --build ./build
+      // export BELLMAN_CUDA_DIR=$HOME/era-bellman-cuda
+      // \`\`\`
 
-5. Run all scripts to regenerate verification keys. The correct commit hash is \`f57999997f581b557cf8e36e3a9be5650d992022\`.
-\`\`\`
-cd ~ 
-git clone https://github.com/matter-labs/zksync-era.git
-cd zksync-era/
-git checkout f57999997f581b557cf8e36e3a9be5650d992022
+      // 5. Run all scripts to regenerate verification keys. The correct commit hash is \`f57999997f581b557cf8e36e3a9be5650d992022\`.
+      // \`\`\`
+      // cd ~
+      // git clone https://github.com/matter-labs/zksync-era.git
+      // cd zksync-era/
+      // git checkout f57999997f581b557cf8e36e3a9be5650d992022
 
-# Download compact CRS for the compressor data step, put in repo root
-curl -o setup_compact.key https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_compact.key
-export COMPACT_CRS_FILE=~/zksync-era/setup_compact.key
+      // # Download compact CRS for the compressor data step, put in repo root
+      // curl -o setup_compact.key https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_compact.key
+      // export COMPACT_CRS_FILE=~/zksync-era/setup_compact.key
 
-cd prover/crates/bin/vk_setup_data_generator_server_fri
-CRS_FILE=https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_2^24.key ZKSYNC_HOME=$HOME 
+      // cd prover/crates/bin/vk_setup_data_generator_server_fri
+      // CRS_FILE=https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_2^24.key ZKSYNC_HOME=$HOME
 
-# Run regeneration steps
-cargo run --release --bin key_generator generate-vk
-cargo run --features gpu --release --bin key_generator generate-compressor-data
-\`\`\`
+      // # Run regeneration steps
+      // cargo run --release --bin key_generator generate-vk
+      // cargo run --features gpu --release --bin key_generator generate-compressor-data
+      // \`\`\`
 
-The output of the last command will contain the required \`snark_wrapper\` value.
-      `,
-      },
+      // The output of the last command will contain the required \`snark_wrapper\` value.
+      //       `,
+      //       },
       {
         hash: '0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1',
         name: 'Boojum Plonk prover-v22.0.0',
@@ -503,93 +403,10 @@ The output of the last command will contain the required \`snark_wrapper\` value
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-Verification requires an Ubuntu 22.04 machine with an NVIDIA GPU. We used a g6.4xlarge aws instance with 24 GiB GPU memory and 64 GiB RAM. 
-The setup part is based on [this guide](https://paragraph.com/@zksync/from-integration-to-verification-completing-the-first-steps-in-zksync-s-prover-network) with modifications, the verification is done using [this script](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri).
-
-1. Install rust, yarn, some essential libraries, docker and cmake:
-
-\`\`\`
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
-
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-export NVM_DIR=$HOME/.nvm
-. .bashrc
-nvm install 20
-npm install -g yarn
-yarn set version 1.22.19
-
-sudo apt-get update
-sudo apt-get install -y build-essential pkg-config cmake clang lldb lld libssl-dev postgresql apt-transport-https ca-certificates curl software-properties-common
-cargo install sqlx-cli --version 0.8.1
-
-# install the latest version of cmake
-sudo apt remove cmake
-curl -fsSL https://apt.kitware.com/kitware-archive.sh | sudo sh
-sudo apt-get install cmake
-\`\`\`
-
-2. Install CUDA drivers and toolkit 12.2, export necessary env vars. On Ubuntu 22.04 this requires updating gcc to version 12.
-
-\`\`\`
-sudo apt-get install gcc-12 g++-12
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
-
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-sudo dpkg -i cuda-keyring_1.1-1_all.deb
-sudo apt-get update
-sudo apt-get install -y cuda-drivers-535
-sudo apt-get install -y cuda-toolkit-12-2
-\`\`\`
-
-Reboot the machine to apply the drivers.
-
-3. Install \`foundryup-zksync\`.
-
-\`\`\`
-curl -L https://raw.githubusercontent.com/matter-labs/foundry-zksync/main/install-foundry-zksync | bash
-. ~/.bashrc
-foundryup-zksync
-\`\`\`
-
-4. Build bellman-cuda. We used the tag version \`prerelease-dev-a87a309\`, commit hash \`a87a309e7c07ef6b3fc5532e50d5d244aab9f4d0\`.
-\`\`\`
-export CUDA_HOME=/usr/local/cuda
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
-export PATH=$PATH:$CUDA_HOME/bin
-
-git clone https://github.com/matter-labs/era-bellman-cuda.git
-cd era-bellman-cuda
-git checkout prerelease-dev-a87a309
-git submodule update --init --recursive
-cmake -B./build -DCMAKE_BUILD_TYPE=Release
-cmake --build ./build
-export BELLMAN_CUDA_DIR=$HOME/era-bellman-cuda
-\`\`\`
-
-5. Run all scripts to regenerate verification keys. The correct tag version of the repo is \`prover-v22.0.0\`, commit hash \`157045b4f67546629fc2f7fb32cbbcb4daa2054d\`.
-\`\`\`
-cd ~ 
-git clone https://github.com/matter-labs/zksync-era.git
-cd zksync-era/
-git checkout prover-v22.0.0
-
-# Download compact CRS for the compressor data step, put in repo root
-curl -o setup_compact.key https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_compact.key
-export COMPACT_CRS_FILE=~/zksync-era/setup_compact.key
-
-cd prover/crates/bin/vk_setup_data_generator_server_fri
-CRS_FILE=https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_2^24.key ZKSYNC_HOME=$HOME 
-
-# Run regeneration steps
-cargo run --release --bin key_generator generate-vk
-cargo run --features gpu --release --bin key_generator generate-compressor-data
-\`\`\`
-
-The output of the last command will contain the required \`snark_wrapper\` value.
-                `,
+        verificationSteps: readProjectMarkdown(
+          'boojum',
+          'verificationSteps-0x64b347c6',
+        ),
       },
       // {
       //   hash: '0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78',
@@ -660,93 +477,10 @@ The output of the last command will contain the required \`snark_wrapper\` value
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-Verification requires an Ubuntu 22.04 machine with an NVIDIA GPU. We used a g6.4xlarge aws instance with 24 GiB GPU memory and 64 GiB RAM. 
-The setup part is based on [this guide](https://paragraph.com/@zksync/from-integration-to-verification-completing-the-first-steps-in-zksync-s-prover-network) with modifications, the verification is done using [this script](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri).
-
-1. Install rust, yarn, some essential libraries, docker and cmake:
-
-\`\`\`
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
-
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-export NVM_DIR=$HOME/.nvm
-. .bashrc
-nvm install 20
-npm install -g yarn
-yarn set version 1.22.19
-
-sudo apt-get update
-sudo apt-get install -y build-essential pkg-config cmake clang lldb lld libssl-dev postgresql apt-transport-https ca-certificates curl software-properties-common
-cargo install sqlx-cli --version 0.8.1
-
-# install the latest version of cmake
-sudo apt remove cmake
-curl -fsSL https://apt.kitware.com/kitware-archive.sh | sudo sh
-sudo apt-get install cmake
-\`\`\`
-
-2. Install CUDA drivers and toolkit 12.2, export necessary env vars. On Ubuntu 22.04 this requires updating gcc to version 12.
-
-\`\`\`
-sudo apt-get install gcc-12 g++-12
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
-
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-sudo dpkg -i cuda-keyring_1.1-1_all.deb
-sudo apt-get update
-sudo apt-get install -y cuda-drivers-535
-sudo apt-get install -y cuda-toolkit-12-2
-\`\`\`
-
-Reboot the machine to apply the drivers.
-
-3. Install \`foundryup-zksync\`.
-
-\`\`\`
-curl -L https://raw.githubusercontent.com/matter-labs/foundry-zksync/main/install-foundry-zksync | bash
-. ~/.bashrc
-foundryup-zksync
-\`\`\`
-
-4. Build bellman-cuda. We used the tag version \`prerelease-dev-a87a309\`, commit hash \`a87a309e7c07ef6b3fc5532e50d5d244aab9f4d0\`.
-\`\`\`
-export CUDA_HOME=/usr/local/cuda
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
-export PATH=$PATH:$CUDA_HOME/bin
-
-git clone https://github.com/matter-labs/era-bellman-cuda.git
-cd era-bellman-cuda
-git checkout prerelease-dev-a87a309
-git submodule update --init --recursive
-cmake -B./build -DCMAKE_BUILD_TYPE=Release
-cmake --build ./build
-export BELLMAN_CUDA_DIR=$HOME/era-bellman-cuda
-\`\`\`
-
-5. Run all scripts to regenerate verification keys. The correct tag version of the repo is \`core-v29.4.0\`, commit hash \`fe0a73730853b291c3c1dd514a42a45625704b7b\`.
-\`\`\`
-cd ~ 
-git clone https://github.com/matter-labs/zksync-era.git
-cd zksync-era/
-git checkout core-v29.4.0
-
-# Download compact CRS for the compressor data step, put in repo root
-curl -o setup_compact.key https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_compact.key
-export COMPACT_CRS_FILE=~/zksync-era/setup_compact.key
-
-cd prover/crates/bin/vk_setup_data_generator_server_fri
-CRS_FILE=https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_2^24.key ZKSYNC_HOME=$HOME 
-
-# Run regeneration steps
-cargo run --release --bin key_generator generate-vk
-cargo run --features gpu --release --bin key_generator generate-compressor-data
-\`\`\`
-
-The output of the last command will contain the required \`fflonk_snark_wrapper\` value.
-      `,
+        verificationSteps: readProjectMarkdown(
+          'boojum',
+          'verificationSteps-0x49eae0bf',
+        ),
       },
       {
         hash: '0x1ffc56111a5cfaf5db387f6a31408ad20217e9bc1f31f2f5c1bd38b0d6d7968b',
@@ -770,93 +504,10 @@ The output of the last command will contain the required \`fflonk_snark_wrapper\
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-Verification requires an Ubuntu 22.04 machine with an NVIDIA GPU. We used a g6.4xlarge aws instance with 24 GiB GPU memory and 64 GiB RAM. 
-The setup part is based on [this guide](https://paragraph.com/@zksync/from-integration-to-verification-completing-the-first-steps-in-zksync-s-prover-network) with modifications, the verification is done using [this script](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri).
-
-1. Install rust, yarn, some essential libraries, docker and cmake:
-
-\`\`\`
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
-
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-export NVM_DIR=$HOME/.nvm
-. .bashrc
-nvm install 20
-npm install -g yarn
-yarn set version 1.22.19
-
-sudo apt-get update
-sudo apt-get install -y build-essential pkg-config cmake clang lldb lld libssl-dev postgresql apt-transport-https ca-certificates curl software-properties-common
-cargo install sqlx-cli --version 0.8.1
-
-# install the latest version of cmake
-sudo apt remove cmake
-curl -fsSL https://apt.kitware.com/kitware-archive.sh | sudo sh
-sudo apt-get install cmake
-\`\`\`
-
-2. Install CUDA drivers and toolkit 12.2, export necessary env vars. On Ubuntu 22.04 this requires updating gcc to version 12.
-
-\`\`\`
-sudo apt-get install gcc-12 g++-12
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
-
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-sudo dpkg -i cuda-keyring_1.1-1_all.deb
-sudo apt-get update
-sudo apt-get install -y cuda-drivers-535
-sudo apt-get install -y cuda-toolkit-12-2
-\`\`\`
-
-Reboot the machine to apply the drivers.
-
-3. Install \`foundryup-zksync\`.
-
-\`\`\`
-curl -L https://raw.githubusercontent.com/matter-labs/foundry-zksync/main/install-foundry-zksync | bash
-. ~/.bashrc
-foundryup-zksync
-\`\`\`
-
-4. Build bellman-cuda. We used the tag version \`prerelease-dev-a87a309\`, commit hash \`a87a309e7c07ef6b3fc5532e50d5d244aab9f4d0\`.
-\`\`\`
-export CUDA_HOME=/usr/local/cuda
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
-export PATH=$PATH:$CUDA_HOME/bin
-
-git clone https://github.com/matter-labs/era-bellman-cuda.git
-cd era-bellman-cuda
-git checkout prerelease-dev-a87a309
-git submodule update --init --recursive
-cmake -B./build -DCMAKE_BUILD_TYPE=Release
-cmake --build ./build
-export BELLMAN_CUDA_DIR=$HOME/era-bellman-cuda
-\`\`\`
-
-5. Run all scripts to regenerate verification keys. The correct tag version of the repo is \`prover-v23.2.0\`, commit hash \`2b188cd7ac139430d3cb1f27babc9693a2c83df6\`.
-\`\`\`
-cd ~ 
-git clone https://github.com/matter-labs/zksync-era.git
-cd zksync-era/
-git checkout prover-v23.2.0
-
-# Download compact CRS for the compressor data step, put in repo root
-curl -o setup_compact.key https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_compact.key
-export COMPACT_CRS_FILE=~/zksync-era/setup_compact.key
-
-cd prover/crates/bin/vk_setup_data_generator_server_fri
-CRS_FILE=https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_2^24.key ZKSYNC_HOME=$HOME 
-
-# Run regeneration steps
-cargo run --release --bin key_generator generate-vk
-cargo run --features gpu --release --bin key_generator generate-compressor-data
-\`\`\`
-
-The output of the last command will contain the required \`snark_wrapper\` value.
-        `,
+        verificationSteps: readProjectMarkdown(
+          'boojum',
+          'verificationSteps-0x1ffc5611',
+        ),
       },
       {
         hash: '0xb2f50340e0edbe49dc657d4eb298e07f13860c1be0fe2e438e44ef8fad133d84',
@@ -874,93 +525,10 @@ The output of the last command will contain the required \`snark_wrapper\` value
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-  Verification requires an Ubuntu 22.04 machine with an NVIDIA GPU. We used a g6.4xlarge aws instance with 24 GiB GPU memory and 64 GiB RAM. 
-  The setup part is based on [this guide](https://paragraph.com/@zksync/from-integration-to-verification-completing-the-first-steps-in-zksync-s-prover-network) with modifications, the verification is done using [this script](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri).
-  
-  1. Install rust, yarn, some essential libraries, docker and cmake:
-  
-  \`\`\`
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-  . .cargo/env
-  
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-  export NVM_DIR=$HOME/.nvm
-  . .bashrc
-  nvm install 20
-  npm install -g yarn
-  yarn set version 1.22.19
-  
-  sudo apt-get update
-  sudo apt-get install -y build-essential pkg-config cmake clang lldb lld libssl-dev postgresql apt-transport-https ca-certificates curl software-properties-common
-  cargo install sqlx-cli --version 0.8.1
-  
-  # install the latest version of cmake
-  sudo apt remove cmake
-  curl -fsSL https://apt.kitware.com/kitware-archive.sh | sudo sh
-  sudo apt-get install cmake
-  \`\`\`
-  
-  2. Install CUDA drivers and toolkit 12.2, export necessary env vars. On Ubuntu 22.04 this requires updating gcc to version 12.
-  
-  \`\`\`
-  sudo apt-get install gcc-12 g++-12
-  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
-  sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
-  
-  wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-  sudo dpkg -i cuda-keyring_1.1-1_all.deb
-  sudo apt-get update
-  sudo apt-get install -y cuda-drivers-535
-  sudo apt-get install -y cuda-toolkit-12-2
-  \`\`\`
-  
-  Reboot the machine to apply the drivers.
-  
-  3. Install \`foundryup-zksync\`.
-  
-  \`\`\`
-  curl -L https://raw.githubusercontent.com/matter-labs/foundry-zksync/main/install-foundry-zksync | bash
-  . ~/.bashrc
-  foundryup-zksync
-  \`\`\`
-  
-  4. Build bellman-cuda. We used the tag version \`prerelease-dev-a87a309\`, commit hash \`a87a309e7c07ef6b3fc5532e50d5d244aab9f4d0\`.
-  \`\`\`
-  export CUDA_HOME=/usr/local/cuda
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
-  export PATH=$PATH:$CUDA_HOME/bin
-  
-  git clone https://github.com/matter-labs/era-bellman-cuda.git
-  cd era-bellman-cuda
-  git checkout prerelease-dev-a87a309
-  git submodule update --init --recursive
-  cmake -B./build -DCMAKE_BUILD_TYPE=Release
-  cmake --build ./build
-  export BELLMAN_CUDA_DIR=$HOME/era-bellman-cuda
-  \`\`\`
-  
-  5. Run all scripts to regenerate verification keys. The correct tag version of the repo is \`core-v29.11.1\`, commit hash \`3f71cb2230fb9c365c095ce7bcf3373ea63fbec2\`.
-  \`\`\`
-  cd ~ 
-  git clone https://github.com/matter-labs/zksync-era.git
-  cd zksync-era/
-  git checkout core-v29.11.1
-  
-  # Download compact CRS for the compressor data step, put in repo root
-  curl -o setup_compact.key https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_compact.key
-  export COMPACT_CRS_FILE=~/zksync-era/setup_compact.key
-  
-  cd prover/crates/bin/vk_setup_data_generator_server_fri
-  CRS_FILE=https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_2^24.key ZKSYNC_HOME=$HOME 
-  
-  # Run regeneration steps
-  cargo run --release --bin key_generator generate-vk
-  cargo run --features gpu --release --bin key_generator generate-compressor-data
-  \`\`\`
-  
-  The output of the last command will contain the required \`snark_wrapper\` value.
-          `,
+        verificationSteps: readProjectMarkdown(
+          'boojum',
+          'verificationSteps-0xb2f50340',
+        ),
       },
       {
         hash: '0xc8cd705a0db89577146137de78eba6bd1f1c9c3f66dc52f7627e7c2df30895b2',
@@ -978,93 +546,10 @@ The output of the last command will contain the required \`snark_wrapper\` value
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-Verification requires an Ubuntu 22.04 machine with an NVIDIA GPU. We used a g6.4xlarge aws instance with 24 GiB GPU memory and 64 GiB RAM. 
-The setup part is based on [this guide](https://paragraph.com/@zksync/from-integration-to-verification-completing-the-first-steps-in-zksync-s-prover-network) with modifications, the verification is done using [this script](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri).
-
-1. Install rust, yarn, some essential libraries, docker and cmake:
-
-\`\`\`
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
-
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-export NVM_DIR=$HOME/.nvm
-. .bashrc
-nvm install 20
-npm install -g yarn
-yarn set version 1.22.19
-
-sudo apt-get update
-sudo apt-get install -y build-essential pkg-config cmake clang lldb lld libssl-dev postgresql apt-transport-https ca-certificates curl software-properties-common
-cargo install sqlx-cli --version 0.8.1
-
-# install the latest version of cmake
-sudo apt remove cmake
-curl -fsSL https://apt.kitware.com/kitware-archive.sh | sudo sh
-sudo apt-get install cmake
-\`\`\`
-
-2. Install CUDA drivers and toolkit 12.2, export necessary env vars. On Ubuntu 22.04 this requires updating gcc to version 12.
-
-\`\`\`
-sudo apt-get install gcc-12 g++-12
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 100
-
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-sudo dpkg -i cuda-keyring_1.1-1_all.deb
-sudo apt-get update
-sudo apt-get install -y cuda-drivers-535
-sudo apt-get install -y cuda-toolkit-12-2
-\`\`\`
-
-Reboot the machine to apply the drivers.
-
-3. Install \`foundryup-zksync\`.
-
-\`\`\`
-curl -L https://raw.githubusercontent.com/matter-labs/foundry-zksync/main/install-foundry-zksync | bash
-. ~/.bashrc
-foundryup-zksync
-\`\`\`
-
-4. Build bellman-cuda. We used the tag version \`prerelease-dev-a87a309\`, commit hash \`a87a309e7c07ef6b3fc5532e50d5d244aab9f4d0\`.
-\`\`\`
-export CUDA_HOME=/usr/local/cuda
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
-export PATH=$PATH:$CUDA_HOME/bin
-
-git clone https://github.com/matter-labs/era-bellman-cuda.git
-cd era-bellman-cuda
-git checkout prerelease-dev-a87a309
-git submodule update --init --recursive
-cmake -B./build -DCMAKE_BUILD_TYPE=Release
-cmake --build ./build
-export BELLMAN_CUDA_DIR=$HOME/era-bellman-cuda
-\`\`\`
-
-5. Run all scripts to regenerate verification keys. The correct tag version of the repo is \`core-v29.11.1\`, commit hash \`3f71cb2230fb9c365c095ce7bcf3373ea63fbec2\`.
-\`\`\`
-cd ~ 
-git clone https://github.com/matter-labs/zksync-era.git
-cd zksync-era/
-git checkout core-v29.11.1
-
-# Download compact CRS for the compressor data step, put in repo root
-curl -o setup_compact.key https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_compact.key
-export COMPACT_CRS_FILE=~/zksync-era/setup_compact.key
-
-cd prover/crates/bin/vk_setup_data_generator_server_fri
-CRS_FILE=https://storage.googleapis.com/matterlabs-setup-keys-us/setup-keys/setup_2^24.key ZKSYNC_HOME=$HOME 
-
-# Run regeneration steps
-cargo run --release --bin key_generator generate-vk
-cargo run --features gpu --release --bin key_generator generate-compressor-data
-\`\`\`
-
-The output of the last command will contain the required \`fflonk_snark_wrapper\` value.
-      `,
+        verificationSteps: readProjectMarkdown(
+          'boojum',
+          'verificationSteps-0xc8cd705a',
+        ),
       },
     ],
   },

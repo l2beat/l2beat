@@ -1,3 +1,299 @@
+Generated with discovered.json: 0x99f4310550e32b4231cc95d543d356dad0f82ece
+
+# Diff at Fri, 12 Jun 2026 12:07:43 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@77f62933d564f65f6ab803a9850a637ea4a77091 block: 1767634866
+- current timestamp: 1767634866
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767634866 (main branch discovery), not current.
+
+```diff
+    contract CommitteeUSDC (eth:0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4) [starkex/Committee] {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.
+      sourceHashes.0:
+-        "0x581fe96c5df565dd8524d044e5dcfdad1b613513021dce348f4c85f8c881a7b5"
++        "0x3cb57744ed0806e1e1604c1bbb564187321e4f492cadddae15c71324f33bfda2"
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDT (eth:0x40e1e5Ece49A878062fA9F87eA6dc81281098B22) [starkex/FinalizableGpsFactAdapter] {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`), which can be changed until the adapter is finalized.
+      template:
+-        "starkex/GpsFactRegistryAdapter"
++        "starkex/FinalizableGpsFactAdapter"
+      sourceHashes.0:
+-        "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
++        "0xc8212559a530b4ba272dfc6c98851fa8aa4c1b36e2da1bdbe18091f2c59754f0"
+      description:
+-        "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`)."
++        "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`), which can be changed until the adapter is finalized."
++++ severity: HIGH
+      values.owner:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    EOA  (eth:0x53c6Ec9640761c669B800088F097E01A8207Ac8b) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set."
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b","description":"change the global and per-asset configuration hashes committing to the L2 system parameters.","role":".$admin"}
+    }
+```
+
+```diff
+    EOA  (eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A) {
+    +++ description: None
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x40e1e5Ece49A878062fA9F87eA6dc81281098B22","description":"change the programHash, replacing the L2 execution logic whose proofs are accepted, directly or through appointed admins.","role":".owner","condition":"if the adapter is not finalized"}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953","description":"change the programHash, replacing the L2 execution logic whose proofs are accepted, directly or through appointed admins.","role":".owner","condition":"if the adapter is not finalized"}
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    contract CommitteeUSDT (eth:0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800) [starkex/Committee] {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.
+      sourceHashes.0:
+-        "0xab5a8f616268fb3ec919ff2c4566b29938a53013be74e966348bf881eecd4c0a"
++        "0xa6c615cde1a1180a0bfa1c17038acb3ab6104b449aaed4d326f7a0d3baf0e5ce"
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract StarkPerpetualUSDC (eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) [starkex/StarkPerpetual] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.0:
+-        "0xb5e622bd6406dd3d2188cae22f160599ee0953d520795bb86831c4c266e45587"
++        "0x409415b9d5b1c07a1e521ad99a73a466d1a6a681df98a3f0241a82a9dcb861f1"
+      sourceHashes.1:
+-        "0xd2cfc40f85f0171f0b9b5a88fc7638bbb2af49fb1b87cf13a11d58f32403c598"
++        "0x7cd422f025b0fd3210c5dd5116401aea5673db49cd24c6a040b7b148d25dc7f4"
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract PerpetualEscapeVerifier (eth:0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD) [edgex/PerpetualEscapeVerifier] {
+    +++ description: Special verifier for the escape() function.
+      sourceHashes.0:
+-        "0xb56ab8d20ca2ce7897c0448957f5ad2bb634a2019411b1cb0453afe5c86f4f5f"
++        "0x7b9a6fc1405ce527115c6c286c0e85ba27c6c9a0576b4ca39fe647103101c676"
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract ApexAdminMultisig (eth:0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      receivedPermissions.1.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set."
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","description":"change the global and per-asset configuration hashes committing to the L2 system parameters.","role":".$admin"}
+      deployerAddress:
++        "eth:0xB7B2d6d7a1ca768410B424bEd7f065F9756Cc299"
+    }
+```
+
+```diff
+    contract StarkPerpetualUSDT (eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) [starkex/StarkPerpetual] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.0:
+-        "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3"
++        "0x4c21fb0aff75ac1755959abe5aace71b3d70cd508a697c0a16ffbd2f81b5420a"
+      sourceHashes.1:
+-        "0xd44985473645ee33ac39b971c16c6b06bbada1d7c54ae7aa1e106e020fc3f4c1"
++        "0xcf0ce6605c3fb6262ab3bd6dcc022c17b07991a65c45c0a2a2d97ed59da1a36e"
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDC (eth:0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953) [starkex/FinalizableGpsFactAdapter] {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`), which can be changed until the adapter is finalized.
+      template:
+-        "starkex/GpsFactRegistryAdapter"
++        "starkex/FinalizableGpsFactAdapter"
+      sourceHashes.0:
+-        "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
++        "0xc8212559a530b4ba272dfc6c98851fa8aa4c1b36e2da1bdbe18091f2c59754f0"
+      description:
+-        "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`)."
++        "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`), which can be changed until the adapter is finalized."
++++ severity: HIGH
+      values.owner:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    EOA  (eth:0xef75e1199B0599BA823b7770AcE8eb34864a1D55) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
++        "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set."
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","description":"change the global and per-asset configuration hashes committing to the L2 system parameters.","role":".$admin"}
+    }
+```
+
+Generated with discovered.json: 0x92738990c4e0622cd398634a412ce1b760ef0850
+
+# Diff at Fri, 12 Jun 2026 10:18:39 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1767634866
+- current timestamp: 1767634866
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767634866 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x53c6Ec9640761c669B800088F097E01A8207Ac8b) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0xef75e1199B0599BA823b7770AcE8eb34864a1D55) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x0bbe69fd2bd1a6c3a146c515dc9b3c1803a174d8
+
+# Diff at Tue, 09 Jun 2026 12:43:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1767634866
+- current timestamp: 1767634866
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767634866 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x53c6Ec9640761c669B800088F097E01A8207Ac8b) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+```diff
+    EOA  (eth:0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","description":"Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.","role":".operators"}
+      receivedPermissions.2:
+-        {"permission":"operateStarknet","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","role":".operators"}
+      receivedPermissions.3.description:
++        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+      receivedPermissions.3.permission:
+-        "operateStarknet"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "interact"
+    }
+```
+
+```diff
+    contract ApexAdminMultisig (eth:0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+```diff
+    EOA  (eth:0xef75e1199B0599BA823b7770AcE8eb34864a1D55) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","role":".$admin"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
 Generated with discovered.json: 0xc42718fb2343feb968d7892d52a4d910e32fda67
 
 # Diff at Tue, 14 Oct 2025 11:52:55 GMT:

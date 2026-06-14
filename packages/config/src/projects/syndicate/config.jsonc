@@ -31,7 +31,7 @@
         "batchPosters": {
           "permissions": [
             {
-              "type": "sequence",
+              "type": "interact",
               "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
             }
           ],
@@ -93,7 +93,7 @@
         "validators": {
           "permissions": [
             {
-              "type": "validate",
+              "type": "interact",
               "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
             }
           ],

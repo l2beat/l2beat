@@ -1,7 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TokenDbHistory } from '../kysely/generated/types'
+import { escapeLikePattern } from '../utils/escapeLikePattern'
 import { toJsonSafe } from '../utils/toJsonSafe'
 
 export type TokenDbHistorySource = 'manual' | 'ingestion'
@@ -66,20 +67,34 @@ export class TokenDbHistoryRepository extends BaseRepository {
   async getPage(options: {
     offset: number
     limit: number
+    search?: string
   }): Promise<TokenDbHistoryPage> {
-    const rows = await this.db
+    const search = options.search?.trim()
+    const pattern = search ? `%${escapeLikePattern(search)}%` : undefined
+
+    let rowsQuery = this.db
       .selectFrom('TokenDbHistory')
       .selectAll()
       .orderBy('timestamp', 'desc')
       .orderBy('id', 'desc')
       .offset(options.offset)
       .limit(options.limit)
-      .execute()
 
-    const count = await this.db
+    let countQuery = this.db
       .selectFrom('TokenDbHistory')
       .select((eb) => eb.fn.countAll<number>().as('count'))
-      .executeTakeFirstOrThrow()
+
+    if (pattern) {
+      rowsQuery = rowsQuery.where(
+        sql<boolean>`"command"::text ILIKE ${pattern}`,
+      )
+      countQuery = countQuery.where(
+        sql<boolean>`"command"::text ILIKE ${pattern}`,
+      )
+    }
+
+    const rows = await rowsQuery.execute()
+    const count = await countQuery.executeTakeFirstOrThrow()
 
     return {
       entries: rows.map(toRecord),

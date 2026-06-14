@@ -53,7 +53,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   redstone: 'redstone',
   soneium: 'soneium',
   wc: 'worldchain',
-  'hype-evm': 'hyperevm',
+  hyperevm: 'hyperevm',
   megaeth: 'megaeth',
   polygon: 'polygon',
   tempo: 'tempo',
