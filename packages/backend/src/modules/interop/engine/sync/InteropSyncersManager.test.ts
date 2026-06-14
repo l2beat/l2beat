@@ -285,69 +285,93 @@ describe(InteropSyncersManager.name, () => {
     })
   })
 
-  describe(InteropSyncersManager.prototype.areAllSyncersFollowing.name, () => {
-    it('returns false when syncer has not yet initialized', () => {
+  describe(InteropSyncersManager.prototype.areSyncersFreshEnough.name, () => {
+    const target = UnixTime(10_000)
+    const tolerance = 30 * UnixTime.MINUTE
+
+    it('returns true when every syncer is synced past the threshold', async () => {
+      const db = mockDb({
+        syncedRanges: [
+          makeSyncedRangeRecordAt('cluster-a', 'ethereum', target),
+          makeSyncedRangeRecordAt('cluster-a', 'arbitrum', target - tolerance),
+        ],
+      })
       const manager = makeManager({
         clusters: [makeCluster('cluster-a')],
-        chains: ['ethereum'],
+        chains: ['ethereum', 'arbitrum'],
+        db,
       })
 
-      // Syncers start in FollowingState with status 'starting'
-      expect(manager.areAllSyncersFollowing()).toEqual(false)
+      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
+        true,
+      )
     })
 
-    it('returns true when all syncers are following and idle', () => {
+    it('ignores instantaneous syncer state when data is fresh', async () => {
+      const db = mockDb({
+        syncedRanges: [
+          makeSyncedRangeRecordAt('cluster-a', 'ethereum', target),
+        ],
+      })
       const manager = makeManager({
         clusters: [makeCluster('cluster-a')],
         chains: ['ethereum'],
+        db,
       })
 
-      const syncer = manager.getSyncer('cluster-a', 'ethereum')!
-      syncer.state = {
-        type: 'blockProcessor',
-        name: 'following',
-        status: 'idle',
-        checkStatus: async () => syncer.state,
-        processNewestBlock: async () => syncer.state,
-      }
-
-      expect(manager.areAllSyncersFollowing()).toEqual(true)
-    })
-
-    it('returns false when any syncer is catching up', () => {
-      const manager = makeManager({
-        clusters: [makeCluster('cluster-a')],
-        chains: ['ethereum'],
-      })
-
+      // catching up and erroring, but the captured data is recent enough
       const syncer = manager.getSyncer('cluster-a', 'ethereum')!
       syncer.state = {
         type: 'timeLoop',
         name: 'catchingUp',
-        status: 'waiting',
+        status: 'starting',
         run: async () => syncer.state,
-      }
-
-      expect(manager.areAllSyncersFollowing()).toEqual(false)
-    })
-
-    it('returns false when any syncer has an error', () => {
-      const manager = makeManager({
-        clusters: [makeCluster('cluster-a')],
-        chains: ['ethereum'],
-      })
-
-      const syncer = manager.getSyncer('cluster-a', 'ethereum')!
-      syncer.state = {
-        type: 'blockProcessor',
-        name: 'following',
-        status: 'idle',
-        checkStatus: async () => syncer.state,
-        processNewestBlock: async () => syncer.state,
       }
       syncer.hasError = true
 
-      expect(manager.areAllSyncersFollowing()).toEqual(false)
+      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
+        true,
+      )
+    })
+
+    it('returns false when any syncer is synced before the threshold', async () => {
+      const db = mockDb({
+        syncedRanges: [
+          makeSyncedRangeRecordAt('cluster-a', 'ethereum', target),
+          makeSyncedRangeRecordAt(
+            'cluster-a',
+            'arbitrum',
+            target - tolerance - 1,
+          ),
+        ],
+      })
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum', 'arbitrum'],
+        db,
+      })
+
+      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
+        false,
+      )
+    })
+
+    it('returns false when a syncer has no synced range yet', async () => {
+      const db = mockDb({
+        syncedRanges: [
+          makeSyncedRangeRecordAt('cluster-a', 'ethereum', target),
+        ],
+      })
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum', 'arbitrum'],
+        db,
+      })
+
+      // arbitrum has never produced a synced range
+      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
+        false,
+      )
     })
   })
 
@@ -499,6 +523,21 @@ function makeSyncedRangeRecord(
     fromTimestamp: UnixTime(1),
     toBlock,
     toTimestamp: UnixTime(Number(toBlock)),
+  }
+}
+
+function makeSyncedRangeRecordAt(
+  pluginName: string,
+  chain: LongChainName,
+  toTimestamp: UnixTime,
+): InteropPluginSyncedRangeRecord {
+  return {
+    pluginName,
+    chain,
+    fromBlock: 1n,
+    fromTimestamp: UnixTime(1),
+    toBlock: 1n,
+    toTimestamp,
   }
 }
 

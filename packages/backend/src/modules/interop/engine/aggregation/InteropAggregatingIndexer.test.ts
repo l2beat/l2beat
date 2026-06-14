@@ -152,7 +152,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returns(true),
+        areSyncersFreshEnough: mockFn().resolvesTo(true),
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
@@ -262,7 +262,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returns(true),
+        areSyncersFreshEnough: mockFn().resolvesTo(true),
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
@@ -300,7 +300,7 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(aggregatedInteropTokensPair.insertMany).toHaveBeenCalledWith([])
     })
 
-    it('skips aggregation when not all syncers are following', async () => {
+    it('skips aggregation when syncers captured data is not fresh enough', async () => {
       const interopTransfer = mockObject<Database['interopTransfer']>({
         getByRange: mockFn().resolvesTo([]),
       })
@@ -326,7 +326,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returns(false),
+        areSyncersFreshEnough: mockFn().resolvesTo(false),
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
@@ -398,7 +398,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returnsOnce(false).returns(true),
+        areSyncersFreshEnough: mockFn().resolvesToOnce(false).resolvesTo(true),
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
@@ -484,7 +484,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returns(true),
+        areSyncersFreshEnough: mockFn().resolvesTo(true),
       })
       const aggregationService = mockObject<InteropAggregationService>({
         aggregate: mockFn().returns({
@@ -605,7 +605,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returns(true),
+        areSyncersFreshEnough: mockFn().resolvesTo(true),
       })
       const aggregationService = mockObject<InteropAggregationService>({
         aggregate: mockFn().returns({
@@ -699,7 +699,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
-        areAllSyncersFollowing: mockFn().returns(true),
+        areSyncersFreshEnough: mockFn().resolvesTo(true),
       })
       const aggregationService = mockObject<InteropAggregationService>({
         aggregate: mockFn().returns({

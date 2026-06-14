@@ -6,7 +6,7 @@ import {
   type RpcMetricsAggregator,
   UpsertMap,
 } from '@l2beat/shared'
-import type { Block, Log, LongChainName } from '@l2beat/shared-pure'
+import type { Block, Log, LongChainName, UnixTime } from '@l2beat/shared-pure'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { BlockProcessor } from '../../../types'
 import type { PluginCluster } from '../../plugins'
@@ -111,14 +111,27 @@ export class InteropSyncersManager {
     }
   }
 
-  areAllSyncersFollowing(): boolean {
-    for (const byChain of this.syncers.values()) {
-      for (const syncer of byChain.values()) {
-        if (
-          syncer.state.name !== 'following' ||
-          syncer.state.status === 'starting' ||
-          syncer.hasError
-        ) {
+  /**
+   * Returns true only if every syncer has captured data up to at least
+   * `target - tolerance`. This measures data freshness via the persisted
+   * synced range rather than instantaneous syncer state, so transient errors
+   * and brief catch-ups don't count as "not ready" as long as the captured
+   * data is recent enough for the aggregation window.
+   */
+  async areSyncersFreshEnough(
+    target: UnixTime,
+    tolerance: number,
+  ): Promise<boolean> {
+    const ranges = await this.db.interopPluginSyncedRange.getAll()
+    const rangeByKey = new Map(
+      ranges.map((range) => [`${range.pluginName}:${range.chain}`, range]),
+    )
+    const threshold = target - tolerance
+
+    for (const [clusterName, byChain] of this.syncers) {
+      for (const chain of byChain.keys()) {
+        const range = rangeByKey.get(`${clusterName}:${chain}`)
+        if (!range || range.toTimestamp < threshold) {
           return false
         }
       }
