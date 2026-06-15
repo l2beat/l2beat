@@ -56,33 +56,35 @@ export function ProjectHeader({
             )}
           </div>
         </h1>
-        {!!ongoingAnomaly && (
-          <a
-            href={livenessSectionHref}
-            className="flex h-8 items-center justify-center gap-2 rounded border border-negative p-2"
-          >
-            <LiveIndicator />
-            <h3 className="font-medium text-negative text-xs uppercase leading-none">
-              {ongoingAnomaly === 'single'
-                ? 'Ongoing anomaly'
-                : 'Ongoing anomalies'}
-            </h3>
-            <ChevronIcon className="-rotate-90 size-2.5 fill-negative" />
-          </a>
-        )}
-        {!!recentUpdatesCount && (
-          <a
-            href="#updates"
-            className="flex h-8 items-center justify-center gap-2 rounded border border-brand p-2"
-          >
-            <h3 className="font-medium text-brand text-xs uppercase leading-none">
-              {recentUpdatesCount === 1
-                ? '1 recent update'
-                : `${recentUpdatesCount} recent updates`}
-            </h3>
-            <ChevronIcon className="-rotate-90 size-2.5 fill-brand" />
-          </a>
-        )}
+        <div className="flex flex-col gap-2 max-md:w-full md:contents">
+          {!!ongoingAnomaly && (
+            <a
+              href={livenessSectionHref}
+              className="flex h-8 items-center justify-center gap-2 rounded border border-negative p-2"
+            >
+              <LiveIndicator />
+              <h3 className="font-medium text-negative text-xs uppercase leading-none">
+                {ongoingAnomaly === 'single'
+                  ? 'Ongoing anomaly'
+                  : 'Ongoing anomalies'}
+              </h3>
+              <ChevronIcon className="-rotate-90 size-2.5 fill-negative" />
+            </a>
+          )}
+          {!!recentUpdatesCount && (
+            <a
+              href="#updates"
+              className="flex h-8 items-center justify-center gap-2 rounded border border-brand p-2"
+            >
+              <h3 className="font-medium text-brand text-xs uppercase leading-none">
+                {recentUpdatesCount === 1
+                  ? '1 recent update'
+                  : `${recentUpdatesCount} recent updates`}
+              </h3>
+              <ChevronIcon className="-rotate-90 size-2.5 fill-brand" />
+            </a>
+          )}
+        </div>
       </div>
       <SearchBarButton className="max-lg:hidden" label="Search projects" />
     </div>
