@@ -5,6 +5,7 @@ import type { InteropTokenDeployment } from './getInteropTokenDeployments'
 
 export interface InteropTokenEntry {
   sections: ProjectDetailsSection[]
+  deploymentsCount: number
 }
 
 export function getInteropTokenEntry(
@@ -54,7 +55,7 @@ export function getInteropTokenEntry(
     },
   })
 
-  return { sections }
+  return { sections, deploymentsCount: deployments.length }
 }
 
 function toDeploymentRow(
