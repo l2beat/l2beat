@@ -1004,6 +1004,7 @@
       "address": "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

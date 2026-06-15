@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xf97af827ca4a69272adefcc039448c9745e883ed
+
+# Diff at Fri, 12 Jun 2026 10:18:56 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1779719548
+- current timestamp: 1779719548
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779719548 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x52D5E794B5a4C77Af1197EEB21ea67BEa51a238E) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0xeb06930a922d3125d62a7dceb9feab5ee03190dd
 
 # Diff at Tue, 09 Jun 2026 12:43:36 GMT:

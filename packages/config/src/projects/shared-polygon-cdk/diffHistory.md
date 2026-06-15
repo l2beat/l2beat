@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x410f6ee81947472db2f44c65363f26bbb0d159a7
+
+# Diff at Wed, 10 Jun 2026 14:35:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9b1a27959a14343aae7c71ebbc397f62f0aab99c block: 1777963087
+- current timestamp: 1781095928
+
+## Description
+
+New aggchain-FEP program (affecting katana, programhash reproduced).
+
+## Watched changes
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      values.aggchainVKeys.0x000b0001:
++        [{"selector":"0x000b0001","newVKey":"0x679bc13716cdb49416a9ca9e297b10d76390df2c343690d4172676c207517915"}]
+    }
+```
+
+```diff
+    contract Timelock (eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) [polygon-cdk/Timelock] {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      values.scheduledTransactionsDecoded.52:
++        {"target":"eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3","value":"0","function":"addPessimisticVKeyRoute","inputs":{"pessimisticVKeySelector":"0x0000000e","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A","pessimisticVKey":"0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777963087 (main branch discovery), not current.
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      fieldMeta.aggchainVKeys.description:
+-        "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey()."
++        "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey(), which some chains (ECDSA) override and do not call."
+      fieldMeta.routes.description:
+-        "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey. It is freely chosen by the aggregator from among any of the listed routes."
++        "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey for all VerifierType 2 (algateway) chains. It wraps the aggchainVKey, which can be FEP or just ECDSA or anything else. It is freely chosen by the aggregator from among any of the listed routes."
+    }
+```
+
 Generated with discovered.json: 0xc1748f5b310167ebbdc6d2609878e4f3d961ae96
 
 # Diff at Tue, 09 Jun 2026 12:43:38 GMT:

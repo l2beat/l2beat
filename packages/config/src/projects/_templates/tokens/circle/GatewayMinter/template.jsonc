@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Entrypoint or minter of USDC on this chain for the Gateway protocol.",
+  "category": "non-critical",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
     "owner": {

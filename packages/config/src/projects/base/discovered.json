@@ -49,7 +49,8 @@
       "implementationNames": {
         "base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA": "Proxy",
         "base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6": "FeeDisburser"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "base:0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
@@ -163,7 +164,8 @@
       "implementationNames": {
         "base:0x4200000000000000000000000000000000000011": "Proxy",
         "base:0xd53210eE20948eCFF8B6B8180E29657e0ce8492d": "SequencerFeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -521,7 +523,8 @@
       "implementationNames": {
         "base:0x4200000000000000000000000000000000000019": "Proxy",
         "base:0x4E207bDF8aece56de86821f5370b2b993D08C9E9": "BaseFeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "L1FeeVault",
@@ -561,7 +564,8 @@
       "implementationNames": {
         "base:0x420000000000000000000000000000000000001A": "Proxy",
         "base:0x0c9034b92351cF8f067379a1fFA4fa35f5AF9dCC": "L1FeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "SchemaRegistry",
@@ -642,7 +646,6 @@
       "address": "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

@@ -129,6 +129,7 @@ export class TokenIngestionProcessor {
       return {
         id,
         address: { chain: entry.chain, address: entry.address },
+        existingDeployedToken: undefined,
         steps,
         outcome: { kind: 'skip', reason: 'Address could not be normalized' },
       }
@@ -154,6 +155,7 @@ export class TokenIngestionProcessor {
       return {
         id,
         address,
+        existingDeployedToken: existing,
         steps,
         outcome: { kind: 'conflict', message: resolution.message },
       }
@@ -162,6 +164,7 @@ export class TokenIngestionProcessor {
       return {
         id,
         address,
+        existingDeployedToken: existing,
         steps,
         outcome: {
           kind: 'skip',
@@ -173,6 +176,7 @@ export class TokenIngestionProcessor {
     return {
       id,
       address,
+      existingDeployedToken: existing,
       steps,
       outcome: this.buildPlanOutcome(existing, resolution, transfers, address),
     }

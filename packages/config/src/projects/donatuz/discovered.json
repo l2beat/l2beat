@@ -387,7 +387,7 @@
       "address": "base:0xb02b6c8e9970D7Fd54a000a95AC4fBAA3bb11288",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

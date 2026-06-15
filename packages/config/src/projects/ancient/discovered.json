@@ -1,6 +1,6 @@
 {
   "name": "ancient",
-  "timestamp": 1780397515,
+  "timestamp": 1781176659,
   "configHash": "0xaa207ab7fce9d2447585a4854131c0a0ec65b20691c19785234e0f4afe5ee17f",
   "entries": [
     {
@@ -438,13 +438,13 @@
         ],
         "$upgradeCount": 1,
         "absolutePrestateFromGame": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6",
-        "anchorGame": "eth:0x10ED34368C4fd94e3c37A653Aa4f74f61a8B795A",
+        "anchorGame": "eth:0xBA9c34B5C70DF0d34039B862Cc000C9178E5750E",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x3CEa4B383D855208f5d06e5b1A602E4006a1d0E1",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x025bd7392f31eb3a2c66dee7459756b1d372c0b4a4e44705b4197b0462b018ba",
-          36847276
+          "0xabdb790279f04762b9e107f7b1b6f2e269a62a64b3f6171d0a919a9b2bbd2057",
+          37236333
         ],
         "initVersion": 1,
         "oracleFromVm": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
@@ -559,7 +559,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 327,
+        "gameCount": 336,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xbf5952D52a911614c3436B4D7C1279778Dd4816a",
@@ -574,7 +574,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 327,
+        "permissionedGamesTotal": 336,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -736,11 +736,9 @@
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
-          "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
@@ -749,8 +747,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 275,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 277,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -913,11 +911,6 @@
       }
     },
     {
-      "address": "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1010,11 +1003,6 @@
     },
     {
       "address": "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2186,6 +2174,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25229217 },
-  "permissionsConfigHash": "0x719521e3056ac8700b915e878b681e9df3a870e362211fe7ea15f37308bad9a7"
+  "usedBlockNumbers": { "ethereum": 25293864 },
+  "permissionsConfigHash": "0x0c57208df746465f22e8fd36201b6e5edb069246ce2ca6f7ad104e9e6a4cd07a"
 }

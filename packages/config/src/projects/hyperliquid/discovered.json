@@ -381,7 +381,7 @@
       "address": "hyperevm:0x8E66c6AC847f06b9502fA2512435a62005f5Fb92",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

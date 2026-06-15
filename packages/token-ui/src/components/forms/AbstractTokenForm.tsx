@@ -1,4 +1,4 @@
-import { TOKEN_CATEGORIES } from '@l2beat/token-backend'
+import { TOKEN_CATEGORIES } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { ArrowRightIcon, RefreshCwIcon } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'

@@ -1,7 +1,7 @@
 {
   "name": "axelar",
   "timestamp": 1780914426,
-  "configHash": "0x42f5b2491715a8ff47a9891b52392136fce2313a5043e649399ab4552976c6a7",
+  "configHash": "0x74980aa887b4ee3a2aa84ed5dec0d12e7eff01227fe18cf4500ab927608f29af",
   "entries": [
     {
       "address": "eth:0x027c1882B975E2cd771AE068b0389FA38B9dda73",
@@ -55,7 +55,8 @@
       "implementationNames": {
         "eth:0x2d5d7d31F671F86C782533cc367F14109a082712": "AxelarGasServiceProxy",
         "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b": "AxelarGasService"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0x2eC991B5c0B742AbD9d2ea31fe6c14a85e91C821",
@@ -146,7 +147,6 @@
       "address": "eth:0x72164D4448fe6cfA472946feDC71e83b4628B1aF",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
