@@ -1,48 +1,67 @@
 import compact from 'lodash/compact'
 import { useMemo } from 'react'
-import { HiringBadge } from '~/components/badge/HiringBadge'
-import { ChangelogUnreadBadge } from '~/components/changelog/ChangelogUnreadBadge'
 import { SidebarProvider } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
+import { SecondaryLinksNav } from '~/components/nav/SecondaryLinksNav'
 import { NavSidebar } from '~/components/nav/sidebar/NavSidebar'
 import type { NavGroup } from '~/components/nav/types'
 import { TopBanner } from '~/components/TopBanner'
 import { useWhatsNewContext } from '~/components/whats-new/WhatsNewContext'
 import { WhatsNewWidgetCloseable } from '~/components/whats-new/WhatsNewWidgetCloseable'
-import { externalLinks } from '~/consts/externalLinks'
+import { getNavSecondaryLinks } from '~/consts/navSecondaryLinks'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
+import { OverviewIcon } from '~/icons/pages/Overview'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { cn } from '~/utils/cn'
 import { createOrderedSort } from '~/utils/sort'
 
-const LOGO_LINK = '/scaling/summary'
+const LOGO_LINK = '/home'
 
 export interface SideNavLayoutProps {
   children: React.ReactNode
   childrenWrapperClassName?: string
+  contentAreaClassName?: string
   maxWidth?: 'default' | 'wide'
+  /** Full-width content, no fixed desktop sidebar, top bar on all breakpoints, secondary links above footer. */
+  homepageLayout?: boolean
 }
 
 export function SideNavLayout({
   children,
   childrenWrapperClassName,
+  contentAreaClassName,
   maxWidth = 'default',
+  homepageLayout = false,
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
   const topChildren = (
-    <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
+    <TopBanner
+      className={cn(
+        'lg:rounded-b-xl 2xl:rounded-br-none',
+        homepageLayout && 'lg:mr-0',
+      )}
+    />
   )
 
   const groups = useMemo(
     () =>
       compact<NavGroup>([
+        {
+          type: 'single',
+          title: 'Home',
+          match: 'home',
+          href: '/home',
+          icon: (
+            <OverviewIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
+        },
         {
           type: 'multiple',
           title: 'Scaling',
@@ -99,6 +118,10 @@ export function SideNavLayout({
             },
           ],
           secondaryLinks: [
+            {
+              title: 'Upcoming',
+              href: '/scaling/upcoming',
+            },
             {
               title: 'Archived',
               href: '/scaling/archived',
@@ -213,60 +236,7 @@ export function SideNavLayout({
     [],
   )
 
-  const sideLinks = useMemo(
-    () =>
-      compact([
-        {
-          title: 'About Us',
-          href: '/about-us',
-        },
-        {
-          title: 'Publications',
-          href: '/publications',
-        },
-        {
-          title: 'Changelog',
-          href: '/changelog',
-          accessory: <ChangelogUnreadBadge />,
-        },
-        {
-          title: 'Forum',
-          href: externalLinks.forum,
-        },
-        {
-          title: 'Donate',
-          href: '/donate',
-        },
-        {
-          title: 'Governance',
-          href: '/governance',
-        },
-        {
-          title: 'Tools',
-          href: externalLinks.tools,
-        },
-        {
-          title: 'Glossary',
-          href: '/glossary',
-        },
-        {
-          title: 'Jobs',
-          href: externalLinks.jobs,
-          accessory: env.CLIENT_SIDE_SHOW_HIRING_BADGE ? (
-            <HiringBadge />
-          ) : undefined,
-        },
-        {
-          title: 'Brand Kit',
-          href: '/brand-kit',
-        },
-        {
-          title: 'FAQ',
-          href: '/faq',
-        },
-      ]),
-    [],
-  )
+  const sideLinks = useMemo(() => getNavSecondaryLinks(), [])
 
   return (
     <SidebarProvider>
@@ -281,32 +251,56 @@ export function SideNavLayout({
           logoLink={LOGO_LINK}
           groups={groups}
           sideLinks={sideLinks}
+          suppressDesktopSidebar={homepageLayout}
+          omitSecondaryDrawerLinks={homepageLayout}
         />
         <div
           className={cn(
-            'flex min-w-0 flex-1 flex-col has-data-hide-overflow-x:overflow-x-clip md:pt-5 lg:ml-3 lg:pt-0',
+            'flex min-w-0 flex-1 flex-col has-data-hide-overflow-x:overflow-x-clip md:pt-5 lg:pt-0',
+            homepageLayout ? 'lg:ml-0' : 'lg:ml-3',
             childrenWrapperClassName,
           )}
         >
-          <div className="hidden lg:mr-3 lg:block 2xl:mr-0">{topChildren}</div>
           <div
-            style={
-              {
-                '--tablet-content-horizontal-padding': '20px',
-              } as React.CSSProperties
-            }
             className={cn(
-              'mx-auto flex w-full grow flex-col md:px-(--tablet-content-horizontal-padding) lg:pl-0',
-              maxWidth === 'default' && 'max-w-(--breakpoint-lg)',
-              maxWidth === 'wide' && 'max-w-412',
+              'hidden lg:block 2xl:mr-0',
+              homepageLayout ? 'lg:mr-0' : 'lg:mr-3',
+            )}
+          >
+            {topChildren}
+          </div>
+          <div
+            className={cn(
+              'mx-auto flex w-full min-w-0 grow flex-col',
+              homepageLayout
+                ? 'max-w-none px-4 pb-6 md:px-6 lg:px-8 xl:px-10'
+                : 'md:px-5 lg:pl-0',
+              !homepageLayout &&
+                maxWidth === 'default' &&
+                'max-w-(--breakpoint-lg)',
+              !homepageLayout && maxWidth === 'wide' && 'max-w-412',
+              contentAreaClassName,
             )}
           >
             {children}
             {whatsNew && <WhatsNewWidgetCloseable whatsNew={whatsNew} />}
+            {homepageLayout && (
+              <SecondaryLinksNav
+                links={sideLinks}
+                className={cn(
+                  'mt-12 w-full justify-center gap-x-6 gap-y-3 max-xl:justify-start xl:justify-center',
+                )}
+              />
+            )}
           </div>
           <Footer
-            className="md:px-12 md:pt-8 lg:pr-9 lg:pl-6"
-            innerContainerClassName="max-w-[1142px]"
+            className={cn(
+              homepageLayout && 'md:px-8 md:pt-10 lg:px-16 lg:pt-12 lg:pb-6',
+              !homepageLayout && 'md:px-12 md:pt-8 lg:pr-9 lg:pl-6',
+            )}
+            innerContainerClassName={
+              homepageLayout ? 'max-w-none' : 'max-w-[1142px]'
+            }
           />
         </div>
       </div>

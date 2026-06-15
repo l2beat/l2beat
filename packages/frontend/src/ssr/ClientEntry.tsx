@@ -10,4 +10,6 @@ async function main() {
   hydrateRoot(root, <StrictMode>{pageElement}</StrictMode>)
 }
 
-void main()
+void main().catch((error) => {
+  console.error('[ClientEntry] Failed to hydrate', error)
+})

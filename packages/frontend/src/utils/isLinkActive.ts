@@ -7,6 +7,15 @@ interface Params {
 export function isLinkActive({ href, pathname, exact }: Params) {
   // Strip query parameters from href for comparison
   const hrefPath = href.split('?')[0]
+  if (
+    hrefPath === '/home' &&
+    (pathname === '/home' ||
+      pathname === '/home/' ||
+      pathname === '/overview' ||
+      pathname === '/overview/')
+  ) {
+    return true
+  }
   if (exact) {
     return pathname === hrefPath
   }

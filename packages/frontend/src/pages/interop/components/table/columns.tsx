@@ -14,6 +14,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { InteropSelection } from '../../utils/types'
 import { InteropNoDataBadge } from '../InteropNoDataBadge'
 import { TopTokensCell } from '../tokens/TopTokensCell'
@@ -27,57 +28,92 @@ export type ProtocolRow = ProtocolEntry & BasicTableRow
 
 const columnHelper = createColumnHelper<ProtocolEntry>()
 
-const commonColumns = [
-  columnHelper.display({
-    id: 'logo',
-    cell: (ctx) => (
-      <img
-        className="min-h-[20px] min-w-[20px]"
-        src={ctx.row.original.iconUrl}
-        width={20}
-        height={20}
-        alt={`${ctx.row.original.name} logo`}
-      />
-    ),
-    meta: {
-      headClassName: 'w-0',
-      cellClassName: 'lg:pr-1.5!',
-    },
-    size: 28,
-    enableHiding: false,
-  }),
-  columnHelper.accessor('name', {
-    header: 'Name',
-    cell: (ctx) => {
-      return (
-        <InteropProjectNameTooltip
-          projectName={ctx.row.original.name}
-          description={ctx.row.original.description}
-        >
-          <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
-            <TwoRowCell>
-              <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-                <div className="w-fit max-w-[78px] break-words font-bold text-label-value-15 md:leading-none">
-                  {ctx.row.original.name}
-                </div>
-                {ctx.row.original.subgroup && (
-                  <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
-                )}
-              </TwoRowCell.First>
-              <TwoRowCell.Second>
-                {ctx.row.original.isAggregate && 'Aggregate'}
-              </TwoRowCell.Second>
-            </TwoRowCell>
-          </TableLink>
-        </InteropProjectNameTooltip>
-      )
-    },
-    meta: {
-      cellClassName: 'whitespace-normal',
-      headClassName: 'text-2xs',
-    },
-  }),
-]
+const logoColumn = columnHelper.display({
+  id: 'logo',
+  cell: (ctx) => (
+    <img
+      className="min-h-[20px] min-w-[20px]"
+      src={ctx.row.original.iconUrl}
+      width={20}
+      height={20}
+      alt={`${ctx.row.original.name} logo`}
+    />
+  ),
+  meta: {
+    headClassName: 'w-0',
+    cellClassName: 'lg:pr-1.5!',
+  },
+  size: 28,
+  enableHiding: false,
+})
+
+const nameColumn = columnHelper.accessor('name', {
+  header: 'Name',
+  cell: (ctx) => {
+    return (
+      <InteropProjectNameTooltip
+        projectName={ctx.row.original.name}
+        description={ctx.row.original.description}
+      >
+        <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
+          <TwoRowCell>
+            <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
+              <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
+                {ctx.row.original.name}
+              </div>
+              {ctx.row.original.subgroup && (
+                <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
+              )}
+            </TwoRowCell.First>
+            <TwoRowCell.Second>
+              {ctx.row.original.isAggregate && 'Aggregate'}
+            </TwoRowCell.Second>
+          </TwoRowCell>
+        </TableLink>
+      </InteropProjectNameTooltip>
+    )
+  },
+  meta: {
+    cellClassName: 'whitespace-normal',
+    headClassName: 'text-2xs',
+  },
+})
+
+const commonColumns = [logoColumn, nameColumn]
+
+const overviewNameColumn = columnHelper.accessor('name', {
+  header: 'Name',
+  cell: (ctx) => {
+    return (
+      <InteropProjectNameTooltip
+        projectName={ctx.row.original.name}
+        description={ctx.row.original.description}
+      >
+        <TableLink href={`/interop/protocols/${ctx.row.original.slug}`}>
+          <TwoRowCell>
+            <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
+              <div className="w-fit max-w-[112px] whitespace-nowrap font-bold text-label-value-15 md:leading-none">
+                {ctx.row.original.name}
+              </div>
+              {ctx.row.original.subgroup && (
+                <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
+              )}
+            </TwoRowCell.First>
+            <TwoRowCell.Second>
+              {ctx.row.original.isAggregate && 'Aggregate'}
+            </TwoRowCell.Second>
+          </TwoRowCell>
+        </TableLink>
+      </InteropProjectNameTooltip>
+    )
+  },
+  meta: {
+    cellClassName: 'whitespace-nowrap',
+    headClassName: 'text-2xs min-w-[7.5rem]',
+  },
+})
+
+const overviewCommonColumns = [logoColumn, overviewNameColumn]
 
 const last24hVolumeColumn = columnHelper.accessor('volume', {
   header: 'Last 24h\nVolume',
@@ -324,4 +360,113 @@ export function getAllProtocolsColumns(
         },
       }),
   ])
+}
+
+export function getOverviewTopInteropProtocolsColumns(
+  apiSelection: InteropSelection,
+) {
+  return [
+    ...overviewCommonColumns,
+    last24hVolumeColumn,
+    columnHelper.accessor((row) => row.transferCount, {
+      header: 'Last 24h\ntransfer count',
+      cell: (ctx) => (
+        <span className="font-medium text-label-value-15 text-primary tabular-nums">
+          {formatInteger(ctx.row.original.transferCount)}
+        </span>
+      ),
+      meta: {
+        align: 'right',
+        headClassName: 'text-2xs',
+        tooltip:
+          'The total number of token transfer transactions completed in the past 24 hours.',
+      },
+    }),
+    columnHelper.accessor('averageValue', {
+      header: 'Last 24h avg.\ntransfer value',
+      meta: {
+        align: 'right',
+        headClassName: 'text-2xs',
+        tooltip:
+          'The average USD value per token transfer completed in the past 24 hours.',
+      },
+      cell: (ctx) => {
+        if (!ctx.row.original.averageValue) return EM_DASH
+
+        const averageValue = formatCurrency(
+          ctx.row.original.averageValue,
+          'usd',
+        )
+        const minTransferSize =
+          ctx.row.original.minTransferValueUsd !== undefined
+            ? formatCurrency(ctx.row.original.minTransferValueUsd, 'usd')
+            : EM_DASH
+        const maxTransferSize =
+          ctx.row.original.maxTransferValueUsd !== undefined
+            ? formatCurrency(ctx.row.original.maxTransferValueUsd, 'usd')
+            : EM_DASH
+
+        return (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="font-medium text-label-value-15 text-primary">
+                {averageValue}
+              </span>
+            </TooltipTrigger>
+            <TooltipContent className="min-w-[200px]">
+              <div className="font-medium text-label-value-14 text-secondary">
+                Transfer value
+              </div>
+              <HorizontalSeparator className="my-1" />
+              <div className="flex items-center justify-between gap-x-6">
+                <span className="font-medium text-label-value-14">Minimum</span>
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  {minTransferSize}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-x-6">
+                <span className="font-medium text-label-value-14">Average</span>
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  {averageValue}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-x-6">
+                <span className="font-medium text-label-value-14">Maximum</span>
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  {maxTransferSize}
+                </span>
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        )
+      },
+    }),
+    columnHelper.accessor('tokens', {
+      header: 'Tokens\nby volume',
+      meta: {
+        cellClassName: '!pr-0',
+        headClassName: 'text-2xs',
+        tooltip:
+          'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume.',
+      },
+      cell: (ctx) => {
+        if ((ctx.row.original.tokens?.items.length ?? 0) === 0) return EM_DASH
+        return (
+          <TopTokensCell
+            topItems={ctx.row.original.tokens}
+            type={undefined}
+            apiSelection={apiSelection}
+            hideDialog
+            protocol={{
+              id: ctx.row.original.id,
+              name: ctx.row.original.name,
+              slug: ctx.row.original.slug,
+              iconUrl: ctx.row.original.iconUrl,
+              bridgeTypes: ctx.row.original.bridgeTypes,
+            }}
+          />
+        )
+      },
+    }),
+  ]
 }

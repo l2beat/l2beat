@@ -52,15 +52,17 @@ export function TransferCountCell({
       >
         {transferCount}
       </button>
-      <TransferDetailsDialog
-        protocol={protocol}
-        type={type}
-        snapshotTimestamp={snapshotTimestamp}
-        selectedChains={selectedChains}
-        subtitle={<BetweenChainsInfo className="md:mt-1" />}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
+      {isOpen ? (
+        <TransferDetailsDialog
+          protocol={protocol}
+          type={type}
+          snapshotTimestamp={snapshotTimestamp}
+          selectedChains={selectedChains}
+          subtitle={<BetweenChainsInfo className="md:mt-1" />}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
+      ) : null}
     </>
   )
 }

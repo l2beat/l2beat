@@ -1,5 +1,4 @@
-import { Fragment, useMemo, useState } from 'react'
-import { useBreakpoint } from '~/hooks/useBreakpoint'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
@@ -22,6 +21,7 @@ import {
   SidebarGroupSubLink,
   SidebarHeader,
   SidebarSeparator,
+  useSidebar,
 } from '../../core/Sidebar'
 import { DarkThemeToggle } from '../../DarkThemeToggle'
 import { Logo } from '../../Logo'
@@ -33,15 +33,25 @@ interface Props {
   groups: NavGroup[]
   logoLink: string
   sideLinks: NavLink[]
+  suppressDesktopSidebar?: boolean
+  omitSecondaryDrawerLinks?: boolean
 }
 
-export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
+export function NavSidebar({
+  groups,
+  logoLink,
+  sideLinks,
+  suppressDesktopSidebar = false,
+  omitSecondaryDrawerLinks = false,
+}: Props) {
   const pathname = usePathname()
+  const { setOpenMobile } = useSidebar()
+  const closeMobileSidebar = () => setOpenMobile(false)
   return (
-    <Sidebar>
+    <Sidebar suppressDesktop={suppressDesktopSidebar}>
       <SidebarHeader>
         <div className="flex h-[38px] flex-row items-center justify-between">
-          <a href={logoLink}>
+          <a href={logoLink} onClick={closeMobileSidebar}>
             <Logo className="block h-8 w-auto" />
           </a>
           <div className="flex flex-row items-center gap-4">
@@ -58,7 +68,10 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
             <SidebarGroup key={group.title}>
               {group.type === 'multiple' && (
                 <SidebarGroupItem>
-                  <NavCollapsibleItem group={group} />
+                  <NavCollapsibleItem
+                    group={group}
+                    closeMobileSidebar={closeMobileSidebar}
+                  />
                 </SidebarGroupItem>
               )}
               {group.type === 'single' && (
@@ -66,6 +79,7 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
                   <SidebarGroupLink
                     href={group.href}
                     isActive={isLinkActive({ href: group.href, pathname })}
+                    onClick={closeMobileSidebar}
                   >
                     {group.icon}
                     <span>{group.title}</span>
@@ -75,19 +89,22 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
             </SidebarGroup>
           )
         })}
-        <SidebarGroup className="mt-8 gap-1.5">
-          {sideLinks.map((link) => (
-            <SidebarGroupItem key={link.title}>
-              <SidebarGroupSmallLink
-                href={link.href}
-                isActive={isLinkActive({ href: link.href, pathname })}
-              >
-                {link.title}
-                {link.accessory}
-              </SidebarGroupSmallLink>
-            </SidebarGroupItem>
-          ))}
-        </SidebarGroup>
+        {!omitSecondaryDrawerLinks && (
+          <SidebarGroup className="mt-8 gap-1.5">
+            {sideLinks.map((link) => (
+              <SidebarGroupItem key={link.title}>
+                <SidebarGroupSmallLink
+                  href={link.href}
+                  isActive={isLinkActive({ href: link.href, pathname })}
+                  onClick={closeMobileSidebar}
+                >
+                  {link.title}
+                  {link.accessory}
+                </SidebarGroupSmallLink>
+              </SidebarGroupItem>
+            ))}
+          </SidebarGroup>
+        )}
       </SidebarContent>
       <SidebarFooter>
         <div className="flex gap-2 lg:justify-between">
@@ -100,8 +117,10 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
 
 function NavCollapsibleItem({
   group,
+  closeMobileSidebar,
 }: {
   group: Extract<NavGroup, { type: 'multiple' }>
+  closeMobileSidebar: () => void
 }) {
   const pathname = usePathname()
   const allGroupLinks = useMemo(
@@ -112,50 +131,33 @@ function NavCollapsibleItem({
   const isAnyLinkActive = allGroupLinks.some((link) =>
     isLinkActive({ href: link.href, pathname, exact: link.exactMatch }),
   )
-  const breakpoint = useBreakpoint()
 
   const [open, setOpen] = useState(isAnyLinkActive)
+
+  useEffect(() => {
+    setOpen(isAnyLinkActive)
+  }, [isAnyLinkActive])
 
   if (!group.links[0]) return null
 
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
-      {breakpoint === 'xs' ||
-      breakpoint === 'sm' ||
-      breakpoint === 'md' ||
-      group.preventTitleNavigation ? (
-        <CollapsibleTrigger
-          className="group flex items-center gap-1.5 p-1.5"
-          data-active={isGroupActive}
-        >
-          <div className="flex items-center gap-2">
-            <div>{group.icon}</div>
-            <span className="font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-brand">
-              {group.title}
-            </span>
-          </div>
-          <ChevronIcon
-            className={cn(
-              '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-brand',
-            )}
-          />
-        </CollapsibleTrigger>
-      ) : (
-        <div
-          className="group flex items-center p-1.5"
-          data-active={isGroupActive}
-        >
-          <a href={group.links[0].href} className="flex items-center gap-2">
-            <div>{group.icon}</div>
-            <span className="font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-brand">
-              {group.title}
-            </span>
-          </a>
-          <CollapsibleTrigger className="group size-6">
-            <ChevronIcon className="-rotate-90 m-auto size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-brand" />
-          </CollapsibleTrigger>
+      <CollapsibleTrigger
+        className="group flex items-center gap-1.5 p-1.5"
+        data-active={isGroupActive}
+      >
+        <div className="flex items-center gap-2">
+          <div>{group.icon}</div>
+          <span className="font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-brand">
+            {group.title}
+          </span>
         </div>
-      )}
+        <ChevronIcon
+          className={cn(
+            '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-brand',
+          )}
+        />
+      </CollapsibleTrigger>
       <CollapsibleContent>
         <SidebarGroupSub>
           {group.links.map((item) => (
@@ -167,6 +169,7 @@ function NavCollapsibleItem({
                   pathname,
                   exact: item.exactMatch,
                 })}
+                onClick={closeMobileSidebar}
               >
                 <span className="leading-tight">{item.title}</span>
               </SidebarGroupSubButton>
@@ -181,6 +184,7 @@ function NavCollapsibleItem({
                         pathname,
                         exact: subItem.exactMatch,
                       })}
+                      onClick={closeMobileSidebar}
                     >
                       {subItem.title}
                     </SidebarGroupSubLink>
@@ -201,6 +205,7 @@ function NavCollapsibleItem({
                     pathname,
                     exact: item.exactMatch,
                   })}
+                  onClick={closeMobileSidebar}
                 >
                   <span>{item.title}</span>
                 </SidebarGroupSubButton>
