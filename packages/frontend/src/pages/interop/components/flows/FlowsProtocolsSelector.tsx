@@ -38,20 +38,7 @@ export function FlowsProtocolsSelector({
     toggleProtocolSelection,
     selectAllProtocols,
     deselectAllProtocols,
-    setSelectedProtocols,
   } = useInteropFlows()
-
-  const hasCanonical =
-    !!canonicalProtocolId &&
-    allProtocols.some((p) => p.id === canonicalProtocolId)
-  const onlyCanonicalSelected =
-    hasCanonical &&
-    selectedProtocols.length === 1 &&
-    selectedProtocols[0] === canonicalProtocolId
-
-  const canonicalProtocol = hasCanonical
-    ? allProtocols.find((p) => p.id === canonicalProtocolId)
-    : undefined
 
   const protocolsWithDetails = allProtocols
     .map(({ id, name, iconUrl, slug }) => ({
@@ -133,41 +120,7 @@ export function FlowsProtocolsSelector({
   )
 
   return (
-    <div className="flex items-start gap-1 max-md:w-full max-md:flex-col md:items-center md:gap-2">
-      {/* Direct "Canonical bridge" shortcut, sitting next to the selector. */}
-      {hasCanonical && canonicalProtocolId && (
-        <button
-          type="button"
-          onClick={() => {
-            if (onlyCanonicalSelected) {
-              selectAllProtocols()
-              return
-            }
-            setSelectedProtocols([canonicalProtocolId])
-            // Anchor the URL to the Volume & flows section (sets the hash and
-            // scrolls there) so the selected-bridge link is shareable.
-            if (typeof window !== 'undefined') {
-              window.location.hash = 'interop-flows'
-            }
-          }}
-          aria-pressed={onlyCanonicalSelected}
-          className={cn(
-            'flex h-9.5 shrink-0 items-center gap-2 rounded-lg border py-2 pr-4 pl-2 font-bold text-sm leading-none transition-colors max-md:w-full md:order-2',
-            onlyCanonicalSelected
-              ? 'border-brand text-brand'
-              : 'border-divider bg-surface-primary! hover:bg-surface-secondary',
-          )}
-        >
-          {canonicalProtocol?.iconUrl && (
-            <img
-              src={canonicalProtocol.iconUrl}
-              alt=""
-              className="size-5 rounded-full bg-white"
-            />
-          )}
-          Canonical bridge
-        </button>
-      )}
+    <div className="max-md:w-full">
       {/* Mobile */}
       <Drawer>
         <DrawerTrigger className="w-full md:hidden">{trigger}</DrawerTrigger>
@@ -228,6 +181,67 @@ export function FlowsProtocolsSelector({
         </DialogContent>
       </Dialog>
     </div>
+  )
+}
+
+/**
+ * Direct "Canonical bridge" shortcut. Rendered as a sibling of the chain and
+ * protocol selectors so it can sit inline on desktop but drop to its own full
+ * width row on mobile.
+ */
+export function FlowsCanonicalBridgeButton({
+  allProtocols,
+  canonicalProtocolId,
+}: {
+  allProtocols: (ProtocolDisplayable & {
+    id: string
+  })[]
+  canonicalProtocolId: string
+}) {
+  const { selectedProtocols, selectAllProtocols, setSelectedProtocols } =
+    useInteropFlows()
+
+  const canonicalProtocol = allProtocols.find(
+    (p) => p.id === canonicalProtocolId,
+  )
+  if (!canonicalProtocol) return null
+
+  const onlyCanonicalSelected =
+    selectedProtocols.length === 1 &&
+    selectedProtocols[0] === canonicalProtocolId
+
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        if (onlyCanonicalSelected) {
+          selectAllProtocols()
+          return
+        }
+        setSelectedProtocols([canonicalProtocolId])
+        // Anchor the URL to the Volume & flows section (sets the hash and
+        // scrolls there) so the selected-bridge link is shareable.
+        if (typeof window !== 'undefined') {
+          window.location.hash = 'interop-flows'
+        }
+      }}
+      aria-pressed={onlyCanonicalSelected}
+      className={cn(
+        'flex h-9.5 shrink-0 items-center gap-2 rounded-lg border py-2 pr-4 pl-2 font-bold text-sm leading-none transition-colors max-md:w-full max-md:justify-center',
+        onlyCanonicalSelected
+          ? 'border-brand text-brand'
+          : 'border-divider bg-surface-primary! hover:bg-surface-secondary',
+      )}
+    >
+      {canonicalProtocol.iconUrl && (
+        <img
+          src={canonicalProtocol.iconUrl}
+          alt=""
+          className="size-5 rounded-full bg-white"
+        />
+      )}
+      Canonical bridge
+    </button>
   )
 }
 

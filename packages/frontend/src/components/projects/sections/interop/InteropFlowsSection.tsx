@@ -9,7 +9,10 @@ import {
 } from '~/pages/interop/components/flows/consts'
 import { FlowsChainsSelector } from '~/pages/interop/components/flows/FlowsChainsSelector'
 import { FlowsParticleLegend } from '~/pages/interop/components/flows/FlowsParticleLegend'
-import { FlowsProtocolsSelector } from '~/pages/interop/components/flows/FlowsProtocolsSelector'
+import {
+  FlowsCanonicalBridgeButton,
+  FlowsProtocolsSelector,
+} from '~/pages/interop/components/flows/FlowsProtocolsSelector'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
 import { InactiveChainsDialog } from '~/pages/interop/components/flows/graph/InactiveChainsDialog'
 import { useScaledParticleCounts } from '~/pages/interop/components/flows/graph/utils/useScaledParticleCounts'
@@ -126,11 +129,22 @@ function Content({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:items-start">
-        <FlowsChainsSelector allChains={interopChains} />
-        <FlowsProtocolsSelector
-          allProtocols={protocols}
-          canonicalProtocolId={canonicalProtocolId}
-        />
+        {/* Chain + protocol selectors share a row on mobile; on desktop the
+            wrapper dissolves so all three controls flow in the same row. */}
+        <div className="flex gap-2 max-md:w-full md:contents">
+          <FlowsChainsSelector allChains={interopChains} />
+          <FlowsProtocolsSelector
+            allProtocols={protocols}
+            canonicalProtocolId={canonicalProtocolId}
+          />
+        </div>
+        {/* Canonical bridge drops to its own full-width row below on mobile. */}
+        {canonicalProtocolId && (
+          <FlowsCanonicalBridgeButton
+            allProtocols={protocols}
+            canonicalProtocolId={canonicalProtocolId}
+          />
+        )}
       </div>
       <div className="flex h-full min-w-0 flex-col">
         <div className="group/flows flex h-full w-full min-w-0 flex-col items-center gap-10 pb-4">
