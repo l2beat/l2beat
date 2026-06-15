@@ -17,6 +17,14 @@ import type {
 } from './InteropAggregationAnalyzer'
 import type { InteropAggregationService } from './InteropAggregationService'
 
+/**
+ * How stale the syncers' captured data may be relative to the aggregation
+ * window end before we skip the hour. `to` is the last whole hour (already up
+ * to an hour in the past), so a syncer must lag by more than this plus that
+ * gap to trip the check.
+ */
+const SYNCER_FRESHNESS_TOLERANCE = 30 * UnixTime.MINUTE
+
 export interface InteropAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
@@ -36,9 +44,13 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
   }
 
   override async update(_: number, to: number): Promise<number> {
-    if (!this.$.syncersManager.areAllSyncersFollowing()) {
+    const syncersFresh = await this.$.syncersManager.areSyncersFreshEnough(
+      to,
+      SYNCER_FRESHNESS_TOLERANCE,
+    )
+    if (!syncersFresh) {
       this.logger.info(
-        'Skipping aggregation - not all syncers are following the tip',
+        'Skipping aggregation - syncers captured data is not fresh enough',
       )
       // This is a deliberate no-op: aggregates are best-effort hourly snapshots.
       // If syncers are behind, we leave this hour empty and try again next hour.
