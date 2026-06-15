@@ -32,3 +32,14 @@ export const EXPLORER_URLS: Record<string, string> = {
   jovay: 'https://explorer.jovay.io/l2/address',
   katana: 'https://katanascan.com',
 }
+
+export function getExplorerTxUrl(chain: string): string | undefined {
+  const base = EXPLORER_URLS[chain]
+  if (!base) {
+    return undefined
+  }
+  if (/\/address$/.test(base)) {
+    return base.replace(/\/address$/, '/tx')
+  }
+  return `${base.replace(/\/$/, '')}/tx`
+}
