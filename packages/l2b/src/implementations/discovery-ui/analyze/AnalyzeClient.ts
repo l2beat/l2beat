@@ -33,7 +33,7 @@ export class AnalyzeClient {
     input: { files: Record<string, Uint8Array>; entrypoint: string },
   ): Promise<AnalyzerResultApiResponse> {
     const body = new FormData()
-    body.append('archive', Buffer.from(zipSync(input.files)), {
+    body.append('archive', createSourcesArchive(input.files), {
       filename: 'sources.zip',
       contentType: 'application/zip',
     })
@@ -99,6 +99,12 @@ export class AnalyzeClient {
     }
     return headers
   }
+}
+
+export function createSourcesArchive(
+  files: Record<string, Uint8Array>,
+): Buffer {
+  return Buffer.from(zipSync(files))
 }
 
 function parseJson(body: string, status: number, statusText: string): unknown {
