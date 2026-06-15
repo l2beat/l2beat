@@ -99,6 +99,7 @@ export function EcosystemTvsByStage({
     (acc, data) => acc + data.tvs,
     0,
   )
+  const hasTvsData = totalTvs > 0
 
   return (
     <EcosystemWidget className={className}>
@@ -120,62 +121,72 @@ export function EcosystemTvsByStage({
         Total {totalProjects} projects
       </p>
       <div className="flex items-center justify-around">
-        <div>
-          {Object.entries(tvsByStage).map(([stage, data]) => {
-            if (stage === 'NotApplicable' && data.tvs === 0) return null
-            return (
-              <div key={stage} className="flex items-center gap-2">
-                <StageBadge stage={stage as Stage} isAppchain={false} />
-                <div>
-                  <span className="font-medium text-label-value-14 text-secondary">
-                    {formatPercent(data.tvs / totalTvs)}
-                  </span>{' '}
-                  <span className="font-medium text-[#9399A9] text-label-value-14">
-                    ({data.projectCount})
-                  </span>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-        <SimpleChartContainer meta={chartMeta}>
-          <PieChart
-            responsive
-            className="aspect-square! h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
-          >
-            <ChartTooltip
-              cursor={false}
-              content={<CustomTooltip />}
-              position={breakpoint === 'xs' ? { x: -22, y: -46 } : undefined}
-            />
-            <Pie
-              className={className}
-              data={chartData}
-              dataKey="tvs"
-              nameKey="stage"
-              isAnimationActive={false}
-              innerRadius={breakpoint === 'xs' ? 24 : 35}
-              outerRadius={breakpoint === 'xs' ? 58 : 70}
-            >
-              <Label
-                content={() => {
-                  return (
-                    <text x="50%" y="50%" textAnchor="middle">
-                      <tspan
-                        x="50%"
-                        y="50%"
-                        className="fill-secondary font-medium text-2xs leading-none"
-                        dy={5}
-                      >
-                        Stages
-                      </tspan>
-                    </text>
-                  )
-                }}
-              />
-            </Pie>
-          </PieChart>
-        </SimpleChartContainer>
+        {hasTvsData ? (
+          <>
+            <div>
+              {Object.entries(tvsByStage).map(([stage, data]) => {
+                if (stage === 'NotApplicable' && data.tvs === 0) return null
+                return (
+                  <div key={stage} className="flex items-center gap-2">
+                    <StageBadge stage={stage as Stage} isAppchain={false} />
+                    <div>
+                      <span className="font-medium text-label-value-14 text-secondary">
+                        {formatPercent(data.tvs / totalTvs)}
+                      </span>{' '}
+                      <span className="font-medium text-[#9399A9] text-label-value-14">
+                        ({data.projectCount})
+                      </span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+            <SimpleChartContainer meta={chartMeta}>
+              <PieChart
+                responsive
+                className="aspect-square! h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
+              >
+                <ChartTooltip
+                  cursor={false}
+                  content={<CustomTooltip />}
+                  position={
+                    breakpoint === 'xs' ? { x: -22, y: -46 } : undefined
+                  }
+                />
+                <Pie
+                  className={className}
+                  data={chartData}
+                  dataKey="tvs"
+                  nameKey="stage"
+                  isAnimationActive={false}
+                  innerRadius={breakpoint === 'xs' ? 24 : 35}
+                  outerRadius={breakpoint === 'xs' ? 58 : 70}
+                >
+                  <Label
+                    content={() => {
+                      return (
+                        <text x="50%" y="50%" textAnchor="middle">
+                          <tspan
+                            x="50%"
+                            y="50%"
+                            className="fill-secondary font-medium text-2xs leading-none"
+                            dy={5}
+                          >
+                            Stages
+                          </tspan>
+                        </text>
+                      )
+                    }}
+                  />
+                </Pie>
+              </PieChart>
+            </SimpleChartContainer>
+          </>
+        ) : (
+          <div className="flex h-[140px] w-full items-center justify-center font-medium text-label-value-14 text-secondary">
+            No data
+          </div>
+        )}
       </div>
     </EcosystemWidget>
   )

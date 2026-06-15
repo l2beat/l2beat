@@ -10,7 +10,7 @@ export function calculatePercentageChange(now: number, then: number) {
 }
 
 export function formatPercent(value: number) {
-  const percent = value * 100
+  const percent = Number.isFinite(value) ? value * 100 : 0
 
   if (percent >= 1000) {
     return '>1K%'

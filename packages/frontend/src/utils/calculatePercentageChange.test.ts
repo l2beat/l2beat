@@ -54,4 +54,9 @@ describe('formatPercent', () => {
   it('formats values less than 10 with two decimal places', () => {
     expect(formatPercent(0.075)).toEqual('7.50%')
   })
+
+  it('formats invalid values as 0', () => {
+    expect(formatPercent(Number.NaN)).toEqual('0.00%')
+    expect(formatPercent(Number.POSITIVE_INFINITY)).toEqual('0.00%')
+  })
 })
