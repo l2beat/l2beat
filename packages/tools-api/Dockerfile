@@ -1,12 +1,11 @@
+# syntax=docker/dockerfile:1
 ARG TURBO_TEAM
-ARG TURBO_TOKEN
 ARG COREPACK_VERSION="^0.31.0"
 
 FROM node:22.22.0 AS pruner
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ARG TURBO_TEAM
-ARG TURBO_TOKEN
 ARG COREPACK_VERSION
 RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
 WORKDIR /src/
@@ -16,7 +15,7 @@ RUN turbo prune --docker @l2beat/tools-api
 
 FROM node:22.22.0 AS builder
 ARG TURBO_TEAM
-ARG TURBO_TOKEN
+ENV TURBO_TEAM=$TURBO_TEAM
 ARG COREPACK_VERSION
 RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
 WORKDIR /src/
@@ -24,7 +23,8 @@ COPY --from=pruner /src/out/json/ .
 RUN pnpm install --frozen-lockfile
 COPY --from=pruner /src/.discovery.json .
 COPY --from=pruner /src/out/full/ ./
-RUN pnpm build:tools-api
+RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
+  pnpm build:tools-api
 
 FROM node:22.22.0-slim AS release
 
@@ -41,4 +41,5 @@ WORKDIR /app/packages/tools-api/
 
 USER appuser
 
-CMD NODE_ENV=production node ./build/index.js
+ENV NODE_ENV=production
+CMD ["node", "./build/index.js"]
