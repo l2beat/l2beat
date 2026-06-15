@@ -1,7 +1,9 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getRecentChangesOverview } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { getOngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -13,7 +15,7 @@ import { MAX_SELECTED_CHAINS } from '../interop/components/flows/consts'
 import { getOverviewProjectCounts } from './getOverviewProjectCounts'
 
 const TOP_CHAINS_COUNT = 5
-const RECENT_PROJECTS_COUNT = 6
+const RECENT_PROJECTS_COUNT = 3
 
 export async function getOverviewData(
   req: Request,
@@ -67,13 +69,21 @@ async function getCachedData() {
   )
   const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)
 
-  const [summaryTabs, recentProjects, projectCounts, interopProtocols] =
-    await Promise.all([
-      getScalingSummaryEntries(),
-      getRecentProjectsForOverview(),
-      getOverviewProjectCounts(),
-      ps.getProjects({ select: ['interopConfig'] }),
-    ])
+  const [
+    summaryTabs,
+    recentProjects,
+    projectCounts,
+    interopProtocols,
+    recentChanges,
+    ongoingAnomalies,
+  ] = await Promise.all([
+    getScalingSummaryEntries(),
+    getRecentProjectsForOverview(),
+    getOverviewProjectCounts(),
+    ps.getProjects({ select: ['interopConfig'] }),
+    getRecentChangesOverview(),
+    getOngoingAnomaliesOverview(),
+  ])
 
   const scalingCategoryCounts = {
     rollups: summaryTabs.rollups.length,
@@ -97,10 +107,12 @@ async function getCachedData() {
     .map((chain) => chain.id)
 
   if (defaultSelectedFlowChains.length > 0) {
-    await helpers.interop.dashboard.prefetch({
-      from: defaultSelectedFlowChains,
-      to: defaultSelectedFlowChains,
-    })
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.interop.dashboard.queryOptions({
+        from: defaultSelectedFlowChains,
+        to: defaultSelectedFlowChains,
+      }),
+    )
   }
 
   const totalInterop24hVolume = 0
@@ -119,6 +131,8 @@ async function getCachedData() {
     totalInterop24hVolume,
     chainVolumeMap,
     scalingCategoryCounts,
+    recentChanges,
+    ongoingAnomalies,
   }
 }
 

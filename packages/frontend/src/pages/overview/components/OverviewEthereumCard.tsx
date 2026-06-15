@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -6,7 +7,7 @@ import { PercentChange } from '~/components/PercentChange'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EM_DASH } from '~/consts/characters'
 import { ChevronIcon } from '~/icons/Chevron'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
@@ -32,15 +33,18 @@ export function OverviewEthereumCard({
   daRange,
   compactCharts = false,
 }: Props) {
-  const { data: activity, isLoading: isActivityLoading } =
-    api.activity.ethereumChart.useQuery({ range: activityRange })
+  const trpc = useTRPC()
+  const { data: activity, isLoading: isActivityLoading } = useQuery(
+    trpc.activity.ethereumChart.queryOptions({ range: activityRange }),
+  )
 
-  const { data: daCharts, isLoading: isDaLoading } =
-    api.da.projectCharts.useQuery({
+  const { data: daCharts, isLoading: isDaLoading } = useQuery(
+    trpc.da.projectCharts.queryOptions({
       projectId: 'ethereum',
       range: daRange,
       includeScalingOnly: false,
-    })
+    }),
+  )
 
   const realActivitySparkline = useMemo(
     () =>
@@ -100,7 +104,7 @@ export function OverviewEthereumCard({
   const dataPostedChange = computeSparklineChange(dataPostedSparkline)
   const rollupShare = realRollupShare
 
-  const chartHeight = compactCharts ? 48 : 96
+  const chartHeight = compactCharts ? 'fill' : 96
 
   return (
     <PrimaryCard
@@ -116,12 +120,13 @@ export function OverviewEthereumCard({
         className={cn(
           'grid grid-cols-1',
           compactCharts
-            ? 'gap-5 md:grid-cols-2 md:gap-4 xl:grid-cols-1 xl:gap-5'
+            ? 'gap-5 md:grid-cols-2 md:gap-4 xl:min-h-0 xl:flex-1 xl:auto-rows-fr xl:grid-cols-1 xl:gap-5'
             : 'gap-3.5 md:grid-cols-2 md:gap-6',
         )}
       >
         <OverviewChartSection
           label="Data posted to Ethereum blobs"
+          fill={compactCharts}
           periodLabel={OVERVIEW_CHART_PERIOD_LABEL}
           stat={
             isDaLoading ? (
@@ -161,6 +166,7 @@ export function OverviewEthereumCard({
         </OverviewChartSection>
         <OverviewChartSection
           label="Ethereum activity (UOPS)"
+          fill={compactCharts}
           periodLabel={OVERVIEW_CHART_PERIOD_LABEL}
           stat={
             isActivityLoading ? (

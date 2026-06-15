@@ -4,7 +4,7 @@ import { cn } from '~/utils/cn'
 import type { OverviewRecentProject } from '../getOverviewData'
 import { OVERVIEW_CARD_PADDING_CLASS } from './overviewChartHeight'
 
-const VISIBLE_RECENT_PROJECTS_COUNT = 6
+const VISIBLE_RECENT_PROJECTS_COUNT = 3
 
 const CATEGORY_LABEL: Record<OverviewRecentProject['category'], string> = {
   scaling: 'Scaling project',

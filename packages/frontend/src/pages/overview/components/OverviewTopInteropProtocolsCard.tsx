@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { getCoreRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -11,7 +12,7 @@ import {
   type ProtocolRow,
 } from '~/pages/interop/components/table/columns'
 import { NoResultsInfo } from '~/pages/interop/summary/components/NoResultsInfo'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { pickTopProtocolEntries } from '../utils/pickTopProtocolEntries'
 import { OVERVIEW_CARD_PADDING_CLASS } from './overviewChartHeight'
@@ -31,6 +32,7 @@ export function OverviewTopInteropProtocolsCard({
   interopChains,
   defaultSelectedFlowChains = [],
 }: Props) {
+  const trpc = useTRPC()
   const chainIds = useMemo(() => {
     if (defaultSelectedFlowChains.length > 0) {
       return defaultSelectedFlowChains
@@ -46,9 +48,11 @@ export function OverviewTopInteropProtocolsCard({
     [chainIds],
   )
 
-  const { data, isLoading } = api.interop.dashboard.useQuery(apiSelection, {
-    enabled: chainIds.length > 0,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.interop.dashboard.queryOptions(apiSelection, {
+      enabled: chainIds.length > 0,
+    }),
+  )
 
   const entries = useMemo(() => pickTopProtocolEntries(data), [data])
 

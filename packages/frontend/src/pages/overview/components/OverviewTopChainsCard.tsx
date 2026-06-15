@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -26,7 +27,7 @@ import { useTable } from '~/hooks/useTable'
 import { ChevronIcon } from '~/icons/Chevron'
 import { toTableRows } from '~/pages/scaling/summary/utils/toTableRows'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -45,12 +46,15 @@ interface Props {
 }
 
 export function OverviewTopChainsCard({ entries, chainVolumeMap }: Props) {
+  const trpc = useTRPC()
   const { display } = useTvsDisplayControlsContext()
-  const { data: tvsTable, isLoading: isTvsLoading } = api.tvs.table.useQuery({
-    type: 'rollups',
-    excludeAssociatedTokens: display.excludeAssociatedTokens,
-    excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
-  })
+  const { data: tvsTable, isLoading: isTvsLoading } = useQuery(
+    trpc.tvs.table.queryOptions({
+      type: 'rollups',
+      excludeAssociatedTokens: display.excludeAssociatedTokens,
+      excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
+    }),
+  )
 
   const tableEntries = useMemo<OverviewTopChainRow[]>(() => {
     const rows = toTableRows({

@@ -39,6 +39,8 @@ export type OverviewSparklineHeight =
   | 120
   | 140
   | 160
+  /** Grow to fill the parent's available height (parent must define a height). */
+  | 'fill'
 
 export interface OverviewSparklineDataPoint {
   timestamp: number
@@ -85,6 +87,7 @@ const HEIGHT_OVERRIDE: Record<OverviewSparklineHeight, string> = {
   120: '[&_.recharts-responsive-container]:!h-[120px] [&_.recharts-responsive-container]:!min-h-[120px]',
   140: '[&_.recharts-responsive-container]:!h-[140px] [&_.recharts-responsive-container]:!min-h-[140px]',
   160: '[&_.recharts-responsive-container]:!h-[160px] [&_.recharts-responsive-container]:!min-h-[160px]',
+  fill: 'h-full min-h-[120px] [&>div]:h-full [&_.recharts-wrapper]:h-full! [&_.recharts-wrapper]:min-h-0! [&_.recharts-wrapper]:aspect-auto!',
 }
 
 /**

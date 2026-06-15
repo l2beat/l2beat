@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -6,7 +7,7 @@ import { PercentChange } from '~/components/PercentChange'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EM_DASH } from '~/consts/characters'
 import { ChevronIcon } from '~/icons/Chevron'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -44,19 +45,22 @@ export function OverviewScalingCard({
   scalingCategoryCounts,
   compactCharts = false,
 }: Props) {
-  const { data: tvs, isLoading: isTvsLoading } =
-    api.tvs.recategorisedChart.useQuery({
+  const trpc = useTRPC()
+  const { data: tvs, isLoading: isTvsLoading } = useQuery(
+    trpc.tvs.recategorisedChart.queryOptions({
       range: tvsRange,
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
       filter: { type: 'layer2' },
-    })
+    }),
+  )
 
-  const { data: activity, isLoading: isActivityLoading } =
-    api.activity.recategorisedChart.useQuery({
+  const { data: activity, isLoading: isActivityLoading } = useQuery(
+    trpc.activity.recategorisedChart.queryOptions({
       range: activityRange,
       filter: { type: 'all' },
-    })
+    }),
+  )
 
   const tvsSeriesPoints = useMemo<TvsPoint[] | undefined>(
     () =>
@@ -128,7 +132,7 @@ export function OverviewScalingCard({
     [activitySparkline],
   )
 
-  const chartHeight = compactCharts ? 48 : 96
+  const chartHeight = compactCharts ? 'fill' : 96
 
   return (
     <PrimaryCard
@@ -140,12 +144,13 @@ export function OverviewScalingCard({
         className={cn(
           'grid grid-cols-1',
           compactCharts
-            ? 'gap-5 md:grid-cols-2 md:gap-4 xl:grid-cols-1 xl:gap-5'
+            ? 'gap-5 md:grid-cols-2 md:gap-4 xl:min-h-0 xl:flex-1 xl:auto-rows-fr xl:grid-cols-1 xl:gap-5'
             : 'gap-3.5 md:grid-cols-2 md:gap-6',
         )}
       >
         <OverviewChartSection
           label="Total value secured"
+          fill={compactCharts}
           periodLabel={OVERVIEW_CHART_PERIOD_LABEL}
           stat={
             isTvsLoading ? (
@@ -176,6 +181,7 @@ export function OverviewScalingCard({
         </OverviewChartSection>
         <OverviewChartSection
           label="Scaling activity (UOPS)"
+          fill={compactCharts}
           periodLabel={OVERVIEW_CHART_PERIOD_LABEL}
           stat={
             isActivityLoading ? (

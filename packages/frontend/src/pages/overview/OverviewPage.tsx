@@ -7,7 +7,9 @@ import { TvsDisplayControlsContextProvider } from '~/components/table/display/co
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { RecentChangesOverview } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import type { OngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { optionToRange } from '~/utils/range/range'
 import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
@@ -18,6 +20,8 @@ import {
 } from './components/OverviewDeferredMount'
 import { OverviewEthereumCard } from './components/OverviewEthereumCard'
 import { OverviewInteropCard } from './components/OverviewInteropCard'
+import { OverviewOngoingAnomaliesCard } from './components/OverviewOngoingAnomaliesCard'
+import { OverviewRecentChangesCard } from './components/OverviewRecentChangesCard'
 import { OverviewRecentProjectsCard } from './components/OverviewRecentProjectsCard'
 import { OverviewScalingCard } from './components/OverviewScalingCard'
 import { OverviewStatsStrip } from './components/OverviewStatsStrip'
@@ -47,6 +51,8 @@ interface Props extends AppLayoutProps {
     validiumsAndOptimiums: number
     others: number
   }
+  recentChanges: RecentChangesOverview
+  ongoingAnomalies: OngoingAnomaliesOverview
 }
 
 export function OverviewPage({
@@ -60,6 +66,8 @@ export function OverviewPage({
   totalInterop24hVolume,
   chainVolumeMap,
   scalingCategoryCounts,
+  recentChanges,
+  ongoingAnomalies,
   ...props
 }: Props) {
   const tvsChartRange = optionToRange(...OVERVIEW_TVS_CHART_RANGE_ARGS)
@@ -99,6 +107,10 @@ export function OverviewPage({
                   <OverviewStatsStrip
                     counts={projectCounts}
                     variant="overviewRightColumn"
+                  />
+                  <OverviewRecentChangesCard recentChanges={recentChanges} />
+                  <OverviewOngoingAnomaliesCard
+                    ongoingAnomalies={ongoingAnomalies}
                   />
                   <OverviewWhatsNewCard />
                   <OverviewRecentProjectsCard

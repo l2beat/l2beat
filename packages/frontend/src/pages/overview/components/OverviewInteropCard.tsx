@@ -1,9 +1,11 @@
+import { useQuery } from '@tanstack/react-query'
 import partition from 'lodash/partition'
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { ChevronIcon } from '~/icons/Chevron'
+import { CursorClickIcon } from '~/icons/CursorClick'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
   MIN_SELECTED_CHAINS,
@@ -15,10 +17,11 @@ import {
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { OverviewInteropSelectedPath } from './OverviewInteropSelectedPath'
 import { OVERVIEW_INTEROP_CARD_CLASS } from './overviewChartHeight'
 
 interface Props {
@@ -55,16 +58,20 @@ function OverviewInteropCardContent({
   interopChains: InteropChainWithIcon[]
   totalInterop24hVolume: number
 }) {
-  const { selectedChains, allChains, selectedProtocols } = useInteropFlows()
+  const trpc = useTRPC()
+  const { selectedChains, allChains, selectedProtocols, highlightedChains } =
+    useInteropFlows()
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
   const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
 
-  const { data, isLoading } = api.interop.flows.useQuery(
-    {
-      chains: selectedChains,
-      protocolIds: selectedProtocols,
-    },
-    { enabled: hasEnoughChains && hasEnoughProtocols },
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions(
+      {
+        chains: selectedChains,
+        protocolIds: selectedProtocols,
+      },
+      { enabled: hasEnoughChains && hasEnoughProtocols },
+    ),
   )
 
   const activeIds = new Set<string>(
@@ -72,6 +79,11 @@ function OverviewInteropCardContent({
       .filter((chain) => chain.totalVolume > 0)
       .map((chain) => chain.chainId),
   )
+
+  const visibleHighlightedChains = isLoading
+    ? highlightedChains
+    : highlightedChains.filter((chainId) => activeIds.has(chainId))
+  const hasSelection = visibleHighlightedChains.length > 0
 
   const selectedChainsWithIcons = interopChains.filter((chain) =>
     selectedChains.includes(chain.id),
@@ -175,7 +187,14 @@ function OverviewInteropCardContent({
           }
         />
       </div>
-      <div className="-mx-2 mt-2 flex min-h-0 flex-1 flex-col pb-1">
+      <div
+        className={cn(
+          '-mx-2 mt-2 flex min-h-0 flex-col',
+          // Desktop: graph pulled up toward the stats; bottom area holds the
+          // hint / selection panel. Mobile (unselected): just fit the graph.
+          hasSelection ? 'flex-1' : 'lg:flex-1',
+        )}
+      >
         <FlowsGraphPanel
           activeChains={activeChains}
           data={data}
@@ -184,7 +203,42 @@ function OverviewInteropCardContent({
           isLoading={isLoading}
         />
       </div>
+      {hasSelection && data ? (
+        <div className="mt-4">
+          <OverviewInteropSelectedPath
+            data={data}
+            allChains={allChains}
+            selectedChains={selectedChains}
+            visibleHighlightedChains={visibleHighlightedChains}
+          />
+        </div>
+      ) : (
+        <div className="mt-4 hidden items-center justify-center pb-1 lg:flex">
+          <SelectInfo
+            highlightedChainsNumber={visibleHighlightedChains.length}
+          />
+        </div>
+      )}
     </PrimaryCard>
+  )
+}
+
+function SelectInfo({
+  highlightedChainsNumber,
+}: {
+  highlightedChainsNumber: number
+}) {
+  const text =
+    highlightedChainsNumber === 1
+      ? 'Select second chain to view detailed data'
+      : 'Select chain or pair of chains to view detailed data'
+  return (
+    <div className="flex items-center gap-0.5">
+      <CursorClickIcon className="size-3.5 shrink-0 fill-brand" />
+      <p className="font-medium text-brand text-label-value-13 italic leading-none">
+        {text}
+      </p>
+    </div>
   )
 }
 
