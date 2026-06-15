@@ -38,5 +38,8 @@ export function getExplorerTxUrl(chain: string): string | undefined {
   if (!base) {
     return undefined
   }
-  return base.replace(/\/address$/, '/tx')
+  if (/\/address$/.test(base)) {
+    return base.replace(/\/address$/, '/tx')
+  }
+  return `${base.replace(/\/$/, '')}/tx`
 }

@@ -20,6 +20,8 @@ export interface PastUpgradeCell {
 
 export interface PastUpgradeRow {
   formattedDate: string
+  /** Raw upgrade transaction hash, shown (and copyable) even without a link. */
+  txHash: string | undefined
   /** Explorer link to the upgrade transaction, when derivable. */
   txUrl: string | undefined
   /**
@@ -70,6 +72,7 @@ export function buildPastUpgradeRows(value: FieldValue): PastUpgradeRow[] {
 
     return {
       formattedDate: formatDate(upgrade.date),
+      txHash: upgrade.txHash,
       txUrl:
         txBase && upgrade.txHash ? `${txBase}/${upgrade.txHash}` : undefined,
       cells,

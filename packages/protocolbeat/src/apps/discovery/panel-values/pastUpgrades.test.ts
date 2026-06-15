@@ -85,7 +85,22 @@ describe('buildPastUpgradeRows', () => {
 
     const [row] = buildPastUpgradeRows(value)
 
+    expect(row?.txHash).toEqual('0xdeadbeef')
     expect(row?.txUrl).toEqual('https://etherscan.io/tx/0xdeadbeef')
+  })
+
+  it('keeps the transaction hash even when the chain has no explorer', () => {
+    // zircuit has no EXPLORER_URLS entry, but the hash must stay inspectable.
+    const onZircuit = ChainSpecificAddress.random('zircuit')
+    const value = {
+      type: 'array',
+      values: [entry('2024-01-20T02:02:25.000Z', '0xdeadbeef', [onZircuit])],
+    } satisfies FieldValue
+
+    const [row] = buildPastUpgradeRows(value)
+
+    expect(row?.txHash).toEqual('0xdeadbeef')
+    expect(row?.txUrl).toEqual(undefined)
   })
 
   it('exposes one cell per facet for diamond upgrades', () => {
