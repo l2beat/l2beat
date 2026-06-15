@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x17d6fafd9416f0b47b5b318b688b97080978822a
+Generated with discovered.json: 0x6b1193cd40192d42f0c8c272ed83b221486f2213
 
-# Diff at Thu, 11 Jun 2026 11:25:13 GMT:
+# Diff at Mon, 15 Jun 2026 08:08:46 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@91b2eba1ff9c1c8341d0eaf6594dac4179405ef6 block: 1780925503
-- current timestamp: 1781177005
+- current timestamp: 1781510846
 
 ## Description
 
@@ -20,6 +20,28 @@ Conduit Multisig 2 dropped one signer.
       values.multisigThreshold:
 -        "4 of 11 (36%)"
 +        "4 of 10 (40%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780925503 (main branch discovery), not current.
+
+```diff
+    EOA  (ethereal:0x98046Bd286715D3B0BC227Dd7a956b83D8978603) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract PythLazer (ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481) [ethereal/PythLazer] {
+    +++ description: Used to verify offchain signed oracle data.
+      category:
++        {"name":"Non-Critical","priority":0}
     }
 ```
 

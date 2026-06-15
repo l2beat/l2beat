@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "timestamp": 1776761835,
-  "configHash": "0xbe5c64d0d01eeb9842271962a61bc6e5e8d632b5ebcae3221fb17912bec8835a",
+  "configHash": "0x5e6773cf0636f934b0a447f2b5eea93ac6f192fcbfb490eb91d93b06e80e42eb",
   "entries": [
     {
       "name": "Starkware Multisig 2",
@@ -1424,7 +1424,7 @@
         "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e": "ProxyV5",
         "eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff": "StarknetTokenBridge"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "L1DaiGateway",
@@ -1597,7 +1597,7 @@
         "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10": "ProxyV5",
         "eth:0x205Fef0daB48D83CbA6888C5F050FeE36C4762B7": "StarknetTokenBridge"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc",
@@ -3080,7 +3080,7 @@
           }
         }
       ],
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "MultiBridge",

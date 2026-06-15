@@ -1,7 +1,7 @@
 {
   "name": "hyperliquid",
-  "timestamp": 1777036752,
-  "configHash": "0x2d10e3f12da2b2d02aeb9396da888f75746073e78f41702e619956a26d5c5190",
+  "timestamp": 1781171322,
+  "configHash": "0xe88b75becc7c8a8387b1196db56fd74c2c9b3d7095fda9ba721a593eae078c82",
   "entries": [
     {
       "address": "arb1:0x263294039413B96D25E4173a5F7599F8b3801504",
@@ -285,6 +285,115 @@
           "role": ".lockers"
         }
       ]
+    },
+    {
+      "address": "hyperevm:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "hyperevm:0x0000000000000000000000000000000000000810",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "hyperevm:0x2DA340FDE4087c8AD0848ED3f980549Fde4F0A59",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "CoreWriter",
+      "address": "hyperevm:0x3333333333333333333333333333333333333333",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x87b168b579e5d65595f80dd03c1ff6592cfdd6c10a5c662ace79dddb4038002e"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "hyperevm:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1739849780,
+      "sinceBlock": 0,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "hyperevm:0x3333333333333333333333333333333333333333": "CoreWriter"
+      }
+    },
+    {
+      "address": "hyperevm:0x438aA6Cea4d8a153c35c6bD1E4B6adCfdF869EAC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "CoreDepositWallet",
+      "address": "hyperevm:0x6B9E773128f453f5c2C60935Ee2DE2CBc5390A24",
+      "type": "Contract",
+      "template": "hyperliquid/CoreDepositWallet",
+      "sourceHashes": [
+        "0x0f6567e3f3b76997d73df085a97533bc460aeb5a6a5dcd00a17aeb1dd95c5816",
+        "0x0914d4635f8674af66b0b50d4e20074dbd32c4e7d68170526fd86db2edd3cab8"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Manages USDC transfers between HyperEVM and HyperCore. It handles user deposits, optionally deducts a fee for new HyperCore accounts, and routes assets to specific DEXs. It also processes cross-chain withdrawals from HyperCore to external chains via Circle CCTP.",
+      "deployerAddress": "hyperevm:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
+      "sinceTimestamp": 1763482980,
+      "sinceBlock": 19550128,
+      "values": {
+        "$admin": "hyperevm:0x8E66c6AC847f06b9502fA2512435a62005f5Fb92",
+        "$implementation": "hyperevm:0x7537af00779cc053a696e47ebd451b5bc4790DA3",
+        "$pastUpgrades": [
+          [
+            "2025-11-18T16:23:00.000Z",
+            "0x920aa47c6b5f9939fbe7f791b96283e063b4256f6994356a2ad03bc6eac26518",
+            ["hyperevm:0x7537af00779cc053a696e47ebd451b5bc4790DA3"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "admin": "hyperevm:0x8E66c6AC847f06b9502fA2512435a62005f5Fb92",
+        "cctpDefaultForwardFee": 200000,
+        "cctpMaxFee": 0,
+        "getCoreProtocolConstants": {
+          "coreWriterActionVersion": 1,
+          "coreWriterSendAssetActionId": 13,
+          "coreTokenIndex": 0,
+          "coreSpotDexId": 4294967295,
+          "corePerpsDexId": 0,
+          "coreWriterPrecompileAddress": "hyperevm:0x3333333333333333333333333333333333333333",
+          "coreUserExistsPrecompileAddress": "hyperevm:0x0000000000000000000000000000000000000810",
+          "coreScalingFactor": 100
+        },
+        "implementation": "hyperevm:0x7537af00779cc053a696e47ebd451b5bc4790DA3",
+        "isDexForwardingDisabled": false,
+        "newCoreAccountFee": 0,
+        "owner": "hyperevm:0x438aA6Cea4d8a153c35c6bD1E4B6adCfdF869EAC",
+        "paused": false,
+        "pauser": "hyperevm:0x2DA340FDE4087c8AD0848ED3f980549Fde4F0A59",
+        "pendingOwner": "hyperevm:0x0000000000000000000000000000000000000000",
+        "rescuer": "hyperevm:0xa56fA84d6B417b0aE968AAc312E57214473BEDE4",
+        "token": "hyperevm:0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+        "tokenMessenger": "hyperevm:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+        "tokenSystemAddress": "hyperevm:0x2000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "hyperevm:0x6B9E773128f453f5c2C60935Ee2DE2CBc5390A24": "AdminUpgradableProxy",
+        "hyperevm:0x7537af00779cc053a696e47ebd451b5bc4790DA3": "CoreDepositWallet"
+      }
+    },
+    {
+      "address": "hyperevm:0x8E66c6AC847f06b9502fA2512435a62005f5Fb92",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "hyperevm:0x6B9E773128f453f5c2C60935Ee2DE2CBc5390A24",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "address": "hyperevm:0xa56fA84d6B417b0aE968AAc312E57214473BEDE4",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -338,11 +447,88 @@
       "function usedMessages(bytes32) view returns (bool)",
       "function voteEmergencyLock()",
       "function withdrawalsInvalidated(bytes32) view returns (bool)"
+    ],
+    "hyperevm:0x3333333333333333333333333333333333333333": [
+      "event RawAction(address indexed user, bytes data)",
+      "function sendRawAction(bytes data)"
+    ],
+    "hyperevm:0x6B9E773128f453f5c2C60935Ee2DE2CBc5390A24": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() view returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() view returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "hyperevm:0x7537af00779cc053a696e47ebd451b5bc4790DA3": [
+      "constructor(address tokenAddress, address _tokenSystemAddress, address tokenMessengerAddress)",
+      "event CctpDefaultForwardFeeUpdated(uint256 previousFee, uint256 newFee)",
+      "event CctpForwardFeeUpdated(uint32 indexed destinationDomain, uint256 previousFee, uint256 newFee)",
+      "event CctpMaxFeeUpdated(uint256 previousFee, uint256 newFee)",
+      "event CrossChainWithdraw(address indexed from, bytes32 indexed to, uint256 value, uint32 destinationDomain, uint64 indexed coreNonce)",
+      "event DexDisabled(uint32 indexed dex)",
+      "event DexEnabled(uint32 indexed dex)",
+      "event DexForwardingDisabled()",
+      "event DexForwardingEnabled()",
+      "event Initialized(uint64 version)",
+      "event NewCoreAccountFeeApplied(address indexed coreRecipient, uint64 newCoreAccountFee, uint256 evmDepositAmount, uint64 coreSentAmount)",
+      "event NewCoreAccountFeeUpdated(uint64 previousFee, uint64 newFee)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Pause()",
+      "event PauserChanged(address indexed newAddress)",
+      "event RescuerChanged(address indexed newRescuer)",
+      "event SendAsset(address indexed coreRecipient, uint64 coreAmount, uint32 destinationDex)",
+      "event Transfer(address indexed from, address indexed to, uint256 amount)",
+      "event Unpause()",
+      "event Withdraw(address indexed to, uint256 value)",
+      "function acceptOwnership()",
+      "function calculateCrossChainWithdrawalFee(bool shouldForward, uint32 destinationChainId) view returns (uint256 maxFee)",
+      "function cctpDefaultForwardFee() view returns (uint256)",
+      "function cctpForwardFees(uint32) view returns (uint256)",
+      "function cctpMaxFee() view returns (uint256)",
+      "function coreReceiveWithData(address from, bytes32 destinationRecipient, uint32 destinationChainId, uint256 amount, uint64 coreNonce, bytes data)",
+      "function deposit(uint256 amount, uint32 destinationDex)",
+      "function depositFor(address recipient, uint256 amount, uint32 destinationDex)",
+      "function depositWithAuth(uint256 amount, uint256 authValidAfter, uint256 authValidBefore, bytes32 authNonce, uint8 v, bytes32 r, bytes32 s, uint32 destinationDex)",
+      "function disableDex(uint32 dex)",
+      "function disableDexForwarding()",
+      "function enableDex(uint32 dex)",
+      "function enableDexForwarding()",
+      "function enabledDestinationDexes(uint32) view returns (bool)",
+      "function getCoreProtocolConstants() pure returns (tuple(uint8 coreWriterActionVersion, uint24 coreWriterSendAssetActionId, uint64 coreTokenIndex, uint32 coreSpotDexId, uint32 corePerpsDexId, address coreWriterPrecompileAddress, address coreUserExistsPrecompileAddress, uint256 coreScalingFactor) constants)",
+      "function initialize(tuple(address owner, address pauser, address rescuer) roles)",
+      "function isCctpForwardFeeSet(uint32) view returns (bool)",
+      "function isDexForwardingDisabled() view returns (bool)",
+      "function newCoreAccountFee() view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pauser() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function rescueERC20(address tokenContract, address to, uint256 amount)",
+      "function rescuer() view returns (address)",
+      "function token() view returns (address)",
+      "function tokenMessenger() view returns (address)",
+      "function tokenSystemAddress() view returns (address)",
+      "function transfer(address to, uint256 amount) returns (bool success)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function unsetCctpForwardFee(uint32 destinationDomain)",
+      "function updateCctpDefaultForwardFee(uint256 maxFee)",
+      "function updateCctpForwardFee(uint32 destinationDomain, uint256 maxFee)",
+      "function updateCctpMaxFee(uint256 maxFee)",
+      "function updateNewCoreAccountFee(uint64 fee)",
+      "function updatePauser(address _newPauser)",
+      "function updateRescuer(address newRescuer)"
     ]
   },
   "usedTemplates": {
+    "hyperliquid/CoreDepositWallet": "0xd86a7c64543a55e4e31a698585edcdff3196ac1256c3d368760f74a8b720a818",
     "hyperliquid/HyperliquidBridge": "0x6349c4d94e64347ff4aa348ac6cfad812936cdf0f3ba72b0e7f12d0caf1574c3"
   },
-  "usedBlockNumbers": { "arbitrum": 455862577 },
-  "permissionsConfigHash": "0xaa1580ebb8d4b8beb3415e621946694b99bfe686d82de21875e30444597502ba"
+  "usedBlockNumbers": { "arbitrum": 472336072, "hyperevm": 37531278 },
+  "permissionsConfigHash": "0x2a0fe419d5c20afff8254ad943300fcc72f727adb802473e6613d8d86e1b7896"
 }

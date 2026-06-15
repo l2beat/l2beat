@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x5ef179ed57ac54472a3dfa8d83e45b5d09968bf5
+
+# Diff at Fri, 12 Jun 2026 10:19:03 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780913202
+- current timestamp: 1780913202
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780913202 (main branch discovery), not current.
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias (zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
 Generated with discovered.json: 0xa2129158580720086e26319fcee41e0c9bc130e4
 
 # Diff at Mon, 08 Jun 2026 10:07:57 GMT:

@@ -114,7 +114,12 @@ The processor splits each tick into three phases:
    coin map. **No external calls**: no RPC, no explorer, and no per-coin
    CoinGecko endpoints (`getCoinDataById` / `getCoinMarketChartRange`).
    Produces an **`IngestionTrace`**: an ordered list of decision `steps`
-   plus a single `outcome`. When the outcome can't be made terminal
+   plus a single `outcome`. The trace also carries
+   `existingDeployedToken` — the result of the TokenDB lookup `plan`
+   performs for every entry — as a structured field, so consumers (such
+   as the queue page's already-in-TokenDB indicator) read it directly
+   instead of scanning the human-readable `steps`. When the outcome
+   can't be made terminal
    without an external call — either we'd insert a new token (needs RPC
    facts) or we'd materialize a new abstract from a CoinGecko coin we
    haven't seen before (needs CoinGecko per-coin endpoints) — the
@@ -423,7 +428,9 @@ EVM addresses. Normalization:
   caches one on demand if no drain has warmed it yet.
 - Queue page predicted outcomes: `plan` only, called once per row from
   inside the `tokenIngestionQueue.getPage` tRPC route. Uses the same cached
-  transfer index/fallback path as preview.
+  transfer index/fallback path as preview. The same per-row `plan` call
+  also powers the row's already-in-TokenDB indicator via the trace's
+  `existingDeployedToken`.
 
 ## What this replaces
 

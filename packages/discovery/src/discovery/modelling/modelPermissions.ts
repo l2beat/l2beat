@@ -18,7 +18,7 @@ import {
 import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
 import {
-  parseEoaWithMajorityUpgradePermissionsFacts,
+  parseEoaWithUpgradePermissionsFacts,
   parseUltimatePermissionFact,
 } from './parseUltimatePermissionFact'
 import { runClingo } from './runClingo'
@@ -111,15 +111,14 @@ export function buildPermissionsOutput(
   const ultimatePermissions = ultimatePermissionFacts.map((fact) =>
     parseUltimatePermissionFact(fact, modelIdRegistry),
   )
-  const eoaWithMajorityUpgradePermissions =
-    parseEoaWithMajorityUpgradePermissionsFacts(
-      kb.getFacts('eoaWithMajorityUpgradePermissions'),
-      modelIdRegistry,
-    )
+  const eoasWithUpgradePermissions = parseEoaWithUpgradePermissionsFacts(
+    kb.getFacts('eoaWithUpgradePermissions'),
+    modelIdRegistry,
+  )
   return {
     permissionsConfigHash,
     permissions: ultimatePermissions,
-    eoasWithMajorityUpgradePermissions: eoaWithMajorityUpgradePermissions,
+    eoasWithUpgradePermissions,
     dependentTimestamps: discoveries.getTimestamps(),
   }
 }

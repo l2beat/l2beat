@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xf05e9b0e994083d6364d94fe07e9d4cb584f6975
+
+# Diff at Fri, 12 Jun 2026 10:18:50 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1781171322
+- current timestamp: 1781171322
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781171322 (main branch discovery), not current.
+
+```diff
+    EOA  (hyperevm:0x8E66c6AC847f06b9502fA2512435a62005f5Fb92) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x78849c4421708e3dde57a7d84221b185a1f73e08
+
+# Diff at Thu, 11 Jun 2026 10:15:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e1a2baeabeeaef8ae8278115ae4859984484bac block: 1777036752
+- current timestamp: 1781171322
+
+## Description
+
+add hyperevm locking USDC escrow.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777036752 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract CoreWriter (hyperevm:0x3333333333333333333333333333333333333333) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CoreDepositWallet (hyperevm:0x6B9E773128f453f5c2C60935Ee2DE2CBc5390A24) [hyperliquid/CoreDepositWallet]
+    +++ description: Manages USDC transfers between HyperEVM and HyperCore. It handles user deposits, optionally deducts a fee for new HyperCore accounts, and routes assets to specific DEXs. It also processes cross-chain withdrawals from HyperCore to external chains via Circle CCTP.
+```
+
 Generated with discovered.json: 0x5c5f9c5037908f241174f63738ec8ad4e84484f0
 
 # Diff at Tue, 09 Jun 2026 12:43:34 GMT:

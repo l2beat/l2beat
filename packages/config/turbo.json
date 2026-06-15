@@ -6,6 +6,7 @@
       "inputs": [
         "**/*.ts",
         "**/*.test.ts",
+        "src/**/*.md",
         "**/*.json",
         "**/*.jsonc",
         "../backend/**/*.json",

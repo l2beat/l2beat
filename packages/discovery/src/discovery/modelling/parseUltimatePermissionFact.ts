@@ -43,12 +43,12 @@ export function parseUltimatePermissionVia(
   }
 }
 
-export function parseEoaWithMajorityUpgradePermissionsFacts(
+export function parseEoaWithUpgradePermissionsFacts(
   facts: ClingoFact[],
   modelIdRegistry: ModelIdRegistry,
 ): ChainSpecificAddress[] | undefined {
   const result = facts.map((f) => {
-    assert(f.atom === 'eoaWithMajorityUpgradePermissions')
+    assert(f.atom === 'eoaWithUpgradePermissions')
     return modelIdRegistry.idToChainSpecificAddress(String(f.params[0]))
   })
   return result.length === 0 ? undefined : result

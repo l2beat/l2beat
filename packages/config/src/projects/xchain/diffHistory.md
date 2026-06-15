@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8d31a2c06365a1fd0c65b8c467ad721d1c100b7e
+Generated with discovered.json: 0x7a61d883af114cdd29dbae07bd0d2d9fed1db1af
 
-# Diff at Thu, 11 Jun 2026 11:29:02 GMT:
+# Diff at Mon, 15 Jun 2026 08:08:56 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@91b2eba1ff9c1c8341d0eaf6594dac4179405ef6 block: 1780398865
-- current timestamp: 1781177244
+- current timestamp: 1781510867
 
 ## Description
 
@@ -22,6 +22,22 @@ Conduit Multisig 1 dropped two signers.
       values.multisigThreshold:
 -        "4 of 12 (33%)"
 +        "4 of 10 (40%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780398865 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x8af97264482B59c7AA11010907710DEe6d8D8c6C) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
     }
 ```
 

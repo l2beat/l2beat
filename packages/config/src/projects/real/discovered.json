@@ -1286,6 +1286,7 @@
       "address": "eth:0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

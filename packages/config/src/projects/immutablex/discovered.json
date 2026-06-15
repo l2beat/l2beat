@@ -1,7 +1,7 @@
 {
   "name": "immutablex",
   "timestamp": 1780913745,
-  "configHash": "0xb9796b5f7ebbb455d888f0aa62f61a8e3b0843e0c16aeabf40d685adf6643044",
+  "configHash": "0xd4ed5c6714ecdc1add8536837ef3aa48553c5f753138c746f896fb4a5599f1dc",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000007B",
@@ -75,7 +75,8 @@
       "implementationNames": {
         "eth:0x2d5d7d31F671F86C782533cc367F14109a082712": "AxelarGasServiceProxy",
         "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b": "AxelarGasService"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0x37AC4a9Bf184aa1130016525631f3Daec11f7b26",

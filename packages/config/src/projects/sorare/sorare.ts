@@ -66,10 +66,6 @@ export const sorare: ScalingProject = {
     BADGES.Infra.SHARP,
   ],
   display: {
-    redWarning: {
-      text: 'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
-      detailAnchor: 'permissions',
-    },
     architectureImage: 'starkex',
     headerWarning:
       'Sorare froze its StarkEx rollup on June 1st, 2026. The core rollup contract is currently frozen.',

@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x962481e8f9418d28c369d80bfb9e94150af8cac3
+
+# Diff at Fri, 12 Jun 2026 10:57:50 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1779719590
+- current timestamp: 1779719590
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779719590 (main branch discovery), not current.
+
+```diff
+    EOA L1Timelock (arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract Validator (eth:0x3B0369CAD35d257793F51c28213a4Cf4001397AC) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x658e8123722462F888b6fa01a7dbcEFe1D6DD709) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
 Generated with discovered.json: 0x92dba981a090d1dc811d647108223cfca6fb41ed
 
 # Diff at Tue, 09 Jun 2026 12:43:36 GMT:

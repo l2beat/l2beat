@@ -1072,6 +1072,12 @@ export class ProjectDiscovery {
     }
     return result
   }
+
+  hasEoaWithUpgradePermissions(): boolean {
+    return this.reachableEntries.some(
+      (entry) => entry.eoaWithUpgradePermissions === true,
+    )
+  }
 }
 
 function getUpgradeability(

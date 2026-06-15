@@ -1,6 +1,6 @@
 {
   "name": "xchain",
-  "timestamp": 1781177244,
+  "timestamp": 1781510867,
   "configHash": "0x6bb5c29353e9c31d91cbf19d9d2ded952e0f386a229fd56f4ef0aec431953254",
   "entries": [
     {
@@ -777,7 +777,7 @@
       "address": "eth:0x8af97264482B59c7AA11010907710DEe6d8D8c6C",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1992,6 +1992,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25293913 },
+  "usedBlockNumbers": { "ethereum": 25321603 },
   "permissionsConfigHash": "0x8c48fd6224d0cfce8c52fd72b6d8a952ce32d5d5f57038a0697db8c078d0f143"
 }

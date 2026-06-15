@@ -69,6 +69,7 @@ import type {
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
+import { readMarkdown } from '../utils/readMarkdown'
 import { getActivityConfig } from './activity'
 import {
   generateDiscoveryDrivenContracts,
@@ -950,15 +951,16 @@ function getStateValidation(
         categories: [
           {
             title: 'State root proposals',
-            description: `Proposers submit state roots as children of any (possibly unresolved) previous state root proposal, by calling the \`propose()\` function in the KailuaTreasury. A parent state root can have multiple conflicting children, composing a tournament. Each proposer requires to lock a bond, currently set to ${formatEther(
-              kailuaBond,
-            )} ETH, that can be slashed if any proposal made by them is proven incorrect via a fault proof or a conflicting validity proof. The bond can be withdrawn once the proposer has no more pending proposals that need to be resolved and was not eliminated.
-
-Proposals consist of a state root and a reference to their parent and implicitly challenge any sibling proposals who have the same parent. A proposal asserts that the proposed state root constitutes a valid state transition from the parent's state root. To offer efficient zk fault proofs, each proposal must include ${proposalOutputCount} intermediate state commitments, each spanning ${outputBlockSpan} L2 blocks. 
-
-Proposals target sequential tournament epochs of currently ${proposalOutputCount} * ${outputBlockSpan} L2 blocks. A tournament with a resolved parent tournament, a single child- and no conflicting sibling proposals can be resolved after ${formatSeconds(maxClockDuration)}. 
-
-${vanguardDescription}`,
+            description: readMarkdown(
+              'templates/opStack/kailuaStateRootProposals.md',
+              {
+                kailuaBond: formatEther(kailuaBond),
+                proposalOutputCount,
+                outputBlockSpan,
+                maxClockDuration: formatSeconds(maxClockDuration),
+                vanguardDescription,
+              },
+            ),
             references: [
               {
                 title: 'Sequencing - Kailua Docs',
@@ -981,21 +983,22 @@ ${vanguardDescription}`,
           },
           {
             title: 'Challenges',
-            description: `
-${
-  templateVars.kailuaVanguardAppliesToAllProposals
-    ? `Any actor can submit a ZK fault proof against an existing child proposal via \`proveOutputFault\` to mark it faulty during the ${formatSeconds(maxClockDuration)} challenge period; this blocks the wrong proposal from resolving but does not, by itself, advance the chain. Conflicting sibling proposals (which would survive the tournament and resolve in place of a faulty proposal) can only be submitted by the Vanguard during the \`vanguardAdvantage\` window.`
-    : `Any conflicting sibling proposals within a tournament that are made within the ${formatSeconds(maxClockDuration)} challenge period of a proposal they are challenging, delay resolving the tournament until sufficient ZK proofs are published to leave one single tournament survivor.`
-}
-
-In the tree of proposed state roots, each parent node can have multiple children. These children are indirectly challenging each other in a tournament, which can only be resolved if but a single child survives. A state root can be resolved if it is **the only remaining proposal** due to any combination of the following elimination methods:
-1. the proposal's challenge period of ${formatSeconds(maxClockDuration)} has ended before a conflicting proposal was made
-2. the proposal is proven correct with a full validity proof (invalidates all conflicting proposals)
-3. a conflicting sibling proposal is proven faulty
-
-Proving any of the ${proposalOutputCount} intermediate state commitments in a proposal faulty invalidates the entire proposal. Proving a proposal valid invalidates all conflicting siblings. Pruning of a tournament's children happens strictly chronologically, which guarantees that the first faulty proposal of a given proposer is always pruned first. When pruned, an invalid proposal leads to the elimination of its proposer, which invalidates all their subsequent proposals, slashes their bond, and disallows future proposals by the same address. A slashed bond is transferred to an address chosen by the prover who caused the slashing.
-
-A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
+            description: readMarkdown('templates/opStack/kailuaChallenges.md', {
+              challengeIntro: templateVars.kailuaVanguardAppliesToAllProposals
+                ? readMarkdown(
+                    'templates/opStack/kailuaChallengeIntroVanguard.md',
+                    { maxClockDuration: formatSeconds(maxClockDuration) },
+                  )
+                : readMarkdown(
+                    'templates/opStack/kailuaChallengeIntroDefault.md',
+                    { maxClockDuration: formatSeconds(maxClockDuration) },
+                  ),
+              maxClockDuration: formatSeconds(maxClockDuration),
+              proposalOutputCount,
+              disputeGameFinalityDelaySeconds: formatSeconds(
+                disputeGameFinalityDelaySeconds,
+              ),
+            }),
             references: [
               {
                 url: 'https://boundless-xyz.github.io/kailua/operate.html',
@@ -1009,9 +1012,10 @@ A single remaining child in a tournament can be 'resolved' and will be finalized
           },
           {
             title: 'Validity proofs',
-            description: `Validity proofs and fault proofs both must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.
-
-The Kailua state validation system is primarily optimistically resolved, so no validity proofs are required in the happy case. But two different zk proofs on unresolved state roots are possible and permissionless: The proveValidity() function proves a state root proposal's full validity, automatically invalidating all conflicting sibling proposals. proveOutputFault() allows any actor to eliminate a state root proposal for which they can prove that any of the ${proposalOutputCount} intermediate state transitions in the proposal are not correct. Both are zk proofs of validity, although one is used as an efficient fault proof to invalidate a single conflicting state transition.`,
+            description: readMarkdown(
+              'templates/opStack/kailuaValidityProofs.md',
+              { proposalOutputCount },
+            ),
             references: [
               {
                 url: 'https://boundless-xyz.github.io/kailua/introduction.html',
@@ -1071,13 +1075,15 @@ The Kailua state validation system is primarily optimistically resolved, so no v
         categories: [
           {
             title: 'State root proposals',
-            description: `Proposers submit state roots as children of any (possibly unresolved) previous state root proposal, by calling the \`propose()\` function in the KailuaTreasury. A parent state root can have multiple conflicting children, composing a tournament. Each proposer requires to lock a bond, currently set to ${formatEther(
-              kailuaBond,
-            )} ETH, that can be slashed if any proposal made by them is proven incorrect via a fault proof or a conflicting validity proof. The bond can be withdrawn once the proposer has no more pending proposals that need to be resolved and was not eliminated.
-
-Proposals consist of a state root and a reference to their parent and implicitly challenge any sibling proposals who have the same parent. A proposal asserts that the proposed state root constitutes a valid state transition from the parent's state root. To offer efficient zk fault proofs, each proposal must include ${proposalOutputCount} intermediate state commitments, each spanning ${outputBlockSpan} L2 blocks.
-
-Proposals target sequential tournament epochs of currently ${proposalOutputCount} * ${outputBlockSpan} L2 blocks. A tournament with a resolved parent tournament, a single child- and no conflicting sibling proposals can be resolved after ${formatSeconds(maxClockDuration)}.`,
+            description: readMarkdown(
+              'templates/opStack/kailuaSoonStateRootProposals.md',
+              {
+                kailuaBond: formatEther(kailuaBond),
+                proposalOutputCount,
+                outputBlockSpan,
+                maxClockDuration: formatSeconds(maxClockDuration),
+              },
+            ),
             references: [
               {
                 title: "'Sequencing' - Kailua Docs",
@@ -1087,17 +1093,16 @@ Proposals target sequential tournament epochs of currently ${proposalOutputCount
           },
           {
             title: 'Challenges',
-            description: `
-Any conflicting sibling proposals within a tournament that are made within the ${formatSeconds(maxClockDuration)} challenge period of a proposal they are challenging, delay resolving the tournament until sufficient ZK proofs are published to leave one single tournament survivor.
-
-In the tree of proposed state roots, each parent node can have multiple children. These children are indirectly challenging each other in a tournament, which can only be resolved if but a single child survives. A state root can be resolved if it is **the only remaining proposal** due to any combination of the following elimination methods:
-1. the proposal's challenge period of ${formatSeconds(maxClockDuration)} has ended before a conflicting proposal was made
-2. the proposal is proven correct with a full validity proof (invalidates all conflicting proposals)
-3. a conflicting sibling proposal is proven faulty
-
-Proving any of the ${proposalOutputCount} intermediate state commitments in a proposal faulty invalidates the entire proposal. Proving a proposal valid invalidates all conflicting siblings. Pruning of a tournament's children happens strictly chronologically, which guarantees that the first faulty proposal of a given proposer is always pruned first. When pruned, an invalid proposal leads to the elimination of its proposer, which invalidates all their subsequent proposals, slashes their bond, and disallows future proposals by the same address. A slashed bond is transferred to an address chosen by the prover who caused the slashing.
-
-A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
+            description: readMarkdown(
+              'templates/opStack/kailuaSoonChallenges.md',
+              {
+                maxClockDuration: formatSeconds(maxClockDuration),
+                proposalOutputCount,
+                disputeGameFinalityDelaySeconds: formatSeconds(
+                  disputeGameFinalityDelaySeconds,
+                ),
+              },
+            ),
             references: [
               {
                 url: 'https://boundless-xyz.github.io/kailua/dispute.html',
@@ -1107,9 +1112,10 @@ A single remaining child in a tournament can be 'resolved' and will be finalized
           },
           {
             title: 'Validity proofs',
-            description: `Validity proofs and fault proofs both must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.
-
-The Kailua state validation system is primarily optimistically resolved, so no validity proofs are required in the happy case. But two different zk proofs on unresolved state roots are possible and permissionless: The proveValidity() function proves a state root proposal's full validity, automatically invalidating all conflicting sibling proposals. proveOutputFault() allows any actor to eliminate a state root proposal for which they can prove that any of the ${proposalOutputCount} intermediate state transitions in the proposal are not correct. Both are zk proofs of validity, although one is used as an efficient fault proof to invalidate a single conflicting state transition.`,
+            description: readMarkdown(
+              'templates/opStack/kailuaValidityProofs.md',
+              { proposalOutputCount },
+            ),
             references: [
               {
                 url: 'https://github.com/soonlabs/kailua-soon',
@@ -1153,8 +1159,9 @@ The Kailua state validation system is primarily optimistically resolved, so no v
         categories: [
           {
             title: 'Validity proofs',
-            description: `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.
-        Through the SuccinctL2OutputOracle, the system also allows to switch to an optimistic mode, in which no proofs are required and a challenger can challenge the proposed output state root within the finalization period.`,
+            description: readMarkdown(
+              'templates/opStack/opSuccinctValidityProofs.md',
+            ),
             references: [
               {
                 url: 'https://succinctlabs.github.io/op-succinct/architecture.html',
@@ -1224,7 +1231,15 @@ The Kailua state validation system is primarily optimistically resolved, so no v
         categories: [
           {
             title: 'Fraud proofs',
-            description: `State roots are proposed by whitelisted proposers who create dispute games via the DisputeGameFactory by posting a bond of ${formatEther(proposerBond)} ETH. Once created, the game enters a challenge period of ${formatSeconds(maxChallengeDuration)} during which whitelisted challengers can dispute the proposal by posting a bond of ${formatEther(challengerBond)} ETH. If challenged, anyone can submit a ZK proof to prove the correct state within the proving period of ${formatSeconds(maxProveDuration)}. After the challenge period passes without a successful challenge, or after a valid proof is submitted, anyone can resolve the game and finalize the state root.`,
+            description: readMarkdown(
+              'templates/opStack/opSuccinctLiteFraudProofs.md',
+              {
+                proposerBond: formatEther(proposerBond),
+                maxChallengeDuration: formatSeconds(maxChallengeDuration),
+                challengerBond: formatEther(challengerBond),
+                maxProveDuration: formatSeconds(maxProveDuration),
+              },
+            ),
             references: [
               {
                 url: 'https://succinctlabs.github.io/op-succinct/fault_proofs/fault_proof_architecture.html',
@@ -1280,12 +1295,32 @@ The Kailua state validation system is primarily optimistically resolved, so no v
         categories: [
           {
             title: 'State root proposals',
-            description: `State roots are proposed by calling \`DisputeGameFactory.create\` with the AggregateVerifier game type${initBond !== undefined ? `, posting a bond of ${formatEther(initBond)} ETH` : ''}. Each proposal must include an initial proof (TEE attestation or ZK proof) over the range of ${blockInterval ?? 'N'} L2 blocks split into sub-ranges of ${intermediateBlockInterval ?? 'N'} blocks. With a single proof, the game resolves after ${slowFinalization !== undefined ? formatSeconds(slowFinalization) : 'the slow finalization delay'}; if both proof arms commit, the window collapses to ${fastFinalization !== undefined ? formatSeconds(fastFinalization) : 'the fast finalization delay'}.`,
+            description: readMarkdown(
+              'templates/opStack/aggregateProofStateRootProposals.md',
+              {
+                bondNote:
+                  initBond !== undefined
+                    ? `, posting a bond of ${formatEther(initBond)} ETH`
+                    : '',
+                blockInterval: blockInterval ?? 'N',
+                intermediateBlockInterval: intermediateBlockInterval ?? 'N',
+                slowFinalization:
+                  slowFinalization !== undefined
+                    ? formatSeconds(slowFinalization)
+                    : 'the slow finalization delay',
+                fastFinalization:
+                  fastFinalization !== undefined
+                    ? formatSeconds(fastFinalization)
+                    : 'the fast finalization delay',
+              },
+            ),
             references: additionalRefs,
           },
           {
             title: 'Challenges',
-            description: `Any party that produces a valid ZK proof of an incorrect intermediate root can call \`AggregateVerifier.challenge\`, contradicting a TEE-only proposal. The challenger's proof is verified onchain via the SP1 verifier gateway. If the challenge stands until the resolution window closes, the original proposer's bond is awarded to the challenger and the game resolves CHALLENGER_WINS. Soundness contradictions within a single proof arm are caught by \`AggregateVerifier.nullify\`, which permanently disables that arm's verifier contract for all games.`,
+            description: readMarkdown(
+              'templates/opStack/aggregateProofChallenges.md',
+            ),
             references: [],
           },
         ],
@@ -1328,13 +1363,18 @@ function describeOPFP({
   })()
 
   return {
-    description: `Updates to the system state can be proposed and challenged by ${isPermissionless ? 'anyone who has sufficient funds' : 'permissioned operators only'}. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.`,
+    description: readMarkdown('templates/opStack/opfpDescription.md', {
+      proposers: isPermissionless
+        ? 'anyone who has sufficient funds'
+        : 'permissioned operators only',
+    }),
     categories: [
       {
         title: 'State root proposals',
-        description: `Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the \`create\` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to ${formatEther(
-          disputeGameBonds,
-        )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.`,
+        description: readMarkdown(
+          'templates/opStack/opfpStateRootProposals.md',
+          { disputeGameBonds: formatEther(disputeGameBonds) },
+        ),
         references: [
           {
             title: 'OP stack specification: Fault Dispute Game',
@@ -1344,23 +1384,19 @@ function describeOPFP({
       },
       {
         title: 'Challenges',
-        description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of ${exponentialBondsFactor}. The maximum depth is ${gameMaxDepth}, and reaching it therefore requires a cumulative stake of ${Number.parseFloat(
-          formatEther(permissionlessGameFullCost),
-        ).toFixed(
-          2,
-        )} ETH from depth 0. Actors can participate in any challenge by calling the \`defend\` or \`attack\` functions, depending whether they agree or disagree with the latest claim and want to move the bisection game forward. Actors that disagree with the top-level claim are called challengers, and actors that agree are called defenders. Each actor might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Challengers and defenders alternate in the bisection game, and they pass each other a clock that starts with ${formatSeconds(
-          maxClockDuration,
-        )}. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious parties that play both as challengers and defenders (see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than ${formatSeconds(
-          gameClockExtension,
-        )}, it generally gets extended by ${formatSeconds(
-          gameClockExtension,
-        )} with the exception of ${formatSeconds(
-          gameClockExtension * 2,
-        )} right before depth ${gameSplitDepth}, and ${formatSeconds(
-          oracleChallengePeriod,
-        )} right before the last depth. The maximum clock extension that a top level claim can get is therefore ${formatSeconds(
-          gameMaxClockExtension,
-        )}. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf)).`,
+        description: readMarkdown('templates/opStack/opfpChallenges.md', {
+          exponentialBondsFactor,
+          gameMaxDepth,
+          fullGameCost: Number.parseFloat(
+            formatEther(permissionlessGameFullCost),
+          ).toFixed(2),
+          maxClockDuration: formatSeconds(maxClockDuration),
+          gameClockExtension: formatSeconds(gameClockExtension),
+          doubleGameClockExtension: formatSeconds(gameClockExtension * 2),
+          gameSplitDepth,
+          oracleChallengePeriod: formatSeconds(oracleChallengePeriod),
+          gameMaxClockExtension: formatSeconds(gameMaxClockExtension),
+        }),
         references: [
           {
             title: 'Fraud Proof Wars: OPFP',
@@ -1898,13 +1934,13 @@ function getTechnologyExitMechanism(
 
       result.push({
         name: 'Regular exits',
-        description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after ${formatSeconds(
-          disputeGameFinalityDelaySeconds,
-        )}. Withdrawal inclusion can be proven before state root settlement, but a ${formatSeconds(
-          proofMaturityDelaySeconds,
-        )} period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least ${formatSeconds(
-          maxClockDuration,
-        )} to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
+        description: readMarkdown('templates/opStack/regularExits.md', {
+          disputeGameFinalityDelaySeconds: formatSeconds(
+            disputeGameFinalityDelaySeconds,
+          ),
+          proofMaturityDelaySeconds: formatSeconds(proofMaturityDelaySeconds),
+          challengePeriod: formatSeconds(maxClockDuration),
+        }),
         risks: [],
         references: [
           {
@@ -1946,13 +1982,13 @@ function getTechnologyExitMechanism(
 
       result.push({
         name: 'Regular exits',
-        description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after ${formatSeconds(
-          disputeGameFinalityDelaySeconds,
-        )}. Withdrawal inclusion can be proven before state root settlement, but a ${formatSeconds(
-          proofMaturityDelaySeconds,
-        )} period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least ${formatSeconds(
-          maxClockDuration,
-        )} to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
+        description: readMarkdown('templates/opStack/regularExits.md', {
+          disputeGameFinalityDelaySeconds: formatSeconds(
+            disputeGameFinalityDelaySeconds,
+          ),
+          proofMaturityDelaySeconds: formatSeconds(proofMaturityDelaySeconds),
+          challengePeriod: formatSeconds(maxClockDuration),
+        }),
         risks: [],
         references: [
           {
@@ -2009,13 +2045,13 @@ function getTechnologyExitMechanism(
 
       result.push({
         name: 'Regular exits',
-        description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after ${formatSeconds(
-          disputeGameFinalityDelaySeconds,
-        )}. Withdrawal inclusion can be proven before state root settlement, but a ${formatSeconds(
-          proofMaturityDelaySeconds,
-        )} period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least ${formatSeconds(
-          maxChallengeDuration,
-        )} to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
+        description: readMarkdown('templates/opStack/regularExits.md', {
+          disputeGameFinalityDelaySeconds: formatSeconds(
+            disputeGameFinalityDelaySeconds,
+          ),
+          proofMaturityDelaySeconds: formatSeconds(proofMaturityDelaySeconds),
+          challengePeriod: formatSeconds(maxChallengeDuration),
+        }),
         risks: [],
         references: [
           {

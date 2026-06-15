@@ -48,6 +48,7 @@
   },
   "overrides": {
     "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10": {
+      "category": "non-critical",
       "ignoreRelatives": [
         "l2TokenContract",
         "bridgedToken",
@@ -57,12 +58,16 @@
       ]
     },
     "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e": {
+      "category": "non-critical",
       "ignoreRelatives": [
         "l2TokenContract",
         "bridgedToken",
         "maxTotalTokenBalance",
         "manager" // added because it is unverified (prevent warning)
       ]
+    },
+    "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5": {
+      "category": "non-critical"
     },
     "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": {
       "references": [

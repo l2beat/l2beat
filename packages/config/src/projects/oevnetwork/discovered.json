@@ -632,7 +632,7 @@
       "address": "eth:0x9f0566F2E8Ff51901DD0C0E7aad937A94931f75C",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

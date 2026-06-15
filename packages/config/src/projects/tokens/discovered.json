@@ -1465,7 +1465,8 @@
       "implementationNames": {
         "eth:0x45804880De22913dAFE09f4980848ECE6EcbAf78": "AdminUpgradeabilityProxy",
         "eth:0x74271F2282eD7eE35c166122A60c9830354be42a": "PAXGImplementation"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0x46E38dAA42aD10d333118D76A56068d0f25FB217",
