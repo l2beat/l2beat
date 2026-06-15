@@ -117,6 +117,11 @@ export class InteropSyncersManager {
    * synced range rather than instantaneous syncer state, so transient errors
    * and brief catch-ups don't count as "not ready" as long as the captured
    * data is recent enough for the aggregation window.
+   *
+   * Blocking syncers are logged so a missed aggregation is never silent:
+   * a missing range is logged as an error (a configured syncer that has never
+   * persisted a range - expected only briefly at cold start, suspicious
+   * otherwise), a stale range as a warning (syncer is behind the tip).
    */
   async areSyncersFreshEnough(
     target: UnixTime,
@@ -128,15 +133,33 @@ export class InteropSyncersManager {
     )
     const threshold = target - tolerance
 
+    const missing: string[] = []
+    const stale: { syncer: string; toTimestamp: UnixTime }[] = []
+
     for (const [clusterName, byChain] of this.syncers) {
       for (const chain of byChain.keys()) {
-        const range = rangeByKey.get(`${clusterName}:${chain}`)
-        if (!range || range.toTimestamp < threshold) {
-          return false
+        const syncer = `${clusterName}:${chain}`
+        const range = rangeByKey.get(syncer)
+        if (!range) {
+          missing.push(syncer)
+        } else if (range.toTimestamp < threshold) {
+          stale.push({ syncer, toTimestamp: range.toTimestamp })
         }
       }
     }
-    return true
+
+    if (missing.length > 0) {
+      this.logger.error('Syncers have no synced range', { target, missing })
+    }
+    if (stale.length > 0) {
+      this.logger.warn('Syncers are behind the aggregation threshold', {
+        target,
+        threshold,
+        stale,
+      })
+    }
+
+    return missing.length === 0 && stale.length === 0
   }
 
   getSyncer(

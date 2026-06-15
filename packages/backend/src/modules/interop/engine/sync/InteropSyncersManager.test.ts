@@ -334,7 +334,7 @@ describe(InteropSyncersManager.name, () => {
       )
     })
 
-    it('returns false when any syncer is synced before the threshold', async () => {
+    it('returns false and warns when any syncer is synced before the threshold', async () => {
       const db = mockDb({
         syncedRanges: [
           makeSyncedRangeRecordAt('cluster-a', 'ethereum', target),
@@ -345,33 +345,55 @@ describe(InteropSyncersManager.name, () => {
           ),
         ],
       })
+      const { logger, warn, error } = mockLogger()
       const manager = makeManager({
         clusters: [makeCluster('cluster-a')],
         chains: ['ethereum', 'arbitrum'],
         db,
+        logger,
       })
 
       expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
         false,
       )
+      expect(warn).toHaveBeenCalledWith(
+        'Syncers are behind the aggregation threshold',
+        {
+          target,
+          threshold: target - tolerance,
+          stale: [
+            {
+              syncer: 'cluster-a:arbitrum',
+              toTimestamp: target - tolerance - 1,
+            },
+          ],
+        },
+      )
+      expect(error).not.toHaveBeenCalled()
     })
 
-    it('returns false when a syncer has no synced range yet', async () => {
+    it('returns false and logs an error when a syncer has no synced range yet', async () => {
       const db = mockDb({
         syncedRanges: [
           makeSyncedRangeRecordAt('cluster-a', 'ethereum', target),
         ],
       })
+      const { logger, error } = mockLogger()
       const manager = makeManager({
         clusters: [makeCluster('cluster-a')],
         chains: ['ethereum', 'arbitrum'],
         db,
+        logger,
       })
 
       // arbitrum has never produced a synced range
       expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
         false,
       )
+      expect(error).toHaveBeenCalledWith('Syncers have no synced range', {
+        target,
+        missing: ['cluster-a:arbitrum'],
+      })
     })
   })
 
@@ -435,6 +457,7 @@ function makeManager(params: {
   clusters: PluginCluster[]
   chains: LongChainName[]
   db?: Database
+  logger?: Logger
 }) {
   const chains = params.chains
   const chainConfigs = chains.map((chain) => makeChainConfig(chain))
@@ -444,9 +467,21 @@ function makeManager(params: {
     chainConfigs,
     mockStore(),
     params.db ?? mockDb(),
-    Logger.SILENT,
+    params.logger ?? Logger.SILENT,
     mockAggregator(),
   )
+}
+
+function mockLogger() {
+  const error = mockFn().returns(undefined)
+  const warn = mockFn().returns(undefined)
+  const logger: Logger = mockObject<Logger>({
+    for: mockFn().executes(() => logger),
+    tag: mockFn().executes(() => logger),
+    error,
+    warn,
+  })
+  return { logger, error, warn }
 }
 
 function mockAggregator(): RpcMetricsAggregator {
