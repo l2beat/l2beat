@@ -112,33 +112,42 @@ export class InteropSyncersManager {
   }
 
   /**
-   * Returns true only if every syncer has captured data up to at least
-   * `target - tolerance`. This measures data freshness via the persisted
-   * synced range rather than instantaneous syncer state, so transient errors
-   * and brief catch-ups don't count as "not ready" as long as the captured
-   * data is recent enough for the aggregation window.
-   *
-   * Blocking syncers are logged so a missed aggregation is never silent:
-   * a missing range is logged as an error (a configured syncer that has never
-   * persisted a range - expected only briefly at cold start, suspicious
-   * otherwise), a stale range as a warning (syncer is behind the tip).
+   * Returns true only if every syncer has captured data up to `target -
+   * tolerance`, judged by the persisted synced range rather than instantaneous
+   * state so transient errors and brief catch-ups don't count as "not ready".
+   * A pending wipe/resync also counts as not fresh: its range still looks
+   * recent while the underlying data is about to be deleted or rebuilt.
+   * Blockers are logged - missing range as error (suspicious outside cold
+   * start), stale range or pending wipe/resync as warnings.
    */
   async areSyncersFreshEnough(
     target: UnixTime,
     tolerance: number,
   ): Promise<boolean> {
-    const ranges = await this.db.interopPluginSyncedRange.getAll()
+    const [ranges, syncStates] = await Promise.all([
+      this.db.interopPluginSyncedRange.getAll(),
+      this.db.interopPluginSyncState.getAll(),
+    ])
     const rangeByKey = new Map(
       ranges.map((range) => [`${range.pluginName}:${range.chain}`, range]),
     )
+    const stateByKey = new Map(
+      syncStates.map((state) => [`${state.pluginName}:${state.chain}`, state]),
+    )
     const threshold = target - tolerance
 
+    const pending: string[] = []
     const missing: string[] = []
     const stale: { syncer: string; toTimestamp: UnixTime }[] = []
 
     for (const [clusterName, byChain] of this.syncers) {
       for (const chain of byChain.keys()) {
         const syncer = `${clusterName}:${chain}`
+        const state = stateByKey.get(syncer)
+        if (state?.wipeRequired || state?.resyncRequestedFrom != null) {
+          pending.push(syncer)
+          continue
+        }
         const range = rangeByKey.get(syncer)
         if (!range) {
           missing.push(syncer)
@@ -158,8 +167,11 @@ export class InteropSyncersManager {
         stale,
       })
     }
+    if (pending.length > 0) {
+      this.logger.warn('Syncers have a pending wipe or resync', { pending })
+    }
 
-    return missing.length === 0 && stale.length === 0
+    return pending.length === 0 && missing.length === 0 && stale.length === 0
   }
 
   getSyncer(

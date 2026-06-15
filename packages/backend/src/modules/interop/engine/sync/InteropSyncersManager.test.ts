@@ -395,6 +395,69 @@ describe(InteropSyncersManager.name, () => {
         missing: ['cluster-a:arbitrum'],
       })
     })
+
+    it('returns false and warns when a syncer has a pending wipe despite a fresh range', async () => {
+      const db = mockDb({
+        // range still looks fresh, but a wipe is pending
+        syncedRanges: [
+          makeSyncedRangeRecordAt('cluster-a', 'ethereum', target),
+        ],
+        syncStates: [
+          {
+            pluginName: 'cluster-a',
+            chain: 'ethereum',
+            lastError: null,
+            resyncRequestedFrom: null,
+            wipeRequired: true,
+          },
+        ],
+      })
+      const { logger, warn, error } = mockLogger()
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum'],
+        db,
+        logger,
+      })
+
+      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
+        false,
+      )
+      expect(warn).toHaveBeenCalledWith(
+        'Syncers have a pending wipe or resync',
+        {
+          pending: ['cluster-a:ethereum'],
+        },
+      )
+      // a pending wipe is not a "missing range" error
+      expect(error).not.toHaveBeenCalled()
+    })
+
+    it('returns false when a syncer has a pending resync despite a fresh range', async () => {
+      const db = mockDb({
+        syncedRanges: [
+          makeSyncedRangeRecordAt('cluster-a', 'ethereum', target),
+        ],
+        syncStates: [
+          {
+            pluginName: 'cluster-a',
+            chain: 'ethereum',
+            lastError: null,
+            resyncRequestedFrom: target - 5 * UnixTime.DAY,
+            wipeRequired: false,
+          },
+        ],
+      })
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum'],
+        db,
+      })
+
+      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
+        false,
+      )
+    })
   })
 
   describe(InteropSyncersManager.prototype.getPluginSyncStatuses.name, () => {
