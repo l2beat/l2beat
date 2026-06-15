@@ -9,10 +9,12 @@ import {
 import { DiffHistoryParser } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
+import { config as dotenv } from 'dotenv'
 import express from 'express'
 import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
+import { attachAnalyzeRouter } from './analyze/router'
 import { attachConfigRouter } from './configs/router'
 import { DiffoveryController } from './diffovery/DiffoveryController'
 import { FlatSourceClient } from './diffovery/FlatSourceClient'
@@ -93,6 +95,7 @@ const diffHistoryQuerySchema = z.object({
 })
 
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
+  dotenv()
   const app = express()
   const port = process.env.PORT ?? 2021
 
@@ -272,6 +275,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   attachLayoutRouter(app, configReader, readonly)
 
   if (!readonly) {
+    attachAnalyzeRouter(app, configReader)
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
 

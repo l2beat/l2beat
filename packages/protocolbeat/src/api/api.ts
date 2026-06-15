@@ -1,3 +1,7 @@
+import {
+  AnalyzerResultApiResponse,
+  AnalyzersApiResponse,
+} from '@l2beat/shared-pure'
 import { withoutUndefinedKeys } from '../utils/withoutUndefinedKeys'
 import type {
   ApiCodeResponse,
@@ -311,6 +315,37 @@ export async function getHandlers(): Promise<ApiHandlersResponse> {
   return data as ApiHandlersResponse
 }
 
+export async function getAnalyzers(): Promise<AnalyzersApiResponse> {
+  const res = await fetch('/api/analyze/analyzers')
+  if (!res.ok) {
+    throw new Error(await readErrorMessage(res))
+  }
+  const data = await res.json()
+  return AnalyzersApiResponse.parse(data)
+}
+
+export async function runAnalyzer(
+  project: string,
+  address: string,
+  analyzerId: string,
+  entrypoint: string,
+): Promise<AnalyzerResultApiResponse> {
+  const res = await fetch(`/api/projects/${project}/analyze/${address}`, {
+    method: 'POST',
+    body: JSON.stringify({ analyzerId, entrypoint }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!res.ok) {
+    throw new Error(await readErrorMessage(res))
+  }
+
+  const data = await res.json()
+  return AnalyzerResultApiResponse.parse(data)
+}
+
 export async function createShape(
   chain: string,
   addresses: string[],
@@ -355,8 +390,12 @@ export function executeFindMinters(address: string): EventSource {
 
 async function readErrorMessage(res: Response): Promise<string> {
   try {
-    const data = (await res.json()) as { error?: string; errors?: string }
-    return data.error ?? data.errors ?? res.statusText
+    const data = (await res.json()) as {
+      error?: string
+      errors?: string
+      message?: string
+    }
+    return data.error ?? data.errors ?? data.message ?? res.statusText
   } catch {
     return res.statusText
   }
