@@ -90,7 +90,13 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
         timestamp: to,
         checkedGroups: analysis.checkedGroups,
         suspiciousGroups: analysis.suspiciousGroups.length,
-        details: analysis.suspiciousGroups,
+        details: analysis.suspiciousGroups.map((group) => ({
+          id: group.id,
+          bridgeType: group.bridgeType,
+          srcChain: group.srcChain,
+          dstChain: group.dstChain,
+          reasons: group.reasons,
+        })),
       })
       this.$.notifier?.notifySuspiciousAggregates(to, analysis)
     }

@@ -7,8 +7,8 @@ export {
 
 export const FLAT_LINE_WINDOW_DAYS = 3
 
-export const MIN_BASELINE_COUNT_PER_DAY = 10
-export const MIN_BASELINE_VOLUME_USD_PER_DAY = 10_000
+export const MIN_BASELINE_COUNT_PER_DAY = 50
+export const MIN_BASELINE_VOLUME_USD_PER_DAY = 100_000
 export const MIN_VOLUME_IDENTIFICATION_RATE = 0.5
 
 // Only extreme moves alert — insane spikes and insane drops.
@@ -23,12 +23,12 @@ export const RATIO_VOLUME_SPIKE_THRESHOLD = 30
 // Share is computed as single-side lane value over two-sided bridge total
 // (src + dst). For a balanced burn/mint bridge that means the effective
 // floor on a single side is ~2x the constant.
-export const RELEVANCE_MIN_VOLUME_USD = 250_000
-export const RELEVANCE_MIN_BRIDGE_SHARE = 0.02
-export const RELEVANCE_MIN_COUNT = 100
+export const RELEVANCE_MIN_VOLUME_USD = 1_000_000
+export const RELEVANCE_MIN_BRIDGE_SHARE = 0.1
+export const RELEVANCE_MIN_COUNT = 250
 
-export const SIDE_MISMATCH_DIFF_PERCENT = 30
-export const SIDE_MISMATCH_MIN_VOLUME_USD = 500_000
+export const SIDE_MISMATCH_DIFF_PERCENT = 50
+export const SIDE_MISMATCH_MIN_VOLUME_USD = 2_000_000
 
 export const VALUE_DIFF_THRESHOLD_PERCENT = 15
 export const MINIMUM_SIDE_VALUE_USD_THRESHOLD = 50
