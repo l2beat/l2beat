@@ -1,14 +1,14 @@
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { AddressFieldValue, FieldValue } from '../../../api/types'
 import { buildPastUpgradeRows } from './pastUpgrades'
 
-// Real, checksum-valid addresses (getChain validates via ChainSpecificAddress).
-const A = 'eth:0xf9DD56364E3878056654C756cEBA692e577f8466'
-const B = 'eth:0xB0D33d94aD4048070f510eF0086F12d20595dd07'
-const C = 'eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708'
-const D = 'eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81'
-const E = 'eth:0x8991bF7Ed45ad2B8352efbaB83aD6e00c056a61c'
-const F = 'eth:0x8C653b99f18Eb3bAb927519990bfC281500b0De6'
+const A = ChainSpecificAddress.random()
+const B = ChainSpecificAddress.random()
+const C = ChainSpecificAddress.random()
+const D = ChainSpecificAddress.random()
+const E = ChainSpecificAddress.random()
+const F = ChainSpecificAddress.random()
 
 function address(addr: string): AddressFieldValue {
   return { type: 'address', addressType: 'Unknown', address: addr }

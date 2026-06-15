@@ -130,8 +130,7 @@ function parsePastUpgrades(value: FieldValue): PastUpgrade[] {
 }
 
 function formatDate(date: string): string {
-  // Dates are stored as ISO strings (e.g. "2024-01-20T02:02:25.000Z"); we only
-  // want the calendar day.
+  // we only want the calendar day.
   return date.slice(0, 10)
 }
 

@@ -78,8 +78,6 @@ export function PastUpgradesDisplay({ value }: PastUpgradesDisplayProps) {
                     <span className="inline-flex items-baseline gap-1.5">
                       {toShortenedAddress(cell.address)}
                       {cell.diffUrl && (
-                        // IconFileDiff is the closest match in the current
-                        // icon set; swap it if a more fitting one is added.
                         <a
                           href={cell.diffUrl}
                           target="_blank"
