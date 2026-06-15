@@ -1,6 +1,6 @@
 {
   "name": "swell",
-  "timestamp": 1780925482,
+  "timestamp": 1781176909,
   "configHash": "0x042be77b53e92280806c338d50987e40b3a96caed5f8eb228bb30d014c5ad56d",
   "entries": [
     {
@@ -83,7 +83,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -139,6 +139,11 @@
     },
     {
       "address": "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x0c54D3c298c598b0cd5102529B75f51D4c00cf00",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -379,13 +384,13 @@
         ],
         "$upgradeCount": 2,
         "absolutePrestateFromGame": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e",
-        "anchorGame": "eth:0x88644068be09E5ad9AAc5B948f19252348992aE7",
+        "anchorGame": "eth:0x48451fCD2a402eB705b3c4Fc978B9459FC627c55",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x87690676786cDc8cCA75A472e483AF7C8F2f0F57",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xa9a3adc72cb112375754ae1c3e6fb341269daa5f734722aaf63fe1ff887e9232",
-          23808728
+          "0x306ecf5c4895df8d4cf05bef4e43e485e94566fc7ace8080a3ba8d6552786770",
+          23818955
         ],
         "getStartingAnchorRoot": {
           "root": "0x0643a6421228c3b84259b24e864756627d02877c8a5876ab7d5ca59da8323c61",
@@ -1056,7 +1061,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 13267,
+        "gameCount": 13336,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -1071,7 +1076,7 @@
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "permissionedGameArgs": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb908511fb9e172f8a180735acf9c2beeb208cd0061acdd525e7e8fa35345d30e88018c9925f3c28761070000000000000000000000000000000000000000000000000000000000000783a2acb8142b64fabda103da19b0075abb56d29fbd9ba6e03d8b90de867373db8cf1a58d2f7f006b3a",
-        "permissionedGamesTotal": 13267,
+        "permissionedGamesTotal": 13336,
         "proposerFromDGF": "eth:0xA2Acb8142b64fabda103DA19b0075aBB56d29FbD",
         "proxyAdmin": "eth:0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
@@ -1390,11 +1395,6 @@
       }
     },
     {
-      "address": "eth:0xc28bAd2A2D3E915d132795D2963D0e0459664D68",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "OptimismMintableERC20Factory",
       "address": "eth:0xc2b228cd433eBaE788DE287EDE2abE55B3F3F603",
       "type": "Contract",
@@ -1572,7 +1572,7 @@
         "startBlock": 21277945,
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
-        "unsafeBlockSigner": "eth:0xc28bAd2A2D3E915d132795D2963D0e0459664D68",
+        "unsafeBlockSigner": "eth:0x0c54D3c298c598b0cd5102529B75f51D4c00cf00",
         "version": "3.13.1",
         "VERSION": 0
       },
@@ -2941,6 +2941,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25273007 },
-  "permissionsConfigHash": "0x4555424aa4e174f33895e6d5d7e9991ca2c7ba97b9f411dbb96c289df412061f"
+  "usedBlockNumbers": { "ethereum": 25293885 },
+  "permissionsConfigHash": "0x9eea75e3ff486ae1beea321b72ecea4fc6bac8006bb17d7417d4de466ef32939"
 }

@@ -1,6 +1,6 @@
 {
   "name": "powerloom",
-  "timestamp": 1780398823,
+  "timestamp": 1781177199,
   "configHash": "0x5c9a59642ba6367f778e7b1f8f94fee6e866aa5e81ea8eb16af60a307b06488f",
   "entries": [
     {
@@ -427,11 +427,9 @@
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
-          "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
@@ -440,8 +438,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 275,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 277,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -508,7 +506,7 @@
           "eth:0x02f3a60D25abF1844740a39cd9679227309a1Fa6"
         ],
         "allowedOutboxList": ["eth:0xc0dd0a059a8a948B7737D00bfC9024475C791259"],
-        "delayedMessageCount": 162,
+        "delayedMessageCount": 166,
         "inboxHistory": [
           "eth:0x7d4509336b154C17Df80D03A19C051ddAcdA2e7f",
           "eth:0x02f3a60D25abF1844740a39cd9679227309a1Fa6"
@@ -518,8 +516,8 @@
         "outboxHistory": ["eth:0xc0dd0a059a8a948B7737D00bfC9024475C791259"],
         "rollup": "eth:0xc3196FEE2b194bf699076865060d566c7Cb02892",
         "sequencerInbox": "eth:0x903Af716AA8C7C27Fd785F453D5a59C20E06bDeC",
-        "sequencerMessageCount": 3616,
-        "sequencerReportedSubMessageCount": 12169049
+        "sequencerMessageCount": 3789,
+        "sequencerReportedSubMessageCount": 13135345
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -544,11 +542,6 @@
         "eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6": "ERC20Bridge"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "UpgradeExecutor",
@@ -804,7 +797,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 3616,
+        "batchCount": 3789,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -854,7 +847,7 @@
         "rollup": "eth:0xc3196FEE2b194bf699076865060d566c7Cb02892",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 162,
+        "totalDelayedMessagesRead": 166,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -904,11 +897,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xA4f98Ac0E083C79BAB53A3895082e8a4fbf12CDe",
       "type": "EOA",
       "proxyType": "EOA",
@@ -944,7 +932,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 659,
+        "nonce": 673,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1066,7 +1054,7 @@
         "getValidators": ["eth:0x401Ba2e5037e3d8D1c32E77Dfd371501618604Bf"],
         "inbox": "eth:0x7d4509336b154C17Df80D03A19C051ddAcdA2e7f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x96d708cfb4300d1c9cfa889f2f1fa88497f99886ed4a8179f30cb9e6b4c544cb",
+        "latestConfirmed": "0x72a716363d523d6bf0d1e801ca2e2fca56033e592e834176a32b90037a275695",
         "loserStakeEscrow": "eth:0x401Ba2e5037e3d8D1c32E77Dfd371501618604Bf",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xc0dd0a059a8a948B7737D00bfC9024475C791259",
@@ -2159,6 +2147,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 25229325 },
-  "permissionsConfigHash": "0xefcc46e62f0483aea1e1327bd865c5ed6c8b3f051dbbec5ea9b9cdd075cefc19"
+  "usedBlockNumbers": { "ethereum": 25293909 },
+  "permissionsConfigHash": "0x04d2149e8313d3e667a8586d87efc68bcfa539d49305dfa789e27e231a5b4d7f"
 }
