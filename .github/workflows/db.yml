@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
           run_install: false
@@ -52,7 +52,7 @@ jobs:
             -d "{\"content\": \"DB Migration workflow failure at $GITHUB_REF_NAME! Defails: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}" \
             "${DISCORD_WEBHOOK_URL}"
       - name: Notify devs in case of failure
-        uses: dawidd6/action-send-mail@v6
+        uses: dawidd6/action-send-mail@v17
         if: ${{ failure() }}
         with:
           username: ${{ secrets.MAIL_USERNAME }}
