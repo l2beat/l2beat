@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-table'
 import { CustomLink } from '~/components/link/CustomLink'
 import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
+import { IndexCell } from '~/components/table/cells/IndexCell'
 import { EM_DASH } from '~/consts/characters'
 import { useTable } from '~/hooks/useTable'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -34,6 +35,16 @@ type DeploymentRow = InteropTokenDeploymentRow & BasicTableRow
 
 const columnHelper = createColumnHelper<DeploymentRow>()
 const columns = [
+  columnHelper.accessor((_, index) => index + 1, {
+    id: 'index',
+    header: '#',
+    cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
+    enableSorting: false,
+    meta: {
+      headClassName: 'w-0',
+    },
+    size: 44,
+  }),
   columnHelper.accessor((row) => row.chain.name, {
     id: 'chain',
     header: 'Chain',
