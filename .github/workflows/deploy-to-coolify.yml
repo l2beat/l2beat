@@ -24,7 +24,7 @@ jobs:
       COOLIFY_UUID: ${{ secrets.COOLIFY_UUID }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Deploy to Coolify
         run: |
