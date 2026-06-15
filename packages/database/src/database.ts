@@ -2,6 +2,7 @@ import type { LogConfig } from 'kysely'
 import type { PoolConfig } from 'pg'
 import { DatabaseClient } from './kysely'
 import { ActivityRepository } from './repositories/ActivityRepository'
+import { AggregatedInteropDeployedTokenRepository } from './repositories/AggregatedInteropDeployedTokenRepository'
 import { AggregatedInteropTokenRepository } from './repositories/AggregatedInteropTokenRepository'
 import { AggregatedInteropTokensPairRepository } from './repositories/AggregatedInteropTokensPairRepository'
 import { AggregatedInteropTransferRepository } from './repositories/AggregatedInteropTransferRepository'
@@ -70,6 +71,8 @@ export function createDatabase(
     interopTransfer: new InteropTransferRepository(db),
     aggregatedInteropTransfer: new AggregatedInteropTransferRepository(db),
     aggregatedInteropToken: new AggregatedInteropTokenRepository(db),
+    aggregatedInteropDeployedToken:
+      new AggregatedInteropDeployedTokenRepository(db),
     aggregatedInteropTokensPair: new AggregatedInteropTokensPairRepository(db),
     interopRecentPrices: new InteropRecentPricesRepository(db),
     interopPluginSyncState: new InteropPluginSyncStateRepository(db),
