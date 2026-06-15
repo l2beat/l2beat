@@ -42,8 +42,9 @@ describe(evaluateAnomalies.name, () => {
 
   describe('flat line', () => {
     it('flags identical last 3 days for count', () => {
+      // Median (300) must clear the flat-line relevance floor of 250.
       const series = countSeries([
-        100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+        300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300,
       ])
       const result = evaluateAnomalies(series)
       const count = result.signals.find((s) => s.metric === 'count')
@@ -53,7 +54,7 @@ describe(evaluateAnomalies.name, () => {
 
     it('does not flag flat line when the last 3 days differ', () => {
       const series = countSeries([
-        100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 50,
+        300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 150,
       ])
       const result = evaluateAnomalies(series)
       const count = result.signals.find((s) => s.metric === 'count')
@@ -63,8 +64,9 @@ describe(evaluateAnomalies.name, () => {
 
   describe('ratio drops and spikes', () => {
     it('flags a near-total ratio drop in count', () => {
+      // Baseline median (~300) clears the count relevance floor of 250.
       const series = countSeries([
-        100, 110, 90, 105, 95, 100, 98, 102, 101, 99, 100, 97, 103, 1,
+        300, 310, 290, 305, 295, 300, 298, 302, 301, 299, 300, 297, 303, 3,
       ])
       const result = evaluateAnomalies(series)
       const count = result.signals.find((s) => s.metric === 'count')
@@ -136,7 +138,7 @@ describe(evaluateAnomalies.name, () => {
   })
 
   describe('side mismatch', () => {
-    it('flags when diff >= 30% and larger side >= $1M', () => {
+    it('flags when diff >= 50% and larger side >= $2M', () => {
       const series = volumeSeries(
         Array.from({ length: 14 }, () => 100),
         Array.from({ length: 13 }, () => 1_500_000).concat([2_000_000]),
@@ -147,11 +149,13 @@ describe(evaluateAnomalies.name, () => {
       expect(result.sideMismatch?.largerSideUsd).toEqual(2_000_000)
     })
 
-    it('does not flag when below the $500k floor', () => {
+    it('does not flag when below the $2M floor', () => {
+      // 60% diff would clear the percentage gate, but the larger side
+      // ($1.9M) is below the $2M materiality floor.
       const series = volumeSeries(
         Array.from({ length: 14 }, () => 100),
-        Array.from({ length: 14 }, () => 490_000),
-        Array.from({ length: 14 }, () => 400_000),
+        Array.from({ length: 14 }, () => 1_900_000),
+        Array.from({ length: 14 }, () => 760_000),
       )
       const result = evaluateAnomalies(series)
       expect(result.sideMismatch).toEqual(null)
@@ -167,11 +171,13 @@ describe(evaluateAnomalies.name, () => {
       expect(result.sideMismatch).toEqual(null)
     })
 
-    it('does not flag when diff is below 30%', () => {
+    it('does not flag when diff is below 50%', () => {
+      // Larger side ($2M) clears the materiality floor, but the 45% diff is
+      // below the percentage gate.
       const series = volumeSeries(
         Array.from({ length: 14 }, () => 100),
         Array.from({ length: 14 }, () => 2_000_000),
-        Array.from({ length: 14 }, () => 1_500_000),
+        Array.from({ length: 14 }, () => 1_100_000),
       )
       const result = evaluateAnomalies(series)
       expect(result.sideMismatch).toEqual(null)
@@ -234,16 +240,18 @@ describe(evaluateAnomalies.name, () => {
 
   describe('relevance gate', () => {
     it('suppresses a volume spike on a lane below the absolute USD floor', () => {
-      // Baseline clears the $10K mean floor (15K), but the spike lands the
-      // current value at $200K — below the $250K materiality floor — and
-      // we pass no bridge total, so share-of-bridge cannot rescue it.
+      // Baseline (~$150K) clears the $100K/day mean floor, and the tight
+      // baseline + jump to $900K trips classic-Z — but $900K is below the $1M
+      // materiality floor and we pass no bridge total, so share-of-bridge
+      // cannot rescue it.
+      const baselineVolumes = [
+        148_000, 152_000, 150_000, 149_000, 151_000, 150_000, 148_000, 152_000,
+        149_000, 151_000, 150_000, 149_000, 151_000,
+      ]
       const series = volumeSeries(
         Array.from({ length: 14 }, () => 100),
-        [
-          15_000, 15_000, 15_000, 15_000, 15_000, 15_000, 15_000, 15_000,
-          15_000, 15_000, 15_000, 15_000, 15_000, 200_000,
-        ],
-        15_000,
+        baselineVolumes.concat([900_000]),
+        baselineVolumes.concat([900_000]),
       )
       const result = evaluateAnomalies(series)
       const src = result.signals.find((s) => s.metric === 'srcVolume')
@@ -267,17 +275,17 @@ describe(evaluateAnomalies.name, () => {
     })
 
     it('keeps a volume signal that clears the bridge-share gate', () => {
-      // Lane lands at $200K — below the $250K absolute floor — but
-      // represents 4% of a $5M bridge, above the 2% share gate. Tight
-      // baseline + log jump makes classic-Z trip.
+      // Lane lands at $600K — below the $1M absolute floor — but represents
+      // 12% of a $5M bridge, above the 10% share gate. Baseline (~$120K)
+      // clears the $100K/day floor; tight baseline + log jump trips classic-Z.
       const baselineVolumes = [
-        48_000, 52_000, 50_000, 49_000, 51_000, 50_000, 48_000, 52_000, 49_000,
-        51_000, 50_000, 49_000, 51_000,
+        118_000, 122_000, 120_000, 119_000, 121_000, 120_000, 118_000, 122_000,
+        119_000, 121_000, 120_000, 119_000, 121_000,
       ]
       const series = volumeSeries(
         Array.from({ length: 14 }, () => 100),
-        baselineVolumes.concat([200_000]),
-        baselineVolumes.concat([200_000]),
+        baselineVolumes.concat([600_000]),
+        baselineVolumes.concat([600_000]),
       )
       const result = evaluateAnomalies(series, {
         transferCount: 1_000,

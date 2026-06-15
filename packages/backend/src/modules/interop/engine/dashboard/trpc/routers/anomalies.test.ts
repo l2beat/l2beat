@@ -15,8 +15,10 @@ describe(createAnomaliesRouter.name, () => {
       bridgeType: 'nonMinting' as const,
       srcChain: 'ethereum',
       dstChain: 'arbitrum',
-      transferCount: 100,
-      identifiedCount: 95,
+      // Flat at 300/day so the flat-line signal clears the count relevance
+      // floor (250) and the route stays flagged.
+      transferCount: 300,
+      identifiedCount: 285,
       totalSrcValueUsd: 1_000_000,
       totalDstValueUsd: 1_000_000,
     })
@@ -49,8 +51,8 @@ describe(createAnomaliesRouter.name, () => {
     expect(row?.srcChain).toEqual('ethereum')
     expect(row?.dstChain).toEqual('arbitrum')
     expect(row?.interpretation.length).toBeGreaterThan(0)
-    expect(result.aggregateSideMismatchDiffPercent).toEqual(30)
-    expect(result.aggregateSideMismatchMinVolumeUsd).toEqual(500_000)
+    expect(result.aggregateSideMismatchDiffPercent).toEqual(50)
+    expect(result.aggregateSideMismatchMinVolumeUsd).toEqual(2_000_000)
   })
 
   it('returns aggregate details for a selected route', async () => {

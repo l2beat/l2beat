@@ -52,23 +52,26 @@ describe(explore.name, () => {
     expect(result?.bridgeType).toEqual('nonMinting')
     expect(result?.srcChain).toEqual('ethereum')
     expect(result?.dstChain).toEqual('arbitrum')
-    expect(result?.counts.last).toEqual(100)
+    expect(result?.counts.last).toEqual(300)
     expect(result?.srcVolume.valueUsd.last).toEqual(1_000_000)
     expect(result?.dstVolume.valueUsd.last).toEqual(1_000_000)
   })
 
   it('passes bridge totals to the evaluator for share-material route spikes', () => {
+    // Arbitrum lane lands at $600K — below the $1M absolute floor — but the
+    // bridge total (arbitrum $1.2M + base $4M = $5.2M) puts it at ~12% share,
+    // above the 10% gate. Baseline (~$120K) clears the $100K/day floor.
     const baselineVolumes = [
-      48_000, 52_000, 50_000, 49_000, 51_000, 50_000, 48_000, 52_000, 49_000,
-      51_000, 50_000, 49_000, 51_000,
+      118_000, 122_000, 120_000, 119_000, 121_000, 120_000, 118_000, 122_000,
+      119_000, 121_000, 120_000, 119_000, 121_000,
     ]
     const rows = [
       ...baselineVolumes.map((value, i) =>
         row(i, 'across', 100, value, value, 'ethereum', 'arbitrum'),
       ),
-      row(13, 'across', 100, 200_000, 200_000, 'ethereum', 'arbitrum'),
+      row(13, 'across', 100, 600_000, 600_000, 'ethereum', 'arbitrum'),
       ...Array.from({ length: 14 }, (_, i) =>
-        row(i, 'across', 100, 2_300_000, 2_300_000, 'ethereum', 'base'),
+        row(i, 'across', 100, 2_000_000, 2_000_000, 'ethereum', 'base'),
       ),
     ]
 
@@ -103,8 +106,9 @@ describe(explore.name, () => {
   }
 
   function flatRoute(id: string, srcChain: string, dstChain: string) {
+    // 300/day clears the flat-line count relevance floor (250).
     return Array.from({ length: 14 }, (_, i) =>
-      row(i, id, 100, 1_000_000, 1_000_000, srcChain, dstChain),
+      row(i, id, 300, 1_000_000, 1_000_000, srcChain, dstChain),
     )
   }
 })
