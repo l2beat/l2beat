@@ -3,6 +3,7 @@ import {
   DiffHistoryParser,
   type DiffHistorySectionKind,
 } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
 import {
@@ -36,6 +37,7 @@ const PUBLIC_SECTION_KINDS = new Set<DiscoveryUpdateSectionKind>([
 
 const PROJECT_ID_RE = /^[a-z0-9-]+$/i
 const DEFAULT_LIMIT = 50
+const RECENT_UPDATES_WINDOW_SECONDS = 7 * 24 * 60 * 60
 
 const diffHistoryParser = new DiffHistoryParser()
 
@@ -72,6 +74,17 @@ export function parseDiscoveryUpdates(
   }
 
   return updates
+}
+
+export function countRecentDiscoveryUpdates(
+  updates: DiscoveryUpdate[],
+  now: number = UnixTime.now(),
+): number {
+  return updates.filter(
+    (update) =>
+      update.timestamp !== null &&
+      now - update.timestamp <= RECENT_UPDATES_WINDOW_SECONDS,
+  ).length
 }
 
 function readDiffHistoryContent(projectId: string): string | undefined {
