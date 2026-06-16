@@ -8,6 +8,7 @@ import { getInteropTokenDeployments } from '~/server/features/scaling/interop/to
 import { getInteropTokenEntry } from '~/server/features/scaling/interop/token/getInteropTokenEntry'
 import { resolveInteropTokenBySlug } from '~/server/features/scaling/interop/token/resolveInteropTokenBySlug'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -107,17 +108,21 @@ async function getCachedData({
 
   const apiSelection = initialSelection
 
-  const [tokenData, deployments] = await Promise.all([
+  const [tokenData, deployments, projectsWithChains] = await Promise.all([
     getInteropTokenData({
       tokenId: token.id,
       ...apiSelection,
     }),
     getInteropTokenDeployments(token.id),
+    ps.getProjects({
+      select: ['chainConfig'],
+    }),
   ])
 
   const tokenEntry = getInteropTokenEntry(
     token.id,
     interopChainsWithIcons,
+    projectsWithChains,
     deployments,
   )
 
