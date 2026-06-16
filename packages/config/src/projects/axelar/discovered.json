@@ -1,6 +1,6 @@
 {
   "name": "axelar",
-  "timestamp": 1780914426,
+  "timestamp": 1781603706,
   "configHash": "0x74980aa887b4ee3a2aa84ed5dec0d12e7eff01227fe18cf4500ab927608f29af",
   "entries": [
     {
@@ -133,7 +133,7 @@
         "allTokensFrozen": false,
         "authModule": "eth:0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0",
         "contractId": "0xad2ae48b4d93c587cd1f0f8f269b84f57dbe98bbe5c61c4b6d324e6a667b3625",
-        "governance": "eth:0xfDF36A30070ea0241d69052ea85ff44Ad0476a66",
+        "governance": "eth:0x7Acbae6CBa67d78AAf69e47000884aE00F9B2525",
         "implementation": "eth:0x99B5FA03a5ea4315725c43346e55a6A6fbd94098",
         "mintLimiter": "eth:0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68",
         "tokenDeployer": "eth:0xb28478319B64f8D47e19A120209A211D902F8b8f"
@@ -154,6 +154,31 @@
           "role": "admin"
         }
       ]
+    },
+    {
+      "name": "AxelarServiceGovernance",
+      "address": "eth:0x7Acbae6CBa67d78AAf69e47000884aE00F9B2525",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xdd62e290e2eb8b182d6d1798c4d0ee62f5361abcf94e5c653e75fd00f11b27a2"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xba76c6980428A0b10CFC5d8ccb61949677A61233",
+      "sinceTimestamp": 1780505243,
+      "sinceBlock": 25238151,
+      "values": {
+        "$immutable": true,
+        "gateway": "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5",
+        "governanceAddress": "axelar10d07y265gmmuvt4z0w9aw880jnsr700j7v9daj",
+        "governanceAddressHash": "0x63aecca002108196491c5b0d3641258c2095abd3d368bdf85c54c2bbadf980a1",
+        "governanceChain": "axelar",
+        "governanceChainHash": "0x220ca3f20879614d18d73591ccb7f659caa8c8b7f731374d26339bab1b82f8cf",
+        "minimumTimeLockDelay": 259200,
+        "operator": "eth:0xc8a8399c3D1207f4e109673be7047604737c1D56"
+      },
+      "implementationNames": {
+        "eth:0x7Acbae6CBa67d78AAf69e47000884aE00F9B2525": "AxelarServiceGovernance"
+      }
     },
     {
       "name": "AxelarGasServiceOperators",
@@ -195,6 +220,11 @@
       "implementationNames": {
         "eth:0xb28478319B64f8D47e19A120209A211D902F8b8f": "TokenDeployer"
       }
+    },
+    {
+      "address": "eth:0xc8a8399c3D1207f4e109673be7047604737c1D56",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Multisig",
@@ -239,7 +269,7 @@
       "sinceBlock": 18389964,
       "values": {
         "$immutable": true,
-        "currentEpoch": 950,
+        "currentEpoch": 958,
         "owner": "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
@@ -251,30 +281,6 @@
       "address": "eth:0xf505462A29E36E26f25Ef0175Ca1eCBa09CC118f",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "InterchainGovernance",
-      "address": "eth:0xfDF36A30070ea0241d69052ea85ff44Ad0476a66",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xcca8350613357397a59035f61d95ca848eed0c5b1d1d4e863e307af34107bc24"
-      ],
-      "proxyType": "immutable",
-      "deployerAddress": "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
-      "sinceTimestamp": 1697842379,
-      "sinceBlock": 18394640,
-      "values": {
-        "$immutable": true,
-        "gateway": "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5",
-        "governanceAddress": "axelar10d07y265gmmuvt4z0w9aw880jnsr700j7v9daj",
-        "governanceAddressHash": "0x63aecca002108196491c5b0d3641258c2095abd3d368bdf85c54c2bbadf980a1",
-        "governanceChain": "Axelarnet",
-        "governanceChainHash": "0x9d38b77bdc2e9ef511420f947b5e8145291232b74f3f3a9e327433ff8f5acb66",
-        "minimumTimeLockDelay": 604800
-      },
-      "implementationNames": {
-        "eth:0xfDF36A30070ea0241d69052ea85ff44Ad0476a66": "InterchainGovernance"
-      }
     }
   ],
   "abis": {
@@ -297,6 +303,49 @@
       "function getString(bytes32 key) view returns (string)",
       "function getUint(bytes32 key) view returns (uint256)",
       "function setup(bytes params)"
+    ],
+    "eth:0x7Acbae6CBa67d78AAf69e47000884aE00F9B2525": [
+      "constructor(address gateway_, string governanceChain_, string governanceAddress_, uint256 minimumTimeDelay, address operator_)",
+      "error ExecutionFailed()",
+      "error InsufficientBalance()",
+      "error InvalidAddress()",
+      "error InvalidCommand()",
+      "error InvalidContract(address target)",
+      "error InvalidOperator()",
+      "error InvalidTarget()",
+      "error InvalidTimeLockHash()",
+      "error NativeTransferFailed()",
+      "error NotApproved()",
+      "error NotApprovedByGateway()",
+      "error NotAuthorized()",
+      "error NotGovernance()",
+      "error NotSelf()",
+      "error TimeLockAlreadyScheduled()",
+      "error TimeLockNotReady()",
+      "error TokenNotSupported()",
+      "event OperatorProposalApproved(bytes32 indexed proposalHash, address indexed targetContract, bytes callData, uint256 nativeValue)",
+      "event OperatorProposalCancelled(bytes32 indexed proposalHash, address indexed targetContract, bytes callData, uint256 nativeValue)",
+      "event OperatorProposalExecuted(bytes32 indexed proposalHash, address indexed targetContract, bytes callData, uint256 nativeValue)",
+      "event OperatorshipTransferred(address indexed oldOperator, address indexed newOperator)",
+      "event ProposalCancelled(bytes32 indexed proposalHash, address indexed target, bytes callData, uint256 value, uint256 indexed eta)",
+      "event ProposalExecuted(bytes32 indexed proposalHash, address indexed target, bytes callData, uint256 value, uint256 indexed timestamp)",
+      "event ProposalScheduled(bytes32 indexed proposalHash, address indexed target, bytes callData, uint256 value, uint256 indexed eta)",
+      "function execute(bytes32 commandId, string sourceChain, string sourceAddress, bytes payload)",
+      "function executeOperatorProposal(address target, bytes callData, uint256 nativeValue) payable",
+      "function executeProposal(address target, bytes callData, uint256 nativeValue) payable",
+      "function gateway() view returns (address)",
+      "function getProposalEta(address target, bytes callData, uint256 nativeValue) view returns (uint256)",
+      "function getTimeLock(bytes32 hash) view returns (uint256)",
+      "function governanceAddress() view returns (string)",
+      "function governanceAddressHash() view returns (bytes32)",
+      "function governanceChain() view returns (string)",
+      "function governanceChainHash() view returns (bytes32)",
+      "function isOperatorProposalApproved(address target, bytes callData, uint256 nativeValue) view returns (bool)",
+      "function minimumTimeLockDelay() view returns (uint256)",
+      "function operator() view returns (address)",
+      "function operatorApprovals(bytes32) view returns (bool)",
+      "function transferOperatorship(address newOperator)",
+      "function withdraw(address recipient, uint256 amount)"
     ],
     "eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC": [
       "constructor(address initialOwner)",
@@ -521,41 +570,9 @@
       "function transferOperatorship(bytes params)",
       "function transferOwnership(address newOwner)",
       "function validateProof(bytes32 messageHash, bytes proof) view returns (bool)"
-    ],
-    "eth:0xfDF36A30070ea0241d69052ea85ff44Ad0476a66": [
-      "constructor(address gateway_, string governanceChain_, string governanceAddress_, uint256 minimumTimeDelay)",
-      "error ExecutionFailed()",
-      "error InsufficientBalance()",
-      "error InvalidAddress()",
-      "error InvalidCommand()",
-      "error InvalidContract(address target)",
-      "error InvalidTarget()",
-      "error InvalidTimeLockHash()",
-      "error NativeTransferFailed()",
-      "error NotApprovedByGateway()",
-      "error NotGovernance()",
-      "error NotSelf()",
-      "error TimeLockAlreadyScheduled()",
-      "error TimeLockNotReady()",
-      "error TokenNotSupported()",
-      "event ProposalCancelled(bytes32 indexed proposalHash, address indexed target, bytes callData, uint256 value, uint256 indexed eta)",
-      "event ProposalExecuted(bytes32 indexed proposalHash, address indexed target, bytes callData, uint256 value, uint256 indexed timestamp)",
-      "event ProposalScheduled(bytes32 indexed proposalHash, address indexed target, bytes callData, uint256 value, uint256 indexed eta)",
-      "function execute(bytes32 commandId, string sourceChain, string sourceAddress, bytes payload)",
-      "function executeProposal(address target, bytes callData, uint256 nativeValue) payable",
-      "function executeWithToken(bytes32 commandId, string sourceChain, string sourceAddress, bytes payload, string tokenSymbol, uint256 amount)",
-      "function gateway() view returns (address)",
-      "function getProposalEta(address target, bytes callData, uint256 nativeValue) view returns (uint256)",
-      "function getTimeLock(bytes32 hash) view returns (uint256)",
-      "function governanceAddress() view returns (string)",
-      "function governanceAddressHash() view returns (bytes32)",
-      "function governanceChain() view returns (string)",
-      "function governanceChainHash() view returns (bytes32)",
-      "function minimumTimeLockDelay() view returns (uint256)",
-      "function withdraw(address recipient, uint256 amount)"
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 25272092 },
-  "permissionsConfigHash": "0x26c903354fd376a8fab4c524f8082b185d83c9fda8ee286890957df6d4c4084f"
+  "usedBlockNumbers": { "ethereum": 25329318 },
+  "permissionsConfigHash": "0x9f93b42b896d1877a575b8c3c96f20d0fa5ea5464d5ebde735c0838e3ea75419"
 }
