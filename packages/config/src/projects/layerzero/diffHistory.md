@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x4a58a3500fa2244c29fda481586d2a127c8f7207
+
+# Diff at Tue, 16 Jun 2026 10:00:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1777285916
+- current timestamp: 1781603942
+
+## Description
+
+Unichain peer blocked in ethereum rsETH OApp.
+
+## Watched changes
+
+```diff
+    contract RsETHOFTAdapter (eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3) [layerzero/OFTAdapter] {
+    +++ description: An OApp in the LayerZero protocol that adapts an existing ERC20 token into the OFT standard. Its owner can configure peers and LayerZero security settings for connected routes.
++++ description: The configured peer for the rsETH OFT route from Unichain.
+      values.peerUnichain:
+-        "unichain:0xc3eACf0612346366Db554C991D7858716db09f58"
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x9921aa9eaabd740f707a49d2755d084d0b189441
 
 # Diff at Fri, 12 Jun 2026 10:18:53 GMT:
