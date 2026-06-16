@@ -15,7 +15,6 @@ export interface InteropSelectionDetails {
   snapshotTimestamp: UnixTime | undefined
 }
 
-
 export async function getInteropSelectionDetails(
   params: InteropSelectionDetailsParams,
 ): Promise<InteropSelectionDetails> {
