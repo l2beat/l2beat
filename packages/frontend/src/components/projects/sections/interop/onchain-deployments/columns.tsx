@@ -1,5 +1,6 @@
 import { formatAddress, formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import { CopyButton } from '~/components/CopyButton'
 import { CustomLink } from '~/components/link/CustomLink'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
@@ -51,9 +52,16 @@ export const interopTokenOnchainDeploymentsColumns = [
         return <span className="font-medium text-label-value-15">{label}</span>
       }
       return (
-        <CustomLink href={explorerUrl} className="text-label-value-15">
-          {label}
-        </CustomLink>
+        <div className="flex items-center gap-1">
+          <CustomLink href={explorerUrl} className="text-label-value-15">
+            {label}
+          </CustomLink>
+          <CopyButton
+            toCopy={address}
+            iconClassName="size-3 fill-secondary"
+            copyText="Copy address"
+          />
+        </div>
       )
     },
   }),
