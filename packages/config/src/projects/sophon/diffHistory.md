@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xd5e37c0efad10bfe6bd88e6a27435d0438ef007c
+
+# Diff at Tue, 16 Jun 2026 09:44:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1780913579
+- current timestamp: 1781602990
+
+## Description
+
+Multisig member switched.
+
+## Watched changes
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xF6877208302D9715A576D4Bff96f6576B5A1dFbA"
+      values.$members.3:
+-        "eth:0x20719Abd2E63518e68D30a295388cAd6B542dCEf"
+    }
+```
+
 Generated with discovered.json: 0x92f48e1fe0afd597461d13cee378686da2fda143
 
 # Diff at Tue, 09 Jun 2026 12:43:39 GMT:
