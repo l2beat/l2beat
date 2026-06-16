@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xf2044c43c69b63a7e2c70ff2c8d91135d1866c85
+
+# Diff at Tue, 16 Jun 2026 09:45:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1777883283
+- current timestamp: 1781603066
+
+## Description
+
+Rotate operator EOAs.
+
+## Watched changes
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      values.executor.eth:0x32400084C286CF3E17e7B677ea9583e60a000324.0:
+-        "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
++        "eth:0xa90c7CDB553332948E2943431436117eCFb1e781"
+      values.executor.eth:0x32400084C286CF3E17e7B677ea9583e60a000324.1:
+-        "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
++        "eth:0x28942E6870612893B96F77De0F485fcE3497AAA8"
+    }
+```
+
 Generated with discovered.json: 0xe8f73817f58c5a7f888fd15babfcc98ac0d372e9
 
 # Diff at Tue, 09 Jun 2026 12:43:41 GMT:

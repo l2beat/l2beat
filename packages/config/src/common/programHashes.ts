@@ -313,7 +313,26 @@ const programHashes: Record<
       'https://github.com/agglayer/agglayer/tree/v0.4.4/crates/pessimistic-proof',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
-      'common/programHashes/0x000055f14384bdb5bb092fd7e5152ec31856321c5a30306ab95836bdf5cdb639.md',
+      'common/programHashes/agglayer-pessimistic-proof.md',
+      {
+        version: 'v0.4.4',
+        commitHash: 'caac9f06bc7cb1cf89912dbb4dffa4d594a00bd5',
+        elfTarget: 'riscv32im-succinct-zkvm-elf',
+      },
+    ),
+  },
+  '0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e': {
+    ...PESSIMISTIC_PROG('v0.5.1'),
+    programUrl:
+      'https://github.com/agglayer/agglayer/tree/v0.5.1/crates/pessimistic-proof',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/agglayer-pessimistic-proof.md',
+      {
+        version: 'v0.5.1',
+        commitHash: 'f7bb86695b03d363c3d0d15ff7f2d8b386e58c91',
+        elfTarget: 'riscv64im-succinct-zkvm-elf',
+      },
     ),
   },
   '0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f': {

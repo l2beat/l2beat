@@ -1,6 +1,6 @@
 {
   "name": "lens",
-  "timestamp": 1780999809,
+  "timestamp": 1781602943,
   "configHash": "0x1a3cd3cc74bcd5e07da700dfcbaafe8b6dcddcb367ffe8e24edbee9b6c01828a",
   "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
   "entries": [
@@ -61,43 +61,43 @@
         "revertedBlocks": [],
         "REVERTER_ROLE": "0x30085792330f3f9ee2ee216aea0321c55a0909b87c51ee9ab49d05ca4a4c2ecb",
         "validatorsVTL": [
-          "eth:0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67",
-          "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
+          "eth:0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc",
+          "eth:0x9971903268BAED330DA9DD533D97924c725AB593"
         ],
         "validatorsVTLFullAC": {
           "PRECOMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67",
-              "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
+              "eth:0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc",
+              "eth:0x9971903268BAED330DA9DD533D97924c725AB593"
             ]
           },
           "COMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67",
-              "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
+              "eth:0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc",
+              "eth:0x9971903268BAED330DA9DD533D97924c725AB593"
             ]
           },
           "REVERTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67",
-              "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
+              "eth:0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc",
+              "eth:0x9971903268BAED330DA9DD533D97924c725AB593"
             ]
           },
           "PROVER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67",
-              "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
+              "eth:0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc",
+              "eth:0x9971903268BAED330DA9DD533D97924c725AB593"
             ]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67",
-              "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
+              "eth:0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc",
+              "eth:0x9971903268BAED330DA9DD533D97924c725AB593"
             ]
           }
         }
@@ -119,32 +119,6 @@
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-zk-stack"
-    },
-    {
-      "address": "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
-          "role": ".validatorsVTLFullAC"
-        }
-      ]
-    },
-    {
-      "address": "eth:0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
-          "role": ".validatorsVTLFullAC"
-        }
-      ]
     },
     {
       "name": "Lens Multisig",
@@ -198,7 +172,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 10 (20%)",
-        "nonce": 21,
+        "nonce": 23,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -363,6 +337,19 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "eth:0x9971903268BAED330DA9DD533D97924c725AB593",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTLFullAC"
+        }
+      ]
+    },
+    {
       "name": "L1VerifierFflonk",
       "address": "eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442",
       "type": "Contract",
@@ -388,6 +375,19 @@
       "implementationNames": {
         "eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442": "L1VerifierFflonk"
       }
+    },
+    {
+      "address": "eth:0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTLFullAC"
+        }
+      ]
     },
     {
       "name": "Diamond",
@@ -646,7 +646,7 @@
           "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120",
           "eth:0xdA6661Df15E79cFe1e679ccD138D813b955ba492"
         ],
-        "getFirstUnprocessedPriorityTx": 6210,
+        "getFirstUnprocessedPriorityTx": 6349,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -655,7 +655,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 3,
-        "getPriorityTreeRoot": "0xca91e175b418afa3857c15ef8aa3ce31a4306dabc7533369a0f09224e3035876",
+        "getPriorityTreeRoot": "0x6a6bc9fed9716385115772ca02113a534a5566dc1723543541e6424724f8f53b",
         "getPriorityTreeStartIndex": 25,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051588,
@@ -663,13 +663,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 4],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 8774,
-        "getTotalBatchesExecuted": 8774,
-        "getTotalBatchesVerified": 8774,
-        "getTotalBlocksCommitted": 8774,
-        "getTotalBlocksExecuted": 8774,
-        "getTotalBlocksVerified": 8774,
-        "getTotalPriorityTxs": 6213,
+        "getTotalBatchesCommitted": 8795,
+        "getTotalBatchesExecuted": 8795,
+        "getTotalBatchesVerified": 8795,
+        "getTotalBlocksCommitted": 8795,
+        "getTotalBlocksExecuted": 8795,
+        "getTotalBlocksVerified": 8795,
+        "getTotalPriorityTxs": 6352,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45",
         "getVerifierParams": {
@@ -1413,6 +1413,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 25279178 },
-  "permissionsConfigHash": "0xbae674328a1b2feda107b498b31a1d23b4685db098f0ff74424825f1df3910d6"
+  "usedBlockNumbers": { "ethereum": 25329255 },
+  "permissionsConfigHash": "0x1bfd2693f196876999c7d7b44ef078786ea16120231510ce09e07dc5758e77a3"
 }
