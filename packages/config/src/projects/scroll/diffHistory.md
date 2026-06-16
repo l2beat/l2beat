@@ -8,12 +8,7 @@ Generated with discovered.json: 0xe1b69e09a54eb953fc254c38098f4d3a781255c8
 
 ## Description
 
-**Security Council Minority role transfer executed.** Following the 2026-06-01 Security Council removal, the `SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE` on `ScrollOwner` (both L1 and L2) — the only role still held by the independent 3/12 `Scroll Security Council Minority` (`eth:0x40bD67…` / `scr:0x40bD67…`) — was transferred to `ScrollAdminMultisig` (`0xcca54B0916Cee2186b47E9709BEdcb7041A8F761`) on 2026-06-08, after the 3-day TimelockSCSlow delay scheduled on 2026-06-01.
-
-- L1 execution tx: [0xc0c12c58…20cc50e](https://etherscan.io/tx/0xc0c12c588544b90f84053ac2e50840bda28b8f45348acaa0b9f8c28c120cc50e) (2026-06-08T12:09:47Z, block 25272601) — `revokeRole`/`grantRole` on ScrollOwner L1.
-- L2 execution tx: [0x19c768d5…20575e1cd](https://scrollscan.com/tx/0x19c768d5872bd9f815abc22ac70a2b8bc3fb487a5d371c486ba2fb620575e1cd) (2026-06-08T12:10:32Z, block 34008091) — `revokeRole`/`grantRole` on ScrollOwner L2.
-
-With the Minority no longer holding any role on Scroll, the `Scroll Security Council Minority` Safes and their member Safes were pruned from discovery on both chains. `ScrollAdminMultisig` now controls the `scMinorityNoDelay` path (used to unpause core contracts via the PauseController), completing the Security Council removal.
+Final Security Council removal transaction. `ScrollAdminMultisig` now controls the `scMinorityNoDelay` path (used to unpause core contracts via the PauseController), completing the Security Council removal.
 
 ## Watched changes
 
