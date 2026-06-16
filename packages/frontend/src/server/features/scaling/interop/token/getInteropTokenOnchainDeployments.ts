@@ -4,7 +4,7 @@ import { getDb } from '~/server/database'
 import { getTokenDb } from '~/server/tokenDb'
 import { getAggregatedInteropSnapshotTimestamp } from '../utils/getAggregatedInteropTimestamp'
 
-export interface InteropTokenDeployment {
+export interface InteropTokenOnchainDeployment {
   chain: string
   address: string
   symbol: string
@@ -13,15 +13,17 @@ export interface InteropTokenDeployment {
   avgDuration: number | null
 }
 
-export async function getInteropTokenDeployments(
+export async function getInteropTokenOnchainDeployments(
   tokenId: string,
-): Promise<InteropTokenDeployment[]> {
+): Promise<InteropTokenOnchainDeployment[]> {
   if (env.MOCK) {
     return MOCK_INTEROP_TOKEN_DEPLOYMENTS
   }
+  const db = getDb()
+  const tokenDb = getTokenDb()
 
   const deployedTokens =
-    await getTokenDb().deployedToken.getByAbstractTokenId(tokenId)
+    await tokenDb.deployedToken.getByAbstractTokenId(tokenId)
   if (deployedTokens.length === 0) return []
 
   // Aggregates store token addresses in Address32 format,
@@ -33,7 +35,7 @@ export async function getInteropTokenDeployments(
 
   const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
   const stats = snapshotTimestamp
-    ? await getDb().aggregatedInteropDeployedToken.getSummedStatsByTimestampAndTokens(
+    ? await db.aggregatedInteropDeployedToken.getSummedStatsByTimestampAndTokens(
         snapshotTimestamp,
         statsKeys,
       )
@@ -66,7 +68,7 @@ export async function getInteropTokenDeployments(
   )
 }
 
-const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenDeployment[] = [
+const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
   {
     chain: 'ethereum',
     address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',

@@ -7,13 +7,13 @@ import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
 import type { InteropFlowsSectionProps } from './interop/InteropFlowsSection'
-import type { InteropTokenDeploymentsSectionProps } from './interop/InteropTokenDeploymentsSection'
 import type { InteropTokenProtocolsSectionProps } from './interop/InteropTokenProtocolsSection'
 import type { InteropTokensSectionProps } from './interop/InteropTokensSection'
 import type { InteropTokenTransfersSectionProps } from './interop/InteropTokenTransfersSection'
 import type { InteropTokenVolumeSectionProps } from './interop/InteropTokenVolumeSection'
 import type { InteropTransfersSectionProps } from './interop/InteropTransfersSection'
 import type { InteropVolumeSectionProps } from './interop/InteropVolumeSection'
+import type { InteropTokenOnchainDeploymentsSectionProps } from './interop/onchain-deployments/InteropTokenOnchainDeploymentsSection'
 import type { L3RiskAnalysisSectionProps } from './L3RiskAnalysisSection'
 import type { LivenessSectionProps } from './liveness/LivenessSection'
 import type { MarkdownSectionProps } from './MarkdownSection'
@@ -232,9 +232,9 @@ interface ProjectDetailsInteropTokenProtocolsSection {
   props: ProjectDetailsProps<InteropTokenProtocolsSectionProps>
 }
 
-interface ProjectDetailsInteropTokenDeploymentsSection {
-  type: 'InteropTokenDeploymentsSection'
-  props: ProjectDetailsProps<InteropTokenDeploymentsSectionProps>
+interface ProjectDetailsInteropTokenOnchainDeploymentsSection {
+  type: 'InteropTokenOnchainDeploymentsSection'
+  props: ProjectDetailsProps<InteropTokenOnchainDeploymentsSectionProps>
 }
 
 interface ProjectDetailsInteropTokenTransfersSection {
@@ -318,7 +318,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsInteropTokensSection
   | ProjectDetailsInteropTokenVolumeSection
   | ProjectDetailsInteropTokenProtocolsSection
-  | ProjectDetailsInteropTokenDeploymentsSection
+  | ProjectDetailsInteropTokenOnchainDeploymentsSection
   | ProjectDetailsInteropTokenTransfersSection
   | ProjectDetailsUpgradesAndGovernanceSection
   | ProjectDetailsUpdatesSection

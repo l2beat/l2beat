@@ -4,8 +4,8 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropTokenData } from '~/server/features/scaling/interop/getInteropTokenData'
 import { getAbstractTokenSlug } from '~/server/features/scaling/interop/token/getAbstractTokenSlug'
 import { getInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
-import { getInteropTokenDeployments } from '~/server/features/scaling/interop/token/getInteropTokenDeployments'
 import { getInteropTokenEntry } from '~/server/features/scaling/interop/token/getInteropTokenEntry'
+import { getInteropTokenOnchainDeployments } from '~/server/features/scaling/interop/token/getInteropTokenOnchainDeployments'
 import { resolveInteropTokenBySlug } from '~/server/features/scaling/interop/token/resolveInteropTokenBySlug'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
@@ -113,7 +113,7 @@ async function getCachedData({
       tokenId: token.id,
       ...apiSelection,
     }),
-    getInteropTokenDeployments(token.id),
+    getInteropTokenOnchainDeployments(token.id),
     ps.getProjects({
       select: ['chainConfig'],
     }),

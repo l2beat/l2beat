@@ -1,40 +1,15 @@
 import { formatAddress, formatSeconds } from '@l2beat/shared-pure'
-import {
-  createColumnHelper,
-  getCoreRowModel,
-  getSortedRowModel,
-} from '@tanstack/react-table'
+import { createColumnHelper } from '@tanstack/react-table'
 import { CustomLink } from '~/components/link/CustomLink'
-import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
+import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { EM_DASH } from '~/consts/characters'
-import { useTable } from '~/hooks/useTable'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { ProjectSection } from '../ProjectSection'
-import type { ProjectSectionProps } from '../types'
+import type { InteropTokenOnchainDeploymentsRow } from './InteropTokenOnchainDeploymentsSection'
 
-export interface InteropTokenDeploymentRow {
-  chain: {
-    name: string
-    iconUrl: string | undefined
-  }
-  address: string
-  explorerUrl: string | undefined
-  symbol: string
-  volume: number | null
-  transferCount: number | null
-  avgDuration: number | null
-}
-
-export interface InteropTokenDeploymentsSectionProps
-  extends ProjectSectionProps {
-  deployments: InteropTokenDeploymentRow[]
-}
-
-type DeploymentRow = InteropTokenDeploymentRow & BasicTableRow
-
+export type DeploymentRow = InteropTokenOnchainDeploymentsRow & BasicTableRow
 const columnHelper = createColumnHelper<DeploymentRow>()
-const columns = [
+export const interopTokenOnchainDeploymentsColumns = [
   columnHelper.accessor((_, index) => index + 1, {
     id: 'index',
     header: '#',
@@ -139,29 +114,3 @@ const columns = [
     },
   }),
 ]
-
-export function InteropTokenDeploymentsSection({
-  deployments,
-  ...sectionProps
-}: InteropTokenDeploymentsSectionProps) {
-  const table = useTable<DeploymentRow>({
-    data: deployments,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    initialState: {
-      sorting: [
-        {
-          id: 'volume',
-          desc: true,
-        },
-      ],
-    },
-  })
-
-  return (
-    <ProjectSection {...sectionProps}>
-      <BasicTable table={table} tableWrapperClassName="pb-0" />
-    </ProjectSection>
-  )
-}

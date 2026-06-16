@@ -1,9 +1,9 @@
 import type { Project } from '@l2beat/config'
-import type { InteropTokenDeploymentRow } from '~/components/projects/sections/interop/InteropTokenDeploymentsSection'
+import type { InteropTokenOnchainDeploymentsRow } from '~/components/projects/sections/interop/onchain-deployments/InteropTokenOnchainDeploymentsSection'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { manifest } from '~/utils/Manifest'
-import type { InteropTokenDeployment } from './getInteropTokenDeployments'
+import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
 
 export interface InteropTokenEntry {
   sections: ProjectDetailsSection[]
@@ -14,7 +14,7 @@ export function getInteropTokenEntry(
   tokenId: string,
   interopChains: InteropChainWithIcon[],
   projectsWithChains: Project<'chainConfig'>[],
-  deployments: InteropTokenDeployment[],
+  deployments: InteropTokenOnchainDeployment[],
 ): InteropTokenEntry {
   const sections: ProjectDetailsSection[] = [
     {
@@ -42,7 +42,7 @@ export function getInteropTokenEntry(
       projectsWithChains,
     )
     sections.push({
-      type: 'InteropTokenDeploymentsSection',
+      type: 'InteropTokenOnchainDeploymentsSection',
       props: {
         id: 'onchain-deployments',
         title: 'Onchain deployments',
@@ -67,9 +67,9 @@ export function getInteropTokenEntry(
 }
 
 function toDeploymentRow(
-  deployment: InteropTokenDeployment,
+  deployment: InteropTokenOnchainDeployment,
   chainInfoMap: ChainInfoMap,
-): InteropTokenDeploymentRow {
+): InteropTokenOnchainDeploymentsRow {
   const chain = chainInfoMap.get(deployment.chain)
   return {
     chain: {
@@ -90,7 +90,7 @@ function toDeploymentRow(
 
 type ChainInfoMap = ReturnType<typeof deploymentsToChainInfo>
 function deploymentsToChainInfo(
-  deployments: InteropTokenDeployment[],
+  deployments: InteropTokenOnchainDeployment[],
   interopChains: InteropChainWithIcon[],
   projectsWithChain: Project<'chainConfig'>[],
 ) {
