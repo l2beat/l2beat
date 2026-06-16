@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xcfca47b22b3ae111dd72a1d4b6664357e76e7d05
+
+# Diff at Tue, 16 Jun 2026 09:40:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e3be4116cfc279e5c4415ba34f338c2f1d453616 block: 1779278156
+- current timestamp: 1781602758
+
+## Description
+
+New scheduled tx targeting GBT (gas token) and contracts on L2: https://tools.l2beat.com/decoder-new/?hash=0xac73fadffe5aa2eb9b6d9b0ff4d9f1a4fa07eb147c3553d9e70718968bdb0139&data=AwA .
+
+## Watched changes
+
+```diff
+    contract GrvtZkEvmAdmin (eth:0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.5:
++        {"_protocolVersion":124554051587,"_upgradeTimestamp":1781074800}
+    }
+```
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        45
++        46
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        45
++        46
+    }
+```
+
 Generated with discovered.json: 0xfaa7f54d444bc1f412d30add572e0f27a60d33b4
 
 # Diff at Wed, 20 May 2026 11:56:59 GMT:
