@@ -11,6 +11,8 @@ export const stargate: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1718620600),
   interopConfig: {
+    description:
+      'Liquidity bridge focused on USD stablecoins and ETH using the LayerZero message bridge. Stargate also has a Hydra product which is a minting token bridge for chains that do not natively support Stargate assets.',
     plugins: [
       {
         plugin: 'stargate',
@@ -45,5 +47,4 @@ export const stargate: BaseProject = {
     },
     type: 'intent',
   },
-  isInteropProtocol: true,
 }

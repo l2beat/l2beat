@@ -331,15 +331,7 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
         <div className="font-medium text-label-value-14 text-secondary">
-          {formatRange(
-            label,
-            label +
-              (resolution === 'daily'
-                ? UnixTime.DAY
-                : resolution === 'sixHourly'
-                  ? UnixTime.HOUR * 6
-                  : UnixTime.HOUR),
-          )}
+          {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
         </div>
         {actualPayload.filter((p) => p.name !== 'posted').length > 1 && (
           <>

@@ -45,6 +45,11 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
     openapi: {
       url: env.string('BACKEND_URL', 'http://localhost:3000'),
     },
+    analytics: options.isLocal
+      ? false
+      : {
+          clientId: env.optionalString('OPENPANEL_CLIENT_ID'),
+        },
     cacheEnabled:
       (env.optionalString('DEPLOYMENT_ENV') === 'production' ||
         env.optionalString('DEPLOYMENT_ENV') === 'staging') &&

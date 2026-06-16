@@ -18,7 +18,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -26,6 +26,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('morph')
 
@@ -64,7 +65,9 @@ export const morph: ScalingProject = {
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   proofSystem: {
     type: 'Optimistic',
-    name: 'SP1',
+    name: 'SP1 Hypercube',
+    zkCatalogId: ProjectId('sp1hypercube'),
+    challengeProtocol: 'Single-step',
   },
   display: {
     name: 'Morph',
@@ -90,7 +93,7 @@ export const morph: ScalingProject = {
       ],
     },
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -180,9 +183,14 @@ export const morph: ScalingProject = {
         ' The system currently operates with at least 5 whitelisted challengers external to the team.',
       sentiment: 'warning',
       challengeDelay: challengeWindow,
-      initialBond: formatEther(
-        discovery.getContractValue<number>('L1Staking', 'stakingValue'),
-      ),
+      executionDelay: 0,
+      initialBond: {
+        value: formatEther(
+          discovery.getContractValue<number>('L1Staking', 'stakingValue'),
+        ),
+      },
+      permissioned: true,
+      defenderAdvantage: 'not-applicable',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
@@ -225,10 +233,16 @@ export const morph: ScalingProject = {
     categories: [
       {
         title: 'Fraud proofs',
-        description: `Morph uses a one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
-          can post a ${challengeBond} WEI bond and request a ZK proof of the state transition. At least 5 Challengers are operated by entities external to the team. After the challenge, during a ${formatSeconds(proofWindow)} proving window, a ZK proof must be \
-          delivered, otherwise the state root is considered invalid and the root proposer bond, which is currently set to ${stakingValue} ETH, is slashed. The zkVM used is SP1 by Succinct.\
-          If a valid proof is delivered, the Challenger loses the challenge bond. The Morph Multisig can revert unfinalized batches.`,
+        description: readProjectMarkdown(
+          'morph',
+          'stateValidationFraudProofs',
+          {
+            challengeWindow: formatSeconds(challengeWindow),
+            challengeBond,
+            proofWindow: formatSeconds(proofWindow),
+            stakingValue,
+          },
+        ),
         references: [
           {
             title: 'Whitelisted Challengers - Morph Docs',
@@ -237,7 +251,7 @@ export const morph: ScalingProject = {
           {
             title:
               'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-            url: 'https://etherscan.io/address/0x9e2Fb684935a32CEd121972f23BD0e4634377cA2',
+            url: 'https://etherscan.io/address/0xaC3C379D772f3520B34690d32BA14510ab36C3fB',
           },
         ],
         risks: [

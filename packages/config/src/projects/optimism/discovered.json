@@ -1,7 +1,7 @@
 {
   "name": "optimism",
-  "timestamp": 1776331867,
-  "configHash": "0x728c1ee94170d1da3bf04ddc0f06ceb5e57c493187319024fc37e93185268f31",
+  "timestamp": 1778851817,
+  "configHash": "0x6332a2a7618d177bd91f664e9a3e2bcb9908e27d7aea1bc76682fa902b2634e2",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -25,6 +25,7 @@
           "role": ".GnosisSafe_modules"
         }
       ],
+      "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1717149791,
       "sinceBlock": 19989094,
       "values": {
@@ -52,17 +53,19 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1716902219,
       "sinceBlock": 19968607,
       "values": {
@@ -99,10 +102,11 @@
       "address": "eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
       "type": "Contract",
       "sourceHashes": [
-        "0x4c5465ff113d9808b9b99013be373f52fcb90c8df71628dd658f0adbceff1366"
+        "0x9de3454a2f958a28d8c56f70a1d32786607c9951cea5698df8d868d37da2204f"
       ],
       "proxyType": "immutable",
       "description": "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.",
+      "deployerAddress": "eth:0x075da589886BA445d7c7e81c472059dE7AE65250",
       "sinceTimestamp": 1625675779,
       "sinceBlock": 12781431,
       "values": {
@@ -124,10 +128,11 @@
       "type": "Contract",
       "template": "opstack/PreimageOracle",
       "sourceHashes": [
-        "0xd9838f1f137bd5397f583f33c414ec9c0fc3dc69401213fae0f09c36d4ac8e47"
+        "0x16701fcaa0e04e5481701a81736e7c8ee2c8aa32da272bf74e0589e6a90c3615"
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1740762647,
       "sinceBlock": 21946249,
       "values": {
@@ -153,11 +158,12 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x86dc9ef5cbf4cc436d50678ad7b2abbf9cc1905641ebbeccddbf1adf9b724403"
+        "0x703fe68eeb3d5454a8ef012933846f1ff1433fc2df39c0c94f2a550d8325f085"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960",
       "sinceTimestamp": 1685377403,
       "sinceBlock": 17365804,
       "values": {
@@ -330,7 +336,7 @@
       "template": "opstack/AnchorStateRegistry_post13",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xa1c629e3a86e4cba49482956c04d921b52551c4ee9833ddda7e44ca155bc6cab"
+        "0xfdabc8b9b4db9b7aa78227b26e936abaf24f058502b96e8d9a293d49b1e89b47"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.",
@@ -343,6 +349,7 @@
         "challengePeriodFromOracle",
         "wethFromGame"
       ],
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1753379243,
       "sinceBlock": 22990599,
       "values": {
@@ -367,13 +374,13 @@
         ],
         "$upgradeCount": 3,
         "absolutePrestateFromGame": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e",
-        "anchorGame": "eth:0xC9A25d9849af32e70E9d014578CdE66A31Cdb2B8",
+        "anchorGame": "eth:0x4e715a374c5219bDa357FEed68984DecE57930f2",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x59c9c6f20dced7ec4da1d962f981753fa8a9c7492d20e90b232e19abddcd6db6",
-          150063329
+          "0xc7356b124ec09f9cf89484739cc04fa409164ab80418d9bb6145efbad0d71364",
+          151321584
         ],
         "getStartingAnchorRoot": {
           "root": "0xfce6d556d11e1662f316ed1408782a3227b1c1dcd8f643c1f563043298822e62",
@@ -415,7 +422,7 @@
       "type": "Contract",
       "template": "gnosisSafeModules/LivenessGuard",
       "sourceHashes": [
-        "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
+        "0xe2e33569583c3b0a8186c653cba56130fb30cb26c95500065a6394824546cc2e"
       ],
       "proxyType": "immutable",
       "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
@@ -428,12 +435,13 @@
         }
       ],
       "ignoreInWatchMode": ["timeSinceLastL2beatInteraction"],
+      "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1717149791,
       "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "16d 1h",
+        "timeSinceLastL2beatInteraction": "1mo",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -447,11 +455,12 @@
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7",
-        "0xfa9c986019a03bd66efb7584a7064e708f6fb71956643a9d4daa2c0972a29c03"
+        "0x1f2c13ad1144ce6548e578b834c33b0d65b1564aeb0d5c708ed4e7fb50535cc6"
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5",
       "sinceTimestamp": 1624400997,
       "sinceBlock": 12686757,
       "values": {
@@ -545,7 +554,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292844547",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292850393",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -577,6 +586,35 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "name": "Optimism EOA 1",
+      "address": "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            {
+              "address": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
+              "condition": "though restricted to the SuperchainConfig's `pause()` function"
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
+          "role": ".deputy",
+          "condition": "though restricted to the SuperchainConfig's `pause()` function"
+        }
+      ]
+    },
+    {
       "address": "eth:0x3041BA32f451F5850c147805F5521AC206421623",
       "type": "EOA",
       "proxyType": "EOA"
@@ -588,10 +626,11 @@
       "template": "opstack/ETHLockbox",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x472fa7a61a37a57da6eac2000038cc269e240a832d4a1ffe5ac0800946e5d196"
+        "0x330c0ee4ca969ca3a1deda35d8ce83d1861361088ef0b4b8efe0ec23b4f24c19"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A simple escrow contract storing ETH for the canonical bridge.",
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1753379243,
       "sinceBlock": 22990599,
       "values": {
@@ -619,34 +658,6 @@
       }
     },
     {
-      "name": "Optimism EOA 1",
-      "address": "eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "guard",
-          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-          "role": ".guardian",
-          "via": [
-            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
-            {
-              "address": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
-              "condition": "though restricted to the SuperchainConfig's `pause()` function"
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
-          "role": ".deputy",
-          "condition": "though restricted to the SuperchainConfig's `pause()` function"
-        }
-      ]
-    },
-    {
       "address": "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
       "type": "EOA",
       "proxyType": "EOA"
@@ -661,6 +672,7 @@
       ],
       "proxyType": "immutable",
       "description": "Stores DAI deposited from the attached L1DAITokenBridge.",
+      "deployerAddress": "eth:0x075da589886BA445d7c7e81c472059dE7AE65250",
       "sinceTimestamp": 1625675683,
       "sinceBlock": 12781427,
       "values": {
@@ -767,6 +779,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960",
       "sinceTimestamp": 1685377355,
       "sinceBlock": 17365800,
       "values": {
@@ -785,10 +798,11 @@
       "type": "Contract",
       "template": "opstack/PermissionedDisputeGame",
       "sourceHashes": [
-        "0x282b981348a4ab1395edfcf6b2e0eeb3e9cfa9df3decce6b4d2cdd480825613d"
+        "0xc36a2d08c78e94899e169e68b8ae59394b021eb370f8b104550c3892e4ca8cad"
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "deployerAddress": "eth:0x926E9595fb147A376800022a554C8c05444EB658",
       "sinceTimestamp": 1766424179,
       "sinceBlock": 24069615,
       "values": {
@@ -886,7 +900,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1005,6 +1019,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c",
       "sinceTimestamp": 1707420875,
       "sinceBlock": 19185554,
       "values": {
@@ -1034,10 +1049,11 @@
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x75cd470a9d1c1afc343b599b1c14731f55bb36fe8a4e844ddb88a0b791918795"
+        "0x1f65fda230b6d0df44e466b06418b2e12a401ef82c07521ad18d2f4ae6c70fb2"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x53A6eecC2dD4795Fcc68940ddc6B4d53Bd88Bd9E",
       "sinceTimestamp": 1664918591,
       "sinceBlock": 15677422,
       "values": {
@@ -1137,10 +1153,11 @@
       "address": "eth:0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
       "type": "Contract",
       "sourceHashes": [
-        "0x9fdc8650f5cfe4f5ce38accccf178614c6a57917867d6ee7fcc9c5a690ade600"
+        "0x7e15a2bf7710942237f53504e85d22680d445b01b383b5979b7c79003ea5a19a"
       ],
       "proxyType": "immutable",
       "description": "Custom escrow for SNX bridged via canonical messaging.",
+      "deployerAddress": "eth:0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe",
       "sinceTimestamp": 1620680982,
       "sinceBlock": 12409015,
       "values": {
@@ -1168,10 +1185,11 @@
       "type": "Contract",
       "template": "opstack/MIPS",
       "sourceHashes": [
-        "0xff203abbbb6edba7fff3caefb2752c4e7b786992b19c4f0f8ab568bc0a5fbf04"
+        "0x4a578c18a0b50fb7778c6a6b805dcb18427478d4002c8f7f28c2146dcfbf3a33"
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1762212215,
       "sinceBlock": 23722054,
       "values": {
@@ -1195,8 +1213,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -1212,10 +1231,11 @@
       "type": "Contract",
       "template": "opstack/FaultDisputeGame",
       "sourceHashes": [
-        "0x127a5a9b6364f01a1835b317e119b9e894fc7eedf3e9a939569f741f74378a8f"
+        "0x2987fcaf908b3baa0ae4ff6ad30ef75935c87c0b317ba03f034967803c7778ca"
       ],
       "proxyType": "immutable",
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
+      "deployerAddress": "eth:0x926E9595fb147A376800022a554C8c05444EB658",
       "sinceTimestamp": 1766424179,
       "sinceBlock": 24069615,
       "values": {
@@ -1311,10 +1331,11 @@
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x25bad2bdb7df4347412a48e271dea1489299460192b43b8ca52ed191b4940992"
+        "0x307d4cb83e682629880fe9bb874a188805e3b93cb11a2cbf80095975f1e5b04e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "deployerAddress": "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960",
       "sinceTimestamp": 1685377391,
       "sinceBlock": 17365803,
       "values": {
@@ -1379,10 +1400,11 @@
       "template": "lido/L1LidoTokensBridge",
       "sourceHashes": [
         "0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135",
-        "0xee07202651af1cf311f14f1f29908dd5524a050efc650832b6ee88c9a9cf86fd"
+        "0x2bd131300b48e6652e12d55e42a0bcaf468b74775bf0c31c2162950c78faa2c4"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.",
+      "deployerAddress": "eth:0x2a61d3ba5030Ef471C74f612962c7367ECa3a62d",
       "sinceTimestamp": 1659687799,
       "sinceBlock": 15281202,
       "values": {
@@ -1464,10 +1486,10 @@
       "type": "Contract",
       "template": "opstack/DeputyPauseModule",
       "sourceHashes": [
-        "0x6d8659eec5f14dbbacd2c5fb2ebcfab040b98237fc8ea869b3317a9e425da7bf"
+        "0xd3119ff100b38f6dbd66a573658509c10d6ddd7ab9dd522bd3401928062b128f"
       ],
       "proxyType": "immutable",
-      "description": "Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.",
+      "description": "Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1475,11 +1497,12 @@
           "role": ".GnosisSafe_modules"
         }
       ],
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1748963099,
       "sinceBlock": 22624903,
       "values": {
         "$immutable": true,
-        "deputy": "eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC",
+        "deputy": "eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c",
         "deputyAuthMessageTypehash": "0x92e47526b2e32be4f66cd2600e9cda9147735107631c0b241a067693f49b7f38",
         "eip712Domain": {
           "fields": "0x0f",
@@ -1512,13 +1535,20 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
+          "from": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian",
           "via": [
             { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
@@ -1528,12 +1558,6 @@
               "condition": "if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
             }
           ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "role": ".owner"
         }
       ],
       "directlyReceivedPermissions": [
@@ -1546,6 +1570,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c",
       "sinceTimestamp": 1707420755,
       "sinceBlock": 19185544,
       "values": {
@@ -1558,7 +1583,7 @@
           "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
           "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
-          "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
+          "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
         ],
         "$threshold": 5,
         "domainSeparator": "0xa4a9c312badf3fcaa05eafe5dc9bee8bd9316c78ee8b0bebe3115bb21b732672",
@@ -1567,7 +1592,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 55,
+        "nonce": 57,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1576,21 +1601,17 @@
       }
     },
     {
-      "address": "eth:0x92827223f6b397CE9F208eE352bacA710765cACb",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "SuperchainConfig",
       "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
       "type": "Contract",
       "template": "opstack/SuperchainConfig_expiry",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
+        "0x5fb525d1572fb90d060d122143b915059cbff39e0298b345857fd4267d7f6b28"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.",
+      "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1705954799,
       "sinceBlock": 19064589,
       "values": {
@@ -1652,10 +1673,11 @@
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
-        "0x0114d3af66179d6404d14360203dc6bcf404f23e2db4ee1b5848e923e131bc00"
+        "0xcacd38e7b52353ad3463da40b7e7a29b028f95500a82590d2b8f8ffd26b83f6d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5",
       "sinceTimestamp": 1624401464,
       "sinceBlock": 12686786,
       "values": {
@@ -1692,10 +1714,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x6B7C001F4af36A576babA2aF3b5251Fc326Ab09A",
       "sinceTimestamp": 1610850364,
       "sinceBlock": 11670007,
       "values": {
@@ -1708,7 +1731,7 @@
           "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
           "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
-          "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
+          "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea"
         ],
         "$threshold": 5,
         "domainSeparator": "0x2e5ad244d335c45fbace4ebd1736b0fad81b01591a2819baedad311ead5bce76",
@@ -1717,13 +1740,18 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 117,
+        "nonce": 118,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "Proxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
+    },
+    {
+      "address": "eth:0xa2A58E31C03C59e34ab4d996d811DA0C035BfDea",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "FeesCollector",
@@ -1736,11 +1764,12 @@
       "proxyType": "EIP1167 proxy",
       "description": "Collecting sequencer, base- and L1 fees from L2.",
       "ignoreInWatchMode": ["getNextSequenceId"],
+      "deployerAddress": "eth:0x660E77a3AAA7a90f076Ed7f3e477acd0BF443b5D",
       "sinceTimestamp": 1672938575,
       "sinceBlock": 16341988,
       "values": {
         "$implementation": "eth:0xE8E847cf573Fc8ed75621660A36AffD18c543d7E",
-        "getNextSequenceId": 134,
+        "getNextSequenceId": 135,
         "initialized": true,
         "safeMode": false
       },
@@ -1755,14 +1784,24 @@
       "type": "Contract",
       "template": "gnosisSafeModules/SaferSafes",
       "sourceHashes": [
-        "0x037b17d0072b90906969c37097eb5ed525df21e4a27ba101d5b0b5de87e66dd7"
+        "0xf3c2f517bc8bfc612fa686bea9f5a85b983b23a9d407b3a4fd3c0f18fc824469"
       ],
       "proxyType": "immutable",
       "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
+          "from": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian",
           "via": [
             { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
@@ -1771,15 +1810,6 @@
               "address": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
               "condition": "if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
             },
-            { "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "role": ".owner",
-          "via": [
             { "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92" }
           ]
         }
@@ -1796,6 +1826,7 @@
           "role": ".GnosisSafe_modules"
         }
       ],
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1764596735,
       "sinceBlock": 23919014,
       "values": { "$immutable": true, "version": "1.10.1" },
@@ -1815,11 +1846,12 @@
       "template": "opstack/OptimismPortal2",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x3410684a7a8c16c4f87db990b834ce7c3be33136857c103791b132b824bfd951"
+        "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.",
       "ignoreInWatchMode": ["params", "balance"],
+      "deployerAddress": "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960",
       "sinceTimestamp": 1685377379,
       "sinceBlock": 17365802,
       "values": {
@@ -1903,7 +1935,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516982,
-          "prevBlockNum": 24891458
+          "prevBlockNum": 25100843
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1933,6 +1965,7 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "621": "AggregateVerifier",
             "1337": "KailuaGame"
           }
         }
@@ -1950,24 +1983,20 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Optimism Security Council",
       "address": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian",
           "via": [
             { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
@@ -1975,6 +2004,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c",
       "sinceTimestamp": 1707420419,
       "sinceBlock": 19185517,
       "values": {
@@ -1993,7 +2023,7 @@
           "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
           "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
           "eth:0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
-          "eth:0x92827223f6b397CE9F208eE352bacA710765cACb"
+          "eth:0xcbC7dCeb857F0b25523618cCa0A03c419a6d7eA6"
         ],
         "$threshold": 10,
         "domainSeparator": "0xdf53d510b56e539b90b369ef08fce3631020fbf921e3136ea5f8747c20bce967",
@@ -2003,7 +2033,7 @@
         ],
         "isL2beatStillAnOwner": true,
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 57,
+        "nonce": 58,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2023,17 +2053,23 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xcbC7dCeb857F0b25523618cCa0A03c419a6d7eA6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DelayedWETH",
       "address": "eth:0xD061AB95069987868768818cc1248705351e2D0e",
       "type": "Contract",
       "template": "opstack/DelayedWETH",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1"
+        "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1759422923,
       "sinceBlock": 23491328,
       "values": {
@@ -2056,7 +2092,7 @@
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
         "systemConfig": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
-        "totalSupply": "20415188000000000000",
+        "totalSupply": "20335188000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -2079,6 +2115,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5",
       "sinceTimestamp": 1624400033,
       "sinceBlock": 12686687,
       "values": {
@@ -2099,11 +2136,12 @@
       "template": "opstack/DelayedWETH",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1"
+        "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1759422923,
       "sinceBlock": 23491328,
       "values": {
@@ -2141,11 +2179,16 @@
       "template": "opstack/DisputeGameFactory",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x0fdb3ea7873ad716dd0f5f9d2fdbab989f3b308066977be182ddc31d150e12f5"
+        "0x8f21dbc160582c568a2a925ddad1b2bb889a9f72bac2067c6e72d43b662ef538"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount", "permissionedGameArgs"],
+      "ignoreInWatchMode": [
+        "gameCount",
+        "permissionedGameArgs",
+        "permissionedGamesTotal"
+      ],
+      "deployerAddress": "eth:0xf2FbAE9b080Ae2AC24a56CF456636804FA54DB29",
       "sinceTimestamp": 1715887043,
       "sinceBlock": 19884569,
       "values": {
@@ -2188,7 +2231,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 16209,
+        "gameCount": 16910,
         "gameImpls": [
           "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -2257,7 +2300,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
@@ -2269,6 +2312,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0xab1ef74D2C461e95f4b658ca1f94aC519ad80BA2",
       "sinceTimestamp": 1650712171,
       "sinceBlock": 6297293,
       "values": {
@@ -2300,7 +2344,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -2315,6 +2359,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0x69323538b8C2b2B0E54fa5167Ebe6d19830C9641",
       "sinceTimestamp": 1770219757,
       "sinceBlock": 147310490,
       "values": {
@@ -2356,6 +2401,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.",
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2378,11 +2424,12 @@
       "template": "opstack/Layer2/L2CrossDomainMessenger",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x54d303632c7acb15a0f8c319289166a6c178e02f2c930685ab3cdcbe5b19ca29"
+        "0xc976dd7891ac59d37603c7648ea8e3a566365094a242d169a646ebfed971bab8"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2392,7 +2439,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "oeth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292652673",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292653102",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2415,11 +2462,12 @@
       "template": "opstack/Layer2/GasPriceOracle",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x3a8edff20d21cac6fe4146bd2ae47f7ec927759ff9eb35e3f32f366e91da9e15"
+        "0x2a3c7909036a30543d4aaa8e9501caab6f998a671d40cc3822f89c6239e6b8ab"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Provides the current gas price for L2 transactions.",
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2450,7 +2498,7 @@
         "$upgradeCount": 4,
         "baseFee": 0,
         "baseFeeScalar": 5227,
-        "blobBaseFee": 3265288,
+        "blobBaseFee": 14240679,
         "blobBaseFeeScalar": 1014213,
         "decimals": 6,
         "DECIMALS": 6,
@@ -2459,7 +2507,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 63866975,
+        "l1BaseFee": 244193090,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -2474,10 +2522,11 @@
       "template": "opstack/Layer2/L2StandardBridge",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0xb1264cdbc9eb25c5d5f9542dc05d942009b4443379d97b246c66b11e2319215f"
+        "0x4354fe0c1ae65beab0a93e37ea50f3964a7d5e51a2f4a33c98cb041a1d18d32c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2503,10 +2552,11 @@
       "template": "opstack/Layer2/SequencerFeeVault",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0xf13800f6674424ad602d8daac646acfc10794f492253796903ac26b7fdb3eabf"
+        "0x0441c14992309acc9ee49b32ded90950f349d5d4ab52d9d4f3380bbfb12d9957"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.",
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2522,7 +2572,8 @@
       "implementationNames": {
         "oeth:0x4200000000000000000000000000000000000011": "Proxy",
         "oeth:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011": "SequencerFeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -2531,10 +2582,11 @@
       "template": "opstack/Layer2/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x33cbc2e27551e9c304842740517adbe533ed12516557dc9a8b7c63f7d599998b"
+        "0xb2fc6f2e6343ad65e6ad1c34dcc5eeb708cc17ebdaeba5635ee74568f976ad26"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.",
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2557,10 +2609,11 @@
       "template": "opstack/Layer2/L1BlockNumber",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x0ac40be66f726a1d64904e03831f746ee3fd847922d5e54ba4ad0e509602ccf8"
+        "0xbbb8ccc7d5265fef9343b1084b2b73e3fa883345355a70c2c6f99bd6d7a8c138"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Simple contract that returns the latest L1 block number.",
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2582,10 +2635,11 @@
       "template": "opstack/Layer2/L2ERC721Bridge",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x5e60fa0150197ecbd302b46ad0cc0b6f3f024342d97f052ed2f9a8c2a6ed3846"
+        "0xe7457c0a0e9e7ba45f45fb369ff94f8a3613c4bb9083999a6eb18eaf6a077cdd"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.",
+      "deployerAddress": "oeth:0x53A6eecC2dD4795Fcc68940ddc6B4d53Bd88Bd9E",
       "sinceTimestamp": 1664918265,
       "sinceBlock": 27391910,
       "values": {
@@ -2617,7 +2671,7 @@
       "template": "opstack/Layer2/L1Block",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x1d69ab3b3edee9b7eeccc72b0980f9041777fdc5f5224f97aa5e69f0a8b68c7c"
+        "0x399e57fff478211b47d61c5acb60592a4df8ffa5716959a1a6ee2ccabc44915e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
@@ -2631,6 +2685,7 @@
         "operatorFeeConstant",
         "operatorFeeScalar"
       ],
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2654,10 +2709,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 63866975,
+        "basefee": 244193090,
         "baseFeeScalar": 5227,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
-        "blobBaseFee": 3265288,
+        "blobBaseFee": 14240679,
         "blobBaseFeeScalar": 1014213,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "oeth:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -2667,15 +2722,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x2bd5893eaebf38ec7d3fde2e6b7e2f64d5062255eb002e4054747b7f8bb2e9ef",
+        "hash": "0xeaec7a4ae948a66ca901dafd834676a9bfd8597a04f6d1a9d9b92165887fa5ee",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 24891498,
+        "number": 25100848,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 1,
-        "timestamp": 1776331787,
+        "sequenceNumber": 5,
+        "timestamp": 1778851727,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -2690,10 +2745,11 @@
       "template": "opstack/Layer2/L2ToL1MessagePasser",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x362ef15b4c72a78e42b10222a63ec31da455fc051e5fc3e6bade09de4d19bdd9"
+        "0xa8bdac224f506426db48b13c4933c57cbe3d88178a3499712638d559204c5eaa"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.",
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2716,10 +2772,11 @@
       "template": "opstack/Layer2/OptimismMintableERC721Factory",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x8dc81ca02eba8fc262038825d8c633ed5542af30e92e629f65787cf7161c0b69"
+        "0x889f9ffc10090c8df747b3523aa4fde7bcc0aade333f7ddabece6b3f005a2e80"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.",
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2833,6 +2890,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2856,10 +2914,11 @@
       "template": "opstack/Layer2/BaseFeeVault",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x0c18a8a786c9a78d1ea6a3f71ee3369ae8acc817629b8bf4934b05f8a38a41a2"
+        "0xa4fbbae0f482b898d87c15326c29fdeaa7ad5371f679bbaa0dc95b0866325cab"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2874,7 +2933,8 @@
       "implementationNames": {
         "oeth:0x4200000000000000000000000000000000000019": "Proxy",
         "oeth:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019": "BaseFeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "L1FeeVault",
@@ -2883,10 +2943,11 @@
       "template": "opstack/Layer2/L1FeeVault",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0xa5448c99f954f5f48195d1e118c0513d52fe9a6357928d1d29f617258ca935ff"
+        "0x09853f7c7e9d53511d9bcb729b4b53f1b00b56183056dd353d2cd640d9407d82"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.",
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2901,7 +2962,8 @@
       "implementationNames": {
         "oeth:0x420000000000000000000000000000000000001A": "Proxy",
         "oeth:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A": "L1FeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "OperatorFeeVault",
@@ -2910,10 +2972,12 @@
       "template": "opstack/Layer2/OperatorFeeVault",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0xc35c98e4b7bad72da3eda4ed9193d928885e62142aaf1ab37e3a298cf7a51371"
+        "0x8ee929b67fce68f8daf1dac67514e5e05678a9f554e8d6e676fa28fe81874844"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.",
+      "ignoreInWatchMode": ["totalProcessed"],
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2939,7 +3003,8 @@
       "implementationNames": {
         "oeth:0x420000000000000000000000000000000000001b": "Proxy",
         "oeth:0x4fa2Be8cd41504037F1838BcE3bCC93bC68Ff537": "OperatorFeeVault"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "SchemaRegistry",
@@ -2948,10 +3013,11 @@
       "template": "opstack/Layer2/SchemaRegistry",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x612d21c1676a505153f40dceb55f1251798affb5ed211cfc9c00efa2a51fcbfd"
+        "0xc94799f3b35c3dedb3578da655614d2690e56477b3e176966113bbf06888e05d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contracts to register schemas for the Ethereum Attestation Service (EAS).",
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -2979,10 +3045,11 @@
       "template": "opstack/Layer2/EAS",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x662edc082d445c579bb50a631e8c4137c8d9d9016da29683e3f1ccf24b835092"
+        "0x22dcc9bc6d8b0463159f8a96f6f2ee61c897a8ae5e1b684e38e74e2b25b48e66"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract containing the main logic for the Ethereum Attestation Service (EAS).",
+      "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
       "values": {
@@ -3013,11 +3080,12 @@
       "address": "oeth:0x4200000000000000000000000000000000000042",
       "type": "Contract",
       "sourceHashes": [
-        "0xbaac8c2c26ae66ca5f26a277a6fc9ad2cac1d8e638fae5ab2589b8fec8262316"
+        "0xfd1bc9c5969652ad2ef236c9f43553e0df542b2358196e74ac0e4e830615dad3"
       ],
       "proxyType": "immutable",
       "description": "The OP token contract. The minting policy is controlled by the oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "oeth:0xcDE47C1a5e2d60b9ff262b0a3b6d486048575Ad9",
       "sinceTimestamp": 1650979836,
       "sinceBlock": 6490467,
       "values": {
@@ -3047,6 +3115,7 @@
       ],
       "proxyType": "immutable",
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
+      "deployerAddress": "oeth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
       "sinceTimestamp": 1665174739,
       "sinceBlock": 28103702,
       "values": {
@@ -3072,7 +3141,6 @@
       "address": "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -3234,7 +3302,7 @@
       "address": "oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
       "type": "Contract",
       "sourceHashes": [
-        "0x8db59f0314cf1f509c68bc38ece2df168a72fa7b2863eeaacdc8742091c551c4"
+        "0xd366f745f0b211567995cba05bc2f3ec23d5b5816955b2151befbd1be367438f"
       ],
       "proxyType": "immutable",
       "receivedPermissions": [
@@ -3256,6 +3324,7 @@
           "role": ".GnosisSafe_modules"
         }
       ],
+      "deployerAddress": "oeth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1764596903,
       "sinceBlock": 144499063,
       "values": { "$immutable": true, "version": "1.10.1" },
@@ -5246,7 +5315,7 @@
     "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
+    "opstack/DisputeGameFactory": "0x46746381be2da0435ab1c70360c00f35d9759a505c3f99905e07476b72e8b79c",
     "opstack/ETHLockbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
@@ -5262,19 +5331,19 @@
     "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
-    "opstack/Layer2/OperatorFeeVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/OperatorFeeVault": "0x044085f5049dce846d88feaa0007d7805521906a1025bb3acc0ee57c09befe47",
     "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
+    "opstack/OptimismPortal2": "0x1b805f60190e91b935eb0a191e48ecec5e834022adc693965887462bd52e05a9",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24891504, "optimism": 150366545 },
-  "permissionsConfigHash": "0x98c7fc2dc5cc875a26dac44f9083a8147eb88711141ddfdbfe53b78d9a8e9572"
+  "usedBlockNumbers": { "ethereum": 25100855, "optimism": 151626520 },
+  "permissionsConfigHash": "0x74381301802ca94d21a3996795c2047c3a16da6474f39394ec25589420e7cff1"
 }

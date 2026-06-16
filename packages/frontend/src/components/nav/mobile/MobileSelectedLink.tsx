@@ -16,7 +16,7 @@ export function MobileSelectedLink({
     if (group.type === 'single') {
       return isLinkActive({ href: group.href, pathname })
     }
-    return group.links.some((link) =>
+    return [...group.links, ...(group.secondaryLinks ?? [])].some((link) =>
       isLinkActive({ href: link.href, pathname }),
     )
   })

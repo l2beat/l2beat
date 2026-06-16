@@ -1,0 +1,185 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FeeQuoter",
+  "description": "Fee oracle + price registry. It holds the per-destination-chain config (gas overheads, DA multipliers, network fee, gas multiplier, size limits, chain-family selector, etc.), the per-fee-token premium config, the per-(destChain, token) transfer fee overrides, and the live USD price tables for tokens and destination gas. The OnRamp delegates fee quoting to this contract.",
+  "category": "core",
+  "ignoreRelatives": ["owner"],
+  "types": {
+    "CCIPChainFamily": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0x2812d52c": "EVM",
+        "0x1e10bdc4": "SVM",
+        "0xac77ffec": "APTOS",
+        "0xc4e05953": "SUI",
+        "0x647e2ba9": "TVM"
+      }
+    }
+  },
+  "fields": {
+    "getStaticConfig": {
+      "description": "Immutable config: max stale gas/token price, LINK token, token decimals."
+    },
+    "getFeeTokens": {
+      "description": "Tokens accepted as CCIP fee payment. The OnRamp validates the user-supplied feeToken against this list before quoting."
+    },
+    "getAllAuthorizedCallers": {
+      "description": "Accounts authorized to write token and gas prices through updatePrices(). Typically Chainlink DON OCR transmitters and the per-chain OnRamp.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update token and destination-chain gas prices used for fee calculation."
+        }
+      ]
+    },
+    "destChainConfigs": {
+      "description": "Per-destination-chain config (isEnabled, max sizes, gas overheads, DA multipliers, chain-family selector, default token fee, gas multiplier, network fee, etc.). Replayed from DestChainAdded / DestChainConfigUpdated events; keys are CCIP chain selectors, value is the latest DestChainConfig set for that chain.",
+      "handler": {
+        "type": "event",
+        "groupBy": "destChainSelector",
+        "select": "destChainConfig",
+        "set": [
+          {
+            "event": "event DestChainAdded(uint64 indexed destChainSelector, (bool isEnabled, uint16 maxNumberOfTokensPerMsg, uint32 maxDataBytes, uint32 maxPerMsgGasLimit, uint32 destGasOverhead, uint8 destGasPerPayloadByteBase, uint8 destGasPerPayloadByteHigh, uint16 destGasPerPayloadByteThreshold, uint32 destDataAvailabilityOverheadGas, uint16 destGasPerDataAvailabilityByte, uint16 destDataAvailabilityMultiplierBps, bytes4 chainFamilySelector, bool enforceOutOfOrder, uint16 defaultTokenFeeUSDCents, uint32 defaultTokenDestGasOverhead, uint32 defaultTxGasLimit, uint64 gasMultiplierWeiPerEth, uint32 gasPriceStalenessThreshold, uint32 networkFeeUSDCents) destChainConfig)"
+          },
+          {
+            "event": "event DestChainConfigUpdated(uint64 indexed destChainSelector, (bool isEnabled, uint16 maxNumberOfTokensPerMsg, uint32 maxDataBytes, uint32 maxPerMsgGasLimit, uint32 destGasOverhead, uint8 destGasPerPayloadByteBase, uint8 destGasPerPayloadByteHigh, uint16 destGasPerPayloadByteThreshold, uint32 destDataAvailabilityOverheadGas, uint16 destGasPerDataAvailabilityByte, uint16 destDataAvailabilityMultiplierBps, bytes4 chainFamilySelector, bool enforceOutOfOrder, uint16 defaultTokenFeeUSDCents, uint32 defaultTokenDestGasOverhead, uint32 defaultTxGasLimit, uint64 gasMultiplierWeiPerEth, uint32 gasPriceStalenessThreshold, uint32 networkFeeUSDCents) destChainConfig)"
+          }
+        ]
+      },
+      "edit": [
+        "pipe",
+        [
+          "map_values",
+          [
+            "shape",
+            "isEnabled",
+            "maxNumberOfTokensPerMsg",
+            "maxDataBytes",
+            "maxPerMsgGasLimit",
+            "destGasOverhead",
+            "destGasPerPayloadByteBase",
+            "destGasPerPayloadByteHigh",
+            "destGasPerPayloadByteThreshold",
+            "destDataAvailabilityOverheadGas",
+            "destGasPerDataAvailabilityByte",
+            "destDataAvailabilityMultiplierBps",
+            ["chainFamilySelector", ["format", "CCIPChainFamily"]],
+            "enforceOutOfOrder",
+            "defaultTokenFeeUSDCents",
+            "defaultTokenDestGasOverhead",
+            "defaultTxGasLimit",
+            "gasMultiplierWeiPerEth",
+            "gasPriceStalenessThreshold",
+            "networkFeeUSDCents"
+          ]
+        ],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ]
+    },
+    "tokenTransferFeeConfig": {
+      "description": "Per-(destChain, token) transfer fee overrides (minFeeUSDCents, maxFeeUSDCents, deciBps, destGasOverhead, destBytesOverhead, isEnabled). When no override exists for a (destChain, token), the DestChainConfig defaults apply. Replayed from TokenTransferFeeConfigUpdated / TokenTransferFeeConfigDeleted events; outer keys are destination chain names, latest config per (chain, token) wins.",
+      "handler": {
+        "type": "event",
+        "groupBy": "destChainSelector",
+        "dedupBy": "token",
+        "select": ["token", "tokenTransferFeeConfig"],
+        "add": {
+          "event": "event TokenTransferFeeConfigUpdated(uint64 indexed destChainSelector, address indexed token, (uint32 minFeeUSDCents, uint32 maxFeeUSDCents, uint16 deciBps, uint32 destGasOverhead, uint32 destBytesOverhead, bool isEnabled) tokenTransferFeeConfig)"
+        },
+        "remove": {
+          "event": "event TokenTransferFeeConfigDeleted(uint64 indexed destChainSelector, address indexed token)"
+        },
+        "ignoreRelative": true
+      },
+      "edit": [
+        "pipe",
+        [
+          "map_values",
+          [
+            "map",
+            [
+              "set",
+              "tokenTransferFeeConfig",
+              [
+                "shape",
+                "minFeeUSDCents",
+                "maxFeeUSDCents",
+                "deciBps",
+                "destGasOverhead",
+                "destBytesOverhead",
+                "isEnabled"
+              ]
+            ]
+          ]
+        ],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ]
+    },
+    "allowedReports": {
+      "description": "Keystone-feeds allowlist: per-reportId permission entries that gate the FeeQuoter's IReceiver.onReport() direct-write path. Each reportId = keccak256(forwarder, workflowOwner, workflowName, reportName). The value carries the full Permission struct emitted by the owner via setReportPermissions(). Empty mapping means the Keystone direct-price-feed channel is fully disabled; only the OffRamp-via-OCR path can write prices. Replayed from ReportPermissionSet events.",
+      "handler": {
+        "type": "event",
+        "groupBy": "reportId",
+        "select": "permission",
+        "set": {
+          "event": "event ReportPermissionSet(bytes32 indexed reportId, (address forwarder, bytes10 workflowName, bytes2 reportName, address workflowOwner, bool isAllowed) permission)"
+        },
+        "ignoreRelative": true
+      },
+      "edit": [
+        "map_values",
+        [
+          "shape",
+          "forwarder",
+          "workflowName",
+          "reportName",
+          "workflowOwner",
+          "isAllowed"
+        ]
+      ]
+    },
+    "tokenPriceFeeds": {
+      "description": "Per-token Chainlink data-feed fallback config (dataFeedAddress, tokenDecimals, isEnabled). When set, the OnRamp can fall back to the feed for USD pricing if the OCR/Keystone path stale-checks fail. Replayed from PriceFeedPerTokenUpdated events. Empty mapping means no token has a data feed configured.",
+      "handler": {
+        "type": "event",
+        "groupBy": "token",
+        "select": "priceFeedConfig",
+        "set": {
+          "event": "event PriceFeedPerTokenUpdated(address indexed token, (address dataFeedAddress, uint8 tokenDecimals, bool isEnabled) priceFeedConfig)"
+        },
+        "ignoreRelative": true
+      },
+      "edit": [
+        "map_values",
+        ["shape", "dataFeedAddress", "tokenDecimals", "isEnabled"]
+      ]
+    },
+    "owner": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove fee tokens accepted by CCIP pricing."
+        },
+        {
+          "type": "interact",
+          "description": "add or remove fallback price feed oracles if the default path fails or is stale."
+        },
+        {
+          "type": "interact",
+          "description": "add or remove addresses in the authorized whitelist that can update prices."
+        },
+        {
+          "type": "interact",
+          "description": "add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits)."
+        },
+        {
+          "type": "interact",
+          "description": "update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead)."
+        }
+      ]
+    }
+  }
+}

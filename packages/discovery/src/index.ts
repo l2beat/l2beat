@@ -15,7 +15,7 @@ export {
   AddressAnalyzer,
   type Analysis,
 } from './discovery/analysis/AddressAnalyzer'
-export { codeIsEOA } from './discovery/analysis/codeIsEOA'
+export { codeIsEOA } from './discovery/analysis/bytecode'
 export { getShapeFromOutputEntry } from './discovery/analysis/findShape'
 export {
   type RefreshReason,
@@ -39,7 +39,6 @@ export { hashJsonStable } from './discovery/config/hashJsonStable'
 export {
   BasePermissionEntries,
   Permission,
-  RolePermissionEntries,
 } from './discovery/config/PermissionConfig'
 export {
   makeEntryStructureConfig,
@@ -115,7 +114,10 @@ export { generateEntrypoints } from './discovery/shared-modules/generateEntrypoi
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
 export { asStructured } from './discovery/type-casters/asStructured'
-export { get$Implementations } from './discovery/utils/extractors'
+export {
+  get$Implementations,
+  toAddressArray,
+} from './discovery/utils/extractors'
 export { getContractField } from './discovery/utils/metaGetters'
 export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
 export { getReachableEntries } from './discovery/utils/reachable'
@@ -132,7 +134,6 @@ export {
   flatteningHash,
   getHashToBeMatched,
 } from './flatten/utils'
-export { flattenStartingFrom as flattenBytecodeEquivalentStartingFrom } from './flatten-external/flatten'
 export {
   type ContractConfigSchema,
   type DiscoveryConfigSchema,

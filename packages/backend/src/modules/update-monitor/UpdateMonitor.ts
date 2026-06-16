@@ -12,6 +12,7 @@ import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import shuffle from 'lodash/shuffle'
 import type { Clock } from '../../tools/Clock'
+import { withCoreFeatureRpcMetricsContext } from '../../tools/coreFeatureRpcMetrics'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import type { WorkerPool } from './createWorkers'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
@@ -151,6 +152,18 @@ export class UpdateMonitor {
   }
 
   async updateProject(
+    runner: DiscoveryRunner,
+    project: string,
+    timestamp: UnixTime,
+  ) {
+    return await withCoreFeatureRpcMetricsContext(
+      'updateMonitor.discovery',
+      { project },
+      () => this._updateProject(runner, project, timestamp),
+    )
+  }
+
+  private async _updateProject(
     runner: DiscoveryRunner,
     project: string,
     timestamp: UnixTime,

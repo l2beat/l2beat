@@ -1,0 +1,8 @@
+Railgun features an omnipotent DAO governed by the stakers of the RAIL token. The DAO has the authority to change ZK circuit logic on the core Railgun contract, which can arbitrarily change the rules for shielded tokens; as well as manage blacklisted tokens, mint RAIL tokens and manage governance rewards. See docs here: <https://docs.railgun.org/wiki/rail-token/protocol-governance>
+
+## Governance flow
+
+1. Users stake RAIL token in the Staking contract ([0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20](https://etherscan.io/address/0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20)). Voting power is proportional to the staked amount and can be delegated to another address. Unstaking has {{stakeLocktime}} delay.
+2. Anyone can create a new proposal with an IPFS link and onchain calldata on the Voting contract ([0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC)). It enters a Sponsorship stage of {{sponsorWindow}}, where it has to be supported by {{proposalSponsorThreshold}} RAIL stake.
+3. After a {{votingStartOffset}} delay, the actual voting starts. "Yay" votes need to be cast within {{votingYayEndOffset}}, "Nay" have {{votingNayEndOffset}}. Proposal needs to reach the quorum of {{quorum}} RAIL.
+4. A passed proposal (simple majority) waits for {{executionStartOffset}} before execution and then must be executed within {{executionEndOffset}} by anyone. Execution goes via the Delegator smart contract ([0xB6d513f6222Ee92Fff975E901bd792E2513fB53B](https://etherscan.io/address/0xB6d513f6222Ee92Fff975E901bd792E2513fB53B)), which actually has permissions to modify the Railgun protocol values.

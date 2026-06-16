@@ -26,7 +26,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xF75206c49c1694594E3e69252E519434f1579876",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -211,7 +211,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -273,7 +273,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -503,7 +503,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -516,7 +516,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xF75206c49c1694594E3e69252E519434f1579876",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -907,7 +907,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xF75206c49c1694594E3e69252E519434f1579876",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -957,7 +957,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xF75206c49c1694594E3e69252E519434f1579876",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -987,7 +987,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "fastconfirm",
+          "permission": "interact",
           "from": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer",
@@ -996,7 +996,7 @@
           ]
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
@@ -1005,7 +1005,7 @@
           ]
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -1023,7 +1023,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -1079,13 +1079,13 @@
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
         {
-          "permission": "fastconfirm",
+          "permission": "interact",
           "from": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer"
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -1117,7 +1117,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xF75206c49c1694594E3e69252E519434f1579876",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -1989,5 +1989,5 @@
     "uniswap/calibur7702": "0x9f03ed41f4dd7794f1a7ad4d4e55fb891cce776ed8502eaa4e7d07f8c5861bbb"
   },
   "usedBlockNumbers": { "ethereum": 24017481 },
-  "permissionsConfigHash": "0xebb7e4eead933a6c182b0fbd1303655c7e6192d8eb85a34217bd4b26dbff0e69"
+  "permissionsConfigHash": "0x34d000985938d9cd3894a22af4cc104c248c2803981d6fdb28f4b1e32cc6bab3"
 }

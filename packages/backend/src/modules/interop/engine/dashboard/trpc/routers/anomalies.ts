@@ -2,17 +2,15 @@ import { InteropTransferClassifier } from '@l2beat/shared'
 import type { InteropBridgeType } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { router } from '../../../../../../trpc/init'
+import { protectedProcedure } from '../../../../../../trpc/procedures'
 import {
   MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+  SIDE_MISMATCH_DIFF_PERCENT,
+  SIDE_MISMATCH_MIN_VOLUME_USD,
   VALUE_DIFF_THRESHOLD_PERCENT,
 } from '../../anomalies/constants'
-import {
-  explore,
-  interpret,
-  VALUE_DIFF_ALERT_THRESHOLD_PERCENT,
-} from '../../stats'
-import { protectedProcedure } from '../procedures'
-import { router } from '../trpc'
+import { explore } from '../../stats'
 
 export interface SuspiciousTransferDto {
   plugin: string
@@ -35,13 +33,9 @@ export interface SuspiciousTransferDto {
 
 const AggregateDetailsRequest = v.object({
   id: v.string(),
-})
-
-const _AggregateExplorerRequest = v.object({
-  plugin: v.string().optional(),
-  type: v.string().optional(),
-  srcChain: v.string().optional(),
-  dstChain: v.string().optional(),
+  bridgeType: v.string(),
+  srcChain: v.string(),
+  dstChain: v.string(),
 })
 
 function toSuspiciousTransferDto(transfer: {
@@ -115,14 +109,13 @@ export function createAnomaliesRouter() {
       const aggregatedRows =
         await ctx.db.aggregatedInteropTransfer.getDailySeries()
 
-      const aggregatedItems = explore(aggregatedRows).map((row) => ({
-        ...row,
-        interpretation: interpret(row),
-      }))
+      const aggregatedItems = explore(aggregatedRows).filter(
+        (row) => row.interpretation.length > 0,
+      )
 
       return {
-        aggregateValueDiffAlertThresholdPercent:
-          VALUE_DIFF_ALERT_THRESHOLD_PERCENT,
+        aggregateSideMismatchDiffPercent: SIDE_MISMATCH_DIFF_PERCENT,
+        aggregateSideMismatchMinVolumeUsd: SIDE_MISMATCH_MIN_VOLUME_USD,
         aggregatedItems,
       }
     }),
@@ -142,10 +135,18 @@ export function createAnomaliesRouter() {
       .input(AggregateDetailsRequest)
       .query(async ({ ctx, input }) => {
         const series =
-          await ctx.db.aggregatedInteropTransfer.getDailySeriesById(input.id)
+          await ctx.db.aggregatedInteropTransfer.getDailySeriesByGroup(
+            input.id,
+            input.bridgeType as InteropBridgeType,
+            input.srcChain,
+            input.dstChain,
+          )
 
         return {
           id: input.id,
+          bridgeType: input.bridgeType as InteropBridgeType,
+          srcChain: input.srcChain,
+          dstChain: input.dstChain,
           items: series.map((point) =>
             toChartPoint({
               day: point.timestamp,

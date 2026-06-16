@@ -1,3 +1,882 @@
+Generated with discovered.json: 0x600418befcb185972254ee51e97f55e82666588b
+
+# Diff at Tue, 02 Jun 2026 13:22:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@63ce779d811ac540efbb445178f952fd5f075eb6 block: 1779963546
+- current timestamp: 1780406469
+
+## Description
+
+Vali added, cap hit (validator set closed).
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the Polygon PoS validator set.
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xf02BE0dA37dB50BEFA5a525158aa94b50F81D4B2"
+      values.$members.1:
++        "eth:0xe0e8e6bBDef7bbcf8dF1F5Ac0ab9906BFe991d8B"
+      values.$members.2:
++        "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 8 (25%)"
+    }
+```
+
+Generated with discovered.json: 0x6b3f32d89b813c35a759eebbb99e960990aa7790
+
+# Diff at Tue, 02 Jun 2026 07:46:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b3a022e9c02d6a59e5bcdfd46e210ca78757cd63 block: 1779963546
+- current timestamp: 1779963546
+
+## Description
+
+Config: add comments about the replacement auction.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779963546 (main branch discovery), not current.
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the Polygon PoS validator set.
+      fieldMeta.replacementCoolDown:
++        {"severity":"HIGH","description":"startAuction() can only be called after this epoch (compare with current epoch). this effectively closes the validator set if the cap is hit because no validators can be replaced."}
+      description:
++        "Manages the Polygon PoS validator set."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+Generated with discovered.json: 0x9a772ae3d06ca307ac85a0cf4c5804ff022f494f
+
+# Diff at Thu, 28 May 2026 13:08:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@66dc249f7108a6fbf8b6581aed0b7625deeebb2a block: 1779963546
+- current timestamp: 1779963546
+
+## Description
+
+config: format values
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779963546 (main branch discovery), not current.
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: None
++++ description: min POL stake for new validators
+      values.minDeposit:
+-        "100000000000000000000000"
++        "100,000"
+      template:
++        "polygon-pos/StakeManager"
+      fieldMeta:
++        {"minDeposit":{"description":"min POL stake for new validators"}}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861) [N/A]
+    +++ description: None
+```
+
+Generated with discovered.json: 0x0e655ef7ed0ce877dea09c221b3174ec14c4a03e
+
+# Diff at Thu, 28 May 2026 10:20:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1778679802
+- current timestamp: 1779963546
+
+## Description
+
+vali added (permissioned).
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [N/A] {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        103
++        104
+    }
+```
+
+Generated with discovered.json: 0x8eb45392a9502b63371f95e673071e4c86d8ac7e
+
+# Diff at Tue, 19 May 2026 11:44:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1d630d9c64f2d9431ff75a101bb6e0338cdffc9e block: 1778679802
+- current timestamp: 1778679802
+
+## Description
+
+All shapes have to be defined on an implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778679802 (main branch discovery), not current.
+
+```diff
+    contract RootChainManager (eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) [polygonposbridge/RootChainManagerMigrator] {
+    +++ description: None
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD","description":"move any tokens to or from the escrow.","role":".managersAC"}
+    }
+```
+
+```diff
+    contract ERC721Predicate (eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) [polygonposbridge/predicate] {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+      values.defaultAdminAC:
++        ["eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+      values.managersAC:
++        ["eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+      template:
++        "polygonposbridge/predicate"
+    }
+```
+
+```diff
+    contract PolygonMultisig (eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD","description":"assign any access control roles that can access the escrow.","role":".defaultAdminAC"}
+    }
+```
+
+Generated with discovered.json: 0xefad4ab01eb138033d007fe802dffdbc1b8818fb
+
+# Diff at Wed, 13 May 2026 13:45:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b18d53b57004d29236893505e028d7202c63b265 block: 1777964012
+- current timestamp: 1778679802
+
+## Description
+
+adjust staking reward.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [N/A] {
+    +++ description: None
+      values.CHECKPOINT_REWARD:
+-        "34695980000000000000000"
++        "29414916286149162861491"
+    }
+```
+
+Generated with discovered.json: 0x5c4d889da3d26778734b8745a8c633d9d1355a89
+
+# Diff at Fri, 08 May 2026 07:51:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777964012
+- current timestamp: 1777964012
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777964012 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) [polygonposbridge/predicate] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xda2db56264809ae744116955fe8ee8083707b093633a4d3aa1713a6d5fc0ee1c"
++        "0xf34c01b1d573f2b4c943972dabba17c260d66ef834a1b063c3c5b1da0464b9dd"
+    }
+```
+
+```diff
+    contract CustomPredicate (eth:0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xd873771bacc2ec458452d650f61ff1f7907e3a4fe09888ae8b93cd61125511fa"
++        "0x7c4e33a4135b3a62e916bcb2802aa4f8945c1e66d7573f0f9fbca21c778e41b6"
+    }
+```
+
+```diff
+    contract ERC20EscrowPredicate (eth:0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x66815b2f8b05e9960d6f4c23ca95251145298d7577c32c5e029b90f9a4e38bbb"
++        "0x15161cf43cff2ba16a062022dc8d15a222bffabce8a72476414aebf244222cac"
+    }
+```
+
+```diff
+    contract StateSender (eth:0x28e4F3a7f651294B9564800b2D01f35189A5bFbE) [polygonposbridge/StateSender] {
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
+      sourceHashes.0:
+-        "0x2f6878db7119cba5b64851fc04d0bd822ce210db74bf11ca1255f000eb88065f"
++        "0x8122ee5d6f35571649314df7645c999b72a6e3e9cd4c3d1c5959b8dc6b4e625e"
+    }
+```
+
+```diff
+    contract WithdrawManager (eth:0x2A88696e0fFA76bAA1338F2C74497cC013495922) [polygonposbridge/WithdrawManager] {
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
+      sourceHashes.0:
+-        "0x05029129ea02d46e1d659b46c83ec5822b7d15f5d332a3dd100436ebeabb01b4"
++        "0x90a87c94f5f2b145e9fae42691e8861b5ea0876e276b2b319e1649a8ca653efc"
+      sourceHashes.1:
+-        "0xda0990aeeb22bcf3c867d4f398d00bd7d2f15aef3add8c60800711185b34a09c"
++        "0x20e025af1bc435454d93b6cf985e145b760203b05705d1d0d720f50082830dcd"
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x6bcd5917763490ae131f09d4c3a6866f1af10ca4a99f233b8965efaa8c358b6a"
++        "0x49ea7dca7ae9088144634bb910a7d879e4520293a4bd957c25a0b6451c9a7401"
+    }
+```
+
+```diff
+    contract ERC721PredicateBurnOnly (eth:0x36C2503d53C6948331144b85D1e74a3B96731d1b) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf09e81f94877953f148b12864ec341367f4708956fbcd7803208c364bce87f8d"
++        "0x76759aacba9526feb38826dfeaf56f6a05126b41aafa260d8e2352cec2aa7faf"
+    }
+```
+
+```diff
+    contract DepositManager (eth:0x401F6c983eA34274ec46f84D70b31C151321188b) [polygonposbridge/DepositManager] {
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+      sourceHashes.0:
+-        "0x56357b4fdb898e49aff0370db0c900b81a28004a5c5932d0cbe0f8ac8e017b39"
++        "0x826767fc628832843afce4ce17349ccba573103cab4c382945915b3995259b98"
+      sourceHashes.1:
+-        "0xc5b5f88996b07c7bbc95a43cde9d9dd36d460beb6780e633858131ed36e1cbc9"
++        "0x2a37aadf262f095a201912294cdccc6e935e1728d64f5e59a4367abca39f66e8"
+    }
+```
+
+```diff
+    contract ERC20Predicate (eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) [polygonposbridge/predicate] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xf159b16a5d3a5070602bdcce59b317b67354f3e0daade4bd67d39fc4b7e11476"
++        "0x5d61795be40290be89c2a606f418d8753d722c036da5a377e78b478b0f943f23"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract PolygonERC20MintBurnPredicate (eth:0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x802005602f9307c4394cd8cee610c3c1373e6876b348605733983a5d3d5b9248"
++        "0xa96d5dc9c24c71deb1ce3b02a3968d5c15ce554913f1109dfb738637b57878b4"
+    }
+```
+
+```diff
+    contract StakingNFT (eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F) [polygonposbridge/StakingNFT] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x3d5900e83820883d56342fee2c6ac21046702b686ae86d2ce5d2ac1beafe8b9e"
++        "0x2f8aae1745ceefd7a79c9084c0f5e89a6b621a77d901454f54a62f56fdc147c6"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract ERC20PredicateBurnOnly (eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x64ce795eece141785456d3e10df0bf177f0b6485ced89f7cce54661ef1c811ec"
++        "0x480f11a18ba73f3bf220b01ec644e804083a6af4470bc72e9eca19368e48249c"
+    }
+```
+
+```diff
+    contract RootChainInitialImplementation (eth:0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xd8261395dc342e63946716f52052725e094de2da9b6dca487e1f7cf3cecd797f"
++        "0x2ecfe72849c16d42666972e211bde424e9557dfe7cb1b16575ebfb8db2f47c42"
+    }
+```
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x5b260eb8b498c90359fa555e522f2fdd615857ea55e37c785de7da84915bfa7d"
++        "0xc1bf1e1ffffdb1c23aebc663048d79f349bed55ade9d09b835d75d291c6d4f61"
+    }
+```
+
+```diff
+    contract Governance (eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) [polygonposbridge/Governance] {
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+      sourceHashes.1:
+-        "0x5a4efa55552545ebc05194d3649859f5731b5beb3358f26dadb38330cec78719"
++        "0xc574edf94d4eba85f85272edeca4466cf7e76f8b74a96462bcc5f165d91fa30a"
+    }
+```
+
+```diff
+    contract EtherPredicate (eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) [polygonposbridge/predicate] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x366c91202d3a2d7866e03ca63c5642da8ae32252a79ec9f171a4ddb75437df71"
++        "0x1d379529f4861356b1f5c2ddb0867a97ec594242a63138c07de67c371911e1fd"
+    }
+```
+
+```diff
+    contract RootChain (eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) [polygonposbridge/RootChain] {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+      sourceHashes.0:
+-        "0xf3a9eafd244e85252bdcfb1873e8503ed1e03781a220e97d71c01fa9dc3a5b33"
++        "0x55cb29f4a614839999c9a82b8eaccc3353be9ebdf40ba77e07f3d1facb238603"
+      sourceHashes.1:
+-        "0xd35b67d8f30e644710988f565f06bbc06eee75ae1ed4b4d46c3e193266e7163c"
++        "0xde405d310b919ef415c91bb8c9596c5f8e0f51a3ad5a48adfe236585dc3c466b"
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) [polygonposbridge/predicate] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x4dcf96c463738c373c6726e2304e718115843041080f89a520d8d6fb2f357820"
++        "0x3aac7dba4d92121e6f73162e9a3b0ce4fcd60592f91f84e0cec3fdcaa492b5d9"
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x32f8c95c75000ff3e167903d7561c542e4365588e0a7c4cdc6651b3891a40591"
++        "0x800a9eaaca3f0ccd3542904caee78ecb2176a6fc4f885369f25c5fb6c59f1a76"
+    }
+```
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract RootChainManager (eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) [polygonposbridge/RootChainManagerMigrator] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x4d461641f48e1fc41d08d5f5672126575c15044e75679ad3abcd25a23d4575d1"
++        "0x3c42aaa1ea018f27efac80dacecec3f56d62a2b8b92f2f0b56c487b57741b45f"
+    }
+```
+
+```diff
+    contract StakingInfo (eth:0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B) [polygonposbridge/StakingInfo] {
+    +++ description: Contains logging and getter functions about staking.
+      sourceHashes.0:
+-        "0x6f083446e02260d9c548d8b66bfe0bf437ae747e1e7163a71a5f1a6c4cabcd54"
++        "0xea1573aa122981cf085a3aaaabcb1f9813d1d6ba6001cb885c34eb170e66b6d4"
+    }
+```
+
+```diff
+    contract ValidatorShareFactory (eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xe388adb0a2a9179ef6156bc2aff8d97746405656abea331f24a11da4b622a864"
++        "0x8f7d87ecf4962c0debd7c27f70578f289f834e812b890c16f7fe2f28f2a16070"
+    }
+```
+
+```diff
+    contract ChainExitERC1155Predicate (eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xbde7c4ae6d29f2d5ac51feeb27ed9d65ea22f779fda4a41e97f24622dcf84a46"
++        "0x55412158ace37850905a083574e7c2bee354950e64b054dbe62a367ea114e41f"
+    }
+```
+
+```diff
+    contract ExitNFT (eth:0xDF74156420Bd57ab387B195ed81EcA36F9fABAca) [polygonposbridge/ExitNFT] {
+    +++ description: NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).
+      sourceHashes.0:
+-        "0x8ab86a61175e5d05a7397611f3be4b4979a70b9c498bf772de63c31455e9393d"
++        "0x79ca55a0bab6b9581de67f17b6e3027ed214d46de02ad0ed742bbb843be00cfc"
+    }
+```
+
+```diff
+    contract ERC721Predicate (eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xfb5adba76f3e09db109bb95a396cf305bba6d711df04b5bfd12b226816fc5556"
++        "0x3ba5e3b72dc8014129d816e9f97d23d3ff56b3b89c558939e6204ce70b662c26"
+    }
+```
+
+```diff
+    contract StakeManagerExtension (eth:0xef49Ea6996073752b6840CDA34773FFA78F78166) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0efa258772085a1651cde756807a2fa451169f701ccba9eae9d4e25cb85fa558"
++        "0x57d72ce45f5d84b0fb87ef076c7f586f53cfa9a985152dc17148249e6a365670"
+    }
+```
+
+```diff
+    contract PolygonMultisig (eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+Generated with discovered.json: 0x450dff9b983476be3cba4b83f715e6e0aa74f142
+
+# Diff at Tue, 05 May 2026 10:22:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777964012
+- current timestamp: 1777964012
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777964012 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56"
+    }
+```
+
+```diff
+    contract CustomPredicate (eth:0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313"
+    }
+```
+
+```diff
+    contract ERC20EscrowPredicate (eth:0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x80b12BD0F1793BF6CEa767Fa83Eb2068eaa17DC8"
+    }
+```
+
+```diff
+    contract StateSender (eth:0x28e4F3a7f651294B9564800b2D01f35189A5bFbE) {
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract WithdrawManager (eth:0x2A88696e0fFA76bAA1338F2C74497cC013495922) {
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313"
+    }
+```
+
+```diff
+    contract Registry (eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract ERC721PredicateBurnOnly (eth:0x36C2503d53C6948331144b85D1e74a3B96731d1b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x11222a5d5DA8AdaE9e715C843D729E71D285AA3A"
+    }
+```
+
+```diff
+    contract DepositManager (eth:0x401F6c983eA34274ec46f84D70b31C151321188b) {
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract ERC20Predicate (eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xfd550689c459422ee351b5fa1f1360F1e34588AB"
+    }
+```
+
+```diff
+    contract PolygonERC20MintBurnPredicate (eth:0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x80b12BD0F1793BF6CEa767Fa83Eb2068eaa17DC8"
+    }
+```
+
+```diff
+    contract StakingNFT (eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
+    }
+```
+
+```diff
+    contract ERC20PredicateBurnOnly (eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x11222a5d5DA8AdaE9e715C843D729E71D285AA3A"
+    }
+```
+
+```diff
+    contract RootChainInitialImplementation (eth:0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract EventsHub (eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x427cEB53c3532835CcfdBbE4c533286e15d3576E"
+    }
+```
+
+```diff
+    contract Governance (eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) {
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract EtherPredicate (eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56"
+    }
+```
+
+```diff
+    contract RootChain (eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56"
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313"
+    }
+```
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
+    }
+```
+
+```diff
+    contract RootChainManager (eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56"
+    }
+```
+
+```diff
+    contract MaticWETH (eth:0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract StakingInfo (eth:0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B) {
+    +++ description: Contains logging and getter functions about staking.
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract MerklePatriciaProof (eth:0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56"
+    }
+```
+
+```diff
+    contract ValidatorShareFactory (eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract Timelock (eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x427cEB53c3532835CcfdBbE4c533286e15d3576E"
+    }
+```
+
+```diff
+    contract  (eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract ChainExitERC1155Predicate (eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313"
+    }
+```
+
+```diff
+    contract ExitNFT (eth:0xDF74156420Bd57ab387B195ed81EcA36F9fABAca) {
+    +++ description: NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).
+      deployerAddress:
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract ERC721Predicate (eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56"
+    }
+```
+
+```diff
+    contract StakeManagerExtension (eth:0xef49Ea6996073752b6840CDA34773FFA78F78166) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x427cEB53c3532835CcfdBbE4c533286e15d3576E"
+    }
+```
+
+```diff
+    contract PolygonMultisig (eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x78655080b65f42E2ceE5FA5673689CC44D4E1cFC"
+    }
+```
+
+Generated with discovered.json: 0x201421096dc104c95bb1e112b55f0a3c842e4179
+
+# Diff at Tue, 05 May 2026 06:55:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26382144ce3c79862aee73e15f619d0a40458aae block: 1776866125
+- current timestamp: 1777964012
+
+## Description
+
+formatting and minimal refactor for the ERC20PredicateBurnOnly: https://disco.l2beat.com/diff/eth:0x626fb210bf50e201ED62cA2705c16DE2a53DC966/eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0 .
+
+## Watched changes
+
+```diff
+    contract Registry (eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.
+      values.erc20Predicate:
+-        "eth:0x626fb210bf50e201ED62cA2705c16DE2a53DC966"
++        "eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0"
+    }
+```
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        103
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20PredicateBurnOnly (eth:0x626fb210bf50e201ED62cA2705c16DE2a53DC966)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20PredicateBurnOnly (eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ERC20PredicateBurnOnly.sol                     | 469 ++++++++-------------
+ 1 file changed, 185 insertions(+), 284 deletions(-)
+```
+
+Generated with discovered.json: 0x88c90056b38c5c63760674a52efc79cb4e5c8c96
+
+# Diff at Wed, 22 Apr 2026 13:57:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b0c9883f4f9da8504a0490bf6e80c8c08daa0cb0 block: 1775561522
+- current timestamp: 1776866125
+
+## Description
+
+vali removed.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        105
++        104
+    }
+```
+
 Generated with discovered.json: 0x380da56e00ec0a417ad741b5e8bc884e951c030b
 
 # Diff at Tue, 07 Apr 2026 11:33:16 GMT:

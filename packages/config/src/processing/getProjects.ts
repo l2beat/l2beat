@@ -35,6 +35,7 @@ import {
 } from '../utils/discoveryDriven'
 import { runConfigAdjustments } from './adjustments'
 import { ecosystems } from './ecosystems'
+import { getEoaUpgradeRedWarning } from './getEoaRedWarning'
 import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
@@ -50,6 +51,7 @@ export function getProjects(): BaseProject[] {
   runConfigAdjustments()
 
   return refactored
+    .map((p): BaseProject => ({ ...p, tvsConfig: getTvsConfig(p) }))
     .concat(layer2s.map(layer2Or3ToProject))
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(ecosystems)
@@ -69,6 +71,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     id: p.id,
     name: p.display.name,
     shortName: p.display.shortName,
+    aliases: p.display.aliases,
     slug: p.display.slug,
     addedAt: p.addedAt,
 
@@ -78,7 +81,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       ?.colors,
     statuses: {
       yellowWarning: p.display.headerWarning,
-      redWarning: p.display.redWarning,
+      redWarning: getEoaUpgradeRedWarning(p.id, p.display.redWarning),
       emergencyWarning: p.display.emergencyWarning,
       reviewStatus: p.reviewStatus,
       unverifiedContracts: getProjectUnverifiedContracts(p, daBridges),
@@ -136,7 +139,6 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       stateValidationImage: p.display.stateValidationImage,
       upgradesAndGovernance:
         p.type === 'layer2' ? p.upgradesAndGovernance : undefined,
-      upgradesAndGovernanceImage: p.display.upgradesAndGovernanceImage,
     },
     customDa: p.customDa,
     tvsInfo: {
@@ -158,10 +160,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     ecosystemInfo: p.ecosystemInfo,
     interopConfig: p.interopConfig,
     // tags
-    isScaling: true,
-    isInteropProtocol: p.interopConfig ? true : undefined,
     archivedAt: p.archivedAt,
-    isUpcoming: p.isUpcoming ? true : undefined,
     hasTestnet: p.hasTestnet,
     escrows: p.config.escrows,
   }
@@ -176,8 +175,7 @@ function getType(p: ScalingProject): ProjectScalingCategory | undefined {
       // If there's a bridge in DA
       if (da.bridge.value === 'Plasma') return 'Plasma'
 
-      if (p.isUpcoming || !p.proofSystem || !p.dataAvailability)
-        return undefined
+      if (!p.proofSystem || !p.dataAvailability) return undefined
 
       const isEthereumBridge =
         da.bridge.value === 'Enshrined' || da.bridge.value === 'Self-attested' // Intmax case
@@ -212,7 +210,8 @@ function getProcessedRiskView(
   let secondLine: string | undefined
   if (challengeDelay !== undefined && executionDelay !== undefined) {
     secondLine = formatChallengeAndExecutionDelay(
-      challengeDelay + executionDelay,
+      challengeDelay,
+      executionDelay,
     )
   } else if (challengeDelay !== undefined) {
     secondLine = formatChallengePeriod(challengeDelay)
@@ -332,11 +331,9 @@ export function adjustDiscoveryInfo(
   }
 }
 
-function getTvsConfig(
-  project: ScalingProject | Bridge,
-): TvsToken[] | undefined {
-  const fileName = `${project.id.replace('=', '').replace(';', '')}.json`
-  const filePath = join(__dirname, `../../src/tvs/json/${fileName}`)
+function getTvsConfig(project: { id: ProjectId }): TvsToken[] | undefined {
+  const projectPath = project.id.replace('=', '').replace(';', '')
+  const filePath = join(__dirname, `../../src/projects/${projectPath}/tvs.json`)
 
   if (!existsSync(filePath)) {
     return undefined

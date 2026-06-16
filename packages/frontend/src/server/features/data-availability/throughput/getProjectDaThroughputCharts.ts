@@ -46,7 +46,7 @@ export type ProjectDaThroughputChartDataParams = v.infer<
 
 export async function getProjectDaThroughputCharts(
   params: ProjectDaThroughputChartDataParams,
-): Promise<getProjectDaThroughputChartsData | undefined> {
+): Promise<getProjectDaThroughputChartsData | null> {
   if (env.MOCK) {
     return getMockProjectDaThroughputCharts(params)
   }
@@ -64,7 +64,7 @@ export async function getProjectDaThroughputCharts(
     : throughputTable.data[params.projectId]
 
   if (!totalChartData || !byProjectChartData || !projectData) {
-    return undefined
+    return null
   }
 
   const from = Math.min(totalChartData.from, byProjectChartData.from)
@@ -139,7 +139,7 @@ function getMockProjectDaThroughputCharts({
     }
   }
 
-  const timestamps = generateTimestamps([from, to], 'daily')
+  const timestamps = generateTimestamps([from, to], 'day')
   return {
     totalChart: {
       data: timestamps.map((timestamp) => {

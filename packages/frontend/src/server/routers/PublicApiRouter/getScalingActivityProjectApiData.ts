@@ -14,7 +14,7 @@ export async function getScalingActivityProjectApiData({
   const isEthereum = slug === 'ethereum'
   const project = await ps.getProject({
     slug,
-    where: ['activityConfig', 'isScaling'],
+    where: ['activityConfig', 'scalingInfo'],
   })
 
   if (!project && !isEthereum) {

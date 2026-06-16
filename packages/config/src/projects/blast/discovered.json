@@ -1,7 +1,7 @@
 {
   "name": "blast",
   "timestamp": 1772118382,
-  "configHash": "0x8a92466ab214da7197b983752d54f139945aa71f5119289555b57539ae3f5448",
+  "configHash": "0x10d31037f3c243044072d60c15c694ebaa6ef9b3a3aa9eb366b1ae44aae5b0fe",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -13,10 +13,11 @@
       "address": "eth:0x0733F618118bF420b6b604c969498ecf143681a8",
       "type": "Contract",
       "sourceHashes": [
-        "0xb4bd2b8453fbde4b776b6b9653139c16e0c673e589025d3d3fe553933fdab859"
+        "0xa2ea6af2b3a3cc2b5ad3149197be1b907dc65f3d6c86523a41732093a23a72a1"
       ],
       "proxyType": "immutable",
       "description": "Yield Provider for DAI investing DAI into the MakerDAO DSR.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708813619,
       "sinceBlock": 19300419,
       "values": {
@@ -39,13 +40,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         },
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".PROPOSER"
         }
       ]
@@ -57,11 +60,12 @@
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
         "0xb3a50793a004e7679dcb326be57efe8df5bea72fc250e4fc7505b2c5dc53fb86",
-        "0xd40fa201f3d213c5e7a8e44bcd59d3f28c198741c50a733c20af045c60a2914d"
+        "0x6f18d3d375bfb0591d1169a0f990fefd6b7360221834ea0dbe6ae4bff1ac8b74"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "ignoreInWatchMode": ["params"],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812875,
       "sinceBlock": 19300357,
       "values": {
@@ -118,7 +122,7 @@
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
-        "0xb6eaecb36b3255721e6a4b99c79ab661b8c1691f6d6e630956458b67ae012104"
+        "0x68f4fccce7d06f884dca696ec976dcdecc0c4b7a2eb20d8408b860132263d170"
       ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
@@ -180,6 +184,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812851,
       "sinceBlock": 19300355,
       "values": {
@@ -198,10 +203,11 @@
       "type": "Contract",
       "sourceHashes": [
         "0x25b3b37613a93de74b5c7b795eb7f1446dfea8b9e763cfebe29c2f2881acfbb3",
-        "0x9b25fea33ece84240133b9633d6edebfa268b929644604f9ec3ef4fbcd97ac60"
+        "0x2de77137c7520591ce7be53e8fdff330d246d95d6713af63b93c30d6188df3c1"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812923,
       "sinceBlock": 19300361,
       "values": {
@@ -231,8 +237,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -247,10 +254,11 @@
       "address": "eth:0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db",
       "type": "Contract",
       "sourceHashes": [
-        "0x085a7e18c46eb9d391f5ffaf3469ac7fcb4a361abf098f4aee3e6f4c03670368"
+        "0x476a9614293e04b80561c3979a3b7d10a8725e5739275d018dce616273ee8518"
       ],
       "proxyType": "immutable",
       "description": "Yield Provider for ETH investing ETH into stETH.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708813595,
       "sinceBlock": 19300417,
       "values": {
@@ -290,28 +298,20 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "challenge",
-          "from": "eth:0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
-          "role": ".challenger"
-        },
-        {
-          "permission": "challenge",
-          "from": "eth:0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
-          "role": ".CHALLENGER"
-        },
-        {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         },
         {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".GUARDIAN"
         },
         {
@@ -319,6 +319,18 @@
           "from": "eth:0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".CHALLENGER"
         },
         {
           "permission": "interact",
@@ -419,6 +431,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708813211,
       "sinceBlock": 19300385,
       "values": {
@@ -451,11 +464,12 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0xb3a50793a004e7679dcb326be57efe8df5bea72fc250e4fc7505b2c5dc53fb86",
-        "0x5287b087cec2244d57a3cea230c0c70a9b5fd8d4fdca71f7d85d34a8a22792b1"
+        "0xfb5ca7945962ca184ae52d18bad1815f3bd10e5c86cf0f81fe43c6af0aa0a00a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812899,
       "sinceBlock": 19300359,
       "values": {
@@ -531,11 +545,12 @@
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
-        "0x62b0361291c40e624393723bdac21e4ecdb590904474346417c941734984bb25"
+        "0x3126968e259fe634511b73797b5d68920a1ac2e5949f110b67593234696d72e2"
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812983,
       "sinceBlock": 19300366,
       "values": {
@@ -587,8 +602,8 @@
       "address": "eth:0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d",
       "type": "Contract",
       "sourceHashes": [
-        "0x73794f4d5d902d84fab5db7010571b31475a0a5d0de21348cbea9f221964a26a",
-        "0x5c353b5bca59f0970c0a2ab9d5bebc21738761aa447e35d48814660b52ae9955"
+        "0xcefdabef7fe40aabfc6ac3f03c69e7ad8ac090ee14b0140126c899ea5d561fae",
+        "0xdb6261e93a3e06970df0452dfa432c4336325a7e33af8ad47989f84f13329751"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -597,6 +612,7 @@
         "totalUSDBalanceNoUpdate",
         "totalUSDShares"
       ],
+      "deployerAddress": "eth:0x52c31C77974667Bc17d3c4A336AC60A1584f18B7",
       "sinceTimestamp": 1700359187,
       "sinceBlock": 18602739,
       "values": {
@@ -655,7 +671,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -666,6 +682,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x1f97306039530ADB4173C3786e86fab5e6b90F41",
       "sinceTimestamp": 1700012495,
       "sinceBlock": 18574084,
       "values": {
@@ -698,10 +715,11 @@
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0x25b3b37613a93de74b5c7b795eb7f1446dfea8b9e763cfebe29c2f2881acfbb3",
-        "0xf5e9d1b6ac4bf84529eacc8e29c0731ef1524f2a84cbd91fb9840cf631cfff7c"
+        "0x377d7d9884c6b5a01cc0338355b17f22b16e609f1ffa70ba947c52603dc670f5"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812911,
       "sinceBlock": 19300360,
       "values": {
@@ -734,10 +752,11 @@
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0xb3a50793a004e7679dcb326be57efe8df5bea72fc250e4fc7505b2c5dc53fb86",
-        "0x3199ce561d915dec4e96a05f056d262ab4af7342a28a8c1b65b73aad49850d0e"
+        "0x4710eea9a3f4d8962d2a8a22e311386af24c308a65cfb2c25a4538ba6503480a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708813007,
       "sinceBlock": 19300368,
       "values": {
@@ -772,7 +791,7 @@
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0xb3a50793a004e7679dcb326be57efe8df5bea72fc250e4fc7505b2c5dc53fb86",
-        "0x373b0cddb16922a75ab98dfce0c4913a0970c018bfa1d55d123d4ff6511179a6"
+        "0xa8a23a23332311d341acf01f001ca6e041cc46d6e277f1c3197195d288fd1108"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
@@ -782,6 +801,7 @@
         "latestBlockNumber",
         "latestOutputIndex"
       ],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812887,
       "sinceBlock": 19300358,
       "values": {
@@ -844,11 +864,12 @@
       "type": "Contract",
       "sourceHashes": [
         "0x25b3b37613a93de74b5c7b795eb7f1446dfea8b9e763cfebe29c2f2881acfbb3",
-        "0x5d1416fc2e9565203ff83a5f989b55c635a3c9c11d7655a7d7f8e4a2e63ede7d"
+        "0xb87f66cb0d382c418fb77d2ac7850660f016f0817764937c3d267c8f4eda3088"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract managing Yield Providers for ETH.",
       "ignoreInWatchMode": ["getLockedBalance"],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812935,
       "sinceBlock": 19300362,
       "values": {
@@ -893,11 +914,12 @@
       "type": "Contract",
       "sourceHashes": [
         "0x25b3b37613a93de74b5c7b795eb7f1446dfea8b9e763cfebe29c2f2881acfbb3",
-        "0xf99e492f3d76fa74e24ea285b4e7de6199ab1f71a8de99f523785133dac44581"
+        "0x956934682bbb4fe0586d036110d75b514aac8f9dc5c5aa1958fe59d2d023d69f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).",
       "ignoreInWatchMode": ["getLockedBalance"],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812947,
       "sinceBlock": 19300363,
       "values": {
@@ -938,10 +960,11 @@
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0xb3a50793a004e7679dcb326be57efe8df5bea72fc250e4fc7505b2c5dc53fb86",
-        "0x17f0c97db13062aa8299e78c5d1a68b5152ce948b2fe10e5283857bd6a15ce4f"
+        "0xbf91cfbe2fd261a806ece3b6317522bc80d49e675dbc9334305279b3c521954b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708813019,
       "sinceBlock": 19300369,
       "values": {
@@ -987,6 +1010,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812839,
       "sinceBlock": 19300354,
       "values": {
@@ -1742,5 +1766,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 24541879 },
-  "permissionsConfigHash": "0x7d9326d0a5a6556f593ec3d92e1cd56410eddc599ff9f1645ebd973792fbf608"
+  "permissionsConfigHash": "0x16f1d94a3bec87f7a21cbc6637de2493bd238fc219bfacad18e7fe5d92050665"
 }

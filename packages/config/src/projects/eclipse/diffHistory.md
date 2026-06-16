@@ -1,3 +1,184 @@
+Generated with discovered.json: 0x07d213706ab0916a7e5791f6661728ed5b8b7e50
+
+# Diff at Fri, 08 May 2026 07:51:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1763979972
+- current timestamp: 1763979972
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763979972 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (eth:0x0706Ffc1722D53a85ba90f32807880ccee968Fed) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract Eclipse Multisig (eth:0x4720342419C1D316B948690d12C86D5b485C64E0) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract CanonicalBridgeV3 (eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a) [eclipse/CanonicalBridge] {
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+      sourceHashes.0:
+-        "0xa3f1bc495709a51f53d454130ac4b132983abbc6738a9630f44e6a8fb68b392d"
++        "0xd85948ac23a3119f71c0b5227a946f5bb5434a10105cfc5a552fd78e3aea24cd"
+    }
+```
+
+```diff
+    contract Eclipse Multisig 2 (eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract EtherBridge (eth:0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1) [eclipse/EtherBridge] {
+    +++ description: (Deprecated) Entrypoint for depositing assets. This contract calls the Mailbox contract for each deposit. In practice this path is not used for deposits.
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x6c9915deb3c1995718bd3919c08d1b3cd20ae7957820fa959345c6a6df1b2ab2"
++        "0x403f2a0bd411d79bd79c34036ed437e4cee9dec21b134bedd0f5853215e50225"
+    }
+```
+
+```diff
+    contract Mailbox (eth:0xb23B2492f7A9631104A5877F7FFA00633660968d) [eclipse/Mailbox] {
+    +++ description: (Deprecated) Mailbox contract for L1 -> L2 messaging. There is no canonical way to send messages back.
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0xba13db03312283ce922ecc440fda2277ee898ec150ba63de910c6241181199ab"
++        "0xcfd69f57a3239d9f02fb090644a39844017f8c41d817a76b65ff5ebb5989c0c6"
+    }
+```
+
+```diff
+    contract Upgrader0to1 (eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3) [eclipse/Upgrader0to1] {
+    +++ description: This contract was used for an upgrade an still retains its permissions and permissioned actors.
+      sourceHashes.0:
+-        "0x599d3ce0d649d659cb428825fa26a5ae43f782ff2acc3b65fd5d633f4a34f360"
++        "0x4730a8073feecd79d4d99b59cd8359f21aa217b6919fe326a8a4cffa5f0972db"
+    }
+```
+
+```diff
+    contract Treasury (eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644) [eclipse/Treasury] {
+    +++ description: Permissioned escrow for assets bridged to Eclipse. There is no canonical messaging and users need to trust the bridge operators to process deposits and authorize withdrawals.
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x63d1cc40bc2613e87b2d6905ffda15f04f069e3bf72cb12a2979f95a0e7010b7"
++        "0x843458049ec39573aed7225aa6a640fa6ee374ba57f280201d9336d34d7cf991"
+    }
+```
+
+Generated with discovered.json: 0x89532b127e9bee7194498e24984dbd020d804f9b
+
+# Diff at Tue, 05 May 2026 10:22:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1763979972
+- current timestamp: 1763979972
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763979972 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (eth:0x0706Ffc1722D53a85ba90f32807880ccee968Fed) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x45894CeBad0a1298D44aF2B528490693E58B322E"
+    }
+```
+
+```diff
+    contract Eclipse Multisig (eth:0x4720342419C1D316B948690d12C86D5b485C64E0) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
+    }
+```
+
+```diff
+    contract CanonicalBridgeV3 (eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a) {
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+      deployerAddress:
++        "eth:0xBb534A6Bd0440727cb5883D037DEd7358059D547"
+    }
+```
+
+```diff
+    contract Eclipse Multisig 2 (eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x33440E53476B855A56B831e7924B5aa123981726"
+    }
+```
+
+```diff
+    contract EtherBridge (eth:0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1) {
+    +++ description: (Deprecated) Entrypoint for depositing assets. This contract calls the Mailbox contract for each deposit. In practice this path is not used for deposits.
+      deployerAddress:
++        "eth:0x4B9e130Cf77103596ADC24Ed12952D80eA3f3866"
+    }
+```
+
+```diff
+    contract Mailbox (eth:0xb23B2492f7A9631104A5877F7FFA00633660968d) {
+    +++ description: (Deprecated) Mailbox contract for L1 -> L2 messaging. There is no canonical way to send messages back.
+      deployerAddress:
++        "eth:0x4B9e130Cf77103596ADC24Ed12952D80eA3f3866"
+    }
+```
+
+```diff
+    contract Upgrader0to1 (eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3) {
+    +++ description: This contract was used for an upgrade an still retains its permissions and permissioned actors.
+      deployerAddress:
++        "eth:0xBb534A6Bd0440727cb5883D037DEd7358059D547"
+    }
+```
+
+```diff
+    contract Treasury (eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644) {
+    +++ description: Permissioned escrow for assets bridged to Eclipse. There is no canonical messaging and users need to trust the bridge operators to process deposits and authorize withdrawals.
+      deployerAddress:
++        "eth:0x4B9e130Cf77103596ADC24Ed12952D80eA3f3866"
+    }
+```
+
 Generated with discovered.json: 0xff704b83c76376ac6ae6fe4b0459894a2aa77f91
 
 # Diff at Thu, 20 Nov 2025 10:58:02 GMT:

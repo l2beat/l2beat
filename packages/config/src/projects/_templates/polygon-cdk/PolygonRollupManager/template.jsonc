@@ -75,7 +75,12 @@
         },
         "pickRoleMembers": "TRUSTED_AGGREGATOR"
       },
-      "permissions": [{ "type": "aggregatePolygon" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Permissioned to post new state roots and global exit roots accompanied by ZK proofs."
+        }
+      ]
     },
     "defaultAdminAC": {
       // assuming they also have ADD_ROLLUP_TYPE, ADD_EXISTING_ROLLUP, UPDATE_ROLLUP roles

@@ -82,6 +82,22 @@ export interface InteropMissingTokenInfo {
   plugins: string[]
 }
 
+export interface InteropTransferTokenInfo {
+  chain: string
+  tokenAddress: string
+}
+
+export interface InteropTransferTokenAddress {
+  chain: string
+  address: string
+}
+
+export interface InteropTransferTokenAddressBatch {
+  latestSerialId: string | undefined
+  transferCount: number
+  tokenAddresses: InteropTransferTokenAddress[]
+}
+
 interface PartialAbstractTokenFilter {
   chain: string
   address: Address32
@@ -198,6 +214,11 @@ export interface InteropTransfersDetailedStatsRecord {
 
 export interface InteropSuspiciousTransferRecord extends InteropTransferRecord {
   valueDifferencePercent: number
+}
+
+export interface InteropTransferCursor {
+  timestamp: UnixTime
+  transferId: string
 }
 
 export class InteropTransferRepository extends BaseRepository {
@@ -343,6 +364,57 @@ export class InteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getProjectTransfersPage(options: {
+    plugins: string[]
+    snapshotTimestamp: UnixTime
+    sourceChains: string[]
+    destinationChains: string[]
+    cursor?: InteropTransferCursor
+    limit: number
+  }): Promise<InteropTransferRecord[]> {
+    if (
+      options.plugins.length === 0 ||
+      options.sourceChains.length === 0 ||
+      options.destinationChains.length === 0 ||
+      options.limit <= 0
+    ) {
+      return []
+    }
+
+    const from = options.snapshotTimestamp - UnixTime.DAY
+    let query = this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where('timestamp', '>', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(options.snapshotTimestamp))
+      .where('plugin', 'in', options.plugins)
+      .where('srcChain', 'in', options.sourceChains)
+      .where('dstChain', 'in', options.destinationChains)
+      .whereRef('srcChain', '!=', 'dstChain')
+
+    const cursor = options.cursor
+    if (cursor) {
+      const cursorDate = UnixTime.toDate(cursor.timestamp)
+      query = query.where((eb) =>
+        eb.or([
+          eb('timestamp', '<', cursorDate),
+          eb.and([
+            eb('timestamp', '=', cursorDate),
+            eb('transferId', '<', cursor.transferId),
+          ]),
+        ]),
+      )
+    }
+
+    const rows = await query
+      .orderBy('timestamp', 'desc')
+      .orderBy('transferId', 'desc')
+      .limit(options.limit)
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async getUnprocessed() {
     const rows = await this.db
       .selectFrom('InteropTransfer')
@@ -351,6 +423,41 @@ export class InteropTransferRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getTokenAddressesAfterSerialId(
+    serialId: string,
+  ): Promise<InteropTransferTokenAddressBatch> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .select([
+        'serialId',
+        'srcChain',
+        'srcTokenAddress',
+        'dstChain',
+        'dstTokenAddress',
+      ])
+      .where('serialId', '>', serialId)
+      .orderBy('serialId', 'asc')
+      .execute()
+
+    const tokenAddresses = new Map<string, InteropTransferTokenAddress>()
+    for (const row of rows) {
+      if (row.srcTokenAddress) {
+        const address = { chain: row.srcChain, address: row.srcTokenAddress }
+        tokenAddresses.set(`${address.chain}:${address.address}`, address)
+      }
+      if (row.dstTokenAddress) {
+        const address = { chain: row.dstChain, address: row.dstTokenAddress }
+        tokenAddresses.set(`${address.chain}:${address.address}`, address)
+      }
+    }
+
+    return {
+      latestSerialId: rows.at(-1)?.serialId,
+      transferCount: rows.length,
+      tokenAddresses: Array.from(tokenAddresses.values()),
+    }
   }
 
   async getWithPartialAbstractTokenIds(): Promise<InteropTransferRecord[]> {
@@ -422,6 +529,44 @@ export class InteropTransferRepository extends BaseRepository {
     return Number(result.numUpdatedRows)
   }
 
+  async markAsUnprocessedByTokens(
+    tokens: InteropTransferTokenInfo[],
+  ): Promise<number> {
+    if (tokens.length === 0) {
+      return 0
+    }
+
+    const uniqueTokens = Array.from(
+      new Map(
+        tokens.map((token) => [`${token.chain}:${token.tokenAddress}`, token]),
+      ).values(),
+    )
+
+    const result = await this.db
+      .updateTable('InteropTransfer')
+      .set({ isProcessed: false })
+      .where('isProcessed', '=', true)
+      .where((eb) =>
+        eb.or(
+          uniqueTokens.map((token) =>
+            eb.or([
+              eb.and([
+                eb('srcChain', '=', token.chain),
+                eb('srcTokenAddress', '=', token.tokenAddress),
+              ]),
+              eb.and([
+                eb('dstChain', '=', token.chain),
+                eb('dstTokenAddress', '=', token.tokenAddress),
+              ]),
+            ]),
+          ),
+        ),
+      )
+      .executeTakeFirst()
+
+    return Number(result.numUpdatedRows)
+  }
+
   async getStats(): Promise<InteropTransfersStatsRecord[]> {
     const overallStats = await this.db
       .selectFrom('InteropTransfer')
@@ -484,13 +629,19 @@ export class InteropTransferRepository extends BaseRepository {
   ): Promise<InteropTransferRecord[]> {
     if (items.length === 0) return []
 
-    const srcHashes = items.map((x) => x.srcTxHash.toLowerCase())
-    const dstHashes = items.map((x) => x.dstTxHash.toLowerCase())
     const rows = await this.db
       .selectFrom('InteropTransfer')
       .selectAll()
-      .where('srcTxHash', 'in', srcHashes)
-      .where('dstTxHash', 'in', dstHashes)
+      .where((eb) =>
+        eb.or(
+          items.map((item) =>
+            eb.and([
+              eb('srcTxHash', '=', item.srcTxHash.toLowerCase()),
+              eb('dstTxHash', '=', item.dstTxHash.toLowerCase()),
+            ]),
+          ),
+        ),
+      )
       .execute()
     return rows.map(toRecord)
   }

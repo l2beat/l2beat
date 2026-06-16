@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('muster')
 
 export const muster: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1718609683), // 2024-06-17T07:34:43Z
+  archivedAt: UnixTime(1777420800), // 2026-04-29T00:00:00Z
   additionalBadges: [BADGES.RaaS.AltLayer],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
@@ -19,10 +20,6 @@ export const muster: ScalingProject = orbitStackL3({
   display: {
     name: 'Muster',
     slug: 'muster',
-    redWarning: {
-      text: 'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
-      detailAnchor: 'permissions',
-    },
     description:
       'Muster Network is an Arbitrum Orbit L3 gaming chain aiming to transform digital ownership for brands and games while managing blockchain infrastructure and security.',
     links: {
@@ -44,6 +41,7 @@ export const muster: ScalingProject = orbitStackL3({
   chainConfig: {
     name: 'muster',
     chainId: 4078,
+    untilTimestamp: UnixTime(1777420800), // 2026-04-29T00:00:00Z
     apis: [
       {
         type: 'rpc',

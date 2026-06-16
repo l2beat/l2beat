@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Sweeper",
+  "description": "Helper that forwards all ETH or ERC20 balances it holds to a fixed receiver.",
+  "category": "bridge-external",
+  "fields": {
+    "$admin": {
+      "description": "Direct proxy admin of the Sweeper proxy.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the Sweeper implementation."
+        }
+      ]
+    },
+    "$implementation": {
+      "description": "Current Sweeper implementation.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "receiver": {
+      "description": "Fixed recipient that receives every ETH or ERC20 balance swept by this contract.",
+      "severity": "HIGH"
+    }
+  }
+}

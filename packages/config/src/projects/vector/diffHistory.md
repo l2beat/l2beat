@@ -1,3 +1,138 @@
+Generated with discovered.json: 0xb7d5857a065bf7465870328fb4b25ea05cd76991
+
+# Diff at Fri, 08 May 2026 07:52:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1763483689
+- current timestamp: 1763483689
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763483689 (main branch discovery), not current.
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) [succinct/SP1Vector] {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      sourceHashes.0:
+-        "0xca64a552160ec278e1bacf8ca23e8c71f49012ace91a33141b797451f4683731"
++        "0x0940bdd2da00547eb0c190e7c4c5648e1147c96389d9771c2749b98270fc6315"
+      sourceHashes.1:
+-        "0x0e469131222e34f50c12fe74205439de113446461e0fbd31fff1a43b081dbbeb"
++        "0xe7fda3c09c3912281f605cde13565f94a164de607ec5784e028531883f3a6077"
+    }
+```
+
+```diff
+    contract AvailBridgeV1 (eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a) [avail/AvailBridgeV1] {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      sourceHashes.0:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413"
+      sourceHashes.1:
+-        "0x069ad8329069dba1dfdae5d03c54eaa7e8c15f55fb8498db3b46e3b945330199"
++        "0x3903ac9a0d6e9221ce37976cf87cacfc141984011d05bf62c9bfffc3479f77c0"
+    }
+```
+
+```diff
+    contract Avail Multisig 2 (eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      sourceHashes.0:
+-        "0x98201d53847b5f763bccbb14f9d4e7ffa8a4ed16c8a4a388949f76850c3d1671"
++        "0x2699a8e9ab56350f4ca6bf41e86895f77f53e2cf6dcf3e9b5d3a6b309992f942"
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+Generated with discovered.json: 0xde9f4cf784d9dbb5abec8333c9b22be358cf8333
+
+# Diff at Tue, 05 May 2026 10:23:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1763483689
+- current timestamp: 1763483689
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763483689 (main branch discovery), not current.
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      deployerAddress:
++        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+```diff
+    contract AvailBridgeV1 (eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a) {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      deployerAddress:
++        "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42"
+    }
+```
+
+```diff
+    contract Avail Multisig 2 (eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xE458b870F2F59a49915591282f1Bb688901767AD"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42"
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      deployerAddress:
++        "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42"
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xE458b870F2F59a49915591282f1Bb688901767AD"
+    }
+```
+
 Generated with discovered.json: 0x91505dbf050e1d953ed41137bb6dea5122716245
 
 # Diff at Tue, 18 Nov 2025 16:35:52 GMT:

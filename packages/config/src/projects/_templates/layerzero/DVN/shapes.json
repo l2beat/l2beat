@@ -1,21 +1,21 @@
 {
   "GoogleCloudDVN.sol": {
-    "hash": "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701",
+    "hash": "0x911b7602e3af9fbebb1498ff61f953a13c6a7d49a7126219dd770ffe3f66aaae",
     "address": "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
     "blockNumber": 23667311
   },
   "CanaryDVN": {
-    "hash": "0x6891d5860b39102382c883ddfe5fb9bce9b432c06b70c867ea830ab74e5755a5",
+    "hash": "0x15af06d40884e87fb02496ccba2e672b9d7029e4a65d508bc519c657981216f9",
     "address": "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
     "blockNumber": 23667311
   },
   "HorizenDVN.sol": {
-    "hash": "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c",
+    "hash": "0xe14c8b49fee1ac4a89c3a3335072e4e7713ef67747686d0d8a5a70b1297ef7e8",
     "address": "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
     "blockNumber": 23667311
   },
   "PolyhedraDVN.sol": {
-    "hash": "0x7b47ae15df80519afbed6bca2472ab35b7e20938dfc898ececbbb6d1c7a369a0",
+    "hash": "0x32d1c1af58e3be76c191ba884890f4edd71d6d77e4e43c51dd05ab8512b9af5b",
     "address": "eth:0xdFf54e8d2B31A197DC5859739E7177AA31fC3390",
     "blockNumber": 23667311
   }

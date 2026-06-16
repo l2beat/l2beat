@@ -7,6 +7,7 @@ import {
   getPublicationEntryFromExternalPublication,
   getPublicationEntryFromGovernance,
   getPublicationEntryFromMonthlyUpdate,
+  getPublicationEntryFromOtherPublication,
 } from './utils/getPublicationEntry'
 
 export async function getPublicationsData(
@@ -15,11 +16,13 @@ export async function getPublicationsData(
 ): Promise<RenderData | undefined> {
   const appLayoutProps = await getAppLayoutProps()
   const governancePublications = getCollection('governance-publications')
+  const otherPublications = getCollection('other-publications')
   const monthlyUpdates = getCollection('monthly-updates')
   const externalPublications = getCollection('external-publications')
 
   const publications = governancePublications
     .map(getPublicationEntryFromGovernance)
+    .concat(otherPublications.map(getPublicationEntryFromOtherPublication))
     .concat(monthlyUpdates.map(getPublicationEntryFromMonthlyUpdate))
     .concat(
       externalPublications.map(getPublicationEntryFromExternalPublication),

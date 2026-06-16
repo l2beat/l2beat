@@ -212,7 +212,7 @@
       "project": "shared-sharp-verifier"
     },
     "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe": {
-      "name": "SHARPVerifier",
+      "name": "SHARPVerifier_2026_13",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
@@ -263,6 +263,11 @@
     },
     "eth:0x7ca0201319f98b5494d90d0f8dA9427C64AF135e": {
       "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7": {
+      "name": "SHARPVerifier",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },

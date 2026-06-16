@@ -20,11 +20,12 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getSP1Verifiers } from '../../templates/opStack'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('taiko')
 
@@ -70,6 +71,28 @@ const whitelistedProverCount = discovery.getContractValue<number>(
 )
 
 const chainId = 167000
+
+const proverPlural = whitelistedProverCount === 1 ? '' : 's'
+const securityCouncilStats = discovery.getMultisigStats(
+  'SignerList (Security Council)',
+)
+const taikoMultisigStats = discovery.getMultisigStats('Taiko Multisig')
+const standardProposalThreshold = discovery.getContractValue<number>(
+  'Multisig',
+  'minApprovals',
+)
+const timelockPeriod = discovery.getContractValue<string>(
+  'OptimisticTokenVotingPlugin',
+  'governanceSettings_timelockPeriod_fmt',
+)
+const minVetoPercent = discovery.getContractValue<number>(
+  'OptimisticTokenVotingPlugin',
+  'minVetoPercent',
+)
+const emergencyProposalThreshold = discovery.getContractValue<number>(
+  'EmergencyMultisig',
+  'minApprovals',
+)
 
 export const taiko: ScalingProject = {
   id: ProjectId('taiko'),
@@ -344,7 +367,7 @@ export const taiko: ScalingProject = {
   type: 'layer2',
   riskView: {
     stateValidation: {
-      description: `A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a proposal range, and SGX (Geth) is mandatory. The end state root is supplied during the \`prove\` call and is checked against the accompanying SGX/zkVM proof. Proving is currently gated by ProverWhitelist, which has ${whitelistedProverCount} whitelisted prover${whitelistedProverCount === 1 ? '' : 's'} in discovery, and becomes permissionless only after an unproven proposal is > ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} old.`,
+      description: `A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a proposal range, and SGX (Geth) is mandatory. The end state root is supplied during the \`prove\` call and is checked against the accompanying SGX/zkVM proof. Proving is currently gated by ProverWhitelist, which has ${whitelistedProverCount} whitelisted prover${proverPlural} in discovery, and becomes permissionless only after an unproven proposal is > ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} old.`,
       sentiment: 'bad',
       value: 'Multi-proofs',
       executionDelay: 0,
@@ -368,7 +391,7 @@ export const taiko: ScalingProject = {
       description: `Anyone can propose after ${formatSeconds(forcedInclusionPermissionlessDelay)} if forced inclusions are ignored, and proving becomes permissionless after ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} if a proposal remains unproven.`,
     },
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -402,7 +425,20 @@ export const taiko: ScalingProject = {
     categories: [
       {
         title: 'Validity proofs',
-        description: `Taiko uses a multi-proof system to validate state transitions. The system requires two proofs among four available verifiers: SGX (Geth), SGX (Reth), SP1, and RISC0. The use of SGX (Geth) is mandatory, while the other three can be used interchangeably. This means that a proposal range can be proven without providing a ZK proof if SGX (Geth) and SGX (Reth) are used together. New proposals target a proof submission cadence of ${formatSeconds(mainnetInboxConfig.provingWindow)}. Proving is currently centralized behind ProverWhitelist with ${whitelistedProverCount} whitelisted prover${whitelistedProverCount === 1 ? '' : 's'}. Non-whitelisted actors must wait ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} before the whitelist is dropped, and MainnetInbox currently sets minBond=${mainnetInboxConfig.minBond} and livenessBond=${mainnetInboxConfig.livenessBond}. The multi-proof system allows detecting bugs in the verifiers if they produce different results for the same proposal range. If such a bug is detected, the system gets automatically paused.`,
+        description: readProjectMarkdown(
+          'taiko',
+          'stateValidationValidityProofs',
+          {
+            provingWindow: formatSeconds(mainnetInboxConfig.provingWindow),
+            whitelistedProverCount,
+            proverPlural,
+            permissionlessProvingDelay: formatSeconds(
+              mainnetInboxConfig.permissionlessProvingDelay,
+            ),
+            minBond: mainnetInboxConfig.minBond,
+            livenessBond: mainnetInboxConfig.livenessBond,
+          },
+        ),
         references: [
           {
             title:
@@ -427,6 +463,16 @@ export const taiko: ScalingProject = {
       },
     ],
   },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('taiko', 'upgradesAndGovernance', {
+      securityCouncilStats,
+      taikoMultisigStats,
+      standardProposalThreshold,
+      timelockPeriod,
+      minVetoPercent,
+      emergencyProposalThreshold,
+    }),
+  },
   technology: {
     dataAvailability: {
       name: 'All data required for proofs is published on chain',
@@ -437,12 +483,22 @@ export const taiko: ScalingProject = {
     },
     operator: {
       name: 'The system uses whitelist-based sequencing and proving',
-      description: `The system uses a whitelist-based sequencing mechanism to allow for fast preconfirmations on the L2. On the L1, whitelisted preconfirmers can propose Taiko L2 data to the MainnetInbox contract.
-        The whitelist is managed by the \`PreconfWhitelist\` contract, which currently has ${whitelistedOperatorsCount} active operators registered.
-        Forced inclusions become mandatory after ${formatSeconds(mainnetInboxConfig.forcedInclusionDelay)} and proposing becomes permissionless after ${formatSeconds(forcedInclusionPermissionlessDelay)} if the queue is still ignored.
-        Proving is controlled separately by \`ProverWhitelist\`, which currently has ${whitelistedProverCount} whitelisted prover${whitelistedProverCount === 1 ? '' : 's'}.
-        Non-whitelisted actors must wait ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} after an unproven proposal before the whitelist is dropped. MainnetInbox currently sets minBond=${mainnetInboxConfig.minBond} and livenessBond=${mainnetInboxConfig.livenessBond}.
-        Currently, proving a proposal requires SGX (Geth), plus either SGX (Reth), SP1, or RISC0.`,
+      description: readProjectMarkdown('taiko', 'technologyOperator', {
+        whitelistedOperatorsCount,
+        forcedInclusionDelay: formatSeconds(
+          mainnetInboxConfig.forcedInclusionDelay,
+        ),
+        forcedInclusionPermissionlessDelay: formatSeconds(
+          forcedInclusionPermissionlessDelay,
+        ),
+        whitelistedProverCount,
+        proverPlural,
+        permissionlessProvingDelay: formatSeconds(
+          mainnetInboxConfig.permissionlessProvingDelay,
+        ),
+        minBond: mainnetInboxConfig.minBond,
+        livenessBond: mainnetInboxConfig.livenessBond,
+      }),
       references: [
         {
           title: 'MainnetInbox.sol - Etherscan source code, propose function',
@@ -465,9 +521,14 @@ export const taiko: ScalingProject = {
     },
     forceTransactions: {
       name: 'Users can force any transaction via L1',
-      description: `Users can submit a blob reference containing a standalone transaction by calling the \`saveForcedInclusion()\` function on the \`MainnetInbox\` contract.
-        Once any forced inclusion has been queued for ${formatSeconds(mainnetInboxConfig.forcedInclusionDelay)}, whitelisted proposers cannot submit new proposals unless they process all due forced inclusions.
-        If the oldest queued forced inclusion is still ignored for ${formatSeconds(forcedInclusionPermissionlessDelay)}, proposing becomes permissionless and anyone can include it.`,
+      description: readProjectMarkdown('taiko', 'technologyForceTransactions', {
+        forcedInclusionDelay: formatSeconds(
+          mainnetInboxConfig.forcedInclusionDelay,
+        ),
+        forcedInclusionPermissionlessDelay: formatSeconds(
+          forcedInclusionPermissionlessDelay,
+        ),
+      }),
       references: [
         {
           title:
@@ -569,6 +630,11 @@ function getTaikoVKeys(): string[] {
 
 function getVerifiers(): ChainSpecificAddress[] {
   const result: ChainSpecificAddress[] = getSP1Verifiers(discovery)
-  result.push(discovery.getContract('RiscZeroGroth16Verifier').address)
+  result.push(
+    ...discovery
+      .getContracts()
+      .filter((contract) => contract.name === 'RiscZeroGroth16Verifier')
+      .map((contract) => contract.address),
+  )
   return result
 }

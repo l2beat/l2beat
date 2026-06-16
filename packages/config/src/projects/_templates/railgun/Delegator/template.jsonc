@@ -1,0 +1,98 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Delegator",
+  "description": "Permission router proxy owned by Railgun governance.",
+  "category": "gov",
+  "ignoreRelatives": ["delegatedCallers", "verificationKeyDelegates"],
+  "fields": {
+    "owner": {
+      "description": "Current controller of the Delegator. The owner bypasses the permission bitmap and can call any target through this contract.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        { "type": "act" },
+        {
+          "type": "interact",
+          "description": "grant or revoke delegated caller permissions and transfer ownership of the Delegator."
+        }
+      ]
+    },
+    "$delegatedPermissionsRaw": {
+      "description": "Internal raw delegated permission map keyed by caller, reconstructed from GrantPermission and RevokePermission events before filtering out callers with no remaining permissions.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "groupBy": "caller",
+        "select": ["contractAddress", "selector"],
+        "add": { "event": "GrantPermission" },
+        "remove": { "event": "RevokePermission" }
+      }
+    },
+    "delegatedPermissions": {
+      "description": "Current non-owner delegated call permissions as active [caller, permissions[]] pairs, filtered to callers that still retain at least one delegated permission.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "copy": "$delegatedPermissionsRaw",
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        ["filter", ["!=", 0, ["pipe", ["get", 1], ["length"]]]]
+      ]
+    },
+    "delegatedCallers": {
+      "description": "Addresses that currently retain at least one delegated permission through the Delegator.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "copy": "$delegatedPermissionsRaw",
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        ["filter", ["!=", 0, ["pipe", ["get", 1], ["length"]]]],
+        ["map", ["get", 0]]
+      ]
+    },
+    "verificationKeyDelegates": {
+      "description": "Delegated callers currently allowed to update Railgun smart wallet SNARK verification keys through the Delegator.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "copy": "$delegatedPermissionsRaw",
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        ["filter", ["!=", 0, ["pipe", ["get", 1], ["length"]]]],
+        [
+          "filter",
+          [
+            "!=",
+            0,
+            [
+              "pipe",
+              ["get", 1],
+              [
+                "filter",
+                [
+                  "and",
+                  [
+                    "=",
+                    "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+                    ["get", "contractAddress"]
+                  ],
+                  ["=", "0x2ec0f359", ["get", "selector"]]
+                ]
+              ],
+              ["length"]
+            ]
+          ]
+        ],
+        ["map", ["get", 0]]
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update the Railgun smart wallet SNARK verifying keys through the Delegator."
+        }
+      ]
+    }
+  }
+}

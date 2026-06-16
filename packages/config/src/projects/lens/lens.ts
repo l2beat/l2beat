@@ -21,8 +21,17 @@ export const lens: ScalingProject = zkStackL2({
   additionalPurposes: ['Social'],
   additionalBadges: [BADGES.DA.AvailVector],
   addedAt: UnixTime(1716536821), // 2024-05-24T07:47:01Z
+  daAttestedByIndependentParty: true,
+  daVerifierSecureOnL1: true,
+  daVerifier7DayExitWindow: true,
+  daCommitteeDecentralized: true,
+  daVerifier30DayExitWindow: false,
+  daMechanismEconomicSecurity: false,
+  daVerifierLink:
+    'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
   display: {
     name: 'Lens',
+    aliases: ['Avara'],
     slug: 'lens',
     description:
       "Lens Network is the main social networking hub for the user base of Lens Protocol, built on a Validium using ZKsync's ZK Stack technology.",

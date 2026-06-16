@@ -1,3 +1,274 @@
+Generated with discovered.json: 0xb37bf783180fd6eaf70261a7acd75e7a6c6dae4c
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1761589819
+- current timestamp: 1761589819
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761589819 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x30c789674ad3B458886BBC9abf42EEe19EA05C1D","role":".CHALLENGER"}
+      receivedPermissions.1.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.1.role:
+-        ".GUARDIAN"
++        ".CHALLENGER"
+      receivedPermissions.1.from:
+-        "eth:0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622"
++        "eth:0x30c789674ad3B458886BBC9abf42EEe19EA05C1D"
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".GUARDIAN"}
+    }
+```
+
+```diff
+    EOA  (eth:0x853bDfF715eFeDc280C16241dD30A6d651f90aCa) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xA76E31D8471D569EfDd3D95d1b11Ce6710f4533F) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x35f71791f752c8747d8713c1ee9205bcdf1abe18
+
+# Diff at Fri, 08 May 2026 07:51:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1761589819
+- current timestamp: 1761589819
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761589819 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (eth:0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) [mantapacific/L2OutputOracle_FinalityProvider] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. The challenge period can be reduced by the FinalityRelayerManager contract.
+      sourceHashes.1:
+-        "0xdd40fbb2ff24f7f8cd28e462753c0953064c62d6fe0615fdae6724cc4d3ab04d"
++        "0x3437a7a092d08f59ae124806ebb927c551003d6c2b04bdcc21079332bb6d30c8"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x3B95bC951EE0f553ba487327278cAc44f29715E5) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x79abdbd90460fe2ac0535b5cb7b4c45284322b49a0a090d1c509cdaf35dbc87e"
++        "0x319de0f895a7da439846a4ecc59c44b03e3e05ef7a5a094d73dcf1c8c00783d3"
+    }
+```
+
+```diff
+    contract MantaMultisig (eth:0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x635ba609680c55C3bDd0B3627b4c5dB21b13c310) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xebfb36a18bcaa176678925149b43fdc5f9f943d98a6405ae1cbc26f4c168ff88"
++        "0xa338e47de7913022d970f6e0b88b4d9ab4c8da92f7b3af6eb3b0b503e5caca6b"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x895E00269A05848F3c9889EfA677D02fF7351a5D) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x29908eb7685943ff431cd384af851ce36a30997bbad880f9b4385bfc3abb86a2"
++        "0x49e02cd90b424c2058925071a8f3b775aeb9b341a032ce3791e363b78dde9d8b"
+    }
+```
+
+```diff
+    contract FinalityRelayerManager (eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E) [mantapacific/FinalityRelayerManager] {
+    +++ description: Contract managing challenge period reductions based on whitelisted signer and staked amounts. No threshold is currently enforced and no validation is done on the staked amounts. The current challenge period is set to 3d, the manta quorum can reduce it by a maximum of 1d, the bitcoin quorum can reduce it by a maximum of 1d, and the minimum challenge period allowed is set to 12h.
+      sourceHashes.0:
+-        "0x986346836d4dfb3ec6cb62cd668e6d746f8be0a370a352172dd7f7e0a7fe1320"
++        "0x3335d1c5141feebb2c3729ab3dc2810d3d9196ee836d49c75be1c2b800a77d81"
+      sourceHashes.1:
+-        "0x4d7370021f41be1d1a0890e911cd51f00ace129e2104a5dfe9d0e6c5a89a13b9"
++        "0xf4b0d7300f63b350ddc70a59fec3661591133598298907d15d5790fed519ac97"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes.1:
+-        "0xec062613f3e0e9ba555b2c11164c199a0137d5b4e9021710092037355d8ed513"
++        "0x764f7af7c65f5c5f8a363a2881d5a44a9d28dee7708a64676237c9188901e12f"
+    }
+```
+
+```diff
+    contract BLSApkRegistry (eth:0xa80f2401c8AE7D95C7995295DC2c0D651F25FD60) [mantapacific/BLSApkRegistry] {
+    +++ description: Contract used to register BLS keys and verify aggregated signatures. No specific threshold is enforced here, as all addresses to exclude from the signature check are provided as an input.
+      sourceHashes.0:
+-        "0x986346836d4dfb3ec6cb62cd668e6d746f8be0a370a352172dd7f7e0a7fe1320"
++        "0x3335d1c5141feebb2c3729ab3dc2810d3d9196ee836d49c75be1c2b800a77d81"
+      sourceHashes.1:
+-        "0x7acd12d53d6f1aa87d9d9348a7a72118d7e4a4d4fbc3f4640f1c0ba014ec5456"
++        "0xd7da580b86df23301f4afc8f5869185d1b3750b0a43e22599680a58211fd5db3"
+    }
+```
+
+Generated with discovered.json: 0xf527c5611a1b8d190154eb824e53ce53a6a6053e
+
+# Diff at Tue, 05 May 2026 10:22:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1761589819
+- current timestamp: 1761589819
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761589819 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (eth:0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. The challenge period can be reduced by the FinalityRelayerManager contract.
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x3B95bC951EE0f553ba487327278cAc44f29715E5) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract MantaMultisig (eth:0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x635ba609680c55C3bDd0B3627b4c5dB21b13c310) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract FinalityRelayerManager (eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E) {
+    +++ description: Contract managing challenge period reductions based on whitelisted signer and staked amounts. No threshold is currently enforced and no validation is done on the staked amounts. The current challenge period is set to 3d, the manta quorum can reduce it by a maximum of 1d, the bitcoin quorum can reduce it by a maximum of 1d, and the minimum challenge period allowed is set to 12h.
+      deployerAddress:
++        "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xa2DCa85BB892De55D8B262d1806114733106e8D1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract BLSApkRegistry (eth:0xa80f2401c8AE7D95C7995295DC2c0D651F25FD60) {
+    +++ description: Contract used to register BLS keys and verify aggregated signatures. No specific threshold is enforced here, as all addresses to exclude from the signature check are provided as an input.
+      deployerAddress:
++        "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01"
+    }
+```
+
+```diff
+    contract  (eth:0xab64A3Da57886cD4205176c72b8Be63C34E46366) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01"
+    }
+```
+
+```diff
+    contract  (eth:0xeC638D2C7d0F07c0245ac94e51A51Bac427d8262) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01"
+    }
+```
+
 Generated with discovered.json: 0xa610723e86ab783abf365feece2c68c12bb878e5
 
 # Diff at Fri, 12 Sep 2025 10:10:08 GMT:

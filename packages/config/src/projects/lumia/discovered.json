@@ -1,7 +1,7 @@
 {
   "name": "lumia",
   "timestamp": 1761895563,
-  "configHash": "0x2758191d8c5c462f005ef52f8d29890c5749f3270790c92c7c4b14ebd265300c",
+  "configHash": "0xca533beca2b09634a8ce92d2d807b952f54a2876e69c4508d5fddd5be9dc1b63",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -76,6 +76,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "System contract defining the prism Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).",
       "ignoreInWatchMode": ["lastAccInputHash"],
+      "deployerAddress": "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
       "sinceTimestamp": 1719499031,
       "sinceBlock": 20183666,
       "values": {

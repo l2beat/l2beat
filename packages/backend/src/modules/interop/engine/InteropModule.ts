@@ -7,7 +7,11 @@ import type { LongChainName } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import type { ApplicationModule, ModuleDependencies } from '../../types'
+import type {
+  ApplicationModule,
+  ModuleDependencies,
+  TrpcContribution,
+} from '../../types'
 import {
   createInteropPlugins,
   flattenClusters,
@@ -25,13 +29,22 @@ import { InteropCleanerLoop } from './cleaner/InteropCleanerLoop'
 import { InteropCompareLoop } from './compare/InteropCompareLoop'
 import { InteropConfigStore } from './config/InteropConfigStore'
 import { InteropMonitoringConfigStoreProxy } from './config/InteropMonitoringConfigStoreProxy'
-import { createInteropRouter } from './dashboard/InteropRouter'
+import { getProcessorsStatus } from './dashboard/impls/processors'
+import {
+  createInteropTrpcRouter,
+  type InteropTrpcRouter,
+} from './dashboard/trpc/router'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropTransferAnalyzer } from './InteropTransferAnalyzer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 import { InteropNotifier } from './notifications/InteropNotifier'
+import { instrumentInteropRpcMetricsRun } from './rpc/interopRpcMetrics'
 import { InteropSyncersManager } from './sync/InteropSyncersManager'
+
+export type InteropApplicationModule = ApplicationModule & {
+  trpc: TrpcContribution<'interop', InteropTrpcRouter>
+}
 
 export function createInteropModule({
   config,
@@ -40,7 +53,7 @@ export function createInteropModule({
   blockProcessors,
   clock,
   providers,
-}: ModuleDependencies): ApplicationModule | undefined {
+}: ModuleDependencies): InteropApplicationModule | undefined {
   if (!config.interop) {
     logger.info('Interop module disabled')
     return
@@ -95,9 +108,10 @@ export function createInteropModule({
     eventStore,
     db,
     logger,
+    providers.clients.rpcMetricsAggregator,
   )
 
-  const processors = []
+  const processors: InteropBlockProcessor[] = []
   if (config.interop.capture.enabled) {
     for (const chain of config.interop.capture.chains) {
       const processor = new InteropBlockProcessor(
@@ -123,13 +137,34 @@ export function createInteropModule({
     logger,
   )
 
-  const router = createInteropRouter(
-    db,
-    config.interop,
-    processors,
-    syncersManager,
-    logger.for('InteropRouter'),
+  const configLoops = plugins.configPlugins.map((plugin) =>
+    instrumentInteropRpcMetricsRun(plugin, 'interop.config', {
+      plugin: plugin.provides.map((config) => config.key).join(','),
+    }),
   )
+
+  const trpcRouter = createInteropTrpcRouter({
+    aggregationConfigs: config.interop.aggregation
+      ? config.interop.aggregation.configs
+      : [],
+    aggregationEnabled: config.interop.aggregation !== false,
+    captureEnabled: config.interop.capture.enabled,
+    getExplorerUrl: config.interop.dashboard.getExplorerUrl,
+    getChainsForPlugin: (pluginName) =>
+      syncersManager.getChainsForPlugin(pluginName),
+    getPluginSyncStatuses: () => syncersManager.getPluginSyncStatuses(),
+    getProcessorStatuses: () => getProcessorsStatus(processors),
+    chains: config.interop.capture.chains,
+    cleanerEnabled: config.interop.cleaner,
+    compareEnabled: config.interop.compare.enabled,
+    configSync: config.interop.config,
+    dangerousOperationsEnabled: config.interop.dangerousOperationsEnabled,
+    dashboardEnabled: config.interop.dashboard.enabled,
+    financialsEnabled: config.interop.financials.enabled,
+    matchingEnabled: config.interop.matching,
+    oneSidedChains: config.interop.oneSidedChains,
+    tokenDbClient,
+  })
 
   const compareLoops = plugins.comparePlugins.map(
     (c) => new InteropCompareLoop(db, c, logger),
@@ -155,13 +190,19 @@ export function createInteropModule({
     db,
     tokenDbClient,
     logger,
-    { analyzer: transferAnalyzer },
+    {
+      analyzer: transferAnalyzer,
+      notifier: notificationClient,
+      maxTokenPriceUsd: config.interop.financials.maxTokenPriceUsd,
+      maxTransferValueUsd: config.interop.financials.maxTransferValueUsd,
+    },
   )
 
   const relayApiClient = new RelayApiClient(new HttpClient())
   const relayRootIndexer = new RelayRootIndexer(logger)
   const relayIndexer = new RelayIndexer(
     config.interop.config.chains,
+    configStore,
     config.interop.capture.chains.map((c) => c.id),
     relayApiClient,
     db,
@@ -223,16 +264,19 @@ export function createInteropModule({
     }
     if (config.interop && config.interop.config.enabled) {
       await configStore.start()
-      for (const configLoop of plugins.configPlugins) {
+      for (const configLoop of configLoops) {
         configLoop.start()
       }
     }
     logger.info('Started', {
       comparePlugins: plugins.comparePlugins.length,
-      configPlugins: plugins.configPlugins.length,
+      configPlugins: configLoops.length,
       eventPlugins: eventPlugins.length,
     })
   }
 
-  return { routers: [router], start }
+  return {
+    trpc: { namespace: 'interop', trpcRouter },
+    start,
+  }
 }

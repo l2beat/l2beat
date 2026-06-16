@@ -1,12 +1,14 @@
-import {
-  Address32,
-  assert,
-  ChainSpecificAddress,
-  type KnownInteropBridgeType,
-} from '@l2beat/shared-pure'
+import { Address32, assert } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import type { TokenMap } from '../../engine/match/TokenMap'
-import { findParsedAround } from '../logScan'
+import {
+  findBestTransferLog,
+  findBestTransferLogByExactAmount,
+} from '../logScan'
+import {
+  getBestEffortTokenFrameworkBridgeType,
+  getTokenFrameworkBridgeType,
+} from '../tokenFrameworkBridgeTyping'
 import {
   createEventParser,
   createInteropEventType,
@@ -83,96 +85,14 @@ type OFTSentTransferData = {
   burned: boolean
 }
 
-export function getBridgeType({
-  srcTokenAddress,
-  dstTokenAddress,
-  srcWasBurned,
-  dstWasMinted,
-  srcChain,
-  dstChain,
-  tokenMap,
-  defaultBridgeType = 'burnAndMint',
-}: {
-  srcTokenAddress: Address32 | undefined
-  dstTokenAddress: Address32 | undefined
-  srcWasBurned: boolean | undefined
-  dstWasMinted: boolean | undefined
-  srcChain: string
-  dstChain: string
-  tokenMap: TokenMap
-  defaultBridgeType?: 'burnAndMint' | 'nonMinting' // defaults to burnAndMint, see above
-}): KnownInteropBridgeType | undefined {
-  if (
-    !srcTokenAddress ||
-    !dstTokenAddress ||
-    srcWasBurned === undefined ||
-    dstWasMinted === undefined
-  ) {
-    return
-  }
-
-  // chainspecificaddress does not support 'native' so we make do without the abstract map
-  if (
-    srcTokenAddress === Address32.NATIVE &&
-    dstTokenAddress === Address32.NATIVE
-  ) {
-    return 'nonMinting'
-  }
-  if (
-    srcTokenAddress === Address32.NATIVE ||
-    dstTokenAddress === Address32.NATIVE
-  ) {
-    return 'lockAndMint'
-  }
-
-  if (srcWasBurned && dstWasMinted) {
-    return 'burnAndMint'
-  }
-  if (srcWasBurned || dstWasMinted) {
-    return 'lockAndMint'
-  }
-
-  const srcAbstractToken = tokenMap.get(
-    ChainSpecificAddress.fromLong(
-      srcChain,
-      Address32.cropToEthereumAddress(srcTokenAddress),
-    ),
-  )
-  const dstAbstractToken = tokenMap.get(
-    ChainSpecificAddress.fromLong(
-      dstChain,
-      Address32.cropToEthereumAddress(dstTokenAddress),
-    ),
-  )
-  if (!srcAbstractToken || !dstAbstractToken) return
-  if (srcAbstractToken.issuer === null || dstAbstractToken.issuer === null) {
-    return defaultBridgeType
-  }
-
-  // lock + release
-  return srcAbstractToken.issuer === dstAbstractToken.issuer
-    ? 'nonMinting'
-    : 'lockAndMint'
-}
-
-function parseMatchingOFTSentTransfer(
-  log: LogToCapture['txLogs'][number],
+function hasOFTSentAmount(
+  transfer: { value: bigint },
   normalized: NormalizedOFTSentAmounts,
-): OFTSentTransferData | undefined {
-  const transfer = parseTransfer(log, null)
-  if (!transfer) return
-
-  if (
-    transfer.value !== normalized.amountSentLD &&
-    transfer.value !== normalized.amountReceivedLD
-  ) {
-    return
-  }
-
-  return {
-    address: Address32.from(log.address),
-    burned: Address32.from(transfer.to) === Address32.ZERO,
-  }
+): boolean {
+  return (
+    transfer.value === normalized.amountSentLD ||
+    transfer.value === normalized.amountReceivedLD
+  )
 }
 
 // matching both amounts due to fees
@@ -182,16 +102,31 @@ export function findOFTSentTransferData(
   startLogIndex: number,
   normalized: NormalizedOFTSentAmounts,
 ): OFTSentTransferData | undefined {
-  return (
-    findParsedAround(logs, startLogIndex, (log) => {
-      const transfer = parseMatchingOFTSentTransfer(log, normalized)
-      if (!transfer?.burned) return
-      return transfer
-    }) ??
-    findParsedAround(logs, startLogIndex, (log) =>
-      parseMatchingOFTSentTransfer(log, normalized),
-    )
+  const burnedTransferMatch = findBestTransferLog(
+    logs,
+    normalized.amountSentLD,
+    startLogIndex,
+    (log) => parseTransfer(log, null),
+    (transfer) =>
+      hasOFTSentAmount(transfer, normalized) && transfer.to === Address32.ZERO,
   )
+
+  const transfer =
+    burnedTransferMatch.transfer ??
+    findBestTransferLog(
+      logs,
+      normalized.amountSentLD,
+      startLogIndex,
+      (log) => parseTransfer(log, null),
+      (transfer) => hasOFTSentAmount(transfer, normalized),
+    ).transfer
+
+  if (!transfer) return
+
+  return {
+    address: transfer.logAddress,
+    burned: transfer.to === Address32.ZERO,
+  }
 }
 
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
@@ -293,20 +228,12 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
             packetDelivered.origin.srcEid,
           )
 
-          const matchingTransferData = findParsedAround(
+          const transferMatch = findBestTransferLogByExactAmount(
             input.txLogs,
+            oftReceived.amountReceivedLD,
             // biome-ignore lint/style/noNonNullAssertion: It's there
             input.log.logIndex!,
-            (log, _index) => {
-              const transfer = parseTransfer(log, null)
-              if (!transfer) return
-              // compare amount to not match a rogue Transfer event
-              if (transfer.value !== oftReceived.amountReceivedLD) return
-              return {
-                address: Address32.from(log.address),
-                minted: Address32.from(transfer.from) === Address32.ZERO,
-              }
-            },
+            (log) => parseTransfer(log, null),
           )
 
           return [
@@ -315,9 +242,11 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               guid,
               amountReceivedLD: oftReceived.amountReceivedLD,
               oappAddress: Address32.from(input.log.address),
-              dstTokenAddress: matchingTransferData?.address,
+              dstTokenAddress: transferMatch.transfer?.logAddress,
               dstAmount: oftReceived.amountReceivedLD,
-              minted: matchingTransferData?.minted,
+              minted: transferMatch.transfer
+                ? transferMatch.transfer.from === Address32.ZERO
+                : undefined,
             }),
           ]
         }
@@ -365,6 +294,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
           dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD,
           dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
           dstWasMinted: oftReceivedPacketDelivered.args.minted,
+          bridgeType: getBestEffortTokenFrameworkBridgeType({
+            srcWasBurned: undefined,
+            dstWasMinted: oftReceivedPacketDelivered.args.minted,
+          }),
           extraEvents: packetDelivered ? [packetDelivered] : undefined,
         }),
       ]
@@ -380,7 +313,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
     const dstTokenAddress = oftReceivedPacketDelivered.args.dstTokenAddress
     const srcWasBurned = oftSentPacketSent.args.burned
     const dstWasMinted = oftReceivedPacketDelivered.args.minted
-    const bridgeType = getBridgeType({
+    const bridgeType = getTokenFrameworkBridgeType({
       srcTokenAddress,
       dstTokenAddress,
       srcWasBurned,
@@ -434,6 +367,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
         srcAmount: oftSentPacketSent.args.amountSentLD,
         srcTokenAddress: oftSentPacketSent.args.srcTokenAddress,
         srcWasBurned: oftSentPacketSent.args.burned,
+        bridgeType: getBestEffortTokenFrameworkBridgeType({
+          srcWasBurned: oftSentPacketSent.args.burned,
+          dstWasMinted: undefined,
+        }),
         extraEvents: packetSent ? [packetSent] : undefined,
       }),
     ]

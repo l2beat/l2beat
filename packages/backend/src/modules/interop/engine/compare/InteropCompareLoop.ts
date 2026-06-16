@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { TimeLoop } from '../../../../tools/TimeLoop'
+import { withInteropRpcMetricsContext } from '../rpc/interopRpcMetrics'
 
 export interface InteropComparePlugin {
   name: string
@@ -26,8 +27,16 @@ export class InteropCompareLoop extends TimeLoop {
   }
 
   async run() {
-    await this.fetchExternalItems()
-    await this.compare()
+    await withInteropRpcMetricsContext(
+      'interop.compare',
+      {
+        plugin: this.plugin.name,
+      },
+      async () => {
+        await this.fetchExternalItems()
+        await this.compare()
+      },
+    )
   }
 
   async fetchExternalItems() {

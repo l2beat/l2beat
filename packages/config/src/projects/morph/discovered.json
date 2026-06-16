@@ -1,7 +1,7 @@
 {
   "name": "morph",
-  "timestamp": 1775810477,
-  "configHash": "0x2742757df23ff811599c5ada31eff0688b5667a0d23786423a7d98ff08aec4c8",
+  "timestamp": 1780914460,
+  "configHash": "0x68c9309767a4d70ce3346eb2f0bfb48056005aea12f0cf73cf8fb00a257eb166",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -14,8 +14,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -26,54 +27,12 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
-    },
-    {
-      "name": "ZkEvmVerifierV1",
-      "address": "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423",
-      "type": "Contract",
-      "template": "morph/ZkEvmVerifierV1",
-      "sourceHashes": [
-        "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
-      ],
-      "proxyType": "immutable",
-      "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
-      "sinceTimestamp": 1763718611,
-      "sinceBlock": 23846603,
-      "values": {
-        "$immutable": true,
-        "programVkey": "0x0059b74a8fd03c44462de3916b45ebeedb9f1158e3037e8c40b8941cbe438d7e",
-        "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
-      },
-      "implementationNames": {
-        "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423": "ZkEvmVerifierV1"
-      }
-    },
-    {
-      "name": "ZkEvmVerifierV1",
-      "address": "eth:0x059adC0Db833f7cCb12dC41BE0017626337AfA63",
-      "type": "Contract",
-      "template": "morph/ZkEvmVerifierV1",
-      "sourceHashes": [
-        "0xe768d966c7b9e6eba422736e59046849ce9b3236ab36b790ec7b87cadfa383b8"
-      ],
-      "proxyType": "immutable",
-      "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
-      "sinceTimestamp": 1775555411,
-      "sinceBlock": 24827021,
-      "values": {
-        "$immutable": true,
-        "programVkey": "0x00940d658cf507217304ec5f7ca5558e2e0fd67881485f604b63588c31a8792f",
-        "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
-        "VERSION": "v5.0.0"
-      },
-      "implementationNames": {
-        "eth:0x059adC0Db833f7cCb12dC41BE0017626337AfA63": "ZkEvmVerifierV1"
-      }
     },
     {
       "address": "eth:0x05e1d4694041aF987Af6F8402D902686018E2136",
@@ -87,7 +46,7 @@
       "template": "morph/L1Staking",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x351d32023ef4c9c047e2ded56496285abbd64e6b818f635853724d6918661122"
+        "0x0e1d68199446451f14f2a7ef0da1b4b74fb6b05a9f004eb41d199417b1985a34"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
@@ -99,6 +58,7 @@
           "role": ".whitelisted"
         }
       ],
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307471,
       "sinceBlock": 20996843,
       "values": {
@@ -154,8 +114,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -166,8 +127,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -179,10 +141,11 @@
       "template": "morph/L1ETHGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xeaf8251bfabe03ffd453e312b616d019dd7b0fa4a67298ba9756c5c13a5d8b7c"
+        "0xe92fa45dcb3b7f6f6a441a9da9924129cd8184c78382da028ad13d2e098ee90a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ETH from L1 to L2.",
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307603,
       "sinceBlock": 20996854,
       "values": {
@@ -217,8 +180,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -279,6 +243,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729306655,
       "sinceBlock": 20996776,
       "values": {
@@ -295,8 +260,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -307,7 +273,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
@@ -321,7 +287,7 @@
       "template": "morph/L1MessageQueueWithGasPriceOracle",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x06be3e07c53c199805b384f80352b668ca35f7bdb1b6d5addc8fcb490ff63eac"
+        "0x50d6f9c37241492993e369b6496118b33438cd7d17915003ca6a471686fa5229"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.",
@@ -330,6 +296,7 @@
         "nextCrossDomainMessageIndex",
         "getFirstUnfinalizedMessageEnqueueTime"
       ],
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307207,
       "sinceBlock": 20996821,
       "values": {
@@ -359,13 +326,13 @@
         ],
         "$upgradeCount": 4,
         "ENFORCED_TX_GATEWAAY": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-        "getFirstUnfinalizedMessageEnqueueTime": 1775635511,
+        "getFirstUnfinalizedMessageEnqueueTime": 1780741139,
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 25709,
+        "nextCrossDomainMessageIndex": 25845,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 25706,
+        "pendingQueueIndex": 25840,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -380,8 +347,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -393,10 +361,11 @@
       "template": "morph/L1StandardERC20Gateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xa93dc4ec78ab93af1f0e80e7f4a46479115b99d7830bcef40bc1546809b58f0c"
+        "0xd9fd1d2027fa84e5c617578022ac0b91eb03a0d519100e7b2a48aaac4ad3194c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.",
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307651,
       "sinceBlock": 20996858,
       "values": {
@@ -433,8 +402,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -475,8 +445,8 @@
       "type": "Contract",
       "template": "global/TimelockController",
       "sourceHashes": [
-        "0x5553c4f2dc9ebb4f397dabef70540cedb6c655c68ac950596144f4f8c6cbf9e8",
-        "0xd6475b362415a3692a3b5af6ae0a14fcdd0a99ac3a39ffc5523dd78dd2b00713"
+        "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc",
+        "0x201f99073fc761fc50bdc6a6f101584c6fe16793fc83bfd0ce67103f30eea656"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A timelock with access control. The current minimum delay is 0s.",
@@ -493,6 +463,7 @@
           "role": ".defaultAdminAC"
         }
       ],
+      "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
       "sinceTimestamp": 1770779267,
       "sinceBlock": 24430740,
       "values": {
@@ -557,8 +528,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -569,22 +541,23 @@
       "type": "Contract",
       "template": "morph/MultipleVersionRollupVerifier",
       "sourceHashes": [
-        "0x4e4c7881c42cbc494da4a596174de793455b993cc0a7b28aba75720d85667af7"
+        "0x3ad3420c0deb4101b654b109a060c171a56f87935a0cd82300a897e9e5085764"
       ],
       "proxyType": "immutable",
       "description": "Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.",
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1737359447,
       "sinceBlock": 21664323,
       "values": {
         "$immutable": true,
         "latestVerifier": [
           {
-            "startBatchIndex": 51566,
-            "verifier": "eth:0x059adC0Db833f7cCb12dC41BE0017626337AfA63"
+            "startBatchIndex": 53283,
+            "verifier": "eth:0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624"
           },
           {
-            "startBatchIndex": 45847,
-            "verifier": "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423"
+            "startBatchIndex": 54332,
+            "verifier": "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692"
           }
         ],
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -601,8 +574,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -613,7 +587,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
@@ -626,8 +600,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -638,8 +613,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -650,8 +626,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -662,8 +639,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -675,10 +653,11 @@
       "template": "morph/L1GatewayRouter",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xf3090fefca73bff62cc9256f5a3a138a2d248f3067048c920dde508a710a8758"
+        "0xdce116224c949553c8a2b628566e670c07759d121439f2ee728ab3a4cd2eb98f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow.",
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307555,
       "sinceBlock": 20996850,
       "values": {
@@ -715,7 +694,7 @@
       "template": "morph/Rollup",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x4ae0d375d97899b0fd3cb34e7aa502f2b652e417b27b23df262734b951560256"
+        "0x9505004977004cf77ebe02c63bae0f3420673028462e69fe68350d91356eb33b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.",
@@ -724,12 +703,13 @@
         "lastCommittedBatchIndex",
         "lastFinalizedBatchIndex"
       ],
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307507,
       "sinceBlock": 20996846,
       "values": {
         "__maxNumTxInChunk": 0,
         "$admin": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-        "$implementation": "eth:0x9e2Fb684935a32CEd121972f23BD0e4634377cA2",
+        "$implementation": "eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB",
         "$pastUpgrades": [
           [
             "2024-10-19T03:11:47.000Z",
@@ -780,9 +760,14 @@
             "2026-03-30T09:36:47.000Z",
             "0xd2892f5b4e5c8fe4bd476e83689b21f4716a38185a3923bd1fcbcf61deefb8f9",
             ["eth:0x9e2Fb684935a32CEd121972f23BD0e4634377cA2"]
+          ],
+          [
+            "2026-06-03T11:26:11.000Z",
+            "0xe9128be913e8685a928c8e8468a030a95ad44ef4ad78534c688cd721af496a54",
+            ["eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB"]
           ]
         ],
-        "$upgradeCount": 10,
+        "$upgradeCount": 11,
         "batchChallenged": 47101,
         "challengers": [
           "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -828,8 +813,8 @@
         "getMinDelayFormatted": "7d",
         "inChallenge": false,
         "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 51648,
-        "lastFinalizedBatchIndex": 51568,
+        "lastCommittedBatchIndex": 54532,
+        "lastFinalizedBatchIndex": 54442,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -848,7 +833,7 @@
       },
       "implementationNames": {
         "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60": "TransparentUpgradeableProxy",
-        "eth:0x9e2Fb684935a32CEd121972f23BD0e4634377cA2": "Rollup"
+        "eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB": "Rollup"
       }
     },
     {
@@ -857,7 +842,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
@@ -870,8 +855,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -892,6 +878,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
       "sinceTimestamp": 1770779267,
       "sinceBlock": 24430740,
       "values": {
@@ -909,8 +896,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -921,8 +909,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -933,8 +922,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -945,8 +935,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -957,11 +948,34 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
+    },
+    {
+      "name": "ZkEvmVerifierV1",
+      "address": "eth:0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x097b2bb9b3df402c802895e2e4155ea7b2fb41b6cbbc053b11d693a5ed864259"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
+      "sinceTimestamp": 1779335891,
+      "sinceBlock": 25141074,
+      "values": {
+        "$immutable": true,
+        "programVkey": "0x00c4ea13863f7b423f53140f432d7147e48b8e31660420636931c0a72459c25c",
+        "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "eth:0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624": "ZkEvmVerifierV1"
+      }
     },
     {
       "address": "eth:0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b",
@@ -969,8 +983,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -981,8 +996,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -993,8 +1009,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1005,8 +1022,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1017,8 +1035,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1030,15 +1049,10 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "role": ".challengers"
-        },
         {
           "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
@@ -1072,6 +1086,12 @@
         {
           "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "description": "can pause and unpause, revert unfinalized batches, update proof window and finalization period, manage challengers, modify the verifier address.",
           "role": ".owner"
         },
@@ -1089,6 +1109,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x05e1d4694041aF987Af6F8402D902686018E2136",
       "sinceTimestamp": 1729598531,
       "sinceBlock": 21020988,
       "values": {
@@ -1106,7 +1127,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 63,
+        "nonce": 66,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1125,7 +1146,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
@@ -1138,8 +1159,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1150,8 +1172,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1162,8 +1185,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1174,8 +1198,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1187,10 +1212,11 @@
       "template": "morph/EnforcedTxGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xb52cf98f79a1b9d6847244beac7ecf26b52a6f424a07d5be2fa8b0708c6144d6"
+        "0x294706d7e04e66317dc12b73ccc3cca5f90ce931686626f7694fecdce0d11f0c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: false.",
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729308143,
       "sinceBlock": 20996899,
       "values": {
@@ -1240,8 +1266,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1252,8 +1279,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1269,11 +1297,34 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
+    },
+    {
+      "name": "ZkEvmVerifierV1",
+      "address": "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x097b2bb9b3df402c802895e2e4155ea7b2fb41b6cbbc053b11d693a5ed864259"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
+      "sinceTimestamp": 1780291583,
+      "sinceBlock": 25220423,
+      "values": {
+        "$immutable": true,
+        "programVkey": "0x00f1b104202c89fe60d973cbf456a4e2e1ec1e7d63c61453b959dda153df798c",
+        "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692": "ZkEvmVerifierV1"
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -1282,11 +1333,12 @@
       "template": "morph/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xdddbb6a01d10a0241f53955182f6b04e5ee4ec2561e412672adae6aa9177fd49"
+        "0xa9970d78ff281a8a07d08c5be88cdd0c2ec926c46e6f34509a67a27df762ffdf"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307111,
       "sinceBlock": 20996813,
       "values": {
@@ -1313,7 +1365,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 25709,
+        "messageNonce": 25845,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -1331,8 +1383,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1343,8 +1396,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1360,7 +1414,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
@@ -1374,7 +1428,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1493,6 +1547,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x0659dF9D53A987e3aDaa9019407431413A101eF3",
       "sinceTimestamp": 1730976923,
       "sinceBlock": 21135313,
       "values": {
@@ -1511,7 +1566,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 24,
+        "nonce": 25,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1525,8 +1580,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1537,8 +1593,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1549,8 +1606,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
         }
       ]
@@ -1561,10 +1619,11 @@
       "type": "Contract",
       "template": "morph/Whitelist",
       "sourceHashes": [
-        "0x6ea636875dfe6299e58d86fdd103fb219f30d1360320b1a068ad33ca3444c8d6"
+        "0x806904d83b6e7278ee4649059b9c635b05161b0c8707ba085718168c3669bd48"
       ],
       "proxyType": "immutable",
       "description": "Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.",
+      "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729328435,
       "sinceBlock": 20998580,
       "values": {
@@ -1578,31 +1637,6 @@
     }
   ],
   "abis": {
-    "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423": [
-      "constructor(bytes32 _programVkey)",
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function programVkey() view returns (bytes32)",
-      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
-      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
-    "eth:0x059adC0Db833f7cCb12dC41BE0017626337AfA63": [
-      "constructor(bytes32 _programVkey)",
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function programVkey() view returns (bytes32)",
-      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
-      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "eth:0x0cC37d5239F9027A1269f53D83c73084D538f3a9": [
       "constructor()",
       "error ErrZeroAddress()",
@@ -1911,7 +1945,23 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "eth:0x9e2Fb684935a32CEd121972f23BD0e4634377cA2": [
+    "eth:0x9774CE99E8Ab3f13582bC6c2Bd2832e5A25C4624": [
+      "constructor(bytes32 _programVkey)",
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function programVkey() view returns (bytes32)",
+      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
+      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB": [
       "constructor(uint64 _chainID)",
       "error ErrZeroAddress()",
       "event ChallengeRes(uint256 indexed batchIndex, address indexed winner, string indexed res)",
@@ -2018,6 +2068,22 @@
       "function setPause(bool _status)",
       "function transferOwnership(address newOwner)",
       "function updateFeeVault(address _newFeeVault)"
+    ],
+    "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692": [
+      "constructor(bytes32 _programVkey)",
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function programVkey() view returns (bytes32)",
+      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
+      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0xDb0734109051DaAB5c32E45e9a5ad0548B2df714": [
       "constructor(address _messenger)",
@@ -2155,9 +2221,8 @@
     "morph/L1StandardERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "morph/MultipleVersionRollupVerifier": "0x18c849e277165d1e348f720058cc03de059801204ee5e7f09bb2a9de7fac1d8c",
     "morph/Rollup": "0xebf506a5dc75ed310a1a6d083343337d766e473d2fff9c4647dfea249d5d206b",
-    "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d",
-    "morph/ZkEvmVerifierV1": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d"
   },
-  "usedBlockNumbers": { "ethereum": 24848194 },
-  "permissionsConfigHash": "0xcf3eb2d840db74bdb77c8b097dad0e2a155b1fec37ab813f2b94fb559c1a9feb"
+  "usedBlockNumbers": { "ethereum": 25272095 },
+  "permissionsConfigHash": "0x4ba2813753b07407e48a2a18e4a6baeae3b7c5c9e799af528c179cf22286a336"
 }

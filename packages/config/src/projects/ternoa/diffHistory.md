@@ -1,3 +1,146 @@
+Generated with discovered.json: 0xce2d0c6e8fefe675a91387d3710dec1227bbc399
+
+# Diff at Fri, 12 Jun 2026 10:19:06 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1768816541
+- current timestamp: 1768816541
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768816541 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x49015545B46B07082bd7faf2633643eae87710EC) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0xf8397d9de8deeb756369933f81c34ea312c0031a
+
+# Diff at Tue, 09 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1768816541
+- current timestamp: 1768816541
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768816541 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xA2Ce8D246889Db0F1Cb615E2E1231790cd5244A7) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xe07d24705a596fd881042e6e76c8230166ef260e
+
+# Diff at Fri, 08 May 2026 07:52:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1768816541
+- current timestamp: 1768816541
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768816541 (main branch discovery), not current.
+
+```diff
+    contract Validium (eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789) [polygon-cdk/PolygonZkEVM] {
+    +++ description: The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.
+      sourceHashes.1:
+-        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
++        "0x5684ac32eb941b26475b5792fd1549caa9c2a7b9da3c5163c16ca5cd4eb4b4a5"
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (eth:0xB408a216927d31A27fd96176dbF1B825630f0301) [polygon-cdk/PolygonDataCommittee] {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).
+      sourceHashes.1:
+-        "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
++        "0x104785224960bd811f19412b23435d0d80fa4eb4d05a7d50a857009b583bafa5"
+    }
+```
+
+Generated with discovered.json: 0x336f659ead2db077614917c3e8e539bb3031ce9c
+
+# Diff at Tue, 05 May 2026 10:23:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1768816541
+- current timestamp: 1768816541
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768816541 (main branch discovery), not current.
+
+```diff
+    contract Validium (eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789) {
+    +++ description: The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.
+      deployerAddress:
++        "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
+    }
+```
+
+```diff
+    contract Verifier (eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      deployerAddress:
++        "eth:0x082cCe3072A26a3871D3e5D40afB425fF5038Cf6"
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (eth:0xB408a216927d31A27fd96176dbF1B825630f0301) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).
+      deployerAddress:
++        "eth:0x49015545B46B07082bd7faf2633643eae87710EC"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x49015545B46B07082bd7faf2633643eae87710EC"
+    }
+```
+
 Generated with discovered.json: 0xb8649cd15536d565128dafc8ee692515ce5eea36
 
 # Diff at Mon, 19 Jan 2026 09:56:47 GMT:

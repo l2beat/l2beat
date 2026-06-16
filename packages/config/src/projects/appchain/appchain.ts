@@ -1,7 +1,6 @@
-import { type ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
-import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ESPRESSO } from '../../common/sequencing'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -10,11 +9,15 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('appchain')
 
-const succinctConfig = discovery.getContractValue<{
-  verifierId: string
-  aggregatorId: string
-  zkVerifier: ChainSpecificAddress
-}>('NitroEnclaveVerifier', 'succintZkConfig')
+const sequencerInbox = discovery.getContract('SequencerInbox')
+const outbox = discovery.getContract('Outbox')
+assert(
+  sequencerInbox.sinceTimestamp !== undefined &&
+    outbox.sinceTimestamp !== undefined,
+)
+const genesisTimestamp = UnixTime(
+  Math.min(sequencerInbox.sinceTimestamp, outbox.sinceTimestamp),
+)
 
 export const appchain: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1744635768), // 2025-04-14T14:42:48Z
@@ -65,10 +68,21 @@ export const appchain: ScalingProject = orbitStackL2({
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
-  sequencerInbox: discovery.getContract('SequencerInbox'),
-  nonTemplateZkVerifiers: [succinctConfig.zkVerifier],
-  nonTemplateProgramHashes: [
-    PROGRAM_HASHES(succinctConfig.verifierId),
-    PROGRAM_HASHES(succinctConfig.aggregatorId),
+  sequencerInbox,
+  additionalTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(sequencerInbox.address),
+        selector: '0x37501551',
+        functionSignature:
+          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, bytes quote)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
   ],
 })

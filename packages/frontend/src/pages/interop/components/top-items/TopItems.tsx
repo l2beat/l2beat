@@ -9,18 +9,26 @@ import type { TopItems } from '~/server/features/scaling/interop/utils/getTopIte
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
-type TopItem = {
+export type TopItem = {
   id?: string
   displayName: string
   issuer?: string | null
   iconUrl: string
   volume: number | null
+  href?: string
 }
 
-type InteropTopItemsCellProps = {
-  topItems: TopItems<TopItem>
-  setIsOpen: (isOpen: boolean) => void
-}
+type InteropTopItemsCellProps =
+  | {
+      topItems: TopItems<TopItem>
+      hideDialog: true
+      setIsOpen?: never
+    }
+  | {
+      topItems: TopItems<TopItem>
+      hideDialog?: false
+      setIsOpen: (isOpen: boolean) => void
+    }
 
 const buttonVariants = cva('group/dialog-trigger flex items-center', {
   variants: {
@@ -31,17 +39,20 @@ const buttonVariants = cva('group/dialog-trigger flex items-center', {
   },
 })
 
-const remainingCountVariants = cva(
-  'font-bold group-hover/dialog-trigger:underline',
-  {
-    variants: {
-      type: {
-        default: 'text-label-value-13',
-        cell: 'text-label-value-15',
-      },
+const remainingCountVariants = cva('font-bold', {
+  variants: {
+    type: {
+      default: 'text-label-value-13',
+      cell: 'text-label-value-15',
+    },
+    hideDialog: {
+      false: 'group-hover/dialog-trigger:underline',
     },
   },
-)
+  defaultVariants: {
+    hideDialog: false,
+  },
+})
 
 const iconVariants = cva('rounded-full bg-white', {
   variants: {
@@ -57,17 +68,13 @@ export function InteropTopItems({
   setIsOpen,
   className,
   type = 'default',
+  hideDialog,
   ...rest
 }: InteropTopItemsCellProps &
   Omit<React.ComponentProps<'button'>, 'type'> &
   VariantProps<typeof buttonVariants>) {
-  return (
-    <button
-      type="button"
-      className={buttonVariants({ type, className })}
-      onClick={() => setIsOpen(true)}
-      {...rest}
-    >
+  const content = (
+    <>
       <div className="flex items-center">
         {topItems.items.map((item, i) => (
           <ItemIconWithTooltip
@@ -75,13 +82,33 @@ export function InteropTopItems({
             item={item}
             index={i}
             type={type}
+            href={item.href}
             className={cn(i !== topItems.items.length - 1 && '-mr-1.5')}
           />
         ))}
       </div>
       {topItems.remainingCount > 0 && (
-        <RemainingCount topItems={topItems} type={type} />
+        <RemainingCount
+          topItems={topItems}
+          type={type}
+          hideDialog={hideDialog}
+        />
       )}
+    </>
+  )
+
+  if (hideDialog) {
+    return <div className={buttonVariants({ type, className })}>{content}</div>
+  }
+
+  return (
+    <button
+      type="button"
+      className={buttonVariants({ type, className })}
+      onClick={() => setIsOpen(true)}
+      {...rest}
+    >
+      {content}
     </button>
   )
 }
@@ -89,11 +116,12 @@ export function InteropTopItems({
 function RemainingCount({
   topItems,
   type,
+  hideDialog,
 }: {
   topItems: TopItems<TopItem>
 } & VariantProps<typeof remainingCountVariants>) {
   return (
-    <span className={remainingCountVariants({ type })}>
+    <span className={remainingCountVariants({ type, hideDialog })}>
       +{topItems.remainingCount}
       {type === 'default' ? ' more' : ''}
     </span>
@@ -104,22 +132,28 @@ function ItemIconWithTooltip({
   item,
   index,
   type,
+  href,
   className,
 }: {
   item: TopItem
   index: number
+  href?: string
   className?: string
 } & VariantProps<typeof iconVariants>) {
+  const icon = (
+    <img
+      key={item.id}
+      src={item.iconUrl}
+      alt={item.displayName}
+      className={iconVariants({ type, className })}
+      style={{ zIndex: 5 - index }}
+    />
+  )
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <img
-          key={item.id}
-          src={item.iconUrl}
-          alt={item.displayName}
-          className={iconVariants({ type, className })}
-          style={{ zIndex: 5 - index }}
-        />
+        {href ? <a href={href}>{icon}</a> : icon}
       </TooltipTrigger>
       <TooltipContent>
         <p className="font-bold text-label-value-15">{item.displayName}</p>

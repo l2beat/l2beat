@@ -1,7 +1,7 @@
 {
   "name": "edgechain",
-  "timestamp": 1773325467,
-  "configHash": "0xa7becb07ed42d3008aaf37e6e041bd52775f691320f19341f545689042c37c8e",
+  "timestamp": 1781176973,
+  "configHash": "0x65361a4bf4af796701b00747defda098131dcf72710ed5183c0839274546170b",
   "entries": [
     {
       "address": "arb1:0x001271c57AeC639952B5201D052767c316755512",
@@ -19,10 +19,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
-        "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
+        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1722965232,
       "sinceBlock": 240101779,
       "values": { "$immutable": true },
@@ -37,10 +38,11 @@
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x12b277cae4866b3d1f1772fcb7f861dc23247452179f0736c9dbe7012f6c14f6"
+        "0xbcc7c87f75509deb2df1f6e2f6388514c4bdb5807f953974c9687b19d36b2475"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
+      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761512772,
       "sinceBlock": 393715818,
       "values": {
@@ -73,8 +75,8 @@
       "type": "Contract",
       "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
-        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
+        "0xb739f8156f36efd1dca81c7048413241da1e5bf4a5f98001523a474136b8defd",
+        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
@@ -84,6 +86,7 @@
         "latestNodeCreated",
         "lastStakeBlock"
       ],
+      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761511538,
       "sinceBlock": 393710880,
       "values": {
@@ -104,7 +107,7 @@
         ],
         "$upgradeCount": 1,
         "anyTrustFastConfirmer": "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836",
-        "arbOsFromWmRoot": "ArbOS v40 wasmModuleRoot",
+        "arbOsFromWmRoot": "ArbOS v51.1 wasmModuleRoot",
         "baseStake": 0,
         "bridge": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
         "chainId": 3343,
@@ -113,13 +116,13 @@
         "confirmPeriodBlocks": 50400,
         "currentRequiredStake": 0,
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 54459,
+        "firstUnresolvedNode": 106983,
         "inbox": "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
         "isERC20Enabled": false,
         "isPostBoLD": false,
-        "lastStakeBlock": 23669164,
-        "latestConfirmed": 54458,
-        "latestNodeCreated": 54458,
+        "lastStakeBlock": 25138705,
+        "latestConfirmed": 106982,
+        "latestNodeCreated": 106982,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 5,
         "outbox": "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764",
@@ -141,7 +144,7 @@
         "validatorUtils": "arb1:0xa0d6E6b1B950aCC748B45F3419FeAd4b52f7389A",
         "validatorWalletCreator": "arb1:0xc8C95B8b35772Ce4bF9E602336082696C2dC0DB8",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a",
+        "wasmModuleRoot": "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -198,6 +201,7 @@
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
+            "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -228,10 +232,11 @@
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x61cc407871b0c56af41887c99354633d150e4586f0a6d237c6efd10966b17bd7"
+        "0x4600f997060ae2ef832240d3416d7837131270d347c85a9227f193804349f0d1"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
+      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761512772,
       "sinceBlock": 393715818,
       "values": {
@@ -264,10 +269,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
-        "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
+        "0x081875b93df655e91ec23245390ad21db0990c12125dad497f1cbf118501ccc2"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1722965308,
       "sinceBlock": 240102081,
       "values": { "$immutable": true },
@@ -281,7 +287,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "fastconfirm",
+          "permission": "interact",
           "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer",
@@ -290,7 +296,7 @@
           ]
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
@@ -299,7 +305,7 @@
           ]
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
@@ -308,7 +314,7 @@
           ]
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -322,24 +328,25 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
         {
-          "permission": "fastconfirm",
+          "permission": "interact",
           "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer"
         },
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1762350107,
       "sinceBlock": 397070318,
       "values": {
@@ -351,7 +358,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 54083,
+        "nonce": 106607,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -366,7 +373,7 @@
       "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x55f3048e868b865115b52aeb3d84b856d34786d8c32f79ae01314c2d0ea8b6aa"
+        "0x119b09babba836df00fa9ed5177d4471f6c8fe8c09d7d1cdf8a96bce9b5d6533"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
@@ -375,6 +382,7 @@
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
       ],
+      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761511538,
       "sinceBlock": 393710880,
       "values": {
@@ -396,7 +404,7 @@
         "allowedOutboxList": [
           "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764"
         ],
-        "delayedMessageCount": 74582,
+        "delayedMessageCount": 136824,
         "inboxHistory": [
           "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
           "arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD"
@@ -404,8 +412,8 @@
         "outboxHistory": ["arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764"],
         "rollup": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
         "sequencerInbox": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
-        "sequencerMessageCount": 59113,
-        "sequencerReportedSubMessageCount": 287371
+        "sequencerMessageCount": 120298,
+        "sequencerReportedSubMessageCount": 728956
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -487,6 +495,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761511538,
       "sinceBlock": 393710880,
       "values": {
@@ -504,7 +513,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -615,6 +624,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0xB3aA47edBc9A1178B56bB55D1a9E3821845870e8",
       "sinceTimestamp": 1758905666,
       "sinceBlock": 383274625,
       "values": {
@@ -635,7 +645,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 2,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -659,6 +669,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761511538,
       "sinceBlock": 393710880,
       "values": {
@@ -694,7 +705,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -707,10 +718,11 @@
       "type": "Contract",
       "template": "orbitstack/ValidatorUtils",
       "sourceHashes": [
-        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
+        "0xebcd95194086ae9c3b9095578172a3192d9d209e5b159956f1d266910d248334"
       ],
       "proxyType": "immutable",
       "description": "This contract implements view only utilities for validators.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1722965518,
       "sinceBlock": 240102912,
       "values": { "$immutable": true },
@@ -729,10 +741,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
-        "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
+        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1722965346,
       "sinceBlock": 240102231,
       "values": {
@@ -753,7 +766,7 @@
       "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
+        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
@@ -775,6 +788,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761511538,
       "sinceBlock": 393710880,
       "values": {
@@ -799,19 +813,13 @@
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": [
-              "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
-              "arb1:0x871e290d5447b958131F6d44f915F10032436ee6"
-            ]
+            "members": ["arb1:0x871e290d5447b958131F6d44f915F10032436ee6"]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "executors": [
-          "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
-          "arb1:0x871e290d5447b958131F6d44f915F10032436ee6"
-        ]
+        "executors": ["arb1:0x871e290d5447b958131F6d44f915F10032436ee6"]
       },
       "implementationNames": {
         "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf": "TransparentUpgradeableProxy",
@@ -826,10 +834,11 @@
       "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
+        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761511538,
       "sinceBlock": 393710880,
       "values": {
@@ -861,119 +870,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner",
-          "via": [
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x107695630130919cb040B095b9b20511D6e211bB",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x3616995dF5D07B28f2B186F1386cace9EB9Bbd20",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xACAec98D879E39d83a30F914A36bf4877424D04f",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
-          "role": ".executors"
-        }
-      ]
-    },
-    {
       "address": "arb1:0xd1447Dd15D9e24ddFF99f0fE3C88Bf64d23D1670",
       "type": "EOA",
       "proxyType": "EOA"
@@ -984,10 +880,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
-        "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
+        "0xd38b92884347e76d4ce463bc343cbf508eefb150146ed51cb80c2aee8c565122"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1722965266,
       "sinceBlock": 240101914,
       "values": { "$immutable": true },
@@ -1002,10 +899,11 @@
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x6ce471861570d55dc6e9a09337d990c13efb0c7abb47f36a5de48a9a7086f6e8"
+        "0x6aedbb6059216584b86626e8ce4bc3f123bb7cdf3890b83063e1d3ef2b16be19"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761511538,
       "sinceBlock": 393710880,
       "values": {
@@ -1034,18 +932,19 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761592647,
       "sinceBlock": 394035807,
       "values": {
@@ -1072,7 +971,7 @@
       "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+        "0x38fab1c44903c11839e1113e339b7268b07f99808721133182f57fdd891be63a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
@@ -1082,6 +981,7 @@
         "buffer",
         "postsBlobs"
       ],
+      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761511538,
       "sinceBlock": 393710880,
       "values": {
@@ -1100,18 +1000,20 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 59113,
+        "batchCount": 120298,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x9f787F6e07469BBA84f0BE488c42eDC4c766cC83"],
         "bridge": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "dacKeyset": {
           "requiredSignatures": 2,
-          "membersCount": 3,
+          "membersCount": 5,
           "blsSignatures": [
             "YA10Tx0VOmY6ZaRDft0hy9Jp3KTNup+mJYlWIyySLr7CZ6ZWlfIhMVv15OXej5a+NhmH1xFFxZLR5uMgYkA+uKIDRuFYmRrAHzlBMCfnytPl68fV4yTolBaNmGb1uO/1cgjO0nnOrgADTYh1jMmZu0y87DtvsdDYr2u+hFEo1StVGlZhfd5qg0+zWEXEDrBD2BGxapx2BBj9nPt+1SlH0HDq29nHnfyiOKM0B5nAoXbBne4QdxfkKlS0XW9X2ikeJwwLvXivK+EazbtWLS+e6XgFG6pKbxzdG5+iGNBYQLC3DPb6Q1Weabl99gsebWoVPBfS3hdeoHTTq5fnpHI0iDdiM7i9t6LqMM5vmDgLMgi/w3yxOVyBSwpjn7Wt+3NkLw==",
             "YAPs5RkU8pYUUt68mNKAJNIZ03qrn8DMCY1KU4KCnh5eiJaQ+K0TfcWpBTgOMyoCcBgCN15WdyFdFswj2Z0w/UYzFKBYo3lrudeovLSeRULZ+xHv96dUjnwJvtQkJEKZdxCmrdC/Xits0gGGxfbFEhB6Ywv/sKpgz7MVQcB+/by/l3DNvR+VuYpr8qm/0kNjFRYH9OULZM51D/N3uyni4aolb/NCeZJFQ9ni2jeNfvoiU7Vo5M6H3c43k+1VZJfEZhjvz9TlJbp3rg3Fmo2UBOWKkH3R4P3jcgo357B23LMoyHsdRcyoOCjYw2tZqOH1tBeaedvgFTu5d/r4l5aTMA6Hu31mkDbz0Jk1DPy2WpwBjmAMOtT/wLYAbEbGYrs7mg==",
-            "YAca1+a2vM6xO7/Z5qHD0swdq+vsGAierMiGew+GQAQBT3zZW7Z/LDorJtr5b6dq5wmeJFNPoGnF9kgGElWkG9lyL4vtU4Jr65YmgEOE28MecNaEtXfZM48s1RunXX04FhgJdHujSzQYkc3xxQdpIdJdVzglSXP/I9o/y1BmQFVlNQOzKFP+1HNFpephWb0WEhQsakr0KMn46QK10lD5euEeQXOKBo8srablM6v/ESP3K6QkmJtu1LD0hxW0rz83/hRYMTB2/9hMKhgQ1Nm/0veou49hv3AY3gCx85ZcSs0cLms/sp1NovNPybkQhxkTMRRz9FdXlXpgVVs/jW1KzbLs00/0wxitGfvIFrNiSkGgnPGAVqS9uCgYaX6Y+KREuA=="
+            "YAca1+a2vM6xO7/Z5qHD0swdq+vsGAierMiGew+GQAQBT3zZW7Z/LDorJtr5b6dq5wmeJFNPoGnF9kgGElWkG9lyL4vtU4Jr65YmgEOE28MecNaEtXfZM48s1RunXX04FhgJdHujSzQYkc3xxQdpIdJdVzglSXP/I9o/y1BmQFVlNQOzKFP+1HNFpephWb0WEhQsakr0KMn46QK10lD5euEeQXOKBo8srablM6v/ESP3K6QkmJtu1LD0hxW0rz83/hRYMTB2/9hMKhgQ1Nm/0veou49hv3AY3gCx85ZcSs0cLms/sp1NovNPybkQhxkTMRRz9FdXlXpgVVs/jW1KzbLs00/0wxitGfvIFrNiSkGgnPGAVqS9uCgYaX6Y+KREuA==",
+            "YA8PdhR9G6EFhblLWymAJ931fvjjb4tOk4a377DXogOfYChxbQETJT3GBYtAvIMmlRUujXEY4uCXjmv5toOcVoDkU4w1wYSvoK3r441hwJw7pG+R+aeGUINtROsxI9sqwhiafKADPPdxLy80mUTK5oIaPztF7RG2WhKMFNK7Ebjsrn4si90qAKRIt7sfneEO4wdeuC5erBen3tLJ7lE32uCi13sEJZYU7UKfr2cwoDQSZyvYePb2KX9U3bHhTpXBbwGKg2pIUGZ5g5GiOuV42wdbfqMjrsOZiLuMbgyYfVl3OOUpDUPGZyupZdGvkzk0rhGY/O/dF1Pv+BCcuX9qUCldfrFYiAvWqYcny+5xKXSQLSlU9cBdTePXy/dotyR7vA==",
+            "YBP6/hdXzakIwPZ68/ORUMDJcuhMwQr/C9anzOd5pbWBokbORN1nrEGAOJMmRfLLtRdcABs+DNEopeD4JnwdzbB5e3pHjqqhJvFJzPQ+Rvvo3uPhbECR/Ptf0Umd35mD+AQPB0rLQbAngxs8tNUnS6IllQIW/FeEGm3LwjZ32m+D08Vh5rgqMKWOpGk/Op4sIhGP3Ishpq6yC/kd+GVSDj+vc30oOuNzVtsuAGMTTy8SmlNR47eVX9eMW9bEWIk65QCAaO4T5EqH5IWNKmWZI0Q0yGSHgvslmUZHApw2vIXn0rrzc5DwyUcgn3XZz2H5vhUXvV95qFARTQ9V7SDIXr134ixoaAmhEHqeav9vhlVZE13e9ghd5iNr6BZQn7SrpQ=="
           ]
         },
         "DAS_MESSAGE_HEADER_FLAG": "0x80",
@@ -1119,7 +1021,7 @@
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "HEADER_LENGTH": 40,
         "isUsingFeeToken": false,
-        "keySetUpdates": 1,
+        "keySetUpdates": 2,
         "maxDataSize": 104857,
         "maxTimeVariation": {
           "delayBlocks": 28800,
@@ -1132,7 +1034,7 @@
         "rollup": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 74581,
+        "totalDelayedMessagesRead": 136823,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1154,10 +1056,11 @@
       "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x84cd273689e720a0b7c657b57d9fb127684f3abb87fc4b337a2f0decd9464120"
+        "0x079413b2ba56c63471a9435a6cbf3759e7d14eb942e6ce789b0b893ec3e6f947"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761511538,
       "sinceBlock": 393710880,
       "values": {
@@ -1200,10 +1103,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
-        "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
+        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1722965191,
       "sinceBlock": 240101615,
       "values": { "$immutable": true },
@@ -1975,6 +1879,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 441039033 },
-  "permissionsConfigHash": "0x1214448255de31ba64def4044131f1f4a1b4412a718dd98e3573d2d80ec925c9"
+  "usedBlockNumbers": { "arbitrum": 472358609 },
+  "permissionsConfigHash": "0x47c88c4e5788d05806e3b41dda7a1ff6cefba1d545e5e6f50fbf04e29431c002"
 }

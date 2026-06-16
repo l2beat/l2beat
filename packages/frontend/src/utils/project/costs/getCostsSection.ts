@@ -20,10 +20,12 @@ export async function getCostsSection(
   if (!trackedTransactions) return undefined
 
   const range = project.archivedAt ? optionToRange('max') : optionToRange('1y')
-  const data = await helpers.costs.projectChart.fetch({
-    range,
-    projectId: project.id,
-  })
+  const data = await helpers.queryClient.fetchQuery(
+    helpers.trpc.costs.projectChart.queryOptions({
+      range,
+      projectId: project.id,
+    }),
+  )
 
   if (!data || data.chart.length === 0) return undefined
 

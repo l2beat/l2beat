@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Treasury",
+  "description": "Collects Railgun fees. Managed through access control roles.",
+  "category": "core",
+  "fields": {
+    "$admin": {
+      "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the treasury proxy.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the treasury implementation."
+        }
+      ]
+    },
+    "$implementation": {
+      "description": "Current treasury implementation.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "DEFAULT_ADMIN_ROLE": {
+      "description": "Identifier of the role that administers every treasury role."
+    },
+    "TRANSFER_ROLE": {
+      "description": "Identifier of the role that authorizes ETH and ERC20 transfers out of the treasury."
+    },
+    "accessControl": {
+      "description": "Current treasury role memberships reconstructed from AccessControl events.",
+      "handler": { "type": "accessControl" }
+    },
+    "defaultAdminRoleMembers": {
+      "description": "Addresses that currently hold DEFAULT_ADMIN_ROLE on the treasury.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke treasury roles, including who can move ETH and ERC20s out of the treasury."
+        }
+      ]
+    },
+    "transferRoleMembers": {
+      "description": "Addresses that currently hold TRANSFER_ROLE on the treasury.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "TRANSFER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer ETH or ERC20s out of the treasury."
+        }
+      ]
+    }
+  }
+}

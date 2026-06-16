@@ -8,7 +8,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -16,6 +15,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
 import { PROGRAM_HASHES } from '../../common/programHashes'
+import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -58,19 +58,17 @@ export const sorare: ScalingProject = {
   id: ProjectId('sorare'),
   capability: 'appchain',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt: UnixTime(1780916919),
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
     BADGES.Stack.StarkEx,
     BADGES.Infra.SHARP,
   ],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    redWarning: {
-      text: 'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
-      detailAnchor: 'permissions',
-    },
     architectureImage: 'starkex',
+    headerWarning:
+      'Sorare froze its StarkEx rollup on June 1st, 2026. The core rollup contract is currently frozen.',
     name: 'Sorare',
     slug: 'sorare',
     description:
@@ -93,9 +91,41 @@ export const sorare: ScalingProject = {
     type: 'Validity',
     zkCatalogId: ProjectId('stone'),
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: getAltDaStage(
+    {
+      stage0: {
+        callsItselfValidiumOrOptimium: true,
+        stateRootsPostedToL1: true,
+        stateVerificationOnL1: true,
+        daAttestedByIndependentParty: true,
+        nodeSourceAvailable: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+      },
+      stage1: {
+        principle: false,
+        usersCanExitWithoutCooperation: 'UnderReview',
+        usersHave7DaysToExit: 'UnderReview',
+        securityCouncilProperlySetUp: false,
+        daVerifierSecureOnL1: true,
+        daVerifier7DayExitWindow: 'UnderReview',
+        daCommitteeDecentralized: false,
+        noRedTrustedSetups: 'UnderReview',
+        proverSourcePublished: 'UnderReview',
+        verifierContractsReproducible: 'UnderReview',
+        programHashesReproducible: 'UnderReview',
+      },
+      stage2: {
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        daVerifier30DayExitWindow: 'UnderReview',
+        daMechanismEconomicSecurity: false,
+      },
+    },
+    {
+      nodeSourceLink: 'https://github.com/starkware-libs/starkex-contracts',
+    },
+  ),
   chainConfig: {
     name: 'sorare',
     chainId: undefined,
@@ -128,7 +158,10 @@ export const sorare: ScalingProject = {
     mode: DA_MODES.STATE_DIFFS,
   },
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_ST,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_ST,
+      executionDelay: 0,
+    },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
       membersCount: committeePermission.accounts.length,
       requiredSignatures: minSigners,
@@ -171,6 +204,14 @@ export const sorare: ScalingProject = {
       url: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
       description:
         'Layer 2 scaling solution powered by Starkware, is live on Ethereum.',
+      type: 'general',
+    },
+    {
+      title: 'Sorare StarkEx deprecation',
+      date: '2026-06-01T00:00:00Z',
+      url: 'https://etherscan.io/tx/0xe289078d3ad6f8f306b2b2938036bb7de8829ba4e897ebcf69af3004240d9d63',
+      description:
+        'Sorare finalizes its migration to Solana by sunsetting its StarkEx L2 contract.',
       type: 'general',
     },
   ],

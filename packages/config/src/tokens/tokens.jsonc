@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "RON",
+      "address": "0x5f2Db62536dd888AacEa933068384318A02094c0",
+      "coingeckoId": "ronin"
+    },
+    {
       "symbol": "AZTEC",
       "address": "0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
       "coingeckoId": "aztec"
@@ -2078,6 +2083,76 @@
     {
       "symbol": "ZRX",
       "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498"
+    },
+    {
+      "symbol": "fxUSD",
+      "category": "stablecoin",
+      "address": "0x085780639CC2cACd35E474e71f4d000e2405d8f6"
+    },
+    {
+      "symbol": "BOLD",
+      "category": "stablecoin",
+      "address": "0x6440f144b7e50D6a8439336510312d2F54beB01D"
+    },
+    {
+      "symbol": "USD1",
+      "category": "stablecoin",
+      "address": "0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d"
+    },
+    {
+      "symbol": "frxUSD",
+      "category": "stablecoin",
+      "address": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29"
+    },
+    {
+      "symbol": "wOETH",
+      "category": "ether",
+      "address": "0xDcEe70654261AF21C44c093C300eD3Bb97b78192"
+    },
+    {
+      "symbol": "NEAR",
+      "address": "0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4"
+    },
+    {
+      "symbol": "FLUID",
+      "address": "0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb"
+    },
+    {
+      "symbol": "USDS",
+      "category": "stablecoin",
+      "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+    },
+    {
+      "symbol": "RAIL",
+      "address": "0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D"
+    },
+    {
+      "symbol": "ezETH",
+      "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+      "coingeckoId": "renzo-restaked-eth",
+      "category": "ether"
+    },
+    {
+      "symbol": "stAZUR",
+      "address": "0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB",
+      "coingeckoId": "azuro-protocol"
+    },
+    {
+      "symbol": "EURS",
+      "address": "0xdB25f211AB05b1c97D595516F45794528a807ad8",
+      "coingeckoId": "stasis-eurs",
+      "category": "stablecoin",
+      "deploymentTimestamp": 1529686012
+    },
+    {
+      "symbol": "Mog",
+      "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+      "coingeckoId": "mog-coin"
+    },
+    {
+      "symbol": "pzETH",
+      "address": "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
+      "coingeckoId": "renzo-restaked-lst"
     }
   ],
   "galxegravity": [
@@ -2323,6 +2398,12 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "CHIP",
+      "address": "0x0c1c1c109fe34733fca54b82d7b46b75cfb71f6e",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "PYUSD",
       "address": "0x46850aD61C2B7d64d08c9C754F45254596696984",
@@ -3326,6 +3407,45 @@
       "source": "native",
       "supply": "circulatingSupply",
       "coingeckoId": "t3rn"
+    },
+    {
+      "symbol": "BUIDL",
+      "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+      "coingeckoId": "blackrock-usd-institutional-digital-liquidity-fund",
+      "category": "rwaRestricted",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "USDY",
+      "address": "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
+      "coingeckoId": "ondo-us-dollar-yield",
+      "category": "rwaPublic",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "W",
+      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+      "coingeckoId": "wormhole",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     }
   ],
   "nova": [
@@ -4425,6 +4545,44 @@
           {
             "name": "Layer Zero",
             "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "Mog",
+      "address": "0x2Da56AcB9Ea78330f947bD57C54119Debda7AF71",
+      "coingeckoId": "mog-coin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "rsETH",
+      "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "W",
+      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+      "coingeckoId": "wormhole",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
           }
         ]
       }
@@ -8485,6 +8643,135 @@
           }
         ]
       }
+    }
+  ],
+  "roninnetwork": [
+    {
+      "symbol": "WRON",
+      "address": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
+      "coingeckoId": "ronin",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "deploymentTimestamp": 1640000000
+    },
+    {
+      "symbol": "AXS",
+      "address": "0x97a9107C1793BC407d6F527b77e7fff4D812bece",
+      "coingeckoId": "axie-infinity",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+      },
+      "deploymentTimestamp": 1612972800
+    },
+    {
+      "symbol": "USDC",
+      "address": "0x0B7007c13325C48911F73A2daD5FA5dCBf808aDc",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+      },
+      "deploymentTimestamp": 1654387200
+    },
+    {
+      "symbol": "WBTC",
+      "address": "0x7E73630F81647bCFD7B1F2C04c1C662D17d4577e",
+      "coingeckoId": "wrapped-bitcoin",
+      "category": "btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Ronin Bridge (legacy multi-sig)" }]
+      },
+      "deploymentTimestamp": 1612972800
+    },
+    {
+      "symbol": "WBTC",
+      "address": "0xca3eb64f3dfd7861c76070e3d1492ee5ee20cdc3",
+      "coingeckoId": "wrapped-bitcoin",
+      "category": "btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+      },
+      "deploymentTimestamp": 1745539200
+    },
+    {
+      "symbol": "WETH",
+      "address": "0xc99a6A985eD2Cac1ef41640596C5A5f9F4E19Ef5",
+      "coingeckoId": "weth",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+      },
+      "deploymentTimestamp": 1612972800
+    },
+    {
+      "symbol": "YGG",
+      "address": "0x1c306872bC82525d72Bf3562E8F0aA3f8F26e857",
+      "coingeckoId": "yield-guild-games",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+      },
+      "deploymentTimestamp": 1640995200
+    },
+    {
+      "symbol": "PIXEL",
+      "address": "0x7EAe20d11Ef8c779433Eb24503dEf900b9d28ad7",
+      "coingeckoId": "pixels",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [{ "name": "Chainlink CCIP", "slug": "transporter" }]
+      },
+      "deploymentTimestamp": 1708300800
+    },
+    {
+      "symbol": "SLP",
+      "address": "0xa8754b9Fa15fc18BB59458815510E40a12cD2014",
+      "coingeckoId": "smooth-love-potion",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "deploymentTimestamp": 1612972800
+    },
+    {
+      "symbol": "xFISH",
+      "address": "0x533701B17963AAf318E11ab274Ca8e2Ec813aA64",
+      "coingeckoId": "fishing-frenzy",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "deploymentTimestamp": 1700000000
+    }
+  ],
+  "hyperevm": [
+    {
+      "symbol": "USDC",
+      "address": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+      "category": "stablecoin",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      },
+      "supply": "zero"
     }
   ]
 }

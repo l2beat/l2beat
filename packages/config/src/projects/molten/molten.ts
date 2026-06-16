@@ -12,15 +12,12 @@ const discovery = new ProjectDiscovery('molten')
 
 export const molten: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1711843200), // 2024-03-31
+  archivedAt: UnixTime(1779090374), // Mon, 18 May 2026 07:46:13 GMT
   hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
-    redWarning: {
-      text: 'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
-      detailAnchor: 'permissions',
-    },
     name: 'Molten Network',
     shortName: 'Molten',
     slug: 'molten',
@@ -61,6 +58,7 @@ export const molten: ScalingProject = orbitStackL3({
       },
     ],
     gasTokens: ['MOLTEN'],
+    untilTimestamp: UnixTime(1779090374), // Mon, 18 May 2026 07:46:13 GMT
   },
   nonTemplateTechnology: {
     sequencing: ESPRESSO,

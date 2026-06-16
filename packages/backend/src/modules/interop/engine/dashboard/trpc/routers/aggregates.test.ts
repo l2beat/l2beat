@@ -1,7 +1,7 @@
 import type { Database, InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { createCallerFactory } from '../trpc'
+import { createCallerFactory } from '../../../../../../trpc/init'
 import { createAggregatesRouter } from './aggregates'
 
 describe(createAggregatesRouter.name, () => {
@@ -21,6 +21,18 @@ describe(createAggregatesRouter.name, () => {
         type: 'withdraw',
         srcValueUsd: 20,
         dstValueUsd: 20,
+      }),
+      createTransfer({
+        transferId: 'included-one-sided',
+        plugin: 'across',
+        type: 'deposit',
+        bridgeType: undefined,
+        srcEventId: 'src-only-event',
+        dstEventId: undefined,
+        srcWasBurned: false,
+        dstWasMinted: undefined,
+        srcValueUsd: 15,
+        dstValueUsd: undefined,
       }),
       createTransfer({
         transferId: 'missing-relay',
@@ -72,8 +84,8 @@ describe(createAggregatesRouter.name, () => {
     const result = await caller.latest()
 
     expect(result.latestTimestamp).toEqual(latestTimestamp)
-    expect(result.latestTransfersCount).toEqual(3)
-    expect(result.includedTransfersCount).toEqual(2)
+    expect(result.latestTransfersCount).toEqual(4)
+    expect(result.includedTransfersCount).toEqual(3)
     expect(result.notIncludedTransfers).toHaveLength(1)
     expect(result.notIncludedTransfers[0]?.transferId).toEqual('missing-relay')
     expect(result.notIncludedByPlugin).toEqual([

@@ -1,3 +1,144 @@
+Generated with discovered.json: 0x8b5994adfb6ad9278ab8f0edd894a24f91c6e556
+
+# Diff at Fri, 08 May 2026 07:51:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1776179280
+- current timestamp: 1776179280
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776179280 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierV3 (eth:0x098C593361d12DD638Ce7dBf34c8C6a655f8274c) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc852aaf012ec426ab5adb8c1e35617f1181de9fc529b6a1dfec99620c24d0dc4"
++        "0xde5547f8d2d989cfd605989512f0e12ca10235b799ffba0df7fd48bc757572a1"
+    }
+```
+
+```diff
+    contract EspressoMultisig (eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract EspressoOpsMultisig (eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract OpsTimelock (eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 2d.
+      sourceHashes.0:
+-        "0x4a9800f2ac03b7f5b2603826eaf3ef1bc41bd1d62eb5470a2b60eba4a9575e8f"
++        "0x2f718e8f9028fd6ca3bfa90dbf6f309f933824cd21d199579903acd45da577f5"
+    }
+```
+
+```diff
+    contract HotShotLightClient (eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) [N/A] {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0xcd6859a33f4bb591c2c5303ca74047fbdd842f543c98e518219c727c33d864ba"
++        "0x2894babb69a12d3a50e4d9789b7015c9c9a392220726cd8d27cb6537aa6c4947"
+    }
+```
+
+```diff
+    contract OperatorRegistryV1Admin (eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xe27cd7251355953a27d4b5d1ac9b631394c1c3590034e725819f23037642d915"
++        "0x3831178dbcd7b495ac7d31c15a78f1f1d165473e6529204e034565a03e0d3cda"
+    }
+```
+
+Generated with discovered.json: 0xab73f1bf8feb2b3473f2e96150cc7086b0f5f69b
+
+# Diff at Tue, 05 May 2026 10:22:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1776179280
+- current timestamp: 1776179280
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776179280 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierV3 (eth:0x098C593361d12DD638Ce7dBf34c8C6a655f8274c) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB22167f12C232e825D26ffbb3780E024c506664E"
+    }
+```
+
+```diff
+    contract EspressoMultisig (eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc"
+    }
+```
+
+```diff
+    contract EspressoOpsMultisig (eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x22dfbDF674E6bd4112a332388E36940650eF5608"
+    }
+```
+
+```diff
+    contract OpsTimelock (eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700) {
+    +++ description: A timelock with access control. The current minimum delay is 2d.
+      deployerAddress:
++        "eth:0x4905147341FB390F0A3F4F01178a040Bc27d8A04"
+    }
+```
+
+```diff
+    contract HotShotLightClient (eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      deployerAddress:
++        "eth:0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947"
+    }
+```
+
+```diff
+    contract OperatorRegistryV1Admin (eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xce2B7bbFE257D910711EEA510176e0fb21cf1761"
+    }
+```
+
 Generated with discovered.json: 0xfa443d52777f4a37cecbf757e54aaa66deee9300
 
 # Diff at Tue, 14 Apr 2026 15:09:05 GMT:

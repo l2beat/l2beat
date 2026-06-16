@@ -5,6 +5,7 @@ import { assert } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { ActivityConfigProject } from '../../../config/Config'
 import type { Clock } from '../../../tools/Clock'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 
 export class BlockTargetIndexer extends RootIndexer {
   // used only for runtime invalidation protection
@@ -38,20 +39,29 @@ export class BlockTargetIndexer extends RootIndexer {
   }
 
   async tick(): Promise<number> {
-    const timestamp = this.clock.getLastHour()
-    this.logger.info('Getting block number for timestamp', { timestamp })
+    return await withCoreFeatureRpcMetricsContext(
+      'activity.target',
+      {
+        chain: this.config.chainName,
+        mode: 'block',
+      },
+      async () => {
+        const timestamp = this.clock.getLastHour()
+        this.logger.info('Getting block number for timestamp', { timestamp })
 
-    const blockNumber =
-      await this.blockTimestampProvider.getBlockNumberAtOrBefore(
-        timestamp,
-        this.config.chainName,
-      )
+        const blockNumber =
+          await this.blockTimestampProvider.getBlockNumberAtOrBefore(
+            timestamp,
+            this.config.chainName,
+          )
 
-    await this.checkBlockNumber(blockNumber)
+        await this.checkBlockNumber(blockNumber)
 
-    this.blockHeight = blockNumber
-    await this.options?.onTick?.(timestamp, blockNumber)
-    return blockNumber
+        this.blockHeight = blockNumber
+        await this.options?.onTick?.(timestamp, blockNumber)
+        return blockNumber
+      },
+    )
   }
 
   /**

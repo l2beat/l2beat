@@ -12,6 +12,7 @@ import type {
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
+import type { PrivacyConfig } from '../modules/privacy/types'
 import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
@@ -55,7 +56,10 @@ export interface Config {
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
   readonly interop: InteropFeatureConfig | false
+  readonly privacy: PrivacyConfig | false
   readonly newClientsEnabled: boolean
+
+  readonly backoffice: BackofficeFeatureConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -213,6 +217,14 @@ export interface NotificationsConfig {
         discordWebhookUrl: string
       }
     | false
+  readonly dailyChecks:
+    | {
+        discordWebhookUrl: string
+        discordUserIds: string[]
+        timezone: string
+        hour: number
+      }
+    | false
 }
 
 export interface AnomaliesConfig {
@@ -238,7 +250,6 @@ export interface InteropFeatureConfig {
   dashboard: {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined
-    auth: InteropDashboardAuthConfig | false
   }
   compare: {
     enabled: boolean
@@ -247,6 +258,8 @@ export interface InteropFeatureConfig {
     enabled: boolean
     tokenDbApiUrl: string
     tokenDbAuthToken?: string
+    maxTokenPriceUsd: number
+    maxTransferValueUsd: number
   }
   config: {
     enabled: boolean
@@ -257,7 +270,16 @@ export interface InteropFeatureConfig {
   oneSidedChains: string[]
 }
 
-export interface InteropDashboardAuthConfig {
+export interface BackofficeFeatureConfig {
+  auth: BackofficeAuthConfig | false
+}
+
+export interface BackofficeAuthConfig {
+  zeroTrust: BackofficeZeroTrustAuthConfig
+  authToken?: string
+}
+
+export interface BackofficeZeroTrustAuthConfig {
   JWKS: ReturnType<typeof createRemoteJWKSet>
   aud: string
   teamDomain: string

@@ -1,7 +1,7 @@
 {
   "name": "intmax",
-  "timestamp": 1771280072,
-  "configHash": "0x9deaea6d12f4866cfe5af5486c84453e14ca7ac7dbb0fde9d219552e0f8daf59",
+  "timestamp": 1778583067,
+  "configHash": "0x896819c68f5ee105b574c3dbedf3b48242f0c22f6287a493c2f7e4bb0bf644e9",
   "entries": [
     {
       "address": "eth:0x110b66ea6F97c0391eEfFDd19CD0cFd73e9871fA",
@@ -14,8 +14,8 @@
       "type": "Contract",
       "template": "intmax/PredicatePermitter",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xa18a357397dde9746d412ff4a4546bc85d954de9f122809482a88b62eeb314be"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x49ef976d4c33533b581d80f36bca17e0994c03d215cab05ef3e60585905f0a15"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that connects INTMAX deposits to the Predicate AVS that ultimately checks AML requirements. It stores a policy ID to be then referenced by the Predicate AVS.",
@@ -27,6 +27,7 @@
           "role": ".amlPermitter"
         }
       ],
+      "deployerAddress": "eth:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1750501451,
       "sinceBlock": 22752223,
       "values": {
@@ -60,7 +61,7 @@
       "address": "eth:0x1eB7d5898A9b3dCB8145e37B564ef00bC4cB794D",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -76,7 +77,7 @@
       "address": "eth:0x2EAB2633c6180Ec592fB7A22EDAF323ccA51F85A",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -98,12 +99,13 @@
       "address": "eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B",
       "type": "Contract",
       "sourceHashes": [
-        "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
-        "0xea1d4e7fc9312bcb235af8d02b25007964a45ba7d95baf30406d46ae55ac744b"
+        "0xf66f390c3291bc5b8725bf8fa36d64494b91e8cfb2b717b52e85adcc68dcdd50",
+        "0x2aa3c23409b7fc58808163407c129120f55ec983790e557c69883dbfe4c503dc"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Timelocked exit mechanism. SUBMITTER_ROLE queues withdrawal requests with a 24-hour timelock, after which anyone can execute them permissionlessly. GUARDIAN_ROLE can cancel pending requests and pause the contract.",
       "ignoreInWatchMode": ["getRequest"],
+      "deployerAddress": "eth:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1771122743,
       "sinceBlock": 24459233,
       "values": {
@@ -137,12 +139,13 @@
       "type": "Contract",
       "template": "intmax/Contribution",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x04d47a14538cc31c1d5699cd1ba8e634345861e576bb09735cacd8e7569495da"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xdc8a3096905413ccc4eb2147fc2d6125f893ab86308c425d5869e086d152cc67"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).",
       "ignoreInWatchMode": ["getCurrentPeriod"],
+      "deployerAddress": "eth:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1750500551,
       "sinceBlock": 22752148,
       "values": {
@@ -158,7 +161,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 34,
+        "getCurrentPeriod": 46,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -166,13 +169,14 @@
       "implementationNames": {
         "eth:0x4c614C7BB9420caA1F19cB2C58B00864f2125Ce2": "ERC1967Proxy",
         "eth:0x09665baEFbfaAE3E9b3AC854717C2ab5534d2D25": "Contribution"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0x5C044174cC9bcA35b933a2B5107b494BAFf34Bb6",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -197,6 +201,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371",
       "sinceTimestamp": 1735344335,
       "sinceBlock": 21497263,
       "values": { "$immutable": true },
@@ -211,7 +216,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -223,6 +228,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c",
       "sinceTimestamp": 1762283363,
       "sinceBlock": 23727944,
       "values": {
@@ -264,10 +270,11 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
       "sinceTimestamp": 1750497179,
       "sinceBlock": 22751867,
       "values": {
@@ -284,7 +291,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 16,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -309,7 +316,7 @@
       "address": "eth:0xB89001Ef513E10482B2667a0fC70F06cfF3a7418",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -328,7 +335,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
@@ -339,6 +346,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
       "sinceTimestamp": 1751444639,
       "sinceBlock": 22830326,
       "values": {
@@ -369,12 +377,13 @@
       "type": "Contract",
       "template": "intmax/Liquidity",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xbfcd0c18579ccd70e1bdf498b14c4f017af16483f44f45015752901149ef0668"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xda028240cfd59f9aee6f15a86bd79017f7f803c87071676f95d8cd21ba73e1a6"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check. The V2 upgrade adds an exitTransfer function, gated by an EXIT_ROLE, that can transfer any token type from the contract.",
       "ignoreInWatchMode": ["getLastDepositId", "getLastRelayedDepositId"],
+      "deployerAddress": "eth:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1750500599,
       "sinceBlock": 22752152,
       "values": {
@@ -452,8 +461,8 @@
       "type": "Contract",
       "template": "eigenlayer/PredicateServiceManager",
       "sourceHashes": [
-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
-        "0x64a4c29e61f52080da22207fe5295d233b6450ecc65dbf2852a0b0383fd74f63"
+        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f",
+        "0xe58aa83dafa0e6dff193969939930317f9b3522d853cc539225ade1c46cbe271"
       ],
       "proxyType": "EIP1967 proxy",
       "receivedPermissions": [
@@ -475,6 +484,7 @@
         }
       ],
       "ignoreInWatchMode": ["getDeployedPolicies"],
+      "deployerAddress": "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371",
       "sinceTimestamp": 1735344335,
       "sinceBlock": 21497263,
       "values": {
@@ -609,8 +619,8 @@
       "type": "Contract",
       "template": "intmax/Rollup",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x210e1b4c7ca45694431b4a558e68cf0fc6e9c0f1444fe91538af462e050f3604"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x01e64846204b53ce78748a8251f96e296b27338062a89fee75f56dce512cf39e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main rollup contract used to submit blocks and process deposits. It saves block hashes to be then referenced by the Withdrawal contract.",
@@ -620,6 +630,7 @@
         "getLatestBlockNumber",
         "lastProcessedDepositId"
       ],
+      "deployerAddress": "scr:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1752665870,
       "sinceBlock": 17261666,
       "values": {
@@ -669,6 +680,7 @@
       ],
       "proxyType": "immutable",
       "description": "A wrapper verifier that can check both withdrawal zk proofs to exit from INTMAX network and zk proofs for claiming rewards of the privacy mining program.",
+      "deployerAddress": "scr:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1754301333,
       "sinceBlock": 18309372,
       "values": { "$immutable": true },
@@ -687,11 +699,12 @@
       "type": "Contract",
       "template": "intmax/Claim",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xdf0969ba7c2284c214c510f2d058375ac28bbfc0eca15673bed761979f32647e"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x2fc0520ce384d608e88ee2f8c51b51bbe47b361bed51aa7063c675e15aa02cd3"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["getCurrentPeriod", "nullifierNonce"],
+      "deployerAddress": "scr:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1752740586,
       "sinceBlock": 17291619,
       "values": {
@@ -721,7 +734,7 @@
           "numPhases": 7,
           "phase0Period": 16
         },
-        "getCurrentPeriod": 240,
+        "getCurrentPeriod": 325,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
@@ -749,12 +762,13 @@
       "type": "Contract",
       "template": "intmax/Contribution",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x04d47a14538cc31c1d5699cd1ba8e634345861e576bb09735cacd8e7569495da"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xdc8a3096905413ccc4eb2147fc2d6125f893ab86308c425d5869e086d152cc67"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).",
       "ignoreInWatchMode": ["getCurrentPeriod"],
+      "deployerAddress": "scr:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1750500006,
       "sinceBlock": 16627826,
       "values": {
@@ -770,7 +784,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 34,
+        "getCurrentPeriod": 46,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -778,7 +792,8 @@
       "implementationNames": {
         "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af": "ERC1967Proxy",
         "scr:0x8305Ca6756b0edb49ed9503C1Cf39Cb64a00b955": "Contribution"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "scr:0x5C044174cC9bcA35b933a2B5107b494BAFf34Bb6",
@@ -791,11 +806,12 @@
       "type": "Contract",
       "template": "intmax/Withdrawal",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xa0c1878c4a72a8a9f029a05bac051e29d9c4e7ee5711c74e323d1e00a8a489eb"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xf7f09471349ce65924a0b0665d661a2e4295659bda7603fc8da414d6f71b0325"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract handling withdrawal requests, which require a validity proof of sufficient balance. It tracks amount of funds already withdrawn to prevent double withdrawals.",
+      "deployerAddress": "scr:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1752665900,
       "sinceBlock": 17261677,
       "values": {
@@ -839,7 +855,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -872,6 +888,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
       "sinceTimestamp": 1750496732,
       "sinceBlock": 16626983,
       "values": {
@@ -1756,6 +1773,6 @@
     "intmax/Rollup": "0x9efdc4c4aebfdd09e6ab16141180d3f9fa8e1bfe833622003535a1d9b98836c6",
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
-  "usedBlockNumbers": { "ethereum": 24472300, "scroll": 30267475 },
+  "usedBlockNumbers": { "ethereum": 25078552, "scroll": 33674374 },
   "permissionsConfigHash": "0xd42e2d06b9670b1d4b25855253402da785780e684dde4bce9708d7b27c5c50f7"
 }

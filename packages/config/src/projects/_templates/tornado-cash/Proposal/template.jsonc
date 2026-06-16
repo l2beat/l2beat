@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Proposal",
+  "description": "Anonymity Mining - One-off governance proposal payload that deployed the newer Tornado Trees and proxy wiring, migrated legacy tree state, and disabled old mineable instances on the legacy proxy.",
+  "category": "spam",
+  "fields": {
+    "getInstances": {
+      "description": "List of pool instances and their target enabled/disabled state used during the migration.",
+      "severity": "LOW"
+    },
+    "getSearchParams": {
+      "description": "Search parameters used to reconstruct the lengths of the legacy deposit and withdrawal arrays during migration.",
+      "severity": "LOW"
+    },
+    "miner": {
+      "description": "Miner contract rewired to the newly deployed Tornado Trees."
+    },
+    "tornadoProxyV1": {
+      "description": "Legacy proxy that this proposal disables selected old mineable instances on."
+    },
+    "tornadoTreesV1": {
+      "description": "Legacy tree manager whose state is imported into the new tree contract."
+    },
+    "verifier": {
+      "description": "Batch tree update verifier passed into the newly deployed Tornado Trees contract."
+    }
+  }
+}

@@ -1,11 +1,18 @@
+import { v } from '@l2beat/validate'
+import { router } from '../../../../../../trpc/init'
+import { protectedProcedure } from '../../../../../../trpc/procedures'
 import { getInteropCoveragePiesData } from '../../impls/coveragePies'
-import { protectedProcedure } from '../procedures'
-import { router } from '../trpc'
+
+const CoveragePiesRequest = v.object({
+  collapseThresholdPct: v.number().optional(),
+})
 
 export function createCoveragePiesRouter() {
   return router({
-    data: protectedProcedure.query(({ ctx }) => {
-      return getInteropCoveragePiesData(ctx.db)
-    }),
+    data: protectedProcedure
+      .input(CoveragePiesRequest)
+      .query(({ ctx, input }) => {
+        return getInteropCoveragePiesData(ctx.db, input.collapseThresholdPct)
+      }),
   })
 }

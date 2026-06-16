@@ -33,18 +33,19 @@
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@l2beat/validate": "workspace:*",
-    "@trpc/server": "^11.0.0-rc.446",
+    "@trpc/server": "11.17.0",
     "fuzzysort": "3.1.0",
     "jose": "^6.1.0",
     "viem": "^2.31.6"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
-    "@trpc/client": "^11.0.0-rc.446",
+    "@trpc/client": "11.17.0",
     "@types/express": "^5.0.0",
     "@types/mocha": "^10.0.6",
     "dotenv": "^17.2.3",

@@ -14,6 +14,7 @@ const MAX_ENTRIES_IN_MESSAGE = 200
 const MAX_SUSPICIOUS_GROUPS_IN_MESSAGE = 20
 const MAX_REASONS_PER_GROUP = 3
 const MAX_SUSPICIOUS_TRANSFERS_IN_MESSAGE = 6
+const MAX_SKIPPED_VALUATIONS_IN_MESSAGE = 10
 
 export interface InteropSuspiciousTransferNotification {
   plugin: string
@@ -33,6 +34,22 @@ export interface InteropSuspiciousTransferNotification {
   dominantSide: 'src' | 'dst'
   valueDifferencePercent: number
   valueRatio: number
+}
+
+export interface InteropSkippedTransferValuationNotification {
+  plugin: string
+  type: string
+  transferId: string
+  srcChain: string
+  dstChain: string
+  side: 'src' | 'dst'
+  symbol: string | undefined
+  coingeckoId: string
+  priceUsd: number
+  amount: number
+  valueUsd: number | undefined
+  reason: 'priceAboveThreshold' | 'valueAboveThreshold'
+  thresholdUsd: number
 }
 
 export class InteropNotifier {
@@ -89,7 +106,7 @@ export class InteropNotifier {
         const remainingSuffix =
           remainingReasons > 0 ? `; +${remainingReasons} more` : ''
 
-        return `- \`${group.id}\` \`${group.bridgeType}\` \`${group.srcChain} -> ${group.dstChain}\`: ${reasons}${remainingSuffix}`
+        return `- ${group.id} ${group.bridgeType} transfers on the ${group.srcChain} -> ${group.dstChain} path: ${reasons}${remainingSuffix}`
       })
 
     const remainingGroups =
@@ -139,6 +156,42 @@ export class InteropNotifier {
     this.messageQueue.addToBack(message)
   }
 
+  notifySkippedTransferValuations(
+    timestamp: UnixTime,
+    valuations: InteropSkippedTransferValuationNotification[],
+  ): void {
+    if (valuations.length === 0) {
+      return
+    }
+
+    const renderedValuations = valuations
+      .slice(0, MAX_SKIPPED_VALUATIONS_IN_MESSAGE)
+      .map((valuation) => {
+        const path = `${valuation.srcChain} -> ${valuation.dstChain}`
+        const symbol = valuation.symbol ?? valuation.coingeckoId
+
+        if (valuation.reason === 'priceAboveThreshold') {
+          return `- \`${valuation.transferId}\` \`${valuation.plugin}\` \`${valuation.type}\` \`${valuation.side}\` \`${symbol}\` on ${path}: skipped valuation because price ${formatDollars(valuation.priceUsd)} is above ${formatDollars(valuation.thresholdUsd)}`
+        }
+
+        return `- \`${valuation.transferId}\` \`${valuation.plugin}\` \`${valuation.type}\` \`${valuation.side}\` \`${symbol}\` on ${path}: skipped value ${formatDollars(valuation.valueUsd ?? 0)} above ${formatDollars(valuation.thresholdUsd)} at price ${formatDollars(valuation.priceUsd)} and amount ${formatAmount(valuation.amount)}`
+      })
+
+    const remainingValuations =
+      valuations.length - MAX_SKIPPED_VALUATIONS_IN_MESSAGE
+    if (remainingValuations > 0) {
+      renderedValuations.push(`- ...and ${remainingValuations} more valuations`)
+    }
+
+    const message = [
+      `⚠️ Interop financials skipped \`${valuations.length}\` transfer valuations at \`${formatTimestamp(timestamp)}\``,
+      '',
+      ...renderedValuations,
+    ].join('\n')
+
+    this.messageQueue.addToBack(message)
+  }
+
   private notifyConfigDiff(diff: InteropConfigDiff): void {
     const header = `⚙️ **${diff.key}** config change - (\`${diff.entries.length}\` diff entries)`
     const markdown = interopConfigDiffToMarkdown(diff, MAX_ENTRIES_IN_MESSAGE)
@@ -178,9 +231,16 @@ const dollarsFormatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
   maximumFractionDigits: 2,
 })
+const amountFormatter = new Intl.NumberFormat('en-US', {
+  maximumFractionDigits: 6,
+})
 
 function formatDollars(value: number): string {
   return dollarsFormatter.format(value)
+}
+
+function formatAmount(value: number): string {
+  return amountFormatter.format(value)
 }
 
 function formatPercent(value: number): string {

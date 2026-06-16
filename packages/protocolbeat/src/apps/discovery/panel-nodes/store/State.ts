@@ -5,10 +5,12 @@ export interface State {
   readonly nodes: readonly Node[]
   readonly selected: readonly string[]
   readonly hidden: readonly string[]
+  readonly history: HistoryState
   readonly userPreferences: {
-    readonly hideUnknownOnLoad: boolean
     readonly enableDimming: boolean
     readonly hideLargeArrays: boolean
+    readonly highlightOverlapping: boolean
+    readonly useExperimentalRenderer: boolean
   }
   readonly transform: {
     readonly offsetX: number
@@ -56,6 +58,24 @@ export interface Node {
   readonly hueShift: number
   readonly data: unknown
   readonly isReachable: boolean
+}
+
+export interface HistoryState {
+  readonly past: readonly HistorySnapshot[]
+  readonly future: readonly HistorySnapshot[]
+  readonly pending?: HistorySnapshot
+}
+
+export interface HistorySnapshot {
+  readonly nodes: readonly HistorySnapshotNode[]
+  readonly hidden: readonly string[]
+}
+
+export interface HistorySnapshotNode {
+  readonly id: string
+  readonly box: Box
+  readonly color: number
+  readonly hiddenFields: readonly string[]
 }
 
 export interface Field {

@@ -151,7 +151,7 @@
       "address": "eth:0x4380709Fc7fd626ad17a63A1819F39A82978E3BF",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -262,14 +262,16 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "challenge",
-          "from": "eth:0x542102Bb35C32ADa5D72cB791295d97574A71C84",
-          "role": ".challenger"
+          "permission": "interact",
+          "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
         },
         {
-          "permission": "guard",
-          "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
-          "role": ".guardian"
+          "permission": "interact",
+          "from": "eth:0x542102Bb35C32ADa5D72cB791295d97574A71C84",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
         },
         {
           "permission": "interact",
@@ -437,8 +439,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -866,8 +869,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0x542102Bb35C32ADa5D72cB791295d97574A71C84",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         }
       ]
@@ -1939,5 +1943,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 24447650 },
-  "permissionsConfigHash": "0x89274f5ea6ef7b5b8bc3e673ada4c9e92afcf0fd71122dad9e9d6fba01e57bb2"
+  "permissionsConfigHash": "0x9366fe7c6c6a38472b45fda1e34c6742f368ada75ccbd9f6c9c21b380fcf3472"
 }

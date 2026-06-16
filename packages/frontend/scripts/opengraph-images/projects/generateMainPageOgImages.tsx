@@ -12,7 +12,23 @@ const mainPages: MainPage[] = [
   },
   {
     type: 'scaling',
-    title: 'Risk Analysis',
+    secondaryLabel: 'RISKS',
+    title: 'Overview',
+  },
+  {
+    type: 'scaling',
+    secondaryLabel: 'RISKS',
+    title: 'Data Availability',
+  },
+  {
+    type: 'scaling',
+    secondaryLabel: 'RISKS',
+    title: 'State Validation',
+  },
+  {
+    type: 'scaling',
+    secondaryLabel: 'RISKS',
+    title: 'Sequencing',
   },
   {
     type: 'scaling',
@@ -22,10 +38,7 @@ const mainPages: MainPage[] = [
     type: 'scaling',
     title: 'Activity',
   },
-  {
-    type: 'scaling',
-    title: 'Data Availability',
-  },
+
   {
     type: 'scaling',
     title: 'Liveness',
@@ -59,6 +72,10 @@ const mainPages: MainPage[] = [
     title: 'Burn & Mint',
   },
   {
+    type: 'interop',
+    title: 'Token Frameworks',
+  },
+  {
     type: 'data-availability',
     title: 'Summary',
   },
@@ -73,6 +90,10 @@ const mainPages: MainPage[] = [
   {
     type: 'data-availability',
     title: 'Liveness',
+  },
+  {
+    type: 'privacy',
+    title: 'Summary',
   },
   {
     title: 'ZK Catalog',
@@ -118,7 +139,10 @@ export async function generateMainPageOgImages(
       process.cwd(),
       'static/meta-images',
       mainPage.type ?? '',
-      `/${mainPage.title.toLowerCase().split(' ').join('-')}`,
+      mainPage.secondaryLabel
+        ? mainPage.secondaryLabel.toLowerCase().split(' ').join('-')
+        : '',
+      mainPage.title.toLowerCase().split(' ').join('-'),
     )
     const outputFile = path.join(outputDir, 'opengraph-image.png')
     if (existsSync(outputFile)) {

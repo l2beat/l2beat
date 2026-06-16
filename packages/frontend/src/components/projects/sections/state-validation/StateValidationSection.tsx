@@ -18,9 +18,11 @@ export interface StateValidationSectionProps extends ProjectSectionProps {
     name: string
     icon: string
     href: string
+    quantumResistant?: boolean
     trustedSetups: TrustedSetupsByProofSystem
   }
   programHashes?: StateValidationProgramHashData[]
+  programHashesDescription?: string
 }
 
 export function StateValidationSection({
@@ -28,6 +30,7 @@ export function StateValidationSection({
   stateValidation,
   proverInfo,
   programHashes,
+  programHashesDescription,
   ...sectionProps
 }: StateValidationSectionProps) {
   return (
@@ -61,6 +64,11 @@ export function StateValidationSection({
             <div className="w-full border-divider border-b-2" />
           </div>
           <ProgramHashesTable entries={programHashes} />
+          {programHashesDescription && (
+            <Markdown className="text-paragraph-15 md:text-paragraph-16">
+              {programHashesDescription}
+            </Markdown>
+          )}
         </div>
       )}
     </ProjectSection>

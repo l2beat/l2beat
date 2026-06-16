@@ -33,6 +33,7 @@ const V2_MESSAGE_TRANSMITTER = EthereumAddress(
 // https://developers.circle.com/cctp/v1/evm-smart-contracts
 // V1 is an older version, we assume there won't be any changes.
 // Notably absent: bsc (V1 was never deployed there; BSC is only on V2, domain 17).
+// solana is bootstrap-only here: it is a valid V1 domain, but not an EVM messageTransmitter capture target.
 // chainconfeeg COMPLETE
 const OVERRIDES_V1 = [
   {
@@ -71,6 +72,10 @@ const OVERRIDES_V1 = [
     ),
   },
   {
+    chain: 'solana',
+    domain: 5,
+  },
+  {
     chain: 'polygonpos',
     domain: 7,
     messageTransmitter: EthereumAddress(
@@ -94,6 +99,7 @@ const OVERRIDES_V2 = [
   { chain: 'sei', domain: 16 },
   { chain: 'xdc', domain: 18 },
   { chain: 'monad', domain: 15 }, // hyperevm removed bc it is auto fetched
+  { chain: 'worldchain', domain: 14 },
 ]
 
 export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
@@ -162,7 +168,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
         const result = await rpc.call(
           {
             to: V2_MESSAGE_TRANSMITTER,
-            data: Bytes.fromHex(calldata),
+            input: Bytes.fromHex(calldata),
           },
           'latest',
         )

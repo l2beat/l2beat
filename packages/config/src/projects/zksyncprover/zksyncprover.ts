@@ -2,13 +2,16 @@ import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 export const zksyncprover: BaseProject = {
   id: ProjectId('zksyncprover'),
   slug: 'zksyncprover',
   name: 'ZKsync Lite',
   shortName: undefined,
+  aliases: ['Matter Labs'],
   addedAt: UnixTime.fromDate(new Date('2025-07-23')),
+  archivedAt: UnixTime.fromDate(new Date('2026-05-05')),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -40,11 +43,7 @@ export const zksyncprover: BaseProject = {
         ZK_CATALOG_TAGS.Other.CustomCircuits,
       ],
     },
-    proofSystemInfo: `
-    ## Proof system
-
-    ZKSync Lite prover is a monolithic SNARK proving system that generates validity proofs for the state transition of ZKSync Lite L2. It is a [Plonk system](https://docs.lite.zksync.io/userdocs/security/#primitives) over BN254 curve with [custom circuits](https://github.com/matter-labs/zksync/tree/master/core/lib/circuit/src) designed to prove the specific state transition function of the L2, including deposits and withdrawals, transfers, swaps, NFT operations. The proof system itself is implemented in the [bellman library](https://github.com/matter-labs/bellman), while many base cryptographic primitives are implemented in [franklin library](https://github.com/matter-labs/franklin-crypto/tree/dev).    
-    `,
+    proofSystemInfo: readProjectMarkdown('zksyncprover', 'proofSystemInfo'),
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,

@@ -1,8 +1,8 @@
 import type { Project } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
+import type { ProjectInteropData } from '~/server/features/scaling/interop/getProjectInteropData'
 import { getLiveness } from '~/server/features/scaling/liveness/getLiveness'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
@@ -20,10 +20,7 @@ import { getDaProjectRiskSummarySection } from './getDaProjectRiskSummarySection
 import { getDaThroughputSection } from './getDaThroughputSection'
 
 type RegularDetailsParams = {
-  layer: Project<
-    'daLayer' | 'statuses' | 'display',
-    'milestones' | 'isUpcoming'
-  >
+  layer: Project<'daLayer' | 'statuses' | 'display', 'milestones'>
   bridge:
     | Project<
         'daBridge' | 'display',
@@ -236,7 +233,7 @@ export async function getRegularDaProjectSections({
     })
   }
 
-  if (!layer.isUpcoming && layer.milestones && layer.milestones.length > 0) {
+  if (layer.milestones && layer.milestones.length > 0) {
     const sortedMilestones = layer.milestones.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     )
@@ -301,6 +298,7 @@ type EthereumDetailsParams = {
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
   helpers: SsrHelpers
+  interopData: ProjectInteropData | undefined
 }
 
 export async function getEthereumDaProjectSections({
@@ -310,6 +308,7 @@ export async function getEthereumDaProjectSections({
   layerGrissiniValues,
   bridgeGrissiniValues,
   helpers,
+  interopData,
 }: EthereumDetailsParams) {
   const riskSummarySection = getDaProjectRiskSummarySection(
     layer,
@@ -320,6 +319,20 @@ export async function getEthereumDaProjectSections({
   const items: ProjectDetailsSection[] = []
 
   const throughputSection = await getDaThroughputSection(helpers, layer)
+
+  if (interopData) {
+    items.push({
+      type: 'InteropFlowsSection',
+      props: {
+        id: 'interop-flows',
+        title: 'Volume and flows',
+        interopChains: interopData.interopChains,
+        protocols: interopData.protocols,
+        defaultSelectedChains: interopData.defaultSelectedChains,
+        defaultStatsChainId: interopData.chainId,
+      },
+    })
+  }
 
   if (throughputSection) {
     items.push({
@@ -338,7 +351,7 @@ export async function getEthereumDaProjectSections({
       id: 'activity',
       title: 'Activity',
       dataSource: undefined,
-      defaultRange: optionToRange('1y', { offset: -UnixTime.DAY }),
+      defaultRange: optionToRange('1y'),
       project: withProjectIcon(layer),
       milestones: layer.milestones ?? [],
     },

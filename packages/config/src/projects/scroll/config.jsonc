@@ -34,6 +34,8 @@
     "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4": "TimelockFast",
     "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": "TimelockSCEmergency",
     "eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b": "TimelockEmergency",
+    "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": "ScrollAdminMultisig",
+    "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": "ScrollAdminMultisig",
     "eth:0x66e5312EDeEAef6e80759A0F789e7914Fb401484": "L2TokenFactoryFallback",
     "eth:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": "L2TokenImplementationFallback",
     "eth:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": "L2ScrollMessengerFallback",
@@ -85,11 +87,25 @@
       // Euro Coin Token (EURC) - tracked via L1USDCGateway reference, changes are Circle ops not Scroll
       "ignoreDiscovery": true
     },
-    "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": {
+    "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": {
+      "description": "Multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.",
       "references": [
         {
-          "text": "Security Council members - Scroll Docs",
-          "href": "https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council"
+          "text": "Governance Update: Security Council Transition, Contributor Roles & Operational Adjustments (Scroll forum, 2026-04-13)",
+          "href": "https://forum.scroll.io/t/governance-update-security-council-transition-contributor-roles-operational-adjustments/1470"
+        },
+        {
+          "text": "L1 execution tx",
+          "href": "https://etherscan.io/tx/0xbc6079d54f7a5fc548402db349168732c3f02430c156f4723865934bdb373765"
+        }
+      ]
+    },
+    "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": {
+      "description": "L2 counterpart of ScrollAdminMultisig.",
+      "references": [
+        {
+          "text": "L2 execution tx",
+          "href": "https://scrollscan.com/tx/0x7278f818e917a553318083cf44d99a4b92d72b876c1e19a1834fa3b2114b62bd"
         }
       ]
     },
@@ -183,17 +199,6 @@
     "eth:0x63FB51C55d9605a75F8872C80De260a00fACfaA2": { "category": "spam" },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "ignoreDiscovery": true
-    },
-    "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14": {
-      "fields": {
-        "timelockAdminAC": {
-          "handler": {
-            "type": "accessControl",
-            "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
-          },
-          "permissions": [{ "type": "act", "delay": "{{getMinDelay}}" }]
-        }
-      }
     },
     "scr:0x5300000000000000000000000000000000000000": {
       "description": "Used to append messages to the L2MessageQueue from the L2ScrollMessenger.",
@@ -304,6 +309,7 @@
       "ignoreDiscovery": true
     },
     "eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2": {
+      "ignoreRelatives": ["l1USDC"],
       "ignoreInWatchMode": ["totalBridgedUSDC"]
     }
   }

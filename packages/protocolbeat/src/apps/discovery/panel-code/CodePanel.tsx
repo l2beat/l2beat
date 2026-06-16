@@ -10,19 +10,14 @@ import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { useProjectData } from '../hooks/useProjectData'
+import { getDefaultSourceIndex, hasSourceCode } from '../utils/sourceCode'
 import { RediscoverPrompt } from './RediscoverPrompt'
 
 export function CodePanel() {
   const { project, selectedAddress, projectResponse, selected } =
     useProjectData()
 
-  const hasCode = useMemo(
-    () =>
-      selected !== undefined &&
-      'implementationNames' in selected &&
-      selected.implementationNames !== undefined,
-    [selected],
-  )
+  const hasCode = useMemo(() => hasSourceCode(selected), [selected])
 
   const codeResponse = useQuery({
     queryKey: ['projects', project, 'code', selectedAddress],
@@ -38,19 +33,15 @@ export function CodePanel() {
 
   const { getRange, getSourceIndex } = useCodeStore()
 
-  const hasProxy = useMemo(() => {
-    const sources = codeResponse.data?.sources
-
-    if (!sources) {
-      return false
-    }
-
-    return sources.length > 1
-  }, [codeResponse.isPending, selectedAddress])
-
   const files = useMemo(
     () => getCodeFiles(codeResponse, selectedAddress, hasCode),
-    [codeResponse, selectedAddress, hasCode],
+    [
+      codeResponse.data,
+      codeResponse.isPending,
+      codeResponse.isError,
+      selectedAddress,
+      hasCode,
+    ],
   )
 
   const showRediscoverInfo = codeResponse.isError && !IS_READONLY
@@ -84,7 +75,9 @@ export function CodePanel() {
         editorId="code-panel"
         files={files}
         range={rangeInfo}
-        initialFileIndex={hasProxy ? 1 : 0}
+        initialFileIndex={getDefaultSourceIndex(
+          codeResponse.data?.sources ?? [],
+        )}
         features={{ lineSelection: false, rangeHighlight: true }}
       />
     </div>

@@ -41,6 +41,18 @@
     "eth:0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688": "EdgeChallengeManager"
   },
   "overrides": {
+    "eth:0x3B0369CAD35d257793F51c28213a4Cf4001397AC": {
+      "category": "non-critical"
+    },
+    "eth:0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3": {
+      "category": "non-critical"
+    },
+    "eth:0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23": {
+      "category": "non-critical"
+    },
+    "eth:0x658e8123722462F888b6fa01a7dbcEFe1D6DD709": {
+      "category": "non-critical"
+    },
     "arb-nova:0x509386DbF5C0BE6fd68Df97A05fdB375136c32De": {
       "fields": {
         "recipientsData": {
@@ -122,7 +134,20 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd": {
-      "ignoreRelatives": ["getValidators"]
+      "fields": {
+        "getValidators": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Can propose BoLD assertions and initiate challenges. Whitelisted validator on RollupProxy."
+            },
+            {
+              "type": "interact",
+              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+            }
+          ]
+        }
+      }
     }
   }
 }

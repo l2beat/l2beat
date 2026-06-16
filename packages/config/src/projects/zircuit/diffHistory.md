@@ -1,3 +1,423 @@
+Generated with discovered.json: 0x81f4d916a419507347b3bf5b5e6f13b1191dae44
+
+# Diff at Tue, 09 Jun 2026 12:43:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780398934
+- current timestamp: 1780398934
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780398934 (main branch discovery), not current.
+
+```diff
+    contract Zircuit Multisig 2 (eth:0x2c0B27F7C8F083B539557a0bA787041BF22DB276) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x691b3588eB87E6163260650D3BB465883EB6A575) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract Zircuit Multisig 1 (eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4","role":".challenger"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challenger"}
+    }
+```
+
+Generated with discovered.json: 0x8478102b2d4545f0e125846711dbd69e3cf95997
+
+# Diff at Tue, 02 Jun 2026 11:17:40 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778832561
+- current timestamp: 1780398934
+
+## Description
+
+Zircuit Multisig 1 rotated two signers (`$members[0]` and `$members[5]`).
+
+## Watched changes
+
+```diff
+    contract Zircuit Multisig 1 (eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xaAf347c2381369cA0bE97320413E3C04f8561f7e"
++        "eth:0xf1829C83C227d3cc30a4204B091A7865AbCD0419"
+      values.$members.5:
+-        "eth:0x38809210f69ed6204E276d2Be6b15cd530698679"
++        "eth:0xf5B2C0bfA18561d5374EAcc5FFfA3E39B049c1ae"
+    }
+```
+
+```diff
+    contract GnosisSafe (zircuit:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "zircuit:0xaAf347c2381369cA0bE97320413E3C04f8561f7e"
++        "zircuit:0xf1829C83C227d3cc30a4204B091A7865AbCD0419"
+      values.$members.5:
+-        "zircuit:0x38809210f69ed6204E276d2Be6b15cd530698679"
++        "zircuit:0xf5B2C0bfA18561d5374EAcc5FFfA3E39B049c1ae"
+    }
+```
+
+Generated with discovered.json: 0xfa7162f8776a16ee0e8d98b4e93602de9d628078
+
+# Diff at Fri, 08 May 2026 07:52:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1774433075
+- current timestamp: 1774433075
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774433075 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
++        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) [opstack/zircuit/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from the host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a time defined by the eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4.
+      sourceHashes.1:
+-        "0xc4abdb5610f10d943d33cff714f0c98807bd0f37828f9b5b32a0874a2f192ce6"
++        "0x75b3a40d24df23769d05a5f3bb0461a19038ca999e7d7a3bb9e1ea2579b405d6"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x931681cb03b7ea6b4521cf57be98c5303f045f088c4cb9e282b889be911da623"
++        "0xe784f0244cc07b370089b601090cc4c3c7469c9fdd2a281bfa13b438c1b88e0d"
+    }
+```
+
+```diff
+    contract Zircuit Multisig 2 (eth:0x2c0B27F7C8F083B539557a0bA787041BF22DB276) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xe99a7b3921e19ba67802b943b31b611bea7fa413649085f55e087689879522d5"
++        "0x3773dd699ed2a94c92b617c9e76c0191f58b9de68e2605999d076e287869e165"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) [opstack/zircuit/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from the host chain to this chain. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a configurable time.
+      sourceHashes.1:
+-        "0x9733115edac1c0966aa238bb30a01bdd75f6a36d3a16307293cbcae2925923d0"
++        "0x2324f7b9f352cb131178a3853eb2383e5c82923461c55e76d14c23fd231664f9"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
++        "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702"
+    }
+```
+
+```diff
+    contract ResolverRegistry (eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E) [opstack/zircuit/ResolverRegistry] {
+    +++ description: Registers 'resolvers' which are allowed to supply authoritative data for blockchain balances to support escapes without merkle proofs from e.g. DeFi smart contracts on L2. A resolver can either be registered directly by the respective contract on L2 or by its deployer from L1, using deterministic deployment derivation.
+      sourceHashes.1:
+-        "0xaf3dfb2d731a0031df7fce45e164a2730f66ed2997bc3081932341a0ad0f2155"
++        "0xa781dfe2c622536e8fa033f7e336138e31604047d1878413a20a26159756eaac"
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) [opstack/zircuit/SuperchainConfig] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+      sourceHashes.1:
+-        "0xf69fa98cc18afd5754767df58a79532b52dab119b14df252fbea558da850139a"
++        "0x0932693430b6f2f9a9491712c6e5fb55fc19c93b51a8b428e62723ccfa16eeaa"
+    }
+```
+
+```diff
+    contract L1ERC20TokenBridge (eth:0x912C7271a6A3622dfb8B218eb46a6122aB046C79) [lido/L1ERC20TokenBridge] {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      sourceHashes.1:
+-        "0xc4b0423b7d0fcada3862027e805c2fc79676feb6f4bc3978e5a86b390bfd7be3"
++        "0x40e05a5687c31241ba914eeb7831d870e410c699c2cc59094759947e8d4148fa"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4) [opstack/zircuit/L2OutputOracle_SP1_nokeepalive] {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.
+      sourceHashes.1:
+-        "0x84bf4755b102b4cd8d19384ef5bfaddf44ffd1503ed4c898b67a9911fefea750"
++        "0xc4a61a213a524b17934b612466862d12315681380db687d2fe88a13f14212e5b"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x994eEb321F9cD79B077a5455fC248c77f30Dd244) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x937e394859daaa4d66de4cbe3e6770d80adf639ecc5d3394774676870cda8d62"
++        "0xeebc391f228960e573a84b61884f39e3f4d64ad3a105cb7974f641c4a737954e"
+    }
+```
+
+```diff
+    contract Zircuit Multisig 1 (eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0xae58fedc9cba4efd31498542acf99901aec1544412fb8cf69fa5c7e804602cc7"
++        "0x8fa0103a7f0708fce3badff106e2d615501b3405658422802ee59b7d9f9e5472"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sourceHashes.0:
+-        "0xae43138d235a7d6bdc28d5f7a1d652c8b9faecc9208b0f4c21490db6c906fa6c"
++        "0x6e5186db929ab276fbc16326aa21a26c619ba0bed06534c468cd6db0c79316b1"
+    }
+```
+
+```diff
+    contract GnosisSafe (zircuit:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+Generated with discovered.json: 0x587cad2c9cb8f612a96fab88224b7ad04e5f39a6
+
+# Diff at Tue, 05 May 2026 10:23:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1774433075
+- current timestamp: 1774433075
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774433075 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from the host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a time defined by the eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract Zircuit Multisig 2 (eth:0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from the host chain to this chain. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a configurable time.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract ResolverRegistry (eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E) {
+    +++ description: Registers 'resolvers' which are allowed to supply authoritative data for blockchain balances to support escapes without merkle proofs from e.g. DeFi smart contracts on L2. A resolver can either be registered directly by the respective contract on L2 or by its deployer from L1, using deterministic deployment derivation.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract L1ERC20TokenBridge (eth:0x912C7271a6A3622dfb8B218eb46a6122aB046C79) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      deployerAddress:
++        "eth:0xbeb4E7EE8961E54bfeA26114599674C30F6885Db"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x994eEb321F9cD79B077a5455fC248c77f30Dd244) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract SP1MockVerifierWithHash (eth:0xb4bd9A37998576C2FfD863b6dc9E0124021B8739) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x83701e3cbbDc9BfBd7A4fcf4Fd1c82935E31bB5a"
+    }
+```
+
+```diff
+    contract Zircuit Multisig 1 (eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      deployerAddress:
++        "eth:0x83701e3cbbDc9BfBd7A4fcf4Fd1c82935E31bB5a"
+    }
+```
+
 Generated with discovered.json: 0x6fad9fb6fea75857be741e6a6b8934580161aab8
 
 # Diff at Wed, 25 Mar 2026 10:06:05 GMT:

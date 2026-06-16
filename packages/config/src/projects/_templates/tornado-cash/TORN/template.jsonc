@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TORN",
+  "description": "TORN governance token contract. Transfers start paused and can later be toggled by governance, which also controls the paused-transfer allowlist and token rescue functions.",
+  "category": "gov",
+  "fields": {
+    "governance": {
+      "description": "Governance address controlling token transferability.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause or unpause TORN transfers after the initial pause period expires."
+        },
+        {
+          "type": "interact",
+          "description": "manage the allowlist of addresses that can transfer while TORN is paused."
+        },
+        {
+          "type": "interact",
+          "description": "rescue arbitrary tokens held by the TORN contract."
+        }
+      ]
+    },
+    "paused": {
+      "description": "Whether ordinary TORN transfers are currently paused.",
+      "severity": "HIGH"
+    },
+    "canUnpauseAfter": {
+      "description": "Earliest timestamp after which governance may change the paused state.",
+      "severity": "HIGH"
+    }
+  },
+  "ignoreMethods": ["blockTimestamp"]
+}

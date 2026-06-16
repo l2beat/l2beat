@@ -1,8 +1,9 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { Command, Plan } from '@l2beat/token-backend'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { diff } from '~/utils/getDiff'
 import { ButtonWithSpinner } from './ButtonWithSpinner'
 import { Button } from './core/Button'
@@ -26,78 +27,104 @@ export function PlanConfirmationDialog({
   setPlan: (plan: Plan | undefined) => void
   onSuccess?: () => void
 }) {
-  const utils = api.useUtils()
+  const trpc = useTRPC()
+  const queryClient = useQueryClient()
   const navigate = useNavigate()
 
   function invalidateAbstractTokenQueries() {
-    utils.abstractTokens.invalidate()
-    utils.search.invalidate()
+    queryClient.invalidateQueries(trpc.abstractTokens.getAll.queryFilter())
+    queryClient.invalidateQueries(
+      trpc.abstractTokens.getAllWithDeployedTokens.queryFilter(),
+    )
+    queryClient.invalidateQueries(trpc.abstractTokens.getById.queryFilter())
+    queryClient.invalidateQueries(trpc.abstractTokens.checks.queryFilter())
+    queryClient.invalidateQueries(trpc.search.all.queryFilter())
   }
 
   function invalidateDeployedTokenQueries() {
-    utils.abstractTokens.invalidate()
-    utils.deployedTokens.invalidate()
-    utils.search.invalidate()
+    invalidateAbstractTokenQueries()
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.findByChainAndAddress.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.checkIfExists.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getByChainAndAddress.queryFilter(),
+    )
+    queryClient.invalidateQueries(trpc.deployedTokens.checks.queryFilter())
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getSuggestionsByCoingeckoId.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getCoingeckoSuggestions.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getSuggestionsByPartialTransfers.queryFilter(),
+    )
   }
 
-  const { mutate: executePlan, isPending } = api.plan.execute.useMutation({
-    onSuccess: () => {
-      if (!plan) return
-      onSuccess?.()
-      switch (plan.intent.type) {
-        case 'AddAbstractTokenIntent':
-          toast.success(
-            <span>
-              Token added successfully.{' '}
-              <Link
-                to={`/tokens/${plan.intent.record.id}`}
-                className="underline"
-              >
-                View token
-              </Link>
-            </span>,
-          )
-          invalidateAbstractTokenQueries()
-          break
-        case 'AddDeployedTokenIntent':
-          toast.success(
-            <span>
-              Token added successfully.{' '}
-              <Link
-                to={`/tokens/${plan.intent.record.chain}/${plan.intent.record.address}`}
-                className="underline"
-              >
-                View token
-              </Link>
-            </span>,
-          )
-          invalidateDeployedTokenQueries()
-          break
-        case 'DeleteAbstractTokenIntent':
-          toast.success('Abstract token deleted successfully')
-          invalidateAbstractTokenQueries()
-          navigate('/')
-          break
-        case 'DeleteDeployedTokenIntent':
-          toast.success('Deployed token deleted successfully')
-          invalidateDeployedTokenQueries()
-          navigate('/')
-          break
-        case 'UpdateAbstractTokenIntent':
-          toast.success('Abstract token updated successfully')
-          invalidateAbstractTokenQueries()
-          break
-        case 'UpdateDeployedTokenIntent':
-          toast.success('Deployed token updated successfully')
-          invalidateDeployedTokenQueries()
-          break
-        default:
-          assertUnreachable(plan.intent)
-      }
+  const { mutate: executePlan, isPending } = useMutation(
+    trpc.plan.execute.mutationOptions({
+      onSuccess: () => {
+        if (!plan) return
+        onSuccess?.()
+        queryClient.invalidateQueries(trpc.tokenDbHistory.getPage.queryFilter())
+        switch (plan.intent.type) {
+          case 'AddAbstractTokenIntent':
+            toast.success(
+              <span>
+                Token added successfully.{' '}
+                <Link
+                  to={`/tokens/${plan.intent.record.id}`}
+                  className="underline"
+                >
+                  View token
+                </Link>
+              </span>,
+            )
+            invalidateAbstractTokenQueries()
+            break
+          case 'AddDeployedTokenIntent':
+            toast.success(
+              <span>
+                Token added successfully.{' '}
+                <Link
+                  to={`/tokens/${plan.intent.record.chain}/${plan.intent.record.address}`}
+                  className="underline"
+                >
+                  View token
+                </Link>
+              </span>,
+            )
+            invalidateDeployedTokenQueries()
+            break
+          case 'DeleteAbstractTokenIntent':
+            toast.success('Abstract token deleted successfully')
+            invalidateAbstractTokenQueries()
+            navigate('/')
+            break
+          case 'DeleteDeployedTokenIntent':
+            toast.success('Deployed token deleted successfully')
+            invalidateDeployedTokenQueries()
+            navigate('/')
+            break
+          case 'UpdateAbstractTokenIntent':
+            toast.success('Abstract token updated successfully')
+            invalidateAbstractTokenQueries()
+            break
+          case 'UpdateDeployedTokenIntent':
+            toast.success('Deployed token updated successfully')
+            invalidateDeployedTokenQueries()
+            break
+          default:
+            assertUnreachable(plan.intent)
+        }
 
-      setPlan(undefined)
-    },
-  })
+        setPlan(undefined)
+      },
+    }),
+  )
 
   if (!plan) {
     return null
@@ -247,10 +274,6 @@ function CommandItem({ command }: { command: Command }) {
           </Tooltip>
         </li>
       )
-    case 'DeleteAllAbstractTokensCommand':
-      return <li>All abstract tokens will be deleted</li>
-    case 'DeleteAllDeployedTokensCommand':
-      return <li>All deployed tokens will be deleted</li>
     default:
       assertUnreachable(command)
   }

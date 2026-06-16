@@ -163,6 +163,7 @@ function mockRpcClient(
 
   return mockObject<BlockProvider>({
     getBlockWithTransactions: mockGetBlock,
+    chain: 'ethereum',
   })
 }
 

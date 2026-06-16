@@ -1,3 +1,216 @@
+Generated with discovered.json: 0xc5d690a4a65e6e9395cc62a570689aff50f5967b
+
+# Diff at Tue, 09 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779962529
+- current timestamp: 1779962529
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779962529 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x2526B437560CF8dC1a706A87494996D48eDFb701) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xE18316BfDDE4e8893F41F94B3439183CfB81A5d1) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xabd05a7160bb60773c933536b9fd22c4108ffb00
+
+# Diff at Thu, 28 May 2026 10:03:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1771584033
+- current timestamp: 1779962529
+
+## Description
+
+caldera msig member removed, threshold decreased to 3.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xae4296c7efe72593d9aee9e2227cc2d3ca5e7674
+
+# Diff at Fri, 08 May 2026 07:52:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1771584033
+- current timestamp: 1771584033
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771584033 (main branch discovery), not current.
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract Diamond (eth:0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sourceHashes.1:
+-        "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
++        "0xfe92fc5881d0e7d5cabb9edf0344e4bf0f6bf6de5a51f9ce5b9a03d32c1338bc"
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0x86F4487949Ac2fb0d5735870f1731e879e1d9680) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x2bf43034b9559643e986A2fE3cE015a18247b904 act through it.
+      sourceHashes.0:
+-        "0x52d297ca518abe8d71a6d8911487860414e682b1d0d1e7169c4151b619d55832"
++        "0x3071b29c9d3c65c02f422ab100df2d586db80b598bf89958951c8dffea457c52"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) [shared-zk-stack/ValidatorTimelock] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sourceHashes.0:
+-        "0x2221508945ceea880f5d52488af1a7466fcdfadeaf3644dc5e3b82671b7947a3"
++        "0x6308b2ae7a44c1255f5ad431f8b3d2d7da55efd35a771e2a31c87ce6b814e358"
+    }
+```
+
+```diff
+    contract AvailL1DAValidator (eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120) [shared-zk-stack/AvailL1DAValidator] {
+    +++ description: Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.
+      sourceHashes.0:
+-        "0x847b975672b29f42aba32df162121ea5330f0bb48ac2ec11c61a07ad004c10c1"
++        "0x1802475d9a91441cffe558d63a993380d7817f22de139c9282edd95cdc2df473"
+    }
+```
+
+Generated with discovered.json: 0x223ed1867b78133ef19ae4af44d3d93afaf9c93f
+
+# Diff at Tue, 05 May 2026 10:23:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1771584033
+- current timestamp: 1771584033
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771584033 (main branch discovery), not current.
+
+```diff
+    contract L1VerifierFflonk (eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      deployerAddress:
++        "eth:0x3AcEB2E5a1e46d491a72783Acc7EE64E904a787a"
+    }
+```
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+    }
+```
+
+```diff
+    contract L1VerifierPlonk (eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      deployerAddress:
++        "eth:0x3AcEB2E5a1e46d491a72783Acc7EE64E904a787a"
+    }
+```
+
+```diff
+    contract Diamond (eth:0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      deployerAddress:
++        "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc"
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0x86F4487949Ac2fb0d5735870f1731e879e1d9680) {
+    +++ description: A governance proxy that lets eth:0x2bf43034b9559643e986A2fE3cE015a18247b904 act through it.
+      deployerAddress:
++        "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      deployerAddress:
++        "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16"
+    }
+```
+
+```diff
+    contract AvailL1DAValidator (eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120) {
+    +++ description: Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.
+      deployerAddress:
++        "eth:0x8fc4cB81975cFE4652630b77E86EF0e4193Aa17e"
+    }
+```
+
+```diff
+    contract DualVerifier (eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A) {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911 or eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6 depending on the supplied proof type.
+      deployerAddress:
++        "eth:0x3AcEB2E5a1e46d491a72783Acc7EE64E904a787a"
+    }
+```
+
 Generated with discovered.json: 0xbdb9a56c4c51bd5e6820243d09b92fd5e897a160
 
 # Diff at Fri, 20 Feb 2026 10:41:36 GMT:

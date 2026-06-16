@@ -17,6 +17,20 @@ import {
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
+  type CCTPNetwork,
+  CCTPV1Config,
+  CCTPV2Config,
+} from '../cctp/cctp.config'
+import {
+  cctpV1DepositForBurnLog,
+  cctpV1MessageReceivedLog,
+  cctpV2DepositForBurnLog,
+  cctpV2MessageReceivedLog,
+  findCctpDepositForBurn,
+  findCctpReceivedTransfer,
+} from '../cctp/cctp.utils'
+import { getBestEffortTokenFrameworkBridgeType } from '../tokenFrameworkBridgeTyping'
+import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
@@ -101,11 +115,6 @@ const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
 const parseTransfer = createEventParser(transferLog)
 
-// Detects when CCIP delegates USDC transfers to Circle's CCTP
-const depositForBurnLog =
-  'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)'
-const parseDepositForBurn = createEventParser(depositForBurnLog)
-
 // --- Interop event types ---
 
 export const CCIPSendRequested = createInteropEventType<{
@@ -118,11 +127,28 @@ export const CCIPSendRequested = createInteropEventType<{
   isCctpBacked?: boolean
 }>('ccip.CCIPSendRequested')
 
+type CcipDstToken = {
+  address: Address32
+  amount: bigint
+  wasMinted: boolean
+  isCctpBacked?: boolean
+}
+
+type CcipSrcToken = {
+  tokenAddress?: string
+  wasBurned: boolean
+}
+
+type CctpNetworks = {
+  v1Networks: CCTPNetwork[]
+  v2Networks: CCTPNetwork[]
+}
+
 export const ExecutionStateChanged = createInteropEventType<{
   messageId: `0x${string}`
   state: number
   $srcChain: string
-  dstTokens?: { address: Address32; amount: bigint; wasMinted: boolean }[]
+  dstTokens?: CcipDstToken[]
 }>('ccip.ExecutionStateChanged')
 
 // --- Transfer event helpers ---
@@ -186,7 +212,8 @@ const SOURCE_TOKEN_POOL_EVENTS = [
   depositedAndBurnedLog,
   lockedOrBurnedLog,
   transferLog,
-  depositForBurnLog,
+  cctpV1DepositForBurnLog,
+  cctpV2DepositForBurnLog,
 ]
 const DEST_TOKEN_POOL_EVENTS = [
   releasedOrMintedLog,
@@ -194,6 +221,8 @@ const DEST_TOKEN_POOL_EVENTS = [
   mintedLog,
   mintedAndWithdrawnLog,
   transferLog,
+  cctpV1MessageReceivedLog,
+  cctpV2MessageReceivedLog,
 ]
 
 export class CCIPPlugin implements InteropPluginResyncable {
@@ -415,7 +444,11 @@ export class CCIPPlugin implements InteropPluginResyncable {
   ) {
     if (opts.state !== 2) return []
 
-    const dstTokens = this.collectDestTokenInfo(input, opts.boundaryParser)
+    const dstTokens = this.collectDestTokenInfo(
+      input,
+      opts.srcChain,
+      opts.boundaryParser,
+    )
 
     return [
       ExecutionStateChanged.create(input, {
@@ -435,34 +468,39 @@ export class CCIPPlugin implements InteropPluginResyncable {
     tokenAddress: string,
     amount: bigint,
   ): boolean {
-    const logsBeforeSend = input.txLogs.filter(
-      (log) => (log.logIndex ?? 0) < (input.log.logIndex ?? 0),
+    return (
+      findCctpDepositForBurn(input.txLogs, {
+        tokenAddress,
+        amount,
+        beforeLogIndex: input.log.logIndex ?? 0,
+      }) !== undefined
     )
-    for (const log of logsBeforeSend) {
-      const depositForBurn = parseDepositForBurn(log, null)
-      if (
-        depositForBurn &&
-        depositForBurn.burnToken.toLowerCase() === tokenAddress.toLowerCase() &&
-        depositForBurn.amount === amount
-      ) {
-        return true
-      }
-    }
-    return false
   }
 
   // Collect source-side token info from TokenPool events before the send event.
   // Handles both v1.5 (Locked/Burned) and v1.6.1+ (LockedOrBurned) formats.
   // Events appear in the same order as tokenAmounts[] in the message.
-  private collectSourceTokenInfo(
-    input: LogToCapture,
-  ): { wasBurned: boolean; tokenAddress?: string }[] {
-    const result: { wasBurned: boolean; tokenAddress?: string }[] = []
+  private collectSourceTokenInfo(input: LogToCapture): CcipSrcToken[] {
+    const result: CcipSrcToken[] = []
     const logsBeforeSend = input.txLogs.filter(
       (log) => (log.logIndex ?? 0) < (input.log.logIndex ?? 0),
     )
 
     const processedTokens = new Set<string>()
+    const addPrecedingToken = (
+      index: number,
+      amount: bigint,
+      wasBurned: boolean,
+    ) => {
+      const transfer = findPrecedingTransfer(logsBeforeSend, index, amount)
+      if (!transfer) return
+
+      const tokenKey = transfer.tokenAddress.toLowerCase()
+      if (processedTokens.has(tokenKey)) return
+
+      processedTokens.add(tokenKey)
+      result.push({ wasBurned, tokenAddress: transfer.tokenAddress })
+    }
 
     for (let i = 0; i < logsBeforeSend.length; i++) {
       const log = logsBeforeSend[i]
@@ -470,17 +508,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
       // v1.5 Locked (lock & mint pattern — wasBurned = false)
       const locked = parseLockedEvent(log, null)
       if (locked) {
-        const transfer = findPrecedingTransfer(logsBeforeSend, i, locked.amount)
-        if (
-          transfer &&
-          !processedTokens.has(transfer.tokenAddress.toLowerCase())
-        ) {
-          processedTokens.add(transfer.tokenAddress.toLowerCase())
-          result.push({
-            wasBurned: false,
-            tokenAddress: transfer.tokenAddress,
-          })
-        }
+        addPrecedingToken(i, locked.amount, false)
         continue
       }
 
@@ -488,35 +516,14 @@ export class CCIPPlugin implements InteropPluginResyncable {
       // The user's tokens are locked in the lockbox, so wasBurned = false.
       const depositedAndBurned = parseDepositedAndBurned(log, null)
       if (depositedAndBurned) {
-        const transfer = findPrecedingTransfer(
-          logsBeforeSend,
-          i,
-          depositedAndBurned.amount,
-        )
-        if (
-          transfer &&
-          !processedTokens.has(transfer.tokenAddress.toLowerCase())
-        ) {
-          processedTokens.add(transfer.tokenAddress.toLowerCase())
-          result.push({
-            wasBurned: false,
-            tokenAddress: transfer.tokenAddress,
-          })
-        }
+        addPrecedingToken(i, depositedAndBurned.amount, false)
         continue
       }
 
       // v1.5 Burned (burn & mint pattern — wasBurned = true)
       const burned = parseBurnedEvent(log, null)
       if (burned) {
-        const transfer = findPrecedingTransfer(logsBeforeSend, i, burned.amount)
-        if (
-          transfer &&
-          !processedTokens.has(transfer.tokenAddress.toLowerCase())
-        ) {
-          processedTokens.add(transfer.tokenAddress.toLowerCase())
-          result.push({ wasBurned: true, tokenAddress: transfer.tokenAddress })
-        }
+        addPrecedingToken(i, burned.amount, true)
         continue
       }
 
@@ -559,11 +566,12 @@ export class CCIPPlugin implements InteropPluginResyncable {
   // to avoid picking up token events from other messages.
   private collectDestTokenInfo(
     input: LogToCapture,
+    srcChain: string,
     boundaryParser: (log: LogToCapture['log'], address: null) => unknown,
-  ): { address: Address32; amount: bigint; wasMinted: boolean }[] {
-    const result: { address: Address32; amount: bigint; wasMinted: boolean }[] =
-      []
+  ): CcipDstToken[] {
+    const result: CcipDstToken[] = []
     const currentLogIndex = input.log.logIndex ?? 0
+    const cctpNetworks = this.getCctpNetworks()
 
     // Find the log index of the previous ExecutionStateChanged in this tx
     const prevBoundaryLogIndex = input.txLogs
@@ -579,6 +587,33 @@ export class CCIPPlugin implements InteropPluginResyncable {
         (log.logIndex ?? 0) > prevBoundaryLogIndex &&
         (log.logIndex ?? 0) < currentLogIndex,
     )
+    const addDstToken = (
+      address: Address32,
+      amount: bigint,
+      wasMinted: boolean,
+    ) => {
+      result.push(
+        this.createDstTokenInfo(
+          input,
+          logsBetween,
+          cctpNetworks,
+          srcChain,
+          address,
+          amount,
+          wasMinted,
+        ),
+      )
+    }
+    const addInferredDstToken = (
+      index: number,
+      amount: bigint,
+      wasMinted: boolean,
+    ) => {
+      const transfer = findPrecedingTransfer(logsBetween, index, amount)
+      if (!transfer) return
+
+      addDstToken(Address32.from(transfer.tokenAddress), amount, wasMinted)
+    }
 
     for (let i = 0; i < logsBetween.length; i++) {
       const log = logsBetween[i]
@@ -595,39 +630,25 @@ export class CCIPPlugin implements InteropPluginResyncable {
         if (transfer) {
           wasMinted = transfer.from === ZERO_ADDRESS
         }
-        result.push({
-          address: Address32.from(releasedOrMinted.token),
-          amount: releasedOrMinted.amount,
+        addDstToken(
+          Address32.from(releasedOrMinted.token),
+          releasedOrMinted.amount,
           wasMinted,
-        })
+        )
         continue
       }
 
       // v1.5 Released (release from pool — wasMinted = false)
       const released = parseReleased(log, null)
       if (released) {
-        const transfer = findPrecedingTransfer(logsBetween, i, released.amount)
-        if (transfer) {
-          result.push({
-            address: Address32.from(transfer.tokenAddress),
-            amount: released.amount,
-            wasMinted: false,
-          })
-        }
+        addInferredDstToken(i, released.amount, false)
         continue
       }
 
       // v1.5 Minted (mint new tokens — wasMinted = true)
       const minted = parseMinted(log, null)
       if (minted) {
-        const transfer = findPrecedingTransfer(logsBetween, i, minted.amount)
-        if (transfer) {
-          result.push({
-            address: Address32.from(transfer.tokenAddress),
-            amount: minted.amount,
-            wasMinted: true,
-          })
-        }
+        addInferredDstToken(i, minted.amount, true)
         continue
       }
 
@@ -637,27 +658,77 @@ export class CCIPPlugin implements InteropPluginResyncable {
       // Marked as wasMinted: false because the receiver gets released (not minted) tokens.
       const mintedAndWithdrawn = parseMintedAndWithdrawn(log, null)
       if (mintedAndWithdrawn) {
-        const transfer = findPrecedingTransfer(
-          logsBetween,
-          i,
-          mintedAndWithdrawn.amount,
-        )
-        if (transfer) {
-          result.push({
-            address: Address32.from(transfer.tokenAddress),
-            amount: mintedAndWithdrawn.amount,
-            wasMinted: false,
-          })
-        }
+        addInferredDstToken(i, mintedAndWithdrawn.amount, false)
       }
     }
 
     return result
   }
 
+  private createDstTokenInfo(
+    input: LogToCapture,
+    txLogs: LogToCapture['txLogs'],
+    cctpNetworks: CctpNetworks,
+    srcChain: string,
+    address: Address32,
+    amount: bigint,
+    wasMinted: boolean,
+  ): CcipDstToken {
+    return {
+      address,
+      amount,
+      wasMinted,
+      isCctpBacked: this.isCctpReceivedToken(
+        input,
+        txLogs,
+        cctpNetworks,
+        srcChain,
+        address,
+        amount,
+      )
+        ? true
+        : undefined,
+    }
+  }
+
+  private isCctpReceivedToken(
+    input: LogToCapture,
+    txLogs: LogToCapture['txLogs'],
+    cctpNetworks: CctpNetworks,
+    srcChain: string,
+    tokenAddress: Address32,
+    amount: bigint,
+  ): boolean {
+    return (
+      findCctpReceivedTransfer(
+        {
+          chain: input.chain,
+          txLogs,
+        },
+        {
+          ...cctpNetworks,
+          srcChain: this.normalizeInteropChain(srcChain),
+          dstTokenAddress: tokenAddress,
+          dstAmount: amount,
+        },
+      ) !== undefined
+    )
+  }
+
+  private getCctpNetworks(): CctpNetworks {
+    return {
+      v1Networks: this.configs.get(CCTPV1Config) ?? [],
+      v2Networks: this.configs.get(CCTPV2Config) ?? [],
+    }
+  }
+
   private normalizeOneSidedChain(chain: string): string | undefined {
-    const normalized = chain.replace(/^Unknown_/, '')
+    const normalized = this.normalizeInteropChain(chain)
     return this.oneSidedChains.includes(normalized) ? normalized : undefined
+  }
+
+  private normalizeInteropChain(chain: string): string {
+    return chain.replace(/^Unknown_/, '')
   }
 
   matchTypes = [ExecutionStateChanged, CCIPSendRequested]
@@ -690,6 +761,8 @@ export class CCIPPlugin implements InteropPluginResyncable {
       const result: MatchResult = []
       const dstTokens = delivery.args.dstTokens ?? []
       for (const dstToken of dstTokens) {
+        if (dstToken.isCctpBacked) continue
+
         result.push(
           Result.Transfer('ccip.Transfer', {
             srcChain,
@@ -697,6 +770,10 @@ export class CCIPPlugin implements InteropPluginResyncable {
             dstTokenAddress: dstToken.address,
             dstAmount: dstToken.amount,
             dstWasMinted: dstToken.wasMinted,
+            bridgeType: getBestEffortTokenFrameworkBridgeType({
+              srcWasBurned: undefined,
+              dstWasMinted: dstToken.wasMinted,
+            }),
           }),
         )
       }
@@ -710,7 +787,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
       const dstToken = dstTokens[i]
       const matched = sendRequests.find((req) => req.args.index === i)
       if (!matched) continue
-      if (matched.args.isCctpBacked) continue
+      if (matched.args.isCctpBacked || dstToken.isCctpBacked) continue
       result.push(
         Result.Transfer('ccip.Transfer', {
           srcEvent: matched,
@@ -763,6 +840,10 @@ export class CCIPPlugin implements InteropPluginResyncable {
         srcTokenAddress: delivery.args.token,
         srcAmount: delivery.args.amount,
         srcWasBurned: delivery.args.wasBurned,
+        bridgeType: getBestEffortTokenFrameworkBridgeType({
+          srcWasBurned: delivery.args.wasBurned,
+          dstWasMinted: undefined,
+        }),
       }),
     ]
   }

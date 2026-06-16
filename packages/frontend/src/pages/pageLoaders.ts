@@ -13,9 +13,15 @@ export const pageLoaders = {
   ScalingActivityPage: async () =>
     (await import('./scaling/activity/ScalingActivityPage'))
       .ScalingActivityPage,
-  ScalingDataAvailabilityPage: async () =>
-    (await import('./scaling/data-availability/ScalingDataAvailabilityPage'))
-      .ScalingDataAvailabilityPage,
+  ScalingRiskDataAvailabilityPage: async () =>
+    (
+      await import(
+        './scaling/risk/data-availability/ScalingRiskDataAvailabilityPage'
+      )
+    ).ScalingRiskDataAvailabilityPage,
+  ScalingRiskSequencingPage: async () =>
+    (await import('./scaling/risk/sequencing/ScalingRiskSequencingPage'))
+      .ScalingRiskSequencingPage,
   ScalingLivenessPage: async () =>
     (await import('./scaling/liveness/ScalingLivenessPage'))
       .ScalingLivenessPage,
@@ -24,9 +30,6 @@ export const pageLoaders = {
   ScalingArchivedPage: async () =>
     (await import('./scaling/archived/ScalingArchivedPage'))
       .ScalingArchivedPage,
-  ScalingUpcomingPage: async () =>
-    (await import('./scaling/upcoming/ScalingUpcomingPage'))
-      .ScalingUpcomingPage,
   ScalingProjectPage: async () =>
     (await import('./scaling/project/ScalingProjectPage')).ScalingProjectPage,
   ScalingProjectTvsBreakdownPage: async () =>
@@ -55,6 +58,11 @@ export const pageLoaders = {
   InteropProtocolPage: async () =>
     (await import('./interop/protocol/InteropProtocolPage'))
       .InteropProtocolPage,
+  InteropTokenPage: async () =>
+    (await import('./interop/token/InteropTokenPage')).InteropTokenPage,
+  InteropTokenFrameworksPage: async () =>
+    (await import('./interop/token-frameworks/InteropTokenFrameworksPage'))
+      .InteropTokenFrameworksPage,
   DataAvailabilitySummaryPage: async () =>
     (await import('./data-availability/summary/DataAvailabilitySummaryPage'))
       .DataAvailabilitySummaryPage,
@@ -76,6 +84,10 @@ export const pageLoaders = {
   DataAvailabilityArchivedPage: async () =>
     (await import('./data-availability/archived/DataAvailabilityArchivedPage'))
       .DataAvailabilityArchivedPage,
+  PrivacySummaryPage: async () =>
+    (await import('./privacy/summary/PrivacySummaryPage')).PrivacySummaryPage,
+  PrivacyProjectPage: async () =>
+    (await import('./privacy/project/PrivacyProjectPage')).PrivacyProjectPage,
   ZkCatalogPage: async () =>
     (await import('./zk-catalog/v2/ZkCatalogPage')).ZkCatalogPage,
   ZkCatalogProjectPage: async () =>
@@ -89,9 +101,8 @@ export const pageLoaders = {
   EthereumConnectPage: async () =>
     (await import('./governance/ethereum-connect/EthereumConnectPage'))
       .EthereumConnectPage,
-  GovernancePublicationPage: async () =>
-    (await import('./publications/governance/GovernancePublicationPage'))
-      .GovernancePublicationPage,
+  PublicationPage: async () =>
+    (await import('./publications/PublicationPage')).PublicationPage,
   FaqPage: async () => (await import('./faq/FaqPage')).FaqPage,
   GlossaryPage: async () =>
     (await import('./glossary/GlossaryPage')).GlossaryPage,

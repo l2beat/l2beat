@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x4a36379c2d288e49fecc32644c6ebff4e9d4a71d
+
+# Diff at Tue, 09 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1753944354
+- current timestamp: 1753944354
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753944354 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x2572835e02b59078711aa0800490e80975e4169d) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+      receivedPermissions.1.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.1.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+      receivedPermissions.1.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.1.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xe236fd0d92c5ebc1b2ea21f7a51e04ac86e8cb51
 
 # Diff at Wed, 17 Dec 2025 14:34:42 GMT:

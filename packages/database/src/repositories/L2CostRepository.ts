@@ -138,6 +138,28 @@ export class L2CostRepository extends BaseRepository {
     return rows.map((row) => row.configurationId)
   }
 
+  async getLatestTimestampsByConfigId(): Promise<
+    { configurationId: string; latestTimestamp: UnixTime }[]
+  > {
+    const rows = await this.db
+      .selectFrom('L2Cost')
+      .select(['configurationId'])
+      .select(this.db.fn.max('timestamp').as('latestTimestamp'))
+      .groupBy('configurationId')
+      .execute()
+
+    return rows.flatMap((row) => {
+      if (row.latestTimestamp === null) {
+        return []
+      }
+
+      return {
+        configurationId: row.configurationId,
+        latestTimestamp: UnixTime.fromDate(row.latestTimestamp),
+      }
+    })
+  }
+
   // #endregion
 
   async deleteAll(): Promise<number> {

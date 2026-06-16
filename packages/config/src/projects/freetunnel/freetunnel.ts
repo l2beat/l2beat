@@ -8,6 +8,8 @@ export const freetunnel: BaseProject = {
   shortName: 'Free',
   addedAt: UnixTime(1774434398),
   interopConfig: {
+    description:
+      'Centralised multichain token framework built for large transfers only, specialised on the Bitcoin-adjacent DeFi ecosystem.',
     plugins: [
       {
         plugin: 'meson',
@@ -18,5 +20,4 @@ export const freetunnel: BaseProject = {
     ],
     type: 'multichain', // we track the multichain part, but there is also lock-minting on the esoteric source chains
   },
-  isInteropProtocol: true,
 }

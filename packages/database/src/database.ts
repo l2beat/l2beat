@@ -2,6 +2,7 @@ import type { LogConfig } from 'kysely'
 import type { PoolConfig } from 'pg'
 import { DatabaseClient } from './kysely'
 import { ActivityRepository } from './repositories/ActivityRepository'
+import { AggregatedInteropDeployedTokenRepository } from './repositories/AggregatedInteropDeployedTokenRepository'
 import { AggregatedInteropTokenRepository } from './repositories/AggregatedInteropTokenRepository'
 import { AggregatedInteropTokensPairRepository } from './repositories/AggregatedInteropTokensPairRepository'
 import { AggregatedInteropTransferRepository } from './repositories/AggregatedInteropTransferRepository'
@@ -9,6 +10,7 @@ import { AggregatedL2CostRepository } from './repositories/AggregatedL2CostRepos
 import { AggregatedLivenessRepository } from './repositories/AggregatedLivenessRepository'
 import { AnomaliesRepository } from './repositories/AnomaliesRepository'
 import { AnomalyStatsRepository } from './repositories/AnomalyStatsRepository'
+import { AppStateRepository } from './repositories/AppStateRepository'
 import { BlobsRepository } from './repositories/BlobsRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
@@ -29,9 +31,13 @@ import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
 import { L2CostRepository } from './repositories/L2CostRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
 import { NotificationsRepository } from './repositories/NotificationsRepository'
+import { PrivacyBlockTimestampRepository } from './repositories/PrivacyBlockTimestampRepository'
+import { PrivacyFlowEventRepository } from './repositories/PrivacyFlowEventRepository'
+import { PrivacyPriceRepository } from './repositories/PrivacyPriceRepository'
 import { RealTimeAnomaliesRepository } from './repositories/RealTimeAnomaliesRepository'
 import { RealTimeLivenessRepository } from './repositories/RealTimeLivenessRepository'
 import { SyncMetadataRepository } from './repositories/SyncMetadataRepository'
+import { TokenFactInputRepository } from './repositories/TokenFactInputRepository'
 import { TokenMetadataRepository } from './repositories/TokenMetadataRepository'
 import { TokenValueRepository } from './repositories/TokenValueRepository'
 import { TvsAmountRepository } from './repositories/TvsAmountRepository'
@@ -65,6 +71,8 @@ export function createDatabase(
     interopTransfer: new InteropTransferRepository(db),
     aggregatedInteropTransfer: new AggregatedInteropTransferRepository(db),
     aggregatedInteropToken: new AggregatedInteropTokenRepository(db),
+    aggregatedInteropDeployedToken:
+      new AggregatedInteropDeployedTokenRepository(db),
     aggregatedInteropTokensPair: new AggregatedInteropTokensPairRepository(db),
     interopRecentPrices: new InteropRecentPricesRepository(db),
     interopPluginSyncState: new InteropPluginSyncStateRepository(db),
@@ -108,6 +116,17 @@ export function createDatabase(
     realTimeLiveness: new RealTimeLivenessRepository(db),
     syncMetadata: new SyncMetadataRepository(db),
     notifications: new NotificationsRepository(db),
+    appState: new AppStateRepository(db),
+    // #endregion
+
+    // #region Privacy
+    privacyBlockTimestamp: new PrivacyBlockTimestampRepository(db),
+    privacyFlowEvent: new PrivacyFlowEventRepository(db),
+    privacyPrice: new PrivacyPriceRepository(db),
+    // #endregion
+
+    // #region Token Knowledge
+    tokenFactInput: new TokenFactInputRepository(db),
     // #endregion
 
     // #region Tvs

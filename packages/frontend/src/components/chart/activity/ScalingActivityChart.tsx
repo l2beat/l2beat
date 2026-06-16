@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
@@ -10,7 +11,7 @@ import { useIsClient } from '~/hooks/useIsClient'
 import { useActivityChartRangeContext } from '~/pages/scaling/activity/components/ActivityChartRangeContext'
 import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import type { ChartScale } from '../types'
 import { ActivityChartHeader } from './ActivityChartHeader'
@@ -28,22 +29,29 @@ interface Props {
 }
 
 export function ScalingActivityChart({ milestones, entries }: Props) {
+  const trpc = useTRPC()
   const { range, setRange } = useActivityChartRangeContext()
   const [scale, setScale] = useState<ChartScale>('linear')
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     RECATEGORISED_ACTIVITY_CHART_META,
   )
 
-  const { data, isLoading } = api.activity.recategorisedChart.useQuery({
-    range,
-    filter: { type: 'projects', projectIds: entries.map((entry) => entry.id) },
-  })
+  const { data, isLoading } = useQuery(
+    trpc.activity.recategorisedChart.queryOptions({
+      range,
+      filter: {
+        type: 'projects',
+        projectIds: entries.map((entry) => entry.id),
+      },
+    }),
+  )
 
   const ratioData = useMemo(() => getRatioChartData(data), [data])
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
         data?.data.map(([timestamp, ..._]) => ({ timestamp })),
+        { bucket: 'day' },
       ),
     [data?.data],
   )

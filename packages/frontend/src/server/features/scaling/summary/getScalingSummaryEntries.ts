@@ -37,8 +37,8 @@ export async function getScalingSummaryEntries() {
       'chainConfig',
       'contracts',
     ],
-    where: ['isScaling'],
-    whereNot: ['isUpcoming', 'archivedAt'],
+    where: ['scalingInfo'],
+    whereNot: ['archivedAt'],
   })
 
   const zkCatalogProjects = await ps.getProjects({

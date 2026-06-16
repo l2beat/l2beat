@@ -1,13 +1,21 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../types'
+import {
+  CCTP_DETAILED_DESCRIPTION,
+  CIRCLE_DISCOVERY_SECTIONS,
+} from '../shared-circle/shared'
 
 export const cctpv1: BaseProject = {
   id: ProjectId('cctpv1'),
   slug: 'cctpv1',
   name: 'CCTP v1',
   shortName: undefined,
+  aliases: ['Circle', 'Cross-Chain Transfer Protocol'],
   addedAt: UnixTime(1769523398),
   interopConfig: {
+    description:
+      'This is the first version cross-chain transfer protocol by Circle. Mainly used for USDC burn-mint transfers, it coexists with the v2 protocol and can also be used for arbitrary message passing.',
+    detailedDescription: CCTP_DETAILED_DESCRIPTION,
     plugins: [
       {
         plugin: 'cctp-v1',
@@ -15,6 +23,6 @@ export const cctpv1: BaseProject = {
       },
     ],
     type: 'multichain',
+    ...CIRCLE_DISCOVERY_SECTIONS,
   },
-  isInteropProtocol: true,
 }

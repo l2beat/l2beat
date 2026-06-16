@@ -3,6 +3,7 @@ export interface Config {
   readonly api: ApiConfig
   readonly auth: AuthConfig | false
   readonly openapi: OpenApiConfig
+  readonly analytics: AnalyticsConfig | false
   readonly cacheEnabled: boolean
 }
 
@@ -26,4 +27,8 @@ export interface AuthConfig {
 
 export interface OpenApiConfig {
   url: string
+}
+
+export interface AnalyticsConfig {
+  clientId?: string
 }

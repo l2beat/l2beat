@@ -9,15 +9,14 @@ export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
       'scalingInfo',
       'daLayer',
       'daBridge',
-      'isScaling',
-      'isDaLayer',
       'ecosystemConfig',
       'interopConfig',
       'zkCatalogInfo',
+      'privacyInfo',
       'contracts',
       'permissions',
+      'aliases',
     ],
-    whereNot: ['isUpcoming'],
   })
 
   return projects

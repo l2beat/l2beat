@@ -8,6 +8,7 @@ export const gateway: BaseProject = {
   slug: 'gateway',
   name: 'Gateway',
   shortName: 'Gateway',
+  aliases: ['ZKsync Gateway', 'Elastic Chain'],
   addedAt: UnixTime(1753868762),
   statuses: {
     yellowWarning: undefined,

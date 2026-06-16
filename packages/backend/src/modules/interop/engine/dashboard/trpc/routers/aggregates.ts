@@ -1,7 +1,7 @@
 import type { InteropAggregationConfig } from '../../../../../../config/features/interop'
+import { router } from '../../../../../../trpc/init'
+import { protectedProcedure } from '../../../../../../trpc/procedures'
 import { getInteropAggregates } from '../../impls/aggregates'
-import { protectedProcedure } from '../procedures'
-import { router } from '../trpc'
 
 type Dependencies = {
   aggregationConfigs: InteropAggregationConfig[]

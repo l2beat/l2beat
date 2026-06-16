@@ -1,8 +1,7 @@
 {
   "AccessManager.sol": {
-    "hash": "0x5328680aaf3216187a64073bdff9a69e374be581a9be8dc3ec9851276d36ae7e",
+    "hash": "0x25e2fd33e56e0f2487c10c9735c4420e3cb4ea27e35fc796bafcc4c8a84569e6",
     "address": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
-    "chain": "ethereum",
     "blockNumber": 23988638
   }
 }

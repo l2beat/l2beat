@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FluentTimeLock",
+  "category": "gov",
+  "description": "OpenZeppelin TimelockController used to delay privileged operations. PROPOSER_ROLE schedules calls; the configured minimum delay must elapse before EXECUTOR_ROLE can execute them; CANCELLER_ROLE can drop scheduled calls.",
+  "fields": {
+    "proposerAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PROPOSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "schedule operations on the timelock; the configured min-delay must elapse before they can be executed."
+        }
+      ]
+    },
+    "cancellerAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "CANCELLER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "cancel scheduled timelock operations before they are executed."
+        }
+      ]
+    },
+    "executorAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EXECUTOR_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "execute scheduled timelock operations once the min-delay has elapsed."
+        }
+      ]
+    },
+    "accessControl": { "handler": { "type": "accessControl" } }
+  }
+}

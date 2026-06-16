@@ -1,0 +1,48 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "bridge-canonical",
+  "description": "Gnosis-side native token bridge that burns xDAI and releases DAI or USDS on Ethereum. It still depends on the legacy BlockRewardAuRa contract to mint xDAI when messages arrive from Ethereum.",
+  "ignoreInWatchMode": ["getCurrentDay", "nonce", "outOfLimitAmount"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change bridge limits, gas and confirmation parameters, fee manager configuration, and the optional Hashi validation manager for the xDAI bridge."
+        }
+      ]
+    },
+    "upgradeabilityOwner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "fix bridge imbalances and claim unsupported tokens or coins held by the xDAI bridge contract."
+        }
+      ]
+    },
+    "HASHI_IS_MANDATORY": {
+      "description": "If true, validator-approved bridge messages also require Hashi validation before execution.",
+      "severity": "HIGH"
+    },
+    "blockRewardContract": {
+      "description": "Legacy BlockRewardAuRa contract used to queue xDAI minting after Ethereum-to-Gnosis bridge messages are validated.",
+      "severity": "HIGH"
+    },
+    "validatorContract": {
+      "description": "Validator contract that must sign xDAI bridge messages before they can be executed on Gnosis.",
+      "severity": "HIGH"
+    },
+    "hashiManager": {
+      "description": "Optional Hashi-based validation manager used as an additional verification layer for xDAI bridge messages from Ethereum.",
+      "severity": "HIGH"
+    }
+  },
+  "ignoreMethods": [
+    "isAlreadyProcessed",
+    "totalExecutedPerDay",
+    "totalSpentPerDay",
+    "withinExecutionLimit",
+    "withinLimit"
+  ],
+  "ignoreRelatives": ["hashiManager"]
+}

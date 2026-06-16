@@ -22,7 +22,6 @@ export async function getCostsProjects(
   const projects = await ps.getProjects({
     select: ['trackedTxsConfig', 'scalingInfo', 'statuses'],
     optional: ['archivedAt'],
-    whereNot: ['isUpcoming'],
   })
 
   const condition = filterToCondition(filter)
@@ -37,18 +36,13 @@ function filterToCondition(
       return () => true
     case 'rollups':
       return (p) =>
-        (p.scalingInfo.type === 'Optimistic Rollup' ||
-          p.scalingInfo.type === 'ZK Rollup') &&
-        !(p.statuses.reviewStatus === 'initialReview')
+        p.scalingInfo.type === 'Optimistic Rollup' ||
+        p.scalingInfo.type === 'ZK Rollup'
     case 'validiumsAndOptimiums':
       return (p) =>
-        (p.scalingInfo.type === 'Validium' ||
-          p.scalingInfo.type === 'Optimium') &&
-        !(p.statuses.reviewStatus === 'initialReview')
+        p.scalingInfo.type === 'Validium' || p.scalingInfo.type === 'Optimium'
     case 'others':
-      return (p) =>
-        p.scalingInfo.type === 'Other' &&
-        !(p.statuses.reviewStatus === 'initialReview')
+      return (p) => p.scalingInfo.type === 'Other'
     case 'projects':
       return (p) => new Set(filter.projectIds).has(p.id)
     default:

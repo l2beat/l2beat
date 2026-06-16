@@ -12,6 +12,7 @@ import {
 import { Markdown } from '../markdown/Markdown'
 import { GrissiniStick } from '../rosette/grissini/GrissiniStick'
 import type { RosetteValue } from '../rosette/types'
+import { SentimentText } from '../SentimentText'
 import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 
 interface RiskBannerProps extends RosetteValue {
@@ -25,6 +26,7 @@ export function RiskBanner({
   name,
   sentiment,
   value,
+  regular,
   warning,
   description,
   className,
@@ -41,7 +43,7 @@ export function RiskBanner({
           size === 'regular' && 'h-16',
           size === 'large' && 'h-20.5',
           sentimentToTransparentBgColor(adjSentiment),
-          warning && 'rounded-b-none',
+          (regular || warning) && info === 'full' && 'rounded-b-none',
           className,
         )}
       >
@@ -49,7 +51,7 @@ export function RiskBanner({
           sentiment={adjSentiment}
           className={cn(
             'h-full shrink-0 max-md:w-1',
-            warning && 'rounded-b-none',
+            (regular || warning) && info === 'full' && 'rounded-b-none',
             className,
           )}
         />
@@ -72,7 +74,7 @@ export function RiskBanner({
               sentimentToTextColor(adjSentiment, { vibrant: true }),
             )}
           >
-            {value}
+            {regular ? `${value} (emergency upgrade path)` : value}
             {warning && info === 'compact' && (
               <RoundedWarningIcon
                 className={cn(
@@ -84,7 +86,38 @@ export function RiskBanner({
           </div>
         </div>
       </div>
-      {warning && info === 'full' && (
+      {regular && info === 'full' && (
+        <div className="relative">
+          <GrissiniStick
+            className={cn(
+              'absolute inset-y-0 left-0 h-full shrink-0 rounded-t-none max-md:w-1',
+              className,
+            )}
+            sentiment={regular.sentiment ?? 'neutral'}
+          />
+          <div
+            className={cn(
+              'rounded-lg rounded-t-none p-4 pl-5 md:pl-6',
+              sentimentToTransparentBgColor(regular.sentiment ?? 'neutral'),
+            )}
+          >
+            <div
+              className={cn(
+                'mb-1 font-bold text-sm md:text-lg',
+                sentimentToTextColor(regular.sentiment ?? 'neutral', {
+                  vibrant: true,
+                }),
+              )}
+            >
+              {regular.value} (regular upgrade path)
+            </div>
+            <Markdown className="font-normal text-paragraph-15 md:text-paragraph-16">
+              {regular.description}
+            </Markdown>
+          </div>
+        </div>
+      )}
+      {warning && !regular && info === 'full' && (
         <div className="relative">
           <GrissiniStick
             className={cn(
@@ -115,7 +148,19 @@ export function RiskBanner({
     <Tooltip>
       <TooltipTrigger>{content}</TooltipTrigger>
       <TooltipContent>
-        {warning && (
+        {regular && (
+          <div className="mb-2">
+            <SentimentText
+              sentiment={regular.sentiment ?? 'neutral'}
+              vibrant={true}
+              className="mb-1 block font-medium"
+            >
+              {`${regular.value} (regular upgrade path)`}
+            </SentimentText>
+            {regular.description}
+          </div>
+        )}
+        {warning && !regular && (
           <WarningBar
             className="mb-2"
             icon={RoundedWarningIcon}

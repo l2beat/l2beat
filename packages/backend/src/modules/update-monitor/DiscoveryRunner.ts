@@ -149,14 +149,14 @@ export class DiscoveryRunner {
       logger.info(
         `Discovering ${dependencyConfig.name} at timestamp ${dependencyTimestamp}`,
       )
-      const analysis = await this.discoveryEngine.discover(
+      const { analyses } = await this.discoveryEngine.discover(
         this.allProviders,
         dependencyConfig.structure,
         dependencyTimestamp,
       )
 
       const chains = unique(
-        analysis.map((c) => ChainSpecificAddress.longChain(c.address)),
+        analyses.map((c) => ChainSpecificAddress.longChain(c.address)),
       )
 
       const usedBlockNumbers: Record<string, number> = {}
@@ -170,9 +170,9 @@ export class DiscoveryRunner {
         dependencyConfig,
         dependencyTimestamp,
         usedBlockNumbers,
-        analysis,
+        analyses,
       )
-      discoveries.set(dependency, discovery, analysis)
+      discoveries.set(dependency, discovery, analyses)
     }
     return discoveries
   }

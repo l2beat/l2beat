@@ -32,7 +32,8 @@
           "delay": "{{getUpgradeActivationDelay}}"
         },
         {
-          "type": "governStarknet"
+          "type": "interact",
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set."
         },
         {
           "type": "interact",
@@ -72,7 +73,12 @@
         "add": { "event": "LogOperatorAdded" },
         "remove": { "event": "LogOperatorRemoved" }
       },
-      "permissions": [{ "type": "operateStarkEx" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+        }
+      ]
     }
   }
 }

@@ -44,25 +44,21 @@ export async function getScalingRiskStateValidationEntries() {
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
       optional: ['contracts', 'tvsInfo'],
-      where: ['isScaling'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      where: ['scalingInfo'],
+      whereNot: ['archivedAt'],
     }),
     ps.getProjects({
       select: ['zkCatalogInfo'],
     }),
     ps.getProjects({
-      optional: ['daBridge', 'isScaling', 'isDaLayer'],
+      optional: ['display', 'daBridge', 'scalingInfo', 'daLayer'],
     }),
     getContractUtils(),
     get7dTvsBreakdown({ type: 'all' }),
   ])
 
-  const reviewedProjects = projects.filter(
-    (p) => p.statuses.reviewStatus !== 'initialReview',
-  )
-
   const [withProofSystem, noProofsProjects] = partition(
-    reviewedProjects,
+    projects,
     (p) => !!p.scalingInfo.proofSystem,
   )
 
@@ -121,6 +117,8 @@ export interface ScalingRiskStateValidationValidityEntry
   isa: string | undefined
   trustedSetupsByProofSystem: TrustedSetupsByProofSystem
   executionDelay: number | undefined
+  executionDelayMode: 'always' | 'if-challenged' | undefined
+  permissioned: boolean | undefined
   tvs: TvsData
 }
 
@@ -133,7 +131,10 @@ function getScalingRiskStateValidationValidityEntry(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
 ): ScalingRiskStateValidationValidityEntry {
   const proofSystem = project.scalingInfo?.proofSystem
   assert(proofSystem, 'Proof system is required')
@@ -166,6 +167,9 @@ function getScalingRiskStateValidationValidityEntry(
     isa: isa?.name,
     trustedSetupsByProofSystem,
     executionDelay: project.scalingRisks.self.stateValidation?.executionDelay,
+    executionDelayMode:
+      project.scalingRisks.self.stateValidation?.executionDelayMode,
+    permissioned: project.scalingRisks.self.stateValidation?.permissioned,
     tvs: getTvsData(project, projectTvs),
   }
 }
@@ -175,8 +179,16 @@ export interface ScalingRiskStateValidationOptimisticEntry
   tvsOrder: number
   proofSystem: ProjectScalingProofSystem
   executionDelay: number | undefined
+  executionDelayMode: 'always' | 'if-challenged' | undefined
   challengePeriod: number | undefined
-  initialBond: string | undefined
+  initialBond: { value: string; token?: string } | undefined
+  permissioned: boolean | undefined
+  defenderAdvantage:
+    | { multiplier: number; shape: 'linear' }
+    | { shape: 'log' }
+    | 'not-applicable'
+    | 'not-assessed'
+    | undefined
   tvs: TvsData
   zkCatalog:
     | {
@@ -249,8 +261,11 @@ function getScalingRiskStateValidationOptimisticEntry(
       name: proofSystem.name ?? zkCatalogProject?.name,
     },
     executionDelay: stateValidation?.executionDelay,
+    executionDelayMode: stateValidation?.executionDelayMode,
     challengePeriod: stateValidation?.challengeDelay,
     initialBond: stateValidation?.initialBond,
+    permissioned: stateValidation?.permissioned,
+    defenderAdvantage: stateValidation?.defenderAdvantage,
     tvs: getTvsData(project, projectTvs),
     zkCatalog,
   }

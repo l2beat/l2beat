@@ -53,7 +53,7 @@ export function encodeMulticallV1(requests: MulticallRequest[]) {
   const string = multicallInterface.encodeFunctionData('aggregate', [
     requests.map((request) => [
       request.address.toString(),
-      request.data.toString(),
+      request.input.toString(),
     ]),
   ])
   return Bytes.fromHex(string)
@@ -78,7 +78,7 @@ export function encodeMulticallV2(requests: MulticallRequest[]) {
     false,
     requests.map((request) => [
       request.address.toString(),
-      request.data.toString(),
+      request.input.toString(),
     ]),
   ])
   return Bytes.fromHex(string)
@@ -103,7 +103,7 @@ function encodeOptimismMulticall(requests: MulticallRequest[]) {
   const hexCalldata = multicallInterface.encodeFunctionData('multicall', [
     requests.map((request) => [
       request.address.toString(),
-      request.data.toString(),
+      request.input.toString(),
     ]),
   ])
 

@@ -5,6 +5,7 @@ import * as trpcExpress from '@trpc/server/adapters/express'
 import express from 'express'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import type { Config } from '../../config/Config'
+import type { TokenIngestionProcessor } from '../../ingestion/TokenIngestionProcessor'
 import { getLogger } from '../../logger'
 import { createAppRouter } from '../../trpc/appRouter'
 import { createTRPCContext } from '../../trpc/trpc'
@@ -17,10 +18,18 @@ export interface CreateTrpcRouterDeps {
   tokenDb: TokenDatabase
   coingeckoClient: CoingeckoClient
   etherscanApiKey: string | undefined
+  tokenIngestionProcessor: TokenIngestionProcessor
 }
 
 export function createTrpcRouter(deps: CreateTrpcRouterDeps): express.Router {
-  const { config, db, tokenDb, coingeckoClient, etherscanApiKey } = deps
+  const {
+    config,
+    db,
+    tokenDb,
+    coingeckoClient,
+    etherscanApiKey,
+    tokenIngestionProcessor,
+  } = deps
 
   const router = express.Router()
 
@@ -38,6 +47,7 @@ export function createTrpcRouter(deps: CreateTrpcRouterDeps): express.Router {
           config,
           db,
           tokenDb,
+          tokenIngestionProcessor,
         }),
       onError: (opts) => {
         const logFn = getLogFn(opts.error)
@@ -66,6 +76,7 @@ function getLogFn(error: TRPCError) {
     case 'BAD_GATEWAY':
     case 'SERVICE_UNAVAILABLE':
     case 'GATEWAY_TIMEOUT':
+    case 'PAYMENT_REQUIRED':
     case 'FORBIDDEN':
     case 'NOT_FOUND':
     case 'METHOD_NOT_SUPPORTED':
@@ -75,6 +86,7 @@ function getLogFn(error: TRPCError) {
     case 'PAYLOAD_TOO_LARGE':
     case 'UNSUPPORTED_MEDIA_TYPE':
     case 'UNPROCESSABLE_CONTENT':
+    case 'PRECONDITION_REQUIRED':
     case 'TOO_MANY_REQUESTS':
     case 'CLIENT_CLOSED_REQUEST':
       return logger.error

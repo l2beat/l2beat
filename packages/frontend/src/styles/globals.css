@@ -804,3 +804,12 @@
     clip-path: circle(var(--circle-radius) at var(--circle-x) var(--circle-y));
   }
 }
+
+@keyframes transfer-speed-fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}

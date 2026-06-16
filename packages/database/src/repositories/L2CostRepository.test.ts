@@ -179,6 +179,44 @@ describeDatabase(L2CostRepository.name, (db) => {
     })
   })
 
+  describe(
+    L2CostRepository.prototype.getLatestTimestampsByConfigId.name,
+    () => {
+      it('returns latest timestamp for each configuration', async () => {
+        await repository.insertMany([
+          {
+            timestamp: START + UnixTime.HOUR,
+            txHash: '0x4',
+            configurationId: txIdA,
+            gasUsed: 100,
+            gasPrice: 1n,
+            calldataLength: 100,
+            calldataGasUsed: 100,
+            blobGasPrice: null,
+            blobGasUsed: null,
+          },
+        ])
+
+        const results = await repository.getLatestTimestampsByConfigId()
+
+        expect(results).toEqualUnsorted([
+          {
+            configurationId: txIdA,
+            latestTimestamp: START + UnixTime.HOUR,
+          },
+          {
+            configurationId: txIdB,
+            latestTimestamp: START - 1 * UnixTime.HOUR,
+          },
+          {
+            configurationId: txIdC,
+            latestTimestamp: START - 2 * UnixTime.HOUR,
+          },
+        ])
+      })
+    },
+  )
+
   describe(L2CostRepository.prototype.deleteByConfigIds.name, () => {
     it('deletes all rows for given configuration ids', async () => {
       const deleted = await repository.deleteByConfigIds([

@@ -1,4 +1,4 @@
-import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import type { InteropBridgeType } from '@l2beat/shared-pure'
 import { Badge, type BadgeProps } from '~/components/badge/Badge'
 import {
   Tooltip,
@@ -12,7 +12,7 @@ import {
 } from '../../utils/display'
 
 interface BridgeTypeBadgeProps extends Omit<BadgeProps, 'children'> {
-  bridgeType: KnownInteropBridgeType
+  bridgeType: InteropBridgeType
 }
 
 export function BridgeTypeBadge({

@@ -1,4 +1,4 @@
-import { parseAbiItem, toFunctionSelector } from 'viem'
+import { parseAbiItem, toFunctionSelector } from 'viem/utils'
 
 export const ERC20ROUTER_TRANSACTION_SIGNATURE = parseAbiItem(
   'function delegatecallMulticall(address[] targets, bytes[] datas, uint256[] values, address refundTo)',

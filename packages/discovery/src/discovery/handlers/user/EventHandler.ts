@@ -53,6 +53,8 @@ const setOnlySchema = v.object({
 const addAndRemoveSchema = v.object({
   ...common,
   set: v.undefined().optional(),
+  flatten: v.boolean().optional(),
+  dedupBy: oneOrMany(v.string()).optional(),
   add: oneOrMany(EventHandlerAction),
   remove: oneOrMany(EventHandlerAction).optional(),
 })
@@ -160,13 +162,23 @@ export class EventHandler implements Handler {
     } else if (this.definition.add !== undefined) {
       const addActions = ensureArray(this.definition.add)
       const removeActions = ensureArray(this.definition.remove ?? [])
+      if (this.definition.flatten) {
+        logRows = flattenSelectedLogRows(logRows, select)
+      }
+
+      // `dedupBy`, when set, is the row identity (what makes two logs "the same").
+      // When omitted, the dedup key falls back to `select` (legacy behavior).
+      const dedupBy =
+        this.definition.dedupBy !== undefined
+          ? ensureArray(this.definition.dedupBy)
+          : select
 
       logRows = this.executeAddRemove(
         longChain,
         logRows,
         addActions,
         removeActions,
-        select,
+        dedupBy,
       )
     }
 
@@ -210,7 +222,7 @@ export class EventHandler implements Handler {
     logs: LogRow[],
     addActions: EventHandlerAction[],
     removeActions: EventHandlerAction[],
-    select: string[],
+    dedupBy: string[],
   ): LogRow[] {
     const result: Map<string, LogRow> = new Map()
 
@@ -232,9 +244,9 @@ export class EventHandler implements Handler {
           '  3. Make sure that remove where clause is opposite to add one',
       )
 
-      const value =
-        select.length > 0 ? extractKeys(entry.value, select) : entry.value
-      const string = JSON.stringify(value)
+      const keyValue =
+        dedupBy.length > 0 ? extractKeys(entry.value, dedupBy) : entry.value
+      const string = JSON.stringify(keyValue)
 
       if (add) {
         result.set(string, entry)
@@ -245,6 +257,37 @@ export class EventHandler implements Handler {
 
     return [...result.values()]
   }
+}
+
+function flattenSelectedLogRows(logRows: LogRow[], select: string[]): LogRow[] {
+  assert(
+    select.length === 1,
+    'Event handler flatten requires exactly one selected field',
+  )
+
+  // biome-ignore lint/style/noNonNullAssertion: checked above
+  const selectedKey = select[0]!
+  const result: LogRow[] = []
+  for (const row of logRows) {
+    const selectedValue = extractKey(row.value, selectedKey)
+    assert(
+      typeof row.value === 'object' && !Array.isArray(row.value),
+      'Event handler flatten requires object log values',
+    )
+    assert(
+      Array.isArray(selectedValue),
+      `Event handler flatten requires selected field [${selectedKey}] to be an array`,
+    )
+
+    for (const item of selectedValue) {
+      result.push({
+        log: row.log,
+        value: { ...row.value, [selectedKey]: item },
+      })
+    }
+  }
+
+  return result
 }
 
 async function fetchLogs(

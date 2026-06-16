@@ -17,6 +17,7 @@ export function createUpdateMonitorModule({
   logger,
   db,
   clock,
+  providers,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.updateMonitor) {
     logger.info('UpdateMonitor module disabled')
@@ -67,6 +68,7 @@ export function createUpdateMonitorModule({
     chains,
     !!cacheEnabled,
     cacheUri,
+    providers.clients.rpcMetricsAggregator,
   )
 
   const workerPool = createWorkerPool({

@@ -270,6 +270,48 @@ model TokenMetadata {
   @@index([projectId])
 }
 
+model PrivacyPrice {
+  timestamp       DateTime @db.Timestamp(6)
+  configurationId String   @db.Char(12)
+  priceId         String   @db.VarChar(255)
+  priceUsd        Float    @db.Real
+
+  @@id([timestamp, configurationId])
+  @@index([priceId])
+}
+
+model PrivacyBlockTimestamp {
+  timestamp       DateTime @db.Timestamp(6)
+  configurationId String   @db.Char(12)
+  chain           String   @db.VarChar(255)
+  blockNumber     Int
+
+  @@id([timestamp, configurationId])
+  @@index([chain])
+}
+
+model PrivacyFlowEvent {
+  configurationId String   @db.Char(12)
+  projectId       String   @db.VarChar(255)
+  bucketId        String   @db.VarChar(255)
+  chain           String   @db.VarChar(32)
+  direction       String   @db.VarChar(16)
+  timestamp       DateTime @db.Timestamp(6)
+  blockNumber     Int
+  txHash          String   @db.VarChar(66)
+  logIndex        Int
+  count           Int
+  amount          Decimal  @db.Decimal(80, 0)
+  priceId         String   @db.VarChar(255)
+  valueUsd        Float    @db.Real
+
+  @@id([configurationId, txHash, logIndex])
+  @@index([projectId, timestamp])
+  @@index([projectId, bucketId, timestamp])
+  @@index([configurationId, blockNumber])
+  @@index([configurationId, timestamp])
+}
+
 model UpdateDiff {
   projectId         String   @db.VarChar(255)
   address           String   @db.VarChar(255)
@@ -368,6 +410,8 @@ model InteropMessage {
 }
 
 model InteropTransfer {
+  serialId BigInt @default(autoincrement()) @db.BigInt
+
   plugin     String   @db.VarChar(64)
   transferId String   @db.VarChar(40)
   type       String   @db.VarChar(64)
@@ -409,10 +453,12 @@ model InteropTransfer {
   isProcessed Boolean
 
   @@id([transferId])
+  @@unique([serialId])
   @@index([type])
   @@index([isProcessed])
   @@index([isProcessed, srcValueUsd, dstValueUsd])
   @@index([type, duration, srcValueUsd, dstValueUsd])
+  @@index([plugin, srcChain, dstChain, timestamp(sort: Desc), transferId(sort: Desc)])
 }
 
 model EcosystemToken {
@@ -441,6 +487,7 @@ model AbstractToken {
   coingeckoListingTimestamp DateTime? @db.Timestamp(6)
   comment                   String?   @db.Text
   reviewed                  Boolean   @default(false)
+  isPriceUnreliable         Boolean   @default(false)
 
   deployedTokens DeployedToken[]
 
@@ -449,14 +496,15 @@ model AbstractToken {
 }
 
 model DeployedToken {
-  chain               String   @db.VarChar(32)
-  address             String   @db.VarChar(255)
-  abstractTokenId     String?  @db.Char(6)
-  symbol              String   @db.VarChar(255)
-  decimals            Int
-  deploymentTimestamp DateTime @db.Timestamp(6)
-  comment             String?  @db.Text
-  metadata            Json?
+  chain                        String   @db.VarChar(32)
+  address                      String   @db.VarChar(255)
+  abstractTokenId              String?  @db.Char(6)
+  symbol                       String   @db.VarChar(255)
+  decimals                     Int
+  deploymentTimestamp          DateTime @db.Timestamp(6)
+  comment                      String?  @db.Text
+  metadata                     Json?
+  abstractTokenAssignmentProof Json?
 
   chainRelation   Chain?            @relation(fields: [chain], references: [name], onDelete: Restrict)
   abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
@@ -465,6 +513,39 @@ model DeployedToken {
 
   @@id([chain, address])
   @@index([abstractTokenId])
+}
+
+model TokenIngestionQueue {
+  chain     String   @db.VarChar(32)
+  address   String   @db.VarChar(255)
+  state     String   @default("pending") @db.VarChar(32)
+  message   String?  @db.Text
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
+
+  @@id([chain, address])
+  @@index([state, updatedAt])
+}
+
+model TokenDbSettings {
+  key       String   @db.VarChar(255)
+  value     String   @db.Text
+  updatedAt DateTime @db.Timestamp(6)
+
+  @@id([key])
+}
+
+model TokenDbHistory {
+  id           BigInt   @id @default(autoincrement())
+  timestamp    DateTime @db.Timestamp(6)
+  source       String   @db.VarChar(32)
+  userEmail    String?  @db.VarChar(255)
+  commandType  String   @db.VarChar(64)
+  command      Json
+  ingestionLog String?  @db.Text
+
+  @@index([timestamp])
+  @@index([commandType, timestamp])
 }
 
 model TokenConnection {
@@ -581,6 +662,38 @@ model AggregatedInteropToken {
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
 }
 
+model AggregatedInteropDeployedToken {
+  timestamp                  DateTime @db.Timestamp(6)
+  id                         String   @db.VarChar(255)
+  srcChain                   String   @db.VarChar(255)
+  dstChain                   String   @db.VarChar(255)
+  bridgeType                 String   @default("unknown") @db.VarChar(255)
+  tokenChain                 String   @db.VarChar(255)
+  tokenAddress               String   @db.VarChar(255)
+  transferTypeStats          Json?
+  mintedValueUsd             Float?   @db.Real
+  burnedValueUsd             Float?   @db.Real
+  transferCount              Int
+  transfersWithDurationCount Int      @default(0)
+  totalDurationSum           Int
+  volume                     Float    @db.Real
+  minTransferValueUsd        Float?   @db.Real
+  maxTransferValueUsd        Float?   @db.Real
+
+  @@id([timestamp, srcChain, dstChain, bridgeType, id, tokenChain, tokenAddress])
+  @@index([timestamp, srcChain, dstChain, id, bridgeType])
+  @@index([timestamp, tokenChain, tokenAddress])
+}
+
+model TokenFactInput {
+  id        Int    @id @default(autoincrement())
+  name      String @db.VarChar(255)
+  arguments String @db.Text
+  context   Json?
+
+  @@index([name])
+}
+
 model AggregatedInteropTokensPair {
   timestamp                  DateTime @db.Timestamp(6)
   id                         String   @db.VarChar(255)
@@ -599,4 +712,11 @@ model AggregatedInteropTokensPair {
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id, tokenA, tokenB])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
+}
+
+model AppState {
+  key       String   @id @db.VarChar(255)
+  value     String   @db.Text
+  updatedAt DateTime @db.Timestamp(6)
+  updatedBy String   @db.VarChar(255)
 }

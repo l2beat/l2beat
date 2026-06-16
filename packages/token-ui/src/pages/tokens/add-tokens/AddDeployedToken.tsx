@@ -1,11 +1,13 @@
 import { formatAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   CheckIcon,
   ListIcon,
   ListPlusIcon,
   ListXIcon,
   PlusIcon,
+  TrashIcon,
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -21,11 +23,20 @@ import {
   CardTitle,
 } from '~/components/core/Card'
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '~/components/core/Dialog'
+import {
   Empty,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
 } from '~/components/core/Empty'
+import { Label } from '~/components/core/Label'
 import {
   Sheet,
   SheetContent,
@@ -43,7 +54,7 @@ import {
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useQueryState } from '~/hooks/useQueryState'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { cn } from '~/utils/cn'
 import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimestamp'
@@ -52,6 +63,7 @@ import { validateResolver } from '~/utils/validateResolver'
 type QueueItem = { chain: string; address: string; abstractTokenId?: string }
 
 export function AddDeployedToken() {
+  const trpc = useTRPC()
   const location = useLocation()
   const navigateQueue = location.state?.queue as QueueItem[] | undefined
   const [, setSearchParams] = useSearchParams()
@@ -65,6 +77,9 @@ export function AddDeployedToken() {
   const addToQueue = useCallback((item: QueueItem) => {
     setQueue((prev) => [...prev, item])
   }, [])
+  const clearQueue = useCallback(() => {
+    setQueue([])
+  }, [])
 
   const form = useForm<DeployedTokenSchema>({
     resolver: validateResolver(DeployedTokenSchema),
@@ -73,24 +88,27 @@ export function AddDeployedToken() {
   const [isQueueSheetOpen, setIsQueueSheetOpen] = useState(false)
 
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
-    api.abstractTokens.getAll.useQuery()
-  const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
-    onSuccess: (data) => {
-      if (data.outcome === 'success') {
-        setPlan(data.plan)
-      } else {
-        toast.error(data.error)
-      }
-    },
-  })
+    useQuery(trpc.abstractTokens.getAll.queryOptions())
+  const { mutate: planMutate, isPending } = useMutation(
+    trpc.plan.generate.mutationOptions({
+      onSuccess: (data) => {
+        if (data.outcome === 'success') {
+          setPlan(data.plan)
+        } else {
+          toast.error(data.error)
+        }
+      },
+    }),
+  )
 
-  const { data: chains, isLoading: isLoadingChains } =
-    api.chains.getAll.useQuery()
+  const { data: chains, isLoading: isLoadingChains } = useQuery(
+    trpc.chains.getAll.queryOptions(),
+  )
 
   const chain = form.watch('chain')
   const address = form.watch('address')
-  const { data: checks, isLoading: checksLoading } =
-    api.deployedTokens.checks.useQuery(
+  const { data: checks, isLoading: checksLoading } = useQuery(
+    trpc.deployedTokens.checks.queryOptions(
       {
         chain,
         address,
@@ -98,13 +116,15 @@ export function AddDeployedToken() {
       {
         enabled: !!chain && !!address,
       },
-    )
+    ),
+  )
 
   useEffect(() => {
     if (!checks || checksLoading) return
     if (
       checks.error?.type === 'already-exists' ||
-      checks.error?.type === 'not-found-on-coingecko'
+      checks.error?.type === 'not-found-on-coingecko' ||
+      checks.error?.type === 'not-a-token'
     ) {
       form.setError('address', {
         type: checks.error.type,
@@ -121,7 +141,7 @@ export function AddDeployedToken() {
     } else {
       form.clearErrors('chain')
     }
-    if (checks.data?.decimals) {
+    if (checks.data?.decimals !== undefined) {
       form.setValue('decimals', checks.data.decimals, { shouldDirty: true })
     }
     if (checks.data?.deploymentTimestamp) {
@@ -163,6 +183,13 @@ export function AddDeployedToken() {
     if (checksLoading) return
     if (checks?.error?.type === 'already-exists') {
       setDeployedTokenExistsError(form)
+      return
+    }
+    if (checks?.error?.type === 'not-a-token') {
+      form.setError('address', {
+        type: checks.error.type,
+        message: checks.error.message,
+      })
       return
     }
     if (checks?.error?.type === 'chain-not-found') {
@@ -359,7 +386,7 @@ export function AddDeployedToken() {
               )}
             </Button>
           </SheetTrigger>
-          <Queue queue={queue} onImport={handleImport} />
+          <Queue queue={queue} onImport={handleImport} onClear={clearQueue} />
         </Sheet>
       </Card>
       {checks?.data?.suggestions && checks.data.suggestions.length !== 0 && (
@@ -450,12 +477,15 @@ function Suggestions({
 function Queue({
   queue,
   onImport,
+  onClear,
 }: {
   queue: QueueItem[]
   onImport: (tokens: QueueItem[]) => void
+  onClear: () => void
 }) {
   const [csvInput, setCsvInput] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [isClearQueueDialogOpen, setIsClearQueueDialogOpen] = useState(false)
 
   function handleImport() {
     try {
@@ -481,55 +511,129 @@ function Queue({
     }
   }
 
+  function handleClearQueue() {
+    onClear()
+    setIsClearQueueDialogOpen(false)
+    toast.success('Queue cleared')
+  }
+
   return (
-    <SheetContent side="right" className="flex flex-col">
-      <SheetHeader>
-        <SheetTitle>Queue</SheetTitle>
-      </SheetHeader>
-      <div className="flex-1 overflow-y-auto px-4">
-        {queue.length > 0 ? (
-          <ul className="list-inside list-decimal space-y-2">
-            {queue.map((item, index) => (
-              <li
-                key={index}
-                className="truncate whitespace-nowrap even:bg-muted"
-              >
-                {[item.chain, formatAddress(item.address), item.abstractTokenId]
-                  .filter(Boolean)
-                  .join(' | ')}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <Empty>
-            <EmptyHeader>
-              <EmptyMedia variant="icon">
-                <ListXIcon />
-              </EmptyMedia>
-              <EmptyTitle>No tokens in queue</EmptyTitle>
-            </EmptyHeader>
-          </Empty>
-        )}
-      </div>
-      <SheetFooter>
-        <div className="space-y-2">
-          <Textarea
-            value={csvInput}
-            onChange={(e) => {
-              setCsvInput(e.target.value)
-              setError(null)
-            }}
-            placeholder="chain*,address*,abstractTokenId"
-            rows={10}
-            className="max-h-[192px] font-mono text-sm"
-          />
-          {error && <p className="text-destructive text-sm">{error}</p>}
+    <>
+      <SheetContent side="right" className="flex flex-col gap-0">
+        <SheetHeader>
+          <SheetTitle>Queue</SheetTitle>
+        </SheetHeader>
+        <div className="flex flex-1 flex-col overflow-hidden">
+          {queue.length > 0 ? (
+            <>
+              <div className="flex items-center justify-between px-4 pb-2">
+                <span className="text-muted-foreground text-xs">
+                  {queue.length} {queue.length === 1 ? 'token' : 'tokens'}
+                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  type="button"
+                  onClick={() => setIsClearQueueDialogOpen(true)}
+                  className="h-7 text-muted-foreground hover:text-foreground"
+                >
+                  <TrashIcon className="size-3.5" />
+                  Clear
+                </Button>
+              </div>
+              <ol className="flex-1 space-y-px overflow-y-auto px-4 pb-2 font-mono text-sm">
+                {queue.map((item, index) => (
+                  <li
+                    key={index}
+                    className="flex gap-2 truncate whitespace-nowrap rounded px-2 py-1 odd:bg-muted/50"
+                  >
+                    <span className="w-8 shrink-0 text-right text-muted-foreground tabular-nums">
+                      {index + 1}.
+                    </span>
+                    <span className="truncate">
+                      {[
+                        item.chain,
+                        formatAddress(item.address),
+                        item.abstractTokenId,
+                      ]
+                        .filter(Boolean)
+                        .join(' | ')}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </>
+          ) : (
+            <div className="flex-1 overflow-y-auto px-4">
+              <Empty>
+                <EmptyHeader>
+                  <EmptyMedia variant="icon">
+                    <ListXIcon />
+                  </EmptyMedia>
+                  <EmptyTitle>No tokens in queue</EmptyTitle>
+                </EmptyHeader>
+              </Empty>
+            </div>
+          )}
         </div>
-        <Button className="w-full" onClick={handleImport}>
-          Import
-        </Button>
-      </SheetFooter>
-    </SheetContent>
+        <SheetFooter className="gap-4 border-t">
+          <div className="space-y-2">
+            <Label
+              htmlFor="queue-csv-input"
+              className="font-medium text-muted-foreground text-xs uppercase tracking-wide"
+            >
+              Import from CSV
+            </Label>
+            <Textarea
+              id="queue-csv-input"
+              value={csvInput}
+              onChange={(e) => {
+                setCsvInput(e.target.value)
+                setError(null)
+              }}
+              placeholder="chain*,address*,abstractTokenId"
+              rows={6}
+              className="max-h-[192px] font-mono text-sm"
+            />
+            {error && <p className="text-destructive text-sm">{error}</p>}
+            <Button className="w-full" onClick={handleImport}>
+              Import
+            </Button>
+          </div>
+        </SheetFooter>
+      </SheetContent>
+      <Dialog
+        open={isClearQueueDialogOpen}
+        onOpenChange={setIsClearQueueDialogOpen}
+      >
+        <DialogContent showCloseButton={false}>
+          <DialogHeader>
+            <DialogTitle>Clear queue?</DialogTitle>
+            <DialogDescription>
+              {queue.length === 1
+                ? 'This will remove the only queued token.'
+                : `This will remove all ${queue.length} queued tokens.`}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => setIsClearQueueDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              type="button"
+              onClick={handleClearQueue}
+            >
+              Clear queue
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }
 

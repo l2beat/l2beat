@@ -1,49 +1,60 @@
-import { getInteropTransferValue, type ProjectId } from '@l2beat/shared-pure'
-import type {
-  AggregatedInteropTransferWithTokens,
-  InteropSelectionInput,
-} from '../types'
+import type { ProjectId } from '@l2beat/shared-pure'
+import { INTEROP_PAIR_SEPARATOR } from '../consts'
+import type { InteropSelectionInput, InteropTransferWithTokens } from '../types'
+import { getInteropTransferRecordValue } from './getInteropTransferRecordValue'
 
 export type InteropFlowData = {
   srcChain: string
   dstChain: string
   volume: number
+  transferCount?: number
 }
 
 export function getFlows(
-  records: AggregatedInteropTransferWithTokens[],
+  records: InteropTransferWithTokens[],
   selection: InteropSelectionInput,
   subgroupProjects?: Set<ProjectId>,
 ): InteropFlowData[] {
-  const map = new Map<string, number>()
+  const volumeMap = new Map<string, number>()
+  const transferMap = new Map<string, number>()
 
   for (const record of records) {
     // Skip projects that are part of other projects to not double count
     if (subgroupProjects?.has(record.id as ProjectId)) continue
 
-    const key = `${record.srcChain}::${record.dstChain}`
-    const current = map.get(key) ?? 0
-    map.set(key, current + (getInteropTransferValue(record) ?? 0))
+    const key = `${record.srcChain}${INTEROP_PAIR_SEPARATOR}${record.dstChain}`
+    volumeMap.set(
+      key,
+      (volumeMap.get(key) ?? 0) + (getInteropTransferRecordValue(record) ?? 0),
+    )
+    transferMap.set(key, (transferMap.get(key) ?? 0) + record.transferCount)
   }
 
-  const sortedFlows = flowsMapToSorted(map, selection)
+  const sortedFlows = flowsMapToSorted(volumeMap, selection)
 
   if (sortedFlows.every((flow) => flow.volume === 0)) {
     return []
   }
 
-  return sortedFlows
+  return sortedFlows.map((flow) => ({
+    ...flow,
+    transferCount: transferMap.get(toFlowKey(flow.srcChain, flow.dstChain)),
+  }))
 }
 
 export function flowsMapToSorted(
-  flows: Map<string, number>,
+  volumes: Map<string, number>,
   selection: InteropSelectionInput,
 ): InteropFlowData[] {
   const selectedPairs = getSelectedFlowPairs(selection)
   return selectedPairs
     .map(({ srcChain, dstChain }) => {
-      const volume = flows.get(toFlowKey(srcChain, dstChain)) ?? 0
-      return { srcChain, dstChain, volume }
+      const key = toFlowKey(srcChain, dstChain)
+      return {
+        srcChain,
+        dstChain,
+        volume: volumes.get(key) ?? 0,
+      }
     })
     .toSorted((a, b) => b.volume - a.volume)
 }
@@ -78,5 +89,5 @@ function getSelectedFlowPairs(
 }
 
 function toFlowKey(srcChain: string, dstChain: string) {
-  return `${srcChain}::${dstChain}`
+  return `${srcChain}${INTEROP_PAIR_SEPARATOR}${dstChain}`
 }

@@ -20,8 +20,8 @@ export async function getScalingTvsEntries() {
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'tvsInfo', 'display'],
       optional: ['contracts'],
-      where: ['isScaling'],
-      whereNot: ['isUpcoming', 'archivedAt'],
+      where: ['scalingInfo'],
+      whereNot: ['archivedAt'],
     }),
   ])
 

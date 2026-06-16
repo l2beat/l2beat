@@ -19,6 +19,7 @@ export const bob: ScalingProject = opStackL2({
   isPartOfSuperchain: true,
   display: {
     name: 'BOB',
+    aliases: ['Build on Bitcoin'],
     slug: 'bob',
     description:
       "BOB (Build on Bitcoin) is an OP Stack rollup that aims to natively support the Bitcoin stack. The current implementation supports a variety of canonical and external bridging for BTC-related assets and a tBTC-v2 LightRelay smart contract for verifying Bitcoin transaction proofs through their blocks' headers on the L2.",
@@ -84,7 +85,7 @@ export const bob: ScalingProject = opStackL2({
   ],
   nonTemplateProofSystem: {
     type: 'Optimistic',
-    name: 'OP Kailua',
+    name: 'Kailua',
     zkCatalogId: ProjectId('risc0'),
     challengeProtocol: 'Single-step',
   },

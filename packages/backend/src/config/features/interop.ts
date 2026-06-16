@@ -6,11 +6,7 @@ import {
   type InteropConfig,
   type ProjectService,
 } from '@l2beat/config'
-import { createRemoteJWKSet } from 'jose'
-import type {
-  InteropDashboardAuthConfig,
-  InteropFeatureConfig,
-} from '../Config'
+import type { InteropFeatureConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 
 export interface InteropAggregationConfig extends InteropConfig {
@@ -23,7 +19,6 @@ export async function getInteropFeatureConfig(
   flags: FeatureFlags,
   chains: ChainConfig[],
   activeChains: ChainConfig[],
-  isLocal?: boolean,
 ): Promise<InteropFeatureConfig | false> {
   if (!flags.isEnabled('interop')) {
     return false
@@ -53,7 +48,6 @@ export async function getInteropFeatureConfig(
         )
         return c?.explorerUrl
       },
-      auth: isLocal ? false : getInteropDashboardAuthConfig(env),
     },
     compare: {
       enabled: flags.isEnabled('interop', 'compare'),
@@ -62,6 +56,14 @@ export async function getInteropFeatureConfig(
       enabled: flags.isEnabled('interop', 'financials'),
       tokenDbApiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
       tokenDbAuthToken: env.optionalString('TOKEN_BACKEND_CF_TOKEN'),
+      maxTokenPriceUsd: env.integer(
+        'INTEROP_FINANCIALS_MAX_TOKEN_PRICE_USD',
+        1_000_000,
+      ),
+      maxTransferValueUsd: env.integer(
+        'INTEROP_FINANCIALS_MAX_TRANSFER_VALUE_USD',
+        1_000_000_000,
+      ),
     },
     config: {
       enabled: flags.isEnabled('interop', 'config'),
@@ -74,18 +76,11 @@ export async function getInteropFeatureConfig(
       ),
     },
     inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
-    oneSidedChains: [...INTEROP_ONE_SIDED_CHAINS],
-  }
-}
-
-function getInteropDashboardAuthConfig(env: Env): InteropDashboardAuthConfig {
-  const teamDomain = env.string('INTEROP_BACKOFFICE_CF_TEAM_DOMAIN')
-  const aud = env.string(['INTEROP_BACKOFFICE_CF_ACCESS_AUD', 'CF_ACCESS_AUD'])
-
-  return {
-    JWKS: createRemoteJWKSet(new URL(`${teamDomain}/cdn-cgi/access/certs`)),
-    aud,
-    teamDomain,
+    oneSidedChains: [
+      ...INTEROP_ONE_SIDED_CHAINS.filter((chain) =>
+        flags.isEnabled('interop', 'oneSidedChain', chain),
+      ),
+    ],
   }
 }
 

@@ -69,7 +69,10 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
   project: Project<'zkCatalogInfo'>,
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
   targetProject?: TargetProject,
 ): TrustedSetupsByProofSystem {
   const grouped = groupBy(
@@ -146,7 +149,10 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
 
 function uniqAndSortProjectsUsedIn(
   usedIn: UsedInProjectWithIcon[] | undefined,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
   tvs: SevenDayTvsBreakdown,
 ) {
   if (!usedIn) return undefined
@@ -160,7 +166,10 @@ function getVerifiersWithProcessedUsedIn(
   project: Project<'zkCatalogInfo'>,
   key: string,
   contractUtils: ContractUtils,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
 ) {
   return project.zkCatalogInfo.verifierHashes
     .filter((v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`)
@@ -238,18 +247,23 @@ function getOnchainVerifier(
   contracts: ProjectContracts | undefined,
 ) {
   const addressKey = toPlainAddress(address)
+  const chainContracts = contracts?.addresses[chain] ?? []
 
-  const contract = contracts?.addresses[chain]?.find(
-    (c) => ChainSpecificAddress.address(c.address) === addressKey,
-  )
+  const contract =
+    chainContracts.find(
+      (c) => ChainSpecificAddress.address(c.address) === addressKey,
+    ) ??
+    chainContracts.find((c) =>
+      c.upgradeability?.implementations.some(
+        (impl) => ChainSpecificAddress.address(impl) === addressKey,
+      ),
+    )
 
   if (!contract?.url) return undefined
 
-  const plainEthAddress = ChainSpecificAddress.address(contract.address)
-
   return {
     name: contract.name,
-    href: explorerAddressPageUrl(contract.url, plainEthAddress),
+    href: explorerAddressPageUrl(contract.url, addressKey),
   }
 }
 
@@ -288,7 +302,10 @@ function getVerifierStatuses(
 
 export function getProjectsUsedIn(
   projectIds: ProjectId[],
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
 ): UsedInProjectWithIcon[] {
   return projectIds
     .map((projectId) => {
@@ -298,10 +315,10 @@ export function getProjectsUsedIn(
       let url = `/scaling/projects/${project.slug}`
       if (project.daBridge) {
         const layer = allProjects
-          .filter((x) => x.isDaLayer)
+          .filter((x) => x.daLayer)
           .find((x) => x.id === project.daBridge?.daLayer)
         url = `/data-availability/projects/${layer?.slug}/${project.slug}`
-      } else if (project.isDaLayer) {
+      } else if (project.daLayer) {
         url = `/data-availability/projects/${project.slug}/no-bridge`
       }
 

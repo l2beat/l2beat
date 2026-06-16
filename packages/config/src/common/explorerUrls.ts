@@ -27,6 +27,7 @@ export const EXPLORER_URLS: Record<string, string> = {
   scroll: 'https://scrollscan.com',
   blast: 'https://blastscan.io',
   unichain: 'https://uniscan.xyz',
+  hyperevm: 'https://hyperevmscan.io',
   ink: 'https://explorer.inkonchain.com',
   everclear: 'https://scan.everclear.org',
   kinto: 'https://explorer.kinto.xyz',
@@ -39,4 +40,5 @@ export const EXPLORER_URLS: Record<string, string> = {
   ethereal: 'https://explorer.ethereal.trade',
   ethscriptions: 'https://explorer.ethscriptions.com',
   sepolia: 'https://sepolia.etherscan.io',
+  katana: 'https://katanascan.com',
 }

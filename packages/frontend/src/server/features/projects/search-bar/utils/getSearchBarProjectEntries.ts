@@ -4,7 +4,6 @@ import type {
   ProjectPermissions,
 } from '@l2beat/config'
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
-import { env } from '~/env'
 import { manifest } from '~/utils/Manifest'
 import type { SearchBarProjectEntry } from '../types'
 
@@ -36,34 +35,39 @@ export function getSearchBarProjectEntries<
     | 'daLayer'
     | 'daBridge'
     | 'interopConfig'
-    | 'isScaling'
-    | 'isDaLayer'
     | 'ecosystemConfig'
     | 'zkCatalogInfo'
+    | 'privacyInfo'
     | 'contracts'
     | 'permissions'
+    | 'aliases'
   >,
 >(project: T, allProjects: T[]): SearchBarProjectEntry[] {
   const results: SearchBarProjectEntry[] = []
   if (
-    !project.isScaling &&
+    !project.scalingInfo &&
     !project.daLayer &&
     !project.daBridge &&
     !project.ecosystemConfig &&
     !project.interopConfig &&
-    !project.zkCatalogInfo
+    !project.zkCatalogInfo &&
+    !project.privacyInfo
   ) {
     return []
   }
 
-  const commonTags = dedupeTags([project.slug, project.name, project.shortName])
+  const commonTags = dedupeTags([
+    project.slug,
+    project.name,
+    project.shortName,
+    ...(project.aliases ?? []),
+  ])
 
   const common = {
     type: 'project',
     id: project.id,
     name: project.name,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-    isUpcoming: false,
     projectAddresses: extractProjectAddresses(
       project.contracts,
       project.permissions,
@@ -71,7 +75,7 @@ export function getSearchBarProjectEntries<
     tags: commonTags,
   } satisfies Partial<SearchBarProjectEntry>
 
-  if (project.isScaling) {
+  if (project.scalingInfo) {
     results.push({
       ...common,
       href: `/scaling/projects/${project.slug}`,
@@ -119,7 +123,7 @@ export function getSearchBarProjectEntries<
     })
   }
 
-  if (project.interopConfig && env.CLIENT_SIDE_INTEROP_DETAILED_PAGES) {
+  if (project.interopConfig) {
     results.push({
       ...common,
       name: project.interopConfig.name ?? project.name,
@@ -141,6 +145,15 @@ export function getSearchBarProjectEntries<
       href: `/zk-catalog/${project.slug}`,
       category: 'zkCatalog',
       kind: 'zkCatalog',
+    })
+  }
+
+  if (project.privacyInfo) {
+    results.push({
+      ...common,
+      href: `/privacy/projects/${project.slug}`,
+      category: 'privacy',
+      kind: 'privacy',
     })
   }
 

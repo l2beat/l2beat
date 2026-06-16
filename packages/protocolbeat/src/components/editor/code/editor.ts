@@ -16,10 +16,13 @@ export type EditorCallbacks = {
   onLoad?: EditorContentCallback
 }
 
+// Session-scoped view state cache: persists folds/cursor/scroll per file URI
+// across Editor instance lifecycles - stable and mainly to help with React's StrictMode double-renders
+const viewStateCache: Map<string, editor.ICodeEditorViewState> = new Map()
+
 export class Editor extends EditorPluginStore<'code'> {
   private models: Record<string, editor.IModel | null> = {}
-  private viewStates: Record<string, editor.ICodeEditorViewState | null> = {}
-  private callbacks: monaco.IDisposable[] = []
+  private disposed = false
 
   private onSaveCallback: ((content: string) => string) | null = null
 
@@ -48,6 +51,13 @@ export class Editor extends EditorPluginStore<'code'> {
   }
 
   setFile(file: EditorFile) {
+    // A remount can queue setFile against the previous editor instance, which
+    // is disposed during the same React commit. Driving a disposed Monaco
+    // editor throws "InstantiationService has been disposed". The live editor
+    // re-registers in the store and receives the file on the next render.
+    if (this.disposed) {
+      return
+    }
     this.saveViewState()
     const model = this.getOrCreateFileModel(file)
 
@@ -64,16 +74,16 @@ export class Editor extends EditorPluginStore<'code'> {
     this.onSaveCallback = onSaveCallback
   }
 
-  onChange(onChangeCallback: (content: string) => void) {
+  onChange(onChangeCallback: (content: string) => void): monaco.IDisposable {
     const disposable = this.editor.onDidChangeModelContent(() => {
       const value = this.editor.getModel()?.getValue() ?? ''
       onChangeCallback(value)
     })
 
-    this.callbacks.push(disposable)
+    return this.trackDisposable(disposable)
   }
 
-  onLoad(onLoadCallback: (content: string) => void) {
+  onLoad(onLoadCallback: (content: string) => void): monaco.IDisposable {
     const disposable = this.editor.onDidChangeModel((e) => {
       if (e.oldModelUrl == null) {
         const value = this.editor.getModel()?.getValue() ?? ''
@@ -81,15 +91,7 @@ export class Editor extends EditorPluginStore<'code'> {
       }
     })
 
-    this.callbacks.push(disposable)
-  }
-
-  private disposeCallbacks() {
-    this.onSaveCallback = null
-    for (const callback of this.callbacks) {
-      callback.dispose()
-    }
-    this.callbacks = []
+    return this.trackDisposable(disposable)
   }
 
   private getOrCreateFileModel(file: EditorFile) {
@@ -124,7 +126,10 @@ export class Editor extends EditorPluginStore<'code'> {
       return
     }
 
-    this.viewStates[model.uri.toString()] = this.editor.saveViewState()
+    const state = this.editor.saveViewState()
+    if (state !== null) {
+      viewStateCache.set(model.uri.toString(), state)
+    }
   }
 
   private restoreViewState() {
@@ -133,7 +138,9 @@ export class Editor extends EditorPluginStore<'code'> {
       return
     }
 
-    this.editor.restoreViewState(this.viewStates[model.uri.toString()] ?? null)
+    this.editor.restoreViewState(
+      viewStateCache.get(model.uri.toString()) ?? null,
+    )
   }
 
   resize() {
@@ -141,13 +148,18 @@ export class Editor extends EditorPluginStore<'code'> {
   }
 
   dispose() {
+    if (this.disposed) {
+      return
+    }
+    this.disposed = true
+    this.onSaveCallback = null
+    this.saveViewState()
     Object.values(this.models).forEach((model) => {
       if (model) {
         model.dispose()
       }
     })
     this.models = {}
-    this.viewStates = {}
     this.disposeCallbacks()
     this.disposePlugins()
     this.editor.dispose()

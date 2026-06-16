@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "railgun",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+    "eth:0xe90275239D734899e8D94646139213F6F97bEB0E",
+    "eth:0xfa7093cdd9ee6932b4eb2c9e1cde7ce00b1fa4b9",
+    "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+    "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+    "eth:0xAc9f360Ae85469B27aEDdEaFC579Ef2d052aD405"
+  ],
+  "names": {
+    "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": "ArbitrumInbox",
+    "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": "DAI",
+    "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": "VerificationKeySetter_64DA",
+    "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B": "GovernorRewardsSweeper",
+    "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": "VerificationKeySetter_9086",
+    "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686": "LegacySweeper"
+  },
+  "overrides": {
+    "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xAc9f360Ae85469B27aEDdEaFC579Ef2d052aD405": {
+      "description": "Execution adapter contract for Railgun. To interact with public contracts from shielded pools, tokens are unshielded to RelayAdapter, which performs specified calls and shields tokens back to the same user."
+    }
+  }
+}

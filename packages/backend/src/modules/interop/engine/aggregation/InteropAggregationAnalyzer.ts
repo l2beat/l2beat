@@ -4,30 +4,27 @@ import type {
 } from '@l2beat/database'
 import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import {
-  getWindowedLogZScore,
-  Z_CLASSIC_THRESHOLD,
-  Z_WINDOW_DAYS,
-} from '../zScore'
-
-const MIN_VOLUME_IDENTIFICATION_RATE = 0.5
-
-export interface SnapshotTotals {
-  transferCount: number
-  identifiedCount: number
-  srcVolumeUsd: number
-  dstVolumeUsd: number
-}
-
-export interface SnapshotTotalsPoint extends SnapshotTotals {
-  timestamp: UnixTime
-}
+  type AnomalyEvaluation,
+  type BridgeTotal,
+  evaluateAnomalies,
+  formatAnomalyReasons,
+  type SeriesPoint,
+} from '../anomalies'
+import { Z_WINDOW_DAYS } from '../zScore'
 
 interface GroupedTransferCandidate {
   id: string
   bridgeType: InteropBridgeType
   srcChain: string
   dstChain: string
-  metrics: SnapshotTotals
+  metrics: CandidateMetrics
+}
+
+interface CandidateMetrics {
+  transferCount: number
+  identifiedCount: number
+  srcVolumeUsd: number
+  dstVolumeUsd: number
 }
 
 export interface SuspiciousAggregationGroup {
@@ -36,6 +33,7 @@ export interface SuspiciousAggregationGroup {
   srcChain: string
   dstChain: string
   reasons: string[]
+  evaluation: AnomalyEvaluation
 }
 
 export interface InteropAggregationAnalysis {
@@ -60,7 +58,8 @@ export class DefaultInteropAggregationAnalyzer
     candidateTransfers: AggregatedInteropTransferRecord[],
   ): Promise<InteropAggregationAnalysis> {
     const groupedTransfers = groupTransfers(candidateTransfers)
-    const candidateDay = getDay(candidateTimestamp)
+    const bridgeTotals = computeBridgeTotals(groupedTransfers)
+    const candidateDay = UnixTime.toStartOf(candidateTimestamp, 'day')
     const historyFrom = candidateDay - (Z_WINDOW_DAYS - 1) * UnixTime.DAY
     const historicalGroups =
       await this.db.aggregatedInteropTransfer.getGroupsWithStatsInTimeRange(
@@ -84,21 +83,9 @@ export class DefaultInteropAggregationAnalyzer
           candidateDay,
         )
 
-      const history = historicalStats.map((record) => ({
-        timestamp: record.timestamp,
-        transferCount: record.transferCount,
-        identifiedCount: record.identifiedCount,
-        srcVolumeUsd: record.srcVolumeUsd,
-        dstVolumeUsd: record.dstVolumeUsd,
-      }))
-
-      const reasons = evaluateQualitySignals({
-        candidateTimestamp,
-        candidate: group.metrics,
-        history,
-      })
-
-      if (reasons.length === 0) {
+      const series = buildSeries(candidateDay, group.metrics, historicalStats)
+      const evaluation = evaluateAnomalies(series, bridgeTotals.get(group.id))
+      if (evaluation.signals.length === 0 && !evaluation.sideMismatch) {
         continue
       }
 
@@ -107,7 +94,8 @@ export class DefaultInteropAggregationAnalyzer
         bridgeType: group.bridgeType,
         srcChain: group.srcChain,
         dstChain: group.dstChain,
-        reasons,
+        reasons: formatAnomalyReasons(evaluation),
+        evaluation,
       })
     }
 
@@ -118,73 +106,70 @@ export class DefaultInteropAggregationAnalyzer
   }
 }
 
-export function evaluateQualitySignals(input: {
-  candidateTimestamp: UnixTime
-  candidate: SnapshotTotals
-  history: SnapshotTotalsPoint[]
-}): string[] {
-  const { candidate, candidateTimestamp, history } = input
-  const dailySeries = materializeDailySeries(
-    candidateTimestamp,
-    candidate,
-    history,
-  )
-  const reasons = analyzeZScore(
-    'Count',
-    dailySeries.map((point) => point.transferCount),
-  )
-
-  if (!isVolumeReliable(candidate)) {
-    return reasons
-  }
-
-  reasons.push(
-    ...analyzeZScore(
-      'Src volume',
-      dailySeries.map((point) =>
-        isVolumeReliable(point) ? point.srcVolumeUsd : 0,
-      ),
-    ),
-  )
-  reasons.push(
-    ...analyzeZScore(
-      'Dst volume',
-      dailySeries.map((point) =>
-        isVolumeReliable(point) ? point.dstVolumeUsd : 0,
-      ),
-    ),
-  )
-
-  return reasons
-}
-
-function materializeDailySeries(
-  candidateTimestamp: UnixTime,
-  candidate: SnapshotTotals,
-  history: SnapshotTotalsPoint[],
-) {
-  const candidateDay = getDay(candidateTimestamp)
-  const startDay = candidateDay - (Z_WINDOW_DAYS - 1) * UnixTime.DAY
+function buildSeries(
+  candidateDay: UnixTime,
+  candidate: CandidateMetrics,
+  history: Array<{
+    timestamp: UnixTime
+    transferCount: number
+    identifiedCount: number
+    srcVolumeUsd: number
+    dstVolumeUsd: number
+  }>,
+): SeriesPoint[] {
   const historyByDay = new Map(
-    history.map((point) => [getDay(point.timestamp), point] as const),
+    history.map((point) => [UnixTime.toStartOf(point.timestamp, 'day'), point]),
   )
-  const series: SnapshotTotals[] = []
+  const startDay = candidateDay - (Z_WINDOW_DAYS - 1) * UnixTime.DAY
+  const series: SeriesPoint[] = []
 
   for (let day = startDay; day < candidateDay; day += UnixTime.DAY) {
     const point = historyByDay.get(day)
     series.push(
-      point ?? {
-        transferCount: 0,
-        identifiedCount: 0,
-        srcVolumeUsd: 0,
-        dstVolumeUsd: 0,
-      },
+      point
+        ? {
+            day,
+            transferCount: point.transferCount,
+            identifiedCount: point.identifiedCount,
+            srcVolumeUsd: point.srcVolumeUsd,
+            dstVolumeUsd: point.dstVolumeUsd,
+          }
+        : {
+            day,
+            transferCount: 0,
+            identifiedCount: 0,
+            srcVolumeUsd: 0,
+            dstVolumeUsd: 0,
+          },
     )
   }
 
-  series.push(candidate)
+  series.push({
+    day: candidateDay,
+    transferCount: candidate.transferCount,
+    identifiedCount: candidate.identifiedCount,
+    srcVolumeUsd: candidate.srcVolumeUsd,
+    dstVolumeUsd: candidate.dstVolumeUsd,
+  })
 
   return series
+}
+
+function computeBridgeTotals(
+  groupedTransfers: Map<string, GroupedTransferCandidate>,
+): Map<string, BridgeTotal> {
+  const totals = new Map<string, BridgeTotal>()
+  for (const group of groupedTransfers.values()) {
+    const existing = totals.get(group.id) ?? {
+      transferCount: 0,
+      volumeUsd: 0,
+    }
+    existing.transferCount += group.metrics.transferCount
+    existing.volumeUsd +=
+      group.metrics.srcVolumeUsd + group.metrics.dstVolumeUsd
+    totals.set(group.id, existing)
+  }
+  return totals
 }
 
 function groupTransfers(transfers: AggregatedInteropTransferRecord[]) {
@@ -237,20 +222,16 @@ function addMissingHistoricalGroups(
 
     groupedTransfers.set(key, {
       ...group,
-      metrics: zeroSnapshotTotals(),
+      metrics: {
+        transferCount: 0,
+        identifiedCount: 0,
+        srcVolumeUsd: 0,
+        dstVolumeUsd: 0,
+      },
     })
   }
 
   return groupedTransfers
-}
-
-function zeroSnapshotTotals(): SnapshotTotals {
-  return {
-    transferCount: 0,
-    identifiedCount: 0,
-    srcVolumeUsd: 0,
-    dstVolumeUsd: 0,
-  }
 }
 
 function toGroupKey(group: {
@@ -260,37 +241,4 @@ function toGroupKey(group: {
   dstChain: string
 }) {
   return [group.id, group.bridgeType, group.srcChain, group.dstChain].join('::')
-}
-
-function safeDivide(a: number, b: number) {
-  if (b === 0) {
-    return a === 0 ? 1 : Number.POSITIVE_INFINITY
-  }
-  return a / b
-}
-
-function analyzeZScore(label: string, values: number[]): string[] {
-  // Route-level daily histories are often flat. In those cases robust z-score
-  // returns null because MAD is zero, so alerting uses the shared classic score.
-  const zScore = getWindowedLogZScore(values).classic
-  if (
-    zScore === null ||
-    !Number.isFinite(zScore) ||
-    Math.abs(zScore) <= Z_CLASSIC_THRESHOLD
-  ) {
-    return []
-  }
-
-  return [`${label} z-score=${zScore.toFixed(2)}`]
-}
-
-function isVolumeReliable(point: SnapshotTotals): boolean {
-  return (
-    safeDivide(point.identifiedCount, point.transferCount) >=
-    MIN_VOLUME_IDENTIFICATION_RATE
-  )
-}
-
-function getDay(timestamp: UnixTime): UnixTime {
-  return UnixTime.toStartOf(timestamp, 'day')
 }

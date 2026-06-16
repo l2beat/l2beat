@@ -113,7 +113,7 @@ const _EVMBlock = {
   parentBeaconBlockRoot: z.string().optional(),
 }
 export type EVMBlock = z.infer<typeof EVMBlock>
-const EVMBlock = z.object(_EVMBlock)
+export const EVMBlock = z.object(_EVMBlock)
 
 export const EVMBlockResponse = z.object({
   result: EVMBlock,
@@ -133,6 +133,10 @@ export const EVMBalanceResponse = z.object({
   result: Quantity.decode,
 })
 
+export const BlockNumberResponse = z.object({
+  result: Quantity.decode.transform((n) => Number(n)),
+})
+
 export type EVMFeeHistory = z.infer<typeof EVMFeeHistory>
 export const EVMFeeHistory = z.object({
   baseFeePerGas: z.array(Quantity.decode),
@@ -140,7 +144,6 @@ export const EVMFeeHistory = z.object({
   baseFeePerBlobGas: z.array(Quantity.decode),
   blobGasUsedRatio: z.array(z.number()),
   oldestBlock: Quantity.decode.transform((n) => Number(n)),
-  reward: z.array(z.array(Quantity.decode)),
 })
 
 export const EVMFeeHistoryResponse = z.object({
@@ -153,7 +156,7 @@ export const EVMCallResponse = z.object({
 
 export interface CallParameters {
   to: EthereumAddress
-  data: Bytes
+  input: Bytes
 }
 
 export type RPCError = z.infer<typeof RPCError>
@@ -173,6 +176,14 @@ export const EVMLog = z.object({
   transactionHash: z.string(),
   data: z.string(),
   logIndex: Quantity.decode.transform((n) => Number(n)),
+  // non-standard optimisation, number in sonic
+  // although this is included in reth, geth and Nethermind since late 2025
+  // see: https://github.com/ethereum/execution-apis/issues/295
+  blockTimestamp: z
+    .union([Quantity.decode, z.number().transform(BigInt)])
+    // Some logs return 0x0 as block timestamp, which is invalid
+    .transform((n) => (n === 0n ? undefined : Number(n)))
+    .optional(),
 })
 
 export type EVMLogsResponse = z.infer<typeof EVMLogsResponse>

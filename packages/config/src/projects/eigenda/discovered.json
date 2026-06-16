@@ -1,7 +1,7 @@
 {
   "name": "eigenda",
   "timestamp": 1775212321,
-  "configHash": "0x892ebea752f55cf257a83ce2dca497b9d5fb68216dca083eced501f86c092e1d",
+  "configHash": "0xfd4e776e2116485d264f09b24afc4803c4c4dba943d27c41ba27cfe9568b4cf1",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {
@@ -11,7 +11,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -132,6 +132,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04",
       "sinceTimestamp": 1744215143,
       "sinceBlock": 22232462,
       "values": {
@@ -163,10 +164,11 @@
       "template": "eigenlayer/StakeRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x249715f12cf118070103f30534be5816b6847d0b1cd8fe8cae8e1833c6afd1f8"
+        "0x2164f0da2cf46f7b500efb558c3a6a0afe65e67d6534370fadf7dce65389b81f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Keeps track of the total stake of each operator.",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353799,
       "sinceBlock": 19592323,
       "values": {
@@ -227,10 +229,11 @@
       "template": "eigenlayer/BLSApkRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0xb4ca65ab7fb0cd9a8fd6f0c4b7805ea96914dcb6dd65309b2557931358ad1ff3"
+        "0x913bc45c379cd6b9d480abbe939324e96f3330645202dd152a4c6532f69ad73e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Keeps track of the BLS public keys of each operator and the quorum aggregated keys.",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353799,
       "sinceBlock": 19592323,
       "values": {
@@ -264,11 +267,12 @@
       "template": "eigenlayer/RegistryCoordinator",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x7e7c9cae80b660c369700ce034c417e93999b08e43dabd1c37a1e76599552575"
+        "0x7bc3d6a892a6e8c6ec410ff8d531b91cca1a03c0c06abc1963b402fd63287f38"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.",
       "ignoreInWatchMode": ["registeredOperators"],
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353787,
       "sinceBlock": 19592322,
       "values": {
@@ -474,6 +478,7 @@
           "role": ".pauserRegistry"
         }
       ],
+      "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686348935,
       "sinceBlock": 17445563,
       "values": {
@@ -497,10 +502,11 @@
       "template": "eigenlayer/EjectionManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x94a826fe3f9609e445cfd3cd6d7d9709c559367e9cb49a9b6d7952cd3a116cd0"
+        "0x479a55e20f8ffd16dffa5952f97f6abd15293e57871ef06140a12860676d5327"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1715347895,
       "sinceBlock": 19839949,
       "values": {
@@ -568,7 +574,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -580,6 +586,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x2bBA03bA38D90634e6afD8C23C16ca01651bc493",
       "sinceTimestamp": 1721762183,
       "sinceBlock": 20371264,
       "values": {
@@ -616,10 +623,11 @@
       "template": "eigenda/EigenDACertVerifierRouter",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x74e8ba69f5e8defb4c133681950b646f84ffb58fd5e7173c13c1e10e020f7fea"
+        "0xc393791ca2cf5f681a53492e15aa1827f685403a9bfffaac231b0894a2faf47e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A router contract for DA Certificate verifiers. Verifier routing depends on the certificate reference block number.",
+      "deployerAddress": "eth:0xF33Fd9bD25a2cb421F7071A785f5De64FD2b617f",
       "sinceTimestamp": 1751656319,
       "sinceBlock": 22847862,
       "values": {
@@ -663,7 +671,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -675,6 +683,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x34D64c402cA43C1c4B368e16130C64aC245718C6",
       "sinceTimestamp": 1732035611,
       "sinceBlock": 21223132,
       "values": {
@@ -751,10 +760,11 @@
       "type": "Contract",
       "template": "eigenda/EigenDACertVerifier",
       "sourceHashes": [
-        "0x5461af9788e297da9de7651464e440e49400a3448477acba821ff196c83d3c0e"
+        "0x44d0d26833c653bbf6f5d9304cb111e6bb07e35b899f0e2085a564a67a9738e3"
       ],
       "proxyType": "immutable",
       "description": "A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.",
+      "deployerAddress": "eth:0xc8F5c7c86c8b87B3D22117cBB8FB03Cd2a2652FE",
       "sinceTimestamp": 1762569287,
       "sinceBlock": 23751593,
       "values": {
@@ -805,6 +815,7 @@
         "0x20ad72ba1402c7715031bdbe60a9bf87718c4a9444c65a68650a7a2c662f43e2"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1733339723,
       "sinceBlock": 21331160,
       "values": {
@@ -850,10 +861,11 @@
       "type": "Contract",
       "template": "eigenda/EigenDACertVerifier",
       "sourceHashes": [
-        "0x89110242a58d5638684fdfe8778df04acaea95a903f7261783575fcef2b61fcd"
+        "0xdd2a64b937040e5d01e5a02cd2483d912df075a701f57bd580bd010f683e23d8"
       ],
       "proxyType": "immutable",
       "description": "A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.",
+      "deployerAddress": "eth:0x6d38F1E29fb85adB59A353623BB721155B9B67f0",
       "sinceTimestamp": 1749145139,
       "sinceBlock": 22639950,
       "values": {
@@ -883,10 +895,11 @@
       "template": "eigenlayer/EigenDADisperserRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x8d337ccea9456dccbcd3d6b82ca9d61509d3a9343487e057438b300efe5484c6"
+        "0xd6d45d6bf7a42c401e94bff9aa98b523d14e47e6c91ec9e5aef48ddea6e75a78"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry for EigenDA disperser info such as disperser key to address mapping.",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750295,
       "sinceBlock": 22276885,
       "values": {
@@ -983,6 +996,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353787,
       "sinceBlock": 19592322,
       "values": {
@@ -1013,11 +1027,12 @@
       "template": "eigenlayer/EigenDAServiceManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x41471c5c89db3f645030775d3f3cc317047a179f36469fbd736db24baed6523e"
+        "0x5446a295966c1f9d773b7b50883f2d7b4890b72f6a5dd66926209ab6ac919a59"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.",
       "ignoreInWatchMode": ["batchId", "taskNumber"],
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353787,
       "sinceBlock": 19592322,
       "values": {
@@ -1189,10 +1204,11 @@
       "template": "eigenlayer/PaymentVault",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0xf39de15799feffaa8711b3b5e9ff8fb4c66ef1cbac1fe00cc984f957663d73d1"
+        "0x198f5fd7944b62838fac91becbbf3cdb3aadaa098b9d64c37eccbabf33318378"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entrypoint for making reservations and on demand payments for EigenDA.",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750295,
       "sinceBlock": 22276885,
       "values": {
@@ -1232,6 +1248,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A registry contract that keeps track of an ordered list of operators for each quorum.",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353799,
       "sinceBlock": 19592323,
       "values": {
@@ -1273,10 +1290,11 @@
       "template": "eigenlayer/EigenDARelayRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x2a5d28cd901637b2eed614152fc63ba60a2a5e10127efe030849aec4cfe64007"
+        "0x04415dba9be0ddc638a871b192f3a780b709a0841a143c08085a9f4ac1372040"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry for EigenDA relay keys, maps key to address.",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750223,
       "sinceBlock": 22276879,
       "values": {
@@ -1328,10 +1346,11 @@
       "template": "eigenlayer/EigenDAThresholdRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x7de6bfaca27d4a2d2ff694543af488ed523e89a1f239036f972852611a228eae"
+        "0x77e829aa26d5459004c4d89d84d90fcc1876ecabc83130235db2c3a71f56b66f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750211,
       "sinceBlock": 22276878,
       "values": {
@@ -1390,10 +1409,11 @@
       "type": "Contract",
       "template": "eigenda/EigenDACertVerifier_Legacy",
       "sourceHashes": [
-        "0x3f32e0b975cf311b07f50d7af9a8c48fb99b5968c12a2d151b2433216d62994b"
+        "0xa1011ba58792b7a420e423a460df317432b7f1f0d3af4f543286f4c714cd7652"
       ],
       "proxyType": "immutable",
       "description": "A legacy DACert verifier contract. It is used to verify v2 DA certificates. New verifiers should use the new verifier router contract.",
+      "deployerAddress": "eth:0x6d38F1E29fb85adB59A353623BB721155B9B67f0",
       "sinceTimestamp": 1748903123,
       "sinceBlock": 22619945,
       "values": {
@@ -1423,8 +1443,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "relayDA",
+          "permission": "interact",
           "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "description": "Can store and serve both unencoded blobs as well as encoded chunks.",
           "role": ".relayers"
         }
       ]
@@ -1439,6 +1460,7 @@
       ],
       "proxyType": "immutable",
       "description": "A contract for retrieving AVS operators state (e.g., quorum bitmaps, ordered operator lists, stakes, sockets, signatures indices—at) at a given block directly from on-chain registries.",
+      "deployerAddress": "eth:0x6d38F1E29fb85adB59A353623BB721155B9B67f0",
       "sinceTimestamp": 1748903123,
       "sinceBlock": 22619945,
       "values": { "$immutable": true },
@@ -1459,8 +1481,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "disperse",
+          "permission": "interact",
           "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "description": "Can disperse EigenDA blobs to the EigenDA node operators.",
           "role": ".dispersers"
         }
       ]
@@ -2169,5 +2192,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 24798523 },
-  "permissionsConfigHash": "0xd3edcb553375387395f3f331b27a9820c7c171b2414dee1e9607f600f3644d27"
+  "permissionsConfigHash": "0xc793638e4ccb1f14f3cd353f4433e109110cdd607ea0b64720e84e9178c3cf63"
 }

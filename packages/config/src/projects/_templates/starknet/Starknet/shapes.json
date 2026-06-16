@@ -1,12 +1,17 @@
 {
   "Starknet": {
-    "hash": "0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6",
+    "hash": "0xfa360ffe8cf5edf4224201f2ae43e57a880995cbeee76fc5dbbf664c2861d9b5",
     "address": "eth:0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC",
     "blockNumber": 22188285
   },
   "Starknet_v2025-10": {
-    "hash": "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe",
+    "hash": "0xfee7303d7ae61327a9f6516d410a6efbe76c07d2ca3406be62e5bb3baa5532c9",
     "address": "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04",
     "blockNumber": 22188285
+  },
+  "Starknet_v2026-11": {
+    "hash": "0xef60960a959a9506c3f6eece9374f7fbcd095a488763801577ae88e427fd3d51",
+    "address": "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A",
+    "blockNumber": 24927241
   }
 }

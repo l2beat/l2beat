@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AggregateVerifier",
+  "description": "Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (7d) to FAST_FINALIZATION_DELAY (1d).",
+  "ignoreMethods": ["intermediateOutputRoot", "intermediateOutputRoots"],
+  "ignoreInWatchMode": [
+    "bondAmount",
+    "bondClaimed",
+    "bondRecipient",
+    "bondUnlocked",
+    "counteredByIntermediateRootIndexPlusOne",
+    "createdAt",
+    "expectedResolution",
+    "extraData",
+    "gameCreator",
+    "gameData",
+    "gameOver",
+    "l1Head",
+    "l2SequenceNumber",
+    "parentAddress",
+    "proofCount",
+    "resolvedAt",
+    "rootClaim",
+    "startingBlockNumber",
+    "startingOutputRoot",
+    "startingRootHash",
+    "status",
+    "teeProver",
+    "wasRespectedGameTypeWhenCreated",
+    "zkProver"
+  ],
+  "fields": {
+    "TEE_VERIFIER": {
+      "severity": "HIGH"
+    },
+    "ZK_VERIFIER": {
+      "severity": "HIGH"
+    },
+    "TEE_IMAGE_HASH": {
+      "severity": "HIGH"
+    },
+    "ZK_RANGE_HASH": {
+      "severity": "HIGH"
+    },
+    "ZK_AGGREGATE_HASH": {
+      "severity": "HIGH"
+    },
+    "PROOF_THRESHOLD": {
+      "severity": "HIGH"
+    },
+    "DELAYED_WETH": {
+      "severity": "HIGH"
+    }
+  }
+}

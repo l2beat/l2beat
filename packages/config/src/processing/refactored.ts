@@ -26,11 +26,11 @@ import { freetunnel } from '../projects/freetunnel/freetunnel'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
 import { gaszip } from '../projects/gaszip/gaszip'
 import { gateway } from '../projects/gateway/gateway'
-import { gnosis } from '../projects/gnosis/gnosis'
 import { hyperevm } from '../projects/hyperevm/hyperevm'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
 import { layerzero } from '../projects/layerzero/layerzero'
+import { lifi } from '../projects/lifi/lifi'
 import { lighterprover } from '../projects/lighterprover/lighterprover'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
 import { loopringprover } from '../projects/loopringprover/loopringprover'
@@ -40,6 +40,8 @@ import { meson } from '../projects/meson/meson'
 import { monad } from '../projects/monad/monad'
 import { near } from '../projects/near/near-da'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
+import { privacyPools } from '../projects/privacy-pools/privacy-pools'
+import { railgun } from '../projects/railgun/railgun'
 import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
@@ -50,6 +52,7 @@ import { stone } from '../projects/stone/stone'
 import { stwo } from '../projects/stwo/stwo'
 import { teeBridge } from '../projects/tee-bridge/tee-bridge'
 import { tempo } from '../projects/tempo/tempo'
+import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
 import { vector } from '../projects/vector/vector'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
@@ -91,7 +94,6 @@ export const refactored: BaseProject[] = [
   memo,
   // chains
   bsc,
-  gnosis,
   gateway,
   avalanche,
   monad,
@@ -104,6 +106,7 @@ export const refactored: BaseProject[] = [
   cctpv2,
   relay,
   gaszip,
+  lifi,
   layerzero,
   axelar,
   axelarits,
@@ -120,4 +123,8 @@ export const refactored: BaseProject[] = [
   cbridge,
   hyperevm,
   freetunnel,
+  // privacy
+  privacyPools,
+  railgun,
+  tornadoCash,
 ]

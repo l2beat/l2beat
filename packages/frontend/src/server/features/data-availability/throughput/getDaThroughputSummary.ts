@@ -42,7 +42,7 @@ const getDaThroughputSummaryData = async (
 
   const { grouped, minTimestamp } = groupByTimestampAndDaLayerId(
     scalingOnlyRecords,
-    'daily',
+    'day',
   )
 
   const lastDataForLayers: Record<

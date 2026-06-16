@@ -9,7 +9,9 @@ import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { getTopProtocolDisplay } from './getTopProtocolDisplay'
 
 export interface InteropTopTokenData {
+  id: string
   symbol: string
+  issuer: string | null
   iconUrl: string
   volume: number
   transferCount: number
@@ -36,7 +38,9 @@ export function getTopToken({
   const tokenVolumes = new Map<
     string,
     {
+      id: string
       symbol: string
+      issuer: string | null
       iconUrl: string
       volume: number
       transferCount: number
@@ -57,7 +61,9 @@ export function getTopToken({
       const tokenTransferCount = token.transferCount ?? 0
 
       const current = tokenVolumes.get(token.abstractTokenId) ?? {
+        id: token.abstractTokenId,
         symbol: tokenDetails.symbol,
+        issuer: tokenDetails.issuer,
         iconUrl: tokenDetails.iconUrl,
         volume: 0,
         transferCount: 0,
@@ -83,7 +89,9 @@ export function getTopToken({
   const topProtocol = getTopProtocolDisplay(topToken.protocols, projectsById)
 
   return {
+    id: topToken.id,
     symbol: topToken.symbol,
+    issuer: topToken.issuer,
     iconUrl: topToken.iconUrl,
     volume: topToken.volume,
     transferCount: topToken.transferCount,

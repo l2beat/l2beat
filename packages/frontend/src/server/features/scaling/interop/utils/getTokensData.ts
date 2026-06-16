@@ -2,10 +2,12 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { InteropDurationSplit, Project } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { UNKNOWN_ABSTRACT_TOKEN_ID } from '../consts'
 import type { TokenData } from '../types'
 import type { TokenInteropData } from './buildTokensDataMap'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { getAverageDuration } from './getAverageDuration'
+import { getNetMintedValueUsd } from './getNetMintedValueUsd'
 import { getTopProtocolDisplay } from './getTopProtocolDisplay'
 
 type Params = {
@@ -53,11 +55,7 @@ export function getTokensData({
           token.transferCount > 0 ? token.volume / token.transferCount : null,
         minTransferValueUsd: token.minTransferValueUsd,
         maxTransferValueUsd: token.maxTransferValueUsd,
-        netMintedValue:
-          token.mintedValueUsd !== undefined &&
-          token.burnedValueUsd !== undefined
-            ? token.mintedValueUsd - token.burnedValueUsd
-            : undefined,
+        netMintedValue: getNetMintedValueUsd(token),
         flows: token.flows
           ? Array.from(token.flows.values()).toSorted(
               (a, b) => b.volume - a.volume,
@@ -70,7 +68,7 @@ export function getTokensData({
 
   if (unknownTransfersCount > 0) {
     tokensData.push({
-      id: 'unknown',
+      id: UNKNOWN_ABSTRACT_TOKEN_ID,
       symbol: 'Unknown',
       issuer: null,
       iconUrl: TOKEN_PLACEHOLDER_ICON_URL,

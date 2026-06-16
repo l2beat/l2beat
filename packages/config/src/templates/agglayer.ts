@@ -50,12 +50,15 @@ import type {
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingScopeOfAssessment,
+  ProjectScalingStage,
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
+  ProjectUpgradesAndGovernance,
   ReasonForBeingInOther,
   TableReadyValue,
 } from '../types'
+import { readMarkdown } from '../utils/readMarkdown'
 import { getActivityConfig } from './activity'
 import { DAC } from './dac-template'
 import {
@@ -98,7 +101,8 @@ interface AgglayerBaseConfig {
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
+  stage?: ProjectScalingStage
   stateValidation?: ProjectScalingStateValidation
   associatedTokens?: string[]
   additionalBadges?: Badge[]
@@ -184,29 +188,7 @@ interface VariantSections {
 
 export function agglayerDAC(template: { dac: DacInfo }): ProjectCustomDa {
   const technology: DaTechnology = {
-    description: `
-## Architecture
-![polygoncdk architecture](/images/da-layer-technology/polygoncdk/architecture.png#center)
-
-Polygon CDK validiums utilize a data availability solution that relies on a Data Availability Committee (DAC) to ensure data integrity and manage off-chain transaction data. 
-This architecture comprises the following components:
-- **Operator**: A trusted entity that collects transactions, computes hash values for the transaction batch, and then requests and collects signatures from Committee members.
-- **Data Availability Committee (DAC)**: A group of nodes responsible for validating batch data against the hash values provided by the operator (sequencer), ensuring the data accurately represents the transactions.
-- **PolygonCommittee Contract**: Contract responsible for managing the data committee members list.
-
-Each DAC node independently validates the batch data, ensuring it matches the received hash values. 
-Upon successful validation, DAC members store the hash values locally and generate signatures endorsing the batch's integrity. 
-The sequencer collects these signatures and submits the transactions batch hash together with the aggregated signature on Ethereum.
-The PolygonCommittee contract is used during batch sequencing to verify that the signature posted by the sequencer was signed off by the DAC members stored in the contract.
-
-## DA Bridge Architecture
-![polygoncdk bridge architecture](/images/da-bridge-technology/polygoncdk/architectureL2.png#center)
-
-The DA commitments are posted to the destination chain through the sequencer inbox, using the inbox as a DA bridge.
-The DA commitment consists of a data availability message provided as transaction input, made up of a byte array containing the signatures and all the addresses of the committee in ascending order.
-The sequencer distributes the data and collects signatures from Committee members offchain. Only the DA message is posted by the sequencer to the destination chain inbox (the DA bridge).
-A separate contract, the PolygonCommittee contract, is used to manage the committee members list and verify the signatures before accepting the DA commitment.
-    `,
+    description: readMarkdown('templates/agglayer/daTechnology.md'),
     risks: [
       {
         category: 'Funds can be lost if',
@@ -255,8 +237,11 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     config.nonTemplatePermissions ?? {},
   )
 
-  const upgradesAndGovernance =
-    config.upgradesAndGovernance ?? buildUpgradesAndGovernance(context)
+  const upgradesAndGovernance: ProjectUpgradesAndGovernance = {
+    content: buildUpgradesAndGovernance(context),
+    image: 'agglayer',
+    ...config.upgradesAndGovernance,
+  }
 
   const fallbackActivityConfig =
     config.variant === 'cdk-opgeth-sovereign'
@@ -280,7 +265,6 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     ecosystemInfo: { id: ProjectId('agglayer') },
     display: {
       ...config.display,
-      upgradesAndGovernanceImage: 'agglayer',
       purposes: config.overridingPurposes ?? [
         'Universal',
         ...(config.additionalPurposes ?? []),
@@ -307,7 +291,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     },
     dataAvailability: variantSections.dataAvailability,
     riskView: variantSections.riskView,
-    stage: { stage: 'NotApplicable' },
+    stage: config.stage ?? { stage: 'NotApplicable' },
     technology: variantSections.technology,
     stateDerivation: variantSections.stateDerivation,
     stateValidation: variantSections.stateValidation,
@@ -402,12 +386,14 @@ function buildSharedContext(config: AgglayerConfig): SharedContext {
   const upgradeDelayString = formatSeconds(upgradeDelaySeconds)
   const exitWindowRisk: ScalingProject['riskView']['exitWindow'] = {
     value: 'None',
-    description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, there are no forced transactions and thus no way to exit during operator censorship or downtime.`,
+    description:
+      'There is no window for users to exit in case of an unwanted upgrade since the Security Council can remove the delay on upgrades.',
     sentiment: 'bad',
     orderHint: -1,
-    warning: {
-      value: 'The Security Council can remove the delay on upgrades.',
-      sentiment: 'bad',
+    regular: {
+      value: upgradeDelayString,
+      sentiment: 'warning',
+      description: `Even though there is a ${upgradeDelayString} Timelock for non-emergency upgrades, there are no forced transactions and thus no way to exit during operator censorship or downtime.`,
     },
   }
 
@@ -874,12 +860,10 @@ function buildSharedBridgeConsiderations(
 }
 
 function buildUpgradesAndGovernance(context: SharedContext): string {
-  return `
-The regular upgrade process for shared system contracts and L2-specific validium contracts starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for ${context.upgradeDelayString} and then execute the upgrade. An upgrade of the Layer 2 specific validium contract requires first adding a new rollupType through the Timelock and the AgglayerManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it. Chains using pessimistic proofs often have completely sovereign upgrade paths from the ones described here, but the shared contracts still remain relevant to them because they use them as escrow.
-
-The PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the AgglayerManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated ${context.emergencyActivatedCount} time(s) since inception.
-
-Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rollupTypes and manage operational parameters and fees in the AgglayerManager directly. The local admin of a specific Aggchain can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. For sovereign chains using pessimistic proofs they can manage any proof logic that might be used on top of the minimal pessimistic one. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`
+  return readMarkdown('templates/agglayer/upgradesAndGovernance.md', {
+    upgradeDelayString: context.upgradeDelayString,
+    emergencyActivatedCount: context.emergencyActivatedCount,
+  })
 }
 
 function getPessimisticVKeys(discovery: ProjectDiscovery): string[] {

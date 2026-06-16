@@ -1,3 +1,133 @@
+Generated with discovered.json: 0xcad6867ea52455e33563660ad415a7ddfa5eee89
+
+# Diff at Fri, 08 May 2026 07:51:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1773319393
+- current timestamp: 1773319393
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773319393 (main branch discovery), not current.
+
+```diff
+    contract Fuel Security Council (eth:0x32da601374b38154f05904B16F44A1911Aa6f314) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract Safe (eth:0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract FuelERC20Gateway (eth:0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x35fac1a306db1eec90fef4226afce6dcef2eee934335f4d2f51625a68f10f273"
++        "0x2236f9fc464e6e4fbd312930efc41b7be669e8b01b192f0585de4bb850003006"
+    }
+```
+
+```diff
+    contract FuelMessagePortal (eth:0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x1fa3aa6d12bbe8ca52b062a380218f557f1d37748cca158f023af1bc7a0e278b"
++        "0x3ab0c27a76240495ac3854e55737137a260cfaabd9423f8a6868b774d79c98ca"
+    }
+```
+
+```diff
+    contract FuelChainState (eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x3a22f204d585524196a1af919fb1dac397751b0b7872aff03ae207eb4d57ae7e"
++        "0x61fd2d7c1f2d05d9e37d471c82edb49d487b1384224313eeafaf12e189d17540"
+    }
+```
+
+Generated with discovered.json: 0x1f49ddac1e8755b37ece8612240dbcb609ab7489
+
+# Diff at Tue, 05 May 2026 10:22:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1773319393
+- current timestamp: 1773319393
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773319393 (main branch discovery), not current.
+
+```diff
+    contract Fuel Security Council (eth:0x32da601374b38154f05904B16F44A1911Aa6f314) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
+    }
+```
+
+```diff
+    contract Safe (eth:0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x698F7A879197Dd834c3203b470ddBadD6616A8bF"
+    }
+```
+
+```diff
+    contract FuelERC20Gateway (eth:0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
+    }
+```
+
+```diff
+    contract FuelMessagePortal (eth:0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
+    }
+```
+
+```diff
+    contract FuelChainState (eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
+    }
+```
+
 Generated with discovered.json: 0x66b83643b4b88d0f58a18269cb5ff30b844e1fcc
 
 # Diff at Thu, 12 Mar 2026 12:44:23 GMT:

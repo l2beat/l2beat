@@ -1,7 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { EthRpcClient, Http, UpsertMap } from '@l2beat/shared'
-import type { Block, Log, LongChainName } from '@l2beat/shared-pure'
+import {
+  EthRpcClient,
+  Http,
+  type RpcMetricsAggregator,
+  UpsertMap,
+} from '@l2beat/shared'
+import type { Block, Log, LongChainName, UnixTime } from '@l2beat/shared-pure'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { BlockProcessor } from '../../../types'
 import type { PluginCluster } from '../../plugins'
@@ -46,6 +51,7 @@ export class InteropSyncersManager {
     eventStore: InteropEventStore,
     private readonly db: Database,
     private readonly logger: Logger,
+    private readonly rpcMetricsAggregator: RpcMetricsAggregator,
   ) {
     for (const cluster of pluginClusters) {
       const resyncablePlugins = cluster.plugins.filter(isPluginResyncable)
@@ -105,19 +111,67 @@ export class InteropSyncersManager {
     }
   }
 
-  areAllSyncersFollowing(): boolean {
-    for (const byChain of this.syncers.values()) {
-      for (const syncer of byChain.values()) {
-        if (
-          syncer.state.name !== 'following' ||
-          syncer.state.status === 'starting' ||
-          syncer.hasError
-        ) {
-          return false
+  /**
+   * Returns true only if every syncer has captured data up to `target -
+   * tolerance`, judged by the persisted synced range rather than instantaneous
+   * state so transient errors and brief catch-ups don't count as "not ready".
+   * A pending wipe/resync also counts as not fresh: its range still looks
+   * recent while the underlying data is about to be deleted or rebuilt.
+   * Blockers are logged - missing range as error (suspicious outside cold
+   * start), stale range or pending wipe/resync as warnings.
+   */
+  async areSyncersFreshEnough(
+    target: UnixTime,
+    tolerance: number,
+  ): Promise<boolean> {
+    const [ranges, syncStates] = await Promise.all([
+      this.db.interopPluginSyncedRange.getAll(),
+      this.db.interopPluginSyncState.getAll(),
+    ])
+    const rangeByKey = new Map(
+      ranges.map((range) => [`${range.pluginName}:${range.chain}`, range]),
+    )
+    const stateByKey = new Map(
+      syncStates.map((state) => [`${state.pluginName}:${state.chain}`, state]),
+    )
+    const threshold = target - tolerance
+
+    const pending: string[] = []
+    const missing: string[] = []
+    const stale: { syncer: string; toTimestamp: UnixTime }[] = []
+
+    for (const [clusterName, byChain] of this.syncers) {
+      for (const chain of byChain.keys()) {
+        const syncer = `${clusterName}:${chain}`
+        const state = stateByKey.get(syncer)
+        if (state?.wipeRequired || state?.resyncRequestedFrom != null) {
+          pending.push(syncer)
+          continue
+        }
+        const range = rangeByKey.get(syncer)
+        if (!range) {
+          missing.push(syncer)
+        } else if (range.toTimestamp < threshold) {
+          stale.push({ syncer, toTimestamp: range.toTimestamp })
         }
       }
     }
-    return true
+
+    if (missing.length > 0) {
+      this.logger.error('Syncers have no synced range', { target, missing })
+    }
+    if (stale.length > 0) {
+      this.logger.warn('Syncers are behind the aggregation threshold', {
+        target,
+        threshold,
+        stale,
+      })
+    }
+    if (pending.length > 0) {
+      this.logger.warn('Syncers have a pending wipe or resync', { pending })
+    }
+
+    return pending.length === 0 && missing.length === 0 && stale.length === 0
   }
 
   getSyncer(
@@ -176,6 +230,12 @@ export class InteropSyncersManager {
         http,
         rpcConfig.url,
         `${EthRpcClient.name}:${chainConfig.name}`,
+        undefined,
+        undefined,
+        this.rpcMetricsAggregator.createRecorder({
+          rpcChain: chainConfig.name,
+          rpcClient: EthRpcClient.name,
+        }),
       )
       this.rpcClients[chainConfig.name] = client
     }

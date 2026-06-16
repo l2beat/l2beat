@@ -1,8 +1,14 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../../templates/generateDiscoveryDrivenSections'
 import type { BaseProject } from '../../types'
+import { WORMHOLE_DETAILED_DESCRIPTION } from '../wormhole/shared'
 
-const _discovery = new ProjectDiscovery('wormholewtt')
+const discovery = new ProjectDiscovery('wormhole')
 
 export const wormholeWtt: BaseProject = {
   id: ProjectId('wormhole-wtt'),
@@ -11,6 +17,10 @@ export const wormholeWtt: BaseProject = {
   shortName: 'Wormhole WTT',
   addedAt: UnixTime(1770637610),
   interopConfig: {
+    description:
+      'Minting token bridge built on top of the Wormhole message protocol.',
+    detailedDescription: WORMHOLE_DETAILED_DESCRIPTION,
+
     plugins: [
       {
         plugin: 'wormhole-token-bridge',
@@ -18,6 +28,10 @@ export const wormholeWtt: BaseProject = {
       },
     ],
     type: 'other',
+    permissions: generateDiscoveryDrivenPermissions([discovery]),
+    contracts: {
+      addresses: generateDiscoveryDrivenContracts([discovery]),
+      risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    },
   },
-  isInteropProtocol: true,
 }

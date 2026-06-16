@@ -1,65 +1,43 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getInteropProtocolData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { getInteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import type { InteropChainWithIcon } from '../components/chain-selector/types'
-import type { InteropQuery } from '../InteropRouter'
-import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
-import { toInteropApiSelection } from '../utils/toInteropApiSelection'
-import type { InteropMode } from '../utils/types'
+import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 
 export async function getInteropProtocolPageData(
-  req: Request<{ slug: string }, unknown, unknown, InteropQuery>,
+  req: Request<{ slug: string }, unknown, unknown, unknown>,
   manifest: Manifest,
-  mode: InteropMode = 'public',
+  cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
-  const helpers = getSsrHelpers()
-  const interopChains = getInteropChains()
-  const interopChainsIds = interopChains.map((chain) => chain.id)
-  const initialSelection = getInitialInteropSelection({
-    query: req.query,
-    interopChainsIds,
-    mode,
-  })
-  const apiSelection = toInteropApiSelection(initialSelection, mode)
-
-  const project = await ps.getProject({
-    slug: req.params.slug,
-    select: ['interopConfig'],
-    optional: ['statuses', 'display'],
-  })
-  if (!project) return undefined
-
-  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains.map(
-    (chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-    }),
-  )
-
-  const [appLayoutProps, projectEntry] = await Promise.all([
+  const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps(),
-    getInteropProtocolEntry(project),
-    apiSelection.from.length > 0 && apiSelection.to.length > 0
-      ? helpers.interop.protocol.prefetch({
-          ...apiSelection,
-          id: project.id,
-        })
-      : undefined,
+    cache.get(
+      {
+        key: ['interop', 'protocols', req.params.slug],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getCachedData(req.params.slug, manifest),
+    ),
   ])
+
+  if (!data) return undefined
+
   return {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: `${project.name} - L2BEAT`,
+        title: `${data.project.name} - L2BEAT`,
+        description: data.project.description,
         url: req.originalUrl,
         openGraph: {
-          image: `/meta-images/interop/projects/${project.slug}/opengraph-image.png`,
+          image: `/meta-images/interop/projects/${data.project.slug}/opengraph-image.png`,
         },
       }),
     },
@@ -67,15 +45,53 @@ export async function getInteropProtocolPageData(
       page: 'InteropProtocolPage',
       props: {
         ...appLayoutProps,
-        mode,
-        projectEntry,
-        queryState: helpers.dehydrate(),
-        interopChains: interopChainsWithIcons.filter(
-          (chain) => !chain.isUpcoming,
-        ),
-        onboardingInteropChains: interopChainsWithIcons,
-        initialSelection,
+        projectEntry: data.projectEntry,
+        protocolData: data.protocolData,
+        apiSelection: data.apiSelection,
       },
     },
+  }
+}
+
+async function getCachedData(slug: string, manifest: Manifest) {
+  const interopChains = getInteropChains()
+  const liveChainIds = interopChains
+    .filter((chain) => !chain.isUpcoming)
+    .map((chain) => chain.id)
+  const apiSelection = { from: liveChainIds, to: liveChainIds }
+
+  const project = await ps.getProject({
+    slug,
+    select: ['interopConfig'],
+    optional: ['statuses', 'display', 'discoveryInfo'],
+  })
+  if (!project) return undefined
+
+  const interopChainsWithIcons = mapInteropChainsToWithIcons(
+    manifest,
+    interopChains.filter((chain) => !chain.isUpcoming),
+  )
+
+  const protocolData = await getInteropProtocolData({
+    id: project.id,
+    ...apiSelection,
+  })
+
+  const projectEntry = await getInteropProtocolEntry(
+    project,
+    apiSelection,
+    interopChainsWithIcons,
+    protocolData,
+  )
+
+  return {
+    project: {
+      name: project.name,
+      slug: project.slug,
+      description: project.interopConfig.description,
+    },
+    projectEntry,
+    protocolData,
+    apiSelection,
   }
 }

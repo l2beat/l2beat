@@ -130,6 +130,82 @@ describeDatabase(InteropMessageRepository.name, (database) => {
     })
   })
 
+  describe(InteropMessageRepository.prototype.getExistingItems.name, () => {
+    const baseTime = UnixTime(1_000_000)
+
+    it('returns rows that match the requested src/dst pairs', async () => {
+      await repository.insertMany([
+        makeRecord(baseTime, {
+          messageId: 'msg1',
+          srcTxHash: '0xa',
+          dstTxHash: '0xx',
+        }),
+        makeRecord(baseTime, {
+          messageId: 'msg2',
+          srcTxHash: '0xb',
+          dstTxHash: '0xy',
+        }),
+      ])
+
+      const result = await repository.getExistingItems([
+        { srcTxHash: '0xa', dstTxHash: '0xx' },
+        { srcTxHash: '0xb', dstTxHash: '0xy' },
+      ])
+
+      expect(result.map((r) => r.messageId)).toEqualUnsorted(['msg1', 'msg2'])
+    })
+
+    it('does not return rows that only cross-match individual hashes', async () => {
+      await repository.insertMany([
+        makeRecord(baseTime, {
+          messageId: 'msg1',
+          srcTxHash: '0xa',
+          dstTxHash: '0xx',
+        }),
+        makeRecord(baseTime, {
+          messageId: 'msg2',
+          srcTxHash: '0xb',
+          dstTxHash: '0xy',
+        }),
+        // Trap row: src is in the requested src list, dst is in the requested
+        // dst list, but the pair (A, Y) was never asked for.
+        makeRecord(baseTime, {
+          messageId: 'msg3',
+          srcTxHash: '0xa',
+          dstTxHash: '0xy',
+        }),
+      ])
+
+      const result = await repository.getExistingItems([
+        { srcTxHash: '0xa', dstTxHash: '0xx' },
+        { srcTxHash: '0xb', dstTxHash: '0xy' },
+      ])
+
+      expect(result.map((r) => r.messageId)).toEqualUnsorted(['msg1', 'msg2'])
+    })
+
+    it('lowercases input tx hashes when matching', async () => {
+      await repository.insertMany([
+        makeRecord(baseTime, {
+          messageId: 'msg1',
+          srcTxHash: '0xabc',
+          dstTxHash: '0xdef',
+        }),
+      ])
+
+      const result = await repository.getExistingItems([
+        { srcTxHash: '0xABC', dstTxHash: '0xDEF' },
+      ])
+
+      expect(result.map((r) => r.messageId)).toEqual(['msg1'])
+    })
+
+    it('returns empty array for empty input', async () => {
+      const result = await repository.getExistingItems([])
+      expect(result).toEqual([])
+    })
+  })
+
   describe(InteropMessageRepository.prototype.deleteForPlugin.name, () => {
     it('deletes only records for the given plugin', async () => {
       const now = UnixTime.now()

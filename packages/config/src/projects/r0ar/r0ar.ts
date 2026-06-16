@@ -15,13 +15,10 @@ export const r0ar: ScalingProject = opStackL2({
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'R0ar',
+    aliases: ['Roar'],
     slug: 'r0ar',
     description:
       'R0ar is an Optimistic Rollup utilizing the OP Stack focusing on DeFi.',
-    redWarning: {
-      text: 'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
-      detailAnchor: 'permissions',
-    },
     stacks: ['OP Stack'],
     links: {
       websites: ['https://r0ar.io/'],

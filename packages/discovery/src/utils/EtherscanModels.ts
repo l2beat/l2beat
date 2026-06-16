@@ -42,6 +42,10 @@ export const ContractSource = v.object({
   SourceCode: v.string(),
   ABI: v.string(),
   ContractName: v.string(),
+  ContractFileName: v
+    .string()
+    .optional()
+    .transform((s) => (s === '' ? undefined : s)),
   CompilerVersion: v.string(),
   OptimizationUsed: v.string(),
   Runs: v.string(),

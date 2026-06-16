@@ -1,0 +1,150 @@
+import type { ProjectId } from '@l2beat/shared-pure'
+import { INTEROP_PAIR_SEPARATOR } from '../consts'
+import type { InteropTransferWithTokens } from '../types'
+import { getInteropTransferRecordValue } from './getInteropTransferRecordValue'
+
+export interface TopEntry {
+  id: string
+  volume: number
+}
+
+export interface InteropFlowAggregate {
+  srcChain: string
+  dstChain: string
+  volume: number
+  transferCount: number
+}
+
+export interface InteropFlowAggregates {
+  flows: InteropFlowAggregate[]
+  chainTopTokens: Map<string, TopEntry[]>
+  chainPairTopTokens: Map<string, TopEntry[]>
+  chainTopProtocols: Map<string, TopEntry[]>
+  chainPairTopProtocols: Map<string, TopEntry[]>
+  chainTokenCounts: Map<string, number>
+  chainProtocolCounts: Map<string, number>
+  topToken: TopEntry | undefined
+  topProtocol: TopEntry | undefined
+  tokenIds: string[]
+}
+
+export function getInteropFlowAggregates(
+  records: InteropTransferWithTokens[],
+  subgroupProjects: Set<ProjectId>,
+): InteropFlowAggregates {
+  const flowMap = new Map<string, { volume: number; transferCount: number }>()
+  const chainTokens = new GroupedVolumes()
+  const pairTokens = new GroupedVolumes()
+  const globalTokens = new Map<string, number>()
+  const chainProtocols = new GroupedVolumes()
+  const pairProtocols = new GroupedVolumes()
+  const globalProtocols = new Map<string, number>()
+
+  for (const record of records) {
+    if (subgroupProjects.has(record.id as ProjectId)) continue
+
+    const volume = getInteropTransferRecordValue(record) ?? 0
+    const pairKey = chainPairKey(record.srcChain, record.dstChain)
+    const flowKey = `${record.srcChain}${INTEROP_PAIR_SEPARATOR}${record.dstChain}`
+
+    // Flows
+    const flow = flowMap.get(flowKey) ?? { volume: 0, transferCount: 0 }
+    flow.volume += volume
+    flow.transferCount += record.transferCount
+    flowMap.set(flowKey, flow)
+
+    // Token volumes: by chain, by pair, and global
+    for (const token of record.tokens) {
+      chainTokens.add(record.srcChain, token.abstractTokenId, token.volume)
+      chainTokens.add(record.dstChain, token.abstractTokenId, token.volume)
+      pairTokens.add(pairKey, token.abstractTokenId, token.volume)
+      globalTokens.set(
+        token.abstractTokenId,
+        (globalTokens.get(token.abstractTokenId) ?? 0) + token.volume,
+      )
+    }
+
+    // Protocol volumes: by chain, by pair, and global
+    chainProtocols.add(record.srcChain, record.id, volume)
+    chainProtocols.add(record.dstChain, record.id, volume)
+    pairProtocols.add(pairKey, record.id, volume)
+    globalProtocols.set(
+      record.id,
+      (globalProtocols.get(record.id) ?? 0) + volume,
+    )
+  }
+
+  const chainTopTokens = chainTokens.topByGroup(3)
+  const chainPairTopTokens = pairTokens.topByGroup(3)
+  const topToken = topEntries(globalTokens, 3)[0]
+  const topProtocol = topEntries(globalProtocols, 1)[0]
+
+  return {
+    flows: toFlows(flowMap),
+    chainTopTokens,
+    chainPairTopTokens,
+    chainTopProtocols: chainProtocols.topByGroup(3),
+    chainPairTopProtocols: pairProtocols.topByGroup(3),
+    chainTokenCounts: chainTokens.countByGroup(),
+    chainProtocolCounts: chainProtocols.countByGroup(),
+    topToken,
+    topProtocol,
+    tokenIds: [...globalTokens.keys()],
+  }
+}
+
+/** Tracks volumes keyed by (group, entryId) — e.g. (chainId, tokenId) → volume */
+class GroupedVolumes {
+  private groups = new Map<string, Map<string, number>>()
+
+  add(group: string, entryId: string, volume: number) {
+    let map = this.groups.get(group)
+    if (!map) {
+      map = new Map()
+      this.groups.set(group, map)
+    }
+    map.set(entryId, (map.get(entryId) ?? 0) + volume)
+  }
+
+  topByGroup(n: number): Map<string, TopEntry[]> {
+    const result = new Map<string, TopEntry[]>()
+    for (const [group, volumes] of this.groups) {
+      result.set(group, topEntries(volumes, n))
+    }
+    return result
+  }
+
+  countByGroup(): Map<string, number> {
+    const result = new Map<string, number>()
+    for (const [group, volumes] of this.groups) {
+      result.set(group, volumes.size)
+    }
+    return result
+  }
+}
+
+function topEntries(volumeMap: Map<string, number>, n: number): TopEntry[] {
+  return Array.from(volumeMap.entries())
+    .toSorted((a, b) => b[1] - a[1])
+    .slice(0, n)
+    .map(([id, volume]) => ({ id, volume }))
+}
+
+function toFlows(
+  flowMap: Map<string, { volume: number; transferCount: number }>,
+): InteropFlowAggregate[] {
+  const flows: InteropFlowAggregate[] = []
+  for (const [key, { volume, transferCount }] of flowMap) {
+    if (volume <= 0) continue
+    const [srcChain, dstChain] = key.split(INTEROP_PAIR_SEPARATOR)
+    if (srcChain && dstChain)
+      flows.push({ srcChain, dstChain, volume, transferCount })
+  }
+  return flows
+}
+
+function chainPairKey(chainA: string, chainB: string) {
+  return chainA < chainB
+    ? `${chainA}${INTEROP_PAIR_SEPARATOR}${chainB}`
+    : `${chainB}${INTEROP_PAIR_SEPARATOR}${chainA}`
+}

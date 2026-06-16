@@ -8,6 +8,7 @@ import { ps } from '~/server/projects'
 import { type ChartResolution, rangeToResolution } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import type { ProjectDaThroughputChartParams } from './getProjectDaThroughputChart'
 import { isThroughputSynced } from './isThroughputSynced'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
@@ -75,11 +76,17 @@ export async function getDaThroughputChartByProjectData({
   const sovereignProjectIds =
     daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((p) => p.projectId)
 
-  const throughput = await db.dataAvailability.getByDaLayersAndTimeRange(
-    [projectId],
-    range,
-    includeScalingOnly ? sovereignProjectIds : undefined,
-  )
+  const [throughput, firstTimestamp] = await Promise.all([
+    db.dataAvailability.getByDaLayersAndTimeRange(
+      [projectId],
+      range,
+      includeScalingOnly ? sovereignProjectIds : undefined,
+    ),
+    db.dataAvailability.getFirstTimestampByDaLayers(
+      [projectId],
+      includeScalingOnly ? sovereignProjectIds : undefined,
+    ),
+  ])
 
   if (throughput.length === 0) {
     return undefined
@@ -116,10 +123,17 @@ export async function getDaThroughputChartByProjectData({
     ? maxTimestamp
     : expectedTo
 
+  const from = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp: firstTimestamp,
+    dataStart: minTimestamp,
+    resolution,
+  })
+
   return {
     daLayer,
     grouped,
-    from: minTimestamp,
+    from,
     to: adjustedTo,
     syncedUntil,
   }
@@ -136,14 +150,7 @@ function groupByTimestampAndProjectId(
   let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, Record<string, number>> = {}
 
-  const offset = UnixTime.toStartOf(
-    UnixTime.now(),
-    resolution === 'daily'
-      ? 'day'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'hour',
-  )
+  const offset = UnixTime.toStartOf(UnixTime.now(), resolution)
   const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
 
   const [daLayerRecords, projectRecords] = partition(
@@ -227,10 +234,10 @@ async function getMockDaThroughputChartByProject({
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = range[0] ?? to - days * UnixTime.DAY
 
-  const timestamps = generateTimestamps([from, to], 'daily')
+  const timestamps = generateTimestamps([from, to], 'day')
   const value = () => Math.random() * 900_000_000 + 90_000_000
 
-  const projects = (await ps.getProjects({ where: ['isScaling'] }))
+  const projects = (await ps.getProjects({ where: ['scalingInfo'] }))
     .map((p) => p.name)
     .slice(0, 50)
 

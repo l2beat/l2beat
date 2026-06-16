@@ -1,3 +1,303 @@
+Generated with discovered.json: 0x95eb1375056f07b751ffdd6e67a9162493a75559
+
+# Diff at Tue, 09 Jun 2026 12:43:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780586770
+- current timestamp: 1780586770
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780586770 (main branch discovery), not current.
+
+```diff
+    contract Paradex Multisig (eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract."
+      receivedPermissions.0.permission:
+-        "governStarknet"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability."
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "interact"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"governStarknet","from":"eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640","role":".$admin"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640","description":"Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.","role":".$admin"}
+    }
+```
+
+Generated with discovered.json: 0x975e72c1887bbd9ebd725a7a734f9c6bacb6f195
+
+# Diff at Thu, 04 Jun 2026 15:27:16 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1778579646
+- current timestamp: 1780586770
+
+## Description
+
+signer added, threshold increased to 3. Also, rotated ms member.
+
+## Watched changes
+
+```diff
+    contract Paradex Multisig (eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x0405107a60391Eb51821be373ff978115Ee58488"
+      values.$members.1:
+-        "eth:0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
++        "eth:0xCe958D997F4a5824D4d503A128216322C6C223a0"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "3 of 6 (50%)"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) [GnosisSafe] {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155"
++        "eth:0x6f52712Ae102e6B7970F1e24c83d22e5fF5E8950"
+    }
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x0405107a60391Eb51821be373ff978115Ee58488)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xfc9ad18ab91a68f11cdd635bdbb812d950599dd4
+
+# Diff at Tue, 12 May 2026 09:55:12 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e08a4d47318721a3851fee0bc0991367ebd1fb4 block: 1771848139
+- current timestamp: 1778579646
+
+## Description
+
+Upgraded Paradex rollup contract by adding small check on l1 to l2 msg hash: https://disco.l2beat.com/diff/eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04/eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A. Also, updated program hashes to already verified versions.
+
+Config: use the new flattener implementation
+
+## Watched changes
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) [starknet/Starknet] {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.1:
+-        "0xfee7303d7ae61327a9f6516d410a6efbe76c07d2ca3406be62e5bb3baa5532c9"
++        "0xef60960a959a9506c3f6eece9374f7fbcd095a488763801577ae88e427fd3d51"
+      values.$implementation:
+-        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"
+      values.$pastUpgrades.4:
++        ["2026-05-10T13:30:11.000Z","0x1e964f795063d0e9b55f3f260bcbd3f11b3f3b43df658b9da2b78ce919bd4009",["eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.aggregatorHashMapped:
+-        "1701025211190912681772481128523426351562426117847395998223683709327746845867"
++        "2571508110958925737463010241874806654058743535666147712534445437599630018294"
+      values.aggregatorProgramHash:
+-        "1701025211190912681772481128523426351562426117847395998223683709327746845867"
++        "2571508110958925737463010241874806654058743535666147712534445437599630018294"
+      values.identify:
+-        "StarkWare_Starknet_2025_10"
++        "StarkWare_Starknet_2026_11"
+      values.implementation:
+-        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "918745833886511857768061986591752808672496300091957204265383861063635175685"
++        "2733003247060056328192560178934419513655729851806095615814023997114795707702"
+      values.programHashHistory.8:
++        "918745833886511857768061986591752808672496300091957204265383861063635175685"
+      values.programHashMapped:
+-        "918745833886511857768061986591752808672496300091957204265383861063635175685"
++        "2733003247060056328192560178934419513655729851806095615814023997114795707702"
+      implementationNames.eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04:
+-        "Starknet"
+      implementationNames.eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A:
++        "Starknet"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Paradex/Starknet.sol                           | 29 +++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771848139 (main branch discovery), not current.
+
+```diff
+    contract Paradex Multisig (eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract StarkgateManager (eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE) [starknet/StarkgateManager] {
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      sourceHashes.0:
+-        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c"
++        "0x35c2aeccc337bb8f47cd27706cd04cc387ba9b5effa2228c9e9fb6762888e77f"
+      sourceHashes.1:
+-        "0x542e548d4e5b9c6da6613f9a5618cfe1f3f2aedf1449c2f52fa6c565eb90e51d"
++        "0x11ce7cbe180d6e08e3dabf78d67f1da5bc6ae76675467c1821a812f067c0c0e4"
+    }
+```
+
+```diff
+    contract StarkgateRegistry (eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280) [starknet/StarkgateRegistry] {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      sourceHashes.0:
+-        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c"
++        "0x35c2aeccc337bb8f47cd27706cd04cc387ba9b5effa2228c9e9fb6762888e77f"
+      sourceHashes.1:
+-        "0xe185bff4846e41d1ea1bffd2a1905568a7206a93b2923a300f9b61990293218b"
++        "0xc2326f142b15d536ff2dfe8c64d5e0064e6bc6d44e37df843cebc2ef50f38beb"
+    }
+```
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      sourceHashes.0:
+-        "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2"
++        "0xf53fa59a32c4a031ce88a109b01439d6e82cf8a3c883d9c7b91e6ad2e7fc256c"
+      sourceHashes.1:
+-        "0xecdc47d2045525d1d373fdecc6478959fa5b2d2595713c2187c41ed98baa4738"
++        "0xfdbdbe8ea7830d252ab9fcc5434af053fb43e8c93023330630d8a3e5964a62e1"
+    }
+```
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) [starknet/Starknet] {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.0:
+-        "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3"
++        "0x4c21fb0aff75ac1755959abe5aace71b3d70cd508a697c0a16ffbd2f81b5420a"
+      sourceHashes.1:
+-        "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe"
++        "0xfee7303d7ae61327a9f6516d410a6efbe76c07d2ca3406be62e5bb3baa5532c9"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+Generated with discovered.json: 0x3b524a87ea23f4c17f953b2df725f53ea0143130
+
+# Diff at Tue, 05 May 2026 10:22:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1771848139
+- current timestamp: 1771848139
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771848139 (main branch discovery), not current.
+
+```diff
+    contract Paradex Multisig (eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+    }
+```
+
+```diff
+    contract StarkgateManager (eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE) {
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      deployerAddress:
++        "eth:0x40060493a280915e2df7b46f8A9f251156080C39"
+    }
+```
+
+```diff
+    contract StarkgateRegistry (eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280) {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      deployerAddress:
++        "eth:0x40060493a280915e2df7b46f8A9f251156080C39"
+    }
+```
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+    }
+```
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155"
+    }
+```
+
 Generated with discovered.json: 0x6732546087fd05bff935a6f034735319c1c5d639
 
 # Diff at Mon, 23 Feb 2026 12:19:28 GMT:

@@ -29,7 +29,7 @@
     "validators": {
       "permissions": [
         {
-          "type": "validate",
+          "type": "interact",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ],
@@ -41,7 +41,7 @@
     "anyTrustFastConfirmer": {
       "permissions": [
         {
-          "type": "fastconfirm",
+          "type": "interact",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
         }
       ]

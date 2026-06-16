@@ -1,7 +1,7 @@
 {
   "name": "sorare",
-  "timestamp": 1756816898,
-  "configHash": "0xfb223c6d9bc36bcdfe85579a62a121681da9092670e0deee8ed7e5aac5170da6",
+  "timestamp": 1780646255,
+  "configHash": "0x6142f644a5d9c2bee4a168b3182db8059ef88858162f915e3088bf55a76a152e",
   "entries": [
     {
       "address": "eth:0x0405107a60391Eb51821be373ff978115Ee58488",
@@ -15,8 +15,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "operateStarkEx",
+          "permission": "interact",
           "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
           "role": ".operators"
         }
       ]
@@ -29,37 +30,11 @@
       "targetProject": "shared-sharp-verifier"
     },
     {
-      "name": "OrderRegistry",
-      "address": "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
-      "type": "Contract",
-      "template": "starkex/OrderRegistry",
-      "sourceHashes": [
-        "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
-      ],
-      "proxyType": "immutable",
-      "description": "Helper contract for registering limit orders from L1.",
-      "sinceTimestamp": 1626352379,
-      "sinceBlock": 12831566,
-      "values": {
-        "$immutable": true,
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_OrderRegistry_2021_1"
-      },
-      "implementationNames": {
-        "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": "OrderRegistry"
-      }
-    },
-    {
       "address": "eth:0x5918481F777dBe437De249492B90AffB4e655de4",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
-        {
-          "permission": "governStarknet",
-          "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "role": ".$admin"
-        },
         {
           "permission": "interact",
           "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
@@ -67,9 +42,14 @@
           "role": ".$admin"
         },
         {
+          "permission": "interact",
+          "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set.",
+          "role": ".$admin"
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "delay": 1209600,
           "role": ".$admin"
         }
       ]
@@ -86,8 +66,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "operateStarkEx",
+          "permission": "interact",
           "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
           "role": ".operators"
         }
       ]
@@ -98,28 +79,16 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x7F6d06eCd94bD899872cd2768e41B7d33EC13e19",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "role": ".tokenAdmins"
-        }
-      ]
-    },
-    {
       "name": "DACommittee",
       "address": "eth:0x879cD57975d596004863D30c59d579ef78BBbe32",
       "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
-        "0xbd4b616703456361720d7aaaa8a8d995f0efbd262e650ecd109f807107476380"
+        "0x5e0e881a698c9b45cde9f411e7a6bd51140bfc24fef11ead24a6d565f7eb8160"
       ],
       "proxyType": "immutable",
       "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1630836435,
       "sinceBlock": 13165081,
       "values": {
@@ -153,19 +122,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xA5dAd8339d9279c2F16d02F2e903AB4B79a72815",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "role": ".tokenAdmins"
-        }
-      ]
-    },
-    {
       "address": "eth:0xA70A45E56c087A34991A712d437fcFfd79D3a8Ec",
       "type": "EOA",
       "proxyType": "EOA"
@@ -181,10 +137,11 @@
       "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
-        "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
+        "0x1bb1677263f0cad4764f3620f45cf353df37fb489e3404889126f7897afcdffd"
       ],
       "proxyType": "immutable",
       "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`).",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1678702991,
       "sinceBlock": 16818452,
       "values": {
@@ -237,15 +194,10 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
-        {
-          "permission": "governStarknet",
-          "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "role": ".$admin"
-        },
         {
           "permission": "interact",
           "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
@@ -253,13 +205,19 @@
           "role": ".$admin"
         },
         {
+          "permission": "interact",
+          "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set.",
+          "role": ".$admin"
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "delay": 1209600,
           "role": ".$admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1678893035,
       "sinceBlock": 16834095,
       "values": {
@@ -275,7 +233,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 6,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -292,10 +250,10 @@
       "name": "StarkExchange",
       "address": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
       "type": "Contract",
-      "template": "starkex/StarkExchange",
+      "template": "starkex/StarkExchange_Frozen",
       "sourceHashes": [
-        "0x945d79fba7fe6f3e3e40f582b69b67983dbd63977e2fce47328aa12e16175fd7",
-        "0xfb3c0545e8c9aeebaa6547f71087a1ad7d93e3344e0dfdb1051e1a18fd44a18b"
+        "0xc5f57a922733a74b99146d3702f466aaffd6150b739c70a54551b7060653f0c4",
+        "0x0843c70dcca99b2fde3a18013b0af9af358e90066af9d8a2d3754785eb0ff2a0"
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
@@ -307,6 +265,7 @@
         "getVaultRoot",
         "getValidiumVaultRoot"
       ],
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1626352527,
       "sinceBlock": 12831579,
       "values": {
@@ -317,8 +276,8 @@
         "$immutable": false,
         "$implementation": [
           "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-          "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
-          "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+          "eth:0xA67821bC089B4374e8D62475526E7e84f09Da086",
+          "eth:0xb97394B55b4807a835619EDbCC6aF6b1d3C71e98",
           "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
           "eth:0x613ee54C54D5548627064B4D648942bF3648f376",
           "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
@@ -467,15 +426,40 @@
               "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
               "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
             ]
+          ],
+          [
+            "2026-04-28T11:42:11.000Z",
+            "0x8133c660c29139f3afcfa0d694829a8e16d5473e74704be6b0aa06869cf329d8",
+            [
+              "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+              "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+              "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+              "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+              "eth:0x613ee54C54D5548627064B4D648942bF3648f376",
+              "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+              "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+            ]
+          ],
+          [
+            "2026-05-31T10:22:59.000Z",
+            "0xfd3455fd60677c360679dc601a13283ad26f7f618c9c67db9a52b9d7d42d5014",
+            [
+              "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+              "eth:0xA67821bC089B4374e8D62475526E7e84f09Da086",
+              "eth:0xb97394B55b4807a835619EDbCC6aF6b1d3C71e98",
+              "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+              "eth:0x613ee54C54D5548627064B4D648942bF3648f376",
+              "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+              "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+            ]
           ]
         ],
-        "$upgradeCount": 11,
-        "defaultVaultWithdrawalLock": 0,
+        "$upgradeCount": 13,
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 22753,
-        "getOrderRoot": "107157959766960481243605837973049768291631189236109371831339864617484556353",
+        "getLastBatchId": 25550,
+        "getOrderRoot": "2578560839281154554828276804183764325502642166024090578361019673777577717445",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "eth:0x879cD57975d596004863D30c59d579ef78BBbe32"
@@ -485,12 +469,12 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 22621,
-        "getUpgradeActivationDelay": 1209600,
+        "getSequenceNumber": 25418,
+        "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "1073817572309527979611633770676795352977281329424524720776632075177889791093",
+        "getValidiumVaultRoot": "1647550381925021870822633630762851051786315410478757708937678185667674948958",
         "implementation": "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-        "isFrozen": false,
+        "isFrozen": true,
         "isNotFinalized": true,
         "isStrictVaultBalancePolicy": true,
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
@@ -500,16 +484,11 @@
           "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
           "eth:0x63881ac44293E22F3c3183a0C4113586ABb3e653"
         ],
-        "orderRegistryAddress": "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
-        "StarkWareDiamond_upgradeDelay": 1209600,
-        "tokenAdmins": [
-          "eth:0xA5dAd8339d9279c2F16d02F2e903AB4B79a72815",
-          "eth:0x7F6d06eCd94bD899872cd2768e41B7d33EC13e19"
-        ],
-        "UNFREEZE_DELAY": 31536000,
+        "StarkWareDiamond_upgradeDelay": 0,
+        "UNFREEZE_DELAY": 3600,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "VERIFIER_REMOVAL_DELAY": 2419200,
         "VERSION": "4.5.1"
@@ -530,8 +509,8 @@
       "implementationNames": {
         "eth:0xF5C9F957705bea56a7e806943f98F7777B995826": "Proxy",
         "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583": "StarkExchange",
-        "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": "AllVerifiers",
-        "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": "TokensAndRamping",
+        "eth:0xA67821bC089B4374e8D62475526E7e84f09Da086": "AllVerifiers",
+        "eth:0xb97394B55b4807a835619EDbCC6aF6b1d3C71e98": "TokensAndRamping",
         "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D": "StarkExState",
         "eth:0x613ee54C54D5548627064B4D648942bF3648f376": "ForcedActions",
         "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F": "OnchainVaults",
@@ -541,99 +520,6 @@
     }
   ],
   "abis": {
-    "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": [
-      "event LogAssetWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
-      "event LogDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
-      "event LogDepositCancel(uint256 starkKey, uint256 vaultId, uint256 assetId)",
-      "event LogDepositCancelReclaimed(uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
-      "event LogDepositNftCancelReclaimed(uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 tokenId, uint256 assetId)",
-      "event LogDepositWithTokenId(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 tokenId, uint256 assetId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
-      "event LogDepositWithTokenIdCancelReclaimed(uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 tokenId, uint256 assetId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
-      "event LogFrozen()",
-      "event LogMintWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount, uint256 assetId)",
-      "event LogMintableWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNftDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 tokenId, uint256 assetId)",
-      "event LogNftWithdrawalAllowed(uint256 ownerKey, uint256 assetId)",
-      "event LogNftWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 tokenId, uint256 assetId, address recipient)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "event LogTokenAdminAdded(address tokenAdmin)",
-      "event LogTokenAdminRemoved(address tokenAdmin)",
-      "event LogTokenRegistered(uint256 assetType, bytes assetInfo, uint256 quantum)",
-      "event LogUnFrozen()",
-      "event LogWithdrawalAllowed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
-      "event LogWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount, address recipient)",
-      "event LogWithdrawalWithTokenIdPerformed(uint256 ownerKey, uint256 assetType, uint256 tokenId, uint256 assetId, uint256 nonQuantizedAmount, uint256 quantizedAmount, address recipient)",
-      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
-      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
-      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
-      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
-      "function MAX_VERIFIER_COUNT() view returns (uint256)",
-      "function UNFREEZE_DELAY() view returns (uint256)",
-      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
-      "function calculateAssetIdWithTokenId(uint256 assetType, uint256 tokenId) view returns (uint256)",
-      "function calculateMintableAssetId(uint256 assetType, bytes mintingBlob) pure returns (uint256 assetId)",
-      "function defaultVaultWithdrawalLock() view returns (uint256)",
-      "function deposit(uint256 starkKey, uint256 assetType, uint256 vaultId) payable",
-      "function deposit(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 quantizedAmount)",
-      "function depositCancel(uint256 starkKey, uint256 assetId, uint256 vaultId)",
-      "function depositERC1155(uint256 starkKey, uint256 assetType, uint256 tokenId, uint256 vaultId, uint256 quantizedAmount)",
-      "function depositERC20(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 quantizedAmount)",
-      "function depositEth(uint256 starkKey, uint256 assetType, uint256 vaultId) payable",
-      "function depositNft(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 tokenId)",
-      "function depositNftReclaim(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 tokenId)",
-      "function depositReclaim(uint256 starkKey, uint256 assetType, uint256 vaultId)",
-      "function depositWithTokenId(uint256 starkKey, uint256 assetType, uint256 tokenId, uint256 vaultId, uint256 quantizedAmount)",
-      "function depositWithTokenIdReclaim(uint256 starkKey, uint256 assetType, uint256 tokenId, uint256 vaultId)",
-      "function getActionCount() view returns (uint256)",
-      "function getActionHashByIndex(uint256 actionIndex) view returns (bytes32)",
-      "function getAssetInfo(uint256 assetType) view returns (bytes assetInfo)",
-      "function getCancellationRequest(uint256 starkKey, uint256 assetId, uint256 vaultId) view returns (uint256 request)",
-      "function getDepositBalance(uint256 starkKey, uint256 assetId, uint256 vaultId) view returns (uint256)",
-      "function getEthKey(uint256 ownerKey) view returns (address)",
-      "function getFullWithdrawalRequest(uint256 ownerKey, uint256 vaultId) view returns (uint256)",
-      "function getQuantizedDepositBalance(uint256 starkKey, uint256 assetId, uint256 vaultId) view returns (uint256)",
-      "function getQuantum(uint256 presumedAssetType) view returns (uint256 quantum)",
-      "function getWithdrawalBalance(uint256 ownerKey, uint256 assetId) view returns (uint256)",
-      "function identify() pure returns (string)",
-      "function initialize(bytes)",
-      "function initializerSize() view returns (uint256)",
-      "function isAssetRegistered(uint256 assetType) view returns (bool)",
-      "function isFrozen() view returns (bool)",
-      "function isTokenAdmin(address testedAdmin) view returns (bool)",
-      "function mainAcceptGovernance()",
-      "function mainCancelNomination()",
-      "function mainIsGovernor(address testGovernor) view returns (bool)",
-      "function mainNominateNewGovernor(address newGovernor)",
-      "function mainRemoveGovernor(address governorForRemoval)",
-      "function onERC1155BatchReceived(address operator, address, uint256[], uint256[], bytes) returns (bytes4)",
-      "function onERC1155Received(address operator, address, uint256, uint256, bytes) returns (bytes4)",
-      "function onERC721Received(address operator, address, uint256, bytes) returns (bytes4)",
-      "function orderRegistryAddress() view returns (address)",
-      "function registerToken(uint256 assetType, bytes assetInfo)",
-      "function registerToken(uint256 assetType, bytes assetInfo, uint256 quantum)",
-      "function registerTokenAdmin(address newAdmin)",
-      "function unFreeze()",
-      "function unregisterTokenAdmin(address oldAdmin)",
-      "function validatedSelectors() pure returns (bytes4[] selectors)",
-      "function withdraw(uint256 ownerKey, uint256 assetType)",
-      "function withdrawAndMint(uint256 ownerKey, uint256 assetType, bytes mintingBlob)",
-      "function withdrawNft(uint256 ownerKey, uint256 assetType, uint256 tokenId)",
-      "function withdrawWithTokenId(uint256 ownerKey, uint256 assetType, uint256 tokenId)"
-    ],
-    "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": [
-      "event LogL1LimitOrderRegistered(address userAddress, address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
-      "event LogMsgRegistered(address from, address to, bytes32 msgHash)",
-      "function calcL1LimitOrderHash(uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp) pure returns (bytes32)",
-      "function hasRegisteredFact() view returns (bool)",
-      "function identify() pure returns (string)",
-      "function isMessageRegistered(address from, address to, bytes32 messageHash) view returns (bool)",
-      "function isValid(bytes32 fact) view returns (bool)",
-      "function registerLimitOrder(address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
-      "function registerMessage(address to, bytes32 messageHash)"
-    ],
     "eth:0x613ee54C54D5548627064B4D648942bF3648f376": [
       "event LogFrozen()",
       "event LogFullWithdrawalRequest(uint256 ownerKey, uint256 vaultId)",
@@ -746,6 +632,46 @@
       "function signaturesRequired() view returns (uint256)",
       "function verifyAvailabilityProof(bytes32 claimHash, bytes availabilityProofs)"
     ],
+    "eth:0xA67821bC089B4374e8D62475526E7e84f09Da086": [
+      "event LogFrozen()",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRegistered(address entry, string entryId)",
+      "event LogRemovalIntent(address entry, string entryId)",
+      "event LogRemoved(address entry, string entryId)",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event LogUnFrozen()",
+      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
+      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
+      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
+      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
+      "function MAX_VERIFIER_COUNT() view returns (uint256)",
+      "function UNFREEZE_DELAY() view returns (uint256)",
+      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
+      "function adminFreeze_9994()",
+      "function announceAvailabilityVerifierRemovalIntent(address verifier)",
+      "function announceVerifierRemovalIntent(address verifier)",
+      "function getRegisteredAvailabilityVerifiers() view returns (address[] _verifers)",
+      "function getRegisteredVerifiers() view returns (address[] _verifers)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes)",
+      "function initializerSize() view returns (uint256)",
+      "function isAvailabilityVerifier(address verifierAddress) view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isVerifier(address verifierAddress) view returns (bool)",
+      "function mainAcceptGovernance()",
+      "function mainCancelNomination()",
+      "function mainIsGovernor(address user) view returns (bool)",
+      "function mainNominateNewGovernor(address newGovernor)",
+      "function mainRemoveGovernor(address governorForRemoval)",
+      "function registerAvailabilityVerifier(address verifier, string identifier)",
+      "function registerVerifier(address verifier, string identifier)",
+      "function removeAvailabilityVerifier(address verifier)",
+      "function removeVerifier(address verifier)",
+      "function unFreeze()",
+      "function validatedSelectors() pure returns (bytes4[] selectors)"
+    ],
     "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F": [
       "event LogDefaultVaultWithdrawalLockSet(uint256 newDefaultLockTime)",
       "event LogDepositToVault(address ethKey, uint256 assetType, uint256 assetId, uint256 vaultId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
@@ -810,6 +736,76 @@
       "function proxyRemoveGovernor(address governorForRemoval)",
       "function updateImplementationActivationTime(address implementation, bytes data, bool finalize)",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
+    ],
+    "eth:0xb97394B55b4807a835619EDbCC6aF6b1d3C71e98": [
+      "event LogAssetWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
+      "event LogDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
+      "event LogDepositCancel(uint256 starkKey, uint256 vaultId, uint256 assetId)",
+      "event LogDepositCancelReclaimed(uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
+      "event LogDepositNftCancelReclaimed(uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 tokenId, uint256 assetId)",
+      "event LogDepositWithTokenId(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 tokenId, uint256 assetId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
+      "event LogDepositWithTokenIdCancelReclaimed(uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 tokenId, uint256 assetId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
+      "event LogFrozen()",
+      "event LogMintWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount, uint256 assetId)",
+      "event LogMintableWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNftDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 tokenId, uint256 assetId)",
+      "event LogNftWithdrawalAllowed(uint256 ownerKey, uint256 assetId)",
+      "event LogNftWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 tokenId, uint256 assetId, address recipient)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event LogUnFrozen()",
+      "event LogWithdrawalAllowed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
+      "event LogWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount, address recipient)",
+      "event LogWithdrawalWithFeePerformed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount, address recipient, uint256 fee, address feeRecipient)",
+      "event LogWithdrawalWithFeeToBaseBankPerformed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount, address ethKey, uint256 fee, address feeRecipient, address l1Messenger, address baseCrossDomainDeposit, address sorareAddress)",
+      "event LogWithdrawalWithTokenIdPerformed(uint256 ownerKey, uint256 assetType, uint256 tokenId, uint256 assetId, uint256 nonQuantizedAmount, uint256 quantizedAmount, address recipient)",
+      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
+      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
+      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
+      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
+      "function MAX_VERIFIER_COUNT() view returns (uint256)",
+      "function UNFREEZE_DELAY() view returns (uint256)",
+      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
+      "function adminFreeze_9994()",
+      "function calculateAssetIdWithTokenId(uint256 assetType, uint256 tokenId) view returns (uint256)",
+      "function calculateMintableAssetId(uint256 assetType, bytes mintingBlob) view returns (uint256)",
+      "function deposit(uint256 starkKey, uint256 assetType, uint256 vaultId) payable",
+      "function deposit(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 quantizedAmount)",
+      "function depositCancel(uint256 starkKey, uint256 assetId, uint256 vaultId)",
+      "function depositERC1155(uint256 starkKey, uint256 assetType, uint256 tokenId, uint256 vaultId, uint256 quantizedAmount)",
+      "function depositERC20(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 quantizedAmount)",
+      "function depositEth(uint256 starkKey, uint256 assetType, uint256 vaultId) payable",
+      "function depositNft(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 tokenId)",
+      "function depositNftReclaim(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 tokenId)",
+      "function depositReclaim(uint256 starkKey, uint256 assetType, uint256 vaultId)",
+      "function depositWithTokenId(uint256 starkKey, uint256 assetType, uint256 tokenId, uint256 vaultId, uint256 quantizedAmount)",
+      "function depositWithTokenIdReclaim(uint256 starkKey, uint256 assetType, uint256 tokenId, uint256 vaultId)",
+      "function getAssetInfo(uint256 assetType) view returns (bytes assetInfo)",
+      "function getCancellationRequest(uint256 starkKey, uint256 assetId, uint256 vaultId) view returns (uint256 request)",
+      "function getDepositBalance(uint256 starkKey, uint256 assetId, uint256 vaultId) view returns (uint256)",
+      "function getEthKey(uint256 ownerKey) view returns (address)",
+      "function getQuantizedDepositBalance(uint256 starkKey, uint256 assetId, uint256 vaultId) view returns (uint256)",
+      "function getQuantum(uint256 presumedAssetType) view returns (uint256 quantum)",
+      "function getWithdrawalBalance(uint256 ownerKey, uint256 assetId) view returns (uint256)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes)",
+      "function initializerSize() view returns (uint256)",
+      "function isFrozen() view returns (bool)",
+      "function mainAcceptGovernance()",
+      "function mainCancelNomination()",
+      "function mainIsGovernor(address user) view returns (bool)",
+      "function mainNominateNewGovernor(address newGovernor)",
+      "function mainRemoveGovernor(address governorForRemoval)",
+      "function unFreeze()",
+      "function validatedSelectors() pure returns (bytes4[] selectors)",
+      "function withdraw(uint256 ownerKey, uint256 assetType)",
+      "function withdrawAndMint(uint256 ownerKey, uint256 assetType, bytes mintingBlob)",
+      "function withdrawNft(uint256 ownerKey, uint256 assetType, uint256 tokenId)",
+      "function withdrawWithFeeToBaseBank(uint256 ownerKey, uint256 assetType, uint256 fee, address feeRecipient, bytes signature, address l1Messenger, address baseCrossDomainDeposit, address sorareAddress, uint32 minGasLimit)",
+      "function withdrawWithFee_10(uint256 ownerKey, uint256 assetType, uint256 fee, address feeRecipient, bytes signature)",
+      "function withdrawWithTokenId(uint256 ownerKey, uint256 assetType, uint256 tokenId)"
     ],
     "eth:0xbcc17446B99465fF01E6816d9bcb2d8b1D7cEdB1": [
       "constructor(address gpsStatementContract, uint256 programHash_)",
@@ -902,54 +898,14 @@
       "function proxyRemoveGovernor(address governorForRemoval)",
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
-    ],
-    "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": [
-      "event LogFrozen()",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogRegistered(address entry, string entryId)",
-      "event LogRemovalIntent(address entry, string entryId)",
-      "event LogRemoved(address entry, string entryId)",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "event LogUnFrozen()",
-      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
-      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
-      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
-      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
-      "function MAX_VERIFIER_COUNT() view returns (uint256)",
-      "function UNFREEZE_DELAY() view returns (uint256)",
-      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
-      "function announceAvailabilityVerifierRemovalIntent(address verifier)",
-      "function announceVerifierRemovalIntent(address verifier)",
-      "function getRegisteredAvailabilityVerifiers() view returns (address[] _verifers)",
-      "function getRegisteredVerifiers() view returns (address[] _verifers)",
-      "function identify() pure returns (string)",
-      "function initialize(bytes)",
-      "function initializerSize() view returns (uint256)",
-      "function isAvailabilityVerifier(address verifierAddress) view returns (bool)",
-      "function isFrozen() view returns (bool)",
-      "function isVerifier(address verifierAddress) view returns (bool)",
-      "function mainAcceptGovernance()",
-      "function mainCancelNomination()",
-      "function mainIsGovernor(address testGovernor) view returns (bool)",
-      "function mainNominateNewGovernor(address newGovernor)",
-      "function mainRemoveGovernor(address governorForRemoval)",
-      "function registerAvailabilityVerifier(address verifier, string identifier)",
-      "function registerVerifier(address verifier, string identifier)",
-      "function removeAvailabilityVerifier(address verifier)",
-      "function removeVerifier(address verifier)",
-      "function unFreeze()",
-      "function validatedSelectors() pure returns (bytes4[] selectors)"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "starkex/Committee": "0xea8d2e95c84337933f471b8c21505791bd94685784b7e5c407f5e7045403a683",
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
-    "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
+    "starkex/StarkExchange_Frozen": "0x0136ed1863558a0fd0cd5283912fcd12ca49a1e78ee7595141def29b8e331ac1"
   },
-  "usedBlockNumbers": { "ethereum": 23275484 },
-  "permissionsConfigHash": "0xb74b4c6e3bbcebf661680cdc27dc049cad85280b62f36b801f73676872eae7fd"
+  "usedBlockNumbers": { "ethereum": 25249836 },
+  "permissionsConfigHash": "0x854621f9dfca16025c1656672105e013cc7d495bc19f8c2cc24d9985d92a2ebd"
 }

@@ -1,5 +1,6 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../../core/OverflowWrapper'
 import type { BadgeWithParams } from '../ProjectBadge'
@@ -19,8 +20,9 @@ export function BadgesSection({
   className,
   withDialog,
 }: BadgesSectionProps) {
+  const trpc = useTRPC()
+  const queryClient = useQueryClient()
   const [selectedBadgeId, setSelectedBadgeId] = useState<string>()
-  const utils = api.useUtils()
 
   return (
     <>
@@ -43,7 +45,11 @@ export function BadgesSection({
                   key={key}
                   className="shrink-0 cursor-pointer"
                   onMouseEnter={() =>
-                    utils.projects.badgesDialog.prefetch({ badgeId: badge.id })
+                    queryClient.prefetchQuery(
+                      trpc.projects.badgesDialog.queryOptions({
+                        badgeId: badge.id,
+                      }),
+                    )
                   }
                   onClick={() => setSelectedBadgeId(badge.id)}
                 >

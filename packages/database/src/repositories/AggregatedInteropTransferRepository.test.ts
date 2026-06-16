@@ -936,6 +936,117 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
   )
 
   describe(
+    AggregatedInteropTransferRepository.prototype.getMaxTimestampAtOrBefore
+      .name,
+    () => {
+      it('returns the latest timestamp at or before the requested timestamp', async () => {
+        await repository.insertMany([
+          record({
+            id: 'id1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+          }),
+          record({
+            id: 'id2',
+            timestamp: UnixTime(200),
+            srcChain: 'arbitrum',
+            dstChain: 'ethereum',
+          }),
+          record({
+            id: 'id3',
+            timestamp: UnixTime(300),
+            srcChain: 'polygon',
+            dstChain: 'ethereum',
+          }),
+        ])
+
+        const result = await repository.getMaxTimestampAtOrBefore(UnixTime(250))
+
+        expect(result).toEqual(UnixTime(200))
+      })
+
+      it('returns undefined when no timestamp is available at or before the requested timestamp', async () => {
+        await repository.insertMany([
+          record({
+            id: 'id1',
+            timestamp: UnixTime(200),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+          }),
+        ])
+
+        const result = await repository.getMaxTimestampAtOrBefore(UnixTime(100))
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
+    AggregatedInteropTransferRepository.prototype.getByTimestamp.name,
+    () => {
+      it('returns records with matching timestamp', async () => {
+        const record1 = record({
+          id: 'id1',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 5,
+          identifiedCount: 1000,
+        })
+        const record2 = record({
+          id: 'id2',
+          timestamp: UnixTime(200),
+          srcChain: 'arbitrum',
+          dstChain: 'ethereum',
+          transferCount: 3,
+          identifiedCount: 2000,
+        })
+        const record3 = record({
+          id: 'id3',
+          timestamp: UnixTime(200),
+          srcChain: 'polygon',
+          dstChain: 'ethereum',
+          transferCount: 7,
+          identifiedCount: 3000,
+        })
+        const record4 = record({
+          id: 'id4',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'polygon',
+          transferCount: 2,
+          identifiedCount: 4000,
+        })
+
+        await repository.insertMany([record1, record2, record3, record4])
+
+        const result = await repository.getByTimestamp(UnixTime(200))
+
+        expect(result).toEqualUnsorted([record2, record3])
+      })
+
+      it('returns empty array when no records match timestamp', async () => {
+        await repository.insertMany([
+          record({
+            id: 'id1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            transferCount: 5,
+            identifiedCount: 1000,
+          }),
+        ])
+
+        const result = await repository.getByTimestamp(UnixTime(200))
+
+        expect(result).toEqual([])
+      })
+    },
+  )
+
+  describe(
     AggregatedInteropTransferRepository.prototype.getByChainsAndTimestamp.name,
     () => {
       it('returns records matching timestamp, srcChains and dstChains', async () => {
@@ -1080,13 +1191,13 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           UnixTime(300),
           ['ethereum', 'arbitrum'],
           ['ethereum', 'arbitrum'],
-          'lockAndMint',
+          ['lockAndMint'],
         )
 
         expect(result).toEqualUnsorted([record1, record3])
       })
 
-      it('filters by protocolId when provided', async () => {
+      it('filters by protocolIds when provided', async () => {
         const record1 = record({
           id: 'protocol1',
           timestamp: UnixTime(300),
@@ -1103,17 +1214,25 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           transferCount: 3,
           identifiedCount: 2000,
         })
-        await repository.insertMany([record1, record2])
+        const record3 = record({
+          id: 'protocol3',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 7,
+          identifiedCount: 3000,
+        })
+        await repository.insertMany([record1, record2, record3])
 
         const result = await repository.getByChainsAndTimestamp(
           UnixTime(300),
           ['ethereum', 'arbitrum'],
           ['ethereum', 'arbitrum'],
           undefined,
-          'protocol1',
+          ['protocol1', 'protocol3'],
         )
 
-        expect(result).toEqual([record1])
+        expect(result).toEqualUnsorted([record1, record3])
       })
 
       it('returns all matching records when bridgeType is undefined', async () => {

@@ -139,7 +139,6 @@ describe('getProjects', () => {
       // It can be squashed, but it's more readable this way
       const target = [...layer2s, ...layer3s].filter(
         (project) =>
-          !project.isUpcoming &&
           !project.reviewStatus &&
           !project.archivedAt &&
           // It makes no sense to list them on the DA-BEAT
@@ -274,12 +273,32 @@ describe('getProjects', () => {
     }
 
     for (const project of projects) {
-      if (!project.isScaling || !project.contracts?.zkVerifiers) continue
+      if (!project.scalingInfo || !project.contracts?.zkVerifiers) continue
       for (const verifier of project.contracts.zkVerifiers) {
         it(`${project.id} verifier ${verifier} is in at least one zk catalog project`, () => {
           expect(zkCatalogAddresses.has(verifier)).toEqual(true)
         })
       }
+    }
+  })
+
+  describe('zk catalog projects are archived when all their projects are archived', () => {
+    for (const project of projects) {
+      if (!project.zkCatalogInfo) continue
+
+      const tvsProjects = project.zkCatalogInfo.projectsForTvs ?? []
+      if (tvsProjects.length === 0) continue
+
+      const allTvsProjectsArchived = tvsProjects.every((tvsProject) => {
+        const tvsProjectConfig = projectsById.get(tvsProject.projectId)
+        return tvsProjectConfig?.archivedAt !== undefined
+      })
+
+      if (!allTvsProjectsArchived) continue
+
+      it(`${project.id} should be archived because all projects using it are archived`, () => {
+        expect(project.archivedAt).not.toEqual(undefined)
+      })
     }
   })
 
@@ -718,11 +737,7 @@ describe('getProjects', () => {
 
   describe('all new projects are discovery driven', () => {
     const isNormalProject = (p: BaseProject) => {
-      return (
-        p.isScaling === true &&
-        p.archivedAt === undefined &&
-        p.isUpcoming !== true
-      )
+      return p.scalingInfo && p.archivedAt === undefined
     }
 
     const filteredProjects = projects.filter(
@@ -791,7 +806,8 @@ function getUsageMap(projects: BaseProject[]) {
   }
 
   for (const project of projects) {
-    if (!(project.isScaling || project.daBridge) || !project.contracts) continue
+    if (!(project.scalingInfo || project.daBridge) || !project.contracts)
+      continue
 
     for (const [, contracts] of Object.entries(project.contracts.addresses)) {
       for (const contract of contracts) {

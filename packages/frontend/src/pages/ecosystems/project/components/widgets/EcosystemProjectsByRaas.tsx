@@ -112,12 +112,11 @@ function ProjectLinkWithTooltip({
 }) {
   return (
     <Tooltip>
-      <a href={`/scaling/projects/${project.slug}`} className="size-6">
+      <a href={project.url} className="size-6">
         <TooltipTrigger>{children}</TooltipTrigger>
       </a>
       <TooltipContent>
         <p className="font-bold">{project.name}</p>
-        <p className="text-secondary text-xs">Click to view project page</p>
       </TooltipContent>
     </Tooltip>
   )

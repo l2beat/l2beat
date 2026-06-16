@@ -1,7 +1,7 @@
 {
   "name": "zeronetwork",
   "timestamp": 1776418304,
-  "configHash": "0x19ef7f4c52d383cfdbacfd674ee932c1966dac305efdd9a1291ee9abe623ab34",
+  "configHash": "0xdb93532fec53e6e979a2be3d673f7a8c8c003bf84898a3fff6faaeadc6098844",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -10,13 +10,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTL"
         },
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTL"
         }
       ]
@@ -31,6 +33,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "deployerAddress": "eth:0x3AcEB2E5a1e46d491a72783Acc7EE64E904a787a",
       "sinceTimestamp": 1754036951,
       "sinceBlock": 23045043,
       "values": {
@@ -57,6 +60,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "deployerAddress": "eth:0x3AcEB2E5a1e46d491a72783Acc7EE64E904a787a",
       "sinceTimestamp": 1754036963,
       "sinceBlock": 23045044,
       "values": {
@@ -80,7 +84,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -102,6 +106,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E",
       "sinceTimestamp": 1728943067,
       "sinceBlock": 20966635,
       "values": {
@@ -150,13 +155,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTL"
         },
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTL"
         }
       ]
@@ -167,7 +174,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
-        "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
+        "0x76c03bdcd4b9f00719cb172815067482f6e639d9e37d46cd597995d931dc26a0"
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
@@ -179,6 +186,7 @@
           "role": ".validators"
         }
       ],
+      "deployerAddress": "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438",
       "sinceTimestamp": 1717520615,
       "sinceBlock": 20019826,
       "values": {
@@ -213,8 +221,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTL"
         }
       ]
@@ -225,7 +234,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
-        "0x2221508945ceea880f5d52488af1a7466fcdfadeaf3644dc5e3b82671b7947a3"
+        "0x6308b2ae7a44c1255f5ad431f8b3d2d7da55efd35a771e2a31c87ce6b814e358"
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
@@ -237,6 +246,7 @@
           "role": ".validators"
         }
       ],
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739108999,
       "sinceBlock": 21809364,
       "values": {
@@ -283,7 +293,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
-        "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
+        "0x5a6156ab737196ad26f28ac0f8be667f64154ce292ba41d4b7bc0c693ff19dea"
       ],
       "proxyType": "immutable",
       "description": "A governance proxy that lets eth:0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9 act through it.",
@@ -295,6 +305,7 @@
           "role": ".getAdmin"
         }
       ],
+      "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1729084139,
       "sinceBlock": 20978324,
       "values": {
@@ -329,6 +340,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router contract for verifiers. Routes verification requests to eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911 or eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6 depending on the supplied proof type.",
+      "deployerAddress": "eth:0x3AcEB2E5a1e46d491a72783Acc7EE64E904a787a",
       "sinceTimestamp": 1754056487,
       "sinceBlock": 23046660,
       "values": {
@@ -353,7 +365,7 @@
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
-        "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
+        "0xfe92fc5881d0e7d5cabb9edf0344e4bf0f6bf6de5a51f9ce5b9a03d32c1338bc"
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
@@ -372,6 +384,7 @@
         "baseTokenGasPriceMultiplierDenominator",
         "baseTokenGasPriceMultiplierNominator"
       ],
+      "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1729268915,
       "sinceBlock": 20993644,
       "values": {
@@ -669,8 +682,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
           "role": ".validatorsVTL"
         }
       ]
@@ -1104,5 +1118,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 24898690 },
-  "permissionsConfigHash": "0x051c7f4da5d2f40737862554f27e4f292500e96c51d9799103f85543e08a06ec"
+  "permissionsConfigHash": "0x99dfbce67309a584ffbd12f82019fec697f13a2e11430c9a135af4ae44529e11"
 }

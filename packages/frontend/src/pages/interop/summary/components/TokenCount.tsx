@@ -3,11 +3,11 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
-import { api } from '~/trpc/React'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
-import { TokensDialog } from '../../components/tokens/TokensDialog'
+import { SelectedChainsTokensDialog } from '../../components/tokens/TokensDialog'
 import { InteropTopItems } from '../../components/top-items/TopItems'
+import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
 export function TokenCount({
@@ -20,8 +20,7 @@ export function TokenCount({
   topItems: TopItems<TokenData> | undefined
 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const utils = api.useUtils()
-  const { selectionForApi } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const hasTokens =
     (tokenCount ?? 0) > 0 && !!topItems && topItems.items.length > 0
 
@@ -56,6 +55,7 @@ export function TokenCount({
                     iconUrl: token.iconUrl,
                     volume: token.volume,
                     issuer: token.issuer,
+                    href: getInteropTokenUrl(token, selectedChains),
                     transferCount: token.transferCount,
                     avgDuration: token.avgDuration,
                     avgValue: token.avgValue,
@@ -67,16 +67,13 @@ export function TokenCount({
                   remainingCount: topItems.remainingCount,
                 }}
                 className="mt-4"
-                onMouseEnter={() =>
-                  utils.interop.tokens.prefetch(selectionForApi)
-                }
                 setIsOpen={setIsOpen}
               />
             ) : null}
           </>
         )}
       </div>
-      <TokensDialog
+      <SelectedChainsTokensDialog
         id={undefined}
         isOpen={isOpen}
         setIsOpen={setIsOpen}

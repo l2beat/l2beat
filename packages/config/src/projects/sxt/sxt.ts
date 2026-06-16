@@ -18,8 +18,17 @@ const bridge = discovery.getContract('L1NativeTokenVault')
 export const sxt: ScalingProject = zkStackL2({
   addedAt: UnixTime(1716819511), // 2024-05-27T14:18:31Z
   additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.AvailVector],
+  daAttestedByIndependentParty: true,
+  daVerifierSecureOnL1: true,
+  daVerifier7DayExitWindow: true,
+  daCommitteeDecentralized: true,
+  daVerifier30DayExitWindow: false,
+  daMechanismEconomicSecurity: false,
+  daVerifierLink:
+    'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
   display: {
     name: 'Space and Time',
+    aliases: ['SXT'],
     slug: 'sxt',
     description:
       "Space and Time (SxT) is a decentralized data warehouse that aims to provide a zk 'Proof of SQL' to bring offchain data to smart contracts onchain. Built on ZK Stack, the SxT chain will serve as a settlement layer and payment hub for data queries.",

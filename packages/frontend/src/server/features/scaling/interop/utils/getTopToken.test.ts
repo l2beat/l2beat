@@ -39,12 +39,15 @@ describe(getTopToken.name, () => {
     })
 
     expect(result).toEqual({
+      id: 'eth',
       symbol: 'ETH',
+      issuer: null,
       iconUrl: '/eth.png',
       volume: 340,
       transferCount: 19,
       topProtocol: {
         name: 'Wormhole',
+        slug: 'wormhole',
         iconUrl: '/icons/wormhole.png',
       },
     })
@@ -76,12 +79,15 @@ describe(getTopToken.name, () => {
     })
 
     expect(result).toEqual({
+      id: 'usdc',
       symbol: 'USDC',
+      issuer: null,
       iconUrl: '/usdc.png',
       volume: 100,
       transferCount: 10,
       topProtocol: {
         name: 'Main protocol',
+        slug: 'main',
         iconUrl: '/icons/main.png',
       },
     })
@@ -113,6 +119,7 @@ describe(getTopToken.name, () => {
 
     expect(result?.topProtocol).toEqual({
       name: 'Wormhole',
+      slug: 'wormhole',
       iconUrl: '/icons/wormhole.png',
     })
   })

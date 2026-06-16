@@ -7,17 +7,16 @@ import { validateRoute } from '~/utils/validateRoute'
 import { getScalingActivityData } from './activity/getScalingActivityData'
 import { getScalingArchivedData } from './archived/getScalingArchivedData'
 import { getScalingCostsData } from './costs/getScalingCostsData'
-import { getScalingDataAvailabilityData } from './data-availability/getScalingDataAvailabilityData'
 import { getScalingLivenessData } from './liveness/getScalingLivenessData'
 import { getScalingProjectData } from './project/getScalingProjectData'
 import { getScalingProjectTvsBreakdownData } from './project/tvs-breakdown/getScalingProjectTvsBreakdownData'
+import { getScalingRiskDataAvailabilityData } from './risk/data-availability/getScalingRiskDataAvailabilityData'
 import { getScalingRiskData } from './risk/getScalingRiskData'
+import { getScalingRiskSequencingData } from './risk/sequencing/getScalingRiskSequencingData'
 import { getScalingRiskStateValidationData } from './risk/state-validation/getScalingRiskStateValidationData'
 import { getScalingSummaryData } from './summary/getScalingSummaryData'
 import { getScalingTvsBreakdownData } from './tvs/breakdown/getScalingTvsBreakdownData'
 import { getScalingTvsData } from './tvs/getScalingTvsData'
-import { getScalingUpcomingData } from './upcoming/getScalingUpcomingData'
-
 export function createScalingRouter(
   manifest: Manifest,
   render: RenderFunction,
@@ -53,12 +52,24 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
+  router.get('/scaling/risk/data-availability', async (req, res) => {
+    const data = await getScalingRiskDataAvailabilityData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
+  router.get('/scaling/risk/sequencing', async (req, res) => {
+    const data = await getScalingRiskSequencingData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
   router.get(
     '/scaling/tvs',
     validateRoute({
       query: v.object({
         tab: v
-          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'notReviewed'])
+          .enum(['rollups', 'validiumsAndOptimiums', 'others'])
           .default('rollups'),
       }),
     }),
@@ -71,12 +82,6 @@ export function createScalingRouter(
 
   router.get('/scaling/tvs/breakdown', async (req, res) => {
     const data = await getScalingTvsBreakdownData(req, manifest, cache)
-    const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get('/scaling/data-availability', async (req, res) => {
-    const data = await getScalingDataAvailabilityData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
@@ -103,12 +108,6 @@ export function createScalingRouter(
 
   router.get('/scaling/archived', async (req, res) => {
     const data = await getScalingArchivedData(req, manifest, cache)
-    const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get('/scaling/upcoming', async (req, res) => {
-    const data = await getScalingUpcomingData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })

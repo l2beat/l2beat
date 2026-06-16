@@ -10,7 +10,6 @@ import {
   DA_LAYERS,
   DA_MODES,
   DATA_ON_CHAIN,
-  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -18,11 +17,12 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getSP1Verifiers } from '../../templates/opStack'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('facet')
 
@@ -62,23 +62,22 @@ export const facet: ScalingProject = {
   ],
   scopeOfAssessment: {
     inScope: [
-      'Ability to deposit, spend, and withdraw ETH from the selected bridge (L1Bridge) built on top of Rollup',
       'Sequencing mechanism via L1 through the Inbox and state validation mechanism via the Rollup proof system',
-      'Upgradability of contracts including the selected bridge (L1Bridge)',
+      'The Rollup contract and its upgradability',
     ],
     notInScope: [
-      'Ability to deposit, spend, and withdraw ETH from any bridge other than the selected bridge (L1Bridge)',
+      'Bridges built on top of the Rollup, including the legacy L1Bridge (eth:0x4e2eba30…, immutably bound to the deprecated Rollup) and the operator-controlled FacetEtherBridgeV6 fast bridge — each bridge carries its own trust assumptions and must be assessed separately',
       'Bridged token compatibility with other DeFi applications e.g., Bluebird WETH (BBWETH)',
       'The soundness of the ZK proof system of Rollup',
-      'Upgradability of the external bridge contracts (e.g., FacetEtherBridgeV6)',
     ],
   },
   proofSystem: {
     type: 'Optimistic',
+    name: 'SP1',
     zkCatalogId: ProjectId('sp1turbo'),
     challengeProtocol: 'Single-step',
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -93,10 +92,10 @@ export const facet: ScalingProject = {
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
-        noRedTrustedSetups: false,
+        noRedTrustedSetups: true,
         programHashesReproducible: true,
         proverSourcePublished: true,
-        verifierContractsReproducible: false,
+        verifierContractsReproducible: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
@@ -110,10 +109,10 @@ export const facet: ScalingProject = {
   ),
   discoveryInfo: getDiscoveryInfo([discovery]),
   display: {
-    name: 'Facet v1',
+    name: 'Facet',
     slug: 'facet',
     description:
-      'Facet v1 is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by burning ETH on L1.',
+      'Facet is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by burning ETH on L1.',
     purposes: ['Universal'],
     links: {
       websites: ['https://facet.org/'],
@@ -137,14 +136,23 @@ export const facet: ScalingProject = {
           'eth:0x4e2eba30a786c0643699b92234d74a71e958c08e',
         ),
         tokens: ['ETH'],
-        description: 'Canonical escrow for ETH bridge.',
+        source: 'external',
+        bridgedUsing: {
+          bridges: [
+            {
+              name: 'Facet legacy L1Bridge.',
+            },
+          ],
+        },
+        description:
+          'Legacy ETH bridge built on top of the deprecated Rollup contract (eth:0x686E7d01…).',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0x0000000000000b07ED001607f5263D85bf28Ce4C',
         ),
         tokens: ['ETH'],
-        ...ESCROW.CANONICAL_ADD_TA,
+        source: 'external',
         bridgedUsing: {
           bridges: [
             {
@@ -152,14 +160,15 @@ export const facet: ScalingProject = {
             },
           ],
         },
-        description: 'Fast external bridge contract.',
+        description:
+          'Operator-controlled fast external ETH bridge; withdrawals are processed by a permissioned EOA and do not depend on the Rollup state.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909',
         ),
         tokens: ['ETH', 'WETH'],
-        ...ESCROW.CANONICAL_ADD_TA,
+        source: 'external',
         bridgedUsing: {
           bridges: [
             {
@@ -182,6 +191,7 @@ export const facet: ScalingProject = {
           sinceTimestamp: UnixTime(1715312711),
         },
       },
+      // Deprecated Rollup (0x686E7d01…) — kept for historical liveness/cost continuity; stopped receiving proposals on 2026-05-19.
       {
         uses: [
           { type: 'liveness', subtype: 'stateUpdates' },
@@ -236,6 +246,61 @@ export const facet: ScalingProject = {
           sinceTimestamp: UnixTime(1753156223),
         },
       },
+      // Active Rollup (0x026902ef…) — deployed 2026-05-18, took over proposals 2026-05-19.
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x026902ef5a0931f25cbb78b5dd7a72ee998569ae',
+          ),
+          selector: '0x45925013',
+          functionSignature:
+            'function submitProposal(bytes32 root, uint256 l2BlockNumber, uint256 parentId) payable returns (uint256 proposalId)',
+          sinceTimestamp: UnixTime(1779135407),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'stateUpdates' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x026902ef5a0931f25cbb78b5dd7a72ee998569ae',
+          ),
+          selector: '0x9eeeb214',
+          functionSignature:
+            'function proveBlock(uint256 l2BlockNumber, bytes32 root, uint256 l1BlockNumber, bytes proof)',
+          sinceTimestamp: UnixTime(1779135407),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'stateUpdates' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x026902ef5a0931f25cbb78b5dd7a72ee998569ae',
+          ),
+          selector: '0x0075552a',
+          functionSignature:
+            'function proveProposal(uint256 id, uint256 l1BlockNumber, bytes proof)',
+          sinceTimestamp: UnixTime(1779135407),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'stateUpdates' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x026902ef5a0931f25cbb78b5dd7a72ee998569ae',
+          ),
+          selector: '0x0062804e',
+          functionSignature: 'function resolveProposal(uint256 id)',
+          sinceTimestamp: UnixTime(1779135407),
+        },
+      },
     ],
     activityConfig: {
       type: 'block',
@@ -253,7 +318,9 @@ export const facet: ScalingProject = {
       ...RISK_VIEW.STATE_ZKP_OPTIMISTIC,
       challengeDelay: MAX_CHALLENGE_SECS,
       executionDelay: 0,
-      initialBond: formatEther(proposerBond),
+      initialBond: { value: formatEther(proposerBond) },
+      permissioned: false,
+      defenderAdvantage: 'not-assessed',
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
@@ -292,36 +359,31 @@ export const facet: ScalingProject = {
     },
     otherConsiderations: [
       {
-        name: 'Multi-bridging',
+        name: 'No canonical bridge',
         description:
-          'Facet does not designate a canonical bridge and allows multiple bridges to be deployed that use the same Rollup state for depositing and withdrawing assets. Each bridge has its own smart contract counterpart on the L2, meaning the same L1 tokens bridged through different bridges will result in different L2 token representations. The risk analysis presented in this page is based on an arbitrarily selected ETH bridge built on top of Rollup.sol that does not introduce additional trust assumptions. However, there can be multiple other bridges to Facet that introduce additional trust assumptions, such as the FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C) fast bridge that relies on a permissioned EOA as operator for withdrawal processing.',
+          "Facet's `Rollup` contract publishes L2 state roots but is not paired with a canonical bridge escrow. Anyone can deploy a bridge that reads the `Rollup`'s anchor state root to bridge arbitrary tokens; each bridge has its own L2 counterpart, so the same L1 token bridged through different bridges results in different L2 representations. Trust assumptions (operator role, upgradeability, withdrawal logic) are bridge-specific and do not propagate from the `Rollup`. The risk analysis on this page covers the `Rollup` and its proof system only; any bridge built on top must be assessed separately. Known bridges today include the `FacetEtherBridgeV6` fast ETH bridge, whose withdrawals are processed by a permissioned EOA operator and do not depend on the `Rollup` state, and a legacy `L1Bridge` immutably bound to `RollupDeprecated`, which no longer receives state-root proposals.",
         risks: [],
         references: [
           {
-            title: 'L1 Bridge - Etherscan',
-            url: 'https://etherscan.io/address/0x4e2eba30a786c0643699b92234d74a71e958c08e',
+            title: 'Rollup - Etherscan',
+            url: 'https://etherscan.io/address/0x026902ef5a0931f25cbb78b5dd7a72ee998569ae',
           },
           {
-            title: 'L2 (BBWETH) Bridge - Facet Explorer',
-            url: 'https://explorer.facet.org/address/0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4',
+            title: 'FacetEtherBridgeV6 (fast bridge) - Etherscan',
+            url: 'https://etherscan.io/address/0x0000000000000b07ED001607f5263D85bf28Ce4C',
+          },
+          {
+            title: 'Legacy L1Bridge - Etherscan',
+            url: 'https://etherscan.io/address/0x4e2eba30a786c0643699b92234d74a71e958c08e',
           },
         ],
       },
       {
         name: 'Gas Token Minting',
-        description: `Facet uses FCT as its native gas token, which is minted through L1 gas consumption rather than being pre-minted. FCT issuance is directly tied to the amount of L1 ETH burned to pay calldata gas in Ethereum transactions, calculated as:
-
-                      FCT minted = ETH burned for calldata × mint rate
-
-                      ETH burned for calldata = L1 base fee × (total L1 gas cost - 21,000)
-
-                      The system targets issuing ~78,300 FCT every 500 Facet blocks. If less than the target is minted in 500 blocks, the mint rate increases proportionally (up to a maximum 4x increase). If the target is reached in fewer than 500 blocks, the mint rate decreases proportionally (up to a maximum 75% decrease).
-
-                      The maximum supply of FCT is ~1.65B. Once 50% of the supply is minted, the per-period target (now ~78,300) will be halved. It will be halved again at 75%, then at 87.5%, and so forth. The period target and period length are selected so that halvings will occur approximately every 5,256,000 blocks.
-
-                      This mechanism is similar to standard OP Stack guaranteed gas markets, where L1 gas is burned to purchase L2 gas for deposits through an EIP-1559-style fee market. However, on Facet, gas purchased in this way accrues to the purchaser's native balance on the L2, whereas in the OP Stack it can only be used for a single transaction.
-
-                      ![Facet Token Minting and Bridging](/images/other-considerations/facet.png#center).`,
+        description: readProjectMarkdown(
+          'facet',
+          'technologyOtherConsiderations2',
+        ),
         risks: [],
         references: [
           {
@@ -383,6 +445,14 @@ export const facet: ScalingProject = {
     ],
   },
   milestones: [
+    {
+      title: 'Rollup redeployed',
+      url: 'https://etherscan.io/address/0x026902ef5a0931f25cbb78b5dd7a72ee998569ae',
+      date: '2026-05-18T00:00:00Z',
+      type: 'general',
+      description:
+        'New Rollup contract takes over state-root proposals with a new SP1VerifierGateway.',
+    },
     {
       title: 'SP1 proof system deployed',
       url: 'https://etherscan.io/tx/0x2c76f9fb8d18290ae8d75b8bcfe6ee2bd5a7548983fa1d400f83ed9db11d0b84',

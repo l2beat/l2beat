@@ -64,6 +64,51 @@ export interface ApiConfigFileResponse {
   config: string
 }
 
+export interface ApiProjectLayoutEntry {
+  name: string
+  description?: string
+}
+
+export type ApiProjectLayoutsResponse = ApiProjectLayoutEntry[]
+
+export interface ApiProjectLayoutResponse {
+  layout: unknown
+}
+
+export type ApiDiffHistorySectionKind =
+  | 'watched-changes'
+  | 'initial-discovery'
+  | 'source-code-changes'
+  | 'config-related-changes'
+
+export interface ApiDiffHistorySection {
+  kind: ApiDiffHistorySectionKind
+  body: string
+}
+
+export type ApiChainPoint =
+  | { kind: 'timestamp'; value: number }
+  | { kind: 'block'; value: number }
+
+export interface ApiDiffHistoryEntry {
+  date: string
+  current: ApiChainPoint | null
+  author: string | null
+  comparing: {
+    ref: string
+    commit: string
+    at: ApiChainPoint | null
+  } | null
+  discoveryHash: string | null
+  description: string
+  sections: ApiDiffHistorySection[]
+}
+
+export interface ApiDiffHistoryResponse {
+  total: number
+  entries: ApiDiffHistoryEntry[]
+}
+
 type RefreshReason =
   | {
       type: 'TEMPLATE_NO_LONGER_MATCHES'
@@ -93,13 +138,6 @@ export interface ApiConfigSyncStatusResponse {
   reasons: RefreshReason[]
 }
 
-export interface ApiGlobalConfigSyncStatusResponse {
-  reasons: {
-    project: string
-    reasons: RefreshReason[]
-  }[]
-}
-
 export type ApiCreateShapeResponse =
   | {
       success: true
@@ -126,6 +164,11 @@ export interface ApiHandlersResponse {
     examples: string[]
   }[]
 }
+
+export type {
+  AnalyzerApiResponse,
+  AnalyzerResultApiResponse,
+} from '@l2beat/shared-pure'
 
 export type ApiAddressType =
   | 'EOA'

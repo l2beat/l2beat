@@ -1,0 +1,48 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Miner",
+  "description": "Anonymity Mining - Mining and reward-distribution contract for Tornado anonymity mining. It verifies reward and withdrawal proofs, maintains account roots, and routes TORN rewards through the swap contract.",
+  "category": "bridge-external",
+  "ignoreMethods": ["accountRoots"],
+  "fields": {
+    "governance": {
+      "description": "Governance address controlling reward parameters and verifier wiring.",
+      "severity": "HIGH",
+      "permissions": [
+        { "type": "interact", "description": "set mining reward rates." },
+        {
+          "type": "interact",
+          "description": "replace the reward, withdrawal, and tree-update verifiers."
+        },
+        {
+          "type": "interact",
+          "description": "replace the connected Tornado Trees contract."
+        },
+        {
+          "type": "interact",
+          "description": "change the reward-swap pool weight used when distributing TORN rewards."
+        }
+      ]
+    },
+    "rewardSwap": {
+      "description": "Reward swap contract that dispenses TORN rewards earned through anonymity mining.",
+      "severity": "HIGH"
+    },
+    "rewardVerifier": {
+      "description": "Verifier used for reward-claim proofs.",
+      "severity": "HIGH"
+    },
+    "withdrawVerifier": {
+      "description": "Verifier used for mining withdrawal proofs.",
+      "severity": "HIGH"
+    },
+    "treeUpdateVerifier": {
+      "description": "Verifier used for account tree update proofs.",
+      "severity": "HIGH"
+    },
+    "tornadoTrees": {
+      "description": "Tornado Trees contract whose deposit and withdrawal roots are consumed by mining proofs.",
+      "severity": "HIGH"
+    }
+  }
+}

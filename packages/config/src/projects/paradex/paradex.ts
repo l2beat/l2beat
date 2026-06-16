@@ -26,6 +26,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { getSHARPBootloaderHashes } from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('paradex')
@@ -171,6 +172,7 @@ export const paradex: ScalingProject = {
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: UnixTime(1689850631),
+          untilTimestamp: UnixTime(1710428663), // last call: https://etherscan.io/tx/0x3230dafe64b826cfddf3ad1326effc46324c092e5c04a69b06d859cb6a5ecec3
         },
       },
       {
@@ -249,7 +251,11 @@ export const paradex: ScalingProject = {
   technology: {
     dataAvailability: {
       name: 'Encrypted blobs via privacy council',
-      description: `Data is posted as encrypted blobs on Ethereum using a random symmetric key per state update. Such symmetric key is also posted, but encrypted to the privacy council members public keys. Each member can recover the symmetric key and decrypt the data. The council has ${privacyCouncil.membersCount} members and at least one is required to disclose the decryption keys to reconstruct the L2 state. Users cannot independently reconstruct the L2 state without relying on the council members.`,
+      description: readProjectMarkdown(
+        'paradex',
+        'technologyDataAvailability',
+        { membersCount: privacyCouncil.membersCount },
+      ),
       risks: [
         {
           category: 'Funds can be frozen if',

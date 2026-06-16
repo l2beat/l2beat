@@ -1,3 +1,1686 @@
+Generated with discovered.json: 0xc619395c6e37184aa9643f40ab7b37f7ef84d9bd
+
+# Diff at Fri, 12 Jun 2026 10:19:06 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780406494
+- current timestamp: 1780406494
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780406494 (main branch discovery), not current.
+
+```diff
+    contract Paxos Gold Token (eth:0x45804880De22913dAFE09f4980848ECE6EcbAf78) [tokens/PAXG] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+Generated with discovered.json: 0x78612c36145f6070d753ab0c7c8862eb18046744
+
+# Diff at Mon, 08 Jun 2026 13:27:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b249a098f7367cb0ead3d881bbc57b408521134 block: 1780406494
+- current timestamp: 1780406494
+
+## Description
+
+rm circle (moved to shared-circle disco)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780406494 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract TokenMessenger (base:0x1682Ae6375C4E4A97e4B583BC394c861A46D8962) [tokens/circle/TokenMessenger]
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayMinter (base:0x2222222d7164433c4C09B0b0D809a9b52C04C205) [tokens/circle/GatewayMinter]
+    +++ description: Entrypoint or minter of USDC on this chain for the Gateway protocol.
+```
+
+```diff
+-   Status: DELETED
+    contract MasterMinter (base:0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1) [tokens/circle/MasterMinter]
+    +++ description: Manager contract for minter management [sic].
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessengerV2 (base:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d) [tokens/circle/TokenMessenger]
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayWallet (base:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE) [tokens/circle/GatewayWallet]
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+```
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitterV2 (base:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64) [tokens/circle/MessageTransmitter]
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) [tokens/circle/USDC]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitter (base:0xAD09780d193884d503182aD4588450C416D6F9D4) [tokens/circle/MessageTransmitter]
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinter (base:0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6) [tokens/circle/TokenMinter]
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinterV2 (base:0xfd78EE919681417d192449715b2594ab58f5D002) [tokens/circle/TokenMinter]
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+Generated with discovered.json: 0x9f32bfe92123317754e52ad3a4c4460394568990
+
+# Diff at Tue, 02 Jun 2026 13:23:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@63ce779d811ac540efbb445178f952fd5f075eb6 block: 1779964138
+- current timestamp: 1780406494
+
+## Description
+
+Staking vault unpaused.
+
+## Watched changes
+
+```diff
+    contract StakingVault (eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711) [tokens/Lido/StakingVault] {
+    +++ description: None
+      values.beaconChainDepositsPaused:
+-        true
++        false
+    }
+```
+
+Generated with discovered.json: 0xd1baa7a5b2a9300bcb204a8f92a641c704dbdb61
+
+# Diff at Thu, 28 May 2026 10:32:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26f05273885d7018b915500a4ca40ac82f676e4c block: 1778679898
+- current timestamp: 1779964138
+
+## Description
+
+ms changes.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x35921FB43cB92F5Bfef7cBA1e97Eb5A21Fc2d353) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x0595E2732Fb64297BA65917DD82F4722aC90A69c"
++        "eth:0x1Eec66C76Ed56f73dA0Aaa9965B3751bf3D075DD"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a) [tokens/Lido/HashConsensus] {
+    +++ description: None
+      values.accessControl.MANAGE_FRAME_CONFIG_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
+    }
+```
+
+Generated with discovered.json: 0xf1075f2b86a529f61dc02b8e6a34c63644607867
+
+# Diff at Fri, 15 May 2026 12:37:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1778679898
+- current timestamp: 1778679898
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778679898 (main branch discovery), not current.
+
+```diff
+    contract TokenMessengerV2 (base:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d) [tokens/circle/TokenMessenger] {
+    +++ description: Part of CCTP
+      sourceHashes.1:
+-        "0xefd6cf6974dbc8ebc44a033c50de8a6af99f518aa4a52795c663ea82600bf3e8"
++        "0xc7716814991dd09cd5c16dec694aea6f3c06a42531df261c804cf65fc2342841"
+    }
+```
+
+```diff
+    contract MessageTransmitterV2 (base:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64) [tokens/circle/MessageTransmitter] {
+    +++ description: Part of CCTP
+      sourceHashes.1:
+-        "0x99288de90f33d10f63dc39e2f12ca10d87f185a937f01ecf49ae82f0c70612b6"
++        "0xb1b996883e893bf22c3220218684d23097e100c26c9467bf95428b8bb1e2b576"
+    }
+```
+
+```diff
+    contract ValidatorExitDelayVerifier (eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xb62b25f0b67746b7e3bf482df8a768f79427d2dbb4367a0e913c73c4bf1261ef"
++        "0x2d45d09afa27ef4bdab79c0c9c40dffdc2e828937a1b2c962dc9d4e9ef39a954"
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) [tokens/Lido/CSModule] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x4b8eaaad7448f56079390c14b2f7e2ee8285fd0f55208880a2e5d95a9c1715f1"
++        "0x415b0abee07f0a91a3208b51454b2914b46d714595716a4f7ff7e9e742a791bf"
+    }
+```
+
+```diff
+    contract PredepositGuarantee (eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x80d0adbcca3e958f1bffc81ef35108d4a2e88a2c44e4626228459ebc0031d1e7"
++        "0xb97b8a0c7648d3d10372c1719e32bb311cb254066843bdef5d9cef60fe290494"
+    }
+```
+
+Generated with discovered.json: 0x7fa4c2f397421cbec5a2dccef8b3c67a3446fc90
+
+# Diff at Wed, 13 May 2026 13:47:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b18d53b57004d29236893505e028d7202c63b265 block: 1776866286
+- current timestamp: 1778679898
+
+## Description
+
+one lido vault pauses deposits. one oeth-related safe adds a member.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) [GnosisSafe] {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "base:0xf633980A61E9F90a41d030676059Dc201D9d4A37"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711) [tokens/Lido/StakingVault] {
+    +++ description: None
+      values.beaconChainDepositsPaused:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x6868667d94c3a07f27718ffcc36bf6d94754c178
+
+# Diff at Fri, 08 May 2026 07:52:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1776866286
+- current timestamp: 1776866286
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776866286 (main branch discovery), not current.
+
+```diff
+    contract SafeL2 (arb1:0x7843225BA488cf780A4Fe2c842B5dc2aBCf8A03e) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
++        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+    }
+```
+
+```diff
+    contract PermissionManager (arb1:0xa925C217e4c1C82Ee721eBD496d3863D5C2d829A) [tokens/PermissionManager] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x1b700e4f2cb900deab1fc07dc6cc38305b72bc7c6703d5313def15c56e809288"
++        "0x3fdf32f1c47da113fac0a216260af28d8f4d514a4ead929122cc1ce71734cdde"
+      sourceHashes.1:
+-        "0x775ec46d31d03f2687835380ad135abaab92a7ad5cd897280e4b1551244a01a9"
++        "0x9e9af02f6a242a5f8fb27ed1a6031a2e9f082348fc4310d7ccaa13a1b69ab87a"
+    }
+```
+
+```diff
+    contract Spiko EU T-Bills Money Market Fund Token (arb1:0xCBeb19549054CC0a6257A77736FC78C367216cE7) [tokens/EUTBL] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x1b700e4f2cb900deab1fc07dc6cc38305b72bc7c6703d5313def15c56e809288"
++        "0x3fdf32f1c47da113fac0a216260af28d8f4d514a4ead929122cc1ce71734cdde"
+      sourceHashes.1:
+-        "0x95ca38921467c82db81aa7581b20ab8104b4a24de3baf525a0bbf527a33511f3"
++        "0xeaaa2bc5f75c54a9b1f8fdaf14118614824245dfca16bdeee0b8b66431dae0bf"
+    }
+```
+
+```diff
+    contract TokenMessenger (base:0x1682Ae6375C4E4A97e4B583BC394c861A46D8962) [tokens/circle/TokenMessenger] {
+    +++ description: Part of CCTP
+      sourceHashes.0:
+-        "0xd05b852e1f8c4b58ffee547d6db9feb1ae5b614ac3281d8cb02c8b2e3af2164f"
++        "0x0e7e48035fe31487cc6f796d7f7e598c93bc4237c35407323cd2b05747144916"
+    }
+```
+
+```diff
+    contract GatewayMinter (base:0x2222222d7164433c4C09B0b0D809a9b52C04C205) [tokens/circle/GatewayMinter] {
+    +++ description: Entrypoint or minter of USDC on this chain for the Gateway protocol.
+      sourceHashes.0:
+-        "0xf65031b6016e2f8ceefeebfc98dfb3c259cfa4326be072dd1de90d143026753b"
++        "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3"
+      sourceHashes.1:
+-        "0x525585e7459a78092c75ba3666a1a0b6ceee863111052fc114675a13b4d06322"
++        "0x6838d677f53c3c637659817b8a77b44a7975202d988e744fd0ae6f2254cdd03d"
+    }
+```
+
+```diff
+    contract TokenMessengerV2 (base:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d) [tokens/circle/TokenMessenger] {
+    +++ description: Part of CCTP
+      sourceHashes.1:
+-        "0x65d3e84e1231bb11a792f4a9946c0672509f68725186e8c623086e51d4ace1a3"
++        "0xefd6cf6974dbc8ebc44a033c50de8a6af99f518aa4a52795c663ea82600bf3e8"
+    }
+```
+
+```diff
+    contract SafeL2 (base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
++        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+    }
+```
+
+```diff
+    contract GatewayWallet (base:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE) [tokens/circle/GatewayWallet] {
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+      sourceHashes.0:
+-        "0xf65031b6016e2f8ceefeebfc98dfb3c259cfa4326be072dd1de90d143026753b"
++        "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3"
+      sourceHashes.1:
+-        "0x506e625ba860a14389c9a084a8c4fd214f27c61d2748b95699be952eb3ff6af0"
++        "0x58abac7a9c89cc1bb5e3008040a2a14acbee3ba234aab0da096e9163c2ba3962"
+    }
+```
+
+```diff
+    contract MessageTransmitterV2 (base:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64) [tokens/circle/MessageTransmitter] {
+    +++ description: Part of CCTP
+      sourceHashes.1:
+-        "0x84e99328c6ecdcc29a4322f0758efcb0a5886faaa900a1764ba815e6c8a2036a"
++        "0x99288de90f33d10f63dc39e2f12ca10d87f185a937f01ecf49ae82f0c70612b6"
+    }
+```
+
+```diff
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) [tokens/circle/USDC] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xacd76117eb21f736961ade180c25f63d796bc2e83f43b82ee3ff585bb34ce6ed"
++        "0xa3d835fb690ea2f5e876dfe8976087c2953119048813d2517a18c0d0467bcfee"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (base:0x92A19381444A001d62cE67BaFF066fA1111d7202) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract MessageTransmitter (base:0xAD09780d193884d503182aD4588450C416D6F9D4) [tokens/circle/MessageTransmitter] {
+    +++ description: Part of CCTP
+      sourceHashes.0:
+-        "0x0a6be4fecca4861686e0a31878557d698e444ce7024f01190aabc908e17087e3"
++        "0x70813cb58534e0502dc344758b141e16cbde2a0857ff4f999c0aee6b3c816da1"
+    }
+```
+
+```diff
+    contract Wrapped OETH Token (base:0xD8724322f44E5c58D7A815F542036fb17DbbF839) [tokens/Origin/wOETH] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x524b79f95e1fba1f052501755efaea01bd2ddd95a7e6453ef2261c263d99dc23"
++        "0xf35eaaf4ed55d10da08f22a170649fff29c24dda3dce76693441b95aee9ea8f8"
+    }
+```
+
+```diff
+    contract TokenMinter (base:0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6) [tokens/circle/TokenMinter] {
+    +++ description: Part of CCTP: Used for automated access control for minting.
+      sourceHashes.0:
+-        "0xe3726a2ed0f748a5239bddbe87c3c53ab18fe03308c167092fb98d970396ec63"
++        "0x8ce1834b9145a30f7685f60bcbb820752f2a42cd7586782754eb4c2b8ca04117"
+    }
+```
+
+```diff
+    contract TokenMinterV2 (base:0xfd78EE919681417d192449715b2594ab58f5D002) [tokens/circle/TokenMinter] {
+    +++ description: Part of CCTP: Used for automated access control for minting.
+      sourceHashes.0:
+-        "0x4f65c99b21662a49a87fe117a196b5c67b5e8414afb355272fa80cd5830591fb"
++        "0xd344d9de17d9bc1f71a1617c4dcbb528e821a05bc72d58e263a87e66e6640696"
+    }
+```
+
+```diff
+    contract DepositContract (eth:0x00000000219ab540356cBB839Cbe05303d7705Fa) [global/DepositContract] {
+    +++ description: Ethereum Beacon Chain deposit contract.
+      sourceHashes.0:
+-        "0x50e829416130215b875975340a7567d915ecf66f25070a50813ca972a4322191"
++        "0x64e29339363d55b4dc7d88beeb0bf9d0c5f577c7bf1218f08d527708f60e5ded"
+    }
+```
+
+```diff
+    contract VaultFactory (eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xe40cdacf85295b79ce35608aea6526762e642df543bb498f3457de2d03e02455"
++        "0xf02b676e5911c76b150e966dae8cd3e4a3337de8862b89c1cea2ae0ba7310e1d"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0x06A56487494aa080deC7Bf69128EdA9225784553) [tokens/Lido/StakingVault] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x01eb43e0204902ef83ed3b7284f39b6ac2747cfec8fa2d667063c77597693253"
++        "0x203e0b11552fff69c2b0e3617840f67ef689929efef062b5628afc6a2880ff45"
+    }
+```
+
+```diff
+    contract CSExitPenalties (eth:0x06cd61045f958A209a0f8D746e103eCc625f4193) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x50b1f029cbc9832f0464c9fb50f05553e7d8689e5bf07c118c523edd42acff5d"
++        "0x8a38737f10d5c2a00f6cc519d3dbc125e8864a4f422532a8005f910ec3893984"
+    }
+```
+
+```diff
+    contract ValidatorsExitBusOracle (eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e) [tokens/Lido/ValidatorsExitBusOracle] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xe4c526720601a291e152819a6b6a28a60b7aa74dfc163dcdda0848713449d95d"
++        "0x4879e0bd2e338990ef1272eed42b478311c14048e7d4acfd4bcf5be1219ab013"
+    }
+```
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) [tokens/Lido/VaultHub] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x5a96636cae49d9865336a069167358aa1056cd74f8308fd55834376c6cbf67e5"
++        "0x6bcf34d4a5b8a1bbe9daa335f1f67871309c33f2bf9fb1f50c339cacb0d21561"
+    }
+```
+
+```diff
+    contract TokenRateNotifier (eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xd88820a97d649ac3bcce0fb26e37ce6f1db8e4c2afc721076b4f7267f7b96c19"
++        "0xae1475dea458c2985b5c3ebd503e52cbcdbc0e654a3aa89bd46cfdc4e613a3ad"
+    }
+```
+
+```diff
+    contract Dashboard (eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3) [tokens/Lido/Dashboard] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x26cc32bd36fc0ef84955e8396853432eecfd75a2d5018a994325ed26f9334edb"
++        "0x0f7ce949499fae2d9966f5b69098e43c8b34ecc49cb47a97ae2cbc7cde5d01b7"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x35921FB43cB92F5Bfef7cBA1e97Eb5A21Fc2d353) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) [tokens/Lido/LidoDaoAgent] {
+    +++ description: Custom role-based operations entrypoint for Lido.
+      sourceHashes.0:
+-        "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a"
++        "0x5d180561dda86f9c602d514f0327c10a48c8b42836553121aa85c9d14a285d36"
+      sourceHashes.1:
+-        "0xa2a0001d171ac04fee445851ab0e1c994c3b76a49ae877c1b3d2b563ae8b8178"
++        "0x4eb31af8f0026c187cef5d9a69b934ec306b9206f749781bc0ee029bd7302489"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4) [tokens/Lido/StakingVault] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xb7340cba7f15880cbd57f96214be29f7ffde82f06b923a0a7b01ed660a852279"
++        "0x98752ee6352221931e7a0dc594ec6c7f22b18c7b84c2f69891efc90010a84a65"
+      sourceHashes.1:
+-        "0x01eb43e0204902ef83ed3b7284f39b6ac2747cfec8fa2d667063c77597693253"
++        "0x203e0b11552fff69c2b0e3617840f67ef689929efef062b5628afc6a2880ff45"
+    }
+```
+
+```diff
+    contract CSFeeOracle (eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB) [tokens/Lido/CSFeeOracle] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xe9044668de5a790902b6bfed112ac2d764965db11a13b730c985ceff09edff4d"
++        "0xef315fcae19b9f01e7ea5921b2afa1fad88cd4144538899030080474517e6ccb"
+    }
+```
+
+```diff
+    contract CSAccounting (eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da) [tokens/Lido/CSAccounting] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xa3793b129329502d6009f7a85359b308a4c6469ce911caf16b24083bdc712519"
++        "0x280da68a03f1701c7c504e3f35f47635d95186ccd20f8359ed48eaa84733134b"
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5) [tokens/Lido/NodeOperatorsRegistry] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a"
++        "0x5d180561dda86f9c602d514f0327c10a48c8b42836553121aa85c9d14a285d36"
+      sourceHashes.1:
+-        "0x7e3615bebdb8e2033c00916316355965e076187f136311105c57e4ab8eed8911"
++        "0x56f04cbd6d74c74c565e84eb51b261382833911c9b0e29b6e8470a96c8c6a4b0"
+    }
+```
+
+```diff
+    contract LazyOracle (eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c) [tokens/Lido/LazyOracle] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x458c2f866141c2cf9eae20f1615ea8870280742c4c0e674575619c0088821291"
++        "0x4e35d87bdeaefb350dcfcc6021b16ffae2c9268f30b5c712569f9755dd281f36"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5217226f6d0d771ac4dec680c53cb340e7e91c54b6b442d0b2509d249701210a"
++        "0x5cf3d26d4fcd1958dd8077785a9ff2adda45e0c7ca89b651ba85610102eadb3b"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428) [tokens/Lido/StakingVault] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xb7340cba7f15880cbd57f96214be29f7ffde82f06b923a0a7b01ed660a852279"
++        "0x98752ee6352221931e7a0dc594ec6c7f22b18c7b84c2f69891efc90010a84a65"
+      sourceHashes.1:
+-        "0x01eb43e0204902ef83ed3b7284f39b6ac2747cfec8fa2d667063c77597693253"
++        "0x203e0b11552fff69c2b0e3617840f67ef689929efef062b5628afc6a2880ff45"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4) [tokens/Lido/HashConsensus] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xd7c073e5462dc74227ab219c6db299253e6a83e1a470f27a9d5dcff04fd6b46f"
++        "0x7f94d3380501ff2d32dbedc9ec31a5dead8beb57dd5d1dd1c49d2dabc4097011"
+    }
+```
+
+```diff
+    contract Wrapped liquid staked Ether 2.0 Token (eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0) [tokens/Lido/wstETH] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6b938c3d38678ebb00f3860def4bdf9d5d8ab7008a6d598cc109fdf7a6c34e0e"
++        "0xab552f390c30719bef4caa481ac16f685edca33726aeacd269e1a992987610b8"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a) [tokens/Lido/HashConsensus] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xdcb2da84a44fbac1b8d7ea814fd34325ac06bb8169fad7507a00835a3ffb25de"
++        "0x5ece20510894b8d8a162c09a6f55308cf4a105f985efb1b7b6e2edc97923ede6"
+    }
+```
+
+```diff
+    contract AccountingOracle (eth:0x852deD011285fe67063a08005c71a85690503Cee) [tokens/Lido/AccountingOracle] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xf330a3f485b5e535d79bf6d47f0acb1a8c8d4df1b8f410979ddd1d7c88751869"
++        "0x942cad30e14ba51db1a2a12e6bb48e0ba708f8bf7390773e0d4bdeb22f8da772"
+    }
+```
+
+```diff
+    contract EVMScriptRegistry (eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A) [tokens/Lido/EVMScriptRegistry] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x3cab9c9a12a52c625f55b2d3d9693f8eb062cb0d41841589b557888ad01afced"
++        "0xd8c08b0f59d6133c399a109ada5168c6e1c1e0c8754b62eb3a4adb440113f20c"
+      sourceHashes.1:
+-        "0x00350407c4a32b62d60dbac5ac3093bf4bffd482f40b2df2a9cd3268365b84e5"
++        "0x5efa3e07ce85dbc47ae51ae53f32fbd64447598eda9d352ce0d65e48a65417a0"
+    }
+```
+
+```diff
+    contract WithdrawalQueueERC721 (eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1) [tokens/Lido/WithdrawalQueueERC721] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x700596a656c09529255fe261db91a5a98b3795dc7aac6bd680e1b9d5ad5f2f5f"
++        "0xbae57f272b3ad6106fc07236b94267465124470d2fed4a0979371fcaada9584b"
+    }
+```
+
+```diff
+    contract EIP712StETH (eth:0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x15185b2d9f11dcf2ea4d005741fa941922e233e89fc5742793ebfb0ca05897c4"
++        "0xb01f6025cd4784eb0b53fd5f60e8713f25f7911a5cf1a76222d33450156be8ff"
+    }
+```
+
+```diff
+    contract Safe (eth:0x909d0CB383Ecc77e44daE5d0146cF476f611f62b) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract ACL (eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a"
++        "0x5d180561dda86f9c602d514f0327c10a48c8b42836553121aa85c9d14a285d36"
+      sourceHashes.1:
+-        "0x766bf5f8bd85cd18a36ec23449bcbb22c66fbc01f44a2e38ff2a06dd5919eb4b"
++        "0xc8c18571f2497cd14c9faa606ad94b64788733b81afae0244175db3c419d228b"
+    }
+```
+
+```diff
+    contract CSParametersRegistry (eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428) [tokens/Lido/CSParametersRegistry] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xc1deebfbd111e2f8e2157336320630099bc5658e2dac19d1ff99e0c76d95e5fd"
++        "0xfc21dd6685a953c7c43b586390cef00c9a04fd78abab13996449f7ca3876ea26"
+    }
+```
+
+```diff
+    contract CSStrikes (eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f) [tokens/Lido/CSStrikes] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x85df3ccf87b902aa07f9bfedaabda68d3ac37ad2524de995d9caa2cd8aa41086"
++        "0x6d90c93ddc693f6962cb745252a149286e2b9de0b6ad20e0dd8ac07c33b0c2af"
+    }
+```
+
+```diff
+    contract Safe (eth:0xAE6A126cBb5128996433350E40dB62E68B9E58d6) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) [tokens/Lido/stETH] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a"
++        "0x5d180561dda86f9c602d514f0327c10a48c8b42836553121aa85c9d14a285d36"
+      sourceHashes.1:
+-        "0x9edb5ea402771070d36f4e553ed8055f5114e26d2b0511b5f3688f8dfd8e1ef5"
++        "0xb4bbd6fc5f141519929083b25c8ce94688fca5c65d89d3bad1cf528f121a4451"
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433) [tokens/Lido/NodeOperatorsRegistry] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a"
++        "0x5d180561dda86f9c602d514f0327c10a48c8b42836553121aa85c9d14a285d36"
+      sourceHashes.1:
+-        "0x7e3615bebdb8e2033c00916316355965e076187f136311105c57e4ab8eed8911"
++        "0x56f04cbd6d74c74c565e84eb51b261382833911c9b0e29b6e8470a96c8c6a4b0"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xB18BB767638Bca324d158B7C7189e1a28aeB9EB4) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract Kernel (eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x3ef00bf119dbb1f46a05a35111f35da84bb45cac1abfa574989211677d16787a"
++        "0xa5a4d8f9ad65f9d9b5e6809f6ff0e2be3f24c2714272e8e47a80772a24c1b3b4"
+      sourceHashes.1:
+-        "0x452458b35204910fe71376b423bd8d2887a1e82d22843fd79880d4ac0dce2a33"
++        "0x4760f9383c4bf8a64ac82aaf6006e2f971fbe2300b77b9b32b986295a28cee33"
+    }
+```
+
+```diff
+    contract WithdrawalVault (eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5cbdf8b8bb204120168ae7790c42ca01a3c365626be04e051f3be6c99a63d794"
++        "0x7a9326e8dc291104b25b9956298c4e7a3b5ef0ef3b4a420da00b454decc3a5e8"
+      sourceHashes.1:
+-        "0x02a7455341d351b5cf754695894d7496179272403e2b811db5202057c6373cad"
++        "0xd295f7b16bbfc3dcff446f382882d7f210156d24b07f3d44cf7b0380299e6213"
+    }
+```
+
+```diff
+    contract Safe (eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract ValidatorExitDelayVerifier (eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x04d8a8a48b4238c64fe27aef387c89bd9d925104d58ae9f3a471fe4684f9dd2e"
++        "0xb62b25f0b67746b7e3bf482df8a768f79427d2dbb4367a0e913c73c4bf1261ef"
+    }
+```
+
+```diff
+    contract OracleDaemonConfig (eth:0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6f38bad385eb6769def612742a8a4ab65d19921bffe96d1ee9241121e2ae1aba"
++        "0x40dfe4001c2bcd0233d4aac1aa3b6e44c712df8c650cdd8c5bcb55c600e6613d"
+    }
+```
+
+```diff
+    contract OperatorGrid (eth:0xC69685E89Cefc327b43B7234AC646451B27c544d) [tokens/Lido/OperatorGrid] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xf8459583fb5a2f8592ade03af60f53d81b1018a669fc56a119e4f821599c4a84"
++        "0xf3868a5258cc49adc67a37a4f1a254b036d51b92e0721ab460a9fb35c0865c33"
+    }
+```
+
+```diff
+    contract CSEjector (eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xa2a2abe99fefa83e09c282ce11527c7eccc31adfa7d899e7f8e3a633550a260d"
++        "0xa70548df0048ed622a658c039b3c21018ad159c165a6e5c5e91b1d9404a4a63f"
+    }
+```
+
+```diff
+    contract StarkNet Token (eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766) [tokens/STRK] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x23af76dab677f190c20ba297bc76c209cffb68653221079dd83fd167ae158753"
++        "0x5f0dbdd26f57b962619c26cd9451be4794c0f375bbe91f91d580d44a5357b141"
+    }
+```
+
+```diff
+    contract MintManager (eth:0xCa14076A3cec95448BaD179cc19B351A4204B88B) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x11978b0aaa6fe38a6bf2106e5ea89f014d40cda3e6f61234c46466e99cf187ee"
++        "0x4f614e396f88e35e1278c687469f0b3b1d3694d0f166aa86d9b4f19a22fef667"
+      sourceHashes.1:
+-        "0x3691fdeb4948182156b23943d1951957e54192b7f9f7ab4c88828089d29d58d7"
++        "0xe5d1e0659f04569f4906592b79388401de1d531008c5003eedb3f62ff417d357"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711) [tokens/Lido/StakingVault] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xb7340cba7f15880cbd57f96214be29f7ffde82f06b923a0a7b01ed660a852279"
++        "0x98752ee6352221931e7a0dc594ec6c7f22b18c7b84c2f69891efc90010a84a65"
+      sourceHashes.1:
+-        "0x01eb43e0204902ef83ed3b7284f39b6ac2747cfec8fa2d667063c77597693253"
++        "0x203e0b11552fff69c2b0e3617840f67ef689929efef062b5628afc6a2880ff45"
+    }
+```
+
+```diff
+    contract OpStackTokenRatePusher (eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE) [tokens/Lido/OpStackTokenRatePusher] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x914444eb1e15eba41dafc9099a1e9e51a554ff786ce9f7b5159cb306f4779477"
++        "0x255983b1a7c926cdb6f5a9611737ef6575185bd282d6add443e6d73de5560727"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288) [tokens/Lido/HashConsensus] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xdcb2da84a44fbac1b8d7ea814fd34325ac06bb8169fad7507a00835a3ffb25de"
++        "0x5ece20510894b8d8a162c09a6f55308cf4a105f985efb1b7b6e2edc97923ede6"
+    }
+```
+
+```diff
+    contract CSFeeDistributor (eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0) [tokens/Lido/CSFeeDistributor] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x881e365358bb714cd1d4c59279039f33010f934835d0bd8406443a9bb43c5b9f"
++        "0xd9dc270d40f391b4b91c286bc179319e2886781eeeb5d1744dea73ed801c4f1b"
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) [tokens/Lido/CSModule] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xde753d771c3a4dc27e58e529b2dfd70871547d49e71ecd3478353ec02e995aa8"
++        "0x4b8eaaad7448f56079390c14b2f7e2ee8285fd0f55208880a2e5d95a9c1715f1"
+    }
+```
+
+```diff
+    contract TriggerableWithdrawalsGateway (eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B) [tokens/Lido/TriggerableWithdrawalsGateway] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6e0f1e9ab2993ef59e29bff788073adafb044d30f822762a9085b18062c36002"
++        "0x55a4d669e1d7d7d718aa53167de51e6498b02aef6dbbdd4e3e2e95edb5df0539"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37) [tokens/Lido/StakingVault] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xb7340cba7f15880cbd57f96214be29f7ffde82f06b923a0a7b01ed660a852279"
++        "0x98752ee6352221931e7a0dc594ec6c7f22b18c7b84c2f69891efc90010a84a65"
+      sourceHashes.1:
+-        "0x01eb43e0204902ef83ed3b7284f39b6ac2747cfec8fa2d667063c77597693253"
++        "0x203e0b11552fff69c2b0e3617840f67ef689929efef062b5628afc6a2880ff45"
+    }
+```
+
+```diff
+    contract Burner (eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a) [tokens/Lido/Burner] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xe60f3737139719a5b7ee625ecc64bbd2f3a558bf210117aa0b0a232fe24a4b80"
++        "0x1bcc782f2db1ba9f9d33585bbcfa0a4d3112f7b4c56b1454d43e73c49852e412"
+    }
+```
+
+```diff
+    contract OracleReportSanityChecker (eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129) [tokens/Lido/OracleReportSanityChecker] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xb1ae7110938670e0ac737a01859c9c6cec20361c269e686d82d1f9007f79dbd6"
++        "0xac98014b6eb58f63a45fb64697a2b2d15d725923c438ac9a1c031988af5d5d7f"
+    }
+```
+
+```diff
+    contract PredepositGuarantee (eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x95ddbbdfb56975dd1a0b91463d3e9a4362231c44b46f40b47781724ceef477c5"
++        "0x80d0adbcca3e958f1bffc81ef35108d4a2e88a2c44e4626228459ebc0031d1e7"
+    }
+```
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) [tokens/Lido/StakingRouter] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xfff62cfc156b3379b99f876fed184d721dcaa8f2c185eb5267d7f0609085e688"
++        "0xa74939534f557c737e81a3317dd9c739b9c0dad834a3342ce70b74afb286f4ad"
+    }
+```
+
+Generated with discovered.json: 0xc39a9bebe84f73eda63634e3f3ca978a160b7a0d
+
+# Diff at Tue, 05 May 2026 10:23:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1776866286
+- current timestamp: 1776866286
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776866286 (main branch discovery), not current.
+
+```diff
+    contract SafeL2 (arb1:0x7843225BA488cf780A4Fe2c842B5dc2aBCf8A03e) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x8De14E014402C0677B075A69122F94C0425Cc179"
+    }
+```
+
+```diff
+    contract PermissionManager (arb1:0xa925C217e4c1C82Ee721eBD496d3863D5C2d829A) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xEd608cf38968C0ba09676843D90B33Dd59dd7375"
+    }
+```
+
+```diff
+    contract Spiko EU T-Bills Money Market Fund Token (arb1:0xCBeb19549054CC0a6257A77736FC78C367216cE7) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xEd608cf38968C0ba09676843D90B33Dd59dd7375"
+    }
+```
+
+```diff
+    contract TokenMessenger (base:0x1682Ae6375C4E4A97e4B583BC394c861A46D8962) {
+    +++ description: Part of CCTP
+      deployerAddress:
++        "base:0x196D99971BC280d5377d9081acB91b383eD0fE70"
+    }
+```
+
+```diff
+    contract GatewayMinter (base:0x2222222d7164433c4C09B0b0D809a9b52C04C205) {
+    +++ description: Entrypoint or minter of USDC on this chain for the Gateway protocol.
+      deployerAddress:
++        "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1"
+    }
+```
+
+```diff
+    contract MasterMinter (base:0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1) {
+    +++ description: Manager contract for minter management [sic].
+      deployerAddress:
++        "base:0x6aAFF8af0ae8017725312C388bA3745dfE91185B"
+    }
+```
+
+```diff
+    contract TokenMessengerV2 (base:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d) {
+    +++ description: Part of CCTP
+      deployerAddress:
++        "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1"
+    }
+```
+
+```diff
+    contract SafeL2 (base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) {
+    +++ description: None
+      deployerAddress:
++        "base:0x620d7E459cfFcdC56a874536dC19147De801a4A1"
+    }
+```
+
+```diff
+    contract GatewayWallet (base:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE) {
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+      deployerAddress:
++        "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1"
+    }
+```
+
+```diff
+    contract MessageTransmitterV2 (base:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64) {
+    +++ description: Part of CCTP
+      deployerAddress:
++        "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1"
+    }
+```
+
+```diff
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
+      deployerAddress:
++        "base:0x6aAFF8af0ae8017725312C388bA3745dfE91185B"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (base:0x92A19381444A001d62cE67BaFF066fA1111d7202) {
+    +++ description: None
+      deployerAddress:
++        "base:0xce96ae6De784181d8Eb2639F1E347fD40b4fD403"
+    }
+```
+
+```diff
+    contract MessageTransmitter (base:0xAD09780d193884d503182aD4588450C416D6F9D4) {
+    +++ description: Part of CCTP
+      deployerAddress:
++        "base:0xe2982b6F5c4d4d93047d49075Cd21c583930135F"
+    }
+```
+
+```diff
+    contract Wrapped OETH Token (base:0xD8724322f44E5c58D7A815F542036fb17DbbF839) {
+    +++ description: None
+      deployerAddress:
++        "base:0x58890A9cB27586E83Cb51d2d26bbE18a1a647245"
+    }
+```
+
+```diff
+    contract TokenMinter (base:0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6) {
+    +++ description: Part of CCTP: Used for automated access control for minting.
+      deployerAddress:
++        "base:0x925c0014EEfc2432eA7522EeF02C35A52229B754"
+    }
+```
+
+```diff
+    contract Timelock (base:0xf817cb3092179083c48c014688D98B72fB61464f) {
+    +++ description: A standard timelock with access control. The current minimum delay is 2d.
+      deployerAddress:
++        "base:0x58890A9cB27586E83Cb51d2d26bbE18a1a647245"
+    }
+```
+
+```diff
+    contract TokenMinterV2 (base:0xfd78EE919681417d192449715b2594ab58f5D002) {
+    +++ description: Part of CCTP: Used for automated access control for minting.
+      deployerAddress:
++        "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1"
+    }
+```
+
+```diff
+    contract DepositContract (eth:0x00000000219ab540356cBB839Cbe05303d7705Fa) {
+    +++ description: Ethereum Beacon Chain deposit contract.
+      deployerAddress:
++        "eth:0xb20a608c624Ca5003905aA834De7156C68b2E1d0"
+    }
+```
+
+```diff
+    contract  (eth:0x00000961Ef480Eb55e80D19ad83579A64c007002) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8646861A7cF453dDD086874d622b0696dE5b9674"
+    }
+```
+
+```diff
+    contract  (eth:0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0B799C86a49DEeb90402691F1041aa3AF2d3C875"
+    }
+```
+
+```diff
+    contract VaultFactory (eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract SimpleMultiSig (eth:0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x75cAD9D719b1109d6fb987A863D41e7A7dF13c8D"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0x06A56487494aa080deC7Bf69128EdA9225784553) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract CSExitPenalties (eth:0x06cd61045f958A209a0f8D746e103eCc625f4193) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44"
+    }
+```
+
+```diff
+    contract ValidatorsExitBusOracle (eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract Accounting (eth:0x23ED611be0e1a820978875C0122F92260804cdDf) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract TokenRateNotifier (eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract Dashboard (eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x35921FB43cB92F5Bfef7cBA1e97Eb5A21Fc2d353) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xe4C119804BE7532dE5C172db5973684e45C22293"
+    }
+```
+
+```diff
+    contract SimpleMultiSig (eth:0x38699d04656fF537ef8671b6b595402ebDBdf6f4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x75cAD9D719b1109d6fb987A863D41e7A7dF13c8D"
+    }
+```
+
+```diff
+    contract LidoExecutionLayerRewardsVault (eth:0x388C818CA8B9251b393131C08a736A67ccB19297) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xDB65702A9b26f8a643a31a4c84b9392589e03D7c"
+    }
+```
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
+    +++ description: Custom role-based operations entrypoint for Lido.
+      deployerAddress:
++        "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD4eD284969E88eBDF8737271933836c2a0DdA50f"
+    }
+```
+
+```diff
+    contract Paxos Gold Token (eth:0x45804880De22913dAFE09f4980848ECE6EcbAf78) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x36C2E652A6c774f4c48F6d3aE747c17916Aeb537"
+    }
+```
+
+```diff
+    contract CSFeeOracle (eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11"
+    }
+```
+
+```diff
+    contract CSAccounting (eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11"
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA"
+    }
+```
+
+```diff
+    contract LazyOracle (eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xA9920F5d0b2671a3ad0bB456DFeDCB0648908DEB"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11"
+    }
+```
+
+```diff
+    contract Wrapped liquid staked Ether 2.0 Token (eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xe19fc582dd93FA876CF4061Eb5456F310144F57b"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract AccountingOracle (eth:0x852deD011285fe67063a08005c71a85690503Cee) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract EVMScriptRegistry (eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA"
+    }
+```
+
+```diff
+    contract WithdrawalQueueERC721 (eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract EIP712StETH (eth:0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract Safe (eth:0x909d0CB383Ecc77e44daE5d0146cF476f611f62b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
+    }
+```
+
+```diff
+    contract ACL (eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA"
+    }
+```
+
+```diff
+    contract CSParametersRegistry (eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44"
+    }
+```
+
+```diff
+    contract CSStrikes (eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44"
+    }
+```
+
+```diff
+    contract Safe (eth:0xAE6A126cBb5128996433350E40dB62E68B9E58d6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x052ab6bFa8aA30CC47ea02e648f90c3B24749B7b"
+    }
+```
+
+```diff
+    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA"
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9B4064C9d9801f062f377512e61bD19484e7F365"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xB18BB767638Bca324d158B7C7189e1a28aeB9EB4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+    }
+```
+
+```diff
+    contract Kernel (eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA"
+    }
+```
+
+```diff
+    contract WithdrawalVault (eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xe19fc582dd93FA876CF4061Eb5456F310144F57b"
+    }
+```
+
+```diff
+    contract Safe (eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB7182815B471Cb251632eF2d1E99Ff1559EEb8e8"
+    }
+```
+
+```diff
+    contract ValidatorExitDelayVerifier (eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x88133C759fdF2D713dEa478D3fD9046853eD198d"
+    }
+```
+
+```diff
+    contract OracleDaemonConfig (eth:0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract LidoLocator (eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x2A78076BF797dAC2D25c9568F79b61aFE565B88C"
+    }
+```
+
+```diff
+    contract OperatorGrid (eth:0xC69685E89Cefc327b43B7234AC646451B27c544d) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract CSEjector (eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44"
+    }
+```
+
+```diff
+    contract StarkNet Token (eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF28f34B4E8983eE4422538bb0b4aA36D6e7d8130"
+    }
+```
+
+```diff
+    contract MintManager (eth:0xCa14076A3cec95448BaD179cc19B351A4204B88B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xdC863FDb545F4DB986DD76F78085AcaFf0271C00"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xC0b1d6e785f547b605744BC287E01c070ED5fE48"
+    }
+```
+
+```diff
+    contract OpStackTokenRatePusher (eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xBb01c09DE4Bf967AbaB418450c3e18Df46358322"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract CSFeeDistributor (eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11"
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11"
+    }
+```
+
+```diff
+    contract TriggerableWithdrawalsGateway (eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x88133C759fdF2D713dEa478D3fD9046853eD198d"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xcD6Fb078F9e1D29e3C04902D3C82e4b24C078Ad9"
+    }
+```
+
+```diff
+    contract Burner (eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract OracleReportSanityChecker (eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract PredepositGuarantee (eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract DepositSecurityModule (eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1F27e93D9E178b2d8e808110a551A65b7fD9F182"
+    }
+```
+
+Generated with discovered.json: 0x6096f32d959ffe393c0f919bfd2ecc4f4a8a6249
+
+# Diff at Wed, 22 Apr 2026 14:13:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b0c9883f4f9da8504a0490bf6e80c8c08daa0cb0 block: 1775562114
+- current timestamp: 1776866286
+
+## Description
+
+GatewayWallet upgraded: support clearing txs against each other with 'batches' (no changes for interop)
+
+small Lido upgrades.
+
+## Watched changes
+
+```diff
+    contract GatewayWallet (base:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE) {
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+      sourceHashes.1:
+-        "0x3c7ddc87aeb7595467ac7d4919823954068ac25a492948abebba618e2a522c0e"
++        "0x506e625ba860a14389c9a084a8c4fd214f27c61d2748b95699be952eb3ff6af0"
+      values.$implementation:
+-        "base:0x899a4f5f5422cC5E8183280182e7096Fb923C762"
++        "base:0x57DC761789b7fb1Ed4b33c3e55F2DFf14150b1e8"
+      values.$pastUpgrades.2:
++        ["2026-04-20T21:25:29.000Z","0x5b88031141c02320ecac344cd7802df1af80a0e1f030c33a44fcbb2f5d1e0509",["base:0x57DC761789b7fb1Ed4b33c3e55F2DFf14150b1e8"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.contractSignersAllowlister:
++        "base:0x0000000000000000000000000000000000000000"
+      implementationNames.base:0x899a4f5f5422cC5E8183280182e7096Fb923C762:
+-        "GatewayWallet"
+      implementationNames.base:0x57DC761789b7fb1Ed4b33c3e55F2DFf14150b1e8:
++        "GatewayWallet"
+    }
+```
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x1dd4ca17f1d07d16fc3bc5c4f5373e5ce36f59220db6cb3f08e93e90300455ad"
++        "0x5a96636cae49d9865336a069167358aa1056cd74f8308fd55834376c6cbf67e5"
+      values.$implementation:
+-        "eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50"
++        "eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70"
+      values.$pastUpgrades.1:
++        ["2026-04-17T16:42:11.000Z","0xf43f6fe63edc60ae6eb0bc919b3c682ac0c068df7eb1cb44aa514302539f19cb",["eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.proxy__getImplementation:
+-        "eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50"
++        "eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70"
+      implementationNames.eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50:
+-        "VaultHub"
+      implementationNames.eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70:
++        "VaultHub"
+    }
+```
+
+```diff
+    contract LazyOracle (eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xb435a1c81fa691bd4ab244f90b03bb5ce2c1a97f0a4ff9c39dabf062c0b0bb5c"
++        "0x458c2f866141c2cf9eae20f1615ea8870280742c4c0e674575619c0088821291"
+      values.$implementation:
+-        "eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B"
++        "eth:0x96c9a897D116ef660086d3aA67b3af653324aB37"
+      values.$pastUpgrades.1:
++        ["2026-04-17T16:42:11.000Z","0xf43f6fe63edc60ae6eb0bc919b3c682ac0c068df7eb1cb44aa514302539f19cb",["eth:0x96c9a897D116ef660086d3aA67b3af653324aB37"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.proxy__getImplementation:
+-        "eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B"
++        "eth:0x96c9a897D116ef660086d3aA67b3af653324aB37"
+      implementationNames.eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B:
+-        "LazyOracle"
+      implementationNames.eth:0x96c9a897D116ef660086d3aA67b3af653324aB37:
++        "LazyOracle"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37) {
+    +++ description: None
+      values.stagedBalance:
+-        "62000000000000000000"
++        0
+    }
+```
+
+```diff
+    contract DepositSecurityModule (eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD) {
+    +++ description: None
+      values.getGuardians.2:
+-        "eth:0xd4EF84b638B334699bcf5AF4B0410B8CCD71943f"
++        "eth:0x6d22aE126eB2c37F67a1391B37FF4f2863e61389"
+      values.getGuardians.5:
+-        "eth:0x6d22aE126eB2c37F67a1391B37FF4f2863e61389"
++        "eth:0x4B87F16B8d32cb5a859a4C48a88edB5adBe3498E"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GatewayWallet/GatewayWallet.sol                | 598 +++++++++++++++++++--
+ .../LazyOracle/LazyOracle.sol                      |  19 +-
+ .../VaultHub/VaultHub.sol                          |  27 +-
+ 3 files changed, 586 insertions(+), 58 deletions(-)
+```
+
 Generated with discovered.json: 0xfd4c27042d6a952c323df8bdfc649d31c9419000
 
 # Diff at Tue, 07 Apr 2026 11:43:39 GMT:

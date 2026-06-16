@@ -46,16 +46,9 @@ interface Props {
   value: ChartRange
   setValue: (range: ChartRange) => void
   options: ChartRangeOption[]
-  offset?: UnixTime
 }
 
-export function ChartRangeControls({
-  name,
-  value,
-  setValue,
-  options,
-  offset = 0,
-}: Props) {
+export function ChartRangeControls({ name, value, setValue, options }: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [internalValue, setInternalValue] = useState<DateRange | undefined>(
     undefined,
@@ -70,7 +63,7 @@ export function ChartRangeControls({
   if (!isClient) {
     return <Skeleton className={cn('h-8 w-14 md:w-[320px]')} />
   }
-  const selectedOption = rangeToOption(value, options, offset)
+  const selectedOption = rangeToOption(value, options)
 
   function onDateRangeChange(dateRange: DateRange | undefined) {
     setInternalValue(dateRange)
@@ -95,9 +88,7 @@ export function ChartRangeControls({
         open={drawerOpen}
         onOpenChange={(open) => {
           if (!open) {
-            track('chartRangeSelected', {
-              props: { name, value: selectedOption },
-            })
+            track('chartRangeSelected', { name, value: selectedOption })
           }
           setDrawerOpen(open)
         }}
@@ -105,7 +96,7 @@ export function ChartRangeControls({
         <DrawerTrigger
           className={cn(
             selectTriggerClassnames,
-            'z-0 h-8 bg-surface-secondary',
+            'z-0 h-8 bg-surface-primary primary-card:bg-surface-secondary',
           )}
         >
           {selectedOption === 'custom' ? (
@@ -125,7 +116,6 @@ export function ChartRangeControls({
           <PredefinedOptions
             name={name}
             options={options}
-            offset={offset}
             setValue={(range) => {
               setValue(range)
               setDrawerOpen(false)
@@ -140,7 +130,6 @@ export function ChartRangeControls({
             className="mx-auto h-[286px]"
             value={value}
             internalValue={internalValue}
-            offset={offset}
             onDateRangeChange={onDateRangeChange}
           />
         </DrawerContent>
@@ -153,7 +142,6 @@ export function ChartRangeControls({
       <PredefinedOptions
         name={name}
         options={options}
-        offset={offset}
         setValue={setValue}
         setInternalValue={setInternalValue}
         selectedOption={selectedOption}
@@ -178,13 +166,10 @@ export function ChartRangeControls({
         <CalendarComponent
           value={value}
           internalValue={internalValue}
-          offset={offset}
           onDateRangeChange={(dateRange) => {
             onDateRangeChange(dateRange)
             if (dateRange?.from && dateRange?.to) {
-              track('chartRangeSelected', {
-                props: { name, value: 'custom' },
-              })
+              track('chartRangeSelected', { name, value: 'custom' })
             }
           }}
         />
@@ -196,7 +181,6 @@ export function ChartRangeControls({
 function PredefinedOptions({
   name,
   options,
-  offset,
   setValue,
   setInternalValue,
   selectedOption,
@@ -204,7 +188,6 @@ function PredefinedOptions({
 }: {
   name: string
   options: ChartRangeOption[]
-  offset: UnixTime
   setValue: (range: ChartRange) => void
   setInternalValue: (dateRange: DateRange | undefined) => void
   selectedOption: ChartRangeOptionValue | 'custom'
@@ -222,12 +205,10 @@ function PredefinedOptions({
         <button
           key={option.value}
           onClick={() => {
-            const range = optionToRange(option.value, { offset })
+            const range = optionToRange(option.value)
             setValue(range)
             setInternalValue(undefined)
-            track('chartRangeSelected', {
-              props: { name, value: option.value },
-            })
+            track('chartRangeSelected', { name, value: option.value })
           }}
           type="button"
           disabled={option.disabled}
@@ -250,13 +231,11 @@ function CalendarComponent({
   className,
   value,
   internalValue,
-  offset,
   onDateRangeChange,
 }: {
   className?: string
   value: ChartRange
   internalValue: DateRange | undefined
-  offset: UnixTime
   onDateRangeChange: (dateRange: DateRange | undefined) => void
 }) {
   const [month, setMonth] = useState<Date>(UnixTime.toDate(value[1]))
@@ -273,8 +252,7 @@ function CalendarComponent({
       min={1}
       timeZone="UTC"
       disabled={(date) =>
-        date.getTime() >
-        UnixTime.toStartOf(UnixTime.now() + offset, 'day') * 1000
+        date.getTime() > UnixTime.toStartOf(UnixTime.now(), 'day') * 1000
       }
       onSelect={onDateRangeChange}
       captionLayout="dropdown"
@@ -286,11 +264,9 @@ function CalendarComponent({
 function rangeToOption(
   [from, to]: ChartRange,
   options: { value: ChartRangeOptionValue }[],
-  offset: UnixTime,
 ): ChartRangeOptionValue | 'custom' {
   if (
-    UnixTime.toStartOf(to, 'day') !==
-    UnixTime.toStartOf(UnixTime.now() + offset, 'day')
+    UnixTime.toStartOf(to, 'day') !== UnixTime.toStartOf(UnixTime.now(), 'day')
   ) {
     return 'custom'
   }

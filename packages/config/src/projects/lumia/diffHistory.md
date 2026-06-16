@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x0f689f077f4615dc45c889887f7523c1900e6045
+
+# Diff at Tue, 05 May 2026 10:22:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1761895563
+- current timestamp: 1761895563
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895563 (main branch discovery), not current.
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B) {
+    +++ description: System contract defining the prism Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      deployerAddress:
++        "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
+    }
+```
+
 Generated with discovered.json: 0x55202438f19786ade68ae74674f52e3ff3889b1f
 
 # Diff at Tue, 09 Dec 2025 11:33:10 GMT:

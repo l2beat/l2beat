@@ -161,7 +161,7 @@ export function getScalingSummaryValidiumAndOptimiumsColumns(
   opts?: ScalingSummaryColumnsOpts,
 ) {
   return [
-    ...getScalingSummaryColumns().slice(0, 5),
+    ...getScalingSummaryColumns(opts).slice(0, 6),
     columnHelper.display({
       header: 'DA Layer',
       cell: (ctx) => {
@@ -178,7 +178,7 @@ export function getScalingSummaryValidiumAndOptimiumsColumns(
                   ? 'No bridge'
                   : latestValue.bridge.value,
             }}
-            href={`/scaling/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+            href={`/scaling/risk/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
           />
         )
       },
@@ -193,7 +193,7 @@ export function getScalingSummaryValidiumAndOptimiumsColumns(
                   secondLine:
                     da.bridge.value === 'None' ? 'No bridge' : da.bridge.value,
                 }}
-                href={`/scaling/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+                href={`/scaling/risk/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
               />
             )) ?? []
           )
@@ -238,20 +238,6 @@ export function getScalingSummaryOthersColumns(
         )
       },
     }),
-    ...getScalingSummaryValidiumAndOptimiumsColumns(opts).slice(5),
-  ]
-}
-
-export function getScalingSummaryNotReviewedColumns(
-  opts?: ScalingSummaryColumnsOpts,
-) {
-  return [
-    ...getScalingCommonProjectColumns(
-      columnHelper,
-      (row) => `/scaling/projects/${row.slug}`,
-      { ignoreUnderReviewIcon: true },
-    ),
-    ...getScalingSummaryColumns().slice(4, 5),
-    ...getScalingSummaryColumns(opts).slice(6, 8),
+    ...getScalingSummaryValidiumAndOptimiumsColumns(opts).slice(6),
   ]
 }

@@ -17,6 +17,14 @@ import type {
 } from './InteropAggregationAnalyzer'
 import type { InteropAggregationService } from './InteropAggregationService'
 
+/**
+ * How stale the syncers' captured data may be relative to the aggregation
+ * window end before we skip the hour. `to` is the last whole hour (already up
+ * to an hour in the past), so a syncer must lag by more than this plus that
+ * gap to trip the check.
+ */
+const SYNCER_FRESHNESS_TOLERANCE = 30 * UnixTime.MINUTE
+
 export interface InteropAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
@@ -36,9 +44,13 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
   }
 
   override async update(_: number, to: number): Promise<number> {
-    if (!this.$.syncersManager.areAllSyncersFollowing()) {
+    const syncersFresh = await this.$.syncersManager.areSyncersFreshEnough(
+      to,
+      SYNCER_FRESHNESS_TOLERANCE,
+    )
+    if (!syncersFresh) {
       this.logger.info(
-        'Skipping aggregation - not all syncers are following the tip',
+        'Skipping aggregation - syncers captured data is not fresh enough',
       )
       // This is a deliberate no-op: aggregates are best-effort hourly snapshots.
       // If syncers are behind, we leave this hour empty and try again next hour.
@@ -46,28 +58,40 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     }
 
     const from = to - UnixTime.DAY
+    const retentionCutoff = to - 14 * UnixTime.DAY
 
     const transfers = await this.$.db.interopTransfer.getByRange(from, to)
 
-    const { aggregatedTransfers, aggregatedTokens, aggregatedTokensPairs } =
-      this.$.aggregationService.aggregate(transfers, this.$.configs, to)
+    const {
+      aggregatedTransfers,
+      aggregatedTokens,
+      aggregatedDeployedTokens,
+      aggregatedTokensPairs,
+    } = this.$.aggregationService.aggregate(transfers, this.$.configs, to)
     const analysis = await this.runAggregateAnalysis(to, aggregatedTransfers)
 
     await this.$.db.transaction(async () => {
       await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
-        from,
+        retentionCutoff,
       )
       await this.$.db.aggregatedInteropToken.deleteAllButEarliestPerDayBefore(
-        from,
+        retentionCutoff,
+      )
+      await this.$.db.aggregatedInteropDeployedToken.deleteAllButEarliestPerDayBefore(
+        retentionCutoff,
       )
       await this.$.db.aggregatedInteropTokensPair.deleteAllButEarliestPerDayBefore(
-        from,
+        retentionCutoff,
       )
       await this.$.db.aggregatedInteropToken.deleteByTimestamp(to)
+      await this.$.db.aggregatedInteropDeployedToken.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTokensPair.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.insertMany(aggregatedTransfers)
       await this.$.db.aggregatedInteropToken.insertMany(aggregatedTokens)
+      await this.$.db.aggregatedInteropDeployedToken.insertMany(
+        aggregatedDeployedTokens,
+      )
       await this.$.db.aggregatedInteropTokensPair.insertMany(
         aggregatedTokensPairs,
       )
@@ -78,7 +102,13 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
         timestamp: to,
         checkedGroups: analysis.checkedGroups,
         suspiciousGroups: analysis.suspiciousGroups.length,
-        details: analysis.suspiciousGroups,
+        details: analysis.suspiciousGroups.map((group) => ({
+          id: group.id,
+          bridgeType: group.bridgeType,
+          srcChain: group.srcChain,
+          dstChain: group.dstChain,
+          reasons: group.reasons,
+        })),
       })
       this.$.notifier?.notifySuspiciousAggregates(to, analysis)
     }
@@ -86,6 +116,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     this.logger.info('Aggregated interop transfers saved to db', {
       aggregatedRecords: aggregatedTransfers.length,
       aggregatedTokens: aggregatedTokens.length,
+      aggregatedDeployedTokens: aggregatedDeployedTokens.length,
       aggregatedTokenPairs: aggregatedTokensPairs.length,
       suspiciousGroups: analysis?.suspiciousGroups.length ?? 0,
     })

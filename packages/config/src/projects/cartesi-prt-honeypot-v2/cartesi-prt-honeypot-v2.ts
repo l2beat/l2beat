@@ -19,7 +19,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -168,7 +168,9 @@ export const cartesiprthoneypotv2: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT(minChallengePeriodSeconds),
-      initialBond: utils.formatEther(topLevelTournamentBond),
+      initialBond: { value: utils.formatEther(topLevelTournamentBond) },
+      permissioned: false,
+      defenderAdvantage: { shape: 'log' },
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
@@ -186,7 +188,7 @@ export const cartesiprthoneypotv2: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,

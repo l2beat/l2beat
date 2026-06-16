@@ -14,6 +14,7 @@ interface Props {
   ongoingAnomaly?: 'single' | 'multiple'
   secondLine?: string
   livenessSectionHref?: string
+  className?: string
 }
 
 export function ProjectHeader({
@@ -21,9 +22,12 @@ export function ProjectHeader({
   ongoingAnomaly,
   secondLine,
   livenessSectionHref = '#liveness',
+  className,
 }: Props) {
   return (
-    <div className="mb-6 flex items-start justify-between gap-4">
+    <div
+      className={cn('mb-6 flex items-start justify-between gap-4', className)}
+    >
       <div
         className={cn(
           'mt-1 flex w-full flex-wrap gap-6 max-md:flex-col md:items-center',

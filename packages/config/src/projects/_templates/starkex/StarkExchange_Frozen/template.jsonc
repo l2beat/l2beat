@@ -1,0 +1,68 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "StarkExchange",
+  "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
+  "category": "core",
+  "ignoreMethods": [
+    "getEthKey",
+    "getQuantum",
+    "isAssetRegistered",
+    "validatedSelectors",
+    "getAssetInfo",
+    "getActionCount",
+    "getActionHashByIndex",
+    "initializerSize",
+    "identify",
+    "defaultVaultWithdrawalLock",
+    "orderRegistryAddress"
+  ],
+  "ignoreInWatchMode": [
+    "getLastBatchId",
+    "getOrderRoot",
+    "getOrderTreeHeight",
+    "getSequenceNumber",
+    "getVaultRoot",
+    "getValidiumVaultRoot"
+  ],
+  "fields": {
+    "$admin": {
+      "description": "Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "upgrade",
+          "delay": "{{getUpgradeActivationDelay}}"
+        },
+        {
+          "type": "interact",
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set."
+        },
+        {
+          "type": "interact",
+          "description": "manage the token admin role."
+        }
+      ]
+    },
+    "isFinalized": {
+      "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade).",
+      "severity": "HIGH"
+    },
+    "DEPOSIT_CANCEL_DELAY": {
+      "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
+    },
+    "operators": {
+      "handler": {
+        "type": "event",
+        "select": "operator",
+        "add": { "event": "LogOperatorAdded" },
+        "remove": { "event": "LogOperatorRemoved" }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain."
+        }
+      ]
+    }
+  }
+}
