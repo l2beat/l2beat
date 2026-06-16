@@ -1,5 +1,6 @@
 import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
+import { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
@@ -24,6 +25,7 @@ const UNKNOWN_TOKEN_SYMBOL = 'Unknown'
 
 export async function getInteropProtocolTransfers({
   id,
+  protocolIds,
   from,
   to,
   type,
@@ -32,39 +34,29 @@ export async function getInteropProtocolTransfers({
   limit,
   cursor,
 }: InteropProtocolTransfersParams): Promise<InteropProtocolTransfersResponse> {
-  if (from.length === 0 || to.length === 0) {
-    return {
-      items: [],
-      nextCursor: undefined,
-    }
+  const empty: InteropProtocolTransfersResponse = {
+    items: [],
+    nextCursor: undefined,
   }
+
+  if (from.length === 0 || to.length === 0) return empty
 
   if (env.MOCK) {
     return getMockInteropTransfers({ from, to })
   }
 
-  const interopProject = await ps.getProject({
-    id,
+  // Either a single protocol (`id`) or a set of protocols (`protocolIds`).
+  const ids = id ? [id] : (protocolIds ?? []).map((value) => ProjectId(value))
+  if (ids.length === 0) return empty
+
+  const interopProjects = await ps.getProjects({
+    ids,
     select: ['interopConfig'],
   })
-  if (!interopProject?.interopConfig) {
-    return {
-      items: [],
-      nextCursor: undefined,
-    }
-  }
-
-  const plugins = type
-    ? interopProject.interopConfig.plugins.filter(
-        (plugin) => plugin.bridgeType === type,
-      )
-    : interopProject.interopConfig.plugins
-  if (plugins.length === 0) {
-    return {
-      items: [],
-      nextCursor: undefined,
-    }
-  }
+  const plugins = interopProjects
+    .flatMap((project) => project.interopConfig.plugins)
+    .filter((plugin) => !type || plugin.bridgeType === type)
+  if (plugins.length === 0) return empty
 
   const classifier = new InteropTransferClassifier()
   const matcher = classifier.createMatcher<InteropTransferRecord>(plugins)
