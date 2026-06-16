@@ -63,6 +63,10 @@ const AORI_NETWORKS = [
     address: EthereumAddress('0xc6868edf1d2a7a8b759856cb8afa333210dfeda6'),
   },
   {
+    chain: 'plasma',
+    address: EthereumAddress('0xFfe691A6dDb5D2645321e0a920C2e7Bdd00dD3D8'),
+  },
+  {
     chain: 'bsc',
     address: EthereumAddress('0xFfe691A6dDb5D2645321e0a920C2e7Bdd00dD3D8'),
   },
