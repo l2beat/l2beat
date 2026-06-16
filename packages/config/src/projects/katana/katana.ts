@@ -41,6 +41,7 @@ const emergencyActivatedCount = discovery.getContractValue<number>(
   'emergencyStateCount',
 )
 const katanaVKeys = getKatanaVKeys()
+const chainId = 747474
 
 const forcedTxUnverifiedDescription =
   'The self-sequencing delay is configured offchain and the node source and config are unverified.'
@@ -168,7 +169,7 @@ export const katana: ScalingProject = {
     sinceTimestamp: UnixTime(1746742811),
     apis: [
       { type: 'rpc', url: 'https://rpc.katana.network', callsPerMinute: 300 },
-      { type: 'blockscout', url: 'https://katanascan.com/api' },
+      { type: 'etherscan', chainId },
     ],
   },
   riskView: {
