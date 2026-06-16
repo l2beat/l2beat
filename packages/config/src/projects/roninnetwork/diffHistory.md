@@ -8,7 +8,7 @@ Generated with discovered.json: 0x02f0fa465869e5e623c2d58227a8c68b9eb52aa0
 
 ## Description
 
-Guardian role on OptimismPortal2, SystemConfig and SuperchainConfig moved from Conduit Multisig 1 to the joint Ronin/Conduit Safe (RoninConduitOwner, `0xE9Ad…5607`). SuperchainConfig impl was bumped twice on 2026-06-09: first to canonical `StorageSetter` (`0x6322…F9b1`), then to standard `SuperchainConfig` (`0xb08C…a957`). Conduit Multisig 1 also dropped two signers.
+Guardian role on OptimismPortal2, SystemConfig and SuperchainConfig moved from Conduit Multisig 1 to the joint Ronin/Conduit Safe (RoninConduitOwner, `0xE9Ad…5607`). SuperchainConfig was re-initialized via the standard StorageSetter→same-impl pattern, bumping `initVersion` 1 → 2 and setting the new guardian to RoninConduitOwner. Conduit Multisig 1 also dropped two signers.
 
 ## Watched changes
 
