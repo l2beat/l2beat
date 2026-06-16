@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xe50afce2c674062212888462ba0ddb7ff11c05f9
+
+# Diff at Tue, 16 Jun 2026 09:48:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1780586770
+- current timestamp: 1781603222
+
+## Description
+
+Add permissioned address to bridge access control.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      values.accessControl.SECURITY_AGENT.members.2:
++        "eth:0x27aFEd9831209B58Cf24fa241E028dD1e80Fb17D"
+      values.secAgentAC.2:
++        "eth:0x27aFEd9831209B58Cf24fa241E028dD1e80Fb17D"
+    }
+```
+
 Generated with discovered.json: 0x95eb1375056f07b751ffdd6e67a9162493a75559
 
 # Diff at Tue, 09 Jun 2026 12:43:37 GMT:
