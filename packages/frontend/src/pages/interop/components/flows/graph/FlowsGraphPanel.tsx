@@ -36,7 +36,7 @@ export function FlowsGraphPanel({
   const isSmallScreen = size ? size <= 500 : false
 
   return (
-    <div className="flex min-h-0 w-full flex-1 flex-col items-center max-lg:order-2">
+    <div className="flex min-h-0 w-full flex-1 flex-col items-center pb-10 max-lg:order-2">
       <div className="flex min-h-0 w-full min-w-0 flex-1 items-center justify-center">
         <div
           id="flows-graph"
