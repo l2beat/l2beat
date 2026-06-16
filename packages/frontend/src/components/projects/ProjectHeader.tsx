@@ -56,7 +56,7 @@ export function ProjectHeader({
             )}
           </div>
         </h1>
-        <div className="flex flex-col gap-2 max-md:w-full md:contents">
+        <div className="flex flex-col gap-2 max-md:w-full md:flex-row md:items-center">
           {!!ongoingAnomaly && (
             <a
               href={livenessSectionHref}
