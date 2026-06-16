@@ -1,6 +1,10 @@
 import type { Project } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
-import { assert, getInteropTransferValue } from '@l2beat/shared-pure'
+import {
+  assert,
+  getInteropTransferValue,
+  type InteropBridgeType,
+} from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { manifest } from '~/utils/Manifest'
 
@@ -88,6 +92,28 @@ export function aggregateTransferSize(
     averageTransferSizeUsd:
       identifiedCount > 0 ? totalValueUsd / identifiedCount : undefined,
   }
+}
+
+/** Volume per bridge type, keyed by the record's `bridgeType`. */
+export type TransferTypeDataPoint = Partial<Record<InteropBridgeType, number>>
+
+/** Single transfer-type (bridge type) volume distribution aggregated across all
+ * given records, for a chain/protocol selection. */
+export function aggregateTransferType(
+  records: AggregatedInteropTransferRecord[],
+): TransferTypeDataPoint | undefined {
+  if (records.length === 0) return undefined
+
+  const byType: TransferTypeDataPoint = {}
+  let total = 0
+  for (const record of records) {
+    const value = getInteropTransferValue(record) ?? 0
+    byType[record.bridgeType] = (byType[record.bridgeType] ?? 0) + value
+    total += value
+  }
+
+  if (total === 0) return undefined
+  return byType
 }
 
 export function getTransferSizeChartData(

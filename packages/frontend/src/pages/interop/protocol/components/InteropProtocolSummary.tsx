@@ -101,7 +101,13 @@ export function InteropProtocolSummary({
       <HorizontalSeparator className="my-4" />
       <InteropTransferSizeBreakdown transferSize={protocolData.transferSize} />
       <HorizontalSeparator className="my-4" />
-      <InteropTransferTypeBreakdown protocolData={protocolData} />
+      <InteropTransferTypeBreakdown
+        byType={Object.fromEntries(
+          Object.entries(protocolData?.entry?.byBridgeType ?? {}).flatMap(
+            ([type, stats]) => (stats ? [[type, stats.volume] as const] : []),
+          ),
+        )}
+      />
       {protocol.header.description && (
         <div className="max-md:hidden">
           <HorizontalSeparator className="my-4" />

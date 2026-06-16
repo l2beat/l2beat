@@ -22,11 +22,11 @@ interface StatItem {
 export function BridgeFlowStats({
   data,
   chainId,
-  protocolName,
+  label,
 }: {
   data: InteropFlowsData
   chainId: string
-  protocolName: string
+  label: string
 }) {
   const { allChains, setHighlightedChainPair } = useInteropFlows()
 
@@ -82,7 +82,7 @@ export function BridgeFlowStats({
   return (
     <div className="rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
       <div className="mb-3 font-bold text-label-value-12 text-secondary uppercase">
-        {protocolName} stats
+        {label}
       </div>
       <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
         <div className="mb-1.5 font-bold text-label-value-12 uppercase">

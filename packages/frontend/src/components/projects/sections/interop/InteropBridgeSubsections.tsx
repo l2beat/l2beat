@@ -1,6 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
-import { InteropTransferSizeBreakdown } from '~/pages/interop/protocol/components/InteropSummaryParts'
+import {
+  InteropTransferSizeBreakdown,
+  InteropTransferTypeBreakdown,
+} from '~/pages/interop/protocol/components/InteropSummaryParts'
 import { useTRPC } from '~/trpc/React'
 import { InteropTokensSection } from './InteropTokensSection'
 import { InteropTransfersSection } from './InteropTransfersSection'
@@ -35,8 +38,13 @@ export function InteropBridgeSubsections({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="rounded-lg border border-divider bg-surface-primary px-4 pt-2.5 pb-4">
-        <InteropTransferSizeBreakdown transferSize={data?.transferSize} />
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="rounded-lg border border-divider bg-surface-primary px-4 pt-2.5 pb-4">
+          <InteropTransferSizeBreakdown transferSize={data?.transferSize} />
+        </div>
+        <div className="rounded-lg border border-divider bg-surface-primary px-4 pt-2.5 pb-4">
+          <InteropTransferTypeBreakdown byType={data?.transferType} />
+        </div>
       </div>
 
       <InteropTokensSection

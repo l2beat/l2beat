@@ -126,6 +126,26 @@ function Content({
   const statsChainB = visibleHighlightedChains[1]
   const hasRouteSelection = hasGraphSelection && !!statsChainB
 
+  const chainName = (chainId: string | undefined) =>
+    interopChains.find((c) => c.id === chainId)?.name ?? chainId ?? ''
+
+  // Base reflects the chain/route selection; a protocol suffix is appended only
+  // when the selection is narrowed down from "all protocols".
+  const baseLabel = hasRouteSelection
+    ? `${chainName(statsChainA)} <> ${chainName(statsChainB)} route stats`
+    : 'Chain stats'
+  const allProtocolsSelected = selectedProtocols.length === protocols.length
+  const protocolSuffix = allProtocolsSelected
+    ? undefined
+    : selectedProtocols.length === 1
+      ? singleProtocolId === canonicalProtocolId
+        ? 'Canonical bridge'
+        : (protocols.find((p) => p.id === singleProtocolId)?.name ?? 'protocol')
+      : `${selectedProtocols.length} protocols`
+  const statsLabel = protocolSuffix
+    ? `${baseLabel} · ${protocolSuffix}`
+    : baseLabel
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:items-start">
@@ -180,20 +200,18 @@ function Content({
           </div>
         )}
       </div>
-      {singleProtocolId ? (
+      {singleProtocolId && !hasRouteSelection ? (
         data && (
           <BridgeFlowStats
             data={data}
             chainId={statsChainA}
-            protocolName={
-              protocols.find((p) => p.id === singleProtocolId)?.name ?? 'Bridge'
-            }
+            label={statsLabel}
           />
         )
       ) : (
         <div className="rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
           <div className="mb-3 font-bold text-label-value-12 text-secondary uppercase">
-            {hasRouteSelection ? 'Route stats' : 'Chain stats'}
+            {statsLabel}
           </div>
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 lg:[&>*:first-child]:row-span-3 lg:[&>*]:col-span-2">
             {hasRouteSelection ? (

@@ -17,6 +17,7 @@ import {
 } from '~/components/core/Drawer'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
+import { CheckIcon } from '~/icons/Check'
 import { InfoIcon } from '~/icons/Info'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { cn } from '~/utils/cn'
@@ -226,6 +227,8 @@ export function FlowsCanonicalBridgeButton({
         }
       }}
       aria-pressed={onlyCanonicalSelected}
+      role="checkbox"
+      aria-checked={onlyCanonicalSelected}
       className={cn(
         'flex h-9.5 shrink-0 items-center gap-2 rounded-lg border py-2 pr-4 pl-2 font-bold text-sm leading-none transition-colors max-md:w-full max-md:justify-center',
         onlyCanonicalSelected
@@ -233,6 +236,18 @@ export function FlowsCanonicalBridgeButton({
           : 'border-divider bg-surface-primary! hover:bg-surface-secondary',
       )}
     >
+      <span
+        className={cn(
+          'flex size-4 shrink-0 items-center justify-center rounded border transition-colors',
+          onlyCanonicalSelected
+            ? 'border-brand bg-brand'
+            : 'border-2 border-surface-tertiary',
+        )}
+      >
+        {onlyCanonicalSelected && (
+          <CheckIcon className="size-3 stroke-[2px] stroke-surface-primary!" />
+        )}
+      </span>
       {canonicalProtocol.iconUrl && (
         <img
           src={canonicalProtocol.iconUrl}
@@ -240,7 +255,7 @@ export function FlowsCanonicalBridgeButton({
           className="size-5 rounded-full bg-white"
         />
       )}
-      Canonical bridge
+      Canonical bridge only
     </button>
   )
 }

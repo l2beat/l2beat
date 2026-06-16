@@ -7,7 +7,6 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { EM_DASH } from '~/consts/characters'
-import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
@@ -105,23 +104,22 @@ export function InteropTransferSizeBreakdown({
 }
 
 export function InteropTransferTypeBreakdown({
-  protocolData,
+  byType,
 }: {
-  protocolData: InteropProtocolDashboardData
+  /** Volume per bridge type. */
+  byType: Partial<Record<TransferType, number>> | undefined
 }) {
-  const byBridgeType = protocolData?.entry?.byBridgeType
-  const transferTypeBreakdownValues = Object.keys(byBridgeType ?? {}).flatMap(
-    (type) => {
-      const transferType = type as TransferType
-      const stats = byBridgeType?.[transferType]
-      if (!stats) return []
-      return {
-        value: stats.volume,
-        label: TRANSFER_TYPE_DISPLAY[transferType].label,
-        className: INTEROP_TYPE_TO_BG_COLOR[transferType],
-      }
-    },
-  )
+  const transferTypeBreakdownValues = (
+    Object.keys(TRANSFER_TYPE_DISPLAY) as TransferType[]
+  ).flatMap((transferType) => {
+    const volume = byType?.[transferType]
+    if (volume === undefined) return []
+    return {
+      value: volume,
+      label: TRANSFER_TYPE_DISPLAY[transferType].label,
+      className: INTEROP_TYPE_TO_BG_COLOR[transferType],
+    }
+  })
 
   return (
     <div>
