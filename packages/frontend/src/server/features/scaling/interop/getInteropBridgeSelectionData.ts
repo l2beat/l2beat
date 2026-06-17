@@ -1,4 +1,4 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
@@ -68,11 +68,18 @@ async function buildBridgeSelectionData(
     ps.getProjects({ select: ['interopConfig'] }),
   ])
 
+  const subgroupProjects = new Set(
+    interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
+  )
+  const nonSubgroupRecords = records.filter(
+    (record) => !subgroupProjects.has(record.id as ProjectId),
+  )
+
   return {
-    transferSize: aggregateTransferSize(records),
-    transferType: aggregateTransferType(records),
+    transferSize: aggregateTransferSize(nonSubgroupRecords),
+    transferType: aggregateTransferType(nonSubgroupRecords),
     tokens: await buildInteropTokenData({
-      records,
+      records: nonSubgroupRecords,
       interopProject: undefined,
       interopProjects,
       type: undefined,

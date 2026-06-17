@@ -82,6 +82,13 @@ export function getSearchBarProjectEntries<
       category: 'scaling',
       kind: project.scalingInfo?.layer ?? 'layer2',
       scalingCategory: project.scalingInfo?.type,
+      tags: project.interopConfig
+        ? dedupeTags([
+            ...commonTags,
+            project.interopConfig.name,
+            project.interopConfig.shortName,
+          ])
+        : commonTags,
     })
   }
 

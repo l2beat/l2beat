@@ -72,13 +72,12 @@ export function InteropTransfersTableView({
 
   const columns = useMemo(() => getTransferColumns({ from, to }), [from, to])
 
-  // Reset to the first page whenever the selection changes, without an effect:
-  // detect the change during render and adjust the controlled pagination state.
+
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: TRANSFERS_PER_PAGE,
   })
-  const selectionKey = `${from.join(',')}|${to.join(',')}`
+  const selectionKey = JSON.stringify({ from, to, scope, snapshotTimestamp })
   const [prevSelectionKey, setPrevSelectionKey] = useState(selectionKey)
   if (prevSelectionKey !== selectionKey) {
     setPrevSelectionKey(selectionKey)
