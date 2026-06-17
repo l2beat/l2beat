@@ -84,31 +84,11 @@ export const sp1hypercube: BaseProject = {
         sinceTimestamp: UnixTime(1781600877),
       },
       {
-        projectId: ProjectId('polygonzkevm'),
-        sinceTimestamp: UnixTime(1781600877),
-      },
-      {
         projectId: ProjectId('xlayer'),
         sinceTimestamp: UnixTime(1781600877),
       },
       {
-        projectId: ProjectId('silicon'),
-        sinceTimestamp: UnixTime(1781600877),
-      },
-      {
-        projectId: ProjectId('ternoa'),
-        sinceTimestamp: UnixTime(1781600877),
-      },
-      {
-        projectId: ProjectId('wirex'),
-        sinceTimestamp: UnixTime(1781600877),
-      },
-      {
         projectId: ProjectId('penchain'),
-        sinceTimestamp: UnixTime(1781600877),
-      },
-      {
-        projectId: ProjectId('haust'),
         sinceTimestamp: UnixTime(1781600877),
       },
       {
@@ -179,19 +159,6 @@ export const sp1hypercube: BaseProject = {
       {
         projectId: ProjectId('apechain'),
         sinceTimestamp: UnixTime(1780346337),
-      },
-      // archived projects
-      {
-        projectId: ProjectId('gpt'),
-        sinceTimestamp: UnixTime(1781600877),
-      },
-      {
-        projectId: ProjectId('astarzkevm'),
-        sinceTimestamp: UnixTime(1781600877),
-      },
-      {
-        projectId: ProjectId('witness'),
-        sinceTimestamp: UnixTime(1781600877),
       },
     ],
     verifierHashes: [
