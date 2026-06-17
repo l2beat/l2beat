@@ -66,8 +66,8 @@ export async function getPrivacyProjectDetails(
   const project = await ps.getProject({
     slug,
     where: ['privacyInfo'],
-    select: ['display', 'privacyInfo', 'statuses', 'tvsConfig'],
-    optional: ['contracts', 'permissions', 'discoveryInfo'],
+    select: ['display', 'privacyInfo', 'statuses'],
+    optional: ['tvsConfig', 'contracts', 'permissions', 'discoveryInfo'],
   })
   if (!project) {
     return undefined
