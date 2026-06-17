@@ -95,6 +95,15 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       await this.$.db.aggregatedInteropTokensPair.insertMany(
         aggregatedTokensPairs,
       )
+      // Mark this snapshot promoted by default. The promotion engine (a later
+      // stage) replaces this with a real verdict; the read path is unaffected
+      // until the cutover, so this is a no-op for what the frontend serves.
+      await this.$.db.interopAggregateStatus.upsertAuto({
+        timestamp: to,
+        status: 'promoted',
+      })
+      // Keep status rows in lockstep with the aggregates retention above.
+      await this.$.db.interopAggregateStatus.deleteOrphaned()
     })
 
     if (analysis && analysis.suspiciousGroups.length > 0) {
