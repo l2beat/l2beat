@@ -81,9 +81,13 @@ async function getInteropTokensData({
     protocolIds: id ? [id] : protocolIds,
   })
 
-  return buildInteropTokenData({ records, interopProject, interopProjects, type })
+  return buildInteropTokenData({
+    records,
+    interopProject,
+    interopProjects,
+    type,
+  })
 }
-
 
 export async function buildInteropTokenData({
   records,

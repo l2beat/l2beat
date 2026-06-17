@@ -524,7 +524,7 @@ export async function getScalingProjectEntry(
         title: 'Risk analysis',
         l2: {
           name: hostChain.name,
-        risks: common.rosette.host,
+          risks: common.rosette.host,
         },
         l3: {
           name: project.name,

@@ -18,7 +18,10 @@ export function getChainFlowStatItems(
     totalTransfers > 0 ? chainData.totalVolume / totalTransfers : 0
 
   return [
-    { label: 'Total volume', value: formatCurrency(chainData.totalVolume, 'usd') },
+    {
+      label: 'Total volume',
+      value: formatCurrency(chainData.totalVolume, 'usd'),
+    },
     { label: 'Volume in', value: formatCurrency(chainData.inflow, 'usd') },
     { label: 'Volume out', value: formatCurrency(chainData.outflow, 'usd') },
     { label: 'Net flow', value: formatCurrency(chainData.netFlow, 'usd') },

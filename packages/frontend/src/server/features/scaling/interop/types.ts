@@ -107,7 +107,10 @@ const InteropSelectionScope = v.object({
   anchorChain: v.string().optional(),
 })
 export type InteropScope = v.infer<typeof InteropScope>
-export const InteropScope = v.union([InteropProjectScope, InteropSelectionScope])
+export const InteropScope = v.union([
+  InteropProjectScope,
+  InteropSelectionScope,
+])
 
 export type InteropBridgeSelectionParams = v.infer<
   typeof InteropBridgeSelectionParams

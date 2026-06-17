@@ -1,9 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
+import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { getChainFlowStatItems } from '~/pages/interop/components/flows/selection-panel/getChainFlowStatItems'
 import { useInteropFlows } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
-import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
