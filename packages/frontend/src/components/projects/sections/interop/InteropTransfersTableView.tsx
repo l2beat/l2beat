@@ -72,7 +72,6 @@ export function InteropTransfersTableView({
 
   const columns = useMemo(() => getTransferColumns({ from, to }), [from, to])
 
-
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: TRANSFERS_PER_PAGE,
