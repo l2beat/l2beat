@@ -41,6 +41,7 @@ export const strk20: BaseProject = {
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
+      PRIVACY_ATTRIBUTES.closedSource,
     ],
     riskSummary: readProjectMarkdown('strk20', 'riskSummary'),
     upgradesAndGovernance: readProjectMarkdown(

@@ -41,6 +41,12 @@ export const PRIVACY_ATTRIBUTES = {
     description:
       'There is at least one practical way to exclusively use auditable, source-available software to interact with this protocol.',
   },
+  closedSource: {
+    id: 'closedSource',
+    label: 'Closed source',
+    description:
+      'The protocol program or circuit is not open source, so users cannot independently inspect the implementation.',
+  },
   immutable: {
     id: 'immutable',
     label: 'Immutable',
