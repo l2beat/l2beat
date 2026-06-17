@@ -29,7 +29,7 @@ export interface PrivacyProjectEntry {
   description: string
   badges: BadgeWithParams[]
   projectLinks: ProjectLink[]
-  discoveryHref: string
+  discoveryHref?: string
   discoUi: {
     href: string
     images: {
@@ -159,6 +159,9 @@ export async function getPrivacyProjectData(
     },
   }
   const icon = manifest.getUrl(`/icons/${details.slug}.png`)
+  const discoveryHref =
+    details.contracts || details.permissions ? discoUi.href : undefined
+  const hasTrackedAssets = details.assets.length > 0
   const bucketCount = details.assets.reduce(
     (sum, asset) => sum + asset.bucketCount,
     0,
@@ -178,41 +181,43 @@ export async function getPrivacyProjectData(
     })
   }
 
-  const chartProject = {
-    id: details.id,
-    name: details.name,
-    shortName: details.shortName,
-    iconUrl: icon,
+  if (hasTrackedAssets) {
+    const chartProject = {
+      id: details.id,
+      name: details.name,
+      shortName: details.shortName,
+      iconUrl: icon,
+    }
+
+    sections.push({
+      type: 'PrivacyTvlSection',
+      props: {
+        id: 'privacy-tvl',
+        title: 'Value Locked',
+        defaultRange: defaultChartRange,
+        project: chartProject,
+      },
+    })
+
+    sections.push({
+      type: 'PrivacyFlowsSection',
+      props: {
+        id: 'privacy-flows',
+        title: 'Flows',
+        defaultRange: defaultChartRange,
+        project: chartProject,
+      },
+    })
+
+    sections.push({
+      type: 'PrivacyAssetsBreakdownSection',
+      props: {
+        id: 'privacy-assets-breakdown',
+        title: 'Assets Breakdown',
+        assets: details.assets,
+      },
+    })
   }
-
-  sections.push({
-    type: 'PrivacyTvlSection',
-    props: {
-      id: 'privacy-tvl',
-      title: 'Value Locked',
-      defaultRange: defaultChartRange,
-      project: chartProject,
-    },
-  })
-
-  sections.push({
-    type: 'PrivacyFlowsSection',
-    props: {
-      id: 'privacy-flows',
-      title: 'Flows',
-      defaultRange: defaultChartRange,
-      project: chartProject,
-    },
-  })
-
-  sections.push({
-    type: 'PrivacyAssetsBreakdownSection',
-    props: {
-      id: 'privacy-assets-breakdown',
-      title: 'Assets Breakdown',
-      assets: details.assets,
-    },
-  })
 
   if (details.riskSummary) {
     sections.push({
@@ -291,7 +296,7 @@ export async function getPrivacyProjectData(
       return badgeWithParams ? [badgeWithParams] : []
     }),
     projectLinks: getProjectLinks(details.display.links),
-    discoveryHref: discoUi.href,
+    discoveryHref,
     discoUi,
     bucketCount,
     assetsCount: details.assets.length,
