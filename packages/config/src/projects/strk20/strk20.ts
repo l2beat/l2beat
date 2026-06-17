@@ -11,8 +11,7 @@ export const strk20: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-06-17')),
   statuses: {
-    yellowWarning:
-      'The SDK and proving stack are not open source yet. L2BEAT currently cannot track STRK-20 contracts, permissions, TVS or privacy flows on Starknet.',
+    yellowWarning: undefined,
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -20,12 +19,13 @@ export const strk20: BaseProject = {
   },
   display: {
     description:
-      'A Starknet privacy pool for arbitrary-amount private transfers and DeFi actions, using Cairo virtual execution proofs and auditor-readable compliance data.',
+      'A privacy pool on Starknet for arbitrary-amount private transfers and DeFi actions, using Cairo execution proofs and auditor-accessible compliance data.',
     detailedDescription: readProjectMarkdown('strk20', 'detailedDescription'),
     links: {
       documentation: [
         'https://docs.starknet.io/build/starknet-privacy/overview',
       ],
+      websites: ['https://strk20.starknet.io/'],
       explorers: [
         'https://voyager.online/contract/0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a',
       ],
