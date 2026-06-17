@@ -1,27 +1,30 @@
 import { useQuery } from '@tanstack/react-query'
-import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
+import { useMemo } from 'react'
 import { InteropTransferSizeBreakdown } from '~/pages/interop/components/InteropTransferSizeBreakdown'
 import { InteropTransferTypeBreakdown } from '~/pages/interop/components/InteropTransferTypeBreakdown'
+import type { InteropScope } from '~/server/features/scaling/interop/types'
 import { useTRPC } from '~/trpc/React'
 import { InteropCollapsibleSubsection } from './InteropCollapsibleSubsection'
-import { InteropTokensTable } from './InteropTokensTable'
-import { InteropTransfersTable } from './InteropTransfersTable'
+import { InteropTokensTableView } from './InteropTokensTableView'
+import { InteropTransfersTableView } from './InteropTransfersTableView'
 
 export function InteropBridgeSubsections({
   protocolIds,
   chains,
   anchorChain,
-  interopChains,
 }: {
   protocolIds: string[]
   chains: string[]
   anchorChain: string
-  interopChains: InteropChainWithIcon[]
 }) {
   const trpc = useTRPC()
-  const apiSelection = { from: chains, to: chains }
+  const apiSelection = useMemo(() => ({ from: chains, to: chains }), [chains])
+  const scope = useMemo<InteropScope>(
+    () => ({ type: 'selection', protocolIds, anchorChain }),
+    [protocolIds, anchorChain],
+  )
   const { data, isLoading } = useQuery(
-    trpc.interop.selectionDetails.queryOptions(
+    trpc.interop.bridgeSelection.queryOptions(
       { ...apiSelection, protocolIds, anchorChain },
       {
         enabled: protocolIds.length > 0 && chains.length > 0,
@@ -46,21 +49,19 @@ export function InteropBridgeSubsections({
         id="interop-tokens"
         title="Top tokens by volume"
       >
-        <InteropTokensTable
-          protocolIds={protocolIds}
+        <InteropTokensTableView
+          tokens={data?.tokens}
+          isLoading={isLoading}
           apiSelection={apiSelection}
-          anchorChain={anchorChain}
         />
       </InteropCollapsibleSubsection>
 
       <InteropCollapsibleSubsection id="interop-transfers" title="Transfers">
-        <InteropTransfersTable
-          protocolIds={protocolIds}
-          apiSelection={apiSelection}
-          anchorChain={anchorChain}
+        <InteropTransfersTableView
+          scope={scope}
+          from={chains}
+          to={chains}
           snapshotTimestamp={data?.snapshotTimestamp}
-          interopChains={interopChains}
-          showChainFilters={false}
           isSnapshotLoading={isLoading}
         />
       </InteropCollapsibleSubsection>

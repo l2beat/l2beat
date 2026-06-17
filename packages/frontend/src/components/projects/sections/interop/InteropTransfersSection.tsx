@@ -10,8 +10,7 @@ export interface InteropTransfersSectionProps
     InteropTransfersTableProps {}
 
 export function InteropTransfersSection({
-  projectId,
-  protocolIds,
+  scope,
   apiSelection,
   snapshotTimestamp,
   interopChains,
@@ -20,8 +19,7 @@ export function InteropTransfersSection({
   return (
     <ProjectSection {...sectionProps}>
       <InteropTransfersTable
-        projectId={projectId}
-        protocolIds={protocolIds}
+        scope={scope}
         apiSelection={apiSelection}
         snapshotTimestamp={snapshotTimestamp}
         interopChains={interopChains}

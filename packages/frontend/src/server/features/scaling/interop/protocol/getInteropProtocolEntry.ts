@@ -110,7 +110,7 @@ export async function getInteropProtocolEntry(
       type: 'InteropTransfersSection',
       props: {
         id: 'interop-transfers',
-        projectId: project.id,
+        scope: { type: 'project', projectId: project.id },
         title: 'Transfers',
         apiSelection,
         snapshotTimestamp: data.entry?.snapshotTimestamp,

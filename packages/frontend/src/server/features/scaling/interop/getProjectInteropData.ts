@@ -81,9 +81,12 @@ export async function getProjectInteropData(
   const currentChainData = interopFlows.chainData.find(
     (chain) => chain.chainId === currentInteropChain.id,
   )
-  const canonicalProtocolId = interopProjects.find(
+
+  const canonicalProtocolId = interopProjects.some(
     (protocol) => protocol.id === projectId,
-  )?.id
+  )
+    ? projectId
+    : undefined
 
   return {
     chainId: currentInteropChain.id,

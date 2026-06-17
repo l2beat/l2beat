@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import partition from 'lodash/partition'
+import { useMemo } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
@@ -81,8 +82,6 @@ function Content({
   const trpc = useTRPC()
   const { highlightedChains, selectedChains, selectedProtocols } =
     useInteropFlows()
-  const singleProtocolId =
-    selectedProtocols.length === 1 ? selectedProtocols[0] : undefined
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
   const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
   const { data, isLoading } = useQuery(
@@ -119,10 +118,13 @@ function Content({
   const statsChainB = visibleHighlightedChains[1]
   const hasRouteSelection = hasGraphSelection && !!statsChainB
 
-  const detailChains =
-    hasRouteSelection && statsChainB
-      ? [statsChainA, statsChainB]
-      : selectedChains
+  const detailChains = useMemo(
+    () =>
+      hasRouteSelection && statsChainB
+        ? [statsChainA, statsChainB]
+        : selectedChains,
+    [hasRouteSelection, statsChainB, statsChainA, selectedChains],
+  )
 
   return (
     <div className="flex flex-col gap-4">
@@ -177,12 +179,8 @@ function Content({
       </div>
       <FlowsStatsPanel
         data={data}
-        interopChains={interopChains}
         protocols={protocols}
         canonicalProtocolId={canonicalProtocolId}
-        selectedProtocols={selectedProtocols}
-        selectedChains={selectedChains}
-        singleProtocolId={singleProtocolId}
         statsChainA={statsChainA}
         statsChainB={statsChainB}
         hasRouteSelection={hasRouteSelection}
@@ -191,7 +189,6 @@ function Content({
         protocolIds={selectedProtocols}
         chains={detailChains}
         anchorChain={statsChainA}
-        interopChains={interopChains}
       />
     </div>
   )

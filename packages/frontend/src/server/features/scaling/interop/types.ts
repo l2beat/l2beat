@@ -97,10 +97,22 @@ export const InteropProtocolParams = v.object({
   ...InteropSelectionInputShape,
 })
 
-export type InteropSelectionDetailsParams = v.infer<
-  typeof InteropSelectionDetailsParams
+const InteropProjectScope = v.object({
+  type: v.literal('project'),
+  projectId: v.string().transform((value) => ProjectId(value)),
+})
+const InteropSelectionScope = v.object({
+  type: v.literal('selection'),
+  protocolIds: v.array(v.string()),
+  anchorChain: v.string().optional(),
+})
+export type InteropScope = v.infer<typeof InteropScope>
+export const InteropScope = v.union([InteropProjectScope, InteropSelectionScope])
+
+export type InteropBridgeSelectionParams = v.infer<
+  typeof InteropBridgeSelectionParams
 >
-export const InteropSelectionDetailsParams = v.object({
+export const InteropBridgeSelectionParams = v.object({
   ...InteropSelectionInputShape,
   protocolIds: v.array(v.string()),
   anchorChain: v.string().optional(),
@@ -139,7 +151,6 @@ const InteropTopItemsParamsShape = {
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
   protocolIds: v.array(v.string()).optional(),
-  anchorChain: v.string().optional(),
 }
 export const InteropTopItemsParams = v.object(InteropTopItemsParamsShape)
 
@@ -164,15 +175,10 @@ export const InteropProtocolTransfersCursor = v.object({
   transferId: v.string(),
 })
 export const InteropProtocolTransfersParams = v.object({
-  id: v.union([
-    v.string().transform((value) => ProjectId(value)),
-    v.undefined(),
-  ]),
-  protocolIds: v.array(v.string()).optional(),
+  scope: InteropScope,
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
   tokenId: v.string().optional(),
-  anchorChain: v.string().optional(),
   snapshotTimestamp: v.number(),
   limit: v.number().optional(),
   cursor: InteropProtocolTransfersCursor.optional(),

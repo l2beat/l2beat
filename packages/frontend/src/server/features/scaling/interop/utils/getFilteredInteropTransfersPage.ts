@@ -2,6 +2,7 @@ import type { InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type { InteropProtocolTransfersCursor } from '../types'
+import { transferTouchesChain } from './transferTouchesChain'
 
 interface TransfersPage {
   items: InteropTransferRecord[]
@@ -63,7 +64,7 @@ export async function getFilteredInteropTransfersPage({
       if (
         !matcher(transfer) ||
         !matchesTokenId(transfer, tokenId) ||
-        !matchesAnchorChain(transfer, anchorChain)
+        !transferTouchesChain(transfer, anchorChain)
       ) {
         continue
       }
@@ -118,16 +119,5 @@ function matchesTokenId(
     tokenId === undefined ||
     transfer.srcAbstractTokenId === tokenId ||
     transfer.dstAbstractTokenId === tokenId
-  )
-}
-
-function matchesAnchorChain(
-  transfer: InteropTransferRecord,
-  anchorChain: string | undefined,
-): boolean {
-  return (
-    anchorChain === undefined ||
-    transfer.srcChain === anchorChain ||
-    transfer.dstChain === anchorChain
   )
 }

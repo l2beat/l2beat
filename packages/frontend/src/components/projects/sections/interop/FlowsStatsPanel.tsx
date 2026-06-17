@@ -1,18 +1,15 @@
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { MultipleChainsStats } from '~/pages/interop/components/flows/selection-panel/MultipleChainsStats'
 import { SingleChainStats } from '~/pages/interop/components/flows/selection-panel/SingleChainStats'
+import { useInteropFlows } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { BridgeFlowStats } from './BridgeFlowStats'
 
 interface FlowsStatsPanelProps {
   data: InteropFlowsData | undefined
-  interopChains: InteropChainWithIcon[]
   protocols: (ProtocolDisplayable & { id: string })[]
   canonicalProtocolId: string | undefined
-  selectedProtocols: string[]
-  selectedChains: string[]
-  singleProtocolId: string | undefined
   statsChainA: string
   statsChainB: string | undefined
   hasRouteSelection: boolean
@@ -20,18 +17,18 @@ interface FlowsStatsPanelProps {
 
 export function FlowsStatsPanel({
   data,
-  interopChains,
   protocols,
   canonicalProtocolId,
-  selectedProtocols,
-  selectedChains,
-  singleProtocolId,
   statsChainA,
   statsChainB,
   hasRouteSelection,
 }: FlowsStatsPanelProps) {
+  const { allChains, selectedChains, selectedProtocols } = useInteropFlows()
+  const singleProtocolId =
+    selectedProtocols.length === 1 ? selectedProtocols[0] : undefined
+
   const label = getStatsLabel({
-    interopChains,
+    interopChains: allChains,
     protocols,
     canonicalProtocolId,
     selectedProtocols,
@@ -79,7 +76,16 @@ function getStatsLabel({
   statsChainA,
   statsChainB,
   hasRouteSelection,
-}: Omit<FlowsStatsPanelProps, 'data' | 'selectedChains'>): string {
+}: {
+  interopChains: InteropChainWithIcon[]
+  protocols: (ProtocolDisplayable & { id: string })[]
+  canonicalProtocolId: string | undefined
+  selectedProtocols: string[]
+  singleProtocolId: string | undefined
+  statsChainA: string
+  statsChainB: string | undefined
+  hasRouteSelection: boolean
+}): string {
   const chainName = (chainId: string | undefined) =>
     interopChains.find((c) => c.id === chainId)?.name ?? chainId ?? ''
 

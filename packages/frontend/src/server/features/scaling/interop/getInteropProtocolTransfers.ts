@@ -1,6 +1,6 @@
 import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
@@ -24,13 +24,11 @@ import {
 const UNKNOWN_TOKEN_SYMBOL = 'Unknown'
 
 export async function getInteropProtocolTransfers({
-  id,
-  protocolIds,
+  scope,
   from,
   to,
   type,
   tokenId,
-  anchorChain,
   snapshotTimestamp,
   limit,
   cursor,
@@ -46,12 +44,12 @@ export async function getInteropProtocolTransfers({
     return getMockInteropTransfers({ from, to })
   }
 
-  assert(
-    !(id && protocolIds && protocolIds.length > 0),
-    'getInteropProtocolTransfers: pass either id or protocolIds, not both',
-  )
-  const ids = id ? [id] : (protocolIds ?? []).map((value) => ProjectId(value))
+  const ids =
+    scope.type === 'project'
+      ? [scope.projectId]
+      : scope.protocolIds.map((value) => ProjectId(value))
   if (ids.length === 0) return empty
+  const anchorChain = scope.type === 'selection' ? scope.anchorChain : undefined
 
   const interopProjects = await ps.getProjects({
     ids,

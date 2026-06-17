@@ -88,14 +88,13 @@ export async function getInteropFlows(
     return getMockInteropFlows()
   }
 
-  const { records } = await getLatestAggregatedInteropTransferWithTokens(
-    {
+  const { records } = await getLatestAggregatedInteropTransferWithTokens({
+    selection: {
       from: params.chains,
       to: params.chains,
     },
-    undefined,
-    params.protocolIds,
-  )
+    protocolIds: params.protocolIds,
+  })
   const scopedRecords = params.tokenId
     ? scopeRecordsToToken(records, params.tokenId)
     : records

@@ -1,9 +1,11 @@
+import type { Project } from '@l2beat/config'
 import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type {
+  AggregatedInteropTransferWithTokens,
   InteropTokensResponse,
   InteropTopItemsInfiniteParams,
   InteropTopItemsParams,
@@ -46,7 +48,6 @@ async function getCachedInteropTokens(params: InteropTopItemsParams) {
         [...params.from].sort().join(','),
         [...params.to].sort().join(','),
         [...(params.protocolIds ?? [])].sort().join(','),
-        params.anchorChain ?? 'all',
       ],
       ttl: 60 * 10,
       staleWhileRevalidate: 60 * 15,
@@ -61,7 +62,6 @@ async function getInteropTokensData({
   to,
   type,
   protocolIds,
-  anchorChain,
 }: InteropTopItemsParams): Promise<TokenData[]> {
   if (env.MOCK) {
     return getMockInteropTokens()
@@ -75,13 +75,27 @@ async function getInteropTokensData({
     return []
   }
 
-  const { records } = await getLatestAggregatedInteropTransferWithTokens(
-    { from, to },
-    type ? [type] : undefined,
-    id ? [id] : protocolIds,
-    anchorChain,
-  )
+  const { records } = await getLatestAggregatedInteropTransferWithTokens({
+    selection: { from, to },
+    types: type ? [type] : undefined,
+    protocolIds: id ? [id] : protocolIds,
+  })
 
+  return buildInteropTokenData({ records, interopProject, interopProjects, type })
+}
+
+
+export async function buildInteropTokenData({
+  records,
+  interopProject,
+  interopProjects,
+  type,
+}: {
+  records: AggregatedInteropTransferWithTokens[]
+  interopProject: Project<'interopConfig'> | undefined
+  interopProjects: Project<'interopConfig'>[]
+  type: InteropTopItemsParams['type']
+}): Promise<TokenData[]> {
   const counts = {
     transferCount: records.reduce(
       (acc, transfer) => acc + transfer.transferCount,

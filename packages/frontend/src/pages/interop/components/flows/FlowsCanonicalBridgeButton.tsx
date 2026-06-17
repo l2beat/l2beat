@@ -33,9 +33,7 @@ export function FlowsCanonicalBridgeButton({
           return
         }
         setSelectedProtocols([canonicalProtocolId])
-        if (typeof window !== 'undefined') {
-          window.location.hash = 'interop-flows'
-        }
+        window.location.hash = 'interop-flows'
       }}
       role="checkbox"
       aria-checked={onlyCanonicalSelected}

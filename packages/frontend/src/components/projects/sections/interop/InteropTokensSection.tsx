@@ -11,17 +11,12 @@ export interface InteropTokensSectionProps
 
 export function InteropTokensSection({
   projectId,
-  protocolIds,
   apiSelection,
   ...sectionProps
 }: InteropTokensSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <InteropTokensTable
-        projectId={projectId}
-        protocolIds={protocolIds}
-        apiSelection={apiSelection}
-      />
+      <InteropTokensTable projectId={projectId} apiSelection={apiSelection} />
     </ProjectSection>
   )
 }

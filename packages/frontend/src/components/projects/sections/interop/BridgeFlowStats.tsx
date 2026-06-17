@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
-import { ArrowRightIcon } from '~/icons/ArrowRight'
+import { getChainFlowStatItems } from '~/pages/interop/components/flows/selection-panel/getChainFlowStatItems'
 import { useInteropFlows } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
+import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface StatItem {
   label: string
@@ -25,25 +25,13 @@ export function BridgeFlowStats({
   const chainData = data.chainData.find((c) => c.chainId === chainId)
   if (!chainData) return null
 
-  const totalTransfers = chainData.transfersIn + chainData.transfersOut
-  const avg = totalTransfers > 0 ? chainData.totalVolume / totalTransfers : 0
   const routes = data.flows
     .filter((f) => f.srcChain === chainId || f.dstChain === chainId)
     .sort((a, b) => b.volume - a.volume)
   const topFlow = routes.length > 1 ? routes[0] : undefined
 
   const items: StatItem[] = [
-    {
-      label: 'Total volume',
-      value: formatCurrency(chainData.totalVolume, 'usd'),
-    },
-    { label: 'Volume in', value: formatCurrency(chainData.inflow, 'usd') },
-    { label: 'Volume out', value: formatCurrency(chainData.outflow, 'usd') },
-    { label: 'Net flow', value: formatCurrency(chainData.netFlow, 'usd') },
-    { label: 'Total transfers', value: formatInteger(totalTransfers) },
-    { label: 'Transfers in', value: formatInteger(chainData.transfersIn) },
-    { label: 'Transfers out', value: formatInteger(chainData.transfersOut) },
-    { label: 'Avg. transfer value', value: formatCurrency(avg, 'usd') },
+    ...getChainFlowStatItems(chainData),
     {
       label: 'Avg. value per second',
       value: `${formatCurrency(chainData.totalVolume / UnixTime.DAY, 'usd')}/s`,

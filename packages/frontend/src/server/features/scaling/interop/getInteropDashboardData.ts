@@ -61,10 +61,10 @@ export async function getInteropDashboardData(
   })
 
   const { records, snapshotTimestamp } =
-    await getLatestAggregatedInteropTransferWithTokens(
-      params,
-      params.type ? [params.type] : undefined,
-    )
+    await getLatestAggregatedInteropTransferWithTokens({
+      selection: params,
+      types: params.type ? [params.type] : undefined,
+    })
 
   if (records.length === 0) {
     return null
