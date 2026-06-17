@@ -7,12 +7,10 @@ import {
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '~/pages/interop/components/flows/consts'
+import { FlowsCanonicalBridgeButton } from '~/pages/interop/components/flows/FlowsCanonicalBridgeButton'
 import { FlowsChainsSelector } from '~/pages/interop/components/flows/FlowsChainsSelector'
 import { FlowsParticleLegend } from '~/pages/interop/components/flows/FlowsParticleLegend'
-import {
-  FlowsCanonicalBridgeButton,
-  FlowsProtocolsSelector,
-} from '~/pages/interop/components/flows/FlowsProtocolsSelector'
+import { FlowsProtocolsSelector } from '~/pages/interop/components/flows/FlowsProtocolsSelector'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
 import { InactiveChainsDialog } from '~/pages/interop/components/flows/graph/InactiveChainsDialog'
 import { useScaledParticleCounts } from '~/pages/interop/components/flows/graph/utils/useScaledParticleCounts'
