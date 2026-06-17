@@ -51,10 +51,7 @@ export function SingleChainStats({
           items={chainData.topTokens.map((t) => ({
             ...t,
             title: t.symbol,
-            href: getInteropTokenUrl(t, {
-              from: selectedChains,
-              to: selectedChains,
-            }),
+            href: getInteropTokenUrl(t),
           }))}
         />
       )}
