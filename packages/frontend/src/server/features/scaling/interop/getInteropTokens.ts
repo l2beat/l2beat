@@ -46,6 +46,7 @@ async function getCachedInteropTokens(params: InteropTopItemsParams) {
         [...params.from].sort().join(','),
         [...params.to].sort().join(','),
         [...(params.protocolIds ?? [])].sort().join(','),
+        params.anchorChain ?? 'all',
       ],
       ttl: 60 * 10,
       staleWhileRevalidate: 60 * 15,
@@ -60,6 +61,7 @@ async function getInteropTokensData({
   to,
   type,
   protocolIds,
+  anchorChain,
 }: InteropTopItemsParams): Promise<TokenData[]> {
   if (env.MOCK) {
     return getMockInteropTokens()
@@ -77,6 +79,7 @@ async function getInteropTokensData({
     { from, to },
     type ? [type] : undefined,
     id ? [id] : protocolIds,
+    anchorChain,
   )
 
   const counts = {

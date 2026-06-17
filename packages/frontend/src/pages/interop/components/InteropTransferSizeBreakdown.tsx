@@ -7,17 +7,15 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { EM_DASH } from '~/consts/characters'
-import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
+import type { TransferSizeDistribution } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { transferSizeBuckets } from '../utils/transferSizeBuckets'
 
-/** Transfer-size distribution as a breakdown bar with a hover tooltip. Shared by
- * the single-protocol page and the chain/protocol selection subsections. */
 export function InteropTransferSizeBreakdown({
   transferSize,
 }: {
-  transferSize: TransferSizeDataPoint | undefined
+  transferSize: TransferSizeDistribution | undefined
 }) {
   const breakdownValues = [
     {
@@ -87,7 +85,7 @@ function TransferSizeTooltipContent({
   transferSize,
 }: {
   breakdownValues: { value: number; style: CSSProperties; label: string }[]
-  transferSize: TransferSizeDataPoint | undefined
+  transferSize: TransferSizeDistribution | undefined
 }) {
   const totalTransfers = breakdownValues.reduce((sum, v) => sum + v.value, 0)
 

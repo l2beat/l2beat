@@ -103,6 +103,7 @@ export type InteropSelectionDetailsParams = v.infer<
 export const InteropSelectionDetailsParams = v.object({
   ...InteropSelectionInputShape,
   protocolIds: v.array(v.string()),
+  anchorChain: v.string().optional(),
 })
 
 export type InteropTokenParams = v.infer<typeof InteropTokenParams>
@@ -138,6 +139,7 @@ const InteropTopItemsParamsShape = {
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
   protocolIds: v.array(v.string()).optional(),
+  anchorChain: v.string().optional(),
 }
 export const InteropTopItemsParams = v.object(InteropTopItemsParamsShape)
 
@@ -170,6 +172,7 @@ export const InteropProtocolTransfersParams = v.object({
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
   tokenId: v.string().optional(),
+  anchorChain: v.string().optional(),
   snapshotTimestamp: v.number(),
   limit: v.number().optional(),
   cursor: InteropProtocolTransfersCursor.optional(),

@@ -8,9 +8,7 @@ import {
 import round from 'lodash/round'
 import { manifest } from '~/utils/Manifest'
 
-export type TransferSizeDataPoint = {
-  name: string
-  iconUrl: string
+export interface TransferSizeDistribution {
   countUnder100: number
   percentageUnder100: number
   count100To1K: number
@@ -24,6 +22,11 @@ export type TransferSizeDataPoint = {
   minTransferValueUsd: number | undefined
   maxTransferValueUsd: number | undefined
   averageTransferSizeUsd: number | undefined
+}
+
+export type TransferSizeDataPoint = TransferSizeDistribution & {
+  name: string
+  iconUrl: string
 }
 
 interface TransferSizeAccumulator {
@@ -79,7 +82,7 @@ function addRecord(
 
 function finalize(
   acc: TransferSizeAccumulator,
-): Omit<TransferSizeDataPoint, 'name' | 'iconUrl'> | undefined {
+): TransferSizeDistribution | undefined {
   const total =
     acc.countUnder100 +
     acc.count100To1K +
@@ -110,15 +113,14 @@ function finalize(
 
 export function aggregateTransferSize(
   records: AggregatedInteropTransferRecord[],
-): TransferSizeDataPoint | undefined {
+): TransferSizeDistribution | undefined {
   if (records.length === 0) return undefined
 
   const acc = createTransferSizeAccumulator()
   for (const record of records) {
     addRecord(acc, record)
   }
-  const point = finalize(acc)
-  return point ? { name: '', iconUrl: '', ...point } : undefined
+  return finalize(acc)
 }
 
 export type TransferTypeDataPoint = Partial<Record<InteropBridgeType, number>>

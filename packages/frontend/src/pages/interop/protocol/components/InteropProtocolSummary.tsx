@@ -4,6 +4,8 @@ import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { EM_DASH } from '~/consts/characters'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import type { InteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
+import type { ByBridgeTypeData } from '~/server/features/scaling/interop/types'
+import type { TransferTypeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
@@ -100,11 +102,7 @@ export function InteropProtocolSummary({
       <InteropTransferSizeBreakdown transferSize={protocolData.transferSize} />
       <HorizontalSeparator className="my-4" />
       <InteropTransferTypeBreakdown
-        byType={Object.fromEntries(
-          Object.entries(protocolData?.entry?.byBridgeType ?? {}).flatMap(
-            ([type, stats]) => (stats ? [[type, stats.volume] as const] : []),
-          ),
-        )}
+        byType={bridgeTypeVolumes(protocolData?.entry?.byBridgeType)}
       />
       {protocol.header.description && (
         <div className="max-md:hidden">
@@ -114,6 +112,18 @@ export function InteropProtocolSummary({
       )}
     </section>
   )
+}
+
+function bridgeTypeVolumes(
+  byBridgeType: ByBridgeTypeData | undefined,
+): TransferTypeDataPoint {
+  const volumes: TransferTypeDataPoint = {}
+  for (const [type, stats] of Object.entries(byBridgeType ?? {})) {
+    if (stats) {
+      volumes[type as keyof ByBridgeTypeData] = stats.volume
+    }
+  }
+  return volumes
 }
 
 function StatsItem({ title, value }: { title: string; value: ReactNode }) {

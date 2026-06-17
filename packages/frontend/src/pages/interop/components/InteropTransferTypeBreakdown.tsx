@@ -4,6 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import type { TransferTypeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import {
   INTEROP_TYPE_TO_BG_COLOR,
@@ -11,10 +12,11 @@ import {
 } from '../utils/display'
 
 type TransferType = keyof typeof TRANSFER_TYPE_DISPLAY
+
 export function InteropTransferTypeBreakdown({
   byType,
 }: {
-  byType: Partial<Record<TransferType, number>> | undefined
+  byType: TransferTypeDataPoint | undefined
 }) {
   const values = (Object.keys(TRANSFER_TYPE_DISPLAY) as TransferType[]).flatMap(
     (transferType) => {

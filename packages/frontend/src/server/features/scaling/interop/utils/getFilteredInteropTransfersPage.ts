@@ -17,6 +17,7 @@ export async function getFilteredInteropTransfersPage({
   snapshotTimestamp,
   sourceChains,
   destinationChains,
+  anchorChain,
   pluginIds,
   matcher,
   limit,
@@ -26,6 +27,7 @@ export async function getFilteredInteropTransfersPage({
   snapshotTimestamp: number
   sourceChains: string[]
   destinationChains: string[]
+  anchorChain?: string
   pluginIds: string[]
   matcher: (transfer: InteropTransferRecord) => boolean
   limit: number | undefined
@@ -58,7 +60,11 @@ export async function getFilteredInteropTransfersPage({
     for (const [i, transfer] of transfers.entries()) {
       dbCursor = toTransferCursor(transfer)
 
-      if (!matcher(transfer) || !matchesTokenId(transfer, tokenId)) {
+      if (
+        !matcher(transfer) ||
+        !matchesTokenId(transfer, tokenId) ||
+        !matchesAnchorChain(transfer, anchorChain)
+      ) {
         continue
       }
 
@@ -112,5 +118,16 @@ function matchesTokenId(
     tokenId === undefined ||
     transfer.srcAbstractTokenId === tokenId ||
     transfer.dstAbstractTokenId === tokenId
+  )
+}
+
+function matchesAnchorChain(
+  transfer: InteropTransferRecord,
+  anchorChain: string | undefined,
+): boolean {
+  return (
+    anchorChain === undefined ||
+    transfer.srcChain === anchorChain ||
+    transfer.dstChain === anchorChain
   )
 }

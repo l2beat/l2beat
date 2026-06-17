@@ -72,8 +72,6 @@ describe(aggregateTransferSize.name, () => {
     ])
 
     expect(result).toEqual({
-      name: '',
-      iconUrl: '',
       countUnder100: 2,
       percentageUnder100: 50,
       count100To1K: 1,
@@ -86,7 +84,6 @@ describe(aggregateTransferSize.name, () => {
       percentageOver100K: 0,
       minTransferValueUsd: 10,
       maxTransferValueUsd: 5000,
-      // (300 + 5000) / (3 + 1)
       averageTransferSizeUsd: 1325,
     })
   })

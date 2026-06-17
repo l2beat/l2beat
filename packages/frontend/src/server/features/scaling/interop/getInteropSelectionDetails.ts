@@ -5,12 +5,12 @@ import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestA
 import {
   aggregateTransferSize,
   aggregateTransferType,
-  type TransferSizeDataPoint,
+  type TransferSizeDistribution,
   type TransferTypeDataPoint,
 } from './utils/getTransferSizeChartData'
 
 export interface InteropSelectionDetails {
-  transferSize: TransferSizeDataPoint | undefined
+  transferSize: TransferSizeDistribution | undefined
   transferType: TransferTypeDataPoint | undefined
   snapshotTimestamp: UnixTime | undefined
 }
@@ -36,6 +36,7 @@ export async function getInteropSelectionDetails(
       { from: params.from, to: params.to },
       undefined,
       params.protocolIds,
+      params.anchorChain,
     )
 
   return {

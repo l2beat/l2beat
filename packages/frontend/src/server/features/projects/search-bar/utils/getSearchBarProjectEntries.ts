@@ -123,7 +123,7 @@ export function getSearchBarProjectEntries<
     })
   }
 
-  if (project.interopConfig) {
+  if (project.interopConfig && !project.scalingInfo) {
     results.push({
       ...common,
       name: project.interopConfig.name ?? project.name,

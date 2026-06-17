@@ -15,6 +15,7 @@ export async function getLatestAggregatedInteropTransferWithTokens(
   selection: InteropSelectionInput,
   types?: InteropBridgeType[],
   protocolIds?: string[],
+  anchorChain?: string,
 ): Promise<AggregatedInteropTransferWithTokensResult> {
   const db = getDb()
 
@@ -50,7 +51,15 @@ export async function getLatestAggregatedInteropTransferWithTokens(
     ),
   ])
 
-  const records = transfers.map((transfer) => ({
+  const anchoredTransfers = anchorChain
+    ? transfers.filter(
+        (transfer) =>
+          transfer.srcChain === anchorChain ||
+          transfer.dstChain === anchorChain,
+      )
+    : transfers
+
+  const records = anchoredTransfers.map((transfer) => ({
     ...transfer,
     tokens: tokens
       .filter(
