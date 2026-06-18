@@ -10,6 +10,25 @@ export const lifi: BaseProject = {
   interopConfig: {
     description:
       'Intent protocol implemented by LI.FI, based on the Open Intents Framework (OIF).',
+    intent: {
+      intentModel: {
+        value: 'Intent aggregator',
+        description: 'Routes user intents across integrated liquidity sources.',
+      },
+      userRecovery: {
+        value: 'Route-dependent',
+        description: 'Recovery depends on the selected LI.FI route.',
+      },
+      solverAccess: {
+        value: 'Curated solvers',
+        description:
+          'Execution depends on LI.FI solver and route integrations.',
+      },
+      settlement: {
+        value: 'Route-dependent',
+        description: 'Settlement depends on the selected underlying route.',
+      },
+    },
     plugins: [
       {
         plugin: 'lifi-intents',

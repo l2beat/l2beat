@@ -1,3 +1,4 @@
+import { getIntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
 import { getInteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { getInteropFlows } from '~/server/features/scaling/interop/getInteropFlows'
 import { getInteropProtocolsByVolume } from '~/server/features/scaling/interop/getInteropProtocolsByVolume'
@@ -32,6 +33,9 @@ export const interopRouter = router({
   tokenFrameworks: procedure
     .input(InteropSelectionInput)
     .query(({ input }) => getTokenFrameworksData(input)),
+  intentBridges: procedure
+    .input(InteropSelectionInput)
+    .query(({ input }) => getIntentBridgesData(input)),
   tokens: procedure
     .input(InteropTopItemsInfiniteParams)
     .query(({ input }) => getInteropTokensInfinite(input)),

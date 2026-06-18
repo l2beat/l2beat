@@ -10,6 +10,24 @@ export const debridgeDln: BaseProject = {
   interopConfig: {
     description:
       'Intent framework built on top of the deBridge messaging protocol.',
+    intent: {
+      intentModel: {
+        value: 'Cross-chain limit order',
+        description: 'Users create orders that takers can fulfill.',
+      },
+      userRecovery: {
+        value: 'Order cancellation',
+        description: 'Unfilled orders can be cancelled through the DLN flow.',
+      },
+      solverAccess: {
+        value: 'Open takers',
+        description: 'Order fulfillment is designed around independent takers.',
+      },
+      settlement: {
+        value: 'deBridge messaging',
+        description: 'Order state and settlement use deBridge infrastructure.',
+      },
+    },
     plugins: [
       {
         plugin: 'debridge-dln',

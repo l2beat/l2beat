@@ -1421,6 +1421,18 @@ export type InteropPluginName =
 
 export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 
+export type InteropIntentAttribute = {
+  value: string
+  description?: string
+}
+
+export interface InteropIntentConfig {
+  intentModel: InteropIntentAttribute
+  userRecovery: InteropIntentAttribute
+  solverAccess: InteropIntentAttribute
+  settlement: InteropIntentAttribute
+}
+
 export interface InteropConfig {
   name?: string
   shortName?: string
@@ -1435,6 +1447,8 @@ export interface InteropConfig {
    * which is a separate project)
    */
   isAggregate?: boolean
+  /** Intent-specific properties displayed on intent bridge focus pages. */
+  intent?: InteropIntentConfig
   /** Should be configured for projects that are part of other project (e.g. USDT0 is part of LayerZero,
    * so layerzero id should be configured in usdt0 config)
    */

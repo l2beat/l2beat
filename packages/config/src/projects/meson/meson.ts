@@ -9,6 +9,24 @@ export const meson: BaseProject = {
   addedAt: UnixTime(1772110772),
   interopConfig: {
     description: 'Liquidity bridge specialised on alt-L1s.',
+    intent: {
+      intentModel: {
+        value: 'Liquidity network',
+        description: 'Transfers are filled through a liquidity bridge model.',
+      },
+      userRecovery: {
+        value: 'Protocol-specific',
+        description: 'Recovery depends on Meson swap state.',
+      },
+      solverAccess: {
+        value: 'Liquidity providers',
+        description: 'Execution depends on available Meson liquidity.',
+      },
+      settlement: {
+        value: 'Meson contracts',
+        description: 'Settled through Meson bridge contracts.',
+      },
+    },
     plugins: [
       {
         plugin: 'meson',

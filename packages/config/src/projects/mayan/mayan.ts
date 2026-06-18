@@ -11,6 +11,24 @@ export const mayan: BaseProject = {
   interopConfig: {
     description: 'Intent framework using the Wormhole message bridge.',
     detailedDescription: WORMHOLE_DETAILED_DESCRIPTION,
+    intent: {
+      intentModel: {
+        value: 'Auction bridge',
+        description: 'Solvers compete to fill cross-chain swap intents.',
+      },
+      userRecovery: {
+        value: 'Protocol-specific',
+        description: 'Recovery depends on the Mayan transfer path.',
+      },
+      solverAccess: {
+        value: 'Auction solvers',
+        description: 'Fillers compete in the Mayan solver flow.',
+      },
+      settlement: {
+        value: 'Wormhole messaging',
+        description: 'Mayan uses Wormhole-based cross-chain infrastructure.',
+      },
+    },
     plugins: [
       {
         plugin: 'mayan-swift',
