@@ -20,22 +20,23 @@ export const relay: BaseProject = {
     detailedDescription: RELAY_DETAILED_DESCRIPTION,
     intent: {
       intentModel: {
-        value: 'Solver relay',
+        value: 'Intent framework',
         description:
           'Routes transfers through a relay-style execution network.',
       },
       userRecovery: {
-        value: 'Route-dependent',
+        value: 'Needs research',
         description:
-          'Recovery depends on the selected route and execution path.',
+          'Confirm whether users can cancel or refund a transfer that is not filled.',
       },
       solverAccess: {
-        value: 'Relay network',
-        description: 'Execution is coordinated by Relay infrastructure.',
+        value: 'Internal',
+        description: 'Transfers are filled by Relay-operated infrastructure.',
       },
       settlement: {
-        value: 'Route-dependent',
-        description: 'Settlement follows the chosen Relay route.',
+        value: 'Relay Oracle',
+        description:
+          'Settlement depends on Relay’s centralized oracle and allocator flow.',
       },
     },
     plugins: [

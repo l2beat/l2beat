@@ -15,21 +15,23 @@ export const across: BaseProject = {
       'Intent framework specialised on popular chains and assets, speed and security.',
     intent: {
       intentModel: {
-        value: 'Optimistic liquidity relay',
-        description: 'Relayers fill user deposits on the destination chain.',
+        value: 'Intent framework',
+        description:
+          'General, open, multi-token architecture where relayers compete to fill crosschain-transfer intents.',
       },
       userRecovery: {
-        value: 'Fallback fill path',
+        value: 'Slow-fill fallback',
         description:
-          'Designed around relayer fills with protocol fallback for unfilled deposits.',
+          'If no relayer fast-fills a deposit, Across can complete it through the protocol slow-fill path.',
       },
       solverAccess: {
-        value: 'Open relayers',
+        value: 'Permissionless',
         description: 'Relayers compete to fill deposits and receive repayment.',
       },
       settlement: {
-        value: 'UMA optimistic settlement',
-        description: 'Relayer repayment is settled through the Across system.',
+        value: 'Optimistic',
+        description:
+          'Relayer repayment is settled through the Across system and can be escalated to token voting via UMA.',
       },
     },
     plugins: [

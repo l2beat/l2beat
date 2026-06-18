@@ -12,14 +12,16 @@ export const meson: BaseProject = {
     intent: {
       intentModel: {
         value: 'Liquidity network',
-        description: 'Transfers are filled through a liquidity bridge model.',
+        description:
+          'Transfers are filled from a central liquidity pool on each chain.',
       },
       userRecovery: {
-        value: 'Protocol-specific',
-        description: 'Recovery depends on Meson swap state.',
+        value: 'Needs research',
+        description:
+          'Confirm whether users can cancel or refund an unfilled Meson swap and under what conditions.',
       },
       solverAccess: {
-        value: 'Liquidity providers',
+        value: 'LP network',
         description: 'Execution depends on available Meson liquidity.',
       },
       settlement: {

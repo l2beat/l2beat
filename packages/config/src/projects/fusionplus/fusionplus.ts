@@ -11,7 +11,7 @@ export const fusionplus: BaseProject = {
     description: 'Hash time lock (HTLC) based intent framework built by 1inch.',
     intent: {
       intentModel: {
-        value: 'HTLC swap',
+        value: 'HTLC',
         description: 'Cross-chain swaps use hash time locks.',
       },
       userRecovery: {
@@ -20,13 +20,13 @@ export const fusionplus: BaseProject = {
           'HTLC construction provides a timeout-based recovery path.',
       },
       solverAccess: {
-        value: 'Resolver network',
+        value: 'Needs research',
         description:
-          'Resolvers compete or are selected through the 1inch flow.',
+          'Confirm whether resolver participation is permissionless, allowlisted, or otherwise curated.',
       },
       settlement: {
-        value: 'Atomic swap settlement',
-        description: 'Settlement follows the HTLC execution path.',
+        value: 'HTLC',
+        description: 'Settlement follows the HTLC atomic swap.',
       },
     },
     plugins: [

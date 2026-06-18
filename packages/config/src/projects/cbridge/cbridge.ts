@@ -14,22 +14,23 @@ export const cbridge: BaseProject = {
   interopConfig: {
     intent: {
       intentModel: {
-        value: 'Liquidity network',
+        value: 'Liquidity pool',
         description: 'Transfers are routed through liquidity providers.',
       },
       userRecovery: {
-        value: 'Protocol-specific',
+        value: 'Needs research',
         description:
-          'Recovery depends on the transfer path and liquidity state.',
+          'Confirm whether users can cancel or refund an unfilled transfer and under what conditions.',
       },
       solverAccess: {
-        value: 'Liquidity providers',
+        value: 'LP network',
         description:
-          'The active market is defined by available bridge liquidity.',
+          'Transfers are served by Celer liquidity providers. LP admission rules still need confirmation.',
       },
       settlement: {
-        value: 'Celer network',
-        description: 'Settled through Celer bridge infrastructure.',
+        value: 'Celer SGN',
+        description:
+          'Settlement is coordinated through Celer infrastructure. Confirm exact SGN role for the tracked flow.',
       },
     },
     plugins: [

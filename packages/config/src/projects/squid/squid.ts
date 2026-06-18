@@ -11,20 +11,21 @@ export const squid: BaseProject = {
     description: 'Intent framework using the Axelar message bridge.',
     intent: {
       intentModel: {
-        value: 'Intent router',
+        value: 'Intent framework',
         description: 'Routes cross-chain swaps through Squid integrations.',
       },
       userRecovery: {
-        value: 'Route-dependent',
-        description: 'Recovery depends on the selected Squid route.',
+        value: 'Needs research',
+        description:
+          'Confirm whether users can cancel or refund a Squid transfer that is not delivered.',
       },
       solverAccess: {
         value: 'Integrated executors',
         description:
-          'Execution depends on Squid and Axelar route integrations.',
+          'Execution uses Squid-integrated executors. Confirm exact admission rules.',
       },
       settlement: {
-        value: 'Axelar messaging',
+        value: 'Axelar GMP',
         description:
           'Squid routes use Axelar-based cross-chain infrastructure.',
       },

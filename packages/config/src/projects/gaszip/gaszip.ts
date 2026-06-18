@@ -16,16 +16,17 @@ export const gaszip: BaseProject = {
         description: 'Focused on sending small gas balances across chains.',
       },
       userRecovery: {
-        value: 'Protocol-specific',
-        description: 'Recovery depends on Gas.zip transfer handling.',
+        value: 'Needs research',
+        description:
+          'Confirm whether users can cancel or refund a transfer that is not delivered.',
       },
       solverAccess: {
-        value: 'Protocol-operated',
-        description: 'Not primarily exposed as an open solver marketplace.',
+        value: 'Internal',
+        description: 'No open solver marketplace exposed.',
       },
       settlement: {
-        value: 'Gas.zip routing',
-        description: 'Settled through Gas.zip route execution.',
+        value: 'Internal',
+        description: 'Settled through Gas.zip internal, centralized acounting.',
       },
     },
     plugins: [

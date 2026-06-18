@@ -13,16 +13,18 @@ export const mayan: BaseProject = {
     detailedDescription: WORMHOLE_DETAILED_DESCRIPTION,
     intent: {
       intentModel: {
-        value: 'Auction bridge',
+        value: 'Intent Framework',
         description: 'Solvers compete to fill cross-chain swap intents.',
       },
       userRecovery: {
-        value: 'Protocol-specific',
-        description: 'Recovery depends on the Mayan transfer path.',
+        value: 'Needs research',
+        description:
+          'Confirm whether users can cancel or refund an unfilled Mayan transfer and under what conditions.',
       },
       solverAccess: {
-        value: 'Auction solvers',
-        description: 'Fillers compete in the Mayan solver flow.',
+        value: 'Solver auction',
+        description:
+          'Fillers compete in the Mayan auction. Confirm whether solver participation is permissionless or curated.',
       },
       settlement: {
         value: 'Wormhole messaging',
