@@ -8,6 +8,7 @@ import { Checkbox } from '../../../components/Checkbox'
 import { ErrorState } from '../../../components/ErrorState'
 import { Loader } from '../../../components/Loader'
 import { LoadingState } from '../../../components/LoadingState'
+import { Markdown } from '../../../components/Markdown'
 import { Select } from '../../../components/Select'
 import { IconPlay } from '../../../icons/IconPlay'
 import { IconRefresh } from '../../../icons/IconRefresh'
@@ -292,10 +293,9 @@ function ResultView(props: {
   }
 
   return (
-    <pre
-      className={`${wrapClass} font-mono text-coffee-200 text-xs leading-relaxed`}
-    >
+    <Markdown className="text-coffee-200 text-sm leading-relaxed">
+      
       {props.result.output.text}
-    </pre>
+    </Markdown>
   )
 }
