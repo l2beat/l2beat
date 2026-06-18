@@ -762,6 +762,7 @@ export class TokenIngestionProcessor {
         coingeckoListingTimestamp: await this.findCoingeckoListingTimestamp(
           coin.id,
         ),
+        additionalCoingeckoEntries: null,
         comment: null,
         reviewed: false,
         isPriceUnreliable: false,

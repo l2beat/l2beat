@@ -258,6 +258,7 @@ function abstractRecord(id: string, symbol: string): AbstractTokenRecord {
     iconUrl: null,
     coingeckoId: null,
     coingeckoListingTimestamp: null,
+    additionalCoingeckoEntries: null,
     comment: null,
     reviewed: false,
     isPriceUnreliable: false,

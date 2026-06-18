@@ -1,9 +1,83 @@
 import type { DeployedTokenRecord, TokenDatabase } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { generatePlan } from './planning'
+import { generatePlan, Plan } from './planning'
 
 const USER = 'someone@l2beat.com'
+
+describe('Plan', () => {
+  it('defaults missing additional CoinGecko entries on abstract token records', () => {
+    const parsed = Plan.parse({
+      intent: {
+        type: 'UpdateAbstractTokenIntent',
+        id: 'ABC123',
+        update: {
+          additionalCoingeckoEntries: [
+            {
+              coingeckoId: 'bridged-token',
+              coingeckoListingTimestamp: 1782345600,
+              iconUrl: 'https://example.com/icon.png',
+            },
+          ],
+        },
+      },
+      commands: [
+        {
+          type: 'UpdateAbstractTokenCommand',
+          id: 'ABC123',
+          existing: {
+            id: 'ABC123',
+            symbol: 'USDT',
+            issuer: null,
+            category: null,
+            iconUrl: null,
+            coingeckoId: 'tether',
+            coingeckoListingTimestamp: null,
+            comment: null,
+            reviewed: false,
+            isPriceUnreliable: false,
+          },
+          update: {
+            additionalCoingeckoEntries: [
+              {
+                coingeckoId: 'bridged-token',
+                coingeckoListingTimestamp: 1782345600,
+                iconUrl: 'https://example.com/icon.png',
+              },
+            ],
+          },
+        },
+      ],
+    })
+
+    expect(parsed.commands[0]).toEqual({
+      type: 'UpdateAbstractTokenCommand',
+      id: 'ABC123',
+      existing: {
+        id: 'ABC123',
+        symbol: 'USDT',
+        issuer: null,
+        category: null,
+        iconUrl: null,
+        coingeckoId: 'tether',
+        coingeckoListingTimestamp: null,
+        additionalCoingeckoEntries: null,
+        comment: null,
+        reviewed: false,
+        isPriceUnreliable: false,
+      },
+      update: {
+        additionalCoingeckoEntries: [
+          {
+            coingeckoId: 'bridged-token',
+            coingeckoListingTimestamp: 1782345600,
+            iconUrl: 'https://example.com/icon.png',
+          },
+        ],
+      },
+    })
+  })
+})
 
 describe('planning proof stamping', () => {
   describe('AddDeployedTokenIntent', () => {

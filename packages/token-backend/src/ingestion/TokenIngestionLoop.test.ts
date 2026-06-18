@@ -1023,6 +1023,7 @@ function abstractToken(id: string, symbol: string) {
     iconUrl: null,
     coingeckoId: null,
     coingeckoListingTimestamp: null,
+    additionalCoingeckoEntries: null,
     comment: null,
     reviewed: false,
   }

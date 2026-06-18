@@ -75,6 +75,14 @@ function AbstractTokenView({
       coingeckoId: token.coingeckoId ?? undefined,
       iconUrl: token.iconUrl ?? undefined,
       comment: token.comment ?? undefined,
+      additionalCoingeckoEntries:
+        token.additionalCoingeckoEntries?.map((entry) => ({
+          coingeckoId: entry.coingeckoId,
+          iconUrl: entry.iconUrl ?? undefined,
+          coingeckoListingTimestamp: entry.coingeckoListingTimestamp
+            ? UnixTime.toYYYYMMDD(entry.coingeckoListingTimestamp)
+            : undefined,
+        })) ?? [],
       coingeckoListingTimestamp: token.coingeckoListingTimestamp
         ? UnixTime.toYYYYMMDD(token.coingeckoListingTimestamp)
         : undefined,
@@ -138,6 +146,17 @@ function AbstractTokenView({
                       iconUrl: values.iconUrl || null,
                       coingeckoId: values.coingeckoId || null,
                       comment: values.comment || null,
+                      additionalCoingeckoEntries:
+                        values.additionalCoingeckoEntries?.map((entry) => ({
+                          coingeckoId: entry.coingeckoId,
+                          iconUrl: entry.iconUrl || null,
+                          coingeckoListingTimestamp:
+                            entry.coingeckoListingTimestamp
+                              ? UnixTime.fromDate(
+                                  new Date(entry.coingeckoListingTimestamp),
+                                )
+                              : null,
+                        })) ?? null,
                       coingeckoListingTimestamp:
                         values.coingeckoListingTimestamp
                           ? UnixTime.fromDate(
