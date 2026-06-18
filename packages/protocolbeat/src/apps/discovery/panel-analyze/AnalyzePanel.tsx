@@ -294,7 +294,6 @@ function ResultView(props: {
 
   return (
     <Markdown className="text-coffee-200 text-sm leading-relaxed">
-      
       {props.result.output.text}
     </Markdown>
   )
