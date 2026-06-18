@@ -16,16 +16,17 @@ export const meson: BaseProject = {
           'Transfers are filled from a central liquidity pool on each chain.',
       },
       userRecovery: {
-        value: 'Needs research',
+        value: 'Request refund',
         description:
-          'Confirm whether users can cancel or refund an unfilled Meson swap and under what conditions.',
+          'The central liquidity pool implementation source code is unavailable.',
       },
       solverAccess: {
-        value: 'LP network',
-        description: 'Execution depends on available Meson liquidity.',
+        value: 'Permissionless',
+        description:
+          'Execution depends on Meson LPs locking destination-chain liquidity in the smart contract escrow. Execution is permissionless but needs offchain signatures by the centralized oracle.',
       },
       settlement: {
-        value: 'Meson contracts',
+        value: 'Internal',
         description: 'Settled through Meson bridge contracts.',
       },
     },
