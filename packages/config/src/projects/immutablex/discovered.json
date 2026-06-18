@@ -1,6 +1,6 @@
 {
   "name": "immutablex",
-  "timestamp": 1780913745,
+  "timestamp": 1781778427,
   "configHash": "0xd4ed5c6714ecdc1add8536837ef3aa48553c5f753138c746f896fb4a5599f1dc",
   "entries": [
     {
@@ -446,7 +446,7 @@
         "VARIABLE_MANAGER_ROLE": "0x5b94a8cd68affa84315f488cc2e6e456f761d334859cae8a073ef8fe13fb0ee6",
         "WITHDRAW_SIG": "0x7a8dc26796a1e50e6e190b70259f58f6a4edd5b22280ceecc82b687b8e982869",
         "withdrawalDelay": 86400,
-        "withdrawalQueueActivated": false
+        "withdrawalQueueActivated": true
       },
       "implementationNames": {
         "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6": "TransparentUpgradeableProxy",
@@ -1099,6 +1099,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25272035 },
+  "usedBlockNumbers": { "ethereum": 25343845 },
   "permissionsConfigHash": "0x47bc8c3c40741d25b4375a26055645504556056f8e3b6f4bc0e7cc6d57e171c6"
 }
