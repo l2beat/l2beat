@@ -13,22 +13,22 @@ export const mayan: BaseProject = {
     detailedDescription: WORMHOLE_DETAILED_DESCRIPTION,
     intent: {
       intentModel: {
-        value: 'Intent Framework',
+        value: 'Intent framework',
         description: 'Solvers compete to fill cross-chain swap intents.',
       },
       userRecovery: {
-        value: 'Needs research',
+        value: 'Request refund',
         description:
-          'Confirm whether users can cancel or refund an unfilled Mayan transfer and under what conditions.',
+          'Unfulfilled Swift orders can be refunded from the source contract with a Wormhole or refund-verifier message.',
       },
       solverAccess: {
-        value: 'Solver auction',
-        description:
-          'Fillers compete in the Mayan auction. Confirm whether solver participation is permissionless or curated.',
+        value: 'Permissionless',
+        description: "'Drivers' (solvers) compete in Mayan auctions.",
       },
       settlement: {
         value: 'Wormhole messaging',
-        description: 'Mayan uses Wormhole-based cross-chain infrastructure.',
+        description:
+          'Mayan uses Wormhole messages to prove destination fulfillment or refunds and unlock source-chain funds.',
       },
     },
     plugins: [

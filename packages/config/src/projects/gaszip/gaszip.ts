@@ -16,17 +16,18 @@ export const gaszip: BaseProject = {
         description: 'Focused on sending small gas balances across chains.',
       },
       userRecovery: {
-        value: 'Needs research',
+        value: 'Request refund',
         description:
-          'Confirm whether users can cancel or refund a transfer that is not delivered.',
+          'No self-serve onchain cancellation or refund path; invalid deposits are handled through Gas.zip support.',
       },
       solverAccess: {
         value: 'Internal',
-        description: 'No open solver marketplace exposed.',
+        description: 'No open solver marketplace.',
       },
       settlement: {
         value: 'Internal',
-        description: 'Settled through Gas.zip internal, centralized acounting.',
+        description:
+          'Settled through Gas.zip internal, centralized accounting.',
       },
     },
     plugins: [

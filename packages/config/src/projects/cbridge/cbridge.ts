@@ -10,27 +10,26 @@ export const cbridge: BaseProject = {
   name: 'Celer cBridge',
   shortName: 'cBridge',
   addedAt: UnixTime(1662628329),
-  // TODO!: when added, remove it from filter in config.test.ts
   interopConfig: {
     intent: {
       intentModel: {
-        value: 'Liquidity pool',
-        description: 'Transfers are routed through liquidity providers.',
+        value: 'Liquidity network',
+        description: 'Transfers are filled from the liquidity pool.',
       },
       userRecovery: {
-        value: 'Needs research',
+        value: 'Request refund',
         description:
-          'Confirm whether users can cancel or refund an unfilled transfer and under what conditions.',
+          'Failed pool transfers can be withdrawn on the source chain using gateway data signed by the Celer SGN.',
       },
       solverAccess: {
-        value: 'LP network',
+        value: 'Internal',
         description:
-          'Transfers are served by Celer liquidity providers. LP admission rules still need confirmation.',
+          'Solvers provide the signatures of the offchain Celer signer quorum with their transaction.',
       },
       settlement: {
         value: 'Celer SGN',
         description:
-          'Settlement is coordinated through Celer infrastructure. Confirm exact SGN role for the tracked flow.',
+          'Relay and refund messages must be authorized by a Celer signer quorum.',
       },
     },
     plugins: [

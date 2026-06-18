@@ -25,16 +25,16 @@ export const relay: BaseProject = {
           'Routes transfers through a relay-style execution network.',
       },
       userRecovery: {
-        value: 'Needs research',
+        value: 'Request refund',
         description:
-          'Confirm whether users can cancel or refund a transfer that is not filled.',
+          'No self-serve onchain refund path is exposed; failed transfers depend on Relay-operated recovery.',
       },
       solverAccess: {
         value: 'Internal',
         description: 'Transfers are filled by Relay-operated infrastructure.',
       },
       settlement: {
-        value: 'Relay Oracle',
+        value: 'Internal',
         description:
           'Settlement depends on Relay’s centralized oracle and allocator flow.',
       },

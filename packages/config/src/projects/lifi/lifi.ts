@@ -12,23 +12,23 @@ export const lifi: BaseProject = {
       'Intent protocol implemented by LI.FI, based on the Open Intents Framework (OIF).',
     intent: {
       intentModel: {
-        value: 'Intent Framework (OIF)',
-        description: 'Open Intents Framework standard.',
+        value: 'Intent framework (OIF)',
+        description: 'Uses the Open Intents Framework standard.',
       },
       userRecovery: {
-        value: 'Needs research',
+        value: 'Timeout refund',
         description:
-          'Confirm the user recovery path for LI.FI OIF intents, including cancellation or refund conditions.',
+          'Escrow orders can be refunded after expiry; Compact orders expire without moving locked funds unless fills are proven in time.',
       },
       solverAccess: {
-        value: 'Curated solvers',
+        value: 'Permissionless',
         description:
-          'Execution uses LI.FI-integrated solvers. Confirm exact admission rules.',
+          'Whitelisted solvers have access to an internal API and marketplace but in general solving is permissionless in OIF.',
       },
       settlement: {
-        value: 'Needs research',
+        value: 'OIF settlement',
         description:
-          'Confirm the settlement path for tracked LI.FI intent transfers.',
+          'Solvers fill destination outputs, then claim source inputs after oracle proofs of the fills. Oracles are configurable by LiFi.',
       },
     },
     plugins: [

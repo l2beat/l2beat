@@ -15,18 +15,18 @@ export const stargate: BaseProject = {
       'Liquidity bridge focused on USD stablecoins and ETH using the LayerZero message bridge. Stargate also has a Hydra product which is a minting token bridge for chains that do not natively support Stargate assets.',
     intent: {
       intentModel: {
-        value: 'Liquidity bridge',
+        value: 'Liquidity network',
         description: 'Transfers use Stargate liquidity and omnichain routing.',
       },
       userRecovery: {
-        value: 'Needs research',
+        value: 'Self-relay',
         description:
-          'Confirm the recovery path for failed or unfilled Stargate transfers.',
+          'Source-side checks revert before funds move; destination delivery depends on the DVN signature. There is no way to get refunded on the source chain.',
       },
       solverAccess: {
         value: 'Permissionless',
         description:
-          'Execution is permissionless via LayerZero and Stargate liquidity pools.',
+          'Execution is permissionless via LayerZero and Stargate liquidity pools, but requires DVN liveness.',
       },
       settlement: {
         value: 'LayerZero messaging',

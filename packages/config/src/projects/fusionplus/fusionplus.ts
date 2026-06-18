@@ -17,12 +17,12 @@ export const fusionplus: BaseProject = {
       userRecovery: {
         value: 'Timeout refund',
         description:
-          'HTLC construction provides a timeout-based recovery path.',
+          'HTLC construction provides a permissionless timeout-based recovery path.',
       },
       solverAccess: {
-        value: 'Needs research',
+        value: 'Whitelist',
         description:
-          'Confirm whether resolver participation is permissionless, allowlisted, or otherwise curated.',
+          'Resolvers onboard through 1inch Business Portal compliance and Access NFTs.',
       },
       settlement: {
         value: 'HTLC',
