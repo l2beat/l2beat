@@ -11,23 +11,23 @@ export const squid: BaseProject = {
     description: 'Intent framework using the Axelar message bridge.',
     intent: {
       intentModel: {
-        value: 'Intent framework',
-        description: 'Routes cross-chain swaps through Squid integrations.',
+        value: 'Express Execution',
+        description:
+          'Solvers fill standard Axelar transfers before they arrive at the destination.',
       },
       userRecovery: {
-        value: 'Needs research',
+        value: 'Slow fallback',
         description:
-          'Confirm whether users can cancel or refund a Squid transfer that is not delivered.',
+          'Transfers are not cancellable but fall back to standard Axelar bridge (minting) transfers if they are not filled.',
       },
       solverAccess: {
-        value: 'Integrated executors',
+        value: 'Permissionless',
         description:
-          'Execution uses Squid-integrated executors. Confirm exact admission rules.',
+          'Anyone can front liquidity by calling expressExecuteWithToken()',
       },
       settlement: {
-        value: 'Axelar GMP',
-        description:
-          'Squid routes use Axelar-based cross-chain infrastructure.',
+        value: 'Axelar',
+        description: 'Standard Axelar GMP token transfers.',
       },
     },
     plugins: [
