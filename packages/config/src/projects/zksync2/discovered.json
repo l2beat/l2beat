@@ -1,6 +1,6 @@
 {
   "name": "zksync2",
-  "timestamp": 1777883283,
+  "timestamp": 1781603066,
   "configHash": "0xe3366ebd88403dbbba2b7749a60f5e9e97666cca45498cba5ffc1e8c682647f5",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -30,6 +30,19 @@
       "implementationNames": {
         "eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB": "ProxyAdmin"
       }
+    },
+    {
+      "address": "eth:0x28942E6870612893B96F77De0F485fcE3497AAA8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
+          "role": ".executor"
+        }
+      ]
     },
     {
       "name": "EraChainAdminProxy",
@@ -553,7 +566,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3307353,
+        "getFirstUnprocessedPriorityTx": 3310340,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -561,8 +574,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 11,
-        "getPriorityTreeRoot": "0xca17943202df712550a3b2a49c07cf7f1c3155a9dc67196ae0cae599243f863a",
+        "getPriorityQueueSize": 8,
+        "getPriorityTreeRoot": "0xe9bfbefba86e909162aef54efa6ad5d0d46578d540ab12d229e99fc152522967",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051588,
@@ -570,13 +583,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 4],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 510434,
-        "getTotalBatchesExecuted": 510427,
-        "getTotalBatchesVerified": 510432,
-        "getTotalBlocksCommitted": 510434,
-        "getTotalBlocksExecuted": 510427,
-        "getTotalBlocksVerified": 510432,
-        "getTotalPriorityTxs": 3307364,
+        "getTotalBatchesCommitted": 512531,
+        "getTotalBatchesExecuted": 512523,
+        "getTotalBatchesVerified": 512528,
+        "getTotalBlocksCommitted": 512531,
+        "getTotalBlocksExecuted": 512523,
+        "getTotalBlocksVerified": 512528,
+        "getTotalPriorityTxs": 3310348,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45",
         "getVerifierParams": {
@@ -843,19 +856,6 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "address": "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
-          "role": ".executor"
-        }
-      ]
-    },
-    {
       "address": "eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F",
       "type": "EOA",
       "proxyType": "EOA"
@@ -888,6 +888,19 @@
       }
     },
     {
+      "address": "eth:0xa90c7CDB553332948E2943431436117eCFb1e781",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
+          "role": ".executor"
+        }
+      ]
+    },
+    {
       "address": "eth:0xBBBCA2805c784e59E4eC2880cE63d08C08282726",
       "type": "EOA",
       "proxyType": "EOA"
@@ -912,19 +925,6 @@
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-zk-stack"
-    },
-    {
-      "address": "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
-          "role": ".executor"
-        }
-      ]
     },
     {
       "address": "eth:0xCCEfc6dB1010af90AB0Fa0bbBd86F6D8C1627df7",
@@ -1036,8 +1036,8 @@
         "executionDelay_fmt": "3h",
         "executor": {
           "eth:0x32400084C286CF3E17e7B677ea9583e60a000324": [
-            "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd",
-            "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
+            "eth:0xa90c7CDB553332948E2943431436117eCFb1e781",
+            "eth:0x28942E6870612893B96F77De0F485fcE3497AAA8"
           ]
         },
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
@@ -1662,6 +1662,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 25020439 },
-  "permissionsConfigHash": "0xd956d07f5a8cf051f65dc6192f566d7ec07cacf4f5d4a9a9f4efba01286ca0c0"
+  "usedBlockNumbers": { "ethereum": 25329265 },
+  "permissionsConfigHash": "0x90c925234f71e52fe99df97205cba3c879ea81205967aa3de1d871c75067e2d5"
 }

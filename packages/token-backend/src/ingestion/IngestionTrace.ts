@@ -10,6 +10,10 @@ import type { TokenAddress } from './tokenIngestionUtils'
 export interface IngestionTrace {
   id: string
   address: TokenAddress
+  /** Result of the TokenDB lookup `plan()` performs for every entry —
+   * structured counterpart of the `existing-token` / `no-existing-token`
+   * steps, so consumers don't have to scan `steps`. */
+  existingDeployedToken: DeployedTokenRecord | undefined
   steps: IngestionStep[]
   outcome: IngestionOutcome
 }

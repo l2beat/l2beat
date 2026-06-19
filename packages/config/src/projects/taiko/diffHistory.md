@@ -1,3 +1,182 @@
+Generated with discovered.json: 0x6653a4994b88d931eb0aa60c14b7e113dde2f552
+
+# Diff at Tue, 16 Jun 2026 09:50:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1781102204
+- current timestamp: 1781603320
+
+## Description
+
+Propose 'Enable SP1 v6 on mainnet': new programhashes.
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
++++ description: total standard proposal count.
++++ severity: HIGH
+      values.proposalCount:
+-        20
++        21
+    }
+```
+
+Generated with discovered.json: 0x803f8b0d1799bbdd13c15302c608a704959eacd4
+
+# Diff at Wed, 10 Jun 2026 14:38:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3d7d193af6bb84bba0cb2817621d9f6c8df11cf4 block: 1780405412
+- current timestamp: 1781102204
+
+## Description
+
+Add raiko2 images, proposal https://dao.taiko.xyz/plugins/community-proposals/#/proposals/30 , all regenerated.
+
+## Watched changes
+
+```diff
+    contract TaikoRisc0Verifier (eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b) [taiko/Risc0Verifier] {
+    +++ description: Gating router contract to verify batches using RISC Zero.
++++ description: Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.4:
++        "0xbee1be4cbe2bdf9b0034a1ab6572061a76019e73189ff96322e58ab229b75f92"
++++ description: Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.5:
++        "0xcecc85819e15d173c2991577727525b136e820728f7aaaede612f1281cac2249"
+    }
+```
+
+```diff
+    contract TaikoSP1Verifier (eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6) [taiko/SP1Verifier] {
+    +++ description: Gating router contract to verify batches using SP1.
++++ description: Taiko specific Image IDs (i.e. program digest) of SP1 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedPrograms.8:
++        "0x0033e2cccc3296e7def7b381a4fb96fafec64f45420b6d24686779ef6236dff1"
++++ description: Taiko specific Image IDs (i.e. program digest) of SP1 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedPrograms.9:
++        "0x19f166660ca5b9f75ef670344fb96faf76327a2a082db49150cef3de6236dff1"
++++ description: Taiko specific Image IDs (i.e. program digest) of SP1 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedPrograms.10:
++        "0x009d26a03d10b4e70eef6a339187c258a7701d6a0150524684cb46b56cf9e540"
++++ description: Taiko specific Image IDs (i.e. program digest) of SP1 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedPrograms.11:
++        "0x4e93501e442d39c35ded4672187c258a3b80eb500541491a09968d6a6cf9e540"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780405412 (main branch discovery), not current.
+
+```diff
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x1efDd13f831ceeEa14940806705A53D3211CD698","description":"pause the verifier.","role":".owner"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3","description":"pause the verifier.","role":".owner"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782","description":"pause the verifier.","role":".owner"}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1","description":"pause the verifier.","role":".owner"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
++++ severity: HIGH
+      values.verifier_242f9d5b:
++        "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782"
++++ severity: HIGH
+      values.verifier_310fe598:
++        "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7"
++++ severity: HIGH
+      values.verifier_73c457ba:
++        "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696"
++++ severity: HIGH
+      values.verifier_9f39696c:
++        "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3"
++++ severity: HIGH
+      values.verifier_bb001d44:
++        "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698"
++++ severity: HIGH
+      values.verifier_f536085a:
++        "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier]
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C) [N/A]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x4deffdce25dc145d88b2a53f8043ea1129de9dc1
 
 # Diff at Tue, 09 Jun 2026 12:43:40 GMT:

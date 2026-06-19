@@ -1063,6 +1063,7 @@
       "address": "eth:0xcB58d1142e53e37aDE44E1F125248FbfAc99352A",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

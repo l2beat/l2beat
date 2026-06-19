@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x5e549954d76027e6c1f354d135d818ab971a7112
+
+# Diff at Tue, 16 Jun 2026 09:58:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1780405492
+- current timestamp: 1781603826
+
+## Description
+
+Revoker switched back to EOA (see below).
+
+## Watched changes
+
+```diff
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) [aztecnetwork/AztecTokenPositionRegistry] {
+    +++ description: Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked. Is also used as source of truth for other vesting contracts in the Aztec ecosystem.
+      values.getRevoker:
+-        "eth:0x79E5BD3BD5cfc52C718Fe0f83fEaab31691683cA"
++        "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350"
+    }
+```
+
 Generated with discovered.json: 0xbff27ec5f49a74e29c33a58cd16868206b55a6fb
 
 # Diff at Tue, 02 Jun 2026 13:18:04 GMT:

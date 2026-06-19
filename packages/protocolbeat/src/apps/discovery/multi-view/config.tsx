@@ -9,6 +9,7 @@ import {
   useDockingHook,
 } from '../../../components/docking'
 import { IS_READONLY } from '../../../config/readonly'
+import { IconChatbot } from '../../../icons/IconChatbot'
 import { IconChecked } from '../../../icons/IconChcked'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconCode } from '../../../icons/IconCode'
@@ -20,6 +21,7 @@ import { IconSigma } from '../../../icons/IconSigma'
 import { IconStamp } from '../../../icons/IconStamp'
 import { IconTerminal } from '../../../icons/IconTerminal'
 import { IconWebApp } from '../../../icons/IconWebApp'
+import { AnalyzePanel } from '../panel-analyze/AnalyzePanel'
 import { CodePanel } from '../panel-code/CodePanel'
 import { ConfigPanel } from '../panel-config/ConfigPanel'
 import { DiffHistoryPanel } from '../panel-diff-history/DiffHistoryPanel'
@@ -37,6 +39,7 @@ export const PANEL_IDS = [
   'nodes',
   'code',
   'preview',
+  'analyze',
   'terminal',
   'template',
   'config',
@@ -56,6 +59,7 @@ const PANELS: Record<PanelId, Panel> = {
   nodes: { icon: IconNodes, body: NodesPanel },
   code: { icon: IconCode, body: CodePanel },
   preview: { icon: IconWebApp, body: PreviewPanel },
+  analyze: { icon: IconChatbot, body: AnalyzePanel },
   terminal: { icon: IconTerminal, body: TerminalPanel },
   template: { icon: IconStamp, body: TemplatePanel },
   config: { icon: IconGear, body: ConfigPanel },
@@ -63,7 +67,7 @@ const PANELS: Record<PanelId, Panel> = {
 }
 
 export function isAllowedPanel(id: PanelId): boolean {
-  return !(IS_READONLY && id === 'terminal')
+  return !(IS_READONLY && (id === 'terminal' || id === 'analyze'))
 }
 
 function isPanelId(key: string): key is PanelId {

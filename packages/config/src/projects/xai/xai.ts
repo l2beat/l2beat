@@ -5,6 +5,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('xai')
 
@@ -51,8 +52,7 @@ export const xai: ScalingProject = orbitStackL3({
     categories: [
       {
         title: 'Fraud proofs',
-        description: `After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect. The challenge protocol can be subject to delay attacks. \
-        After the state root is published, there is also a trusted entity, called Challenger, that signs it and submits the signature to a Referee smart contract. The signatures submitted to the referee are used then verified by sentry nodes. The role of sentry nodes is to verify (assert) the submitted state root after it has been submitted. There is no integrated way to flag an invalid state root, sentry nodes will have to raise the alarm by external means, making them just observation nodes.`,
+        description: readProjectMarkdown('xai', 'stateValidationFraudProofs'),
         risks: [
           {
             category: 'Funds can be stolen if',

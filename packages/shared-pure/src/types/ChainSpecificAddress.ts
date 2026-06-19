@@ -58,6 +58,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   polygon: 'polygon',
   tempo: 'tempo',
   mon: 'monad',
+  plasma: 'plasma',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(

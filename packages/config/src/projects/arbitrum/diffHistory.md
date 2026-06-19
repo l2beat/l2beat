@@ -1,3 +1,64 @@
+Generated with discovered.json: 0xe011c3619c0bd6da41b581d07075537ff4d5f804
+
+# Diff at Tue, 16 Jun 2026 07:35:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@254df558db0f4fcb5b0e269facd77fad1c7d2ddb block: 1779800021
+- current timestamp: 1781595174
+
+## Description
+
+Inbox temporarily replaced with a custom impl exposing `sendUnsignedTransactionOverride(...)` (forge an L2 unsigned EOA tx from any `from`, `onlyAllowed`-gated), then reverted to standard `Inbox_BoLD`. L1Timelock scheduled a `SpoofL2TxAction` (executed 2026-06-15, [L1 exec tx](https://etherscan.io/tx/0xc2e247e5869aaf5b57ff1cc5da8b56f6675161ad6f980b547846f209e43e145b)) that used the override to spoof an L2 transfer of 30,765.617 ETH from the freeze/quarantine address `0x000…DA0` to `0x3b87…6C07` ([L2 exec tx](https://arbiscan.io/tx/0x09795deb2b812f9bb069df8a0466cc7a96a17c3b2268c3924308d3d07dafdf72)) — the Constitutional AIP [Approve Release of Frozen ETH](https://forum.arbitrum.foundation/t/constitutional-aip-approve-release-of-frozen-eth/30825). The funds were placed at `0xDA0` by the same SpoofL2TxAction mechanism in the Security Council's 2026-04-21 emergency (the original rsETH/KelpDAO freeze). These specific April/June actions did not directly move L1 ETH; they changed L2 balances through delayed L2 messages.
+
+## Watched changes
+
+```diff
+    contract Inbox (eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      values.$pastUpgrades.12:
++        ["2026-06-15T10:08:47.000Z","0xc2e247e5869aaf5b57ff1cc5da8b56f6675161ad6f980b547846f209e43e145b",["eth:0x980D1F93FC5809c828539c46084801673FA6A859"]]
+      values.$pastUpgrades.13:
++        ["2026-06-15T10:08:47.000Z","0xc2e247e5869aaf5b57ff1cc5da8b56f6675161ad6f980b547846f209e43e145b",["eth:0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10"]]
+      values.$upgradeCount:
+-        12
++        14
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.scheduledTransactions.103:
++        {"id":"0x3b8c42fc538bca5c6732df90d234ba7450c632c3818dbad104c5e3528cc36d83","decoded":{"chain":"ethereum","contractName":"SpoofL2TxAction","function":"execute","inputs":[{"name":"proxyAdmin","value":"eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"name":"inbox","value":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},{"name":"gasLimit","value":50000},{"name":"maxFeePerGas","value":1000000000000},{"name":"nonce","value":0},{"name":"to","value":"eth:0x3b87db6ded35eBD28EcbF8014fb325eef23f6C07"},{"name":"value","value":"30765617401709008927568"},{"name":"data","value":"0x"},{"name":"from","value":"eth:0x0000000000000000000000000000000000000DA0"}],"address":"eth:0x3d456FCd62f5baBCf3263B72fb4ac8fF8cc5a322","calldata":"0x0a2e5a5b000000000000000000000000554723262467f125ac9e1cdfa9ce15cc53822dbd0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000000000000000000000000000000000000000c350000000000000000000000000000000000000000000000000000000e8d4a5100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003b87db6ded35ebd28ecbf8014fb325eef23f6c07000000000000000000000000000000000000000000000683ceb5c7a099c63b5000000000000000000000000000000000000000000000000000000000000001200000000000000000000000000000000000000000000000000000000000000da00000000000000000000000000000000000000000000000000000000000000000","executor":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},"raw":{"target":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd0000000000000000000000003d456fcd62f5babcf3263b72fb4ac8ff8cc5a322000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000001440a2e5a5b000000000000000000000000554723262467f125ac9e1cdfa9ce15cc53822dbd0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000000000000000000000000000000000000000c350000000000000000000000000000000000000000000000000000000e8d4a5100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003b87db6ded35ebd28ecbf8014fb325eef23f6c07000000000000000000000000000000000000000000000683ceb5c7a099c63b5000000000000000000000000000000000000000000000000000000000000001200000000000000000000000000000000000000000000000000000000000000da0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
+Generated with discovered.json: 0x0573850d2f4773c2a19841330741c822abb40335
+
+# Diff at Fri, 12 Jun 2026 10:18:40 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1779800021
+- current timestamp: 1779800021
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779800021 (main branch discovery), not current.
+
+```diff
+    EOA L1Timelock_l2alias (arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
 Generated with discovered.json: 0xe39fa6aecc5f3ceef838af8559b8f3031819a242
 
 # Diff at Tue, 09 Jun 2026 12:43:31 GMT:

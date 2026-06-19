@@ -177,6 +177,7 @@ describe(TokenIngestionLoop.name, () => {
       const process = mockFn().resolvesTo({
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: { kind: 'skip', reason: 'test' },
       } satisfies IngestionTrace)
@@ -571,6 +572,7 @@ describe(TokenIngestionLoop.name, () => {
         .resolvesToOnce({
           id: 'ing_test',
           address: secondAddress,
+          existingDeployedToken: undefined,
           steps: [],
           outcome: { kind: 'skip', reason: 'test' },
         } satisfies IngestionTrace)

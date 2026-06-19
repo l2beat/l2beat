@@ -3,6 +3,7 @@ import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 export const sp1turbo: BaseProject = {
   id: ProjectId('sp1turbo'),
@@ -68,27 +69,7 @@ export const sp1turbo: BaseProject = {
         // ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
-    proofSystemInfo: `
-      ## Description
-
-      SP1 Turbo is a RISC-V zkVM using the [Plonky3](https://github.com/Plonky3/Plonky3) stack. The zkVM execution is proven recursively and is wrapped into a SNARK for final verification. It provides tools to generate onchain Groth16 or Plonk verifiers. SP1 targets [100 bits of security based on unproven proximity gaps conjecture](https://docs.succinct.xyz/docs/v5/sp1/security/security-model#conjectures-for-fris-security), so the actual security is likely lower.
-
-      ## Proof system
-
-      SP1 Turbo proves execution of a 32 bit RISC-V VM (RV32IM) using several ZK circuits connected by lookup arguments, as implemented in Plonky3. VM execution trace is split into several chunks that could be proven in parallel with a STARK proving system. The parallelized proofs are recursively checked by the next layer of STARK circuits. The correctness of the final STARK proof is verified with the final wrap SNARK program, the wrap SNARK proof is verified onchain.
-
-      ### zkVM component
-
-      Verifies execution of a RISC-V program in a zkVM. See [here](https://docs.succinct.xyz/docs/v5/sp1/security/rv32im-implementation) for more details on the exact RISC-V standard implemented. Uses [Plonky3](https://github.com/Plonky3/Plonky3) STARK toolkit with AIR arithmetization and FRI-based polynomial commitment scheme within the [BabyBear field](https://docs.succinct.xyz/docs/v5/sp1/security/security-model#hash-functions-and-the-random-oracle-model).
-
-      ### Recursion circuits
-
-      SP1 provides tools for recursive proof generation by [verifying proofs in a zkVM](https://docs.succinct.xyz/docs/v5/sp1/writing-programs/proof-aggregation#verifying-proofs-inside-the-zkvm). This uses the same toolkit as top-level proof system, but proves the correct verification of all proofs generated on the previous step.
-
-      ### Final wrap
-
-      SP1 supports Plonk (with KZG polynomial commitments) or Groth16 final SNARK wrap of the STARK proof for performant onchain proof verification ([link](https://docs.succinct.xyz/docs/v5/sp1/generating-proofs/proof-types#compressed)). The [gnark](https://github.com/Consensys/gnark) implementation of these proof systems over BN254 curve is used. For Plonk, Aztec Ignition trusted setup ceremony is used, for Groth16 Succinct run internal circuit-dependent phase 2 trusted setup, see [below](#trusted-setups) for more details.
-      `,
+    proofSystemInfo: readProjectMarkdown('sp1turbo', 'proofSystemInfo'),
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
@@ -279,40 +260,10 @@ export const sp1turbo: BaseProject = {
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-The regeneration process consumed around 50 GiB of memory on the peak. Also, due to some os indeterminism, 
-the sp1 repo must be cloned into \`/home/aurel/dev/sp1-wip/\` directory, so we recommend creating \`aurel\` user on an Ubuntu 24.04 machine.
-
-1. Create a new \`aurel\` user on a linux os and login as this user.
-2. Install necessary dependencies: rust, sp1 toolkit, go.
-
-\`\`\`
-sudo apt update
-sudo apt install build-essential golang-go
-
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
-cargo install --debug --locked cargo-make
-
-curl -L https://sp1up.succinct.xyz/ | bash
-sp1up
-\`\`\`
-
-3. Clone sp1 repo in the correct directory, set \`SP1_ALLOW_DEPRECATED_HOOKS\` for correct compilation and run the script to regenerate verifiers.
-
-\`\`\`
-mkdir -p dev/sp1-wip/
-cd dev/sp1-wip/
-git clone https://github.com/succinctlabs/sp1.git
-cd sp1/crates/prover
-git checkout v5.0.0   # commit should be 38f0f143dece864e8bffafad64196a924f190336
-export SP1_ALLOW_DEPRECATED_HOOKS=true  # fixes compilation errors
-
-make build-circuits
-\`\`\`
-      
-The script will generate Plonk verifier smart contract with verification keys and the verifier hash in \`build/plonk\` dir.
-        `,
+        verificationSteps: readProjectMarkdown(
+          'sp1turbo',
+          'verificationSteps-0xd4e8ecd2',
+        ),
       },
       {
         hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',
@@ -340,38 +291,10 @@ The script will generate Plonk verifier smart contract with verification keys an
         ],
         verificationStatus: 'unsuccessful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-We performed the following steps, which according to the Succinct team should have lead to a successful regeneration of the verifier's hash.
-However these steps produced a verifier smart contract with \`VERIFIER_HASH = 0xf7ba6320608dadd905f3483d51c2fa0fb55473e3136bdfb37c96a10f158ab9fe\`, which differs from the value onchain.        
-
-1. Create a new \`aurel\` user on a linux os and login as this user.
-2. Install necessary dependencies: rust, sp1 toolkit, go.
-
-\`\`\`
-sudo apt update
-sudo apt install build-essential golang-go
-
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
-cargo install --debug --locked cargo-make
-
-curl -L https://sp1up.succinct.xyz/ | bash
-sp1up
-\`\`\`
-
-3. Clone sp1 repo in the correct directory, set \`SP1_ALLOW_DEPRECATED_HOOKS\` for correct compilation and run the script to regenerate verifiers.
-
-\`\`\`
-mkdir -p dev/sp1-wip/
-cd dev/sp1-wip/
-git clone https://github.com/succinctlabs/sp1.git
-cd sp1/crates/prover
-git checkout v5.0.0   # commit should be 38f0f143dece864e8bffafad64196a924f190336
-export SP1_ALLOW_DEPRECATED_HOOKS=true  # fixes compilation errors
-
-make build-circuits
-\`\`\`
-      `,
+        verificationSteps: readProjectMarkdown(
+          'sp1turbo',
+          'verificationSteps-0xa4594c59',
+        ),
       },
     ],
   },

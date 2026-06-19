@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xabbdd3058934b5b617ebb92e48f5bd736795ad95
+
+# Diff at Tue, 16 Jun 2026 07:37:01 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@254df558db0f4fcb5b0e269facd77fad1c7d2ddb block: 1775599220
+## Description
+
+SequencerInbox `maxTimeVariation` delay fields increased 10x, weakening force inclusion from 4d to 40d.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (eth:0x12ad349e5d72B582856290736e0f13FE5fA57Aa4) [N/A] {
+    +++ description: None
+      values.maxTimeVariation.0:
+-        28800
++        288000
+      values.maxTimeVariation.2:
+-        345600
++        3456000
+    }
+```
+
+Generated with discovered.json: 0x31223a8558a29070654ed5e81cb671858de0e52d
+
+# Diff at Fri, 12 Jun 2026 10:19:05 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1775599220
+- current timestamp: 1775599220
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775599220 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0x30b91654787143769d952dfba05230004d2948c0
 
 # Diff at Tue, 09 Jun 2026 12:43:40 GMT:

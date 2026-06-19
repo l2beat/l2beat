@@ -214,13 +214,9 @@ export function getCodePaths(
         ],
       }
     }
-    const dir = readdirSync(join(root, name))
-    const codePaths = dir
-      .map((file) => ({
-        name: file,
-        path: join(root, name, file),
-      }))
-      .sort((a, b) => compareFiles(a.name, b.name))
+    const codePaths = listFilesRecursively(join(root, name)).sort((a, b) =>
+      compareFiles(a.name, b.name),
+    )
 
     return {
       entryName: entry.name,
@@ -229,6 +225,26 @@ export function getCodePaths(
   }
 
   return { entryName: undefined, codePaths: [] }
+}
+
+function listFilesRecursively(
+  directory: string,
+  prefix = '',
+): { name: string; path: string }[] {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const name = prefix ? `${prefix}/${entry.name}` : entry.name
+    const path = join(directory, entry.name)
+
+    if (entry.isDirectory()) {
+      return listFilesRecursively(path, name)
+    }
+
+    if (!entry.isFile()) {
+      return []
+    }
+
+    return { name, path }
+  })
 }
 
 function compareFiles(a: string, b: string) {

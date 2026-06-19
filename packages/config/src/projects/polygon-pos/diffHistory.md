@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xdb7bec85ec39506414134ac6a482cd9cc5c68bf5
+
+# Diff at Tue, 16 Jun 2026 10:02:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1780406469
+- current timestamp: 1781604054
+
+## Description
+
+3 valis removed: vali set is open to join with min stake.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [polygon-pos/StakeManager] {
+    +++ description: Manages the Polygon PoS validator set.
+      values.CHECKPOINT_REWARD:
+-        "29414916286149162861491"
++        "25212785388127853881278"
+      values.currentValidatorSetSize:
+-        105
++        102
+    }
+```
+
 Generated with discovered.json: 0x600418befcb185972254ee51e97f55e82666588b
 
 # Diff at Tue, 02 Jun 2026 13:22:27 GMT:

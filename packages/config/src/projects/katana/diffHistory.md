@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x2cd3ad8f95b2d9cab8b8ef4b2055ed6d2dd2331e
+
+# Diff at Tue, 16 Jun 2026 09:07:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e3be4116cfc279e5c4415ba34f338c2f1d453616 block: 1781102006
+- current timestamp: 1781600787
+
+## Description
+
+Add multisig signer.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "katana:0xb3dA4c1Ba8De9E04f22B1554a070189F518FDCac"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x571012f08b4d382395f4140f82a9dc7d7db5ba3e
+
+# Diff at Fri, 12 Jun 2026 10:18:52 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1781102006
+- current timestamp: 1781102006
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781102006 (main branch discovery), not current.
+
+```diff
+    contract SequencerFeeVault (katana:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault] {
+    +++ description: Collects the sequencer fees.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract BaseFeeVault (katana:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault] {
+    +++ description: Collects EIP-1559 base fees
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract L1FeeVault (katana:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault] {
+    +++ description: Collects the L1 portion of the L2 transaction fees.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract OperatorFeeVault (katana:0x420000000000000000000000000000000000001b) [opstack/Layer2/OperatorFeeVault] {
+    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+Generated with discovered.json: 0x92270f0b72061a01cfdfcbcab46015b628df80e2
+
+# Diff at Wed, 10 Jun 2026 14:34:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9b1a27959a14343aae7c71ebbc397f62f0aab99c block: 1780404229
+- current timestamp: 1781102006
+
+## Description
+
+Two conduit ms members removed.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.8:
+-        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 10 (40%)"
+    }
+```
+
 Generated with discovered.json: 0xfff1bddfab4dadb902e76d1be2aff47085690aa6
 
 # Diff at Tue, 09 Jun 2026 12:43:35 GMT:

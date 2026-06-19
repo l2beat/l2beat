@@ -165,6 +165,7 @@ function TokenPageContent({
         data={data}
         isLoading={isLoading}
         tokenCategory={token.category}
+        deploymentsCount={tokenEntry.deploymentsCount}
         apiSelection={apiSelection}
       />
       <TokenTopProtocolCard

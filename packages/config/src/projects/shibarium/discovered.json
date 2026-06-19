@@ -823,7 +823,7 @@
       "address": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

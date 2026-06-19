@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x58d67952ca9031b675d29e307a3d0a1ff80af02e
+
+# Diff at Thu, 11 Jun 2026 11:27:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@91b2eba1ff9c1c8341d0eaf6594dac4179405ef6 block: 1780398796
+- current timestamp: 1781177167
+
+## Description
+
+Conduit Multisig 1 dropped two signers.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.8:
+-        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 10 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x4454b844e09266ea037b25a5131ec0a068ba6322
 
 # Diff at Tue, 09 Jun 2026 12:43:37 GMT:

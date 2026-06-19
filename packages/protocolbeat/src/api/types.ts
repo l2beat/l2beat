@@ -165,6 +165,11 @@ export interface ApiHandlersResponse {
   }[]
 }
 
+export type {
+  AnalyzerApiResponse,
+  AnalyzerResultApiResponse,
+} from '@l2beat/shared-pure'
+
 export type ApiAddressType =
   | 'EOA'
   | 'EOAPermissioned'

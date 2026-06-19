@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xb15162cd79a14842eece0395af8c30ed0da296fb
+
+# Diff at Fri, 12 Jun 2026 10:18:41 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1781105531
+- current timestamp: 1781105531
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781105531 (main branch discovery), not current.
+
+```diff
+    contract FeeDisburser (base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA) [opstack/Layer2/FeeDisburser] {
+    +++ description: Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract SequencerFeeVault (base:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault] {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract BaseFeeVault (base:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault] {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract L1FeeVault (base:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault] {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    EOA Base Governance Multisig - L2 Alias (base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x50e5cf659c693f6a12e82237d0991dc997930805
 
 # Diff at Wed, 10 Jun 2026 15:33:22 GMT:

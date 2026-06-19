@@ -1,46 +1,46 @@
 {
   "stakeToken": "AZTEC",
-  "totalStake": 629230000,
+  "totalStake": 609016000,
   "entities": [
     {
       "name": "Nethermind",
-      "stake": 123200000
+      "stake": 113800000
     },
     {
       "name": "Nansen | Stake to Stack Points",
-      "stake": 79800000
+      "stake": 77200000
     },
     {
       "name": "Sigma Prime",
-      "stake": 54600000
+      "stake": 53200000
     },
     {
       "name": "snoopfear|PON",
-      "stake": 47200000
+      "stake": 47400000
     },
     {
       "name": "P2P.org",
-      "stake": 45196000
+      "stake": 42398000
     },
     {
       "name": "Wonderland",
-      "stake": 35400000
-    },
-    {
-      "name": "GabbexNodes",
-      "stake": 30800000
+      "stake": 39000000
     },
     {
       "name": "ZKV",
-      "stake": 30590000
+      "stake": 29416000
     },
     {
-      "name": "Aztec-Scan",
-      "stake": 21000000
+      "name": "GabbexNodes",
+      "stake": 28000000
     },
     {
       "name": "01node",
-      "stake": 18000000
+      "stake": 21400000
+    },
+    {
+      "name": "Aztec-Scan",
+      "stake": 18600000
     }
   ]
 }

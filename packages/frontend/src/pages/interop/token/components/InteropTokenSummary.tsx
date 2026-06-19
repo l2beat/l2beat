@@ -16,11 +16,13 @@ export function InteropTokenSummary({
   data,
   isLoading,
   tokenCategory,
+  deploymentsCount,
   apiSelection,
 }: {
   data: InteropTokenDashboardData | undefined
   isLoading: boolean
   tokenCategory: string | null
+  deploymentsCount: number
   apiSelection: InteropSelection
 }) {
   const token = data?.token
@@ -108,6 +110,17 @@ export function InteropTokenSummary({
             )
           }
         />
+        {deploymentsCount > 0 && (
+          <StatsItem
+            title="Deployments"
+            isLoading={isLoading}
+            value={
+              <a href="#onchain-deployments" className="hover:underline">
+                {formatInteger(deploymentsCount)}
+              </a>
+            }
+          />
+        )}
       </div>
     </section>
   )

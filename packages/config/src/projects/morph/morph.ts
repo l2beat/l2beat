@@ -26,6 +26,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('morph')
 
@@ -232,10 +233,16 @@ export const morph: ScalingProject = {
     categories: [
       {
         title: 'Fraud proofs',
-        description: `Morph uses a one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
-          can post a ${challengeBond} WEI bond and request a ZK proof of the state transition. At least 5 Challengers are operated by entities external to the team. After the challenge, during a ${formatSeconds(proofWindow)} proving window, a ZK proof must be \
-          delivered, otherwise the state root is considered invalid and the root proposer bond, which is currently set to ${stakingValue} ETH, is slashed. The zkVM used is SP1 by Succinct.\
-          If a valid proof is delivered, the Challenger loses the challenge bond. The Morph Multisig can revert unfinalized batches.`,
+        description: readProjectMarkdown(
+          'morph',
+          'stateValidationFraudProofs',
+          {
+            challengeWindow: formatSeconds(challengeWindow),
+            challengeBond,
+            proofWindow: formatSeconds(proofWindow),
+            stakingValue,
+          },
+        ),
         references: [
           {
             title: 'Whitelisted Challengers - Morph Docs',

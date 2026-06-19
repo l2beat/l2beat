@@ -313,8 +313,9 @@ function CustomTooltip({
   if (!payload || typeof label !== 'number') return null
 
   const actualPayload = [...payload].reverse().filter((p) => !p.hide)
+  const costPayload = actualPayload.filter((p) => !isDataPostedKey(p.name))
   const total = actualPayload.reduce<number | null>((acc, curr) => {
-    if (curr.name === 'posted') {
+    if (isDataPostedKey(curr.name)) {
       return acc
     }
     if (curr.value === null || curr.value === undefined) {
@@ -333,7 +334,7 @@ function CustomTooltip({
         <div className="font-medium text-label-value-14 text-secondary">
           {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
         </div>
-        {actualPayload.filter((p) => p.name !== 'posted').length > 1 && (
+        {costPayload.length > 1 && (
           <>
             <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">
               <span>Total</span>
@@ -381,4 +382,8 @@ function CustomTooltip({
       </div>
     </ChartTooltipWrapper>
   )
+}
+
+function isDataPostedKey(name: string | undefined) {
+  return name !== undefined && THROUGHPUT_ENABLED_DA_LAYERS.includes(name)
 }

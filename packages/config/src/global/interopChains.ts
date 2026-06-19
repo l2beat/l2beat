@@ -200,6 +200,22 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://monadscan.com',
   },
   {
+    id: 'plasma',
+    name: 'Plasma',
+    type: 'evm',
+    display: 'XPL',
+    color: '#162F29',
+    explorerUrl: 'https://plasmascan.to',
+  },
+  {
+    id: 'tron',
+    name: 'Tron',
+    type: 'evm',
+    display: 'TRX',
+    color: '#FF060A',
+    explorerUrl: 'https://tronscan.org',
+  },
+  {
     id: 'hyperliquid',
     name: 'Hyperliquid',
     type: 'evm',
@@ -219,6 +235,8 @@ export const INTEROP_CHAINS: InteropChain[] = [
 
 export const INTEROP_ONE_SIDED_CHAINS = [
   'solana',
+  'plasma',
+  'tron',
   'hyperliquid',
   'lighter',
 ] as const
