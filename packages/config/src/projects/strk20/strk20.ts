@@ -37,7 +37,10 @@ export const strk20: BaseProject = {
     trustedSetup: TRUSTED_SETUPS.TransparentSetup,
     tokens: [],
     attributes: [
-      PRIVACY_ATTRIBUTES.upgradeable,
+      {
+        ...PRIVACY_ATTRIBUTES.upgradeable,
+        description: 'Smart contract code can be upgraded instantly by an EOA.',
+      },
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,

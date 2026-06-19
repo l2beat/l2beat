@@ -94,7 +94,11 @@ export const privacyPools: BaseProject = {
     tokens: getPrivacyTokens(),
     attributes: [
       PRIVACY_ATTRIBUTES.immutable,
-      PRIVACY_ATTRIBUTES.enforcedCompliance,
+      {
+        ...PRIVACY_ATTRIBUTES.enforcedCompliance,
+        description:
+          'Centralised ASPs (association set providers) can refuse deposits before they are withdrawn and forcibly remove them from the anonymity set.',
+      },
       PRIVACY_ATTRIBUTES.anyAmount,
       PRIVACY_ATTRIBUTES.sourceAvailable,
     ],

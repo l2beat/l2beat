@@ -4,14 +4,13 @@ export const PRIVACY_ATTRIBUTES = {
   upgradeable: {
     id: 'upgradeable',
     label: 'Upgradeable',
-    description:
-      'DAO can vote on upgrades that are executable with a 7d delay.',
+    description: 'Smart contract code can be upgraded.',
   },
   optCompliance: {
     id: 'optCompliance',
     label: 'Opt compliance',
     description:
-      "Optional 'proofs of innocence' (POIs), can disassociate a deposit from a list of flagged addresses. They are not enforced by the protocol but can be enforced by relayers.",
+      'Users are not forced to provide compliance data by the core protocol.',
   },
   transfers: {
     id: 'transfers',
@@ -62,6 +61,6 @@ export const PRIVACY_ATTRIBUTES = {
     id: 'enforcedCompliance',
     label: 'Enforced compliance',
     description:
-      'Centralised ASPs (association set providers) can refuse deposits before they are withdrawn and forcibly remove them from the anonymity set.',
+      'Compliance checks are enforced by the protocol and can restrict privacy set participation.',
   },
 } as const satisfies Record<string, PrivacyAttribute>

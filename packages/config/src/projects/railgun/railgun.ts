@@ -171,8 +171,16 @@ export const railgun: BaseProject = {
     trustedSetup: TRUSTED_SETUPS.Railgun,
     tokens: privacyTokens,
     attributes: [
-      PRIVACY_ATTRIBUTES.upgradeable,
-      PRIVACY_ATTRIBUTES.optCompliance,
+      {
+        ...PRIVACY_ATTRIBUTES.upgradeable,
+        description:
+          'DAO can vote on upgrades that are executable with a 7d delay.',
+      },
+      {
+        ...PRIVACY_ATTRIBUTES.optCompliance,
+        description:
+          "Optional 'proofs of innocence' (POIs), can disassociate a deposit from a list of flagged addresses. They are not enforced by the protocol but can be enforced by relayers.",
+      },
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
