@@ -54,4 +54,23 @@ interface IVault {
     const segments = splitSolidityDeclarations(source)
     expect(segments).toEqual([{ name: null, content: source }])
   })
+
+  it('does not abort on a function-list `using` declaration', () => {
+    const source = `pragma solidity ^0.8.19;
+
+using {add, sub} for uint256 global;
+
+contract Counter {
+    uint256 public value;
+}
+`
+    const segments = splitSolidityDeclarations(source)
+
+    // The whole source is still recoverable byte-for-byte...
+    expect(segments.map((s) => s.content).join('')).toEqual(source)
+    // ...the `using` line is folded into an unnamed segment...
+    expect(segments.some((s) => s.name === 'add')).toEqual(false)
+    // ...and the following contract is still split out normally.
+    expect(segments.some((s) => s.name === 'Counter')).toEqual(true)
+  })
 })

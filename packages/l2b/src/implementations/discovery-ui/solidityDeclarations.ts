@@ -54,8 +54,11 @@ export function splitSolidityDeclarations(flat: string): SoliditySegment[] {
 export function getASTTopLevelChildName(child: ASTNode): string | undefined {
   switch (child.type) {
     case 'UsingForDeclaration':
-      assert(child.libraryName !== null)
-      return child.libraryName
+      // `using {f} for T;` / `using {f as +} for T global;` has no library
+      // name (the functions live in `child.functions`). Treat it as an unnamed
+      // directive rather than asserting, so one such statement can't abort the
+      // whole split and disable Carve Copy for the entire source.
+      return child.libraryName ?? undefined
     case 'ContractDefinition':
       return child.name
     case 'FunctionDefinition':

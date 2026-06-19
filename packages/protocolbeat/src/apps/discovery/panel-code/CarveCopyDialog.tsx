@@ -6,7 +6,7 @@ import { Dialog } from '../../../components/Dialog'
 import { useCopy } from '../../../hooks/useCopy'
 import { IconCopy } from '../../../icons/IconCopy'
 import { IconTick } from '../../../icons/IconTick'
-import { joinDeclarations } from './declarations'
+import { joinSelectedDeclarations } from './declarations'
 import { KNOWN_LIBRARY_NAMES } from './knownLibraryNames'
 
 interface NamedDeclaration {
@@ -131,12 +131,13 @@ export function CarveCopyDialog(props: CarveCopyDialogProps) {
           <span className="text-coffee-400 text-sm">{summary}</span>
           <Button
             variant="solid"
-            onClick={() => {
-              const content = joinDeclarations(
-                props.declarations.filter((_, i) => selected.has(i)),
+            onClick={() =>
+              copy(
+                joinSelectedDeclarations(props.declarations, (i) =>
+                  selected.has(i),
+                ),
               )
-              copy(content)
-            }}
+            }
             disabled={selected.size === 0}
             className="gap-2"
           >
