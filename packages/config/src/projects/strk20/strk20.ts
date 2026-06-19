@@ -44,6 +44,11 @@ export const strk20: BaseProject = {
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
+      {
+        ...PRIVACY_ATTRIBUTES.enforcedCompliance,
+        description:
+          "A permissioned 'auditor' key can link private transfers at any time, including retroactively.",
+      },
       PRIVACY_ATTRIBUTES.closedSource,
     ],
     riskSummary: readProjectMarkdown('strk20', 'riskSummary'),
