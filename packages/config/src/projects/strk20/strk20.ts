@@ -11,7 +11,8 @@ export const strk20: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-06-17')),
   statuses: {
-    yellowWarning: undefined,
+    yellowWarning:
+      'The proven program is not made available so it is unknown what logic is verified by the smart contract. Furthermore, real-time monitoring for this project is not supported.',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
