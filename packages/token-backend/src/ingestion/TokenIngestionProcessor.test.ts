@@ -750,6 +750,7 @@ describe(TokenIngestionProcessor.name, () => {
         id: 'ing_test',
         address,
         steps: [],
+        existingDeployedToken: undefined,
         outcome: {
           kind: 'pending',
           operation: 'insert',
@@ -803,6 +804,7 @@ describe(TokenIngestionProcessor.name, () => {
         id: 'ing_test',
         address,
         steps: [],
+        existingDeployedToken: undefined,
         outcome: {
           kind: 'pending',
           operation: 'insert',
