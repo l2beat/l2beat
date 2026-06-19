@@ -46,7 +46,6 @@ import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
 import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
-import { squid } from '../projects/squid/squid'
 import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { strk20 } from '../projects/strk20/strk20'
@@ -111,7 +110,6 @@ export const refactored: BaseProject[] = [
   layerzero,
   axelar,
   axelarits,
-  squid,
   fusionplus,
   circlegateway,
   wormholeWtt,

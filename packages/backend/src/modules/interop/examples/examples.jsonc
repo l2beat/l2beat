@@ -1963,7 +1963,7 @@
   "axelar": {
     "loadConfigs": ["layerzero-v2"],
     "txs": [
-      // contractcallwithtoken + express fill via squid
+      // contractcallwithtoken
       {
         "chain": "base",
         "tx": "0x90c74bb1bf1a3257ba4713e1562535babd77d3d7ec6a9608125a9b289ec9ffb4"
@@ -2027,12 +2027,6 @@
     ],
     "expects": {
       "transfers": [
-        {
-          "type": "axelar-squid.Transfer",
-          "bridgeType": "nonMinting",
-          "src": { "financials": { "symbol": "axlUSDC" } },
-          "dst": { "financials": { "symbol": "USDC" } }
-        },
         {
           "type": "axelar.Transfer",
           "bridgeType": "lockAndMint",

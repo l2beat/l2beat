@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x9c5b910f6a6ce39797a4591c666123623c515846
+
+# Diff at Thu, 18 Jun 2026 10:25:29 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ece0bb89d93f4462f45501d91379f3ba4bc05b8a block: 1781602379
+- current timestamp: 1781778259
+
+## Description
+
+Removed one member from Matterlabs ms.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac"
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "1 of 2 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x01b818a19fbcbebc6195e094bad6846650ba2df7
 
 # Diff at Tue, 16 Jun 2026 09:35:17 GMT:

@@ -187,19 +187,27 @@ export class TokenIngestionQueueRepository extends BaseRepository {
   async getPage(options: {
     offset: number
     limit: number
+    chains?: string[]
   }): Promise<TokenIngestionQueuePage> {
-    const rows = await this.db
+    let rowsQuery = this.db
       .selectFrom('TokenIngestionQueue')
       .selectAll()
       .orderBy(['chain', 'address'])
+    let countQuery = this.db
+      .selectFrom('TokenIngestionQueue')
+      .select((eb) => eb.fn.countAll<number>().as('count'))
+
+    if (options.chains && options.chains.length > 0) {
+      rowsQuery = rowsQuery.where('chain', 'in', options.chains)
+      countQuery = countQuery.where('chain', 'in', options.chains)
+    }
+
+    const rows = await rowsQuery
       .offset(options.offset)
       .limit(options.limit)
       .execute()
 
-    const count = await this.db
-      .selectFrom('TokenIngestionQueue')
-      .select((eb) => eb.fn.countAll<number>().as('count'))
-      .executeTakeFirstOrThrow()
+    const count = await countQuery.executeTakeFirstOrThrow()
 
     return {
       entries: rows.map(toRecord),
