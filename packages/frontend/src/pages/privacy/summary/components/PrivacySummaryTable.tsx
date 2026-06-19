@@ -21,6 +21,26 @@ import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
 const columnHelper = createColumnHelper<PrivacySummaryEntry>()
 
+function NotTrackedCell() {
+  return (
+    <span className="font-medium text-base text-secondary">Not tracked</span>
+  )
+}
+
+function MetricCell({
+  value,
+  formatter,
+}: {
+  value: number | undefined
+  formatter: (value: number) => string
+}) {
+  if (value === undefined) {
+    return <NotTrackedCell />
+  }
+
+  return <span className="font-medium text-base">{formatter(value)}</span>
+}
+
 const columns = [
   ...getCommonProjectColumns(columnHelper, (row) => row.href),
   columnHelper.accessor('name', {
@@ -47,7 +67,9 @@ const columns = [
             />
           </TwoRowCell.First>
           <TwoRowCell.Second>
-            {formatInteger(ctx.row.original.poolsTracked)} pools tracked
+            {ctx.row.original.isTracked
+              ? `${formatInteger(ctx.row.original.poolsTracked)} pools tracked`
+              : 'Not tracked'}
           </TwoRowCell.Second>
         </TwoRowCell>
       </TableLink>
@@ -75,10 +97,12 @@ const columns = [
     id: 'totalValueLockedUsd',
     header: 'TVL',
     cell: (ctx) => (
-      <span className="font-medium text-base">
-        {formatCurrency(ctx.getValue() ?? 0, 'usd')}
-      </span>
+      <MetricCell
+        value={ctx.getValue()}
+        formatter={(value) => formatCurrency(value, 'usd')}
+      />
     ),
+    sortUndefined: 'last',
     meta: {
       align: 'right',
       tooltip:
@@ -88,10 +112,9 @@ const columns = [
   columnHelper.accessor('totalDeposits', {
     header: 'Total deposits',
     cell: (ctx) => (
-      <span className="font-medium text-base">
-        {formatInteger(ctx.getValue() ?? 0)}
-      </span>
+      <MetricCell value={ctx.getValue()} formatter={formatInteger} />
     ),
+    sortUndefined: 'last',
     meta: {
       align: 'right',
       tooltip:
@@ -102,10 +125,12 @@ const columns = [
     id: 'totalValueDeposited30dUsd',
     header: '30D volume',
     cell: (ctx) => (
-      <span className="font-medium text-base">
-        {formatCurrency(ctx.getValue() ?? 0, 'usd')}
-      </span>
+      <MetricCell
+        value={ctx.getValue()}
+        formatter={(value) => formatCurrency(value, 'usd')}
+      />
     ),
+    sortUndefined: 'last',
     meta: {
       align: 'right',
       tooltip:

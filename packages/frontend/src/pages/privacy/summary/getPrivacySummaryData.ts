@@ -63,7 +63,12 @@ async function getCachedData() {
     })
   ).sort((a, b) => a.slug.localeCompare(b.slug))
 
-  const projectIds = projects.map((e) => e.id).sort()
+  const projectIds = projects
+    .filter((project) =>
+      project.privacyInfo.tokens.some((token) => token.buckets.length > 0),
+    )
+    .map((e) => e.id)
+    .sort()
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
     getPrivacySummaryEntries(projects),

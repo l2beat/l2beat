@@ -14,10 +14,11 @@ export interface PrivacySummaryEntry {
   icon: string
   href: string
   description: string
-  totalValueLockedUsd: number
+  isTracked: boolean
+  totalValueLockedUsd?: number
   poolsTracked: number
-  totalDeposits: number
-  totalValueDeposited30dUsd: number
+  totalDeposits?: number
+  totalValueDeposited30dUsd?: number
   attributes: PrivacyAttribute[]
   isUnderReview: boolean
   trustedSetup: TrustedSetup
@@ -65,6 +66,7 @@ export async function getPrivacySummaryEntries(
       (sum, t) => sum + t.buckets.length,
       0,
     )
+    const isTracked = poolsTracked > 0
     const totalDeposits = projectTotals.reduce(
       (sum, t) => sum + t.depositCount,
       0,
@@ -82,17 +84,20 @@ export async function getPrivacySummaryEntries(
       icon: manifest.getUrl(`/icons/${project.slug}.png`),
       href: `/privacy/projects/${project.slug}`,
       description: project.display.description,
-      totalValueLockedUsd,
+      isTracked,
+      totalValueLockedUsd: isTracked ? totalValueLockedUsd : undefined,
       poolsTracked,
-      totalDeposits,
-      totalValueDeposited30dUsd,
+      totalDeposits: isTracked ? totalDeposits : undefined,
+      totalValueDeposited30dUsd: isTracked
+        ? totalValueDeposited30dUsd
+        : undefined,
       attributes: project.privacyInfo.attributes ?? [],
       isUnderReview: !!project.statuses.reviewStatus,
       trustedSetup: project.privacyInfo.trustedSetup,
     }
   })
 
-  return entries.sort((a, b) => b.totalValueLockedUsd - a.totalValueLockedUsd)
+  return entries.sort(comparePrivacySummaryEntries)
 }
 
 function getMockPrivacySummaryEntries(
@@ -100,6 +105,12 @@ function getMockPrivacySummaryEntries(
 ): PrivacySummaryEntry[] {
   return projects
     .map((project): PrivacySummaryEntry => {
+      const poolsTracked = project.privacyInfo.tokens.reduce(
+        (sum, t) => sum + t.buckets.length,
+        0,
+      )
+      const isTracked = poolsTracked > 0
+
       return {
         id: project.id,
         slug: project.slug,
@@ -108,17 +119,32 @@ function getMockPrivacySummaryEntries(
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
         href: `/privacy/projects/${project.slug}`,
         description: project.display.description,
-        totalValueLockedUsd: Math.random() * 1_000_000_000,
-        poolsTracked: project.privacyInfo.tokens.reduce(
-          (sum, t) => sum + t.buckets.length,
-          0,
-        ),
-        totalDeposits: Math.round(Math.random() * 10_000),
-        totalValueDeposited30dUsd: Math.random() * 100_000_000,
+        poolsTracked,
+        isTracked,
+        totalValueLockedUsd: isTracked
+          ? Math.random() * 1_000_000_000
+          : undefined,
+        totalDeposits: isTracked
+          ? Math.round(Math.random() * 10_000)
+          : undefined,
+        totalValueDeposited30dUsd: isTracked
+          ? Math.random() * 100_000_000
+          : undefined,
         attributes: project.privacyInfo.attributes ?? [],
         isUnderReview: !!project.statuses.reviewStatus,
         trustedSetup: project.privacyInfo.trustedSetup,
       }
     })
-    .sort((a, b) => b.totalValueLockedUsd - a.totalValueLockedUsd)
+    .sort(comparePrivacySummaryEntries)
+}
+
+function comparePrivacySummaryEntries(
+  a: PrivacySummaryEntry,
+  b: PrivacySummaryEntry,
+): number {
+  if (a.isTracked !== b.isTracked) {
+    return a.isTracked ? -1 : 1
+  }
+
+  return (b.totalValueLockedUsd ?? 0) - (a.totalValueLockedUsd ?? 0)
 }
