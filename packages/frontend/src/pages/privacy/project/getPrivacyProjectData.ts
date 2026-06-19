@@ -111,21 +111,6 @@ export async function getPrivacyProjectData(
     return undefined
   }
 
-  await Promise.all([
-    helpers.queryClient.prefetchQuery(
-      helpers.trpc.privacy.flowsChart.queryOptions({
-        projectIds: [details.id],
-        range: defaultChartRange,
-      }),
-    ),
-    helpers.queryClient.prefetchQuery(
-      helpers.trpc.privacy.tvlChart.queryOptions({
-        projectIds: [details.id],
-        range: defaultChartRange,
-      }),
-    ),
-  ])
-
   const permissionsSection = getPermissionsSection(
     {
       id: details.id,
@@ -159,9 +144,26 @@ export async function getPrivacyProjectData(
     },
   }
   const icon = manifest.getUrl(`/icons/${details.slug}.png`)
-  const discoveryHref =
-    details.contracts || details.permissions ? discoUi.href : undefined
   const hasTrackedAssets = details.assets.length > 0
+  const discoveryHref =
+    contractsSection || permissionsSection ? discoUi.href : undefined
+
+  if (hasTrackedAssets) {
+    await Promise.all([
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.privacy.flowsChart.queryOptions({
+          projectIds: [details.id],
+          range: defaultChartRange,
+        }),
+      ),
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.privacy.tvlChart.queryOptions({
+          projectIds: [details.id],
+          range: defaultChartRange,
+        }),
+      ),
+    ])
+  }
   const bucketCount = details.assets.reduce(
     (sum, asset) => sum + asset.bucketCount,
     0,

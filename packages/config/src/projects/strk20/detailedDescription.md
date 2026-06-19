@@ -8,7 +8,7 @@ The protocol supports private transfers, arbitrary amounts, partial withdrawals 
 Recipients discover notes from onchain data through account-linked channels and token-specific subchannels. This avoids scanning all pool activity, but the discovery address is visible when channel metadata is written or read. Using a trusted or local node for note / channel discovery or separating note discovery from withdrawal submission is therefore crucial for privacy.
 
 ### Fees
-There is a flat fee of currently 4 STRK plus gas for any action that uses the privacy pool (deposit, swap, withdrawal,...).
+The pool currently charges a flat fee of 4 STRK plus gas for any action that uses the privacy pool, including deposits, swaps, and withdrawals.
 
 ### Compliance
 The compliance model relies on an 'auditor' public key. Users register an encrypted private viewing key, but all 'private' actions must include auditor-encrypted metadata. Whoever controls the auditor private key can decrypt user metadata offchain from onchain-emitted cyphertexts; this does not grant spending authority, but it can centrally remove any user's privacy, even retroactively.
