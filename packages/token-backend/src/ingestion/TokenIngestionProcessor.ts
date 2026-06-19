@@ -267,10 +267,15 @@ export class TokenIngestionProcessor {
       }
     }
 
-    const conflict = getNewCoingeckoSymbolConflict(
-      newAbstractToken,
-      built.record.symbol,
-    )
+    const conflict =
+      getNewCoingeckoSymbolConflict(newAbstractToken, built.record.symbol) ??
+      getTransferAbstractSymbolConflict(
+        pending.proof,
+        pending.abstract.kind === 'existing'
+          ? pending.abstract.token
+          : undefined,
+        built.record.symbol,
+      )
     if (conflict) {
       return {
         ...trace,
@@ -560,6 +565,14 @@ export class TokenIngestionProcessor {
       if (existing) {
         if (existing.abstractTokenId === resolution.abstractToken.id) {
           return { kind: 'noop', deployedToken: existing }
+        }
+        const conflict = getTransferAbstractSymbolConflict(
+          resolution.proof,
+          resolution.abstractToken,
+          existing.symbol,
+        )
+        if (conflict) {
+          return { kind: 'conflict', message: conflict }
         }
         return {
           kind: 'write',
@@ -905,6 +918,31 @@ function getNewCoingeckoSymbolConflict(
   }
 
   return `CoinGecko would create abstract token ${newAbstractToken.id}:${newAbstractToken.symbol}, but the deployed token symbol is ${deployedTokenSymbol}.`
+}
+
+/**
+ * Counterpart of `getNewCoingeckoSymbolConflict` for abstract tokens resolved
+ * from non-swapping transfers. Called from two places: `buildPlanOutcome()`
+ * for updates of existing deployed tokens (their symbol is already in the DB)
+ * and `fetch()` for inserts (the symbol only arrives with the RPC facts).
+ * Case-insensitive because deployments of the same asset routinely differ in
+ * casing only; unlike the CoinGecko path no casing is adopted — the abstract
+ * token already exists and its symbol stays as-is.
+ */
+function getTransferAbstractSymbolConflict(
+  proof: AbstractTokenAssignmentProof,
+  abstractToken: AbstractTokenRef | undefined,
+  deployedTokenSymbol: string,
+): string | undefined {
+  if (proof.kind !== 'non-swapping-transfer') return undefined
+  if (!abstractToken) return undefined
+  if (
+    abstractToken.symbol.toLowerCase() === deployedTokenSymbol.toLowerCase()
+  ) {
+    return undefined
+  }
+
+  return `Non-swapping transfers point to abstract token ${formatRef(abstractToken)}, but the deployed token symbol is ${deployedTokenSymbol}.`
 }
 
 /**

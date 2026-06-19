@@ -244,6 +244,120 @@ describe(TokenIngestionProcessor.name, () => {
       )
     })
 
+    it('downgrades a transfer-driven update of an existing token to conflict when symbols differ', async () => {
+      const address = token('ethereum', '0xaaa')
+      const otherAddress = token('base', '0xbbb')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            findByChainAndAddress: mockFn().resolvesTo({
+              ...address,
+              abstractTokenId: null,
+              symbol: 'WETH',
+              comment: null,
+              decimals: 18,
+              deploymentTimestamp: UnixTime(1),
+              metadata: null,
+            }),
+            getByPrimaryKeys: mockFn().resolvesTo([
+              {
+                ...otherAddress,
+                abstractTokenId: 'USDC01',
+                symbol: 'USDC',
+                comment: null,
+                decimals: 6,
+                deploymentTimestamp: UnixTime(1),
+                metadata: null,
+              },
+            ]),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            getByIds: mockFn().resolvesTo([
+              abstractTokenRecord('USDC01', 'USDC'),
+            ]),
+          }),
+        }),
+      })
+
+      const trace = await processor.plan(
+        queueEntry(address),
+        buildInteropTransferIndex([
+          transfer({
+            srcChain: address.chain,
+            srcTokenAddress: address.address,
+            dstChain: otherAddress.chain,
+            dstTokenAddress: otherAddress.address,
+            bridgeType: 'lockAndMint',
+          }),
+        ]),
+      )
+
+      expect(trace.outcome).toEqual({
+        kind: 'conflict',
+        message:
+          'Non-swapping transfers point to abstract token USDC01:USDC, but the deployed token symbol is WETH.',
+      })
+    })
+
+    it('updates an existing token from a transfer when symbols match case-insensitively', async () => {
+      const address = token('ethereum', '0xaaa')
+      const otherAddress = token('base', '0xbbb')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            findByChainAndAddress: mockFn().resolvesTo({
+              ...address,
+              abstractTokenId: null,
+              symbol: 'usdc',
+              comment: null,
+              decimals: 6,
+              deploymentTimestamp: UnixTime(1),
+              metadata: null,
+            }),
+            getByPrimaryKeys: mockFn().resolvesTo([
+              {
+                ...otherAddress,
+                abstractTokenId: 'USDC01',
+                symbol: 'USDC',
+                comment: null,
+                decimals: 6,
+                deploymentTimestamp: UnixTime(1),
+                metadata: null,
+              },
+            ]),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            getByIds: mockFn().resolvesTo([
+              abstractTokenRecord('USDC01', 'USDC'),
+            ]),
+          }),
+        }),
+      })
+
+      const trace = await processor.plan(
+        queueEntry(address),
+        buildInteropTransferIndex([
+          transfer({
+            srcChain: address.chain,
+            srcTokenAddress: address.address,
+            dstChain: otherAddress.chain,
+            dstTokenAddress: otherAddress.address,
+            bridgeType: 'lockAndMint',
+          }),
+        ]),
+      )
+
+      expect(trace.outcome.kind).toEqual('write')
+      if (trace.outcome.kind !== 'write') return
+      expect(trace.outcome.deployedToken.type).toEqual('update')
+      if (trace.outcome.deployedToken.type !== 'update') return
+      expect(trace.outcome.deployedToken.update.abstractTokenId).toEqual(
+        'USDC01',
+      )
+    })
+
     it('returns pending with new-coingecko abstract without calling CoinGecko coin endpoints', async () => {
       const address = token('ethereum', '0xaaa')
       const getCoinDataById = mockFn().resolvesTo(undefined)
@@ -605,6 +719,118 @@ describe(TokenIngestionProcessor.name, () => {
       expect(
         result.steps.some((step) => step.kind === 'fetched-facts'),
       ).toEqual(true)
+    })
+
+    it('downgrades pending insert with a transfer-resolved abstract to conflict when symbols differ', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<TokenDatabase['chain']>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'WETH',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+      })
+
+      const result = await processor.fetch({
+        id: 'ing_test',
+        address,
+        steps: [],
+        existingDeployedToken: undefined,
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: {
+            kind: 'existing',
+            token: { id: 'USDC01', symbol: 'USDC' },
+          },
+          symbolFallback: undefined,
+          neighborsToEnqueue: [],
+          proof: nonSwappingProof(),
+        },
+      })
+
+      expect(result.outcome).toEqual({
+        kind: 'conflict',
+        message:
+          'Non-swapping transfers point to abstract token USDC01:USDC, but the deployed token symbol is WETH.',
+      })
+      expect(
+        result.steps.some((step) => step.kind === 'fetched-facts'),
+      ).toEqual(true)
+    })
+
+    it('keeps a transfer-resolved insert on write when symbols match case-insensitively', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<TokenDatabase['chain']>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'SUSDE',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+      })
+
+      const result = await processor.fetch({
+        id: 'ing_test',
+        address,
+        steps: [],
+        existingDeployedToken: undefined,
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: {
+            kind: 'existing',
+            token: { id: 'SUSDE1', symbol: 'sUSDe' },
+          },
+          symbolFallback: undefined,
+          neighborsToEnqueue: [],
+          proof: nonSwappingProof(),
+        },
+      })
+
+      expect(result.outcome.kind).toEqual('write')
+      if (result.outcome.kind !== 'write') return
+      expect(result.outcome.newAbstractToken).toEqual(undefined)
+      expect(
+        result.outcome.deployedToken.type === 'insert' &&
+          result.outcome.deployedToken.record.symbol,
+      ).toEqual('SUSDE')
+      expect(
+        result.steps.some(
+          (step) => step.kind === 'corrected-coingecko-symbol-casing',
+        ),
+      ).toEqual(false)
     })
 
     it('does not use the new CoinGecko abstract symbol as deployed-token fallback', async () => {
@@ -978,6 +1204,17 @@ function queueEntry(
     message: null,
     createdAt: UnixTime(1),
     updatedAt: UnixTime(1),
+  }
+}
+
+function nonSwappingProof() {
+  return {
+    kind: 'non-swapping-transfer' as const,
+    transfer: {
+      ...transfer({ bridgeType: 'lockAndMint' }),
+      srcRawAmount: '1',
+      dstRawAmount: '1',
+    },
   }
 }
 

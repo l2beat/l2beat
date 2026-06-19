@@ -145,6 +145,26 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
         address: '0x333',
       })
     })
+
+    it('filters by chains in both entries and total count', async () => {
+      await repository.enqueue({ chain: 'ethereum', address: '0x111' })
+      await repository.enqueue({ chain: 'ethereum', address: '0x222' })
+      await repository.enqueue({ chain: 'arbitrum', address: '0x333' })
+      await repository.enqueue({ chain: 'base', address: '0x444' })
+
+      const page = await repository.getPage({
+        offset: 0,
+        limit: 100,
+        chains: ['ethereum', 'arbitrum'],
+      })
+
+      expect(page.totalCount).toEqual(3)
+      expect(page.entries.map((e) => e.address)).toEqual([
+        '0x333',
+        '0x111',
+        '0x222',
+      ])
+    })
   })
 
   describe(TokenIngestionQueueRepository.prototype.retry.name, () => {
