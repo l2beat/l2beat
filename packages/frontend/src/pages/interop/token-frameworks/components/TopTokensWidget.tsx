@@ -15,6 +15,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
+import { Last24HoursBadge } from '~/pages/interop/components/Last24HoursBadge'
 import type { TopTokenItem } from '~/server/features/scaling/interop/getTokenFrameworksData'
 import { useTRPC } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -22,7 +23,6 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
 import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
-import { Last24HoursBadge } from './Last24HoursBadge'
 import { TokenFrameworksTransferTrigger } from './TokenFrameworksTransferTrigger'
 
 export function TopTokensWidget({

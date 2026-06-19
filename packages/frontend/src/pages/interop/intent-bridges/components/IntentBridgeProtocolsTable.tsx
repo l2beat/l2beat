@@ -20,7 +20,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
 import { useTable } from '~/hooks/useTable'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { Last24HoursBadge } from '~/pages/interop/token-frameworks/components/Last24HoursBadge'
+import { Last24HoursBadge } from '~/pages/interop/components/Last24HoursBadge'
 import type {
   IntentBridgeDominanceEntry,
   IntentBridgeTableEntry,

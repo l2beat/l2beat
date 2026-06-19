@@ -16,65 +16,60 @@ import { PercentChange } from '~/components/PercentChange'
 import { InfoIcon } from '~/icons/Info'
 import { Last24HoursBadge } from '~/pages/interop/components/Last24HoursBadge'
 import type {
-  FrameworkDominanceEntry,
-  TokenFrameworksData,
-} from '~/server/features/scaling/interop/getTokenFrameworksData'
+  IntentBridgeDominanceEntry,
+  IntentBridgesData,
+} from '~/server/features/scaling/interop/getIntentBridgesData'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
+import type { InteropIntentBridge } from '../getInteropIntentBridgesData'
 
 type Metric = 'volume' | 'transfers'
 
-type DisplayFramework = {
-  iconUrl?: string
-  label: string
-  name: string
-  color: string
-  slug?: string
-}
-
-type DisplayItem = {
-  entry: FrameworkDominanceEntry
-  framework: DisplayFramework
-}
-
-export function FrameworkDominanceContent({
-  tokenFrameworks,
-  frameworkDominance,
+export function IntentBridgeDominanceContent({
+  intentBridges,
+  bridgeDominance,
   isLoading,
 }: {
-  tokenFrameworks: InteropTokenFramework[]
-  frameworkDominance: TokenFrameworksData['frameworkDominance'] | undefined
+  intentBridges: InteropIntentBridge[]
+  bridgeDominance: IntentBridgesData['bridgeDominance'] | undefined
   isLoading: boolean
 }) {
   const [metric, setMetric] = useState<Metric>('volume')
 
-  const metricData = frameworkDominance
+  const metricData = bridgeDominance
     ? metric === 'volume'
-      ? frameworkDominance.volume
-      : frameworkDominance.transfers
+      ? bridgeDominance.volume
+      : bridgeDominance.transfers
     : undefined
 
-  const frameworksById = new Map(tokenFrameworks.map((f) => [f.id, f]))
+  const bridgesById = new Map(
+    intentBridges.map((bridge) => [bridge.id, bridge]),
+  )
   const displayItems = metricData
-    ? buildDisplayItems(metricData.entries, frameworksById)
+    ? metricData.entries
+        .map((entry) => {
+          const bridge = bridgesById.get(entry.id)
+          return bridge ? { entry, bridge } : undefined
+        })
+        .filter((item) => item !== undefined)
     : []
 
   return (
     <div>
       <div className="flex items-center gap-2.5">
         <h2 className="font-bold text-heading-18 md:text-heading-20">
-          Framework Dominance by {metric === 'volume' ? 'Volume' : 'Transfers'}
+          Intent Bridge Dominance by{' '}
+          {metric === 'volume' ? 'Volume' : 'Transfers'}
         </h2>
         <Last24HoursBadge />
       </div>
 
       <Tabs
-        name="frameworkDominanceMetric"
+        name="intentBridgeDominanceMetric"
         value={metric}
-        onValueChange={(v) => setMetric(v as Metric)}
+        onValueChange={(value) => setMetric(value as Metric)}
         className="mt-4"
         variant="highlighted"
       >
@@ -99,11 +94,11 @@ export function FrameworkDominanceContent({
             <EmptyState />
           ) : (
             <div className="flex flex-col gap-5">
-              {displayItems.map((item) => (
-                <FrameworkRowItem
-                  key={item.entry.id}
-                  entry={item.entry}
-                  framework={item.framework}
+              {displayItems.map(({ entry, bridge }) => (
+                <IntentBridgeRowItem
+                  key={entry.id}
+                  entry={entry}
+                  bridge={bridge}
                   metric={metric}
                   total={metricData.total}
                 />
@@ -116,14 +111,14 @@ export function FrameworkDominanceContent({
   )
 }
 
-function FrameworkRowItem({
+function IntentBridgeRowItem({
   entry,
-  framework,
+  bridge,
   metric,
   total,
 }: {
-  entry: FrameworkDominanceEntry
-  framework: DisplayFramework
+  entry: IntentBridgeDominanceEntry
+  bridge: InteropIntentBridge
   metric: Metric
   total: number
 }) {
@@ -139,7 +134,7 @@ function FrameworkRowItem({
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-center justify-between gap-3">
-        <FrameworkHeader framework={framework} />
+        <BridgeHeader bridge={bridge} />
         <div className="flex items-baseline gap-1">
           <span className="font-bold text-label-value-16">
             {metric === 'volume'
@@ -169,13 +164,13 @@ function FrameworkRowItem({
           className="h-full rounded-full"
           style={{
             width: `${Math.max(0, Math.min(share, 100))}%`,
-            backgroundColor: framework.color,
+            backgroundColor: bridge.color,
           }}
         />
       </div>
       <div className="grid grid-cols-3 gap-3">
         <Stat
-          label={metric === 'volume' ? 'Number of transfers' : 'Volume'}
+          label={metric === 'volume' ? 'Transfers' : 'Volume'}
           value={
             metric === 'volume'
               ? formatInteger(entry.transferCount)
@@ -191,12 +186,10 @@ function FrameworkRowItem({
           }
         />
         <Stat
-          label="Avg. transfer size"
-          value={
-            entry.averageValue !== null
-              ? formatCurrency(entry.averageValue, 'usd', { decimals: 2 })
-              : '—'
-          }
+          label="Active chains / tokens"
+          value={`${formatInteger(entry.activeChainCount)} / ${formatInteger(
+            entry.activeTokenCount,
+          )}`}
           align="right"
         />
       </div>
@@ -204,38 +197,22 @@ function FrameworkRowItem({
   )
 }
 
-function FrameworkHeader({ framework }: { framework: DisplayFramework }) {
-  const content = (
-    <>
-      {framework.iconUrl && (
-        <img
-          src={framework.iconUrl}
-          alt={framework.name}
-          className="size-6 rounded-full"
-        />
-      )}
-      <div className="flex items-center gap-1">
-        <span className="font-bold text-heading-16">{framework.label}</span>
-        {framework.label !== framework.name && (
-          <span className="font-medium text-label-value-16 text-secondary">
-            {framework.name}
-          </span>
-        )}
-      </div>
-    </>
+function BridgeHeader({ bridge }: { bridge: InteropIntentBridge }) {
+  return (
+    <a
+      href={`/interop/protocols/${bridge.slug}`}
+      className="-mx-2 inline-flex min-w-0 items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
+    >
+      <img
+        src={bridge.iconUrl}
+        alt={bridge.name}
+        className="size-6 shrink-0 rounded-full"
+      />
+      <span className="min-w-0 truncate font-bold text-heading-16">
+        {bridge.name}
+      </span>
+    </a>
   )
-
-  if (framework.slug) {
-    return (
-      <a
-        href={`/interop/protocols/${framework.slug}`}
-        className="-mx-2 inline-flex items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
-      >
-        {content}
-      </a>
-    )
-  }
-  return <div className="flex items-center gap-2">{content}</div>
 }
 
 function Stat({
@@ -262,9 +239,9 @@ function Stat({
 function RowsSkeleton() {
   return (
     <div className="flex flex-col gap-5">
-      {Array.from({ length: 4 }).map((_, i) => (
+      {Array.from({ length: 5 }).map((_, i) => (
         <div key={i} className="flex flex-col gap-2">
-          <Skeleton className="h-5 w-full" />
+          <Skeleton className="h-7 w-full" />
           <Skeleton className="h-1.5 w-full" />
           <Skeleton className="h-8 w-full" />
         </div>
@@ -276,64 +253,7 @@ function RowsSkeleton() {
 function EmptyState() {
   return (
     <div className="flex min-h-40 items-center justify-center font-medium text-secondary text-sm">
-      No data for the selected chains.
+      No intent bridge activity found.
     </div>
   )
-}
-
-function buildDisplayItems(
-  entries: FrameworkDominanceEntry[],
-  frameworksById: Map<string, InteropTokenFramework>,
-): DisplayItem[] {
-  if (entries.length <= 5) {
-    return entries.flatMap((entry) => {
-      const framework = frameworksById.get(entry.id)
-      return framework ? [{ entry, framework }] : []
-    })
-  }
-
-  const top4: DisplayItem[] = entries.slice(0, 4).flatMap((entry) => {
-    const framework = frameworksById.get(entry.id)
-    return framework ? [{ entry, framework }] : []
-  })
-  return [...top4, buildOthersItem(entries.slice(4))]
-}
-
-function buildOthersItem(entries: FrameworkDominanceEntry[]): DisplayItem {
-  const volume = entries.reduce((sum, e) => sum + e.volume, 0)
-  const transferCount = entries.reduce((sum, e) => sum + e.transferCount, 0)
-
-  const previousVolume = entries.reduce(
-    (sum, e) => sum + (e.previousVolume ?? 0),
-    0,
-  )
-  const previousTransferCount = entries.reduce(
-    (sum, e) => sum + (e.previousTransferCount ?? 0),
-    0,
-  )
-  const durationWeightedSum = entries.reduce(
-    (s, e) => s + (e.averageDurationSeconds ?? 0) * e.transferCount,
-    0,
-  )
-  const averageDurationSeconds =
-    transferCount > 0 ? Math.floor(durationWeightedSum / transferCount) : null
-
-  const averageValue = transferCount > 0 ? volume / transferCount : null
-
-  return {
-    entry: {
-      id: '__others__',
-      volume,
-      transferCount,
-      previousVolume,
-      previousTransferCount,
-      averageDurationSeconds,
-      averageValue,
-    },
-    framework: {
-      label: 'Others',
-      name: 'Others',
-      color: '#E9BB00',
-    },
-  }
 }

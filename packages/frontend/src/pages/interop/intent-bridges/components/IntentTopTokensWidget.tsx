@@ -15,7 +15,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { Last24HoursBadge } from '~/pages/interop/token-frameworks/components/Last24HoursBadge'
+import { Last24HoursBadge } from '~/pages/interop/components/Last24HoursBadge'
 import type { IntentBridgeTopTokenItem } from '~/server/features/scaling/interop/getIntentBridgesData'
 import { useTRPC } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
