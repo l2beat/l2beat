@@ -344,18 +344,23 @@ function IntentBridgeCompareContent({
         />
         <CompareTextRow
           label="User recovery"
-          left={left?.bridge.userRecovery.value}
-          right={right?.bridge.userRecovery.value}
+          left={left?.bridge.userRecovery}
+          right={right?.bridge.userRecovery}
         />
         <CompareTextRow
           label="Solver access"
-          left={left?.bridge.solverAccess.value}
-          right={right?.bridge.solverAccess.value}
+          left={left?.bridge.solverAccess}
+          right={right?.bridge.solverAccess}
         />
         <CompareTextRow
           label="Intent model"
-          left={left?.bridge.intentModel.value}
-          right={right?.bridge.intentModel.value}
+          left={left?.bridge.intentModel}
+          right={right?.bridge.intentModel}
+        />
+        <CompareTextRow
+          label="Settlement"
+          left={left?.bridge.settlement}
+          right={right?.bridge.settlement}
         />
       </div>
     </div>
@@ -456,16 +461,20 @@ function CompareTextRow({
   right,
 }: {
   label: string
-  left: string | undefined
-  right: string | undefined
+  left: { value: string; sentiment?: 'bad' } | undefined
+  right: { value: string; sentiment?: 'bad' } | undefined
 }) {
   return (
     <div className="grid grid-cols-[minmax(0,1fr)_96px_minmax(0,1fr)] items-center gap-3">
-      <CompareValue>{left ?? '—'}</CompareValue>
+      <CompareValue sentiment={left?.sentiment}>
+        {left?.value ?? '—'}
+      </CompareValue>
       <span className="text-center font-medium text-label-value-13 text-secondary">
         {label}
       </span>
-      <CompareValue alignRight>{right ?? '—'}</CompareValue>
+      <CompareValue sentiment={right?.sentiment} alignRight>
+        {right?.value ?? '—'}
+      </CompareValue>
     </div>
   )
 }
@@ -473,17 +482,21 @@ function CompareTextRow({
 function CompareValue({
   active,
   alignRight,
+  sentiment,
   children,
 }: {
   active?: boolean
   alignRight?: boolean
+  sentiment?: 'bad'
   children: React.ReactNode
 }) {
   return (
     <span
       className={cn(
         'min-w-0 rounded bg-surface-secondary px-2 py-1 font-bold text-label-value-14',
-        active && 'text-brand',
+        sentiment === 'bad'
+          ? 'bg-negative/10 text-negative dark:bg-negative/20'
+          : active && 'text-brand',
         alignRight && 'text-right',
       )}
     >

@@ -18,11 +18,13 @@ export const cbridge: BaseProject = {
       },
       userRecovery: {
         value: 'Request refund',
+        sentiment: 'bad',
         description:
           'Failed pool transfers can be withdrawn on the source chain using gateway data signed by the Celer SGN.',
       },
       solverAccess: {
         value: 'Internal',
+        sentiment: 'bad',
         description:
           'Solvers provide the signatures of the offchain Celer signer quorum with their transaction.',
       },

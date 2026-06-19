@@ -21,6 +21,7 @@ export const fusionplus: BaseProject = {
       },
       solverAccess: {
         value: 'Whitelist',
+        sentiment: 'bad',
         description:
           'Resolvers onboard through 1inch Business Portal compliance and Access NFTs.',
       },

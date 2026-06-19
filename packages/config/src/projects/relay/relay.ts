@@ -26,15 +26,18 @@ export const relay: BaseProject = {
       },
       userRecovery: {
         value: 'Request refund',
+        sentiment: 'bad',
         description:
           'No self-serve onchain refund path is exposed; failed transfers depend on Relay-operated recovery.',
       },
       solverAccess: {
         value: 'Internal',
+        sentiment: 'bad',
         description: 'Transfers are filled by Relay-operated infrastructure.',
       },
       settlement: {
         value: 'Internal',
+        sentiment: 'bad',
         description:
           'Settlement depends on Relay’s centralized oracle and allocator flow.',
       },

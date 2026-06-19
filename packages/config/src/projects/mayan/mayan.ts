@@ -18,6 +18,7 @@ export const mayan: BaseProject = {
       },
       userRecovery: {
         value: 'Request refund',
+        sentiment: 'bad',
         description:
           'Unfulfilled Swift orders can be refunded from the source contract with a Wormhole or refund-verifier message.',
       },

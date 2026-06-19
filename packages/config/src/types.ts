@@ -1424,6 +1424,7 @@ export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 export type InteropIntentAttribute = {
   value: string
   description?: string
+  sentiment?: 'bad'
 }
 
 export interface InteropIntentConfig {

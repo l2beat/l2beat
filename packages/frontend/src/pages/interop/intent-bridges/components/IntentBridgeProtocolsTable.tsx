@@ -26,6 +26,7 @@ import type {
   IntentBridgeTableEntry,
 } from '~/server/features/scaling/interop/getIntentBridgesData'
 import { useTRPC } from '~/trpc/React'
+import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { InteropProjectNameTooltip } from '../../components/table/InteropProjectNameTooltip'
@@ -317,6 +318,7 @@ function getColumns() {
         <AttributeCell
           value={ctx.row.original.userRecovery.value}
           description={ctx.row.original.userRecovery.description}
+          sentiment={ctx.row.original.userRecovery.sentiment}
         />
       ),
       meta: {
@@ -330,6 +332,7 @@ function getColumns() {
         <AttributeCell
           value={ctx.row.original.solverAccess.value}
           description={ctx.row.original.solverAccess.description}
+          sentiment={ctx.row.original.solverAccess.sentiment}
         />
       ),
       meta: {
@@ -343,6 +346,7 @@ function getColumns() {
         <AttributeCell
           value={ctx.row.original.intentModel.value}
           description={ctx.row.original.intentModel.description}
+          sentiment={ctx.row.original.intentModel.sentiment}
         />
       ),
       meta: {
@@ -356,6 +360,7 @@ function getColumns() {
         <AttributeCell
           value={ctx.row.original.settlement.value}
           description={ctx.row.original.settlement.description}
+          sentiment={ctx.row.original.settlement.sentiment}
         />
       ),
       meta: {
@@ -392,12 +397,21 @@ function ChainIcon({
 function AttributeCell({
   value,
   description,
+  sentiment,
 }: {
   value: string
   description: string | undefined
+  sentiment: 'bad' | undefined
 }) {
   const content = (
-    <span className="inline-flex max-w-[150px] items-center rounded bg-surface-secondary px-2 py-1 font-medium text-label-value-13 leading-[1.15]">
+    <span
+      className={cn(
+        'inline-flex max-w-[150px] items-center rounded px-2 py-1 font-medium text-label-value-13 leading-[1.15]',
+        sentiment === 'bad'
+          ? 'bg-negative/10 text-negative dark:bg-negative/20'
+          : 'bg-surface-secondary',
+      )}
+    >
       {value}
     </span>
   )

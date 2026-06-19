@@ -17,6 +17,7 @@ export const meson: BaseProject = {
       },
       userRecovery: {
         value: 'Request refund',
+        sentiment: 'bad',
         description:
           'The central liquidity pool implementation source code is unavailable.',
       },
@@ -27,6 +28,7 @@ export const meson: BaseProject = {
       },
       settlement: {
         value: 'Internal',
+        sentiment: 'bad',
         description: 'Settled through Meson bridge contracts.',
       },
     },

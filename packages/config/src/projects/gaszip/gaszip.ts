@@ -17,15 +17,18 @@ export const gaszip: BaseProject = {
       },
       userRecovery: {
         value: 'Request refund',
+        sentiment: 'bad',
         description:
           'No self-serve onchain cancellation or refund path; invalid deposits are handled through Gas.zip support.',
       },
       solverAccess: {
         value: 'Internal',
+        sentiment: 'bad',
         description: 'No open solver marketplace.',
       },
       settlement: {
         value: 'Internal',
+        sentiment: 'bad',
         description:
           'Settled through Gas.zip internal, centralized accounting.',
       },
