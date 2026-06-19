@@ -15,6 +15,7 @@ import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
+import { getAnomalyFailureMechanism } from './getAnomalyFailureMechanism'
 import { getApprovedOngoingAnomalies } from './getApprovedOngoingAnomalies'
 import { getLiveness } from './getLiveness'
 import type { LivenessAnomaly, LivenessProject } from './types'
@@ -45,7 +46,7 @@ export async function getScalingLivenessEntries() {
         'display',
         'trackedTxsConfig',
       ],
-      optional: ['scalingDa', 'contracts'],
+      optional: ['scalingDa', 'contracts', 'scalingRisks', 'livenessConfig'],
       where: ['scalingInfo'],
       whereNot: ['archivedAt'],
     }),
@@ -91,7 +92,7 @@ function getScalingLivenessEntry(
     | 'livenessInfo'
     | 'display'
     | 'trackedTxsConfig',
-    'scalingDa' | 'contracts'
+    'scalingDa' | 'contracts' | 'scalingRisks' | 'livenessConfig'
   >,
   projectsChangeReport: ProjectsChangeReport,
   liveness: LivenessProject | undefined,
@@ -112,6 +113,15 @@ function getScalingLivenessEntry(
   const lowestSyncedUntil = getLowestSyncedUntil(liveness)
   const syncWarning = getLivenessSyncWarning(lowestSyncedUntil)
   const data = transformLivenessData(liveness, project, !syncWarning)
+  const riskView = project.scalingRisks?.stacked ?? project.scalingRisks?.self
+  const anomalies = liveness.anomalies.map((anomaly) => ({
+    ...anomaly,
+    failureMechanism: getAnomalyFailureMechanism(
+      anomaly.subtype,
+      riskView,
+      project.livenessConfig,
+    ),
+  }))
   return {
     ...getCommonScalingEntry({
       project,
@@ -127,7 +137,7 @@ function getScalingLivenessEntry(
     category: project.scalingInfo.type,
     data,
     explanation: project.livenessInfo?.explanation,
-    anomalies: liveness.anomalies,
+    anomalies,
     dataAvailabilityMode: project.scalingDa?.map((da) => da.mode),
     tvsOrder: tvs ?? -1,
     hasTrackedContractsChanged,

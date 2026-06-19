@@ -1,3 +1,4 @@
+import type { TableReadyValue } from '@l2beat/config'
 import type { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 
 export type LivenessTimeRange = '30d' | '90d' | 'max'
@@ -15,6 +16,7 @@ export interface LivenessAnomaly {
   subtype: TrackedTxsConfigSubtype
   avgInterval: number
   isApproved: boolean
+  failureMechanism?: TableReadyValue
 }
 
 export interface LivenessDetails {
