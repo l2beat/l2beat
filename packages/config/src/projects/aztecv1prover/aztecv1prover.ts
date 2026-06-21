@@ -10,6 +10,7 @@ export const aztecv1prover: BaseProject = {
   name: 'Aztec v1',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-08-15')),
+  archivedAt: UnixTime.fromDate(new Date('2026-06-20')),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
