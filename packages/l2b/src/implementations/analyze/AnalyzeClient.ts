@@ -7,7 +7,6 @@ import { type Validator, v } from '@l2beat/validate'
 import { zipSync } from 'fflate'
 import FormData from 'form-data'
 import fetch, {
-  FetchError,
   Headers,
   type RequestInfo,
   type RequestInit,
@@ -69,24 +68,11 @@ export class AnalyzeClient {
     init: RequestInit = {},
   ): Promise<T> {
     const url = new URL(path, this.getBaseUrl())
-    let response: Awaited<ReturnType<typeof fetch>>
-    let body: string
-    try {
-      response = await this.fetchImpl(url.toString(), {
-        ...init,
-        headers: this.getHeaders(),
-      })
-      body = await response.text()
-    } catch (error) {
-      if (!(error instanceof FetchError)) {
-        throw error
-      }
-
-      throw new AnalyzeClientError(
-        502,
-        `Analyze service request failed: ${error.message}`,
-      )
-    }
+    const response = await this.fetchImpl(url.toString(), {
+      ...init,
+      headers: this.getHeaders(),
+    })
+    const body = await response.text()
 
     const data = parseJson(body, response.status, response.statusText)
 
