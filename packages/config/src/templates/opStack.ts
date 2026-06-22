@@ -2271,8 +2271,7 @@ function getTrackedTxs(
     }
     case 'Permissioned':
     case 'Permissionless':
-    case 'Kailua':
-    case 'KailuaSoon': {
+    case 'Kailua': {
       const disputeGameFactory =
         templateVars.disputeGameFactory ??
         templateVars.discovery.getContract('DisputeGameFactory')
@@ -2301,6 +2300,38 @@ function getTrackedTxs(
             selector: '0x82ecf2f6',
             functionSignature:
               'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+      ]
+    }
+    case 'KailuaSoon': {
+      const kailuaTreasury =
+        templateVars.discovery.getContract('KailuaTreasury')
+      return [
+        {
+          uses: [
+            { type: 'liveness', subtype: 'batchSubmissions' },
+            { type: 'l2costs', subtype: 'batchSubmissions' },
+          ],
+          query: {
+            formula: 'transfer',
+            from: sequencerAddress,
+            to: sequencerInbox,
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+        {
+          uses: [
+            { type: 'liveness', subtype: 'stateUpdates' },
+            { type: 'l2costs', subtype: 'stateUpdates' },
+          ],
+          query: {
+            formula: 'functionCall',
+            address: ChainSpecificAddress.address(kailuaTreasury.address),
+            selector: '0xca0dc973',
+            functionSignature:
+              'function propose(bytes32 _rootClaim,bytes _extraData)',
             sinceTimestamp: templateVars.genesisTimestamp,
           },
         },

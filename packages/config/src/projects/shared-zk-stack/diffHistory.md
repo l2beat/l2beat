@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x1269e2ea41e76e44fc2bbf4e32d995374482f607
+
+# Diff at Mon, 22 Jun 2026 08:55:38 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@18532eacfff59dfa2ff9ea37d128b65c569fef40 block: 1781778259
+- current timestamp: 1782118472
+
+## Description
+
+Added capped minters as per this funding proposal: https://www.tally.xyz/gov/zksync/proposal/2943455218873421873697799536418607104467185343933430719456358615505163695727?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+## Watched changes
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) [shared-zk-stack/ZkToken] {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.22:
++        "zksync:0x872e575cc36d9CF26e7d2F1015D14df908427d03"
+      values.accessControl.MINTER_ROLE.members.23:
++        "zksync:0xA6ec9C7fbFbfdC3c1BfFd9305b66107A0Ac4c099"
+      values.accessControl.MINTER_ROLE.members.24:
++        "zksync:0xc412b13672765504d52fd69B0fEeacB7dc0BDE5C"
+      values.accessControl.MINTER_ROLE.members.25:
++        "zksync:0x92f92B86Ddb239b722651D98e2eb462febA3C8E5"
+      values.accessControl.MINTER_ROLE.members.26:
++        "zksync:0xd532D48feb00EC3323F49cfe63f0fA0cAaf04482"
+      values.accessControl.MINTER_ROLE.members.27:
++        "zksync:0xA424433Dd7f75D3cf394680ABca8F5C28B909F27"
+      values.accessControl.MINTER_ROLE.members.28:
++        "zksync:0x930c62584485F0dc47BFfaf8837b9F2AC217aBC2"
+      values.accessControl.MINTER_ROLE.members.29:
++        "zksync:0xD6291af385B72E547C1D7aD86e0B6852d18C48B1"
+      values.accessControl.MINTER_ROLE.members.30:
++        "zksync:0xcb75781c6cbb3a4A14E4269B67EF719C856F5002"
+      values.accessControl.MINTER_ROLE.members.31:
++        "zksync:0xaa2C61fA1ADDAEFC8d29CDe9448d0cF7899804f6"
+      values.accessControl.MINTER_ROLE.members.32:
++        "zksync:0x0b7d5e484B97d7D6f6981163de46474cD5CFe20F"
+      values.accessControl.MINTER_ROLE.members.33:
++        "zksync:0xCC13dBF9a748e7bf64304a58A7D529F2d0CB40Be"
+    }
+```
+
 Generated with discovered.json: 0x9c5b910f6a6ce39797a4591c666123623c515846
 
 # Diff at Thu, 18 Jun 2026 10:25:29 GMT:
