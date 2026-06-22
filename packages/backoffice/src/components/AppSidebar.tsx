@@ -5,6 +5,7 @@ import {
   PanelsTopLeftIcon,
   PieChartIcon,
   RefreshCwIcon,
+  ShieldCheckIcon,
 } from 'lucide-react'
 import { Link, matchPath, useLocation } from 'react-router-dom'
 import {
@@ -150,6 +151,12 @@ const navGroups: NavigationGroup[] = [
             url: '/interop/insights/memory',
           },
         ],
+      },
+      {
+        type: 'single',
+        title: 'Promotion',
+        icon: ShieldCheckIcon,
+        url: '/interop/promotion',
       },
     ],
   },
