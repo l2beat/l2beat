@@ -55,11 +55,21 @@ export class AnalyzeClient {
     init: RequestInit = {},
   ): Promise<T> {
     const url = new URL(path, this.getBaseUrl())
-    const response = await fetch(url.toString(), {
-      ...init,
-      headers: this.getHeaders(),
-    })
-    const body = await response.text()
+    let response: Awaited<ReturnType<typeof fetch>>
+    let body: string
+    try {
+      response = await fetch(url.toString(), {
+        ...init,
+        headers: this.getHeaders(),
+      })
+      body = await response.text()
+    } catch (error) {
+      throw new AnalyzeClientError(
+        502,
+        `Analyze service request failed: ${getErrorMessage(error)}`,
+      )
+    }
+
     const data = parseJson(body, response.status, response.statusText)
 
     if (!response.ok) {
@@ -105,6 +115,10 @@ export function createSourcesArchive(
   files: Record<string, Uint8Array>,
 ): Buffer {
   return Buffer.from(zipSync(files))
+}
+
+function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error)
 }
 
 function parseJson(body: string, status: number, statusText: string): unknown {
