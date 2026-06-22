@@ -28,7 +28,9 @@ describe(createSourcesArchive.name, () => {
 describe(AnalyzeClient.name, () => {
   it('wraps transport failures as AnalyzeClientError', async () => {
     const previousUrl = process.env.L2ANALYZE_URL
+    const previousApiKey = process.env.L2ANALYZE_API_KEY
     process.env.L2ANALYZE_URL = 'http://analyze.test'
+    process.env.L2ANALYZE_API_KEY = 'test-api-key'
 
     try {
       const client = new AnalyzeClient(() => {
@@ -54,6 +56,11 @@ describe(AnalyzeClient.name, () => {
         Reflect.deleteProperty(process.env, 'L2ANALYZE_URL')
       } else {
         process.env.L2ANALYZE_URL = previousUrl
+      }
+      if (previousApiKey === undefined) {
+        Reflect.deleteProperty(process.env, 'L2ANALYZE_API_KEY')
+      } else {
+        process.env.L2ANALYZE_API_KEY = previousApiKey
       }
     }
   })

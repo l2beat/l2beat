@@ -11,7 +11,6 @@ import {
   optional,
   restPositionals,
 } from 'cmd-ts'
-import { config as dotenv } from 'dotenv'
 import { AnalyzeClientError } from '../implementations/analyze/AnalyzeClient'
 import {
   AnalyzeRunnerError,
@@ -42,7 +41,6 @@ export const Analyze = command({
     }),
   },
   handler: async (args) => {
-    dotenv()
     const runnerPreference = args.backend ?? 'auto'
 
     try {

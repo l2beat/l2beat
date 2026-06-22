@@ -1,3 +1,4 @@
+import { getEnv } from '@l2beat/backend-tools'
 import {
   AnalyzerResultApiResponse,
   AnalyzersApiResponse,
@@ -108,23 +109,25 @@ export class AnalyzeClient {
   }
 
   private getBaseUrl() {
-    const baseUrl = process.env.L2ANALYZE_URL
-    if (!baseUrl) {
-      throw new AnalyzeClientError(
-        500,
-        'L2ANALYZE_URL environment variable is not set',
-      )
+    try {
+      return getEnv().string('L2ANALYZE_URL')
+    } catch {
+      throw new AnalyzeClientError(500, 'L2ANALYZE_URL is not set')
     }
-    return baseUrl
   }
 
   private getHeaders() {
     const headers = new Headers()
-    const apiKey = process.env.L2ANALYZE_API_KEY
-    if (apiKey) {
-      headers.set('Authorization', `Bearer ${apiKey}`)
-    }
+    headers.set('Authorization', `Bearer ${this.getApiKey()}`)
     return headers
+  }
+
+  private getApiKey() {
+    try {
+      return getEnv().string('L2ANALYZE_API_KEY')
+    } catch {
+      throw new AnalyzeClientError(500, 'L2ANALYZE_API_KEY is not set')
+    }
   }
 }
 
