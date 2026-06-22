@@ -170,6 +170,24 @@ export const railgun: BaseProject = {
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.Railgun,
     tokens: privacyTokens,
+    exitWindow: {
+      value: formatSeconds(executionStartOffset),
+      sentiment: 'warning',
+      orderHint: executionStartOffset,
+      description: `DAO-approved upgrades wait ${formatSeconds(executionStartOffset)} before they can execute, giving users time to unshield funds if they do not approve the change.`,
+    },
+    reproducibility: {
+      value: 'True',
+      sentiment: 'good',
+      description:
+        'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
+    },
+    adminViewingKey: {
+      value: 'False',
+      sentiment: 'good',
+      description:
+        'No non-user entity has a default key that can decrypt Railgun private balances or transactions.',
+    },
     attributes: [
       {
         ...PRIVACY_ATTRIBUTES.upgradeable,

@@ -119,6 +119,25 @@ export const tornadoCash: BaseProject = {
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.TornadoCash,
     tokens: getPrivacyTokens(),
+    exitWindow: {
+      value: 'Infinite',
+      sentiment: 'good',
+      orderHint: Number.MAX_SAFE_INTEGER,
+      description:
+        'The core mixer contracts are immutable and have no admin upgrade path, so users can always withdraw with a valid note and proof.',
+    },
+    reproducibility: {
+      value: 'True',
+      sentiment: 'good',
+      description:
+        'There is at least one practical way to participate in Tornado Cash using published source code that can be audited and run locally.',
+    },
+    adminViewingKey: {
+      value: 'False',
+      sentiment: 'good',
+      description:
+        'No protocol-level admin or auditor key can decrypt Tornado Cash private deposits or withdrawals.',
+    },
     attributes: [
       PRIVACY_ATTRIBUTES.immutable,
       PRIVACY_ATTRIBUTES.unconditionalPrivacy,

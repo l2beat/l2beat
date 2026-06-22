@@ -12,12 +12,17 @@ import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
+import {
+  adjustTableValue,
+  sortTableValues,
+} from '~/components/table/sorting/sortTableValues'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import { PrivacyAttributesCell } from './PrivacyAttributesCell'
+import { PrivacyExitWindowCell } from './PrivacyExitWindowCell'
+import { PrivacySummaryValueCell } from './PrivacySummaryValueCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
 const columnHelper = createColumnHelper<PrivacySummaryEntry>()
@@ -67,19 +72,6 @@ const columns = [
     meta: {
       cellClassName: 'pl-4',
       headClassName: 'pl-4',
-    },
-  }),
-  columnHelper.display({
-    id: 'trustedSetup',
-    header: 'Trusted setup',
-    cell: (ctx) => (
-      <PrivacyTrustedSetupCell trustedSetup={ctx.row.original.trustedSetup} />
-    ),
-    enableSorting: false,
-    meta: {
-      align: 'center',
-      tooltip:
-        "Shows the trusted setup used by the project's proving system and its risk.",
     },
   }),
   columnHelper.accessor('totalValueLockedUsd', {
@@ -135,14 +127,65 @@ const columns = [
         'Total USD value of all deposits over the last 30 days, based on configured token prices.',
     },
   }),
-  columnHelper.accessor('attributes', {
-    header: 'Attributes',
-    cell: (ctx) => <PrivacyAttributesCell attributes={ctx.getValue()} />,
+  columnHelper.display({
+    id: 'trustedSetup',
+    header: 'Trusted setup',
+    cell: (ctx) => (
+      <PrivacyTrustedSetupCell trustedSetup={ctx.row.original.trustedSetup} />
+    ),
     enableSorting: false,
     meta: {
+      align: 'center',
       tooltip:
-        'Protocol-level privacy, compliance, upgradeability, and usage attributes.',
-      cellClassName: 'pr-1!',
+        "Shows the trusted setup used by the project's proving system and its risk.",
+    },
+  }),
+  columnHelper.accessor((entry) => adjustTableValue(entry.exitWindow), {
+    id: 'exitWindow',
+    header: 'Exit window',
+    cell: (ctx) => (
+      <PrivacyExitWindowCell exitWindow={ctx.row.original.exitWindow} />
+    ),
+    sortDescFirst: true,
+    sortUndefined: 'last',
+    sortingFn: (a, b) =>
+      sortTableValues(a.original.exitWindow, b.original.exitWindow),
+    meta: {
+      align: 'center',
+      tooltip:
+        'Time users have to withdraw before a malicious upgrade can take effect.',
+    },
+  }),
+  columnHelper.accessor((entry) => adjustTableValue(entry.adminViewingKey), {
+    id: 'adminViewingKey',
+    header: 'Admin view\nkey',
+    cell: (ctx) => (
+      <PrivacySummaryValueCell value={ctx.row.original.adminViewingKey} />
+    ),
+    sortDescFirst: true,
+    sortUndefined: 'last',
+    sortingFn: (a, b) =>
+      sortTableValues(a.original.adminViewingKey, b.original.adminViewingKey),
+    meta: {
+      align: 'center',
+      tooltip:
+        "Any non-user entity has a key that can decrypt users' private transactions.",
+    },
+  }),
+  columnHelper.accessor((entry) => adjustTableValue(entry.reproducibility), {
+    id: 'reproducibility',
+    header: 'Reproducibility',
+    cell: (ctx) => (
+      <PrivacySummaryValueCell value={ctx.row.original.reproducibility} />
+    ),
+    sortDescFirst: true,
+    sortUndefined: 'last',
+    sortingFn: (a, b) =>
+      sortTableValues(a.original.reproducibility, b.original.reproducibility),
+    meta: {
+      align: 'center',
+      tooltip:
+        'All source code needed to audit the protocol and participate in it is published and can be used locally.',
     },
   }),
 ]

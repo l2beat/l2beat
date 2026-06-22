@@ -1,4 +1,8 @@
-import type { PrivacyAttribute, TrustedSetup } from '@l2beat/config'
+import type {
+  PrivacyExitWindow,
+  PrivacySummaryValue,
+  TrustedSetup,
+} from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
@@ -19,9 +23,11 @@ export interface PrivacySummaryEntry {
   poolsTracked: number
   totalDeposits?: number
   totalValueDeposited30dUsd?: number
-  attributes: PrivacyAttribute[]
   isUnderReview: boolean
   trustedSetup: TrustedSetup
+  exitWindow: PrivacyExitWindow
+  reproducibility: PrivacySummaryValue
+  adminViewingKey: PrivacySummaryValue
 }
 
 type PrivacySummaryTrackingMetrics = Pick<
@@ -128,9 +134,11 @@ function getPrivacySummaryBaseEntry(
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     href: `/privacy/projects/${project.slug}`,
     description: project.display.description,
-    attributes: project.privacyInfo.attributes ?? [],
     isUnderReview: !!project.statuses.reviewStatus,
     trustedSetup: project.privacyInfo.trustedSetup,
+    exitWindow: project.privacyInfo.exitWindow,
+    reproducibility: project.privacyInfo.reproducibility,
+    adminViewingKey: project.privacyInfo.adminViewingKey,
   }
 }
 
