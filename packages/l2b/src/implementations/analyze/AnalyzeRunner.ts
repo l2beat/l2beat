@@ -154,8 +154,13 @@ interface LocalCommandResult {
   status: number
 }
 
+const L2ANALYZE_MAX_BUFFER = 256 * 1024 * 1024
+
 function runLocalL2Analyze(args: string[]): LocalCommandResult {
-  const result = spawnSync('l2analyze', args, { encoding: 'utf-8' })
+  const result = spawnSync('l2analyze', args, {
+    encoding: 'utf-8',
+    maxBuffer: L2ANALYZE_MAX_BUFFER,
+  })
   const error = result.error as NodeJS.ErrnoException | undefined
 
   if (error !== undefined) {
