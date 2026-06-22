@@ -17,8 +17,10 @@ export async function getInteropAbstractTokens(
   }
 
   const { records } = await getLatestAggregatedInteropTransferWithTokens({
-    from: chainIds,
-    to: chainIds,
+    selection: {
+      from: chainIds,
+      to: chainIds,
+    },
   })
   const tokenIds = unique(
     records.flatMap((record) =>

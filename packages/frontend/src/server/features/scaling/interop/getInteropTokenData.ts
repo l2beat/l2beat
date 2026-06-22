@@ -46,7 +46,7 @@ export async function getInteropTokenData(
   const selection = getTokenDataSelection(params)
 
   const { records, snapshotTimestamp } =
-    await getLatestAggregatedInteropTransferWithTokens(selection)
+    await getLatestAggregatedInteropTransferWithTokens({ selection })
   const tokenRecords = scopeRecordsToToken(records, params.tokenId)
 
   if (tokenRecords.length === 0) {
