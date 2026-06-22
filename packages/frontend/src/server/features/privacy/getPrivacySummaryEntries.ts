@@ -24,6 +24,20 @@ export interface PrivacySummaryEntry {
   trustedSetup: TrustedSetup
 }
 
+type PrivacySummaryTrackingMetrics = Pick<
+  PrivacySummaryEntry,
+  | 'isTracked'
+  | 'poolsTracked'
+  | 'totalValueLockedUsd'
+  | 'totalDeposits'
+  | 'totalValueDeposited30dUsd'
+>
+
+type PrivacySummaryBaseEntry = Omit<
+  PrivacySummaryEntry,
+  keyof PrivacySummaryTrackingMetrics
+>
+
 export async function getPrivacySummaryEntries(
   projects: PrivacyProject[],
 ): Promise<PrivacySummaryEntry[]> {
@@ -62,11 +76,6 @@ export async function getPrivacySummaryEntries(
       (sum, tv) => sum + tv.valueForProject,
       0,
     )
-    const poolsTracked = project.privacyInfo.tokens.reduce(
-      (sum, t) => sum + t.buckets.length,
-      0,
-    )
-    const isTracked = poolsTracked > 0
     const totalDeposits = projectTotals.reduce(
       (sum, t) => sum + t.depositCount,
       0,
@@ -77,23 +86,13 @@ export async function getPrivacySummaryEntries(
     )
 
     return {
-      id: project.id,
-      slug: project.slug,
-      name: project.name,
-      shortName: project.shortName,
-      icon: manifest.getUrl(`/icons/${project.slug}.png`),
-      href: `/privacy/projects/${project.slug}`,
-      description: project.display.description,
-      isTracked,
-      totalValueLockedUsd: isTracked ? totalValueLockedUsd : undefined,
-      poolsTracked,
-      totalDeposits: isTracked ? totalDeposits : undefined,
-      totalValueDeposited30dUsd: isTracked
-        ? totalValueDeposited30dUsd
-        : undefined,
-      attributes: project.privacyInfo.attributes ?? [],
-      isUnderReview: !!project.statuses.reviewStatus,
-      trustedSetup: project.privacyInfo.trustedSetup,
+      ...getPrivacySummaryBaseEntry(project),
+      ...getTrackingMetrics({
+        poolsTracked: getPoolsTracked(project),
+        totalValueLockedUsd,
+        totalDeposits,
+        totalValueDeposited30dUsd,
+      }),
     }
   })
 
@@ -105,37 +104,57 @@ function getMockPrivacySummaryEntries(
 ): PrivacySummaryEntry[] {
   return projects
     .map((project): PrivacySummaryEntry => {
-      const poolsTracked = project.privacyInfo.tokens.reduce(
-        (sum, t) => sum + t.buckets.length,
-        0,
-      )
-      const isTracked = poolsTracked > 0
-
       return {
-        id: project.id,
-        slug: project.slug,
-        name: project.name,
-        shortName: project.shortName,
-        icon: manifest.getUrl(`/icons/${project.slug}.png`),
-        href: `/privacy/projects/${project.slug}`,
-        description: project.display.description,
-        poolsTracked,
-        isTracked,
-        totalValueLockedUsd: isTracked
-          ? Math.random() * 1_000_000_000
-          : undefined,
-        totalDeposits: isTracked
-          ? Math.round(Math.random() * 10_000)
-          : undefined,
-        totalValueDeposited30dUsd: isTracked
-          ? Math.random() * 100_000_000
-          : undefined,
-        attributes: project.privacyInfo.attributes ?? [],
-        isUnderReview: !!project.statuses.reviewStatus,
-        trustedSetup: project.privacyInfo.trustedSetup,
+        ...getPrivacySummaryBaseEntry(project),
+        ...getTrackingMetrics({
+          poolsTracked: getPoolsTracked(project),
+          totalValueLockedUsd: Math.random() * 1_000_000_000,
+          totalDeposits: Math.round(Math.random() * 10_000),
+          totalValueDeposited30dUsd: Math.random() * 100_000_000,
+        }),
       }
     })
     .sort(comparePrivacySummaryEntries)
+}
+
+function getPrivacySummaryBaseEntry(
+  project: PrivacyProject,
+): PrivacySummaryBaseEntry {
+  return {
+    id: project.id,
+    slug: project.slug,
+    name: project.name,
+    shortName: project.shortName,
+    icon: manifest.getUrl(`/icons/${project.slug}.png`),
+    href: `/privacy/projects/${project.slug}`,
+    description: project.display.description,
+    attributes: project.privacyInfo.attributes ?? [],
+    isUnderReview: !!project.statuses.reviewStatus,
+    trustedSetup: project.privacyInfo.trustedSetup,
+  }
+}
+
+function getTrackingMetrics(
+  metrics: Omit<PrivacySummaryTrackingMetrics, 'isTracked'>,
+): PrivacySummaryTrackingMetrics {
+  if (metrics.poolsTracked === 0) {
+    return {
+      isTracked: false,
+      poolsTracked: metrics.poolsTracked,
+    }
+  }
+
+  return {
+    isTracked: true,
+    ...metrics,
+  }
+}
+
+function getPoolsTracked(project: PrivacyProject): number {
+  return project.privacyInfo.tokens.reduce(
+    (sum, token) => sum + token.buckets.length,
+    0,
+  )
 }
 
 function comparePrivacySummaryEntries(

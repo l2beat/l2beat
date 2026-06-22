@@ -21,24 +21,14 @@ import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
 const columnHelper = createColumnHelper<PrivacySummaryEntry>()
 
-function NotTrackedCell() {
-  return (
-    <span className="font-medium text-base text-secondary">Not tracked</span>
-  )
-}
-
-function MetricCell({
-  value,
-  formatter,
-}: {
-  value: number | undefined
-  formatter: (value: number) => string
-}) {
-  if (value === undefined) {
-    return <NotTrackedCell />
+function MetricCell({ children }: { children: React.ReactNode }) {
+  if (children === undefined || children === null) {
+    return (
+      <span className="font-medium text-base text-secondary">Not tracked</span>
+    )
   }
 
-  return <span className="font-medium text-base">{formatter(value)}</span>
+  return <span className="font-medium text-base">{children}</span>
 }
 
 const columns = [
@@ -96,12 +86,14 @@ const columns = [
   columnHelper.accessor('totalValueLockedUsd', {
     id: 'totalValueLockedUsd',
     header: 'TVL',
-    cell: (ctx) => (
-      <MetricCell
-        value={ctx.getValue()}
-        formatter={(value) => formatCurrency(value, 'usd')}
-      />
-    ),
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      return (
+        <MetricCell>
+          {value === undefined ? undefined : formatCurrency(value, 'usd')}
+        </MetricCell>
+      )
+    },
     sortUndefined: 'last',
     meta: {
       align: 'right',
@@ -111,9 +103,14 @@ const columns = [
   }),
   columnHelper.accessor('totalDeposits', {
     header: 'Total deposits',
-    cell: (ctx) => (
-      <MetricCell value={ctx.getValue()} formatter={formatInteger} />
-    ),
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      return (
+        <MetricCell>
+          {value === undefined ? undefined : formatInteger(value)}
+        </MetricCell>
+      )
+    },
     sortUndefined: 'last',
     meta: {
       align: 'right',
@@ -124,12 +121,14 @@ const columns = [
   columnHelper.accessor('totalValueDeposited30dUsd', {
     id: 'totalValueDeposited30dUsd',
     header: '30D volume',
-    cell: (ctx) => (
-      <MetricCell
-        value={ctx.getValue()}
-        formatter={(value) => formatCurrency(value, 'usd')}
-      />
-    ),
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      return (
+        <MetricCell>
+          {value === undefined ? undefined : formatCurrency(value, 'usd')}
+        </MetricCell>
+      )
+    },
     sortUndefined: 'last',
     meta: {
       align: 'right',
