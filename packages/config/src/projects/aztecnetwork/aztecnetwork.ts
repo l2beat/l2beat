@@ -375,7 +375,12 @@ export const aztecnetwork: ScalingProject = {
       permissioned: false,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
-    exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
+      description:
+        RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE.description +
+        ' Governance can remove Sequencers and prevent new sequencers from joining, making the bonded escape hatch the only exit path in the worst case.',
+    },
     sequencerFailure: {
       value: 'Decentralized Sequencer Set',
       sentiment: 'good',
@@ -535,7 +540,7 @@ export const aztecnetwork: ScalingProject = {
       {
         name: 'Upgrades replace the canonical rollup',
         description:
-          'The core contracts are immutable, but Governance owns the Registry and GSE and can register a new rollup version as canonical after the governance delay. Governance also owns critical config parameters that can freeze or compromise the Rollup system.',
+          'The core contracts are immutable, but Governance owns the Registry and GSE and can register a new rollup version as canonical after the governance delay.',
         references: [
           {
             title: 'Registry.sol - addRollup() on Etherscan',
