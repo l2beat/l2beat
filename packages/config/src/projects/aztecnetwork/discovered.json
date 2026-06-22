@@ -107,7 +107,7 @@
         {
           "permission": "interact",
           "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-          "description": "mint new AZTEC in the bounds of the minting caps and forward the acceptOwnership() call to the eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+          "description": "mint new AZTEC in the bounds of the minting caps",
           "role": ".owner",
           "via": [
             {
@@ -125,7 +125,7 @@
         {
           "permission": "interact",
           "from": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
-          "description": "add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup.",
+          "description": "add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup; change the staking configuration so that no new Sequencers can joing the queue.",
           "role": ".owner"
         }
       ],
@@ -345,7 +345,7 @@
         {
           "permission": "interact",
           "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-          "description": "mint new AZTEC in the bounds of the minting caps and forward the acceptOwnership() call to the eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+          "description": "mint new AZTEC in the bounds of the minting caps",
           "role": ".owner"
         }
       ],
@@ -1817,5 +1817,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25373156 },
-  "permissionsConfigHash": "0x01202fa7beec74810b65fd518dc6c9acefb1d37c012916924a159ee1fc2a0ecc"
+  "permissionsConfigHash": "0x3fc39eea1029d5f0ef4044fb689d0db451162d3802b9a483a69f94aba41b96a5"
 }
