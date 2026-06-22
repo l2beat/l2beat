@@ -24,7 +24,6 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import type { Sentiment } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import stakeDistribution from './stake-distribution.json'
 
@@ -42,12 +41,6 @@ const governanceConfiguration = discovery.getContractValue<{
 }>('Governance', 'getConfiguration')
 
 const hardCodedExitSimTime = 20 * UnixTime.DAY // https://sekuba.github.io/crsim/?max_horizon_days=100&target_inclusion_percent=99&max_new_sequencers_per_epoch=0&honest_add_success_rate=0.5
-const exitWindow = governanceConfiguration.executionDelay - hardCodedExitSimTime
-const exitWindowObject = {
-  value: formatSeconds(exitWindow),
-  sentiment: 'warning' as Sentiment,
-  description: `Users have ${formatSeconds(exitWindow)} to exit funds in case of an unwanted upgrade. There is a ${formatSeconds(governanceConfiguration.executionDelay)} delay before an upgrade is applied, and withdrawal inclusion via the decentralized sequencer set is probabilistic and simulated to take up to ${formatSeconds(hardCodedExitSimTime)} to be processed. Although core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a ${formatSeconds(governanceConfiguration.executionDelay)} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system, counting as an upgrade for the exit window.`,
-}
 
 const activeSequencerCount = discovery.getContractValue<number>(
   'Rollup',
@@ -382,7 +375,7 @@ export const aztecnetwork: ScalingProject = {
       permissioned: false,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
-    exitWindow: exitWindowObject,
+    exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
     sequencerFailure: {
       value: 'Decentralized Sequencer Set',
       sentiment: 'good',
@@ -406,7 +399,7 @@ export const aztecnetwork: ScalingProject = {
         fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
-        principle: true, // assuming the probabilistic inclusion provides the 7d exit window, also there is no SC
+        principle: true,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
@@ -416,9 +409,9 @@ export const aztecnetwork: ScalingProject = {
         verifierContractsReproducible: true,
       },
       stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: null, // there is no SC
+        proofSystemOverriddenOnlyInCaseOfABug: null, // there is no SC, rollup immutable
         fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false, // 30d gov delay means <30d exit window due to inclusion delay
+        delayWith30DExitWindow: true, // escape hatch and rollup are immutable
       },
     },
     {
@@ -684,6 +677,14 @@ export const aztecnetwork: ScalingProject = {
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
+    {
+      title: 'Cut the Leash',
+      url: 'https://github.com/AztecProtocol/governance/pull/7',
+      date: '2026-06-22T00:00:00Z',
+      description:
+        'Ownership of the v4 Rollup is revoked, promoting it to Stage 2 (immutable).',
+      type: 'general',
+    },
     {
       title: 'v4 Vulnerabilities',
       url: 'https://aztec.network/blog/critical-vulnerability-in-alpha-v4',

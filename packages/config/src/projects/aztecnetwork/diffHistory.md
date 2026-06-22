@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x01b30df68d26243d08859381752394fc209a7cff
+
+# Diff at Mon, 22 Jun 2026 12:32:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8ba0c3bf27fe9dff489c81459f65eb24b15156cc block: 1781603826
+- current timestamp: 1782131482
+
+## Description
+
+Execute 'cut the leash' upgrade. This revokes ownership of the current rollup contract. Gov execution delay is reduced to 2d (from 30d). Since gov cannot change the escape hatch or critical configs on the current rollup, Aztec Network is now Stage 2. At the same time, there are known vulnerabilities, which places all escrowed funds at risk.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) [aztecnetwork/Governance] {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      values.getConfiguration.executionDelay:
+-        2592000
++        172800
+      receivedPermissions.3:
+-        {"permission":"interact","from":"eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962","description":"change the escape hatch address and disable the escape hatch, change the slasher address which can slash arbitrary sequencers, change the sequencer queue config and disallow new sequencers joining, set the ejection threshold that exits sequencers from the active set, change various critical fee and reward configurations.","role":".owner"}
+    }
+```
+
+```diff
+    contract Rollup (eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962) [aztecnetwork/Rollup] {
+    +++ description: Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      values.owner:
+-        "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x5e549954d76027e6c1f354d135d818ab971a7112
 
 # Diff at Tue, 16 Jun 2026 09:58:16 GMT:
