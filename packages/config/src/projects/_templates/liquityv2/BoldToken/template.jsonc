@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BoldToken",
+  "ignoreInCoverage": ["ERC20", "ERC20Permit", "EIP712"],
+  "fields": {
+    "borrowerOperationsAddresses": {
+      "handler": {
+        "type": "event",
+        "select": "_newBorrowerOperationsAddress",
+        "add": { "event": "BorrowerOperationsAddressAdded" }
+      },
+      "severity": "HIGH",
+      "description": "Addresses allowed to mint and burn BOLD. One BorrowerOperations is whitelisted per collateral branch via setBranchAddresses."
+    },
+    "activePoolAddresses": {
+      "handler": {
+        "type": "event",
+        "select": "_newActivePoolAddress",
+        "add": { "event": "ActivePoolAddressAdded" }
+      },
+      "severity": "HIGH",
+      "description": "Addresses allowed to mint BOLD (aggregate interest minting). One ActivePool is whitelisted per collateral branch via setBranchAddresses."
+    },
+    "troveManagerAddresses": {
+      "handler": {
+        "type": "event",
+        "select": "_newTroveManagerAddress",
+        "add": { "event": "TroveManagerAddressAdded" }
+      },
+      "severity": "HIGH",
+      "description": "Addresses allowed to burn BOLD. One TroveManager is whitelisted per collateral branch via setBranchAddresses."
+    },
+    "stabilityPoolAddresses": {
+      "handler": {
+        "type": "event",
+        "select": "_newStabilityPoolAddress",
+        "add": { "event": "StabilityPoolAddressAdded" }
+      },
+      "severity": "HIGH",
+      "description": "Addresses allowed to burn BOLD and move it in and out of the Stability Pool. One StabilityPool is whitelisted per collateral branch via setBranchAddresses."
+    }
+  }
+}

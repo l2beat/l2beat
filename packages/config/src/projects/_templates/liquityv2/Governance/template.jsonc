@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Governance",
+  "ignoreRelatives": ["stakingV1", "lqty"],
+  "ignoreMethods": ["calculateVotingThreshold"],
+  "ignoreInCoverage": [
+    "initiativeStates",
+    "lqtyAllocatedByUserToInitiative",
+    "registeredInitiatives",
+    "userStates",
+    "votesForInitiativeSnapshot"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "liquityv2",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 60,
+  "initialAddresses": ["eth:0x6440f144b7e50D6a8439336510312d2F54beB01D"],
+  "names": {
+    "eth:0x5CcA549ca706C39D68156e5E0a72CcBC95f563d0": "FixedAssetData",
+    "eth:0x884Acfa4593a6FdbA0a9373007E48Ea9AF881C42": "FixedAssetData",
+    "eth:0xf4a3fE99227F6060e4C1c62b557EEE050B6483E4": "FixedAssetData"
+  },
+  "overrides": {
+    "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013": {
+      "fields": {
+        "boldToken": { "handler": { "type": "hardcoded", "value": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D" } },
+        "collToken": { "handler": { "type": "hardcoded", "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" } }
+      }
+    },
+    "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873": {
+      "fields": {
+        "boldToken": { "handler": { "type": "hardcoded", "value": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D" } },
+        "collToken": { "handler": { "type": "hardcoded", "value": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393" } }
+      }
+    },
+    "eth:0x857aECeBF75f1012DC18E15020C97096aeA31b04": {
+      "fields": {
+        "boldToken": { "handler": { "type": "hardcoded", "value": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D" } },
+        "collToken": { "handler": { "type": "hardcoded", "value": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0" } }
+      }
+    },
+    "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A": {
+      "fields": {
+        "WETH": { "handler": { "type": "hardcoded", "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" } }
+      }
+    },
+    "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22": {
+      "fields": {
+        "WETH": { "handler": { "type": "hardcoded", "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" } }
+      }
+    },
+    "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e": {
+      "fields": {
+        "WETH": { "handler": { "type": "hardcoded", "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" } }
+      }
+    },
+    "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65": {
+      "fields": {
+        "WETH": { "handler": { "type": "hardcoded", "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" } },
+        "collToken": { "handler": { "type": "hardcoded", "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" } }
+      }
+    },
+    "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3": {
+      "fields": {
+        "WETH": { "handler": { "type": "hardcoded", "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" } },
+        "collToken": { "handler": { "type": "hardcoded", "value": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0" } }
+      }
+    },
+    "eth:0xe8119fC02953B27a1b48D2573855738485A17329": {
+      "fields": {
+        "WETH": { "handler": { "type": "hardcoded", "value": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" } },
+        "collToken": { "handler": { "type": "hardcoded", "value": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393" } }
+      }
+    }
+  }
+}

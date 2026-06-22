@@ -43,6 +43,7 @@ interface AnalyzedCommon {
   sourceBundles: PerContractSource[]
   extendedTemplate?: ExtendedTemplate
   ignoreInWatchMode?: string[]
+  ignoreInCoverage?: string[]
   relatives: AddressesWithTemplates
   usedTypes?: DiscoveryCustomType[]
 }
@@ -211,6 +212,7 @@ export class AddressAnalyzer {
       sourceBundles: sources.sources,
       extendedTemplate,
       ignoreInWatchMode: config.ignoreInWatchMode,
+      ignoreInCoverage: config.ignoreInCoverage,
       relatives,
       usedTypes,
     } as Analysis

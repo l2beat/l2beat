@@ -1,0 +1,8 @@
+{
+  "WETHPriceFeed": {
+    "hash": "0x44383161cfda219b00f1e94bb530b1011dfea08f6b280bcce410e7c82107e61e",
+    "address": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
+    "chain": "ethereum",
+    "blockNumber": 25358256
+  }
+}

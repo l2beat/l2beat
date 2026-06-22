@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TroveNFT",
+  "ignoreRelatives": ["collToken"],
+  "ignoreInCoverage": ["ERC721"],
+  "fields": {
+    "constructorArgs": {
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "addressesRegistry": {
+      "copy": "constructorArgs",
+      "edit": ["get", "_addressesRegistry"]
+    }
+  }
+}

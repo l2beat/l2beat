@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "WETHPriceFeed",
+  "ignoreRelatives": ["ethUsdOracle"],
+  "fields": {
+    "constructorArgs": {
+      "handler": { "type": "constructorArgs", "nameArgs": true, "ignoreRelative": true }
+    },
+    "borrowerOperations": {
+      "copy": "constructorArgs",
+      "edit": ["get", "_borrowerOperationsAddress"]
+    }
+  }
+}

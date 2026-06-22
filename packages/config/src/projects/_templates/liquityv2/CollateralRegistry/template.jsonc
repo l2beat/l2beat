@@ -1,0 +1,48 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CollateralRegistry",
+  "ignoreRelatives": ["getToken"],
+  "ignoreMethods": [
+    "getEffectiveRedemptionFeeInBold",
+    "getRedemptionFeeWithDecay",
+    "getRedemptionRateForRedeemedAmount"
+  ],
+  "ignoreInCoverage": [
+    "token0",
+    "token1",
+    "token2",
+    "token3",
+    "token4",
+    "token5",
+    "token6",
+    "token7",
+    "token8",
+    "token9",
+    "troveManager0",
+    "troveManager1",
+    "troveManager2",
+    "troveManager3",
+    "troveManager4",
+    "troveManager5",
+    "troveManager6",
+    "troveManager7",
+    "troveManager8",
+    "troveManager9"
+  ],
+  "fields": {
+    "getToken": {
+      "handler": {
+        "type": "array",
+        "method": "getToken",
+        "length": "{{ totalCollaterals }}"
+      }
+    },
+    "getTroveManager": {
+      "handler": {
+        "type": "array",
+        "method": "getTroveManager",
+        "length": "{{ totalCollaterals }}"
+      }
+    }
+  }
+}
