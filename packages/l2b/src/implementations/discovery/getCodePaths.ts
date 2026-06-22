@@ -79,12 +79,35 @@ export function compareFiles(a: string, b: string) {
 }
 
 function fileNameToOrder(name: string) {
-  const ending = name.match(/\.(\w+)\.sol/)?.[1]
-  if (!ending) {
+  // Flattened implementation files are named Contract.p.sol for the proxy,
+  // Contract.1.sol, Contract.2.sol, ... for implementations, or Contract.sol.
+  const pathParts = name.split('/')
+  const fileName = pathParts[pathParts.length - 1]
+  const fileNameParts = fileName?.split('.')
+  if (
+    fileNameParts === undefined ||
+    fileNameParts[fileNameParts.length - 1] !== 'sol'
+  ) {
     return 1
   }
+
+  const ending =
+    fileNameParts.length >= 3
+      ? fileNameParts[fileNameParts.length - 2]
+      : undefined
   if (ending === 'p') {
     return 0
   }
-  return /^\d+$/.test(ending) ? Number.parseInt(ending) : 2
+  if (ending !== undefined && isIntegerString(ending)) {
+    return Number.parseInt(ending)
+  }
+  return ending === undefined ? 1 : 2
+}
+
+function isIntegerString(value: string) {
+  if (value.length === 0) {
+    return false
+  }
+
+  return value.split('').every((char) => char >= '0' && char <= '9')
 }
