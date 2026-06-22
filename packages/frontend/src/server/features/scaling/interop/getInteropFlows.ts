@@ -81,8 +81,12 @@ export type InteropFlowsData = {
   stats: FlowsStats
 }
 
+type GetInteropFlowsParams = InteropFlowsParams & {
+  anchorChain?: string
+}
+
 export async function getInteropFlows(
-  params: InteropFlowsParams,
+  params: GetInteropFlowsParams,
 ): Promise<InteropFlowsData> {
   if (env.MOCK) {
     return getMockInteropFlows()
@@ -94,6 +98,7 @@ export async function getInteropFlows(
       to: params.chains,
     },
     protocolIds: params.protocolIds,
+    anchorChain: params.anchorChain,
   })
   const scopedRecords = params.tokenId
     ? scopeRecordsToToken(records, params.tokenId)
