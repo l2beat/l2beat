@@ -2,12 +2,19 @@ import type {
   AnalyzerResultApiResponse,
   AnalyzersApiResponse,
 } from '@l2beat/shared-pure'
-import { boolean, command, flag, restPositionals } from 'cmd-ts'
+import {
+  boolean,
+  command,
+  flag,
+  oneOf,
+  option,
+  optional,
+  restPositionals,
+} from 'cmd-ts'
 import { config as dotenv } from 'dotenv'
 import { AnalyzeClientError } from '../implementations/analyze/AnalyzeClient'
 import {
   AnalyzeRunnerError,
-  type AnalyzeRunnerPreference,
   type AnalyzeRunnerResult,
   AnalyzeRunnerUnavailableError,
   listAnalyzersWithRunner,
@@ -24,15 +31,10 @@ export const Analyze = command({
       long: 'json',
       description: 'Print the raw analyzer API response as JSON.',
     }),
-    cli: flag({
-      type: boolean,
-      long: 'cli',
-      description: 'Force the local l2analyze CLI backend.',
-    }),
-    api: flag({
-      type: boolean,
-      long: 'api',
-      description: 'Force the remote analyzer API backend.',
+    backend: option({
+      type: optional(oneOf(['cli', 'api'] as const)),
+      long: 'backend',
+      description: 'Force the analyzer backend.',
     }),
     args: restPositionals({
       displayName: 'args',
@@ -41,12 +43,7 @@ export const Analyze = command({
   },
   handler: async (args) => {
     dotenv()
-
-    const runnerPreference = getRunnerPreference(args.cli, args.api)
-    if (runnerPreference === undefined) {
-      process.exitCode = 1
-      return
-    }
+    const runnerPreference = args.backend ?? 'auto'
 
     try {
       if (isListCommand(args.args)) {
@@ -87,23 +84,6 @@ function parseRunArgs(
     return undefined
   }
   return { analyzerId, entrypointPath }
-}
-
-function getRunnerPreference(
-  forceCli: boolean,
-  forceApi: boolean,
-): AnalyzeRunnerPreference | undefined {
-  if (forceCli && forceApi) {
-    console.error('Use only one of --cli or --api.')
-    return undefined
-  }
-  if (forceCli) {
-    return 'cli'
-  }
-  if (forceApi) {
-    return 'api'
-  }
-  return 'auto'
 }
 
 function finish<T>(output: AnalyzeRunnerResult<T>, exitCode?: number) {
@@ -178,6 +158,8 @@ function handleAnalyzeError(error: unknown): number {
 
 function printUsageError() {
   console.error('Usage:')
-  console.error('  l2b analyze [--cli|--api] list')
-  console.error('  l2b analyze [--cli|--api] <analyzer-id> <path-inside-.flat>')
+  console.error('  l2b analyze [--backend cli|api] list')
+  console.error(
+    '  l2b analyze [--backend cli|api] <analyzer-id> <path-inside-.flat>',
+  )
 }
