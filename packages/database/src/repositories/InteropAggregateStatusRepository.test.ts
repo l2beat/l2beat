@@ -14,20 +14,22 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
   })
 
   describe(InteropAggregateStatusRepository.prototype.upsertAuto.name, () => {
-    it('inserts then updates an existing auto row', async () => {
-      await repository.upsertAuto({
+    it('inserts then updates an existing auto row (returns true)', async () => {
+      const inserted = await repository.upsertAuto({
         timestamp: UnixTime(100),
         status: 'promoted',
       })
+      expect(inserted).toEqual(true)
       expect((await repository.getByTimestamp(UnixTime(100)))?.status).toEqual(
         'promoted',
       )
 
-      await repository.upsertAuto({
+      const updated = await repository.upsertAuto({
         timestamp: UnixTime(100),
         status: 'blocked',
         reasons: [{ rule: 'maxLaneVolume' }],
       })
+      expect(updated).toEqual(true)
 
       const row = await repository.getByTimestamp(UnixTime(100))
       expect(row?.status).toEqual('blocked')
@@ -35,18 +37,20 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
       expect(row?.reasons).toEqual([{ rule: 'maxLaneVolume' }])
     })
 
-    it('does NOT overwrite a manual (non-auto) verdict (sticky)', async () => {
+    it('does NOT overwrite a manual (non-auto) verdict (sticky, returns false)', async () => {
       await repository.upsert({
         timestamp: UnixTime(100),
         status: 'promoted',
         promotedBy: 'ops@l2beat.com',
       })
 
-      await repository.upsertAuto({
+      const applied = await repository.upsertAuto({
         timestamp: UnixTime(100),
         status: 'blocked',
       })
 
+      // the write was a no-op — the caller must not act on a verdict it didn't record
+      expect(applied).toEqual(false)
       const row = await repository.getByTimestamp(UnixTime(100))
       expect(row?.status).toEqual('promoted')
       expect(row?.promotedBy).toEqual('ops@l2beat.com')

@@ -14,6 +14,10 @@ import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
 import type { InteropNotifier } from '../notifications/InteropNotifier'
+import type {
+  InteropPromotionService,
+  ReconcileResult,
+} from '../promotion/InteropPromotionService'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { InteropAggregatingIndexer } from './InteropAggregatingIndexer'
 import {
@@ -174,7 +178,6 @@ describe(InteropAggregatingIndexer.name, () => {
       const interopAggregateStatus = mockObject<
         Database['interopAggregateStatus']
       >({
-        upsertAuto: mockFn().resolvesTo(undefined),
         deleteOrphaned: mockFn().resolvesTo(0),
       })
 
@@ -210,6 +213,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregationService,
           syncersManager,
           parents: [],
+          promotionService: mockPromotionService(),
           indexerService: mockObject<IndexerService>({}),
           minHeight: 0,
         },
@@ -261,11 +265,105 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(
         aggregatedInteropTokensPair.deleteByTimestamp,
       ).toHaveBeenCalledWith(to)
-      expect(interopAggregateStatus.upsertAuto).toHaveBeenCalledWith({
-        timestamp: to,
-        status: 'promoted',
-      })
       expect(interopAggregateStatus.deleteOrphaned).toHaveBeenCalledTimes(1)
+    })
+
+    it('reconciles promotion and notifies when the snapshot is blocked', async () => {
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getByRange: mockFn().resolvesTo([]),
+      })
+      const aggregatedInteropTransfer = mockObject<
+        Database['aggregatedInteropTransfer']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const aggregatedInteropToken = mockObject<
+        Database['aggregatedInteropToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const aggregatedInteropDeployedToken = mockObject<
+        Database['aggregatedInteropDeployedToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const aggregatedInteropTokensPair = mockObject<
+        Database['aggregatedInteropTokensPair']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+
+      const db = mockDatabase({
+        transaction: mockFn(async (fn: any) => await fn()),
+        interopTransfer,
+        aggregatedInteropTransfer,
+        aggregatedInteropToken,
+        aggregatedInteropDeployedToken,
+        aggregatedInteropTokensPair,
+        interopAggregateStatus: mockObject<Database['interopAggregateStatus']>({
+          deleteOrphaned: mockFn().resolvesTo(0),
+        }),
+      })
+      const syncersManager = mockObject<InteropSyncersManager>({
+        areSyncersFreshEnough: mockFn().resolvesTo(true),
+      })
+      const aggregationService = mockObject<InteropAggregationService>({
+        aggregate: mockFn().returns({
+          aggregatedTransfers: [],
+          aggregatedTokens: [],
+          aggregatedDeployedTokens: [],
+          aggregatedTokensPairs: [],
+          warnings: [],
+        }),
+      })
+
+      const reasons = [
+        {
+          rule: 'maxLaneVolume',
+          scope: 'p|nonMinting|ethereum|base',
+          message: 'lane volume exceeds threshold',
+        },
+      ]
+      const promotionService = mockPromotionService({
+        status: 'blocked',
+        reasons,
+        notify: true,
+      })
+      const notifier = mockObject<InteropNotifier>({
+        notifyBlockedSnapshot: mockFn().returns(undefined),
+      })
+
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs: [],
+          aggregationService,
+          promotionService,
+          notifier,
+          syncersManager,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
+
+      await indexer.update(from, to)
+
+      expect(promotionService.reconcile).toHaveBeenCalledWith({
+        timestamp: to,
+        transfers: [],
+        tokens: [],
+      })
+      expect(notifier.notifyBlockedSnapshot).toHaveBeenCalledWith(to, reasons)
     })
 
     it('handles empty transfers correctly', async () => {
@@ -314,7 +412,6 @@ describe(InteropAggregatingIndexer.name, () => {
       const interopAggregateStatus = mockObject<
         Database['interopAggregateStatus']
       >({
-        upsertAuto: mockFn().resolvesTo(undefined),
         deleteOrphaned: mockFn().resolvesTo(0),
       })
 
@@ -350,6 +447,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregationService,
           syncersManager,
           parents: [],
+          promotionService: mockPromotionService(),
           indexerService: mockObject<IndexerService>({}),
           minHeight: 0,
         },
@@ -424,6 +522,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregationService,
           syncersManager,
           parents: [],
+          promotionService: mockPromotionService(),
           indexerService: mockObject<IndexerService>({}),
           minHeight: 0,
         },
@@ -478,7 +577,6 @@ describe(InteropAggregatingIndexer.name, () => {
       const interopAggregateStatus = mockObject<
         Database['interopAggregateStatus']
       >({
-        upsertAuto: mockFn().resolvesTo(undefined),
         deleteOrphaned: mockFn().resolvesTo(0),
       })
 
@@ -513,6 +611,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregationService,
           syncersManager,
           parents: [],
+          promotionService: mockPromotionService(),
           indexerService: mockObject<IndexerService>({}),
           minHeight: 0,
         },
@@ -580,7 +679,6 @@ describe(InteropAggregatingIndexer.name, () => {
       const interopAggregateStatus = mockObject<
         Database['interopAggregateStatus']
       >({
-        upsertAuto: mockFn().resolvesTo(undefined),
         deleteOrphaned: mockFn().resolvesTo(0),
       })
 
@@ -635,7 +733,10 @@ describe(InteropAggregatingIndexer.name, () => {
         }),
       })
       const notifier = mockObject<
-        Pick<InteropNotifier, 'notifySuspiciousAggregates'>
+        Pick<
+          InteropNotifier,
+          'notifySuspiciousAggregates' | 'notifyBlockedSnapshot'
+        >
       >({
         notifySuspiciousAggregates: mockFn().returns(undefined),
       })
@@ -649,6 +750,7 @@ describe(InteropAggregatingIndexer.name, () => {
           notifier,
           syncersManager,
           parents: [],
+          promotionService: mockPromotionService(),
           indexerService: mockObject<IndexerService>({}),
           minHeight: 0,
         },
@@ -718,7 +820,6 @@ describe(InteropAggregatingIndexer.name, () => {
       const interopAggregateStatus = mockObject<
         Database['interopAggregateStatus']
       >({
-        upsertAuto: mockFn().resolvesTo(undefined),
         deleteOrphaned: mockFn().resolvesTo(0),
       })
 
@@ -758,6 +859,7 @@ describe(InteropAggregatingIndexer.name, () => {
           notifier,
           syncersManager,
           parents: [],
+          promotionService: mockPromotionService(),
           indexerService: mockObject<IndexerService>({}),
           minHeight: 0,
         },
@@ -829,7 +931,6 @@ describe(InteropAggregatingIndexer.name, () => {
       const interopAggregateStatus = mockObject<
         Database['interopAggregateStatus']
       >({
-        upsertAuto: mockFn().resolvesTo(undefined),
         deleteOrphaned: mockFn().resolvesTo(0),
       })
 
@@ -868,6 +969,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregationService,
           syncersManager,
           parents: [],
+          promotionService: mockPromotionService(),
           indexerService: mockObject<IndexerService>({}),
           minHeight: 0,
         },
@@ -1021,6 +1123,14 @@ function baselineHistoryForAnalyzer(candidateTimestamp: UnixTime) {
       dstVolumeUsd: 1_985_000,
     }),
   ]
+}
+
+function mockPromotionService(result?: ReconcileResult) {
+  return mockObject<InteropPromotionService>({
+    reconcile: mockFn().resolvesTo(
+      result ?? { status: 'promoted', reasons: [], notify: false },
+    ),
+  })
 }
 
 function historyPointAt(
