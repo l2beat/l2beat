@@ -348,6 +348,14 @@ export const aztec: ScalingProject = {
   },
   milestones: [
     {
+      title: 'Escape-hatch verifier exploit',
+      date: '2026-06-17T00:00:00Z',
+      url: 'https://www.aztec-labs.com/blog/aztec-2-incident.html',
+      description:
+        '$2.2M of assets are drained by exploiting an unsound verification key.',
+      type: 'incident',
+    },
+    {
       title: 'Aztec operator sunset',
       date: '2023-07-08T00:00:00Z',
       url: 'https://github.com/AztecProtocol/aztec-v2-ejector/',
