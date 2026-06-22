@@ -5,6 +5,7 @@ import {
   type SortingState,
 } from '@tanstack/react-table'
 import { useState } from 'react'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
@@ -23,9 +24,7 @@ const columnHelper = createColumnHelper<PrivacySummaryEntry>()
 
 function MetricCell({ children }: { children: React.ReactNode }) {
   if (children === undefined || children === null) {
-    return (
-      <span className="font-medium text-base text-secondary">Not tracked</span>
-    )
+    return <NoDataBadge />
   }
 
   return <span className="font-medium text-base">{children}</span>
@@ -57,9 +56,11 @@ const columns = [
             />
           </TwoRowCell.First>
           <TwoRowCell.Second>
-            {ctx.row.original.isTracked
-              ? `${formatInteger(ctx.row.original.poolsTracked)} pools tracked`
-              : 'Not tracked'}
+            {ctx.row.original.isTracked ? (
+              `${formatInteger(ctx.row.original.poolsTracked)} pools tracked`
+            ) : (
+              <NoDataBadge />
+            )}
           </TwoRowCell.Second>
         </TwoRowCell>
       </TableLink>
