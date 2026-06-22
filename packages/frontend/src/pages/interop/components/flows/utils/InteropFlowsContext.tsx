@@ -24,6 +24,7 @@ interface InteropFlowsContextType {
   toggleProtocolSelection: (protocolId: string) => void
   selectAllProtocols: () => void
   deselectAllProtocols: () => void
+  setSelectedProtocols: (protocolIds: string[]) => void
   highlightedChains: string[]
   toggleHighlightedChain: (chainId: string) => void
   setHighlightedChainPair: (chainIdA: string, chainIdB: string) => void
@@ -229,6 +230,7 @@ export function InteropFlowsProvider({
         toggleProtocolSelection,
         selectAllProtocols,
         deselectAllProtocols,
+        setSelectedProtocols,
         highlightedChains,
         toggleHighlightedChain,
         setHighlightedChainPair,

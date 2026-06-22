@@ -9,7 +9,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup."
+          "description": "add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup; change the staking configuration so that no new Sequencers can joing the queue."
         }
       ]
     }

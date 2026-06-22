@@ -7,7 +7,33 @@ import {
   getAllProjectDiscoveries,
   getProjectDiscoveries,
 } from './getDiscoveries'
-import type { ApiCodeResponse } from './types'
+import { splitSolidityDeclarations } from './solidityDeclarations'
+import type { ApiCodeDeclarationsResponse, ApiCodeResponse } from './types'
+
+// Splits every flattened source into selectable top-level declarations while
+// keeping the bytes intact (see splitSolidityDeclarations). A source that fails
+// to parse (e.g. unverified or non-Solidity) falls back to a single unnamed
+// segment so the code view still renders the original text.
+export function toCodeDeclarations(
+  code: ApiCodeResponse,
+): ApiCodeDeclarationsResponse {
+  return {
+    entryName: code.entryName,
+    sources: code.sources.map((source) => {
+      try {
+        return {
+          name: source.name,
+          declarations: splitSolidityDeclarations(source.code),
+        }
+      } catch {
+        return {
+          name: source.name,
+          declarations: [{ name: null, content: source.code }],
+        }
+      }
+    }),
+  }
+}
 
 export function addFlattenerNote(code: string): string {
   const note = [

@@ -20,14 +20,13 @@ export async function getInteropProtocolsByVolume(
     return getMockInteropProtocolsByVolume(params)
   }
 
-  const { records } = await getLatestAggregatedInteropTransferWithTokens(
-    {
+  const { records } = await getLatestAggregatedInteropTransferWithTokens({
+    selection: {
       from: params.chains,
       to: params.chains,
     },
-    undefined,
-    params.protocolIds,
-  )
+    protocolIds: params.protocolIds,
+  })
 
   if (records.length === 0) return []
 

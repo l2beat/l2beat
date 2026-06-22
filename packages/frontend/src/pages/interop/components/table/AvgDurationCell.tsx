@@ -45,7 +45,7 @@ export function AvgDurationCell({
       return (
         <div
           className={cn(
-            'flex flex-col items-center gap-0.5 font-medium text-label-value-15 md:gap-1.5',
+            'flex flex-col items-end gap-0.5 font-medium text-label-value-15 md:gap-1.5',
             splitClassName,
           )}
         >

@@ -108,7 +108,11 @@ describe('tokenIngestionQueueRouter', () => {
           deployedTokenExists: false,
         },
       ])
-      expect(getPage).toHaveBeenCalledWith({ offset: 5, limit: 5 })
+      expect(getPage).toHaveBeenCalledWith({
+        offset: 5,
+        limit: 5,
+        chains: undefined,
+      })
       expect(getInteropTransferIndex).toHaveBeenCalledWith()
       expect(plan).toHaveBeenCalledTimes(2)
       expect(plan).toHaveBeenNthCalledWith(1, existingEntry, transferIndex)

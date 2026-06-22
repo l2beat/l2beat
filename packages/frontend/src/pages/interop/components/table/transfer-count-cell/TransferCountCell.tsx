@@ -98,7 +98,7 @@ export function TransferDetailsDialog({
       trpc.interop.transfers.infiniteQueryOptions(
         {
           ...selectedChains,
-          id: protocol.id,
+          scope: { type: 'project', projectId: protocol.id },
           type,
           tokenId,
           snapshotTimestamp: snapshotTimestamp ?? 0,

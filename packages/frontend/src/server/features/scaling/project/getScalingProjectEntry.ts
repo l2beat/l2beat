@@ -412,6 +412,7 @@ export async function getScalingProjectEntry(
         protocols: interopData.protocols,
         defaultSelectedChains: interopData.defaultSelectedChains,
         defaultStatsChainId: interopData.chainId,
+        canonicalProtocolId: interopData.canonicalProtocolId,
       },
     })
   }

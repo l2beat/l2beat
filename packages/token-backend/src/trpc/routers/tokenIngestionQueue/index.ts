@@ -18,6 +18,7 @@ const QueueEntryAddress = v.object({
 const QueuePageInput = v.object({
   page: v.number(),
   pageSize: v.number(),
+  chains: v.array(v.string()).optional(),
 })
 
 export interface QueuePageRow {
@@ -39,6 +40,7 @@ export const tokenIngestionQueueRouter = router({
       const result = await ctx.tokenDb.tokenIngestionQueue.getPage({
         offset: (page - 1) * pageSize,
         limit: pageSize,
+        chains: input.chains,
       })
 
       const transferIndex =
