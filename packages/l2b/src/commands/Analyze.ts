@@ -9,7 +9,9 @@ import {
   oneOf,
   option,
   optional,
-  restPositionals,
+  positional,
+  string,
+  subcommands,
 } from 'cmd-ts'
 import { AnalyzeClientError } from '../implementations/analyze/AnalyzeClient'
 import {
@@ -21,44 +23,59 @@ import {
 } from '../implementations/analyze/AnalyzeRunner'
 import { AnalyzeSourceError } from '../implementations/analyze/loadFlatSources'
 
-export const Analyze = command({
-  name: 'analyze',
-  description: 'Run a source-code analyzer against discovery flat sources.',
+const json = flag({
+  type: boolean,
+  long: 'json',
+  description: 'Print the raw analyzer API response as JSON.',
+})
+
+const backend = option({
+  type: optional(oneOf(['cli', 'api'] as const)),
+  long: 'backend',
+  description: 'Force the analyzer backend.',
+})
+
+const AnalyzeList = command({
+  name: 'list',
+  aliases: ['analyzers'],
+  description: 'List available analyzers.',
+  args: { json, backend },
+  handler: async (args) => {
+    const runnerPreference = args.backend ?? 'auto'
+
+    try {
+      const output = await listAnalyzersWithRunner(runnerPreference)
+      printAnalyzers(output.result, args.json)
+      finish(output)
+    } catch (error) {
+      process.exitCode = handleAnalyzeError(error)
+    }
+  },
+})
+
+const AnalyzeRun = command({
+  name: 'run',
+  description: 'Run an analyzer against a discovery flat source.',
   args: {
-    json: flag({
-      type: boolean,
-      long: 'json',
-      description: 'Print the raw analyzer API response as JSON.',
+    json,
+    backend,
+    analyzerId: positional({
+      type: string,
+      displayName: 'analyzer-id',
     }),
-    backend: option({
-      type: optional(oneOf(['cli', 'api'] as const)),
-      long: 'backend',
-      description: 'Force the analyzer backend.',
-    }),
-    args: restPositionals({
-      displayName: 'args',
-      description: 'Use "list" or "<analyzer-id> <path-inside-.flat>".',
+    entrypointPath: positional({
+      type: string,
+      displayName: 'path-inside-.flat',
     }),
   },
   handler: async (args) => {
     const runnerPreference = args.backend ?? 'auto'
 
     try {
-      if (isListCommand(args.args)) {
-        const output = await listAnalyzersWithRunner(runnerPreference)
-        printAnalyzers(output.result, args.json)
-        finish(output)
-        return
-      }
-
-      const commandArgs = parseRunArgs(args.args)
-      if (commandArgs === undefined) {
-        printUsageError()
-        process.exitCode = 1
-        return
-      }
-
-      const output = await runAnalyzerWithRunner(runnerPreference, commandArgs)
+      const output = await runAnalyzerWithRunner(runnerPreference, {
+        analyzerId: args.analyzerId,
+        entrypointPath: args.entrypointPath,
+      })
       const resultExitCode = printAnalyzerResult(output.result, args.json)
       finish(output, resultExitCode)
     } catch (error) {
@@ -67,22 +84,14 @@ export const Analyze = command({
   },
 })
 
-function isListCommand(args: string[]) {
-  return args.length === 1 && (args[0] === 'list' || args[0] === 'analyzers')
-}
-
-function parseRunArgs(
-  args: string[],
-): { analyzerId: string; entrypointPath: string } | undefined {
-  if (args.length !== 2) {
-    return undefined
-  }
-  const [analyzerId, entrypointPath] = args
-  if (analyzerId === undefined || entrypointPath === undefined) {
-    return undefined
-  }
-  return { analyzerId, entrypointPath }
-}
+export const Analyze = subcommands({
+  name: 'analyze',
+  description: 'Run a source-code analyzer against discovery flat sources.',
+  cmds: {
+    list: AnalyzeList,
+    run: AnalyzeRun,
+  },
+})
 
 function finish<T>(output: AnalyzeRunnerResult<T>, exitCode?: number) {
   const finalExitCode =
@@ -152,12 +161,4 @@ function handleAnalyzeError(error: unknown): number {
   }
 
   throw error
-}
-
-function printUsageError() {
-  console.error('Usage:')
-  console.error('  l2b analyze [--backend cli|api] list')
-  console.error(
-    '  l2b analyze [--backend cli|api] <analyzer-id> <path-inside-.flat>',
-  )
 }
