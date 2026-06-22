@@ -1,5 +1,6 @@
 import { expect } from 'earl'
 import { strFromU8, strToU8, unzipSync } from 'fflate'
+import { FetchError } from 'node-fetch'
 import {
   AnalyzeClient,
   AnalyzeClientError,
@@ -27,12 +28,16 @@ describe(createSourcesArchive.name, () => {
 describe(AnalyzeClient.name, () => {
   it('wraps transport failures as AnalyzeClientError', async () => {
     const previousUrl = process.env.L2ANALYZE_URL
-    process.env.L2ANALYZE_URL = 'http://127.0.0.1:1'
+    process.env.L2ANALYZE_URL = 'http://analyze.test'
 
     try {
+      const client = new AnalyzeClient(() => {
+        throw new FetchError('connection refused', 'system')
+      })
+
       let thrown: unknown
       try {
-        await new AnalyzeClient().getAnalyzers()
+        await client.getAnalyzers()
       } catch (error) {
         thrown = error
       }
@@ -45,7 +50,11 @@ describe(AnalyzeClient.name, () => {
         ),
       ).toEqual(true)
     } finally {
-      process.env.L2ANALYZE_URL = previousUrl
+      if (previousUrl === undefined) {
+        Reflect.deleteProperty(process.env, 'L2ANALYZE_URL')
+      } else {
+        process.env.L2ANALYZE_URL = previousUrl
+      }
     }
   })
 })

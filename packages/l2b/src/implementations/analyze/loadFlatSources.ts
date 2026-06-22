@@ -76,7 +76,7 @@ export function resolveFlatEntrypointSource(
 
   let isFile: boolean
   try {
-    isFile = pathIsFile(absoluteEntrypointPath)
+    isFile = statSync(absoluteEntrypointPath).isFile()
   } catch {
     throw new AnalyzeSourceError(400, 'Entrypoint path does not exist')
   }
@@ -94,10 +94,6 @@ export function resolveFlatEntrypointSource(
     flatDir,
     entrypoint,
   }
-}
-
-function pathIsFile(filePath: string) {
-  return statSync(filePath).isFile()
 }
 
 function getFlatSourceRoot(entrypointPath: string): string {

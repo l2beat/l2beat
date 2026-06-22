@@ -5,7 +5,18 @@ import {
 import { type Validator, v } from '@l2beat/validate'
 import { zipSync } from 'fflate'
 import FormData from 'form-data'
-import fetch, { Headers, type RequestInit } from 'node-fetch'
+import fetch, {
+  FetchError,
+  Headers,
+  type RequestInfo,
+  type RequestInit,
+  type Response,
+} from 'node-fetch'
+
+export type FetchFn = (
+  url: RequestInfo,
+  init?: RequestInit,
+) => Promise<Response>
 
 const UpstreamErrorResponse = v.object({
   error: v.object({
@@ -24,6 +35,8 @@ export class AnalyzeClientError extends Error {
 }
 
 export class AnalyzeClient {
+  constructor(private readonly fetchImpl: FetchFn = fetch) {}
+
   async getAnalyzers(): Promise<AnalyzersApiResponse> {
     return await this.requestJson('/v1/analyzers', AnalyzersApiResponse)
   }
@@ -58,15 +71,19 @@ export class AnalyzeClient {
     let response: Awaited<ReturnType<typeof fetch>>
     let body: string
     try {
-      response = await fetch(url.toString(), {
+      response = await this.fetchImpl(url.toString(), {
         ...init,
         headers: this.getHeaders(),
       })
       body = await response.text()
     } catch (error) {
+      if (!(error instanceof FetchError)) {
+        throw error
+      }
+
       throw new AnalyzeClientError(
         502,
-        `Analyze service request failed: ${getErrorMessage(error)}`,
+        `Analyze service request failed: ${error.message}`,
       )
     }
 
@@ -115,10 +132,6 @@ export function createSourcesArchive(
   files: Record<string, Uint8Array>,
 ): Buffer {
   return Buffer.from(zipSync(files))
-}
-
-function getErrorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error)
 }
 
 function parseJson(body: string, status: number, statusText: string): unknown {

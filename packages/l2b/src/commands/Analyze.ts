@@ -63,11 +63,7 @@ export const Analyze = command({
         return
       }
 
-      const [analyzerId, entrypointPath] = commandArgs
-      const output = await runAnalyzerWithRunner(runnerPreference, {
-        analyzerId,
-        entrypointPath,
-      })
+      const output = await runAnalyzerWithRunner(runnerPreference, commandArgs)
       const resultExitCode = printAnalyzerResult(output.result, args.json)
       finish(output, resultExitCode)
     } catch (error) {
@@ -80,7 +76,9 @@ function isListCommand(args: string[]) {
   return args.length === 1 && (args[0] === 'list' || args[0] === 'analyzers')
 }
 
-function parseRunArgs(args: string[]) {
+function parseRunArgs(
+  args: string[],
+): { analyzerId: string; entrypointPath: string } | undefined {
   if (args.length !== 2) {
     return undefined
   }
@@ -88,7 +86,7 @@ function parseRunArgs(args: string[]) {
   if (analyzerId === undefined || entrypointPath === undefined) {
     return undefined
   }
-  return [analyzerId, entrypointPath]
+  return { analyzerId, entrypointPath }
 }
 
 function getRunnerPreference(
