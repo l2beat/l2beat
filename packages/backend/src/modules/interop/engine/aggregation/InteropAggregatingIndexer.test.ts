@@ -171,6 +171,13 @@ describe(InteropAggregatingIndexer.name, () => {
         insertMany: mockFn().resolvesTo(1),
       })
 
+      const interopAggregateStatus = mockObject<
+        Database['interopAggregateStatus']
+      >({
+        upsertAuto: mockFn().resolvesTo(undefined),
+        deleteOrphaned: mockFn().resolvesTo(0),
+      })
+
       const transaction = mockFn(async (fn: any) => await fn())
 
       const db = mockDatabase({
@@ -180,6 +187,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken,
         aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
+        interopAggregateStatus,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
         areSyncersFreshEnough: mockFn().resolvesTo(true),
@@ -253,6 +261,11 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(
         aggregatedInteropTokensPair.deleteByTimestamp,
       ).toHaveBeenCalledWith(to)
+      expect(interopAggregateStatus.upsertAuto).toHaveBeenCalledWith({
+        timestamp: to,
+        status: 'promoted',
+      })
+      expect(interopAggregateStatus.deleteOrphaned).toHaveBeenCalledTimes(1)
     })
 
     it('handles empty transfers correctly', async () => {
@@ -298,6 +311,12 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const interopAggregateStatus = mockObject<
+        Database['interopAggregateStatus']
+      >({
+        upsertAuto: mockFn().resolvesTo(undefined),
+        deleteOrphaned: mockFn().resolvesTo(0),
+      })
 
       const transaction = mockFn(async (fn: any) => await fn())
 
@@ -308,6 +327,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken,
         aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
+        interopAggregateStatus,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
         areSyncersFreshEnough: mockFn().resolvesTo(true),
@@ -455,6 +475,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const interopAggregateStatus = mockObject<
+        Database['interopAggregateStatus']
+      >({
+        upsertAuto: mockFn().resolvesTo(undefined),
+        deleteOrphaned: mockFn().resolvesTo(0),
+      })
+
       const transaction = mockFn(async (fn: any) => await fn())
       const db = mockDatabase({
         transaction,
@@ -463,6 +490,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken,
         aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
+        interopAggregateStatus,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
         areSyncersFreshEnough: mockFn().resolvesToOnce(false).resolvesTo(true),
@@ -549,6 +577,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const interopAggregateStatus = mockObject<
+        Database['interopAggregateStatus']
+      >({
+        upsertAuto: mockFn().resolvesTo(undefined),
+        deleteOrphaned: mockFn().resolvesTo(0),
+      })
+
       const transaction = mockFn(async (fn: any) => await fn())
 
       const db = mockDatabase({
@@ -558,6 +593,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken,
         aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
+        interopAggregateStatus,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
         areSyncersFreshEnough: mockFn().resolvesTo(true),
@@ -679,6 +715,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const interopAggregateStatus = mockObject<
+        Database['interopAggregateStatus']
+      >({
+        upsertAuto: mockFn().resolvesTo(undefined),
+        deleteOrphaned: mockFn().resolvesTo(0),
+      })
+
       const transaction = mockFn(async (fn) => await fn())
 
       const db = mockDatabase({
@@ -688,6 +731,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken,
         aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
+        interopAggregateStatus,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
         areSyncersFreshEnough: mockFn().resolvesTo(true),
@@ -782,6 +826,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const interopAggregateStatus = mockObject<
+        Database['interopAggregateStatus']
+      >({
+        upsertAuto: mockFn().resolvesTo(undefined),
+        deleteOrphaned: mockFn().resolvesTo(0),
+      })
+
       const transaction = mockFn(async (fn: any) => await fn())
 
       const db = mockDatabase({
@@ -791,6 +842,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken,
         aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
+        interopAggregateStatus,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
         areSyncersFreshEnough: mockFn().resolvesTo(true),
