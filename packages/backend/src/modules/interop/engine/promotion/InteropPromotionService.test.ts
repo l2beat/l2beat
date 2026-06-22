@@ -30,6 +30,13 @@ const passingRule: PromotionRule = {
   name: 'maxLaneVolume',
   evaluate: () => [],
 }
+/** A rule whose evaluate() throws — isolated by evaluatePromotion into ruleErrors. */
+const throwingRule: PromotionRule = {
+  name: 'brokenRule',
+  evaluate: () => {
+    throw new Error('kaboom')
+  },
+}
 
 describe(InteropPromotionService.name, () => {
   describe(InteropPromotionService.prototype.reconcile.name, () => {
@@ -116,6 +123,69 @@ describe(InteropPromotionService.name, () => {
         false,
         brokenRules(),
       )
+
+      const result = await service.reconcile(ctx)
+
+      expect(result.status).toEqual('promoted')
+      expect(result.notify).toEqual(false)
+      expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
+        timestamp: UnixTime(100),
+        status: 'promoted',
+      })
+    })
+
+    it('enforce + failClosed: blocks and surfaces a rule that throws', async () => {
+      const { service, statusRepository } = setup('enforce', true, [
+        throwingRule,
+      ])
+
+      const result = await service.reconcile(ctx)
+
+      expect(result.status).toEqual('blocked')
+      expect(result.notify).toEqual(true)
+      expect(result.reasons).toHaveLength(1)
+      expect(result.reasons[0]?.rule).toEqual('brokenRule')
+      expect(result.reasons[0]?.message).toEqual(
+        'rule "brokenRule" failed to evaluate: kaboom',
+      )
+      expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
+        timestamp: UnixTime(100),
+        status: 'blocked',
+        reasons: result.reasons,
+      })
+    })
+
+    it('enforce + failClosed: surfaces both a throwing rule and a real violation', async () => {
+      const { service } = setup('enforce', true, [throwingRule, blockingRule])
+
+      const result = await service.reconcile(ctx)
+
+      expect(result.status).toEqual('blocked')
+      expect(result.reasons.map((r) => r.rule)).toEqual([
+        'brokenRule',
+        'maxTotalVolume',
+      ])
+    })
+
+    it('enforce + failOpen: promotes despite a rule that throws', async () => {
+      const { service, statusRepository } = setup('enforce', false, [
+        throwingRule,
+      ])
+
+      const result = await service.reconcile(ctx)
+
+      expect(result.status).toEqual('promoted')
+      expect(result.notify).toEqual(false)
+      expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
+        timestamp: UnixTime(100),
+        status: 'promoted',
+      })
+    })
+
+    it('shadow: promotes despite a rule that throws, never notifies', async () => {
+      const { service, statusRepository } = setup('shadow', true, [
+        throwingRule,
+      ])
 
       const result = await service.reconcile(ctx)
 

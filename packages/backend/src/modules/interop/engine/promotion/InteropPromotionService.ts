@@ -1,7 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { evaluatePromotion } from './evaluatePromotion'
-import type { PromotionContext, PromotionRule, RuleViolation } from './types'
+import type {
+  PromotionContext,
+  PromotionRule,
+  RuleError,
+  RuleViolation,
+} from './types'
 
 export type PromotionMode = 'off' | 'shadow' | 'enforce'
 
@@ -44,17 +49,12 @@ export class InteropPromotionService {
     }
 
     let violations: RuleViolation[] = []
+    let ruleErrors: RuleError[] = []
     let engineError = false
     try {
       const evaluation = evaluatePromotion(ctx, this.$.rules)
       violations = evaluation.violations
-      if (evaluation.ruleErrors.length > 0) {
-        // isolate a broken rule: log it, keep evaluating the rest
-        this.logger.warn('Promotion rule errors', {
-          timestamp: ctx.timestamp,
-          ruleErrors: evaluation.ruleErrors,
-        })
-      }
+      ruleErrors = evaluation.ruleErrors
     } catch (error) {
       engineError = true
       this.logger.error('Promotion evaluation failed', {
@@ -63,22 +63,38 @@ export class InteropPromotionService {
       })
     }
 
+    // A broken rule (or an engine-level throw) means we could NOT fully evaluate the
+    // snapshot. Always log it; whether it blocks depends on the fail mode below.
+    if (ruleErrors.length > 0) {
+      this.logger.warn('Promotion rule errors', {
+        timestamp: ctx.timestamp,
+        ruleErrors,
+      })
+    }
+    const evaluationFailed = engineError || ruleErrors.length > 0
+
     // shadow: observe only — always promote, never alert.
     if (this.$.mode === 'shadow') {
-      if (violations.length > 0 || engineError) {
+      if (violations.length > 0 || evaluationFailed) {
         this.logger.warn('Promotion shadow: snapshot would be blocked', {
           timestamp: ctx.timestamp,
-          engineError,
+          evaluationFailed,
           violations: violations.map((v) => v.message),
         })
       }
       return this.promote(ctx, violations)
     }
 
-    // enforce
-    const blocked = violations.length > 0 || (engineError && this.$.failClosed)
+    // enforce: real violations always block; an incomplete evaluation blocks only when
+    // fail-closed (fail-open promotes but the error is still logged above).
+    const blocked =
+      violations.length > 0 || (this.$.failClosed && evaluationFailed)
     if (blocked) {
-      const reasons = engineError ? [ENGINE_ERROR, ...violations] : violations
+      const reasons = [
+        ...(this.$.failClosed && engineError ? [ENGINE_ERROR] : []),
+        ...(this.$.failClosed ? ruleErrors.map(toRuleErrorReason) : []),
+        ...violations,
+      ]
       await this.$.statusRepository.upsertAuto({
         timestamp: ctx.timestamp,
         status: 'blocked',
@@ -103,5 +119,13 @@ export class InteropPromotionService {
       status: 'promoted',
     })
     return { status: 'promoted', reasons, notify: false }
+  }
+}
+
+function toRuleErrorReason(error: RuleError): RuleViolation {
+  return {
+    rule: error.rule,
+    scope: '*',
+    message: `rule "${error.rule}" failed to evaluate: ${error.error}`,
   }
 }
