@@ -109,7 +109,7 @@ export const privacyPools: BaseProject = {
       value: 'False',
       sentiment: 'good',
       description:
-        'The protocol can manage deposits and force public exits, but it does not include an admin viewing key that decrypts private transactions by default.',
+        "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.immutable,

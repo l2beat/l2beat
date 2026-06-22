@@ -186,7 +186,7 @@ export const railgun: BaseProject = {
       value: 'False',
       sentiment: 'good',
       description:
-        'No non-user entity has a default key that can decrypt Railgun private balances or transactions.',
+        "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",
     },
     attributes: [
       {

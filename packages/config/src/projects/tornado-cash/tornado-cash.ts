@@ -136,7 +136,7 @@ export const tornadoCash: BaseProject = {
       value: 'False',
       sentiment: 'good',
       description:
-        'No protocol-level admin or auditor key can decrypt Tornado Cash private deposits or withdrawals.',
+        "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.immutable,
