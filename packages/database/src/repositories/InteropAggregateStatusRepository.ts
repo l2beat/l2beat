@@ -50,12 +50,16 @@ export class InteropAggregateStatusRepository extends BaseRepository {
    * Engine write. Sticky: inserts a new row, or updates an existing one ONLY when
    * its `promotedBy` is still `'auto'`. A human verdict (non-`auto`) is never
    * downgraded by the engine.
+   *
+   * Returns whether the write actually applied: `false` means a manual (non-`auto`)
+   * verdict was preserved and this call was a no-op. Callers use this to avoid acting
+   * (e.g. alerting) on a verdict the engine did not get to write.
    */
   async upsertAuto(record: {
     timestamp: UnixTime
     status: InteropAggregateStatusValue
     reasons?: unknown
-  }): Promise<void> {
+  }): Promise<boolean> {
     const now = UnixTime.now()
     const row = toRow({
       timestamp: record.timestamp,
@@ -65,7 +69,7 @@ export class InteropAggregateStatusRepository extends BaseRepository {
       checkedAt: now,
       updatedAt: now,
     })
-    await this.db
+    const result = await this.db
       .insertInto('InteropAggregateStatus')
       .values(row)
       .onConflict((oc) =>
@@ -82,7 +86,9 @@ export class InteropAggregateStatusRepository extends BaseRepository {
           // never overwrite a manual (non-`auto`) verdict
           .where('InteropAggregateStatus.promotedBy', '=', 'auto'),
       )
-      .execute()
+      .executeTakeFirst()
+    // pg counts a conflict-WHERE-skipped row as 0 inserted/updated → write was a no-op.
+    return (result?.numInsertedOrUpdatedRows ?? 0n) > 0n
   }
 
   /** Manual (operator) write — unconditional; takes precedence over the engine. */

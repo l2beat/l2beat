@@ -84,6 +84,28 @@ describe(InteropPromotionService.name, () => {
       })
     })
 
+    it('enforce: does NOT notify when a manual verdict preserves the write (no-op)', async () => {
+      // upsertAuto no-ops because a human already promoted/blocked this timestamp;
+      // a fresh alert would contradict the stored verdict.
+      const { service, statusRepository } = setup(
+        'enforce',
+        true,
+        [blockingRule],
+        false,
+      )
+
+      const result = await service.reconcile(ctx)
+
+      expect(result.status).toEqual('blocked')
+      expect(result.notify).toEqual(false)
+      expect(result.reasons).toHaveLength(1)
+      expect(statusRepository.upsertAuto).toHaveBeenCalledWith({
+        timestamp: UnixTime(100),
+        status: 'blocked',
+        reasons: result.reasons,
+      })
+    })
+
     it('enforce: promotes when no rule fires', async () => {
       const { service, statusRepository } = setup('enforce', true, [
         passingRule,
@@ -203,9 +225,11 @@ function setup(
   mode: PromotionMode,
   failClosed: boolean,
   rules: PromotionRule[],
+  /** Whether the sticky auto write applies; false ⇒ a manual verdict was preserved. */
+  upsertAutoApplied = true,
 ) {
   const statusRepository = mockObject<Database['interopAggregateStatus']>({
-    upsertAuto: mockFn().resolvesTo(undefined),
+    upsertAuto: mockFn().resolvesTo(upsertAutoApplied),
   })
   const service = new InteropPromotionService({
     statusRepository,

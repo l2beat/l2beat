@@ -95,11 +95,21 @@ export class InteropPromotionService {
         ...(this.$.failClosed ? ruleErrors.map(toRuleErrorReason) : []),
         ...violations,
       ]
-      await this.$.statusRepository.upsertAuto({
+      const applied = await this.$.statusRepository.upsertAuto({
         timestamp: ctx.timestamp,
         status: 'blocked',
         reasons,
       })
+      // A manual verdict (e.g. ops already promoted this hour) makes the sticky write
+      // a no-op. Don't alert on a verdict we didn't actually record — it would
+      // contradict the stored (possibly manually promoted) status.
+      if (!applied) {
+        this.logger.info(
+          'Promotion block skipped — manual verdict preserved, not alerting',
+          { timestamp: ctx.timestamp },
+        )
+        return { status: 'blocked', reasons, notify: false }
+      }
       this.logger.warn('Interop snapshot blocked from promotion', {
         timestamp: ctx.timestamp,
         reasons: reasons.map((r) => r.message),
