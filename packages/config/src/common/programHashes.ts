@@ -254,12 +254,52 @@ const programHashes: Record<
       'As shared by the Celo team, this program fixes a security issue and because of that it is not yet public. Program hash could not be regenerated.',
   },
   '0x1fffeb5a6f932e26084c284829e79973121fe5d456a7ec9029febc1308167c2c': {
-    ...OP_SUCCINCT_FDP_RANGE_EIGENDA(''), // idk which version this is exactly, but not 2.0.0
+    ...OP_SUCCINCT_FDP_RANGE_EIGENDA(''), // prior on-chain version, superseded by celo/v2.1.0 below; exact version unidentified (not 2.0.0)
     // programUrl:
     //   'https://github.com/celo-org/op-succinct/tree/celo/v2.0.0/programs/range/eigenda',
     verificationStatus: 'unsuccessful',
     verificationSteps:
       'As shared by the Celo team, this program fixes a security issue and because of that it is not yet public. Program hash could not be regenerated.',
+  },
+  '0x00b04647b693a1024f3f6524643693ac5445fbabe5cdfcd3b2d3d468274d4be4': {
+    ...OP_SUCCINCT_FDP_AGG_EIGENDA('v2.1.0'),
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v2.1.0/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo: \`git checkout celo/v2.1.0\`. Commit hash should be \`00ac9f41a19917be8add5f7b60bef5be93b5b2b7\`.
+2. Make sure docker is running by running \`docker ps\`
+3. Reproducibly rebuild the program ELF from source: from \`programs/aggregation\` run \`cargo prove build --elf-name aggregation-elf --docker --tag v6.1.0 --output-directory ../../elf\`. The rebuilt ELF is byte-identical to the one committed in the release.
+4. From the \`op-succinct\` dir run \`cargo run --bin config --release --features eigenda\` to print the verification key hashes.
+    `,
+  },
+  '0x1dd60be45aa2e74722e16f3a7c2d3b0a3339c1b72dc4e5b513487da3528e5c94': {
+    ...OP_SUCCINCT_FDP_RANGE_EIGENDA('v2.1.0'),
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v2.1.0/programs/range/eigenda',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo: \`git checkout celo/v2.1.0\`. Commit hash should be \`00ac9f41a19917be8add5f7b60bef5be93b5b2b7\`.
+2. Make sure docker is running by running \`docker ps\`
+3. Reproducibly rebuild the program ELF from source: from \`programs/range/eigenda\` run \`cargo prove build --elf-name eigenda-range-elf-embedded --docker --tag v6.1.0 --output-directory ../../../elf\`. The rebuilt ELF is byte-identical to the one committed in the release.
+4. From the \`op-succinct\` dir run \`cargo run --bin config --release --features eigenda\` to print the verification key hashes.
+    `,
   },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     ...OP_SUCCINCT_AGG_BLOBS,
@@ -313,7 +353,26 @@ const programHashes: Record<
       'https://github.com/agglayer/agglayer/tree/v0.4.4/crates/pessimistic-proof',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
-      'common/programHashes/0x000055f14384bdb5bb092fd7e5152ec31856321c5a30306ab95836bdf5cdb639.md',
+      'common/programHashes/agglayer-pessimistic-proof.md',
+      {
+        version: 'v0.4.4',
+        commitHash: 'caac9f06bc7cb1cf89912dbb4dffa4d594a00bd5',
+        elfTarget: 'riscv32im-succinct-zkvm-elf',
+      },
+    ),
+  },
+  '0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e': {
+    ...PESSIMISTIC_PROG('v0.5.1'),
+    programUrl:
+      'https://github.com/agglayer/agglayer/tree/v0.5.1/crates/pessimistic-proof',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/agglayer-pessimistic-proof.md',
+      {
+        version: 'v0.5.1',
+        commitHash: 'f7bb86695b03d363c3d0d15ff7f2d8b386e58c91',
+        elfTarget: 'riscv64im-succinct-zkvm-elf',
+      },
     ),
   },
   '0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f': {

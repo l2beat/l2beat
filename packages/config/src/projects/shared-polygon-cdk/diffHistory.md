@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x95844697bd903f68a260a701bf4651c98ea84eb9
+
+# Diff at Tue, 16 Jun 2026 09:09:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e3be4116cfc279e5c4415ba34f338c2f1d453616 block: 1781095928
+- current timestamp: 1781600877
+
+## Description
+
+Add new vkey for all chains that use AgglayerGW. Switch multisig signer.
+
+## Watched changes
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      values.routes.0x0000000e:
++        [{"selector":"0x0000000e","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A","pessimisticVKey":"0x00d14f977a6ec393014f300ad78d0761dc29435d3fa1e2626fa466bd3343578e"}]
+    }
+```
+
+```diff
+    contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) [GnosisSafe] {
+    +++ description: None
+      values.$members.7:
+-        "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227"
++        "eth:0x21618593F7147235aC8D511d68A547C935F9d417"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459.sol} |    0
+ ...:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A.sol | 1427 ++++++++++++++++++++
+ 2 files changed, 1427 insertions(+)
+```
+
 Generated with discovered.json: 0x410f6ee81947472db2f44c65363f26bbb0d159a7
 
 # Diff at Wed, 10 Jun 2026 14:35:30 GMT:

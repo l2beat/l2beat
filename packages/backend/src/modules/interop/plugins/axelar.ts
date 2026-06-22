@@ -1,10 +1,6 @@
 /**
  * Axelar AMB and token bridge
  * this token bridge is confusingly branded under 'Squid'
- * together with the intent protocol
- * the squid frontend supports the tokenbridge and intents/swaps
- * MINTING (tokenbridge/squid)
- * NON-MINTING (intents/squid)
  */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { TokenMap } from '../engine/match/TokenMap'
@@ -46,11 +42,6 @@ const parseContractCallExecuted = createEventParser(
   'event ContractCallExecuted(bytes32 indexed commandId)',
 )
 
-// ExpressExecutedWithToken (index_topic_1 bytes32 commandId, string sourceChain, string sourceAddress, bytes32 payloadHash, string symbol, index_topic_2 uint256 amount, index_topic_3 address expressExecutor)
-const parseExpressExecutedWithToken = createEventParser(
-  'event ExpressExecutedWithToken(bytes32 indexed commandId,string sourceChain, string sourceAddress, bytes32 payloadHash, string symbol, uint256 indexed amount, address indexed expressExecutor)',
-)
-
 const parseTransfer = createEventParser(
   'event Transfer(address indexed from, address indexed to, uint256 value)',
 )
@@ -79,14 +70,6 @@ export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'solana', chain: 'solana' },
   // tempo unsupported
 ])
-
-export const SquidExpressExecutedWithToken = createInteropEventType<{
-  commandId: `0x${string}`
-  tokenAddress?: Address32
-  amount: bigint
-  symbol: string
-  $srcChain?: string
-}>('axelar.ExpressExecutedWithToken', { direction: 'incoming' })
 
 export const ContractCall = createInteropEventType<{
   sender: EthereumAddress
@@ -140,37 +123,6 @@ export class AxelarPlugin implements InteropPlugin {
   constructor(private oneSidedChains: string[] = []) {}
 
   capture(input: LogToCapture) {
-    const expressExecutedWithToken = parseExpressExecutedWithToken(
-      input.log,
-      null,
-    )
-    if (expressExecutedWithToken) {
-      const transferMatch = findBestTransferLogByExactAmount(
-        input.txLogs,
-        expressExecutedWithToken.amount,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
-        (log) => parseTransfer(log, null),
-      )
-
-      const srcChain = findChain(
-        AXELAR_NETWORKS,
-        (x) => x.axelarChainName,
-        expressExecutedWithToken.sourceChain,
-      )
-
-      return [
-        SquidExpressExecutedWithToken.create(input, {
-          commandId: expressExecutedWithToken.commandId,
-          tokenAddress: transferMatch.transfer?.logAddress,
-          amount: expressExecutedWithToken.amount,
-          symbol: expressExecutedWithToken.symbol,
-          $srcChain: srcChain === 'Unknown_axelar' ? undefined : srcChain,
-          // never minted
-        }),
-      ]
-    }
-
     const contractCall = parseContractCall(input.log, null)
     if (contractCall) {
       const dstChain = findChain(
@@ -316,7 +268,6 @@ export class AxelarPlugin implements InteropPlugin {
   1. Start with contractCallExecuted on DST chain
   2. Find corresponding contractCallApproved or contractCallApprovedWithMint on DST chain using commandId
   3. Find corresponding contractCall or contractCallWithToken on SRC chain using payloadHash and srcTxHash
-  4. check for express execution via squid (commandId match)
 
   */
 
@@ -407,10 +358,6 @@ export class AxelarPlugin implements InteropPlugin {
       ]
     }
 
-    const expressExecuted = db.find(SquidExpressExecutedWithToken, {
-      commandId: contractCallExecuted.args.commandId,
-    })
-
     const srcTokenAddress = contractCallWithToken.args.tokenAddress
     const dstTokenAddress = matchingUnsafeAmount
       ? contractCallExecuted.args.tokenAddressUnsafe
@@ -430,39 +377,9 @@ export class AxelarPlugin implements InteropPlugin {
       tokenMap,
     })
 
-    const result: MatchResult = []
-    if (expressExecuted) {
-      result.push(
-        // TODO: do we want to count intent fill AND settlement as message/transfer?
-        // INTENT FILL
-        Result.Message('axelar-squid.Message', {
-          app: 'axelar-squid',
-          srcEvent: contractCallWithToken,
-          dstEvent: expressExecuted,
-        }),
-        Result.Transfer('axelar-squid.Transfer', {
-          srcEvent: contractCallWithToken,
-          srcTokenAddress: contractCallWithToken.args.tokenAddress,
-          srcAmount: contractCallWithToken.args.amount,
-          srcWasBurned: contractCallWithToken.args.srcWasBurned,
-          dstEvent: expressExecuted,
-          dstTokenAddress: expressExecuted.args.tokenAddress,
-          dstAmount: expressExecuted.args.amount,
-          dstWasMinted: false,
-          // fast execution special case: the destination is intent-based (never minted)
-          // but the source often is burned since it is part of the token bridge
-          // so this fast execution is non-minting, while the
-          // axelar transfer (settlement) in lock-mint or even burn-mint
-          bridgeType: 'nonMinting',
-        }),
-      )
-    }
-
-    result.push(
+    return [
       Result.Message('axelar.Message', {
-        app: expressExecuted
-          ? 'axelar-tokenbridge-squid-settlement'
-          : 'axelar-tokenbridge',
+        app: 'axelar-tokenbridge',
         srcEvent: contractCallWithToken,
         dstEvent: contractCallExecuted,
         extraEvents: [contractCallApprovedWithMint],
@@ -480,9 +397,7 @@ export class AxelarPlugin implements InteropPlugin {
         dstWasMinted,
         bridgeType,
       }),
-    )
-
-    return result
+    ]
   }
 
   private matchOneSidedSent(

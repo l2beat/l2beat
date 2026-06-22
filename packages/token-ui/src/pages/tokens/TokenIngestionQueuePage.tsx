@@ -49,6 +49,7 @@ import {
   type IngestionPreviewState,
 } from '~/components/IngestionPreviewDialog'
 import { LoadingState } from '~/components/LoadingState'
+import { MultiSelectCombobox } from '~/components/MultiSelectCombobox'
 import { AppLayout } from '~/layouts/AppLayout'
 import { useTRPC } from '~/react-query/trpc'
 
@@ -61,9 +62,14 @@ export function TokenIngestionQueuePage() {
   const [retryingKey, setRetryingKey] = useState<string | undefined>()
   const [preview, setPreview] = useState<IngestionPreviewState | undefined>()
   const [page, setPage] = useState(1)
+  const [selectedChains, setSelectedChains] = useState<string[]>([])
   const { data: queuePage, isLoading } = useQuery(
     trpc.tokenIngestionQueue.getPage.queryOptions(
-      { page, pageSize: PAGE_SIZE },
+      {
+        page,
+        pageSize: PAGE_SIZE,
+        chains: selectedChains.length > 0 ? selectedChains : undefined,
+      },
       { refetchInterval: 10_000 },
     ),
   )
@@ -78,6 +84,10 @@ export function TokenIngestionQueuePage() {
     : page
   const chainsByName = useMemo(
     () => new Map(chains?.map((chain) => [chain.name, chain])),
+    [chains],
+  )
+  const chainOptions = useMemo(
+    () => chains?.map((chain) => ({ value: chain.name })) ?? [],
     [chains],
   )
 
@@ -175,48 +185,58 @@ export function TokenIngestionQueuePage() {
               {formatQueueRange(page, totalCount)}
             </CardDescription>
           )}
-          {queuePage && (
-            <CardAction>
-              <div className="flex flex-wrap items-center justify-end gap-2">
-                <ButtonWithSpinner
-                  size="sm"
-                  isLoading={approveMany.isPending}
-                  disabled={stagedEntries.length === 0}
-                  onClick={approveAllOnPage}
-                >
-                  <CheckIcon />
-                  Approve all on this page
-                </ButtonWithSpinner>
-                {totalCount > PAGE_SIZE && (
-                  <>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      disabled={page <= 1}
-                      onClick={() => setPage((page) => Math.max(1, page - 1))}
-                    >
-                      <ChevronLeftIcon />
-                      Previous
-                    </Button>
-                    <div className="whitespace-nowrap text-muted-foreground text-sm tabular-nums">
-                      Page {page} of {pageCount}
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      disabled={page >= pageCount}
-                      onClick={() =>
-                        setPage((page) => Math.min(pageCount, page + 1))
-                      }
-                    >
-                      Next
-                      <ChevronRightIcon />
-                    </Button>
-                  </>
-                )}
-              </div>
-            </CardAction>
-          )}
+          <CardAction>
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              <MultiSelectCombobox
+                options={chainOptions}
+                selected={selectedChains}
+                onChange={(next) => {
+                  setSelectedChains(next)
+                  setPage(1)
+                }}
+                placeholder="All chains"
+                pluralNoun="chains"
+                searchPlaceholder="Search chain..."
+                emptyText="No chain found."
+              />
+              <ButtonWithSpinner
+                size="sm"
+                isLoading={approveMany.isPending}
+                disabled={stagedEntries.length === 0}
+                onClick={approveAllOnPage}
+              >
+                <CheckIcon />
+                Approve all on this page
+              </ButtonWithSpinner>
+              {totalCount > PAGE_SIZE && (
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={page <= 1}
+                    onClick={() => setPage((page) => Math.max(1, page - 1))}
+                  >
+                    <ChevronLeftIcon />
+                    Previous
+                  </Button>
+                  <div className="whitespace-nowrap text-muted-foreground text-sm tabular-nums">
+                    Page {page} of {pageCount}
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={page >= pageCount}
+                    onClick={() =>
+                      setPage((page) => Math.min(pageCount, page + 1))
+                    }
+                  >
+                    Next
+                    <ChevronRightIcon />
+                  </Button>
+                </>
+              )}
+            </div>
+          </CardAction>
         </CardHeader>
         <CardContent className="min-h-0 flex-1 overflow-y-auto">
           {isLoading ? (

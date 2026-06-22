@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x6653a4994b88d931eb0aa60c14b7e113dde2f552
+
+# Diff at Tue, 16 Jun 2026 09:50:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1781102204
+- current timestamp: 1781603320
+
+## Description
+
+Propose 'Enable SP1 v6 on mainnet': new programhashes.
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
++++ description: total standard proposal count.
++++ severity: HIGH
+      values.proposalCount:
+-        20
++        21
+    }
+```
+
 Generated with discovered.json: 0x803f8b0d1799bbdd13c15302c608a704959eacd4
 
 # Diff at Wed, 10 Jun 2026 14:38:24 GMT:

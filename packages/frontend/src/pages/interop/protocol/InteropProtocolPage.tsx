@@ -65,7 +65,10 @@ function Content({
       }}
       header={
         <>
-          <ProjectHeader project={projectEntry} />
+          <ProjectHeader
+            project={projectEntry}
+            recentUpdatesCount={projectEntry.header.recentUpdatesCount}
+          />
           <ProjectSummaryBars project={projectEntry} />
           {projectEntry.header?.description && (
             <AboutSection

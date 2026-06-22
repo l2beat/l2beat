@@ -20,6 +20,7 @@ import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepositor
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
 import { IndexerStateRepository } from './repositories/IndexerStateRepository'
+import { InteropAggregateStatusRepository } from './repositories/InteropAggregateStatusRepository'
 import { InteropConfigRepository } from './repositories/InteropConfigRepository'
 import { InteropEventRepository } from './repositories/InteropEventRepository'
 import { InteropMessageRepository } from './repositories/InteropMessageRepository'
@@ -70,6 +71,7 @@ export function createDatabase(
     interopMessage: new InteropMessageRepository(db),
     interopTransfer: new InteropTransferRepository(db),
     aggregatedInteropTransfer: new AggregatedInteropTransferRepository(db),
+    interopAggregateStatus: new InteropAggregateStatusRepository(db),
     aggregatedInteropToken: new AggregatedInteropTokenRepository(db),
     aggregatedInteropDeployedToken:
       new AggregatedInteropDeployedTokenRepository(db),

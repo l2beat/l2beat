@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x9c5b910f6a6ce39797a4591c666123623c515846
+
+# Diff at Thu, 18 Jun 2026 10:25:29 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ece0bb89d93f4462f45501d91379f3ba4bc05b8a block: 1781602379
+- current timestamp: 1781778259
+
+## Description
+
+Removed one member from Matterlabs ms.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac"
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "1 of 2 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x01b818a19fbcbebc6195e094bad6846650ba2df7
+
+# Diff at Tue, 16 Jun 2026 09:35:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e3be4116cfc279e5c4415ba34f338c2f1d453616 block: 1780913202
+- current timestamp: 1781602379
+
+## Description
+
+[TPP-18](https://www.tally.xyz/gov/zksync/proposal/2943455218873421873697799536418607104467185343933430719456358615505163695727?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) queued: Mint USD 1M in ZK per month for development.
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        15
++        16
+    }
+```
+
 Generated with discovered.json: 0x5ef179ed57ac54472a3dfa8d83e45b5d09968bf5
 
 # Diff at Fri, 12 Jun 2026 10:19:03 GMT:

@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x2cd3ad8f95b2d9cab8b8ef4b2055ed6d2dd2331e
+
+# Diff at Tue, 16 Jun 2026 09:07:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e3be4116cfc279e5c4415ba34f338c2f1d453616 block: 1781102006
+- current timestamp: 1781600787
+
+## Description
+
+Add multisig signer.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (katana:0x7990513f4d64d57524a0B2519759f53B0cB1aEbd) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "katana:0xb3dA4c1Ba8De9E04f22B1554a070189F518FDCac"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x571012f08b4d382395f4140f82a9dc7d7db5ba3e
 
 # Diff at Fri, 12 Jun 2026 10:18:52 GMT:

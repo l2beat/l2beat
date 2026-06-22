@@ -193,14 +193,16 @@ function StatRow({
   onClick?: () => void
 }) {
   const baseClassName =
-    'flex w-full items-center justify-between gap-2 text-[13px]'
+    'flex w-full items-start justify-between gap-2 text-[13px]'
   const content = (
     <>
-      <span className="font-medium text-secondary leading-none">{label}</span>
+      <span className="whitespace-nowrap font-medium text-secondary leading-none">
+        {label}
+      </span>
       {isLoading ? (
         <Skeleton className="h-4 w-16" />
       ) : (
-        <span className="font-semibold leading-[1.15]">{value}</span>
+        <span className="text-right font-semibold leading-[1.15]">{value}</span>
       )}
     </>
   )

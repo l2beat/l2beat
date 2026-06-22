@@ -1,3 +1,91 @@
+Generated with discovered.json: 0xb7e1c0894385979f2d5d34e35b542258721afd83
+
+# Diff at Thu, 18 Jun 2026 10:18:53 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ece0bb89d93f4462f45501d91379f3ba4bc05b8a block: 1781602618
+- current timestamp: 1781777867
+
+## Description
+
+Removed 2 (out of 4) registered validators.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.0:
+-        "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807"
+      values.validatorsVTL.1:
+-        "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.0:
+-        "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.1:
+-        "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.0:
+-        "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.1:
+-        "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.0:
+-        "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.1:
+-        "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.0:
+-        "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.1:
+-        "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.0:
+-        "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.1:
+-        "eth:0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+    }
+```
+
+Generated with discovered.json: 0x54dca3e82ff22633382a5bbd7c7e48156a6e27c8
+
+# Diff at Tue, 16 Jun 2026 09:38:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e3be4116cfc279e5c4415ba34f338c2f1d453616 block: 1779442556
+- current timestamp: 1781602618
+
+## Description
+
+Add more EOAs to the VTL accessControl.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.2:
++        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTL.3:
++        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.2:
++        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.3:
++        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.2:
++        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.3:
++        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.2:
++        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.3:
++        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.2:
++        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.3:
++        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.2:
++        "eth:0x6be789605b13Edb78749824633b9933D44B582ba"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.3:
++        "eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+    }
+```
+
 Generated with discovered.json: 0x7e5cfc1e501e4062176943abeb5269582a587872
 
 # Diff at Tue, 09 Jun 2026 12:43:30 GMT:

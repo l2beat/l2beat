@@ -1,3 +1,74 @@
+Generated with discovered.json: 0x02f0fa465869e5e623c2d58227a8c68b9eb52aa0
+
+# Diff at Mon, 15 Jun 2026 13:58:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@254df558db0f4fcb5b0e269facd77fad1c7d2ddb block: 1780557929
+- current timestamp: 1781531783
+
+## Description
+
+Guardian role on OptimismPortal2, SystemConfig and SuperchainConfig moved from Conduit Multisig 1 to the joint Ronin/Conduit Safe (RoninConduitOwner): SuperchainConfig was re-initialized via the standard StorageSetter→same-impl pattern, bumping `initVersion` 1 → 2 and setting the new guardian address. Conduit Multisig 1 remains challenger in DGF.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.8:
+-        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 10 (40%)"
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      values.guardian:
+-        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.guardian:
+-        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607"
+    }
+```
+
+```diff
+    contract RoninConduitOwner (eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607) [GnosisSafe] {
+    +++ description: 5-of-6 joint Ronin/Conduit Safe.
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      values.$pastUpgrades.1:
++        ["2026-06-09T07:02:35.000Z","0x7e9202c4d6cb60aa8f0d86f9524f58cc3b5edb505495f61503d9374e3859cdb6",["eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"]]
+      values.$pastUpgrades.2:
++        ["2026-06-09T07:02:35.000Z","0x7e9202c4d6cb60aa8f0d86f9524f58cc3b5edb505495f61503d9374e3859cdb6",["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.guardian:
+-        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607"
+    }
+```
+
 Generated with discovered.json: 0x8ad704aa9cad63433de68fbaa561468f7c9c8ff0
 
 # Diff at Tue, 09 Jun 2026 12:43:38 GMT:

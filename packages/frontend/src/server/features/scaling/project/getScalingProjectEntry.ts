@@ -19,7 +19,10 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
-import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
+import {
+  countRecentDiscoveryUpdates,
+  getDiscoveryUpdates,
+} from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -87,6 +90,7 @@ export interface ProjectScalingEntry {
     redWarning?: ProjectRedWarning
     emergencyWarning?: string
     ongoingAnomaly?: 'single' | 'multiple'
+    recentUpdatesCount: number
     description?: string
     badges?: BadgeWithParams[]
     links: ProjectLink[]
@@ -234,6 +238,7 @@ export async function getScalingProjectEntry(
           ? 'single'
           : 'multiple'
       : undefined,
+    recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),
     category: project.scalingInfo.type,
     proofSystemType: project.scalingInfo.proofSystem?.type,
     purposes: project.scalingInfo.purposes,

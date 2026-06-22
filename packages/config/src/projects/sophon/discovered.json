@@ -1,6 +1,6 @@
 {
   "name": "sophon",
-  "timestamp": 1780913579,
+  "timestamp": 1781602990,
   "configHash": "0x839c616f59c8ba2272d40db916653a970b6447f43f6a597dc5e92a68c9d8a1f1",
   "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
   "entries": [
@@ -149,8 +149,8 @@
           ]
         ],
         "$upgradeCount": 10,
-        "baseTokenGasPriceMultiplierDenominator": 21,
-        "baseTokenGasPriceMultiplierNominator": 6250000,
+        "baseTokenGasPriceMultiplierDenominator": 31,
+        "baseTokenGasPriceMultiplierNominator": 10000000,
         "facetAddresses": [
           "eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253",
           "eth:0x1666124221622eb6154306Ea9BA87043e8be88B2",
@@ -266,7 +266,7 @@
           "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120",
           "eth:0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA"
         ],
-        "getFirstUnprocessedPriorityTx": 10200,
+        "getFirstUnprocessedPriorityTx": 10206,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -274,8 +274,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0xeefc585e98894cdf70163e90b1a8bf9833d89be5494052bdddc9c4d7758dfed3",
+        "getPriorityQueueSize": 1,
+        "getPriorityTreeRoot": "0xf8456640a1073c7e9eccaab955cf9f0a51592344e8e2068f411039f75803d916",
         "getPriorityTreeStartIndex": 4136,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051588,
@@ -283,13 +283,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 4],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 38685,
-        "getTotalBatchesExecuted": 38685,
-        "getTotalBatchesVerified": 38685,
-        "getTotalBlocksCommitted": 38685,
-        "getTotalBlocksExecuted": 38685,
-        "getTotalBlocksVerified": 38685,
-        "getTotalPriorityTxs": 10200,
+        "getTotalBatchesCommitted": 38749,
+        "getTotalBatchesExecuted": 38748,
+        "getTotalBatchesVerified": 38749,
+        "getTotalBlocksCommitted": 38749,
+        "getTotalBlocksExecuted": 38748,
+        "getTotalBlocksVerified": 38749,
+        "getTotalPriorityTxs": 10207,
         "getTransactionFilterer": "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
         "getVerifier": "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45",
         "getVerifierParams": {
@@ -360,11 +360,6 @@
     },
     {
       "address": "eth:0x14574dfC6B7aF658c5033BA95673864947956521",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x20719Abd2E63518e68D30a295388cAd6B542dCEf",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -844,10 +839,10 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0xF6877208302D9715A576D4Bff96f6576B5A1dFbA",
           "eth:0x4BBBaCCbA75dbb482619722FFE68bBddC9CCc336",
           "eth:0x2Ea9CcB15Ceb6c228786a3d4837B0bA3e9736D97",
           "eth:0x3b6036d410cA018661324766680674921a8b2d89",
-          "eth:0x20719Abd2E63518e68D30a295388cAd6B542dCEf",
           "eth:0x14574dfC6B7aF658c5033BA95673864947956521",
           "eth:0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"
         ],
@@ -856,7 +851,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 36,
+        "nonce": 38,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -918,6 +913,11 @@
         "eth:0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB": "L1USDCBridge"
       },
       "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "address": "eth:0xF6877208302D9715A576D4Bff96f6576B5A1dFbA",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1424,6 +1424,6 @@
     "shared-zk-stack/TransactionFilterer": "0x590d37dd842667198e464e09383d8240a77ae5af274853f992c7c5fc1b70de2a",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 25272022 },
-  "permissionsConfigHash": "0x135220a87dbda2124ad92a58ee7adf639547d409f87b808ecf63e451864902b2"
+  "usedBlockNumbers": { "ethereum": 25329258 },
+  "permissionsConfigHash": "0x657db0546ccced28f17cb8e6f6eb15f6d70a801d5a4c08fcb45fc1267eef3dcc"
 }

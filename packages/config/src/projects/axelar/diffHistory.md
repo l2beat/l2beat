@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x0ad497916f7d3c393173b01d511be1e945a43417
+
+# Diff at Tue, 16 Jun 2026 09:56:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1780914426
+- current timestamp: 1781603706
+
+## Description
+
+Add new Governance contract that can verify governance decisions from the Axelar blockchain.
+
+## Watched changes
+
+```diff
+    contract Gateway (eth:0x4F4495243837681061C4743b74B3eEdf548D56A5) [N/A] {
+    +++ description: None
+      values.governance:
+-        "eth:0xfDF36A30070ea0241d69052ea85ff44Ad0476a66"
++        "eth:0x7Acbae6CBa67d78AAf69e47000884aE00F9B2525"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract InterchainGovernance (eth:0xfDF36A30070ea0241d69052ea85ff44Ad0476a66) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AxelarServiceGovernance (eth:0x7Acbae6CBa67d78AAf69e47000884aE00F9B2525) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AxelarServiceGovernance.sol}                   | 587 +++++++++++----------
+ 1 file changed, 322 insertions(+), 265 deletions(-)
+```
+
 Generated with discovered.json: 0x084d760a9e6c050ab69a64da8eb334f2500fffd7
 
 # Diff at Fri, 12 Jun 2026 10:25:40 GMT:

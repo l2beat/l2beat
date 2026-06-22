@@ -714,6 +714,15 @@ model AggregatedInteropTokensPair {
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
 }
 
+model InteropAggregateStatus {
+  timestamp  DateTime @id @db.Timestamp(6) // = aggregate snapshot `to`
+  status     String   @db.VarChar(16) // 'promoted' | 'blocked'
+  promotedBy String?  @db.VarChar(255) // 'auto' | operator email | 'backfill'
+  reasons    String?  @db.Text // RuleViolation[] as JSON text (blocked only)
+  checkedAt  DateTime @db.Timestamp(6)
+  updatedAt  DateTime @db.Timestamp(6)
+}
+
 model AppState {
   key       String   @id @db.VarChar(255)
   value     String   @db.Text

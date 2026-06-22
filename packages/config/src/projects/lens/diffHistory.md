@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x8d4f7eed25b157a73fae75a435406ced48436204
+
+# Diff at Tue, 16 Jun 2026 09:43:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1780999809
+- current timestamp: 1781602943
+
+## Description
+
+Switch validator EOAs.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.0:
+-        "eth:0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67"
++        "eth:0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc"
+      values.validatorsVTL.1:
+-        "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
++        "eth:0x9971903268BAED330DA9DD533D97924c725AB593"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.0:
+-        "eth:0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67"
++        "eth:0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.1:
+-        "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
++        "eth:0x9971903268BAED330DA9DD533D97924c725AB593"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.0:
+-        "eth:0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67"
++        "eth:0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.1:
+-        "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
++        "eth:0x9971903268BAED330DA9DD533D97924c725AB593"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.0:
+-        "eth:0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67"
++        "eth:0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.1:
+-        "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
++        "eth:0x9971903268BAED330DA9DD533D97924c725AB593"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.0:
+-        "eth:0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67"
++        "eth:0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.1:
+-        "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
++        "eth:0x9971903268BAED330DA9DD533D97924c725AB593"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.0:
+-        "eth:0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67"
++        "eth:0xBf02Dc815BA63140Bfc170cFcF97987B504d36Bc"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.1:
+-        "eth:0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
++        "eth:0x9971903268BAED330DA9DD533D97924c725AB593"
+    }
+```
+
 Generated with discovered.json: 0xfcf4bc771e875656359829c90bdc527db4c77d98
 
 # Diff at Tue, 09 Jun 2026 12:43:35 GMT:

@@ -247,12 +247,14 @@ function StatRow({
   isLoading: boolean
 }) {
   return (
-    <div className="flex items-center justify-between gap-2 text-[13px]">
-      <span className="font-medium text-secondary leading-none">{label}</span>
+    <div className="flex items-start justify-between gap-2 text-[13px]">
+      <span className="whitespace-nowrap font-medium text-secondary leading-none">
+        {label}
+      </span>
       {isLoading ? (
         <Skeleton className="h-4 w-16" />
       ) : (
-        <span className="font-semibold leading-[1.15]">{value}</span>
+        <span className="text-right font-semibold leading-[1.15]">{value}</span>
       )}
     </div>
   )
