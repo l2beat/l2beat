@@ -56,11 +56,9 @@ const columns = [
             />
           </TwoRowCell.First>
           <TwoRowCell.Second>
-            {ctx.row.original.isTracked ? (
-              `${formatInteger(ctx.row.original.poolsTracked)} pools tracked`
-            ) : (
-              <NoDataBadge />
-            )}
+            {ctx.row.original.isTracked
+              ? `${formatInteger(ctx.row.original.poolsTracked)} pools tracked`
+              : 'Not tracked'}
           </TwoRowCell.Second>
         </TwoRowCell>
       </TableLink>
