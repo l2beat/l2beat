@@ -7,6 +7,7 @@ import { FormatSeconds } from './FormatSeconds'
 import { GreaterThan } from './GreaterThan'
 import { Mapping } from './Mapping'
 import { SliceAddress } from './SliceAddress'
+import { SliceBytes32 } from './SliceBytes32'
 import { TimeSince } from './TimeSince'
 import { Undecimal } from './Undecimal'
 
@@ -20,6 +21,7 @@ export const TypeConverters = {
   GreaterThan,
   TimeSince,
   SliceAddress,
+  SliceBytes32,
 }
 
 export function isCustomTypeCaster(name: string): boolean {

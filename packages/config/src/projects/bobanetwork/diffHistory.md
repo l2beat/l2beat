@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x48ddea852a54824e1033a37f130a1f1543714b16
+Generated with discovered.json: 0x438663fbbcc874564eea46cec21503fcac194e6d
 
-# Diff at Tue, 23 Jun 2026 10:22:23 GMT:
+# Diff at Tue, 23 Jun 2026 13:56:37 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@0e360eee2a54a17c6634ebce656a966ffe743da7 block: 1779715460
+- comparing to: main@a5f057bd866d51b73890dc21c75db5984b6e37b7 block: 1779715460
 - current timestamp: 1782210040
 
 ## Description
@@ -159,6 +159,9 @@ Upgraded to known contract versions.
       values.$upgradeCount:
 -        4
 +        5
+      values.absolutePrestateFromDGF:
+-        "UNRESOLVED"
++        "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e"
       values.challengerFromDGF:
 -        "UNRESOLVED"
 +        "eth:0x67b2426fB1ba42c6168e53E1e40E116A4E963d60"
@@ -202,6 +205,22 @@ Upgraded to known contract versions.
  .../PreimageOracle.sol => /dev/null                | 1463 -------
  .../SystemConfig/SystemConfig.sol                  |   71 +-
  7 files changed, 2425 insertions(+), 7007 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779715460 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xF45a5f1e36fCeA3Cc830A98c6c3C5ceA7d6af852) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.absolutePrestateFromDGF:
++        "UNRESOLVED"
+      usedTypes.3:
++        {"typeCaster":"SliceBytes32","arg":{"offset":0}}
+    }
 ```
 
 Generated with discovered.json: 0xc4f16096ecd4da3884859cb40131a1afa34e5ba6

@@ -660,12 +660,12 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   }
 }
 
-// An absolute prestate is "empty" when it's all zeros, in either the bytes32
-// form (0x000…0) returned by V2 game implementations, or the zero-address form
-// (<chain>:0x000…0) the AnchorStateRegistry *FromGame fields use when no game
-// is anchored yet.
-function isEmptyPrestate(value: string): boolean {
-  return /^([^:]+:)?0x0*$/.test(value)
+// A real absolute prestate is exactly 32 non-zero bytes. V2 game implementations
+// return all-zero (the value lives in clone immutable args), the AnchorStateRegistry
+// *FromGame fields resolve to the zero address until a game is anchored, and
+// unresolved handler reads come back as non-hex strings; all must be rejected.
+function isRealPrestate(value: string | undefined): value is string {
+  return value !== undefined && /^0x(?!0+$)[0-9a-f]{64}$/i.test(value)
 }
 
 function getProgramHashes(
@@ -678,30 +678,31 @@ function getProgramHashes(
       return []
     case 'Permissioned':
     case 'Permissionless': {
-      const absolutePrestate = templateVars.discovery.getContractValue<string>(
-        'PermissionedDisputeGame',
-        'absolutePrestate',
-      )
-      // V2 dispute games store params in clone bytecode;
-      // the implementation contract returns zero.
-      // Read from AnchorStateRegistry's game clone instead.
-      if (isEmptyPrestate(absolutePrestate)) {
-        const fromAnchor = templateVars.discovery.hasContract(
-          'AnchorStateRegistry',
-        )
+      // V2 dispute games store the prestate in clone immutable args, so the
+      // implementation returns zero. Try the implementation, then the anchored
+      // game clone, then the factory's configured game args (gameArgs[1], which
+      // it bakes into every permissioned game). The anchor stays empty until a
+      // game resolves. Zero / zero-address forms are skipped.
+      const prestateCandidates = [
+        templateVars.discovery.getContractValueOrUndefined<string>(
+          'PermissionedDisputeGame',
+          'absolutePrestate',
+        ),
+        templateVars.discovery.hasContract('AnchorStateRegistry')
           ? templateVars.discovery.getContractValueOrUndefined<string>(
               'AnchorStateRegistry',
               'absolutePrestateFromGame',
             )
-          : undefined
-        // When no game is anchored yet, the *FromGame fields resolve to the
-        // zero address, so treat that as empty alongside the bytes32 form.
-        if (fromAnchor && !isEmptyPrestate(fromAnchor)) {
-          return [PROGRAM_HASHES(fromAnchor)]
-        }
-        return []
-      }
-      return [PROGRAM_HASHES(absolutePrestate)]
+          : undefined,
+        templateVars.discovery.hasContract('DisputeGameFactory')
+          ? templateVars.discovery.getContractValueOrUndefined<string>(
+              'DisputeGameFactory',
+              'absolutePrestateFromDGF',
+            )
+          : undefined,
+      ]
+      const prestate = prestateCandidates.find(isRealPrestate)
+      return prestate ? [PROGRAM_HASHES(prestate)] : []
     }
     case 'Kailua': {
       const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
