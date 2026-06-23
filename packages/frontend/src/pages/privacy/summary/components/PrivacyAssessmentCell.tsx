@@ -9,13 +9,13 @@ import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSet
 import { cn } from '~/utils/cn'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
 
-type PrivacySummaryTableValue = PrivacyExitWindow | PrivacySummaryValue
+type PrivacyAssessmentValue = PrivacyExitWindow | PrivacySummaryValue
 
-export function PrivacySummaryValueCell({
+export function PrivacyAssessmentCell({
   value,
   showValue = false,
 }: {
-  value: PrivacySummaryTableValue
+  value: PrivacyAssessmentValue
   showValue?: boolean
 }) {
   return (

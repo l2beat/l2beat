@@ -21,8 +21,7 @@ import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import { PrivacyExitWindowCell } from './PrivacyExitWindowCell'
-import { PrivacySummaryValueCell } from './PrivacySummaryValueCell'
+import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
 const columnHelper = createColumnHelper<PrivacySummaryEntry>()
@@ -144,7 +143,7 @@ const columns = [
     id: 'exitWindow',
     header: 'Exit window',
     cell: (ctx) => (
-      <PrivacyExitWindowCell exitWindow={ctx.row.original.exitWindow} />
+      <PrivacyAssessmentCell value={ctx.row.original.exitWindow} showValue />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
@@ -160,7 +159,7 @@ const columns = [
     id: 'adminViewingKey',
     header: 'Admin\nview key',
     cell: (ctx) => (
-      <PrivacySummaryValueCell
+      <PrivacyAssessmentCell
         value={ctx.row.original.adminViewingKey}
         showValue
       />
@@ -179,7 +178,7 @@ const columns = [
     id: 'reproducibility',
     header: 'Reproducibility',
     cell: (ctx) => (
-      <PrivacySummaryValueCell
+      <PrivacyAssessmentCell
         value={ctx.row.original.reproducibility}
         showValue
       />
