@@ -8,7 +8,7 @@ Generated with discovered.json: 0x0f1180d79e9cbad47e063dfff7561f97f02c6269
 
 ## Description
 
-Update op-succinct program to.
+Update op-succinct programs to v6.1.0.
 
 ## Watched changes
 
