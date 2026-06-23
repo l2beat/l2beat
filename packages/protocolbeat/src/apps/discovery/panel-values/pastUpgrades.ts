@@ -43,9 +43,13 @@ export interface PastUpgradeRow {
  * facets and the oldest entry get no diff.
  */
 export function buildPastUpgradeRows(value: FieldValue): PastUpgradeRow[] {
-  const sorted = [...dedupeByTransaction(parsePastUpgrades(value))].sort(
-    (a, b) => b.date.localeCompare(a.date),
-  )
+  const sorted = collapseRedundantUpgrades(parsePastUpgrades(value))
+    .map((upgrade, index) => ({ upgrade, index }))
+    .sort(
+      (a, b) =>
+        b.upgrade.date.localeCompare(a.upgrade.date) || b.index - a.index,
+    )
+    .map((entry) => entry.upgrade)
 
   return sorted.map((upgrade, entryIndex) => {
     const previous = sorted[entryIndex + 1]
@@ -81,24 +85,35 @@ export function buildPastUpgradeRows(value: FieldValue): PastUpgradeRow[] {
 }
 
 /**
- * Collapses entries that share a transaction hash. Diamonds emit one
- * `$pastUpgrades` entry per `DiamondCut` event, so a single upgrade transaction
- * can appear several times. We keep the last occurrence, which holds the final
- * cumulative facet set for that transaction. Entries without a hash are kept.
+ * Collapses entries that are genuinely redundant: same transaction AND same
+ * resulting implementation set. Diamonds emit one `$pastUpgrades` entry per
+ * `DiamondCut` event and the repeated events within a single transaction
+ * resolve to the same cumulative facet set, so they collapse to one row (the
+ * last occurrence). Single-implementation proxies that change the
+ * implementation more than once in a transaction - e.g. the OP Stack pattern of
+ * `proxy -> StorageSetter -> new impl` emitting two `Upgraded` events - keep
+ * every distinct implementation, so no real upgrade is hidden. Entries without
+ * a transaction hash are always kept.
  */
-function dedupeByTransaction(upgrades: PastUpgrade[]): PastUpgrade[] {
-  const lastIndexByTx = new Map<string, number>()
+function collapseRedundantUpgrades(upgrades: PastUpgrade[]): PastUpgrade[] {
+  const lastIndexByKey = new Map<string, number>()
   upgrades.forEach((upgrade, index) => {
     if (upgrade.txHash !== undefined) {
-      lastIndexByTx.set(upgrade.txHash, index)
+      lastIndexByKey.set(upgradeKey(upgrade), index)
     }
   })
 
   return upgrades.filter(
     (upgrade, index) =>
       upgrade.txHash === undefined ||
-      lastIndexByTx.get(upgrade.txHash) === index,
+      lastIndexByKey.get(upgradeKey(upgrade)) === index,
   )
+}
+
+function upgradeKey(upgrade: PastUpgrade): string {
+  return `${upgrade.txHash}:${upgrade.implementations
+    .map((implementation) => implementation.address)
+    .join(',')}`
 }
 
 function parsePastUpgrades(value: FieldValue): PastUpgrade[] {
