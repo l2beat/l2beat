@@ -84,30 +84,18 @@ export function buildPastUpgradeRows(value: FieldValue): PastUpgradeRow[] {
   })
 }
 
-/**
- * Collapses entries that are genuinely redundant: same transaction AND same
- * resulting implementation set. Diamonds emit one `$pastUpgrades` entry per
- * `DiamondCut` event and the repeated events within a single transaction
- * resolve to the same cumulative facet set, so they collapse to one row (the
- * last occurrence). Single-implementation proxies that change the
- * implementation more than once in a transaction - e.g. the OP Stack pattern of
- * `proxy -> StorageSetter -> new impl` emitting two `Upgraded` events - keep
- * every distinct implementation, so no real upgrade is hidden. Entries without
- * a transaction hash are always kept.
- */
+// Folds only consecutive identical snapshots (same tx + implementation set),
+// e.g. a diamond's repeated `DiamondCut` events. Distinct in-tx changes (OP
+// Stack `proxy -> StorageSetter -> impl`, or a recurring `A -> B -> A`) are
+// kept. Assumes `$pastUpgrades` is chronological, so same-tx events are adjacent.
 function collapseRedundantUpgrades(upgrades: PastUpgrade[]): PastUpgrade[] {
-  const lastIndexByKey = new Map<string, number>()
-  upgrades.forEach((upgrade, index) => {
-    if (upgrade.txHash !== undefined) {
-      lastIndexByKey.set(upgradeKey(upgrade), index)
+  return upgrades.filter((upgrade, index) => {
+    if (upgrade.txHash === undefined) {
+      return true
     }
+    const next = upgrades[index + 1]
+    return next === undefined || upgradeKey(next) !== upgradeKey(upgrade)
   })
-
-  return upgrades.filter(
-    (upgrade, index) =>
-      upgrade.txHash === undefined ||
-      lastIndexByKey.get(upgradeKey(upgrade)) === index,
-  )
 }
 
 function upgradeKey(upgrade: PastUpgrade): string {

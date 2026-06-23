@@ -162,9 +162,7 @@ describe('buildPastUpgradeRows', () => {
   })
 
   it('keeps distinct implementations changed within one transaction', () => {
-    // OP Stack upgrades go proxy -> StorageSetter (B) -> new impl (A) in a
-    // single tx, emitting two `Upgraded` events that share a hash and block
-    // timestamp. Both are real upgrades and must be shown, newest (A) first.
+    // OP Stack: proxy -> StorageSetter (B) -> new impl (A) in one tx.
     const value: FieldValue = {
       type: 'array',
       values: [
@@ -186,5 +184,46 @@ describe('buildPastUpgradeRows', () => {
     expect(rows[0]?.cells[0]?.diffUrl).toEqual(`/diff/${B}/${A}`)
     expect(rows[1]?.cells[0]?.diffUrl).toEqual(`/diff/${C}/${B}`)
     expect(rows[2]?.cells[0]?.diffUrl).toEqual(undefined)
+  })
+
+  it('keeps a snapshot that recurs non-consecutively within one transaction', () => {
+    // A -> B -> A in one tx: the two A entries are not adjacent, so neither
+    // collapses and B still diffs against the intra-tx A, not pre-tx C.
+    const value: FieldValue = {
+      type: 'array',
+      values: [
+        entry('2024-01-01T00:00:00.000Z', '0xold', [C]),
+        entry('2026-05-25T00:00:00.000Z', '0xtx', [A]),
+        entry('2026-05-25T00:00:00.000Z', '0xtx', [B]),
+        entry('2026-05-25T00:00:00.000Z', '0xtx', [A]),
+      ],
+    }
+
+    const rows = buildPastUpgradeRows(value)
+
+    expect(rows.length).toEqual(4)
+    expect(rows.map((r) => r.cells[0]?.address)).toEqual([A, B, A, C])
+    expect(rows[0]?.cells[0]?.diffUrl).toEqual(`/diff/${B}/${A}`)
+    expect(rows[1]?.cells[0]?.diffUrl).toEqual(`/diff/${A}/${B}`)
+    expect(rows[2]?.cells[0]?.diffUrl).toEqual(`/diff/${C}/${A}`)
+    expect(rows[3]?.cells[0]?.diffUrl).toEqual(undefined)
+  })
+
+  it('still folds three consecutive identical diamond snapshots into one row', () => {
+    const value: FieldValue = {
+      type: 'array',
+      values: [
+        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
+        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
+        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
+        entry('2024-03-01T00:00:00.000Z', '0xreset', [F]),
+      ],
+    }
+
+    const rows = buildPastUpgradeRows(value)
+
+    expect(rows.length).toEqual(2)
+    expect(rows.map((r) => r.txHash)).toEqual(['0xreset', '0xdeploy'])
+    expect(rows.map((r) => r.cells[0]?.address)).toEqual([F, F])
   })
 })
