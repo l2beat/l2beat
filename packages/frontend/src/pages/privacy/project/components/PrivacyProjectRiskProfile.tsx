@@ -32,12 +32,12 @@ export function PrivacyProjectRiskProfile({
       />
       <ProjectSummaryStat
         title="Admin view key"
-        tooltip="Any non-user entity has a key that can decrypt users' private transactions."
+        tooltip="Whether the protocol has a privilidged admin key that can decrypt users' private transactions, and whether the use of such admin key is auditable by users."
         value={<RiskValue value={adminViewingKey} />}
       />
       <ProjectSummaryStat
         title="Reproducibility"
-        tooltip="All source code needed to audit the protocol and participate in it is published and can be used locally."
+        tooltip="Whether all source code needed to audit the protocol and participate in it is published and can be used locally."
         value={<RiskValue value={reproducibility} />}
       />
     </div>

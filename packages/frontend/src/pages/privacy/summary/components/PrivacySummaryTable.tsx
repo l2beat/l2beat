@@ -137,7 +137,7 @@ const columns = [
     meta: {
       align: 'center',
       tooltip:
-        "Shows the trusted setup used by the project's proving system and its risk.",
+        "Trusted setup used by the project's proving system and its risk.",
     },
   }),
   columnHelper.accessor((entry) => adjustTableValue(entry.exitWindow), {
@@ -158,7 +158,7 @@ const columns = [
   }),
   columnHelper.accessor((entry) => adjustTableValue(entry.adminViewingKey), {
     id: 'adminViewingKey',
-    header: 'Admin view\nkey',
+    header: 'Admin\nview key',
     cell: (ctx) => (
       <PrivacySummaryValueCell
         value={ctx.row.original.adminViewingKey}
@@ -172,7 +172,7 @@ const columns = [
     meta: {
       align: 'center',
       tooltip:
-        "Any non-user entity has a key that can decrypt users' private transactions.",
+        "Whether the protocol has a privilidged admin key that can decrypt users' private transactions, and whether the use of such admin key is auditable by users.",
     },
   }),
   columnHelper.accessor((entry) => adjustTableValue(entry.reproducibility), {
@@ -191,7 +191,7 @@ const columns = [
     meta: {
       align: 'center',
       tooltip:
-        'All source code needed to audit the protocol and participate in it is published and can be used locally.',
+        'Whether all source code needed to audit the protocol and participate in it is published and can be used locally.',
     },
   }),
 ]

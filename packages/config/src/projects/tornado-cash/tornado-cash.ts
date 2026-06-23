@@ -124,7 +124,7 @@ export const tornadoCash: BaseProject = {
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
-        'The core mixer contracts are immutable and have no admin upgrade path, so users can always withdraw with a valid note and proof.',
+        'The core Tornado Cash contracts are immutable and have no admin upgrade path, so users can always withdraw with a valid note and proof.',
     },
     reproducibility: {
       value: 'Reproducible',

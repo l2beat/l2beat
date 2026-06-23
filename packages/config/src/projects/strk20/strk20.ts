@@ -38,7 +38,7 @@ export const strk20: BaseProject = {
     trustedSetup: TRUSTED_SETUPS.TransparentSetup,
     tokens: [],
     exitWindow: {
-      value: '0d',
+      value: 'None',
       sentiment: 'bad',
       orderHint: 0,
       description:
@@ -48,13 +48,13 @@ export const strk20: BaseProject = {
       value: 'Not published',
       sentiment: 'bad',
       description:
-        'The STRK-20 protocol program and the sources for proving stack are not published, so users cannot independently reproduce the full system locally.',
+        'The STRK-20 protocol program and the sources for proving stack are not published. Users cannot independently verify the correctness of STRK-20 ZK program. They also cannot generate required ZK proofs locally and are forced to reveal private data to third party - the prover.',
     },
     adminViewingKey: {
       value: 'Use undetectable',
       sentiment: 'bad',
       description:
-        'All private actions include auditor-encrypted metadata, so whoever controls the auditor private key can decrypt user activity retroactively. User can not know whether their privacy was violated.',
+        'All private actions include auditor-encrypted metadata, so whoever controls the auditor private key can decrypt user activity retroactively. Users can not know whether their privacy was violated.',
     },
     attributes: [
       {
