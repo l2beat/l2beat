@@ -49,7 +49,7 @@ function createPhantomNode(subnodes: Node[]): Node {
     address: '',
     isInitial: false,
     hasTemplate: false,
-    addressType: 'Contract',
+    addressType: 'Group',
     name: 'Group',
     fields: collectOutgoingFields(subnodes, internal),
     hiddenFields: [],

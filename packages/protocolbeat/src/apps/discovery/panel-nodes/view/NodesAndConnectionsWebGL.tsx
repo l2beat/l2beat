@@ -495,6 +495,7 @@ const ICON_LIST = [
       'Diamond',
       'Untemplatized',
       'Contract',
+      'Group',
       'Unknown',
     ] as const
   ).map((id) => ({
