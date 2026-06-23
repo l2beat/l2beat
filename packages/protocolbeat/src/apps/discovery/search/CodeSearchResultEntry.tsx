@@ -8,7 +8,7 @@ import { HighlightedText } from './HighlightedText'
 import { useSearchStore } from './store'
 
 interface CodeSearchEntryProps {
-  select: (address: string) => void
+  select: (address: string[]) => void
   entries: ApiCodeSearchResponse['matches']
 }
 
@@ -53,7 +53,7 @@ export function CodeSearchResultEntry({
                   )}
                   onClick={() => {
                     ensureLeaf('code')
-                    select(result.address)
+                    select([result.address])
                     setOpen(false)
                     setSourceIndex(result.address, loc.index)
                     showRange(result.address, {

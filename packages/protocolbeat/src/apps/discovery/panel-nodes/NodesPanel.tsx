@@ -137,16 +137,17 @@ function useSynchronizeSelection() {
   }, [selectedNodes, hiddenNodes, highlightGlobal])
 
   useEffect(() => {
+    const firstGlobal = selectedGlobal[0]
     if (selectedNodes.length > 0 && !eq(lastSelection, selectedNodes)) {
       rememberSelection(selectedNodes)
-      selectGlobal(selectedNodes[0])
+      selectGlobal([...selectedNodes])
     } else if (
-      selectedGlobal &&
-      !lastSelection.includes(selectedGlobal) &&
+      firstGlobal !== undefined &&
+      !lastSelection.includes(firstGlobal) &&
       loaded
     ) {
-      rememberSelection([selectedGlobal])
-      selectAndFocus(selectedGlobal)
+      rememberSelection(selectedGlobal)
+      selectAndFocus(firstGlobal)
     }
   }, [
     lastSelection,
