@@ -1,9 +1,4 @@
-import type {
-  HistorySnapshot,
-  HistorySnapshotNode,
-  HistoryState,
-  State,
-} from '../State'
+import type { HistorySnapshot, HistoryState, Node, State } from '../State'
 import { updateNodePositions } from './updateNodePositions'
 
 const HISTORY_LIMIT = 50
@@ -19,7 +14,7 @@ export function captureHistorySnapshot(
   state: Pick<State, 'nodes' | 'hidden'>,
 ): HistorySnapshot {
   return {
-    nodes: state.nodes.map((node) => captureHistorySnapshotNode(node)),
+    nodes: state.nodes,
     hidden: [...state.hidden],
   }
 }
@@ -74,25 +69,7 @@ export function applyHistorySnapshot(
   state: State,
   snapshot: HistorySnapshot,
 ): State {
-  const snapshotsByNodeId = new Map(
-    snapshot.nodes.map((node) => [node.id, node]),
-  )
-
-  const nodes = state.nodes.map((node) => {
-    const saved = snapshotsByNodeId.get(node.id)
-    if (!saved) {
-      return node
-    }
-
-    return {
-      ...node,
-      box: { ...saved.box },
-      color: saved.color,
-      hiddenFields: [...saved.hiddenFields],
-    }
-  })
-
-  const nodeIds = new Set(nodes.map((node) => node.id))
+  const nodeIds = new Set(snapshot.nodes.map((node) => node.id))
   const hidden = snapshot.hidden.filter((id) => nodeIds.has(id))
   const hiddenSet = new Set(hidden)
   const selected = state.selected.filter(
@@ -100,7 +77,7 @@ export function applyHistorySnapshot(
   )
 
   return updateNodePositions(state, {
-    nodes,
+    nodes: [...snapshot.nodes],
     hidden,
     selected,
     resizingNode: undefined,
@@ -111,21 +88,7 @@ export function applyHistorySnapshot(
   })
 }
 
-function captureHistorySnapshotNode(
-  state: State['nodes'][number],
-): HistorySnapshotNode {
-  return {
-    id: state.id,
-    box: { ...state.box },
-    color: state.color,
-    hiddenFields: [...state.hiddenFields],
-  }
-}
-
-function snapshotNodesEqual(
-  left: HistorySnapshotNode,
-  right: HistorySnapshotNode,
-): boolean {
+function snapshotNodesEqual(left: Node, right: Node): boolean {
   return (
     left.id === right.id &&
     left.color === right.color &&

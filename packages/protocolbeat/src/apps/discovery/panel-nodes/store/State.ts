@@ -68,15 +68,8 @@ export interface HistoryState {
 }
 
 export interface HistorySnapshot {
-  readonly nodes: readonly HistorySnapshotNode[]
+  readonly nodes: readonly Node[]
   readonly hidden: readonly string[]
-}
-
-export interface HistorySnapshotNode {
-  readonly id: string
-  readonly box: Box
-  readonly color: number
-  readonly hiddenFields: readonly string[]
 }
 
 export interface Field {
