@@ -1,5 +1,6 @@
 import type { Node, State } from '../State'
 import type { NodeLocations, StoredNodeLayout } from '../utils/storage'
+import type { AlignDirection, DistributeAxis } from './align'
 import type { ApplyLayoutMode } from './applyStoredLayout'
 
 export interface Actions {
@@ -21,6 +22,8 @@ export interface Actions {
   loadNodes: (projectId: string, nodes: Node[]) => void
   setNodes: (nodes: Node[]) => void
   colorSelected: (color: number) => void
+  alignSelected: (direction: AlignDirection) => void
+  distributeSelected: (axis: DistributeAxis) => void
   layout: (locations: NodeLocations) => void
   undo: () => void
   redo: () => void
