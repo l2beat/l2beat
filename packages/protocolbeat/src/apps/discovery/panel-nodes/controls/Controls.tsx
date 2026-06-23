@@ -17,7 +17,6 @@ export function Controls() {
   return (
     <div className="absolute inset-x-2 bottom-4 z-10 flex justify-center">
       <div className="flex max-w-full flex-wrap justify-center gap-2 pb-1">
-        <GroupControls />
         <AlignControls />
         <ControlGroup>
           <UndoButton />
@@ -30,6 +29,7 @@ export function Controls() {
           <HideNodesButton />
         </ControlGroup>
         <ControlGroup>
+          <GroupControls />
           <HideButton />
           <ColorButton />
           <ValuesButton />
