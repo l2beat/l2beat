@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { IconGroup } from '../../../../icons/IconGroup'
 import { IconUngroup } from '../../../../icons/IconUngroup'
 import { useStore } from '../store/store'
@@ -14,6 +15,12 @@ export function GroupControls() {
   const canUngroup = nodes.some(
     (node) => selectedSet.has(node.id) && node.subnodes.length > 0,
   )
+  const onlySelected =
+    selected.length === 1
+      ? nodes.find((node) => node.id === selected[0])
+      : undefined
+  const selectedGroup =
+    onlySelected && onlySelected.subnodes.length > 0 ? onlySelected : undefined
 
   return (
     <>
@@ -29,6 +36,12 @@ export function GroupControls() {
           </span>
         </ControlButton>
       )}
+      {selectedGroup && (
+        <GroupNameInput
+          key={`${selectedGroup.id}-${selectedGroup.name}`}
+          name={selectedGroup.name}
+        />
+      )}
       {canUngroup && (
         <ControlButton
           title="Ungroup"
@@ -42,5 +55,35 @@ export function GroupControls() {
         </ControlButton>
       )}
     </>
+  )
+}
+
+function GroupNameInput({ name }: { name: string }) {
+  const renameSelectedGroup = useStore((state) => state.renameSelectedGroup)
+  const [value, setValue] = useState(name)
+
+  function commit() {
+    const trimmed = value.trim()
+    if (trimmed.length > 0 && trimmed !== name) {
+      renameSelectedGroup(trimmed)
+    } else {
+      setValue(name)
+    }
+  }
+
+  return (
+    <input
+      value={value}
+      aria-label="Group name"
+      onChange={(event) => setValue(event.target.value)}
+      onBlur={commit}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter') {
+          commit()
+          event.currentTarget.blur()
+        }
+      }}
+      className="w-32 self-stretch rounded-lg border border-coffee-600 bg-coffee-800 px-3 text-coffee-100 text-xs outline-none focus:border-coffee-400"
+    />
   )
 }

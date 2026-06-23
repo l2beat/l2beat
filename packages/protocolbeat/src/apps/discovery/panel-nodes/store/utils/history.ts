@@ -91,6 +91,7 @@ export function applyHistorySnapshot(
 function snapshotNodesEqual(left: Node, right: Node): boolean {
   return (
     left.id === right.id &&
+    left.name === right.name &&
     left.color === right.color &&
     left.box.x === right.box.x &&
     left.box.y === right.box.y &&

@@ -3,7 +3,11 @@ import { persist } from 'zustand/middleware'
 import type { Actions } from './actions/Actions'
 import { alignSelected, distributeSelected } from './actions/align'
 import { applyStoredLayout } from './actions/applyStoredLayout'
-import { groupSelected, ungroupSelected } from './actions/group'
+import {
+  groupSelected,
+  renameSelectedGroup,
+  ungroupSelected,
+} from './actions/group'
 import { redo, undo } from './actions/history'
 import { loadNodes } from './actions/loadNodes'
 import { onKeyDown } from './actions/onKeyDown'
@@ -80,6 +84,7 @@ export const useStore = create<StoreState>()(
       distributeSelected: wrapUndoableAction(set, distributeSelected),
       groupSelected: wrapUndoableAction(set, groupSelected),
       ungroupSelected: wrapUndoableAction(set, ungroupSelected),
+      renameSelectedGroup: wrapUndoableAction(set, renameSelectedGroup),
       undo: wrapAction(set, undo),
       redo: wrapAction(set, redo),
       hideSelected: wrapUndoableAction(set, hideSelected),

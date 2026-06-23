@@ -26,6 +26,7 @@ export interface Actions {
   distributeSelected: (axis: DistributeAxis) => void
   groupSelected: () => void
   ungroupSelected: () => void
+  renameSelectedGroup: (name: string) => void
   layout: (locations: NodeLocations) => void
   undo: () => void
   redo: () => void

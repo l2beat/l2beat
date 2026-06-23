@@ -38,6 +38,20 @@ export function ungroupSelected(state: State): Partial<State> {
   })
 }
 
+export function renameSelectedGroup(
+  state: State,
+  name: string,
+): Partial<State> {
+  if (state.selected.length !== 1) {
+    return {}
+  }
+  const id = state.selected[0]
+  const nodes = state.nodes.map((node) =>
+    node.id === id && node.subnodes.length > 0 ? { ...node, name } : node,
+  )
+  return { nodes }
+}
+
 function createPhantomNode(subnodes: Node[]): Node {
   const anchor = subnodes[0]?.box
   const internal = new Set<string>()
