@@ -14,6 +14,7 @@ import express from 'express'
 import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
+import { getCodePaths } from '../discovery/getCodePaths'
 import { attachAnalyzeRouter } from './analyze/router'
 import { attachConfigRouter } from './configs/router'
 import { DiffoveryController } from './diffovery/DiffoveryController'
@@ -23,7 +24,6 @@ import { executeTerminalCommand } from './executeTerminalCommand'
 import {
   getCodeFromDisk,
   getCodeFromEtherscan,
-  getCodePaths,
   toCodeDeclarations,
 } from './getCode'
 import { getConfigHealth } from './getConfigHealth'

@@ -1,5 +1,5 @@
 import type { ConfigReader, DiscoveryOutput } from '@l2beat/discovery'
-import { getReferencedProjects } from './utils'
+import { getReferencedProjects } from './getReferencedProjects'
 
 export function getProjectDiscoveries(
   configReader: ConfigReader,
@@ -14,11 +14,4 @@ export function getProjectDiscoveries(
   }
 
   return discoveries
-}
-
-export function getAllProjectDiscoveries(
-  configReader: ConfigReader,
-  project: string,
-): DiscoveryOutput[] {
-  return getProjectDiscoveries(configReader, project)
 }
