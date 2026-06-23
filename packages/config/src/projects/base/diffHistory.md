@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x389f30067f4f3c3cc47ecff9868a507f4b9dc274
+
+# Diff at Tue, 23 Jun 2026 10:15:42 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0e360eee2a54a17c6634ebce656a966ffe743da7 block: 1781105531
+- current timestamp: 1782209652
+
+## Description
+
+FeeDisburser admin rotated. Not security critical.
+
+## Watched changes
+
+```diff
+    contract FeeDisburser (base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA) [opstack/Layer2/FeeDisburser] {
+    +++ description: Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.
+      values.$admin:
+-        "base:0xaD5B57FEB77e294fD7BF5EBE9aB01caA0a90B221"
++        "base:0xa966054731540a48b28990b63Dcf4f33d8aE57B2"
+    }
+```
+
 Generated with discovered.json: 0xb15162cd79a14842eece0395af8c30ed0da296fb
 
 # Diff at Fri, 12 Jun 2026 10:18:41 GMT:
