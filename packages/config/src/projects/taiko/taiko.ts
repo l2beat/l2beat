@@ -94,6 +94,10 @@ const emergencyProposalThreshold = discovery.getContractValue<number>(
   'minApprovals',
 )
 
+const bridgesPaused =
+  discovery.getContractValue<boolean>('MainnetBridge', 'paused') &&
+  discovery.getContractValue<boolean>('MainnetERC20Vault', 'paused')
+
 export const taiko: ScalingProject = {
   id: ProjectId('taiko'),
   capability: 'universal',
@@ -114,6 +118,9 @@ export const taiko: ScalingProject = {
     name: 'Taiko Alethia',
     slug: 'taiko',
     stacks: ['Taiko'],
+    headerWarning: bridgesPaused
+      ? 'Deposits and withdrawals via ETH-Bridge and ERC-20 bridges are paused.'
+      : undefined,
     description:
       'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko aims at combining based sequencing and a multi-proof system through SP1, RISC0 and TEEs.',
     purposes: ['Universal'],
