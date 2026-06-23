@@ -33,10 +33,13 @@ const HEADER_PADDING = 8
 const HEADER_ITEM_GAP = 4
 const NODE_CORNER_RADIUS = 4
 const FULL_HEIGHT_CORNER_RADIUS = 16
+const GROUP_CORNER_RADIUS = 12
 const DOT_RADIUS = 5
 const FIELD_DOT_CELL = DOT_RADIUS * 2 * 2 // see comment in emitNodeDots
 const SELECTION_OUTLINE_INSET = 2
 const SELECTION_OUTLINE_WIDTH = 4
+const GROUP_OUTLINE_INSET = 1
+const GROUP_OUTLINE_WIDTH = 2
 const OVERLAP_BORDER_WIDTH = 2
 
 const HEADER_FONT: FontSpec = {
@@ -109,6 +112,7 @@ interface RenderNode {
   fullHeight: boolean
   corner: number
   headerH: number
+  isGroup: boolean
 }
 
 type IconAtlasId = ApiAddressType | 'InitialCircle'
@@ -911,9 +915,9 @@ class WebGLRenderer {
   }
 
   private buildRound(renderNodes: readonly RenderNode[]): number {
-    // Upper bound: 3 quads (body, header, selection) per node, plus one pill
-    // per visible field for selected/highlighted rows.
-    let maxInstances = renderNodes.length * 3
+    // Upper bound: 4 quads (body, header, selection, group outline) per node,
+    // plus one pill per visible field for selected/highlighted rows.
+    let maxInstances = renderNodes.length * 4
     for (const rn of renderNodes) maxInstances += rn.visibleFields.length
     if (maxInstances === 0) return 0
     const buf = this.ensureRound(maxInstances)
@@ -979,6 +983,25 @@ class WebGLRenderer {
         0,
         z,
       )
+
+      if (rn.isGroup) {
+        const inset = GROUP_OUTLINE_INSET
+        writeRound(
+          buf,
+          n++,
+          x - inset,
+          y - inset,
+          width + inset * 2,
+          height + inset * 2,
+          withAlpha(COFFEE_200, alpha),
+          corner + inset,
+          corner + inset,
+          corner + inset,
+          corner + inset,
+          GROUP_OUTLINE_WIDTH,
+          z,
+        )
+      }
 
       for (const { index, visibleRow } of rn.visibleFields) {
         if (flags.fieldHighlighted[index]) {
@@ -1502,6 +1525,7 @@ function buildRenderNodes(data: DrawData): RenderNode[] {
     const flags = data.flags.get(node.id)
     if (!flags) continue
     const fullHeight = node.addressType === 'EOA' && node.fields.length === 0
+    const isGroup = node.subnodes.length > 0
     const renderNode: RenderNode = {
       node,
       flags,
@@ -1509,8 +1533,13 @@ function buildRenderNodes(data: DrawData): RenderNode[] {
       alpha: nodeAlpha(flags),
       visibleFields: getVisibleFields(node),
       fullHeight,
-      corner: fullHeight ? FULL_HEIGHT_CORNER_RADIUS : NODE_CORNER_RADIUS,
+      corner: fullHeight
+        ? FULL_HEIGHT_CORNER_RADIUS
+        : isGroup
+          ? GROUP_CORNER_RADIUS
+          : NODE_CORNER_RADIUS,
       headerH: fullHeight ? HEADER_HEIGHT : HEADER_HEIGHT - 4,
+      isGroup,
     }
 
     if (flags.isSelected) selected.push(renderNode)
