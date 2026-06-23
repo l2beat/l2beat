@@ -94,6 +94,11 @@ const emergencyProposalThreshold = discovery.getContractValue<number>(
   'minApprovals',
 )
 
+const isPostHackState =
+  discovery.getContractValue<boolean>('MainnetBridge', 'paused') &&
+  discovery.getContractValue<boolean>('MainnetERC20Vault', 'paused') &&
+  discovery.getContractValue<boolean>('MainnetInbox', 'noForce')
+
 export const taiko: ScalingProject = {
   id: ProjectId('taiko'),
   capability: 'universal',
@@ -114,6 +119,9 @@ export const taiko: ScalingProject = {
     name: 'Taiko Alethia',
     slug: 'taiko',
     stacks: ['Taiko'],
+    headerWarning: isPostHackState
+      ? 'Deposits and withdrawals via ETH-Bridge and ERC-20 bridges are paused. Forced transactions and permissionless proving fallback are disabled as emergency responses to the hack.'
+      : undefined,
     description:
       'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko aims at combining based sequencing and a multi-proof system through SP1, RISC0 and TEEs.',
     purposes: ['Universal'],
@@ -561,6 +569,14 @@ export const taiko: ScalingProject = {
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
+    {
+      title: 'Proof system exploit',
+      url: 'https://x.com/taikoxyz/status/2068857506718515320',
+      date: '2026-06-22T00:00:00.00Z',
+      description:
+        'An attacker exploits a vulnerability in the SGX proof system and steals USD ~1.7M.',
+      type: 'incident',
+    },
     {
       title: 'Preconfs introduction',
       url: 'https://taiko.mirror.xyz/rbgD_KM06QkDe1t0Gw1wI_MLvwobTS1PqEIfstZRo48',

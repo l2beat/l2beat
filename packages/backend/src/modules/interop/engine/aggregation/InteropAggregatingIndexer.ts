@@ -10,6 +10,10 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropNotifier } from '../notifications/InteropNotifier'
+import type {
+  InteropPromotionService,
+  ReconcileResult,
+} from '../promotion/InteropPromotionService'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import type {
   InteropAggregationAnalysis,
@@ -30,8 +34,12 @@ export interface InteropAggregatingIndexerDeps
   db: Database
   configs: InteropAggregationConfig[]
   aggregationService: InteropAggregationService
+  promotionService: InteropPromotionService
   aggregationAnalyzer?: InteropAggregationAnalyzer
-  notifier?: Pick<InteropNotifier, 'notifySuspiciousAggregates'>
+  notifier?: Pick<
+    InteropNotifier,
+    'notifySuspiciousAggregates' | 'notifyBlockedSnapshot'
+  >
   syncersManager: InteropSyncersManager
 }
 
@@ -70,6 +78,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     } = this.$.aggregationService.aggregate(transfers, this.$.configs, to)
     const analysis = await this.runAggregateAnalysis(to, aggregatedTransfers)
 
+    let promotion: ReconcileResult | undefined
     await this.$.db.transaction(async () => {
       await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
         retentionCutoff,
@@ -95,7 +104,21 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       await this.$.db.aggregatedInteropTokensPair.insertMany(
         aggregatedTokensPairs,
       )
+      // Evaluate + write this snapshot's promotion status (atomic with the
+      // aggregates). The read path is unaffected until the cutover, so a `blocked`
+      // verdict only records + alerts for now; it does not change what is served.
+      promotion = await this.$.promotionService.reconcile({
+        timestamp: to,
+        transfers: aggregatedTransfers,
+        tokens: aggregatedTokens,
+      })
+      // Keep status rows in lockstep with the aggregates retention above.
+      await this.$.db.interopAggregateStatus.deleteOrphaned()
     })
+
+    if (promotion?.notify) {
+      this.$.notifier?.notifyBlockedSnapshot(to, promotion.reasons)
+    }
 
     if (analysis && analysis.suspiciousGroups.length > 0) {
       this.logger.warn('Suspicious interop aggregates detected', {

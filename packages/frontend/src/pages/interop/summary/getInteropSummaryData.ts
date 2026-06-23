@@ -1,3 +1,4 @@
+import { chainToProjectId } from '@l2beat/config/build/global/chainMap'
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { Request } from 'express'
@@ -110,7 +111,7 @@ function getInteropChainHref(
   if (chainId === ProjectId.ETHEREUM) {
     return '/data-availability/projects/ethereum/ethereum'
   }
-  const slug = scalingProjectSlugById.get(ProjectId(chainId))
+  const slug = scalingProjectSlugById.get(chainToProjectId(chainId))
   return slug ? `/scaling/projects/${slug}` : undefined
 }
 

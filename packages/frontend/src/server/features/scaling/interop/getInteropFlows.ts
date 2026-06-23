@@ -81,21 +81,25 @@ export type InteropFlowsData = {
   stats: FlowsStats
 }
 
+type GetInteropFlowsParams = InteropFlowsParams & {
+  anchorChain?: string
+}
+
 export async function getInteropFlows(
-  params: InteropFlowsParams,
+  params: GetInteropFlowsParams,
 ): Promise<InteropFlowsData> {
   if (env.MOCK) {
     return getMockInteropFlows()
   }
 
-  const { records } = await getLatestAggregatedInteropTransferWithTokens(
-    {
+  const { records } = await getLatestAggregatedInteropTransferWithTokens({
+    selection: {
       from: params.chains,
       to: params.chains,
     },
-    undefined,
-    params.protocolIds,
-  )
+    protocolIds: params.protocolIds,
+    anchorChain: params.anchorChain,
+  })
   const scopedRecords = params.tokenId
     ? scopeRecordsToToken(records, params.tokenId)
     : records

@@ -1,6 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-/** this is a temporary solution until we eliminate discrepancies between chain names and project IDs */
+/** Temporary mapping until discrepancies between chain names and project IDs are eliminated. */
 export function chainToProjectId(chain: string): ProjectId {
   switch (chain) {
     case 'polygonpos':

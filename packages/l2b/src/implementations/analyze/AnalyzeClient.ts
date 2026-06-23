@@ -1,3 +1,4 @@
+import { getEnv } from '@l2beat/backend-tools'
 import {
   AnalyzerResultApiResponse,
   AnalyzersApiResponse,
@@ -5,7 +6,17 @@ import {
 import { type Validator, v } from '@l2beat/validate'
 import { zipSync } from 'fflate'
 import FormData from 'form-data'
-import fetch, { Headers, type RequestInit } from 'node-fetch'
+import fetch, {
+  Headers,
+  type RequestInfo,
+  type RequestInit,
+  type Response,
+} from 'node-fetch'
+
+export type FetchFn = (
+  url: RequestInfo,
+  init?: RequestInit,
+) => Promise<Response>
 
 const UpstreamErrorResponse = v.object({
   error: v.object({
@@ -24,6 +35,8 @@ export class AnalyzeClientError extends Error {
 }
 
 export class AnalyzeClient {
+  constructor(private readonly fetchImpl: FetchFn = fetch) {}
+
   async getAnalyzers(): Promise<AnalyzersApiResponse> {
     return await this.requestJson('/v1/analyzers', AnalyzersApiResponse)
   }
@@ -55,11 +68,12 @@ export class AnalyzeClient {
     init: RequestInit = {},
   ): Promise<T> {
     const url = new URL(path, this.getBaseUrl())
-    const response = await fetch(url.toString(), {
+    const response = await this.fetchImpl(url.toString(), {
       ...init,
       headers: this.getHeaders(),
     })
     const body = await response.text()
+
     const data = parseJson(body, response.status, response.statusText)
 
     if (!response.ok) {
@@ -81,23 +95,25 @@ export class AnalyzeClient {
   }
 
   private getBaseUrl() {
-    const baseUrl = process.env.L2ANALYZE_URL
-    if (!baseUrl) {
-      throw new AnalyzeClientError(
-        500,
-        'L2ANALYZE_URL environment variable is not set',
-      )
+    try {
+      return getEnv().string('L2ANALYZE_URL')
+    } catch {
+      throw new AnalyzeClientError(500, 'L2ANALYZE_URL is not set')
     }
-    return baseUrl
   }
 
   private getHeaders() {
     const headers = new Headers()
-    const apiKey = process.env.L2ANALYZE_API_KEY
-    if (apiKey) {
-      headers.set('Authorization', `Bearer ${apiKey}`)
-    }
+    headers.set('Authorization', `Bearer ${this.getApiKey()}`)
     return headers
+  }
+
+  private getApiKey() {
+    try {
+      return getEnv().string('L2ANALYZE_API_KEY')
+    } catch {
+      throw new AnalyzeClientError(500, 'L2ANALYZE_API_KEY is not set')
+    }
   }
 }
 

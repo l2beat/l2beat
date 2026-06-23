@@ -9,9 +9,11 @@ import {
   interopConfigDiffToMarkdown,
   removeMutedInteropConfigDiffEntries,
 } from '../config/InteropConfigDiff'
+import type { RuleViolation } from '../promotion/types'
 
 const MAX_ENTRIES_IN_MESSAGE = 200
 const MAX_SUSPICIOUS_GROUPS_IN_MESSAGE = 20
+const MAX_BLOCKED_REASONS_IN_MESSAGE = 20
 const MAX_REASONS_PER_GROUP = 3
 const MAX_SUSPICIOUS_TRANSFERS_IN_MESSAGE = 6
 const MAX_SKIPPED_VALUATIONS_IN_MESSAGE = 10
@@ -119,6 +121,29 @@ export class InteropNotifier {
       `🚨 Interop aggregate analysis flagged \`${analysis.suspiciousGroups.length}\` suspicious groups at \`${formatTimestamp(timestamp)}\``,
       '',
       ...renderedGroups,
+    ].join('\n')
+
+    this.messageQueue.addToBack(message)
+  }
+
+  notifyBlockedSnapshot(timestamp: UnixTime, reasons: RuleViolation[]): void {
+    if (reasons.length === 0) {
+      return
+    }
+
+    const renderedReasons = reasons
+      .slice(0, MAX_BLOCKED_REASONS_IN_MESSAGE)
+      .map((reason) => `- ${reason.message}`)
+
+    const remainingReasons = reasons.length - MAX_BLOCKED_REASONS_IN_MESSAGE
+    if (remainingReasons > 0) {
+      renderedReasons.push(`- ...and ${remainingReasons} more`)
+    }
+
+    const message = [
+      `⛔ Interop snapshot \`${formatTimestamp(timestamp)}\` blocked from promotion - needs manual review`,
+      '',
+      ...renderedReasons,
     ].join('\n')
 
     this.messageQueue.addToBack(message)
