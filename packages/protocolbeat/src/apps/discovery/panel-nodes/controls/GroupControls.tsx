@@ -9,13 +9,11 @@ export function GroupControls() {
   const groupSelected = useStore((state) => state.groupSelected)
   const ungroupSelected = useStore((state) => state.ungroupSelected)
 
+  const selectedSet = new Set(selected)
   const canGroup = selected.length > 1
-  const selectedNode =
-    selected.length === 1
-      ? nodes.find((node) => node.id === selected[0])
-      : undefined
-  const canUngroup =
-    selectedNode !== undefined && selectedNode.subnodes.length > 0
+  const canUngroup = nodes.some(
+    (node) => selectedSet.has(node.id) && node.subnodes.length > 0,
+  )
 
   return (
     <>

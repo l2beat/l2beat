@@ -19,19 +19,22 @@ export function groupSelected(state: State): Partial<State> {
 }
 
 export function ungroupSelected(state: State): Partial<State> {
-  if (state.selected.length !== 1) {
-    return {}
-  }
-  const phantom = state.nodes.find((node) => node.id === state.selected[0])
-  if (!phantom || phantom.subnodes.length === 0) {
+  const selectedSet = new Set(state.selected)
+  const phantoms = state.nodes.filter(
+    (node) => selectedSet.has(node.id) && node.subnodes.length > 0,
+  )
+  if (phantoms.length === 0) {
     return {}
   }
 
-  const remaining = state.nodes.filter((node) => node.id !== phantom.id)
+  const phantomIds = new Set(phantoms.map((node) => node.id))
+  const remaining = state.nodes.filter((node) => !phantomIds.has(node.id))
+  const lifted = phantoms.flatMap((node) => node.subnodes)
+  const keptSelected = state.selected.filter((id) => !phantomIds.has(id))
 
   return updateNodePositions(state, {
-    nodes: [...remaining, ...phantom.subnodes],
-    selected: phantom.subnodes.map((node) => node.id),
+    nodes: [...remaining, ...lifted],
+    selected: [...keptSelected, ...lifted.map((node) => node.id)],
   })
 }
 
