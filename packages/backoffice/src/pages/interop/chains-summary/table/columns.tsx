@@ -137,7 +137,7 @@ export const chainsSummaryColumns: TableOptions<ChainsSummaryRow>['columns'] = [
     header: 'Suspicious transfers',
     cell: ({ getValue }) => (
       <CountLink
-        to="/interop/insights/anomalies/suspicious-transfers"
+        to="/interop/insights/activity/suspicious-transfers"
         value={getValue()}
       />
     ),

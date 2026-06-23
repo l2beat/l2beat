@@ -1,4 +1,4 @@
-export function buildAnomalyDetailsPath(group: {
+export function buildActivityDetailsPath(group: {
   id: string
   bridgeType: string
   srcChain: string
@@ -9,7 +9,7 @@ export function buildAnomalyDetailsPath(group: {
     srcChain: group.srcChain,
     dstChain: group.dstChain,
   })
-  return `/interop/insights/anomalies/aggregate/${encodeURIComponent(group.id)}?${params.toString()}`
+  return `/interop/insights/activity/aggregate/${encodeURIComponent(group.id)}?${params.toString()}`
 }
 
 export function parseOptionalSearchParam(value: string | null) {

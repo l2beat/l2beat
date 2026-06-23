@@ -19,7 +19,7 @@ import { ErrorState } from '~/components/ErrorState'
 import { ExternalLink } from '~/components/ExternalLink'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { formatPercent } from '~/pages/interop/anomalies/utils'
+import { formatPercent } from '~/pages/interop/activity/utils'
 import { formatDollars } from '~/pages/interop/transfers/utils'
 import { useBackendTrpc } from '~/react-query/trpc'
 

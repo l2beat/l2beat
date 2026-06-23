@@ -1,21 +1,21 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { evaluateAnomalies, type SeriesPoint } from './evaluator'
+import { evaluateInteropChart, type SeriesPoint } from './evaluator'
 
-describe(evaluateAnomalies.name, () => {
+describe(evaluateInteropChart.name, () => {
   const base = UnixTime.toStartOf(UnixTime(20 * UnixTime.DAY), 'day')
 
   describe('baseline floor', () => {
     it('suppresses count signal when baseline mean is below 10/day', () => {
       // baseline avg = 1/day, candidate jumps to 5 — should not fire
       const series = countSeries([1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 5])
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       expect(result.signals.filter((s) => s.metric === 'count')).toEqual([])
     })
 
     it('suppresses count signal even on extreme jump when baseline is sparse', () => {
       const series = countSeries([3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 300])
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       expect(result.signals.filter((s) => s.metric === 'count')).toEqual([])
     })
 
@@ -23,7 +23,7 @@ describe(evaluateAnomalies.name, () => {
       const series = countSeries([
         100, 110, 90, 105, 95, 100, 98, 102, 101, 99, 100, 97, 103, 5_000,
       ])
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
       expect(count).not.toBeNullish()
       expect(count?.severity).toEqual('severe')
@@ -35,7 +35,7 @@ describe(evaluateAnomalies.name, () => {
         Array.from({ length: 13 }, () => 100).concat([10_000_000]),
         100,
       )
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       expect(result.signals.filter((s) => s.metric === 'srcVolume')).toEqual([])
     })
   })
@@ -46,7 +46,7 @@ describe(evaluateAnomalies.name, () => {
       const series = countSeries([
         300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300,
       ])
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
       expect(count?.kind).toEqual('flatLine')
       expect(count?.severity).toEqual('severe')
@@ -56,7 +56,7 @@ describe(evaluateAnomalies.name, () => {
       const series = countSeries([
         300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 150,
       ])
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
       expect(count?.kind).not.toEqual('flatLine')
     })
@@ -68,7 +68,7 @@ describe(evaluateAnomalies.name, () => {
       const series = countSeries([
         300, 310, 290, 305, 295, 300, 298, 302, 301, 299, 300, 297, 303, 3,
       ])
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
       expect(count?.kind).toEqual('ratioDrop')
       expect(count?.severity).toEqual('severe')
@@ -78,7 +78,7 @@ describe(evaluateAnomalies.name, () => {
       const series = countSeries([
         100, 110, 90, 105, 95, 100, 98, 102, 101, 99, 100, 97, 103, 5_000,
       ])
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
       expect(count?.kind).toEqual('ratioSpike')
       expect(count?.severity).toEqual('severe')
@@ -93,7 +93,7 @@ describe(evaluateAnomalies.name, () => {
         ],
         100_000,
       )
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       const src = result.signals.find((s) => s.metric === 'srcVolume')
       expect(src?.kind).toEqual('ratioSpike')
       expect(src?.severity).toEqual('severe')
@@ -108,7 +108,7 @@ describe(evaluateAnomalies.name, () => {
         ],
         100_000,
       )
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       const src = result.signals.find((s) => s.metric === 'srcVolume')
       expect(src?.kind).not.toEqual('ratioSpike')
     })
@@ -120,7 +120,7 @@ describe(evaluateAnomalies.name, () => {
         100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
         1_000_000,
       ])
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
       expect(count?.severity).toEqual('severe')
     })
@@ -131,7 +131,7 @@ describe(evaluateAnomalies.name, () => {
       const series = countSeries([
         95, 100, 105, 95, 100, 105, 95, 100, 105, 95, 100, 105, 95, 145,
       ])
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
       expect(count).toBeNullish()
     })
@@ -144,7 +144,7 @@ describe(evaluateAnomalies.name, () => {
         Array.from({ length: 13 }, () => 1_500_000).concat([2_000_000]),
         Array.from({ length: 13 }, () => 1_500_000).concat([1_000_000]),
       )
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       expect(result.sideMismatch?.diffPercent).toEqual(50)
       expect(result.sideMismatch?.largerSideUsd).toEqual(2_000_000)
     })
@@ -157,7 +157,7 @@ describe(evaluateAnomalies.name, () => {
         Array.from({ length: 14 }, () => 1_900_000),
         Array.from({ length: 14 }, () => 760_000),
       )
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       expect(result.sideMismatch).toEqual(null)
     })
 
@@ -167,7 +167,7 @@ describe(evaluateAnomalies.name, () => {
         Array.from({ length: 14 }, () => 2_000_000),
         Array.from({ length: 14 }, () => 0),
       )
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       expect(result.sideMismatch).toEqual(null)
     })
 
@@ -179,7 +179,7 @@ describe(evaluateAnomalies.name, () => {
         Array.from({ length: 14 }, () => 2_000_000),
         Array.from({ length: 14 }, () => 1_100_000),
       )
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       expect(result.sideMismatch).toEqual(null)
     })
   })
@@ -202,7 +202,7 @@ describe(evaluateAnomalies.name, () => {
           dstVolumeUsd: 10_000_000,
         }),
       )
-      const result = evaluateAnomalies(points)
+      const result = evaluateInteropChart(points)
       expect(
         result.signals.filter(
           (s) => s.metric === 'srcVolume' || s.metric === 'dstVolume',
@@ -227,7 +227,7 @@ describe(evaluateAnomalies.name, () => {
           dstVolumeUsd: 10_000_000,
         }),
       )
-      const result = evaluateAnomalies(points)
+      const result = evaluateInteropChart(points)
       const count = result.signals.find((s) => s.metric === 'count')
       expect(count?.severity).toEqual('severe')
       expect(
@@ -253,7 +253,7 @@ describe(evaluateAnomalies.name, () => {
         baselineVolumes.concat([900_000]),
         baselineVolumes.concat([900_000]),
       )
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       const src = result.signals.find((s) => s.metric === 'srcVolume')
       expect(src).toBeNullish()
     })
@@ -266,7 +266,7 @@ describe(evaluateAnomalies.name, () => {
         Array.from({ length: 13 }, () => 50_000).concat([0]),
         Array.from({ length: 13 }, () => 50_000).concat([0]),
       )
-      const result = evaluateAnomalies(series, {
+      const result = evaluateInteropChart(series, {
         transferCount: 100_000,
         volumeUsd: 10_000_000,
       })
@@ -287,7 +287,7 @@ describe(evaluateAnomalies.name, () => {
         baselineVolumes.concat([600_000]),
         baselineVolumes.concat([600_000]),
       )
-      const result = evaluateAnomalies(series, {
+      const result = evaluateInteropChart(series, {
         transferCount: 1_000,
         volumeUsd: 5_000_000,
       })
@@ -302,7 +302,7 @@ describe(evaluateAnomalies.name, () => {
       const series = countSeries([
         50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
       ])
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
       expect(count).toBeNullish()
     })
@@ -322,7 +322,7 @@ describe(evaluateAnomalies.name, () => {
         246_208, 1_798_650, 398_739, 301_336, 635_887, 1_560_280, 19_089_200,
       ]
       const series = volumeSeries(counts, srcVolumes, dstVolumes)
-      const result = evaluateAnomalies(series, {
+      const result = evaluateInteropChart(series, {
         transferCount: 4_971,
         volumeUsd: 493_321_000,
       })
@@ -345,7 +345,7 @@ describe(evaluateAnomalies.name, () => {
         243_377, 21_808,
       ]
       const series = volumeSeries(counts, volumes, volumes)
-      const result = evaluateAnomalies(series, {
+      const result = evaluateInteropChart(series, {
         transferCount: 1_040,
         volumeUsd: 59_513_600,
       })
@@ -371,7 +371,7 @@ describe(evaluateAnomalies.name, () => {
         203_561, 144_841, 231_289, 216_954, 171_337, 275_169,
       ]
       const series = volumeSeries(counts, srcVolumes, dstVolumes)
-      const result = evaluateAnomalies(series, {
+      const result = evaluateInteropChart(series, {
         transferCount: 15_076,
         volumeUsd: 57_833_300,
       })
@@ -385,12 +385,12 @@ describe(evaluateAnomalies.name, () => {
       const series = countSeries([
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 1_000,
       ])
-      const result = evaluateAnomalies(series)
+      const result = evaluateInteropChart(series)
       expect(result.signals).toEqual([])
     })
 
     it('returns no signals for empty series', () => {
-      expect(evaluateAnomalies([])).toEqual({
+      expect(evaluateInteropChart([])).toEqual({
         signals: [],
         sideMismatch: null,
       })

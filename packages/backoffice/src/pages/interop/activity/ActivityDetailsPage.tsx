@@ -19,7 +19,7 @@ import { AggregateSeriesCharts } from './charts/AggregateSeriesCharts'
 import type { AggregateDetailsInput, AggregateSeriesPoint } from './types'
 import { decodeRouteParam } from './utils'
 
-export function AnomalyDetailsPage() {
+export function ActivityDetailsPage() {
   const trpc = useBackendTrpc()
   const params = useParams<{ id: string }>()
   const [searchParams] = useSearchParams()
@@ -38,7 +38,7 @@ export function AnomalyDetailsPage() {
     : { id: '', bridgeType: '', srcChain: '', dstChain: '' }
 
   const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
-    trpc.interop.anomalies.aggregateDetails.queryOptions(detailsInput, {
+    trpc.interop.activity.aggregateDetails.queryOptions(detailsInput, {
       enabled: hasValidParams,
     }),
   )
@@ -52,17 +52,17 @@ export function AnomalyDetailsPage() {
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">
             <div className="space-y-1">
-              <CardTitle>Aggregate anomaly detail</CardTitle>
+              <CardTitle>Aggregate activity detail</CardTitle>
               <CardDescription>
-                Daily aggregate charts for a single anomaly ID from the legacy
-                anomalies summary.
+                Daily aggregate charts for a single aggregate group from the
+                activity summary.
               </CardDescription>
             </div>
             <div className="flex items-center gap-2">
               <Button asChild variant="outline" size="sm">
-                <Link to="/interop/insights/anomalies">
+                <Link to="/interop/insights/activity">
                   <ChevronLeftIcon />
-                  Back to anomalies
+                  Back to activity
                 </Link>
               </Button>
               <Button
@@ -114,7 +114,7 @@ export function AnomalyDetailsPage() {
             <CardContent className="px-0">
               <ErrorState
                 className="m-6"
-                cause="Invalid route. Expected /insights/anomalies/aggregate/:id?bridgeType=…&srcChain=…&dstChain=…"
+                cause="Invalid route. Expected /insights/activity/aggregate/:id?bridgeType=…&srcChain=…&dstChain=…"
               />
             </CardContent>
           </Card>
@@ -129,7 +129,7 @@ export function AnomalyDetailsPage() {
         {hasValidParams && !isLoading && !isError ? (
           <AggregateSeriesCharts
             data={rows}
-            emptyMessage="No aggregate series was found for the selected anomaly ID."
+            emptyMessage="No aggregate series was found for the selected aggregate group."
           />
         ) : null}
       </div>

@@ -1,8 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type {
-  AggregatedInteropTransferRecord,
-  Database,
-} from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import {
@@ -15,10 +12,6 @@ import type {
   ReconcileResult,
 } from '../promotion/InteropPromotionService'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
-import type {
-  InteropAggregationAnalysis,
-  InteropAggregationAnalyzer,
-} from './InteropAggregationAnalyzer'
 import type { InteropAggregationService } from './InteropAggregationService'
 
 /**
@@ -35,11 +28,7 @@ export interface InteropAggregatingIndexerDeps
   configs: InteropAggregationConfig[]
   aggregationService: InteropAggregationService
   promotionService: InteropPromotionService
-  aggregationAnalyzer?: InteropAggregationAnalyzer
-  notifier?: Pick<
-    InteropNotifier,
-    'notifySuspiciousAggregates' | 'notifyBlockedSnapshot'
-  >
+  notifier?: Pick<InteropNotifier, 'notifyBlockedSnapshot'>
   syncersManager: InteropSyncersManager
 }
 
@@ -76,7 +65,6 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       aggregatedDeployedTokens,
       aggregatedTokensPairs,
     } = this.$.aggregationService.aggregate(transfers, this.$.configs, to)
-    const analysis = await this.runAggregateAnalysis(to, aggregatedTransfers)
 
     let promotion: ReconcileResult | undefined
     await this.$.db.transaction(async () => {
@@ -120,53 +108,14 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       this.$.notifier?.notifyBlockedSnapshot(to, promotion.reasons)
     }
 
-    if (analysis && analysis.suspiciousGroups.length > 0) {
-      this.logger.warn('Suspicious interop aggregates detected', {
-        timestamp: to,
-        checkedGroups: analysis.checkedGroups,
-        suspiciousGroups: analysis.suspiciousGroups.length,
-        details: analysis.suspiciousGroups.map((group) => ({
-          id: group.id,
-          bridgeType: group.bridgeType,
-          srcChain: group.srcChain,
-          dstChain: group.dstChain,
-          reasons: group.reasons,
-        })),
-      })
-      this.$.notifier?.notifySuspiciousAggregates(to, analysis)
-    }
-
     this.logger.info('Aggregated interop transfers saved to db', {
       aggregatedRecords: aggregatedTransfers.length,
       aggregatedTokens: aggregatedTokens.length,
       aggregatedDeployedTokens: aggregatedDeployedTokens.length,
       aggregatedTokenPairs: aggregatedTokensPairs.length,
-      suspiciousGroups: analysis?.suspiciousGroups.length ?? 0,
     })
 
     return to
-  }
-
-  private async runAggregateAnalysis(
-    timestamp: UnixTime,
-    aggregatedTransfers: AggregatedInteropTransferRecord[],
-  ): Promise<InteropAggregationAnalysis | undefined> {
-    if (!this.$.aggregationAnalyzer) {
-      return undefined
-    }
-
-    try {
-      return await this.$.aggregationAnalyzer.analyze(
-        timestamp,
-        aggregatedTransfers,
-      )
-    } catch (error) {
-      this.logger.error('Failed to analyze interop aggregates', {
-        timestamp,
-        error,
-      })
-      return undefined
-    }
   }
 
   isAggregationInProgress(): boolean {

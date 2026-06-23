@@ -31,19 +31,19 @@ export interface BridgeTotal {
   volumeUsd: number
 }
 
-export type AnomalyMetric = 'count' | 'srcVolume' | 'dstVolume'
-export type AnomalyKind =
+export type InteropChartMetric = 'count' | 'srcVolume' | 'dstVolume'
+export type InteropChartSignalKind =
   | 'flatLine'
   | 'ratioDrop'
   | 'ratioSpike'
   | 'zScoreDrop'
   | 'zScoreSpike'
-export type AnomalySeverity = 'severe'
+export type InteropChartSeverity = 'severe'
 
 export interface MetricSignal {
-  metric: AnomalyMetric
-  kind: AnomalyKind
-  severity: AnomalySeverity
+  metric: InteropChartMetric
+  kind: InteropChartSignalKind
+  severity: InteropChartSeverity
   baseline: number
   current: number
   changePercent: number | null
@@ -56,15 +56,15 @@ export interface SideMismatchSignal {
   largerSideUsd: number
 }
 
-export interface AnomalyEvaluation {
+export interface InteropChartEvaluation {
   signals: MetricSignal[]
   sideMismatch: SideMismatchSignal | null
 }
 
-export function evaluateAnomalies(
+export function evaluateInteropChart(
   series: SeriesPoint[],
   bridgeTotal?: BridgeTotal,
-): AnomalyEvaluation {
+): InteropChartEvaluation {
   if (series.length === 0) {
     return { signals: [], sideMismatch: null }
   }
@@ -109,7 +109,7 @@ export function evaluateAnomalies(
 }
 
 function evaluateMetric(
-  metric: AnomalyMetric,
+  metric: InteropChartMetric,
   window: SeriesPoint[],
   pick: (p: SeriesPoint) => number,
   bridgeTotal: BridgeTotal | undefined,
@@ -177,7 +177,7 @@ function evaluateMetric(
 }
 
 function isRelevant(
-  metric: AnomalyMetric,
+  metric: InteropChartMetric,
   value: number,
   bridgeTotal: BridgeTotal | undefined,
 ): boolean {
@@ -217,8 +217,8 @@ function evaluateSideMismatch(
 }
 
 function buildSignal(
-  kind: AnomalyKind,
-  metric: AnomalyMetric,
+  kind: InteropChartSignalKind,
+  metric: InteropChartMetric,
   baseline: number,
   current: number,
 ): MetricSignal {
