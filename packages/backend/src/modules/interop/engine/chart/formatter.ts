@@ -1,6 +1,6 @@
 import type {
-  AnomalyEvaluation,
-  AnomalyMetric,
+  InteropChartEvaluation,
+  InteropChartMetric,
   MetricSignal,
   SideMismatchSignal,
 } from './evaluator'
@@ -40,7 +40,9 @@ export function describeSideMismatch(signal: SideMismatchSignal): string {
   return `Src/Dst volume mismatch (${diff}, ${src} src vs ${dst} dst)`
 }
 
-export function formatAnomalyReasons(evaluation: AnomalyEvaluation): string[] {
+export function formatInteropChartReasons(
+  evaluation: InteropChartEvaluation,
+): string[] {
   const reasons = describeMetricSignals(evaluation.signals)
   if (evaluation.sideMismatch) {
     reasons.push(describeSideMismatch(evaluation.sideMismatch))
@@ -94,7 +96,7 @@ function describeVolumeMerged(signal: MetricSignal): string {
   return `Volume ${action} (${changePart}${baselineFmt} → ${currentFmt})`
 }
 
-function metricLabel(metric: AnomalyMetric): string {
+function metricLabel(metric: InteropChartMetric): string {
   switch (metric) {
     case 'count':
       return 'Transfer count'

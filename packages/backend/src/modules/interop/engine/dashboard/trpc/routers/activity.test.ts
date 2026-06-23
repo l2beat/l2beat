@@ -2,9 +2,9 @@ import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { createCallerFactory } from '../../../../../../trpc/init'
-import { createAnomaliesRouter } from './anomalies'
+import { createActivityRouter } from './activity'
 
-describe(createAnomaliesRouter.name, () => {
+describe(createActivityRouter.name, () => {
   it('returns flagged routes with interpretation text', async () => {
     const flatHistoryDay = (offsetDays: number) => ({
       day: UnixTime.toStartOf(
@@ -34,7 +34,7 @@ describe(createAnomaliesRouter.name, () => {
       interopTransfer: mockObject<Database['interopTransfer']>({}),
     })
 
-    const callerFactory = createCallerFactory(createAnomaliesRouter())
+    const callerFactory = createCallerFactory(createActivityRouter())
     const caller = callerFactory({
       headers: new Headers(),
       db,
@@ -80,7 +80,7 @@ describe(createAnomaliesRouter.name, () => {
       interopTransfer: mockObject<Database['interopTransfer']>({}),
     })
 
-    const callerFactory = createCallerFactory(createAnomaliesRouter())
+    const callerFactory = createCallerFactory(createActivityRouter())
     const caller = callerFactory({
       headers: new Headers(),
       db,

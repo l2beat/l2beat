@@ -21,7 +21,6 @@ import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
 import { isPluginResyncable } from '../plugins/types'
 import { InteropAggregatingIndexer } from './aggregation/InteropAggregatingIndexer'
-import { DefaultInteropAggregationAnalyzer } from './aggregation/InteropAggregationAnalyzer'
 import { InteropAggregationService } from './aggregation/InteropAggregationService'
 import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
 import { InteropEventStore } from './capture/InteropEventStore'
@@ -217,7 +216,6 @@ export function createInteropModule({
   if (config.interop.aggregation) {
     const classifier = new InteropTransferClassifier()
     const aggregationService = new InteropAggregationService(classifier)
-    const aggregationAnalyzer = new DefaultInteropAggregationAnalyzer(db)
     const promotion = config.interop.aggregation.promotion
     const promotionService = new InteropPromotionService({
       statusRepository: db.interopAggregateStatus,
@@ -232,7 +230,6 @@ export function createInteropModule({
         configs: config.interop.aggregation.configs,
         aggregationService,
         promotionService,
-        aggregationAnalyzer,
         indexerService,
         notifier: notificationClient,
         parents: [hourlyIndexer],

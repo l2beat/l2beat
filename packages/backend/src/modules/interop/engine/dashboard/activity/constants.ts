@@ -3,4 +3,4 @@ export {
   SIDE_MISMATCH_DIFF_PERCENT,
   SIDE_MISMATCH_MIN_VOLUME_USD,
   VALUE_DIFF_THRESHOLD_PERCENT,
-} from '../../anomalies'
+} from '../../chart'

@@ -4,8 +4,8 @@ import type { InteropAggregationConfig } from '../../../../../config/features/in
 import { router } from '../../../../../trpc/init'
 import type { PluginSyncStatus } from '../../sync/InteropSyncersManager'
 import type { ProcessorStatus } from '../impls/processors'
+import { createActivityRouter } from './routers/activity'
 import { createAggregatesRouter } from './routers/aggregates'
-import { createAnomaliesRouter } from './routers/anomalies'
 import { createChainsRouter } from './routers/chains'
 import { createCoveragePiesRouter } from './routers/coveragePies'
 import { createEventsRouter } from './routers/events'
@@ -46,7 +46,7 @@ export interface InteropTrpcRouterDeps {
 export function createInteropTrpcRouter(deps: InteropTrpcRouterDeps) {
   return router({
     aggregates: createAggregatesRouter(deps),
-    anomalies: createAnomaliesRouter(),
+    activity: createActivityRouter(),
     chains: createChainsRouter(deps),
     coveragePies: createCoveragePiesRouter(),
     events: createEventsRouter(),

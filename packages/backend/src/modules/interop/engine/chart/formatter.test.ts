@@ -2,7 +2,7 @@ import { expect } from 'earl'
 import {
   describeSideMismatch,
   describeSignal,
-  formatAnomalyReasons,
+  formatInteropChartReasons,
 } from './formatter'
 
 describe(describeSignal.name, () => {
@@ -74,9 +74,9 @@ describe(describeSideMismatch.name, () => {
   })
 })
 
-describe(formatAnomalyReasons.name, () => {
+describe(formatInteropChartReasons.name, () => {
   it('returns one entry per signal plus side mismatch', () => {
-    const reasons = formatAnomalyReasons({
+    const reasons = formatInteropChartReasons({
       signals: [
         {
           metric: 'count',
@@ -112,7 +112,7 @@ describe(formatAnomalyReasons.name, () => {
   })
 
   it('collapses paired src+dst signals of the same kind into a single Volume row', () => {
-    const reasons = formatAnomalyReasons({
+    const reasons = formatInteropChartReasons({
       signals: [
         {
           metric: 'srcVolume',
@@ -138,7 +138,7 @@ describe(formatAnomalyReasons.name, () => {
   })
 
   it('uses the larger collapsed side when merging paired drops', () => {
-    const reasons = formatAnomalyReasons({
+    const reasons = formatInteropChartReasons({
       signals: [
         {
           metric: 'srcVolume',
@@ -164,7 +164,7 @@ describe(formatAnomalyReasons.name, () => {
   })
 
   it('keeps separate rows when src and dst have different signal kinds', () => {
-    const reasons = formatAnomalyReasons({
+    const reasons = formatInteropChartReasons({
       signals: [
         {
           metric: 'srcVolume',
@@ -194,8 +194,8 @@ describe(formatAnomalyReasons.name, () => {
   })
 
   it('returns empty when there are no signals or mismatch', () => {
-    expect(formatAnomalyReasons({ signals: [], sideMismatch: null })).toEqual(
-      [],
-    )
+    expect(
+      formatInteropChartReasons({ signals: [], sideMismatch: null }),
+    ).toEqual([])
   })
 })

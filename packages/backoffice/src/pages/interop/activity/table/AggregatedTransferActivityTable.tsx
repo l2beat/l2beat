@@ -1,19 +1,19 @@
 import { useMemo } from 'react'
 import { TanStackTable } from '~/components/table/TanStackTable'
 import { useTanStackTable } from '~/components/table/useTanStackTable'
-import type { AggregatedAnomalyRow } from '../types'
-import { createAggregatedAnomalyColumns } from './aggregated-columns'
+import type { AggregatedActivityRow } from '../types'
+import { createAggregatedActivityColumns } from './aggregated-columns'
 
-interface AggregatedTransferAnomaliesTableProps {
-  data: AggregatedAnomalyRow[]
+interface AggregatedTransferActivityTableProps {
+  data: AggregatedActivityRow[]
   enableCsvExport?: boolean
 }
 
-export function AggregatedTransferAnomaliesTable({
+export function AggregatedTransferActivityTable({
   data,
   enableCsvExport = false,
-}: AggregatedTransferAnomaliesTableProps) {
-  const columns = useMemo(() => createAggregatedAnomalyColumns(), [])
+}: AggregatedTransferActivityTableProps) {
+  const columns = useMemo(() => createAggregatedActivityColumns(), [])
 
   const {
     filteredRowsCount,
@@ -40,12 +40,12 @@ export function AggregatedTransferAnomaliesTable({
       table={table}
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
-      emptyMessage="No aggregated transfer anomalies found."
+      emptyMessage="No aggregated transfer activity found."
       fillHeight
       enableVirtualization={false}
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
-        `interop-aggregated-transfer-anomalies-${new Date().toISOString()}.csv`
+        `interop-aggregated-transfer-activity-${new Date().toISOString()}.csv`
       }
       totalRowsCount={totalRowsCount}
       filteredRowsCount={filteredRowsCount}

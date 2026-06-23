@@ -22,7 +22,7 @@ export function SuspiciousTransfersPage() {
     isLoading: isSuspiciousTransfersLoading,
     isFetching: isSuspiciousTransfersFetching,
     refetch: refetchSuspiciousTransfers,
-  } = useQuery(trpc.interop.anomalies.suspiciousTransfers.queryOptions())
+  } = useQuery(trpc.interop.activity.suspiciousTransfers.queryOptions())
 
   const {
     data: chainsData,
