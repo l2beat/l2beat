@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x341d2105446fc005722bb559017f7680c4adefd2
+Generated with discovered.json: 0xe7a84a1e4d92abd1e9a0dcb958f4e4789fb11b33
 
-# Diff at Tue, 23 Jun 2026 10:27:11 GMT:
+# Diff at Tue, 23 Jun 2026 11:38:41 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@0e360eee2a54a17c6634ebce656a966ffe743da7 block: 1772626589
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x341d2105446fc005722bb559017f7680c4adefd2
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Moved some GnosisSafes to NXV multisigs (supposedly simplified version of GnosisSafe), see: nexvault.com
 
 ## Watched changes
 
@@ -101,19 +101,19 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract NXV (eth:0x3228F00FbFD0e1F4c282601c489664B10932C40f) [N/A]
+    contract NXV (eth:0x3228F00FbFD0e1F4c282601c489664B10932C40f) [NXV]
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract NXV (eth:0x391832Fb1884E6772Dbd9f24cE2db35E9B20B696) [N/A]
+    contract NXV (eth:0x391832Fb1884E6772Dbd9f24cE2db35E9B20B696) [NXV]
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract NXV (eth:0x6F2b20996ADAf3ae64Da901A67f659C2c48f66C9) [N/A]
+    contract NXV (eth:0x6F2b20996ADAf3ae64Da901A67f659C2c48f66C9) [NXV]
     +++ description: None
 ```
 

@@ -196,6 +196,7 @@
       "name": "NXV",
       "address": "eth:0x3228F00FbFD0e1F4c282601c489664B10932C40f",
       "type": "Contract",
+      "template": "NXV",
       "sourceHashes": [
         "0xf7a3a334fecf35ec82603560c063498bca43a6f26bae6b680a37d4ff177a89f3",
         "0x48536d64bafa3833aa5676fa342919ece975e7d6328910b74788e547537ecc0f"
@@ -314,20 +315,19 @@
       "values": {
         "$immutable": false,
         "$implementation": "eth:0x3F99439D9e9BBC961cF3a25Ed53309C8c42e14DA",
-        "domainSeparator": "0x3be3c90e007f4d0a1f02ef5fe64699655b7211315187afc367459112ba0aef1c",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "eth:0x18B024f02b7Bd6F3595F49285d5EaD0880b00338",
           "eth:0x6622C53e25cDA3166A76Ff503BBd38ff9DED022A",
           "eth:0xAFf88c51043b2F12fb409B1b0F5e598E867c70A7",
           "eth:0xC00d88Eb202869FF412F95811AA95D55cB3B9d47",
           "eth:0xd1E15028fe575AD2D8F6d7bd1CB22589dFA68fbe"
         ],
-        "getThreshold": 3,
-        "txNonces": [false, false, false, false, false],
+        "$threshold": 3,
+        "domainSeparator": "0x3be3c90e007f4d0a1f02ef5fe64699655b7211315187afc367459112ba0aef1c",
+        "getChainId": 1,
+        "multisigThreshold": "3 of 5 (60%)",
         "VERSION": "1.0.0"
       },
-      "errors": { "txNonces": "Processing error occurred." },
       "implementationNames": {
         "eth:0x3228F00FbFD0e1F4c282601c489664B10932C40f": "NXVProxy",
         "eth:0x3F99439D9e9BBC961cF3a25Ed53309C8c42e14DA": "NXV"
@@ -337,6 +337,7 @@
       "name": "NXV",
       "address": "eth:0x391832Fb1884E6772Dbd9f24cE2db35E9B20B696",
       "type": "Contract",
+      "template": "NXV",
       "sourceHashes": [
         "0xf7a3a334fecf35ec82603560c063498bca43a6f26bae6b680a37d4ff177a89f3",
         "0x48536d64bafa3833aa5676fa342919ece975e7d6328910b74788e547537ecc0f"
@@ -356,20 +357,19 @@
       "values": {
         "$immutable": false,
         "$implementation": "eth:0x3F99439D9e9BBC961cF3a25Ed53309C8c42e14DA",
-        "domainSeparator": "0x51f54c5be7329c627b70ce9af4c85d94a386f7e6439eec5ee952cf060da89cba",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "eth:0x0dE9FA3e6d10665E2896565D34FB6Cb69041987A",
           "eth:0x0Fa31E74FdE71D75bbA7f31df6466fCd825e780D",
           "eth:0x19a3A4a6602C978A5b93d4Fcfc0acB883eD0d0BD",
           "eth:0x7015251A3D3F5A517072FA4a01FCc028aad9A5b1",
           "eth:0xcd2BD074bBd6433b9D46006483e06fe98127A93A"
         ],
-        "getThreshold": 3,
-        "txNonces": [false, false, false, false, false],
+        "$threshold": 3,
+        "domainSeparator": "0x51f54c5be7329c627b70ce9af4c85d94a386f7e6439eec5ee952cf060da89cba",
+        "getChainId": 1,
+        "multisigThreshold": "3 of 5 (60%)",
         "VERSION": "1.0.0"
       },
-      "errors": { "txNonces": "Processing error occurred." },
       "implementationNames": {
         "eth:0x391832Fb1884E6772Dbd9f24cE2db35E9B20B696": "NXVProxy",
         "eth:0x3F99439D9e9BBC961cF3a25Ed53309C8c42e14DA": "NXV"
@@ -636,6 +636,7 @@
       "name": "NXV",
       "address": "eth:0x6F2b20996ADAf3ae64Da901A67f659C2c48f66C9",
       "type": "Contract",
+      "template": "NXV",
       "sourceHashes": [
         "0xf7a3a334fecf35ec82603560c063498bca43a6f26bae6b680a37d4ff177a89f3",
         "0x48536d64bafa3833aa5676fa342919ece975e7d6328910b74788e547537ecc0f"
@@ -655,20 +656,19 @@
       "values": {
         "$immutable": false,
         "$implementation": "eth:0x3F99439D9e9BBC961cF3a25Ed53309C8c42e14DA",
-        "domainSeparator": "0x18b2b353c8901459d348ace0408b9fc590f34574e9e2da585926b1a7125e8417",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "eth:0x2d462d0B23F6F510769252ADdEBa31743b0a1569",
           "eth:0x3B5a39dA4E87d49416D8676190cC1f1dc8884661",
           "eth:0x4fe176bd3F4C948dbC2cddb6bd85bDC04Eae1c6D",
           "eth:0xDfA1C539cAb9376bC2eCcA795BC797EDC196dC1F",
           "eth:0xfF57AA0CC7A727FF219673Cf329C05945685c0f2"
         ],
-        "getThreshold": 3,
-        "txNonces": [false, false, false, false, false],
+        "$threshold": 3,
+        "domainSeparator": "0x18b2b353c8901459d348ace0408b9fc590f34574e9e2da585926b1a7125e8417",
+        "getChainId": 1,
+        "multisigThreshold": "3 of 5 (60%)",
         "VERSION": "1.0.0"
       },
-      "errors": { "txNonces": "Processing error occurred." },
       "implementationNames": {
         "eth:0x6F2b20996ADAf3ae64Da901A67f659C2c48f66C9": "NXVProxy",
         "eth:0x3F99439D9e9BBC961cF3a25Ed53309C8c42e14DA": "NXV"
@@ -2083,6 +2083,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "NXV": "0xd08b460def14c8ab7e388497438fc922b6ae38129a05723beaea43b3c8ab15b4",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
@@ -2100,5 +2101,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 25379703 },
-  "permissionsConfigHash": "0x7c368ea0345b03ffb4ec584df630867450402468d2c537d1aeecd2e443650876"
+  "permissionsConfigHash": "0x4f152fb8cba508b26ea143df5ec7a8fc1fd80a997f89e8472164095ce5ce6bee"
 }
