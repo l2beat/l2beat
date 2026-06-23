@@ -8,7 +8,7 @@ Generated with discovered.json: 0x48ddea852a54824e1033a37f130a1f1543714b16
 
 ## Description
 
-System config update, main change allows the sequencer to be updated by directly passing an address instead of a bytes32 and adds CGT field which is unused.
+Upgraded to known contract versions.
 
 ## Watched changes
 
