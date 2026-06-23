@@ -23,6 +23,13 @@ function recurse(node: Node): string[] {
   return [node.id]
 }
 
+function containsAddress(node: Node, address: string): boolean {
+  if (node.id === address) {
+    return true
+  }
+  return node.subnodes.some((subnode) => containsAddress(subnode, address))
+}
+
 export function NodesPanel() {
   const { project } = useParams()
   if (!project) {
@@ -158,8 +165,13 @@ function useSynchronizeSelection() {
       !lastSelection.includes(firstGlobal) &&
       loaded
     ) {
+      const containing = nodes.find((node) =>
+        containsAddress(node, firstGlobal),
+      )
       rememberSelection(selectedGlobal)
-      selectAndFocus(firstGlobal)
+      if (containing) {
+        selectAndFocus(containing.id)
+      }
     }
   }, [
     lastSelection,
