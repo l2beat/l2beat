@@ -66,6 +66,26 @@ export class BlipRuntime {
         assert(Array.isArray(v), 'map requires an array input')
         return v.map((item) => this.executeBlip(item, fn))
       }
+      case 'sort': {
+        // ['sort'] sorts elements directly; ['sort', keyExpr] sorts by a
+        // computed key. Ascending, deterministic, stable. Useful to normalize
+        // set-like arrays (e.g. DON nodes) so reordering produces no diff.
+        assert(Array.isArray(v), 'sort requires an array input')
+        const keyFn = blip[1]
+        const decorated = v.map((item) => ({
+          item,
+          key: keyFn === undefined ? item : this.executeBlip(item, keyFn),
+        }))
+        decorated.sort((a, b) => {
+          if (typeof a.key === 'number' && typeof b.key === 'number') {
+            return a.key - b.key
+          }
+          const as = String(a.key)
+          const bs = String(b.key)
+          return as < bs ? -1 : as > bs ? 1 : 0
+        })
+        return decorated.map((d) => d.item)
+      }
       case 'pick': {
         assert(
           typeof v === 'object' && v !== null && !Array.isArray(v),
