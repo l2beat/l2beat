@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xc5e4f6791464ed13259dc11ee3c8a574a9c3dd48
+Generated with discovered.json: 0xf70298886d7d21fc85781312e41a33326bc0c2d9
 
-# Diff at Tue, 23 Jun 2026 09:06:54 GMT:
+# Diff at Tue, 23 Jun 2026 09:26:12 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@30c3b0611ac82b18f6581a04bed5c63089dcd0a8 block: 1781085930
+- comparing to: main@0e360eee2a54a17c6634ebce656a966ffe743da7 block: 1781085930
 - current timestamp: 1782144559
 
 ## Description
 
-Add CCIPHome contract with full values discovery.
+colorize CCIPHome / CapabilitiesRegistry discovery fields
 
 ## Watched changes
 

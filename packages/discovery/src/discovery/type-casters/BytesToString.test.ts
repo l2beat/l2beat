@@ -20,7 +20,9 @@ describe('BytesToString', () => {
   })
 
   it('throws if value is not a hex string', () => {
-    expect(() => BytesToString.cast({}, 42)).toThrow('Value must be a hex string')
+    expect(() => BytesToString.cast({}, 42)).toThrow(
+      'Value must be a hex string',
+    )
   })
 
   it('throws if value does not start with 0x', () => {
