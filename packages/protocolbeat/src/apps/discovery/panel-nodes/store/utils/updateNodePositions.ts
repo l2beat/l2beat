@@ -55,6 +55,7 @@ export function updateNodePositions(
     if (boxMoved) {
       movedIds.add(node.id)
     }
+    indexSubnodes(node, nextBox, boxMoved, nextBoxes, movedIds)
   }
 
   // Pass 2: rebuild nodes lazily. Reuse refs whenever the data is
@@ -151,6 +152,22 @@ export function updateNodePositions(
   return {
     ...nextState,
     nodes: nextNodes,
+  }
+}
+
+function indexSubnodes(
+  node: Node,
+  box: Box,
+  moved: boolean,
+  boxes: Map<string, Box>,
+  movedIds: Set<string>,
+): void {
+  for (const subnode of node.subnodes) {
+    boxes.set(subnode.id, box)
+    if (moved) {
+      movedIds.add(subnode.id)
+    }
+    indexSubnodes(subnode, box, moved, boxes, movedIds)
   }
 }
 

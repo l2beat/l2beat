@@ -16,6 +16,13 @@ import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
 import { Viewport } from './view/Viewport'
 
+function recurse(node: Node): string[] {
+  if (node.subnodes.length > 0) {
+    return node.subnodes.flatMap((n) => recurse(n))
+  }
+  return [node.id]
+}
+
 export function NodesPanel() {
   const { project } = useParams()
   if (!project) {
@@ -126,6 +133,7 @@ function useSynchronizeSelection() {
   const highlightGlobal = usePanelStore((state) => state.highlight)
   const selectGlobal = usePanelStore((state) => state.select)
   const selectedNodes = useStore((state) => state.selected)
+  const nodes = useStore((state) => state.nodes)
   const hiddenNodes = useStore((state) => state.hidden)
   const selectAndFocus = useStore((state) => state.selectAndFocus)
 
@@ -138,9 +146,13 @@ function useSynchronizeSelection() {
 
   useEffect(() => {
     const firstGlobal = selectedGlobal[0]
-    if (selectedNodes.length > 0 && !eq(lastSelection, selectedNodes)) {
-      rememberSelection(selectedNodes)
-      selectGlobal([...selectedNodes])
+    const selectedAddresses = nodes
+      .filter((n) => selectedNodes.includes(n.id))
+      .flatMap((n) => recurse(n))
+
+    if (selectedAddresses.length > 0 && !eq(lastSelection, selectedAddresses)) {
+      rememberSelection(selectedAddresses)
+      selectGlobal(selectedAddresses)
     } else if (
       firstGlobal !== undefined &&
       !lastSelection.includes(firstGlobal) &&

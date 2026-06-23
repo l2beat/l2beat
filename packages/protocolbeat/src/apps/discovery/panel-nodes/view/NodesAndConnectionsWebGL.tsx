@@ -2105,7 +2105,7 @@ function buildDrawData(
   for (const node of nodes) {
     if (!hiddenSet.has(node.id)) {
       visible.push(node)
-      visibleById.set(node.id, node)
+      indexTargets(node, node, visibleById)
     }
   }
 
@@ -2163,6 +2163,17 @@ function buildDrawData(
     enableDimming,
     markUnreachableEntries,
     anyNodeSelected,
+  }
+}
+
+function indexTargets(
+  visibleNode: Node,
+  node: Node,
+  byId: Map<string, Node>,
+): void {
+  byId.set(node.id, visibleNode)
+  for (const subnode of node.subnodes) {
+    indexTargets(visibleNode, subnode, byId)
   }
 }
 

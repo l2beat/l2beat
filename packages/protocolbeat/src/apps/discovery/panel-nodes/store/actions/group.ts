@@ -9,7 +9,7 @@ export function groupSelected(state: State): Partial<State> {
     return {}
   }
 
-  const phantom = createPhantomNode(subnodes, selectedSet)
+  const phantom = createPhantomNode(subnodes)
   const remaining = state.nodes.filter((node) => !selectedSet.has(node.id))
 
   return updateNodePositions(state, {
@@ -35,8 +35,12 @@ export function ungroupSelected(state: State): Partial<State> {
   })
 }
 
-function createPhantomNode(subnodes: Node[], memberSet: Set<string>): Node {
+function createPhantomNode(subnodes: Node[]): Node {
   const anchor = subnodes[0]?.box
+  const internal = new Set<string>()
+  for (const node of subnodes) {
+    collectIds(node, internal)
+  }
   return {
     id: `group:${crypto.randomUUID()}`,
     address: '',
@@ -44,7 +48,7 @@ function createPhantomNode(subnodes: Node[], memberSet: Set<string>): Node {
     hasTemplate: false,
     addressType: 'Contract',
     name: 'Group',
-    fields: collectOutgoingFields(subnodes, memberSet),
+    fields: collectOutgoingFields(subnodes, internal),
     hiddenFields: [],
     box: {
       x: anchor?.x ?? 0,
@@ -60,14 +64,21 @@ function createPhantomNode(subnodes: Node[], memberSet: Set<string>): Node {
   }
 }
 
+function collectIds(node: Node, into: Set<string>): void {
+  into.add(node.id)
+  for (const subnode of node.subnodes) {
+    collectIds(subnode, into)
+  }
+}
+
 function collectOutgoingFields(
   subnodes: Node[],
-  memberSet: Set<string>,
+  internal: Set<string>,
 ): Field[] {
   const outgoing: Field[] = []
   for (const node of subnodes) {
     for (const field of node.fields) {
-      if (!memberSet.has(field.target)) {
+      if (!internal.has(field.target)) {
         outgoing.push(field)
       }
     }
