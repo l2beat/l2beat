@@ -564,7 +564,7 @@ export const taiko: ScalingProject = {
     {
       title: 'Proof system exploit',
       url: 'https://x.com/taikoxyz/status/2068857506718515320',
-      date: '2026-06-23T00:00:00.00Z',
+      date: '2026-06-22T00:00:00.00Z',
       description:
         'An attacker exploits a vulnerability in the SGX proof system and steals USD ~1.7M.',
       type: 'incident',
