@@ -660,6 +660,14 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   }
 }
 
+// An absolute prestate is "empty" when it's all zeros, in either the bytes32
+// form (0x000…0) returned by V2 game implementations, or the zero-address form
+// (<chain>:0x000…0) the AnchorStateRegistry *FromGame fields use when no game
+// is anchored yet.
+function isEmptyPrestate(value: string): boolean {
+  return /^([^:]+:)?0x0*$/.test(value)
+}
+
 function getProgramHashes(
   templateVars: OpStackConfigCommon,
 ): ProjectScalingContractsProgramHash[] {
@@ -674,11 +682,10 @@ function getProgramHashes(
         'PermissionedDisputeGame',
         'absolutePrestate',
       )
-      const EMPTY_PRESTATE = '0x' + '0'.repeat(64)
       // V2 dispute games store params in clone bytecode;
       // the implementation contract returns zero.
       // Read from AnchorStateRegistry's game clone instead.
-      if (absolutePrestate === EMPTY_PRESTATE) {
+      if (isEmptyPrestate(absolutePrestate)) {
         const fromAnchor = templateVars.discovery.hasContract(
           'AnchorStateRegistry',
         )
@@ -687,7 +694,9 @@ function getProgramHashes(
               'absolutePrestateFromGame',
             )
           : undefined
-        if (fromAnchor && fromAnchor !== EMPTY_PRESTATE) {
+        // When no game is anchored yet, the *FromGame fields resolve to the
+        // zero address, so treat that as empty alongside the bytes32 form.
+        if (fromAnchor && !isEmptyPrestate(fromAnchor)) {
           return [PROGRAM_HASHES(fromAnchor)]
         }
         return []
