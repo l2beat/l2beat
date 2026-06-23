@@ -6,17 +6,17 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
 import { useBackendTrpc } from '~/react-query/trpc'
-import { AggregatedTransferAnomaliesTable } from './table/AggregatedTransferAnomaliesTable'
-import type { AggregatedAnomalyRow, AnomaliesSummaryResponse } from './types'
+import { AggregatedTransferActivityTable } from './table/AggregatedTransferActivityTable'
+import type { ActivitySummaryResponse, AggregatedActivityRow } from './types'
 
-export function AnomaliesPage() {
+export function ActivityPage() {
   const trpc = useBackendTrpc()
   const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
-    trpc.interop.anomalies.summary.queryOptions(),
+    trpc.interop.activity.summary.queryOptions(),
   )
 
-  const response: AnomaliesSummaryResponse | undefined = data
-  const rows: AggregatedAnomalyRow[] = response?.aggregatedItems ?? []
+  const response: ActivitySummaryResponse | undefined = data
+  const rows: AggregatedActivityRow[] = response?.aggregatedItems ?? []
   const idsWithSrcDstMismatch = rows.filter(
     (row) => row.srcDstDiff.isSideMismatch,
   ).length
@@ -27,7 +27,7 @@ export function AnomaliesPage() {
 
   return (
     <TablePageLayout
-      title="Anomalies"
+      title="Activity"
       description="Aggregate alerts with readable explanations. Only aggregates with active signals are shown."
       actions={
         <Button
@@ -60,7 +60,7 @@ export function AnomaliesPage() {
       {isLoading ? <LoadingState className="m-6" /> : null}
       {isError ? <ErrorState className="m-6" cause={error.message} /> : null}
       {!isLoading && !isError ? (
-        <AggregatedTransferAnomaliesTable data={rows} enableCsvExport />
+        <AggregatedTransferActivityTable data={rows} enableCsvExport />
       ) : null}
     </TablePageLayout>
   )

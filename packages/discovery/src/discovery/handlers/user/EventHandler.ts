@@ -330,12 +330,25 @@ function extractKeys(
   return result
 }
 
+// Supports dot-notation for reaching into nested values, e.g.
+// "config.chainSelector" for a named object or "config.1" for a tuple/struct
+// (decoded structs are positional arrays, so a nested struct field is addressed
+// by its index). Plain keys (no dot) behave as before. Safe because Solidity
+// parameter names cannot contain a dot.
 function extractKey(value: ContractValue, key: string): ContractValue {
-  assert(typeof value === 'object' && !Array.isArray(value), 'Extract keys')
-
-  const result = value[key]
-  assert(result !== undefined, `Invalid extraction key [${key}], not defined`)
-  return result
+  let current: ContractValue = value
+  for (const part of key.split('.')) {
+    assert(
+      typeof current === 'object' && current !== null,
+      `Cannot extract [${part}] from a non-object while resolving [${key}]`,
+    )
+    const next: ContractValue | undefined = Array.isArray(current)
+      ? current[Number(part)]
+      : current[part]
+    assert(next !== undefined, `Invalid extraction key [${key}], not defined`)
+    current = next
+  }
+  return current
 }
 
 function ensureArray<T>(v: T | T[]): T[] {

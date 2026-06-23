@@ -6,10 +6,10 @@ import {
   EnvironmentProvider,
   useEnvironment,
 } from './components/environment/EnvironmentContext'
+import { ActivityDetailsPage } from './pages/interop/activity/ActivityDetailsPage'
+import { ActivityPage } from './pages/interop/activity/ActivityPage'
+import { SuspiciousTransfersPage } from './pages/interop/activity/SuspiciousTransfersPage'
 import { AggregatesPage } from './pages/interop/aggregates/AggregatesPage'
-import { AnomaliesPage } from './pages/interop/anomalies/AnomaliesPage'
-import { AnomalyDetailsPage } from './pages/interop/anomalies/AnomalyDetailsPage'
-import { SuspiciousTransfersPage } from './pages/interop/anomalies/SuspiciousTransfersPage'
 import { ChainsSummaryPage } from './pages/interop/chains-summary/ChainsSummaryPage'
 import { CoveragePiesPage } from './pages/interop/coverage-pies/CoveragePiesPage'
 import { EventDetailsPage } from './pages/interop/events/EventDetailsPage'
@@ -94,15 +94,15 @@ function EnvironmentScopedApp() {
             />
 
             <Route
-              path="/interop/insights/anomalies"
-              element={<AnomaliesPage />}
+              path="/interop/insights/activity"
+              element={<ActivityPage />}
             />
             <Route
-              path="/interop/insights/anomalies/aggregate/:id"
-              element={<AnomalyDetailsPage />}
+              path="/interop/insights/activity/aggregate/:id"
+              element={<ActivityDetailsPage />}
             />
             <Route
-              path="/interop/insights/anomalies/suspicious-transfers"
+              path="/interop/insights/activity/suspicious-transfers"
               element={<SuspiciousTransfersPage />}
             />
             <Route

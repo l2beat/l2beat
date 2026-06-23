@@ -47,7 +47,9 @@
           "set",
           "configInfo",
           ["shape", "configDigest", "F", "n", "isSignatureVerificationEnabled"]
-        ]
+        ],
+        ["set", "signers", ["sort"]],
+        ["set", "transmitters", ["sort"]]
       ]
     },
     "ocrExecution": {
@@ -64,13 +66,15 @@
           "set",
           "configInfo",
           ["shape", "configDigest", "F", "n", "isSignatureVerificationEnabled"]
-        ]
+        ],
+        ["set", "signers", ["sort"]],
+        ["set", "transmitters", ["sort"]]
       ]
     },
     "ocrCommitSigners": {
       "description": "Message OCR signers. F+1 of these must sign every crosschain and price report.",
       "copy": "ocrCommit",
-      "edit": ["get", "signers"],
+      "edit": ["pipe", ["get", "signers"], ["sort"]],
       "permissions": [
         {
           "type": "interact",
@@ -82,7 +86,7 @@
     "ocrCommitTransmitters": {
       "description": "Commit-plugin OCR transmitters. They relay a signature quorum from OCR commit signers.",
       "copy": "ocrCommit",
-      "edit": ["get", "transmitters"],
+      "edit": ["pipe", ["get", "transmitters"], ["sort"]],
       "permissions": [
         {
           "type": "interact",
@@ -112,7 +116,7 @@
     "ocrExecutionTransmitters": {
       "description": "Execution-plugin OCR transmitters. msg.sender of execute() must be one of these. Since isSignatureVerificationEnabled is false on the execution plugin, any one of these can singly authorize executing any already-committed message.",
       "copy": "ocrExecution",
-      "edit": ["get", "transmitters"],
+      "edit": ["pipe", ["get", "transmitters"], ["sort"]],
       "permissions": [
         {
           "type": "interact",

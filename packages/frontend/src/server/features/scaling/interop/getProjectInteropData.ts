@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { projectIdToChain } from '@l2beat/config/build/global/chainMap'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
@@ -53,8 +54,9 @@ export async function getProjectInteropData(
     getInteropChains().filter((chain) => !chain.isUpcoming),
   )
 
+  const projectChainId = projectIdToChain(projectId)
   const currentInteropChain = interopChains.find(
-    (chain) => chain.id === projectId,
+    (chain) => chain.id === projectChainId,
   )
   if (!currentInteropChain) return undefined
 

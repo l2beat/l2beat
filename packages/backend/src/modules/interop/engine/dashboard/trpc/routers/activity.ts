@@ -9,7 +9,7 @@ import {
   SIDE_MISMATCH_DIFF_PERCENT,
   SIDE_MISMATCH_MIN_VOLUME_USD,
   VALUE_DIFF_THRESHOLD_PERCENT,
-} from '../../anomalies/constants'
+} from '../../activity/constants'
 import { explore } from '../../stats'
 
 export interface SuspiciousTransferDto {
@@ -103,7 +103,7 @@ function toChartPoint(point: {
   }
 }
 
-export function createAnomaliesRouter() {
+export function createActivityRouter() {
   return router({
     summary: protectedProcedure.query(async ({ ctx }) => {
       const aggregatedRows =

@@ -140,10 +140,11 @@ describe('buildPastUpgradeRows', () => {
     expect(rows[0]?.cells[2]?.diffUrl).toEqual(`/diff/${E}/${D}`)
   })
 
-  it('collapses entries that share a transaction hash', () => {
+  it('collapses entries that share a transaction hash and implementation set', () => {
     const value: FieldValue = {
       type: 'array',
-      // A diamond deployment emits the same tx several times.
+      // A diamond emits one DiamondCut event per cut; repeated events within a
+      // single tx resolve to the same cumulative facet set.
       values: [
         entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
         entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
@@ -158,5 +159,71 @@ describe('buildPastUpgradeRows', () => {
     expect(rows.map((r) => r.cells[0]?.address)).toEqual([A, F])
     expect(rows[0]?.cells[0]?.diffUrl).toEqual(`/diff/${F}/${A}`)
     expect(rows[1]?.cells[0]?.diffUrl).toEqual(undefined)
+  })
+
+  it('keeps distinct implementations changed within one transaction', () => {
+    // OP Stack: proxy -> StorageSetter (B) -> new impl (A) in one tx.
+    const value: FieldValue = {
+      type: 'array',
+      values: [
+        entry('2024-12-16T10:59:11.000Z', '0xfirst', [C]),
+        entry('2026-05-25T00:00:00.000Z', '0xsecond', [B]),
+        entry('2026-05-25T00:00:00.000Z', '0xsecond', [A]),
+      ],
+    }
+
+    const rows = buildPastUpgradeRows(value)
+
+    expect(rows.length).toEqual(3)
+    expect(rows.map((r) => r.cells[0]?.address)).toEqual([A, B, C])
+    expect(rows.map((r) => r.txHash)).toEqual([
+      '0xsecond',
+      '0xsecond',
+      '0xfirst',
+    ])
+    expect(rows[0]?.cells[0]?.diffUrl).toEqual(`/diff/${B}/${A}`)
+    expect(rows[1]?.cells[0]?.diffUrl).toEqual(`/diff/${C}/${B}`)
+    expect(rows[2]?.cells[0]?.diffUrl).toEqual(undefined)
+  })
+
+  it('keeps a snapshot that recurs non-consecutively within one transaction', () => {
+    // A -> B -> A in one tx: the two A entries are not adjacent, so neither
+    // collapses and B still diffs against the intra-tx A, not pre-tx C.
+    const value: FieldValue = {
+      type: 'array',
+      values: [
+        entry('2024-01-01T00:00:00.000Z', '0xold', [C]),
+        entry('2026-05-25T00:00:00.000Z', '0xtx', [A]),
+        entry('2026-05-25T00:00:00.000Z', '0xtx', [B]),
+        entry('2026-05-25T00:00:00.000Z', '0xtx', [A]),
+      ],
+    }
+
+    const rows = buildPastUpgradeRows(value)
+
+    expect(rows.length).toEqual(4)
+    expect(rows.map((r) => r.cells[0]?.address)).toEqual([A, B, A, C])
+    expect(rows[0]?.cells[0]?.diffUrl).toEqual(`/diff/${B}/${A}`)
+    expect(rows[1]?.cells[0]?.diffUrl).toEqual(`/diff/${A}/${B}`)
+    expect(rows[2]?.cells[0]?.diffUrl).toEqual(`/diff/${C}/${A}`)
+    expect(rows[3]?.cells[0]?.diffUrl).toEqual(undefined)
+  })
+
+  it('still folds three consecutive identical diamond snapshots into one row', () => {
+    const value: FieldValue = {
+      type: 'array',
+      values: [
+        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
+        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
+        entry('2024-01-01T00:00:00.000Z', '0xdeploy', [F]),
+        entry('2024-03-01T00:00:00.000Z', '0xreset', [F]),
+      ],
+    }
+
+    const rows = buildPastUpgradeRows(value)
+
+    expect(rows.length).toEqual(2)
+    expect(rows.map((r) => r.txHash)).toEqual(['0xreset', '0xdeploy'])
+    expect(rows.map((r) => r.cells[0]?.address)).toEqual([F, F])
   })
 })

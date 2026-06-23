@@ -19,6 +19,27 @@ export function PrivacyProjectStats({
   bucketsCount,
   deposits,
 }: Props) {
+  const hasTrackedAssets = assetsCount > 0
+
+  if (!hasTrackedAssets) {
+    return (
+      <div className="grid gap-4 md:grid-cols-4">
+        <ProjectSummaryStat
+          className="md:col-span-4"
+          title="Live metrics"
+          value={
+            <div className="flex flex-col md:gap-1">
+              <span>Not tracked</span>
+              <span className="font-medium text-paragraph-12 text-secondary leading-normal">
+                Onchain monitoring is not available for this project.
+              </span>
+            </div>
+          }
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="grid gap-4 md:grid-cols-4">
       <ProjectSummaryStat

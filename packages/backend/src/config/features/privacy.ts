@@ -30,6 +30,9 @@ export async function getPrivacyConfig(
 
   const projects = projectsWithPrivacy
     .filter((project) => flags.isEnabled('privacy', project.id))
+    .filter((project) =>
+      project.privacyInfo.tokens.some((token) => token.buckets.length > 0),
+    )
     .map((project) => ({
       projectId: project.id.toString(),
       privacyInfo: project.privacyInfo,

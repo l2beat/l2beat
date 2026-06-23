@@ -1,10 +1,10 @@
 export {
-  type AnomalyEvaluation,
-  type AnomalyKind,
-  type AnomalyMetric,
-  type AnomalySeverity,
   type BridgeTotal,
-  evaluateAnomalies,
+  evaluateInteropChart,
+  type InteropChartEvaluation,
+  type InteropChartMetric,
+  type InteropChartSeverity,
+  type InteropChartSignalKind,
   type MetricSignal,
   type SeriesPoint,
   type SideMismatchSignal,
@@ -12,7 +12,7 @@ export {
 export {
   describeSideMismatch,
   describeSignal,
-  formatAnomalyReasons,
+  formatInteropChartReasons,
 } from './formatter'
 export {
   EXTREME_VALUE_RATIO_THRESHOLD,

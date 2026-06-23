@@ -1,13 +1,13 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { CellLink } from '~/components/table/CellLink'
 import { formatDollars } from '~/pages/interop/transfers/utils'
-import type { AggregatedAnomalyRow } from '../types'
-import { buildAnomalyDetailsPath, formatGapPercent } from '../utils'
+import type { AggregatedActivityRow } from '../types'
+import { buildActivityDetailsPath, formatGapPercent } from '../utils'
 import { MetricLine } from './cells/MetricLine'
 
-const columnHelper = createColumnHelper<AggregatedAnomalyRow>()
+const columnHelper = createColumnHelper<AggregatedActivityRow>()
 
-export function createAggregatedAnomalyColumns(): TableOptions<AggregatedAnomalyRow>['columns'] {
+export function createAggregatedActivityColumns(): TableOptions<AggregatedActivityRow>['columns'] {
   return [
     columnHelper.accessor('timestamp', {
       header: 'Day (UTC)',
@@ -28,7 +28,7 @@ export function createAggregatedAnomalyColumns(): TableOptions<AggregatedAnomaly
       cell: ({ row }) => (
         <div className="flex min-w-[9rem] flex-col">
           <CellLink
-            to={buildAnomalyDetailsPath(row.original)}
+            to={buildActivityDetailsPath(row.original)}
             className="text-xs"
           >
             {row.original.id}
@@ -69,7 +69,7 @@ export function createAggregatedAnomalyColumns(): TableOptions<AggregatedAnomaly
       },
     }),
     columnHelper.accessor(
-      (row: AggregatedAnomalyRow) => `${row.srcChain} -> ${row.dstChain}`,
+      (row: AggregatedActivityRow) => `${row.srcChain} -> ${row.dstChain}`,
       {
         id: 'route',
         header: 'Route',
@@ -88,12 +88,12 @@ export function createAggregatedAnomalyColumns(): TableOptions<AggregatedAnomaly
         },
       },
     ),
-    columnHelper.accessor((row: AggregatedAnomalyRow) => row.counts.last, {
+    columnHelper.accessor((row: AggregatedActivityRow) => row.counts.last, {
       id: 'count',
       header: 'Count',
       cell: ({ row }) => (
         <CellLink
-          to={buildAnomalyDetailsPath(row.original)}
+          to={buildActivityDetailsPath(row.original)}
           className="text-xs"
         >
           {Math.round(row.original.counts.last).toLocaleString()}
@@ -104,7 +104,7 @@ export function createAggregatedAnomalyColumns(): TableOptions<AggregatedAnomaly
       },
     }),
     columnHelper.accessor(
-      (row: AggregatedAnomalyRow) =>
+      (row: AggregatedActivityRow) =>
         Math.max(row.srcVolume.valueUsd.last, row.dstVolume.valueUsd.last),
       {
         id: 'volumeUsd',
@@ -128,7 +128,7 @@ export function createAggregatedAnomalyColumns(): TableOptions<AggregatedAnomaly
       },
     ),
     columnHelper.accessor(
-      (row: AggregatedAnomalyRow) => row.srcDstDiff.lastPercent ?? -1,
+      (row: AggregatedActivityRow) => row.srcDstDiff.lastPercent ?? -1,
       {
         id: 'srcDstDiff',
         header: 'Src/Dst diff %',

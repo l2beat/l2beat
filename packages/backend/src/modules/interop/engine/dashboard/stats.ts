@@ -2,12 +2,12 @@ import type { AggregatedInteropTransferSeriesRecord } from '@l2beat/database'
 import { assert, type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import {
-  type AnomalyEvaluation,
   type BridgeTotal,
-  evaluateAnomalies,
-  formatAnomalyReasons,
+  evaluateInteropChart,
+  formatInteropChartReasons,
+  type InteropChartEvaluation,
   type SeriesPoint,
-} from '../anomalies'
+} from '../chart'
 
 export type DataRow = AggregatedInteropTransferSeriesRecord
 
@@ -17,7 +17,7 @@ export type DataRowResult = {
   srcChain: string
   dstChain: string
   timestamp: string
-  evaluation: AnomalyEvaluation
+  evaluation: InteropChartEvaluation
   interpretation: string
   counts: {
     last: number
@@ -102,11 +102,11 @@ export function explore(rows: DataRow[]): DataRowResult[] {
     const prevDay = dataPoints.at(-2) ?? null
     const prev7d = dataPoints.at(-8) ?? null
 
-    const evaluation = evaluateAnomalies(
+    const evaluation = evaluateInteropChart(
       dataPoints.map(toSeriesPoint),
       bridgeTotals.get(bridgeTotalKey(last)),
     )
-    const reasons = formatAnomalyReasons(evaluation)
+    const reasons = formatInteropChartReasons(evaluation)
 
     results.push({
       id: last.id,
@@ -182,7 +182,7 @@ function buildSrcDstDiff(
   last: DataRow,
   prevDay: DataRow | null,
   prev7d: DataRow | null,
-  evaluation: AnomalyEvaluation,
+  evaluation: InteropChartEvaluation,
 ) {
   return {
     lastPercent: percentDiff(last.totalSrcValueUsd, last.totalDstValueUsd),

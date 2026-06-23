@@ -48,6 +48,7 @@ import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
 import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
 import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
+import { strk20 } from '../projects/strk20/strk20'
 import { stwo } from '../projects/stwo/stwo'
 import { teeBridge } from '../projects/tee-bridge/tee-bridge'
 import { tempo } from '../projects/tempo/tempo'
@@ -124,5 +125,6 @@ export const refactored: BaseProject[] = [
   // privacy
   privacyPools,
   railgun,
+  strk20,
   tornadoCash,
 ]

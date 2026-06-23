@@ -1,5 +1,7 @@
 import type {
   PrivacyAttribute,
+  PrivacyExitWindow,
+  PrivacySummaryValue,
   ProjectContracts,
   ProjectDisplay,
   ProjectPermissions,
@@ -40,6 +42,9 @@ export interface PrivacyProjectDetails {
     longDescription: string
     participantCount?: number
   }
+  exitWindow: PrivacyExitWindow
+  adminViewingKey: PrivacySummaryValue
+  reproducibility: PrivacySummaryValue
   riskSummary?: string
   upgradesAndGovernance?: string
   attributes: PrivacyAttribute[]
@@ -66,8 +71,8 @@ export async function getPrivacyProjectDetails(
   const project = await ps.getProject({
     slug,
     where: ['privacyInfo'],
-    select: ['display', 'privacyInfo', 'statuses', 'tvsConfig'],
-    optional: ['contracts', 'permissions', 'discoveryInfo'],
+    select: ['display', 'privacyInfo', 'statuses'],
+    optional: ['tvsConfig', 'contracts', 'permissions', 'discoveryInfo'],
   })
   if (!project) {
     return undefined
@@ -253,6 +258,9 @@ export async function getPrivacyProjectDetails(
     permissions: project.permissions,
     statuses: project.statuses,
     trustedSetup: project.privacyInfo.trustedSetup,
+    exitWindow: project.privacyInfo.exitWindow,
+    adminViewingKey: project.privacyInfo.adminViewingKey,
+    reproducibility: project.privacyInfo.reproducibility,
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     attributes: project.privacyInfo.attributes ?? [],

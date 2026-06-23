@@ -127,12 +127,12 @@ const navGroups: NavigationGroup[] = [
         icon: PieChartIcon,
         items: [
           {
-            title: 'Anomalies',
-            url: '/interop/insights/anomalies',
+            title: 'Activity',
+            url: '/interop/insights/activity',
           },
           {
             title: 'Suspicious transfers',
-            url: '/interop/insights/anomalies/suspicious-transfers',
+            url: '/interop/insights/activity/suspicious-transfers',
           },
           {
             title: 'Coverage pies',

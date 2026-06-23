@@ -170,9 +170,35 @@ export const railgun: BaseProject = {
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.Railgun,
     tokens: privacyTokens,
+    exitWindow: {
+      value: formatSeconds(executionStartOffset),
+      sentiment: 'warning',
+      orderHint: executionStartOffset,
+      description: `DAO-approved upgrades wait ${formatSeconds(executionStartOffset)} before they can execute, giving users time to unshield funds if they do not approve the change.`,
+    },
+    reproducibility: {
+      value: 'Reproducible',
+      sentiment: 'good',
+      description:
+        'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
+    },
+    adminViewingKey: {
+      value: 'None',
+      sentiment: 'good',
+      description:
+        "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",
+    },
     attributes: [
-      PRIVACY_ATTRIBUTES.upgradeable,
-      PRIVACY_ATTRIBUTES.optCompliance,
+      {
+        ...PRIVACY_ATTRIBUTES.upgradeable,
+        description:
+          'DAO can vote on upgrades that are executable with a 7d delay.',
+      },
+      {
+        ...PRIVACY_ATTRIBUTES.optCompliance,
+        description:
+          "Optional 'proofs of innocence' (POIs), can disassociate a deposit from a list of flagged addresses. They are not enforced by the protocol but can be enforced by relayers.",
+      },
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
