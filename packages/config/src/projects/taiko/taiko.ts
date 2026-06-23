@@ -94,9 +94,10 @@ const emergencyProposalThreshold = discovery.getContractValue<number>(
   'minApprovals',
 )
 
-const bridgesPaused =
+const isPostHackState =
   discovery.getContractValue<boolean>('MainnetBridge', 'paused') &&
-  discovery.getContractValue<boolean>('MainnetERC20Vault', 'paused')
+  discovery.getContractValue<boolean>('MainnetERC20Vault', 'paused') &&
+  discovery.getContractValue<boolean>('MainnetInbox', 'noForce')
 
 export const taiko: ScalingProject = {
   id: ProjectId('taiko'),
@@ -118,8 +119,8 @@ export const taiko: ScalingProject = {
     name: 'Taiko Alethia',
     slug: 'taiko',
     stacks: ['Taiko'],
-    headerWarning: bridgesPaused
-      ? 'Deposits and withdrawals via ETH-Bridge and ERC-20 bridges are paused.'
+    headerWarning: isPostHackState
+      ? 'Deposits and withdrawals via ETH-Bridge and ERC-20 bridges are paused. Forced transactions and permissionless proving fallback are disabled as emergency responses to the hack.'
       : undefined,
     description:
       'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko aims at combining based sequencing and a multi-proof system through SP1, RISC0 and TEEs.',

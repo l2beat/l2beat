@@ -1,3 +1,192 @@
+Generated with discovered.json: 0x9e21d2ba938f0f008b58abedf45e9befcf72fc3b
+
+# Diff at Tue, 23 Jun 2026 08:55:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4f4ac87ddc25db00d317d67a35558c15d985e531 block: 1781603320
+- current timestamp: 1782204489
+
+## Description
+
+Emergency proposals pause the bridges and deactivate forced transactions and permissionless proposal fallback after a hacker steals USD ~1.7M from the bridges by exploiting bugs in whitelisted SGX programs. 
+
+Exploiter transaction: https://app.blocksec.com/phalcon/explorer/tx/eth/0x2f44dc1b883522a88f9b0cbbdfabf9ec33884b69dd4326600c3fab7fb2277260. 
+
+vulnerable mrEnclaves used:
+- fda8bb1fc9938700c25353c0a5fabc96a238e69ce8e35f08e558831a20db33a6 (geth, old)
+- 8f73135b83a84126c7fff37ea02f9363e134aea0f6446b13e198b20d94e75099 (reth, recent)
+
+## Watched changes
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) [taiko/EmergencyMultisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
++++ description: total count of encrypted emergency proposals created.
++++ severity: HIGH
+      values.proposalCount:
+-        29
++        33
+    }
+```
+
+```diff
+    contract MainnetInbox (eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f) [taiko/MainnetInboxRestricted] {
+    +++ description: [FORCED TRANSACTIONS AND PERMISSIONLESS PROVING ARE DISABLED] The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2.
+      template:
+-        "taiko/MainnetInbox"
++        "taiko/MainnetInboxRestricted"
+      sourceHashes.1:
+-        "0xa362200444c4acb7197c44886acc6eb7d90bb3933f19c339e94239e413f132d1"
++        "0xc8fb004590f1c60e5c9735be36da74676fdc93286aa44749d3156ad33bc416e7"
+      description:
+-        "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2."
++        "[FORCED TRANSACTIONS AND PERMISSIONLESS PROVING ARE DISABLED] The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2."
+      values.$implementation:
+-        "eth:0x0680c84378FA6A7D2F46ADa5A70637Fa2A938d42"
++        "eth:0x349Ae3578f48F758d79451EeAB61Cdd5fedD0098"
+      values.$pastUpgrades.1:
++        ["2026-06-22T09:24:35.000Z","0x2fb71b83b8971dd7bbc174f72ea5d37f57bf20277c406b0d679062b20c348e1d",["eth:0x349Ae3578f48F758d79451EeAB61Cdd5fedD0098"]]
+      values.$upgradeCount:
+-        1
++        2
++++ severity: HIGH
+      values.getCurrentForcedInclusionFee:
+-        1000000
++        1020000
+      values.impl:
+-        "eth:0x0680c84378FA6A7D2F46ADa5A70637Fa2A938d42"
++        "eth:0x349Ae3578f48F758d79451EeAB61Cdd5fedD0098"
+      values.noForce:
++        [true]
+      implementationNames.eth:0x0680c84378FA6A7D2F46ADa5A70637Fa2A938d42:
+-        "MainnetInbox"
+      implementationNames.eth:0x349Ae3578f48F758d79451EeAB61Cdd5fedD0098:
++        "MainnetInbox"
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      values.proposalCount:
+-        31
++        34
+      values.proposalIds.31:
++        "606258323829018279630170080852096129484418187295"
+      values.proposalIds.32:
++        "606419523753005534282828605203137025379655483424"
+      values.proposalIds.33:
++        "606424105314793757798300924445813695132257484833"
+    }
+```
+
+```diff
+    contract MainnetERC20Vault (eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) [taiko/SharedERC20Vault] {
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract MainnetBridge (eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) [taiko/TaikoBridge] {
+    +++ description: Shared bridge escrow for Taiko chains for bridged ETH.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1 and issue preconfirmations. It dynamically selects a single operator for a given epoch using the Ethereum beacon block root as a source of randomness.
+      values.operatorMapping.0:
+-        "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"
+      values.operatorMapping.2:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+    }
+```
+
+## Source code changes
+
+```diff
+.../MainnetInbox/MainnetInbox.sol                  | 68 +++++-----------------
+ 1 file changed, 16 insertions(+), 52 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781603320 (main branch discovery), not current.
+
+```diff
+    contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
+      receivedPermissions.16:
+-        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000005","description":"pause and unpause proofs and verification.","role":".owner","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.17:
+-        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000006","description":"can update the contract address for a given name","role":".owner","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.32:
+-        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000001","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.33:
+-        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000002","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.34:
+-        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000005","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.35:
+-        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000006","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.36:
+-        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000010001","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.37:
+-        {"permission":"upgrade","from":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      directlyReceivedPermissions.0:
+-        {"permission":"act","from":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C","role":".daoController"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge (taiko:0x1670000000000000000000000000000000000001) [taiko/L2Bridge]
+    +++ description: Bridge escrow holding preminted ETH on Taiko.
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20Vault (taiko:0x1670000000000000000000000000000000000002) [taiko/L2ERC20Vault]
+    +++ description: Escrow for L2-native tokens sent to L1 via the canonical bridge.
+```
+
+```diff
+-   Status: DELETED
+    contract SignalService (taiko:0x1670000000000000000000000000000000000005) [taiko/SignalService]
+    +++ description: Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications like the bridge escrows to prove that a specific L1<->L2 signal or state transition occurred via Merkle proofs.
+```
+
+```diff
+-   Status: DELETED
+    contract L2AddressManager (taiko:0x1670000000000000000000000000000000000006) [taiko/L2AddressManager]
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
+-   Status: DELETED
+    contract Anchor (taiko:0x1670000000000000000000000000000000010001) [taiko/Anchor]
+    +++ description: Stores L1 block details on L2 as a cross-layer oracle and manages EIP-1559 gas pricing for L2 operations.
+```
+
+```diff
+-   Status: DELETED
+    contract DelegateController (taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C) [taiko/DelegateController]
+    +++ description: Middleware contract that can maintain ownership of DAO-controlled assets and contracts. It can only be invoked by the TaikoDAOController on L1 through the L2 bridge.
+```
+
 Generated with discovered.json: 0x6653a4994b88d931eb0aa60c14b7e113dde2f552
 
 # Diff at Tue, 16 Jun 2026 09:50:07 GMT:
