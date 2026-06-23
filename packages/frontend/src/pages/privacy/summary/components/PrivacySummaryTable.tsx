@@ -5,21 +5,34 @@ import {
   type SortingState,
 } from '@tanstack/react-table'
 import { useState } from 'react'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
+import {
+  adjustTableValue,
+  sortTableValues,
+} from '~/components/table/sorting/sortTableValues'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import { PrivacyAttributesCell } from './PrivacyAttributesCell'
+import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
 const columnHelper = createColumnHelper<PrivacySummaryEntry>()
+
+function MetricCell({ children }: { children: React.ReactNode }) {
+  if (children === undefined || children === null) {
+    return <NoDataBadge />
+  }
+
+  return <span className="font-medium text-base">{children}</span>
+}
 
 const columns = [
   ...getCommonProjectColumns(columnHelper, (row) => row.href),
@@ -47,7 +60,9 @@ const columns = [
             />
           </TwoRowCell.First>
           <TwoRowCell.Second>
-            {formatInteger(ctx.row.original.poolsTracked)} pools tracked
+            {ctx.row.original.isTracked
+              ? `${formatInteger(ctx.row.original.poolsTracked)} pools tracked`
+              : 'Not tracked'}
           </TwoRowCell.Second>
         </TwoRowCell>
       </TableLink>
@@ -56,6 +71,59 @@ const columns = [
     meta: {
       cellClassName: 'pl-4',
       headClassName: 'pl-4',
+    },
+  }),
+  columnHelper.accessor('totalValueLockedUsd', {
+    id: 'totalValueLockedUsd',
+    header: 'TVL',
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      return (
+        <MetricCell>
+          {value === undefined ? undefined : formatCurrency(value, 'usd')}
+        </MetricCell>
+      )
+    },
+    sortUndefined: 'last',
+    meta: {
+      align: 'right',
+      tooltip:
+        'Total USD value currently held across all tracked assets for the protocol.',
+    },
+  }),
+  columnHelper.accessor('totalDeposits', {
+    header: 'Total deposits',
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      return (
+        <MetricCell>
+          {value === undefined ? undefined : formatInteger(value)}
+        </MetricCell>
+      )
+    },
+    sortUndefined: 'last',
+    meta: {
+      align: 'right',
+      tooltip:
+        'Total deposit count aggregated across all tracked tokens and buckets.',
+    },
+  }),
+  columnHelper.accessor('totalValueDeposited30dUsd', {
+    id: 'totalValueDeposited30dUsd',
+    header: '30D volume',
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      return (
+        <MetricCell>
+          {value === undefined ? undefined : formatCurrency(value, 'usd')}
+        </MetricCell>
+      )
+    },
+    sortUndefined: 'last',
+    meta: {
+      align: 'right',
+      tooltip:
+        'Total USD value of all deposits over the last 30 days, based on configured token prices.',
     },
   }),
   columnHelper.display({
@@ -68,58 +136,61 @@ const columns = [
     meta: {
       align: 'center',
       tooltip:
-        "Shows the trusted setup used by the project's proving system and its risk.",
+        "Trusted setup used by the project's proving system and its risk.",
     },
   }),
-  columnHelper.accessor('totalValueLockedUsd', {
-    id: 'totalValueLockedUsd',
-    header: 'TVL',
+  columnHelper.accessor((entry) => adjustTableValue(entry.exitWindow), {
+    id: 'exitWindow',
+    header: 'Exit window',
     cell: (ctx) => (
-      <span className="font-medium text-base">
-        {formatCurrency(ctx.getValue() ?? 0, 'usd')}
-      </span>
+      <PrivacyAssessmentCell value={ctx.row.original.exitWindow} showValue />
     ),
+    sortDescFirst: true,
+    sortUndefined: 'last',
+    sortingFn: (a, b) =>
+      sortTableValues(a.original.exitWindow, b.original.exitWindow),
     meta: {
-      align: 'right',
+      align: 'center',
       tooltip:
-        'Total USD value currently held across all tracked assets for the protocol.',
+        'Time users have to withdraw before a malicious upgrade can take effect.',
     },
   }),
-  columnHelper.accessor('totalDeposits', {
-    header: 'Total deposits',
+  columnHelper.accessor((entry) => adjustTableValue(entry.adminViewingKey), {
+    id: 'adminViewingKey',
+    header: 'Admin\nview key',
     cell: (ctx) => (
-      <span className="font-medium text-base">
-        {formatInteger(ctx.getValue() ?? 0)}
-      </span>
+      <PrivacyAssessmentCell
+        value={ctx.row.original.adminViewingKey}
+        showValue
+      />
     ),
+    sortDescFirst: true,
+    sortUndefined: 'last',
+    sortingFn: (a, b) =>
+      sortTableValues(a.original.adminViewingKey, b.original.adminViewingKey),
     meta: {
-      align: 'right',
+      align: 'center',
       tooltip:
-        'Total deposit count aggregated across all tracked tokens and buckets.',
+        "Whether the protocol has a privilidged admin key that can decrypt users' private transactions, and whether the use of such admin key is auditable by users.",
     },
   }),
-  columnHelper.accessor('totalValueDeposited30dUsd', {
-    id: 'totalValueDeposited30dUsd',
-    header: '30D volume',
+  columnHelper.accessor((entry) => adjustTableValue(entry.reproducibility), {
+    id: 'reproducibility',
+    header: 'Reproducibility',
     cell: (ctx) => (
-      <span className="font-medium text-base">
-        {formatCurrency(ctx.getValue() ?? 0, 'usd')}
-      </span>
+      <PrivacyAssessmentCell
+        value={ctx.row.original.reproducibility}
+        showValue
+      />
     ),
+    sortDescFirst: true,
+    sortUndefined: 'last',
+    sortingFn: (a, b) =>
+      sortTableValues(a.original.reproducibility, b.original.reproducibility),
     meta: {
-      align: 'right',
+      align: 'center',
       tooltip:
-        'Total USD value of all deposits over the last 30 days, based on configured token prices.',
-    },
-  }),
-  columnHelper.accessor('attributes', {
-    header: 'Attributes',
-    cell: (ctx) => <PrivacyAttributesCell attributes={ctx.getValue()} />,
-    enableSorting: false,
-    meta: {
-      tooltip:
-        'Protocol-level privacy, compliance, upgradeability, and usage attributes.',
-      cellClassName: 'pr-1!',
+        'Whether all source code needed to audit the protocol and participate in it is published and can be used locally.',
     },
   }),
 ]
