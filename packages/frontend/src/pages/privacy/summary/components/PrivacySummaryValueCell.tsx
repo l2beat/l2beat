@@ -7,6 +7,7 @@ import {
 import { ProjectRiskTooltipContent } from '~/components/projects/ProjectRiskTooltipContent'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import { cn } from '~/utils/cn'
+import { sentimentToRiskDot } from '../../sentimentToRiskDot'
 
 type PrivacySummaryTableValue = PrivacyExitWindow | PrivacySummaryValue
 
@@ -27,7 +28,7 @@ export function PrivacySummaryValueCell({
         aria-label={value.value}
       >
         <TrustedSetupRiskDot
-          risk={toRiskDotRisk(value.sentiment)}
+          risk={sentimentToRiskDot(value.sentiment)}
           size="sm"
           className="shrink-0"
         />
@@ -42,19 +43,4 @@ export function PrivacySummaryValueCell({
       </TooltipContent>
     </Tooltip>
   )
-}
-
-function toRiskDotRisk(sentiment: PrivacySummaryTableValue['sentiment']) {
-  switch (sentiment) {
-    case 'good':
-      return 'green'
-    case 'warning':
-      return 'yellow'
-    case 'bad':
-      return 'red'
-    case 'neutral':
-    case 'UnderReview':
-    case undefined:
-      return 'N/A'
-  }
 }

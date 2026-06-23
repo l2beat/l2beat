@@ -127,13 +127,13 @@ export const tornadoCash: BaseProject = {
         'The core mixer contracts are immutable and have no admin upgrade path, so users can always withdraw with a valid note and proof.',
     },
     reproducibility: {
-      value: 'True',
+      value: 'Reproducible',
       sentiment: 'good',
       description:
         'There is at least one practical way to participate in Tornado Cash using published source code that can be audited and run locally.',
     },
     adminViewingKey: {
-      value: 'False',
+      value: 'None',
       sentiment: 'good',
       description:
         "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",

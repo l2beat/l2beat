@@ -45,16 +45,16 @@ export const strk20: BaseProject = {
         'The pool implementation is immediately upgradeable, so users have no delay to withdraw before a malicious upgrade can take effect.',
     },
     reproducibility: {
-      value: 'False',
+      value: 'Not published',
       sentiment: 'bad',
       description:
-        'The TypeScript SDK and proving stack are not published, so users cannot independently reproduce the full system locally.',
+        'The STRK-20 protocol program and the sources for proving stack are not published, so users cannot independently reproduce the full system locally.',
     },
     adminViewingKey: {
-      value: 'True',
+      value: 'Use undetectable',
       sentiment: 'bad',
       description:
-        'All private actions include auditor-encrypted metadata, so whoever controls the auditor private key can decrypt user activity retroactively.',
+        'All private actions include auditor-encrypted metadata, so whoever controls the auditor private key can decrypt user activity retroactively. User can not know whether their privacy was violated.',
     },
     attributes: [
       {

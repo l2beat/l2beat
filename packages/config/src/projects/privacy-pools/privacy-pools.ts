@@ -100,13 +100,13 @@ export const privacyPools: BaseProject = {
         'Even if the Entrypoint or ASP configuration turns malicious, users can always publicly ragequit from the immutable pool contracts, at the cost of losing privacy.',
     },
     reproducibility: {
-      value: 'True',
+      value: 'Reproducible',
       sentiment: 'good',
       description:
         'The contracts, circuits, and supporting software needed to participate in Privacy Pools are publicly available and can be run locally.',
     },
     adminViewingKey: {
-      value: 'False',
+      value: 'None',
       sentiment: 'good',
       description:
         "The protocol does not include an auditor viewing key that decrypts users' private balances and transactions.",

@@ -160,7 +160,10 @@ const columns = [
     id: 'adminViewingKey',
     header: 'Admin view\nkey',
     cell: (ctx) => (
-      <PrivacySummaryValueCell value={ctx.row.original.adminViewingKey} />
+      <PrivacySummaryValueCell
+        value={ctx.row.original.adminViewingKey}
+        showValue
+      />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
@@ -176,7 +179,10 @@ const columns = [
     id: 'reproducibility',
     header: 'Reproducibility',
     cell: (ctx) => (
-      <PrivacySummaryValueCell value={ctx.row.original.reproducibility} />
+      <PrivacySummaryValueCell
+        value={ctx.row.original.reproducibility}
+        showValue
+      />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
