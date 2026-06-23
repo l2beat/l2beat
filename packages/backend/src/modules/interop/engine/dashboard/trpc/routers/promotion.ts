@@ -74,18 +74,11 @@ export function createPromotionRouter() {
     promote: protectedProcedure
       .input(PromoteRequest)
       .mutation(async ({ ctx, input }) => {
-        const timestamp = UnixTime(input.timestamp)
-        // Preserve the engine's `reasons` as an audit trail of why it was blocked;
-        // the human verdict (non-`auto`) is sticky, so the engine won't revert it.
-        const existing =
-          await ctx.db.interopAggregateStatus.getByTimestamp(timestamp)
-        await ctx.db.interopAggregateStatus.upsert({
-          timestamp,
-          status: 'promoted',
-          promotedBy: ctx.session.email,
-          reasons: existing?.reasons,
-        })
-        return { timestamp: input.timestamp }
+        const promoted = await ctx.db.interopAggregateStatus.promoteIfBlocked(
+          UnixTime(input.timestamp),
+          ctx.session.email,
+        )
+        return { timestamp: input.timestamp, promoted }
       }),
   })
 }

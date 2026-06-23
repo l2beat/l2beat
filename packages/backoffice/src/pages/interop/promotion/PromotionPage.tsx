@@ -46,9 +46,16 @@ export function PromotionPage() {
   const promote = useMutation(
     trpc.interop.promotion.promote.mutationOptions({
       onSuccess: (result) => {
-        toast.success('Snapshot promoted', {
-          description: `Window end ${formatTransferTimestamp(result.timestamp)} UTC is now promoted.`,
-        })
+        if (result.promoted) {
+          toast.success('Snapshot promoted', {
+            description: `Window end ${formatTransferTimestamp(result.timestamp)} UTC is now promoted.`,
+          })
+        } else {
+          toast.info('No change', {
+            description:
+              'This snapshot was no longer blocked; the list refreshed.',
+          })
+        }
         void queryClient.invalidateQueries(
           trpc.interop.promotion.listRecent.queryFilter(),
         )

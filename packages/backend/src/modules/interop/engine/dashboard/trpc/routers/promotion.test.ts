@@ -82,61 +82,34 @@ describe(createPromotionRouter.name, () => {
   })
 
   describe('promote', () => {
-    it('upserts a promoted verdict with the operator email, preserving reasons', async () => {
-      const reasons = [
-        {
-          rule: 'maxLaneVolume',
-          scope: 'a|b|c|d',
-          value: 9,
-          threshold: 1,
-          message: 'too big',
-        },
-      ]
-      const getByTimestamp = mockFn().resolvesTo({
-        timestamp: UnixTime(100),
-        status: 'blocked',
-        promotedBy: 'auto',
-        reasons,
-        checkedAt: UnixTime(110),
-        updatedAt: UnixTime(110),
-      })
-      const upsert = mockFn().resolvesTo(undefined)
+    it('promotes a blocked snapshot with the operator email', async () => {
+      const promoteIfBlocked = mockFn().resolvesTo(true)
       const caller = createCaller(
-        mockObject<Database['interopAggregateStatus']>({
-          getByTimestamp,
-          upsert,
-        }),
+        mockObject<Database['interopAggregateStatus']>({ promoteIfBlocked }),
       )
 
       const result = await caller.promote({ timestamp: 100 })
 
-      expect(upsert).toHaveBeenCalledWith({
-        timestamp: UnixTime(100),
-        status: 'promoted',
-        promotedBy: 'ops@l2beat.com',
-        reasons,
-      })
-      expect(result).toEqual({ timestamp: 100 })
+      expect(promoteIfBlocked).toHaveBeenCalledWith(
+        UnixTime(100),
+        'ops@l2beat.com',
+      )
+      expect(result).toEqual({ timestamp: 100, promoted: true })
     })
 
-    it('promotes even when no prior status row exists (reasons undefined)', async () => {
-      const getByTimestamp = mockFn().resolvesTo(undefined)
-      const upsert = mockFn().resolvesTo(undefined)
+    it('reports promoted=false when the snapshot was not blocked (no-op)', async () => {
+      const promoteIfBlocked = mockFn().resolvesTo(false)
       const caller = createCaller(
-        mockObject<Database['interopAggregateStatus']>({
-          getByTimestamp,
-          upsert,
-        }),
+        mockObject<Database['interopAggregateStatus']>({ promoteIfBlocked }),
       )
 
-      await caller.promote({ timestamp: 100 })
+      const result = await caller.promote({ timestamp: 100 })
 
-      expect(upsert).toHaveBeenCalledWith({
-        timestamp: UnixTime(100),
-        status: 'promoted',
-        promotedBy: 'ops@l2beat.com',
-        reasons: undefined,
-      })
+      expect(promoteIfBlocked).toHaveBeenCalledWith(
+        UnixTime(100),
+        'ops@l2beat.com',
+      )
+      expect(result).toEqual({ timestamp: 100, promoted: false })
     })
   })
 })

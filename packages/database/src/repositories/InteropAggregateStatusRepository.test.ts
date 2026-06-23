@@ -58,6 +58,61 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
   })
 
   describe(
+    InteropAggregateStatusRepository.prototype.promoteIfBlocked.name,
+    () => {
+      it('promotes a blocked snapshot and stamps the operator (returns true)', async () => {
+        await repository.upsertAuto({
+          timestamp: UnixTime(100),
+          status: 'blocked',
+          reasons: [{ rule: 'maxLaneVolume' }],
+        })
+
+        const applied = await repository.promoteIfBlocked(
+          UnixTime(100),
+          'ops@l2beat.com',
+        )
+
+        expect(applied).toEqual(true)
+        const row = await repository.getByTimestamp(UnixTime(100))
+        expect(row?.status).toEqual('promoted')
+        expect(row?.promotedBy).toEqual('ops@l2beat.com')
+        // reasons kept as the audit trail of why it was blocked
+        expect(row?.reasons).toEqual([{ rule: 'maxLaneVolume' }])
+      })
+
+      it('does NOT manualize an already-promoted snapshot (returns false)', async () => {
+        await repository.upsertAuto({
+          timestamp: UnixTime(100),
+          status: 'promoted',
+        })
+
+        const applied = await repository.promoteIfBlocked(
+          UnixTime(100),
+          'ops@l2beat.com',
+        )
+
+        // stays an auto verdict so the engine can still block it if the gate fails
+        expect(applied).toEqual(false)
+        const row = await repository.getByTimestamp(UnixTime(100))
+        expect(row?.status).toEqual('promoted')
+        expect(row?.promotedBy).toEqual('auto')
+      })
+
+      it('is a no-op when no status row exists (returns false)', async () => {
+        const applied = await repository.promoteIfBlocked(
+          UnixTime(100),
+          'ops@l2beat.com',
+        )
+
+        expect(applied).toEqual(false)
+        expect(await repository.getByTimestamp(UnixTime(100))).toEqual(
+          undefined,
+        )
+      })
+    },
+  )
+
+  describe(
     InteropAggregateStatusRepository.prototype.getLatestPromotedTimestamp.name,
     () => {
       it('returns the max promoted timestamp, skipping a newer blocked one', async () => {
