@@ -562,6 +562,14 @@ export const taiko: ScalingProject = {
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
     {
+      title: 'Proof system exploit',
+      url: 'https://x.com/taikoxyz/status/2068857506718515320',
+      date: '2026-06-23T00:00:00.00Z',
+      description:
+        'An attacker exploits a vulnerability in the SGX proof system and steals USD ~1.7M.',
+      type: 'incident',
+    },
+    {
       title: 'Preconfs introduction',
       url: 'https://taiko.mirror.xyz/rbgD_KM06QkDe1t0Gw1wI_MLvwobTS1PqEIfstZRo48',
       date: '2025-08-11T00:00:00.00Z',
