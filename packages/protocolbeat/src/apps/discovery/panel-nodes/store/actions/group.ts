@@ -1,0 +1,76 @@
+import type { Field, Node, State } from '../State'
+import { NODE_WIDTH } from '../utils/constants'
+import { updateNodePositions } from '../utils/updateNodePositions'
+
+export function groupSelected(state: State): Partial<State> {
+  const selectedSet = new Set(state.selected)
+  const subnodes = state.nodes.filter((node) => selectedSet.has(node.id))
+  if (subnodes.length === 0) {
+    return {}
+  }
+
+  const phantom = createPhantomNode(subnodes, selectedSet)
+  const remaining = state.nodes.filter((node) => !selectedSet.has(node.id))
+
+  return updateNodePositions(state, {
+    nodes: [...remaining, phantom],
+    selected: [phantom.id],
+  })
+}
+
+export function ungroupSelected(state: State): Partial<State> {
+  if (state.selected.length !== 1) {
+    return {}
+  }
+  const phantom = state.nodes.find((node) => node.id === state.selected[0])
+  if (!phantom || phantom.subnodes.length === 0) {
+    return {}
+  }
+
+  const remaining = state.nodes.filter((node) => node.id !== phantom.id)
+
+  return updateNodePositions(state, {
+    nodes: [...remaining, ...phantom.subnodes],
+    selected: phantom.subnodes.map((node) => node.id),
+  })
+}
+
+function createPhantomNode(subnodes: Node[], memberSet: Set<string>): Node {
+  const anchor = subnodes[0]?.box
+  return {
+    id: `group:${crypto.randomUUID()}`,
+    address: '',
+    isInitial: false,
+    hasTemplate: false,
+    addressType: 'Contract',
+    name: 'Group',
+    fields: collectOutgoingFields(subnodes, memberSet),
+    hiddenFields: [],
+    box: {
+      x: anchor?.x ?? 0,
+      y: anchor?.y ?? 0,
+      width: NODE_WIDTH,
+      height: NODE_WIDTH,
+    },
+    color: 0,
+    hueShift: 0,
+    data: null,
+    isReachable: true,
+    subnodes,
+  }
+}
+
+function collectOutgoingFields(
+  subnodes: Node[],
+  memberSet: Set<string>,
+): Field[] {
+  const outgoing: Field[] = []
+  for (const node of subnodes) {
+    for (const field of node.fields) {
+      if (!memberSet.has(field.target)) {
+        outgoing.push(field)
+      }
+    }
+  }
+  return outgoing
+}

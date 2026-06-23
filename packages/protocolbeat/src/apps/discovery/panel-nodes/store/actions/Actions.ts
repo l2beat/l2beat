@@ -24,6 +24,8 @@ export interface Actions {
   colorSelected: (color: number) => void
   alignSelected: (direction: AlignDirection) => void
   distributeSelected: (axis: DistributeAxis) => void
+  groupSelected: () => void
+  ungroupSelected: () => void
   layout: (locations: NodeLocations) => void
   undo: () => void
   redo: () => void

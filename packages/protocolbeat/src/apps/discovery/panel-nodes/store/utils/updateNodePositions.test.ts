@@ -282,5 +282,6 @@ function makeNode(
     hueShift: 0,
     data: null,
     isReachable: true,
+    subnodes: [],
   }
 }
