@@ -122,6 +122,23 @@ export class InteropAggregateStatusRepository extends BaseRepository {
       .execute()
   }
 
+  async promoteIfBlocked(
+    timestamp: UnixTime,
+    promotedBy: string,
+  ): Promise<boolean> {
+    const result = await this.db
+      .updateTable('InteropAggregateStatus')
+      .set({
+        status: 'promoted',
+        promotedBy,
+        updatedAt: UnixTime.toDate(UnixTime.now()),
+      })
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .where('status', '=', 'blocked')
+      .executeTakeFirst()
+    return (result?.numUpdatedRows ?? 0n) > 0n
+  }
+
   async getLatestPromotedTimestamp(): Promise<UnixTime | undefined> {
     const result = await this.db
       .selectFrom('InteropAggregateStatus')

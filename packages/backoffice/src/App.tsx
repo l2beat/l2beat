@@ -22,6 +22,7 @@ import { MessageDetailsPage } from './pages/interop/messages/MessageDetailsPage'
 import { MessagesPage } from './pages/interop/messages/MessagesPage'
 import { MissingTokensPage } from './pages/interop/missing-tokens/MissingTokensPage'
 import { ProcessorStatusesPage } from './pages/interop/processor-statuses/ProcessorStatusesPage'
+import { PromotionPage } from './pages/interop/promotion/PromotionPage'
 import { StatusPage } from './pages/interop/status/StatusPage'
 import { SummaryPage } from './pages/interop/summary/SummaryPage'
 import { TransferDetailsPage } from './pages/interop/transfers/TransferDetailsPage'
@@ -117,6 +118,7 @@ function EnvironmentScopedApp() {
               element={<ChainsSummaryPage />}
             />
             <Route path="/interop/insights/memory" element={<MemoryPage />} />
+            <Route path="/interop/promotion" element={<PromotionPage />} />
             <Route
               path="/website/status/tracked-txs"
               element={<TrackedTxsStatusPage />}
