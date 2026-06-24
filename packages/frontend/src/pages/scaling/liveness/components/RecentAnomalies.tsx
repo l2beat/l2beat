@@ -10,6 +10,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { AnomalyText } from './AnomalyText'
 import { NoAnomaliesState } from './NoRecentAnomaliesState'
 
@@ -82,8 +83,8 @@ function AnomalyCollapsible({
 }: {
   projectWithAnomalies: ProjectWithAnomaly
 }) {
-  const isAnyOngoing = projectWithAnomalies.recentAnomalies.some(
-    (anomaly) => anomaly.end === undefined,
+  const isAnyOngoing = projectWithAnomalies.recentAnomalies.some((anomaly) =>
+    isAnomalyOngoing(anomaly),
   )
   return (
     <Collapsible
@@ -112,7 +113,7 @@ function AnomalyCollapsible({
             return (
               <div key={anomaly.start} className="text-xs">
                 <HorizontalSeparator className="my-3 first:mt-0" />
-                {anomaly.end === undefined ? (
+                {isAnomalyOngoing(anomaly) ? (
                   <div className="mb-1 flex items-center gap-1">
                     <LiveIndicator />
                     <span className="subtitle-12 text-negative uppercase leading-none">

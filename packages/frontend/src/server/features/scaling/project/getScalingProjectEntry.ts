@@ -41,6 +41,7 @@ import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/getScalingRiskSummary'
 import { getDataAvailabilitySection } from '~/utils/project/technology/getDataAvailabilitySection'
 import { getOperatorSection } from '~/utils/project/technology/getOperatorSection'
@@ -216,9 +217,7 @@ export async function getScalingProjectEntry(
     ? getDiscoveryUpdates(project.id)
     : []
 
-  const ongoingAnomalies = projectLiveness?.anomalies.filter(
-    (a) => a.end === undefined,
-  )
+  const ongoingAnomalies = projectLiveness?.anomalies.filter(isAnomalyOngoing)
 
   const tvsProjectStats = tvsStats.projects[project.id]
   const interopData = await getProjectInteropData(

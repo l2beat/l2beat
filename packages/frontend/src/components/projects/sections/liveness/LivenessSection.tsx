@@ -12,6 +12,7 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { AnomalyText } from '~/pages/scaling/liveness/components/AnomalyText'
 import { NoAnomaliesState } from '~/pages/scaling/liveness/components/NoRecentAnomaliesState'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getTrackedTransactions'
 import type { ChartRange } from '~/utils/range/range'
 import { TrackedTransactions } from '../costs/TrackedTransactions'
@@ -45,7 +46,7 @@ export function LivenessSection({
   isForDaBridge,
   ...sectionProps
 }: LivenessSectionProps) {
-  const ongoingAnomalies = anomalies.filter((a) => a.end === undefined)
+  const ongoingAnomalies = anomalies.filter(isAnomalyOngoing)
   return (
     <ProjectSection {...sectionProps}>
       <p className="mb-4 text-paragraph-15 md:text-paragraph-16">

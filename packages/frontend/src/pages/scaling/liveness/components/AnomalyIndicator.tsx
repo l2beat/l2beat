@@ -7,6 +7,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 
 interface Props {
   anomalies: LivenessAnomaly[]
@@ -19,7 +20,7 @@ export function AnomalyIndicator({ anomalies, href }: Props) {
     anomalies,
     indicators.length,
   )
-  const hasOngoing = anomalies.some((a) => a.end === undefined)
+  const hasOngoing = anomalies.some(isAnomalyOngoing)
 
   const content = (
     <div className="flex flex-col items-center gap-0.5">
@@ -92,7 +93,7 @@ function calculateUptimePercentage(anomalies: LivenessAnomaly[], days: number) {
   const intervals = anomalies
     .map((a) => ({
       start: Math.max(a.start, windowStart),
-      end: a.end ? Math.min(a.end, now) : now,
+      end: isAnomalyOngoing(a) ? now : Math.min(a.end ?? a.start, now),
     }))
     .filter((i) => i.end > i.start)
     .sort((a, b) => a.start - b.start)
@@ -123,14 +124,15 @@ function toAnomalyIndicatorEntries(anomalies: LivenessAnomaly[]) {
     const anomaliesInGivenDay = anomalies.filter((a) => {
       return (
         dayInLoop >= UnixTime.toStartOf(a.start, 'day') &&
-        (!a.end || dayInLoop <= UnixTime.toEndOf(a.end, 'day'))
+        (isAnomalyOngoing(a) ||
+          dayInLoop <= UnixTime.toEndOf(a.end ?? a.start, 'day'))
       )
     })
 
     if (anomaliesInGivenDay.length === 0) {
       result.push('none')
     } else {
-      const isAnyOngoing = anomaliesInGivenDay.some((a) => a.end === undefined)
+      const isAnyOngoing = anomaliesInGivenDay.some(isAnomalyOngoing)
       result.push(isAnyOngoing ? 'ongoing' : 'recovered')
     }
 

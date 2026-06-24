@@ -2,6 +2,7 @@ import { formatDuration } from '~/components/chart/liveness/LivenessChart'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { anomalySubtypeToLabel } from './AnomalyIndicator'
 import { getDurationColorClassName } from './LivenessDurationCell'
 
@@ -12,7 +13,7 @@ export function AnomalyText({
   anomaly: LivenessAnomaly
   className?: string
 }) {
-  if (anomaly.end === undefined) {
+  if (isAnomalyOngoing(anomaly)) {
     return (
       <p className={cn('text-paragraph-13', className)}>
         No{' '}
@@ -65,10 +66,15 @@ export function AnomalyText({
       <span className="font-medium">
         {formatTimestamp(anomaly.start, { mode: 'datetime' })}
       </span>{' '}
-      until{' '}
-      <span className="font-medium">
-        {formatTimestamp(anomaly.end, { mode: 'datetime' })}
-      </span>
+      {anomaly.end && (
+        <>
+          {' '}
+          until{' '}
+          <span className="font-medium">
+            {formatTimestamp(anomaly.end, { mode: 'datetime' })}
+          </span>
+        </>
+      )}
       {')'}. These typically occur every{' '}
       <span
         className={cn(
