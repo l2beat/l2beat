@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PauserSet",
+  "description": "Maintains the pauser account set used in pause-control checks.",
+  "category": "gov"
+}

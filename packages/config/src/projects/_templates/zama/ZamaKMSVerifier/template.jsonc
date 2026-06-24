@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "KMSVerifier",
+  "description": "Verifies KMS signatures over public decryption results before those results are accepted onchain.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID"]
+}

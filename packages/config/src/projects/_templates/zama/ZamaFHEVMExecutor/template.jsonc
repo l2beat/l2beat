@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FHEVMExecutor",
+  "description": "FHEVM executor that accepts encrypted operation requests, accounts for computation usage, and stores ciphertext handles for operation results.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID"]
+}

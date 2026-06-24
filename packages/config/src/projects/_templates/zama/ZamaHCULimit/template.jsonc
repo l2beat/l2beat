@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "HCULimit",
+  "description": "Tracks and enforces homomorphic computation unit limits for FHEVM operation requests.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID"]
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ACL",
+  "description": "Access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID"]
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "InputVerifier",
+  "description": "Verifies signed encrypted input bundles before they are accepted as ciphertext handles.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID"]
+}

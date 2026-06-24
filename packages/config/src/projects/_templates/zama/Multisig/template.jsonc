@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Multisig",
+  "description": "Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.",
+  "category": "gov",
+  "ignoreMethods": [
+    "addresslistLengthAtBlock",
+    "canExecute",
+    "getProposal",
+    "proposalCount",
+    "proxiableUUID"
+  ],
+  "fields": {
+    "multisigSettings": {
+      "description": "Aragon multisig settings: whether proposal creation is restricted to listed members and the minimum approval threshold.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "addresslistLength": {
+      "description": "Number of addresses currently listed as multisig members.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "$members": {
+      "description": "Current multisig members reconstructed from MembersAdded and MembersRemoved events.",
+      "handler": {
+        "type": "event",
+        "select": "members",
+        "flatten": true,
+        "ignoreRelative": true,
+        "add": { "event": "event MembersAdded(address[] members)" },
+        "remove": { "event": "event MembersRemoved(address[] members)" }
+      }
+    },
+    "$threshold": {
+      "description": "Minimum approvals required by this multisig plugin.",
+      "copy": "multisigSettings",
+      "edit": ["get", "minApprovals"]
+    }
+  }
+}

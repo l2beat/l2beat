@@ -1,0 +1,78 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ConfidentialWrapperV3",
+  "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and underlying-token denylist checks.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "owner": {
+      "description": "Current owner of the wrapper.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        { "type": "upgrade" },
+        {
+          "type": "interact",
+          "description": "block and unblock users, transfer ownership, and authorize implementation upgrades."
+        }
+      ]
+    },
+    "pendingOwner": {
+      "description": "Pending owner for a two-step ownership transfer.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "accept ownership of the wrapper if non-zero."
+        }
+      ]
+    },
+    "underlying": {
+      "description": "ERC-20 token escrowed by this wrapper.",
+      "type": "EXTERNAL"
+    },
+    "getUnderlyingDenyListSelector": {
+      "description": "Underlying-token denylist hook used by the wrapper. For cUSDC this is USDC's isBlacklisted(address) selector, so Circle blacklist status is enforced on wrapper operations.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "blockedUsers": {
+      "description": "Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "user",
+        "ignoreRelative": true,
+        "add": { "event": "UserBlocked" },
+        "remove": { "event": "UserUnblocked" }
+      }
+    },
+    "fheAcl": {
+      "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6"
+      }
+    },
+    "fheCoprocessor": {
+      "description": "Zama FHE coprocessor/executor contract that receives encrypted-operation requests and stores encrypted-result handles.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "0xD82385dADa1ae3E969447f20A3164F6213100e75"
+      }
+    },
+    "fheKmsVerifier": {
+      "description": "Zama KMS verifier contract used to verify threshold decryption/signature material returned by the offchain KMS.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
+      }
+    }
+  },
+  "ignoreRelatives": ["underlying"]
+}
