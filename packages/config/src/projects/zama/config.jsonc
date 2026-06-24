@@ -35,6 +35,21 @@
     "eth:0xBc860b6a4C860C5424B84A056E53ACFb2C99a38F": "ZamaGovMultisigB"
   },
   "overrides": {
+    "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": {
+      "category": "spam"
+    },
+    "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4": {
+      "category": "spam"
+    },
+    "eth:0x8c0E2c46F96756C49DBd6723F4C57a03a254B4B0": {
+      "category": "spam"
+    },
+    "eth:0x69E55790880d0ABa56E48Ee1f7fc3834b0F5c223": {
+      "category": "spam"
+    },
+    "eth:0x97E18544e156724E4076945F10c288ecBBC94e54": {
+      "category": "spam"
+    },
     "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3": {
       "fields": {
         "daoExecutors": {

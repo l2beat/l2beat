@@ -27,7 +27,6 @@
         "type": "event",
         "select": "members",
         "flatten": true,
-        "ignoreRelative": true,
         "add": { "event": "event MembersAdded(address[] members)" },
         "remove": { "event": "event MembersRemoved(address[] members)" }
       }

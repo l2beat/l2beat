@@ -1,15 +1,21 @@
-Generated with discovered.json: 0x7bd732b1152024deebf7544873e6c50dbb4185f0
+Generated with discovered.json: 0x92d7a36e7912b8d885d7c909a0d0d7e6a42e4066
 
-# Diff at Wed, 24 Jun 2026 13:47:23 GMT:
+# Diff at Wed, 24 Jun 2026 13:58:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1782308700
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Initial discovery.
 
 ## Initial discovery
+
+```diff
++   Status: CREATED
+    contract ZamaGovMemberDAO (eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C) [zama/ZamaDAO]
+    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+```
 
 ```diff
 +   Status: CREATED
@@ -19,8 +25,26 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    EOA  (eth:0x4202860Fa6afAF3e2977cD139Ac693a05e4f9450)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract ConfidentialSteakcUSDCWrapper (eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458) [zama/ConfidentialWrapperV3]
     +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x69E55790880d0ABa56E48Ee1f7fc3834b0F5c223) [GnosisSafe]
+    +++ description: None
 ```
 
 ```diff
@@ -45,6 +69,18 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract ConfidentialBRONWrapper (eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc) [zama/ConfidentialWrapperV3]
     +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x8c0E2c46F96756C49DBd6723F4C57a03a254B4B0) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x97E18544e156724E4076945F10c288ecBBC94e54) [GnosisSafe]
+    +++ description: None
 ```
 
 ```diff
@@ -111,6 +147,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract ZamaGovMultisigA (eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f) [zama/Multisig]
     +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4) [GnosisSafe]
+    +++ description: None
 ```
 
 ```diff
