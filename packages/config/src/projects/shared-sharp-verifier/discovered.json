@@ -1,6 +1,6 @@
 {
   "name": "shared-sharp-verifier",
-  "timestamp": 1782119094,
+  "timestamp": 1782304372,
   "configHash": "0x763beeb7544e2aaab313d4437719ced5db231a569f24182a5200e9732c2c3db7",
   "entries": [
     {
@@ -1612,7 +1612,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 21,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3268,13 +3268,16 @@
           "eth:0xb641a2035c7340CDff40f069454EB0B8Bbab6a3C",
           "eth:0x3F3380d9e31D53264dEA568E654b6e9D9EB3895A",
           "eth:0x93b1F80BaDc57AE16Ef21d25EEc31A3785e7c426",
-          "eth:0x8Cdcf93be2508cb8b348E539EC8EEF2434BFB2DE"
+          "eth:0x8Cdcf93be2508cb8b348E539EC8EEF2434BFB2DE",
+          "eth:0x6eEDe907dF99F7FBCd26e71e5b157BBB6483Fc8b",
+          "eth:0xA410aEA6d7ad518165c214a42730A19fB3828170"
         ],
         "customProxyImplementations": [
           "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
           "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934",
           "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066",
-          "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe"
+          "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe",
+          "eth:0xE67515a751291445B85b2F176c1eCdf08e86b406"
         ],
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "getUpgradeActivationDelay": 691200,
@@ -4423,6 +4426,11 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "address": "eth:0x6eEDe907dF99F7FBCd26e71e5b157BBB6483Fc8b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "CpuFrilessVerifier",
       "address": "eth:0x71574057D12541ccDa98643aC56441838353A26D",
       "type": "Contract",
@@ -4742,6 +4750,11 @@
         "eth:0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766": "CpuOods"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0xA410aEA6d7ad518165c214a42730A19fB3828170",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "CpuOods",
@@ -7357,6 +7370,6 @@
     "shared-sharp-verifier/SHARPVerifier": "0x9f442d61eda2d5aabf1141b1f7769fd6c3100f2fae6777f87260eb27a9903db4",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xcbc3662577ca6bc2de4ebf8583008543e01742f079dd46e757b4abe24d694805"
   },
-  "usedBlockNumbers": { "ethereum": 25372126 },
-  "permissionsConfigHash": "0xff6f1aa471d39242cd5a514dee60a8fa0eee2c13638c6e323d4bf8bf1e11403e"
+  "usedBlockNumbers": { "ethereum": 25387494 },
+  "permissionsConfigHash": "0x1e3902f30f489d3f46ccf279fa71c48fff59c41a78c56bd4bd238ea5c46383ba"
 }

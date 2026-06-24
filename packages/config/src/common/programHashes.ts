@@ -582,6 +582,26 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x1d1e0ac74bb66ded0388062e779adae47925fd572a49a3424e2684f83d776004.md',
     ),
   },
+  '0x001db6dc655ffc97e6ec7a2b5c9b1ddf42c2235faa007d8a96d659c68b7c432a': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.2.4-mainnet.4/programs/aggregation',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x001db6dc655ffc97e6ec7a2b5c9b1ddf42c2235faa007d8a96d659c68b7c432a.md',
+    ),
+  },
+  '0x6f0230de6e9b59592b3127f55829c9a766d397903df5c57d557c91634a30b32b': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.2.4-mainnet.4/programs/range/ethereum',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x6f0230de6e9b59592b3127f55829c9a766d397903df5c57d557c91634a30b32b.md',
+    ),
+  },
   '0x08666bcf03c2240b14b399040abdc4aa2fe934535315fd3c158f010926d1e4a5': {
     ...OP_SUCCINCT_RANGE_BLOBS,
     programUrl:
