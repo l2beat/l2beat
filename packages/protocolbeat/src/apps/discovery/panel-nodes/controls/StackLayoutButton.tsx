@@ -120,13 +120,16 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
     }),
   )
 
-  const byId = new Map(nodes.map((x) => [x.id, x]))
+  const byAddress = new Map<string, LayoutNode>()
+  for (const node of nodes) {
+    registerAddresses(node, node.base, byAddress)
+  }
 
   for (const node of nodes) {
-    const chainA = getChain(node.base.id)
+    const chainA = nodeChain(node.base)
     for (const field of node.base.fields) {
-      const other = byId.get(field.target)
-      if (other && other !== node && getChain(other.base.id) === chainA) {
+      const other = byAddress.get(field.target)
+      if (other && other !== node && nodeChain(other.base) === chainA) {
         if (!node.connectionsOut.includes(other)) {
           node.connectionsOut.push(other)
         }
@@ -138,6 +141,25 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
   }
 
   return nodes
+}
+
+function registerAddresses(
+  layoutNode: LayoutNode,
+  base: Node,
+  byAddress: Map<string, LayoutNode>,
+): void {
+  byAddress.set(base.id, layoutNode)
+  for (const subnode of base.subnodes) {
+    registerAddresses(layoutNode, subnode, byAddress)
+  }
+}
+
+function nodeChain(node: Node): string {
+  const first = node.subnodes[0]
+  if (first === undefined) {
+    return getChain(node.id)
+  }
+  return nodeChain(first)
 }
 
 function clusterNodes(nodes: LayoutNode[]) {

@@ -57,11 +57,16 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
       node,
     }))
 
+    const topLevelByAddress = new Map<string, string>()
+    for (const node of simulationNodes) {
+      registerAddresses(node.id, node, topLevelByAddress)
+    }
+
     const links = simulationNodes
       .flatMap((node) =>
         node.fields.map((field) => ({
           source: node.id,
-          target: field.target,
+          target: topLevelByAddress.get(field.target) ?? field.target,
         })),
       )
       .filter((l) => simNodes.some((sn) => sn.id === l.target))
@@ -125,6 +130,17 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
       </span>
     </ControlButton>
   )
+}
+
+function registerAddresses(
+  topLevelId: string,
+  node: Node,
+  byAddress: Map<string, string>,
+): void {
+  byAddress.set(node.id, topLevelId)
+  for (const subnode of node.subnodes) {
+    registerAddresses(topLevelId, subnode, byAddress)
+  }
 }
 
 function getAnchorPoints(
