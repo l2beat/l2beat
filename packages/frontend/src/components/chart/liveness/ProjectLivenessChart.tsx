@@ -10,6 +10,7 @@ import { LivenessChartSubtypeControls } from '~/pages/scaling/liveness/component
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { getDefaultSubtype } from './getDefaultSubtype'
@@ -50,7 +51,7 @@ export function ProjectLivenessChart({
   )
 
   const anyAnomalyLive = anomalies.some(
-    (anomaly) => anomaly.subtype === subtype && anomaly.end === undefined,
+    (anomaly) => anomaly.subtype === subtype && isAnomalyOngoing(anomaly),
   )
   const chartData = useMemo(() => {
     return chart?.data?.map(([timestamp, min, avg, max]) => {

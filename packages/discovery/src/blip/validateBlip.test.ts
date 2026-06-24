@@ -90,6 +90,14 @@ describe(validateBlip.name, () => {
       expect(validateBlip(['map', {}])).toBeFalsy() // Invalid sub-element
     })
 
+    it('validates "sort" operation', () => {
+      expect(validateBlip(['sort'])).toBeTruthy() // Valid with no key expression
+      expect(validateBlip(['sort', ['get', 'p2pId']])).toBeTruthy() // Valid with a key expression
+      expect(validateBlip(['sort', 123])).toBeTruthy() // Valid with a scalar key expression
+      expect(validateBlip(['sort', 123, 456])).toBeFalsy() // Too many arguments
+      expect(validateBlip(['sort', {}])).toBeFalsy() // Invalid sub-element
+    })
+
     it('validates "pick" operation', () => {
       expect(validateBlip(['pick'])).toBeFalsy() // Empty pick is invalid
       expect(validateBlip(['pick', 123])).toBeTruthy()

@@ -14,13 +14,18 @@ import express from 'express'
 import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
+import { getCodePaths } from '../discovery/getCodePaths'
 import { attachAnalyzeRouter } from './analyze/router'
 import { attachConfigRouter } from './configs/router'
 import { DiffoveryController } from './diffovery/DiffoveryController'
 import { FlatSourceClient } from './diffovery/FlatSourceClient'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
-import { getCodeFromDisk, getCodeFromEtherscan, getCodePaths } from './getCode'
+import {
+  getCodeFromDisk,
+  getCodeFromEtherscan,
+  toCodeDeclarations,
+} from './getCode'
 import { getConfigHealth } from './getConfigHealth'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
@@ -175,7 +180,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
             address,
             flatSourceClient,
           )
-      res.json(response)
+      res.json(toCodeDeclarations(response))
     } catch (e) {
       console.error(e)
       res.status(500).json({ error: 'Failed to fetch code' })

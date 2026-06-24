@@ -117,11 +117,11 @@ export async function getTokenFrameworksData(
   const [interopProjects, { records: rawRecords, snapshotTimestamp }] =
     await Promise.all([
       ps.getProjects({ select: ['interopConfig'] }),
-      getLatestAggregatedInteropTransferWithTokens(
-        params,
-        ['lockAndMint', 'burnAndMint'],
-        frameworkProjectIds,
-      ),
+      getLatestAggregatedInteropTransferWithTokens({
+        selection: params,
+        types: ['lockAndMint', 'burnAndMint'],
+        protocolIds: frameworkProjectIds,
+      }),
     ])
 
   const records = dropCanonicalSideInLockAndMint(rawRecords)

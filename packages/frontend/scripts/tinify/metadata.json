@@ -1485,7 +1485,7 @@
   "static/icons/barretenberg.png": "76f7968ebfa28a3fb8b5543a15a3e456",
   "static/meta-images/zk-catalog/projects/barretenberg/opengraph-image.png": "a6dc7d80929034a26fcfe35de06f16a4",
   "static/images/architecture/aztecnetwork.png": "91036789f2e5df302dd7912d4229e269",
-  "static/images/upgrades-and-governance/aztecnetwork.png": "c1238b1d7027f962f5ef98de802f848b",
+  "static/images/upgrades-and-governance/aztecnetwork.png": "f51331bee66cc5c84ed9f383cbaefa22",
   "static/images/state-validation/aztecnetwork.png": "ac629456457155ddd53ae5c443ee9cb4",
   "static/meta-images/interop/projects/freetunnel/opengraph-image.png": "541edf13ac6478efdc37e397377a95a5",
   "static/brand-kit/logo-dark.png": "71084ad4affabc92a0c22272f2c8f2fb",
@@ -1557,5 +1557,8 @@
   "static/meta-images/scaling/risks/state-validation/opengraph-image.png": "02f38095112e99bb002d17c495805852",
   "static/images/architecture/opstack-rollup-superchain-opfp-preu16.png": "e867b7db6a7da763b4d7ce6458072c49",
   "static/meta-images/publications/governance-review-97.png": "de035c69e4ced7538a11081a7f46de5d",
-  "static/images/architecture/circlegateway.png": "ce7c9443e5726b9d3a28008675e6f163"
+  "static/images/architecture/circlegateway.png": "ce7c9443e5726b9d3a28008675e6f163",
+  "static/meta-images/publications/governance-review-98.png": "a4a6d854e01e1f7a37d4e10b3ffaa9c3",
+  "static/icons/strk20.png": "d5db5cc791c23c7636b284ae39581558",
+  "static/meta-images/privacy/projects/strk20/opengraph-image.png": "2372a0a30ec6b5c14ec0c27dc41c2e01"
 }

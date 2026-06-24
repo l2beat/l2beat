@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { Actions } from './actions/Actions'
+import { alignSelected, distributeSelected } from './actions/align'
 import { applyStoredLayout } from './actions/applyStoredLayout'
 import { redo, undo } from './actions/history'
 import { loadNodes } from './actions/loadNodes'
@@ -74,6 +75,8 @@ export const useStore = create<StoreState>()(
       loadNodes: wrapHistoryResetAction(set, loadNodes),
       setNodes: wrapUndoableAction(set, setNodes),
       colorSelected: wrapUndoableAction(set, colorSelected),
+      alignSelected: wrapUndoableAction(set, alignSelected),
+      distributeSelected: wrapUndoableAction(set, distributeSelected),
       undo: wrapAction(set, undo),
       redo: wrapAction(set, redo),
       hideSelected: wrapUndoableAction(set, hideSelected),

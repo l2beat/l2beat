@@ -1,10 +1,11 @@
 import type { AnalyzerResultApiResponse } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import { type ReactNode, useMemo, useState } from 'react'
+import { type ReactNode, useCallback, useMemo, useState } from 'react'
 import { getAnalyzers, getCode, runAnalyzer } from '../../../api/api'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { Button } from '../../../components/Button'
 import { ErrorState } from '../../../components/ErrorState'
+import { useCodeStore } from '../../../components/editor/store'
 import { Loader } from '../../../components/Loader'
 import { LoadingState } from '../../../components/LoadingState'
 import { Markdown } from '../../../components/Markdown'
@@ -17,6 +18,7 @@ import { getDefaultSourceName, hasSourceCode } from '../utils/sourceCode'
 export function AnalyzePanel() {
   const { project, selectedAddress, projectResponse, selected } =
     useProjectData()
+  const codePanelEditor = useCodeStore((state) => state.editors['code-panel'])
 
   const hasCode = hasSourceCode(selected)
 
@@ -94,6 +96,24 @@ export function AnalyzePanel() {
       )
     },
   })
+
+  const searchSelectedResultInCodePanel = useCallback(() => {
+    if (codePanelEditor === undefined) {
+      return
+    }
+
+    const selection = window.getSelection()
+    if (!selection || selection.isCollapsed) {
+      return
+    }
+
+    const searchString = selection.toString().trim()
+    if (searchString.length === 0) {
+      return
+    }
+
+    codePanelEditor.find(searchString)
+  }, [codePanelEditor])
 
   if (projectResponse.isError) {
     return <ErrorState />
@@ -198,7 +218,11 @@ export function AnalyzePanel() {
       </Field>
 
       <Field label="Result" className="min-h-0 flex-1">
-        <div className="min-h-0 flex-1 select-text overflow-auto border border-coffee-600 bg-coffee-800 p-2">
+        <div
+          className="min-h-0 flex-1 select-text overflow-auto border border-coffee-600 bg-coffee-800 p-2"
+          onMouseUp={searchSelectedResultInCodePanel}
+          onKeyUp={searchSelectedResultInCodePanel}
+        >
           {hasRun ? (
             <ResultView
               isPending={analyzeQuery.isFetching || codeResponse.isPending}

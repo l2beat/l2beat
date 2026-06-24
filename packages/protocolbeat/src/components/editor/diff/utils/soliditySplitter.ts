@@ -49,7 +49,7 @@ function stripCommentsFromAll(
     result[key] = tokenizeSolidity(value)
       .filter((t) => t.type !== 'comment')
       .map((t) => t.content)
-      .join(' ')
+      .join('\n')
   }
   return result
 }
@@ -65,7 +65,7 @@ function matchUp(
   left: Record<string, string>,
   right: Record<string, string>,
   removeSameDeclarations: boolean,
-  threshold = 0.5,
+  threshold = 0.25,
 ): MatchUpResult {
   const leftKeys = Object.keys(left)
   const rightKeys = Object.keys(right)

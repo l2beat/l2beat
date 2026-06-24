@@ -168,6 +168,16 @@ export interface ApiCodeResponse {
   sources: { name: string; code: string }[]
 }
 
+export interface ApiCodeSegment {
+  name: string | null
+  content: string
+}
+
+export interface ApiCodeDeclarationsResponse {
+  entryName: string | undefined
+  sources: { name: string; declarations: ApiCodeSegment[] }[]
+}
+
 export interface ApiCodeSearchResponse {
   matches: {
     name: string | undefined

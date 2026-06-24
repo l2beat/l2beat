@@ -10,6 +10,7 @@ const ATTRIBUTE_CLASS_NAMES: Record<string, string> = {
   anyAmount: 'text-[#3F1E6D] bg-[#C7B8FF] border-[#8D78D9]',
   fixedAmounts: 'text-[#452576] bg-[#D8CEFF] border-[#9B86E6]',
   sourceAvailable: 'bg-[#CCD0DA] border-[#808CAA] text-[#272A2F]',
+  closedSource: 'bg-[#F1C7C7] border-[#D16A6A] text-[#5D1F1F]',
   immutable: 'text-[#6B4A00] bg-[#FFE08A] border-[#D6A900]',
   unconditionalPrivacy: 'text-[#00445A] bg-[#A9ECF4] border-[#46C7D9]',
   enforcedCompliance: 'text-[#235000] bg-[#C9F59B] border-[#7AC943]',

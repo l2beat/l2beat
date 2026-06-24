@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x7de1fe1fe2682d187746f10e7837876a0415106a
+
+# Diff at Mon, 22 Jun 2026 08:58:45 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@18532eacfff59dfa2ff9ea37d128b65c569fef40 block: 1781778427
+- current timestamp: 1782118661
+
+## Description
+
+Disabled withdrawal queue of 1 day for all withdrawals from the Immutable X bridge to Ethereum (it was enabled very recently).
+
+## Watched changes
+
+```diff
+    contract RootERC20BridgeFlowRate (eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) [N/A] {
+    +++ description: None
+      values.withdrawalQueueActivated:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0xc4786b8ca9a4c28a8cd537bde5c49aeabeb44d93
 
 # Diff at Thu, 18 Jun 2026 10:28:10 GMT:

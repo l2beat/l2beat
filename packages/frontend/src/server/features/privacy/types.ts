@@ -2,8 +2,8 @@ import type { Project } from '@l2beat/config'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
 export type PrivacyProject = Project<
-  'display' | 'privacyInfo' | 'statuses' | 'tvsConfig',
-  'contracts' | 'permissions' | 'discoveryInfo'
+  'display' | 'privacyInfo' | 'statuses',
+  'tvsConfig' | 'contracts' | 'permissions' | 'discoveryInfo'
 >
 
 export interface PrivacyDepositedValueUsd {

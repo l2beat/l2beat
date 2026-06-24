@@ -2,9 +2,11 @@ import type { ConfigReader } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import type { Express, Response } from 'express'
-import { readFileSync } from 'fs'
-import { getCodePaths } from '../getCode'
-import { AnalyzeClient, AnalyzeClientError } from './AnalyzeClient'
+import { AnalyzeClient, AnalyzeClientError } from '../../analyze/AnalyzeClient'
+import {
+  AnalyzeSourceError,
+  loadAnalyzerSourceInput,
+} from '../../analyze/loadFlatSources'
 
 const safeStringSchema = z
   .string()
@@ -48,29 +50,18 @@ export function attachAnalyzeRouter(app: Express, configReader: ConfigReader) {
       return
     }
 
-    const { project, address } = paramsValidation.data
     const { analyzerId, entrypoint } = bodyValidation.data
-    let files: Record<string, Uint8Array>
-    try {
-      const { codePaths } = getCodePaths(configReader, project, address)
-      if (!codePaths.some(({ name }) => name === entrypoint)) {
-        res.status(404).json({ error: 'Entrypoint not found' })
-        return
-      }
-      files = Object.fromEntries(
-        codePaths.map(({ name, path }) => [name, readFileSync(path)]),
-      )
-    } catch (error) {
-      console.error(error)
-      res.status(500).json({ error: 'Failed to load source files' })
-      return
-    }
+    const { project, address } = paramsValidation.data
 
     try {
-      const result = await analyzeClient.runAnalyzer(analyzerId, {
-        files,
-        entrypoint,
-      })
+      const result = await analyzeClient.runAnalyzer(
+        analyzerId,
+        await loadAnalyzerSourceInput(configReader, {
+          project,
+          address,
+          entrypoint,
+        }),
+      )
       res.json(result)
     } catch (error) {
       respondWithAnalyzeError(res, error, 'Failed to run analyzer')
@@ -84,6 +75,11 @@ function respondWithAnalyzeError(
   fallbackMessage: string,
 ) {
   console.error(error)
+
+  if (error instanceof AnalyzeSourceError) {
+    res.status(error.status).json({ error: error.message })
+    return
+  }
 
   if (error instanceof AnalyzeClientError) {
     res.status(error.status).json({ error: error.message })
