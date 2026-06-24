@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd1197aa467ce00e971013d13c2ee12503f30b2ab
+
+# Diff at Tue, 23 Jun 2026 10:18:22 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0e360eee2a54a17c6634ebce656a966ffe743da7 block: 1780925494
+- current timestamp: 1782209813
+
+## Description
+
+Increased 1559 elasticity.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Elasticity:
+-        16
++        22
+    }
+```
+
 Generated with discovered.json: 0xfcb76c808959dd3bb9fdc2fabe6bd674c68a6aa9
 
 # Diff at Tue, 09 Jun 2026 12:43:40 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "base",
-  "timestamp": 1781105531,
+  "timestamp": 1782209652,
   "configHash": "0x201da71a82b49559128b2b47d577a98484991839ba4837420f827e63ea6f7ce3",
   "entries": [
     {
@@ -19,7 +19,7 @@
       "sinceTimestamp": 1686802803,
       "sinceBlock": 6728,
       "values": {
-        "$admin": "base:0xaD5B57FEB77e294fD7BF5EBE9aB01caA0a90B221",
+        "$admin": "base:0xa966054731540a48b28990b63Dcf4f33d8aE57B2",
         "$implementation": "base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6",
         "$pastUpgrades": [
           [
@@ -41,7 +41,7 @@
         "$upgradeCount": 3,
         "FEE_DISBURSEMENT_INTERVAL": 86400,
         "L1_WALLET": "base:0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
-        "lastDisbursementTime": 1780790413,
+        "lastDisbursementTime": 1781999021,
         "netFeeRevenue": 0,
         "version": "1.0.0+fee-vault-withdraw-compat",
         "WITHDRAWAL_MIN_GAS": 35000
@@ -79,7 +79,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292676190",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292676710",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -302,10 +302,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 1497734261,
+        "basefee": 216229607,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 81941632,
+        "blobBaseFee": 10738448,
         "blobBaseFeeScalar": 1055762,
         "daFootprintGasScalar": 148,
         "DEPOSITOR_ACCOUNT": "base:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -315,15 +315,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x9ee5f444e688da76ce5b9a3b2d0229098f59ba0374cd7be20750ca0e712bc95e",
+        "hash": "0xb0dd5fb79bc6750622d89fda44a4d3fe5855fa8ff9117dace879be772e4d4035",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 25287958,
+        "number": 25379641,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "sequenceNumber": 2,
-        "timestamp": 1781105471,
+        "timestamp": 1782209591,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -769,7 +769,7 @@
       ]
     },
     {
-      "address": "base:0xaD5B57FEB77e294fD7BF5EBE9aB01caA0a90B221",
+      "address": "base:0xa966054731540a48b28990b63Dcf4f33d8aE57B2",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -1101,7 +1101,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 13 (23%)",
-        "nonce": 106,
+        "nonce": 107,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1273,7 +1273,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "8 of 11 (73%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1575,7 +1575,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
         "game621": "eth:0xeEcb8A5944B217585817E802702b1262a049D259",
-        "gameCount": 15134,
+        "gameCount": 16054,
         "initBondGame0": "80000000000000000",
         "initBondGame1": "80000000000000000",
         "initBondGame42": 0,
@@ -1724,7 +1724,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 310736,
-          "prevBlockNum": 25287955
+          "prevBlockNum": 25379644
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -2654,7 +2654,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293191290",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293196262",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2791,12 +2791,12 @@
           ]
         ],
         "$upgradeCount": 3,
-        "anchorGame": "eth:0x4a77782Da13050CD5E97F287ff07C8c90a9ED77A",
+        "anchorGame": "eth:0x5999f0F1b9417f2580b145257754ff0a0c9b590B",
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "disputeGameFinalityDelaySeconds": 0,
         "getAnchorRoot": [
-          "0xb8b949fee7b5a065f3ef2e7f2bfe4ea98e7a611d60659ebcb0a18d19ce74bb3d",
-          46837560
+          "0x4421100c2079be7811b9bf6659d62daeb394f03a8969d692827eee35555b0645",
+          47406960
         ],
         "getStartingAnchorRoot": {
           "root": "0xc34c9f98b74b2fb85a516e302f86bc9bedcf5623ab078a671d40beac0e120329",
@@ -3224,7 +3224,7 @@
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
-        "totalSupply": "29150000000000000000",
+        "totalSupply": "28800000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -5447,6 +5447,6 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "base": 47158092, "ethereum": 25287963 },
-  "permissionsConfigHash": "0x9ef39f2ef32e385c5a2675786b549d475c6e50fcc996e1058a4fa0cfa0aa41bc"
+  "usedBlockNumbers": { "base": 47710152, "ethereum": 25379646 },
+  "permissionsConfigHash": "0x898d29c0387d771bf7e337360e93ab81c485198d5cfb848933955576e61c6691"
 }
