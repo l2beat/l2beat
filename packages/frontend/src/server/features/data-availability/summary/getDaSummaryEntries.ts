@@ -15,6 +15,7 @@ import {
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import {
   getProjectsChangeReport,
   type ProjectsChangeReport,
@@ -144,9 +145,7 @@ function getDaSummaryEntry(
             : projectsChangeReport.getChanges(b.id).impactfulChange
               ? 'impactful-change'
               : undefined,
-        ongoingAnomaly: bridgeLiveness?.anomalies.some(
-          (a) => a.end === undefined,
-        ),
+        ongoingAnomaly: bridgeLiveness?.anomalies.some(isAnomalyOngoing),
       },
       tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)),
       risks: mapBridgeRisksToRosetteValues(b.daBridge.risks),
