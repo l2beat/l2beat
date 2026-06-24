@@ -91,10 +91,17 @@ function calculateUptimePercentage(anomalies: LivenessAnomaly[], days: number) {
 
   // clamp intervals to the window
   const intervals = anomalies
-    .map((a) => ({
-      start: Math.max(a.start, windowStart),
-      end: isAnomalyOngoing(a) ? now : Math.min(a.end ?? a.start, now),
-    }))
+    .flatMap((a) => {
+      const end = isAnomalyOngoing(a) ? now : a.end
+      if (end === undefined) {
+        return []
+      }
+
+      return {
+        start: Math.max(a.start, windowStart),
+        end: Math.min(end, now),
+      }
+    })
     .filter((i) => i.end > i.start)
     .sort((a, b) => a.start - b.start)
 
