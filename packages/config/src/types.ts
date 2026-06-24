@@ -1024,6 +1024,16 @@ export type PrivacyFlowExtractorConfig =
         tokenAddress: EthereumAddress
       }
     }
+  | {
+      extractor: 'zamaWrap'
+      params: Record<string, never>
+    }
+  | {
+      extractor: 'zamaUnwrap'
+      params: {
+        rate: string
+      }
+    }
 
 export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
 export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']

@@ -56,6 +56,7 @@ import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
 import { vector } from '../projects/vector/vector'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
+import { zama } from '../projects/zama/zama'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
@@ -127,4 +128,5 @@ export const refactored: BaseProject[] = [
   railgun,
   strk20,
   tornadoCash,
+  zama,
 ]

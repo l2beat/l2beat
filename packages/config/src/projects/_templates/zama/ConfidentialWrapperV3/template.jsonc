@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ConfidentialWrapperV3",
-  "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and underlying-token denylist checks.",
+  "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
   "category": "core",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
@@ -33,7 +33,7 @@
       "type": "EXTERNAL"
     },
     "getUnderlyingDenyListSelector": {
-      "description": "Underlying-token denylist hook used by the wrapper. For cUSDC this is USDC's isBlacklisted(address) selector, so Circle blacklist status is enforced on wrapper operations.",
+      "description": "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations.",
       "severity": "HIGH",
       "type": "RISK_PARAMETER"
     },

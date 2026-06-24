@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x388e4c6a4377db7bf19476d39ab0d20f334e4e47
+Generated with discovered.json: 0x7bd732b1152024deebf7544873e6c50dbb4185f0
 
-# Diff at Wed, 24 Jun 2026 12:07:10 GMT:
+# Diff at Wed, 24 Jun 2026 13:47:23 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1782302763
+- current timestamp: 1782308700
 
 ## Description
 
@@ -19,20 +19,56 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract ConfidentialSteakcUSDCWrapper (eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458) [zama/ConfidentialWrapperV3]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialXAUTWrapper (eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1) [zama/ConfidentialWrapperV3]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.
+```
+
+```diff
++   Status: CREATED
     contract KMSVerifier (eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03) [zama/ZamaKMSVerifier]
     +++ description: Verifies KMS signatures over public decryption results before those results are accepted onchain.
 ```
 
 ```diff
 +   Status: CREATED
-    contract USD Coin Token (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) [tokens/circle/USDC]
-    +++ description: None
+    contract ConfidentialZAMAWrapper (eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071) [zama/ConfidentialWrapperV3]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialBRONWrapper (eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc) [zama/ConfidentialWrapperV3]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialTGBPWrapper (eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9) [zama/ConfidentialWrapperV3]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialUSDTWrapper (eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50) [zama/ConfidentialWrapperV3]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.
 ```
 
 ```diff
 +   Status: CREATED
     contract DAO (eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3) [zama/ZamaDAO]
     +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialBbqTGBPWrapper (eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762) [zama/ConfidentialWrapperV3]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.
 ```
 
 ```diff
@@ -67,6 +103,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract ConfidentialWETHWrapper (eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893) [zama/ConfidentialWrapperV3]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.
+```
+
+```diff
++   Status: CREATED
     contract ZamaGovMultisigA (eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f) [zama/Multisig]
     +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
 ```
@@ -74,5 +116,5 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract ConfidentialUSDCWrapper (eth:0xe978F22157048E5DB8E5d07971376e86671672B2) [zama/ConfidentialWrapperV3]
-    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and underlying-token denylist checks.
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.
 ```
