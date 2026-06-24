@@ -668,6 +668,15 @@ function isRealPrestate(value: string | undefined): value is string {
   return value !== undefined && /^0x(?!0+$)[0-9a-f]{64}$/i.test(value)
 }
 
+// The factory's gameArgs[1] is the implementation-args blob it appends to every
+// permissioned game clone; the absolute prestate is its first 32 bytes. The blob
+// is empty ("0x") on chains whose games keep the prestate in the implementation.
+function prestateFromGameArgs(
+  gameArgs: string | undefined,
+): string | undefined {
+  return gameArgs?.startsWith('0x') ? gameArgs.slice(0, 66) : undefined
+}
+
 function getProgramHashes(
   templateVars: OpStackConfigCommon,
 ): ProjectScalingContractsProgramHash[] {
@@ -682,7 +691,7 @@ function getProgramHashes(
       // implementation returns zero. Try the implementation, then the anchored
       // game clone, then the factory's configured game args (gameArgs[1], which
       // it bakes into every permissioned game). The anchor stays empty until a
-      // game resolves. Zero / zero-address forms are skipped.
+      // game resolves. Zero / zero-address / empty forms are skipped.
       const prestateCandidates = [
         templateVars.discovery.getContractValueOrUndefined<string>(
           'PermissionedDisputeGame',
@@ -695,9 +704,11 @@ function getProgramHashes(
             )
           : undefined,
         templateVars.discovery.hasContract('DisputeGameFactory')
-          ? templateVars.discovery.getContractValueOrUndefined<string>(
-              'DisputeGameFactory',
-              'absolutePrestateFromDGF',
+          ? prestateFromGameArgs(
+              templateVars.discovery.getContractValueOrUndefined<string>(
+                'DisputeGameFactory',
+                'permissionedGameArgs',
+              ),
             )
           : undefined,
       ]

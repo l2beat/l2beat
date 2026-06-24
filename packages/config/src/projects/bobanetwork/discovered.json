@@ -1189,7 +1189,6 @@
           ]
         ],
         "$upgradeCount": 5,
-        "absolutePrestateFromDGF": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e",
         "challengerFromDGF": "eth:0x67b2426fB1ba42c6168e53E1e40E116A4E963d60",
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
@@ -1229,8 +1228,7 @@
       "usedTypes": [
         { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
         { "typeCaster": "SliceAddress", "arg": { "offset": 144 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } },
-        { "typeCaster": "SliceBytes32", "arg": { "offset": 0 } }
+        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1956,7 +1954,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0x3ffd3f66126b25f3dfc138a4397824a3fbeeb7dd2bba2e1992972fcfcf987f2f",
+    "opstack/DisputeGameFactory": "0x46746381be2da0435ab1c70360c00f35d9759a505c3f99905e07476b72e8b79c",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",

@@ -9,7 +9,6 @@ import { GreaterThan } from './GreaterThan'
 import { Mapping } from './Mapping'
 import { Ocr3OffchainConfig } from './Ocr3OffchainConfig'
 import { SliceAddress } from './SliceAddress'
-import { SliceBytes32 } from './SliceBytes32'
 import { TimeSince } from './TimeSince'
 import { Undecimal } from './Undecimal'
 
@@ -24,7 +23,6 @@ export const TypeConverters = {
   GreaterThan,
   TimeSince,
   SliceAddress,
-  SliceBytes32,
   Ocr3OffchainConfig,
 }
 

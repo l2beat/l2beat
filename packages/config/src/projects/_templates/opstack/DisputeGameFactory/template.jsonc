@@ -20,10 +20,6 @@
     "WethFromArgs": {
       "typeCaster": "SliceAddress",
       "arg": { "offset": 72 }
-    },
-    "AbsolutePrestateFromArgs": {
-      "typeCaster": "SliceBytes32",
-      "arg": { "offset": 0 }
     }
   },
   "fields": {
@@ -105,19 +101,6 @@
         "expectRevert": true
       },
       "edit": ["format", "WethFromArgs"]
-    },
-    // Absolute prestate (offset 0) of gameArgs[1]: the implementation-args blob
-    // governance configures and the factory appends to every permissioned game
-    // clone at creation. The game implementation returns zero, and the
-    // AnchorStateRegistry only exposes a prestate once a game is anchored.
-    "absolutePrestateFromDGF": {
-      "handler": {
-        "type": "call",
-        "method": "function gameArgs(uint32) view returns (bytes)",
-        "args": [1],
-        "expectRevert": true
-      },
-      "edit": ["format", "AbsolutePrestateFromArgs"]
     },
     "permissionedGamesTotal": {
       "handler": {
