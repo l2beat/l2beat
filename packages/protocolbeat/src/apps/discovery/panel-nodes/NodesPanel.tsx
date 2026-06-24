@@ -14,6 +14,7 @@ import { Controls } from './controls/Controls'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
+import { topLevelByDescendant } from './store/utils/subnodes'
 import { Viewport } from './view/Viewport'
 
 function recurse(node: Node): string[] {
@@ -21,13 +22,6 @@ function recurse(node: Node): string[] {
     return node.subnodes.flatMap((n) => recurse(n))
   }
   return [node.id]
-}
-
-function containsAddress(node: Node, address: string): boolean {
-  if (node.id === address) {
-    return true
-  }
-  return node.subnodes.some((subnode) => containsAddress(subnode, address))
 }
 
 export function NodesPanel() {
@@ -165,9 +159,7 @@ function useSynchronizeSelection() {
       !lastSelection.includes(firstGlobal) &&
       loaded
     ) {
-      const containing = nodes.find((node) =>
-        containsAddress(node, firstGlobal),
-      )
+      const containing = topLevelByDescendant(nodes).get(firstGlobal)
       rememberSelection(selectedGlobal)
       if (containing) {
         selectAndFocus(containing.id)

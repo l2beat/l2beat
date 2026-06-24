@@ -11,6 +11,7 @@ import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
 import type { NodeLocations } from '../store/utils/storage'
+import { topLevelByDescendant } from '../store/utils/subnodes'
 import { ControlButton } from './ControlButton'
 import { IconControlCluster } from './icons/IconControlCluster'
 
@@ -57,16 +58,13 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
       node,
     }))
 
-    const topLevelByAddress = new Map<string, string>()
-    for (const node of simulationNodes) {
-      registerAddresses(node.id, node, topLevelByAddress)
-    }
+    const byDescendant = topLevelByDescendant(simulationNodes)
 
     const links = simulationNodes
       .flatMap((node) =>
         node.fields.map((field) => ({
           source: node.id,
-          target: topLevelByAddress.get(field.target) ?? field.target,
+          target: byDescendant.get(field.target)?.id ?? field.target,
         })),
       )
       .filter((l) => simNodes.some((sn) => sn.id === l.target))
@@ -130,17 +128,6 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
       </span>
     </ControlButton>
   )
-}
-
-function registerAddresses(
-  topLevelId: string,
-  node: Node,
-  byAddress: Map<string, string>,
-): void {
-  byAddress.set(node.id, topLevelId)
-  for (const subnode of node.subnodes) {
-    registerAddresses(topLevelId, subnode, byAddress)
-  }
 }
 
 function getAnchorPoints(

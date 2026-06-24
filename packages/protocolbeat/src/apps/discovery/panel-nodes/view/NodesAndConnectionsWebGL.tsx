@@ -11,6 +11,7 @@ import {
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
 } from '../store/utils/constants'
+import { topLevelByDescendant } from '../store/utils/subnodes'
 import { getColor } from './colors/colors'
 
 // ============================================================================
@@ -2131,13 +2132,12 @@ function buildDrawData(
   const hiddenSet = new Set(hidden)
   const selectedSet = new Set(selected)
   const visible: Node[] = []
-  const visibleById = new Map<string, Node>()
   for (const node of nodes) {
     if (!hiddenSet.has(node.id)) {
       visible.push(node)
-      indexTargets(node, node, visibleById)
     }
   }
+  const visibleById = topLevelByDescendant(visible)
 
   const overlappingIds = highlightOverlapping
     ? computeOverlappingIds(visible)
@@ -2193,17 +2193,6 @@ function buildDrawData(
     enableDimming,
     markUnreachableEntries,
     anyNodeSelected,
-  }
-}
-
-function indexTargets(
-  visibleNode: Node,
-  node: Node,
-  byId: Map<string, Node>,
-): void {
-  byId.set(node.id, visibleNode)
-  for (const subnode of node.subnodes) {
-    indexTargets(visibleNode, subnode, byId)
   }
 }
 

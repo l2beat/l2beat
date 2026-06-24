@@ -3,6 +3,7 @@ import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { centerLocationsInViewport } from '../store/utils/centerLocationsInViewport'
 import type { NodeLocations } from '../store/utils/storage'
+import { topLevelByDescendant } from '../store/utils/subnodes'
 import { ControlButton } from './ControlButton'
 import { IconControlStack } from './icons/IconControlStack'
 
@@ -120,15 +121,14 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
     }),
   )
 
-  const byAddress = new Map<string, LayoutNode>()
-  for (const node of nodes) {
-    registerAddresses(node, node.base, byAddress)
-  }
+  const byId = new Map(nodes.map((node) => [node.id, node]))
+  const topLevelByAddress = topLevelByDescendant(baseNodes)
 
   for (const node of nodes) {
     const chainA = nodeChain(node.base)
     for (const field of node.base.fields) {
-      const other = byAddress.get(field.target)
+      const topLevel = topLevelByAddress.get(field.target)
+      const other = topLevel ? byId.get(topLevel.id) : undefined
       if (other && other !== node && nodeChain(other.base) === chainA) {
         if (!node.connectionsOut.includes(other)) {
           node.connectionsOut.push(other)
@@ -141,17 +141,6 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
   }
 
   return nodes
-}
-
-function registerAddresses(
-  layoutNode: LayoutNode,
-  base: Node,
-  byAddress: Map<string, LayoutNode>,
-): void {
-  byAddress.set(base.id, layoutNode)
-  for (const subnode of base.subnodes) {
-    registerAddresses(layoutNode, subnode, byAddress)
-  }
 }
 
 function nodeChain(node: Node): string {
