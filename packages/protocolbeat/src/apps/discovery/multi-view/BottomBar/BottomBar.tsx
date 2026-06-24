@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { IS_READONLY } from '../../../../config/readonly'
 import { useIsomorphicKeys } from '../../hooks/useIsomorphicKeys'
+import { useStore as useNodesStore } from '../../panel-nodes/store/store'
 import { useDiscoveryCommand } from '../../panel-terminal/useDiscoveryCommand'
 import { useSearchStore } from '../../search/store'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
@@ -56,6 +57,13 @@ export function BottomBar() {
       }
       if (e.code === 'KeyK' && e.altKey) {
         killCommand()
+      }
+      if (e.code === 'KeyG' && e.altKey) {
+        if (e.shiftKey) {
+          useNodesStore.getState().ungroupSelected()
+        } else {
+          useNodesStore.getState().groupSelected()
+        }
       }
     }
 
@@ -113,6 +121,13 @@ export function BottomBar() {
               </li>
               <li>
                 <Keys keys={[altKey, 'Enter']} /> - Add panel
+              </li>
+              <hr className="my-1" />
+              <li>
+                <Keys keys={[altKey, 'G']} /> - Group nodes
+              </li>
+              <li>
+                <Keys keys={[altKey, 'Shift', 'G']} /> - Ungroup nodes
               </li>
               <hr className="my-1" />
               <li>
