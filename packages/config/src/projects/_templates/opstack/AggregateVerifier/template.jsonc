@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "AggregateVerifier",
-  "description": "Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (7d) to FAST_FINALIZATION_DELAY (1d).",
+  "description": "Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = {{PROOF_THRESHOLD}}). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY ({{slowFinalizationDelayFmt}}) to FAST_FINALIZATION_DELAY ({{fastFinalizationDelayFmt}}).",
   "ignoreMethods": ["intermediateOutputRoot", "intermediateOutputRoots"],
   "ignoreInWatchMode": [
     "bondAmount",
@@ -30,6 +30,22 @@
     "zkProver"
   ],
   "fields": {
+    "slowFinalizationDelayFmt": {
+      "handler": {
+        "type": "call",
+        "method": "SLOW_FINALIZATION_DELAY",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "fastFinalizationDelayFmt": {
+      "handler": {
+        "type": "call",
+        "method": "FAST_FINALIZATION_DELAY",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
     "TEE_VERIFIER": {
       "severity": "HIGH"
     },

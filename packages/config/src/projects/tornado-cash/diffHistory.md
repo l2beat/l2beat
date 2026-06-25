@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x54378f7babf68d377b4316321ec5d62e129cd43f
+
+# Diff at Thu, 25 Jun 2026 10:51:26 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@97724e7b196709850ff462946c329b4e37cc602d block: 1779439938
+- current timestamp: 1782384615
+
+## Description
+
+New proposal created: https://tools.l2beat.com/decoder-new/?hash=0x350da85a4ca2541f75cc9c1a42371de2660562b79b347018d30f2cfc58e42d40&data=AwA. Looks very sus, proposal execution contract is not verified.
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        66
++        67
+    }
+```
+
 Generated with discovered.json: 0x925773d2287b4e6481fbbc071a65518ced353c0d
 
 # Diff at Mon, 25 May 2026 09:49:32 GMT:
