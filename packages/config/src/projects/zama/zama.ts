@@ -217,10 +217,6 @@ export const zama: BaseProject = {
       {
         multisigAStats,
         multisigBStats,
-        kmsThreshold,
-        kmsSignerCount,
-        coprocessorThreshold,
-        coprocessorSignerCount,
       },
     ),
   },
