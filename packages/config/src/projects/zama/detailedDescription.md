@@ -2,6 +2,8 @@ Zama is an account-based confidential token wrapper system on Ethereum. It is ba
 
 The wrapper is not a note-based mixer: `from:` and `to:` addresses and transfer timestamps always remain public. Only balances and transfer amounts are hidden.
 
+![Zama pool architecture](/images/architecture/zama-pool.png#center)
+
 ### Architecture
 
 Zama uses fully homomorphic encryption (FHE) to let smart contracts operate on encrypted values. Balances are stored as encrypted handles instead of plaintext balances, and FHEVM system contracts are called for encrypted arithmetic, comparisons, transfers, minting, or burning, but most of the actuel FHE execution happens offchain.
