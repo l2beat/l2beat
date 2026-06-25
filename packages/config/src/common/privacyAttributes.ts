@@ -44,7 +44,7 @@ export const PRIVACY_ATTRIBUTES = {
     id: 'closedSource',
     label: 'Closed source',
     description:
-      'The protocol program or circuit is not open source, so users cannot independently inspect the implementation or know what is verified by the smart contract.',
+      'A protocol program or circuit is not open source, so users cannot independently inspect the implementation or know what is verified by the smart contract.',
   },
   immutable: {
     id: 'immutable',

@@ -138,7 +138,7 @@ export const zama: BaseProject = {
   },
   display: {
     description:
-      'An Ethereum confidential token system that wraps ERC-20 assets and issues encrypted balances using Zama FHEVM.',
+      'An Ethereum confidential token system that wraps ERC-20 assets and hides balances and transfer amounts using Zama FHEVM.',
     detailedDescription: readProjectMarkdown('zama', 'detailedDescription', {
       kmsThreshold,
       kmsSignerCount,
@@ -172,7 +172,7 @@ export const zama: BaseProject = {
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The wrapper and FHEVM system contracts are upgradeable without an onchain delay after a successful DAO/multisig action, so users do not get a guaranteed withdrawal window before changes take effect.',
+        'The wrapper and system contracts are upgradeable without an onchain delay, so users do not get a guaranteed withdrawal window before changes take effect.',
     },
     reproducibility: {
       value: 'Partially reproducible',
@@ -184,7 +184,7 @@ export const zama: BaseProject = {
       value: `${kmsThreshold}/${kmsSignerCount} KMS threshold`,
       sentiment: 'warning',
       description:
-        'There is no simple single-address viewing key in the wrapper, but public decryptions are accepted when enough KMS signers attest to them. Privacy assumes fewer than the KMS threshold collude or are compromised.',
+        'There is no simple single-address viewing key, but public decryptions are accepted when enough KMS signers attest to them. Privacy assumes fewer than the KMS threshold collude or are compromised.',
     },
     attributes: [
       {
@@ -197,8 +197,13 @@ export const zama: BaseProject = {
         description:
           'Wrapper owners can block users and wrappers can enforce configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization.',
       },
-      PRIVACY_ATTRIBUTES.transfers,
+      {
+        ...PRIVACY_ATTRIBUTES.transfers,
+        description:
+          'Privacy is limited to transfer amounts and balances, sender and recipient are public.',
+      },
       PRIVACY_ATTRIBUTES.anyAmount,
+      PRIVACY_ATTRIBUTES.closedSource,
     ],
     riskSummary: readProjectMarkdown('zama', 'riskSummary', {
       kmsThreshold,
