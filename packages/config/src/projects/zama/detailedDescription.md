@@ -1,4 +1,4 @@
-Zama is an account-based confidential token wrapper system on Ethereum. It is based on [ERC-7984](https://eips.ethereum.org/EIPS/eip-7984).Users deposit regular ERC-20 tokens into asset-specific wrapper escrows and receive confidential wrapper tokens whose balances and internal transfer amounts are represented as encrypted handles.
+Zama is an account-based confidential token wrapper system on Ethereum. It is based on [ERC-7984](https://eips.ethereum.org/EIPS/eip-7984). Users deposit regular ERC-20 tokens into asset-specific wrapper escrows and receive confidential wrapper tokens whose balances and internal transfer amounts are represented as encrypted handles.
 
 The wrapper is not a note-based mixer: `from:` and `to:` addresses and transfer timestamps always remain public. Only balances and transfer amounts are hidden.
 
