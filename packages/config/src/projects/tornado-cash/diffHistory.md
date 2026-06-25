@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x54378f7babf68d377b4316321ec5d62e129cd43f
+Generated with discovered.json: 0x29e07dffcaf2328a9178fd62c8aceebe29247046
 
-# Diff at Thu, 25 Jun 2026 10:51:26 GMT:
+# Diff at Thu, 25 Jun 2026 12:45:24 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@97724e7b196709850ff462946c329b4e37cc602d block: 1779439938
-- current timestamp: 1782384615
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8df370c30d58cf2a24a9fe5df1aafba41971f447 block: 1779439938
+- current timestamp: 1782391445
 
 ## Description
 
-New proposal created: https://tools.l2beat.com/decoder-new/?hash=0x350da85a4ca2541f75cc9c1a42371de2660562b79b347018d30f2cfc58e42d40&data=AwA. Looks very sus, proposal execution contract is not verified.
+New proposal, (yet) unverified and malicious, see https://x.com/pcaversaccio/status/2070125180261896246 .
 
 ## Watched changes
 

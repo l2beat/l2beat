@@ -1,6 +1,6 @@
 {
   "name": "shibarium",
-  "timestamp": 1772615972,
+  "timestamp": 1782392290,
   "configHash": "0x12f2062b6c107944f05012d06be4e547452ffb06b2a838fcc7392045287ab64b",
   "entries": [
     {
@@ -297,7 +297,7 @@
       "sinceBlock": 17849217,
       "values": {
         "$immutable": true,
-        "counter": 41883,
+        "counter": 41916,
         "isOwner": false,
         "owner": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
         "REGISTRATIONS": [
@@ -509,18 +509,18 @@
         "CHECKPOINT_REWARD": "100000000000000000000",
         "checkPointBlockInterval": 1024,
         "checkpointRewardDelta": 0,
-        "currentEpoch": 33705,
+        "currentEpoch": 34874,
         "currentValidatorSetSize": 11,
-        "currentValidatorSetTotalStake": "10974090167514730948320174",
+        "currentValidatorSetTotalStake": "10934559562404516415581018",
         "delegationEnabled": true,
         "delegatorsReward": [
-          "210975338394165244701",
-          "2763262760844474275671",
-          "1782345025938981979802",
-          "405618133441902228408"
+          "182927944949537239035",
+          "208537100651114658045",
+          "85648334797509269415",
+          "105179677610374694691"
         ],
         "dynasty": 30,
-        "epoch": 33705,
+        "epoch": 34874,
         "eventsHub": "eth:0x12185669Dac70749f717247971E0B8819b2e472e",
         "extensionCode": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
         "getRegistry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
@@ -547,7 +547,7 @@
         "registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
         "replacementCoolDown": 29342,
         "rewardDecreasePerCheckpoint": 0,
-        "rewardPerStake": "1912012559950754480189565",
+        "rewardPerStake": "2060069022274996035563288",
         "rootChain": "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
         "signerUpdateLimit": 100,
         "token": "eth:0x9813037ee2218799597d83D4a5B6F3b6778218d9",
@@ -557,7 +557,7 @@
         "totalStaked": "109999000000000000000000",
         "validatorShareFactory": "eth:0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD",
         "validatorState": {
-          "amount": "10974090167514730948320174",
+          "amount": "10934559562404516415581018",
           "stakerCount": 11
         },
         "validatorThreshold": 15,
@@ -1083,7 +1083,7 @@
       "sinceTimestamp": 1691243771,
       "sinceBlock": 17849204,
       "values": {
-        "_nextHeaderBlock": 337020000,
+        "_nextHeaderBlock": 348710000,
         "$immutable": false,
         "$implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "CHAINID": 109,
@@ -1092,8 +1092,8 @@
           "_registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
           "_heimdallId": "heimdall-109"
         },
-        "currentHeaderBlock": 337010000,
-        "getLastChildBlock": 15987740,
+        "currentHeaderBlock": 348700000,
+        "getLastChildBlock": 17836060,
         "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
         "implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "isOwner": false,
@@ -1101,6 +1101,11 @@
         "owner": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
         "proxyType": 2,
         "VOTE_TYPE": 2
+      },
+      "fieldMeta": {
+        "heimdallId": {
+          "description": "Fork identifier for the heimdall state bridge to bor (polygon execution). Changes with hard forks."
+        }
       },
       "implementationNames": {
         "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9": "RootChainProxy",
@@ -2023,7 +2028,7 @@
     "polygonposbridge/predicate": "0x15319e6e8947d37c32a6ecf4e3356cfe7300b2e28d7a48036dabb989f6d98ca7",
     "polygonposbridge/Registry": "0x153babaec9d06d0263f00b77d5d0270b5b20922d4895e1889e72f6100fea5a28",
     "polygonposbridge/RLPReader": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "polygonposbridge/RootChain": "0x951f1afb2394ca6912e53ebaac34bb72e9a1c3b6e65eca9bdba31dfe0f8ff656",
+    "polygonposbridge/RootChain": "0xab76db8d5d7d0f47b2c3e57017bf4ec89eed1681bbe979c63bee501fc0b3f246",
     "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
     "polygonposbridge/SlashingManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "polygonposbridge/StakeManager_shibarium": "0x7329e87dc01248c97bcd484854e12f63f0f6214f42d3f1fcf33884380f2ab892",
@@ -2034,6 +2039,6 @@
     "polygonposbridge/ValidatorRegistry": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "shibarium/WithdrawManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 24583152 },
+  "usedBlockNumbers": { "ethereum": 25394788 },
   "permissionsConfigHash": "0x32a4cab100c0f4e26adb5a456a4c0e11a2906cfdda31d98f142e5734a85b3b4e"
 }
