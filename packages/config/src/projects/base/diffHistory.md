@@ -1,3 +1,84 @@
+Generated with discovered.json: 0x3b9671b4fa92f8a963da506b96a98fb9e02856dd
+
+# Diff at Thu, 25 Jun 2026 10:11:05 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@97724e7b196709850ff462946c329b4e37cc602d block: 1782209652
+- current timestamp: 1782377394
+
+## Description
+
+Base Beryll upgrade: https://x.com/buildonbase/status/2067693904909189141.
+
+Reduced optimistic path finalization 7d -> 5d: https://disco.l2beat.com/diff/eth:0xeEcb8A5944B217585817E802702b1262a049D259/eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919.
+
+Also deployed a new AggregateVerifier with new program hashes and upgraded the TEE Image hash. All programs are reproduced.
+
+## Watched changes
+
+```diff
+    contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
+    +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
++++ severity: HIGH
+      values.getExpectedImageHash:
+-        "0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c"
++        "0x58557c709e93357a135041297107aecc4bc6ba616509098a4aa8dbef774d212a"
++++ severity: LOW
+      values.getRegisteredSigners.0:
+-        "eth:0x8a2B99252bad63813e704237Bf2A40A6a4cEBda9"
++        "eth:0xBb82fe2b294F7a9F74aF2ad32DF3B2d61abd4BEC"
++++ severity: LOW
+      values.getRegisteredSigners.1:
+-        "eth:0xf3aef21F74AD989812D066ad3e51b986ED312875"
++        "eth:0x1A095fE4895D142955c36F958be2a9e53c41224f"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
++++ severity: HIGH
+      values.game621:
+-        "eth:0xeEcb8A5944B217585817E802702b1262a049D259"
++        "eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AggregateVerifier (eth:0xeEcb8A5944B217585817E802702b1262a049D259) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (7d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+```diff
++   Status: CREATED
+    contract AggregateVerifier (eth:0x1bd8db5139Ba7aC9277684650c15e6E341761919) [opstack/AggregateVerifier]
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).
+```
+
+## Source code changes
+
+```diff
+.../AggregateVerifier.sol                          | 1522 +++-----------------
+ 1 file changed, 177 insertions(+), 1345 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782209652 (main branch discovery), not current.
+
+```diff
+    contract AggregateVerifier (eth:0xeEcb8A5944B217585817E802702b1262a049D259) [opstack/AggregateVerifier] {
+    +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (7d) to FAST_FINALIZATION_DELAY (1d).
+      values.fastFinalizationDelayFmt:
++        "1d"
+      values.slowFinalizationDelayFmt:
++        "7d"
+    }
+```
+
 Generated with discovered.json: 0x389f30067f4f3c3cc47ecff9868a507f4b9dc274
 
 # Diff at Tue, 23 Jun 2026 10:15:42 GMT:

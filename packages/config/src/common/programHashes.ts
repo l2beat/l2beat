@@ -1935,6 +1935,22 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x003147cde8e7d519d3dbae6b76f1198a70d4ff477a3aaea73bee4153f250288a.md',
     ),
   },
+  '0x001df6dffb10eebfa70e392bb6a4d0d1e3e5ac48cf07d473b6c244bdd8243a3b': {
+    title: 'Aggregation program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/v1.1.1/crates/proof/succinct/programs/aggregation',
+    description:
+      'Aggregates range proofs of correct execution for several consecutive sub-ranges of Base L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/base-aggregate-verifier.md',
+      {
+        version: 'v1.1.1',
+        commitHash: '01e732cdbae0c624d652da9e608d7d3fe0f9c74b',
+      },
+    ),
+  },
   '0x44f625fa2a41367670d74a7b0d9899412dc1ca406f90df7a5bd9f8ae581ee47f': {
     title: 'Range program of Base AggregateVerifier',
     programUrl:
@@ -1947,6 +1963,22 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x44f625fa2a41367670d74a7b0d9899412dc1ca406f90df7a5bd9f8ae581ee47f.md',
     ),
   },
+  '0x505c97f13a996b722a90d54753fb82de5ce1b9e94bd499a46d42b2982188d677': {
+    title: 'Range program of Base AggregateVerifier',
+    programUrl:
+      'https://github.com/base/base/tree/v1.1.1/crates/proof/succinct/programs/range/ethereum',
+    description:
+      'Proves correct state transition function of the Base rollup over a sub-range of L2 blocks.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/base-aggregate-verifier.md',
+      {
+        version: 'v1.1.1',
+        commitHash: '01e732cdbae0c624d652da9e608d7d3fe0f9c74b',
+      },
+    ),
+  },
   '0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c': {
     title: 'TEE enclave image hash of Base client',
     programUrl:
@@ -1956,6 +1988,21 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0xc9536fb5b1387f30d16f6b95a5a26de352f8056866482bca632f7219896ea74c.md',
+    ),
+  },
+  '0x58557c709e93357a135041297107aecc4bc6ba616509098a4aa8dbef774d212a': {
+    title: 'TEE enclave image hash of Base client',
+    programUrl:
+      'https://github.com/base/base/tree/v1.1.1/crates/proof/tee/nitro-enclave',
+    description:
+      'TEE image hash of Base L2 node program. AWS Nitro Enclave attestations guarantee that exactly this program was run within a TEE.',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/base-tee-enclave-image.md',
+      {
+        version: 'v1.1.1',
+        commitHash: '01e732cdbae0c624d652da9e608d7d3fe0f9c74b',
+      },
     ),
   },
   '0x20141665fe40bce01fbcfa0a95c8a1bd750eadbe3f24e06a75571e6fd7a9dc11': {

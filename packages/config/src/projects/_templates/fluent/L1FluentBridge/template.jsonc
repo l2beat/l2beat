@@ -8,7 +8,8 @@
     "getNonce",
     "getReceivedNonce",
     "getSentMessageCursor",
-    "getExecuteGasLimit"
+    "getExecuteGasLimit",
+    "getSentMessageQueueSize"
   ],
   "fields": {
     "defaultAdminAC": {
@@ -25,10 +26,7 @@
       ]
     },
     "pauserAC": {
-      "handler": {
-        "type": "accessControl",
-        "pickRoleMembers": "PAUSER_ROLE"
-      },
+      "handler": { "type": "accessControl", "pickRoleMembers": "PAUSER_ROLE" },
       "permissions": [
         {
           "type": "interact",
