@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x6241c41af620a04de5fcee4c5ac744920d93c249
+
+# Diff at Thu, 25 Jun 2026 12:51:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8df370c30d58cf2a24a9fe5df1aafba41971f447 block: 1778679690
+- current timestamp: 1782391789
+
+## Description
+
+Swap one validator signer.
+
+## Watched changes
+
+```diff
+    contract XDai Bridge Validators (eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) [gnosis/BridgeValidators] {
+    +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
++++ description: Array of the signers in the validator multisig
+      values.$members.4:
+-        "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4"
++++ description: Array of the signers in the validator multisig
+      values.$members.6:
++        "eth:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA"
+    }
+```
+
+```diff
+    contract AMB Validators (eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) [gnosis/BridgeValidators] {
+    +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
++++ description: Array of the signers in the validator multisig
+      values.$members.4:
+-        "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4"
++++ description: Array of the signers in the validator multisig
+      values.$members.6:
++        "eth:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA"
+    }
+```
+
+```diff
+    contract HomeAMB Validators (gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) [gnosis/BridgeValidators] {
+    +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
++++ description: Array of the signers in the validator multisig
+      values.$members.4:
+-        "gno:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4"
++++ description: Array of the signers in the validator multisig
+      values.$members.6:
++        "gno:0xb54B5572F3C4f70fF3cc8F67C19C8cddb838FBaA"
+    }
+```
+
 Generated with discovered.json: 0x6393dac14eaa263787f8e325124afc1383dcad84
 
 # Diff at Tue, 09 Jun 2026 12:43:34 GMT:

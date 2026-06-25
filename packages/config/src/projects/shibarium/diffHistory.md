@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xf4ab9a848b675ee2d26b83313eeebf372c89fc0b
+
+# Diff at Thu, 25 Jun 2026 12:59:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8df370c30d58cf2a24a9fe5df1aafba41971f447 block: 1772615972
+- current timestamp: 1782392290
+
+## Description
+
+Config: Add details.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772615972 (main branch discovery), not current.
+
+```diff
+    contract RootChain (eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9) [polygonposbridge/RootChain] {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+      fieldMeta:
++        {"heimdallId":{"description":"Fork identifier for the heimdall state bridge to bor (polygon execution). Changes with hard forks."}}
+    }
+```
+
 Generated with discovered.json: 0x0e8a325a209cfe0b435858a7d178bf154b217fa0
 
 # Diff at Fri, 12 Jun 2026 10:19:03 GMT:
