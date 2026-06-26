@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xdb4c93d65aac4f190440217b4951bc8f8ad4daac
+
+# Diff at Wed, 24 Jun 2026 12:34:05 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@de5d8a0f706ed1564e5583609b20d2bf29d3dfd5 block: 1782119094
+- current timestamp: 1782304372
+
+## Description
+
+Added custom implementation operators for the current callproxy implementation. It does not introduce any trust assumptions because this callproxy is used by default anyway.
+
+## Watched changes
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) [shared-sharp-verifier/SHARPVerifierCallProxy] {
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.
++++ description: Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers.
++++ severity: HIGH
+      values.customImplOperators.8:
++        "eth:0x6eEDe907dF99F7FBCd26e71e5b157BBB6483Fc8b"
++++ description: Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers.
++++ severity: HIGH
+      values.customImplOperators.9:
++        "eth:0xA410aEA6d7ad518165c214a42730A19fB3828170"
++++ description: Non-default targets for call proxy delegation. These targets are automatically chosen based on which operator makes a call.
++++ severity: HIGH
+      values.customProxyImplementations.4:
++        "eth:0xE67515a751291445B85b2F176c1eCdf08e86b406"
+    }
+```
+
 Generated with discovered.json: 0x48091a0469dcd0a331a808bf4041e1e950719f7e
 
 # Diff at Mon, 22 Jun 2026 10:11:52 GMT:

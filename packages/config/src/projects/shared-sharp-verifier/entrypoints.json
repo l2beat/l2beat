@@ -231,6 +231,10 @@
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
+    "eth:0x6eEDe907dF99F7FBCd26e71e5b157BBB6483Fc8b": {
+      "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
     "eth:0x71574057D12541ccDa98643aC56441838353A26D": {
       "name": "CpuFrilessVerifier",
       "type": "Contract",
@@ -305,6 +309,10 @@
     "eth:0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766": {
       "name": "CpuOods",
       "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xA410aEA6d7ad518165c214a42730A19fB3828170": {
+      "type": "EOA",
       "project": "shared-sharp-verifier"
     },
     "eth:0xa4D0Bb20c708262155378C9D14A5A6A863E15Dd4": {

@@ -15,6 +15,7 @@ import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectInteropData } from '../../scaling/interop/getProjectInteropData'
 import { getLiveness } from '../../scaling/liveness/getLiveness'
@@ -146,9 +147,7 @@ export async function getDaProjectEntry(
 
   const projectLiveness =
     selected && liveness ? liveness[selected.id] : undefined
-  const ongoingAnomalies = projectLiveness?.anomalies.filter(
-    (a) => a.end === undefined,
-  )
+  const ongoingAnomalies = projectLiveness?.anomalies.filter(isAnomalyOngoing)
 
   const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)
 

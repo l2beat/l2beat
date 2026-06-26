@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropPlugins } from '../../plugins'
 import type { InteropEventStore } from '../capture/InteropEventStore'
@@ -69,6 +70,10 @@ describe(InteropCleanerLoop.name, () => {
       expect(deleteMessageBefore).toHaveBeenCalledTimes(1)
       expect(deleteTransferBefore).toHaveBeenCalledTimes(1)
       expect(deletePricesBefore).toHaveBeenCalledTimes(1)
+
+      const messageCutoff = deleteMessageBefore.calls[0]?.args[0] as number
+      const transferCutoff = deleteTransferBefore.calls[0]?.args[0] as number
+      expect(messageCutoff - transferCutoff).toEqual(6 * UnixTime.DAY)
       expect(deleteConfigs).toHaveBeenCalledWith(KEEP_LATEST)
       expect(deleteSyncStateNotIn).toHaveBeenCalledWith([
         'plugin-a',

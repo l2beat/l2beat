@@ -1,6 +1,7 @@
 import type { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 
 export type LivenessTimeRange = '30d' | '90d' | 'max'
+export type LivenessAnomalyStatus = 'ongoing' | 'recovered'
 
 export interface LivenessDataPoint {
   averageInSeconds: number
@@ -11,6 +12,7 @@ export interface LivenessDataPoint {
 export interface LivenessAnomaly {
   start: UnixTime
   end: UnixTime | undefined
+  status: LivenessAnomalyStatus
   durationInSeconds: number
   subtype: TrackedTxsConfigSubtype
   avgInterval: number

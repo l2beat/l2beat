@@ -78,6 +78,22 @@ export const openvmprover: BaseProject = {
     ],
     verifierHashes: [
       {
+        hash: '0x6a74f16c472ea2698ee461daf35ffb62faaef6280d40390961daa181bc805663',
+        name: 'OpenVM v1.6.0 PostFeynman',
+        sourceLink:
+          'https://github.com/scroll-tech/zkvm-prover/tree/1839b4905bd920bf75de9c25997b8383029e021d/crates/prover',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x96cbcC4333E172927fDa8B631C716d43E2FBA01C',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
         hash: '0x30af8474d8e13b8ce6a96eae63293310e7c1072b890bde77f96786497a9e5f4b',
         name: 'OpenVM Feynman',
         sourceLink:

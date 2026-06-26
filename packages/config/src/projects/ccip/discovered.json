@@ -1,7 +1,7 @@
 {
   "name": "ccip",
   "timestamp": 1782144559,
-  "configHash": "0x906c94426595ec87c7f68b74c00a758ebd5d93fde183413f6b38e7640d525f29",
+  "configHash": "0x27123da3c5061cbf0bfec91d2f1c7fa8c09e5d17bf94556e8d841ba78ce08a66",
   "entries": [
     {
       "name": "ArbitrumOffRamp_v1_6",
@@ -347,6 +347,7 @@
             "241851231317828981": "bitcoin-merlin",
             "2135107236357186872": "bittensor",
             "11344663589394136015": "bsc",
+            "2308837218439511688": "canton",
             "1346049177634351622": "celo",
             "1224752112135636129": "core",
             "9043146809313071210": "corn",
@@ -393,6 +394,7 @@
             "17912061998839310979": "plume",
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
+            "6180753054346818345": "robinhood",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -791,6 +793,7 @@
             "241851231317828981": "bitcoin-merlin",
             "2135107236357186872": "bittensor",
             "11344663589394136015": "bsc",
+            "2308837218439511688": "canton",
             "1346049177634351622": "celo",
             "1224752112135636129": "core",
             "9043146809313071210": "corn",
@@ -837,6 +840,7 @@
             "17912061998839310979": "plume",
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
+            "6180753054346818345": "robinhood",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -1217,6 +1221,7 @@
             "241851231317828981": "bitcoin-merlin",
             "2135107236357186872": "bittensor",
             "11344663589394136015": "bsc",
+            "2308837218439511688": "canton",
             "1346049177634351622": "celo",
             "1224752112135636129": "core",
             "9043146809313071210": "corn",
@@ -1263,6 +1268,7 @@
             "17912061998839310979": "plume",
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
+            "6180753054346818345": "robinhood",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -4970,7 +4976,7 @@
             "isRMNVerificationDisabled": true,
             "onRamp": "0x000000000000000000000000530ae314ec3fa038bd9a215095e37295ec76162a"
           },
-          "6180753054346818345": {
+          "robinhood": {
             "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "isEnabled": true,
             "isRMNVerificationDisabled": true,
@@ -5031,6 +5037,7 @@
             "241851231317828981": "bitcoin-merlin",
             "2135107236357186872": "bittensor",
             "11344663589394136015": "bsc",
+            "2308837218439511688": "canton",
             "1346049177634351622": "celo",
             "1224752112135636129": "core",
             "9043146809313071210": "corn",
@@ -5077,6 +5084,7 @@
             "17912061998839310979": "plume",
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
+            "6180753054346818345": "robinhood",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -8193,6 +8201,7 @@
       ],
       "proxyType": "immutable",
       "description": "Token accepted as fee token for sending outgoing messages.",
+      "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0xf55037738604FDDFC4043D12F25124E94D7D1780",
       "sinceTimestamp": 1505597189,
       "sinceBlock": 4281611,
@@ -11996,7 +12005,7 @@
             "fChain": 5,
             "config": "{\"gasPriceDeviationPPB\":\"4000000000\",\"daGasPriceDeviationPPB\":\"4000000000\",\"optimisticConfirmations\":1,\"chainFeeDeviationDisabled\":false}"
           },
-          "6180753054346818345": {
+          "robinhood": {
             "readers": [
               "0x7d35d97d8757a08a74e54144b841674ae6d7288c57c9a229ee528351a89d4459",
               "0x2ea219639a1f1c923af8d90eef2d0168c5e887ac8fdb2ead5bd2820b100a4aeb",
@@ -22408,7 +22417,7 @@
               }
             }
           },
-          "6180753054346818345": {
+          "robinhood": {
             "configDigest": "0x000a6cf7ffd739b65e0a01cf93b24a3881b109bec7ef9add8cffb4008bbf7e32",
             "version": 217,
             "config": {
@@ -32559,7 +32568,7 @@
               }
             }
           },
-          "6180753054346818345": {
+          "robinhood": {
             "configDigest": "0x000ab5daeb02624010752d8b2d54de9426fffb40095d7fee38df3a718148a6aa",
             "version": 218,
             "config": {
@@ -32776,6 +32785,7 @@
             "241851231317828981": "bitcoin-merlin",
             "2135107236357186872": "bittensor",
             "11344663589394136015": "bsc",
+            "2308837218439511688": "canton",
             "1346049177634351622": "celo",
             "1224752112135636129": "core",
             "9043146809313071210": "corn",
@@ -32822,6 +32832,7 @@
             "17912061998839310979": "plume",
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
+            "6180753054346818345": "robinhood",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -33734,8 +33745,8 @@
           "ton": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "tempo": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "creditcoin": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "6180753054346818345": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "2308837218439511688": "eth:0x2613cc57F3ac4a054D79a04618Fb62589b8a4b26"
+          "robinhood": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
+          "canton": "eth:0x2613cc57F3ac4a054D79a04618Fb62589b8a4b26"
         },
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "Router 1.2.0"
@@ -33777,6 +33788,7 @@
             "241851231317828981": "bitcoin-merlin",
             "2135107236357186872": "bittensor",
             "11344663589394136015": "bsc",
+            "2308837218439511688": "canton",
             "1346049177634351622": "celo",
             "1224752112135636129": "core",
             "9043146809313071210": "corn",
@@ -33823,6 +33835,7 @@
             "17912061998839310979": "plume",
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
+            "6180753054346818345": "robinhood",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -36451,7 +36464,7 @@
             "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "allowlistEnabled": false
           },
-          "6180753054346818345": {
+          "robinhood": {
             "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "allowlistEnabled": false
           }
@@ -36509,6 +36522,7 @@
             "241851231317828981": "bitcoin-merlin",
             "2135107236357186872": "bittensor",
             "11344663589394136015": "bsc",
+            "2308837218439511688": "canton",
             "1346049177634351622": "celo",
             "1224752112135636129": "core",
             "9043146809313071210": "corn",
@@ -36555,6 +36569,7 @@
             "17912061998839310979": "plume",
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
+            "6180753054346818345": "robinhood",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -38168,7 +38183,7 @@
             "networkFeeUSDCents": 50,
             "linkFeeMultiplierPercent": 90
           },
-          "6180753054346818345": {
+          "robinhood": {
             "isEnabled": true,
             "maxDataBytes": 30000,
             "maxPerMsgGasLimit": 3000000,
@@ -38181,7 +38196,7 @@
             "networkFeeUSDCents": 50,
             "linkFeeMultiplierPercent": 90
           },
-          "2308837218439511688": {
+          "canton": {
             "isEnabled": true,
             "maxDataBytes": 30000,
             "maxPerMsgGasLimit": 3000000,
@@ -42799,7 +42814,7 @@
               }
             }
           ],
-          "2308837218439511688": [
+          "canton": [
             {
               "token": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
               "tokenTransferFeeConfig": {
@@ -42864,6 +42879,7 @@
             "241851231317828981": "bitcoin-merlin",
             "2135107236357186872": "bittensor",
             "11344663589394136015": "bsc",
+            "2308837218439511688": "canton",
             "1346049177634351622": "celo",
             "1224752112135636129": "core",
             "9043146809313071210": "corn",
@@ -42910,6 +42926,7 @@
             "17912061998839310979": "plume",
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
+            "6180753054346818345": "robinhood",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -47314,6 +47331,7 @@
       ],
       "proxyType": "immutable",
       "description": "Central token registry that defines token pools and administrative rights to change such token pools. Tokens can either be centrally administered by Chainlink, or by the actual token admin / issuer.",
+      "ignoreInWatchMode": ["administrators", "poolsMap"],
       "deployerAddress": "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414",
       "sinceTimestamp": 1726156727,
       "sinceBlock": 20735575,
@@ -49002,6 +49020,7 @@
       ],
       "proxyType": "immutable",
       "description": "Token accepted as fee token for sending outgoing messages.",
+      "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x4F26FfBe5F04ED43630fdC30A87638d53D0b0876",
       "sinceTimestamp": 1513077455,
       "sinceBlock": 4719568,
@@ -57716,6 +57735,7 @@
             "241851231317828981": "bitcoin-merlin",
             "2135107236357186872": "bittensor",
             "11344663589394136015": "bsc",
+            "2308837218439511688": "canton",
             "1346049177634351622": "celo",
             "1224752112135636129": "core",
             "9043146809313071210": "corn",
@@ -57762,6 +57782,7 @@
             "17912061998839310979": "plume",
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
+            "6180753054346818345": "robinhood",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -60701,6 +60722,7 @@
             "241851231317828981": "bitcoin-merlin",
             "2135107236357186872": "bittensor",
             "11344663589394136015": "bsc",
+            "2308837218439511688": "canton",
             "1346049177634351622": "celo",
             "1224752112135636129": "core",
             "9043146809313071210": "corn",
@@ -60747,6 +60769,7 @@
             "17912061998839310979": "plume",
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
+            "6180753054346818345": "robinhood",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -61019,6 +61042,7 @@
             "241851231317828981": "bitcoin-merlin",
             "2135107236357186872": "bittensor",
             "11344663589394136015": "bsc",
+            "2308837218439511688": "canton",
             "1346049177634351622": "celo",
             "1224752112135636129": "core",
             "9043146809313071210": "corn",
@@ -61065,6 +61089,7 @@
             "17912061998839310979": "plume",
             "6422105447186081193": "astar",
             "2459028469735686113": "katana",
+            "6180753054346818345": "robinhood",
             "6916147374840168594": "ronin",
             "11964252391146578476": "rootstock",
             "9027416829622342829": "sei",
@@ -66190,7 +66215,7 @@
     "transporter/RegistryModuleOwnerCustom": "0x31426f3737f5820435725410fc412b5e921a0c3da71f4a75869eaa59fa2af379",
     "transporter/RMNRemote": "0xcdc147715d75ca79489ca5912b26252c69c9c65da8f64943ed212b469096d585",
     "transporter/RouterV1_2_0": "0x98bd2d7f9da868cf6fb53bd2fa80bd63f67e712945dd1b93ca5c85d4e65effe7",
-    "transporter/TokenAdminRegistry": "0x30a93231c3c7ddad9e5b1e6cae1a24dc4868b220564302bf4022c349b3990e0d",
+    "transporter/TokenAdminRegistry": "0xfae26ead9c4cc190673220f160c74daa0f0a1036905bf6158b90cbceaa1a774b",
     "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d"
   },
   "usedBlockNumbers": {
