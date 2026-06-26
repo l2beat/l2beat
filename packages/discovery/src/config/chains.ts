@@ -322,6 +322,16 @@ export const chains: ChainConfig[] = [
     explorer: { type: 'etherscan' },
   },
   {
+    name: 'zama',
+    chainId: 261131,
+    shortName: 'zama',
+    multicall: undefined,
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.mainnet.zama.org/api',
+    },
+  },
+  {
     name: 'ethereal',
     chainId: 5064014,
     shortName: 'ethereal',

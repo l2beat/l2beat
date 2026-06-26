@@ -152,6 +152,19 @@ export const zama: BaseProject = {
     },
     badges: [],
   },
+  chainConfig: {
+    name: 'zama',
+    chainId: 261131,
+    explorerUrl: 'https://explorer.mainnet.zama.org',
+    apis: [
+      { type: 'rpc', url: 'https://rpc.mainnet.zama.org', callsPerMinute: 300 },
+      { type: 'blockscout', url: 'https://explorer.mainnet.zama.org/api' },
+      {
+        type: 'blockscoutV2',
+        url: 'https://explorer.mainnet.zama.org/api/v2',
+      },
+    ],
+  },
   escrows: trackedWrappers.map(
     ({ wrapper, wrapperSinceTimestamp, underlyingToken }) => ({
       address: ChainSpecificAddress.address(wrapper.address),

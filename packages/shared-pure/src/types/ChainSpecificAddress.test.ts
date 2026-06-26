@@ -105,6 +105,18 @@ describe(ChainSpecificAddress.name, () => {
         'base:0x33D66941465ac776C38096cb1bc496C673aE7390',
       )
     })
+
+    it('creates an address on Zama', () => {
+      const address = ChainSpecificAddress.from(
+        'zama',
+        '0x33D66941465ac776C38096cb1bc496C673aE7390',
+      )
+      expect(address).toBeA(String)
+      expect(ChainSpecificAddress.check(address)).toEqual(true)
+      expect(address.toString()).toEqual(
+        'zama:0x33D66941465ac776C38096cb1bc496C673aE7390',
+      )
+    })
   })
 
   describe(ChainSpecificAddress.fromLong.name, () => {
