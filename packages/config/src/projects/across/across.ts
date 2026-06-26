@@ -34,7 +34,7 @@ export const across: BaseProject = {
 
     Root bundles settle in two levels:
     1. Optimistic (Across-native): the proposer bonds ${bondAmountFmt} ABT (a simple ETH wrapper, not to be confused with the ACX governance token) and the root sits in a challenge period of ${finalizationDelayFmt}. If unchallenged, the bundle executes; UMA is not involved in this happy path.
-    2. Dispute escalation (UMA): anyone can call disputeRootBundle() within the challenge period by posting an equal counter-bond. A disputed bundle is escalated to UMA's optimistic oracle, which resolves via UMA token voting; the losing party is slashed.
+    2. Dispute escalation (UMA): anyone can call disputeRootBundle() within the challenge period by posting an equal counter-bond. The disputed bundle is discarded immediately so a new proposal can be submitted, while the dispute itself is escalated to UMA's optimistic oracle, which resolves via UMA token voting; the losing party loses their bond.
 
     For chains with a canonical L1↔L2 messenger, tokens and admin / refund messages move from the HubPool to each SpokePool through that chain's canonical bridge via a per-chain adapter. For chains without one (BNB Smart Chain, HyperEVM, Plasma, Tempo, Tron, ...), Across uses universal adapters: the HubPool writes the message calldata into the HubPoolStore on Ethereum, and the destination chain's SpokePool reads it via an Ethereum zk light client. Tokens travel via LayerZero OFT, or via Circle CCTP for USDC.
 
