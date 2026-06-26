@@ -1536,6 +1536,24 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x0091609acb607118f47f756c0f4db9aad227420326cbda96f0303384e0bbf8e3.md',
     ),
   },
+  '0x00398b786b500ca759ca2de2aee9c73bd8e28f1c80b49e1c53bc060a9a649269': {
+    ...SCROLL_BUNDLE_EXE('v0.8.0'),
+    programUrl:
+      'https://github.com/scroll-tech/zkvm-prover/tree/1839b4905bd920bf75de9c25997b8383029e021d/crates/circuits/bundle-circuit',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x00398b786b500ca759ca2de2aee9c73bd8e28f1c80b49e1c53bc060a9a649269.md',
+    ),
+  },
+  '0x0021785a05e931b447c8d6463f4547f92081a92ee357af26e1c6f6ecfe373d67': {
+    ...SCROLL_BUNDLE_CONFIG('v0.8.0'),
+    programUrl:
+      'https://github.com/scroll-tech/zkvm-prover/tree/1839b4905bd920bf75de9c25997b8383029e021d/crates/circuits/bundle-circuit',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x0021785a05e931b447c8d6463f4547f92081a92ee357af26e1c6f6ecfe373d67.md',
+    ),
+  },
   '0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909': {
     ...SCROLL_BUNDLE_CONFIG('v0.5.2'),
     programUrl:
@@ -1719,6 +1737,12 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationSteps:
       'The sources for this program are located in a private repository, shared with L2BEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
   },
+  '0x2dc824fed99dcdf659f2523ad68d1ec70bd5f08e3c533996be3a2d2b19813e83': {
+    ...WASM_MODULE_ROOT('Apechain'),
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'The sources for this program are located in a private repository, shared with L2BEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
+  },
   '0x2c9a9d645ae56304c483709fc710a58a0935ed43893179fe4b275e1400503ea7': {
     ...WASM_MODULE_ROOT('Syndicate'),
     verificationStatus: 'notVerified',
@@ -1845,6 +1869,10 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   },
   '0x5731b637d9e3b693fc0d74e570bac76ca6c0defe3e4c119b1cea981a9bd307d6': {
     title: 'Appchain TEE Enclave hash',
+    verificationStatus: 'unsuccessful',
+  },
+  '0x025b20bb8cd6aebf15f787050c19291014ec2ef70cf045f756c3a90d2a672373': {
+    title: 'Apechain TEE Enclave hash',
     verificationStatus: 'unsuccessful',
   },
   '0x002bb66c60302a81a621d7899e3f6ee1d0db9fb1eae5d1e80e94a33cb1e24922': {
