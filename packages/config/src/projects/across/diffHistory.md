@@ -1,14 +1,16 @@
-Generated with discovered.json: 0xee24355a860b2cdb8fda4a0240b56cbec8372af6
+Generated with discovered.json: 0xd221f565ed5ae163a0abbbc5d3d8b39081a6c0a7
 
-# Diff at Fri, 26 Jun 2026 08:45:04 GMT:
+# Diff at Fri, 26 Jun 2026 09:02:42 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@cf24a6eb45e0c4c6be4d66ee4e477ba0cce45b01 block: 1779355521
-- current timestamp: 1782463439
+- current timestamp: 1782464494
 
 ## Description
 
-Address PR review feedback. The `AcrossBondToken` proposers permission is deduped into a single description that clarifies the two-level settlement model: proposals are bonded with ABT and settle optimistically on the HubPool with no UMA involvement; UMA token voting only kicks in when a dispute is raised via `disputeRootBundle()` within the challenge period.
+Address PR review feedback:
+- `AcrossBondToken` proposers permission is deduped into a single description that clarifies the two-level settlement model: proposals are bonded with ABT and settle optimistically on the HubPool with no UMA involvement; UMA token voting only kicks in when a dispute is raised via `disputeRootBundle()` within the challenge period.
+- Universal-adapter descriptions: replace the `{{DATA_STORE}}` template placeholder, which was rendering as a raw `eth:0x…` address, with the literal contract name `HubPoolStore` so the prose reads naturally.
 
 Also catches up to onchain state since the last main discovery: two newly registered chain mappings (`CrossChainContracts` + `Adapters`) and a couple of `poolRebalanceRoutes` re-points/disables.
 
@@ -85,13 +87,13 @@ Also catches up to onchain state since the last main discovery: two newly regist
 ```diff
 +   Status: CREATED
     contract Universal_Adapter (eth:0xbc5E82035e2C8d4B335Ccb751D6BF47e44Dec678) [acrossv3/universalAdapter]
-    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
 ```
 
 ```diff
 +   Status: CREATED
     contract Universal_Adapter (eth:0xCA5f9960022078F3585a188e06F910eeC29c7eBD) [acrossv3/universalAdapter]
-    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
 ```
 
 ## Source code changes
@@ -118,13 +120,13 @@ discovery. Values are for block 1779355521 (main branch discovery), not current.
 
 ```diff
     contract HyperEVM_Adapter (eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B) [acrossv3/universalAdapter] {
-    +++ description: This adapter can be used to send messages / root bundles to HyperEVM. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+    +++ description: This adapter can be used to send messages / root bundles to HyperEVM. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
       name:
 -        "Universal_Adapter"
 +        "HyperEVM_Adapter"
       description:
 -        "This adapter can be used to send messages / root bundles to Hyperliquid. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
-+        "This adapter can be used to send messages / root bundles to HyperEVM. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
++        "This adapter can be used to send messages / root bundles to HyperEVM. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
       category.name:
 -        "Local Infrastructure"
 +        "External Bridges"
@@ -170,10 +172,13 @@ discovery. Values are for block 1779355521 (main branch discovery), not current.
 
 ```diff
     contract Tempo_Adapter (eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c) [acrossv3/universalAdapter] {
-    +++ description: This adapter can be used to send messages / root bundles to Tempo. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+    +++ description: This adapter can be used to send messages / root bundles to Tempo. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
       name:
 -        "Universal_Adapter"
 +        "Tempo_Adapter"
+      description:
+-        "This adapter can be used to send messages / root bundles to Tempo. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
++        "This adapter can be used to send messages / root bundles to Tempo. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
       category.name:
 -        "Local Infrastructure"
 +        "External Bridges"
@@ -214,10 +219,13 @@ discovery. Values are for block 1779355521 (main branch discovery), not current.
 
 ```diff
     contract BNBSmartChain_Adapter (eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b) [acrossv3/universalAdapter] {
-    +++ description: This adapter can be used to send messages / root bundles to Binance Smart Chain. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.
+    +++ description: This adapter can be used to send messages / root bundles to Binance Smart Chain. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.
       name:
 -        "Universal_Adapter"
 +        "BNBSmartChain_Adapter"
+      description:
+-        "This adapter can be used to send messages / root bundles to Binance Smart Chain. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
++        "This adapter can be used to send messages / root bundles to Binance Smart Chain. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
       category.name:
 -        "Local Infrastructure"
 +        "External Bridges"
@@ -335,10 +343,13 @@ discovery. Values are for block 1779355521 (main branch discovery), not current.
 
 ```diff
     contract Tron_Adapter (eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db) [acrossv3/universalAdapter] {
-    +++ description: This adapter can be used to send messages / root bundles to Tron. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+    +++ description: This adapter can be used to send messages / root bundles to Tron. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
       name:
 -        "Universal_Adapter"
 +        "Tron_Adapter"
+      description:
+-        "This adapter can be used to send messages / root bundles to Tron. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
++        "This adapter can be used to send messages / root bundles to Tron. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
       category.name:
 -        "Local Infrastructure"
 +        "External Bridges"
@@ -359,10 +370,13 @@ discovery. Values are for block 1779355521 (main branch discovery), not current.
 
 ```diff
     contract Plasma_Adapter (eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363) [acrossv3/universalAdapter] {
-    +++ description: This adapter can be used to send messages / root bundles to Plasma Mainnet. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.
+    +++ description: This adapter can be used to send messages / root bundles to Plasma Mainnet. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero.
       name:
 -        "Universal_Adapter"
 +        "Plasma_Adapter"
+      description:
+-        "This adapter can be used to send messages / root bundles to Plasma Mainnet. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
++        "This adapter can be used to send messages / root bundles to Plasma Mainnet. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
       category.name:
 -        "Local Infrastructure"
 +        "External Bridges"
@@ -655,7 +669,10 @@ discovery. Values are for block 1779355521 (main branch discovery), not current.
 
 ```diff
     contract Monad_Adapter (eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452) [acrossv3/universalAdapter] {
-    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+      description:
+-        "This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
++        "This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the HubPoolStore on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
       category.name:
 -        "Local Infrastructure"
 +        "External Bridges"
