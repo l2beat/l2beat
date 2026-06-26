@@ -211,6 +211,7 @@ function generateNodes(
       hueShift: 0,
       data: undefined,
       isReachable: true,
+      opened: false,
       subnodes: [],
     })
   }

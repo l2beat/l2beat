@@ -58,6 +58,7 @@ export interface Node {
   readonly hueShift: number
   readonly data: unknown
   readonly isReachable: boolean
+  readonly opened: boolean
   readonly subnodes: Node[]
 }
 

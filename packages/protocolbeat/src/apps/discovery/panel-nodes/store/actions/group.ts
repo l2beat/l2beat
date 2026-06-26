@@ -77,6 +77,7 @@ function createPhantomNode(subnodes: Node[]): Node {
     hueShift: 0,
     data: null,
     isReachable: true,
+    opened: false,
     subnodes,
   }
 }

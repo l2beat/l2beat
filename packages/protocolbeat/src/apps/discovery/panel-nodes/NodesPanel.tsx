@@ -93,6 +93,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           data: null,
           fields: toNodeFields(contract.fields),
           hiddenFields: keysToHideOnLoad,
+          opened: false,
           subnodes: [],
         }
         nodes.push(node)
@@ -114,6 +115,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           data: null,
           fields: [],
           hiddenFields: [],
+          opened: false,
           subnodes: [],
         }
         nodes.push(node)

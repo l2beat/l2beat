@@ -916,9 +916,10 @@ class WebGLRenderer {
   }
 
   private buildRound(renderNodes: readonly RenderNode[]): number {
-    // Upper bound: 4 quads (body, header, selection, group outline) per node,
-    // plus one pill per visible field for selected/highlighted rows.
-    let maxInstances = renderNodes.length * 4
+    // Upper bound: 5 quads (body, header, selection, group outline, opened
+    // marker) per node, plus one pill per visible field for selected/
+    // highlighted rows.
+    let maxInstances = renderNodes.length * 5
     for (const rn of renderNodes) maxInstances += rn.visibleFields.length
     if (maxInstances === 0) return 0
     const buf = this.ensureRound(maxInstances)
@@ -1000,6 +1001,25 @@ class WebGLRenderer {
           corner + inset,
           corner + inset,
           GROUP_OUTLINE_WIDTH,
+          z,
+        )
+      }
+
+      if (node.opened) {
+        const inset = SELECTION_OUTLINE_INSET
+        writeRound(
+          buf,
+          n++,
+          x - inset,
+          y - inset,
+          width + inset * 2,
+          height + inset * 2,
+          withAlpha(AUX_RED, alpha),
+          corner + inset,
+          corner + inset,
+          corner + inset,
+          corner + inset,
+          SELECTION_OUTLINE_WIDTH,
           z,
         )
       }

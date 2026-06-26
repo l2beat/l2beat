@@ -10,6 +10,7 @@ import {
 } from './actions/group'
 import { redo, undo } from './actions/history'
 import { loadNodes } from './actions/loadNodes'
+import { onDoubleClick } from './actions/onDoubleClick'
 import { onKeyDown } from './actions/onKeyDown'
 import { onKeyUp } from './actions/onKeyUp'
 import { onMouseDown } from './actions/onMouseDown'
@@ -103,6 +104,7 @@ export const useStore = create<StoreState>()(
       onMouseDown: wrapHistoryStartAction(set, onMouseDown),
       onMouseUp: wrapHistoryEndAction(set, onMouseUp),
       onMouseMove: wrapAction(set, onMouseMove),
+      onDoubleClick: wrapHistoryStartAction(set, onDoubleClick),
       onWheel: wrapAction(set, onWheel),
     }),
     {

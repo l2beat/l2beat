@@ -68,7 +68,12 @@ function NodeViewImpl(props: NodeViewProps) {
         >
           <AddressIcon type={props.node.addressType} />
           <div className="truncate">{props.node.name}</div>
-          <div className="flex items-center">
+          <div className="flex items-center gap-1">
+            {props.node.opened && (
+              <span className="rounded bg-aux-red px-1 text-[10px] text-black">
+                OPEN
+              </span>
+            )}
             {props.node.isInitial && <IconInitial className="text-aux-green" />}
             {props.node.hasTemplate && (
               <IconInitial className="text-aux-orange" />

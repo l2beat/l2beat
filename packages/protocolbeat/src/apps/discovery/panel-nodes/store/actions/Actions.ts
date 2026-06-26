@@ -17,6 +17,7 @@ export interface Actions {
     opts?: { disableSelection?: boolean },
   ) => void
   onMouseUp: (event: MouseEvent) => void
+  onDoubleClick: (event: MouseEvent, container: HTMLElement) => void
   onWheel: (event: WheelEvent, view: HTMLElement) => void
 
   loadNodes: (projectId: string, nodes: Node[]) => void
