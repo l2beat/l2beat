@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x932de52e6ba4cf577e86c1ff30233783570eb622
+Generated with discovered.json: 0x42599013900bacd0525d80f9d561704659b95177
 
-# Diff at Fri, 26 Jun 2026 14:52:53 GMT:
+# Diff at Fri, 26 Jun 2026 15:24:28 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1782485499
@@ -181,12 +181,54 @@ Initial discovery.
 
 ```diff
 +   Status: CREATED
-    contract Decryption (zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24) [N/A]
-    +++ description: None
+    contract MultichainACL (zama:0x055d9FD50a612A9027716ec8db663E7D68562468) [zama/MultichainACL]
+    +++ description: Gateway-side ACL mirror that records coprocessor consensus for public decryption permissions, account handle allowances, and delegated user-decryption access.
 ```
 
 ```diff
 +   Status: CREATED
-    contract InputVerification (zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287) [N/A]
-    +++ description: None
+    contract Decryption (zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24) [zama/Decryption]
+    +++ description: Gateway contract that orchestrates public and user decryption requests, checks Gateway ACL state, collects KMS responses, and emits results once the configured KMS threshold is reached.
+```
+
+```diff
++   Status: CREATED
+    contract KMSGeneration (zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3) [zama/KMSGeneration]
+    +++ description: Gateway contract that orchestrates FHE key generation, CRS generation, PRSS initialization, and key resharing through threshold KMS responses.
+```
+
+```diff
++   Status: CREATED
+    contract GatewayPauserSet (zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b) [zama/GatewayPauserSet]
+    +++ description: Maintains the set of accounts allowed to pause gateway contracts. The set is managed by the GatewayConfig owner.
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (zama:0x5f0F86BcEad6976711C9B131bCa5D30E767fe2bE) [GnosisSafe]
+    +++ description: Gateway owner Safe. Its LayerZero governance module is outside the Zama Gateway protocol surface covered here.
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolPayment (zama:0x7E179E45E5fe0a21015Be25185363B4F2F2F7e89) [zama/ProtocolPayment]
+    +++ description: Gateway fee contract that charges ZAMA fees for encrypted input verification, public decryption, and user decryption requests, then forwards the collected fees to the configured fee burner sender.
+```
+
+```diff
++   Status: CREATED
+    contract InputVerification (zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287) [zama/InputVerification]
+    +++ description: Gateway contract that receives encrypted input verification requests, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached.
+```
+
+```diff
++   Status: CREATED
+    contract CiphertextCommits (zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F) [zama/CiphertextCommits]
+    +++ description: Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material.
+```
+
+```diff
++   Status: CREATED
+    contract GatewayConfig (zama:0xDE537Be194777A56f8B19d14079E6a78249390ab) [zama/GatewayConfig]
+    +++ description: Central configuration contract for the Zama Gateway. It stores the KMS, coprocessor, custodian, host-chain, pauser, and consensus-threshold configuration used by the gateway workflow contracts.
 ```

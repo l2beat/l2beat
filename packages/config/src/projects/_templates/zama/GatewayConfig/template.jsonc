@@ -1,0 +1,153 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "GatewayConfig",
+  "description": "Central configuration contract for the Zama Gateway. It stores the KMS, coprocessor, custodian, host-chain, pauser, and consensus-threshold configuration used by the gateway workflow contracts.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID", "getHostChain", "isHostChainRegistered"],
+  "ignoreRelatives": ["getHostChains"],
+  "fields": {
+    "owner": {
+      "description": "Owner of GatewayConfig. This account manages KMS nodes, coprocessors, custodians, host chains, consensus thresholds, ownership, and gateway unpausing.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update KMS, coprocessor, custodian, host-chain, and threshold configuration, transfer GatewayConfig ownership, and unpause gateway workflow contracts."
+        }
+      ]
+    },
+    "pendingOwner": {
+      "description": "Pending GatewayConfig owner. If non-zero, this address can accept ownership.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "accept GatewayConfig ownership."
+        }
+      ]
+    },
+    "gatewayPauserSet": {
+      "description": "PauserSet contract checked by GatewayConfig before pausing all pausable gateway workflow contracts.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b"
+      }
+    },
+    "decryption": {
+      "description": "Decryption workflow contract paused and unpaused by GatewayConfig.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24"
+      }
+    },
+    "inputVerification": {
+      "description": "InputVerification workflow contract paused and unpaused by GatewayConfig.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287"
+      }
+    },
+    "getKmsTxSenders": {
+      "description": "KMS transaction-sender addresses registered for this gateway. These accounts submit KMS responses to gateway contracts.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "act",
+          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts."
+        }
+      ]
+    },
+    "getKmsSigners": {
+      "description": "KMS signer addresses registered for this gateway. Thresholds over these signers secure public and user decryption, key generation, and CRS generation.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "act",
+          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts."
+        }
+      ]
+    },
+    "getCoprocessorTxSenders": {
+      "description": "Coprocessor transaction-sender addresses registered for this gateway. These accounts submit input-verification, ACL, and ciphertext-material consensus messages.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "act",
+          "description": "submit coprocessor responses, ACL mirror updates, and ciphertext material commitments to gateway contracts."
+        }
+      ]
+    },
+    "getCoprocessorSigners": {
+      "description": "Coprocessor signer addresses registered for this gateway. These sign encrypted input proof responses accepted by InputVerification.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "act",
+          "description": "sign encrypted input proof verification responses accepted by the gateway."
+        }
+      ]
+    },
+    "getCustodianTxSenders": {
+      "description": "Custodian transaction-sender addresses registered for this gateway.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "act",
+          "description": "participate in gateway key custody workflows."
+        }
+      ]
+    },
+    "getCustodianSigners": {
+      "description": "Custodian signer addresses registered for this gateway.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "act",
+          "description": "sign gateway key custody material."
+        }
+      ]
+    },
+    "getMpcThreshold": {
+      "description": "MPC threshold for KMS key material generation.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getPublicDecryptionThreshold": {
+      "description": "Minimum number of KMS signatures required for public decryption consensus.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getUserDecryptionThreshold": {
+      "description": "Minimum number of KMS shares required for user decryption consensus.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getKmsGenThreshold": {
+      "description": "Minimum number of KMS signatures required for key and CRS generation consensus.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getCoprocessorMajorityThreshold": {
+      "description": "Minimum number of matching coprocessor messages required for gateway coprocessor consensus.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getHostChains": {
+      "description": "Registered host chains and their host-chain FHEVMExecutor and ACL endpoints. Returned addresses belong to the listed host chain, not to the gateway chain."
+    },
+    "getProtocolMetadata": {
+      "description": "Human-readable gateway protocol metadata."
+    }
+  }
+}
