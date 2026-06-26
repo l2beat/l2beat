@@ -48,6 +48,8 @@ export const sophon: ScalingProject = zkStackL2({
     name: 'Sophon',
     slug: 'sophon',
     architectureImage: 'zkstack-validium-vector',
+    warning:
+      'Sophon will be sunsetting in late 2026. See the [announcement](https://x.com/sophon/status/2070192257295335800) and the [migration guide](https://sophon.com/content/) for details.',
     description:
       'Sophon is a consumer-centric ecosystem on a ZK Stack Validium L2, designed to bring onchain benefits to everyday lifestyle and entertainment applications.',
     links: {
