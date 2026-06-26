@@ -1,14 +1,106 @@
-Generated with discovered.json: 0x6dbf6f980482e9a93325f0d1dd5204c46964c6cd
+Generated with discovered.json: 0xee24355a860b2cdb8fda4a0240b56cbec8372af6
 
-# Diff at Mon, 25 May 2026 13:24:32 GMT:
+# Diff at Fri, 26 Jun 2026 08:45:04 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@f956a1829482ff8cca3de1993ffa6d584a1241e0 block: 1779355521
-- current timestamp: 1779715406
+- comparing to: main@cf24a6eb45e0c4c6be4d66ee4e477ba0cce45b01 block: 1779355521
+- current timestamp: 1782463439
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Address PR review feedback. The `AcrossBondToken` proposers permission is deduped into a single description that clarifies the two-level settlement model: proposals are bonded with ABT and settle optimistically on the HubPool with no UMA involvement; UMA token voting only kicks in when a dispute is raised via `disputeRootBundle()` within the challenge period.
+
+Also catches up to onchain state since the last main discovery: two newly registered chain mappings (`CrossChainContracts` + `Adapters`) and a couple of `poolRebalanceRoutes` re-points/disables.
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.Adapters.4663:
++        "eth:0xbc5E82035e2C8d4B335Ccb751D6BF47e44Dec678"
+      values.Adapters.5042:
++        "eth:0xCA5f9960022078F3585a188e06F910eeC29c7eBD"
+      values.CrossChainContracts.4663:
++        "eth:0xD29C85F15DF544bA632C9E25829fd29d767d7978"
+      values.CrossChainContracts.5042:
++        "eth:0x9b4A302A548c7e313c2b74C461db7b84d3074A84"
+      values.poolRebalanceRoutes.Ethereum.7.destinationToken:
+-        "eth:0xba100000625a3754423978a60c9317c58a424e3D"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Ethereum.10.destinationToken:
+-        "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Ethereum.11.destinationToken:
+-        "eth:0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Ethereum.12.destinationToken:
+-        "eth:0x6033F7f88332B8db6ad452B7C6D5bB643990aE3f"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Ethereum.15.destinationToken:
+-        "eth:0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.OP Mainnet.5.destinationToken:
+-        "eth:0xFE8B128bA8C78aabC59d4c64cEE7fF28e9379921"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.OP Mainnet.8.destinationToken:
+-        "eth:0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.OP Mainnet.9.destinationToken:
+-        "eth:0x395Ae52bB17aef68C2888d941736A71dC6d4e125"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.OP Mainnet.11.destinationToken:
+-        "eth:0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Polygon PoS.6.destinationToken:
+-        "eth:0x9a71012B13CA4d3D0Cdc72A177DF3ef03b0E76A3"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Polygon PoS.9.destinationToken:
+-        "eth:0x25788a1a171ec66Da6502f9975a15B609fF54CF6"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.World Chain.3.destinationToken:
+-        "eth:0x7077C71B4AF70737a08287E279B717Dcf64fdC57"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Lisk.2.destinationToken:
+-        "eth:0xac485391EB2d7D88253a7F1eF18C37f4242D1A24"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Base.3.destinationToken:
+-        "eth:0x4158734D47Fc9692176B5085E0F52ee0Da5d47F1"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Base.4.destinationToken:
+-        "eth:0xd652C5425aea2Afd5fb142e120FeCf79e18fafc3"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Base.5.destinationToken:
+-        "eth:0x4e107a0000DB66f0E9Fd2039288Bf811dD1f9c74"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Arbitrum One.6.destinationToken:
+-        "eth:0x040d1EdC9569d4Bab2D15287Dc5A4F10F56a56B8"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Arbitrum One.9.destinationToken:
+-        "eth:0xCF934E2402A5e072928a39a956964eb8F2B5B79C"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Universal_Adapter (eth:0xbc5E82035e2C8d4B335Ccb751D6BF47e44Dec678) [acrossv3/universalAdapter]
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+```
+
+```diff
++   Status: CREATED
+    contract Universal_Adapter (eth:0xCA5f9960022078F3585a188e06F910eeC29c7eBD) [acrossv3/universalAdapter]
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+```
+
+## Source code changes
+
+```diff
+...:0xCA5f9960022078F3585a188e06F910eeC29c7eBD.sol | 1416 ++++++++++++++++++++
+ ...:0xbc5E82035e2C8d4B335Ccb751D6BF47e44Dec678.sol | 1416 ++++++++++++++++++++
+ 2 files changed, 2832 insertions(+)
+```
 
 ## Config/verification related changes
 
@@ -617,11 +709,11 @@ discovery. Values are for block 1779355521 (main branch discovery), not current.
 ```diff
     EOA  (eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c) {
     +++ description: None
-      receivedPermissions.0.description:
-+        "propose new root bundles (containing settlement info to refund relayers), which are validated optimistically by the UMA oracle."
-      receivedPermissions.0.permission:
--        "acrossPropose"
-+        "interact"
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea","description":"Can propose new root bundles (containing settlement info to refund relayers), which are validated optimistically by the UMA oracle.","role":".proposers"}
+      receivedPermissions.1.description:
+-        "use ABT as a bond to the HubPool contract for root bundle proposals."
++        "propose new root bundles to the HubPool by posting an ABT bond. Proposals settle optimistically; only disputes (via `disputeRootBundle()`) escalate to UMA token voting."
     }
 ```
 
@@ -637,6 +729,35 @@ discovery. Values are for block 1779355521 (main branch discovery), not current.
 +   Status: CREATED
     contract Optimism_SpokePool (oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281) [acrossv3/SpokePool]
     +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.
+```
+
+Generated with discovered.json: 0xae75558b7abc3fe3e9245e4489f64b7c6548e94e
+
+# Diff at Tue, 09 Jun 2026 12:43:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779355521
+- current timestamp: 1779355521
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779355521 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can propose new root bundles (containing settlement info to refund relayers), which are validated optimistically by the UMA oracle."
+      receivedPermissions.0.permission:
+-        "acrossPropose"
++        "interact"
+    }
 ```
 
 Generated with discovered.json: 0x894e4eb696b7625cdb36481785432477e426b75c

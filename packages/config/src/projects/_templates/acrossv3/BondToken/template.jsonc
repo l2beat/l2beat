@@ -30,11 +30,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "use ABT as a bond to the HubPool contract for root bundle proposals."
-        },
-        {
-          "type": "interact",
-          "description": "propose new root bundles (containing settlement info to refund relayers), which are validated optimistically by the UMA oracle."
+          "description": "propose new root bundles to the HubPool by posting an ABT bond. Proposals settle optimistically; only disputes (via `disputeRootBundle()`) escalate to UMA token voting."
         }
       ]
     }
