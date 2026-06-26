@@ -1719,6 +1719,12 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationSteps:
       'The sources for this program are located in a private repository, shared with L2BEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
   },
+  '0x2dc824fed99dcdf659f2523ad68d1ec70bd5f08e3c533996be3a2d2b19813e83': {
+    ...WASM_MODULE_ROOT('Apechain'),
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'The sources for this program are located in a private repository, shared with L2BEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
+  },
   '0x2c9a9d645ae56304c483709fc710a58a0935ed43893179fe4b275e1400503ea7': {
     ...WASM_MODULE_ROOT('Syndicate'),
     verificationStatus: 'notVerified',
@@ -1845,6 +1851,10 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   },
   '0x5731b637d9e3b693fc0d74e570bac76ca6c0defe3e4c119b1cea981a9bd307d6': {
     title: 'Appchain TEE Enclave hash',
+    verificationStatus: 'unsuccessful',
+  },
+  '0x025b20bb8cd6aebf15f787050c19291014ec2ef70cf045f756c3a90d2a672373': {
+    title: 'Apechain TEE Enclave hash',
     verificationStatus: 'unsuccessful',
   },
   '0x002bb66c60302a81a621d7899e3f6ee1d0db9fb1eae5d1e80e94a33cb1e24922': {
