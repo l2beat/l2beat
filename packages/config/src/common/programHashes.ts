@@ -1536,6 +1536,24 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x0091609acb607118f47f756c0f4db9aad227420326cbda96f0303384e0bbf8e3.md',
     ),
   },
+  '0x00398b786b500ca759ca2de2aee9c73bd8e28f1c80b49e1c53bc060a9a649269': {
+    ...SCROLL_BUNDLE_EXE('v0.8.0'),
+    programUrl:
+      'https://github.com/scroll-tech/zkvm-prover/tree/1839b4905bd920bf75de9c25997b8383029e021d/crates/circuits/bundle-circuit',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x00398b786b500ca759ca2de2aee9c73bd8e28f1c80b49e1c53bc060a9a649269.md',
+    ),
+  },
+  '0x0021785a05e931b447c8d6463f4547f92081a92ee357af26e1c6f6ecfe373d67': {
+    ...SCROLL_BUNDLE_CONFIG('v0.8.0'),
+    programUrl:
+      'https://github.com/scroll-tech/zkvm-prover/tree/1839b4905bd920bf75de9c25997b8383029e021d/crates/circuits/bundle-circuit',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x0021785a05e931b447c8d6463f4547f92081a92ee357af26e1c6f6ecfe373d67.md',
+    ),
+  },
   '0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909': {
     ...SCROLL_BUNDLE_CONFIG('v0.5.2'),
     programUrl:
