@@ -141,7 +141,8 @@ export const nova: ScalingProject = orbitStackL2({
   display: {
     name: 'Arbitrum Nova',
     slug: 'nova',
-    warning: undefined,
+    warning:
+      'The ArbitrumDAO voted to minimize Arbitrum Nova. Developers and users are encouraged to migrate to Arbitrum One. See the [Minimizing Arbitrum Nova FAQs](https://forum.arbitrum.foundation/t/minimizing-arbitrum-nova-faqs/30955) for details.',
     description:
       'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
     links: {
