@@ -4,7 +4,7 @@
   "configHash": "0x02dec344b27408a799817642a4ac8d7f5d44a10c4fb55d2b50e4829a1487ef7e",
   "entries": [
     {
-      "name": "SortedTroves",
+      "name": "SortedTroves_rETH",
       "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
       "type": "Contract",
       "template": "liquityv2/SortedTroves",
@@ -31,7 +31,7 @@
       }
     },
     {
-      "name": "TroveNFT",
+      "name": "TroveNFT_WETH",
       "address": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
       "type": "Contract",
       "template": "liquityv2/TroveNFT",
@@ -64,7 +64,7 @@
       }
     },
     {
-      "name": "AddressesRegistry",
+      "name": "AddressesRegistry_WETH",
       "address": "eth:0x20F7C9ad66983F6523a0881d0f82406541417526",
       "type": "Contract",
       "template": "liquityv2/AddressesRegistry",
@@ -109,7 +109,7 @@
       }
     },
     {
-      "name": "MetadataNFT",
+      "name": "MetadataNFT_rETH",
       "address": "eth:0x3400874305E1547020fb8e80eAF1308B757171Af",
       "type": "Contract",
       "sourceHashes": [
@@ -170,7 +170,7 @@
       }
     },
     {
-      "name": "MetadataNFT",
+      "name": "MetadataNFT_wstETH",
       "address": "eth:0x362f822dF79790C8077e61110484Fffa48F682A1",
       "type": "Contract",
       "sourceHashes": [
@@ -189,7 +189,7 @@
       }
     },
     {
-      "name": "CollSurplusPool",
+      "name": "CollSurplusPool_wstETH",
       "address": "eth:0x36e6CBdf68f64CF00fC3a6c634A25be32Dd0A235",
       "type": "Contract",
       "template": "liquityv2/CollSurplusPool",
@@ -214,7 +214,7 @@
       }
     },
     {
-      "name": "BorrowerOperations",
+      "name": "BorrowerOperations_WETH",
       "address": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
       "type": "Contract",
       "template": "liquityv2/BorrowerOperations",
@@ -262,7 +262,7 @@
       }
     },
     {
-      "name": "GasPool",
+      "name": "GasPool_rETH",
       "address": "eth:0x45c81dcE308389e1Bee63ae30A04Fb1e148dad41",
       "type": "Contract",
       "sourceHashes": [
@@ -278,7 +278,7 @@
       }
     },
     {
-      "name": "ActivePool",
+      "name": "ActivePool_wstETH",
       "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
       "type": "Contract",
       "template": "liquityv2/ActivePool",
@@ -318,7 +318,7 @@
       }
     },
     {
-      "name": "StabilityPool",
+      "name": "StabilityPool_WETH",
       "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
       "type": "Contract",
       "template": "liquityv2/StabilityPool",
@@ -361,7 +361,7 @@
       }
     },
     {
-      "name": "DefaultPool",
+      "name": "DefaultPool_rETH",
       "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
       "type": "Contract",
       "template": "liquityv2/DefaultPool",
@@ -386,7 +386,7 @@
       }
     },
     {
-      "name": "FixedAssetData",
+      "name": "FixedAssetData_WETH",
       "address": "eth:0x5CcA549ca706C39D68156e5E0a72CcBC95f563d0",
       "type": "Contract",
       "unverified": true,
@@ -400,7 +400,7 @@
       }
     },
     {
-      "name": "AddressesRegistry",
+      "name": "AddressesRegistry_rETH",
       "address": "eth:0x6106046F031a22713697e04C08B330dDaf3e8789",
       "type": "Contract",
       "template": "liquityv2/AddressesRegistry",
@@ -544,7 +544,7 @@
       }
     },
     {
-      "name": "TroveNFT",
+      "name": "TroveNFT_rETH",
       "address": "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873",
       "type": "Contract",
       "template": "liquityv2/TroveNFT",
@@ -577,7 +577,7 @@
       }
     },
     {
-      "name": "GasPool",
+      "name": "GasPool_WETH",
       "address": "eth:0x7b9ab3DE4036caE51F1fa4ec0a2C2fd606bCF921",
       "type": "Contract",
       "sourceHashes": [
@@ -593,7 +593,7 @@
       }
     },
     {
-      "name": "TroveManager",
+      "name": "TroveManager_WETH",
       "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
       "type": "Contract",
       "template": "liquityv2/TroveManager",
@@ -701,7 +701,7 @@
       }
     },
     {
-      "name": "FixedAssetReader",
+      "name": "FixedAssetReader_WETH",
       "address": "eth:0x84087689B0D6a8A8f11C297e9e7f8De99f398258",
       "type": "Contract",
       "sourceHashes": [
@@ -720,7 +720,7 @@
       }
     },
     {
-      "name": "SortedTroves",
+      "name": "SortedTroves_wstETH",
       "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
       "type": "Contract",
       "template": "liquityv2/SortedTroves",
@@ -747,7 +747,7 @@
       }
     },
     {
-      "name": "TroveNFT",
+      "name": "TroveNFT_wstETH",
       "address": "eth:0x857aECeBF75f1012DC18E15020C97096aeA31b04",
       "type": "Contract",
       "template": "liquityv2/TroveNFT",
@@ -780,7 +780,7 @@
       }
     },
     {
-      "name": "FixedAssetData",
+      "name": "FixedAssetData_rETH",
       "address": "eth:0x884Acfa4593a6FdbA0a9373007E48Ea9AF881C42",
       "type": "Contract",
       "unverified": true,
@@ -794,7 +794,7 @@
       }
     },
     {
-      "name": "GasPool",
+      "name": "GasPool_wstETH",
       "address": "eth:0x8C44FBa379D8A8608C0e29B2729DeB75a981Db1f",
       "type": "Contract",
       "sourceHashes": [
@@ -810,7 +810,7 @@
       }
     },
     {
-      "name": "AddressesRegistry",
+      "name": "AddressesRegistry_wstETH",
       "address": "eth:0x8d733F7ea7c23Cbea7C613B6eBd845d46d3aAc54",
       "type": "Contract",
       "template": "liquityv2/AddressesRegistry",
@@ -855,7 +855,7 @@
       }
     },
     {
-      "name": "ActivePool",
+      "name": "ActivePool_rETH",
       "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
       "type": "Contract",
       "template": "liquityv2/ActivePool",
@@ -895,7 +895,7 @@
       }
     },
     {
-      "name": "StabilityPool",
+      "name": "StabilityPool_wstETH",
       "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
       "type": "Contract",
       "template": "liquityv2/StabilityPool",
@@ -938,7 +938,7 @@
       }
     },
     {
-      "name": "MetadataNFT",
+      "name": "MetadataNFT_WETH",
       "address": "eth:0x9B36C3B16299D68c79F174df7e728E35b6AF4A12",
       "type": "Contract",
       "sourceHashes": [
@@ -957,7 +957,7 @@
       }
     },
     {
-      "name": "SortedTroves",
+      "name": "SortedTroves_WETH",
       "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
       "type": "Contract",
       "template": "liquityv2/SortedTroves",
@@ -984,7 +984,7 @@
       }
     },
     {
-      "name": "TroveManager",
+      "name": "TroveManager_wstETH",
       "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
       "type": "Contract",
       "template": "liquityv2/TroveManager",
@@ -1026,7 +1026,7 @@
       }
     },
     {
-      "name": "FixedAssetReader",
+      "name": "FixedAssetReader_wstETH",
       "address": "eth:0xa5224865040034A9f8E5C60e0a616c9c8A63f237",
       "type": "Contract",
       "sourceHashes": [
@@ -1045,7 +1045,7 @@
       }
     },
     {
-      "name": "BorrowerOperations",
+      "name": "BorrowerOperations_wstETH",
       "address": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
       "type": "Contract",
       "template": "liquityv2/BorrowerOperations",
@@ -1093,7 +1093,7 @@
       }
     },
     {
-      "name": "TroveManager",
+      "name": "TroveManager_rETH",
       "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
       "type": "Contract",
       "template": "liquityv2/TroveManager",
@@ -1135,7 +1135,7 @@
       }
     },
     {
-      "name": "CollSurplusPool",
+      "name": "CollSurplusPool_rETH",
       "address": "eth:0xba4A2bD8b76DF84CaC98eBa3f4b967D8423192bF",
       "type": "Contract",
       "template": "liquityv2/CollSurplusPool",
@@ -1192,7 +1192,7 @@
       }
     },
     {
-      "name": "FixedAssetReader",
+      "name": "FixedAssetReader_rETH",
       "address": "eth:0xcC77baf5706BDf7CFA7FefD5337833e2e1fd0d8e",
       "type": "Contract",
       "sourceHashes": [
@@ -1211,7 +1211,7 @@
       }
     },
     {
-      "name": "StabilityPool",
+      "name": "StabilityPool_rETH",
       "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
       "type": "Contract",
       "template": "liquityv2/StabilityPool",
@@ -1254,7 +1254,7 @@
       }
     },
     {
-      "name": "DefaultPool",
+      "name": "DefaultPool_WETH",
       "address": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
       "type": "Contract",
       "template": "liquityv2/DefaultPool",
@@ -1279,7 +1279,7 @@
       }
     },
     {
-      "name": "DefaultPool",
+      "name": "DefaultPool_wstETH",
       "address": "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1",
       "type": "Contract",
       "template": "liquityv2/DefaultPool",
@@ -1346,7 +1346,7 @@
       }
     },
     {
-      "name": "BorrowerOperations",
+      "name": "BorrowerOperations_rETH",
       "address": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
       "type": "Contract",
       "template": "liquityv2/BorrowerOperations",
@@ -1394,7 +1394,7 @@
       }
     },
     {
-      "name": "ActivePool",
+      "name": "ActivePool_WETH",
       "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
       "type": "Contract",
       "template": "liquityv2/ActivePool",
@@ -1434,7 +1434,7 @@
       }
     },
     {
-      "name": "CollSurplusPool",
+      "name": "CollSurplusPool_WETH",
       "address": "eth:0xedbE2509E502c0320D2e7f8b6746a49b4B50E2bF",
       "type": "Contract",
       "template": "liquityv2/CollSurplusPool",
@@ -1479,7 +1479,7 @@
       }
     },
     {
-      "name": "FixedAssetData",
+      "name": "FixedAssetData_wstETH",
       "address": "eth:0xf4a3fE99227F6060e4C1c62b557EEE050B6483E4",
       "type": "Contract",
       "unverified": true,
@@ -3007,5 +3007,5 @@
     "liquityv2/WSTETHPriceFeed": "0xdc26275a801895b3260e54c61633f157a559f4578df78ccc7da4b2e875478314"
   },
   "usedBlockNumbers": { "ethereum": 25359156 },
-  "permissionsConfigHash": "0xee118d00e22877166cdf33cc3605a47ed44676e3591b32a91bcfd37b11fbd0aa"
+  "permissionsConfigHash": "0x99d13ba50e849b0d0bb99836b7cbd36203e68c900ac2b6db34dd32168bafa894"
 }
