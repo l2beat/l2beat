@@ -16,5 +16,5 @@ export async function getAggregatedInteropSnapshotTimestamp(): Promise<
     )
   }
 
-  return db.aggregatedInteropTransfer.getLatestTimestamp()
+  return db.interopAggregateStatus.getLatestPromotedTimestamp()
 }
